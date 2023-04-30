@@ -168,9 +168,9 @@ public class RelacaoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
-			private Action diferencaAction = actionMenu("label.diferenca_em_horas", null);
-			private Action reiniciarAction = actionMenu("label.reiniciar_horas", null);
-			private Action somarAction = actionMenu("label.somar_em_horas", null);
+			private Action diferencaAction = acaoMenu("label.diferenca_em_horas", null);
+			private Action reiniciarAction = acaoMenu("label.reiniciar_horas", null);
+			private Action somarAction = acaoMenu("label.somar_em_horas", null);
 			private static final String CHAVE_ERRO = "msg.padrao_valor_invalido";
 			private static final long serialVersionUID = 1L;
 
@@ -246,7 +246,7 @@ public class RelacaoContainer extends Panel {
 			}
 		}
 
-		Action actionMenu(String chave, Icon icon) {
+		Action acaoMenu(String chave, Icon icon) {
 			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 		}
 	}

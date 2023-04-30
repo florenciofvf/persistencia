@@ -317,12 +317,12 @@ public class TabelaPersistencia extends JTable {
 		return columnModel.getColumn(colunaView);
 	}
 
-	static Action actionMenu(String chave, Icon icon) {
+	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(getString(chave), icon);
 	}
 
-	static Action actionMenu(String chave) {
-		return actionMenu(chave, null);
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
 	}
 
 	static String getString(String chave) {
@@ -331,13 +331,13 @@ public class TabelaPersistencia extends JTable {
 
 	private class PopupHeader extends Popup {
 		private JCheckBoxMenuItem inativoTempCheck = new JCheckBoxMenuItem(getString("label.inativo_temp"));
-		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
+		private Action pesquisaApartirColunaAcao = acaoMenu("label.pesquisa_a_partir_coluna");
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_manual", null);
-		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
+		private Action copiarNomeColunaAcao = acaoMenu("label.copiar_nome_coluna");
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
-		private Action larguraConteudoAcao = actionMenu("label.largura_conteudo");
-		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
-		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
+		private Action larguraConteudoAcao = acaoMenu("label.largura_conteudo");
+		private Action larguraTituloAcao = acaoMenu("label.largura_titulo");
+		private Action larguraMinimaAcao = acaoMenu("label.largura_minima");
 		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();
 		private ItemClassBiblio itemClassBiblio = new ItemClassBiblio();
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
@@ -370,8 +370,8 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuMetadados extends Menu {
-			private Action exportaParaAcao = actionMenu("label.campo_exportado_para");
-			private Action importaDeAcao = actionMenu("label.campo_importado_de");
+			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
+			private Action importaDeAcao = acaoMenu("label.campo_importado_de");
 			private Action infoColunaAcao = Action.actionMenu("label.info", null);
 			private MenuSelectDistinct distinct = new MenuSelectDistinct();
 			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
@@ -571,8 +571,8 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuColocarNomeColuna extends Menu {
-			private Action atalhoAcao = actionMenu("label.atalho");
-			private Action opcoesAcao = actionMenu("label.opcoes");
+			private Action atalhoAcao = acaoMenu("label.atalho");
+			private Action opcoesAcao = acaoMenu("label.opcoes");
 			private static final long serialVersionUID = 1L;
 
 			private MenuColocarNomeColuna() {
@@ -602,8 +602,8 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuCopiarLinhas extends MenuPadrao2 {
-			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho", Icones.ASPAS);
-			private Action semAspasAtalhoAcao = actionMenu("label.sem_aspas_atalho");
+			private Action comAspasAtalhoAcao = acaoMenu("label.com_aspas_atalho", Icones.ASPAS);
+			private Action semAspasAtalhoAcao = acaoMenu("label.sem_aspas_atalho");
 			private static final long serialVersionUID = 1L;
 
 			private MenuCopiarLinhas() {
@@ -638,8 +638,8 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuColocarColuna extends MenuPadrao2 {
-			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho", Icones.ASPAS);
-			private Action semAspasAtalhoAcao = actionMenu("label.sem_aspas_atalho");
+			private Action comAspasAtalhoAcao = acaoMenu("label.com_aspas_atalho", Icones.ASPAS);
+			private Action semAspasAtalhoAcao = acaoMenu("label.sem_aspas_atalho");
 			private static final long serialVersionUID = 1L;
 			private final boolean numeros;
 			private final boolean letras;

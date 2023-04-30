@@ -1269,7 +1269,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	private class SuperficiePopup extends Popup {
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
-		private Action excluirAcao = actionMenu("label.excluir_selecionado", Icones.EXCLUIR);
+		private Action excluirAcao = acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 		private Action relacoesAcao = Action.actionMenu("label.relacoes", null);
 		private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
@@ -1329,7 +1329,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private class MenuDistribuicao extends Menu {
-			Action inverterAcao = actionMenu("label.inverter_posicao");
+			Action inverterAcao = acaoMenu("label.inverter_posicao");
 			private static final long serialVersionUID = 1L;
 
 			private MenuDistribuicao() {
@@ -1432,7 +1432,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private class MenuDestacar extends MenuPadrao1 {
-			Action proprioAcao = actionMenu("label.proprio_container");
+			Action proprioAcao = acaoMenu("label.proprio_container");
 			Action desktopAcao = Action.actionMenuDesktop();
 			private static final long serialVersionUID = 1L;
 
@@ -1575,19 +1575,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	static Action actionMenu(String chave, Icon icon) {
+	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 	}
 
-	static Action actionMenu(String chave) {
-		return actionMenu(chave, null);
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
 	}
 
 	private class SuperficiePopup2 extends Popup {
-		private Action atualizarFormulariosAcao = actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
-		private Action limparFormulariosAcao = actionMenu("label.limpar_formularios", Icones.NOVO);
-		private Action formulariosInvisiveisAcao = actionMenu("label.forms_invisiveis", null);
-		private Action criarObjetoAcao = actionMenu("label.criar_objeto", Icones.CRIAR);
+		private Action atualizarFormulariosAcao = acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
+		private Action limparFormulariosAcao = acaoMenu("label.limpar_formularios", Icones.NOVO);
+		private Action formulariosInvisiveisAcao = acaoMenu("label.forms_invisiveis", null);
+		private Action criarObjetoAcao = acaoMenu("label.criar_objeto", Icones.CRIAR);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 		private static final long serialVersionUID = 1L;

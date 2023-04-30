@@ -120,13 +120,13 @@ public class AbaView extends Panel {
 		}
 
 		private class ButtonStatus extends ButtonPopup {
-			private Action desenharObjetoCentroAcao = actionMenu("label.desenhar_objeto_centro");
-			private Action desenharAssociacaoAcao = actionMenu("label.desenhar_associacao");
-			private Action desenharAtributoAcao = actionMenu("label.desenhar_atributo");
-			private Action desenharGrade2Acao = actionMenu("label.desenhar_grade2");
-			private Action desenharGradeAcao = actionMenu("label.desenhar_grade");
-			private Action velocidadeAcao = actionMenu("label.velocidade");
-			private Action girarAcao = actionMenu("label.girar");
+			private Action desenharObjetoCentroAcao = acaoMenu("label.desenhar_objeto_centro");
+			private Action desenharAssociacaoAcao = acaoMenu("label.desenhar_associacao");
+			private Action desenharAtributoAcao = acaoMenu("label.desenhar_atributo");
+			private Action desenharGrade2Acao = acaoMenu("label.desenhar_grade2");
+			private Action desenharGradeAcao = acaoMenu("label.desenhar_grade");
+			private Action velocidadeAcao = acaoMenu("label.velocidade");
+			private Action girarAcao = acaoMenu("label.girar");
 			private static final long serialVersionUID = 1L;
 
 			private ButtonStatus() {
@@ -203,12 +203,12 @@ public class AbaView extends Panel {
 		}
 	}
 
-	static Action actionMenu(String chave, Icon icon) {
+	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(MapaMensagens.getString(chave), icon);
 	}
 
-	static Action actionMenu(String chave) {
-		return actionMenu(chave, null);
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
 	}
 
 	class PanelView extends Panel implements Runnable {

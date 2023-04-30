@@ -173,9 +173,9 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	protected class MenuLargura extends Menu {
-		private Action direitoAutoAcao = actionMenu("label.total_direito_auto", Icones.ALINHA_DIREITO);
-		private Action esquerdoAcao = actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
-		private Action direitoAcao = actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
+		private Action direitoAutoAcao = acaoMenu("label.total_direito_auto", Icones.ALINHA_DIREITO);
+		private Action esquerdoAcao = acaoMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
+		private Action direitoAcao = acaoMenu("label.total_direito", Icones.ALINHA_DIREITO);
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
 		private static final long serialVersionUID = 1L;
 		private JCheckBoxMenuItem checkDireitoAuto;
@@ -221,9 +221,9 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	protected class MenuAjustar extends Menu {
-		private Action usarFormularioAcao = actionMenu("label.usar_formularios");
-		private Action dimensaoManualAcao = actionMenu("label.dimensao_manual");
-		private Action retirarRolagemAcao = actionMenu("label.retirar_rolagem");
+		private Action usarFormularioAcao = acaoMenu("label.usar_formularios");
+		private Action dimensaoManualAcao = acaoMenu("label.dimensao_manual");
+		private Action retirarRolagemAcao = acaoMenu("label.retirar_rolagem");
 		private static final long serialVersionUID = 1L;
 
 		protected MenuAjustar() {
@@ -241,20 +241,20 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	static Action actionMenu(String chave, Icon icon) {
+	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
 	}
 
-	static Action actionMenu(String chave) {
-		return actionMenu(chave, null);
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
 	}
 
 	protected class MenuAjuste extends Menu {
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
-		private Action aproximarFormAoObjetoAcao = actionMenu("label.aproximar_form_ao_objeto");
-		private Action aproximarObjetoAoFormAcao = actionMenu("label.aproximar_objeto_ao_form");
+		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
+		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
-		private Action empilharAcao = actionMenu("label.empilhar_formularios");
+		private Action empilharAcao = acaoMenu("label.empilhar_formularios");
 		private static final long serialVersionUID = 1L;
 
 		protected MenuAjuste() {

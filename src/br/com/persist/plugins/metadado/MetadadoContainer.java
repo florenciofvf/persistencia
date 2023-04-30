@@ -120,7 +120,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 	}
 
-	static Action actionMenu(String chave) {
+	static Action acaoMenu(String chave) {
 		return Action.acaoMenu(MetadadoMensagens.getString(chave), null);
 	}
 
@@ -201,15 +201,15 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 
 		private class ButtonInfo extends ButtonPopup {
-			private Action pksMultiplaAcaoExport = actionMenu("label.pks_multiplas_export");
-			private Action queExportamAcao = actionMenu("label.tabelas_que_exportam");
-			private Action naoExportamAcao = actionMenu("label.tabelas_nao_exportam");
-			private Action ordemExportAcao = actionMenu("label.ordenado_exportacao");
-			private Action ordemImportAcao = actionMenu("label.ordenado_importacao");
-			private Action localizarCampoAcao = actionMenu("label.localizar_campo");
-			private Action ordemCamposAcao = actionMenu("label.ordenado_campos");
-			private Action pksMultiplaAcao = actionMenu("label.pks_multiplas");
-			private Action pksAusentesAcao = actionMenu("label.pks_ausente");
+			private Action pksMultiplaAcaoExport = acaoMenu("label.pks_multiplas_export");
+			private Action queExportamAcao = acaoMenu("label.tabelas_que_exportam");
+			private Action naoExportamAcao = acaoMenu("label.tabelas_nao_exportam");
+			private Action ordemExportAcao = acaoMenu("label.ordenado_exportacao");
+			private Action ordemImportAcao = acaoMenu("label.ordenado_importacao");
+			private Action localizarCampoAcao = acaoMenu("label.localizar_campo");
+			private Action ordemCamposAcao = acaoMenu("label.ordenado_campos");
+			private Action pksMultiplaAcao = acaoMenu("label.pks_multiplas");
+			private Action pksAusentesAcao = acaoMenu("label.pks_ausente");
 			private static final long serialVersionUID = 1L;
 
 			private ButtonInfo() {

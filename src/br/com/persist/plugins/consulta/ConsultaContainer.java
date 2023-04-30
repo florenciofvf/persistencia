@@ -255,12 +255,12 @@ public class ConsultaContainer extends AbstratoContainer {
 		}
 	}
 
-	static Action actionMenu(String chave) {
+	static Action acaoMenu(String chave) {
 		return Action.acaoMenu(ConsultaMensagens.getString(chave), null);
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private Action colarSemAspasAcao = actionMenu("label.colar_sem_aspas");
+		private Action colarSemAspasAcao = acaoMenu("label.colar_sem_aspas");
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
