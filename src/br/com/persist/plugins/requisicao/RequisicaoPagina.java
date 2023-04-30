@@ -102,11 +102,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private class PopupFichario extends Popup {
-		private Action fecharEsquerda = actionMenu("label.fechar_todas_esquerda");
-		private Action fecharDireita = actionMenu("label.fechar_todas_direita");
-		private Action fecharOutras = actionMenu("label.fechar_outras_abas");
-		private Action fecharTodas = actionMenu("label.fechar_todas_abas");
-		private Action fechar = actionMenu("label.fechar_aba_ativa");
+		private Action fecharEsquerda = acaoMenu("label.fechar_todas_esquerda");
+		private Action fecharDireita = acaoMenu("label.fechar_todas_direita");
+		private Action fecharOutras = acaoMenu("label.fechar_outras_abas");
+		private Action fecharTodas = acaoMenu("label.fechar_todas_abas");
+		private Action fechar = acaoMenu("label.fechar_aba_ativa");
 		private static final long serialVersionUID = 1L;
 
 		PopupFichario() {
@@ -337,17 +337,17 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
-	static Action actionMenu(String chave) {
+	static Action acaoMenu(String chave) {
 		return Action.acaoMenu(RequisicaoMensagens.getString(chave), null);
 	}
 
-	static Action actionIcon(String chave, Icon icon) {
+	static Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private Action clonarSelAcao = actionIcon("label.clonar_selecionados", Icones.COPIA);
-		private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
+		private Action clonarSelAcao = acaoIcon("label.clonar_selecionados", Icones.COPIA);
+		private Action vAccessTokenAcao = acaoMenu("label.atualizar_access_token_var");
 		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private CheckBox chkModoTabela = new CheckBox();

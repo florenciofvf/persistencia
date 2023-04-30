@@ -158,16 +158,16 @@ public class RequisicaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	static Action actionMenu(String chave) {
+	static Action acaoMenu(String chave) {
 		return Action.acaoMenu(RequisicaoMensagens.getString(chave), null);
 	}
 
-	static Action actionIcon(String chave, Icon icon) {
+	static Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
 	}
 
-	static Action actionIcon(String chave) {
-		return actionIcon(chave, null);
+	static Action acaoIcon(String chave) {
+		return acaoIcon(chave, null);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -189,12 +189,12 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private class ButtonUtil extends ButtonPopup {
-			private Action formatarAcao = actionMenu("label.formatar_frag_json");
-			private Action variaveisAcao = actionMenu("label.variaveis_sistema");
+			private Action formatarAcao = acaoMenu("label.formatar_frag_json");
+			private Action variaveisAcao = acaoMenu("label.variaveis_sistema");
 			private Action modeloAcao = Action.actionMenu("label.modelo", null);
-			private Action retornar64Acao = actionMenu("label.retornar_base64");
-			private Action appendAcao = actionMenu("label.salvar_req_sel");
-			private Action base64Acao = actionMenu("label.criar_base64");
+			private Action retornar64Acao = acaoMenu("label.retornar_base64");
+			private Action appendAcao = acaoMenu("label.salvar_req_sel");
+			private Action base64Acao = acaoMenu("label.criar_base64");
 			private static final long serialVersionUID = 1L;
 
 			private ButtonUtil() {

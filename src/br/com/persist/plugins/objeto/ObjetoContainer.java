@@ -174,26 +174,26 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		return arquivo;
 	}
 
-	static Action actionMenu(String chave, Icon icon) {
+	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 	}
 
-	static Action actionMenu(String chave) {
-		return actionMenu(chave, null);
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
 	}
 
-	static Action actionIcon(String chave, Icon icon) {
+	static Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
 	}
 
-	static Action actionIcon(String chave) {
-		return actionIcon(chave, null);
+	static Action acaoIcon(String chave) {
+		return acaoIcon(chave, null);
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action excluirAcao = actionIcon("label.excluir_selecionado", Icones.EXCLUIR);
-		private Action arquivoVinculadoAcao = actionMenu("label.abrir_criar_arq_vinculado");
-		private Action criarObjetoAcao = actionIcon("label.criar_objeto", Icones.CRIAR);
+		private Action excluirAcao = acaoIcon("label.excluir_selecionado", Icones.EXCLUIR);
+		private Action arquivoVinculadoAcao = acaoMenu("label.abrir_criar_arq_vinculado");
+		private Action criarObjetoAcao = acaoIcon("label.criar_objeto", Icones.CRIAR);
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
 		private TextField txtDestacaObjeto = new TextField(10);
@@ -447,10 +447,10 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			private Action desenharDescAcao = Action.actionMenu("label.desenhar_desc", Icones.TAG);
 			private Action transparenteAcao = Action.actionMenu("label.transparente", Icones.RECT);
 			private Action desenharIdAcao = Action.actionMenu("label.desenhar_id", Icones.LABEL);
-			private Action selecaoGeralAcao = actionMenu("label.selecao_todos", Icones.TAG2);
-			private Action pontoDestinoAcao = actionMenu("label.ponto_destino", Icones.RECT);
-			private Action pontoOrigemAcao = actionMenu("label.ponto_origem", Icones.RECT);
-			private Action reiniciarAction = actionMenu("label.reiniciar_horas", null);
+			private Action selecaoGeralAcao = acaoMenu("label.selecao_todos", Icones.TAG2);
+			private Action pontoDestinoAcao = acaoMenu("label.ponto_destino", Icones.RECT);
+			private Action pontoOrigemAcao = acaoMenu("label.ponto_origem", Icones.RECT);
+			private Action reiniciarAction = acaoMenu("label.reiniciar_horas", null);
 			private static final long serialVersionUID = 1L;
 
 			private ButtonStatus() {
@@ -492,9 +492,9 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private class ButtonInfo extends ButtonPopup {
-			private Action excluirSemTabelaAcao = actionMenu("label.excluir_sem_tabela");
-			private Action totalAtualAcao = actionMenu("label.total_atual");
-			private Action comparaRecAcao = actionMenu("label.compararRec");
+			private Action excluirSemTabelaAcao = acaoMenu("label.excluir_sem_tabela");
+			private Action totalAtualAcao = acaoMenu("label.total_atual");
+			private Action comparaRecAcao = acaoMenu("label.compararRec");
 			private MenuItem itemTotalAtual = new MenuItem(totalAtualAcao);
 			private MenuItem itemComparaRec = new MenuItem(comparaRecAcao);
 			private static final long serialVersionUID = 1L;
