@@ -19,6 +19,8 @@ public interface AnexoTreeListener {
 
 	public void editarAnexo(AnexoTree anexoTree);
 
+	public void copiarAnexo(AnexoTree anexoTree);
+
 	public void abrirAnexo(AnexoTree anexoTree);
 
 	public void iconeAnexo(AnexoTree anexoTree);

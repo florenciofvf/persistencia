@@ -191,6 +191,7 @@ public class ArquivoTree extends Tree {
 		private class MenuAbrir extends MenuPadrao1 {
 			private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
 			private Action conteudoAcao = actionMenu("label.conteudo");
+			private Action copiarAcao = Action.actionMenuCopiar();
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {
@@ -198,11 +199,14 @@ public class ArquivoTree extends Tree {
 				addSeparator();
 				addMenuItem(diretorioAcao);
 				addMenuItem(conteudoAcao);
+				addSeparator();
+				addMenuItem(copiarAcao);
 				formularioAcao
 						.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFormulario(ArquivoTree.this)));
 				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this)));
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
 				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoArquivo(ArquivoTree.this)));
+				copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarArquivo(ArquivoTree.this)));
 			}
 
 			private void preShow(Arquivo arquivo) {

@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -971,6 +972,31 @@ public class Util {
 	public static boolean isMac() {
 		String s = System.getProperty("os.name");
 		return s != null && s.startsWith("Mac OS");
+	}
+
+	public static String copiar(File file) throws IOException {
+		if (file == null || !file.isFile()) {
+			return " >>> " + -1;
+		}
+		try (FileInputStream fis = new FileInputStream(file)) {
+			File destino = gerarFileDestino(file);
+			try (FileOutputStream fos = new FileOutputStream(destino)) {
+				FileChannel fci = fis.getChannel();
+				FileChannel fco = fos.getChannel();
+				return destino.getAbsolutePath() + " byte(s) copiado(s) >>> " + fci.transferTo(0, file.length(), fco);
+			}
+		}
+	}
+
+	private static File gerarFileDestino(File file) {
+		File parent = file.getParentFile();
+		String nome = file.getName();
+		int cont = 1;
+		File resp = new File(parent, nome + "_" + cont);
+		while (resp.exists()) {
+			resp = new File(parent, nome + "_" + ++cont);
+		}
+		return resp;
 	}
 
 	public static void conteudo(Component componente, File file) throws IOException {
