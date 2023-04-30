@@ -190,7 +190,7 @@ public class ArquivoTree extends Tree {
 
 		private class MenuAbrir extends MenuPadrao1 {
 			private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
-			private Action conteudoAcao = actionMenu("label.conteudo", null);
+			private Action conteudoAcao = actionMenu("label.conteudo");
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {

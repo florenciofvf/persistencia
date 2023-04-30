@@ -214,7 +214,7 @@ public class AnexoTree extends Tree {
 			private Action imprimirAcao = actionMenu("label.imprimir", Icones.PRINT);
 			private Action editarAcao = actionMenu("label.editar", Icones.EDIT);
 			private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
-			private Action conteudoAcao = actionMenu("label.conteudo", null);
+			private Action conteudoAcao = actionMenu("label.conteudo");
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {

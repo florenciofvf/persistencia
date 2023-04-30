@@ -1409,9 +1409,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private class MenuCircular extends Menu {
-			private Action exportacaoAcao = actionMenu("label.exportacao", null);
-			private Action importacaoAcao = actionMenu("label.importacao", null);
-			private Action normalAcao = actionMenu("label.normal", null);
+			private Action exportacaoAcao = actionMenu("label.exportacao");
+			private Action importacaoAcao = actionMenu("label.importacao");
+			private Action normalAcao = actionMenu("label.normal");
 			private static final long serialVersionUID = 1L;
 
 			private MenuCircular() {

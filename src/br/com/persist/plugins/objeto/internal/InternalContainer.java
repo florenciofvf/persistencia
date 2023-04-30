@@ -994,8 +994,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
-				private Action renomearAcao = actionMenu("label.renomear", null);
-				private Action excluirAcao = actionMenu("label.excluir", null);
+				private Action renomearAcao = actionMenu("label.renomear");
+				private Action excluirAcao = actionMenu("label.excluir");
 				private static final long serialVersionUID = 1L;
 				private MenuInfo menuInfo = new MenuInfo();
 				private MenuUtil menuUtil = new MenuUtil();
@@ -1025,9 +1025,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private class MenuInfo extends Menu {
-					private Action elementosAcao = actionMenu("label.elementos", null);
-					private Action descricaoAcao = actionMenu("label.descricao", null);
-					private Action consultaAcao = actionMenu("label.consulta", null);
+					private Action elementosAcao = actionMenu("label.elementos");
+					private Action descricaoAcao = actionMenu("label.descricao");
+					private Action consultaAcao = actionMenu("label.consulta");
 					private static final long serialVersionUID = 1L;
 
 					private MenuInfo() {
@@ -1078,7 +1078,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private Action excLimparRestoAcao = acaoMenu("label.exc_limpar_resto");
 					private Action vazioInvisivelAcao = acaoMenu("label.vazio_invisivel");
 					private Action vazioVisivelAcao = acaoMenu("label.vazio_visivel");
-					private Action iconeAcao = actionMenu("label.icone", null);
+					private Action iconeAcao = actionMenu("label.icone");
 					private static final long serialVersionUID = 1L;
 
 					private MenuUtil() {
@@ -1949,12 +1949,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuCopiar extends Menu {
-				private Action umaColunaSemAcao = actionMenu("label.uma_coluna_sem_aspas", null);
-				private Action umaColunaComAcao = actionMenu("label.uma_coluna_com_aspas", null);
-				private Action transferidorAcao = actionMenu("label.transferidor", null);
-				private Action nomeColunasAcao = actionMenu("label.nome_colunas", null);
-				private Action tabularAcao = actionMenu("label.tabular", null);
-				private Action htmlAcao = actionMenu("label.html", null);
+				private Action umaColunaSemAcao = actionMenu("label.uma_coluna_sem_aspas");
+				private Action umaColunaComAcao = actionMenu("label.uma_coluna_com_aspas");
+				private Action transferidorAcao = actionMenu("label.transferidor");
+				private Action nomeColunasAcao = actionMenu("label.nome_colunas");
+				private Action tabularAcao = actionMenu("label.tabular");
+				private Action htmlAcao = actionMenu("label.html");
 				private static final long serialVersionUID = 1L;
 
 				private MenuCopiar() {
@@ -2135,7 +2135,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private class MenuInnerJoin extends Menu {
-					private Action disponivelAcao = actionMenu("label.disponivel", null);
+					private Action disponivelAcao = actionMenu("label.disponivel");
 					private static final long serialVersionUID = 1L;
 
 					private MenuInnerJoin() {

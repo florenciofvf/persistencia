@@ -372,9 +372,9 @@ public class TabelaPersistencia extends JTable {
 		private class MenuMetadados extends Menu {
 			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
 			private Action importaDeAcao = acaoMenu("label.campo_importado_de");
-			private Action infoColunaAcao = actionMenu("label.info", null);
 			private MenuSelectDistinct distinct = new MenuSelectDistinct();
 			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
+			private Action infoColunaAcao = actionMenu("label.info");
 			private static final long serialVersionUID = 1L;
 
 			private MenuMetadados() {
