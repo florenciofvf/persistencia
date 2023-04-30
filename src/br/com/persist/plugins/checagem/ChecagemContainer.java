@@ -151,7 +151,7 @@ public class ChecagemContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action excluirAtivoAcao = actionIcon("label.excluir", Icones.EXCLUIR);
+		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {

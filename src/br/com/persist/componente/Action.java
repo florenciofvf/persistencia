@@ -76,6 +76,14 @@ public class Action extends Acao {
 		return Action.actionMenu(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
 	}
 
+	public static Action actionMenuExcluir() {
+		return Action.actionMenu("label.excluir", Icones.EXCLUIR);
+	}
+
+	public static Action actionIconExcluir() {
+		return Action.actionIcon("label.excluir", Icones.EXCLUIR);
+	}
+
 	public static Action actionMenuCopiar() {
 		return Action.actionMenu("label.copiar", Icones.COPIA);
 	}

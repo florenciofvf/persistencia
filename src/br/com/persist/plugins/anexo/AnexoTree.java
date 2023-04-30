@@ -155,10 +155,10 @@ public class AnexoTree extends Tree {
 		private CheckBoxItem chkPadraoAbrir = new CheckBoxItem("label.padrao_abrir", Icones.EXECUTAR);
 		private Action copiarAcao = Action.actionMenu("label.copiar_atributos", Icones.COPIA);
 		private Action colarAcao = Action.actionMenu("label.colar_atributos", Icones.COLAR);
-		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
 		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
 		private Action corFonteAcao = Action.actionMenu("label.cor_fonte", Icones.COR);
 		private Action iconeAcao = Action.actionMenu("label.icone", Icones.ICON);
+		private Action excluirAcao = Action.actionMenuExcluir();
 		private static final long serialVersionUID = 1L;
 		private MenuAbrir menuAbrir = new MenuAbrir();
 

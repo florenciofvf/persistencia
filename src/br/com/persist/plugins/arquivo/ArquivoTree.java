@@ -162,7 +162,7 @@ public class ArquivoTree extends Tree {
 		private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
 		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
-		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
+		private Action excluirAcao = Action.actionMenuExcluir();
 		private static final long serialVersionUID = 1L;
 		private MenuAbrir menuAbrir = new MenuAbrir();
 

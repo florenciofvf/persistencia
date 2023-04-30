@@ -24,7 +24,6 @@ public abstract class BarraButton extends JToolBar
 	protected Action aplicarAcao = actionIcon(Constantes.LABEL_APLICAR, Icones.SUCESSO);
 	private Action salvarComoAcao = actionIcon("label.salvar_como", Icones.SALVARC);
 	private Action fecharAcao = actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
-	private Action excluirAcao = actionIcon("label.excluir", Icones.EXCLUIR);
 	private Action limpar2Acao = actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = actionIcon("label.copiar2", Icones.COPIA);
 	private Action baixar2Acao = actionIcon("label.baixar2", Icones.COLAR);
@@ -41,6 +40,7 @@ public abstract class BarraButton extends JToolBar
 	private Action baixarAcao = Action.actionIconBaixar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
+	private Action excluirAcao = actionIconExcluir();
 	private static final long serialVersionUID = 1L;
 	protected transient ButtonAplicar buttonAplicar;
 	private Label labelNomeBackup = new Label();
@@ -79,6 +79,10 @@ public abstract class BarraButton extends JToolBar
 
 	protected Action actionIcon(String chaveRotulo, Icon icone) {
 		return Action.actionIcon(chaveRotulo, icone);
+	}
+
+	protected Action actionIconExcluir() {
+		return Action.actionIconExcluir();
 	}
 
 	private void configAplicar(BarraButtonEnum... enuns) {
