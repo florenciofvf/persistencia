@@ -332,10 +332,10 @@ public class TabelaPersistencia extends JTable {
 	private class PopupHeader extends Popup {
 		private JCheckBoxMenuItem inativoTempCheck = new JCheckBoxMenuItem(getString("label.inativo_temp"));
 		private Action pesquisaApartirColunaAcao = acaoMenu("label.pesquisa_a_partir_coluna");
-		private Action larguraColunaAcao = actionMenu("label.largura_manual", null);
 		private Action copiarNomeColunaAcao = acaoMenu("label.copiar_nome_coluna");
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
 		private Action larguraConteudoAcao = acaoMenu("label.largura_conteudo");
+		private Action larguraColunaAcao = actionMenu("label.largura_manual");
 		private Action larguraTituloAcao = acaoMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = acaoMenu("label.largura_minima");
 		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();

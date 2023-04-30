@@ -1272,12 +1272,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		private Action excluirAcao = acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
 		private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
-		private Action relacoesAcao = actionMenu("label.relacoes", null);
 		private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 		private MenuItem itemPartir = new MenuItem(new PartirAcao());
-		private Action dadosAcao = actionMenu("label.dados", null);
+		private Action relacoesAcao = actionMenu("label.relacoes");
 		private MenuDestacar menuDestacar = new MenuDestacar();
 		private MenuCircular menuCircular = new MenuCircular();
+		private Action dadosAcao = actionMenu("label.dados");
 		private MenuItem itemDados = new MenuItem(dadosAcao);
 		private static final long serialVersionUID = 1L;
 
@@ -1586,9 +1586,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private class SuperficiePopup2 extends Popup {
 		private Action atualizarFormulariosAcao = acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action limparFormulariosAcao = acaoMenu("label.limpar_formularios", Icones.NOVO);
-		private Action formulariosInvisiveisAcao = acaoMenu("label.forms_invisiveis", null);
+		private Action formulariosInvisiveisAcao = acaoMenu("label.forms_invisiveis");
 		private Action criarObjetoAcao = acaoMenu("label.criar_objeto", Icones.CRIAR);
-		private Action propriedadesAcao = actionMenu("label.propriedades", null);
+		private Action propriedadesAcao = actionMenu("label.propriedades");
 		private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
 		private static final long serialVersionUID = 1L;
 		int xLocal;
