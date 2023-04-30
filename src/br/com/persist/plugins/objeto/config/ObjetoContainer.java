@@ -893,10 +893,10 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class ButtonColar extends ButtonPopup {
-			private Action numeroAcao = Action.actionMenu("label.numeros", null);
-			private Action letraAcao = Action.actionMenu("label.letras", null);
-			private Action todosAcao = Action.actionMenu("label.todos", null);
-			private Action horaAcao = Action.actionMenu("label.hora", null);
+			private Action numeroAcao = actionMenu("label.numeros", null);
+			private Action letraAcao = actionMenu("label.letras", null);
+			private Action todosAcao = actionMenu("label.todos", null);
+			private Action horaAcao = actionMenu("label.hora", null);
 			private static final long serialVersionUID = 1L;
 
 			private ButtonColar() {

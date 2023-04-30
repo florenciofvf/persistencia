@@ -136,7 +136,7 @@ public class ContainerTree extends Tree {
 	private class ContainerPopup extends Popup {
 		private Action executarVarAcao = Action.acaoMenu(ExecucaoMensagens.getString("label.executar_var"),
 				Icones.EXECUTAR);
-		private Action executarAcao = Action.actionMenu("label.executar", Icones.EXECUTAR);
+		private Action executarAcao = actionMenu("label.executar", Icones.EXECUTAR);
 		private static final long serialVersionUID = 1L;
 
 		private ContainerPopup() {

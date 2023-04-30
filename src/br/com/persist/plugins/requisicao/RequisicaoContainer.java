@@ -191,8 +191,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private class ButtonUtil extends ButtonPopup {
 			private Action formatarAcao = acaoMenu("label.formatar_frag_json");
 			private Action variaveisAcao = acaoMenu("label.variaveis_sistema");
-			private Action modeloAcao = Action.actionMenu("label.modelo", null);
 			private Action retornar64Acao = acaoMenu("label.retornar_base64");
+			private Action modeloAcao = actionMenu("label.modelo", null);
 			private Action appendAcao = acaoMenu("label.salvar_req_sel");
 			private Action base64Acao = acaoMenu("label.criar_base64");
 			private static final long serialVersionUID = 1L;
@@ -394,9 +394,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private class ButtonRota extends ButtonPopup {
-			private Action adicionarAcao = Action.actionMenu("label.adicionar", null);
-			private Action exibirAcao = Action.actionMenu("label.exibir", null);
-			private Action limparAcao = Action.actionMenu("label.limpar", null);
+			private Action adicionarAcao = actionMenu("label.adicionar", null);
+			private Action exibirAcao = actionMenu("label.exibir", null);
+			private Action limparAcao = actionMenu("label.limpar", null);
 			private static final long serialVersionUID = 1L;
 
 			private ButtonRota() {

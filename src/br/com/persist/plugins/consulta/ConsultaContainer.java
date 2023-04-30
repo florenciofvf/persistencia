@@ -145,12 +145,12 @@ public class ConsultaContainer extends AbstratoContainer {
 		}
 
 		private class ButtonCopiar extends ButtonPopup {
-			private Action umaColunaSemAcao = Action.actionMenu("label.uma_coluna_sem_aspas", null);
-			private Action umaColunaComAcao = Action.actionMenu("label.uma_coluna_com_aspas", null);
-			private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
-			private Action tabularAcao = Action.actionMenu("label.tabular", null);
-			private Action htmlAcao = Action.actionMenu("label.html", null);
-			private Action pipeAcao = Action.actionMenu("label.pipe", null);
+			private Action umaColunaSemAcao = actionMenu("label.uma_coluna_sem_aspas", null);
+			private Action umaColunaComAcao = actionMenu("label.uma_coluna_com_aspas", null);
+			private Action transferidorAcao = actionMenu("label.transferidor", null);
+			private Action tabularAcao = actionMenu("label.tabular", null);
+			private Action htmlAcao = actionMenu("label.html", null);
+			private Action pipeAcao = actionMenu("label.pipe", null);
 			private static final long serialVersionUID = 1L;
 
 			private ButtonCopiar() {

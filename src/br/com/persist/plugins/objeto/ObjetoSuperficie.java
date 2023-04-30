@@ -1268,14 +1268,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private class SuperficiePopup extends Popup {
-		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
+		private Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action excluirAcao = acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
-		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
-		private Action relacoesAcao = Action.actionMenu("label.relacoes", null);
+		private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
 		private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
-		private Action dadosAcao = Action.actionMenu("label.dados", null);
+		private Action relacoesAcao = actionMenu("label.relacoes", null);
 		private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 		private MenuItem itemPartir = new MenuItem(new PartirAcao());
+		private Action dadosAcao = actionMenu("label.dados", null);
 		private MenuDestacar menuDestacar = new MenuDestacar();
 		private MenuCircular menuCircular = new MenuCircular();
 		private MenuItem itemDados = new MenuItem(dadosAcao);
@@ -1409,9 +1409,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private class MenuCircular extends Menu {
-			private Action exportacaoAcao = Action.actionMenu("label.exportacao", null);
-			private Action importacaoAcao = Action.actionMenu("label.importacao", null);
-			private Action normalAcao = Action.actionMenu("label.normal", null);
+			private Action exportacaoAcao = actionMenu("label.exportacao", null);
+			private Action importacaoAcao = actionMenu("label.importacao", null);
+			private Action normalAcao = actionMenu("label.normal", null);
 			private static final long serialVersionUID = 1L;
 
 			private MenuCircular() {
@@ -1588,8 +1588,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		private Action limparFormulariosAcao = acaoMenu("label.limpar_formularios", Icones.NOVO);
 		private Action formulariosInvisiveisAcao = acaoMenu("label.forms_invisiveis", null);
 		private Action criarObjetoAcao = acaoMenu("label.criar_objeto", Icones.CRIAR);
-		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
-		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
+		private Action propriedadesAcao = actionMenu("label.propriedades", null);
+		private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
 		private static final long serialVersionUID = 1L;
 		int xLocal;
 		int yLocal;

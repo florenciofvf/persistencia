@@ -444,11 +444,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		private class ButtonStatus extends ButtonPopup {
 			private JCheckBoxMenuItem somarHorasAcao = new JCheckBoxMenuItem(
 					ObjetoMensagens.getString("label.somar_em_horas"));
-			private Action desenharDescAcao = Action.actionMenu("label.desenhar_desc", Icones.TAG);
-			private Action transparenteAcao = Action.actionMenu("label.transparente", Icones.RECT);
-			private Action desenharIdAcao = Action.actionMenu("label.desenhar_id", Icones.LABEL);
+			private Action desenharDescAcao = actionMenu("label.desenhar_desc", Icones.TAG);
+			private Action transparenteAcao = actionMenu("label.transparente", Icones.RECT);
 			private Action selecaoGeralAcao = acaoMenu("label.selecao_todos", Icones.TAG2);
 			private Action pontoDestinoAcao = acaoMenu("label.ponto_destino", Icones.RECT);
+			private Action desenharIdAcao = actionMenu("label.desenhar_id", Icones.LABEL);
 			private Action pontoOrigemAcao = acaoMenu("label.ponto_origem", Icones.RECT);
 			private Action reiniciarAction = acaoMenu("label.reiniciar_horas", null);
 			private static final long serialVersionUID = 1L;

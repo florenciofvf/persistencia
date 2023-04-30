@@ -159,9 +159,9 @@ public class ArquivoTree extends Tree {
 	};
 
 	private class ArquivoPopup extends Popup {
-		private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
-		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
-		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
+		private Action fecharAcao = actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
+		private Action selecionarAcao = actionMenu("label.selecionar", Icones.CURSOR);
+		private Action atualizarAcao = actionMenu("label.status", Icones.ATUALIZAR);
 		private Action excluirAcao = Action.actionMenuExcluir();
 		private static final long serialVersionUID = 1L;
 		private MenuAbrir menuAbrir = new MenuAbrir();
@@ -189,8 +189,8 @@ public class ArquivoTree extends Tree {
 		}
 
 		private class MenuAbrir extends MenuPadrao1 {
-			private Action diretorioAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
-			private Action conteudoAcao = Action.actionMenu("label.conteudo", null);
+			private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
+			private Action conteudoAcao = actionMenu("label.conteudo", null);
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {

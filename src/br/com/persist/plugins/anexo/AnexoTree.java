@@ -153,11 +153,11 @@ public class AnexoTree extends Tree {
 	private class AnexoPopup extends Popup {
 		private CheckBoxItem chkAbrirVisivel = new CheckBoxItem("label.abrir_visivel", Icones.HIERARQUIA);
 		private CheckBoxItem chkPadraoAbrir = new CheckBoxItem("label.padrao_abrir", Icones.EXECUTAR);
-		private Action copiarAcao = Action.actionMenu("label.copiar_atributos", Icones.COPIA);
-		private Action colarAcao = Action.actionMenu("label.colar_atributos", Icones.COLAR);
-		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
-		private Action corFonteAcao = Action.actionMenu("label.cor_fonte", Icones.COR);
-		private Action iconeAcao = Action.actionMenu("label.icone", Icones.ICON);
+		private Action copiarAcao = actionMenu("label.copiar_atributos", Icones.COPIA);
+		private Action colarAcao = actionMenu("label.colar_atributos", Icones.COLAR);
+		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);
+		private Action corFonteAcao = actionMenu("label.cor_fonte", Icones.COR);
+		private Action iconeAcao = actionMenu("label.icone", Icones.ICON);
 		private Action excluirAcao = Action.actionMenuExcluir();
 		private static final long serialVersionUID = 1L;
 		private MenuAbrir menuAbrir = new MenuAbrir();
@@ -210,11 +210,11 @@ public class AnexoTree extends Tree {
 		}
 
 		private class MenuAbrir extends Menu {
-			private Action diretorioAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
-			private Action imprimirAcao = Action.actionMenu("label.imprimir", Icones.PRINT);
-			private Action editarAcao = Action.actionMenu("label.editar", Icones.EDIT);
-			private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
-			private Action conteudoAcao = Action.actionMenu("label.conteudo", null);
+			private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
+			private Action imprimirAcao = actionMenu("label.imprimir", Icones.PRINT);
+			private Action editarAcao = actionMenu("label.editar", Icones.EDIT);
+			private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
+			private Action conteudoAcao = actionMenu("label.conteudo", null);
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {
