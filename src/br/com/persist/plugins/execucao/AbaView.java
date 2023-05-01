@@ -102,11 +102,11 @@ class Handler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (raiz == null) {
 			raiz = new Container();
-			raiz.lerAtributos(attributes);
+			raiz.lerAtributos(qName, attributes);
 			selecionado = raiz;
 		} else {
 			Container container = new Container();
-			container.lerAtributos(attributes);
+			container.lerAtributos(qName, attributes);
 			selecionado.adicionar(container);
 			selecionado = container;
 		}

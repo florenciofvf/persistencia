@@ -57,4 +57,11 @@
 			]]>
 		</valor>
 	</variavel>
+	<variavel nome="GIT_STATUS">
+		<valor>
+			<![CDATA[
+				status
+			]]>
+		</valor>
+	</variavel>
 </variaveis>

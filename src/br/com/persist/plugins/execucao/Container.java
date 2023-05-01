@@ -28,9 +28,12 @@ public class Container {
 		return pai;
 	}
 
-	public void lerAtributos(Attributes attributes) {
+	public void lerAtributos(String tag, Attributes attributes) {
 		for (int i = 0; i < attributes.getLength(); i++) {
 			string = attributes.getValue(i);
+		}
+		if (string == null) {
+			throw new IllegalStateException("Nenhum atributo em: " + tag);
 		}
 	}
 
