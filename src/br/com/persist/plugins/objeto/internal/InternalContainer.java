@@ -743,7 +743,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(InternalContainer.this, false)) {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
-					AtomicBoolean atom = new AtomicBoolean(true);
+					AtomicBoolean atom = null;
+					if (linhas.length > 1) {
+						atom = new AtomicBoolean(true);
+					}
 					for (int linha : linhas) {
 						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true, conexao,
 								atom);

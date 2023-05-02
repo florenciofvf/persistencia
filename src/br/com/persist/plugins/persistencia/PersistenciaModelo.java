@@ -21,6 +21,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 
 public class PersistenciaModelo implements TableModel {
+	private static final String MSG_AREA_TRANS = "msg.area_trans_tabela_registros";
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<Object>> registros;
 	private final List<Coluna> colunas;
@@ -234,8 +235,7 @@ public class PersistenciaModelo implements TableModel {
 						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true, conexao);
 				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
-				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
-						false)) {
+				if (Util.confirmar(componente, PersistenciaMensagens.getString(MSG_AREA_TRANS), false)) {
 					Util.setContentTransfered(update);
 				}
 			} catch (Exception ex) {
@@ -328,9 +328,15 @@ public class PersistenciaModelo implements TableModel {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere, conexao);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
-				if (atom.get() && Util.confirmar2(componente,
-						PersistenciaMensagens.getString("msg.area_trans_tabela_registros"), atom)) {
-					Util.setContentTransfered(delete);
+				if (atom != null) {
+					if (atom.get()
+							&& Util.confirmar2(componente, PersistenciaMensagens.getString(MSG_AREA_TRANS), atom)) {
+						Util.setContentTransfered(delete);
+					}
+				} else {
+					if (Util.confirmar(componente, PersistenciaMensagens.getString(MSG_AREA_TRANS), false)) {
+						Util.setContentTransfered(delete);
+					}
 				}
 				return i;
 			} catch (Exception ex) {
