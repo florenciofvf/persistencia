@@ -174,22 +174,6 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		return arquivo;
 	}
 
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
-	}
-
-	static Action acaoMenu(String chave) {
-		return acaoMenu(chave, null);
-	}
-
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
-	}
-
-	static Action acaoIcon(String chave) {
-		return acaoIcon(chave, null);
-	}
-
 	private class Toolbar extends BarraButton {
 		private Action excluirAcao = acaoIcon("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action arquivoVinculadoAcao = acaoMenu("label.abrir_criar_arq_vinculado");
@@ -226,6 +210,18 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			txtArquivoVinculo.addMouseListener(mouseListenerPopupVinculado);
 			txtDestacaObjeto.addActionListener(e -> destacarObjetos());
 			popupArquivoVinculado.add(arquivoVinculadoAcao);
+		}
+
+		Action acaoMenu(String chave, Icon icon) {
+			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+		}
+
+		Action acaoMenu(String chave) {
+			return acaoMenu(chave, null);
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
 		}
 
 		private void configurar() {

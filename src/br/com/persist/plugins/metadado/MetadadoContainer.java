@@ -120,10 +120,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 	}
 
-	static Action acaoMenu(String chave) {
-		return Action.acaoMenu(MetadadoMensagens.getString(chave), null);
-	}
-
 	private Conexao getConexao() {
 		return (Conexao) comboConexao.getSelectedItem();
 	}
@@ -240,6 +236,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				ordemExportAcao.setActionListener(e -> Util.mensagemFormulario(MetadadoContainer.this,
 						metadadoTree.getOrdenadosExportacaoImportacao(true)));
 				localizarCampoAcao.setActionListener(e -> localizarCampo());
+			}
+
+			Action acaoMenu(String chave) {
+				return Action.acaoMenu(MetadadoMensagens.getString(chave), null);
 			}
 
 			private void localizarCampo() {

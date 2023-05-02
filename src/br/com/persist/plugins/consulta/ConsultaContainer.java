@@ -255,10 +255,6 @@ public class ConsultaContainer extends AbstratoContainer {
 		}
 	}
 
-	static Action acaoMenu(String chave) {
-		return Action.acaoMenu(ConsultaMensagens.getString(chave), null);
-	}
-
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action colarSemAspasAcao = acaoMenu("label.colar_sem_aspas");
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
@@ -279,6 +275,10 @@ public class ConsultaContainer extends AbstratoContainer {
 			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
+		}
+
+		Action acaoMenu(String chave) {
+			return Action.acaoMenu(ConsultaMensagens.getString(chave), null);
 		}
 
 		@Override

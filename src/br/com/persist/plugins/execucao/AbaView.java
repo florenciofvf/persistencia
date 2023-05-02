@@ -7,7 +7,6 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.io.File;
 
-import javax.swing.Icon;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
@@ -16,7 +15,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -83,14 +81,6 @@ public class AbaView extends Panel implements ContainerTreeListener {
 		protected void baixar() {
 			carregar(file);
 		}
-	}
-
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(ExecucaoMensagens.getString(chave), icon);
-	}
-
-	static Action acaoMenu(String chave) {
-		return acaoMenu(chave, null);
 	}
 }
 

@@ -20,7 +20,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -30,7 +29,6 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -80,14 +78,6 @@ public class EntregaPagina extends Panel {
 
 	private void setValueScrollPane(int value) {
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
-	}
-
-	static Action acaoMenu(String chave) {
-		return Action.acaoMenu(EntregaMensagens.getString(chave), null);
-	}
-
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(EntregaMensagens.getString(chave), icon);
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {

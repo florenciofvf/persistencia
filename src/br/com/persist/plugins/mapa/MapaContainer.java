@@ -129,18 +129,6 @@ public class MapaContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	static Action acaoMenu(String chave) {
-		return Action.acaoMenu(MapaMensagens.getString(chave), null);
-	}
-
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(MapaMensagens.getString(chave), icon);
-	}
-
-	static Action acaoIcon(String chave) {
-		return acaoIcon(chave, null);
-	}
-
 	private class Toolbar extends BarraButton {
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;

@@ -86,14 +86,6 @@ public class ChecagemPagina extends Panel {
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
-	static Action acaoMenu(String chave) {
-		return Action.acaoMenu(ChecagemMensagens.getString(chave), null);
-	}
-
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(ChecagemMensagens.getString(chave), icon);
-	}
-
 	private class PainelResultado extends Panel {
 		private static final long serialVersionUID = 1L;
 		private JTextPane textPane = new JTextPane();
@@ -136,6 +128,10 @@ public class ChecagemPagina extends Panel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(ChecagemMensagens.getString(chave), icon);
 		}
 
 		private void executar() {

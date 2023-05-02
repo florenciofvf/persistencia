@@ -158,18 +158,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	static Action acaoMenu(String chave) {
-		return Action.acaoMenu(RequisicaoMensagens.getString(chave), null);
-	}
-
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
-	}
-
-	static Action acaoIcon(String chave) {
-		return acaoIcon(chave, null);
-	}
-
 	private class Toolbar extends BarraButton {
 		private Action atualizarAcao2 = actionIcon("label.requisicao", Icones.URL);
 		private Action excluirAtivoAcao = actionIconExcluir();
@@ -211,6 +199,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 				formatarAcao.setActionListener(e -> formatar());
 				base64Acao.setActionListener(e -> base64());
 				modeloAcao.setActionListener(e -> modelo());
+			}
+
+			Action acaoMenu(String chave) {
+				return Action.acaoMenu(RequisicaoMensagens.getString(chave), null);
 			}
 
 			@Override

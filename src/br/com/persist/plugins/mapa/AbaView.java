@@ -141,6 +141,14 @@ public class AbaView extends Panel {
 				eventos();
 			}
 
+			Action acaoMenu(String chave, Icon icon) {
+				return Action.acaoMenu(MapaMensagens.getString(chave), icon);
+			}
+
+			Action acaoMenu(String chave) {
+				return acaoMenu(chave, null);
+			}
+
 			private void eventos() {
 				desenharObjetoCentroAcao.setActionListener(e -> {
 					Config.setDesenharObjetoCentro(isSelected(e));
@@ -201,14 +209,6 @@ public class AbaView extends Panel {
 				}
 			});
 		}
-	}
-
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(MapaMensagens.getString(chave), icon);
-	}
-
-	static Action acaoMenu(String chave) {
-		return acaoMenu(chave, null);
 	}
 
 	class PanelView extends Panel implements Runnable {

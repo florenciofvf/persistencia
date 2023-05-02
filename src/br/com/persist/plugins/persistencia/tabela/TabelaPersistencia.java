@@ -317,18 +317,6 @@ public class TabelaPersistencia extends JTable {
 		return columnModel.getColumn(colunaView);
 	}
 
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(getString(chave), icon);
-	}
-
-	static Action acaoMenu(String chave) {
-		return acaoMenu(chave, null);
-	}
-
-	static String getString(String chave) {
-		return TabelaMensagens.getString(chave);
-	}
-
 	private class PopupHeader extends Popup {
 		private JCheckBoxMenuItem inativoTempCheck = new JCheckBoxMenuItem(getString("label.inativo_temp"));
 		private Action pesquisaApartirColunaAcao = acaoMenu("label.pesquisa_a_partir_coluna");
@@ -367,6 +355,18 @@ public class TabelaPersistencia extends JTable {
 			add(true, menuCopiarLinhas);
 			add(true, menuIN);
 			eventos();
+		}
+
+		Action acaoMenu(String chave, Icon icon) {
+			return Action.acaoMenu(getString(chave), icon);
+		}
+
+		Action acaoMenu(String chave) {
+			return acaoMenu(chave, null);
+		}
+
+		String getString(String chave) {
+			return TabelaMensagens.getString(chave);
 		}
 
 		private class MenuMetadados extends Menu {

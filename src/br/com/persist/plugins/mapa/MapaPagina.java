@@ -20,7 +20,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -29,7 +28,6 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -55,14 +53,6 @@ public class MapaPagina extends Panel {
 		tabbedPane.addTab("Text", abaText);
 		tabbedPane.addTab("View", abaView);
 		add(BorderLayout.CENTER, tabbedPane);
-	}
-
-	static Action acaoMenu(String chave) {
-		return Action.acaoMenu(MapaMensagens.getString(chave), null);
-	}
-
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(MapaMensagens.getString(chave), icon);
 	}
 
 	class AbaText extends Panel {
