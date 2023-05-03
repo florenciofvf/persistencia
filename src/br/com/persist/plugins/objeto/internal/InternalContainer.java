@@ -43,6 +43,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -1644,12 +1645,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private class ButtonFuncoes extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private JCheckBoxMenuItem chkExibirInstrucao = new JCheckBoxMenuItem(
+					ObjetoMensagens.getString("label.exibir_instrucao"));
 
 			private ButtonFuncoes() {
 				super("label.funcoes", Icones.SOMA);
 				addMenuItem(new MinimoMaximoAcao(true));
 				addMenuItem(new MinimoMaximoAcao(false));
-				addMenuItem(true, new TotalizarRegistrosAcao(false));
+				addSeparator();
+				addItem(chkExibirInstrucao);
+				addMenuItem(new TotalizarRegistrosAcao(false));
 				addMenuItem(new TotalizarRegistrosAcao(true));
 				addMenuItem(true, new AlternativoAcao());
 			}
@@ -1736,8 +1741,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							String complementar = complemento ? txtComplemento.getText() : Constantes.VAZIO;
 							String filtro = Util.estaVazio(complementar) ? Constantes.VAZIO
 									: " WHERE 1=1 " + complementar;
-							int i = Persistencia.getTotalRegistros(conn, objeto.getTabelaEsquema(conexao) + filtro);
-							toolbar.labelTotal.setText(Constantes.VAZIO + i);
+							String[] array = Persistencia.getTotalRegistros(conn,
+									objeto.getTabelaEsquema(conexao) + filtro);
+							toolbar.labelTotal.setText(Constantes.VAZIO + array[1]);
+							if (chkExibirInstrucao.isSelected()) {
+								Util.mensagem(InternalContainer.this, array[0]);
+							}
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("TOTAL", ex, InternalContainer.this);
 						}

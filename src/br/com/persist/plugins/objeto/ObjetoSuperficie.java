@@ -2020,7 +2020,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela())) {
 					try {
-						int i = 0;
+						String[] i = { "0", "0" };
 						if (!Preferencias.isDesconectado()) {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
@@ -2029,7 +2029,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 						}
 						objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 						label.setText(++atual + " / " + total);
-						objeto.setTotalRegistros(i);
+						objeto.setTotalRegistros(Long.parseLong(i[1]));
 						processado = true;
 						repaint();
 						sleep(ObjetoPreferencia.getIntervaloComparacao());
@@ -2109,7 +2109,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela())) {
 					try {
-						int i = 0;
+						String[] i = { "0", "0" };
 						if (!Preferencias.isDesconectado()) {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
@@ -2117,7 +2117,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 							i = Persistencia.getTotalRegistros(conn, aposFROM);
 						}
 						label.setText(++atual + " / " + total);
-						processarRecente(objeto, i, fm);
+						processarRecente(objeto, Integer.parseInt(i[1]), fm);
 						processado = true;
 						repaint();
 						sleep(ObjetoPreferencia.getIntervaloComparacao());

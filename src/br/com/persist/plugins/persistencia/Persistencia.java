@@ -240,12 +240,15 @@ public class Persistencia {
 		}
 	}
 
-	public static int getTotalRegistros(Connection conn, String aposFROM) throws PersistenciaException {
+	public static String[] getTotalRegistros(Connection conn, String aposFROM) throws PersistenciaException {
 		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + aposFROM);
-		try (PreparedStatement psmt = conn.prepareStatement(normal(builder.toString()))) {
+		String[] array = new String[2];
+		array[0] = normal(builder.toString());
+		try (PreparedStatement psmt = conn.prepareStatement(array[0])) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				rs.next();
-				return rs.getInt(1);
+				array[1] = "" + rs.getInt(1);
+				return array;
 			}
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
