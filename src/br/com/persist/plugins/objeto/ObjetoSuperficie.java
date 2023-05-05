@@ -959,6 +959,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (processar && thread != null) {
 			g2.setFont(ObjetoConstantes.FONT_HORAS);
 			g2.drawString(HoraUtil.formatar(totalHoras), 300, 300);
+			g2.drawString(HoraUtil.getHoraAtual(), 300, 500);
 		}
 	}
 
