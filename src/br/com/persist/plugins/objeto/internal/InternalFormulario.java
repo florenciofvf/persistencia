@@ -33,6 +33,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
+import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -396,9 +397,11 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	public void selecionar(boolean b) {
 		try {
 			if (isEnabled() && isVisible()) {
-				dimension = b ? getSize() : null;
 				setSelected(b);
-				repaint();
+				if (ObjetoPreferencia.isDestacarInternalComCor()) {
+					dimension = b ? getSize() : null;
+					repaint();
+				}
 			}
 		} catch (PropertyVetoException e) {
 			LOG.log(Level.FINEST, "{0}", b);

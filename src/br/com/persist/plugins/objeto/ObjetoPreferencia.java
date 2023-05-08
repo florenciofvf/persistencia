@@ -9,6 +9,7 @@ public class ObjetoPreferencia {
 	private static boolean habilitadoEsquemaTabelaAlter;
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean pesquisaFormInternalLazy;
+	private static boolean destacarInternalComCor;
 	private static int tipoContainerPesquisaAuto;
 	private static boolean abrirAutoDestacado;
 	private static Color corAntesTotalRecente;
@@ -31,6 +32,7 @@ public class ObjetoPreferencia {
 		pesquisaFormInternalLazy = pref.getBoolean("pesquisa_form_internal_lazy", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
+		destacarInternalComCor = pref.getBoolean("destacar_internal_com_cor", false);
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
@@ -44,6 +46,7 @@ public class ObjetoPreferencia {
 		pref.putBoolean("pesquisa_form_internal_lazy", pesquisaFormInternalLazy);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
+		pref.putBoolean("destacar_internal_com_cor", destacarInternalComCor);
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
 		pref.putInt("intervalo_comparacao", intervaloComparacao);
@@ -138,5 +141,13 @@ public class ObjetoPreferencia {
 
 	public static void setPesquisaFormInternalLazy(boolean pesquisaFormInternalLazy) {
 		ObjetoPreferencia.pesquisaFormInternalLazy = pesquisaFormInternalLazy;
+	}
+
+	public static boolean isDestacarInternalComCor() {
+		return destacarInternalComCor;
+	}
+
+	public static void setDestacarInternalComCor(boolean destacarInternalComCor) {
+		ObjetoPreferencia.destacarInternalComCor = destacarInternalComCor;
 	}
 }
