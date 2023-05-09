@@ -166,6 +166,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
 	private boolean destacarTitulo;
+	private String ultimaConsulta;
 	private boolean buscaAuto;
 	private int contadorAuto;
 
@@ -359,6 +360,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		tabelaPersistencia.setModel(modeloOrdenacao);
 		persistenciaModelo.setConexao(conexao);
 		persistenciaModelo.setComponente(this);
+		ultimaConsulta = param.getConsulta();
 		checarAtributosObjeto();
 		checarScrollPane();
 		return modeloOrdenacao;
@@ -2018,12 +2020,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuDML extends Menu {
+				private Action ultimaConsAcao = acaoMenu("label.ultima_consulta", Icones.TABELA);
 				private Action descreverAcao = actionMenu("label.descrever", Icones.TABELA);
 				private static final long serialVersionUID = 1L;
 
 				private MenuDML() {
 					super("label.dml", Icones.EXECUTAR);
 					add(descreverAcao);
+					add(ultimaConsAcao);
 					add(true, new MenuInsert(true));
 					add(false, new MenuInsert(false));
 					add(true, new MenuUpdate());
@@ -2031,7 +2035,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					add(true, new MenuSelect());
 					add(true, new MenuSelectColuna());
 					add(true, new MenuInnerJoin());
+					ultimaConsAcao.setActionListener(e -> ultimaCons());
 					descreverAcao.setActionListener(e -> descrever());
+				}
+
+				private void ultimaCons() {
+					Util.mensagem(InternalContainer.this, ultimaConsulta);
 				}
 
 				private void descrever() {
