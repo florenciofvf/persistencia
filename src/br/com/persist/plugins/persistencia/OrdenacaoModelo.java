@@ -94,6 +94,10 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getListaNomeColunas(comChaves);
 	}
 
+	public List<Coluna> getColunas(List<String> nomes) {
+		return model.getColunas(nomes);
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return model.getColumnClass(columnIndex);

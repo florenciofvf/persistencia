@@ -2020,13 +2020,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuDML extends Menu {
+				private Action descreverColunaAcao = acaoMenu("label.descrever_coluna", Icones.TABELA);
+				private Action resumirColunaAcao = acaoMenu("label.resumir_coluna", Icones.TABELA);
 				private Action ultimaConsAcao = acaoMenu("label.ultima_consulta", Icones.TABELA);
-				private Action descreverAcao = actionMenu("label.descrever", Icones.TABELA);
 				private static final long serialVersionUID = 1L;
 
 				private MenuDML() {
 					super("label.dml", Icones.EXECUTAR);
-					add(descreverAcao);
+					add(descreverColunaAcao);
+					add(resumirColunaAcao);
 					add(ultimaConsAcao);
 					add(true, new MenuInsert(true));
 					add(false, new MenuInsert(false));
@@ -2035,15 +2037,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					add(true, new MenuSelect());
 					add(true, new MenuSelectColuna());
 					add(true, new MenuInnerJoin());
+					descreverColunaAcao.setActionListener(e -> descreverColuna());
+					resumirColunaAcao.setActionListener(e -> resumirColuna());
 					ultimaConsAcao.setActionListener(e -> ultimaCons());
-					descreverAcao.setActionListener(e -> descrever());
 				}
 
 				private void ultimaCons() {
 					Util.mensagem(InternalContainer.this, ultimaConsulta);
 				}
 
-				private void descrever() {
+				private void resumirColuna() {
 					StringBuilder sb = new StringBuilder(objeto.getTabela() + Constantes.QL);
 					sb.append(Util.completar(Constantes.VAZIO, objeto.getTabela().length(), '-'));
 					Coletor coletor = new Coletor();
@@ -2052,6 +2055,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					for (String string : coletor.getLista()) {
 						sb.append(Constantes.QL);
 						sb.append(string);
+					}
+					Util.mensagem(InternalContainer.this, sb.toString());
+				}
+
+				private void descreverColuna() {
+					StringBuilder sb = new StringBuilder(objeto.getTabela() + Constantes.QL);
+					sb.append(Util.completar(Constantes.VAZIO, objeto.getTabela().length(), '-'));
+					Coletor coletor = new Coletor();
+					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+							InternalContainer.this, null);
+					List<Coluna> colunas = tabelaPersistencia.getColunas(coletor.getLista());
+					for (Coluna coluna : colunas) {
+						sb.append(Constantes.QL);
+						sb.append(coluna.getDetalhe());
 					}
 					Util.mensagem(InternalContainer.this, sb.toString());
 				}
