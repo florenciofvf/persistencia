@@ -10,10 +10,12 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
+import javax.swing.JComboBox;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -35,6 +37,7 @@ import br.com.persist.formulario.Formulario;
 
 public class GeraPluginContainer extends AbstratoContainer {
 	private CheckBox chkComConfiguracao = criarCheckBox("label.com_configuracao");
+	private JComboBox<Object> cmbIconePlugin = new JComboBox<>(arrayNomeIcones());
 	private CheckBox chkComClasseUtil = criarCheckBox("label.com_classe_util");
 	private CheckBox chkComException = criarCheckBox("label.com_exception");
 	private CheckBox chkComProvedor = criarCheckBox("label.com_provedor");
@@ -46,7 +49,6 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private TextField txtDiretorioDestino = new TextField();
 	private Button buttonGerar = new Button("label.gerar");
 	private TextField txtPacotePlugin = new TextField();
-	private TextField txtIconePlugin = new TextField();
 	private TextField txtMinimPlugin = new TextField();
 	private GeraPluginFormulario geraPluginFormulario;
 	private TextField txtNomePlugin = new TextField();
@@ -54,6 +56,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private final Toolbar toolbar = new Toolbar();
 	private GeraPluginDialogo geraPluginDialogo;
 	private TextArea textArea = new TextArea();
+	private transient Config config;
 
 	public GeraPluginContainer(Janela janela, Formulario formulario) {
 		super(formulario);
@@ -93,6 +96,19 @@ public class GeraPluginContainer extends AbstratoContainer {
 		return label;
 	}
 
+	private Object[] arrayNomeIcones() {
+		List<String> resp = new ArrayList<>();
+		Class<?> klass = Icones.class;
+		Field[] fields = klass.getDeclaredFields();
+		for (Field field : fields) {
+			Class<?> tipo = field.getType();
+			if (tipo.equals(Icon.class)) {
+				resp.add(field.getName());
+			}
+		}
+		return resp.toArray();
+	}
+
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 
@@ -103,7 +119,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino)));
 		muro.camada(Muro.panelGrid(labelTextField("label.pacote_plugin", txtPacotePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_recursos", txtDiretorioRecursos)));
-		muro.camada(Muro.panelGrid(labelTextField("label.icone_plugin", txtIconePlugin)));
+		muro.camada(Muro.panelGrid(labelComboBox("label.icone_plugin", cmbIconePlugin)));
 		muro.camada(Muro.panelGrid(chkComConfiguracao));
 		muro.camada(Muro.panelGrid(chkComClasseUtil));
 		muro.camada(Muro.panelGrid(chkComException));
@@ -126,10 +142,19 @@ public class GeraPluginContainer extends AbstratoContainer {
 		return panel;
 	}
 
+	private Panel labelComboBox(String chaveRotulo, JComboBox<?> combo) {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.WEST, criarLabel(chaveRotulo));
+		panel.add(BorderLayout.CENTER, combo);
+		return panel;
+	}
+
 	private List<String> validar() {
 		List<String> resp = new ArrayList<>();
 		if (Util.estaVazio(txtNomePlugin.getText()) || caracterInvalido(txtNomePlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.nome_plugin"));
+		} else if (txtNomePlugin.getText().length() < 2) {
+			resp.add(GeraPluginMensagens.getString("erro.nome_plugin_curto"));
 		}
 		if (Util.estaVazio(txtMinimPlugin.getText()) || caracterInvalido(txtMinimPlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
@@ -187,7 +212,26 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private void gerar() {
+		criarConfig();
+		try {
+			GeraPluginUtil.criarMensagens(config);
+			GeraPluginUtil.criarConstantes(config);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(GeraPluginConstantes.PAINEL_GERA_PLUGIN, ex, GeraPluginContainer.this);
+		}
+	}
 
+	private void criarConfig() {
+		config = new Config();
+		config.destino = new File(txtDiretorioDestino.getText());
+		String nome = txtNomePlugin.getText();
+		config.nomeMin = txtMinimPlugin.getText();
+		config.pacote = txtPacotePlugin.getText();
+		config.recurso = txtDiretorioRecursos.getText();
+		config.nomeCap = nome.substring(0, 1).toUpperCase() + nome.substring(1);
+		config.nomeCapUpper = config.nomeCap.toUpperCase();
+		config.nomeDecap = nome.substring(0, 1).toLowerCase() + nome.substring(1);
+		config.nomeDecapLower = config.nomeDecap.toLowerCase();
 	}
 
 	@Override

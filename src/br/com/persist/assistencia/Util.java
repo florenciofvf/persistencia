@@ -917,7 +917,7 @@ public class Util {
 
 	public static String replaceAll(String string, String atual, String novo) {
 		if (estaVazio(string) || atual == null || novo == null) {
-			return null;
+			return string;
 		}
 		int indice = 0;
 		int pos = string.indexOf(atual);
