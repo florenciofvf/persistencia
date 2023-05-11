@@ -165,7 +165,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 			@Override
 			public Icon getIcone() {
-				return Icones.SOMA;
+				return Icones.CRIAR2;
 			}
 		};
 	}

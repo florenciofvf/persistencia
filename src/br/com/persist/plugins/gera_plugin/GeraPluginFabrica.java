@@ -38,7 +38,7 @@ public class GeraPluginFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuGeraPlugin(Formulario formulario) {
-			super(Constantes.LABEL_VAZIO, Icones.SOMA);
+			super(Constantes.LABEL_VAZIO, Icones.CRIAR2);
 			setText(GeraPluginMensagens.getString(GeraPluginConstantes.LABEL_GERA_PLUGIN));
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new GeraPluginContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> GeraPluginFormulario.criar(formulario));
