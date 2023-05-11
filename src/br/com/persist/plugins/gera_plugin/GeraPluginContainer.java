@@ -23,6 +23,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -31,17 +32,24 @@ import br.com.persist.formulario.Formulario;
 public class GeraPluginContainer extends AbstratoContainer {
 	private CheckBox chkComConfiguracao = criarCheckBox("label.com_configuracao");
 	private CheckBox chkComClasseUtil = criarCheckBox("label.com_classe_util");
+	private CheckBox chkComException = criarCheckBox("label.com_exception");
+	private CheckBox chkComProvedor = criarCheckBox("label.com_provedor");
+	private CheckBox chkComListener = criarCheckBox("label.com_listener");
 	private CheckBox chkComDialogo = criarCheckBox("label.com_dialogo");
+	private CheckBox chkComHandler = criarCheckBox("label.com_handler");
+	private CheckBox chkComModelo = criarCheckBox("label.com_modelo");
 	private TextField txtDiretorioRecursos = new TextField();
 	private TextField txtDiretorioDestino = new TextField();
 	private Button buttonGerar = new Button("label.gerar");
 	private TextField txtPacotePlugin = new TextField();
 	private TextField txtIconePlugin = new TextField();
+	private TextField txtMinimPlugin = new TextField();
 	private GeraPluginFormulario geraPluginFormulario;
 	private TextField txtNomePlugin = new TextField();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private GeraPluginDialogo geraPluginDialogo;
+	private TextArea textArea = new TextArea();
 
 	public GeraPluginContainer(Janela janela, Formulario formulario) {
 		super(formulario);
@@ -85,14 +93,21 @@ public class GeraPluginContainer extends AbstratoContainer {
 		add(BorderLayout.NORTH, toolbar);
 
 		Muro muro = new Muro();
+		muro.camada(textArea);
+		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
+		muro.camada(Muro.panelGrid(labelTextField("label.nome_min_plugin", txtMinimPlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino)));
 		muro.camada(Muro.panelGrid(labelTextField("label.pacote_plugin", txtPacotePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_recursos", txtDiretorioRecursos)));
 		muro.camada(Muro.panelGrid(labelTextField("label.icone_plugin", txtIconePlugin)));
-		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
 		muro.camada(Muro.panelGrid(chkComConfiguracao));
 		muro.camada(Muro.panelGrid(chkComClasseUtil));
+		muro.camada(Muro.panelGrid(chkComException));
+		muro.camada(Muro.panelGrid(chkComProvedor));
+		muro.camada(Muro.panelGrid(chkComListener));
 		muro.camada(Muro.panelGrid(chkComDialogo));
+		muro.camada(Muro.panelGrid(chkComHandler));
+		muro.camada(Muro.panelGrid(chkComModelo));
 		muro.camada(buttonGerar);
 		add(BorderLayout.CENTER, muro);
 
