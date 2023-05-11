@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Window;
 
 import javax.swing.Icon;
@@ -15,14 +16,29 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.Label;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class GeraPluginContainer extends AbstratoContainer {
+	private CheckBox chkComConfiguracao = criarCheckBox("label.com_configuracao");
+	private CheckBox chkComClasseUtil = criarCheckBox("label.com_classe_util");
+	private CheckBox chkComDialogo = criarCheckBox("label.com_dialogo");
+	private TextField txtDiretorioRecursos = new TextField();
+	private TextField txtDiretorioDestino = new TextField();
+	private Button buttonGerar = new Button("label.gerar");
+	private TextField txtPacotePlugin = new TextField();
+	private TextField txtIconePlugin = new TextField();
 	private GeraPluginFormulario geraPluginFormulario;
+	private TextField txtNomePlugin = new TextField();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private GeraPluginDialogo geraPluginDialogo;
@@ -55,8 +71,44 @@ public class GeraPluginContainer extends AbstratoContainer {
 		}
 	}
 
+	static CheckBox criarCheckBox(String chaveRotulo) {
+		return new CheckBox(GeraPluginMensagens.getString(chaveRotulo), false);
+	}
+
+	static Label criarLabel(String chaveRotulo) {
+		Label label = new Label(GeraPluginMensagens.getString(chaveRotulo), false);
+		label.setPreferredSize(new Dimension(150, 0));
+		return label;
+	}
+
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
+
+		Muro muro = new Muro();
+		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino)));
+		muro.camada(Muro.panelGrid(labelTextField("label.pacote_plugin", txtPacotePlugin)));
+		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_recursos", txtDiretorioRecursos)));
+		muro.camada(Muro.panelGrid(labelTextField("label.icone_plugin", txtIconePlugin)));
+		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
+		muro.camada(Muro.panelGrid(chkComConfiguracao));
+		muro.camada(Muro.panelGrid(chkComClasseUtil));
+		muro.camada(Muro.panelGrid(chkComDialogo));
+		muro.camada(buttonGerar);
+		add(BorderLayout.CENTER, muro);
+
+		buttonGerar.setIcon(Icones.EXECUTAR);
+		buttonGerar.addActionListener(e -> gerarArquivos());
+	}
+
+	private Panel labelTextField(String chaveRotulo, TextField textField) {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.WEST, criarLabel(chaveRotulo));
+		panel.add(BorderLayout.CENTER, textField);
+		return panel;
+	}
+
+	private void gerarArquivos() {
+		//
 	}
 
 	@Override
