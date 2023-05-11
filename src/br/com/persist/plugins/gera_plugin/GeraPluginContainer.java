@@ -9,6 +9,9 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Window;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 
@@ -17,6 +20,7 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
@@ -122,8 +126,68 @@ public class GeraPluginContainer extends AbstratoContainer {
 		return panel;
 	}
 
+	private List<String> validar() {
+		List<String> resp = new ArrayList<>();
+		if (Util.estaVazio(txtNomePlugin.getText()) || caracterInvalido(txtNomePlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.nome_plugin"));
+		}
+		if (Util.estaVazio(txtMinimPlugin.getText()) || caracterInvalido(txtMinimPlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
+		}
+		if (Util.estaVazio(txtDiretorioDestino.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_vazio"));
+		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
+		}
+		if (Util.estaVazio(txtPacotePlugin.getText()) || caracterInvalidoPacote(txtPacotePlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
+		}
+		if (!Util.estaVazio(txtDiretorioRecursos.getText()) && caracterInvalido(txtDiretorioRecursos.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos"));
+		}
+		return resp;
+	}
+
+	private boolean caracterInvalido(String string) {
+		for (char c : string.toCharArray()) {
+			if (!caracter(c)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean caracterInvalidoPacote(String string) {
+		for (char c : string.toCharArray()) {
+			if (!caracter2(c)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean caracter(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+	}
+
+	private boolean caracter2(char c) {
+		return caracter(c) || c == '.';
+	}
+
 	private void gerarArquivos() {
-		//
+		List<String> erros = validar();
+		textArea.limpar();
+		if (erros.isEmpty()) {
+			gerar();
+		} else {
+			for (String string : erros) {
+				textArea.append(string + Constantes.QL);
+			}
+		}
+	}
+
+	private void gerar() {
+
 	}
 
 	@Override
