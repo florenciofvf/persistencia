@@ -17,6 +17,7 @@ import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
+//		<menu classeFabrica="###package###.###cap###Fabrica" ativo="true" />
 public class ###cap###Fabrica extends AbstratoFabricaContainer {
 ###recurso###
 	@Override
