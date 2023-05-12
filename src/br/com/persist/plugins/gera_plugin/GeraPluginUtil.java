@@ -36,6 +36,16 @@ public class GeraPluginUtil {
 		gerar(config, "Dialogo", file);
 	}
 
+	static void fabricaDialogo(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Fabrica.java");
+		gerar(config, "FabricaDialogo", file);
+	}
+
+	static void fabrica(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Fabrica.java");
+		gerar(config, "Fabrica", file);
+	}
+
 	private static void gerar(Config config, String template, File file) throws IOException {
 		try (PrintWriter pw = new PrintWriter(file)) {
 			BufferedReader br = criarBufferedReader(template);

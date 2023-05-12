@@ -12,6 +12,7 @@ class Config {
 	String nomeCap;
 	String recurso;
 	String pacote;
+	String icone;
 	File destino;
 
 	String processar(String string) {
@@ -21,6 +22,7 @@ class Config {
 		string = Util.replaceAll(string, tag("decap"), nomeDecap);
 		string = Util.replaceAll(string, tag("package"), pacote);
 		string = Util.replaceAll(string, tag("cap"), nomeCap);
+		string = Util.replaceAll(string, tag("icone"), icone);
 		return string;
 	}
 

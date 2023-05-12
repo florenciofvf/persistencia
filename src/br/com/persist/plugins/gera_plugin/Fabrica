@@ -1,0 +1,62 @@
+package ###package###;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+import br.com.persist.abstrato.AbstratoFabricaContainer;
+import br.com.persist.abstrato.AbstratoServico;
+import br.com.persist.abstrato.Servico;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
+import br.com.persist.componente.MenuPadrao1;
+import br.com.persist.fichario.Pagina;
+import br.com.persist.fichario.PaginaServico;
+import br.com.persist.formulario.Formulario;
+
+public class ###cap###Fabrica extends AbstratoFabricaContainer {
+	@Override
+	public PaginaServico getPaginaServico() {
+		return new ###cap###PaginaServico();
+	}
+
+	private class ###cap###PaginaServico implements PaginaServico {
+		@Override
+		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
+			return new ###cap###Container(null, formulario);
+		}
+	}
+
+	@Override
+	public List<Servico> getServicos(Formulario formulario) {
+		return Arrays.asList(new ###cap###Servico());
+	}
+
+	private class ###cap###Servico extends AbstratoServico {
+	}
+
+	@Override
+	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
+		if (menu.getItemCount() > 0) {
+			menu.addSeparator();
+		}
+		List<JMenuItem> lista = new ArrayList<>();
+		lista.add(new Menu###cap###(formulario));
+		return lista;
+	}
+
+	private class Menu###cap### extends MenuPadrao1 {
+		private static final long serialVersionUID = 1L;
+
+		private Menu###cap###(Formulario formulario) {
+			super(Constantes.LABEL_VAZIO, Icones.###icone###, false);
+			setText(###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###));
+			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new ###cap###Container(null, formulario)));
+			formularioAcao.setActionListener(e -> ###cap###Formulario.criar(formulario));
+		}
+	}
+}
