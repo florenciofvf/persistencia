@@ -114,13 +114,13 @@ public class AnotacaoContainer extends AbstratoContainer {
 			buttonDestacar.estadoFormulario();
 		}
 
-		void adicionadoAoFichario() {
-			buttonDestacar.estadoFichario();
-		}
-
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
+		}
+
+		void adicionadoAoFichario() {
+			buttonDestacar.estadoFichario();
 		}
 
 		@Override

@@ -133,15 +133,15 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			buttonDestacar.estadoFormulario();
 		}
 
-		void adicionadoAoFichario() {
-			painelConfiguracao.adicionadoAoFichario();
-			buttonDestacar.estadoFichario();
-		}
-
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			painelConfiguracao.dialogOpenedHandler(dialog);
 			buttonDestacar.estadoDialogo();
+		}
+
+		void adicionadoAoFichario() {
+			painelConfiguracao.adicionadoAoFichario();
+			buttonDestacar.estadoFichario();
 		}
 
 		@Override
