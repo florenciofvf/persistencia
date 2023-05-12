@@ -6,6 +6,7 @@ import br.com.persist.assistencia.Util;
 
 class Config {
 	String nomeDecapLower;
+	boolean configuracao;
 	String nomeCapUpper;
 	String nomeDecap;
 	String nomeMin;
@@ -28,5 +29,9 @@ class Config {
 
 	String tag(String string) {
 		return "###" + string + "###";
+	}
+
+	boolean comRecurso() {
+		return !Util.estaVazio(recurso);
 	}
 }

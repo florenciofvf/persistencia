@@ -16,6 +16,11 @@ public class GeraPluginUtil {
 		gerar(config, "mensagens_prop", file);
 	}
 
+	static void preferencias(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Preferencia.java");
+		gerar(config, "Preferencia", file);
+	}
+
 	static void constantes(Config config) throws IOException {
 		File file = new File(config.destino, config.nomeCap + "Constantes.java");
 		gerar(config, "Constantes", file);
@@ -38,12 +43,12 @@ public class GeraPluginUtil {
 
 	static void fabricaDialogo(Config config) throws IOException {
 		File file = new File(config.destino, config.nomeCap + "Fabrica.java");
-		gerar(config, "FabricaDialogo", file);
+		gerarFabrica(config, "FabricaDialogo", file);
 	}
 
 	static void fabrica(Config config) throws IOException {
 		File file = new File(config.destino, config.nomeCap + "Fabrica.java");
-		gerar(config, "Fabrica", file);
+		gerarFabrica(config, "Fabrica", file);
 	}
 
 	static void containerDialogo(Config config) throws IOException {
@@ -54,6 +59,41 @@ public class GeraPluginUtil {
 	static void container(Config config) throws IOException {
 		File file = new File(config.destino, config.nomeCap + "Container.java");
 		gerar(config, "Container", file);
+	}
+
+	private static void gerarFabrica(Config config, String template, File file) throws IOException {
+		try (PrintWriter pw = new PrintWriter(file)) {
+			BufferedReader br = criarBufferedReader(template);
+			String linha = br.readLine();
+			while (linha != null) {
+				if ("###recurso###".equals(linha)) {
+					configRecurso(config, pw);
+				} else {
+					linha = config.processar(linha);
+					pw.println(linha);
+				}
+				linha = br.readLine();
+			}
+			br.close();
+		}
+	}
+
+	private static void configRecurso(Config config, PrintWriter pw) {
+		if (!config.configuracao && !config.comRecurso()) {
+			return;
+		}
+		pw.println("\t@Override");
+		pw.println("\tpublic void inicializar() {");
+		if (config.configuracao) {
+			pw.println("\t\tbr.com.persist.assistencia.Preferencias.addOutraPreferencia(" + config.nomeCap
+					+ "Preferencia.class);");
+		}
+		if (config.comRecurso()) {
+			pw.println("\t\tbr.com.persist.assistencia.Util.criarDiretorio(" + config.nomeCap + "Constantes."
+					+ config.nomeCapUpper + ");");
+		}
+		pw.println("\t}");
+		pw.println();
 	}
 
 	private static void gerar(Config config, String template, File file) throws IOException {

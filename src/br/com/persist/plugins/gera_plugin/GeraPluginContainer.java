@@ -226,6 +226,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 				GeraPluginUtil.container(config);
 				GeraPluginUtil.fabrica(config);
 			}
+			if (config.configuracao) {
+				GeraPluginUtil.preferencias(config);
+			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(GeraPluginConstantes.PAINEL_GERA_PLUGIN, ex, GeraPluginContainer.this);
 		}
@@ -243,6 +246,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		config.nomeDecap = nome.substring(0, 1).toLowerCase() + nome.substring(1);
 		config.nomeDecapLower = config.nomeDecap.toLowerCase();
 		config.icone = cmbIconePlugin.getSelectedItem().toString();
+		config.configuracao = chkComConfiguracao.isSelected();
 	}
 
 	@Override

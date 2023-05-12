@@ -4,6 +4,7 @@ public class ###cap###Constantes {
 	public static final String LABEL_###capUpper###_MIN = "label.###decapLower###_min";
 	public static final String PAINEL_###capUpper### = "PAINEL ###capUpper###";
 	public static final String LABEL_###capUpper### = "label.###decapLower###";
+	public static final String ###capUpper### = "###decapLower###";
 
 	private ###cap###Constantes() {
 	}

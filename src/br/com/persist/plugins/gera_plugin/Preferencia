@@ -1,0 +1,18 @@
+package ###package###;
+
+import java.util.prefs.Preferences;
+
+import br.com.persist.formulario.Formulario;
+
+public class ###cap###Preferencia {
+	private ###cap###Preferencia() {
+	}
+
+	public static void abrir() {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+	}
+
+	public static void salvar() {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+	}
+}
