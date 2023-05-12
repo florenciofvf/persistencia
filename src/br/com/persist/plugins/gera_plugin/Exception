@@ -1,0 +1,9 @@
+package ###package###;
+
+public class ###cap###Exception extends Exception {
+	private static final long serialVersionUID = 1L;
+
+	public ###cap###Exception(Throwable cause) {
+		super(cause);
+	}
+}

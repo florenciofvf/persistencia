@@ -229,6 +229,24 @@ public class GeraPluginContainer extends AbstratoContainer {
 			if (config.configuracao) {
 				GeraPluginUtil.preferencias(config);
 			}
+			if (chkComHandler.isSelected()) {
+				GeraPluginUtil.handler(config);
+			}
+			if (chkComProvedor.isSelected()) {
+				GeraPluginUtil.provedor(config);
+			}
+			if (chkComModelo.isSelected()) {
+				GeraPluginUtil.modelo(config);
+			}
+			if (chkComClasseUtil.isSelected()) {
+				GeraPluginUtil.util(config);
+			}
+			if (chkComException.isSelected()) {
+				GeraPluginUtil.exception(config);
+			}
+			if (chkComListener.isSelected()) {
+				GeraPluginUtil.listener(config);
+			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(GeraPluginConstantes.PAINEL_GERA_PLUGIN, ex, GeraPluginContainer.this);
 		}

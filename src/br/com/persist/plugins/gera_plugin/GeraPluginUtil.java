@@ -90,7 +90,7 @@ public class GeraPluginUtil {
 		}
 		if (config.comRecurso()) {
 			pw.println("\t\tbr.com.persist.assistencia.Util.criarDiretorio(" + config.nomeCap + "Constantes."
-					+ config.nomeCapUpper + ");");
+					+ config.recurso + ");");
 		}
 		pw.println("\t}");
 		pw.println();
@@ -113,5 +113,35 @@ public class GeraPluginUtil {
 		InputStream is = GeraPluginContainer.class.getResourceAsStream(template);
 		InputStreamReader isr = new InputStreamReader(is);
 		return new BufferedReader(isr);
+	}
+
+	static void exception(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Exception.java");
+		gerar(config, "Exception", file);
+	}
+
+	static void listener(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Listener.java");
+		gerar(config, "Listener", file);
+	}
+
+	static void provedor(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Provedor.java");
+		gerar(config, "Provedor", file);
+	}
+
+	static void modelo(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Modelo.java");
+		gerar(config, "Modelo", file);
+	}
+
+	static void handler(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Handler.java");
+		gerar(config, "Handler", file);
+	}
+
+	static void util(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Util.java");
+		gerar(config, "Util", file);
 	}
 }
