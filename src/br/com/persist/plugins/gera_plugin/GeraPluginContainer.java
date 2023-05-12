@@ -219,9 +219,11 @@ public class GeraPluginContainer extends AbstratoContainer {
 			GeraPluginUtil.mensagens(config);
 			GeraPluginUtil.formulario(config);
 			if (chkComDialogo.isSelected()) {
+				GeraPluginUtil.containerDialogo(config);
 				GeraPluginUtil.fabricaDialogo(config);
 				GeraPluginUtil.dialogo(config);
 			} else {
+				GeraPluginUtil.container(config);
 				GeraPluginUtil.fabrica(config);
 			}
 		} catch (Exception ex) {
@@ -251,7 +253,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
-		protected void ini(Janela janela) {
+		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
 		}
 

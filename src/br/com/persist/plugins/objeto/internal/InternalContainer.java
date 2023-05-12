@@ -550,7 +550,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		private transient Thread thread;
 		private String msgException;
 
-		protected void ini(Janela janela, Objeto objeto) {
+		public void ini(Janela janela, Objeto objeto) {
 			super.ini(janela);
 			add(btnArrasto);
 			addButton(true, exceptionAcao);
