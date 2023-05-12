@@ -1,0 +1,53 @@
+package ###package###;
+
+import java.awt.BorderLayout;
+import java.awt.Window;
+
+import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.formulario.Formulario;
+
+public class ###cap###Formulario extends AbstratoFormulario {
+	private static final long serialVersionUID = 1L;
+	private final ###cap###Container container;
+
+	private ###cap###Formulario(Formulario formulario) {
+		super(###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###));
+		container = new ###cap###Container(this, formulario);
+		container.set###cap###Formulario(this);
+		montarLayout();
+	}
+
+	private ###cap###Formulario(###cap###Container container) {
+		super(###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###));
+		container.set###cap###Formulario(this);
+		this.container = container;
+		container.setJanela(this);
+		montarLayout();
+	}
+
+	private void montarLayout() {
+		add(BorderLayout.CENTER, container);
+	}
+
+	public static void criar(Formulario formulario, ###cap###Container container) {
+		###cap###Formulario form = new ###cap###Formulario(container);
+		Formulario.posicionarJanela(formulario, form);
+	}
+
+	public static void criar(Formulario formulario) {
+		###cap###Formulario form = new ###cap###Formulario(formulario);
+		Formulario.posicionarJanela(formulario, form);
+	}
+
+	public void excluirContainer() {
+		remove(container);
+		container.setJanela(null);
+		container.set###cap###Formulario(null);
+		fechar();
+	}
+
+	@Override
+	public void windowOpenedHandler(Window window) {
+		container.windowOpenedHandler(window);
+	}
+}

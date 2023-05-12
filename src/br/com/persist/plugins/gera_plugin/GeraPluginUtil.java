@@ -26,6 +26,16 @@ public class GeraPluginUtil {
 		gerar(config, "Mensagens", file);
 	}
 
+	static void formulario(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Formulario.java");
+		gerar(config, "Formulario", file);
+	}
+
+	static void dialogo(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Dialogo.java");
+		gerar(config, "Dialogo", file);
+	}
+
 	private static void gerar(Config config, String template, File file) throws IOException {
 		try (PrintWriter pw = new PrintWriter(file)) {
 			BufferedReader br = criarBufferedReader(template);
