@@ -214,8 +214,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private void gerar() {
 		criarConfig();
 		try {
-			GeraPluginUtil.criarMensagens(config);
-			GeraPluginUtil.criarConstantes(config);
+			GeraPluginUtil.mensagens(config);
+			GeraPluginUtil.constantes(config);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(GeraPluginConstantes.PAINEL_GERA_PLUGIN, ex, GeraPluginContainer.this);
 		}

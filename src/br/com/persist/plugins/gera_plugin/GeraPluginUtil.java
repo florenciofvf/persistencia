@@ -2,7 +2,6 @@ package br.com.persist.plugins.gera_plugin;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,15 +11,12 @@ public class GeraPluginUtil {
 	private GeraPluginUtil() {
 	}
 
-	static void criarMensagens(Config config) throws FileNotFoundException {
+	static void mensagens(Config config) throws IOException {
 		File file = new File(config.destino, "mensagens.properties");
-		try (PrintWriter pw = new PrintWriter(file)) {
-			pw.println("label." + config.nomeDecap + "=" + config.nomeCap);
-			pw.println("label." + config.nomeDecap + "_min=" + config.nomeMin);
-		}
+		gerar(config, "mensagens", file);
 	}
 
-	static void criarConstantes(Config config) throws IOException {
+	static void constantes(Config config) throws IOException {
 		File file = new File(config.destino, config.nomeCap + "Constantes.java");
 		gerar(config, "Constantes", file);
 	}

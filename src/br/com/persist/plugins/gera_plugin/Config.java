@@ -17,6 +17,7 @@ class Config {
 	String processar(String string) {
 		string = Util.replaceAll(string, tag("decapLower"), nomeDecapLower);
 		string = Util.replaceAll(string, tag("capUpper"), nomeCapUpper);
+		string = Util.replaceAll(string, tag("nomeMin"), nomeMin);
 		string = Util.replaceAll(string, tag("decap"), nomeDecap);
 		string = Util.replaceAll(string, tag("package"), pacote);
 		string = Util.replaceAll(string, tag("cap"), nomeCap);
