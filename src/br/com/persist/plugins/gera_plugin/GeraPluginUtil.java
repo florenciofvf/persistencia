@@ -11,14 +11,19 @@ public class GeraPluginUtil {
 	private GeraPluginUtil() {
 	}
 
-	static void mensagens(Config config) throws IOException {
+	static void mensagensProp(Config config) throws IOException {
 		File file = new File(config.destino, "mensagens.properties");
-		gerar(config, "mensagens", file);
+		gerar(config, "mensagens_prop", file);
 	}
 
 	static void constantes(Config config) throws IOException {
 		File file = new File(config.destino, config.nomeCap + "Constantes.java");
 		gerar(config, "Constantes", file);
+	}
+
+	static void mensagens(Config config) throws IOException {
+		File file = new File(config.destino, config.nomeCap + "Mensagens.java");
+		gerar(config, "Mensagens", file);
 	}
 
 	private static void gerar(Config config, String template, File file) throws IOException {

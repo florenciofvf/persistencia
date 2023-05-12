@@ -1,0 +1,19 @@
+package ###package###;
+
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
+public class ###cap###Mensagens {
+	public static final ResourceBundle bundle = ResourceBundle
+			.getBundle(###cap###Mensagens.class.getPackage().getName() + ".mensagens");
+
+	private ###cap###Mensagens() {
+	}
+
+	public static String getString(String chave, Object... argumentos) {
+		if (argumentos == null || argumentos.length == 0) {
+			return bundle.getString(chave);
+		}
+		return MessageFormat.format(bundle.getString(chave), argumentos);
+	}
+}
