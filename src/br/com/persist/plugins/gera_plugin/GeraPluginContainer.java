@@ -196,7 +196,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private boolean caracter2(char c) {
-		return caracter(c) || c == '.';
+		return caracter(c) || c == '.' || c == '_';
 	}
 
 	private void gerarArquivos() {
