@@ -22,28 +22,47 @@ public class GeraPluginUtil {
 	}
 
 	static void preferencias(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Preferencia.java");
-		gerar(config, "Preferencia", file);
+		transferir(config, "Preferencia");
 	}
 
 	static void constantes(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Constantes.java");
-		gerar(config, "Constantes", file);
+		transferir(config, "Constantes");
 	}
 
 	static void mensagens(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Mensagens.java");
-		gerar(config, "Mensagens", file);
+		transferir(config, "Mensagens");
 	}
 
 	static void formulario(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Formulario.java");
-		gerar(config, "Formulario", file);
+		transferir(config, "Formulario");
 	}
 
 	static void dialogo(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Dialogo.java");
-		gerar(config, "Dialogo", file);
+		transferir(config, "Dialogo");
+	}
+
+	static void exception(Config config) throws IOException {
+		transferir(config, "Exception");
+	}
+
+	static void listener(Config config) throws IOException {
+		transferir(config, "Listener");
+	}
+
+	static void provedor(Config config) throws IOException {
+		transferir(config, "Provedor");
+	}
+
+	static void modelo(Config config) throws IOException {
+		transferir(config, "Modelo");
+	}
+
+	static void handler(Config config) throws IOException {
+		transferir(config, "Handler");
+	}
+
+	static void util(Config config) throws IOException {
+		transferir(config, "Util");
 	}
 
 	static void fabricaDialogo(Config config) throws IOException {
@@ -62,8 +81,7 @@ public class GeraPluginUtil {
 	}
 
 	static void container(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Container.java");
-		gerar(config, "Container", file);
+		transferir(config, "Container");
 	}
 
 	private static void gerarFabrica(Config config, String template, File file) throws IOException {
@@ -101,6 +119,11 @@ public class GeraPluginUtil {
 		pw.println();
 	}
 
+	private static void transferir(Config config, String objeto) throws IOException {
+		File file = new File(config.destino, config.nomeCap + objeto + ".java");
+		gerar(config, objeto, file);
+	}
+
 	private static void gerar(Config config, String template, File file) throws IOException {
 		try (PrintWriter pw = new PrintWriter(file)) {
 			BufferedReader br = criarBufferedReader(template);
@@ -118,35 +141,5 @@ public class GeraPluginUtil {
 		InputStream is = GeraPluginContainer.class.getResourceAsStream(template);
 		InputStreamReader isr = new InputStreamReader(is);
 		return new BufferedReader(isr);
-	}
-
-	static void exception(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Exception.java");
-		gerar(config, "Exception", file);
-	}
-
-	static void listener(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Listener.java");
-		gerar(config, "Listener", file);
-	}
-
-	static void provedor(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Provedor.java");
-		gerar(config, "Provedor", file);
-	}
-
-	static void modelo(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Modelo.java");
-		gerar(config, "Modelo", file);
-	}
-
-	static void handler(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Handler.java");
-		gerar(config, "Handler", file);
-	}
-
-	static void util(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Util.java");
-		gerar(config, "Util", file);
 	}
 }
