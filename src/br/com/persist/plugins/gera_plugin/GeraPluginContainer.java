@@ -216,8 +216,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 		try {
 			GeraPluginUtil.mensagensProp(config);
 			GeraPluginUtil.constantes(config);
-			GeraPluginUtil.mensagens(config);
 			GeraPluginUtil.formulario(config);
+			GeraPluginUtil.mensagens(config);
+			GeraPluginUtil.objeto(config);
 			if (chkComDialogo.isSelected()) {
 				GeraPluginUtil.containerDialogo(config);
 				GeraPluginUtil.fabricaDialogo(config);
