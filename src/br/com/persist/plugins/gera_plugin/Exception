@@ -6,4 +6,8 @@ public class ###cap###Exception extends Exception {
 	public ###cap###Exception(Throwable cause) {
 		super(cause);
 	}
+
+	public ###cap###Exception(String chave) {
+		super(###cap###Mensagens.getString(chave));
+	}
 }
