@@ -304,6 +304,37 @@ class PanelQuebraLog extends Panel {
 	}
 
 	private void processar() {
+		int totalBlocos = Integer.parseInt(txtTotal.getText());
+		File destino = new File(txtDestino.getText());
+		File origem = new File(txtOrigem.getText());
+		long tamanho = origem.length();
+		long tamanhoBloco = tamanho / totalBlocos;
+		String sufixo = getSufixo(origem);
+		int contador = 0;
+		int indice = 0;
+
+		QuebraLogModelo modelo = new QuebraLogModelo();
+
+		while (contador < totalBlocos) {
+			File bloco = new File(destino, origem.getName() + "_" + contador + "_" + sufixo);
+			QuebraLog qlog = new QuebraLog(origem, bloco, indice, tamanhoBloco);
+			qlog.setRow(contador);
+			modelo.adicionar(qlog);
+			indice += tamanhoBloco;
+			contador++;
+		}
+
+		table.setModel(modelo);
+		modelo.fragmentarArquivo(table);
+	}
+
+	private String getSufixo(File f) {
+		String nome = f.getName();
+		int pos = nome.lastIndexOf('.');
+		if (pos != -1) {
+			return nome.substring(pos);
+		}
+		return "";
 	}
 
 	private void inicializar() {

@@ -3,7 +3,10 @@ package br.com.persist.assistencia;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,5 +58,15 @@ public class ArquivoUtil {
 		}
 		List<String> lista = map.get(chave);
 		return lista != null && lista.contains(string);
+	}
+
+	public static void copiar(File origem, File destino, long indice, long quantidade) throws IOException {
+		try (FileInputStream fis = new FileInputStream(origem)) {
+			try (FileOutputStream fos = new FileOutputStream(destino)) {
+				FileChannel ci = fis.getChannel();
+				FileChannel co = fos.getChannel();
+				ci.transferTo(indice, quantidade, co);
+			}
+		}
 	}
 }

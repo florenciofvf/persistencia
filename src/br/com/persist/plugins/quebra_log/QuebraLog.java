@@ -9,14 +9,21 @@ import br.com.persist.assistencia.Util;
 
 public class QuebraLog {
 	private final String absolutePath;
+	private final long tamanhoBloco;
+	private final int indice;
 	private final String nome;
+	private final File origem;
 	private final File file;
 	private String tamanho;
+	private int row;
 
-	public QuebraLog(File file) {
+	public QuebraLog(File origem, File file, int indice, long tamanhoBloco) {
+		this.origem = Objects.requireNonNull(origem);
 		this.file = Objects.requireNonNull(file);
 		absolutePath = file.getAbsolutePath();
+		this.tamanhoBloco = tamanhoBloco;
 		nome = file.getName();
+		this.indice = indice;
 	}
 
 	public String getAbsolutePath() {
@@ -31,8 +38,28 @@ public class QuebraLog {
 		return file;
 	}
 
+	public long getTamanhoBloco() {
+		return tamanhoBloco;
+	}
+
+	public int getIndice() {
+		return indice;
+	}
+
 	public String getNome() {
 		return nome;
+	}
+
+	public File getOrigem() {
+		return origem;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
 	}
 
 	public void abrir(Component c) {

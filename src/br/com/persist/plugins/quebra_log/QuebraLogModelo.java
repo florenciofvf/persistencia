@@ -1,11 +1,16 @@
 package br.com.persist.plugins.quebra_log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+
+import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.assistencia.Util;
 
 public class QuebraLogModelo extends AbstractTableModel {
 	private final transient List<QuebraLog> lista = new ArrayList<>();
@@ -69,5 +74,33 @@ public class QuebraLogModelo extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		LOG.log(Level.FINEST, "setValueAt");
+	}
+
+	public void fragmentarArquivo(JTable table) {
+		for (QuebraLog qlog : lista) {
+			new ThreadFragmento(qlog, table).start();
+		}
+	}
+
+	private class ThreadFragmento extends Thread {
+		final QuebraLog qlog;
+		final JTable table;
+
+		ThreadFragmento(QuebraLog qlog, JTable table) {
+			this.table = table;
+			this.qlog = qlog;
+		}
+
+		@Override
+		public void run() {
+			try {
+				ArquivoUtil.copiar(qlog.getOrigem(), qlog.getFile(), qlog.getIndice(), qlog.getTamanhoBloco());
+				qlog.atualizarTamanho();
+				Util.ajustar(table, table.getGraphics());
+				fireTableRowsUpdated(qlog.getRow(), qlog.getRow());
+			} catch (IOException ex) {
+				LOG.log(Level.SEVERE, ex.getMessage());
+			}
+		}
 	}
 }
