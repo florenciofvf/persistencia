@@ -10,9 +10,9 @@ import br.com.persist.assistencia.Util;
 public class QuebraLog {
 	private final String absolutePath;
 	private final long tamanhoBloco;
-	private final int indice;
 	private final String nome;
 	private final File origem;
+	private final int indice;
 	private final File file;
 	private String tamanho;
 	private int row;
