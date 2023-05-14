@@ -180,7 +180,7 @@ public class QuebraLogContainer extends AbstratoContainer {
 
 			@Override
 			public Icon getIcone() {
-				return Icones.ALINHA_ESQUERDO;
+				return Icones.PANEL2;
 			}
 		};
 	}

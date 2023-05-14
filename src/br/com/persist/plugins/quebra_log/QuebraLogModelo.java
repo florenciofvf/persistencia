@@ -98,6 +98,7 @@ public class QuebraLogModelo extends AbstractTableModel {
 				qlog.atualizarTamanho();
 				Util.ajustar(table, table.getGraphics());
 				fireTableRowsUpdated(qlog.getRow(), qlog.getRow());
+				table.addRowSelectionInterval(qlog.getRow(), qlog.getRow());
 			} catch (IOException ex) {
 				LOG.log(Level.SEVERE, ex.getMessage());
 			}

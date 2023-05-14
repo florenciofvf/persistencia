@@ -52,7 +52,7 @@ public class QuebraLogFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuQuebraLog(Formulario formulario) {
-			super(Constantes.LABEL_VAZIO, Icones.ALINHA_ESQUERDO);
+			super(Constantes.LABEL_VAZIO, Icones.PANEL2);
 			setText(QuebraLogMensagens.getString(QuebraLogConstantes.LABEL_QUEBRA_LOG));
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new QuebraLogContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> QuebraLogFormulario.criar(formulario));
