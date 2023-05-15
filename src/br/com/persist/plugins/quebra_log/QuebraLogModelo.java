@@ -77,12 +77,24 @@ public class QuebraLogModelo extends AbstractTableModel {
 	}
 
 	public void fragmentarArquivo(JTable table) {
+		ThreadFragmento selecionado = null;
+		ThreadFragmento primeiro = null;
 		for (QuebraLog qlog : lista) {
-			new ThreadFragmento(qlog, table).start();
+			ThreadFragmento fragmento = new ThreadFragmento(qlog, table);
+			if (primeiro == null) {
+				primeiro = fragmento;
+			} else {
+				selecionado.proximo = fragmento;
+			}
+			selecionado = fragmento;
+		}
+		if (primeiro != null) {
+			primeiro.start();
 		}
 	}
 
 	private class ThreadFragmento extends Thread {
+		ThreadFragmento proximo;
 		final QuebraLog qlog;
 		final JTable table;
 
@@ -101,6 +113,9 @@ public class QuebraLogModelo extends AbstractTableModel {
 				table.addRowSelectionInterval(qlog.getRow(), qlog.getRow());
 			} catch (IOException ex) {
 				LOG.log(Level.SEVERE, ex.getMessage());
+			}
+			if (proximo != null) {
+				proximo.start();
 			}
 		}
 	}
