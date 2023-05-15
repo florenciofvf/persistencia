@@ -5,7 +5,10 @@ import br.com.persist.plugins.checagem.Sentenca;
 import br.com.persist.plugins.checagem.TipoFuncao;
 
 public abstract class FuncaoUnaria extends TipoFuncao {
-	public Sentenca param0() {
+	public Sentenca param0() throws ChecagemException {
+		if (parametros.isEmpty()) {
+			throw new ChecagemException(getClass(), "Parametros vazio");
+		}
 		return parametros.get(0);
 	}
 

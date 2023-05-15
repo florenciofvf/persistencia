@@ -3,7 +3,7 @@ package br.com.persist.plugins.checagem;
 import br.com.persist.plugins.checagem.funcao.FuncaoUnaria;
 
 public class SentencaRaiz extends FuncaoUnaria {
-	public Sentenca getSentenca() {
+	public Sentenca getSentenca() throws ChecagemException {
 		return param0();
 	}
 
