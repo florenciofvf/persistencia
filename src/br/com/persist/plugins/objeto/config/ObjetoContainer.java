@@ -893,6 +893,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class ButtonColar extends ButtonPopup {
+			private Action diffHoraAcao = acaoMenu("label.diferenca_em_horas");
 			private Action numeroAcao = actionMenu("label.numeros");
 			private Action letraAcao = actionMenu("label.letras");
 			private Action todosAcao = actionMenu("label.todos");
@@ -916,12 +917,21 @@ public class ObjetoContainer extends Panel {
 
 			private void configHora() {
 				addMenuItem(true, horaAcao);
+				addMenuItem(diffHoraAcao);
 				horaAcao.setActionListener(e -> {
 					textField.setText(HoraUtil.getHoraAtual());
 					textField.postActionEvent();
 					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
 					if (lista.size() == 1 && Util.confirmar(ObjetoContainer.this,
 							ObjetoMensagens.getString("msg.calcular_diferenca_em_horas"), false)) {
+						Relacao relacao = lista.get(0);
+						relacao.processarHoraDiff(false);
+						objetoSuperficie.repaint();
+					}
+				});
+				diffHoraAcao.setActionListener(e -> {
+					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					if (lista.size() == 1) {
 						Relacao relacao = lista.get(0);
 						relacao.processarHoraDiff(false);
 						objetoSuperficie.repaint();
