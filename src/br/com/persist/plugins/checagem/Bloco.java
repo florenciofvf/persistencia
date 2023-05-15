@@ -11,14 +11,16 @@ public class Bloco {
 	private final Modulo modulo;
 	private boolean paraString;
 	private Sentenca sentenca;
+	private final int indice;
 	private boolean paraPos;
 	private boolean privado;
 	private final String id;
 
-	public Bloco(Modulo modulo, String id) {
+	public Bloco(Modulo modulo, String id, int indice) {
 		preString = new StringBuilder();
 		posString = new StringBuilder();
 		string = new StringBuilder();
+		this.indice = indice;
 		this.modulo = modulo;
 		this.id = id;
 	}
@@ -70,6 +72,10 @@ public class Bloco {
 
 	public String getPosString() {
 		return posString.toString();
+	}
+
+	public int getIndice() {
+		return indice;
 	}
 
 	public boolean isPrivado() {

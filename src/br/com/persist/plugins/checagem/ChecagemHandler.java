@@ -10,6 +10,7 @@ class ChecagemHandler extends XMLHandler {
 	private static final String BLOCO = "set";
 	private final boolean lexicalHandler;
 	private final Modulo modulo;
+	private int indice;
 
 	public ChecagemHandler(Modulo modulo, boolean lexicalHandler) {
 		this.lexicalHandler = lexicalHandler;
@@ -19,7 +20,7 @@ class ChecagemHandler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (BLOCO.equals(qName)) {
-			Bloco bloco = new Bloco(modulo, attributes.getValue("id"));
+			Bloco bloco = new Bloco(modulo, attributes.getValue("id"), ++indice);
 			boolean privado = Boolean.parseBoolean(attributes.getValue("privado"));
 			bloco.setPrivado(privado);
 			modulo.add(bloco);

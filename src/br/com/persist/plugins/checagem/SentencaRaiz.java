@@ -3,7 +3,15 @@ package br.com.persist.plugins.checagem;
 import br.com.persist.plugins.checagem.funcao.FuncaoUnaria;
 
 public class SentencaRaiz extends FuncaoUnaria {
-	public Sentenca getSentenca() throws ChecagemException {
+	public Sentenca getSentenca(Bloco bloco) throws ChecagemException {
+		if (parametros.isEmpty()) {
+			StringBuilder sb = new StringBuilder("Sentenca vazia >>> indice=" + bloco.getIndice() + ", bloco="
+					+ bloco.getId() + ", privado=" + bloco.isPrivado());
+			if (bloco.getModulo() != null) {
+				sb.append(", modulo=" + bloco.getModulo().getId());
+			}
+			throw new ChecagemException(getClass(), sb.toString());
+		}
 		return param0();
 	}
 

@@ -94,7 +94,7 @@ public class ChecagemGramatica {
 			funcaoSelecionada = processar(prefixaSet, funcaoSelecionada, token);
 		}
 		checagemFinal(bloco, sentencaRaiz);
-		bloco.setSentenca(sentencaRaiz.getSentenca());
+		bloco.setSentenca(sentencaRaiz.getSentenca(bloco));
 	}
 
 	private static TipoFuncao processar(AtomicBoolean prefixaSet, TipoFuncao funcaoSelecionada, Token token)
@@ -165,11 +165,11 @@ public class ChecagemGramatica {
 	}
 
 	private static void checagemFinal(Bloco bloco, SentencaRaiz sentencaRaiz) throws ChecagemException {
-		if (sentencaRaiz.getSentenca() == null) {
+		if (sentencaRaiz.getSentenca(bloco) == null) {
 			throw new ChecagemException(ChecagemGramatica.class, "Sentenca vazia >>> " + bloco);
 		}
-		if (sentencaRaiz.getSentenca() instanceof TipoFuncao) {
-			((TipoFuncao) sentencaRaiz.getSentenca()).checarEncerrar();
+		if (sentencaRaiz.getSentenca(bloco) instanceof TipoFuncao) {
+			((TipoFuncao) sentencaRaiz.getSentenca(bloco)).checarEncerrar();
 		}
 	}
 
