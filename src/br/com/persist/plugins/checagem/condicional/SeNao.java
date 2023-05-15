@@ -19,6 +19,6 @@ public class SeNao extends FuncaoTernaria {
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return "seNao(Logico, funcao) : Objeto";
+		return "seNao(Logico, funcao, funcao) : Objeto";
 	}
 }

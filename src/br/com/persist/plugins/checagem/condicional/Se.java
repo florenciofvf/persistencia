@@ -19,6 +19,6 @@ public class Se extends FuncaoBinaria {
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return "se(Logico) : Objeto";
+		return "se(Logico, funcao) : Objeto";
 	}
 }
