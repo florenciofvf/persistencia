@@ -10,16 +10,14 @@ import br.com.persist.plugins.checagem.funcao.FuncaoVaziaOuNParam;
 public class Processar extends FuncaoVaziaOuNParam {
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
-		Object resposta = null;
 		for (Sentenca s : parametros) {
-			Object obj = s.executar(checagem, bloco, ctx);
-			resposta = obj;
+			s.executar(checagem, bloco, ctx);
 		}
-		return resposta;
+		return null;
 	}
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return "processar(funcao, funcaoN) : Objeto";
+		return "processar(funcao, funcaoN)";
 	}
 }

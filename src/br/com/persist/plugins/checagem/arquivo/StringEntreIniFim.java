@@ -10,15 +10,13 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.funcao.FuncaoTernaria;
 
-public class StringEntreIniFim extends FuncaoTernaria {
+public class StringEntreIniFim extends FuncaoTernaria implements Arquivo {
 	private static final String ERRO = "Erro StringEntreIniFim";
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(checagem, bloco, ctx);
-		if (!(op0 instanceof List<?>)) {
-			throw new ChecagemException(getClass(), ERRO + " >>> op0 deve ser List<String>");
-		}
+		checar(op0);
 		Object op1 = param1().executar(checagem, bloco, ctx);
 		Object op2 = param2().executar(checagem, bloco, ctx);
 		checkObrigatorioString(op1, ERRO + " >>> op1");
@@ -32,7 +30,7 @@ public class StringEntreIniFim extends FuncaoTernaria {
 			throw new ChecagemException(getClass(), ERRO + " >>> op2 vazio");
 		}
 		List<Linha> resposta = new ArrayList<>();
-		List<String> arquivo = LinhaPeloNumero.get((List<?>) op0);
+		List<String> arquivo = get(op0);
 		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, resposta, arquivo);
 		if (resposta.isEmpty()) {
 			throw new ChecagemException(getClass(), ERRO + "Nenhuma linha come\u00E7ando com <<<[" + strInicio
@@ -46,7 +44,6 @@ public class StringEntreIniFim extends FuncaoTernaria {
 		int posIni = string.indexOf(strInicio);
 		int posFim = string.indexOf(strFinal);
 		return string.substring(posIni + strInicio.length(), posFim);
-
 	}
 
 	@Override

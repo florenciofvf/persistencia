@@ -203,3 +203,5 @@ stringEntreIniFim
 br.com.persist.plugins.checagem.arquivo.StringEntreIniFim
 novaEntreIniFim
 br.com.persist.plugins.checagem.arquivo.NovaEntreIniFim
+getLinha
+br.com.persist.plugins.checagem.arquivo.GetLinha

@@ -10,15 +10,13 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.funcao.FuncaoBinaria;
 
-public class LinhasPelaString extends FuncaoBinaria {
+public class LinhasPelaString extends FuncaoBinaria implements Arquivo {
 	private static final String ERRO = "Erro LinhasPelaString";
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(checagem, bloco, ctx);
-		if (!(op0 instanceof List<?>)) {
-			throw new ChecagemException(getClass(), ERRO + " >>> op0 deve ser List<String>");
-		}
+		checar(op0);
 		Object op1 = param1().executar(checagem, bloco, ctx);
 		checkObrigatorioString(op1, ERRO + " >>> op1");
 		String string = ((String) op1).trim();
@@ -26,7 +24,7 @@ public class LinhasPelaString extends FuncaoBinaria {
 		if (Util.estaVazio(string)) {
 			return resposta;
 		}
-		List<String> arquivo = LinhaPeloNumero.get((List<?>) op0);
+		List<String> arquivo = get(op0);
 		for (int i = 0; i < arquivo.size(); i++) {
 			String str = arquivo.get(i).trim();
 			if (str.equals(string)) {
