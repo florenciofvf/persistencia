@@ -39,10 +39,7 @@ public class NovaEntreIniFim extends FuncaoBinariaOuMaior implements Arquivo {
 		List<String> arquivo = get(op0);
 		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, resposta, arquivo);
 		if (resposta.isEmpty()) {
-			throw new ChecagemException(getClass(), ERRO + "Nenhuma linha come\u00E7ando com <<<[" + strInicio
-					+ "]>>> e finalizando com <<<[" + strFinal + "]>>>");
-		} else if (resposta.size() > 1) {
-			throw new ChecagemException(getClass(), ERRO + "Mais de uma linha come\u00E7ando com <<<[" + strInicio
+			throw new ChecagemException(getClass(), ERRO + " Nenhuma linha come\u00E7ando com <<<[" + strInicio
 					+ "]>>> e finalizando com <<<[" + strFinal + "]>>>");
 		}
 		String nova = (String) op3;
