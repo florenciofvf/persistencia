@@ -10,8 +10,8 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.funcao.FuncaoTernaria;
 
-public class StringEntreIniFim extends FuncaoTernaria implements Arquivo {
-	private static final String ERRO = "Erro StringEntreIniFim";
+public class LinhasEntreIniFim extends FuncaoTernaria implements Arquivo {
+	private static final String ERRO = "Erro LinhasEntreIniFim";
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
@@ -29,22 +29,26 @@ public class StringEntreIniFim extends FuncaoTernaria implements Arquivo {
 		if (Util.estaVazio(strFinal)) {
 			throw new ChecagemException(getClass(), ERRO + " >>> op2 vazio");
 		}
-		List<Linha> resposta = new ArrayList<>();
+		List<Linha> coletor = new ArrayList<>();
 		List<String> arquivo = get(op0);
-		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, resposta, arquivo);
-		if (resposta.isEmpty()) {
+		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, coletor, arquivo);
+		if (coletor.isEmpty()) {
 			throw new ChecagemException(getClass(), ERRO + " Nenhuma linha come\u00E7ando com <<<[" + strInicio
 					+ "]>>> e finalizando com <<<[" + strFinal + "]>>>");
 		}
-		Linha linha = resposta.get(0);
-		String string = linha.string;
-		int posIni = string.indexOf(strInicio);
-		int posFim = string.indexOf(strFinal);
-		return string.substring(posIni + strInicio.length(), posFim);
+		List<Linha> resposta = new ArrayList<>();
+		for (Linha linha : coletor) {
+			String string = linha.string;
+			int posIni = string.indexOf(strInicio);
+			int posFim = string.indexOf(strFinal);
+			String nova = string.substring(posIni + strInicio.length(), posFim);
+			resposta.add(new Linha(linha.numero, nova));
+		}
+		return resposta;
 	}
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return "stringEntreIniFim(List<String>, Texto, Texto) : Texto";
+		return "linhasEntreIniFim(List<String>, Texto, Texto) : List<Linha>";
 	}
 }

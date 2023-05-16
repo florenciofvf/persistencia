@@ -10,10 +10,10 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.funcao.FuncaoBinariaOuMaior;
 
-public class NovaEntreIniFim extends FuncaoBinariaOuMaior implements Arquivo {
-	private static final String ERRO = "Erro NovaEntreIniFim";
+public class LinhasAtualizadasEntreIniFim extends FuncaoBinariaOuMaior implements Arquivo {
+	private static final String ERRO = "Erro LinhasAtualizadasEntreIniFim";
 
-	public NovaEntreIniFim() {
+	public LinhasAtualizadasEntreIniFim() {
 		super(4);
 	}
 
@@ -35,25 +35,28 @@ public class NovaEntreIniFim extends FuncaoBinariaOuMaior implements Arquivo {
 		if (Util.estaVazio(strFinal)) {
 			throw new ChecagemException(getClass(), ERRO + " >>> op2 vazio");
 		}
-		List<Linha> resposta = new ArrayList<>();
+		List<Linha> coletor = new ArrayList<>();
 		List<String> arquivo = get(op0);
-		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, resposta, arquivo);
-		if (resposta.isEmpty()) {
+		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, coletor, arquivo);
+		if (coletor.isEmpty()) {
 			throw new ChecagemException(getClass(), ERRO + " Nenhuma linha come\u00E7ando com <<<[" + strInicio
 					+ "]>>> e finalizando com <<<[" + strFinal + "]>>>");
 		}
 		String nova = (String) op3;
-		Linha linha = resposta.get(0);
-		String string = linha.string;
-		int posIni = string.indexOf(strInicio);
-		int posFim = string.indexOf(strFinal);
-		String inicio = string.substring(0, posIni + strInicio.length());
-		String termino = string.substring(posFim);
-		return new Linha(linha.numero, inicio + nova + termino);
+		List<Linha> resposta = new ArrayList<>();
+		for (Linha linha : coletor) {
+			String string = linha.string;
+			int posIni = string.indexOf(strInicio);
+			int posFim = string.indexOf(strFinal);
+			String inicio = string.substring(0, posIni + strInicio.length());
+			String termino = string.substring(posFim);
+			resposta.add(new Linha(linha.numero, inicio + nova + termino));
+		}
+		return resposta;
 	}
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return "novaEntreIniFim(List<String>, Texto, Texto, Texto) : Texto";
+		return "linhasAtualizadasEntreIniFim(List<String>, Texto, Texto, Texto) : List<Linha>";
 	}
 }

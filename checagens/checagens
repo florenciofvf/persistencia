@@ -189,6 +189,7 @@ classItens
 br.com.persist.plugins.checagem.colecao.ClasseItens
 
 
+
 lerArquivo
 br.com.persist.plugins.checagem.arquivo.LerArquivo
 linhaPeloNumero
@@ -199,9 +200,9 @@ linhasPelaStringIniFim
 br.com.persist.plugins.checagem.arquivo.LinhasPelaStringIniFim
 substituirLinha
 br.com.persist.plugins.checagem.arquivo.SubstituirLinha
-stringEntreIniFim
-br.com.persist.plugins.checagem.arquivo.StringEntreIniFim
-novaEntreIniFim
-br.com.persist.plugins.checagem.arquivo.NovaEntreIniFim
+linhasEntreIniFim
+br.com.persist.plugins.checagem.arquivo.LinhasEntreIniFim
+linhasAtualizadasEntreIniFim
+br.com.persist.plugins.checagem.arquivo.LinhasAtualizadasEntreIniFim
 getLinha
 br.com.persist.plugins.checagem.arquivo.GetLinha

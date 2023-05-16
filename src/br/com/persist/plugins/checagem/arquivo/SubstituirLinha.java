@@ -47,7 +47,7 @@ public class SubstituirLinha extends FuncaoBinaria {
 			}
 			pw.close();
 			StringBuilder sb = new StringBuilder("SUBSTITUIR LINHA >>> " + absoluto);
-			sb.append(sucesso ? " SUCESSO" : " NAO ALTERADO");
+			sb.append(sucesso ? " ALTERADO PARA >>> " + linha.string : " NAO ALTERADO");
 			return sb.toString();
 		} catch (Exception ex) {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
