@@ -23,7 +23,7 @@ public class ExecModulo extends FuncaoBinaria {
 		if (modulo == null) {
 			throwModuloInexistente(idModulo);
 		}
-		return modulo.executar(checagem, null, Contexto.criar(op1));
+		return modulo.executar(checagem, null, ctx.criar(op1));
 	}
 
 	private void throwModuloInexistente(String idModulo) throws ChecagemException {

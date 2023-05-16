@@ -26,7 +26,7 @@ public class Exec extends FuncaoUnariaOuNParam {
 	private Object executarProprioBloco(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		checkObrigatorioMap(op0, ERRO + "op0");
-		return bloco.executar(checagem, Contexto.criar(op0));
+		return bloco.executar(checagem, ctx.criar(op0));
 	}
 
 	private Object executarOutroBloco(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
@@ -43,7 +43,7 @@ public class Exec extends FuncaoUnariaOuNParam {
 		if (outro == null) {
 			throwBlocoInexistente(modulo, idBloco);
 		}
-		return outro.executar(checagem, Contexto.criar(op1));
+		return outro.executar(checagem, ctx.criar(op1));
 	}
 
 	private Object executarModuloBloco(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
@@ -64,7 +64,7 @@ public class Exec extends FuncaoUnariaOuNParam {
 		if (outro == null) {
 			throwBlocoInexistente(modulo, idBloco);
 		}
-		return outro.executar(checagem, Contexto.criar(op2));
+		return outro.executar(checagem, ctx.criar(op2));
 	}
 
 	private void throwModuloInexistente(String idModulo) throws ChecagemException {

@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 public class Contexto {
 	private final Map<String, Object> map = new HashMap<>();
+	private Contexto parent;
 
 	public Contexto(Map<String, Object> map) {
 		put(map);
@@ -19,7 +20,15 @@ public class Contexto {
 	}
 
 	public Object get(String chave) {
-		return map.get(chave.toLowerCase());
+		Contexto ctx = this;
+		while (ctx != null) {
+			Object obj = ctx.map.get(chave.toLowerCase());
+			if (obj != null) {
+				return obj;
+			}
+			ctx = ctx.parent;
+		}
+		return null;
 	}
 
 	public void put(String chave, Object valor) {
@@ -34,11 +43,12 @@ public class Contexto {
 		}
 	}
 
-	public static Contexto criar(Object object) {
+	public Contexto criar(Object object) {
 		Contexto ctx = new Contexto();
+		ctx.parent = this;
 		if (object instanceof Map<?, ?>) {
-			Map<?, ?> map = (Map<?, ?>) object;
-			for (Entry<?, ?> entry : map.entrySet()) {
+			Map<?, ?> mapa = (Map<?, ?>) object;
+			for (Entry<?, ?> entry : mapa.entrySet()) {
 				ctx.put(entry.getKey().toString(), entry.getValue());
 			}
 		}
