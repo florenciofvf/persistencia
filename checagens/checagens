@@ -194,6 +194,8 @@ getLinha
 br.com.persist.plugins.checagem.arquivo.GetLinha
 lerArquivo
 br.com.persist.plugins.checagem.arquivo.LerArquivo
+clonarLinha
+br.com.persist.plugins.checagem.arquivo.ClonarLinha
 substituirLinha
 br.com.persist.plugins.checagem.arquivo.SubstituirLinha
 linhaPeloNumero
