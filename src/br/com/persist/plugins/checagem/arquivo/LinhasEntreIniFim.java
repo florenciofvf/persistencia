@@ -33,8 +33,7 @@ public class LinhasEntreIniFim extends FuncaoTernaria implements Arquivo {
 		List<String> arquivo = get(op0);
 		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, coletor, arquivo);
 		if (coletor.isEmpty()) {
-			throw new ChecagemException(getClass(), ERRO + " Nenhuma linha come\u00E7ando com <<<[" + strInicio
-					+ "]>>> e finalizando com <<<[" + strFinal + "]>>>");
+			lancarExcecao(getClass(), ERRO, ctx, strInicio, strFinal);
 		}
 		List<Linha> resposta = new ArrayList<>();
 		for (Linha linha : coletor) {
@@ -45,6 +44,17 @@ public class LinhasEntreIniFim extends FuncaoTernaria implements Arquivo {
 			resposta.add(new Linha(linha.numero, nova));
 		}
 		return resposta;
+	}
+
+	static void lancarExcecao(Class<?> klass, String erro, Contexto ctx, String strInicio, String strFinal)
+			throws ChecagemException {
+		Object object = ctx.get("absoluto");
+		String absoluto = "";
+		if (object instanceof String) {
+			absoluto = (String) object;
+		}
+		throw new ChecagemException(klass, erro + " Nenhuma linha come\u00E7ando com <<<[" + strInicio
+				+ "]>>> e finalizando com <<<[" + strFinal + "]>>> " + absoluto);
 	}
 
 	@Override

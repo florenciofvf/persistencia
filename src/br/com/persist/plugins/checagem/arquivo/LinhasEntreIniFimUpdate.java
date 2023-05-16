@@ -39,8 +39,7 @@ public class LinhasEntreIniFimUpdate extends FuncaoBinariaOuMaior implements Arq
 		List<String> arquivo = get(op0);
 		LinhasPelaStringIniFim.linhasStrIniStrFim(strInicio, strFinal, coletor, arquivo);
 		if (coletor.isEmpty()) {
-			throw new ChecagemException(getClass(), ERRO + " Nenhuma linha come\u00E7ando com <<<[" + strInicio
-					+ "]>>> e finalizando com <<<[" + strFinal + "]>>>");
+			LinhasEntreIniFim.lancarExcecao(getClass(), ERRO, ctx, strInicio, strFinal);
 		}
 		String nova = (String) op3;
 		List<Linha> resposta = new ArrayList<>();
