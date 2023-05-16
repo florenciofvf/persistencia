@@ -2,13 +2,21 @@ package br.com.persist.plugins.checagem.arquivo;
 
 import java.io.PrintWriter;
 
-class Linha {
+public class Linha {
 	final int numero;
 	final String string;
 
 	Linha(int numero, String string) {
 		this.numero = numero;
 		this.string = string;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public String getString() {
+		return string;
 	}
 
 	boolean processar(String str, int num, PrintWriter pw, boolean ln) {
