@@ -51,9 +51,9 @@ public class LinhasEntreIniFim extends FuncaoTernaria implements Arquivo {
 		Object object = ctx.get("absoluto");
 		String absoluto = "";
 		if (object instanceof String) {
-			absoluto = (String) object;
+			absoluto = "Arquivo: " + (String) object;
 		}
-		throw new ChecagemException(klass, erro + " Nenhuma linha come\u00E7ando com <<<[" + strInicio
+		throw new ChecagemException(klass, erro + " - Nenhuma linha come\u00E7ando com <<<[" + strInicio
 				+ "]>>> e finalizando com <<<[" + strFinal + "]>>> " + absoluto);
 	}
 

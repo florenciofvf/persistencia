@@ -15,6 +15,7 @@ public class Bloco {
 	private boolean paraPos;
 	private boolean privado;
 	private final String id;
+	private String desc;
 
 	public Bloco(Modulo modulo, String id, int indice) {
 		preString = new StringBuilder();
@@ -39,6 +40,9 @@ public class Bloco {
 		StringBuilder sb = new StringBuilder();
 		if (!Util.estaVazio(id)) {
 			sb.append(" id=" + XMLUtil.citar(id));
+		}
+		if (!Util.estaVazio(desc)) {
+			sb.append(" desc=" + XMLUtil.citar(desc));
 		}
 		if (privado) {
 			sb.append(" privado=" + XMLUtil.citar("" + privado));
@@ -80,6 +84,14 @@ public class Bloco {
 
 	public boolean isPrivado() {
 		return privado;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public void setParaString(boolean paraString) {

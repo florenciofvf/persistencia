@@ -22,6 +22,7 @@ class ChecagemHandler extends XMLHandler {
 		if (BLOCO.equals(qName)) {
 			Bloco bloco = new Bloco(modulo, attributes.getValue("id"), ++indice);
 			boolean privado = Boolean.parseBoolean(attributes.getValue("privado"));
+			bloco.setDesc(attributes.getValue("desc"));
 			bloco.setPrivado(privado);
 			modulo.add(bloco);
 			config(bloco);
