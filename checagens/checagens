@@ -190,19 +190,19 @@ br.com.persist.plugins.checagem.colecao.ClasseItens
 
 
 
+getLinha
+br.com.persist.plugins.checagem.arquivo.GetLinha
 lerArquivo
 br.com.persist.plugins.checagem.arquivo.LerArquivo
+substituirLinha
+br.com.persist.plugins.checagem.arquivo.SubstituirLinha
 linhaPeloNumero
 br.com.persist.plugins.checagem.arquivo.LinhaPeloNumero
 linhasPelaString
 br.com.persist.plugins.checagem.arquivo.LinhasPelaString
 linhasPelaStringIniFim
 br.com.persist.plugins.checagem.arquivo.LinhasPelaStringIniFim
-substituirLinha
-br.com.persist.plugins.checagem.arquivo.SubstituirLinha
 linhasEntreIniFim
 br.com.persist.plugins.checagem.arquivo.LinhasEntreIniFim
-linhasAtualizadasEntreIniFim
-br.com.persist.plugins.checagem.arquivo.LinhasAtualizadasEntreIniFim
-getLinha
-br.com.persist.plugins.checagem.arquivo.GetLinha
+linhasEntreIniFimUpdate
+br.com.persist.plugins.checagem.arquivo.LinhasEntreIniFimUpdate

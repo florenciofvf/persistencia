@@ -10,10 +10,10 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.funcao.FuncaoBinariaOuMaior;
 
-public class LinhasAtualizadasEntreIniFim extends FuncaoBinariaOuMaior implements Arquivo {
-	private static final String ERRO = "Erro LinhasAtualizadasEntreIniFim";
+public class LinhasEntreIniFimUpdate extends FuncaoBinariaOuMaior implements Arquivo {
+	private static final String ERRO = "Erro LinhasEntreIniFimUpdate";
 
-	public LinhasAtualizadasEntreIniFim() {
+	public LinhasEntreIniFimUpdate() {
 		super(4);
 	}
 
@@ -57,6 +57,6 @@ public class LinhasAtualizadasEntreIniFim extends FuncaoBinariaOuMaior implement
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return "linhasAtualizadasEntreIniFim(List<String>, Texto, Texto, Texto) : List<Linha>";
+		return "linhasEntreIniFimUpdate(List<String>, Texto, Texto, Texto) : List<Linha>";
 	}
 }
