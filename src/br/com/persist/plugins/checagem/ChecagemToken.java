@@ -181,8 +181,8 @@ public class ChecagemToken {
 					escapeAtivado = true;
 				}
 			} else {
+				checarCaracter(sb, escapeAtivado, c);
 				sb.append(c);
-				escapeAtivado = false;
 			}
 			indice++;
 		}
@@ -191,6 +191,13 @@ public class ChecagemToken {
 		}
 		indice++;
 		return new Token(sb.toString(), Token.STRING, indice);
+	}
+
+	private void checarCaracter(StringBuilder sb, boolean escapeAtivado, char c) throws ChecagemException {
+		if (escapeAtivado) {
+			sb.append(c);
+			throw new ChecagemException(getClass(), indice + " <<< Escape invalido no texto >>> " + sb.toString());
+		}
 	}
 
 	private Token tokenVariavel() throws ChecagemException {
