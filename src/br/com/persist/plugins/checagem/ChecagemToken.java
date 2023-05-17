@@ -174,7 +174,12 @@ public class ChecagemToken {
 					break;
 				}
 			} else if (c == '\\') {
-				escapeAtivado = true;
+				if (escapeAtivado) {
+					sb.append(c);
+					escapeAtivado = false;
+				} else {
+					escapeAtivado = true;
+				}
 			} else {
 				sb.append(c);
 				escapeAtivado = false;
