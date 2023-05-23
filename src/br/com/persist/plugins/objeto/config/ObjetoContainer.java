@@ -893,6 +893,8 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class ButtonColar extends ButtonPopup {
+			private Action desativarHoraAcao = acaoMenu("label.desativar_diff_em_horas");
+			private Action ativarHoraAcao = acaoMenu("label.ativar_diff_em_horas");
 			private Action diffHoraAcao = acaoMenu("label.diferenca_em_horas");
 			private Action numeroAcao = actionMenu("label.numeros");
 			private Action letraAcao = actionMenu("label.letras");
@@ -918,6 +920,8 @@ public class ObjetoContainer extends Panel {
 			private void configHora() {
 				addMenuItem(true, horaAcao);
 				addMenuItem(diffHoraAcao);
+				addMenuItem(ativarHoraAcao);
+				addMenuItem(desativarHoraAcao);
 				horaAcao.setActionListener(e -> {
 					textField.setText(HoraUtil.getHoraAtual());
 					textField.postActionEvent();
@@ -934,6 +938,23 @@ public class ObjetoContainer extends Panel {
 					if (lista.size() == 1) {
 						Relacao relacao = lista.get(0);
 						relacao.processarHoraDiff(false);
+						objetoSuperficie.repaint();
+					}
+				});
+				ativarHoraAcao.setActionListener(e -> {
+					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					if (lista.size() == 1) {
+						Relacao relacao = lista.get(0);
+						relacao.setProcessar(true);
+						relacao.ativar();
+						objetoSuperficie.repaint();
+					}
+				});
+				desativarHoraAcao.setActionListener(e -> {
+					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					if (lista.size() == 1) {
+						Relacao relacao = lista.get(0);
+						relacao.desativar();
 						objetoSuperficie.repaint();
 					}
 				});
