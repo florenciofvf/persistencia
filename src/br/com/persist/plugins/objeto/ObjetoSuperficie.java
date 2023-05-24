@@ -206,6 +206,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
+		repaint();
 	}
 
 	public void reiniciarHoras() {
