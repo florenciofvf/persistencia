@@ -1,13 +1,14 @@
 package br.com.persist.plugins.instrucao;
 
-public class Instrucao {
-	private String nome;
+public abstract class Instrucao {
+	protected final Metodo metodo;
 
-	public String getNome() {
-		return nome;
+	public Instrucao(Metodo metodo) {
+		this.metodo = metodo;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	public abstract Instrucao clonar(Metodo metodo);
+
+	public abstract void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando,
+			CacheBiblioteca cacheBiblioteca);
 }
