@@ -21,6 +21,7 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 	@Override
 	public void inicializar() {
 		br.com.persist.assistencia.Preferencias.addOutraPreferencia(InstrucaoPreferencia.class);
+		br.com.persist.assistencia.Util.criarDiretorio(InstrucaoConstantes.INSTRUCAO);
 	}
 
 	@Override
