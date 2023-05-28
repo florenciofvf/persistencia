@@ -27,6 +27,7 @@
 		<menu classeFabrica="br.com.persist.plugins.checagem.ChecagemFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.entrega.EntregaFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.mapa.MapaFabrica" ativo="true" />
+		<menu classeFabrica="br.com.persist.plugins.instrucao.InstrucaoFabrica" ativo="true" />
 	</menu>
 
 	<menu descricao="Configurações">
