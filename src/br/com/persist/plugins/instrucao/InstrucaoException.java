@@ -10,4 +10,8 @@ public class InstrucaoException extends Exception {
 	public InstrucaoException(String chave) {
 		super(InstrucaoMensagens.getString(chave));
 	}
+
+	public InstrucaoException(String chave, Object... argumentos) {
+		super(InstrucaoMensagens.getString(chave, argumentos));
+	}
 }
