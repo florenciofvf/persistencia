@@ -1,7 +1,5 @@
 package br.com.persist.plugins.instrucao;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,15 +44,11 @@ public class Metodo {
 	}
 
 	public void setValorParam(int indice, Object valor) throws InstrucaoException {
-		if (valido(valor)) {
+		if (PilhaOperando.valido(valor)) {
 			parametros.get(indice).valor = valor;
 		} else {
 			throw new InstrucaoException("erro.valor_invalido_param", indice, nome);
 		}
-	}
-
-	private boolean valido(Object valor) {
-		return (valor instanceof String) || (valor instanceof BigInteger) || (valor instanceof BigDecimal);
 	}
 
 	public void addInstrucao(Instrucao instrucao) {

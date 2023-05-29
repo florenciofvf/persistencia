@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
@@ -22,6 +23,11 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 	public void inicializar() {
 		br.com.persist.assistencia.Preferencias.addOutraPreferencia(InstrucaoPreferencia.class);
 		br.com.persist.assistencia.Util.criarDiretorio(InstrucaoConstantes.INSTRUCAO);
+	}
+
+	@Override
+	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
+		return new InstrucaoConfiguracao(formulario);
 	}
 
 	@Override
