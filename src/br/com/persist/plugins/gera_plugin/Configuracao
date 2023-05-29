@@ -1,0 +1,41 @@
+package ###package###;
+
+import java.awt.BorderLayout;
+
+import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.assistencia.Muro;
+import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.Label;
+import br.com.persist.formulario.Formulario;
+
+public class ###cap###Configuracao extends AbstratoConfiguracao {
+	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
+	private static final long serialVersionUID = 1L;
+
+	public ###cap###Configuracao(Formulario formulario) {
+		super(formulario, ###cap###Mensagens.getString("label.plugin_###decapLower###"));
+		montarLayout();
+		configurar();
+	}
+
+	private void montarLayout() {
+		chkExibirArqIgnorados.setSelected(###cap###Preferencia.isExibirArqIgnorados());
+
+		Muro muro = new Muro();
+		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
+		add(BorderLayout.CENTER, muro);
+	}
+
+	static CheckBox criarCheckBox(String chaveRotulo) {
+		return new CheckBox(###cap###Mensagens.getString(chaveRotulo), false);
+	}
+
+	private void configurar() {
+		chkExibirArqIgnorados
+				.addActionListener(e -> ###cap###Preferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
+	}
+
+	public Label criarLabel(String chaveRotulo) {
+		return new Label(###cap###Mensagens.getString(chaveRotulo), false);
+	}
+}

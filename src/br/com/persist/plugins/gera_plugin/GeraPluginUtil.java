@@ -117,6 +117,15 @@ public class GeraPluginUtil {
 		}
 		pw.println("\t}");
 		pw.println();
+
+		if (config.configuracao) {
+			pw.println();
+			pw.println("\t@Override");
+			pw.println("\tpublic AbstratoConfiguracao getConfiguracao(Formulario formulario) {");
+			pw.println("\t\treturn new " + config.nomeCap + "Configuracao(formulario);");
+			pw.println("\t}");
+			pw.println();
+		}
 	}
 
 	private static void transferir(Config config, String objeto) throws IOException {
