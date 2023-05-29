@@ -10,9 +10,9 @@ public class InstrucaoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final InstrucaoContainer container;
 
-	private InstrucaoFormulario(Formulario formulario) {
+	private InstrucaoFormulario(Formulario formulario, String conteudo, String idPagina) {
 		super(InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
-		container = new InstrucaoContainer(this, formulario);
+		container = new InstrucaoContainer(this, formulario, conteudo, idPagina);
 		container.setInstrucaoFormulario(this);
 		montarLayout();
 	}
@@ -34,8 +34,8 @@ public class InstrucaoFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
-	public static void criar(Formulario formulario) {
-		InstrucaoFormulario form = new InstrucaoFormulario(formulario);
+	public static void criar(Formulario formulario, String conteudo, String idPagina) {
+		InstrucaoFormulario form = new InstrucaoFormulario(formulario, conteudo, idPagina);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

@@ -38,7 +38,7 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 	private class InstrucaoPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new InstrucaoContainer(null, formulario);
+			return new InstrucaoContainer(null, formulario, null, stringPersistencia);
 		}
 	}
 
@@ -66,8 +66,9 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 		private MenuInstrucao(Formulario formulario) {
 			super(Constantes.LABEL_VAZIO, Icones.FRAGMENTO);
 			setText(InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
-			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new InstrucaoContainer(null, formulario)));
-			formularioAcao.setActionListener(e -> InstrucaoFormulario.criar(formulario));
+			ficharioAcao.setActionListener(
+					e -> formulario.adicionarPagina(new InstrucaoContainer(null, formulario, null, null)));
+			formularioAcao.setActionListener(e -> InstrucaoFormulario.criar(formulario, null, null));
 			dialogoAcao.setActionListener(e -> InstrucaoDialogo.criar(formulario));
 		}
 	}
