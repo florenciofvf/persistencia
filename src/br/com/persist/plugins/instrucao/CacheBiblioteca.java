@@ -57,10 +57,10 @@ public class CacheBiblioteca {
 	private void addInstrucao(Metodo metodo, String string) {
 		int pos = string.indexOf(' ');
 		if (pos == -1) {
-			Instrucao instrucao = Processador.instrucoes.get(string);
+			Instrucao instrucao = Instrucoes.get(string);
 			metodo.addInstrucao(instrucao);
 		} else {
-			Instrucao instrucao = Processador.instrucoes.get(string.substring(0, pos));
+			Instrucao instrucao = Instrucoes.get(string.substring(0, pos));
 			instrucao.setParam(string.substring(pos + 1));
 			metodo.addInstrucao(instrucao);
 		}
