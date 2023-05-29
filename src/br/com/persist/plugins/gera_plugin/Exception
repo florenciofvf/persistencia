@@ -10,4 +10,8 @@ public class ###cap###Exception extends Exception {
 	public ###cap###Exception(String chave) {
 		super(###cap###Mensagens.getString(chave));
 	}
+
+	public ###cap###Exception(String chave, Object... argumentos) {
+		super(###cap###Mensagens.getString(chave, argumentos));
+	}
 }
