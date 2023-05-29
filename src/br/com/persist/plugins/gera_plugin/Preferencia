@@ -25,6 +25,6 @@ public class ###cap###Preferencia {
 	}
 
 	public static void setExibirArqIgnorados(boolean exibirArqIgnorados) {
-		InstrucaoPreferencia.exibirArqIgnorados = exibirArqIgnorados;
+		###cap###Preferencia.exibirArqIgnorados = exibirArqIgnorados;
 	}
 }

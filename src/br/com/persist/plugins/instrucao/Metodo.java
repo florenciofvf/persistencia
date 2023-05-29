@@ -44,7 +44,7 @@ public class Metodo {
 	}
 
 	public void setValorParam(int indice, Object valor) throws InstrucaoException {
-		if (PilhaOperando.valido(valor)) {
+		if (InstrucaoUtil.tipoValido(valor)) {
 			parametros.get(indice).valor = valor;
 		} else {
 			throw new InstrucaoException("erro.valor_invalido_param", indice, nome);

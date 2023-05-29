@@ -1,7 +1,5 @@
 package br.com.persist.plugins.instrucao;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +15,11 @@ public class PilhaOperando {
 	}
 
 	public void add(Object valor) throws InstrucaoException {
-		if (valido(valor)) {
-			operandos.add(valor);
-		} else {
-			throw new InstrucaoException("erro.valor_invalido_operando", valor);
-		}
+		InstrucaoUtil.checarOperando(valor);
+		operandos.add(valor);
 	}
 
 	public Object remove() {
 		return operandos.remove(operandos.size() - 1);
-	}
-
-	static boolean valido(Object valor) {
-		return (valor instanceof String) || (valor instanceof BigInteger) || (valor instanceof BigDecimal);
 	}
 }
