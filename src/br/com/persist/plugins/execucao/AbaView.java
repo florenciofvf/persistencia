@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Frame;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -23,6 +25,7 @@ import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLHandler;
+import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelColetor;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 
@@ -68,6 +71,11 @@ public class AbaView extends Panel implements ContainerTreeListener {
 	@Override
 	public void executarVar(ContainerTree tree) {
 		log.processarVar(tree.getObjetoSelecionado(), tree, formulario);
+	}
+
+	@Override
+	public void executarMemoria(ContainerTree tree) {
+		log.processarMemoria(tree.getObjetoSelecionado(), tree, formulario);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -141,6 +149,18 @@ class PanelLog extends Panel {
 		dialogo.setVisible(true);
 		StringBuilder sb = new StringBuilder();
 		container.processar(sb, false, comp, coletor.getLista());
+		textArea.setText(sb.toString());
+	}
+
+	void processarMemoria(Container container, Component comp, Formulario formulario) {
+		if (container == null) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		List<Variavel> lista = new ArrayList<>();
+		Variavel var = new Variavel("tmp", Util.getContentTransfered());
+		lista.add(var);
+		container.processar(sb, false, comp, lista);
 		textArea.setText(sb.toString());
 	}
 }

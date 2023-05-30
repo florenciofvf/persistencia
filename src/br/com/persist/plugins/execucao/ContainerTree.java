@@ -134,16 +134,20 @@ public class ContainerTree extends Tree {
 	};
 
 	private class ContainerPopup extends Popup {
+		private Action executarMemoriaAcao = Action.acaoMenu(ExecucaoMensagens.getString("label.executar_memoria"),
+				Icones.EXECUTAR);
 		private Action executarVarAcao = Action.acaoMenu(ExecucaoMensagens.getString("label.executar_var"),
 				Icones.EXECUTAR);
 		private Action executarAcao = actionMenu("label.executar", Icones.EXECUTAR);
 		private static final long serialVersionUID = 1L;
 
 		private ContainerPopup() {
+			addMenuItem(executarMemoriaAcao);
 			addMenuItem(executarVarAcao);
 			addMenuItem(executarAcao);
 			executarAcao.setActionListener(e -> ouvintes.forEach(o -> o.executar(ContainerTree.this, false)));
 			executarVarAcao.setActionListener(e -> ouvintes.forEach(o -> o.executarVar(ContainerTree.this)));
+			executarMemoriaAcao.setActionListener(e -> ouvintes.forEach(o -> o.executarMemoria(ContainerTree.this)));
 		}
 
 		private void preShow(Container container) {
