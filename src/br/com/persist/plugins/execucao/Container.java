@@ -99,8 +99,8 @@ public class Container {
 			}
 			Process process = Runtime.getRuntime().exec(comando);
 			if (sb != null) {
-				imprimir(process.getErrorStream(), sb);
 				imprimir(process.getInputStream(), sb);
+				imprimir(process.getErrorStream(), sb);
 			}
 		} catch (IOException e) {
 			if (sb != null) {
