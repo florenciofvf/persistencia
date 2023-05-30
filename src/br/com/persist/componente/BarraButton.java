@@ -85,13 +85,6 @@ public abstract class BarraButton extends JToolBar
 		return Action.actionIconExcluir();
 	}
 
-	private void configAplicar(BarraButtonEnum... enuns) {
-		if (contem(APLICAR, enuns)) {
-			addButton(aplicarAcao);
-			aplicarAcao.setActionListener(e -> aplicar());
-		}
-	}
-
 	private void configColar2(BarraButtonEnum... enuns) {
 		if (contem(COLAR2, enuns)) {
 			addButton(colar2Acao);
@@ -247,6 +240,13 @@ public abstract class BarraButton extends JToolBar
 			buttonDestacar = new ButtonDestacar();
 			buttonDestacar.ini(enuns);
 			add(buttonDestacar);
+		}
+	}
+
+	private void configAplicar(BarraButtonEnum... enuns) {
+		if (contem(APLICAR, enuns)) {
+			addButton(aplicarAcao);
+			aplicarAcao.setActionListener(e -> aplicar());
 		}
 	}
 

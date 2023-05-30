@@ -1,7 +1,7 @@
 package br.com.persist.plugins.variaveis;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
-import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
@@ -97,13 +97,12 @@ public class VariavelContainer extends AbstratoContainer {
 
 		public void ini(Janela janela, VariavelColetor coletor) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					EXCLUIR, COPIAR, APLICAR_BOTAO);
-			buttonAplicar.setEnableAplicar2Acao(false);
+					EXCLUIR, COPIAR, APLICAR);
 			setColetor(coletor);
 		}
 
 		private void setColetor(VariavelColetor coletor) {
-			buttonAplicar.setEnabled(coletor != null);
+			aplicarAcao.setEnabled(coletor != null);
 			this.coletor = coletor;
 		}
 
