@@ -1,24 +1,26 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
+import java.util.Objects;
+
 public class Atom {
 	static final int FUNCAO_INFIXA = 1;
 	static final int PARENTESE_INI = 2;
 	static final int PARENTESE_FIM = 3;
-	static final int STRING_ATOM = 4;
-	static final int BIG_INTEGER = 5;
-	static final int BIG_DECIMAL = 6;
-	static final int VIRGULA = 7;
-	static final int STRING = 8;
-	static final int AUTO = 9;
-	static final int META = 10;
+	static final int BIG_INTEGER = 4;
+	static final int BIG_DECIMAL = 5;
+	static final int STRING_ATOM = 6;
+	static final int VARIAVEL = 7;
+	static final int VIRGULA = 8;
+	static final int STRING = 9;
+	static final int AUTO = 10;
 
 	private boolean negarExpressao;
 	private boolean processado;
-	private final Object valor;
+	private final String valor;
 	private final int tipo;
 
-	public Atom(Object valor, int tipo) {
-		this.valor = valor;
+	public Atom(String valor, int tipo) {
+		this.valor = Objects.requireNonNull(valor);
 		this.tipo = tipo;
 	}
 
@@ -26,7 +28,7 @@ public class Atom {
 		this("" + c, tipo);
 	}
 
-	public Object getValor() {
+	public String getValor() {
 		return valor;
 	}
 
@@ -44,6 +46,22 @@ public class Atom {
 
 	public boolean isParenteseFim() {
 		return tipo == PARENTESE_FIM;
+	}
+
+	public boolean isBigInteger() {
+		return tipo == BIG_INTEGER;
+	}
+
+	public boolean isBigDecimal() {
+		return tipo == BIG_DECIMAL;
+	}
+
+	public boolean isStringAtom() {
+		return tipo == STRING_ATOM;
+	}
+
+	public boolean isVariavel() {
+		return tipo == VARIAVEL;
 	}
 
 	public boolean isVirgula() {
@@ -76,6 +94,6 @@ public class Atom {
 
 	@Override
 	public String toString() {
-		return valor.toString();
+		return valor;
 	}
 }
