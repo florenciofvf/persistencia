@@ -61,6 +61,12 @@ public class InstrucaoAtom {
 		case ')':
 			indice++;
 			return new Atom(c, Atom.PARENTESE_FIM);
+		case '{':
+			indice++;
+			return new Atom(c, Atom.CHAVE_INI);
+		case '}':
+			indice++;
+			return new Atom(c, Atom.CHAVE_FIM);
 		case ',':
 			indice++;
 			return new Atom(c, Atom.VIRGULA);
@@ -224,6 +230,7 @@ public class InstrucaoAtom {
 
 	private Atom criarStringAtom(char c) throws InstrucaoException {
 		if (c >= 'a' && c <= 'z') {
+			indice++;
 			return stringAtom(c);
 		}
 		return throwInstrucaoException();
