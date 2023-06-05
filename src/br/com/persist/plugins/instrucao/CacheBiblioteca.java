@@ -35,7 +35,11 @@ public class CacheBiblioteca {
 		resp = new Biblioteca(nome);
 		Metodo metodo = null;
 		for (String linha : arquivo) {
-			if (linha.startsWith("@@")) {
+			if (linha.startsWith("@@@")) {
+				metodo = new Metodo(linha.substring(3));
+				metodo.setNativo(true);
+				resp.add(metodo);
+			} else if (linha.startsWith("@@")) {
 				metodo = new Metodo(linha.substring(2));
 				resp.add(metodo);
 			} else if (linha.startsWith("##")) {

@@ -10,6 +10,7 @@ public class Metodo {
 	private final List<NomeValor> parametros;
 	private final List<Instrucao> instrucoes;
 	private final String nome;
+	private boolean nativo;
 	private int indice;
 
 	public Metodo(String nome) {
@@ -55,6 +56,14 @@ public class Metodo {
 		if (instrucao != null) {
 			instrucoes.add(instrucao);
 		}
+	}
+
+	public boolean isNativo() {
+		return nativo;
+	}
+
+	public void setNativo(boolean nativo) {
+		this.nativo = nativo;
 	}
 }
 
