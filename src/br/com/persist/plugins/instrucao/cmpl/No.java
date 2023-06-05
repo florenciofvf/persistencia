@@ -39,6 +39,11 @@ public abstract class No {
 		return nos;
 	}
 
+	@Override
+	public String toString() {
+		return nome;
+	}
+
 	public abstract int comprimento();
 
 	public abstract void print(PrintWriter pw);

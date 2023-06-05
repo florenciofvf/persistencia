@@ -58,4 +58,13 @@ public class Metodo {
 		no.print(pw);
 		pw.println("return");
 	}
+
+	void criarHierarquia() {
+		//
+	}
+
+	@Override
+	public String toString() {
+		return nome + "(" + parametros + ")";
+	}
 }

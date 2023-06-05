@@ -32,6 +32,9 @@ public class InstrucaoGramatica {
 			metodos.add(metodo);
 			metodo = getMetodo();
 		}
+		for (Metodo met : metodos) {
+			met.criarHierarquia();
+		}
 	}
 
 	private Metodo getMetodo() throws InstrucaoException {
