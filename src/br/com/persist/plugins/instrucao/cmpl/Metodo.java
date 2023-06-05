@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
+
 public class Metodo {
 	private final List<No> parametros;
 	private final String nome;
@@ -59,8 +61,9 @@ public class Metodo {
 		pw.println("return");
 	}
 
-	void criarHierarquia() {
-		//
+	void criarHierarquia() throws InstrucaoException {
+		MetodoUtil util = new MetodoUtil(atoms);
+		no = util.criar();
 	}
 
 	@Override
