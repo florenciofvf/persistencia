@@ -7,6 +7,7 @@ import java.util.List;
 public abstract class No {
 	protected List<No> nos;
 	protected String nome;
+	protected No parent;
 
 	public No(String nome) {
 		nos = new ArrayList<>();
@@ -19,9 +20,14 @@ public abstract class No {
 
 	public No add(No no) {
 		if (no != null) {
+			no.parent = this;
 			nos.add(no);
 		}
 		return this;
+	}
+
+	public No getParent() {
+		return parent;
 	}
 
 	public No remove(No no) {

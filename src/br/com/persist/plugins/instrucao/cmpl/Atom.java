@@ -66,6 +66,14 @@ public class Atom {
 		return tipo == VARIAVEL;
 	}
 
+	public boolean isChaveIni() {
+		return tipo == CHAVE_INI;
+	}
+
+	public boolean isChaveFim() {
+		return tipo == CHAVE_FIM;
+	}
+
 	public boolean isVirgula() {
 		return tipo == VIRGULA;
 	}

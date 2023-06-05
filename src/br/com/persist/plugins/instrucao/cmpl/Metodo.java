@@ -7,6 +7,8 @@ import java.util.List;
 public class Metodo {
 	private final List<No> parametros;
 	private final String nome;
+	private List<Atom> atoms;
+	private boolean nativo;
 	private No no;
 
 	public Metodo(String nome) {
@@ -27,13 +29,29 @@ public class Metodo {
 	}
 
 	public void addParam(No no) {
-		if(no instanceof Param) {
+		if (no instanceof Param) {
 			parametros.add(no);
 		}
 	}
 
 	public String getNome() {
 		return nome;
+	}
+
+	public boolean isNativo() {
+		return nativo;
+	}
+
+	public void setNativo(boolean nativo) {
+		this.nativo = nativo;
+	}
+
+	public List<Atom> getAtoms() {
+		return atoms;
+	}
+
+	public void setAtoms(List<Atom> atoms) {
+		this.atoms = atoms;
 	}
 
 	public void print(PrintWriter pw) {
