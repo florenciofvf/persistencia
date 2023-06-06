@@ -71,3 +71,54 @@ public class Metodo {
 		return nome + "(" + parametros + ")";
 	}
 }
+
+class Param extends No {
+	public Param(String nome) {
+		super(nome);
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(nome);
+	}
+}
+
+class Variavel extends No {
+	private final boolean negarVariavel;
+
+	public Variavel(String nome, boolean negarVariavel) {
+		super(nome);
+		this.negarVariavel = negarVariavel;
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(nome);
+	}
+}
+
+class Invocacao extends No {
+	public Invocacao(String nome) {
+		super(nome);
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;// TODO
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(nome);// TODO
+	}
+}

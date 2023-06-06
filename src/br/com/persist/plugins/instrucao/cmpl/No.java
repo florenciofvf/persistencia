@@ -66,3 +66,19 @@ public abstract class No {
 
 	public abstract void print(PrintWriter pw);
 }
+
+class NoRaiz extends No {
+	public NoRaiz() {
+		super(null);
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 0;
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		throw new IllegalStateException();
+	}
+}

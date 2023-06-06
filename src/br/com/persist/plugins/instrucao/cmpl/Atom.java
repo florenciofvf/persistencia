@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
+import java.io.PrintWriter;
 import java.util.Objects;
 
 public class Atom {
@@ -109,5 +110,40 @@ public class Atom {
 	@Override
 	public String toString() {
 		return valor;
+	}
+}
+
+class Atomico extends No {
+	public Atomico(String nome) {
+		super(nome);
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(nome);
+	}
+}
+
+class Expressao extends No {
+	private final boolean negarExpressao;
+
+	public Expressao(boolean negarExpressao) {
+		super(null);
+		this.negarExpressao = negarExpressao;
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;// TODO
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(nome);// TODO
 	}
 }
