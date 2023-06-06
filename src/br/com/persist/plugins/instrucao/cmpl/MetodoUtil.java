@@ -130,21 +130,21 @@ class MetodoUtil {
 	}
 
 	static {
-		// infixas.put("+", Somar.class);
-		// infixas.put("-", Subtrair.class);
-		// infixas.put("*", Multiplicar.class);
-		// infixas.put("/", Dividir.class);
-		// infixas.put("%", Resto.class);
-		//
-		// infixas.put("==", Igual.class);
-		// // infixas.put("!=", Diferente.class);
-		// infixas.put("<", Menor.class);
-		// infixas.put("<=", MenorIgual.class);
-		// infixas.put(">", Maior.class);
-		// infixas.put(">=", MaiorIgual.class);
-		//
-		// infixas.put("^", Oux.class);
-		// infixas.put("&&", E.class);
-		// infixas.put("||", Ou.class);
+		infixas.put("+", new Somar());
+		infixas.put("-", new Subtrair());
+		infixas.put("*", new Multiplicar());
+		infixas.put("/", new Dividir());
+		infixas.put("%", new Resto());
+
+		infixas.put("==", new Igual());
+		infixas.put("!=", new Diferente());
+		infixas.put("<", new Menor());
+		infixas.put("<=", new MenorIgual());
+		infixas.put(">", new Maior());
+		infixas.put(">=", new MaiorIgual());
+
+		infixas.put("^", new Oux());
+		infixas.put("&&", new And());
+		infixas.put("||", new Ou());
 	}
 }

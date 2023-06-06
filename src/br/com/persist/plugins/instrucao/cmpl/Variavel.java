@@ -2,9 +2,12 @@ package br.com.persist.plugins.instrucao.cmpl;
 
 import java.io.PrintWriter;
 
-public class Param extends No {
-	public Param(String nome) {
+public class Variavel extends No {
+	private final boolean negarVariavel;
+
+	public Variavel(String nome, boolean negarVariavel) {
 		super(nome);
+		this.negarVariavel = negarVariavel;
 	}
 
 	@Override

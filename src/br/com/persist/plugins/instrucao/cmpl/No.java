@@ -62,7 +62,7 @@ public abstract class No {
 		return nome;
 	}
 
-	public abstract int comprimento();
+	public abstract int totalInstrucoes();
 
 	public abstract void print(PrintWriter pw);
 }
