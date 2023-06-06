@@ -15,6 +15,8 @@ public class InstrucaoConstantes {
 	public static final String RETURN = "return";
 	public static final String BODY = "body";
 	public static final String ELSE = "else";
+	public static final String LOAD = "load";
+	public static final String NEG = "neg";
 	public static final String IF = "if";
 
 	public static final String PUSH_BIG_INTEGER = "push_big_integer";

@@ -94,8 +94,8 @@ class MetodoUtil {
 	}
 
 	private void processoVariavel(Atom atom) {
-		Variavel variavel = new Variavel(atom.getValor(), atom.isNegarVariavel());
-		pilhaNo.peek().add(variavel);
+		Load load = new Load(atom);
+		pilhaNo.peek().add(load);
 		indice++;
 	}
 

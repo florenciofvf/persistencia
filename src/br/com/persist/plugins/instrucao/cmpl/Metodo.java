@@ -75,22 +75,6 @@ public class Metodo {
 		retorn.print(pw);
 	}
 
-	class Return extends No {
-		public Return() {
-			super(InstrucaoConstantes.RETURN);
-		}
-
-		@Override
-		public int totalInstrucoes() {
-			return 1;
-		}
-
-		@Override
-		public void print(PrintWriter pw) {
-			pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
-		}
-	}
-
 	void montar() throws InstrucaoException {
 		if (nativo) {
 			return;
@@ -102,25 +86,6 @@ public class Metodo {
 	@Override
 	public String toString() {
 		return nome + "(" + parametros + ")";
-	}
-}
-
-class Variavel extends No {
-	private final boolean negarVariavel;
-
-	public Variavel(String nome, boolean negarVariavel) {
-		super(nome);
-		this.negarVariavel = negarVariavel;
-	}
-
-	@Override
-	public int totalInstrucoes() {
-		return 1;
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		pw.print(nome);
 	}
 }
 
