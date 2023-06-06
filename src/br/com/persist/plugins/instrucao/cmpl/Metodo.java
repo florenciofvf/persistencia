@@ -62,7 +62,7 @@ public class Metodo {
 	}
 
 	void criarHierarquia() throws InstrucaoException {
-		MetodoUtil util = new MetodoUtil(atoms);
+		MetodoUtil util = new MetodoUtil(this);
 		no = util.criar();
 	}
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class No {
-	protected List<No> nos;
+	protected final List<No> nos;
 	protected String nome;
 	protected No parent;
 
@@ -20,10 +20,27 @@ public abstract class No {
 
 	public No add(No no) {
 		if (no != null) {
+			if (no.parent != null) {
+				no.parent.remove(no);
+			}
 			no.parent = this;
 			nos.add(no);
 		}
 		return this;
+	}
+
+	public No get(int indice) {
+		return nos.get(indice);
+	}
+
+	public No getUltimoNo() {
+		return nos.get(nos.size() - 1);
+	}
+
+	public No excluirUltimoNo() {
+		No no = nos.remove(nos.size() - 1);
+		no.parent = null;
+		return no;
 	}
 
 	public No getParent() {
@@ -31,6 +48,7 @@ public abstract class No {
 	}
 
 	public No remove(No no) {
+		no.parent = null;
 		nos.remove(no);
 		return this;
 	}

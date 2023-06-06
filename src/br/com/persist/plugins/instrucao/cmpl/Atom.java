@@ -14,7 +14,6 @@ public class Atom {
 	static final int VARIAVEL = 9;
 	static final int VIRGULA = 10;
 	static final int STRING = 11;
-	static final int AUTO = 12;
 
 	private boolean negarExpressao;
 	private boolean processado;
@@ -80,10 +79,6 @@ public class Atom {
 
 	public boolean isString() {
 		return tipo == STRING;
-	}
-
-	public boolean isAuto() {
-		return tipo == AUTO;
 	}
 
 	public boolean isProcessado() {

@@ -91,7 +91,7 @@ public class InstrucaoAtom {
 				indice++;
 				return new Atom("!=", Atom.FUNCAO_INFIXA);
 			}
-			return new Atom(c, Atom.AUTO);
+			return throwInstrucaoException();
 		case '<':
 			indice++;
 			if (indiceAtualEh('=')) {
