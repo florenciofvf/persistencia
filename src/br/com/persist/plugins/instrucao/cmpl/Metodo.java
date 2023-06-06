@@ -11,13 +11,14 @@ import br.com.persist.plugins.instrucao.cmpl.InstrucaoGramatica.Param;
 public class Metodo {
 	private final Return retorn = new Return();
 	private final List<No> parametros;
+	private final List<Atom> atoms;
 	private final String nome;
-	private List<Atom> atoms;
 	private boolean nativo;
 	private No no;
 
 	public Metodo(String nome) {
 		parametros = new ArrayList<>();
+		atoms = new ArrayList<>();
 		this.nome = nome;
 	}
 
@@ -55,15 +56,20 @@ public class Metodo {
 		return atoms;
 	}
 
-	public void setAtoms(List<Atom> atoms) {
-		this.atoms = atoms;
+	public void addAtom(Atom atom) {
+		if (atom != null) {
+			atoms.add(atom);
+		}
 	}
 
 	public void print(PrintWriter pw) {
 		String prefixo = nativo ? InstrucaoConstantes.PREFIXO_METODO_NATIVO : InstrucaoConstantes.PREFIXO_METODO;
-		pw.print(prefixo + nome);
+		pw.println(prefixo + nome);
 		for (No n : parametros) {
 			n.print(pw);
+		}
+		if (nativo) {
+			return;
 		}
 		no.print(pw);
 		retorn.print(pw);
@@ -81,11 +87,14 @@ public class Metodo {
 
 		@Override
 		public void print(PrintWriter pw) {
-			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
+			pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
 		}
 	}
 
 	void montar() throws InstrucaoException {
+		if (nativo) {
+			return;
+		}
 		MetodoUtil util = new MetodoUtil(this);
 		no = util.montar();
 	}

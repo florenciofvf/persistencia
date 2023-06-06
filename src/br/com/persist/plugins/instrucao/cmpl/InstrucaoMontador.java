@@ -12,21 +12,22 @@ public class InstrucaoMontador {
 	private InstrucaoMontador() {
 	}
 
-	public static void compilar(File file) throws IOException, InstrucaoException {
+	public static boolean compilar(File file) throws IOException, InstrucaoException {
 		if (!file.isFile()) {
-			return;
+			return false;
 		}
 		String script = Util.conteudo(file);
 		InstrucaoAtom lexico = new InstrucaoAtom(script);
 		List<Atom> atoms = lexico.getListaAtom();
 		InstrucaoGramatica gramatica = new InstrucaoGramatica(atoms);
 		List<Metodo> metodos = gramatica.montarMetodos();
-		File destino = new File(file.getParent(), file.getName() + ".obj");
+		File destino = new File(file.getParent(), file.getName() + ".txt");
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			for (Metodo metodo : metodos) {
 				pw.println();
 				metodo.print(pw);
 			}
 		}
+		return true;
 	}
 }

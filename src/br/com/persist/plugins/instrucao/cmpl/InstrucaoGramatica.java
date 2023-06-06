@@ -51,7 +51,9 @@ public class InstrucaoGramatica {
 		} else if ("funcao".equals(atom.getValor())) {
 			indice++;
 			Metodo metodo = criarMetodo();
-			metodo.setAtoms(getAtoms());
+			for (Atom a : getAtoms()) {
+				metodo.addAtom(a);
+			}
 			return metodo;
 		} else {
 			return throwInstrucaoException();
