@@ -70,7 +70,7 @@ class NoRaiz extends No {
 
 	@Override
 	public int totalInstrucoes() {
-		return 0;
+		throw new IllegalStateException();
 	}
 
 	@Override

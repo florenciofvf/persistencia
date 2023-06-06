@@ -3,6 +3,8 @@ package br.com.persist.plugins.instrucao.cmpl;
 import java.io.PrintWriter;
 import java.util.Objects;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+
 public class Atom {
 	static final int FUNCAO_INFIXA = 1;
 	static final int PARENTESE_INI = 2;
@@ -113,9 +115,12 @@ public class Atom {
 	}
 }
 
-class Atomico extends No {
-	public Atomico(String nome) {
-		super(nome);
+class Push extends No {
+	final Atom atom;
+
+	public Push(Atom atom) {
+		super("push");
+		this.atom = atom;
 	}
 
 	@Override
@@ -125,7 +130,16 @@ class Atomico extends No {
 
 	@Override
 	public void print(PrintWriter pw) {
-		pw.print(nome);
+		if (atom.isString()) {
+			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_STRING);
+		} else if (atom.isBigInteger()) {
+			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_BIG_INTEGER);
+		} else if (atom.isBigDecimal()) {
+			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_BIG_DECIMAL);
+		} else {
+			throw new IllegalStateException();
+		}
+		pw.println(InstrucaoConstantes.ESPACO + atom.getValor());
 	}
 }
 

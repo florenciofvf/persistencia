@@ -10,11 +10,16 @@ public class InstrucaoConstantes {
 	public static final String IGNORADOS = "ignorados";
 	public static final String PREFIXO_METODO = "@@";
 	public static final String PREFIXO_PARAM = "##";
+	public static final String ESPACO = " ";
 
 	public static final String RETURN = "return";
 	public static final String BODY = "body";
 	public static final String ELSE = "else";
 	public static final String IF = "if";
+
+	public static final String PUSH_BIG_INTEGER = "push_big_integer";
+	public static final String PUSH_BIG_DECIMAL = "push_big_decimal";
+	public static final String PUSH_STRING = "push_string";
 
 	private InstrucaoConstantes() {
 	}

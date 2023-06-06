@@ -107,8 +107,8 @@ class MetodoUtil {
 	}
 
 	private void processoAtomico(Atom atom) {
-		Atomico atomico = new Atomico(atom.getValor());
-		pilhaNo.peek().add(atomico);
+		Push push = new Push(atom);
+		pilhaNo.peek().add(push);
 		indice++;
 	}
 
@@ -132,7 +132,7 @@ class MetodoUtil {
 	}
 
 	private static boolean ehTipoAtomico(Atom atom) {
-		return atom.isVariavel() || atom.isString() || atom.isBigInteger() || atom.isBigDecimal();
+		return atom.isString() || atom.isBigInteger() || atom.isBigDecimal();
 	}
 
 	static {
