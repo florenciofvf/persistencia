@@ -9,13 +9,9 @@ public abstract class Instrucao {
 	protected final String nome;
 	protected String parametro;
 
-	public Instrucao(String nome, Metodo metodo) {
+	public Instrucao(Metodo metodo, String nome) {
 		this.nome = Objects.requireNonNull(nome);
 		this.metodo = metodo;
-	}
-
-	public Instrucao(String nome) {
-		this(nome, null);
 	}
 
 	public String getNome() {

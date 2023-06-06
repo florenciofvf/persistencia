@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoGramatica {
-	private final List<Metodo> metodos;
 	private final List<Atom> atoms;
 	private int indice;
 
 	public InstrucaoGramatica(List<Atom> atoms) {
-		metodos = new ArrayList<>();
 		this.atoms = atoms;
 		indice = 0;
 	}
@@ -26,15 +25,17 @@ public class InstrucaoGramatica {
 		throw new InstrucaoException(sb.toString(), false);
 	}
 
-	public void processar(PrintWriter pw) throws InstrucaoException {
+	public List<Metodo> montarMetodos() throws InstrucaoException {
+		List<Metodo> metodos = new ArrayList<>();
 		Metodo metodo = getMetodo();
 		while (metodo != null) {
 			metodos.add(metodo);
 			metodo = getMetodo();
 		}
 		for (Metodo met : metodos) {
-			met.criarHierarquia();
+			met.montar();
 		}
+		return metodos;
 	}
 
 	private Metodo getMetodo() throws InstrucaoException {
@@ -88,6 +89,22 @@ public class InstrucaoGramatica {
 		List<Atom> parametros = getParametros();
 		for (Atom atom : parametros) {
 			resp.addParam(new Param(atom.getValor()));
+		}
+	}
+
+	class Param extends No {
+		public Param(String nome) {
+			super(nome);
+		}
+
+		@Override
+		public int totalInstrucoes() {
+			return 1;
+		}
+
+		@Override
+		public void print(PrintWriter pw) {
+			pw.println(InstrucaoConstantes.PREFIXO_PARAM + nome);
 		}
 	}
 

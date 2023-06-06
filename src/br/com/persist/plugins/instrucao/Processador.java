@@ -22,6 +22,6 @@ public class Processador {
 	}
 
 	static {
-		Instrucoes.add(new Return());
+		Instrucoes.add(new Return(null));
 	}
 }

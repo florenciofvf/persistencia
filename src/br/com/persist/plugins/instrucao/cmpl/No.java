@@ -14,10 +14,6 @@ public abstract class No {
 		this.nome = nome;
 	}
 
-	public No() {
-		this(null);
-	}
-
 	public No add(No no) {
 		if (no != null) {
 			if (no.parent != null) {

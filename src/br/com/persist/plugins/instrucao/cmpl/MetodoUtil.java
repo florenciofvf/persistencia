@@ -36,7 +36,7 @@ class MetodoUtil {
 		return atoms.get(indice);
 	}
 
-	No criar() throws InstrucaoException {
+	No montar() throws InstrucaoException {
 		NoRaiz raiz = new NoRaiz();
 		pilhaNo.push(raiz);
 		while (indice < atoms.size()) {
@@ -74,9 +74,15 @@ class MetodoUtil {
 		if (!atom.isParenteseIni()) {
 			throwInstrucaoException();
 		}
-		Invocacao invocacao = new Invocacao(metodo);
-		pilhaNo.peek().add(invocacao);
-		pilhaNo.push(invocacao);
+		if ("if".equals(metodo)) {
+			If se = new If();
+			pilhaNo.peek().add(se);
+			pilhaNo.push(se);
+		} else {
+			Invocacao invocacao = new Invocacao(metodo);
+			pilhaNo.peek().add(invocacao);
+			pilhaNo.push(invocacao);
+		}
 		indice++;
 	}
 

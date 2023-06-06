@@ -4,9 +4,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.cmpl.InstrucaoGramatica.Param;
 
 public class Metodo {
+	private final Return retorn = new Return();
 	private final List<No> parametros;
 	private final String nome;
 	private List<Atom> atoms;
@@ -57,34 +60,39 @@ public class Metodo {
 	}
 
 	public void print(PrintWriter pw) {
+		String prefixo = nativo ? InstrucaoConstantes.PREFIXO_METODO_NATIVO : InstrucaoConstantes.PREFIXO_METODO;
+		pw.print(prefixo + nome);
+		for (No n : parametros) {
+			n.print(pw);
+		}
 		no.print(pw);
-		pw.println("return");
+		retorn.print(pw);
 	}
 
-	void criarHierarquia() throws InstrucaoException {
+	class Return extends No {
+		public Return() {
+			super(InstrucaoConstantes.RETURN);
+		}
+
+		@Override
+		public int totalInstrucoes() {
+			return 1;
+		}
+
+		@Override
+		public void print(PrintWriter pw) {
+			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
+		}
+	}
+
+	void montar() throws InstrucaoException {
 		MetodoUtil util = new MetodoUtil(this);
-		no = util.criar();
+		no = util.montar();
 	}
 
 	@Override
 	public String toString() {
 		return nome + "(" + parametros + ")";
-	}
-}
-
-class Param extends No {
-	public Param(String nome) {
-		super(nome);
-	}
-
-	@Override
-	public int totalInstrucoes() {
-		return 1;
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		pw.print(nome);
 	}
 }
 

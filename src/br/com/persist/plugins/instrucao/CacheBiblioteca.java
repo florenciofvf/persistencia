@@ -35,19 +35,19 @@ public class CacheBiblioteca {
 		resp = new Biblioteca(nome);
 		Metodo metodo = null;
 		for (String linha : arquivo) {
-			if (linha.startsWith("@@@")) {
+			if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO_NATIVO)) {
 				metodo = new Metodo(linha.substring(3));
 				metodo.setNativo(true);
 				resp.add(metodo);
-			} else if (linha.startsWith("@@")) {
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO)) {
 				metodo = new Metodo(linha.substring(2));
 				resp.add(metodo);
-			} else if (linha.startsWith("##")) {
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAM)) {
 				if (metodo == null) {
 					throw new InstrucaoException("erro.parametro_sem_metodo", nome, linha.substring(2));
 				}
 				metodo.addParam(linha.substring(2));
-			} else if (linha.startsWith("$$")) {
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_INSTRUCAO)) {
 				if (metodo == null) {
 					throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linha.substring(2));
 				}
