@@ -311,7 +311,7 @@ public class InstrucaoAtom {
 	private void processar(final List<Atom> lista, AtomIndice atomIndice, boolean negar) throws InstrucaoException {
 		int indiceAtomAntes = atomIndice.indice - 1;
 		int indiceAtomDepois = atomIndice.indice + 1;
-		if (!ehOperandoCalculavel(indiceAtomAntes, lista) && isAtomNumero(indiceAtomDepois, lista)) {
+		if (!ehOperandoCalculavel(indiceAtomAntes, lista) && atomNumero(indiceAtomDepois, lista)) {
 			if (negar) {
 				negarAtom(indiceAtomDepois, atomIndice, lista);
 			} else {
@@ -322,12 +322,17 @@ public class InstrucaoAtom {
 				lista.get(indiceAtomDepois).setNegarExpressao(true);
 			}
 			lista.remove(atomIndice.indice);
+		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista) && variavel(indiceAtomDepois, lista)) {
+			if (negar) {
+				lista.get(indiceAtomDepois).setNegarVariavel(true);
+			}
+			lista.remove(atomIndice.indice);
 		} else {
 			atomIndice.atom.setProcessado(true);
 		}
 	}
 
-	private boolean isAtomNumero(int i, final List<Atom> lista) {
+	private boolean atomNumero(int i, final List<Atom> lista) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
 			return atom.isBigInteger() || atom.isBigDecimal();
@@ -339,6 +344,14 @@ public class InstrucaoAtom {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
 			return atom.isParenteseIni();
+		}
+		return false;
+	}
+
+	private boolean variavel(int i, final List<Atom> lista) {
+		if (i >= 0 && i < lista.size()) {
+			Atom atom = lista.get(i);
+			return atom.isVariavel();
 		}
 		return false;
 	}

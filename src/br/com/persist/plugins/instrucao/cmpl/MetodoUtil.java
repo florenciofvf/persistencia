@@ -38,7 +38,7 @@ class MetodoUtil {
 
 	No criar() throws InstrucaoException {
 		NoRaiz raiz = new NoRaiz();
-		pilhaNo.add(raiz);
+		pilhaNo.push(raiz);
 		while (indice < atoms.size()) {
 			Atom atom = getAtom();
 			if (atom.isStringAtom()) {
@@ -47,9 +47,9 @@ class MetodoUtil {
 			} else if (atom.isParenteseIni()) {
 				processoExpressao(atom);
 			} else if (atom.isParenteseFim()) {
-				pilhaNo.remove();
-				while (pilhaNo.ref() instanceof Infixa) {
-					pilhaNo.remove();
+				pilhaNo.pop();
+				while (pilhaNo.peek() instanceof Infixa) {
+					pilhaNo.pop();
 				}
 			} else if (atom.isVariavel()) {
 				processoVariavel(atom);
@@ -75,58 +75,58 @@ class MetodoUtil {
 			throwInstrucaoException();
 		}
 		Invocacao invocacao = new Invocacao(metodo);
-		pilhaNo.ref().add(invocacao);
-		pilhaNo.add(invocacao);
+		pilhaNo.peek().add(invocacao);
+		pilhaNo.push(invocacao);
 		indice++;
 	}
 
 	private void processoExpressao(Atom atom) {
 		Expressao expressao = new Expressao(atom.isNegarExpressao());
-		pilhaNo.ref().add(expressao);
-		pilhaNo.add(expressao);
+		pilhaNo.peek().add(expressao);
+		pilhaNo.push(expressao);
 		indice++;
 	}
 
 	private void processoVariavel(Atom atom) {
-		Variavel variavel = new Variavel(atom.getValor());
-		pilhaNo.ref().add(variavel);
-		// pilhaNo.add(variavel);
+		Variavel variavel = new Variavel(atom.getValor(), atom.isNegarVariavel());
+		pilhaNo.peek().add(variavel);
 		indice++;
 	}
 
 	private void processoVirgula() throws InstrucaoException {
-		if (!(pilhaNo.ref() instanceof Invocacao)) {
+		if (!(pilhaNo.peek() instanceof Invocacao)) {
 			throwInstrucaoException();
 		}
 		indice++;
 	}
 
-	private static boolean ehTipoAtomico(Atom atom) {
-		return atom.isVariavel() || atom.isString() || atom.isBigInteger() || atom.isBigDecimal();
-	}
-
 	private void processoAtomico(Atom atom) {
 		Atomico atomico = new Atomico(atom.getValor());
-		pilhaNo.ref().add(atomico);
-		// pilhaNo.add(atomico);
+		pilhaNo.peek().add(atomico);
 		indice++;
 	}
 
 	private void processoInfixa(Atom atom) {
 		Infixa novaInfixa = infixas.get(atom.getValor()).clonar();
 
-		if (novaInfixa.possuoPrioridadeSobre(pilhaNo.ref())) {
-			Infixa ultimaInfixa = (Infixa) pilhaNo.ref();
+		No sel = pilhaNo.peek();
+		if (novaInfixa.possuoPrioridadeSobre(sel.getUltimoNo())) {
+			Infixa ultimaInfixa = (Infixa) sel.getUltimoNo();
 			No no = ultimaInfixa.excluirUltimoNo();
 			novaInfixa.add(no);
 			ultimaInfixa.add(novaInfixa);
 		} else {
-			No no = pilhaNo.remove();
+			No no = sel.excluirUltimoNo();
 			novaInfixa.add(no);
-			pilhaNo.add(novaInfixa);
+			sel.add(novaInfixa);
 		}
 
+		pilhaNo.push(novaInfixa);
 		indice++;
+	}
+
+	private static boolean ehTipoAtomico(Atom atom) {
+		return atom.isVariavel() || atom.isString() || atom.isBigInteger() || atom.isBigDecimal();
 	}
 
 	static {

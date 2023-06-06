@@ -16,6 +16,7 @@ public class Atom {
 	static final int STRING = 11;
 
 	private boolean negarExpressao;
+	private boolean negarVariavel;
 	private boolean processado;
 	private final String valor;
 	private final int tipo;
@@ -95,6 +96,14 @@ public class Atom {
 
 	public void setNegarExpressao(boolean negarExpressao) {
 		this.negarExpressao = negarExpressao;
+	}
+
+	public boolean isNegarVariavel() {
+		return negarVariavel;
+	}
+
+	public void setNegarVariavel(boolean negarVariavel) {
+		this.negarVariavel = negarVariavel;
 	}
 
 	@Override
