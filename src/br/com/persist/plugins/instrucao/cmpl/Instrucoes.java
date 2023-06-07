@@ -161,3 +161,84 @@ class Expression extends No {
 		}
 	}
 }
+
+class If extends No {
+	final Goto gotoBody = new Goto();
+	final Goto gotoElse = new Goto();
+	final Ifeq ifeq = new Ifeq();
+
+	public If() {
+		super(InstrucaoConstantes.IF);
+	}
+
+	@Override
+	public int totalInstrucoes() throws InstrucaoException {
+		checarOperandos();
+		int total = nos.get(0).totalInstrucoes();
+		total += ifeq.totalInstrucoes();
+		total += nos.get(1).totalInstrucoes();
+		total += gotoBody.totalInstrucoes();
+		total += nos.get(2).totalInstrucoes();
+		total += gotoElse.totalInstrucoes();
+		return total;
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		checarOperandos();
+		nos.get(0).print(pw);
+		ifeq.print(pw);
+		nos.get(1).print(pw);
+		gotoBody.print(pw);
+		nos.get(2).print(pw);
+		gotoElse.print(pw);
+	}
+
+	public boolean valido() {
+		return nos.size() == 3;
+	}
+
+	private void checarOperandos() throws InstrucaoException {
+		if (!valido()) {
+			throw new InstrucaoException(nome + " <<< Faltando operandos", false);
+		}
+	}
+}
+
+class Ifeq extends No {
+	private int indice = 21;
+
+	public Ifeq() {
+		super(InstrucaoConstantes.IF_EQ);
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
+		pw.println(InstrucaoConstantes.ESPACO + indice);
+	}
+}
+
+class Goto extends No {
+	private int indice = 31;
+
+	public Goto() {
+		super(InstrucaoConstantes.GOTO);
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
+		pw.println(InstrucaoConstantes.ESPACO + indice);
+	}
+}
