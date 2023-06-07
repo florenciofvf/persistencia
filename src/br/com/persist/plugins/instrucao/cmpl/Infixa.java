@@ -58,7 +58,7 @@ public abstract class Infixa extends No {
 
 class Somar extends Infixa {
 	public Somar() {
-		super("add");
+		super(InstrucaoConstantes.ADD);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ class Somar extends Infixa {
 
 class Subtrair extends Infixa {
 	public Subtrair() {
-		super("sub");
+		super(InstrucaoConstantes.SUB);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ class Subtrair extends Infixa {
 
 class Multiplicar extends Infixa {
 	public Multiplicar() {
-		super("mul");
+		super(InstrucaoConstantes.MUL);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ class Multiplicar extends Infixa {
 
 class Dividir extends Infixa {
 	public Dividir() {
-		super("div");
+		super(InstrucaoConstantes.DIV);
 	}
 
 	@Override
@@ -122,7 +122,7 @@ class Dividir extends Infixa {
 
 class Resto extends Infixa {
 	public Resto() {
-		super("rem");
+		super(InstrucaoConstantes.REM);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ class Resto extends Infixa {
 
 class Igual extends Infixa {
 	public Igual() {
-		super("eq");
+		super(InstrucaoConstantes.IGUAL);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ class Igual extends Infixa {
 
 class Diferente extends Infixa {
 	public Diferente() {
-		super("ne");
+		super(InstrucaoConstantes.DIFF);
 	}
 
 	@Override
@@ -170,7 +170,7 @@ class Diferente extends Infixa {
 
 class Menor extends Infixa {
 	public Menor() {
-		super("lt");
+		super(InstrucaoConstantes.MENOR);
 	}
 
 	@Override
@@ -186,7 +186,7 @@ class Menor extends Infixa {
 
 class MenorIgual extends Infixa {
 	public MenorIgual() {
-		super("le");
+		super(InstrucaoConstantes.MENOR_IGUAL);
 	}
 
 	@Override
@@ -202,7 +202,7 @@ class MenorIgual extends Infixa {
 
 class Maior extends Infixa {
 	public Maior() {
-		super("gt");
+		super(InstrucaoConstantes.MAIOR);
 	}
 
 	@Override
@@ -218,7 +218,7 @@ class Maior extends Infixa {
 
 class MaiorIgual extends Infixa {
 	public MaiorIgual() {
-		super("ge");
+		super(InstrucaoConstantes.MAIOR_IGUAL);
 	}
 
 	@Override
@@ -232,25 +232,9 @@ class MaiorIgual extends Infixa {
 	}
 }
 
-class Xor extends Infixa {
-	public Xor() {
-		super("xor");
-	}
-
-	@Override
-	public short getPrioridade() {
-		return logico1;
-	}
-
-	@Override
-	public Infixa clonar() {
-		return new Xor();
-	}
-}
-
 class And extends Infixa {
 	public And() {
-		super("and");
+		super(InstrucaoConstantes.AND);
 	}
 
 	@Override
@@ -264,9 +248,25 @@ class And extends Infixa {
 	}
 }
 
+class Xor extends Infixa {
+	public Xor() {
+		super(InstrucaoConstantes.XOR);
+	}
+
+	@Override
+	public short getPrioridade() {
+		return logico1;
+	}
+
+	@Override
+	public Infixa clonar() {
+		return new Xor();
+	}
+}
+
 class Or extends Infixa {
 	public Or() {
-		super("or");
+		super(InstrucaoConstantes.OR);
 	}
 
 	@Override
