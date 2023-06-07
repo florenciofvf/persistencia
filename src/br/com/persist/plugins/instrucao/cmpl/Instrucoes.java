@@ -129,18 +129,18 @@ class Invoke extends No {
 }
 
 class Expression extends No {
-	private final boolean negarExpressao;
+	final Atom atom;
 
-	public Expression(boolean negarExpressao) {
+	public Expression(Atom atom) {
 		super("expression");
-		this.negarExpressao = negarExpressao;
+		this.atom = atom;
 	}
 
 	@Override
 	public int totalInstrucoes() throws InstrucaoException {
 		checarOperandos();
 		int total = nos.get(0).totalInstrucoes();
-		if (negarExpressao) {
+		if (atom.isNegarExpressao()) {
 			total++;
 		}
 		return total;
@@ -150,7 +150,7 @@ class Expression extends No {
 	public void print(PrintWriter pw) throws InstrucaoException {
 		checarOperandos();
 		nos.get(0).print(pw);
-		if (negarExpressao) {
+		if (atom.isNegarExpressao()) {
 			pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.NEG);
 		}
 	}

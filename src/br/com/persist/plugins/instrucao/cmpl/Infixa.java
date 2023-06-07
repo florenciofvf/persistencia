@@ -45,8 +45,12 @@ public abstract class Infixa extends No {
 		return false;
 	}
 
+	public boolean valido() {
+		return nos.size() == 2;
+	}
+
 	private void checarOperandos() throws InstrucaoException {
-		if (nos.size() != 2) {
+		if (!valido()) {
 			throw new InstrucaoException(nome + " <<< Faltando operandos", false);
 		}
 	}
@@ -228,8 +232,8 @@ class MaiorIgual extends Infixa {
 	}
 }
 
-class Oux extends Infixa {
-	public Oux() {
+class Xor extends Infixa {
+	public Xor() {
 		super("xor");
 	}
 
@@ -240,7 +244,7 @@ class Oux extends Infixa {
 
 	@Override
 	public Infixa clonar() {
-		return new Oux();
+		return new Xor();
 	}
 }
 
@@ -260,8 +264,8 @@ class And extends Infixa {
 	}
 }
 
-class Ou extends Infixa {
-	public Ou() {
+class Or extends Infixa {
+	public Or() {
 		super("or");
 	}
 
@@ -272,6 +276,6 @@ class Ou extends Infixa {
 
 	@Override
 	public Infixa clonar() {
-		return new Ou();
+		return new Or();
 	}
 }

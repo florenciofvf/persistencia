@@ -13,15 +13,13 @@ class MetodoUtil {
 	private final PilhaNo pilhaNo = new PilhaNo();
 	private final List<Atom> atoms;
 	private final Metodo metodo;
-	private int indice;
 
 	MetodoUtil(Metodo metodo) {
 		this.metodo = Objects.requireNonNull(metodo);
 		atoms = metodo.getAtoms();
-		indice = 0;
 	}
 
-	private No throwInstrucaoException() throws InstrucaoException {
+	private No throwInstrucaoException(int indice) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder(metodo.toString() + Constantes.QL);
 		for (int i = 0; i <= indice; i++) {
 			sb.append(atoms.get(i).getValor());
@@ -29,9 +27,9 @@ class MetodoUtil {
 		throw new InstrucaoException(sb.toString(), false);
 	}
 
-	private Atom getAtom() throws InstrucaoException {
+	private Atom getAtom(int indice) throws InstrucaoException {
 		if (indice >= atoms.size()) {
-			throwInstrucaoException();
+			throwInstrucaoException(indice);
 		}
 		return atoms.get(indice);
 	}
@@ -39,26 +37,28 @@ class MetodoUtil {
 	No montar() throws InstrucaoException {
 		NoRaiz raiz = new NoRaiz();
 		pilhaNo.push(raiz);
+		int indice = 0;
 		while (indice < atoms.size()) {
-			Atom atom = getAtom();
+			Atom atom = getAtom(indice);
 			if (atom.isStringAtom()) {
 				indice++;
-				processoInvocacao(atom.getValor());
+				processoInvocacao(atom.getValor(), indice);
 			} else if (atom.isParenteseIni()) {
 				processoExpressao(atom);
-			} else if (atom.isParenteseFim()) {
-				processoFinalInstrucao();
-			} else if (atom.isVariavel()) {
-				processoVariavel(atom);
-			} else if (atom.isVirgula()) {
-				processoVirgula();
-			} else if (ehTipoAtomico(atom)) {
-				processoAtomico(atom);
 			} else if (atom.isFuncaoInfixa()) {
 				processoInfixa(atom);
+			} else if (atom.isParenteseFim()) {
+				pilhaNo.pop();
+			} else if (ehTipoAtomico(atom)) {
+				pilhaNo.add(new Push(atom));
+			} else if (atom.isVariavel()) {
+				pilhaNo.add(new Load(atom));
+			} else if (atom.isVirgula()) {
+				processoVirgula(indice);
 			} else {
-				throwInstrucaoException();
+				throwInstrucaoException(indice);
 			}
+			indice++;
 		}
 		if (raiz.getNos().size() != 1) {
 			throw new InstrucaoException(metodo.toString() + " <<< CHEQUE O COMANDO DE RETORNO", false);
@@ -66,83 +66,50 @@ class MetodoUtil {
 		return raiz.excluirUltimoNo();
 	}
 
-	private void processoInvocacao(String metodo) throws InstrucaoException {
-		Atom atom = getAtom();
+	private void processoInvocacao(String metodo, int indice) throws InstrucaoException {
+		Atom atom = getAtom(indice);
 		if (!atom.isParenteseIni()) {
-			throwInstrucaoException();
+			throwInstrucaoException(indice);
 		}
 		if ("if".equals(metodo)) {
 			If se = new If();
-			pilhaNo.peek().add(se);
+			pilhaNo.add(se);
 			pilhaNo.push(se);
 		} else {
 			Invoke invoke = new Invoke(metodo);
-			pilhaNo.peek().add(invoke);
+			pilhaNo.add(invoke);
 			pilhaNo.push(invoke);
 		}
-		indice++;
 	}
 
-	private void processoExpressao(Atom atom) {
-		Expression expression = new Expression(atom.isNegarExpressao());
-		pilhaNo.peek().add(expression);
+	private void processoExpressao(Atom atom) throws InstrucaoException {
+		Expression expression = new Expression(atom);
+		pilhaNo.add(expression);
 		pilhaNo.push(expression);
-		indice++;
 	}
 
-	private void processoFinalInstrucao() {
-		pilhaNo.pop();
-		while (pilhaNo.size() > 0 && pilhaNo.peek() instanceof Infixa) {
-			pilhaNo.pop();
-		}
-		indice++;
-	}
-
-	private void processoVariavel(Atom atom) {
-		Load load = new Load(atom);
-		pilhaNo.peek().add(load);
-		indice++;
-	}
-
-	private void processoVirgula() throws InstrucaoException {
-		if (pilhaNo.peek() instanceof Expression) {
-			indice++;
-			return;
-		}
-		if (pilhaNo.peek() instanceof Invoke) {
-			indice++;
-			return;
-		}
-		if (pilhaNo.peek() instanceof If) {
-			indice++;
-			return;
-		}
-		throwInstrucaoException();
-	}
-
-	private void processoAtomico(Atom atom) {
-		Push push = new Push(atom);
-		pilhaNo.peek().add(push);
-		indice++;
-	}
-
-	private void processoInfixa(Atom atom) {
+	private void processoInfixa(Atom atom) throws InstrucaoException {
 		Infixa novaInfixa = infixas.get(atom.getValor()).clonar();
-
-		No sel = pilhaNo.peek();
-		if (novaInfixa.possuoPrioridadeSobre(sel.getUltimoNo())) {
-			Infixa ultimaInfixa = (Infixa) sel.getUltimoNo();
-			No no = ultimaInfixa.excluirUltimoNo();
-			novaInfixa.add(no);
-			ultimaInfixa.add(novaInfixa);
+		No noAtivado = pilhaNo.ref();
+		if (novaInfixa.possuoPrioridadeSobre(noAtivado.getUltimoNo())) {
+			Infixa infixa = (Infixa) noAtivado.getUltimoNo();
+			No operandoDireito = infixa.excluirUltimoNo();
+			novaInfixa.add(operandoDireito);
+			infixa.add(novaInfixa);
 		} else {
-			No no = sel.excluirUltimoNo();
-			novaInfixa.add(no);
-			sel.add(novaInfixa);
+			No ultimoParam = noAtivado.excluirUltimoNo();
+			novaInfixa.add(ultimoParam);
+			noAtivado.add(novaInfixa);
 		}
-
 		pilhaNo.push(novaInfixa);
-		indice++;
+	}
+
+	private void processoVirgula(int indice) throws InstrucaoException {
+		No no = pilhaNo.ref();
+		if ((no instanceof Invoke) || (no instanceof If)) {
+			return;
+		}
+		throwInstrucaoException(indice);
 	}
 
 	private static boolean ehTipoAtomico(Atom atom) {
@@ -158,13 +125,13 @@ class MetodoUtil {
 
 		infixas.put("==", new Igual());
 		infixas.put("!=", new Diferente());
-		infixas.put("<", new Menor());
 		infixas.put("<=", new MenorIgual());
-		infixas.put(">", new Maior());
 		infixas.put(">=", new MaiorIgual());
+		infixas.put("<", new Menor());
+		infixas.put(">", new Maior());
 
-		infixas.put("^", new Oux());
 		infixas.put("&&", new And());
-		infixas.put("||", new Ou());
+		infixas.put("||", new Or());
+		infixas.put("^", new Xor());
 	}
 }
