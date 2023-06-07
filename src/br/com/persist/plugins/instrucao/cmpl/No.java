@@ -67,7 +67,7 @@ public abstract class No {
 
 class NoRaiz extends No {
 	public NoRaiz() {
-		super(null);
+		super("raiz");
 	}
 
 	@Override

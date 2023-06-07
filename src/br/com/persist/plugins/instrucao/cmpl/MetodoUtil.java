@@ -47,10 +47,7 @@ class MetodoUtil {
 			} else if (atom.isParenteseIni()) {
 				processoExpressao(atom);
 			} else if (atom.isParenteseFim()) {
-				pilhaNo.pop();
-				while (pilhaNo.peek() instanceof Infixa) {
-					pilhaNo.pop();
-				}
+				processoFinalInstrucao();
 			} else if (atom.isVariavel()) {
 				processoVariavel(atom);
 			} else if (atom.isVirgula()) {
@@ -66,7 +63,7 @@ class MetodoUtil {
 		if (raiz.getNos().size() != 1) {
 			throw new InstrucaoException(metodo.toString() + " <<< CHEQUE O COMANDO DE RETORNO", false);
 		}
-		return raiz.get(0);
+		return raiz.excluirUltimoNo();
 	}
 
 	private void processoInvocacao(String metodo) throws InstrucaoException {
@@ -90,6 +87,14 @@ class MetodoUtil {
 		Expressao expressao = new Expressao(atom.isNegarExpressao());
 		pilhaNo.peek().add(expressao);
 		pilhaNo.push(expressao);
+		indice++;
+	}
+
+	private void processoFinalInstrucao() {
+		pilhaNo.pop();
+		while (pilhaNo.size() > 0 && pilhaNo.peek() instanceof Infixa) {
+			pilhaNo.pop();
+		}
 		indice++;
 	}
 
