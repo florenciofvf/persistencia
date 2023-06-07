@@ -13,6 +13,7 @@ public class InstrucaoConstantes {
 	public static final String ESPACO = " ";
 
 	public static final String RETURN = "return";
+	public static final String INVOKE = "invoke";
 	public static final String BODY = "body";
 	public static final String ELSE = "else";
 	public static final String LOAD = "load";

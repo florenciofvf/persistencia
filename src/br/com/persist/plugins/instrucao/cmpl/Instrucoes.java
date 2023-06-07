@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.cmpl;
 import java.io.PrintWriter;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+import br.com.persist.plugins.instrucao.InstrucaoException;
 
 class Return extends No {
 	public Return() {
@@ -68,5 +69,29 @@ class Load extends No {
 		if (atom.isNegarVariavel()) {
 			pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.NEG);
 		}
+	}
+}
+
+class Invoke extends No {
+	public Invoke(String nome) {
+		super(nome);
+	}
+
+	@Override
+	public int totalInstrucoes() throws InstrucaoException {
+		int total = 0;
+		for (No no : nos) {
+			total += no.totalInstrucoes();
+		}
+		return total + 1;
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		for (No no : nos) {
+			no.print(pw);
+		}
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.INVOKE);
+		pw.println(InstrucaoConstantes.ESPACO + nome);
 	}
 }

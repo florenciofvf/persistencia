@@ -79,9 +79,9 @@ class MetodoUtil {
 			pilhaNo.peek().add(se);
 			pilhaNo.push(se);
 		} else {
-			Invocacao invocacao = new Invocacao(metodo);
-			pilhaNo.peek().add(invocacao);
-			pilhaNo.push(invocacao);
+			Invoke invoke = new Invoke(metodo);
+			pilhaNo.peek().add(invoke);
+			pilhaNo.push(invoke);
 		}
 		indice++;
 	}
@@ -100,10 +100,15 @@ class MetodoUtil {
 	}
 
 	private void processoVirgula() throws InstrucaoException {
-		if (!(pilhaNo.peek() instanceof Invocacao)) {
-			throwInstrucaoException();
+		if (pilhaNo.peek() instanceof Invoke) {
+			indice++;
+			return;
 		}
-		indice++;
+		if (pilhaNo.peek() instanceof If) {
+			indice++;
+			return;
+		}
+		throwInstrucaoException();
 	}
 
 	private void processoAtomico(Atom atom) {
