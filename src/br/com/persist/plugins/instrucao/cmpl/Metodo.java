@@ -62,7 +62,7 @@ public class Metodo {
 		}
 	}
 
-	public void print(PrintWriter pw) {
+	public void print(PrintWriter pw) throws InstrucaoException {
 		String prefixo = nativo ? InstrucaoConstantes.PREFIXO_METODO_NATIVO : InstrucaoConstantes.PREFIXO_METODO;
 		pw.println(prefixo + nome);
 		for (No n : parametros) {

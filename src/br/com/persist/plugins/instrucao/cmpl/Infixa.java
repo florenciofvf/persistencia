@@ -1,6 +1,10 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
 import java.io.PrintWriter;
+import java.util.Objects;
+
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Infixa extends No {
 	protected short matematico1 = 100;
@@ -10,12 +14,23 @@ public abstract class Infixa extends No {
 	protected short logico1 = 300;
 
 	public Infixa(String nome) {
-		super(nome);
+		super(Objects.requireNonNull(nome));
 	}
 
 	@Override
-	public int totalInstrucoes() {
-		return 0;
+	public int totalInstrucoes() throws InstrucaoException {
+		checarOperandos();
+		int totalE = nos.get(0).totalInstrucoes();
+		int totalD = nos.get(1).totalInstrucoes();
+		return totalE + totalD + 1;
+	}
+
+	@Override
+	public final void print(PrintWriter pw) throws InstrucaoException {
+		checarOperandos();
+		nos.get(0).print(pw);
+		nos.get(1).print(pw);
+		pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
 	}
 
 	public abstract short getPrioridade();
@@ -28,6 +43,12 @@ public abstract class Infixa extends No {
 			return getPrioridade() < infixa.getPrioridade();
 		}
 		return false;
+	}
+
+	private void checarOperandos() throws InstrucaoException {
+		if (nos.size() != 2) {
+			throw new InstrucaoException(nome + " <<< Faltando operandos", false);
+		}
 	}
 }
 
@@ -45,11 +66,6 @@ class Somar extends Infixa {
 	public Infixa clonar() {
 		return new Somar();
 	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
-	}
 }
 
 class Subtrair extends Infixa {
@@ -65,11 +81,6 @@ class Subtrair extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Subtrair();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
 	}
 }
 
@@ -87,11 +98,6 @@ class Multiplicar extends Infixa {
 	public Infixa clonar() {
 		return new Multiplicar();
 	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
-	}
 }
 
 class Dividir extends Infixa {
@@ -107,11 +113,6 @@ class Dividir extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Dividir();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
 	}
 }
 
@@ -129,11 +130,6 @@ class Resto extends Infixa {
 	public Infixa clonar() {
 		return new Resto();
 	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
-	}
 }
 
 class Igual extends Infixa {
@@ -149,11 +145,6 @@ class Igual extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Igual();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
 	}
 }
 
@@ -171,11 +162,6 @@ class Diferente extends Infixa {
 	public Infixa clonar() {
 		return new Diferente();
 	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
-	}
 }
 
 class Menor extends Infixa {
@@ -191,11 +177,6 @@ class Menor extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Menor();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
 	}
 }
 
@@ -213,11 +194,6 @@ class MenorIgual extends Infixa {
 	public Infixa clonar() {
 		return new MenorIgual();
 	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
-	}
 }
 
 class Maior extends Infixa {
@@ -233,11 +209,6 @@ class Maior extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Maior();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
 	}
 }
 
@@ -255,11 +226,6 @@ class MaiorIgual extends Infixa {
 	public Infixa clonar() {
 		return new MaiorIgual();
 	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
-	}
 }
 
 class Oux extends Infixa {
@@ -275,11 +241,6 @@ class Oux extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Oux();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
 	}
 }
 
@@ -297,11 +258,6 @@ class And extends Infixa {
 	public Infixa clonar() {
 		return new And();
 	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
-	}
 }
 
 class Ou extends Infixa {
@@ -317,10 +273,5 @@ class Ou extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Ou();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		// TODO Auto-generated method stub
 	}
 }

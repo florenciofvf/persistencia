@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
+
 public abstract class No {
 	protected final List<No> nos;
 	protected String nome;
@@ -58,9 +60,9 @@ public abstract class No {
 		return nome;
 	}
 
-	public abstract int totalInstrucoes();
+	public abstract int totalInstrucoes() throws InstrucaoException;
 
-	public abstract void print(PrintWriter pw);
+	public abstract void print(PrintWriter pw) throws InstrucaoException;
 }
 
 class NoRaiz extends No {
