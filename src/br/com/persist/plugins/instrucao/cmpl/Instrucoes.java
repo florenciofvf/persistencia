@@ -137,12 +137,27 @@ class Expression extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() {
-		return 1;// TODO
+	public int totalInstrucoes() throws InstrucaoException {
+		checarOperandos();
+		int total = nos.get(0).totalInstrucoes();
+		if (negarExpressao) {
+			total++;
+		}
+		return total;
 	}
 
 	@Override
-	public void print(PrintWriter pw) {
-		pw.print(nome);// TODO
+	public void print(PrintWriter pw) throws InstrucaoException {
+		checarOperandos();
+		nos.get(0).print(pw);
+		if (negarExpressao) {
+			pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.NEG);
+		}
+	}
+
+	private void checarOperandos() throws InstrucaoException {
+		if (nos.size() != 1) {
+			throw new InstrucaoException(nome + " <<< Total de operandos incorreto", false);
+		}
 	}
 }

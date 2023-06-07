@@ -1,6 +1,5 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
-import java.io.PrintWriter;
 import java.util.Objects;
 
 public class Atom {
