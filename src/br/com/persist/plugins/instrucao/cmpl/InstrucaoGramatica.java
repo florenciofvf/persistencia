@@ -1,11 +1,9 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoGramatica {
@@ -91,22 +89,6 @@ public class InstrucaoGramatica {
 		List<Atom> parametros = getParametros();
 		for (Atom atom : parametros) {
 			resp.addParam(new Param(atom.getValor()));
-		}
-	}
-
-	class Param extends No {
-		public Param(String nome) {
-			super(nome);
-		}
-
-		@Override
-		public int totalInstrucoes() {
-			return 1;
-		}
-
-		@Override
-		public void print(PrintWriter pw) {
-			pw.println(InstrucaoConstantes.PREFIXO_PARAM + nome);
 		}
 	}
 

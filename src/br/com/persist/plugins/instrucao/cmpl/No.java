@@ -64,19 +64,3 @@ public abstract class No {
 
 	public abstract void print(PrintWriter pw) throws InstrucaoException;
 }
-
-class NoRaiz extends No {
-	public NoRaiz() {
-		super("raiz");
-	}
-
-	@Override
-	public int totalInstrucoes() {
-		throw new IllegalStateException();
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		throw new IllegalStateException();
-	}
-}

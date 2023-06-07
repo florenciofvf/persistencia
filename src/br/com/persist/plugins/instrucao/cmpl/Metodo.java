@@ -6,7 +6,6 @@ import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.cmpl.InstrucaoGramatica.Param;
 
 public class Metodo {
 	private final Return retorn = new Return();

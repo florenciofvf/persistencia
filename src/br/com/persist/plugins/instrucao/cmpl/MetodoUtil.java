@@ -84,9 +84,9 @@ class MetodoUtil {
 	}
 
 	private void processoExpressao(Atom atom) {
-		Expressao expressao = new Expressao(atom.isNegarExpressao());
-		pilhaNo.peek().add(expressao);
-		pilhaNo.push(expressao);
+		Expression expression = new Expression(atom.isNegarExpressao());
+		pilhaNo.peek().add(expression);
+		pilhaNo.push(expression);
 		indice++;
 	}
 
@@ -105,6 +105,10 @@ class MetodoUtil {
 	}
 
 	private void processoVirgula() throws InstrucaoException {
+		if (pilhaNo.peek() instanceof Expression) {
+			indice++;
+			return;
+		}
 		if (pilhaNo.peek() instanceof Invoke) {
 			indice++;
 			return;

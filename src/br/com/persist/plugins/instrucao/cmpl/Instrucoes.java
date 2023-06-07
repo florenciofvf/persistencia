@@ -5,6 +5,38 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
+class NoRaiz extends No {
+	public NoRaiz() {
+		super("raiz");
+	}
+
+	@Override
+	public int totalInstrucoes() throws InstrucaoException {
+		throw new InstrucaoException(nome + " <<< totalInstrucoes()", false);
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		throw new InstrucaoException(nome + " <<< print(PrintWriter pw)", false);
+	}
+}
+
+class Param extends No {
+	public Param(String nome) {
+		super(nome);
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.println(InstrucaoConstantes.PREFIXO_PARAM + nome);
+	}
+}
+
 class Return extends No {
 	public Return() {
 		super(InstrucaoConstantes.RETURN);
@@ -35,7 +67,7 @@ class Push extends No {
 	}
 
 	@Override
-	public void print(PrintWriter pw) {
+	public void print(PrintWriter pw) throws InstrucaoException {
 		if (atom.isString()) {
 			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_STRING);
 		} else if (atom.isBigInteger()) {
@@ -43,7 +75,7 @@ class Push extends No {
 		} else if (atom.isBigDecimal()) {
 			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_BIG_DECIMAL);
 		} else {
-			throw new IllegalStateException();
+			throw new InstrucaoException(atom.getValor() + " <<< Atomico error", false);
 		}
 		pw.println(InstrucaoConstantes.ESPACO + atom.getValor());
 	}
@@ -93,5 +125,24 @@ class Invoke extends No {
 		}
 		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.INVOKE);
 		pw.println(InstrucaoConstantes.ESPACO + nome);
+	}
+}
+
+class Expression extends No {
+	private final boolean negarExpressao;
+
+	public Expression(boolean negarExpressao) {
+		super("expression");
+		this.negarExpressao = negarExpressao;
+	}
+
+	@Override
+	public int totalInstrucoes() {
+		return 1;// TODO
+	}
+
+	@Override
+	public void print(PrintWriter pw) {
+		pw.print(nome);// TODO
 	}
 }
