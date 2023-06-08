@@ -34,6 +34,13 @@ public abstract class Infixa extends No {
 	}
 
 	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		checarOperandos2();
+		nos.get(0).configurarDesvio();
+		nos.get(1).configurarDesvio();
+	}
+
+	@Override
 	public final void print(PrintWriter pw) throws InstrucaoException {
 		checarOperandos2();
 		nos.get(0).print(pw);

@@ -90,6 +90,7 @@ public class Metodo {
 		no.normalizarEstrutura(this);
 		AtomicInteger atomic = new AtomicInteger(0);
 		no.indexar(atomic);
+		no.configurarDesvio();
 	}
 
 	@Override

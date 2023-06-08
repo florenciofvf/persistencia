@@ -23,6 +23,11 @@ class NoRaiz extends No {
 	}
 
 	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		throw new InstrucaoException(nome + " <<< configurarDesvio()", false);
+	}
+
+	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
 		throw new InstrucaoException(nome + " <<< print(PrintWriter pw)", false);
 	}
@@ -33,13 +38,20 @@ abstract class Comum extends No {
 		super(Objects.requireNonNull(nome));
 	}
 
+	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 	}
 
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+	}
+
+	@Override
 	public void indexar(AtomicInteger atomic) throws InstrucaoException {
 		indice = atomic.getAndIncrement();
 	}
 
+	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
 		print(pw, nome);
 	}
@@ -128,6 +140,13 @@ class Load extends No {
 	}
 
 	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		if (neg != null) {
+			neg.configurarDesvio();
+		}
+	}
+
+	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
 		print(pw, InstrucaoConstantes.LOAD, atom.getValor());
 		if (neg != null) {
@@ -154,6 +173,13 @@ class Invoke extends No {
 			no.indexar(atomic);
 		}
 		indice = atomic.getAndIncrement();
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		for (No no : nos) {
+			no.configurarDesvio();
+		}
 	}
 
 	@Override
@@ -193,6 +219,15 @@ class Expression extends No {
 	}
 
 	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		checarOperandos1();
+		nos.get(0).configurarDesvio();
+		if (neg != null) {
+			neg.configurarDesvio();
+		}
+	}
+
+	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
 		checarOperandos1();
 		nos.get(0).print(pw);
@@ -203,9 +238,11 @@ class Expression extends No {
 }
 
 class If extends No {
-	final Goto gotoBody = new Goto();
-	final Goto gotoElse = new Goto();
+	final Goto gotoIf = new Goto();
 	final Ifeq ifeq = new Ifeq();
+	No parentComando;
+	Goto gotoElse;
+	Return retorn;
 
 	public If() {
 		super(InstrucaoConstantes.IF);
@@ -214,35 +251,86 @@ class If extends No {
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		checarOperandos3();
-		// int total = nos.get(0).totalInstrucoes();
-		// total += ifeq.totalInstrucoes();
-		// total += nos.get(1).totalInstrucoes();
-		// total += gotoBody.totalInstrucoes();
-		// total += nos.get(2).totalInstrucoes();
-		// total += gotoElse.totalInstrucoes();
+		parentComando = proximo();
+		if (parentComando == null) {
+			retorn = metodo.retorn;
+		} else {
+			gotoElse = new Goto();
+		}
+		No condicao = nos.get(0);
+		No bodyIf = nos.get(1);
+		No bodyElse = nos.get(2);
+		condicao.normalizarEstrutura(metodo);
+		bodyIf.normalizarEstrutura(metodo);
+		bodyElse.normalizarEstrutura(metodo);
 	}
 
 	private No proximo() {
 		No no = this;
-		while (no != null || no instanceof If) {
+		while (no != null) {
+			if (!(no instanceof If) && no.nos.size() > 1) {
+				break;
+			}
 			no = no.parent;
 		}
-		return null;
+		return no;
 	}
 
+	@Override
 	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		checarOperandos3();
+		No condicao = nos.get(0);
+		No bodyIf = nos.get(1);
+		No bodyElse = nos.get(2);
 
+		condicao.indexar(atomic);
+		ifeq.indexar(atomic);
+		bodyIf.indexar(atomic);
+		gotoIf.indexar(atomic);
+		bodyElse.indexar(atomic);
+		if (gotoElse != null) {
+			gotoElse.indexar(atomic);
+		}
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		checarOperandos3();
+		No condicao = nos.get(0);
+		No bodyIf = nos.get(1);
+		No bodyElse = nos.get(2);
+
+		condicao.configurarDesvio();
+		bodyElse.configDesvio(ifeq);
+		bodyIf.configurarDesvio();
+		if (parentComando != null) {
+			No proximoNo = parentComando.noApos(this);
+			proximoNo.configDesvio(gotoIf);
+		} else {
+			retorn.configDesvio(gotoIf);
+		}
+		bodyElse.configurarDesvio();
+		if (parentComando != null) {
+			No proximoNo = parentComando.noApos(this);
+			proximoNo.configDesvio(gotoElse);
+		}
 	}
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
 		checarOperandos3();
-		nos.get(0).print(pw);
+		No condicao = nos.get(0);
+		No bodyIf = nos.get(1);
+		No bodyElse = nos.get(2);
+
+		condicao.print(pw);
 		ifeq.print(pw);
-		nos.get(1).print(pw);
-		gotoBody.print(pw);
-		nos.get(2).print(pw);
-		gotoElse.print(pw);
+		bodyIf.print(pw);
+		gotoIf.print(pw);
+		bodyElse.print(pw);
+		if (gotoElse != null) {
+			gotoElse.print(pw);
+		}
 	}
 }
 

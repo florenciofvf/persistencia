@@ -67,10 +67,31 @@ public abstract class No {
 
 	public abstract void indexar(AtomicInteger atomic) throws InstrucaoException;
 
+	public abstract void configurarDesvio() throws InstrucaoException;
+
+	public void configDesvio(Desvio desvio) {
+		if (nos.isEmpty()) {
+			desvio.salto = indice;
+		} else {
+			nos.get(0).configDesvio(desvio);
+		}
+	}
+
+	public No noApos(No no) throws InstrucaoException {
+		if (no == null) {
+			throw new InstrucaoException(nome + " <<< noApos(No no) >>> null", false);
+		}
+		int pos = nos.indexOf(no);
+		if (pos == -1) {
+			throw new InstrucaoException(nome + " <<< noApos(No no) >>> inexistente", false);
+		}
+		return nos.get(pos + 1);
+	}
+
 	public abstract void print(PrintWriter pw) throws InstrucaoException;
 
 	public void print(PrintWriter pw, String... strings) {
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.ESPACO + indice);
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.ESPACO + indice + " -");
 		for (String string : strings) {
 			pw.print(InstrucaoConstantes.ESPACO + string);
 		}
