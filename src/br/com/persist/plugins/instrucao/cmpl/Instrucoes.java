@@ -176,7 +176,7 @@ class Expression extends No {
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
-		checarOperandos();
+		checarOperandos1();
 		nos.get(0).normalizarEstrutura(metodo);
 		if (atom.isNegarVariavel()) {
 			neg = new Neg();
@@ -185,7 +185,7 @@ class Expression extends No {
 
 	@Override
 	public void indexar(AtomicInteger atomic) throws InstrucaoException {
-		checarOperandos();
+		checarOperandos1();
 		nos.get(0).indexar(atomic);
 		if (neg != null) {
 			neg.indexar(atomic);
@@ -194,16 +194,10 @@ class Expression extends No {
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
-		checarOperandos();
+		checarOperandos1();
 		nos.get(0).print(pw);
 		if (neg != null) {
 			neg.print(pw);
-		}
-	}
-
-	private void checarOperandos() throws InstrucaoException {
-		if (nos.size() != 1) {
-			throw new InstrucaoException(nome + " <<< Total de operandos incorreto", false);
 		}
 	}
 }
@@ -218,36 +212,37 @@ class If extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() throws InstrucaoException {
-		checarOperandos();
-		int total = nos.get(0).totalInstrucoes();
-		total += ifeq.totalInstrucoes();
-		total += nos.get(1).totalInstrucoes();
-		total += gotoBody.totalInstrucoes();
-		total += nos.get(2).totalInstrucoes();
-		total += gotoElse.totalInstrucoes();
-		return total;
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		checarOperandos3();
+		// int total = nos.get(0).totalInstrucoes();
+		// total += ifeq.totalInstrucoes();
+		// total += nos.get(1).totalInstrucoes();
+		// total += gotoBody.totalInstrucoes();
+		// total += nos.get(2).totalInstrucoes();
+		// total += gotoElse.totalInstrucoes();
+	}
+
+	private No proximo() {
+		No no = this;
+		while (no != null || no instanceof If) {
+			no = no.parent;
+		}
+		return null;
+	}
+
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+
 	}
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
-		checarOperandos();
+		checarOperandos3();
 		nos.get(0).print(pw);
 		ifeq.print(pw);
 		nos.get(1).print(pw);
 		gotoBody.print(pw);
 		nos.get(2).print(pw);
 		gotoElse.print(pw);
-	}
-
-	public boolean valido() {
-		return nos.size() == 3;
-	}
-
-	private void checarOperandos() throws InstrucaoException {
-		if (!valido()) {
-			throw new InstrucaoException(nome + " <<< Faltando operandos", false);
-		}
 	}
 }
 

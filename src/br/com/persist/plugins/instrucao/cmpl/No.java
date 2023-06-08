@@ -76,4 +76,22 @@ public abstract class No {
 		}
 		pw.println();
 	}
+
+	public void checarOperandos1() throws InstrucaoException {
+		checarOperandos(1);
+	}
+
+	public void checarOperandos2() throws InstrucaoException {
+		checarOperandos(2);
+	}
+
+	public void checarOperandos3() throws InstrucaoException {
+		checarOperandos(3);
+	}
+
+	public void checarOperandos(int total) throws InstrucaoException {
+		if (nos.size() != total) {
+			throw new InstrucaoException(nome + " <<< Total de operandos incorreto", false);
+		}
+	}
 }

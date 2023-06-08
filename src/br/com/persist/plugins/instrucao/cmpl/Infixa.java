@@ -20,14 +20,14 @@ public abstract class Infixa extends No {
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
-		checarOperandos();
+		checarOperandos2();
 		nos.get(0).normalizarEstrutura(metodo);
 		nos.get(1).normalizarEstrutura(metodo);
 	}
 
 	@Override
 	public void indexar(AtomicInteger atomic) throws InstrucaoException {
-		checarOperandos();
+		checarOperandos2();
 		nos.get(0).indexar(atomic);
 		nos.get(1).indexar(atomic);
 		indice = atomic.getAndIncrement();
@@ -35,7 +35,7 @@ public abstract class Infixa extends No {
 
 	@Override
 	public final void print(PrintWriter pw) throws InstrucaoException {
-		checarOperandos();
+		checarOperandos2();
 		nos.get(0).print(pw);
 		nos.get(1).print(pw);
 		print(pw, nome);
@@ -55,12 +55,6 @@ public abstract class Infixa extends No {
 
 	public boolean valido() {
 		return nos.size() == 2;
-	}
-
-	private void checarOperandos() throws InstrucaoException {
-		if (!valido()) {
-			throw new InstrucaoException(nome + " <<< Faltando operandos", false);
-		}
 	}
 }
 
