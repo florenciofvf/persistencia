@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class No {
@@ -62,9 +63,17 @@ public abstract class No {
 		return nome;
 	}
 
-	public abstract int normalizarEstrutura(Metodo metodo) throws InstrucaoException;
+	public abstract void normalizarEstrutura(Metodo metodo) throws InstrucaoException;
 
-	public abstract int indexar(AtomicInteger atomic) throws InstrucaoException;
+	public abstract void indexar(AtomicInteger atomic) throws InstrucaoException;
 
 	public abstract void print(PrintWriter pw) throws InstrucaoException;
+
+	public void print(PrintWriter pw, String... strings) {
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.ESPACO + indice);
+		for (String string : strings) {
+			pw.print(InstrucaoConstantes.ESPACO + string);
+		}
+		pw.println();
+	}
 }

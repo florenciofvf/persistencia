@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.cmpl;
 
 import java.io.PrintWriter;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -18,11 +19,18 @@ public abstract class Infixa extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() throws InstrucaoException {
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		checarOperandos();
-		int totalE = nos.get(0).totalInstrucoes();
-		int totalD = nos.get(1).totalInstrucoes();
-		return totalE + totalD + 1;
+		nos.get(0).normalizarEstrutura(metodo);
+		nos.get(1).normalizarEstrutura(metodo);
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		checarOperandos();
+		nos.get(0).indexar(atomic);
+		nos.get(1).indexar(atomic);
+		indice = atomic.getAndIncrement();
 	}
 
 	@Override
@@ -30,7 +38,7 @@ public abstract class Infixa extends No {
 		checarOperandos();
 		nos.get(0).print(pw);
 		nos.get(1).print(pw);
-		pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
+		print(pw, nome);
 	}
 
 	public abstract short getPrioridade();

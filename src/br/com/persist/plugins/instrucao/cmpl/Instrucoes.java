@@ -1,6 +1,8 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
 import java.io.PrintWriter;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -11,8 +13,13 @@ class NoRaiz extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() throws InstrucaoException {
-		throw new InstrucaoException(nome + " <<< totalInstrucoes()", false);
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		throw new InstrucaoException(nome + " <<< normalizarEstrutura(Metodo metodo)", false);
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		throw new InstrucaoException(nome + " <<< indexar(AtomicInteger atomic)", false);
 	}
 
 	@Override
@@ -21,14 +28,39 @@ class NoRaiz extends No {
 	}
 }
 
-class Param extends No {
-	public Param(String nome) {
+abstract class Comum extends No {
+	public Comum(String nome) {
+		super(Objects.requireNonNull(nome));
+	}
+
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+	}
+
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		indice = atomic.getAndIncrement();
+	}
+
+	public void print(PrintWriter pw) throws InstrucaoException {
+		print(pw, nome);
+	}
+}
+
+abstract class Desvio extends Comum {
+	protected int salto;
+
+	public Desvio(String nome) {
 		super(nome);
 	}
 
 	@Override
-	public int totalInstrucoes() {
-		return 1;
+	public void print(PrintWriter pw) throws InstrucaoException {
+		print(pw, nome, "" + salto);
+	}
+}
+
+class Param extends Comum {
+	public Param(String nome) {
+		super(nome);
 	}
 
 	@Override
@@ -37,23 +69,19 @@ class Param extends No {
 	}
 }
 
-class Return extends No {
+class Return extends Comum {
 	public Return() {
 		super(InstrucaoConstantes.RETURN);
 	}
+}
 
-	@Override
-	public int totalInstrucoes() {
-		return 1;
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
+class Neg extends Comum {
+	public Neg() {
+		super(InstrucaoConstantes.NEG);
 	}
 }
 
-class Push extends No {
+class Push extends Comum {
 	final Atom atom;
 
 	public Push(Atom atom) {
@@ -62,27 +90,22 @@ class Push extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() {
-		return 1;
-	}
-
-	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
 		if (atom.isString()) {
-			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_STRING);
+			print(pw, InstrucaoConstantes.PUSH_STRING, atom.getValor());
 		} else if (atom.isBigInteger()) {
-			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_BIG_INTEGER);
+			print(pw, InstrucaoConstantes.PUSH_BIG_INTEGER, atom.getValor());
 		} else if (atom.isBigDecimal()) {
-			pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.PUSH_BIG_DECIMAL);
+			print(pw, InstrucaoConstantes.PUSH_BIG_DECIMAL, atom.getValor());
 		} else {
 			throw new InstrucaoException(atom.getValor() + " <<< Atomico error", false);
 		}
-		pw.println(InstrucaoConstantes.ESPACO + atom.getValor());
 	}
 }
 
 class Load extends No {
 	final Atom atom;
+	Neg neg;
 
 	public Load(Atom atom) {
 		super("load");
@@ -90,16 +113,25 @@ class Load extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() {
-		return atom.isNegarVariavel() ? 2 : 1;
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		if (atom.isNegarVariavel()) {
+			neg = new Neg();
+		}
 	}
 
 	@Override
-	public void print(PrintWriter pw) {
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.LOAD);
-		pw.println(InstrucaoConstantes.ESPACO + atom.getValor());
-		if (atom.isNegarVariavel()) {
-			pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.NEG);
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		indice = atomic.getAndIncrement();
+		if (neg != null) {
+			neg.indexar(atomic);
+		}
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		print(pw, InstrucaoConstantes.LOAD, atom.getValor());
+		if (neg != null) {
+			neg.print(pw);
 		}
 	}
 }
@@ -110,12 +142,18 @@ class Invoke extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() throws InstrucaoException {
-		int total = 0;
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		for (No no : nos) {
-			total += no.totalInstrucoes();
+			no.normalizarEstrutura(metodo);
 		}
-		return total + 1;
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		for (No no : nos) {
+			no.indexar(atomic);
+		}
+		indice = atomic.getAndIncrement();
 	}
 
 	@Override
@@ -123,13 +161,13 @@ class Invoke extends No {
 		for (No no : nos) {
 			no.print(pw);
 		}
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.INVOKE);
-		pw.println(InstrucaoConstantes.ESPACO + nome);
+		print(pw, InstrucaoConstantes.INVOKE, nome);
 	}
 }
 
 class Expression extends No {
 	final Atom atom;
+	Neg neg;
 
 	public Expression(Atom atom) {
 		super("expression");
@@ -137,21 +175,29 @@ class Expression extends No {
 	}
 
 	@Override
-	public int totalInstrucoes() throws InstrucaoException {
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		checarOperandos();
-		int total = nos.get(0).totalInstrucoes();
-		if (atom.isNegarExpressao()) {
-			total++;
+		nos.get(0).normalizarEstrutura(metodo);
+		if (atom.isNegarVariavel()) {
+			neg = new Neg();
 		}
-		return total;
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		checarOperandos();
+		nos.get(0).indexar(atomic);
+		if (neg != null) {
+			neg.indexar(atomic);
+		}
 	}
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
 		checarOperandos();
 		nos.get(0).print(pw);
-		if (atom.isNegarExpressao()) {
-			pw.println(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.NEG);
+		if (neg != null) {
+			neg.print(pw);
 		}
 	}
 
@@ -205,36 +251,14 @@ class If extends No {
 	}
 }
 
-class Ifeq extends No {
+class Ifeq extends Desvio {
 	public Ifeq() {
 		super(InstrucaoConstantes.IF_EQ);
 	}
-
-	@Override
-	public int totalInstrucoes() {
-		return 1;
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
-		pw.println(InstrucaoConstantes.ESPACO + indice);
-	}
 }
 
-class Goto extends No {
+class Goto extends Desvio {
 	public Goto() {
 		super(InstrucaoConstantes.GOTO);
-	}
-
-	@Override
-	public int totalInstrucoes() {
-		return 1;
-	}
-
-	@Override
-	public void print(PrintWriter pw) {
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + nome);
-		pw.println(InstrucaoConstantes.ESPACO + indice);
 	}
 }
