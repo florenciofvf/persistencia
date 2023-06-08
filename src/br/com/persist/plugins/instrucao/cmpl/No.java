@@ -98,6 +98,10 @@ public abstract class No {
 		pw.println();
 	}
 
+	public void checarOperandos0() throws InstrucaoException {
+		checarOperandos(0);
+	}
+
 	public void checarOperandos1() throws InstrucaoException {
 		checarOperandos(1);
 	}
