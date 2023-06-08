@@ -31,7 +31,10 @@ public class InstrucaoGramatica {
 			metodo = getMetodo();
 		}
 		for (Metodo met : metodos) {
-			met.montar();
+			met.montarEstrutura();
+		}
+		for (Metodo met : metodos) {
+			met.finalizar();
 		}
 		return metodos;
 	}

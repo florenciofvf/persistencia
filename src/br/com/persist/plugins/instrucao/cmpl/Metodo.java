@@ -3,12 +3,13 @@ package br.com.persist.plugins.instrucao.cmpl;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Metodo {
-	private final Return retorn = new Return();
+	protected final Return retorn = new Return();
 	private final List<No> parametros;
 	private final List<Atom> atoms;
 	private final String nome;
@@ -74,12 +75,21 @@ public class Metodo {
 		retorn.print(pw);
 	}
 
-	void montar() throws InstrucaoException {
+	void montarEstrutura() throws InstrucaoException {
 		if (nativo) {
 			return;
 		}
 		MetodoUtil util = new MetodoUtil(this);
 		no = util.montar();
+	}
+
+	void finalizar() throws InstrucaoException {
+		if (nativo) {
+			return;
+		}
+		no.normalizarEstrutura(this);
+		AtomicInteger atomic = new AtomicInteger(0);
+		no.indexar(atomic);
 	}
 
 	@Override

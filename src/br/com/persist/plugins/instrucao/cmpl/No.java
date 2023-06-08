@@ -3,12 +3,14 @@ package br.com.persist.plugins.instrucao.cmpl;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class No {
 	protected final List<No> nos;
 	protected String nome;
+	protected int indice;
 	protected No parent;
 
 	public No(String nome) {
@@ -60,7 +62,9 @@ public abstract class No {
 		return nome;
 	}
 
-	public abstract int totalInstrucoes() throws InstrucaoException;
+	public abstract int normalizarEstrutura(Metodo metodo) throws InstrucaoException;
+
+	public abstract int indexar(AtomicInteger atomic) throws InstrucaoException;
 
 	public abstract void print(PrintWriter pw) throws InstrucaoException;
 }

@@ -206,8 +206,6 @@ class If extends No {
 }
 
 class Ifeq extends No {
-	private int indice = 21;
-
 	public Ifeq() {
 		super(InstrucaoConstantes.IF_EQ);
 	}
@@ -225,8 +223,6 @@ class Ifeq extends No {
 }
 
 class Goto extends No {
-	private int indice = 31;
-
 	public Goto() {
 		super(InstrucaoConstantes.GOTO);
 	}
