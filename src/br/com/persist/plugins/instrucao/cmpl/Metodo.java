@@ -62,19 +62,6 @@ public class Metodo {
 		}
 	}
 
-	public void print(PrintWriter pw) throws InstrucaoException {
-		String prefixo = nativo ? InstrucaoConstantes.PREFIXO_METODO_NATIVO : InstrucaoConstantes.PREFIXO_METODO;
-		pw.println(prefixo + nome);
-		for (No n : parametros) {
-			n.print(pw);
-		}
-		if (nativo) {
-			return;
-		}
-		no.print(pw);
-		retorn.print(pw);
-	}
-
 	void montarEstrutura() throws InstrucaoException {
 		if (nativo) {
 			return;
@@ -88,9 +75,29 @@ public class Metodo {
 			return;
 		}
 		no.normalizarEstrutura(this);
+		retorn.normalizarEstrutura(this);
 		AtomicInteger atomic = new AtomicInteger(0);
 		no.indexar(atomic);
+		retorn.indexar(atomic);
 		no.configurarDesvio();
+		retorn.configurarDesvio();
+	}
+
+	public void print(PrintWriter pw) throws InstrucaoException {
+		String prefixo = nativo ? InstrucaoConstantes.PREFIXO_METODO_NATIVO : InstrucaoConstantes.PREFIXO_METODO;
+		pw.println(prefixo + nome);
+		for (No n : parametros) {
+			n.print(pw);
+		}
+		if (nativo) {
+			return;
+		}
+		no.print(pw);
+		retorn.print(pw);
+	}
+
+	public Return getReturn() {
+		return retorn;
 	}
 
 	@Override

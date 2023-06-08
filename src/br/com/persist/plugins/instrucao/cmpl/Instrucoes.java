@@ -40,19 +40,23 @@ abstract class Comum extends No {
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		checarOperandos1();
 	}
 
 	@Override
 	public void configurarDesvio() throws InstrucaoException {
+		checarOperandos1();
 	}
 
 	@Override
 	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		checarOperandos1();
 		indice = atomic.getAndIncrement();
 	}
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
+		checarOperandos1();
 		print(pw, nome);
 	}
 }
@@ -66,6 +70,7 @@ abstract class Desvio extends Comum {
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
+		checarOperandos1();
 		print(pw, nome, "" + salto);
 	}
 }
@@ -253,7 +258,7 @@ class If extends No {
 		checarOperandos3();
 		parentComando = proximo();
 		if (parentComando == null) {
-			retorn = metodo.retorn;
+			retorn = metodo.getReturn();
 		} else {
 			gotoElse = new Goto();
 		}
