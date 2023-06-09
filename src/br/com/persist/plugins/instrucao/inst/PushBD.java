@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.inst;
 
+import java.math.BigDecimal;
+
 import br.com.persist.plugins.instrucao.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
@@ -8,28 +10,28 @@ import br.com.persist.plugins.instrucao.Metodo;
 import br.com.persist.plugins.instrucao.PilhaMetodo;
 import br.com.persist.plugins.instrucao.PilhaOperando;
 
-public class Goto extends Instrucao {
-	private int indice;
+public class PushBD extends Instrucao {
+	private BigDecimal bigDecimal;
 
-	public Goto(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.GOTO);
+	public PushBD(Metodo metodo) {
+		super(metodo, InstrucaoConstantes.PUSH_BIG_DECIMAL);
 	}
 
 	@Override
 	public Instrucao clonar(Metodo metodo) {
-		Goto resp = new Goto(metodo);
-		resp.indice = indice;
+		PushBD resp = new PushBD(metodo);
+		resp.bigDecimal = bigDecimal;
 		return resp;
 	}
 
 	@Override
 	public void setParam(String string) {
-		indice = Integer.parseInt(string);
+		bigDecimal = new BigDecimal(string);
 	}
 
 	@Override
 	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException {
-		metodo.setIndice(indice);
+		pilhaOperando.push(bigDecimal);
 	}
 }

@@ -8,28 +8,31 @@ import br.com.persist.plugins.instrucao.Metodo;
 import br.com.persist.plugins.instrucao.PilhaMetodo;
 import br.com.persist.plugins.instrucao.PilhaOperando;
 
-public class Goto extends Instrucao {
-	private int indice;
+public class PushString extends Instrucao {
+	private String string;
 
-	public Goto(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.GOTO);
+	public PushString(Metodo metodo) {
+		super(metodo, InstrucaoConstantes.PUSH_STRING);
 	}
 
 	@Override
 	public Instrucao clonar(Metodo metodo) {
-		Goto resp = new Goto(metodo);
-		resp.indice = indice;
+		PushString resp = new PushString(metodo);
+		resp.string = string;
 		return resp;
 	}
 
 	@Override
 	public void setParam(String string) {
-		indice = Integer.parseInt(string);
+		if (string == null) {
+			string = "";
+		}
+		this.string = string;
 	}
 
 	@Override
 	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException {
-		metodo.setIndice(indice);
+		pilhaOperando.push(string);
 	}
 }

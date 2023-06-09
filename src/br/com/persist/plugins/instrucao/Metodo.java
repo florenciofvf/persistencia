@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import br.com.persist.assistencia.Util;
-
 public class Metodo {
 	private final List<NomeValor> parametros;
 	private final List<Instrucao> instrucoes;
@@ -37,7 +35,10 @@ public class Metodo {
 		return indice;
 	}
 
-	public void setIndice(int indice) {
+	public void setIndice(int indice) throws InstrucaoException {
+		if (indice < 0 || indice >= instrucoes.size()) {
+			throw new InstrucaoException("erro.metodo_set_indice", nome);
+		}
 		this.indice = indice;
 	}
 
@@ -49,12 +50,11 @@ public class Metodo {
 		return instrucoes.get(indice);
 	}
 
-	public void addParam(String nome) {
-		if (!Util.estaVazio(nome)) {
-			NomeValor nomeValor = new NomeValor(nome);
-			if (!parametros.contains(nomeValor)) {
-				parametros.add(nomeValor);
-			}
+	public void addParam(String nome) throws InstrucaoException {
+		InstrucaoUtil.checarParam(nome);
+		NomeValor nomeValor = new NomeValor(nome);
+		if (!parametros.contains(nomeValor)) {
+			parametros.add(nomeValor);
 		}
 	}
 

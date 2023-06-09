@@ -1,6 +1,9 @@
 package br.com.persist.plugins.instrucao;
 
 import br.com.persist.plugins.instrucao.inst.Goto;
+import br.com.persist.plugins.instrucao.inst.PushBD;
+import br.com.persist.plugins.instrucao.inst.PushBI;
+import br.com.persist.plugins.instrucao.inst.PushString;
 import br.com.persist.plugins.instrucao.inst.Return;
 
 public class Processador {
@@ -25,5 +28,8 @@ public class Processador {
 	static {
 		Instrucoes.add(new Return(null));
 		Instrucoes.add(new Goto(null));
+		Instrucoes.add(new PushBI(null));
+		Instrucoes.add(new PushBD(null));
+		Instrucoes.add(new PushString(null));
 	}
 }
