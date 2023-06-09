@@ -7,11 +7,13 @@ import java.util.Objects;
 public class Metodo {
 	private final List<NomeValor> parametros;
 	private final List<Instrucao> instrucoes;
+	private final Biblioteca biblioteca;
 	private final boolean nativo;
 	private final String nome;
 	private int indice;
 
-	public Metodo(String nome, boolean nativo) {
+	public Metodo(Biblioteca biblioteca, String nome, boolean nativo) {
+		this.biblioteca = Objects.requireNonNull(biblioteca);
 		this.nome = Objects.requireNonNull(nome);
 		parametros = new ArrayList<>();
 		instrucoes = new ArrayList<>();
@@ -19,7 +21,7 @@ public class Metodo {
 	}
 
 	public Metodo clonar() throws InstrucaoException {
-		Metodo metodo = new Metodo(nome, nativo);
+		Metodo metodo = new Metodo(biblioteca, nome, nativo);
 		for (NomeValor nv : parametros) {
 			metodo.addParam(nv.nome);
 		}
@@ -44,6 +46,10 @@ public class Metodo {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public Biblioteca getBiblioteca() {
+		return biblioteca;
 	}
 
 	Instrucao getInstrucao() {
