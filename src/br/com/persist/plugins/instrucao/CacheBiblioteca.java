@@ -14,7 +14,7 @@ public class CacheBiblioteca {
 		map = new HashMap<>();
 	}
 
-	public Biblioteca get(String nome) throws InstrucaoException {
+	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
 		Biblioteca resp = map.get(nome);
 		if (resp == null) {
 			resp = lerBiblioteca(nome);
@@ -36,11 +36,10 @@ public class CacheBiblioteca {
 		Metodo metodo = null;
 		for (String linha : arquivo) {
 			if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO_NATIVO)) {
-				metodo = new Metodo(linha.substring(3));
-				metodo.setNativo(true);
+				metodo = new Metodo(linha.substring(3), true);
 				resp.add(metodo);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO)) {
-				metodo = new Metodo(linha.substring(2));
+				metodo = new Metodo(linha.substring(2), false);
 				resp.add(metodo);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAM)) {
 				if (metodo == null) {
@@ -51,14 +50,15 @@ public class CacheBiblioteca {
 				if (metodo == null) {
 					throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linha.substring(2));
 				}
-				String string = linha.substring(2);
-				addInstrucao(metodo, string);
+				int pos = linha.indexOf('-');
+				String stringInstrucao = linha.substring(pos + 2);
+				addInstrucao(metodo, stringInstrucao);
 			}
 		}
 		return resp;
 	}
 
-	private void addInstrucao(Metodo metodo, String string) {
+	private void addInstrucao(Metodo metodo, String string) throws InstrucaoException {
 		int pos = string.indexOf(' ');
 		if (pos == -1) {
 			Instrucao instrucao = Instrucoes.get(string);

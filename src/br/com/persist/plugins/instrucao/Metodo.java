@@ -9,14 +9,28 @@ import br.com.persist.assistencia.Util;
 public class Metodo {
 	private final List<NomeValor> parametros;
 	private final List<Instrucao> instrucoes;
+	private final boolean nativo;
 	private final String nome;
-	private boolean nativo;
 	private int indice;
 
-	public Metodo(String nome) {
+	public Metodo(String nome, boolean nativo) {
 		this.nome = Objects.requireNonNull(nome);
 		parametros = new ArrayList<>();
 		instrucoes = new ArrayList<>();
+		this.nativo = nativo;
+	}
+
+	public Metodo clonar() throws InstrucaoException {
+		Metodo metodo = new Metodo(nome, nativo);
+		for (NomeValor nv : parametros) {
+			metodo.addParam(nv.nome);
+		}
+		if (!nativo) {
+			for (Instrucao inst : instrucoes) {
+				metodo.addInstrucao(inst);
+			}
+		}
+		return metodo;
 	}
 
 	public int getIndice() {
@@ -31,7 +45,7 @@ public class Metodo {
 		return nome;
 	}
 
-	Instrucao get() {
+	Instrucao getInstrucao() {
 		return instrucoes.get(indice);
 	}
 
@@ -45,25 +59,35 @@ public class Metodo {
 	}
 
 	public void setValorParam(int indice, Object valor) throws InstrucaoException {
-		if (InstrucaoUtil.tipoValido(valor)) {
-			parametros.get(indice).valor = valor;
-		} else {
-			throw new InstrucaoException("erro.valor_invalido_param", indice, nome);
-		}
+		InstrucaoUtil.checarOperando(valor);
+		parametros.get(indice).valor = valor;
 	}
 
-	public void addInstrucao(Instrucao instrucao) {
+	public void setValorParam(String nome, Object valor) throws InstrucaoException {
+		int pos = getIndiceParam(nome);
+		setValorParam(pos, valor);
+	}
+
+	private int getIndiceParam(String nome) {
+		for (int i = 0; i < parametros.size(); i++) {
+			if (parametros.get(i).nome.equals(nome)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public void addInstrucao(Instrucao instrucao) throws InstrucaoException {
 		if (instrucao != null) {
-			instrucoes.add(instrucao);
+			if (nativo) {
+				throw new InstrucaoException("erro.metodo_nativo_add_inst", nome);
+			}
+			instrucoes.add(instrucao.clonar(this));
 		}
 	}
 
 	public boolean isNativo() {
 		return nativo;
-	}
-
-	public void setNativo(boolean nativo) {
-		this.nativo = nativo;
 	}
 }
 

@@ -125,7 +125,7 @@ class Load extends No {
 	Neg neg;
 
 	public Load(Atom atom) {
-		super("load");
+		super(InstrucaoConstantes.LOAD);
 		this.atom = atom;
 	}
 
@@ -153,7 +153,7 @@ class Load extends No {
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
-		print(pw, InstrucaoConstantes.LOAD, atom.getValor());
+		print(pw, nome, atom.getValor());
 		if (neg != null) {
 			neg.print(pw);
 		}
