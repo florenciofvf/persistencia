@@ -243,11 +243,9 @@ class Expression extends No {
 }
 
 class If extends No {
-	Goto gotoFinalBody = new Goto();
-	Goto gotoFinalElse = new Goto();
+	SaltoFinal saltoFinalBody;
+	SaltoFinal saltoFinalElse;
 	Ifeq ifeq = new Ifeq();
-	No saltoFinalBody;
-	No saltoFinalElse;
 
 	public If() {
 		super(InstrucaoConstantes.IF);
@@ -260,15 +258,31 @@ class If extends No {
 		No bodyIf = nos.get(1);
 		No bodyElse = nos.get(2);
 
-		saltoFinalBody = proximo();
-		if (saltoFinalBody == null) {
-			saltoFinalBody = metodo.getReturn();
+		No container = containerSuperior();
+
+		Goto gotoFinalBody = new Goto();
+		if (container == null) {
+			saltoFinalBody = new SaltoFinal(true, gotoFinalBody, metodo.getReturn());
+		} else {
+			No proximoApos = container.proximoApos(filhoDe(container, this));
+			if (proximoApos == container) {
+				saltoFinalBody = new SaltoFinal(true, gotoFinalBody, container);
+			} else {
+				saltoFinalBody = new SaltoFinal(false, gotoFinalBody, proximoApos);
+			}
 		}
 
-		if (parent instanceof If) {
-			gotoFinalElse = null;
-		} else {
-			saltoFinalElse = proximo();
+		Goto gotoFinalElse = new Goto();
+		if (container != null && !(parent instanceof If)) {
+			No proximoApos = container.proximoApos(filhoDe(container, this));
+//			if (proximoApos == container) {
+//				saltoFinalElse = new SaltoFinal(true, gotoFinalElse, container);
+//			} else {
+//				saltoFinalElse = new SaltoFinal(false, gotoFinalElse, proximoApos);
+//			}
+//			if (proximoApos != container) {
+//				saltoFinalElse = new SaltoFinal(false, gotoFinalElse, proximoApos);
+//			}
 		}
 
 		condicao.normalizarEstrutura(metodo);
@@ -276,10 +290,48 @@ class If extends No {
 		bodyElse.normalizarEstrutura(metodo);
 	}
 
-	private No proximo() {
+	class SaltoFinal {
+		final boolean porIndice;
+		final Desvio desvio;
+		final No no;
+
+		public SaltoFinal(boolean porIndice, Desvio desvio, No no) {
+			this.porIndice = porIndice;
+			this.desvio = desvio;
+			this.no = no;
+		}
+
+		void indexar(AtomicInteger atomic) throws InstrucaoException {
+			desvio.indexar(atomic);
+		}
+
+		void configurarDesvio() {
+			if (porIndice) {
+				desvio.salto = no.indice;
+			} else {
+				no.configDesvio(desvio);
+			}
+		}
+
+		void print(PrintWriter pw) throws InstrucaoException {
+			desvio.print(pw);
+		}
+	}
+
+	private No containerSuperior() {
 		No no = this;
 		while (no != null) {
 			if (!(no instanceof If)) {
+				break;
+			}
+			no = no.parent;
+		}
+		return no;
+	}
+
+	private No filhoDe(No container, No no) {
+		while (no != null) {
+			if (no.parent == container) {
 				break;
 			}
 			no = no.parent;
@@ -297,10 +349,10 @@ class If extends No {
 		condicao.indexar(atomic);
 		ifeq.indexar(atomic);
 		bodyIf.indexar(atomic);
-		gotoFinalBody.indexar(atomic);
+		saltoFinalBody.indexar(atomic);
 		bodyElse.indexar(atomic);
 		if (saltoFinalElse != null) {
-			gotoFinalElse.indexar(atomic);
+			saltoFinalElse.indexar(atomic);
 		}
 	}
 
@@ -314,10 +366,10 @@ class If extends No {
 		condicao.configurarDesvio();
 		bodyElse.configDesvio(ifeq);
 		bodyIf.configurarDesvio();
-		gotoFinalBody.salto = saltoFinalBody.indice;
+		saltoFinalBody.configurarDesvio();
 		bodyElse.configurarDesvio();
 		if (saltoFinalElse != null) {
-			gotoFinalElse.salto = saltoFinalElse.indice;
+			saltoFinalElse.configurarDesvio();
 		}
 	}
 
@@ -331,10 +383,10 @@ class If extends No {
 		condicao.print(pw);
 		ifeq.print(pw);
 		bodyIf.print(pw);
-		gotoFinalBody.print(pw);
+		saltoFinalBody.print(pw);
 		bodyElse.print(pw);
 		if (saltoFinalElse != null) {
-			gotoFinalElse.print(pw);
+			saltoFinalElse.print(pw);
 		}
 	}
 }

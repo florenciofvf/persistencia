@@ -77,13 +77,16 @@ public abstract class No {
 		}
 	}
 
-	public No noApos(No no) throws InstrucaoException {
+	public No proximoApos(No no) throws InstrucaoException {
 		if (no == null) {
-			throw new InstrucaoException(nome + " <<< noApos(No no) >>> null", false);
+			throw new InstrucaoException(nome + " <<< proximoApos(No no) >>> null", false);
 		}
 		int pos = nos.indexOf(no);
 		if (pos == -1) {
-			throw new InstrucaoException(nome + " <<< noApos(No no) >>> inexistente", false);
+			throw new InstrucaoException(nome + " <<< proximoApos(No no) >>> inexistente", false);
+		}
+		if (pos == nos.size() - 1) {
+			return this;
 		}
 		return nos.get(pos + 1);
 	}
