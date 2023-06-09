@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao;
 import br.com.persist.plugins.instrucao.inst.Goto;
 import br.com.persist.plugins.instrucao.inst.Ifeq;
 import br.com.persist.plugins.instrucao.inst.Load;
+import br.com.persist.plugins.instrucao.inst.Neg;
 import br.com.persist.plugins.instrucao.inst.PushBD;
 import br.com.persist.plugins.instrucao.inst.PushBI;
 import br.com.persist.plugins.instrucao.inst.PushString;
@@ -31,6 +32,7 @@ public class Processador {
 		Instrucoes.add(new Goto(null));
 		Instrucoes.add(new Ifeq(null));
 		Instrucoes.add(new Load(null));
+		Instrucoes.add(new Neg(null));
 		Instrucoes.add(new PushBD(null));
 		Instrucoes.add(new PushBI(null));
 		Instrucoes.add(new PushString(null));

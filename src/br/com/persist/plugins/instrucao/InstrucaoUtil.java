@@ -1,5 +1,8 @@
 package br.com.persist.plugins.instrucao;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class InstrucaoUtil {
 	private InstrucaoUtil() {
 	}
@@ -25,6 +28,12 @@ public class InstrucaoUtil {
 	public static void checarNumber(Object obj) throws InstrucaoException {
 		if (!(obj instanceof Number)) {
 			throw new InstrucaoException("erro.valor_nao_number", obj);
+		}
+	}
+
+	public static void checarBigIntegerBigDecimal(Object obj) throws InstrucaoException {
+		if (!(obj instanceof BigInteger) && !(obj instanceof BigDecimal)) {
+			throw new InstrucaoException("erro.valor_nao_bigi_bigd", obj);
 		}
 	}
 }
