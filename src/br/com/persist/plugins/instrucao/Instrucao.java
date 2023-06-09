@@ -5,7 +5,6 @@ import java.util.Objects;
 public abstract class Instrucao {
 	protected final Metodo metodo;
 	protected final String nome;
-	protected String parametro;
 
 	public Instrucao(Metodo metodo, String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -21,7 +20,6 @@ public abstract class Instrucao {
 	public abstract void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException;
 
-	public void setParam(String string) {
-		parametro = string;
+	public void setParam(String string) throws InstrucaoException {
 	}
 }

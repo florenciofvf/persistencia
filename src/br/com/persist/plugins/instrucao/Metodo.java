@@ -68,6 +68,15 @@ public class Metodo {
 		setValorParam(pos, valor);
 	}
 
+	public Object getValorParam(int indice) {
+		return parametros.get(indice).valor;
+	}
+
+	public Object getValorParam(String nome) {
+		int pos = getIndiceParam(nome);
+		return getValorParam(pos);
+	}
+
 	private int getIndiceParam(String nome) {
 		for (int i = 0; i < parametros.size(); i++) {
 			if (parametros.get(i).nome.equals(nome)) {
