@@ -14,11 +14,11 @@ public class Processador {
 		if (metodo == null) {
 			throw new InstrucaoException("erro.biblio_sem_metodo_principal", biblioteca);
 		}
-		pilhaMetodo.add(metodo);
+		pilhaMetodo.push(metodo);
 		while (metodo != null) {
 			Instrucao instrucao = metodo.getInstrucao();
 			instrucao.executar(pilhaMetodo, pilhaOperando, cacheBiblioteca);
-			metodo = pilhaMetodo.ref();
+			metodo = pilhaMetodo.isEmpty() ? null : pilhaMetodo.peek();
 		}
 	}
 

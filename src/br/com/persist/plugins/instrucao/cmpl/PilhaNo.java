@@ -14,7 +14,7 @@ public class PilhaNo {
 
 	private void checar() throws InstrucaoException {
 		if (isEmpty()) {
-			throw new InstrucaoException("Pilha vazia >>> " + toString(), false);
+			throw new InstrucaoException("PilhaNo vazia >>> " + toString(), false);
 		}
 	}
 

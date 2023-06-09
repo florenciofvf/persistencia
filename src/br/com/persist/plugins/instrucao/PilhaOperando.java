@@ -10,16 +10,37 @@ public class PilhaOperando {
 		operandos = new ArrayList<>();
 	}
 
-	public Object ref() {
+	private void checar() throws InstrucaoException {
+		if (isEmpty()) {
+			throw new InstrucaoException("PilhaOperando vazia >>> " + toString(), false);
+		}
+	}
+
+	public Object peek() throws InstrucaoException {
+		checar();
 		return operandos.get(operandos.size() - 1);
 	}
 
-	public void add(Object valor) throws InstrucaoException {
+	public void push(Object valor) throws InstrucaoException {
 		InstrucaoUtil.checarOperando(valor);
 		operandos.add(valor);
 	}
 
-	public Object remove() {
+	public Object pop() throws InstrucaoException {
+		checar();
 		return operandos.remove(operandos.size() - 1);
+	}
+
+	public int size() {
+		return operandos.size();
+	}
+
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+
+	@Override
+	public String toString() {
+		return operandos.toString();
 	}
 }
