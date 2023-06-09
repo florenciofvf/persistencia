@@ -209,7 +209,7 @@ class Expression extends No {
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		checarOperandos1();
 		nos.get(0).normalizarEstrutura(metodo);
-		if (atom.isNegarVariavel()) {
+		if (atom.isNegarExpressao()) {
 			neg = new Neg();
 		}
 	}
