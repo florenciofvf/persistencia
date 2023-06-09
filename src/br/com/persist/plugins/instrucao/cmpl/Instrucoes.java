@@ -243,11 +243,11 @@ class Expression extends No {
 }
 
 class If extends No {
-	final Goto gotoIf = new Goto();
-	final Ifeq ifeq = new Ifeq();
-	No parentComando;
-	Goto gotoElse;
-	Return retorn;
+	Goto gotoFinalBody = new Goto();
+	Goto gotoFinalElse = new Goto();
+	Ifeq ifeq = new Ifeq();
+	No saltoFinalBody;
+	No saltoFinalElse;
 
 	public If() {
 		super(InstrucaoConstantes.IF);
@@ -256,15 +256,21 @@ class If extends No {
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		checarOperandos3();
-		parentComando = proximo();
-		if (parentComando == null) {
-			retorn = metodo.getReturn();
-		} else {
-			gotoElse = new Goto();
-		}
 		No condicao = nos.get(0);
 		No bodyIf = nos.get(1);
 		No bodyElse = nos.get(2);
+
+		saltoFinalBody = proximo();
+		if (saltoFinalBody == null) {
+			saltoFinalBody = metodo.getReturn();
+		}
+
+		if (parent instanceof If) {
+			gotoFinalElse = null;
+		} else {
+			saltoFinalElse = proximo();
+		}
+
 		condicao.normalizarEstrutura(metodo);
 		bodyIf.normalizarEstrutura(metodo);
 		bodyElse.normalizarEstrutura(metodo);
@@ -273,7 +279,7 @@ class If extends No {
 	private No proximo() {
 		No no = this;
 		while (no != null) {
-			if (!(no instanceof If) && no.nos.size() > 1) {
+			if (!(no instanceof If)) {
 				break;
 			}
 			no = no.parent;
@@ -291,10 +297,10 @@ class If extends No {
 		condicao.indexar(atomic);
 		ifeq.indexar(atomic);
 		bodyIf.indexar(atomic);
-		gotoIf.indexar(atomic);
+		gotoFinalBody.indexar(atomic);
 		bodyElse.indexar(atomic);
-		if (gotoElse != null) {
-			gotoElse.indexar(atomic);
+		if (saltoFinalElse != null) {
+			gotoFinalElse.indexar(atomic);
 		}
 	}
 
@@ -308,16 +314,10 @@ class If extends No {
 		condicao.configurarDesvio();
 		bodyElse.configDesvio(ifeq);
 		bodyIf.configurarDesvio();
-		if (parentComando != null) {
-			No proximoNo = parentComando.noApos(this);
-			proximoNo.configDesvio(gotoIf);
-		} else {
-			retorn.configDesvio(gotoIf);
-		}
+		gotoFinalBody.salto = saltoFinalBody.indice;
 		bodyElse.configurarDesvio();
-		if (parentComando != null) {
-			No proximoNo = parentComando.noApos(this);
-			proximoNo.configDesvio(gotoElse);
+		if (saltoFinalElse != null) {
+			gotoFinalElse.salto = saltoFinalElse.indice;
 		}
 	}
 
@@ -331,10 +331,10 @@ class If extends No {
 		condicao.print(pw);
 		ifeq.print(pw);
 		bodyIf.print(pw);
-		gotoIf.print(pw);
+		gotoFinalBody.print(pw);
 		bodyElse.print(pw);
-		if (gotoElse != null) {
-			gotoElse.print(pw);
+		if (saltoFinalElse != null) {
+			gotoFinalElse.print(pw);
 		}
 	}
 }
