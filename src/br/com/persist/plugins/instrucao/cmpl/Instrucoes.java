@@ -244,7 +244,6 @@ class Expression extends No {
 
 class If extends No {
 	SaltoFinal saltoFinalBody;
-	SaltoFinal saltoFinalElse;
 	Ifeq ifeq = new Ifeq();
 
 	public If() {
@@ -259,7 +258,6 @@ class If extends No {
 		No bodyElse = nos.get(2);
 
 		No container = containerSuperior();
-
 		Goto gotoFinalBody = new Goto();
 		if (container == null) {
 			saltoFinalBody = new SaltoFinal(true, gotoFinalBody, metodo.getReturn());
@@ -270,19 +268,6 @@ class If extends No {
 			} else {
 				saltoFinalBody = new SaltoFinal(false, gotoFinalBody, proximoApos);
 			}
-		}
-
-		Goto gotoFinalElse = new Goto();
-		if (container != null && !(parent instanceof If)) {
-			No proximoApos = container.proximoApos(filhoDe(container, this));
-//			if (proximoApos == container) {
-//				saltoFinalElse = new SaltoFinal(true, gotoFinalElse, container);
-//			} else {
-//				saltoFinalElse = new SaltoFinal(false, gotoFinalElse, proximoApos);
-//			}
-//			if (proximoApos != container) {
-//				saltoFinalElse = new SaltoFinal(false, gotoFinalElse, proximoApos);
-//			}
 		}
 
 		condicao.normalizarEstrutura(metodo);
@@ -351,9 +336,6 @@ class If extends No {
 		bodyIf.indexar(atomic);
 		saltoFinalBody.indexar(atomic);
 		bodyElse.indexar(atomic);
-		if (saltoFinalElse != null) {
-			saltoFinalElse.indexar(atomic);
-		}
 	}
 
 	@Override
@@ -368,9 +350,6 @@ class If extends No {
 		bodyIf.configurarDesvio();
 		saltoFinalBody.configurarDesvio();
 		bodyElse.configurarDesvio();
-		if (saltoFinalElse != null) {
-			saltoFinalElse.configurarDesvio();
-		}
 	}
 
 	@Override
@@ -385,9 +364,6 @@ class If extends No {
 		bodyIf.print(pw);
 		saltoFinalBody.print(pw);
 		bodyElse.print(pw);
-		if (saltoFinalElse != null) {
-			saltoFinalElse.print(pw);
-		}
 	}
 }
 
