@@ -36,9 +36,13 @@ public class Processador {
 	private final PilhaMetodo pilhaMetodo = new PilhaMetodo();
 
 	public List<Object> executar(String nomeBiblioteca, String nomeMetodo, Object... args) throws InstrucaoException {
-		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioteca);
-		Metodo metodo = biblioteca.getMetodo(nomeMetodo);
-		pilhaMetodo.push(metodo);
+		Invoke invoke = new Invoke(null);
+		invoke.setParam(nomeBiblioteca + "." + nomeMetodo);
+		for (Object obj : args) {
+			pilhaOperando.push(obj);
+		}
+		invoke.executar(pilhaMetodo, pilhaOperando, cacheBiblioteca);
+		Metodo metodo = pilhaMetodo.peek();
 		while (metodo != null) {
 			Instrucao instrucao = metodo.getInstrucao();
 			instrucao.executar(pilhaMetodo, pilhaOperando, cacheBiblioteca);

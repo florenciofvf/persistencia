@@ -44,6 +44,7 @@ public class Invoke extends Instrucao {
 			biblioteca = metodo.getBiblioteca();
 			invocar = biblioteca.getMetodo(array[0]);
 		}
+		// TODO
 		pilhaMetodo.push(invocar.clonar());
 	}
 }
