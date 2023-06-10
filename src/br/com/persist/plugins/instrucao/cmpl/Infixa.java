@@ -195,7 +195,7 @@ class Menor extends Infixa {
 
 class MenorIgual extends Infixa {
 	public MenorIgual() {
-		super(InstrucaoConstantes.MENOR_IGUAL);
+		super(InstrucaoConstantes.MENOR_I);
 	}
 
 	@Override
@@ -227,7 +227,7 @@ class Maior extends Infixa {
 
 class MaiorIgual extends Infixa {
 	public MaiorIgual() {
-		super(InstrucaoConstantes.MAIOR_IGUAL);
+		super(InstrucaoConstantes.MAIOR_I);
 	}
 
 	@Override

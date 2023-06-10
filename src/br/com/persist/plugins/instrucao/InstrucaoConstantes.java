@@ -30,8 +30,8 @@ public class InstrucaoConstantes {
 	public static final String DIV = "div";
 	public static final String REM = "rem";
 
-	public static final String MENOR_IGUAL = "le";
-	public static final String MAIOR_IGUAL = "ge";
+	public static final String MENOR_I = "le";
+	public static final String MAIOR_I = "ge";
 	public static final String MENOR = "lt";
 	public static final String MAIOR = "gt";
 	public static final String IGUAL = "eq";

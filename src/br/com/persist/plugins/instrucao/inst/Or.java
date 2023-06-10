@@ -1,7 +1,5 @@
 package br.com.persist.plugins.instrucao.inst;
 
-import java.math.BigInteger;
-
 import br.com.persist.plugins.instrucao.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
@@ -11,7 +9,7 @@ import br.com.persist.plugins.instrucao.Metodo;
 import br.com.persist.plugins.instrucao.PilhaMetodo;
 import br.com.persist.plugins.instrucao.PilhaOperando;
 
-public class Or extends Instrucao {
+public class Or extends Logico {
 	public Or(Metodo metodo) {
 		super(metodo, InstrucaoConstantes.OR);
 	}
@@ -29,15 +27,15 @@ public class Or extends Instrucao {
 		InstrucaoUtil.checarNumber(operandoE);
 		InstrucaoUtil.checarNumber(operandoD);
 		int valor = ((Number) operandoE).intValue();
-		if (valor > 0) {
-			pilhaOperando.push(BigInteger.valueOf(1));
+		if (valor != 0) {
+			pilhaOperando.push(createTrue());
 			return;
 		}
 		valor = ((Number) operandoD).intValue();
-		if (valor > 0) {
-			pilhaOperando.push(BigInteger.valueOf(1));
+		if (valor != 0) {
+			pilhaOperando.push(createTrue());
 			return;
 		}
-		pilhaOperando.push(BigInteger.valueOf(0));
+		pilhaOperando.push(createFalse());
 	}
 }
