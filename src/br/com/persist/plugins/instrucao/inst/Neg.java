@@ -1,6 +1,5 @@
 package br.com.persist.plugins.instrucao.inst;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import br.com.persist.plugins.instrucao.CacheBiblioteca;
@@ -12,7 +11,7 @@ import br.com.persist.plugins.instrucao.Metodo;
 import br.com.persist.plugins.instrucao.PilhaMetodo;
 import br.com.persist.plugins.instrucao.PilhaOperando;
 
-public class Neg extends Instrucao {
+public class Neg extends Matemat {
 	public Neg(Metodo metodo) {
 		super(metodo, InstrucaoConstantes.NEG);
 	}
@@ -29,9 +28,9 @@ public class Neg extends Instrucao {
 		InstrucaoUtil.checarBigIntegerBigDecimal(operando);
 		Object novo;
 		if (operando instanceof BigInteger) {
-			novo = ((BigInteger) operando).multiply(BigInteger.valueOf(-1));
+			novo = castBI(operando).negate();
 		} else {
-			novo = ((BigDecimal) operando).multiply(BigDecimal.valueOf(-1));
+			novo = castBD(operando).negate();
 		}
 		pilhaOperando.push(novo);
 	}
