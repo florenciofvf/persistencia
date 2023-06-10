@@ -12,7 +12,7 @@ import br.com.persist.plugins.instrucao.inst.Neg;
 import br.com.persist.plugins.instrucao.inst.Or;
 import br.com.persist.plugins.instrucao.inst.PushBD;
 import br.com.persist.plugins.instrucao.inst.PushBI;
-import br.com.persist.plugins.instrucao.inst.PushString;
+import br.com.persist.plugins.instrucao.inst.PushSTR;
 import br.com.persist.plugins.instrucao.inst.Rem;
 import br.com.persist.plugins.instrucao.inst.Return;
 import br.com.persist.plugins.instrucao.inst.Sub;
@@ -50,7 +50,7 @@ public class Processador {
 		Instrucoes.add(new Or(null));
 		Instrucoes.add(new PushBD(null));
 		Instrucoes.add(new PushBI(null));
-		Instrucoes.add(new PushString(null));
+		Instrucoes.add(new PushSTR(null));
 		Instrucoes.add(new Rem(null));
 		Instrucoes.add(new Return(null));
 		Instrucoes.add(new Sub(null));

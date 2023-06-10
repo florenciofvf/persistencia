@@ -8,16 +8,16 @@ import br.com.persist.plugins.instrucao.Metodo;
 import br.com.persist.plugins.instrucao.PilhaMetodo;
 import br.com.persist.plugins.instrucao.PilhaOperando;
 
-public class PushString extends Instrucao {
+public class PushSTR extends Instrucao {
 	private String string;
 
-	public PushString(Metodo metodo) {
+	public PushSTR(Metodo metodo) {
 		super(metodo, InstrucaoConstantes.PUSH_STRING);
 	}
 
 	@Override
 	public Instrucao clonar(Metodo metodo) {
-		PushString resp = new PushString(metodo);
+		PushSTR resp = new PushSTR(metodo);
 		resp.string = string;
 		return resp;
 	}
