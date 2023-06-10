@@ -2,9 +2,11 @@ package br.com.persist.plugins.instrucao;
 
 import br.com.persist.plugins.instrucao.inst.Add;
 import br.com.persist.plugins.instrucao.inst.And;
+import br.com.persist.plugins.instrucao.inst.Diff;
 import br.com.persist.plugins.instrucao.inst.Div;
 import br.com.persist.plugins.instrucao.inst.Goto;
 import br.com.persist.plugins.instrucao.inst.Ifeq;
+import br.com.persist.plugins.instrucao.inst.Igual;
 import br.com.persist.plugins.instrucao.inst.Invoke;
 import br.com.persist.plugins.instrucao.inst.Load;
 import br.com.persist.plugins.instrucao.inst.Maior;
@@ -44,9 +46,11 @@ public class Processador {
 	static {
 		Instrucoes.add(new Add(null));
 		Instrucoes.add(new And(null));
+		Instrucoes.add(new Diff(null));
 		Instrucoes.add(new Div(null));
 		Instrucoes.add(new Goto(null));
 		Instrucoes.add(new Ifeq(null));
+		Instrucoes.add(new Igual(null));
 		Instrucoes.add(new Invoke(null));
 		Instrucoes.add(new Load(null));
 		Instrucoes.add(new Maior(null));
