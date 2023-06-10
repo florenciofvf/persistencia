@@ -1,4 +1,4 @@
-package br.com.persist.plugins.instrucao;
+package br.com.persist.plugins.instrucao.pro;
 
 import java.util.HashMap;
 import java.util.Map;

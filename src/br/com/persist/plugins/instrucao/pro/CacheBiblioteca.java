@@ -1,4 +1,4 @@
-package br.com.persist.plugins.instrucao;
+package br.com.persist.plugins.instrucao.pro;
 
 import java.io.File;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class CacheBiblioteca {
 	private final Map<String, Biblioteca> map;

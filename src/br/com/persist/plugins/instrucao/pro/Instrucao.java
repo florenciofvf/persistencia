@@ -1,6 +1,8 @@
-package br.com.persist.plugins.instrucao;
+package br.com.persist.plugins.instrucao.pro;
 
 import java.util.Objects;
+
+import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Instrucao {
 	protected final Metodo metodo;

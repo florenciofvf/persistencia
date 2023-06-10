@@ -1,7 +1,10 @@
-package br.com.persist.plugins.instrucao;
+package br.com.persist.plugins.instrucao.pro;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.inst.InstrucaoUtil;
 
 public class PilhaOperando {
 	private final List<Object> operandos;

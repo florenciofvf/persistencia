@@ -1,5 +1,6 @@
-package br.com.persist.plugins.instrucao;
+package br.com.persist.plugins.instrucao.pro;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.inst.Add;
 import br.com.persist.plugins.instrucao.inst.And;
 import br.com.persist.plugins.instrucao.inst.Diff;

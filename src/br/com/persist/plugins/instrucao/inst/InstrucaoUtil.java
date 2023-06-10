@@ -1,7 +1,9 @@
-package br.com.persist.plugins.instrucao;
+package br.com.persist.plugins.instrucao.inst;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
+import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoUtil {
 	private InstrucaoUtil() {

@@ -3,8 +3,8 @@ package br.com.persist.plugins.instrucao.inst;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import br.com.persist.plugins.instrucao.Instrucao;
-import br.com.persist.plugins.instrucao.Metodo;
+import br.com.persist.plugins.instrucao.pro.Instrucao;
+import br.com.persist.plugins.instrucao.pro.Metodo;
 
 public abstract class Matemat extends Instrucao {
 	public Matemat(Metodo metodo, String nome) {

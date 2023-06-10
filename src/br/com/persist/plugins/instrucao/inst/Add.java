@@ -3,14 +3,13 @@ package br.com.persist.plugins.instrucao.inst;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import br.com.persist.plugins.instrucao.CacheBiblioteca;
-import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.InstrucaoUtil;
-import br.com.persist.plugins.instrucao.Metodo;
-import br.com.persist.plugins.instrucao.PilhaMetodo;
-import br.com.persist.plugins.instrucao.PilhaOperando;
+import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
+import br.com.persist.plugins.instrucao.pro.Instrucao;
+import br.com.persist.plugins.instrucao.pro.Metodo;
+import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
+import br.com.persist.plugins.instrucao.pro.PilhaOperando;
 
 public class Add extends Matemat {
 	public Add(Metodo metodo) {
