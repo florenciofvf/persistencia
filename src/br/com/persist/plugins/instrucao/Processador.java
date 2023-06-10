@@ -5,6 +5,7 @@ import br.com.persist.plugins.instrucao.inst.Goto;
 import br.com.persist.plugins.instrucao.inst.Ifeq;
 import br.com.persist.plugins.instrucao.inst.Invoke;
 import br.com.persist.plugins.instrucao.inst.Load;
+import br.com.persist.plugins.instrucao.inst.Mul;
 import br.com.persist.plugins.instrucao.inst.Neg;
 import br.com.persist.plugins.instrucao.inst.Or;
 import br.com.persist.plugins.instrucao.inst.PushBD;
@@ -38,6 +39,7 @@ public class Processador {
 		Instrucoes.add(new Ifeq(null));
 		Instrucoes.add(new Invoke(null));
 		Instrucoes.add(new Load(null));
+		Instrucoes.add(new Mul(null));
 		Instrucoes.add(new Neg(null));
 		Instrucoes.add(new Or(null));
 		Instrucoes.add(new PushBD(null));
