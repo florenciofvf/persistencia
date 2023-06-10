@@ -1,5 +1,10 @@
 package br.com.persist.plugins.instrucao.pro;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.inst.Add;
 import br.com.persist.plugins.instrucao.inst.And;
@@ -30,18 +35,24 @@ public class Processador {
 	private final PilhaOperando pilhaOperando = new PilhaOperando();
 	private final PilhaMetodo pilhaMetodo = new PilhaMetodo();
 
-	public void executar(String biblioteca) throws InstrucaoException {
-		Biblioteca biblio = cacheBiblioteca.getBiblioteca(biblioteca);
-		Metodo metodo = biblio.getMetodo("principal");
-		if (metodo == null) {
-			throw new InstrucaoException("erro.biblio_sem_metodo_principal", biblioteca);
-		}
+	public List<Object> executar(String nomeBiblioteca, String nomeMetodo, Object... args) throws InstrucaoException {
+		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioteca);
+		Metodo metodo = biblioteca.getMetodo(nomeMetodo);
 		pilhaMetodo.push(metodo);
 		while (metodo != null) {
 			Instrucao instrucao = metodo.getInstrucao();
 			instrucao.executar(pilhaMetodo, pilhaOperando, cacheBiblioteca);
 			metodo = pilhaMetodo.isEmpty() ? null : pilhaMetodo.peek();
 		}
+		List<Object> resposta = new ArrayList<>();
+		while (!pilhaOperando.isEmpty()) {
+			resposta.add(pilhaOperando.pop());
+		}
+		return resposta;
+	}
+
+	public void excluirBiblioteca(String nome) {
+		cacheBiblioteca.excluir(nome);
 	}
 
 	static {
@@ -68,5 +79,22 @@ public class Processador {
 		Instrucoes.add(new Return(null));
 		Instrucoes.add(new Sub(null));
 		Instrucoes.add(new Xor(null));
+	}
+}
+
+class Instrucoes {
+	static final Map<String, Instrucao> cache = new HashMap<>();
+
+	private Instrucoes() {
+	}
+
+	static void add(Instrucao instrucao) {
+		if (instrucao != null) {
+			cache.put(instrucao.getNome(), instrucao);
+		}
+	}
+
+	static Instrucao get(String nome) {
+		return cache.get(nome);
 	}
 }

@@ -16,6 +16,10 @@ public class CacheBiblioteca {
 		map = new HashMap<>();
 	}
 
+	public void excluir(String nome) {
+		map.remove(nome);
+	}
+
 	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
 		Biblioteca resp = map.get(nome);
 		if (resp == null) {

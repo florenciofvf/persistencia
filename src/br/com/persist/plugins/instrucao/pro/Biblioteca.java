@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
+
 public class Biblioteca {
 	private final String nome;
 	private final Map<String, Metodo> map;
@@ -17,8 +19,12 @@ public class Biblioteca {
 		return nome;
 	}
 
-	public Metodo getMetodo(String nome) {
-		return map.get(nome);
+	public Metodo getMetodo(String nome) throws InstrucaoException {
+		Metodo metodo = map.get(nome);
+		if (metodo == null) {
+			throw new InstrucaoException("erro.metodo_inexistente", nome);
+		}
+		return metodo;
 	}
 
 	public void add(Metodo metodo) {
