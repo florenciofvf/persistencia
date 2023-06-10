@@ -2,10 +2,9 @@ package br.com.persist.plugins.instrucao.inst;
 
 import java.math.BigInteger;
 
-import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.Metodo;
 
-public abstract class Logico extends Instrucao {
+public abstract class Logico extends Matemat {
 	public Logico(Metodo metodo, String nome) {
 		super(metodo, nome);
 	}
