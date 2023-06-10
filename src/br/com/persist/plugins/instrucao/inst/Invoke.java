@@ -1,5 +1,8 @@
 package br.com.persist.plugins.instrucao.inst;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.pro.Biblioteca;
@@ -44,7 +47,34 @@ public class Invoke extends Instrucao {
 			biblioteca = metodo.getBiblioteca();
 			invocar = biblioteca.getMetodo(array[0]);
 		}
-		// TODO
-		pilhaMetodo.push(invocar.clonar());
+		Metodo clone = invocar.clonar();
+		if (!clone.isNativo()) {
+			setParametros(clone, pilhaOperando);
+			pilhaMetodo.push(clone);
+		} else {
+			Object resp = invocarNativo(clone, pilhaOperando);
+			pilhaOperando.push(resp);
+		}
+	}
+
+	private void setParametros(Metodo metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
+		List<Integer> params = listaParam(metodo);
+		for (int i = params.size() - 1; i >= 0; i--) {
+			Object valor = pilhaOperando.pop();
+			metodo.setValorParam(params.get(i), valor);
+		}
+	}
+
+	private List<Integer> listaParam(Metodo metodo) {
+		List<Integer> resp = new ArrayList<>();
+		for (int i = 0; i < metodo.getTotalParam(); i++) {
+			resp.add(i);
+		}
+		return resp;
+	}
+
+	private Object invocarNativo(Metodo metodo, PilhaOperando pilhaOperando) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -8,8 +8,8 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.inst.InstrucaoUtil;
 
 public class Metodo {
-	private final List<NomeValor> parametros;
 	private final List<Instrucao> instrucoes;
+	private final List<Param> parametros;
 	private final Biblioteca biblioteca;
 	private final boolean nativo;
 	private final String nome;
@@ -25,8 +25,8 @@ public class Metodo {
 
 	public Metodo clonar() throws InstrucaoException {
 		Metodo metodo = new Metodo(biblioteca, nome, nativo);
-		for (NomeValor nv : parametros) {
-			metodo.addParam(nv.nome);
+		for (Param p : parametros) {
+			metodo.addParam(p.nome);
 		}
 		if (!nativo) {
 			for (Instrucao inst : instrucoes) {
@@ -61,9 +61,10 @@ public class Metodo {
 
 	public void addParam(String nome) throws InstrucaoException {
 		InstrucaoUtil.checarParam(nome);
-		NomeValor nomeValor = new NomeValor(nome);
-		if (!parametros.contains(nomeValor)) {
-			parametros.add(nomeValor);
+		Param param = new Param(nome);
+		if (!parametros.contains(param)) {
+			param.indice = parametros.size() - 1;
+			parametros.add(param);
 		}
 	}
 
@@ -84,6 +85,10 @@ public class Metodo {
 	public Object getValorParam(String nome) {
 		int pos = getIndiceParam(nome);
 		return getValorParam(pos);
+	}
+
+	public int getTotalParam() {
+		return parametros.size();
 	}
 
 	private int getIndiceParam(String nome) {
@@ -109,11 +114,12 @@ public class Metodo {
 	}
 }
 
-class NomeValor {
+class Param {
 	final String nome;
 	Object valor;
+	int indice;
 
-	public NomeValor(String nome) {
+	public Param(String nome) {
 		this.nome = nome;
 	}
 
@@ -134,7 +140,7 @@ class NomeValor {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		NomeValor other = (NomeValor) obj;
+		Param other = (Param) obj;
 		if (nome == null) {
 			if (other.nome != null) {
 				return false;
