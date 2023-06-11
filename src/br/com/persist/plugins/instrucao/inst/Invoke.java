@@ -36,9 +36,14 @@ public class Invoke extends Instrucao {
 	}
 
 	@Override
+	public String getParam() {
+		return nomeMetodo;
+	}
+
+	@Override
 	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException {
-		String[] array = nomeMetodo.split(".");
+		String[] array = nomeMetodo.split("\\.");
 		Biblioteca biblioteca;
 		Metodo invocar;
 		if (array.length == 2) {

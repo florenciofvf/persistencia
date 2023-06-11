@@ -27,4 +27,14 @@ public abstract class Instrucao {
 
 	public void setParam(String string) throws InstrucaoException {
 	}
+
+	public String getParam() {
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		String param = getParam();
+		return nome + (param != null ? " " + param : "");
+	}
 }

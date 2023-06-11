@@ -31,6 +31,11 @@ public class PushSTR extends Instrucao {
 	}
 
 	@Override
+	public String getParam() {
+		return string;
+	}
+
+	@Override
 	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException {
 		pilhaOperando.push(string);

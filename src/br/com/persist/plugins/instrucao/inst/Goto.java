@@ -28,6 +28,11 @@ public class Goto extends Instrucao {
 	}
 
 	@Override
+	public String getParam() {
+		return String.valueOf(indice);
+	}
+
+	@Override
 	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException {
 		metodo.setIndice(indice);

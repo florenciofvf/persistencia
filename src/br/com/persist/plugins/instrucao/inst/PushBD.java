@@ -30,6 +30,11 @@ public class PushBD extends Instrucao {
 	}
 
 	@Override
+	public String getParam() {
+		return bigDecimal.toString();
+	}
+
+	@Override
 	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException {
 		pilhaOperando.push(bigDecimal);

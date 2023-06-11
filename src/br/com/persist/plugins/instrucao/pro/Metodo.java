@@ -57,7 +57,9 @@ public class Metodo {
 	}
 
 	Instrucao getInstrucao() {
-		return instrucoes.get(indice);
+		Instrucao resp = instrucoes.get(indice);
+		indice++;
+		return resp;
 	}
 
 	public void addParam(String nome) throws InstrucaoException {
@@ -113,6 +115,11 @@ public class Metodo {
 	public boolean isNativo() {
 		return nativo;
 	}
+
+	@Override
+	public String toString() {
+		return nome + "(" + parametros + ")";
+	}
 }
 
 class Param {
@@ -150,5 +157,10 @@ class Param {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return indice + "-" + nome + "=" + valor;
 	}
 }

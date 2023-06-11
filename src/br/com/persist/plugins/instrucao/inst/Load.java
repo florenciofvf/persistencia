@@ -31,6 +31,11 @@ public class Load extends Instrucao {
 	}
 
 	@Override
+	public String getParam() {
+		return param;
+	}
+
+	@Override
 	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
 			throws InstrucaoException {
 		Object valor = metodo.getValorParam(param);
