@@ -138,6 +138,7 @@ public class InstrucaoPagina extends Panel {
 		protected void atualizar() {
 			String biblioteca = file.getName();
 			try {
+				InstrucaoContainer.PROCESSADOR.excluirBiblioteca(biblioteca);
 				boolean resp = InstrucaoMontador.compilar(biblioteca);
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
