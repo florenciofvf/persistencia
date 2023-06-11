@@ -23,6 +23,7 @@ import br.com.persist.plugins.instrucao.inst.MenorI;
 import br.com.persist.plugins.instrucao.inst.Mul;
 import br.com.persist.plugins.instrucao.inst.Neg;
 import br.com.persist.plugins.instrucao.inst.Or;
+import br.com.persist.plugins.instrucao.inst.Pow;
 import br.com.persist.plugins.instrucao.inst.PushBD;
 import br.com.persist.plugins.instrucao.inst.PushBI;
 import br.com.persist.plugins.instrucao.inst.PushSTR;
@@ -86,6 +87,7 @@ public class Processador {
 		Instrucoes.add(new Mul(null));
 		Instrucoes.add(new Neg(null));
 		Instrucoes.add(new Or(null));
+		Instrucoes.add(new Pow(null));
 		Instrucoes.add(new PushBD(null));
 		Instrucoes.add(new PushBI(null));
 		Instrucoes.add(new PushSTR(null));

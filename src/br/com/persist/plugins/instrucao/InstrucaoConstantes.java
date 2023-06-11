@@ -27,6 +27,7 @@ public class InstrucaoConstantes {
 	public static final String ADD = "add";
 	public static final String SUB = "sub";
 	public static final String MUL = "mul";
+	public static final String POW = "pow";
 	public static final String DIV = "div";
 	public static final String REM = "rem";
 

@@ -72,11 +72,17 @@ public class InstrucaoAtom {
 			return new Atom(c, Atom.VIRGULA);
 		case '+':
 		case '-':
-		case '*':
 		case '/':
 		case '%':
 		case '^':
 			indice++;
+			return new Atom(c, Atom.FUNCAO_INFIXA);
+		case '*':
+			indice++;
+			if (indiceAtualEh('*')) {
+				indice++;
+				return new Atom("**", Atom.FUNCAO_INFIXA);
+			}
 			return new Atom(c, Atom.FUNCAO_INFIXA);
 		case '=':
 			indice++;
@@ -311,18 +317,18 @@ public class InstrucaoAtom {
 	private void processar(final List<Atom> lista, AtomIndice atomIndice, boolean negar) throws InstrucaoException {
 		int indiceAtomAntes = atomIndice.indice - 1;
 		int indiceAtomDepois = atomIndice.indice + 1;
-		if (!ehOperandoCalculavel(indiceAtomAntes, lista) && atomNumero(indiceAtomDepois, lista)) {
+		if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && atomNumero(indiceAtomDepois, lista)) {
 			if (negar) {
 				negarAtom(indiceAtomDepois, atomIndice, lista);
 			} else {
 				lista.remove(atomIndice.indice);
 			}
-		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista) && iniExpressao(indiceAtomDepois, lista)) {
+		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && iniExpressao(indiceAtomDepois, lista)) {
 			if (negar) {
 				lista.get(indiceAtomDepois).setNegarExpressao(true);
 			}
 			lista.remove(atomIndice.indice);
-		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista) && variavel(indiceAtomDepois, lista)) {
+		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && variavel(indiceAtomDepois, lista)) {
 			if (negar) {
 				lista.get(indiceAtomDepois).setNegarVariavel(true);
 			}
@@ -356,10 +362,15 @@ public class InstrucaoAtom {
 		return false;
 	}
 
-	private boolean ehOperandoCalculavel(int i, List<Atom> lista) {
+	private boolean ehOperandoCalculavel(int i, List<Atom> lista, boolean negar) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
-			return atom.isParenteseFim() || atom.isVariavel() || atom.isBigInteger() || atom.isBigDecimal();
+			if (negar) {
+				return atom.isParenteseFim() || atom.isVariavel() || atom.isBigInteger() || atom.isBigDecimal();
+			} else {
+				return atom.isParenteseFim() || atom.isVariavel() || atom.isBigInteger() || atom.isBigDecimal()
+						|| atom.isString();
+			}
 		}
 		return false;
 	}

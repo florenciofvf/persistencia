@@ -113,6 +113,22 @@ class Multiplicar extends Infixa {
 	}
 }
 
+class Pow extends Infixa {
+	public Pow() {
+		super(InstrucaoConstantes.POW);
+	}
+
+	@Override
+	public short getPrioridade() {
+		return matematico1;
+	}
+
+	@Override
+	public Infixa clonar() {
+		return new Pow();
+	}
+}
+
 class Dividir extends Infixa {
 	public Dividir() {
 		super(InstrucaoConstantes.DIV);

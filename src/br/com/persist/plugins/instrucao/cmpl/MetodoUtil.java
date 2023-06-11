@@ -120,6 +120,7 @@ class MetodoUtil {
 		infixas.put("+", new Somar());
 		infixas.put("-", new Subtrair());
 		infixas.put("*", new Multiplicar());
+		infixas.put("**", new Pow());
 		infixas.put("/", new Dividir());
 		infixas.put("%", new Resto());
 
