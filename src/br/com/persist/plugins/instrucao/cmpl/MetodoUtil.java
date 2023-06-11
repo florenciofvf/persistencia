@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 class MetodoUtil {
@@ -71,7 +72,7 @@ class MetodoUtil {
 		if (!atom.isParenteseIni()) {
 			throwInstrucaoException(indice);
 		}
-		if ("if".equals(metodo)) {
+		if (InstrucaoConstantes.IF.equals(metodo)) {
 			If se = new If();
 			pilhaNo.add(se);
 			pilhaNo.push(se);
