@@ -33,4 +33,9 @@ public class Biblioteca {
 			map.put(metodo.getNome(), metodo);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
 }

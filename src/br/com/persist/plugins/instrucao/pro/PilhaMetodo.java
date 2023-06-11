@@ -44,6 +44,6 @@ public class PilhaMetodo {
 
 	@Override
 	public String toString() {
-		return metodos.toString();
+		return "PilhaMetodo=" + metodos.toString();
 	}
 }

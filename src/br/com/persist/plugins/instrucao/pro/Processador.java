@@ -60,6 +60,15 @@ public class Processador {
 		cacheBiblioteca.excluir(nome);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(cacheBiblioteca.toString() + "\n");
+		sb.append(pilhaMetodo.toString() + "\n");
+		sb.append(pilhaOperando.toString());
+		return sb.toString();
+	}
+
 	static {
 		Instrucoes.add(new Add(null));
 		Instrucoes.add(new And(null));

@@ -77,4 +77,9 @@ public class CacheBiblioteca {
 			metodo.addInstrucao(instrucao);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "CacheBiblioteca total_cache=" + map.size() + "\n" + map.toString();
+	}
 }

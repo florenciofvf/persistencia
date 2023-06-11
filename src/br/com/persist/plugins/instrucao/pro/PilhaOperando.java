@@ -44,6 +44,6 @@ public class PilhaOperando {
 
 	@Override
 	public String toString() {
-		return operandos.toString();
+		return "PilhaOperando=" + operandos.toString();
 	}
 }
