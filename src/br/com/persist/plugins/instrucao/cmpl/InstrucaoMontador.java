@@ -20,10 +20,19 @@ public class InstrucaoMontador {
 			return false;
 		}
 		String script = Util.conteudo(file);
+		if (Util.estaVazio(script)) {
+			return false;
+		}
 		InstrucaoAtom lexico = new InstrucaoAtom(script);
 		List<Atom> atoms = lexico.getListaAtom();
+		if (atoms.isEmpty()) {
+			return false;
+		}
 		InstrucaoGramatica gramatica = new InstrucaoGramatica(atoms);
 		List<Metodo> metodos = gramatica.montarMetodos();
+		if (metodos.isEmpty()) {
+			return false;
+		}
 		File destino = new File(CacheBiblioteca.ROOT, arquivo + Biblioteca.EXTENSAO);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			for (Metodo metodo : metodos) {
