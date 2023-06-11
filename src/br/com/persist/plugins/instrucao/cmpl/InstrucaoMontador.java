@@ -7,12 +7,15 @@ import java.util.List;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.pro.Biblioteca;
+import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
 
 public class InstrucaoMontador {
 	private InstrucaoMontador() {
 	}
 
-	public static boolean compilar(File file) throws IOException, InstrucaoException {
+	public static boolean compilar(String arquivo) throws IOException, InstrucaoException {
+		File file = new File(CacheBiblioteca.ROOT, arquivo);
 		if (!file.isFile()) {
 			return false;
 		}
@@ -21,7 +24,7 @@ public class InstrucaoMontador {
 		List<Atom> atoms = lexico.getListaAtom();
 		InstrucaoGramatica gramatica = new InstrucaoGramatica(atoms);
 		List<Metodo> metodos = gramatica.montarMetodos();
-		File destino = new File(file.getParent(), file.getName() + ".txt");
+		File destino = new File(CacheBiblioteca.ROOT, arquivo + Biblioteca.EXTENSAO);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			for (Metodo metodo : metodos) {
 				pw.println();

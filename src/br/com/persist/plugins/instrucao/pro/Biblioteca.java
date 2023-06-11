@@ -7,8 +7,9 @@ import java.util.Objects;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Biblioteca {
-	private final String nome;
+	public static final String EXTENSAO = ".fvf";
 	private final Map<String, Metodo> map;
+	private final String nome;
 
 	public Biblioteca(String nome) {
 		this.nome = Objects.requireNonNull(nome);
