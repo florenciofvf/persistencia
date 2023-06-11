@@ -43,7 +43,7 @@ public class Processador {
 			pilhaOperando.push(obj);
 		}
 		invoke.executar(pilhaMetodo, pilhaOperando, cacheBiblioteca);
-		Metodo metodo = pilhaMetodo.peek();
+		Metodo metodo = pilhaMetodo.isEmpty() ? null : pilhaMetodo.peek();
 		while (metodo != null) {
 			Instrucao instrucao = metodo.getInstrucao();
 			instrucao.executar(pilhaMetodo, pilhaOperando, cacheBiblioteca);

@@ -12,7 +12,7 @@ public class Load extends Instrucao {
 	private String param;
 
 	public Load(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.PUSH_STRING);
+		super(metodo, InstrucaoConstantes.LOAD);
 	}
 
 	@Override

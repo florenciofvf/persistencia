@@ -66,7 +66,7 @@ public class Metodo {
 		InstrucaoUtil.checarParam(nome);
 		Param param = new Param(nome);
 		if (!parametros.contains(param)) {
-			param.indice = parametros.size() - 1;
+			param.indice = parametros.size();
 			parametros.add(param);
 		}
 	}
@@ -118,7 +118,7 @@ public class Metodo {
 
 	@Override
 	public String toString() {
-		return nome + "(" + parametros + ")";
+		return (nativo ? "nativo " : "") + nome + "(" + parametros + ")";
 	}
 }
 
@@ -161,6 +161,6 @@ class Param {
 
 	@Override
 	public String toString() {
-		return indice + "-" + nome + "=" + valor;
+		return indice + ": " + nome + "=" + valor;
 	}
 }
