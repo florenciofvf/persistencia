@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
@@ -39,6 +41,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
+import br.com.persist.plugins.instrucao.cmpl.InstrucaoMontador;
 
 public class InstrucaoPagina extends Panel {
 	private final PainelResultado painelResultado = new PainelResultado();
@@ -49,7 +52,7 @@ public class InstrucaoPagina extends Panel {
 	private final File file;
 
 	public InstrucaoPagina(File file) {
-		this.file = file;
+		this.file = Objects.requireNonNull(file);
 		montarLayout();
 		abrir();
 	}
@@ -101,27 +104,15 @@ public class InstrucaoPagina extends Panel {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private Action sincronizarAcao = acaoIcon("label.atualizar_cache2", Icones.SINCRONIZAR);
-		private Action checarAcao = acaoIcon("label.checar_sentenca", Icones.SUCESSO);
-		private Action criarAcao = acaoIcon("label.nova_sentenca", Icones.CRIAR2);
-		private Action formatarAcao = acaoIcon("label.formatar", Icones.ELEMENTO);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
-			addButton(criarAcao);
-			addButton(checarAcao);
-			addButton(sincronizarAcao);
-			addButton(formatarAcao);
 			addButton(executarAcao);
-			atualizarAcao.text(InstrucaoMensagens.getString("label.atualizar_cache"));
+			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_conteudo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			sincronizarAcao.setActionListener(e -> sincronizarSentencas());
-			checarAcao.setActionListener(e -> checarSentenca());
-			formatarAcao.setActionListener(e -> formatar(true));
-			criarAcao.setActionListener(e -> novaSentenca());
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
@@ -133,26 +124,26 @@ public class InstrucaoPagina extends Panel {
 		}
 
 		private void executar() {
-		}
-
-		private void sincronizarSentencas() {
+			String biblioteca = file.getName();
+			String metodo = "main";
+			try {
+				List<Object> resposta = InstrucaoContainer.PROCESSADOR.executar(biblioteca, metodo);
+				painelResultado.setText(resposta.toString());
+			} catch (InstrucaoException e) {
+				painelResultado.setText(e.getMessage());
+			}
 		}
 
 		@Override
 		protected void atualizar() {
-		}
-
-		private void formatar(boolean msg) {
-		}
-
-		private void novaSentenca() {
-		}
-
-		private void checarSentenca() {
-		}
-
-		private void mensagemSucesso() {
-			Util.mensagem(InstrucaoPagina.this, "SUCESSO");
+			String biblioteca = file.getName();
+			try {
+				boolean resp = InstrucaoMontador.compilar(biblioteca);
+				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
+						: InstrucaoMensagens.getString("msg.nao_compilado"));
+			} catch (IOException | InstrucaoException e) {
+				painelResultado.setText(e.getMessage());
+			}
 		}
 
 		@Override
@@ -220,7 +211,6 @@ public class InstrucaoPagina extends Panel {
 					linha = br.readLine();
 				}
 				textArea.setText(sb.toString());
-				toolbar.formatar(false);
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, this);

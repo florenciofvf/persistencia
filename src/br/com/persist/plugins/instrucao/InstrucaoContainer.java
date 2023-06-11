@@ -34,10 +34,12 @@ import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.plugins.instrucao.pro.Processador;
 
 public class InstrucaoContainer extends AbstratoContainer {
 	private static final File file = new File(InstrucaoConstantes.INSTRUCAO);
 	private final InstrucaoFichario fichario = new InstrucaoFichario();
+	public static final Processador PROCESSADOR = new Processador();
 	private InstrucaoFormulario instrucaoFormulario;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
