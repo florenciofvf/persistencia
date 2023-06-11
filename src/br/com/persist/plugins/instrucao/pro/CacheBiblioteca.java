@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class CacheBiblioteca {
+	public static final File root = new File(InstrucaoConstantes.INSTRUCAO);
 	private final Map<String, Biblioteca> map;
 
 	public CacheBiblioteca() {
@@ -34,7 +36,7 @@ public class CacheBiblioteca {
 
 	private Biblioteca lerBiblioteca(String nome) throws InstrucaoException {
 		Biblioteca resp = null;
-		List<String> arquivo = ArquivoUtil.lerArquivo(new File(nome));
+		List<String> arquivo = ArquivoUtil.lerArquivo(new File(root, nome));
 		if (arquivo.isEmpty()) {
 			return resp;
 		}

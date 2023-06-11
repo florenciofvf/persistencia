@@ -2,10 +2,10 @@ package br.com.persist.plugins.instrucao.inst;
 
 import java.math.BigDecimal;
 
+import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
-import br.com.persist.plugins.instrucao.pro.Instrucao;
 import br.com.persist.plugins.instrucao.pro.Metodo;
 import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
 import br.com.persist.plugins.instrucao.pro.PilhaOperando;

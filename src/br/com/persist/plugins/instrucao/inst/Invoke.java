@@ -1,13 +1,14 @@
 package br.com.persist.plugins.instrucao.inst;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.pro.Biblioteca;
 import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
-import br.com.persist.plugins.instrucao.pro.Instrucao;
 import br.com.persist.plugins.instrucao.pro.Metodo;
 import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
 import br.com.persist.plugins.instrucao.pro.PilhaOperando;
@@ -52,7 +53,7 @@ public class Invoke extends Instrucao {
 			setParametros(clone, pilhaOperando);
 			pilhaMetodo.push(clone);
 		} else {
-			Object resp = invocarNativo(clone, pilhaOperando);
+			Object resp = invocarNativo(biblioteca, clone, pilhaOperando);
 			pilhaOperando.push(resp);
 		}
 	}
@@ -73,8 +74,41 @@ public class Invoke extends Instrucao {
 		return resp;
 	}
 
-	private Object invocarNativo(Metodo metodo, PilhaOperando pilhaOperando) {
-		// TODO Auto-generated method stub
-		return null;
+	private Object invocarNativo(Biblioteca biblioteca, Metodo metodo, PilhaOperando pilhaOperando)
+			throws InstrucaoException {
+		Class<?> klass = null;
+		String pacote = Instrucao.class.getPackage().getName();
+		String classe = pacote + ".nativo." + biblioteca.getNome();
+		try {
+			klass = Class.forName(classe);
+		} catch (Exception ex) {
+			throw new InstrucaoException("erro.biblio_inexistente", classe);
+		}
+		List<Integer> params = listaParam(metodo);
+		Class<?>[] tipoParametros = getTipoParametros(params);
+		Object[] valorParametros = getValorParametros(pilhaOperando, params);
+		try {
+			Method method = klass.getDeclaredMethod(metodo.getNome(), tipoParametros);
+			return method.invoke(klass, valorParametros);
+		} catch (Exception ex) {
+			throw new InstrucaoException(ex.getMessage(), false);
+		}
+	}
+
+	private Class<?>[] getTipoParametros(List<Integer> params) {
+		Class<?>[] tipoParametros = new Class<?>[params.size()];
+		for (int i = 0; i < params.size(); i++) {
+			tipoParametros[i] = Object.class;
+		}
+		return tipoParametros;
+	}
+
+	private Object[] getValorParametros(PilhaOperando pilhaOperando, List<Integer> params) throws InstrucaoException {
+		Object[] valorParametros = new Object[params.size()];
+		for (int i = params.size() - 1; i >= 0; i--) {
+			Object valor = pilhaOperando.pop();
+			valorParametros[i] = valor;
+		}
+		return valorParametros;
 	}
 }
