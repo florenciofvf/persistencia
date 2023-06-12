@@ -2786,6 +2786,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				y += 25;
 			}
 		}
+		form.setVisible(false);
+		form.setVisible(true);
 	}
 
 	private void destacarDeskopPagina(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
