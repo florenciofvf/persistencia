@@ -123,7 +123,7 @@ public class Metodo {
 
 	@Override
 	public String toString() {
-		return (nativo ? "nativo " : "") + nome + "(" + parametros + ")";
+		return (nativo ? "nativo " + biblioNativa + " " : "") + nome + "(" + parametros + ")";
 	}
 }
 

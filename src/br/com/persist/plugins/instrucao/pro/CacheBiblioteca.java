@@ -45,7 +45,7 @@ public class CacheBiblioteca {
 			if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO_NATIVO)) {
 				String string = linha.substring(3);
 				int pos = string.indexOf(' ');
-				String biblioNativa = string.substring(pos);
+				String biblioNativa = string.substring(0, pos);
 				String nomeMetodo = string.substring(pos + 1);
 				metodo = new Metodo(resp, nomeMetodo, true, biblioNativa);
 				resp.add(metodo);
