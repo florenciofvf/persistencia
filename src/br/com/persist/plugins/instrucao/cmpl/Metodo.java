@@ -12,6 +12,7 @@ public class Metodo {
 	protected final Return retorn = new Return();
 	private final List<No> parametros;
 	private final List<Atom> atoms;
+	private String biblioNativa;
 	private final String nome;
 	private boolean nativo;
 	private No no;
@@ -52,6 +53,14 @@ public class Metodo {
 		this.nativo = nativo;
 	}
 
+	public String getBiblioNativa() {
+		return biblioNativa;
+	}
+
+	public void setBiblioNativa(String biblioNativa) {
+		this.biblioNativa = biblioNativa;
+	}
+
 	public List<Atom> getAtoms() {
 		return atoms;
 	}
@@ -85,7 +94,7 @@ public class Metodo {
 
 	public void print(PrintWriter pw) throws InstrucaoException {
 		String prefixo = nativo ? InstrucaoConstantes.PREFIXO_METODO_NATIVO : InstrucaoConstantes.PREFIXO_METODO;
-		pw.println(prefixo + nome);
+		pw.println(prefixo + (nativo ? biblioNativa + " " : "") + nome);
 		for (No n : parametros) {
 			n.print(pw);
 		}

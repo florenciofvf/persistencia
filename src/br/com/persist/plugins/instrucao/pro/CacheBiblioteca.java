@@ -44,10 +44,14 @@ public class CacheBiblioteca {
 		Metodo metodo = null;
 		for (String linha : arquivo) {
 			if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO_NATIVO)) {
-				metodo = new Metodo(resp, linha.substring(3), true);
+				String string = linha.substring(3);
+				int pos = string.indexOf(' ');
+				String biblioNativa = string.substring(pos);
+				String nomeMetodo = string.substring(pos + 1);
+				metodo = new Metodo(resp, nomeMetodo, true, biblioNativa);
 				resp.add(metodo);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO)) {
-				metodo = new Metodo(resp, linha.substring(2), false);
+				metodo = new Metodo(resp, linha.substring(2), false, null);
 				resp.add(metodo);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAM)) {
 				if (metodo == null) {

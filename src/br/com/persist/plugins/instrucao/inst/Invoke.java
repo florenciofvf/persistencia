@@ -58,7 +58,7 @@ public class Invoke extends Instrucao {
 			setParametros(clone, pilhaOperando);
 			pilhaMetodo.push(clone);
 		} else {
-			Object resp = invocarNativo(biblioteca, clone, pilhaOperando);
+			Object resp = invocarNativo(clone, pilhaOperando);
 			pilhaOperando.push(resp);
 		}
 	}
@@ -79,15 +79,12 @@ public class Invoke extends Instrucao {
 		return resp;
 	}
 
-	private Object invocarNativo(Biblioteca biblioteca, Metodo metodo, PilhaOperando pilhaOperando)
-			throws InstrucaoException {
+	private Object invocarNativo(Metodo metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Class<?> klass = null;
-		String pacote = Instrucao.class.getPackage().getName();
-		String classe = pacote + ".nativo." + biblioteca.getNome();
 		try {
-			klass = Class.forName(classe);
+			klass = Class.forName(metodo.getBiblioNativa());
 		} catch (Exception ex) {
-			throw new InstrucaoException("erro.biblio_inexistente", classe);
+			throw new InstrucaoException("erro.biblio_inexistente", metodo.getBiblioNativa());
 		}
 		List<Integer> params = listaParam(metodo);
 		Class<?>[] tipoParametros = getTipoParametros(params);

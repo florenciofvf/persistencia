@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoGramatica {
@@ -15,10 +16,15 @@ public class InstrucaoGramatica {
 		indice = 0;
 	}
 
-	private Metodo throwInstrucaoException() throws InstrucaoException {
+	private Metodo throwInstrucaoException(String... strings) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i <= indice; i++) {
 			sb.append(atoms.get(i).getValor());
+		}
+		if (strings != null) {
+			for (String string : strings) {
+				sb.append(" " + string);
+			}
 		}
 		throw new InstrucaoException(sb.toString(), false);
 	}
@@ -46,7 +52,9 @@ public class InstrucaoGramatica {
 		Atom atom = getAtom();
 		if ("funcao_nativa".equals(atom.getValor())) {
 			indice++;
+			String biblioNativa = getBiblioNativa();
 			Metodo metodo = criarMetodo();
+			metodo.setBiblioNativa(biblioNativa);
 			metodo.setNativo(true);
 			return metodo;
 		} else if ("funcao".equals(atom.getValor())) {
@@ -66,6 +74,22 @@ public class InstrucaoGramatica {
 			throwInstrucaoException();
 		}
 		return atoms.get(indice);
+	}
+
+	private String getBiblioNativa() throws InstrucaoException {
+		String resposta = null;
+		Atom atom = getAtom();
+		if (atom.isStringAtom()) {
+			String classe = Util.replaceAll(atom.getValor(), "_", ".");
+			if (classe.indexOf('.') == -1) {
+				throwInstrucaoException("BiblioNativa");
+			}
+			resposta = classe;
+			indice++;
+		} else {
+			throwInstrucaoException("BiblioNativa");
+		}
+		return resposta;
 	}
 
 	private Metodo criarMetodo() throws InstrucaoException {
