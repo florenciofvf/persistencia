@@ -4,11 +4,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.pro.Biblioteca;
 import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
+import br.com.persist.plugins.instrucao.pro.Instrucao;
 import br.com.persist.plugins.instrucao.pro.Metodo;
 import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
 import br.com.persist.plugins.instrucao.pro.PilhaOperando;

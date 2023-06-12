@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.plugins.instrucao.Instrucao;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.inst.Add;
 import br.com.persist.plugins.instrucao.inst.And;
