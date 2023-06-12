@@ -2777,6 +2777,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		int y = 10;
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
+				if (objeto.getReferenciaPesquisa() != null) {
+					objeto.getReferenciaPesquisa().setValidoInvisibilidade(true);
+				}
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), false, config);
 				x += 25;
@@ -2791,6 +2794,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		int y = 10;
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
+				if (objeto.getReferenciaPesquisa() != null) {
+					objeto.getReferenciaPesquisa().setValidoInvisibilidade(true);
+				}
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), false, config);
 				x += 25;
