@@ -72,7 +72,6 @@ public class InstrucaoAtom {
 			return new Atom(c, Atom.VIRGULA);
 		case '+':
 		case '-':
-		case '/':
 		case '%':
 		case '^':
 			indice++;
@@ -82,6 +81,13 @@ public class InstrucaoAtom {
 			if (indiceAtualEh('*')) {
 				indice++;
 				return new Atom("**", Atom.FUNCAO_INFIXA);
+			}
+			return new Atom(c, Atom.FUNCAO_INFIXA);
+		case '/':
+			indice++;
+			if (indiceAtualEh('*')) {
+				indice++;
+				return atomComentario();
 			}
 			return new Atom(c, Atom.FUNCAO_INFIXA);
 		case '=':
@@ -202,6 +208,29 @@ public class InstrucaoAtom {
 		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '$';
 	}
 
+	private Atom atomComentario() throws InstrucaoException {
+		StringBuilder sb = new StringBuilder();
+		boolean encerrado = false;
+		char anterior = ' ';
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if (anterior == '*' && c == '/') {
+				sb.delete(sb.length() - 1, sb.length());
+				encerrado = true;
+				break;
+			} else {
+				anterior = c;
+				sb.append(c);
+			}
+			indice++;
+		}
+		if (!encerrado) {
+			throwInstrucaoException();
+		}
+		indice++;
+		return new Atom(sb.toString(), Atom.COMENTARIO);
+	}
+
 	private Atom atomNumero(char d) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder("" + d);
 		while (indice < string.length()) {
@@ -278,7 +307,9 @@ public class InstrucaoAtom {
 		List<Atom> lista = new ArrayList<>();
 		Atom atom = proximoAtom();
 		while (atom != null) {
-			lista.add(atom);
+			if (!atom.isComentario()) {
+				lista.add(atom);
+			}
 			atom = proximoAtom();
 		}
 		normalizar(lista, "-", true);

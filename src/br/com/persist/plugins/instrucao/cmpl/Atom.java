@@ -9,11 +9,12 @@ public class Atom {
 	static final int BIG_INTEGER = 4;
 	static final int BIG_DECIMAL = 5;
 	static final int STRING_ATOM = 6;
-	static final int CHAVE_INI = 7;
-	static final int CHAVE_FIM = 8;
-	static final int VARIAVEL = 9;
-	static final int VIRGULA = 10;
-	static final int STRING = 11;
+	static final int COMENTARIO = 7;
+	static final int CHAVE_INI = 8;
+	static final int CHAVE_FIM = 9;
+	static final int VARIAVEL = 10;
+	static final int VIRGULA = 11;
+	static final int STRING = 12;
 
 	private boolean negarExpressao;
 	private boolean negarVariavel;
@@ -56,6 +57,10 @@ public class Atom {
 
 	public boolean isBigDecimal() {
 		return tipo == BIG_DECIMAL;
+	}
+
+	public boolean isComentario() {
+		return tipo == COMENTARIO;
 	}
 
 	public boolean isStringAtom() {
