@@ -120,6 +120,46 @@ class Push extends Comum {
 	}
 }
 
+class Variavel extends No {
+	final Atom atom;
+	Neg neg;
+
+	public Variavel(Atom atom) {
+		super(InstrucaoConstantes.LOAD_VAR);
+		this.atom = atom;
+	}
+
+	@Override
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		if (atom.isNegarVariavel()) {
+			neg = new Neg();
+		}
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		indice = atomic.getAndIncrement();
+		if (neg != null) {
+			neg.indexar(atomic);
+		}
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		if (neg != null) {
+			neg.configurarDesvio();
+		}
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		print(pw, nome, atom.getValor());
+		if (neg != null) {
+			neg.print(pw);
+		}
+	}
+}
+
 class Load extends No {
 	final Atom atom;
 	Neg neg;
@@ -131,7 +171,7 @@ class Load extends No {
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
-		if (atom.isNegarVariavel()) {
+		if (atom.isNegarParam()) {
 			neg = new Neg();
 		}
 	}

@@ -16,6 +16,7 @@ public class InstrucaoConstantes {
 	public static final String PUSH_BIG_DECIMAL = "push_big_decimal";
 	public static final String PUSH_STRING = "push_string";
 
+	public static final String LOAD_VAR = "load_var";
 	public static final String RETURN = "return";
 	public static final String INVOKE = "invoke";
 	public static final String IF_EQ = "ifeq";
