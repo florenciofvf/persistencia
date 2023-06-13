@@ -53,6 +53,8 @@ class MetodoUtil {
 			} else if (ehTipoAtomico(atom)) {
 				pilhaNo.add(new Push(atom));
 			} else if (atom.isVariavel()) {
+				pilhaNo.add(new Variavel(atom));
+			} else if (atom.isParam()) {
 				pilhaNo.add(new Load(atom));
 			} else if (atom.isVirgula()) {
 				processoVirgula(indice);

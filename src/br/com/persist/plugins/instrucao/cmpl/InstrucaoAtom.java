@@ -54,6 +54,9 @@ public class InstrucaoAtom {
 			return atomString();
 		case '$':
 			indice++;
+			return atomParam(c);
+		case '#':
+			indice++;
 			return atomVariavel(c);
 		case '(':
 			indice++;
@@ -173,7 +176,23 @@ public class InstrucaoAtom {
 	}
 
 	private boolean validoChar2(char c) {
-		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '$';
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '$'
+				|| c == '#';
+	}
+
+	private Atom atomParam(char d) {
+		StringBuilder sb = new StringBuilder("" + d);
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if (validoChar2(c)) {
+				sb.append(c);
+			} else {
+				break;
+			}
+			indice++;
+		}
+		String sequencia = sb.toString();
+		return new Atom(sequencia, Atom.PARAM);
 	}
 
 	private Atom infixaMulOrPow(char c) {
@@ -320,7 +339,8 @@ public class InstrucaoAtom {
 	}
 
 	private boolean validoChar(char c) {
-		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '.';
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '.'
+				|| c == '#';
 	}
 
 	private void checarStringAtom(String sequencia) throws InstrucaoException {
@@ -380,6 +400,11 @@ public class InstrucaoAtom {
 	private void processar(final List<Atom> lista, AtomIndice atomIndice, boolean negar) throws InstrucaoException {
 		int indiceAtomAntes = atomIndice.indice - 1;
 		int indiceAtomDepois = atomIndice.indice + 1;
+		processar1(lista, atomIndice, negar, indiceAtomAntes, indiceAtomDepois);
+	}
+
+	private void processar1(final List<Atom> lista, AtomIndice atomIndice, boolean negar, int indiceAtomAntes,
+			int indiceAtomDepois) throws InstrucaoException {
 		if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && atomNumero(indiceAtomDepois, lista)) {
 			if (negar) {
 				negarAtom(indiceAtomDepois, atomIndice, lista);
@@ -391,9 +416,21 @@ public class InstrucaoAtom {
 				lista.get(indiceAtomDepois).setNegarExpressao(true);
 			}
 			lista.remove(atomIndice.indice);
-		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && variavel(indiceAtomDepois, lista)) {
+		} else {
+			processar2(lista, atomIndice, negar, indiceAtomAntes, indiceAtomDepois);
+		}
+	}
+
+	private void processar2(final List<Atom> lista, AtomIndice atomIndice, boolean negar, int indiceAtomAntes,
+			int indiceAtomDepois) {
+		if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && variavel(indiceAtomDepois, lista)) {
 			if (negar) {
 				lista.get(indiceAtomDepois).setNegarVariavel(true);
+			}
+			lista.remove(atomIndice.indice);
+		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && param(indiceAtomDepois, lista)) {
+			if (negar) {
+				lista.get(indiceAtomDepois).setNegarParam(true);
 			}
 			lista.remove(atomIndice.indice);
 		} else {
@@ -425,14 +462,23 @@ public class InstrucaoAtom {
 		return false;
 	}
 
+	private boolean param(int i, final List<Atom> lista) {
+		if (i >= 0 && i < lista.size()) {
+			Atom atom = lista.get(i);
+			return atom.isParam();
+		}
+		return false;
+	}
+
 	private boolean ehOperandoCalculavel(int i, List<Atom> lista, boolean negar) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
 			if (negar) {
-				return atom.isParenteseFim() || atom.isVariavel() || atom.isBigInteger() || atom.isBigDecimal();
+				return atom.isParenteseFim() || atom.isParam() || atom.isVariavel() || atom.isBigInteger()
+						|| atom.isBigDecimal();
 			} else {
-				return atom.isParenteseFim() || atom.isVariavel() || atom.isBigInteger() || atom.isBigDecimal()
-						|| atom.isString();
+				return atom.isParenteseFim() || atom.isParam() || atom.isVariavel() || atom.isBigInteger()
+						|| atom.isBigDecimal() || atom.isString();
 			}
 		}
 		return false;

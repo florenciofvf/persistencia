@@ -157,7 +157,7 @@ public class InstrucaoGramatica {
 		while (it.hasNext()) {
 			Atom atom = it.next();
 			if (parametro) {
-				if (atom.isVariavel()) {
+				if (atom.isParam()) {
 					parametro = false;
 				} else {
 					throwInstrucaoException();

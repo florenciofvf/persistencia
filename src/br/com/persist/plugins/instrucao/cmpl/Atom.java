@@ -15,9 +15,11 @@ public class Atom {
 	static final int VARIAVEL = 10;
 	static final int VIRGULA = 11;
 	static final int STRING = 12;
+	static final int PARAM = 13;
 
 	private boolean negarExpressao;
 	private boolean negarVariavel;
+	private boolean negarParam;
 	private boolean processado;
 	private final String valor;
 	private final int tipo;
@@ -87,6 +89,10 @@ public class Atom {
 		return tipo == STRING;
 	}
 
+	public boolean isParam() {
+		return tipo == PARAM;
+	}
+
 	public boolean isProcessado() {
 		return processado;
 	}
@@ -109,6 +115,14 @@ public class Atom {
 
 	public void setNegarVariavel(boolean negarVariavel) {
 		this.negarVariavel = negarVariavel;
+	}
+
+	public boolean isNegarParam() {
+		return negarParam;
+	}
+
+	public void setNegarParam(boolean negarParam) {
+		this.negarParam = negarParam;
 	}
 
 	@Override
