@@ -26,7 +26,7 @@ public class LoadVar extends Instrucao {
 	@Override
 	public void setParam(String string) throws InstrucaoException {
 		if (string == null) {
-			throw new InstrucaoException("Load var null.");
+			throw new InstrucaoException("LoadVar var null.");
 		}
 		this.param = string;
 	}

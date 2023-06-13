@@ -53,7 +53,7 @@ class MetodoUtil {
 			} else if (ehTipoAtomico(atom)) {
 				pilhaNo.add(new Push(atom));
 			} else if (atom.isVariavel()) {
-				pilhaNo.add(new Variavel(atom));
+				pilhaNo.add(new LoadVar(atom));
 			} else if (atom.isParam()) {
 				pilhaNo.add(new Load(atom));
 			} else if (atom.isVirgula()) {
@@ -78,6 +78,10 @@ class MetodoUtil {
 			If se = new If();
 			pilhaNo.add(se);
 			pilhaNo.push(se);
+		} else if (InstrucaoConstantes.VAR.equals(metodo)) {
+			DeclareVar var = new DeclareVar();
+			pilhaNo.add(var);
+			pilhaNo.push(var);
 		} else {
 			Invoke invoke = new Invoke(metodo);
 			pilhaNo.add(invoke);

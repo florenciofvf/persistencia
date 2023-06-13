@@ -33,6 +33,12 @@ public class InstrucaoUtil {
 		}
 	}
 
+	public static void checarString(Object obj) throws InstrucaoException {
+		if (!(obj instanceof String)) {
+			throw new InstrucaoException("erro.valor_nao_string", obj);
+		}
+	}
+
 	public static void checarBigIntegerBigDecimal(Object obj) throws InstrucaoException {
 		if (!(obj instanceof BigInteger) && !(obj instanceof BigDecimal)) {
 			throw new InstrucaoException("erro.valor_nao_bigi_bigd", obj);
