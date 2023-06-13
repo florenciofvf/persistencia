@@ -78,60 +78,28 @@ public class InstrucaoAtom {
 			return new Atom(c, Atom.FUNCAO_INFIXA);
 		case '*':
 			indice++;
-			if (indiceAtualEh('*')) {
-				indice++;
-				return new Atom("**", Atom.FUNCAO_INFIXA);
-			}
-			return new Atom(c, Atom.FUNCAO_INFIXA);
+			return infixaMulOrPow(c);
 		case '/':
 			indice++;
-			if (indiceAtualEh('*')) {
-				indice++;
-				return atomComentario();
-			}
-			return new Atom(c, Atom.FUNCAO_INFIXA);
+			return infixaDivOrComentario(c);
 		case '=':
 			indice++;
-			if (indiceAtualEh('=')) {
-				indice++;
-				return new Atom("==", Atom.FUNCAO_INFIXA);
-			}
-			return throwInstrucaoException();
+			return infixaIgual();
 		case '!':
 			indice++;
-			if (indiceAtualEh('=')) {
-				indice++;
-				return new Atom("!=", Atom.FUNCAO_INFIXA);
-			}
-			return throwInstrucaoException();
+			return infixaDiferente();
 		case '<':
 			indice++;
-			if (indiceAtualEh('=')) {
-				indice++;
-				return new Atom("<=", Atom.FUNCAO_INFIXA);
-			}
-			return new Atom(c, Atom.FUNCAO_INFIXA);
+			return infixaMenor(c);
 		case '>':
 			indice++;
-			if (indiceAtualEh('=')) {
-				indice++;
-				return new Atom(">=", Atom.FUNCAO_INFIXA);
-			}
-			return new Atom(c, Atom.FUNCAO_INFIXA);
+			return infixaMaior(c);
 		case '&':
 			indice++;
-			if (indiceAtualEh('&')) {
-				indice++;
-				return new Atom("&&", Atom.FUNCAO_INFIXA);
-			}
-			return throwInstrucaoException();
+			return infixaAnd();
 		case '|':
 			indice++;
-			if (indiceAtualEh('|')) {
-				indice++;
-				return new Atom("||", Atom.FUNCAO_INFIXA);
-			}
-			return throwInstrucaoException();
+			return infixaOr();
 		case '0':
 		case '1':
 		case '2':
@@ -208,6 +176,22 @@ public class InstrucaoAtom {
 		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '$';
 	}
 
+	private Atom infixaMulOrPow(char c) {
+		if (indiceAtualEh('*')) {
+			indice++;
+			return new Atom("**", Atom.FUNCAO_INFIXA);
+		}
+		return new Atom(c, Atom.FUNCAO_INFIXA);
+	}
+
+	private Atom infixaDivOrComentario(char c) throws InstrucaoException {
+		if (indiceAtualEh('*')) {
+			indice++;
+			return atomComentario();
+		}
+		return new Atom(c, Atom.FUNCAO_INFIXA);
+	}
+
 	private Atom atomComentario() throws InstrucaoException {
 		StringBuilder sb = new StringBuilder();
 		boolean encerrado = false;
@@ -229,6 +213,54 @@ public class InstrucaoAtom {
 		}
 		indice++;
 		return new Atom(sb.toString(), Atom.COMENTARIO);
+	}
+
+	private Atom infixaIgual() throws InstrucaoException {
+		if (indiceAtualEh('=')) {
+			indice++;
+			return new Atom("==", Atom.FUNCAO_INFIXA);
+		}
+		return throwInstrucaoException();
+	}
+
+	private Atom infixaDiferente() throws InstrucaoException {
+		if (indiceAtualEh('=')) {
+			indice++;
+			return new Atom("!=", Atom.FUNCAO_INFIXA);
+		}
+		return throwInstrucaoException();
+	}
+
+	private Atom infixaMenor(char c) {
+		if (indiceAtualEh('=')) {
+			indice++;
+			return new Atom("<=", Atom.FUNCAO_INFIXA);
+		}
+		return new Atom(c, Atom.FUNCAO_INFIXA);
+	}
+
+	private Atom infixaMaior(char c) {
+		if (indiceAtualEh('=')) {
+			indice++;
+			return new Atom(">=", Atom.FUNCAO_INFIXA);
+		}
+		return new Atom(c, Atom.FUNCAO_INFIXA);
+	}
+
+	private Atom infixaAnd() throws InstrucaoException {
+		if (indiceAtualEh('&')) {
+			indice++;
+			return new Atom("&&", Atom.FUNCAO_INFIXA);
+		}
+		return throwInstrucaoException();
+	}
+
+	private Atom infixaOr() throws InstrucaoException {
+		if (indiceAtualEh('|')) {
+			indice++;
+			return new Atom("||", Atom.FUNCAO_INFIXA);
+		}
+		return throwInstrucaoException();
 	}
 
 	private Atom atomNumero(char d) throws InstrucaoException {
@@ -264,7 +296,7 @@ public class InstrucaoAtom {
 	}
 
 	private Atom criarStringAtom(char c) throws InstrucaoException {
-		if (c >= 'a' && c <= 'z') {
+		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
 			indice++;
 			return stringAtom(c);
 		}
