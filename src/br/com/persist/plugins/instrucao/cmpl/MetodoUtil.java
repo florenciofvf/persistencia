@@ -43,7 +43,7 @@ class MetodoUtil {
 			Atom atom = getAtom(indice);
 			if (atom.isStringAtom()) {
 				indice++;
-				processoInvocacao(atom.getValor(), indice);
+				indice += processoInvocacao(atom.getValor(), indice);
 			} else if (atom.isParenteseIni()) {
 				processoExpressao(atom);
 			} else if (atom.isFuncaoInfixa()) {
@@ -69,7 +69,8 @@ class MetodoUtil {
 		return raiz.excluirUltimoNo();
 	}
 
-	private void processoInvocacao(String metodo, int indice) throws InstrucaoException {
+	private int processoInvocacao(String metodo, int indice) throws InstrucaoException {
+		int incremento = 0;
 		Atom atom = getAtom(indice);
 		if (!atom.isParenteseIni()) {
 			throwInstrucaoException(indice);
@@ -79,14 +80,21 @@ class MetodoUtil {
 			pilhaNo.add(se);
 			pilhaNo.push(se);
 		} else if (InstrucaoConstantes.VAR.equals(metodo)) {
-			DeclareVar var = new DeclareVar();
+			indice++;
+			Atom atomVar = getAtom(indice);
+			if (!atomVar.isVariavel()) {
+				throwInstrucaoException(indice);
+			}
+			DeclareVar var = new DeclareVar(atomVar);
 			pilhaNo.add(var);
 			pilhaNo.push(var);
+			incremento = 1;
 		} else {
 			Invoke invoke = new Invoke(metodo);
 			pilhaNo.add(invoke);
 			pilhaNo.push(invoke);
 		}
+		return incremento;
 	}
 
 	private void processoExpressao(Atom atom) throws InstrucaoException {
@@ -113,7 +121,7 @@ class MetodoUtil {
 
 	private void processoVirgula(int indice) throws InstrucaoException {
 		No no = pilhaNo.ref();
-		if ((no instanceof Invoke) || (no instanceof If)) {
+		if ((no instanceof Invoke) || (no instanceof If) || (no instanceof DeclareVar)) {
 			return;
 		}
 		throwInstrucaoException(indice);

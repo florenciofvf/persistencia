@@ -8,6 +8,7 @@ import java.util.Map;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.inst.Add;
 import br.com.persist.plugins.instrucao.inst.And;
+import br.com.persist.plugins.instrucao.inst.DeclareVar;
 import br.com.persist.plugins.instrucao.inst.Diff;
 import br.com.persist.plugins.instrucao.inst.Div;
 import br.com.persist.plugins.instrucao.inst.Goto;
@@ -73,6 +74,7 @@ public class Processador {
 	static {
 		Instrucoes.add(new Add(null));
 		Instrucoes.add(new And(null));
+		Instrucoes.add(new DeclareVar(null));
 		Instrucoes.add(new Diff(null));
 		Instrucoes.add(new Div(null));
 		Instrucoes.add(new Goto(null));

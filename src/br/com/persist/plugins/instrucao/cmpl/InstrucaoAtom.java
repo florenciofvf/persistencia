@@ -335,6 +335,9 @@ public class InstrucaoAtom {
 		}
 		String sequencia = sb.toString();
 		checarStringAtom(sequencia);
+		if (sequencia.indexOf(".#") != -1) {
+			return new Atom(sequencia, Atom.VARIAVEL);
+		}
 		return new Atom(sequencia, Atom.STRING_ATOM);
 	}
 
