@@ -424,21 +424,18 @@ public class InstrucaoAtom {
 		}
 	}
 
-	private void processar2(final List<Atom> lista, AtomIndice atomIndice, boolean negar, int indiceAtomAntes,
-			int indiceAtomDepois) {
-		if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && variavel(indiceAtomDepois, lista)) {
+	private boolean ehOperandoCalculavel(int i, List<Atom> lista, boolean negar) {
+		if (i >= 0 && i < lista.size()) {
+			Atom atom = lista.get(i);
 			if (negar) {
-				lista.get(indiceAtomDepois).setNegarVariavel(true);
+				return atom.isParenteseFim() || atom.isParam() || atom.isVariavel() || atom.isBigInteger()
+						|| atom.isBigDecimal();
+			} else {
+				return atom.isParenteseFim() || atom.isParam() || atom.isVariavel() || atom.isBigInteger()
+						|| atom.isBigDecimal() || atom.isString();
 			}
-			lista.remove(atomIndice.indice);
-		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && param(indiceAtomDepois, lista)) {
-			if (negar) {
-				lista.get(indiceAtomDepois).setNegarParam(true);
-			}
-			lista.remove(atomIndice.indice);
-		} else {
-			atomIndice.atom.setProcessado(true);
 		}
+		return false;
 	}
 
 	private boolean atomNumero(int i, final List<Atom> lista) {
@@ -457,6 +454,28 @@ public class InstrucaoAtom {
 		return false;
 	}
 
+	private void processar2(final List<Atom> lista, AtomIndice atomIndice, boolean negar, int indiceAtomAntes,
+			int indiceAtomDepois) {
+		if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && variavel(indiceAtomDepois, lista)) {
+			if (negar) {
+				lista.get(indiceAtomDepois).setNegarVariavel(true);
+			}
+			lista.remove(atomIndice.indice);
+		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && param(indiceAtomDepois, lista)) {
+			if (negar) {
+				lista.get(indiceAtomDepois).setNegarParam(true);
+			}
+			lista.remove(atomIndice.indice);
+		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && invoke(indiceAtomDepois, lista)) {
+			if (negar) {
+				lista.get(indiceAtomDepois).setNegarRetorno(true);
+			}
+			lista.remove(atomIndice.indice);
+		} else {
+			atomIndice.atom.setProcessado(true);
+		}
+	}
+
 	private boolean variavel(int i, final List<Atom> lista) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
@@ -473,16 +492,10 @@ public class InstrucaoAtom {
 		return false;
 	}
 
-	private boolean ehOperandoCalculavel(int i, List<Atom> lista, boolean negar) {
+	private boolean invoke(int i, final List<Atom> lista) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
-			if (negar) {
-				return atom.isParenteseFim() || atom.isParam() || atom.isVariavel() || atom.isBigInteger()
-						|| atom.isBigDecimal();
-			} else {
-				return atom.isParenteseFim() || atom.isParam() || atom.isVariavel() || atom.isBigInteger()
-						|| atom.isBigDecimal() || atom.isString();
-			}
+			return atom.isStringAtom();
 		}
 		return false;
 	}

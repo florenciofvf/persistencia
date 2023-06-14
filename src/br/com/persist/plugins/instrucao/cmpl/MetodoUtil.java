@@ -43,7 +43,7 @@ class MetodoUtil {
 			Atom atom = getAtom(indice);
 			if (atom.isStringAtom()) {
 				indice++;
-				indice += processoInvocacao(atom.getValor(), indice);
+				indice += processoInvocacao(atom, indice);
 			} else if (atom.isParenteseIni()) {
 				processoExpressao(atom);
 			} else if (atom.isFuncaoInfixa()) {
@@ -69,17 +69,18 @@ class MetodoUtil {
 		return raiz.excluirUltimoNo();
 	}
 
-	private int processoInvocacao(String metodo, int indice) throws InstrucaoException {
+	private int processoInvocacao(Atom atomInvoke, int indice) throws InstrucaoException {
+		String nomeInvoke = atomInvoke.getValor();
 		int incremento = 0;
 		Atom atom = getAtom(indice);
 		if (!atom.isParenteseIni()) {
 			throwInstrucaoException(indice);
 		}
-		if (InstrucaoConstantes.IF.equals(metodo)) {
+		if (InstrucaoConstantes.IF.equals(nomeInvoke)) {
 			If se = new If();
 			pilhaNo.add(se);
 			pilhaNo.push(se);
-		} else if (InstrucaoConstantes.VAR.equals(metodo)) {
+		} else if (InstrucaoConstantes.VAR.equals(nomeInvoke)) {
 			indice++;
 			Atom atomVar = getAtom(indice);
 			if (!atomVar.isVariavel()) {
@@ -89,7 +90,7 @@ class MetodoUtil {
 			pilhaNo.add(var);
 			pilhaNo.push(var);
 			incremento = 1;
-		} else if (InstrucaoConstantes.VAL.equals(metodo)) {
+		} else if (InstrucaoConstantes.VAL.equals(nomeInvoke)) {
 			indice++;
 			Atom atomVal = getAtom(indice);
 			if (!atomVal.isVariavel()) {
@@ -100,7 +101,7 @@ class MetodoUtil {
 			pilhaNo.push(val);
 			incremento = 1;
 		} else {
-			Invoke invoke = new Invoke(metodo);
+			Invoke invoke = new Invoke(atomInvoke);
 			pilhaNo.add(invoke);
 			pilhaNo.push(invoke);
 		}

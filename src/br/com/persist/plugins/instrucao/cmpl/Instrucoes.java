@@ -201,14 +201,21 @@ class Load extends No {
 }
 
 class Invoke extends No {
-	public Invoke(String nome) {
-		super(nome);
+	final Atom atom;
+	Neg neg;
+
+	public Invoke(Atom atom) {
+		super(atom.getValor());
+		this.atom = atom;
 	}
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		for (No no : nos) {
 			no.normalizarEstrutura(metodo);
+		}
+		if (atom.isNegarRetorno()) {
+			neg = new Neg();
 		}
 	}
 
@@ -218,12 +225,18 @@ class Invoke extends No {
 			no.indexar(atomic);
 		}
 		indice = atomic.getAndIncrement();
+		if (neg != null) {
+			neg.indexar(atomic);
+		}
 	}
 
 	@Override
 	public void configurarDesvio() throws InstrucaoException {
 		for (No no : nos) {
 			no.configurarDesvio();
+		}
+		if (neg != null) {
+			neg.configurarDesvio();
 		}
 	}
 
@@ -233,6 +246,9 @@ class Invoke extends No {
 			no.print(pw);
 		}
 		print(pw, InstrucaoConstantes.INVOKE, nome);
+		if (neg != null) {
+			neg.print(pw);
+		}
 	}
 }
 

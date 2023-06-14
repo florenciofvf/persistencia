@@ -19,6 +19,7 @@ public class Atom {
 
 	private boolean negarExpressao;
 	private boolean negarVariavel;
+	private boolean negarRetorno;
 	private boolean negarParam;
 	private boolean processado;
 	private final String valor;
@@ -123,6 +124,14 @@ public class Atom {
 
 	public void setNegarParam(boolean negarParam) {
 		this.negarParam = negarParam;
+	}
+
+	public boolean isNegarRetorno() {
+		return negarRetorno;
+	}
+
+	public void setNegarRetorno(boolean negarRetorno) {
+		this.negarRetorno = negarRetorno;
 	}
 
 	@Override
