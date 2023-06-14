@@ -17,7 +17,7 @@ public class InstrucaoConstantes {
 	public static final String PUSH_STRING = "push_string";
 
 	public static final String DECLARE_VAR = "declare_var";
-	public static final String STORE_VAR = "store_var";
+	public static final String MODIFIC_VAR = "modific_var";
 	public static final String LOAD_VAR = "load_var";
 	public static final String RETURN = "return";
 	public static final String INVOKE = "invoke";
@@ -26,6 +26,7 @@ public class InstrucaoConstantes {
 	public static final String GOTO = "goto";
 	public static final String NEG = "neg";
 	public static final String VAR = "var";
+	public static final String VAL = "val";
 	public static final String IF = "if";
 
 	public static final String ADD = "add";

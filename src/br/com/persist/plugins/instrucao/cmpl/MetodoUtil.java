@@ -89,6 +89,16 @@ class MetodoUtil {
 			pilhaNo.add(var);
 			pilhaNo.push(var);
 			incremento = 1;
+		} else if (InstrucaoConstantes.VAL.equals(metodo)) {
+			indice++;
+			Atom atomVal = getAtom(indice);
+			if (!atomVal.isVariavel()) {
+				throwInstrucaoException(indice);
+			}
+			ModificVar val = new ModificVar(atomVal);
+			pilhaNo.add(val);
+			pilhaNo.push(val);
+			incremento = 1;
 		} else {
 			Invoke invoke = new Invoke(metodo);
 			pilhaNo.add(invoke);
@@ -121,7 +131,7 @@ class MetodoUtil {
 
 	private void processoVirgula(int indice) throws InstrucaoException {
 		No no = pilhaNo.ref();
-		if ((no instanceof Invoke) || (no instanceof If) || (no instanceof DeclareVar)) {
+		if ((no instanceof Invoke) || (no instanceof If) || (no instanceof DeclareVar) || (no instanceof ModificVar)) {
 			return;
 		}
 		throwInstrucaoException(indice);

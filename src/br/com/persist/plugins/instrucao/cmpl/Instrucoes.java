@@ -283,10 +283,12 @@ class Expression extends No {
 }
 
 class DeclareVar extends No {
+	final LoadVar loadVar;
 	final Atom atom;
 
 	public DeclareVar(Atom atom) {
 		super(InstrucaoConstantes.DECLARE_VAR);
+		loadVar = new LoadVar(atom);
 		this.atom = atom;
 	}
 
@@ -294,6 +296,7 @@ class DeclareVar extends No {
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		checarOperandos1();
 		nos.get(0).normalizarEstrutura(metodo);
+		loadVar.normalizarEstrutura(metodo);
 	}
 
 	@Override
@@ -301,12 +304,14 @@ class DeclareVar extends No {
 		checarOperandos1();
 		nos.get(0).indexar(atomic);
 		indice = atomic.getAndIncrement();
+		loadVar.indexar(atomic);
 	}
 
 	@Override
 	public void configurarDesvio() throws InstrucaoException {
 		checarOperandos1();
 		nos.get(0).configurarDesvio();
+		loadVar.configurarDesvio();
 	}
 
 	@Override
@@ -314,6 +319,48 @@ class DeclareVar extends No {
 		checarOperandos1();
 		nos.get(0).print(pw);
 		print(pw, nome, atom.getValor());
+		loadVar.print(pw);
+	}
+}
+
+class ModificVar extends No {
+	final LoadVar loadVar;
+	final Atom atom;
+
+	public ModificVar(Atom atom) {
+		super(InstrucaoConstantes.MODIFIC_VAR);
+		loadVar = new LoadVar(atom);
+		this.atom = atom;
+	}
+
+	@Override
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		checarOperandos1();
+		nos.get(0).normalizarEstrutura(metodo);
+		loadVar.normalizarEstrutura(metodo);
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		checarOperandos1();
+		nos.get(0).indexar(atomic);
+		indice = atomic.getAndIncrement();
+		loadVar.indexar(atomic);
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		checarOperandos1();
+		nos.get(0).configurarDesvio();
+		loadVar.configurarDesvio();
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		checarOperandos1();
+		nos.get(0).print(pw);
+		print(pw, nome, atom.getValor());
+		loadVar.print(pw);
 	}
 }
 
