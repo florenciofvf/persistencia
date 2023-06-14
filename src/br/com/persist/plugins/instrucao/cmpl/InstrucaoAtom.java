@@ -415,10 +415,7 @@ public class InstrucaoAtom {
 				lista.remove(atomIndice.indice);
 			}
 		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && iniExpressao(indiceAtomDepois, lista)) {
-			if (negar) {
-				lista.get(indiceAtomDepois).setNegarExpressao(true);
-			}
-			lista.remove(atomIndice.indice);
+			checkNegarERemover(lista, atomIndice, negar, indiceAtomDepois);
 		} else {
 			processar2(lista, atomIndice, negar, indiceAtomAntes, indiceAtomDepois);
 		}
@@ -454,23 +451,22 @@ public class InstrucaoAtom {
 		return false;
 	}
 
+	private void checkNegarERemover(final List<Atom> lista, AtomIndice atomIndice, boolean negar,
+			int indiceAtomDepois) {
+		if (negar) {
+			lista.get(indiceAtomDepois).setNegar(true);
+		}
+		lista.remove(atomIndice.indice);
+	}
+
 	private void processar2(final List<Atom> lista, AtomIndice atomIndice, boolean negar, int indiceAtomAntes,
 			int indiceAtomDepois) {
 		if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && variavel(indiceAtomDepois, lista)) {
-			if (negar) {
-				lista.get(indiceAtomDepois).setNegarVariavel(true);
-			}
-			lista.remove(atomIndice.indice);
+			checkNegarERemover(lista, atomIndice, negar, indiceAtomDepois);
 		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && param(indiceAtomDepois, lista)) {
-			if (negar) {
-				lista.get(indiceAtomDepois).setNegarParam(true);
-			}
-			lista.remove(atomIndice.indice);
+			checkNegarERemover(lista, atomIndice, negar, indiceAtomDepois);
 		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && invoke(indiceAtomDepois, lista)) {
-			if (negar) {
-				lista.get(indiceAtomDepois).setNegarRetorno(true);
-			}
-			lista.remove(atomIndice.indice);
+			checkNegarERemover(lista, atomIndice, negar, indiceAtomDepois);
 		} else {
 			atomIndice.atom.setProcessado(true);
 		}

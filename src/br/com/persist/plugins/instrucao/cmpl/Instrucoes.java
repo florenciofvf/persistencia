@@ -131,7 +131,7 @@ class LoadVar extends No {
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
-		if (atom.isNegarVariavel()) {
+		if (atom.isNegar()) {
 			neg = new Neg();
 		}
 	}
@@ -171,7 +171,7 @@ class Load extends No {
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
-		if (atom.isNegarParam()) {
+		if (atom.isNegar()) {
 			neg = new Neg();
 		}
 	}
@@ -214,7 +214,7 @@ class Invoke extends No {
 		for (No no : nos) {
 			no.normalizarEstrutura(metodo);
 		}
-		if (atom.isNegarRetorno()) {
+		if (atom.isNegar()) {
 			neg = new Neg();
 		}
 	}
@@ -265,7 +265,7 @@ class Expression extends No {
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
 		checarOperandos1();
 		nos.get(0).normalizarEstrutura(metodo);
-		if (atom.isNegarExpressao()) {
+		if (atom.isNegar()) {
 			neg = new Neg();
 		}
 	}

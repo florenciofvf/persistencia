@@ -17,13 +17,10 @@ public class Atom {
 	static final int STRING = 12;
 	static final int PARAM = 13;
 
-	private boolean negarExpressao;
-	private boolean negarVariavel;
-	private boolean negarRetorno;
-	private boolean negarParam;
 	private boolean processado;
 	private final String valor;
 	private final int tipo;
+	private boolean negar;
 
 	public Atom(String valor, int tipo) {
 		this.valor = Objects.requireNonNull(valor);
@@ -102,36 +99,12 @@ public class Atom {
 		this.processado = processado;
 	}
 
-	public boolean isNegarExpressao() {
-		return negarExpressao;
+	public boolean isNegar() {
+		return negar;
 	}
 
-	public void setNegarExpressao(boolean negarExpressao) {
-		this.negarExpressao = negarExpressao;
-	}
-
-	public boolean isNegarVariavel() {
-		return negarVariavel;
-	}
-
-	public void setNegarVariavel(boolean negarVariavel) {
-		this.negarVariavel = negarVariavel;
-	}
-
-	public boolean isNegarParam() {
-		return negarParam;
-	}
-
-	public void setNegarParam(boolean negarParam) {
-		this.negarParam = negarParam;
-	}
-
-	public boolean isNegarRetorno() {
-		return negarRetorno;
-	}
-
-	public void setNegarRetorno(boolean negarRetorno) {
-		this.negarRetorno = negarRetorno;
+	public void setNegar(boolean negar) {
+		this.negar = negar;
 	}
 
 	@Override
