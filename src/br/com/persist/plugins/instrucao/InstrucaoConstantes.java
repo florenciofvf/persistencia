@@ -18,11 +18,11 @@ public class InstrucaoConstantes {
 
 	public static final String DECLARE_VAR = "declare_var";
 	public static final String MODIFIC_VAR = "modific_var";
+	public static final String LOAD_PAR = "load_par";
 	public static final String LOAD_VAR = "load_var";
 	public static final String RETURN = "return";
 	public static final String INVOKE = "invoke";
 	public static final String IF_EQ = "ifeq";
-	public static final String LOAD = "load";
 	public static final String GOTO = "goto";
 	public static final String NEG = "neg";
 	public static final String VAR = "var";

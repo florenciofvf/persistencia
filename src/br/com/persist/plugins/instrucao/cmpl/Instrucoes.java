@@ -120,12 +120,12 @@ class Push extends Comum {
 	}
 }
 
-class LoadVar extends No {
+class LoadPar extends No {
 	final Atom atom;
 	Neg neg;
 
-	public LoadVar(Atom atom) {
-		super(InstrucaoConstantes.LOAD_VAR);
+	public LoadPar(Atom atom) {
+		super(InstrucaoConstantes.LOAD_PAR);
 		this.atom = atom;
 	}
 
@@ -160,12 +160,12 @@ class LoadVar extends No {
 	}
 }
 
-class Load extends No {
+class LoadVar extends No {
 	final Atom atom;
 	Neg neg;
 
-	public Load(Atom atom) {
-		super(InstrucaoConstantes.LOAD);
+	public LoadVar(Atom atom) {
+		super(InstrucaoConstantes.LOAD_VAR);
 		this.atom = atom;
 	}
 

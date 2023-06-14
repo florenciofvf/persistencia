@@ -8,16 +8,16 @@ import br.com.persist.plugins.instrucao.pro.Metodo;
 import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
 import br.com.persist.plugins.instrucao.pro.PilhaOperando;
 
-public class Load extends Instrucao {
+public class LoadPar extends Instrucao {
 	private String param;
 
-	public Load(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.LOAD);
+	public LoadPar(Metodo metodo) {
+		super(metodo, InstrucaoConstantes.LOAD_PAR);
 	}
 
 	@Override
 	public Instrucao clonar(Metodo metodo) {
-		Load resp = new Load(metodo);
+		LoadPar resp = new LoadPar(metodo);
 		resp.param = param;
 		return resp;
 	}
