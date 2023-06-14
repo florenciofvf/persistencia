@@ -25,7 +25,7 @@ public class Biblioteca {
 	public void declararVariavel(String nome, Object valor) throws InstrucaoException {
 		Variavel variavel = variaveis.get(nome);
 		if (variavel != null) {
-			throw new InstrucaoException("erro.variavel_existente", nome);
+			throw new InstrucaoException("erro.variavel_existente", nome, this.nome);
 		}
 		variaveis.put(nome, new Variavel(nome));
 		setValorVariavel(nome, valor);
@@ -42,7 +42,7 @@ public class Biblioteca {
 	private Variavel getVariavel(String nome) throws InstrucaoException {
 		Variavel variavel = variaveis.get(nome);
 		if (variavel == null) {
-			throw new InstrucaoException("erro.variavel_inexistente", nome);
+			throw new InstrucaoException("erro.variavel_inexistente", nome, this.nome);
 		}
 		return variavel;
 	}
@@ -50,7 +50,7 @@ public class Biblioteca {
 	public Metodo getMetodo(String nome) throws InstrucaoException {
 		Metodo metodo = map.get(nome);
 		if (metodo == null) {
-			throw new InstrucaoException("erro.metodo_inexistente", nome);
+			throw new InstrucaoException("erro.metodo_inexistente", nome, this.nome);
 		}
 		return metodo;
 	}
@@ -63,7 +63,7 @@ public class Biblioteca {
 
 	@Override
 	public String toString() {
-		return nome + " variaveis=" + variaveis;
+		return nome + " variaveis:" + variaveis;
 	}
 }
 
@@ -105,6 +105,6 @@ class Variavel {
 
 	@Override
 	public String toString() {
-		return nome + "=" + valor;
+		return nome + "->" + valor;
 	}
 }
