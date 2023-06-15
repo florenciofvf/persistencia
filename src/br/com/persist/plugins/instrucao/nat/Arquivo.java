@@ -36,30 +36,7 @@ public class Arquivo {
 		}
 	}
 
-	public static LinhaString getLinhaString(Object arquivo, Object numero) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
-		long numeroLinha = ((Number) numero).longValue();
-		Lista lista = arquivoString.getLista();
-		long size = lista.size().longValue();
-		for (long i = 0; i < size; i++) {
-			LinhaString linhaString = (LinhaString) lista.get(i);
-			if (linhaString.numeroEqual(numeroLinha)) {
-				return linhaString;
-			}
-		}
-		return null;
-	}
-
-	public static LinhaString criarLinhaString(Object numero, Object string) {
-		return new LinhaString(((Number) numero).longValue(), (String) string);
-	}
-
-	public static LinhaString clonarLinhaString(Object linha, Object string) {
-		LinhaString linhaString = (LinhaString) linha;
-		return new LinhaString(linhaString.getNumero(), (String) string);
-	}
-
-	public static Lista linhaPelaString(Object arquivo, Object objString) {
+	public static Lista selecionarLinhaString(Object arquivo, Object objString) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		String string = (String) objString;
 		Lista resposta = new Lista();
@@ -74,7 +51,7 @@ public class Arquivo {
 		return resposta;
 	}
 
-	public static Lista linhaPelaStringIniFim(Object arquivo, Object objIni, Object objFim) {
+	public static Lista selecionarLinhaStringIniFim(Object arquivo, Object objIni, Object objFim) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		String strInicio = (String) objIni;
 		String strFinal = (String) objFim;
@@ -90,7 +67,7 @@ public class Arquivo {
 		return resposta;
 	}
 
-	public static Lista linhaEntrePelaStringIniFim(Object arquivo, Object objIni, Object objFim) {
+	public static Lista selecionarLinhaStringEntreIniFim(Object arquivo, Object objIni, Object objFim) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		String strInicio = (String) objIni;
 		String strFinal = (String) objFim;
@@ -107,7 +84,7 @@ public class Arquivo {
 		return resposta;
 	}
 
-	public static Lista linhaEntrePelaStringIniFimReplace(Object arquivo, Object objIni, Object objFim,
+	public static Lista selecionarLinhaStringEntreIniFimReplace(Object arquivo, Object objIni, Object objFim,
 			Object objNova) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		String strInicio = (String) objIni;
@@ -124,6 +101,29 @@ public class Arquivo {
 			}
 		}
 		return resposta;
+	}
+
+	public static LinhaString getLinhaString(Object arquivo, Object numero) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		long numeroLinha = ((Number) numero).longValue();
+		Lista lista = arquivoString.getLista();
+		long size = lista.size().longValue();
+		for (long i = 0; i < size; i++) {
+			LinhaString linhaString = (LinhaString) lista.get(i);
+			if (linhaString.numeroEqual(numeroLinha)) {
+				return linhaString;
+			}
+		}
+		return null;
+	}
+
+	public static LinhaString clonarLinhaString(Object linha, Object string) {
+		LinhaString linhaString = (LinhaString) linha;
+		return new LinhaString(linhaString.getNumero(), (String) string);
+	}
+
+	public static LinhaString criarLinhaString(Object numero, Object string) {
+		return new LinhaString(((Number) numero).longValue(), (String) string);
 	}
 
 	public static LinhaString substituirLinhaString(Object arquivo, Object linha) {
