@@ -88,7 +88,8 @@ public class Arquivo {
 		return resposta;
 	}
 
-	public static Lista linhaEntrePelaStringIniFimReplace(Object arquivo, Object objIni, Object objFim, Object objNova) {
+	public static Lista linhaEntrePelaStringIniFimReplace(Object arquivo, Object objIni, Object objFim,
+			Object objNova) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		String strInicio = (String) objIni;
 		String strFinal = (String) objFim;
