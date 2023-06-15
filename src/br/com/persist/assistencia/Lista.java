@@ -1,6 +1,8 @@
 package br.com.persist.assistencia;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Lista {
 	private BigInteger comprimento;
@@ -109,6 +111,16 @@ public class Lista {
 		sb.insert(0, "[");
 		sb.insert(sb.length(), "]");
 		return sb.toString();
+	}
+
+	public List<Object> list() {
+		List<Object> resp = new ArrayList<>();
+		No no = cabeca;
+		while (no != null) {
+			resp.add(no.valor);
+			no = no.proximo;
+		}
+		return resp;
 	}
 
 	private class No {
