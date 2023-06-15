@@ -1,0 +1,27 @@
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo criarArquivoString
+##$absoluto
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo linhaPelaString
+##$arquivoString
+##$string
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo linhaPelaStringIniFim
+##$arquivoString
+##$stringIni
+##$stringFim
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo linhaEntrePelaStringIniFim
+##$arquivoString
+##$stringIni
+##$stringFim
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo linhaEntrePelaStringIniFimReplace
+##$arquivoString
+##$stringIni
+##$stringFim
+##$stringNova
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo substituirLinhaString
+##$arquivoString
+##$linhaString
