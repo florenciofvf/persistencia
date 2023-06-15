@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
-import java.util.List;
 
 import br.com.persist.assistencia.ArquivoString;
 import br.com.persist.assistencia.LinhaString;
@@ -18,7 +17,7 @@ public class Arquivo {
 	private Arquivo() {
 	}
 
-	public static ArquivoString lerArquivo(Object absoluto) {
+	public static ArquivoString criarArquivoString(Object absoluto) {
 		try {
 			String arquivo = absoluto.toString();
 			checarArquivo(arquivo);
@@ -41,6 +40,72 @@ public class Arquivo {
 		return new LinhaString(((Number) numero).longValue(), (String) string);
 	}
 
+	public static Lista linhaPelaString(Object arquivo, Object objString) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		String string = (String) objString;
+		Lista resposta = new Lista();
+		Lista lista = arquivoString.getLista();
+		long size = lista.size().longValue();
+		for (long i = 0; i < size; i++) {
+			LinhaString linhaString = (LinhaString) lista.get(i);
+			if (linhaString.stringEqual(string)) {
+				resposta.add(linhaString);
+			}
+		}
+		return resposta;
+	}
+
+	public static Lista linhaPelaStringIniFim(Object arquivo, Object objIni, Object objFim) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		String strInicio = (String) objIni;
+		String strFinal = (String) objFim;
+		Lista resposta = new Lista();
+		Lista lista = arquivoString.getLista();
+		long size = lista.size().longValue();
+		for (long i = 0; i < size; i++) {
+			LinhaString linhaString = (LinhaString) lista.get(i);
+			if (linhaString.iniciaEfinalizaCom(strInicio, strFinal)) {
+				resposta.add(linhaString);
+			}
+		}
+		return resposta;
+	}
+
+	public static Lista linhaEntrePelaStringIniFim(Object arquivo, Object objIni, Object objFim) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		String strInicio = (String) objIni;
+		String strFinal = (String) objFim;
+		Lista resposta = new Lista();
+		Lista lista = arquivoString.getLista();
+		long size = lista.size().longValue();
+		for (long i = 0; i < size; i++) {
+			LinhaString linhaString = (LinhaString) lista.get(i);
+			String stringEntre = linhaString.stringEntre(strInicio, strFinal);
+			if (stringEntre != null) {
+				resposta.add(new LinhaString(linhaString.getNumero(), stringEntre));
+			}
+		}
+		return resposta;
+	}
+
+	public static Lista linhaEntrePelaStringIniFimReplace(Object arquivo, Object objIni, Object objFim, Object objNova) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		String strInicio = (String) objIni;
+		String strFinal = (String) objFim;
+		String strNova = (String) objNova;
+		Lista resposta = new Lista();
+		Lista lista = arquivoString.getLista();
+		long size = lista.size().longValue();
+		for (long i = 0; i < size; i++) {
+			LinhaString linhaString = (LinhaString) lista.get(i);
+			String stringEntreReplace = linhaString.stringEntreReplace(strInicio, strFinal, strNova);
+			if (stringEntreReplace != null) {
+				resposta.add(new LinhaString(linhaString.getNumero(), stringEntreReplace));
+			}
+		}
+		return resposta;
+	}
+
 	public static LinhaString substituirLinhaString(Object arquivo, Object linha) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		LinhaString linhaString = (LinhaString) linha;
@@ -48,10 +113,10 @@ public class Arquivo {
 			char c = ultimo(arquivoString);
 			PrintWriter pw = criarPrintWriter(arquivoString);
 			Lista lista = arquivoString.getLista();
-			List<Object> list = lista.list();
-			for (int i = 0, num = 1; i < list.size(); i++, num++) {
-				String string = ((LinhaString) list.get(i)).getString();
-				linhaString.print(pw, string, num, num < list.size());
+			long size = lista.size().longValue();
+			for (long i = 0, num = 1; i < size; i++, num++) {
+				String string = ((LinhaString) lista.get(i)).getString();
+				linhaString.print(pw, string, num, num < size);
 			}
 			if (c == '\r' || c == '\n') {
 				pw.print(c);

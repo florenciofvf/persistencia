@@ -1,8 +1,6 @@
 package br.com.persist.assistencia;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Lista {
 	private BigInteger comprimento;
@@ -90,6 +88,17 @@ public class Lista {
 		return o;
 	}
 
+	public Object get(long indice) {
+		check(indice);
+		long c = 0;
+		No no = cabeca;
+		while (c < indice) {
+			no = no.proximo;
+			c++;
+		}
+		return no.valor;
+	}
+
 	public BigInteger clear() {
 		comprimento = BigInteger.valueOf(0);
 		cabeca = null;
@@ -113,14 +122,10 @@ public class Lista {
 		return sb.toString();
 	}
 
-	public List<Object> list() {
-		List<Object> resp = new ArrayList<>();
-		No no = cabeca;
-		while (no != null) {
-			resp.add(no.valor);
-			no = no.proximo;
+	private void check(long indice) {
+		if (indice < 0 || indice >= comprimento.longValue()) {
+			throw new IndexOutOfBoundsException("indice=" + indice + ", size=" + comprimento);
 		}
-		return resp;
 	}
 
 	private class No {
