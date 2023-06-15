@@ -36,8 +36,27 @@ public class Arquivo {
 		}
 	}
 
+	public static LinhaString getLinhaString(Object arquivo, Object numero) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		long numeroLinha = ((Number) numero).longValue();
+		Lista lista = arquivoString.getLista();
+		long size = lista.size().longValue();
+		for (long i = 0; i < size; i++) {
+			LinhaString linhaString = (LinhaString) lista.get(i);
+			if (linhaString.numeroEqual(numeroLinha)) {
+				return linhaString;
+			}
+		}
+		return null;
+	}
+
 	public static LinhaString criarLinhaString(Object numero, Object string) {
 		return new LinhaString(((Number) numero).longValue(), (String) string);
+	}
+
+	public static LinhaString clonarLinhaString(Object linha, Object string) {
+		LinhaString linhaString = (LinhaString) linha;
+		return new LinhaString(linhaString.getNumero(), (String) string);
 	}
 
 	public static Lista linhaPelaString(Object arquivo, Object objString) {

@@ -23,6 +23,10 @@ public class LinhaString {
 		return string != null && string.equals(str);
 	}
 
+	public boolean numeroEqual(long num) {
+		return numero == num;
+	}
+
 	public boolean iniciaEfinalizaCom(String ini, String fim) {
 		return string != null && string.startsWith(ini) && string.endsWith(fim);
 	}
@@ -65,6 +69,6 @@ public class LinhaString {
 
 	@Override
 	public String toString() {
-		return numero + ": " + string;
+		return numero + ": " + string + "\n";
 	}
 }

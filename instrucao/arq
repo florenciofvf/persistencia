@@ -2,6 +2,8 @@ funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo criarArquivoString($a
 
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo linhaPelaString($arquivoString, $string)
 
+funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo getLinhaString($arquivoString, $numero)
+
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo linhaPelaStringIniFim($arquivoString, $stringIni, $stringFim)
 
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo linhaEntrePelaStringIniFim($arquivoString, $stringIni, $stringFim)
@@ -9,3 +11,5 @@ funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo linhaEntrePelaStringI
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo linhaEntrePelaStringIniFimReplace($arquivoString, $stringIni, $stringFim, $stringNova)
 
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo substituirLinhaString($arquivoString, $linhaString)
+
+funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo clonarLinhaString($linhaString, $string)

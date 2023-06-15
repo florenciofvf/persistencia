@@ -6,6 +6,10 @@
 ##$arquivoString
 ##$string
 
+@@@br.com.persist.plugins.instrucao.nat.Arquivo getLinhaString
+##$arquivoString
+##$numero
+
 @@@br.com.persist.plugins.instrucao.nat.Arquivo linhaPelaStringIniFim
 ##$arquivoString
 ##$stringIni
@@ -25,3 +29,7 @@
 @@@br.com.persist.plugins.instrucao.nat.Arquivo substituirLinhaString
 ##$arquivoString
 ##$linhaString
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo clonarLinhaString
+##$linhaString
+##$string
