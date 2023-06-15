@@ -3,10 +3,13 @@ package br.com.persist.assistencia;
 import java.math.BigInteger;
 
 public class Lista {
-	private BigInteger biSize;
-	private int comprimento;
+	private BigInteger comprimento;
 	private No cabeca;
 	private No cauda;
+
+	public Lista() {
+		clear();
+	}
 
 	public Object head() {
 		check();
@@ -14,7 +17,7 @@ public class Lista {
 	}
 
 	private void check() {
-		if (comprimento == 0) {
+		if (comprimento.intValue() == 0) {
 			throw new IllegalStateException("Lista Vazia.");
 		}
 	}
@@ -22,7 +25,7 @@ public class Lista {
 	public Lista tail() {
 		check();
 		Lista resposta = new Lista();
-		if (comprimento == 1) {
+		if (comprimento.intValue() == 1) {
 			return resposta;
 		}
 		No no = cabeca.proximo;
@@ -34,14 +37,11 @@ public class Lista {
 	}
 
 	public BigInteger size() {
-		if (biSize == null) {
-			biSize = BigInteger.valueOf(comprimento);
-		}
-		return biSize;
+		return comprimento;
 	}
 
 	public BigInteger empty() {
-		return comprimento == 0 ? createTrue() : createFalse();
+		return comprimento.intValue() == 0 ? createTrue() : createFalse();
 	}
 
 	private BigInteger createFalse() {
@@ -53,7 +53,7 @@ public class Lista {
 	}
 
 	public BigInteger contains(Object o) {
-		if (comprimento == 0) {
+		if (comprimento.intValue() == 0) {
 			return createFalse();
 		}
 		No no = cabeca;
@@ -84,13 +84,12 @@ public class Lista {
 			cauda.proximo = no;
 		}
 		cauda = no;
-		comprimento++;
-		biSize = null;
+		comprimento = comprimento.add(BigInteger.valueOf(1));
 		return o;
 	}
 
 	public BigInteger clear() {
-		comprimento = 0;
+		comprimento = BigInteger.valueOf(0);
 		cabeca = null;
 		cauda = null;
 		return createTrue();
