@@ -37,3 +37,4 @@
 @@@br.com.persist.plugins.instrucao.nat.Arquivo substituirLinhaString
 ##$arquivoString
 ##$linhaString
+##$charset

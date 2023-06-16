@@ -14,4 +14,4 @@ funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo clonarLinhaString($li
 
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo criarLinhaString($numero, $string)
 
-funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo substituirLinhaString($arquivoString, $linhaString)
+funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo substituirLinhaString($arquivoString, $linhaString, $charset)

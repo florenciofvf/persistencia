@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import br.com.persist.assistencia.ArquivoString;
 import br.com.persist.assistencia.LinhaString;
@@ -38,9 +39,9 @@ public class Arquivo {
 	private static LinhaString criar(long numero, InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		LinhaString resposta = null;
-		char cr = (char) 0;
-		char lf = (char) 0;
 		int i = is.read();
+		char cr = 0;
+		char lf = 0;
 		while (i != -1) {
 			char c = (char) i;
 			if (c == '\r' || c == '\n') {
@@ -151,11 +152,11 @@ public class Arquivo {
 		return new LinhaString(((Number) numero).longValue(), (String) string, (char) 0, '\n');
 	}
 
-	public static LinhaString substituirLinhaString(Object arquivo, Object linha) {
+	public static LinhaString substituirLinhaString(Object arquivo, Object linha, Object charset) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		LinhaString linhaString = (LinhaString) linha;
 		try {
-			PrintWriter pw = criarPrintWriter(arquivoString);
+			PrintWriter pw = criarPrintWriter(arquivoString, (String) charset);
 			Lista lista = arquivoString.getLista();
 			long size = lista.size().longValue();
 			for (long i = 0, num = 1; i < size; i++, num++) {
@@ -169,8 +170,9 @@ public class Arquivo {
 		return linhaString;
 	}
 
-	private static PrintWriter criarPrintWriter(ArquivoString arquivoString) throws FileNotFoundException {
-		return new PrintWriter(arquivoString.getAbsoluto());
+	private static PrintWriter criarPrintWriter(ArquivoString arquivoString, String charset)
+			throws FileNotFoundException, UnsupportedEncodingException {
+		return new PrintWriter(arquivoString.getAbsoluto(), charset);
 	}
 
 	private static void checarArquivo(String absoluto) throws IOException {
