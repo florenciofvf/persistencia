@@ -129,8 +129,8 @@ public class InstrucaoPagina extends Panel {
 			try {
 				List<Object> resposta = InstrucaoContainer.PROCESSADOR.executar(biblioteca, metodo);
 				painelResultado.setText(resposta.toString());
-			} catch (InstrucaoException e) {
-				painelResultado.setText(e.getMessage());
+			} catch (InstrucaoException ex) {
+				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, InstrucaoPagina.this);
 			}
 		}
 
@@ -142,8 +142,8 @@ public class InstrucaoPagina extends Panel {
 				boolean resp = InstrucaoMontador.compilar(biblioteca);
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
-			} catch (IOException | InstrucaoException e) {
-				painelResultado.setText(e.getMessage());
+			} catch (IOException | InstrucaoException ex) {
+				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, InstrucaoPagina.this);
 			}
 		}
 
