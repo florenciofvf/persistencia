@@ -5,10 +5,14 @@ import java.io.PrintWriter;
 public class LinhaString {
 	final String string;
 	final long numero;
+	final char cr;
+	final char lf;
 
-	public LinhaString(long numero, String string) {
+	public LinhaString(long numero, String string, char cr, char lf) {
 		this.numero = numero;
 		this.string = string;
+		this.cr = cr;
+		this.lf = lf;
 	}
 
 	public long getNumero() {
@@ -51,24 +55,37 @@ public class LinhaString {
 		return null;
 	}
 
-	public void print(PrintWriter pw, String str, long num, boolean ln) {
+	public LinhaString clonar(String string) {
+		return new LinhaString(numero, string, cr, lf);
+	}
+
+	public void print(PrintWriter pw, LinhaString linhaString, long num) {
 		if (numero == num) {
-			if (ln) {
-				pw.println(string);
-			} else {
-				pw.print(string);
-			}
+			print(pw);
 		} else {
-			if (ln) {
-				pw.println(str);
-			} else {
-				pw.print(str);
-			}
+			linhaString.print(pw);
+		}
+	}
+
+	private void print(PrintWriter pw) {
+		pw.print(string);
+		if (cr != 0) {
+			pw.print(cr);
+		}
+		if (lf != 0) {
+			pw.print(lf);
 		}
 	}
 
 	@Override
 	public String toString() {
-		return numero + ": " + string + "\n";
+		StringBuilder sb = new StringBuilder(numero + ": " + string);
+		if (cr != 0) {
+			sb.append(cr);
+		}
+		if (lf != 0) {
+			sb.append(lf);
+		}
+		return sb.toString();
 	}
 }

@@ -1,13 +1,11 @@
 package br.com.persist.plugins.instrucao.nat;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
 
 import br.com.persist.assistencia.ArquivoString;
 import br.com.persist.assistencia.LinhaString;
@@ -21,19 +19,46 @@ public class Arquivo {
 		try {
 			String arquivo = absoluto.toString();
 			checarArquivo(arquivo);
-			Lista lista = new Lista();
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(arquivo)))) {
-				String string = br.readLine();
-				long numero = 0;
-				while (string != null) {
-					lista.add(new LinhaString(++numero, string));
-					string = br.readLine();
+			try (InputStream is = new FileInputStream(arquivo)) {
+				Lista lista = new Lista();
+				long numero = 1;
+				LinhaString linhaString = criar(numero, is);
+				while (linhaString != null) {
+					lista.add(linhaString);
+					numero++;
+					linhaString = criar(numero, is);
 				}
+				return new ArquivoString(arquivo, lista);
 			}
-			return new ArquivoString(arquivo, lista);
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
+	}
+
+	private static LinhaString criar(long numero, InputStream is) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		LinhaString resposta = null;
+		char cr = (char) 0;
+		char lf = (char) 0;
+		int i = is.read();
+		while (i != -1) {
+			char c = (char) i;
+			if (c == '\r' || c == '\n') {
+				if (c == '\r') {
+					cr = c;
+				} else {
+					lf = c;
+					return new LinhaString(numero, sb.toString(), cr, lf);
+				}
+			} else {
+				sb.append(c);
+			}
+			i = is.read();
+		}
+		if (cr != 0) {
+			resposta = new LinhaString(numero, sb.toString(), cr, lf);
+		}
+		return resposta;
 	}
 
 	public static Lista selecionarLinhaString(Object arquivo, Object objString) {
@@ -78,7 +103,7 @@ public class Arquivo {
 			LinhaString linhaString = (LinhaString) lista.get(i);
 			String stringEntre = linhaString.stringEntre(strInicio, strFinal);
 			if (stringEntre != null) {
-				resposta.add(new LinhaString(linhaString.getNumero(), stringEntre));
+				resposta.add(linhaString.clonar(stringEntre));
 			}
 		}
 		return resposta;
@@ -97,7 +122,7 @@ public class Arquivo {
 			LinhaString linhaString = (LinhaString) lista.get(i);
 			String stringEntreReplace = linhaString.stringEntreReplace(strInicio, strFinal, strNova);
 			if (stringEntreReplace != null) {
-				resposta.add(new LinhaString(linhaString.getNumero(), stringEntreReplace));
+				resposta.add(linhaString.clonar(stringEntreReplace));
 			}
 		}
 		return resposta;
@@ -119,43 +144,29 @@ public class Arquivo {
 
 	public static LinhaString clonarLinhaString(Object linha, Object string) {
 		LinhaString linhaString = (LinhaString) linha;
-		return new LinhaString(linhaString.getNumero(), (String) string);
+		return linhaString.clonar((String) string);
 	}
 
 	public static LinhaString criarLinhaString(Object numero, Object string) {
-		return new LinhaString(((Number) numero).longValue(), (String) string);
+		return new LinhaString(((Number) numero).longValue(), (String) string, (char) 0, '\n');
 	}
 
 	public static LinhaString substituirLinhaString(Object arquivo, Object linha) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		LinhaString linhaString = (LinhaString) linha;
 		try {
-			char c = ultimo(arquivoString);
 			PrintWriter pw = criarPrintWriter(arquivoString);
 			Lista lista = arquivoString.getLista();
 			long size = lista.size().longValue();
 			for (long i = 0, num = 1; i < size; i++, num++) {
-				String string = ((LinhaString) lista.get(i)).getString();
-				linhaString.print(pw, string, num, num < size);
-			}
-			if (c == '\r' || c == '\n') {
-				pw.print(c);
+				LinhaString ls = (LinhaString) lista.get(i);
+				linhaString.print(pw, ls, num);
 			}
 			pw.close();
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
 		return linhaString;
-	}
-
-	private static char ultimo(ArquivoString arquivoString) throws IOException {
-		String absoluto = arquivoString.getAbsoluto();
-		checarArquivo(absoluto);
-		try (RandomAccessFile raf = new RandomAccessFile(absoluto, "r")) {
-			long length = raf.length();
-			raf.seek(length - 1);
-			return (char) raf.read();
-		}
 	}
 
 	private static PrintWriter criarPrintWriter(ArquivoString arquivoString) throws FileNotFoundException {
