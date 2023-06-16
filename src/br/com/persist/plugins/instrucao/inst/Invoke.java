@@ -93,7 +93,7 @@ public class Invoke extends Instrucao {
 			Method method = klass.getDeclaredMethod(metodo.getNome(), tipoParametros);
 			return method.invoke(klass, valorParametros);
 		} catch (Exception ex) {
-			throw new InstrucaoException(ex.getMessage(), false);
+			throw new InstrucaoException(ex);
 		}
 	}
 
