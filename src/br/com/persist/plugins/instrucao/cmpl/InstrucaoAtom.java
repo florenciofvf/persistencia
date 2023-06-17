@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.cmpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoAtom {
@@ -128,7 +129,7 @@ public class InstrucaoAtom {
 			char c = string.charAt(indice);
 			if (c == '\'') {
 				if (escapeAtivado) {
-					sb.append(c);
+					appendC(sb, c);
 					escapeAtivado = false;
 				} else {
 					encerrado = true;
@@ -136,14 +137,14 @@ public class InstrucaoAtom {
 				}
 			} else if (c == '\\') {
 				if (escapeAtivado) {
-					sb.append(c);
+					appendC(sb, c);
 					escapeAtivado = false;
 				} else {
 					escapeAtivado = true;
 				}
 			} else {
 				checarEscapeAtivado(escapeAtivado);
-				sb.append(c);
+				appendC(sb, c);
 			}
 			indice++;
 		}
@@ -152,6 +153,16 @@ public class InstrucaoAtom {
 		}
 		indice++;
 		return new Atom(sb.toString(), Atom.STRING);
+	}
+
+	private void appendC(StringBuilder sb, char c) {
+		if (c == '\r') {
+			sb.append(InstrucaoConstantes.CR);
+		} else if (c == '\n') {
+			sb.append(InstrucaoConstantes.LF);
+		} else {
+			sb.append(c);
+		}
 	}
 
 	private void checarEscapeAtivado(boolean escapeAtivado) throws InstrucaoException {
@@ -165,7 +176,7 @@ public class InstrucaoAtom {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (validoChar2(c)) {
-				sb.append(c);
+				appendC(sb, c);
 			} else {
 				break;
 			}
@@ -185,7 +196,7 @@ public class InstrucaoAtom {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (validoChar2(c)) {
-				sb.append(c);
+				appendC(sb, c);
 			} else {
 				break;
 			}
@@ -223,7 +234,7 @@ public class InstrucaoAtom {
 				break;
 			} else {
 				anterior = c;
-				sb.append(c);
+				appendC(sb, c);
 			}
 			indice++;
 		}
@@ -287,7 +298,7 @@ public class InstrucaoAtom {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if ((c >= '0' && c <= '9') || c == '.') {
-				sb.append(c);
+				appendC(sb, c);
 			} else {
 				break;
 			}
@@ -327,7 +338,7 @@ public class InstrucaoAtom {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (validoChar(c)) {
-				sb.append(c);
+				appendC(sb, c);
 			} else {
 				break;
 			}

@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.inst;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
@@ -27,7 +28,8 @@ public class PushSTR extends Instrucao {
 		if (string == null) {
 			string = "";
 		}
-		this.string = string;
+		this.string = Util.replaceAll(string, InstrucaoConstantes.CR, "\r");
+		this.string = Util.replaceAll(this.string, InstrucaoConstantes.LF, "\n");
 	}
 
 	@Override

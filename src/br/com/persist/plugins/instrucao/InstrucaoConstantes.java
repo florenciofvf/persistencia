@@ -27,6 +27,8 @@ public class InstrucaoConstantes {
 	public static final String NEG = "neg";
 	public static final String VAR = "var";
 	public static final String VAL = "val";
+	public static final String CR = "\\r";
+	public static final String LF = "\\n";
 	public static final String IF = "if";
 
 	public static final String ADD = "add";
