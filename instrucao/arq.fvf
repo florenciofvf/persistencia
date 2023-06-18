@@ -1,4 +1,8 @@
 
+@@@br.com.persist.plugins.instrucao.nat.Arquivo selecionarComTrim
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo selecionarSemTrim
+
 @@@br.com.persist.plugins.instrucao.nat.Arquivo criarArquivoString
 ##$absoluto
 

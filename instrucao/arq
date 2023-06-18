@@ -1,3 +1,7 @@
+funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo selecionarComTrim()
+
+funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo selecionarSemTrim()
+
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo criarArquivoString($absoluto)
 
 funcao_nativa br_com_persist_plugins_instrucao_nat_Arquivo selecionarLinhaString($arquivoString, $string)

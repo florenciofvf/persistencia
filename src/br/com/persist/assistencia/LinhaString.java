@@ -23,20 +23,27 @@ public class LinhaString {
 		return string;
 	}
 
-	public boolean stringEqual(String str) {
-		return string != null && string.equals(str);
+	public boolean stringEqual(String str, boolean trim) {
+		if (string != null) {
+			return trim ? string.trim().equals(str) : string.equals(str);
+		}
+		return false;
 	}
 
 	public boolean numeroEqual(long num) {
 		return numero == num;
 	}
 
-	public boolean iniciaEfinalizaCom(String ini, String fim) {
-		return string != null && string.startsWith(ini) && string.endsWith(fim);
+	public boolean iniciaEfinalizaCom(String ini, String fim, boolean trim) {
+		if (string != null) {
+			String str = trim ? string.trim() : string;
+			return str.startsWith(ini) && str.endsWith(fim);
+		}
+		return false;
 	}
 
-	public String stringEntre(String ini, String fim) {
-		if (iniciaEfinalizaCom(ini, fim)) {
+	public String stringEntre(String ini, String fim, boolean trim) {
+		if (iniciaEfinalizaCom(ini, fim, trim)) {
 			int posI = string.indexOf(ini) + ini.length();
 			int posF = string.indexOf(fim);
 			return string.substring(posI, posF);
@@ -44,8 +51,8 @@ public class LinhaString {
 		return null;
 	}
 
-	public String stringEntreReplace(String ini, String fim, String nova) {
-		if (iniciaEfinalizaCom(ini, fim)) {
+	public String stringEntreReplace(String ini, String fim, String nova, boolean trim) {
+		if (iniciaEfinalizaCom(ini, fim, trim)) {
 			int posI = string.indexOf(ini) + ini.length();
 			int posF = string.indexOf(fim);
 			String inicio = string.substring(0, posI);

@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 
 import br.com.persist.assistencia.ArquivoString;
 import br.com.persist.assistencia.LinhaString;
 import br.com.persist.assistencia.Lista;
 
 public class Arquivo {
+	private static boolean selComTrim = false;
+
 	private Arquivo() {
 	}
 
@@ -62,6 +65,16 @@ public class Arquivo {
 		return resposta;
 	}
 
+	public static BigInteger selecionarComTrim() {
+		selComTrim = true;
+		return BigInteger.valueOf(1);
+	}
+
+	public static BigInteger selecionarSemTrim() {
+		selComTrim = false;
+		return BigInteger.valueOf(0);
+	}
+
 	public static Lista selecionarLinhaString(Object arquivo, Object objString) {
 		ArquivoString arquivoString = (ArquivoString) arquivo;
 		String string = (String) objString;
@@ -70,7 +83,7 @@ public class Arquivo {
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
 			LinhaString linhaString = (LinhaString) lista.get(i);
-			if (linhaString.stringEqual(string)) {
+			if (linhaString.stringEqual(string, selComTrim)) {
 				resposta.add(linhaString);
 			}
 		}
@@ -86,7 +99,7 @@ public class Arquivo {
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
 			LinhaString linhaString = (LinhaString) lista.get(i);
-			if (linhaString.iniciaEfinalizaCom(strInicio, strFinal)) {
+			if (linhaString.iniciaEfinalizaCom(strInicio, strFinal, selComTrim)) {
 				resposta.add(linhaString);
 			}
 		}
@@ -102,7 +115,7 @@ public class Arquivo {
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
 			LinhaString linhaString = (LinhaString) lista.get(i);
-			String stringEntre = linhaString.stringEntre(strInicio, strFinal);
+			String stringEntre = linhaString.stringEntre(strInicio, strFinal, selComTrim);
 			if (stringEntre != null) {
 				resposta.add(linhaString.clonar(stringEntre));
 			}
@@ -121,7 +134,7 @@ public class Arquivo {
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
 			LinhaString linhaString = (LinhaString) lista.get(i);
-			String stringEntreReplace = linhaString.stringEntreReplace(strInicio, strFinal, strNova);
+			String stringEntreReplace = linhaString.stringEntreReplace(strInicio, strFinal, strNova, selComTrim);
 			if (stringEntreReplace != null) {
 				resposta.add(linhaString.clonar(stringEntreReplace));
 			}
