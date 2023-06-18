@@ -183,6 +183,30 @@ public class Arquivo {
 		return linhaString;
 	}
 
+	public static ArquivoString salvarArquivoString(Object arquivo, Object charset) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		try {
+			PrintWriter pw = criarPrintWriter(arquivoString, (String) charset);
+			arquivoString.salvar(pw);
+			pw.close();
+		} catch (Exception ex) {
+			throw new IllegalStateException(ex);
+		}
+		return arquivoString;
+	}
+
+	public static LinhaString setLinhaString(Object arquivo, Object linha) {
+		ArquivoString arquivoString = (ArquivoString) arquivo;
+		LinhaString linhaString = (LinhaString) linha;
+		try {
+			Lista lista = arquivoString.getLista();
+			lista.set(linhaString.getNumero() - 1, linhaString);
+		} catch (Exception ex) {
+			throw new IllegalStateException(ex);
+		}
+		return linhaString;
+	}
+
 	private static PrintWriter criarPrintWriter(ArquivoString arquivoString, String charset)
 			throws FileNotFoundException, UnsupportedEncodingException {
 		return new PrintWriter(arquivoString.getAbsoluto(), charset);

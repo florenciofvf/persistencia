@@ -1,5 +1,7 @@
 package br.com.persist.assistencia;
 
+import java.io.PrintWriter;
+
 public class ArquivoString {
 	private final String absoluto;
 	private final Lista lista;
@@ -15,6 +17,14 @@ public class ArquivoString {
 
 	public Lista getLista() {
 		return lista;
+	}
+
+	public void salvar(PrintWriter pw) {
+		long size = lista.size().longValue();
+		for (long i = 0; i < size; i++) {
+			LinhaString linhaString = (LinhaString) lista.get(i);
+			linhaString.print(pw);
+		}
 	}
 
 	@Override

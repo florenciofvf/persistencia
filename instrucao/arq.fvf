@@ -42,3 +42,11 @@
 ##$arquivoString
 ##$linhaString
 ##$charset
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo salvarArquivoString
+##$arquivoString
+##$charset
+
+@@@br.com.persist.plugins.instrucao.nat.Arquivo setLinhaString
+##$arquivoString
+##$linhaString

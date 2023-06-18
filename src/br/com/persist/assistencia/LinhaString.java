@@ -74,7 +74,7 @@ public class LinhaString {
 		}
 	}
 
-	private void print(PrintWriter pw) {
+	public void print(PrintWriter pw) {
 		pw.print(string);
 		if (cr != 0) {
 			pw.print(cr);

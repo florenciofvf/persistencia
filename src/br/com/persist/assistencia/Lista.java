@@ -88,7 +88,7 @@ public class Lista {
 		return o;
 	}
 
-	public Object get(long indice) {
+	private No getNo(long indice) {
 		check(indice);
 		long c = 0;
 		No no = cabeca;
@@ -96,7 +96,16 @@ public class Lista {
 			no = no.proximo;
 			c++;
 		}
-		return no.valor;
+		return no;
+	}
+
+	public Object get(long indice) {
+		return getNo(indice).valor;
+	}
+
+	public Object set(long indice, Object valor) {
+		getNo(indice).valor = valor;
+		return valor;
 	}
 
 	public BigInteger clear() {
@@ -129,7 +138,7 @@ public class Lista {
 	}
 
 	private class No {
-		final Object valor;
+		Object valor;
 		No proximo;
 
 		private No(Object valor, No proximo) {
