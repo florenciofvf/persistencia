@@ -111,7 +111,7 @@ public class InstrucaoPagina extends Panel {
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
 			addButton(executarAcao);
-			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_conteudo"));
+			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
