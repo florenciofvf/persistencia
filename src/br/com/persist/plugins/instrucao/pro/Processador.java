@@ -67,8 +67,10 @@ public class Processador {
 		cacheBiblioteca.excluir(nome);
 	}
 
-	public void limparCacheBiblio() {
+	public void clear() {
 		cacheBiblioteca.clear();
+		pilhaOperando.clear();
+		pilhaMetodo.clear();
 	}
 
 	@Override

@@ -46,4 +46,8 @@ public class PilhaOperando {
 	public String toString() {
 		return "PilhaOperando=" + operandos.toString();
 	}
+
+	public void clear() {
+		operandos.clear();
+	}
 }

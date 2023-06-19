@@ -22,6 +22,11 @@ public class Biblioteca {
 		return nome;
 	}
 
+	public void clear() {
+		variaveis.clear();
+		map.clear();
+	}
+
 	public void declararVariavel(String nome, Object valor) throws InstrucaoException {
 		Variavel variavel = variaveis.get(nome);
 		if (variavel != null) {

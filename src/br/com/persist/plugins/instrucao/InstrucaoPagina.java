@@ -127,7 +127,7 @@ public class InstrucaoPagina extends Panel {
 		}
 
 		private void limparCacheBiblio() {
-			InstrucaoContainer.PROCESSADOR.limparCacheBiblio();
+			InstrucaoContainer.PROCESSADOR.clear();
 		}
 
 		private void executar() {

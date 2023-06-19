@@ -46,4 +46,8 @@ public class PilhaMetodo {
 	public String toString() {
 		return "PilhaMetodo=" + metodos.toString();
 	}
+
+	public void clear() {
+		metodos.clear();
+	}
 }

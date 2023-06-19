@@ -22,6 +22,9 @@ public class CacheBiblioteca {
 	}
 
 	public void clear() {
+		for (Biblioteca biblio : map.values()) {
+			biblio.clear();
+		}
 		map.clear();
 	}
 
