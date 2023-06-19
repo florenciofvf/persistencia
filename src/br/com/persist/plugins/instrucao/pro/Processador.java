@@ -59,8 +59,16 @@ public class Processador {
 		return resposta;
 	}
 
+	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
+		return cacheBiblioteca.getBiblioteca(nome);
+	}
+
 	public void excluirBiblioteca(String nome) {
 		cacheBiblioteca.excluir(nome);
+	}
+
+	public void limparCacheBiblio() {
+		cacheBiblioteca.clear();
 	}
 
 	@Override

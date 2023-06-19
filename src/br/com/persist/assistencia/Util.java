@@ -623,7 +623,7 @@ public class Util {
 		mensagem(componente, msg);
 	}
 
-	private static String getStackTrace(String info, Exception ex) {
+	public static String getStackTrace(String info, Exception ex) {
 		StringWriter sw = new StringWriter();
 		sw.append(info + "\r\n\r\n");
 		if (ex != null) {

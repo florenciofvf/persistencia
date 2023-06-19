@@ -50,6 +50,9 @@ public class Invoke extends Instrucao {
 			biblioteca = cacheBiblioteca.getBiblioteca(array[0]);
 			invocar = biblioteca.getMetodo(array[1]);
 		} else {
+			if (metodo == null) {
+				throw new InstrucaoException("erro.metodo_inexistente", "null", "null");
+			}
 			biblioteca = metodo.getBiblioteca();
 			invocar = biblioteca.getMetodo(array[0]);
 		}

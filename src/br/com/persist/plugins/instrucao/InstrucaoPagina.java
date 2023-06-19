@@ -104,12 +104,14 @@ public class InstrucaoPagina extends Panel {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private Action limparCacheAcao = acaoIcon("label.limpar_cache_biblio", Icones.SINCRONIZAR);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
+			addButton(limparCacheAcao);
 			addButton(executarAcao);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
@@ -117,10 +119,15 @@ public class InstrucaoPagina extends Panel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+			limparCacheAcao.setActionListener(e -> limparCacheBiblio());
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
 			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
+		}
+
+		private void limparCacheBiblio() {
+			InstrucaoContainer.PROCESSADOR.limparCacheBiblio();
 		}
 
 		private void executar() {
@@ -130,7 +137,7 @@ public class InstrucaoPagina extends Panel {
 				List<Object> resposta = InstrucaoContainer.PROCESSADOR.executar(biblioteca, metodo);
 				painelResultado.setText(resposta.toString());
 			} catch (InstrucaoException ex) {
-				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, InstrucaoPagina.this);
+				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
 			}
 		}
 
@@ -143,7 +150,7 @@ public class InstrucaoPagina extends Panel {
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
 			} catch (IOException | InstrucaoException ex) {
-				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, InstrucaoPagina.this);
+				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
 			}
 		}
 

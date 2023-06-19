@@ -21,6 +21,10 @@ public class CacheBiblioteca {
 		map.remove(nome);
 	}
 
+	public void clear() {
+		map.clear();
+	}
+
 	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
 		Biblioteca resp = map.get(nome);
 		if (resp == null) {
@@ -83,6 +87,6 @@ public class CacheBiblioteca {
 
 	@Override
 	public String toString() {
-		return "CacheBiblioteca total_cache=" + map.size() + "\n" + map.toString();
+		return "CacheBiblioteca size=" + map.size() + "\n" + map.toString();
 	}
 }
