@@ -58,7 +58,7 @@ public class Invoke extends Instrucao {
 			setParametros(clone, pilhaOperando);
 			pilhaMetodo.push(clone);
 		} else {
-			Object resp = invocarNativo(clone, pilhaOperando);
+			Object resp = invocarNativo(clone, pilhaMetodo, pilhaOperando);
 			pilhaOperando.push(resp);
 		}
 	}
@@ -79,7 +79,8 @@ public class Invoke extends Instrucao {
 		return resp;
 	}
 
-	private Object invocarNativo(Metodo metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
+	private Object invocarNativo(Metodo metodo, PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando)
+			throws InstrucaoException {
 		Class<?> klass = null;
 		try {
 			klass = Class.forName(metodo.getBiblioNativa());
@@ -93,7 +94,11 @@ public class Invoke extends Instrucao {
 			Method method = klass.getDeclaredMethod(metodo.getNome(), tipoParametros);
 			return method.invoke(klass, valorParametros);
 		} catch (Exception ex) {
-			throw new InstrucaoException(ex);
+			StringBuilder sb = new StringBuilder();
+			while (!pilhaMetodo.isEmpty()) {
+				sb.append(pilhaMetodo.pop() + "\n");
+			}
+			throw new InstrucaoException(sb.toString(), ex);
 		}
 	}
 

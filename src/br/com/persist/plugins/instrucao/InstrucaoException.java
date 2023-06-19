@@ -7,6 +7,10 @@ public class InstrucaoException extends Exception {
 		super(cause);
 	}
 
+	public InstrucaoException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 	public InstrucaoException(String string, boolean ehChave) {
 		super(ehChave ? InstrucaoMensagens.getString(string) : string);
 	}
