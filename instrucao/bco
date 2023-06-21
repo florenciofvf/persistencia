@@ -1,0 +1,5 @@
+funcao_nativa br_com_persist_plugins_instrucao_nat_Banco getConnection($driver, $url, $usuario, $senha)
+
+funcao_nativa br_com_persist_plugins_instrucao_nat_Banco select($conexao, $consulta)
+
+funcao_nativa br_com_persist_plugins_instrucao_nat_Banco closeConnection($conexao)

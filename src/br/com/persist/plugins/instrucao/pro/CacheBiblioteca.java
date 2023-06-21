@@ -18,6 +18,10 @@ public class CacheBiblioteca {
 	}
 
 	public void excluir(String nome) {
+		Biblioteca resp = map.get(nome);
+		if (resp != null) {
+			resp.clear();
+		}
 		map.remove(nome);
 	}
 

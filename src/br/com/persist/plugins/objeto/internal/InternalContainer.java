@@ -90,9 +90,6 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.IconeListener;
-import br.com.persist.plugins.checagem.ChecagemException;
-import br.com.persist.plugins.checagem.ChecagemUtil;
-import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
@@ -100,6 +97,9 @@ import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.fragmento.Fragmento;
 import br.com.persist.plugins.fragmento.FragmentoDialogo;
 import br.com.persist.plugins.fragmento.FragmentoListener;
+import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.pro.Biblioteca;
+import br.com.persist.plugins.instrucao.pro.Processador;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
@@ -1804,9 +1804,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void checarRegistro() {
+				String nomeBiblio = objeto.getTabela().toLowerCase();
+				Processador processador = new Processador();
+				Biblioteca biblioteca = null;
 				try {
-					ChecagemUtil.checarModulo(objeto.getTabela());
-				} catch (ChecagemException ex) {
+					biblioteca = processador.getBiblioteca(nomeBiblio);
+				} catch (Exception ex) {
 					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 					return;
 				}
@@ -1817,6 +1820,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						conn = ConexaoProvedor.getConnection(conexao);
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
 					}
 				}
 				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -1840,10 +1844,29 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 						InternalContainer.this, null);
 				Map<String, Object> map = modelo.getMap(linhas[0], coletor, null);
-				Contexto ctx = new Contexto(map);
-				ctx.put("CONEXAO_SEL", conn);
-				String string = ChecagemUtil.executar(objeto.getTabela(), null, ctx);
-				Util.mensagem(InternalContainer.this, string);
+				try {
+					setVariaveis(biblioteca, map, conn);
+					List<Object> resp = processador.executar(nomeBiblio, "main");
+					Util.mensagem(InternalContainer.this, getStringResposta(resp));
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+				}
+			}
+
+			private void setVariaveis(Biblioteca biblioteca, Map<String, Object> map, Connection conn)
+					throws InstrucaoException {
+				for (Map.Entry<String, Object> entry : map.entrySet()) {
+					biblioteca.declararVariavel(entry.getKey(), entry.getValue());
+				}
+				biblioteca.declararVariavel("conexao", conn);
+			}
+
+			private String getStringResposta(List<Object> lista) {
+				StringBuilder sb = new StringBuilder();
+				for (Object obj : lista) {
+					sb.append(obj == null ? "null\n" : obj.toString() + "\n");
+				}
+				return sb.toString();
 			}
 
 			private class MenuTemp extends Menu {
