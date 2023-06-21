@@ -1856,9 +1856,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private void setVariaveis(Biblioteca biblioteca, Map<String, Object> map, Connection conn)
 					throws InstrucaoException {
 				for (Map.Entry<String, Object> entry : map.entrySet()) {
-					biblioteca.declararVariavel(entry.getKey(), entry.getValue());
+					biblioteca.declararVariavel("#" + entry.getKey(), entry.getValue());
 				}
-				biblioteca.declararVariavel("conexao", conn);
+				biblioteca.declararVariavel("#conexao", conn);
 			}
 
 			private String getStringResposta(List<Object> lista) {
