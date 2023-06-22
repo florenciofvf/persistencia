@@ -1,0 +1,9 @@
+
+@@@br.com.persist.plugins.instrucao.nat.Util isNull
+##$objeto
+
+@@@br.com.persist.plugins.instrucao.nat.Util isNotNull
+##$objeto
+
+@@@br.com.persist.plugins.instrucao.nat.Util stringEmpty
+##$objeto

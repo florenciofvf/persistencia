@@ -1864,7 +1864,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private String getStringResposta(List<Object> lista) {
 				StringBuilder sb = new StringBuilder();
 				for (Object obj : lista) {
-					sb.append(obj == null ? "null\n" : obj.toString() + "\n");
+					if (obj == null) {
+						sb.append("null\n");
+						continue;
+					}
+					String string = obj.toString();
+					if (string != null && !string.isEmpty()) {
+						sb.append(string + "\n");
+					}
 				}
 				return sb.toString();
 			}

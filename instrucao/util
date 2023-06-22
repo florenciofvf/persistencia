@@ -1,0 +1,5 @@
+funcao_nativa br_com_persist_plugins_instrucao_nat_Util isNull($objeto)
+
+funcao_nativa br_com_persist_plugins_instrucao_nat_Util isNotNull($objeto)
+
+funcao_nativa br_com_persist_plugins_instrucao_nat_Util stringEmpty($objeto)
