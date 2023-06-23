@@ -7,9 +7,11 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +27,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
+import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -105,6 +108,7 @@ public class InstrucaoPagina extends Panel {
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action limparCacheAcao = acaoIcon("label.limpar_cache_biblio", Icones.SINCRONIZAR);
+		private JComboBox<String> comboFontes = new JComboBox<>(InstrucaoConstantes.FONTES);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
@@ -119,7 +123,25 @@ public class InstrucaoPagina extends Panel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+			add(comboFontes);
 			limparCacheAcao.setActionListener(e -> limparCacheBiblio());
+			comboFontes.addItemListener(Toolbar.this::alterarFonte);
+		}
+
+		private void alterarFonte(ItemEvent e) {
+			if (ItemEvent.SELECTED == e.getStateChange()) {
+				Object object = comboFontes.getSelectedItem();
+				if (object instanceof String) {
+					Font font = getFont();
+					alterar(font, (String) object);
+				}
+			}
+		}
+
+		private void alterar(Font font, String nome) {
+			if (font != null) {
+				textArea.setFont(new Font(nome, font.getStyle(), font.getSize()));
+			}
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
