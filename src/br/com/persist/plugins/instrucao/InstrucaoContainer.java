@@ -138,6 +138,7 @@ public class InstrucaoContainer extends AbstratoContainer {
 		Font font = InstrucaoPreferencia.getFontPreferencia();
 		if (font != null) {
 			fichario.setFontTextArea(font);
+			toolbar.selecionarFont(font);
 		}
 	}
 
@@ -186,6 +187,10 @@ public class InstrucaoContainer extends AbstratoContainer {
 				fichario.setFontTextArea(nova);
 				InstrucaoPreferencia.setFontPreferencia(nova);
 			}
+		}
+
+		private void selecionarFont(Font font) {
+			comboFontes.setSelectedItem(font.getName());
 		}
 
 		@Override
