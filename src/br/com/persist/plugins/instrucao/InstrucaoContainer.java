@@ -11,7 +11,9 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Font;
 import java.awt.Window;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
+import javax.swing.JComboBox;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -135,6 +138,7 @@ public class InstrucaoContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton {
+		private JComboBox<String> comboFontes = new JComboBox<>(InstrucaoConstantes.FONTES);
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
 
@@ -142,6 +146,8 @@ public class InstrucaoContainer extends AbstratoContainer {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
+			add(comboFontes);
+			comboFontes.addItemListener(Toolbar.this::alterarFonte);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 		}
 
@@ -152,6 +158,22 @@ public class InstrucaoContainer extends AbstratoContainer {
 			} else if (instrucaoDialogo != null) {
 				instrucaoDialogo.excluirContainer();
 				InstrucaoFormulario.criar(formulario, InstrucaoContainer.this);
+			}
+		}
+
+		private void alterarFonte(ItemEvent e) {
+			if (ItemEvent.SELECTED == e.getStateChange()) {
+				Object object = comboFontes.getSelectedItem();
+				if (object instanceof String) {
+					Font font = getFont();
+					alterar(font, (String) object);
+				}
+			}
+		}
+
+		private void alterar(Font font, String nome) {
+			if (font != null) {
+				fichario.setFontTextArea(new Font(nome, font.getStyle(), font.getSize()));
 			}
 		}
 

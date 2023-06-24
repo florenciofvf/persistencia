@@ -1,6 +1,7 @@
 package br.com.persist.plugins.instrucao;
 
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.JTabbedPane;
 
@@ -57,6 +58,16 @@ public class InstrucaoFichario extends JTabbedPane {
 			}
 		}
 		return -1;
+	}
+
+	void setFontTextArea(Font font) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof InstrucaoPagina) {
+				InstrucaoPagina p = (InstrucaoPagina) cmp;
+				p.setFontTextArea(font);
+			}
+		}
 	}
 
 	public void setConteudo(String conteudo, String idPagina) {
