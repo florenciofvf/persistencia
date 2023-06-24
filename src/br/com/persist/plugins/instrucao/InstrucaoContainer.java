@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -130,6 +131,14 @@ public class InstrucaoContainer extends AbstratoContainer {
 			}
 		}
 		fichario.setConteudo(conteudo, idPagina);
+		SwingUtilities.invokeLater(InstrucaoContainer.this::aplicarFontePreferencia);
+	}
+
+	private void aplicarFontePreferencia() {
+		Font font = InstrucaoPreferencia.getFontPreferencia();
+		if (font != null) {
+			fichario.setFontTextArea(font);
+		}
 	}
 
 	@Override
@@ -173,7 +182,9 @@ public class InstrucaoContainer extends AbstratoContainer {
 
 		private void alterar(Font font, String nome) {
 			if (font != null) {
-				fichario.setFontTextArea(new Font(nome, font.getStyle(), font.getSize()));
+				Font nova = new Font(nome, font.getStyle(), font.getSize());
+				fichario.setFontTextArea(nova);
+				InstrucaoPreferencia.setFontPreferencia(nova);
 			}
 		}
 
