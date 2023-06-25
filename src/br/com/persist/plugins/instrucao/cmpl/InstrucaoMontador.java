@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.cmpl;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -42,8 +43,10 @@ public class InstrucaoMontador {
 				metodo.print(pw);
 			}
 		}
+		List<Atom> all = new ArrayList<>(atoms);
+		all.addAll(lexico.getComentarios());
 		if (ref != null) {
-			ref.set(atoms);
+			ref.set(all);
 		}
 		return true;
 	}

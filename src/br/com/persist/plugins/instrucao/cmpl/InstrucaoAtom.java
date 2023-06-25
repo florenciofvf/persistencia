@@ -7,12 +7,18 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoAtom {
+	private final List<Atom> comentarios;
 	private final String string;
 	private int indice;
 
 	public InstrucaoAtom(String string) {
+		comentarios = new ArrayList<>();
 		this.string = string.trim();
 		indice = 0;
+	}
+
+	public List<Atom> getComentarios() {
+		return comentarios;
 	}
 
 	private Atom throwInstrucaoException() throws InstrucaoException {
@@ -217,7 +223,7 @@ public class InstrucaoAtom {
 	private Atom infixaDivOrComentario(char c, int index) throws InstrucaoException {
 		if (indiceAtualEh('*')) {
 			indice++;
-			return atomComentario(index + 1);
+			return atomComentario(index + 2);
 		}
 		return new Atom(c, Atom.FUNCAO_INFIXA, index);
 	}
@@ -375,6 +381,8 @@ public class InstrucaoAtom {
 		while (atom != null) {
 			if (!atom.isComentario()) {
 				lista.add(atom);
+			} else {
+				comentarios.add(atom);
 			}
 			atom = proximoAtom();
 		}

@@ -16,6 +16,7 @@ public class InstrucaoCor {
 	private final MutableAttributeSet attBlack;
 	private final MutableAttributeSet attGreen;
 	private final MutableAttributeSet attBlue;
+	private final MutableAttributeSet attPink;
 	private final MutableAttributeSet attRed2;
 	private final MutableAttributeSet attRed;
 
@@ -25,20 +26,23 @@ public class InstrucaoCor {
 		attBlack = new SimpleAttributeSet();
 		attGreen = new SimpleAttributeSet();
 		attBlue = new SimpleAttributeSet();
+		attPink = new SimpleAttributeSet();
 		attRed2 = new SimpleAttributeSet();
 		attRed = new SimpleAttributeSet();
 		StyleConstants.setForeground(attGreen, new Color(0, 125, 0));
-		StyleConstants.setForeground(attGreen2, new Color(0, 62, 0));
 		StyleConstants.setForeground(attRed2, new Color(125, 0, 0));
 		StyleConstants.setForeground(attMagenta, Color.MAGENTA);
+		StyleConstants.setForeground(attGreen2, Color.GREEN);
 		StyleConstants.setForeground(attBlack, Color.BLACK);
 		StyleConstants.setForeground(attBlue, Color.BLUE);
+		StyleConstants.setForeground(attPink, Color.PINK);
 		StyleConstants.setForeground(attRed, Color.RED);
 		StyleConstants.setBold(attMagenta, true);
 		StyleConstants.setBold(attGreen2, true);
 		StyleConstants.setBold(attBlack, true);
 		StyleConstants.setBold(attGreen, true);
 		StyleConstants.setBold(attBlue, true);
+		StyleConstants.setBold(attPink, true);
 		StyleConstants.setBold(attRed2, true);
 		StyleConstants.setBold(attRed, true);
 	}
@@ -47,6 +51,8 @@ public class InstrucaoCor {
 		for (Atom atom : atoms) {
 			if (stringReservada(atom.getValor())) {
 				set(doc, atom, attRed2);
+			} else if (atom.isBigInteger() || atom.isBigDecimal()) {
+				set(doc, atom, attPink);
 			} else if (atom.isFuncaoInfixa()) {
 				set(doc, atom, attRed);
 			} else if (atom.isComentario()) {
