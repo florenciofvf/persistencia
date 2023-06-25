@@ -62,6 +62,6 @@ public class InstrucaoCor {
 	}
 
 	private void set(StyledDocument doc, Atom atom, MutableAttributeSet att) {
-		doc.setParagraphAttributes(atom.getIndice(), atom.getValor().length(), att, true);
+		doc.setCharacterAttributes(atom.getIndice(), atom.getValor().length(), att, true);
 	}
 }

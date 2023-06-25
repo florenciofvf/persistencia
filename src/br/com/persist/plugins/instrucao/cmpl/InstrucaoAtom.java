@@ -117,7 +117,7 @@ public class InstrucaoAtom {
 			indice++;
 			return atomNumero(c, indice - 1);
 		default:
-			return criarStringAtom(c, indice - 1);
+			return criarStringAtom(c, indice);
 		}
 	}
 
