@@ -12,31 +12,33 @@ import br.com.persist.plugins.instrucao.cmpl.Atom;
 
 public class InstrucaoCor {
 	private final MutableAttributeSet attMagenta;
+	private final MutableAttributeSet attGreen2;
 	private final MutableAttributeSet attBlack;
 	private final MutableAttributeSet attGreen;
-	private final MutableAttributeSet attGray;
 	private final MutableAttributeSet attBlue;
 	private final MutableAttributeSet attRed2;
 	private final MutableAttributeSet attRed;
 
 	public InstrucaoCor() {
 		attMagenta = new SimpleAttributeSet();
+		attGreen2 = new SimpleAttributeSet();
 		attBlack = new SimpleAttributeSet();
 		attGreen = new SimpleAttributeSet();
-		attGray = new SimpleAttributeSet();
 		attBlue = new SimpleAttributeSet();
 		attRed2 = new SimpleAttributeSet();
 		attRed = new SimpleAttributeSet();
 		StyleConstants.setForeground(attGreen, new Color(0, 125, 0));
+		StyleConstants.setForeground(attGreen2, new Color(0, 62, 0));
 		StyleConstants.setForeground(attRed2, new Color(125, 0, 0));
 		StyleConstants.setForeground(attMagenta, Color.MAGENTA);
 		StyleConstants.setForeground(attBlack, Color.BLACK);
 		StyleConstants.setForeground(attBlue, Color.BLUE);
-		StyleConstants.setForeground(attGray, Color.GRAY);
 		StyleConstants.setForeground(attRed, Color.RED);
 		StyleConstants.setBold(attMagenta, true);
+		StyleConstants.setBold(attGreen2, true);
 		StyleConstants.setBold(attBlack, true);
 		StyleConstants.setBold(attGreen, true);
+		StyleConstants.setBold(attBlue, true);
 		StyleConstants.setBold(attRed2, true);
 		StyleConstants.setBold(attRed, true);
 	}
@@ -45,8 +47,14 @@ public class InstrucaoCor {
 		for (Atom atom : atoms) {
 			if (stringReservada(atom.getValor())) {
 				set(doc, atom, attRed2);
+			} else if (atom.isFuncaoInfixa()) {
+				set(doc, atom, attRed);
+			} else if (atom.isComentario()) {
+				set(doc, atom, attGreen2);
 			} else if (atom.isVariavel()) {
 				set(doc, atom, attMagenta);
+			} else if (atom.isVirgula()) {
+				set(doc, atom, attBlack);
 			} else if (atom.isString()) {
 				set(doc, atom, attBlue);
 			} else if (atom.isParam()) {

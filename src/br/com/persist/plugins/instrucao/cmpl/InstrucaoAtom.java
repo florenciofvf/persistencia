@@ -52,7 +52,7 @@ public class InstrucaoAtom {
 		switch (c) {
 		case '\'':
 			indice++;
-			return atomString(indice - 1);
+			return atomString(indice);
 		case '$':
 			indice++;
 			return atomParam(c, indice - 1);
@@ -217,7 +217,7 @@ public class InstrucaoAtom {
 	private Atom infixaDivOrComentario(char c, int index) throws InstrucaoException {
 		if (indiceAtualEh('*')) {
 			indice++;
-			return atomComentario(index);
+			return atomComentario(index + 1);
 		}
 		return new Atom(c, Atom.FUNCAO_INFIXA, index);
 	}
