@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
@@ -42,9 +43,11 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
+import br.com.persist.plugins.instrucao.cmpl.Atom;
 import br.com.persist.plugins.instrucao.cmpl.InstrucaoMontador;
 
 public class InstrucaoPagina extends Panel {
+	private final transient InstrucaoCor instrucaoCor = new InstrucaoCor();
 	private final PainelResultado painelResultado = new PainelResultado();
 	public final JTextPane textArea = new JTextPane();
 	private static final long serialVersionUID = 1L;
@@ -151,9 +154,13 @@ public class InstrucaoPagina extends Panel {
 			String biblioteca = file.getName();
 			try {
 				InstrucaoContainer.PROCESSADOR.excluirBiblioteca(biblioteca);
-				boolean resp = InstrucaoMontador.compilar(biblioteca);
+				AtomicReference<List<Atom>> ref = new AtomicReference<>();
+				boolean resp = InstrucaoMontador.compilar(biblioteca, ref);
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
+				if (resp) {
+					instrucaoCor.processar(textArea.getStyledDocument(), ref.get());
+				}
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
 			}

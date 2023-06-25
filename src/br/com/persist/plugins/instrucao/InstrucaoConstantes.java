@@ -8,12 +8,14 @@ public class InstrucaoConstantes {
 	public static final String LABEL_INSTRUCAO_MIN = "label.instrucao_min";
 	public static final String PAINEL_INSTRUCAO = "PAINEL INSTRUCAO";
 	public static final String LABEL_INSTRUCAO = "label.instrucao";
+	public static final String FUNCAO_NATIVA = "funcao_nativa";
 	public static final String PREFIXO_METODO_NATIVO = "@@@";
 	public static final String PREFIXO_INSTRUCAO = "$$";
 	public static final String INSTRUCAO = "instrucao";
 	public static final String IGNORADOS = "ignorados";
 	public static final String PREFIXO_METODO = "@@";
 	public static final String PREFIXO_PARAM = "##";
+	public static final String FUNCAO = "funcao";
 	public static final String ESPACO = " ";
 
 	public static final String PUSH_BIG_INTEGER = "push_big_integer";

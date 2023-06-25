@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -14,7 +15,8 @@ public class InstrucaoMontador {
 	private InstrucaoMontador() {
 	}
 
-	public static boolean compilar(String arquivo) throws IOException, InstrucaoException {
+	public static boolean compilar(String arquivo, AtomicReference<List<Atom>> ref)
+			throws IOException, InstrucaoException {
 		File file = new File(CacheBiblioteca.ROOT, arquivo);
 		if (!file.isFile()) {
 			return false;
@@ -39,6 +41,9 @@ public class InstrucaoMontador {
 				pw.println();
 				metodo.print(pw);
 			}
+		}
+		if (ref != null) {
+			ref.set(atoms);
 		}
 		return true;
 	}

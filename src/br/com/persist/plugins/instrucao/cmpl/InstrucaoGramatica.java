@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoGramatica {
@@ -50,14 +51,14 @@ public class InstrucaoGramatica {
 			return null;
 		}
 		Atom atom = getAtom();
-		if ("funcao_nativa".equals(atom.getValor())) {
+		if (InstrucaoConstantes.FUNCAO_NATIVA.equals(atom.getValor())) {
 			indice++;
 			String biblioNativa = getBiblioNativa();
 			Metodo metodo = criarMetodo();
 			metodo.setBiblioNativa(biblioNativa);
 			metodo.setNativo(true);
 			return metodo;
-		} else if ("funcao".equals(atom.getValor())) {
+		} else if (InstrucaoConstantes.FUNCAO.equals(atom.getValor())) {
 			indice++;
 			Metodo metodo = criarMetodo();
 			for (Atom a : getAtoms()) {

@@ -19,20 +19,26 @@ public class Atom {
 
 	private boolean processado;
 	private final String valor;
+	private final int indice;
 	private final int tipo;
 	private boolean negar;
 
-	public Atom(String valor, int tipo) {
+	public Atom(String valor, int tipo, int indice) {
 		this.valor = Objects.requireNonNull(valor);
+		this.indice = indice;
 		this.tipo = tipo;
 	}
 
-	public Atom(char c, int tipo) {
-		this("" + c, tipo);
+	public Atom(char c, int tipo, int indice) {
+		this("" + c, tipo, indice);
 	}
 
 	public String getValor() {
 		return valor;
+	}
+
+	public int getIndice() {
+		return indice;
 	}
 
 	public int getTipo() {

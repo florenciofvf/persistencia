@@ -52,58 +52,58 @@ public class InstrucaoAtom {
 		switch (c) {
 		case '\'':
 			indice++;
-			return atomString();
+			return atomString(indice - 1);
 		case '$':
 			indice++;
-			return atomParam(c);
+			return atomParam(c, indice - 1);
 		case '#':
 			indice++;
-			return atomVariavel(c);
+			return atomVariavel(c, indice - 1);
 		case '(':
 			indice++;
-			return new Atom(c, Atom.PARENTESE_INI);
+			return new Atom(c, Atom.PARENTESE_INI, indice - 1);
 		case ')':
 			indice++;
-			return new Atom(c, Atom.PARENTESE_FIM);
+			return new Atom(c, Atom.PARENTESE_FIM, indice - 1);
 		case '{':
 			indice++;
-			return new Atom(c, Atom.CHAVE_INI);
+			return new Atom(c, Atom.CHAVE_INI, indice - 1);
 		case '}':
 			indice++;
-			return new Atom(c, Atom.CHAVE_FIM);
+			return new Atom(c, Atom.CHAVE_FIM, indice - 1);
 		case ',':
 			indice++;
-			return new Atom(c, Atom.VIRGULA);
+			return new Atom(c, Atom.VIRGULA, indice - 1);
 		case '+':
 		case '-':
 		case '%':
 		case '^':
 			indice++;
-			return new Atom(c, Atom.FUNCAO_INFIXA);
+			return new Atom(c, Atom.FUNCAO_INFIXA, indice - 1);
 		case '*':
 			indice++;
-			return infixaMulOrPow(c);
+			return infixaMulOrPow(c, indice - 1);
 		case '/':
 			indice++;
-			return infixaDivOrComentario(c);
+			return infixaDivOrComentario(c, indice - 1);
 		case '=':
 			indice++;
-			return infixaIgual();
+			return infixaIgual(indice - 1);
 		case '!':
 			indice++;
-			return infixaDiferente();
+			return infixaDiferente(indice - 1);
 		case '<':
 			indice++;
-			return infixaMenor(c);
+			return infixaMenor(c, indice - 1);
 		case '>':
 			indice++;
-			return infixaMaior(c);
+			return infixaMaior(c, indice - 1);
 		case '&':
 			indice++;
-			return infixaAnd();
+			return infixaAnd(indice - 1);
 		case '|':
 			indice++;
-			return infixaOr();
+			return infixaOr(indice - 1);
 		case '0':
 		case '1':
 		case '2':
@@ -115,13 +115,13 @@ public class InstrucaoAtom {
 		case '8':
 		case '9':
 			indice++;
-			return atomNumero(c);
+			return atomNumero(c, indice - 1);
 		default:
-			return criarStringAtom(c);
+			return criarStringAtom(c, indice - 1);
 		}
 	}
 
-	private Atom atomString() throws InstrucaoException {
+	private Atom atomString(int index) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder();
 		boolean escapeAtivado = false;
 		boolean encerrado = false;
@@ -152,7 +152,7 @@ public class InstrucaoAtom {
 			throwInstrucaoException();
 		}
 		indice++;
-		return new Atom(sb.toString(), Atom.STRING);
+		return new Atom(sb.toString(), Atom.STRING, index);
 	}
 
 	private void appendC(StringBuilder sb, char c) {
@@ -171,7 +171,7 @@ public class InstrucaoAtom {
 		}
 	}
 
-	private Atom atomVariavel(char d) {
+	private Atom atomVariavel(char d, int index) {
 		StringBuilder sb = new StringBuilder("" + d);
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
@@ -183,7 +183,7 @@ public class InstrucaoAtom {
 			indice++;
 		}
 		String sequencia = sb.toString();
-		return new Atom(sequencia, Atom.VARIAVEL);
+		return new Atom(sequencia, Atom.VARIAVEL, index);
 	}
 
 	private boolean validoChar2(char c) {
@@ -191,7 +191,7 @@ public class InstrucaoAtom {
 				|| c == '#';
 	}
 
-	private Atom atomParam(char d) {
+	private Atom atomParam(char d, int index) {
 		StringBuilder sb = new StringBuilder("" + d);
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
@@ -203,26 +203,26 @@ public class InstrucaoAtom {
 			indice++;
 		}
 		String sequencia = sb.toString();
-		return new Atom(sequencia, Atom.PARAM);
+		return new Atom(sequencia, Atom.PARAM, index);
 	}
 
-	private Atom infixaMulOrPow(char c) {
+	private Atom infixaMulOrPow(char c, int index) {
 		if (indiceAtualEh('*')) {
 			indice++;
-			return new Atom("**", Atom.FUNCAO_INFIXA);
+			return new Atom("**", Atom.FUNCAO_INFIXA, index);
 		}
-		return new Atom(c, Atom.FUNCAO_INFIXA);
+		return new Atom(c, Atom.FUNCAO_INFIXA, index);
 	}
 
-	private Atom infixaDivOrComentario(char c) throws InstrucaoException {
+	private Atom infixaDivOrComentario(char c, int index) throws InstrucaoException {
 		if (indiceAtualEh('*')) {
 			indice++;
-			return atomComentario();
+			return atomComentario(index);
 		}
-		return new Atom(c, Atom.FUNCAO_INFIXA);
+		return new Atom(c, Atom.FUNCAO_INFIXA, index);
 	}
 
-	private Atom atomComentario() throws InstrucaoException {
+	private Atom atomComentario(int index) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder();
 		boolean encerrado = false;
 		char anterior = ' ';
@@ -242,58 +242,58 @@ public class InstrucaoAtom {
 			throwInstrucaoException();
 		}
 		indice++;
-		return new Atom(sb.toString(), Atom.COMENTARIO);
+		return new Atom(sb.toString(), Atom.COMENTARIO, index);
 	}
 
-	private Atom infixaIgual() throws InstrucaoException {
+	private Atom infixaIgual(int index) throws InstrucaoException {
 		if (indiceAtualEh('=')) {
 			indice++;
-			return new Atom("==", Atom.FUNCAO_INFIXA);
+			return new Atom("==", Atom.FUNCAO_INFIXA, index);
 		}
 		return throwInstrucaoException();
 	}
 
-	private Atom infixaDiferente() throws InstrucaoException {
+	private Atom infixaDiferente(int index) throws InstrucaoException {
 		if (indiceAtualEh('=')) {
 			indice++;
-			return new Atom("!=", Atom.FUNCAO_INFIXA);
+			return new Atom("!=", Atom.FUNCAO_INFIXA, index);
 		}
 		return throwInstrucaoException();
 	}
 
-	private Atom infixaMenor(char c) {
+	private Atom infixaMenor(char c, int index) {
 		if (indiceAtualEh('=')) {
 			indice++;
-			return new Atom("<=", Atom.FUNCAO_INFIXA);
+			return new Atom("<=", Atom.FUNCAO_INFIXA, index);
 		}
-		return new Atom(c, Atom.FUNCAO_INFIXA);
+		return new Atom(c, Atom.FUNCAO_INFIXA, index);
 	}
 
-	private Atom infixaMaior(char c) {
+	private Atom infixaMaior(char c, int index) {
 		if (indiceAtualEh('=')) {
 			indice++;
-			return new Atom(">=", Atom.FUNCAO_INFIXA);
+			return new Atom(">=", Atom.FUNCAO_INFIXA, index);
 		}
-		return new Atom(c, Atom.FUNCAO_INFIXA);
+		return new Atom(c, Atom.FUNCAO_INFIXA, index);
 	}
 
-	private Atom infixaAnd() throws InstrucaoException {
+	private Atom infixaAnd(int index) throws InstrucaoException {
 		if (indiceAtualEh('&')) {
 			indice++;
-			return new Atom("&&", Atom.FUNCAO_INFIXA);
+			return new Atom("&&", Atom.FUNCAO_INFIXA, index);
 		}
 		return throwInstrucaoException();
 	}
 
-	private Atom infixaOr() throws InstrucaoException {
+	private Atom infixaOr(int index) throws InstrucaoException {
 		if (indiceAtualEh('|')) {
 			indice++;
-			return new Atom("||", Atom.FUNCAO_INFIXA);
+			return new Atom("||", Atom.FUNCAO_INFIXA, index);
 		}
 		return throwInstrucaoException();
 	}
 
-	private Atom atomNumero(char d) throws InstrucaoException {
+	private Atom atomNumero(char d, int index) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder("" + d);
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
@@ -307,9 +307,9 @@ public class InstrucaoAtom {
 		String sequencia = sb.toString();
 		if (sequencia.indexOf('.') != -1) {
 			checarBigDecimal(sequencia);
-			return new Atom(sequencia, Atom.BIG_DECIMAL);
+			return new Atom(sequencia, Atom.BIG_DECIMAL, index);
 		} else {
-			return new Atom(sequencia, Atom.BIG_INTEGER);
+			return new Atom(sequencia, Atom.BIG_INTEGER, index);
 		}
 	}
 
@@ -325,15 +325,15 @@ public class InstrucaoAtom {
 		}
 	}
 
-	private Atom criarStringAtom(char c) throws InstrucaoException {
+	private Atom criarStringAtom(char c, int index) throws InstrucaoException {
 		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
 			indice++;
-			return stringAtom(c);
+			return stringAtom(c, index);
 		}
 		return throwInstrucaoException();
 	}
 
-	private Atom stringAtom(char d) throws InstrucaoException {
+	private Atom stringAtom(char d, int index) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder("" + d);
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
@@ -347,9 +347,9 @@ public class InstrucaoAtom {
 		String sequencia = sb.toString();
 		checarStringAtom(sequencia);
 		if (sequencia.indexOf(".#") != -1) {
-			return new Atom(sequencia, Atom.VARIAVEL);
+			return new Atom(sequencia, Atom.VARIAVEL, index);
 		}
-		return new Atom(sequencia, Atom.STRING_ATOM);
+		return new Atom(sequencia, Atom.STRING_ATOM, index);
 	}
 
 	private boolean validoChar(char c) {
@@ -509,16 +509,16 @@ public class InstrucaoAtom {
 
 	private void negarAtom(int i, AtomIndice atomIndice, final List<Atom> lista) throws InstrucaoException {
 		Atom atom = lista.get(i);
-		Atom novo = inverter(atom, i);
+		Atom novo = inverter(atom);
 		lista.set(i, novo);
 		lista.remove(atomIndice.indice);
 	}
 
-	private Atom inverter(Atom atom, int indice) throws InstrucaoException {
+	private Atom inverter(Atom atom) throws InstrucaoException {
 		if (atom.isBigInteger()) {
-			return new Atom("-" + atom.getValor(), Atom.BIG_INTEGER);
+			return new Atom("-" + atom.getValor(), Atom.BIG_INTEGER, atom.getIndice() - 1);
 		} else if (atom.isBigDecimal()) {
-			return new Atom("-" + atom.getValor(), Atom.BIG_DECIMAL);
+			return new Atom("-" + atom.getValor(), Atom.BIG_DECIMAL, atom.getIndice() - 1);
 		}
 		return throwInstrucaoException();
 	}
