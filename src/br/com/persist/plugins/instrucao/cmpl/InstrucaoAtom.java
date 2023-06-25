@@ -13,7 +13,7 @@ public class InstrucaoAtom {
 
 	public InstrucaoAtom(String string) {
 		comentarios = new ArrayList<>();
-		this.string = string.trim();
+		this.string = string;
 		indice = 0;
 	}
 

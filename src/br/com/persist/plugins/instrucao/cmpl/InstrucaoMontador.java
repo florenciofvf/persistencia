@@ -1,7 +1,9 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class InstrucaoMontador {
 		if (!file.isFile()) {
 			return false;
 		}
-		String script = Util.conteudo(file);
+		String script = conteudo(file);
 		if (Util.estaVazio(script)) {
 			return false;
 		}
@@ -49,5 +51,20 @@ public class InstrucaoMontador {
 			ref.set(all);
 		}
 		return true;
+	}
+
+	public static String conteudo(File file) throws IOException {
+		if (file != null && file.exists()) {
+			StringBuilder sb = new StringBuilder();
+			try (InputStream is = new FileInputStream(file)) {
+				int i = is.read();
+				while (i != -1) {
+					sb.append((char) i);
+					i = is.read();
+				}
+			}
+			return sb.toString();
+		}
+		return "";
 	}
 }
