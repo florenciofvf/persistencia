@@ -92,6 +92,8 @@ public class InstrucaoGramatica {
 		if (atomPrefixo == null) {
 			return atomValor;
 		}
+		atomValor.setLengthOffset(1);
+		atomValor.setIndice(atomPrefixo.getIndice());
 		return new Atom(atomPrefixo.getValor() + atomValor.getValor(), atomValor.getTipo(), atomPrefixo.getIndice());
 	}
 

@@ -19,9 +19,10 @@ public class Atom {
 
 	private boolean processado;
 	private final String valor;
-	private final int indice;
+	private int lengthOffset;
 	private final int tipo;
 	private boolean negar;
+	private int indice;
 
 	public Atom(String valor, int tipo, int indice) {
 		this.valor = Objects.requireNonNull(valor);
@@ -37,12 +38,24 @@ public class Atom {
 		return valor;
 	}
 
+	public void setIndice(int indice) {
+		this.indice = indice;
+	}
+
 	public int getIndice() {
 		return indice;
 	}
 
 	public int getTipo() {
 		return tipo;
+	}
+
+	public int getLengthOffset() {
+		return lengthOffset;
+	}
+
+	public void setLengthOffset(int lengthOffset) {
+		this.lengthOffset = lengthOffset;
 	}
 
 	public boolean isFuncaoInfixa() {
