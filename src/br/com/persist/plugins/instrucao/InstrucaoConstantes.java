@@ -9,6 +9,7 @@ public class InstrucaoConstantes {
 	public static final String PAINEL_INSTRUCAO = "PAINEL INSTRUCAO";
 	public static final String LABEL_INSTRUCAO = "label.instrucao";
 	public static final String FUNCAO_NATIVA = "funcao_nativa";
+	public static final String DEC_VARIAVEL = "dec_variavel";
 	public static final String PREFIXO_METODO_NATIVO = "@@@";
 	public static final String PREFIXO_INSTRUCAO = "$$";
 	public static final String INSTRUCAO = "instrucao";

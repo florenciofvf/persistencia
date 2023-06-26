@@ -36,16 +36,13 @@ public class InstrucaoMontador {
 			return false;
 		}
 		InstrucaoGramatica gramatica = new InstrucaoGramatica(atoms);
-		List<Metodo> metodos = gramatica.montarMetodos();
-		if (metodos.isEmpty()) {
+		Biblio biblio = gramatica.montarBiblio();
+		if (biblio.isEmpty()) {
 			return false;
 		}
 		File destino = new File(CacheBiblioteca.ROOT, arquivo + Biblioteca.EXTENSAO);
 		try (PrintWriter pw = new PrintWriter(destino)) {
-			for (Metodo metodo : metodos) {
-				pw.println();
-				metodo.print(pw);
-			}
+			biblio.print(pw);
 		}
 		List<Atom> all = new ArrayList<>(atoms);
 		all.addAll(lexico.getComentarios());

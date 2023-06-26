@@ -71,8 +71,8 @@ public class InstrucaoCor {
 
 	private boolean stringReservada(String string) {
 		return InstrucaoConstantes.FUNCAO_NATIVA.equals(string) || InstrucaoConstantes.FUNCAO.equals(string)
-				|| InstrucaoConstantes.IF.equals(string) || InstrucaoConstantes.VAR.equals(string)
-				|| InstrucaoConstantes.VAL.equals(string);
+				|| InstrucaoConstantes.DEC_VARIAVEL.equals(string) || InstrucaoConstantes.IF.equals(string)
+				|| InstrucaoConstantes.VAR.equals(string) || InstrucaoConstantes.VAL.equals(string);
 	}
 
 	private void set(StyledDocument doc, Atom atom, MutableAttributeSet att) {

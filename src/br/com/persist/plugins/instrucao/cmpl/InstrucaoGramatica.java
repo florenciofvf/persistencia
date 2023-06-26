@@ -30,20 +30,15 @@ public class InstrucaoGramatica {
 		throw new InstrucaoException(sb.toString(), false);
 	}
 
-	public List<Metodo> montarMetodos() throws InstrucaoException {
-		List<Metodo> metodos = new ArrayList<>();
+	public Biblio montarBiblio() throws InstrucaoException {
+		Biblio biblio = new Biblio();
 		Metodo metodo = getMetodo();
 		while (metodo != null) {
-			metodos.add(metodo);
+			biblio.add(metodo);
 			metodo = getMetodo();
 		}
-		for (Metodo met : metodos) {
-			met.montarEstrutura();
-		}
-		for (Metodo met : metodos) {
-			met.finalizar();
-		}
-		return metodos;
+		biblio.montarMetodos();
+		return biblio;
 	}
 
 	private Metodo getMetodo() throws InstrucaoException {
@@ -65,8 +60,51 @@ public class InstrucaoGramatica {
 				metodo.addAtom(a);
 			}
 			return metodo;
+		} else if (InstrucaoConstantes.DEC_VARIAVEL.equals(atom.getValor())) {
+			indice++;
+			Atom atomNomeVar = getAtom();
+			if (!atomNomeVar.isVariavel()) {
+				return throwInstrucaoException();
+			}
+			indice++;
+			Atom atomValor = getAtom();
+			Atom atomPrefixo = null;
+			if ("+".equals(atomValor.getValor()) || "-".equals(atomValor.getValor())) {
+				atomPrefixo = atomValor;
+				indice++;
+				atomValor = getAtom();
+			}
+			if (!atomico(atomValor)) {
+				return throwInstrucaoException();
+			}
+			checarPrefixo(atomPrefixo, atomValor);
+			indice++;
+			Metodo metodo = new Metodo(null);
+			metodo.setAtomNomeVar(atomNomeVar);
+			metodo.setAtomValorVar(mergear(atomPrefixo, atomValor));
+			return metodo;
 		} else {
 			return throwInstrucaoException();
+		}
+	}
+
+	private Atom mergear(Atom atomPrefixo, Atom atomValor) {
+		if (atomPrefixo == null) {
+			return atomValor;
+		}
+		return new Atom(atomPrefixo.getValor() + atomValor.getValor(), atomValor.getTipo(), atomPrefixo.getIndice());
+	}
+
+	private boolean atomico(Atom atom) {
+		return atom.isBigInteger() || atom.isBigDecimal() || atom.isString();
+	}
+
+	private void checarPrefixo(Atom atomPrefixo, Atom atom) throws InstrucaoException {
+		if (atomPrefixo != null && atomPrefixo.getValor().length() > 0 && atom.isString()) {
+			throwInstrucaoException();
+		}
+		if (atomPrefixo != null && atomPrefixo.getIndice() + 1 != atom.getIndice()) {
+			throwInstrucaoException();
 		}
 	}
 

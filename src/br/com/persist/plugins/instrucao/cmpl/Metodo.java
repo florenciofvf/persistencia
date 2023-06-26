@@ -14,6 +14,8 @@ public class Metodo {
 	private final List<Atom> atoms;
 	private String biblioNativa;
 	private final String nome;
+	private Atom atomValorVar;
+	private Atom atomNomeVar;
 	private boolean nativo;
 	private No no;
 
@@ -39,6 +41,22 @@ public class Metodo {
 		if (no instanceof Param) {
 			parametros.add(no);
 		}
+	}
+
+	public Atom getAtomValorVar() {
+		return atomValorVar;
+	}
+
+	public void setAtomValorVar(Atom atomValorVar) {
+		this.atomValorVar = atomValorVar;
+	}
+
+	public Atom getAtomNomeVar() {
+		return atomNomeVar;
+	}
+
+	public void setAtomNomeVar(Atom atomNomeVar) {
+		this.atomNomeVar = atomNomeVar;
 	}
 
 	public String getNome() {
