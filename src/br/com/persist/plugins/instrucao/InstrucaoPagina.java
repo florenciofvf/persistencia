@@ -11,11 +11,8 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -221,16 +218,9 @@ public class InstrucaoPagina extends Panel {
 	private void abrir() {
 		textArea.setText(Constantes.VAZIO);
 		if (file.exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-				StringBuilder sb = new StringBuilder();
+			try {
 				int value = getValueScrollPane();
-				String linha = br.readLine();
-				while (linha != null) {
-					sb.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
-				textArea.setText(sb.toString());
+				textArea.setText(InstrucaoMontador.conteudo(file));
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, this);
