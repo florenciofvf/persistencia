@@ -3,8 +3,10 @@ package br.com.persist.plugins.instrucao.cmpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -56,11 +58,11 @@ public class InstrucaoMontador {
 	public static String conteudo(File file) throws IOException {
 		if (file != null && file.exists()) {
 			StringBuilder sb = new StringBuilder();
-			try (InputStream is = new FileInputStream(file)) {
-				int i = is.read();
+			try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+				int i = reader.read();
 				while (i != -1) {
 					sb.append((char) i);
-					i = is.read();
+					i = reader.read();
 				}
 			}
 			return sb.toString();
