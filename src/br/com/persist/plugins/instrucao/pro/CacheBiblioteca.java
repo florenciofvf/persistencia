@@ -1,6 +1,8 @@
 package br.com.persist.plugins.instrucao.pro;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +70,14 @@ public class CacheBiblioteca {
 					throw new InstrucaoException("erro.parametro_sem_metodo", nome, linha.substring(2));
 				}
 				metodo.addParam(linha.substring(2));
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_VAR)) {
+				String string = linha.substring(2);
+				int pos = string.indexOf(' ');
+				int pos2 = string.indexOf('&');
+				String nomeVar = string.substring(0, pos);
+				String tipoVar = string.substring(pos + 1, pos2);
+				String valor = string.substring(pos2 + 1);
+				resp.declararVariavel(nomeVar, getValor(tipoVar, valor, resp));
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_INSTRUCAO)) {
 				if (metodo == null) {
 					throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linha.substring(2));
@@ -78,6 +88,17 @@ public class CacheBiblioteca {
 			}
 		}
 		return resp;
+	}
+
+	private Object getValor(String tipoVar, String valor, Biblioteca biblio) throws InstrucaoException {
+		if (InstrucaoConstantes.STRING.equals(tipoVar)) {
+			return valor;
+		} else if (InstrucaoConstantes.BIG_INTEGER.equals(tipoVar)) {
+			return new BigInteger(valor);
+		} else if (InstrucaoConstantes.BIG_DECIMAL.equals(tipoVar)) {
+			return new BigDecimal(valor);
+		}
+		throw new InstrucaoException("erro.variavel_tipo_invalido", tipoVar, biblio.getNome());
 	}
 
 	private void addInstrucao(Metodo metodo, String string) throws InstrucaoException {

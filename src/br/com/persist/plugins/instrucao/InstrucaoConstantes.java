@@ -15,12 +15,17 @@ public class InstrucaoConstantes {
 	public static final String IGNORADOS = "ignorados";
 	public static final String PREFIXO_METODO = "@@";
 	public static final String PREFIXO_PARAM = "##";
+	public static final String PREFIXO_VAR = "%%";
 	public static final String FUNCAO = "funcao";
 	public static final String ESPACO = " ";
 
 	public static final String PUSH_BIG_INTEGER = "push_big_integer";
 	public static final String PUSH_BIG_DECIMAL = "push_big_decimal";
 	public static final String PUSH_STRING = "push_string";
+
+	public static final String BIG_INTEGER = "big_integer";
+	public static final String BIG_DECIMAL = "big_decimal";
+	public static final String STRING = "string";
 
 	public static final String DECLARE_VAR = "declare_var";
 	public static final String MODIFIC_VAR = "modific_var";
