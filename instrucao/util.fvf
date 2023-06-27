@@ -14,5 +14,5 @@
 @@@br.com.persist.plugins.instrucao.nat.Util parseBigDecimal
 ##$objeto
 
-@@@br.com.persist.plugins.instrucao.nat.Util parseString
+@@@br.com.persist.plugins.instrucao.nat.Util toString
 ##$objeto

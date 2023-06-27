@@ -42,7 +42,7 @@ public class Util {
 		return new BigDecimal(object.toString());
 	}
 
-	public static String parseString(Object object) {
+	public static String toString(Object object) {
 		return object.toString();
 	}
 }

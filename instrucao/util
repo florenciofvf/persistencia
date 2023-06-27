@@ -8,4 +8,4 @@ funcao_nativa br_com_persist_plugins_instrucao_nat_Util parseBigInteger($objeto)
 
 funcao_nativa br_com_persist_plugins_instrucao_nat_Util parseBigDecimal($objeto)
 
-funcao_nativa br_com_persist_plugins_instrucao_nat_Util parseString($objeto)
+funcao_nativa br_com_persist_plugins_instrucao_nat_Util toString($objeto)
