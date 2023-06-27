@@ -267,14 +267,14 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	@Override
-	public void copiarAnexo(AnexoTree anexoTree) {
+	public void clonarAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {
-			copiar(anexo);
+			clonar(anexo);
 		}
 	}
 
-	private void copiar(Anexo anexo) {
+	private void clonar(Anexo anexo) {
 		try {
 			String resp = Util.copiar(anexo.getFile());
 			Util.mensagem(AnexoContainer.this, resp);

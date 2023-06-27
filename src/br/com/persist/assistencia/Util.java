@@ -975,15 +975,18 @@ public class Util {
 	}
 
 	public static String copiar(File file) throws IOException {
-		if (file == null || !file.isFile()) {
-			return " >>> " + -1;
+		if (file == null) {
+			return "ARQUIVO NULL";
+		}
+		if (!file.isFile()) {
+			return "NAO EH ARQUIVO: " + file.getAbsolutePath();
 		}
 		try (FileInputStream fis = new FileInputStream(file)) {
 			File destino = gerarFileDestino(file);
 			try (FileOutputStream fos = new FileOutputStream(destino)) {
 				FileChannel fci = fis.getChannel();
 				FileChannel fco = fos.getChannel();
-				return destino.getAbsolutePath() + " byte(s) copiado(s) >>> " + fci.transferTo(0, file.length(), fco);
+				return destino.getAbsolutePath() + "TOTAL COPIADO(s): " + fci.transferTo(0, file.length(), fco);
 			}
 		}
 	}

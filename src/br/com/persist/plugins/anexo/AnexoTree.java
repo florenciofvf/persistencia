@@ -215,7 +215,7 @@ public class AnexoTree extends Tree {
 			private Action editarAcao = actionMenu("label.editar", Icones.EDIT);
 			private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
 			private Action conteudoAcao = actionMenu("label.conteudo");
-			private Action copiarAcao = Action.actionMenuCopiar();
+			private Action clonarAcao = Action.actionMenuClonar();
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {
@@ -227,12 +227,12 @@ public class AnexoTree extends Tree {
 				addMenuItem(diretorioAcao);
 				addMenuItem(conteudoAcao);
 				addSeparator();
-				addMenuItem(copiarAcao);
+				addMenuItem(clonarAcao);
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioAnexo(AnexoTree.this)));
 				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoAnexo(AnexoTree.this)));
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirAnexo(AnexoTree.this)));
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarAnexo(AnexoTree.this)));
-				copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarAnexo(AnexoTree.this)));
+				clonarAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarAnexo(AnexoTree.this)));
 				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this)));
 			}
 

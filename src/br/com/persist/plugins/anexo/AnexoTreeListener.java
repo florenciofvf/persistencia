@@ -19,7 +19,7 @@ public interface AnexoTreeListener {
 
 	public void editarAnexo(AnexoTree anexoTree);
 
-	public void copiarAnexo(AnexoTree anexoTree);
+	public void clonarAnexo(AnexoTree anexoTree);
 
 	public void abrirAnexo(AnexoTree anexoTree);
 

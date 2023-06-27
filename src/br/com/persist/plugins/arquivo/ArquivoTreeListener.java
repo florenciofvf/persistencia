@@ -17,7 +17,7 @@ public interface ArquivoTreeListener {
 
 	public void fecharArquivo(ArquivoTree arquivoTree);
 
-	public void copiarArquivo(ArquivoTree arquivoTree);
+	public void clonarArquivo(ArquivoTree arquivoTree);
 
 	public void clickArquivo(ArquivoTree arquivoTree);
 }

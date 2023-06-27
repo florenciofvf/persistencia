@@ -261,14 +261,14 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	}
 
 	@Override
-	public void copiarArquivo(ArquivoTree arquivoTree) {
+	public void clonarArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			copiar(arquivo);
+			clonar(arquivo);
 		}
 	}
 
-	private void copiar(Arquivo arquivo) {
+	private void clonar(Arquivo arquivo) {
 		try {
 			String resp = Util.copiar(arquivo.getFile());
 			Util.mensagem(ArquivoContainer.this, resp);
