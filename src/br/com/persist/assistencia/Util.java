@@ -986,7 +986,7 @@ public class Util {
 			try (FileOutputStream fos = new FileOutputStream(destino)) {
 				FileChannel fci = fis.getChannel();
 				FileChannel fco = fos.getChannel();
-				return destino.getAbsolutePath() + "TOTAL COPIADO(s): " + fci.transferTo(0, file.length(), fco);
+				return destino.getAbsolutePath() + "\nTOTAL COPIADO(s): " + fci.transferTo(0, file.length(), fco);
 			}
 		}
 	}
