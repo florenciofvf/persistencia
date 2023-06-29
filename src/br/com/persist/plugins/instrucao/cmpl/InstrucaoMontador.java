@@ -20,6 +20,10 @@ public class InstrucaoMontador {
 	private InstrucaoMontador() {
 	}
 
+	public static boolean compilar(String arquivo) throws IOException, InstrucaoException {
+		return compilar(arquivo, null);
+	}
+
 	public static boolean compilar(String arquivo, AtomicReference<List<Atom>> ref)
 			throws IOException, InstrucaoException {
 		File file = new File(CacheBiblioteca.ROOT, arquivo);
@@ -40,7 +44,10 @@ public class InstrucaoMontador {
 		if (biblio.isEmpty()) {
 			return false;
 		}
-		File destino = new File(CacheBiblioteca.ROOT, arquivo + Biblioteca.EXTENSAO);
+		if (!CacheBiblioteca.COMPILADOS.isDirectory() && !CacheBiblioteca.COMPILADOS.mkdir()) {
+			return false;
+		}
+		File destino = new File(CacheBiblioteca.COMPILADOS, arquivo + Biblioteca.EXTENSAO);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			biblio.print(pw);
 		}

@@ -13,6 +13,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class CacheBiblioteca {
 	public static final File ROOT = new File(InstrucaoConstantes.INSTRUCAO);
+	public static final File COMPILADOS = new File(ROOT, "compilados");
 	private final Map<String, Biblioteca> map;
 
 	public CacheBiblioteca() {
@@ -48,7 +49,7 @@ public class CacheBiblioteca {
 
 	private Biblioteca lerBiblioteca(String nome) throws InstrucaoException {
 		Biblioteca resp = null;
-		List<String> arquivo = ArquivoUtil.lerArquivo(new File(ROOT, nome + Biblioteca.EXTENSAO));
+		List<String> arquivo = ArquivoUtil.lerArquivo(new File(COMPILADOS, nome + Biblioteca.EXTENSAO));
 		if (arquivo.isEmpty()) {
 			return resp;
 		}
