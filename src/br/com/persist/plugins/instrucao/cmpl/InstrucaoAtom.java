@@ -428,11 +428,7 @@ public class InstrucaoAtom {
 	private void processar1(final List<Atom> lista, AtomIndice atomIndice, boolean negar, int indiceAtomAntes,
 			int indiceAtomDepois) throws InstrucaoException {
 		if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && atomNumero(indiceAtomDepois, lista)) {
-			if (negar) {
-				negarAtom(indiceAtomDepois, atomIndice, lista);
-			} else {
-				lista.remove(atomIndice.indice);
-			}
+			mergeAtom(atomIndice.indice, indiceAtomDepois, atomIndice, lista);
 		} else if (!ehOperandoCalculavel(indiceAtomAntes, lista, negar) && iniExpressao(indiceAtomDepois, lista)) {
 			checkNegarERemover(lista, atomIndice, negar, indiceAtomDepois);
 		} else {
@@ -515,18 +511,23 @@ public class InstrucaoAtom {
 		return false;
 	}
 
-	private void negarAtom(int i, AtomIndice atomIndice, final List<Atom> lista) throws InstrucaoException {
-		Atom atom = lista.get(i);
-		Atom novo = inverter(atom);
-		lista.set(i, novo);
+	private void mergeAtom(int iantes, int depois, AtomIndice atomIndice, final List<Atom> lista)
+			throws InstrucaoException {
+		Atom antes = lista.get(iantes);
+		Atom atom = lista.get(depois);
+		Atom novo = merge(antes, atom);
+		lista.set(depois, novo);
 		lista.remove(atomIndice.indice);
 	}
 
-	private Atom inverter(Atom atom) throws InstrucaoException {
+	private Atom merge(Atom antes, Atom atom) throws InstrucaoException {
+		if (antes.getIndice() + 1 != atom.getIndice()) {
+			return throwInstrucaoException();
+		}
 		if (atom.isBigInteger()) {
-			return new Atom("-" + atom.getValor(), Atom.BIG_INTEGER, atom.getIndice() - 1);
+			return new Atom(antes.getValor() + atom.getValor(), Atom.BIG_INTEGER, atom.getIndice() - 1);
 		} else if (atom.isBigDecimal()) {
-			return new Atom("-" + atom.getValor(), Atom.BIG_DECIMAL, atom.getIndice() - 1);
+			return new Atom(antes.getValor() + atom.getValor(), Atom.BIG_DECIMAL, atom.getIndice() - 1);
 		}
 		return throwInstrucaoException();
 	}
