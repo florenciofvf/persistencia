@@ -108,7 +108,8 @@ public class InstrucaoContainer extends AbstratoContainer {
 	}
 
 	private boolean vetarAdicionarPagina(File file) {
-		return ehArquivoReservadoIgnorados(file.getName()) && !InstrucaoPreferencia.isExibirArqIgnorados();
+		return file.isDirectory()
+				|| (ehArquivoReservadoIgnorados(file.getName()) && !InstrucaoPreferencia.isExibirArqIgnorados());
 	}
 
 	private void abrir(String conteudo, String idPagina) {
