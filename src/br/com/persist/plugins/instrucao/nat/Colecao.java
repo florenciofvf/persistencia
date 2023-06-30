@@ -10,6 +10,10 @@ public class Colecao {
 		return new Lista();
 	}
 
+	public static Object notContains(Object lista, Object valor) {
+		return ((Lista) lista).notContains(valor);
+	}
+
 	public static Object contains(Object lista, Object valor) {
 		return ((Lista) lista).contains(valor);
 	}
