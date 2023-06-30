@@ -1,6 +1,10 @@
 
 @@@br.com.persist.plugins.instrucao.nat.Colecao list
 
+@@@br.com.persist.plugins.instrucao.nat.Colecao notContains
+##$lista
+##$valor
+
 @@@br.com.persist.plugins.instrucao.nat.Colecao contains
 ##$lista
 ##$valor

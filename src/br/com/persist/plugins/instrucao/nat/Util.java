@@ -23,6 +23,13 @@ public class Util {
 		return object != null ? createTrue() : createFalse();
 	}
 
+	public static BigInteger stringNotEmpty(Object object) {
+		BigInteger respo = stringEmpty(object);
+		BigInteger falso = createFalse();
+		BigInteger verda = createTrue();
+		return respo.equals(verda) ? falso : verda;
+	}
+
 	public static BigInteger stringEmpty(Object object) {
 		if (object == null) {
 			return createTrue();

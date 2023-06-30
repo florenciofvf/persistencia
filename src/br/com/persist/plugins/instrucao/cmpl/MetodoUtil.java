@@ -123,8 +123,8 @@ class MetodoUtil {
 			novaInfixa.add(operandoDireito);
 			infixa.add(novaInfixa);
 		} else {
-			No ultimoParam = noAtivado.excluirUltimoNo();
-			novaInfixa.add(ultimoParam);
+			No ultimoNo = noAtivado.excluirUltimoNo();
+			novaInfixa.add(ultimoNo);
 			noAtivado.add(novaInfixa);
 		}
 		pilhaNo.push(novaInfixa);

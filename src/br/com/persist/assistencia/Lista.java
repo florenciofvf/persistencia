@@ -52,6 +52,13 @@ public class Lista {
 		return BigInteger.valueOf(1);
 	}
 
+	public BigInteger notContains(Object o) {
+		BigInteger respo = contains(o);
+		BigInteger falso = createFalse();
+		BigInteger verda = createTrue();
+		return respo.equals(verda) ? falso : verda;
+	}
+
 	public BigInteger contains(Object o) {
 		if (comprimento.intValue() == 0) {
 			return createFalse();

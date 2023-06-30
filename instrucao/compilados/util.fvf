@@ -8,6 +8,9 @@
 @@@br.com.persist.plugins.instrucao.nat.Util stringEmpty
 ##$objeto
 
+@@@br.com.persist.plugins.instrucao.nat.Util stringNotEmpty
+##$objeto
+
 @@@br.com.persist.plugins.instrucao.nat.Util parseBigInteger
 ##$objeto
 
