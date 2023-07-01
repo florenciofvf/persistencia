@@ -332,7 +332,7 @@ public class InstrucaoAtom {
 				total++;
 			}
 		}
-		if (total > 1 || sequencia.endsWith(".")) {
+		if (total > 1 || sequencia.endsWith(".") || sequencia.endsWith(".D") || sequencia.endsWith(".d")) {
 			throwInstrucaoException();
 		}
 	}
