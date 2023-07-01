@@ -318,9 +318,7 @@ public class InstrucaoAtom {
 		}
 		String sequencia = sb.toString();
 		if (bigDecimal || sequencia.indexOf('.') != -1) {
-			if (!bigDecimal) {
-				checarBigDecimal(sequencia);
-			}
+			checarBigDecimal(sequencia);
 			return new Atom(sequencia, Atom.BIG_DECIMAL, index);
 		} else {
 			return new Atom(sequencia, Atom.BIG_INTEGER, index);
@@ -334,7 +332,7 @@ public class InstrucaoAtom {
 				total++;
 			}
 		}
-		if (total != 1 || sequencia.endsWith(".")) {
+		if (total > 1 || sequencia.endsWith(".")) {
 			throwInstrucaoException();
 		}
 	}
