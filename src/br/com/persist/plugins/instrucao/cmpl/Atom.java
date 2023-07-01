@@ -38,6 +38,13 @@ public class Atom {
 		return valor;
 	}
 
+	public String getValorBigDecimal() {
+		if (valor.endsWith("D") || valor.endsWith("d")) {
+			return valor.substring(0, valor.length() - 1);
+		}
+		return valor;
+	}
+
 	public void setIndice(int indice) {
 		this.indice = indice;
 	}

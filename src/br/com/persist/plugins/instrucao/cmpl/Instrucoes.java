@@ -113,7 +113,7 @@ class Push extends Comum {
 		} else if (atom.isBigInteger()) {
 			print(pw, InstrucaoConstantes.PUSH_BIG_INTEGER, atom.getValor());
 		} else if (atom.isBigDecimal()) {
-			print(pw, InstrucaoConstantes.PUSH_BIG_DECIMAL, atom.getValor());
+			print(pw, InstrucaoConstantes.PUSH_BIG_DECIMAL, atom.getValorBigDecimal());
 		} else {
 			throw new InstrucaoException(atom.getValor() + " <<< Atomico error", false);
 		}

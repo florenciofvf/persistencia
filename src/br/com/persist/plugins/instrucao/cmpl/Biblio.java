@@ -49,7 +49,7 @@ public class Biblio {
 			String nomeVar = entry.getKey();
 			Atom atomValor = entry.getValue();
 			pw.print(InstrucaoConstantes.PREFIXO_VAR + nomeVar + " ");
-			pw.println(getTipo(atomValor) + "&" + atomValor.getValor());
+			pw.println(getTipo(atomValor) + "&" + getValor(atomValor));
 		}
 		for (Metodo metodo : metodos) {
 			pw.println();
@@ -64,6 +64,17 @@ public class Biblio {
 			return InstrucaoConstantes.BIG_INTEGER;
 		} else if (atom.isBigDecimal()) {
 			return InstrucaoConstantes.BIG_DECIMAL;
+		}
+		return null;
+	}
+
+	private String getValor(Atom atom) {
+		if (atom.isString()) {
+			return atom.getValor();
+		} else if (atom.isBigInteger()) {
+			return atom.getValor();
+		} else if (atom.isBigDecimal()) {
+			return atom.getValorBigDecimal();
 		}
 		return null;
 	}
