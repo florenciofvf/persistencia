@@ -310,9 +310,17 @@ public class InstrucaoAtom {
 			}
 			indice++;
 		}
+		boolean bigDecimal = false;
+		if (indiceAtualEh('D') || indiceAtualEh('d')) {
+			appendC(sb, string.charAt(indice));
+			bigDecimal = true;
+			indice++;
+		}
 		String sequencia = sb.toString();
-		if (sequencia.indexOf('.') != -1) {
-			checarBigDecimal(sequencia);
+		if (bigDecimal || sequencia.indexOf('.') != -1) {
+			if (!bigDecimal) {
+				checarBigDecimal(sequencia);
+			}
 			return new Atom(sequencia, Atom.BIG_DECIMAL, index);
 		} else {
 			return new Atom(sequencia, Atom.BIG_INTEGER, index);
