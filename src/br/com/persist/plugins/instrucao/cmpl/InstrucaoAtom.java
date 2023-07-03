@@ -58,7 +58,7 @@ public class InstrucaoAtom {
 		switch (c) {
 		case '\'':
 			indice++;
-			return atomString(indice);
+			return atomString(indice - 1);
 		case '$':
 			indice++;
 			return atomParam(c, indice - 1);
@@ -131,6 +131,7 @@ public class InstrucaoAtom {
 		StringBuilder sb = new StringBuilder();
 		boolean escapeAtivado = false;
 		boolean encerrado = false;
+		int lengthOffset = 0;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c == '\'') {
@@ -147,6 +148,7 @@ public class InstrucaoAtom {
 					escapeAtivado = false;
 				} else {
 					escapeAtivado = true;
+					lengthOffset++;
 				}
 			} else {
 				checarEscapeAtivado(escapeAtivado);
@@ -158,7 +160,9 @@ public class InstrucaoAtom {
 			throwInstrucaoException();
 		}
 		indice++;
-		return new Atom(sb.toString(), Atom.STRING, index);
+		Atom resp = new Atom(sb.toString(), Atom.STRING, index);
+		resp.setLengthOffset(lengthOffset + 2);
+		return resp;
 	}
 
 	private void appendC(StringBuilder sb, char c) {
