@@ -19,7 +19,6 @@ public class InstrucaoCor {
 	private final MutableAttributeSet attPink;
 	private final MutableAttributeSet attRed2;
 	private final MutableAttributeSet attRed;
-	private final MutableAttributeSet plain;
 
 	public InstrucaoCor() {
 		attLightGray = new SimpleAttributeSet();
@@ -30,7 +29,6 @@ public class InstrucaoCor {
 		attPink = new SimpleAttributeSet();
 		attRed2 = new SimpleAttributeSet();
 		attRed = new SimpleAttributeSet();
-		plain = new SimpleAttributeSet();
 		StyleConstants.setForeground(attLightGray, Color.LIGHT_GRAY);
 		StyleConstants.setForeground(attGreen, new Color(0, 125, 0));
 		StyleConstants.setForeground(attRed2, new Color(125, 0, 0));
@@ -50,7 +48,6 @@ public class InstrucaoCor {
 	}
 
 	public void processar(StyledDocument doc, List<Atom> atoms) {
-		doc.setCharacterAttributes(0, doc.getLength(), plain, true);
 		for (Atom atom : atoms) {
 			if (stringReservada(atom.getValor())) {
 				set(doc, atom, attRed2);

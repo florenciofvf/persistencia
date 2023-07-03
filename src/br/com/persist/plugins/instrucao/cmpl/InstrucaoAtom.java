@@ -223,24 +223,24 @@ public class InstrucaoAtom {
 	private Atom infixaDivOrComentario(char c, int index) throws InstrucaoException {
 		if (indiceAtualEh('*')) {
 			indice++;
-			return atomComentario(index + 2);
+			return atomComentario(index);
 		}
 		return new Atom(c, Atom.FUNCAO_INFIXA, index);
 	}
 
 	private Atom atomComentario(int index) throws InstrucaoException {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("/*");
 		boolean encerrado = false;
 		char anterior = ' ';
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (anterior == '*' && c == '/') {
-				sb.delete(sb.length() - 1, sb.length());
 				encerrado = true;
+				sb.append(c);
 				break;
 			} else {
 				anterior = c;
-				appendC(sb, c);
+				sb.append(c);
 			}
 			indice++;
 		}
