@@ -14,7 +14,7 @@ import br.com.persist.assistencia.Util;
 
 public class QuebraLogModelo extends AbstractTableModel {
 	private final transient List<QuebraLog> lista = new ArrayList<>();
-	private static final String[] COLUNAS = { "NOME", "ABSOLUTE PATH", "TAMANHO" };
+	private static final String[] COLUNAS = { "NOME", "CAMINHO ABSOLUTO", "TAMANHO" };
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 

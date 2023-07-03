@@ -188,9 +188,9 @@ public class QuebraLogContainer extends AbstratoContainer {
 
 class PanelQuebraLog extends Panel {
 	private static final long serialVersionUID = 1L;
+	private Button btnDestino = new Button(QuebraLogMensagens.getString("label.diretorio_destino"), false);
+	private Button btnOrigem = new Button(QuebraLogMensagens.getString("label.arquivo_origem"), false);
 	private JTable table = new JTable(new QuebraLogModelo());
-	private Button btnDestino = new Button("label.destino");
-	private Button btnOrigem = new Button("label.origem");
 	private Button btnLimpar = new Button("label.limpar");
 	private Button btnCriar = new Button("label.criar");
 	private TextField txtDestino = new TextField();
@@ -338,7 +338,7 @@ class PanelQuebraLog extends Panel {
 	}
 
 	private void inicializar() {
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setModel(new QuebraLogModelo());
 		txtDestino.limpar();
 		txtOrigem.limpar();
