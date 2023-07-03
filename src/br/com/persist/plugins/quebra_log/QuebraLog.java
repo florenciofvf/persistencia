@@ -71,15 +71,19 @@ public class QuebraLog {
 	}
 
 	public void atualizarTamanho() {
+		tamanho = atualizarTamanho(file);
+	}
+
+	public static String atualizarTamanho(File file) {
 		long length = file.length();
 		if (length < 1024) {
-			tamanho = length + " Bytes";
+			return length + " Bytes";
 		} else if (length < 1024 * 1024) {
-			tamanho = length / 1024 + " Kilobytes";
+			return (length / 1024) + " Kilobytes";
 		} else if (length < 1024 * 1024 * 1024) {
-			tamanho = (length / 1024 / 1024) + " Megabytes";
+			return (length / 1024 / 1024) + " Megabytes";
 		} else {
-			tamanho = (length / 1024 / 1024 / 1024) + " Gigabytes";
+			return (length / 1024 / 1024 / 1024) + " Gigabytes";
 		}
 	}
 }

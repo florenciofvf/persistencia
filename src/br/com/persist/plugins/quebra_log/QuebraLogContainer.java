@@ -5,6 +5,7 @@ import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
@@ -196,6 +197,7 @@ class PanelQuebraLog extends Panel {
 	private TextField txtDestino = new TextField();
 	private TextField txtOrigem = new TextField();
 	private TextField txtTotal = new TextField(5);
+	private final Label labelStatus = new Label();
 
 	PanelQuebraLog() {
 		montarLayout();
@@ -226,6 +228,9 @@ class PanelQuebraLog extends Panel {
 
 		add(BorderLayout.NORTH, panelNorte);
 		add(BorderLayout.CENTER, new JScrollPane(table));
+		add(BorderLayout.SOUTH, labelStatus);
+		labelStatus.setForeground(Color.BLUE);
+		labelStatus.modoCopiar();
 	}
 
 	private void configurar() {
@@ -248,6 +253,7 @@ class PanelQuebraLog extends Panel {
 			if (i == JFileChooser.APPROVE_OPTION) {
 				File sel = fileChooser.getSelectedFile();
 				txtOrigem.setText(sel.getAbsolutePath());
+				info(sel);
 			}
 		});
 		btnDestino.addActionListener(e -> {
@@ -340,7 +346,30 @@ class PanelQuebraLog extends Panel {
 	private void inicializar() {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setModel(new QuebraLogModelo());
+		labelStatus.limpar();
 		txtDestino.limpar();
 		txtOrigem.limpar();
+	}
+
+	private void info(File file) {
+		if (file == null) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("EXISTS?=" + file.exists());
+		sb.append(", FILE?=" + file.isFile());
+		sb.append(", DIRECTORY?=" + file.isDirectory());
+		sb.append(", BYTES=" + file.length());
+		sb.append(", HIDDEN?=" + file.isHidden());
+		sb.append(", CAN READ?=" + file.canRead());
+		sb.append(", CAN WRITE?=" + file.canWrite());
+		sb.append(", LAST MODIFIED=" + file.lastModified());
+		sb.append(", SIZE=" + QuebraLog.atualizarTamanho(file));
+		labelStatus.setText(sb.toString());
+
+		if (Util.estaVazio(txtDestino.getText())) {
+			txtDestino.setText(file.getParent());
+		}
 	}
 }
