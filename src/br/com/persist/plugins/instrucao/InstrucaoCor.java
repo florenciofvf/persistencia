@@ -11,6 +11,7 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.plugins.instrucao.cmpl.Atom;
 
 public class InstrucaoCor {
+	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
 	private final MutableAttributeSet attLightGray;
 	private final MutableAttributeSet attMagenta;
 	private final MutableAttributeSet attBlack;
@@ -77,5 +78,9 @@ public class InstrucaoCor {
 
 	private void set(StyledDocument doc, Atom atom, MutableAttributeSet att) {
 		doc.setCharacterAttributes(atom.getIndice(), atom.getValor().length() + atom.getLengthOffset(), att, true);
+	}
+
+	public static void clearAttr(StyledDocument doc) {
+		doc.setCharacterAttributes(0, doc.getLength(), PLAIN, true);
 	}
 }

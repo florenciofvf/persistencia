@@ -222,6 +222,7 @@ public class InstrucaoPagina extends Panel {
 				int value = getValueScrollPane();
 				textArea.setText(InstrucaoMontador.conteudo(file));
 				setValueScrollPane(value);
+				InstrucaoCor.clearAttr(textArea.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, this);
 			}
