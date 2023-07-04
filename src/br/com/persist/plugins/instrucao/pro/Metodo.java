@@ -90,7 +90,7 @@ public class Metodo {
 		return parametros.get(indice).valor;
 	}
 
-	public Object getValorParam(String nome) {
+	public Object getValorParam(String nome) throws InstrucaoException {
 		int pos = getIndiceParam(nome);
 		return getValorParam(pos);
 	}
@@ -99,13 +99,13 @@ public class Metodo {
 		return parametros.size();
 	}
 
-	private int getIndiceParam(String nome) {
+	private int getIndiceParam(String nome) throws InstrucaoException {
 		for (int i = 0; i < parametros.size(); i++) {
 			if (parametros.get(i).nome.equals(nome)) {
 				return i;
 			}
 		}
-		return -1;
+		throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, biblioteca.getNome());
 	}
 
 	public void addInstrucao(Instrucao instrucao) throws InstrucaoException {
