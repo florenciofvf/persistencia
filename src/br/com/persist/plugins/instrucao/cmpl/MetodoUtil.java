@@ -80,6 +80,10 @@ class MetodoUtil {
 			If se = new If();
 			pilhaNo.add(se);
 			pilhaNo.push(se);
+		} else if (InstrucaoConstantes.TAIL_CALL.equals(nomeInvoke)) {
+			TailCall tailCall = new TailCall();
+			pilhaNo.add(tailCall);
+			pilhaNo.push(tailCall);
 		} else if (InstrucaoConstantes.VAR.equals(nomeInvoke)) {
 			indice++;
 			Atom atomVar = getAtom(indice);
@@ -132,7 +136,8 @@ class MetodoUtil {
 
 	private void processoVirgula(int indice) throws InstrucaoException {
 		No no = pilhaNo.ref();
-		if ((no instanceof Invoke) || (no instanceof If) || (no instanceof DeclareVar) || (no instanceof ModificVar)) {
+		if ((no instanceof Invoke) || (no instanceof If) || (no instanceof DeclareVar) || (no instanceof ModificVar)
+				|| (no instanceof TailCall)) {
 			return;
 		}
 		throwInstrucaoException(indice);

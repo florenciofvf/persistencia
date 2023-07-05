@@ -252,6 +252,42 @@ class Invoke extends No {
 	}
 }
 
+class TailCall extends No {
+	public TailCall() {
+		super(InstrucaoConstantes.TAIL_CALL);
+	}
+
+	@Override
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		for (No no : nos) {
+			no.normalizarEstrutura(metodo);
+		}
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		for (No no : nos) {
+			no.indexar(atomic);
+		}
+		indice = atomic.getAndIncrement();
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		for (No no : nos) {
+			no.configurarDesvio();
+		}
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		for (No no : nos) {
+			no.print(pw);
+		}
+		print(pw, nome);
+	}
+}
+
 class Expression extends No {
 	final Atom atom;
 	Neg neg;

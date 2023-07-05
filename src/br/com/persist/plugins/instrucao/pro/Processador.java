@@ -32,6 +32,7 @@ import br.com.persist.plugins.instrucao.inst.PushSTR;
 import br.com.persist.plugins.instrucao.inst.Rem;
 import br.com.persist.plugins.instrucao.inst.Return;
 import br.com.persist.plugins.instrucao.inst.Sub;
+import br.com.persist.plugins.instrucao.inst.TailCall;
 import br.com.persist.plugins.instrucao.inst.Xor;
 
 public class Processador {
@@ -109,6 +110,7 @@ public class Processador {
 		Instrucoes.add(new Rem(null));
 		Instrucoes.add(new Return(null));
 		Instrucoes.add(new Sub(null));
+		Instrucoes.add(new TailCall(null));
 		Instrucoes.add(new Xor(null));
 	}
 }

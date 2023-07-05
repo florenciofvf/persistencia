@@ -70,7 +70,7 @@ public class Invoke extends Instrucao {
 		}
 	}
 
-	private void setParametros(Metodo metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
+	static void setParametros(Metodo metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
 		List<Integer> params = listaParam(metodo);
 		for (int i = params.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
@@ -78,7 +78,7 @@ public class Invoke extends Instrucao {
 		}
 	}
 
-	private List<Integer> listaParam(Metodo metodo) {
+	static List<Integer> listaParam(Metodo metodo) {
 		List<Integer> resp = new ArrayList<>();
 		for (int i = 0; i < metodo.getTotalParam(); i++) {
 			resp.add(i);
@@ -105,7 +105,7 @@ public class Invoke extends Instrucao {
 		}
 	}
 
-	private String stringPilhaMetodo(Metodo metodo, PilhaMetodo pilhaMetodo) throws InstrucaoException {
+	static String stringPilhaMetodo(Metodo metodo, PilhaMetodo pilhaMetodo) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder(metodo.toString() + "\n");
 		while (!pilhaMetodo.isEmpty()) {
 			sb.append(pilhaMetodo.pop() + "\n");
