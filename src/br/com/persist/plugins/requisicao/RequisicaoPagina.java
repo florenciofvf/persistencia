@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -679,14 +680,13 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Formatador.setTabHabilitado(salvarFormatado);
 				String string = req.getString();
 				Formatador.setTabHabilitado(bkp);
-				try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-					pw.println(textArea.getText());
+				try {
 					if (salvarFormatado) {
-						pw.print(string);
+						appendString(file, string);
 					} else {
 						string = Util.replaceAll(string, "\n", Constantes.VAZIO);
 						string = Util.replaceAll(string, "\r", Constantes.VAZIO);
-						pw.print(string);
+						appendString(file, string);
 					}
 					atomic.set(true);
 				} catch (Exception ex) {
@@ -695,6 +695,14 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			} else {
 				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
+		}
+	}
+
+	private void appendString(File file, String string) throws IOException {
+		string = Constantes.QL2 + string;
+		try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+			raf.seek(raf.length());
+			raf.writeBytes(string);
 		}
 	}
 
