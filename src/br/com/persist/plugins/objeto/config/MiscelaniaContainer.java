@@ -54,8 +54,9 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	private void chave(StringBuilder builder) {
-		Map<String, List<String>> campoNomes = ObjetoUtil.criarMapaCampoNomes(!Util.estaVazio(objeto.getChaveamento())
-				? objeto.getChaveamento() : ObjetoMensagens.getString("hint.chaveamento"));
+		Map<String, List<String>> campoNomes = ObjetoUtil
+				.criarMapaCampoNomes(!Util.estaVazio(objeto.getChaveamento()) ? objeto.getChaveamento()
+						: ObjetoMensagens.getString("hint.chaveamento"));
 		int i = 0;
 		for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
 			String chave = entry.getKey();
@@ -70,8 +71,9 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	private void mapa(StringBuilder builder) {
-		Map<String, String> campoChave = ObjetoUtil.criarMapaCampoChave(!Util.estaVazio(objeto.getMapeamento())
-				? objeto.getMapeamento() : ObjetoMensagens.getString("hint.mapeamento"));
+		Map<String, String> campoChave = ObjetoUtil
+				.criarMapaCampoChave(!Util.estaVazio(objeto.getMapeamento()) ? objeto.getMapeamento()
+						: ObjetoMensagens.getString("hint.mapeamento"));
 		int i = 0;
 		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
 			String chave = entry.getKey();

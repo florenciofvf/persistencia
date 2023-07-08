@@ -29,6 +29,7 @@ import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -854,7 +855,7 @@ public class ObjetoContainer extends Panel {
 		Dimension largura = new Dimension(150, 0);
 		Panel linha = new Panel();
 		Label label = new Label(rotulo, chaveRotulo);
-		label.setHorizontalAlignment(Label.RIGHT);
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setPreferredSize(largura);
 		label.setMinimumSize(largura);
 		label.setMaximumSize(largura);
