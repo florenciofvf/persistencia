@@ -255,7 +255,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		private void destacarObjetos() {
 			if (Util.estaVazio(txtDestacaObjeto.getText())) {
-				objetoSuperficie.desativarObjetos();
+				ObjetoSuperficieUtil.desativarObjetos(objetoSuperficie);
 			} else {
 				objetoSuperficie.ativarObjetos(txtDestacaObjeto.getText());
 			}

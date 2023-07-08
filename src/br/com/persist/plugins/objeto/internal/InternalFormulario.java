@@ -35,6 +35,7 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -287,7 +288,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public List<Objeto> objetosComTabela() {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				return ((ObjetoSuperficie) desktop).objetosComTabela();
+				return ObjetoSuperficieUtil.objetosComTabela((ObjetoSuperficie) desktop);
 			}
 			return new ArrayList<>();
 		}

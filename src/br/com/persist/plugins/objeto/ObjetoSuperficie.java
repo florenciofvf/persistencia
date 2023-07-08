@@ -305,10 +305,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	void desativarObjetos() {
-		ObjetoSuperficieUtil.desativarObjetos(this);
-	}
-
 	private transient javax.swing.Action macroLista = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
@@ -386,14 +382,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public List<Objeto> getSelecionados() {
 		return ObjetoSuperficieUtil.getSelecionados(this);
-	}
-
-	public List<Objeto> objetosComTabela() {
-		return ObjetoSuperficieUtil.objetosComTabela(this);
-	}
-
-	public List<String> getListaStringIds() {
-		return ObjetoSuperficieUtil.getListaStringIds(this);
 	}
 
 	public JComboBox<Objeto> criarComboObjetosSel() {
@@ -2099,7 +2087,7 @@ class SuperficiePopup extends Popup {
 
 		private void inverterPosicao() {
 			if (superficie.selecionadoObjeto != null) {
-				List<String> list = superficie.getListaStringIds();
+				List<String> list = ObjetoSuperficieUtil.getListaStringIds(superficie);
 				list.remove(superficie.selecionadoObjeto.getId());
 				if (list.isEmpty()) {
 					return;
