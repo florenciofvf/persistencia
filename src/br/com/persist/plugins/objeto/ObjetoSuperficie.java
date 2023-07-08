@@ -850,8 +850,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					conexao = container.getConexaoPadrao();
 				}
 				if (Util.estaVazio(objeto.getArquivo())) {
-					Frame frame = container.getFrame();
-					formularioDados(conexao, objeto, frame);
+					criarExternalFormulario(conexao, objeto);
 				} else {
 					abrirArquivo(conexao, objeto, interno);
 				}
@@ -879,13 +878,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			}
 		}
 		return null;
-	}
-
-	private void formularioDados(Conexao conexao, Objeto objeto, Frame frame) {
-		setComplemento(conexao, objeto);
-		AtomicReference<Formulario> ref = new AtomicReference<>();
-		setFormulario(ref);
-		ExternalFormulario.criar(ref.get(), conexao, objeto);
 	}
 
 	public Formulario getFormulario() {
@@ -1506,8 +1498,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 		private void abrirObjeto(Objeto objeto) {
 			Conexao conexao = container.getConexaoPadrao();
-			Frame frame = container.getFrame();
-			formularioDados(conexao, objeto, frame);
+			criarExternalFormulario(conexao, objeto);
 		}
 
 		private void selecionarRelacao(Objeto objeto) {
@@ -2037,6 +2028,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 						sleep(ObjetoPreferencia.getIntervaloComparacao());
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("TOTAL", ex, ObjetoSuperficie.this);
+						Thread.currentThread().interrupt();
 					}
 				}
 			}
@@ -2125,6 +2117,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 						sleep(ObjetoPreferencia.getIntervaloComparacao());
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("RECENTE", ex, ObjetoSuperficie.this);
+						Thread.currentThread().interrupt();
 					}
 				}
 			}
