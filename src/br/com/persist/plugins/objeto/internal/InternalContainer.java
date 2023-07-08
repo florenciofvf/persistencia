@@ -2414,7 +2414,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void processarMapaReferencia(Map<String, Object> mapaRef) {
 					Boolean erro = (Boolean) mapaRef.get(ObjetoConstantes.ERROR);
-					if (erro || mapaRef.get(VinculoHandler.PESQUISA) == null || mapaRef.get("ref") == null) {
+					if (erro.booleanValue() || mapaRef.get(VinculoHandler.PESQUISA) == null
+							|| mapaRef.get("ref") == null) {
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
