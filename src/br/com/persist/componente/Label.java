@@ -48,18 +48,18 @@ public class Label extends JLabel {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					if (e.isPopupTrigger()) {
-						showPopup(e);
+						showPopup();
 					}
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					if (e.isPopupTrigger()) {
-						showPopup(e);
+						showPopup();
 					}
 				}
 
-				private void showPopup(MouseEvent e) {
+				private void showPopup() {
 					if (popup != null) {
 						popup.show(Label.this, 5, 5);
 					}
