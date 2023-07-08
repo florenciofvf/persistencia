@@ -325,7 +325,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public void salvarVinculacao(Vinculacao vinculacao) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).salvarVinculacao(vinculacao);
+				ObjetoSuperficieUtil.salvarVinculacao((ObjetoSuperficie) desktop, vinculacao);
 			}
 		}
 	};

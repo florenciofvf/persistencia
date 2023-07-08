@@ -58,6 +58,7 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
@@ -173,7 +174,7 @@ public class ObjetoContainer extends Panel {
 			}
 			processar1(para);
 			processar2(para);
-			objetoSuperficie.salvarVinculacao(vinculacao);
+			salvarVinculacao(vinculacao);
 		}
 
 		void processar1(ParaTabela para) {
@@ -1051,7 +1052,7 @@ public class ObjetoContainer extends Panel {
 					vinculacao.putParaTabela(para);
 				}
 				para.setCorFonte(colorChooser.getColor());
-				objetoSuperficie.salvarVinculacao(vinculacao);
+				salvarVinculacao(vinculacao);
 			}
 
 			@Override
@@ -1182,8 +1183,12 @@ public class ObjetoContainer extends Panel {
 				vinculacao.putParaTabela(para);
 			}
 			para.setIcone(objeto.getIcone());
-			objetoSuperficie.salvarVinculacao(vinculacao);
+			salvarVinculacao(vinculacao);
 		}
+	}
+
+	private void salvarVinculacao(Vinculacao vinculacao) {
+		ObjetoSuperficieUtil.salvarVinculacao(objetoSuperficie, vinculacao);
 	}
 
 	Action acaoMenu(String chave, Icon icon) {

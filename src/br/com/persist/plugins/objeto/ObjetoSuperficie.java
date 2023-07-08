@@ -1169,10 +1169,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
 	}
 
-	public void salvarVinculacao(Vinculacao vinculacao) {
-		vinculacao.salvar(arquivoVinculo, ObjetoSuperficie.this);
-	}
-
 	public Vinculacao getVinculacao() throws XMLException {
 		return getVinculacao(arquivoVinculo, false);
 	}
@@ -2754,7 +2750,7 @@ class ExportacaoImportacao {
 			Pesquisa pesq = ref.inverter();
 			superficie.vinculacao.adicionarPesquisa(pesq);
 		}
-		superficie.salvarVinculacao(superficie.vinculacao);
+		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
 	}
 
 	private void salvar(List<Pesquisa> listaRef) {
@@ -2771,7 +2767,7 @@ class ExportacaoImportacao {
 				superficie.vinculacao.adicionarPesquisa(invertido);
 			}
 		}
-		superficie.salvarVinculacao(superficie.vinculacao);
+		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
 	}
 }
 
