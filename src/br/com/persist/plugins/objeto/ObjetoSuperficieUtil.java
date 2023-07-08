@@ -163,4 +163,44 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
+	public static int getIndice(ObjetoSuperficie superficie, Objeto obj) {
+		if (obj != null) {
+			for (int i = 0; i < superficie.objetos.length; i++) {
+				if (superficie.objetos[i] == obj || superficie.objetos[i].equals(obj)) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	public static int getIndice(ObjetoSuperficie superficie, Relacao obj) {
+		if (obj != null) {
+			for (int i = 0; i < superficie.relacoes.length; i++) {
+				if (superficie.relacoes[i] == obj || superficie.relacoes[i].equals(obj)) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	public static boolean contemObjetoComTabela(ObjetoSuperficie superficie, String nomeTabela) {
+		for (Objeto objeto : superficie.objetos) {
+			if (objeto.getTabela().equalsIgnoreCase(nomeTabela)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean contemReferencia(ObjetoSuperficie superficie, Objeto objeto) {
+		for (Objeto obj : superficie.objetos) {
+			if (obj == objeto) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

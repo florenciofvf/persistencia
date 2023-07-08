@@ -1004,34 +1004,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public int getIndice(Objeto obj) {
-		if (obj != null) {
-			for (int i = 0; i < objetos.length; i++) {
-				if (objetos[i] == obj || objetos[i].equals(obj)) {
-					return i;
-				}
-			}
-		}
-		return -1;
+		return ObjetoSuperficieUtil.getIndice(this, obj);
 	}
 
 	public int getIndice(Relacao obj) {
-		if (obj != null) {
-			for (int i = 0; i < relacoes.length; i++) {
-				if (relacoes[i] == obj || relacoes[i].equals(obj)) {
-					return i;
-				}
-			}
-		}
-		return -1;
+		return ObjetoSuperficieUtil.getIndice(this, obj);
 	}
 
 	public boolean contemObjetoComTabela(String nomeTabela) {
-		for (Objeto objeto : objetos) {
-			if (objeto.getTabela().equalsIgnoreCase(nomeTabela)) {
-				return true;
-			}
-		}
-		return false;
+		return ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela);
 	}
 
 	@Override
@@ -1063,12 +1044,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	@Override
 	protected boolean contemReferencia(Objeto objeto) {
-		for (Objeto obj : objetos) {
-			if (obj == objeto) {
-				return true;
-			}
-		}
-		return false;
+		return ObjetoSuperficieUtil.contemReferencia(this, objeto);
 	}
 
 	public void limpar() {
