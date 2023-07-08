@@ -100,15 +100,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private final transient Linha linha = new Linha();
 	private static final long serialVersionUID = 1L;
 	private final transient Area area = new Area();
-	SuperficiePopup popup = new SuperficiePopup();
-	private transient Relacao selecionadoRelacao;
-	private transient Objeto selecionadoObjeto;
 	private transient Relacao[] relacoes;
+	transient Relacao selecionadoRelacao;
+	transient Objeto selecionadoObjeto;
 	final ObjetoContainer container;
 	private transient Thread thread;
 	private boolean validoArrastar;
 	private String arquivoVinculo;
 	final SuperficiePopup2 popup2;
+	final SuperficiePopup popup;
 	final Formulario formulario;
 	transient Objeto[] objetos;
 	private boolean processar;
@@ -121,6 +121,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		super(true);
 		configEstado(ObjetoConstantes.SELECAO);
 		popup2 = new SuperficiePopup2(this);
+		popup = new SuperficiePopup(this);
 		this.formulario = formulario;
 		this.container = container;
 		configurar();
@@ -327,7 +328,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	private transient javax.swing.Action macro = new AbstractAction() {
+	transient javax.swing.Action macro = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -1216,313 +1217,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		repaint();
 	}
 
-	private class SuperficiePopup extends Popup {
-		private Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
-		private Action excluirAcao = acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
-		private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
-		private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
-		private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
-		private MenuItem itemPartir = new MenuItem(new PartirAcao());
-		private Action relacoesAcao = actionMenu("label.relacoes");
-		private MenuDestacar menuDestacar = new MenuDestacar();
-		private MenuCircular menuCircular = new MenuCircular();
-		private Action dadosAcao = actionMenu("label.dados");
-		private MenuItem itemDados = new MenuItem(dadosAcao);
-		private static final long serialVersionUID = 1L;
-
-		private SuperficiePopup() {
-			add(menuAlinhamento);
-			add(true, menuDistribuicao);
-			addMenuItem(true, copiarAcao);
-			add(true, menuDestacar);
-			add(true, menuCircular);
-			addMenuItem(true, excluirAcao);
-			add(true, itemPartir);
-			add(true, itemDados);
-			addMenuItem(true, relacoesAcao);
-			addMenuItem(true, configuracaoAcao);
-			eventos();
-		}
-
-		private class MenuAlinhamento extends Menu {
-			private static final long serialVersionUID = 1L;
-
-			private MenuAlinhamento() {
-				super("label.alinhamento");
-				add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
-				add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
-			}
-		}
-
-		private class AlinhamentoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-			private final boolean horizontal;
-
-			private AlinhamentoAcao(boolean horizontal, String chave) {
-				super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
-				this.horizontal = horizontal;
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (selecionadoObjeto != null) {
-					MacroProvedor.limpar();
-					if (horizontal) {
-						MacroProvedor.yLocal(selecionadoObjeto.y);
-					} else {
-						MacroProvedor.xLocal(selecionadoObjeto.x);
-					}
-					macro.actionPerformed(null);
-				}
-			}
-		}
-
-		private class MenuDistribuicao extends Menu {
-			Action inverterAcao = acaoMenu("label.inverter_posicao");
-			private static final long serialVersionUID = 1L;
-
-			private MenuDistribuicao() {
-				super("label.distribuicao");
-				add(new MenuItem(new DistribuicaoAcao(true, "label.horizontal")));
-				add(new MenuItem(new DistribuicaoAcao(false, "label.vertical")));
-				addMenuItem(true, inverterAcao);
-				inverterAcao.setActionListener(e -> inverterPosicao());
-			}
-
-			private void inverterPosicao() {
-				if (selecionadoObjeto != null) {
-					List<String> list = getListaStringIds();
-					list.remove(selecionadoObjeto.getId());
-					if (list.isEmpty()) {
-						return;
-					}
-					list.sort(Collator.getInstance());
-					Coletor coletor = new Coletor();
-					SetLista.view(selecionadoObjeto.getId(), list, coletor, ObjetoSuperficie.this,
-							new SetLista.Config(true, true));
-					if (coletor.size() == 1) {
-						Objeto outro = getObjeto(coletor.get(0));
-						selecionadoObjeto.inverterPosicao(outro);
-						ObjetoSuperficie.this.repaint();
-					}
-				}
-			}
-		}
-
-		private class DistribuicaoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-			private final boolean horizontal;
-
-			private DistribuicaoAcao(boolean horizontal, String chave) {
-				super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
-				this.horizontal = horizontal;
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (selecionadoObjeto != null) {
-					List<Objeto> lista = getSelecionados();
-					if (lista.size() < 3) {
-						return;
-					}
-					Collections.sort(lista, new Compara());
-					if (horizontal) {
-						int totalDifX = lista.get(lista.size() - 1).x - lista.get(0).x;
-						int fragmentoX = totalDifX / (lista.size() - 1);
-						int x = lista.get(0).x;
-						for (int i = 1; i < lista.size(); i++) {
-							Objeto objeto = lista.get(i);
-							x += fragmentoX;
-							objeto.x = x;
-						}
-					} else {
-						int totalDifY = lista.get(lista.size() - 1).y - lista.get(0).y;
-						int fragmentoY = totalDifY / (lista.size() - 1);
-						int y = lista.get(0).y;
-						for (int i = 1; i < lista.size(); i++) {
-							Objeto objeto = lista.get(i);
-							y += fragmentoY;
-							objeto.y = y;
-						}
-					}
-					ObjetoSuperficie.this.repaint();
-				}
-			}
-
-			private class Compara implements Comparator<Objeto> {
-				@Override
-				public int compare(Objeto o1, Objeto o2) {
-					return horizontal ? o1.x - o2.x : o1.y - o2.y;
-				}
-			}
-		}
-
-		private class MenuCircular extends Menu {
-			private Action exportacaoAcao = actionMenu("label.exportacao");
-			private Action importacaoAcao = actionMenu("label.importacao");
-			private Action normalAcao = actionMenu("label.normal");
-			private static final long serialVersionUID = 1L;
-
-			private MenuCircular() {
-				super(Constantes.LABEL_CIRCULAR);
-				addMenuItem(exportacaoAcao);
-				addMenuItem(importacaoAcao);
-				addMenuItem(normalAcao);
-				exportacaoAcao.setActionListener(e -> abrirModal(Tipo.EXPORTACAO));
-				importacaoAcao.setActionListener(e -> abrirModal(Tipo.IMPORTACAO));
-				normalAcao.setActionListener(e -> abrirModal(Tipo.NORMAL));
-			}
-
-			private void abrirModal(Tipo tipo) {
-				if (getSelecionados().size() > Constantes.UM) {
-					CircularDialogo.criar(container.getFrame(), ObjetoSuperficie.this, tipo);
-				}
-			}
-		}
-
-		private class MenuDestacar extends MenuPadrao1 {
-			Action proprioAcao = acaoMenu("label.proprio_container");
-			Action desktopAcao = Action.actionMenuDesktop();
-			private static final long serialVersionUID = 1L;
-
-			private MenuDestacar() {
-				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
-				addMenuItem(desktopAcao);
-				addMenuItem(true, proprioAcao);
-				formularioAcao.setActionListener(
-						e -> destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, null));
-				ficharioAcao.setActionListener(
-						e -> destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_FICHARIO, null));
-				desktopAcao.setActionListener(
-						e -> destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_DESKTOP, null));
-				proprioAcao.setActionListener(e -> destacarProprioContainer());
-				formularioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_formulario"));
-				ficharioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_fichario"));
-				desktopAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_desktop"));
-			}
-
-			private void destacarProprioContainer() {
-				List<Objeto> lista = getSelecionados();
-				if (getContinua(lista)) {
-					String ajustes = nomeObjetosAjusteAuto(lista);
-					if (!Util.estaVazio(ajustes) && !Util.confirmar(ObjetoSuperficie.this,
-							ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {
-						return;
-					}
-					destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
-				}
-			}
-
-			private String nomeObjetosAjusteAuto(List<Objeto> lista) {
-				StringBuilder sb = new StringBuilder();
-				for (Objeto objeto : lista) {
-					if (objeto.isAjusteAutoForm()) {
-						if (sb.length() > 0) {
-							sb.append(Constantes.QL + ",");
-						}
-						sb.append(objeto.getId());
-					}
-				}
-				return sb.toString();
-			}
-		}
-
-		private void eventos() {
-			dadosAcao.setActionListener(e -> {
-				Object object = itemDados.getObject();
-				if (object instanceof Objeto) {
-					abrirObjeto((Objeto) object);
-				}
-			});
-			excluirAcao.setActionListener(e -> excluirSelecionados());
-			relacoesAcao.setActionListener(e -> {
-				if (selecionadoObjeto != null) {
-					selecionarRelacao(selecionadoObjeto);
-				}
-			});
-			configuracaoAcao.setActionListener(e -> {
-				Frame frame = container.getFrame();
-				if (selecionadoObjeto != null) {
-					ObjetoDialogo.criar(frame, ObjetoSuperficie.this, selecionadoObjeto);
-				} else if (selecionadoRelacao != null) {
-					RelacaoDialogo.criar(frame, ObjetoSuperficie.this, selecionadoRelacao);
-				}
-			});
-			copiarAcao.setActionListener(e -> CopiarColar.copiar(ObjetoSuperficie.this));
-		}
-
-		private void abrirObjeto(Objeto objeto) {
-			Conexao conexao = container.getConexaoPadrao();
-			criarExternalFormulario(conexao, objeto);
-		}
-
-		private void selecionarRelacao(Objeto objeto) {
-			List<Relacao> lista = getRelacoes(objeto);
-			List<String> ids = montarIds(lista, objeto);
-			if (!ids.isEmpty()) {
-				Coletor coletor = new Coletor();
-				SetLista.view(objeto.getId(), ids, coletor, ObjetoSuperficie.this, new SetLista.Config(true, true));
-				if (coletor.size() == 1) {
-					selecionadoObjeto = null;
-					String id = coletor.get(0);
-					Objeto outro = getObjeto(id);
-					selecionadoRelacao = getRelacao(objeto, outro);
-					popup.configuracaoAcao.actionPerformed(null);
-				}
-			}
-		}
-
-		private List<String> montarIds(List<Relacao> lista, Objeto objeto) {
-			List<String> resp = new ArrayList<>();
-			for (Relacao rel : lista) {
-				if (rel.getOrigem().equals(objeto)) {
-					resp.add(rel.getDestino().getId());
-				} else if (rel.getDestino().equals(objeto)) {
-					resp.add(rel.getOrigem().getId());
-				}
-			}
-			return resp;
-		}
-
-		private void preShow(boolean objetoSelecionado) {
-			itemDados.setEnabled(
-					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela()));
-			itemDados.setObject(itemDados.isEnabled() ? selecionadoObjeto : null);
-			menuDistribuicao.setEnabled(objetoSelecionado);
-			menuAlinhamento.setEnabled(objetoSelecionado);
-			relacoesAcao.setEnabled(objetoSelecionado);
-			menuDestacar.setEnabled(objetoSelecionado);
-			menuCircular.setEnabled(objetoSelecionado);
-			itemPartir.setEnabled(!objetoSelecionado);
-			copiarAcao.setEnabled(objetoSelecionado);
-		}
-
-		private class PartirAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			private PartirAcao() {
-				super(true, ObjetoMensagens.getString("label.partir"), false, Icones.PARTIR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (selecionadoRelacao != null) {
-					Objeto novo = selecionadoRelacao.criarObjetoMeio();
-					Objeto destino = selecionadoRelacao.getDestino();
-					Objeto origem = selecionadoRelacao.getOrigem();
-					checagemId(novo, Constantes.VAZIO, Constantes.VAZIO);
-					addObjeto(novo);
-					selecionadoRelacao.setSelecionado(false);
-					excluir(selecionadoRelacao);
-					selecionadoRelacao = null;
-					addRelacao(new Relacao(origem, false, novo, false));
-					addRelacao(new Relacao(novo, false, destino, false));
-					ObjetoSuperficie.this.repaint();
-				}
-			}
-		}
-	}
-
 	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 	}
@@ -1793,7 +1487,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		referencia.setProcessado(true);
 	}
 
-	private void criarExternalFormulario(Conexao conexao, Objeto objeto) {
+	void criarExternalFormulario(Conexao conexao, Objeto objeto) {
 		setComplemento(conexao, objeto);
 		AtomicReference<Formulario> ref = new AtomicReference<>();
 		setFormulario(ref);
@@ -2411,7 +2105,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private boolean getContinua(List<Objeto> lista) {
+	boolean getContinua(List<Objeto> lista) {
 		for (Objeto objeto : lista) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				return true;
@@ -2420,7 +2114,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return false;
 	}
 
-	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
+	void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
 		List<Objeto> lista = getSelecionados();
 		if (getContinua(lista)) {
 			List<Objeto> selecionados = montarSelecionados(lista,
@@ -2954,5 +2648,315 @@ class SuperficiePopup2 extends Popup {
 					+ ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
 		}
 		Util.mensagem(superficie.formulario, sb.toString());
+	}
+}
+
+class SuperficiePopup extends Popup {
+	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
+	Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
+	private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
+	private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
+	private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
+	private MenuItem itemPartir = new MenuItem(new PartirAcao());
+	private Action relacoesAcao = actionMenu("label.relacoes");
+	private MenuDestacar menuDestacar = new MenuDestacar();
+	private MenuCircular menuCircular = new MenuCircular();
+	private Action dadosAcao = actionMenu("label.dados");
+	private MenuItem itemDados = new MenuItem(dadosAcao);
+	private static final long serialVersionUID = 1L;
+	final ObjetoSuperficie superficie;
+
+	SuperficiePopup(ObjetoSuperficie superficie) {
+		this.superficie = superficie;
+		add(menuAlinhamento);
+		add(true, menuDistribuicao);
+		addMenuItem(true, copiarAcao);
+		add(true, menuDestacar);
+		add(true, menuCircular);
+		addMenuItem(true, excluirAcao);
+		add(true, itemPartir);
+		add(true, itemDados);
+		addMenuItem(true, relacoesAcao);
+		addMenuItem(true, configuracaoAcao);
+		eventos();
+	}
+
+	private class MenuAlinhamento extends Menu {
+		private static final long serialVersionUID = 1L;
+
+		private MenuAlinhamento() {
+			super("label.alinhamento");
+			add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
+			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
+		}
+	}
+
+	private class AlinhamentoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+		private final boolean horizontal;
+
+		private AlinhamentoAcao(boolean horizontal, String chave) {
+			super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
+			this.horizontal = horizontal;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (superficie.selecionadoObjeto != null) {
+				MacroProvedor.limpar();
+				if (horizontal) {
+					MacroProvedor.yLocal(superficie.selecionadoObjeto.y);
+				} else {
+					MacroProvedor.xLocal(superficie.selecionadoObjeto.x);
+				}
+				superficie.macro.actionPerformed(null);
+			}
+		}
+	}
+
+	private class MenuDistribuicao extends Menu {
+		Action inverterAcao = ObjetoSuperficie.acaoMenu("label.inverter_posicao");
+		private static final long serialVersionUID = 1L;
+
+		private MenuDistribuicao() {
+			super("label.distribuicao");
+			add(new MenuItem(new DistribuicaoAcao(true, "label.horizontal")));
+			add(new MenuItem(new DistribuicaoAcao(false, "label.vertical")));
+			addMenuItem(true, inverterAcao);
+			inverterAcao.setActionListener(e -> inverterPosicao());
+		}
+
+		private void inverterPosicao() {
+			if (superficie.selecionadoObjeto != null) {
+				List<String> list = superficie.getListaStringIds();
+				list.remove(superficie.selecionadoObjeto.getId());
+				if (list.isEmpty()) {
+					return;
+				}
+				list.sort(Collator.getInstance());
+				Coletor coletor = new Coletor();
+				SetLista.view(superficie.selecionadoObjeto.getId(), list, coletor, superficie,
+						new SetLista.Config(true, true));
+				if (coletor.size() == 1) {
+					Objeto outro = superficie.getObjeto(coletor.get(0));
+					superficie.selecionadoObjeto.inverterPosicao(outro);
+					superficie.repaint();
+				}
+			}
+		}
+	}
+
+	private class DistribuicaoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+		private final boolean horizontal;
+
+		private DistribuicaoAcao(boolean horizontal, String chave) {
+			super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
+			this.horizontal = horizontal;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (superficie.selecionadoObjeto != null) {
+				List<Objeto> lista = superficie.getSelecionados();
+				if (lista.size() < 3) {
+					return;
+				}
+				Collections.sort(lista, new Compara());
+				if (horizontal) {
+					int totalDifX = lista.get(lista.size() - 1).x - lista.get(0).x;
+					int fragmentoX = totalDifX / (lista.size() - 1);
+					int x = lista.get(0).x;
+					for (int i = 1; i < lista.size(); i++) {
+						Objeto objeto = lista.get(i);
+						x += fragmentoX;
+						objeto.x = x;
+					}
+				} else {
+					int totalDifY = lista.get(lista.size() - 1).y - lista.get(0).y;
+					int fragmentoY = totalDifY / (lista.size() - 1);
+					int y = lista.get(0).y;
+					for (int i = 1; i < lista.size(); i++) {
+						Objeto objeto = lista.get(i);
+						y += fragmentoY;
+						objeto.y = y;
+					}
+				}
+				superficie.repaint();
+			}
+		}
+
+		private class Compara implements Comparator<Objeto> {
+			@Override
+			public int compare(Objeto o1, Objeto o2) {
+				return horizontal ? o1.x - o2.x : o1.y - o2.y;
+			}
+		}
+	}
+
+	private class MenuCircular extends Menu {
+		private Action exportacaoAcao = actionMenu("label.exportacao");
+		private Action importacaoAcao = actionMenu("label.importacao");
+		private Action normalAcao = actionMenu("label.normal");
+		private static final long serialVersionUID = 1L;
+
+		private MenuCircular() {
+			super(Constantes.LABEL_CIRCULAR);
+			addMenuItem(exportacaoAcao);
+			addMenuItem(importacaoAcao);
+			addMenuItem(normalAcao);
+			exportacaoAcao.setActionListener(e -> abrirModal(Tipo.EXPORTACAO));
+			importacaoAcao.setActionListener(e -> abrirModal(Tipo.IMPORTACAO));
+			normalAcao.setActionListener(e -> abrirModal(Tipo.NORMAL));
+		}
+
+		private void abrirModal(Tipo tipo) {
+			if (superficie.getSelecionados().size() > Constantes.UM) {
+				CircularDialogo.criar(superficie.container.getFrame(), superficie, tipo);
+			}
+		}
+	}
+
+	private class MenuDestacar extends MenuPadrao1 {
+		Action proprioAcao = ObjetoSuperficie.acaoMenu("label.proprio_container");
+		Action desktopAcao = Action.actionMenuDesktop();
+		private static final long serialVersionUID = 1L;
+
+		private MenuDestacar() {
+			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
+			addMenuItem(desktopAcao);
+			addMenuItem(true, proprioAcao);
+			formularioAcao.setActionListener(e -> superficie.destacar(superficie.container.getConexaoPadrao(),
+					ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, null));
+			ficharioAcao.setActionListener(e -> superficie.destacar(superficie.container.getConexaoPadrao(),
+					ObjetoConstantes.TIPO_CONTAINER_FICHARIO, null));
+			desktopAcao.setActionListener(e -> superficie.destacar(superficie.container.getConexaoPadrao(),
+					ObjetoConstantes.TIPO_CONTAINER_DESKTOP, null));
+			proprioAcao.setActionListener(e -> destacarProprioContainer());
+			formularioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_formulario"));
+			ficharioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_fichario"));
+			desktopAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_desktop"));
+		}
+
+		private void destacarProprioContainer() {
+			List<Objeto> lista = superficie.getSelecionados();
+			if (superficie.getContinua(lista)) {
+				String ajustes = nomeObjetosAjusteAuto(lista);
+				if (!Util.estaVazio(ajustes) && !Util.confirmar(superficie,
+						ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {
+					return;
+				}
+				superficie.destacar(superficie.container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_PROPRIO,
+						null);
+			}
+		}
+
+		private String nomeObjetosAjusteAuto(List<Objeto> lista) {
+			StringBuilder sb = new StringBuilder();
+			for (Objeto objeto : lista) {
+				if (objeto.isAjusteAutoForm()) {
+					if (sb.length() > 0) {
+						sb.append(Constantes.QL + ",");
+					}
+					sb.append(objeto.getId());
+				}
+			}
+			return sb.toString();
+		}
+	}
+
+	private void eventos() {
+		dadosAcao.setActionListener(e -> {
+			Object object = itemDados.getObject();
+			if (object instanceof Objeto) {
+				abrirObjeto((Objeto) object);
+			}
+		});
+		excluirAcao.setActionListener(e -> superficie.excluirSelecionados());
+		relacoesAcao.setActionListener(e -> {
+			if (superficie.selecionadoObjeto != null) {
+				selecionarRelacao(superficie.selecionadoObjeto);
+			}
+		});
+		configuracaoAcao.setActionListener(e -> {
+			Frame frame = superficie.container.getFrame();
+			if (superficie.selecionadoObjeto != null) {
+				ObjetoDialogo.criar(frame, superficie, superficie.selecionadoObjeto);
+			} else if (superficie.selecionadoRelacao != null) {
+				RelacaoDialogo.criar(frame, superficie, superficie.selecionadoRelacao);
+			}
+		});
+		copiarAcao.setActionListener(e -> CopiarColar.copiar(superficie));
+	}
+
+	private void abrirObjeto(Objeto objeto) {
+		Conexao conexao = superficie.container.getConexaoPadrao();
+		superficie.criarExternalFormulario(conexao, objeto);
+	}
+
+	private void selecionarRelacao(Objeto objeto) {
+		List<Relacao> lista = superficie.getRelacoes(objeto);
+		List<String> ids = montarIds(lista, objeto);
+		if (!ids.isEmpty()) {
+			Coletor coletor = new Coletor();
+			SetLista.view(objeto.getId(), ids, coletor, superficie, new SetLista.Config(true, true));
+			if (coletor.size() == 1) {
+				superficie.selecionadoObjeto = null;
+				String id = coletor.get(0);
+				Objeto outro = superficie.getObjeto(id);
+				superficie.selecionadoRelacao = superficie.getRelacao(objeto, outro);
+				superficie.popup.configuracaoAcao.actionPerformed(null);
+			}
+		}
+	}
+
+	private List<String> montarIds(List<Relacao> lista, Objeto objeto) {
+		List<String> resp = new ArrayList<>();
+		for (Relacao rel : lista) {
+			if (rel.getOrigem().equals(objeto)) {
+				resp.add(rel.getDestino().getId());
+			} else if (rel.getDestino().equals(objeto)) {
+				resp.add(rel.getOrigem().getId());
+			}
+		}
+		return resp;
+	}
+
+	void preShow(boolean objetoSelecionado) {
+		itemDados.setEnabled(objetoSelecionado && superficie.selecionadoObjeto != null
+				&& !Util.estaVazio(superficie.selecionadoObjeto.getTabela()));
+		itemDados.setObject(itemDados.isEnabled() ? superficie.selecionadoObjeto : null);
+		menuDistribuicao.setEnabled(objetoSelecionado);
+		menuAlinhamento.setEnabled(objetoSelecionado);
+		relacoesAcao.setEnabled(objetoSelecionado);
+		menuDestacar.setEnabled(objetoSelecionado);
+		menuCircular.setEnabled(objetoSelecionado);
+		itemPartir.setEnabled(!objetoSelecionado);
+		copiarAcao.setEnabled(objetoSelecionado);
+	}
+
+	private class PartirAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		private PartirAcao() {
+			super(true, ObjetoMensagens.getString("label.partir"), false, Icones.PARTIR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (superficie.selecionadoRelacao != null) {
+				Objeto novo = superficie.selecionadoRelacao.criarObjetoMeio();
+				Objeto destino = superficie.selecionadoRelacao.getDestino();
+				Objeto origem = superficie.selecionadoRelacao.getOrigem();
+				superficie.checagemId(novo, Constantes.VAZIO, Constantes.VAZIO);
+				superficie.addObjeto(novo);
+				superficie.selecionadoRelacao.setSelecionado(false);
+				superficie.excluir(superficie.selecionadoRelacao);
+				superficie.selecionadoRelacao = null;
+				superficie.addRelacao(new Relacao(origem, false, novo, false));
+				superficie.addRelacao(new Relacao(novo, false, destino, false));
+				superficie.repaint();
+			}
+		}
 	}
 }
