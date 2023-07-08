@@ -30,6 +30,18 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	private static final long serialVersionUID = 1L;
 	private boolean ajusteLarguraForm;
 
+	public MenuLargura getMenuLargura() {
+		return menuLargura;
+	}
+
+	public MenuAjustar getMenuAjustar() {
+		return menuAjustar;
+	}
+
+	public MenuAjuste getMenuAjuste() {
+		return menuAjuste;
+	}
+
 	public class Distribuicao {
 		public void distribuir(int delta) {
 			int largura = (getSize().width - 20) + delta;
@@ -172,7 +184,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		menuLargura.setTotalDireitoAuto(b);
 	}
 
-	protected class MenuLargura extends Menu {
+	public class MenuLargura extends Menu {
 		private Action direitoAutoAcao = acaoMenu("label.total_direito_auto", Icones.ALINHA_DIREITO);
 		private Action esquerdoAcao = acaoMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = acaoMenu("label.total_direito", Icones.ALINHA_DIREITO);
@@ -220,7 +232,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	protected class MenuAjustar extends Menu {
+	public class MenuAjustar extends Menu {
 		private Action usarFormularioAcao = acaoMenu("label.usar_formularios");
 		private Action dimensaoManualAcao = acaoMenu("label.dimensao_manual");
 		private Action retirarRolagemAcao = acaoMenu("label.retirar_rolagem");
@@ -249,7 +261,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		return acaoMenu(chave, null);
 	}
 
-	protected class MenuAjuste extends Menu {
+	public class MenuAjuste extends Menu {
 		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
 		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
 		private Action distribuirAcao = actionMenu("label.distribuir", Icones.CENTRALIZAR);

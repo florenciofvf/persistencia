@@ -96,20 +96,20 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
 	private final transient Vinculacao vinculacao = new Vinculacao();
-	private SuperficiePopup2 popup2 = new SuperficiePopup2();
-	private SuperficiePopup popup = new SuperficiePopup();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
 	private static final long serialVersionUID = 1L;
 	private final transient Area area = new Area();
+	SuperficiePopup popup = new SuperficiePopup();
 	private transient Relacao selecionadoRelacao;
 	private transient Objeto selecionadoObjeto;
-	private final ObjetoContainer container;
 	private transient Relacao[] relacoes;
-	private final Formulario formulario;
+	final ObjetoContainer container;
 	private transient Thread thread;
 	private boolean validoArrastar;
 	private String arquivoVinculo;
+	final SuperficiePopup2 popup2;
+	final Formulario formulario;
 	transient Objeto[] objetos;
 	private boolean processar;
 	private int totalHoras;
@@ -120,6 +120,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	public ObjetoSuperficie(Formulario formulario, ObjetoContainer container) {
 		super(true);
 		configEstado(ObjetoConstantes.SELECAO);
+		popup2 = new SuperficiePopup2(this);
 		this.formulario = formulario;
 		this.container = container;
 		configurar();
@@ -1530,123 +1531,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return acaoMenu(chave, null);
 	}
 
-	private class SuperficiePopup2 extends Popup {
-		private Action atualizarFormulariosAcao = acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
-		private Action limparFormulariosAcao = acaoMenu("label.limpar_formularios", Icones.NOVO);
-		private Action formulariosInvisiveisAcao = acaoMenu("label.forms_invisiveis");
-		private Action criarObjetoAcao = acaoMenu("label.criar_objeto", Icones.CRIAR);
-		private Action propriedadesAcao = actionMenu("label.propriedades");
-		private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
-		private static final long serialVersionUID = 1L;
-		int xLocal;
-		int yLocal;
-
-		private SuperficiePopup2() {
-			addMenuItem(criarObjetoAcao);
-			addMenuItem(true, colarAcao);
-			add(true, menuAjustar);
-			addMenuItem(true, formulariosInvisiveisAcao);
-			addMenuItem(atualizarFormulariosAcao);
-			addMenuItem(limparFormulariosAcao);
-			add(true, menuLargura);
-			add(true, menuAjuste);
-			addMenuItem(true, propriedadesAcao);
-			eventos();
-		}
-
-		private void eventos() {
-			criarObjetoAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
-			formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
-			atualizarFormulariosAcao.setActionListener(e -> atualizarFormularios());
-			propriedadesAcao.setActionListener(e -> propriedades());
-			limparFormulariosAcao.setActionListener(e -> limpar2());
-			colarAcao.setActionListener(
-					e -> CopiarColar.colar(ObjetoSuperficie.this, true, popup2.xLocal, popup2.yLocal));
-		}
-
-		private void preShow(boolean contemFrames) {
-			colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
-			formulariosInvisiveisAcao.setEnabled(contemFrames);
-			atualizarFormulariosAcao.setEnabled(contemFrames);
-			limparFormulariosAcao.setEnabled(contemFrames);
-			menuLargura.habilitar(contemFrames);
-			menuAjustar.habilitar(contemFrames);
-			menuAjuste.habilitar(contemFrames);
-		}
-
-		private String getGrupoTabela(Objeto objeto) {
-			return objeto.getGrupo() + " - " + objeto.getTabela();
-		}
-
-		private void formulariosInvisiveis() {
-			List<String> lista = new ArrayList<>();
-			for (JInternalFrame frame : getAllFrames()) {
-				if (!frame.isVisible() && frame instanceof InternalFormulario) {
-					InternalFormulario interno = (InternalFormulario) frame;
-					Objeto objeto = interno.getInternalContainer().getObjeto();
-					lista.add(getGrupoTabela(objeto));
-				}
-			}
-			if (lista.isEmpty()) {
-				Util.mensagem(formulario, ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
-				return;
-			}
-
-			Coletor coletor = new Coletor();
-			SetLista.view(ObjetoMensagens.getString("label.forms_invisiveis"), lista, coletor, ObjetoSuperficie.this,
-					new SetLista.Config(true, true));
-			if (coletor.size() == 1) {
-				tornarVisivel(coletor.get(0));
-			}
-		}
-
-		private void tornarVisivel(String grupoTabela) {
-			for (JInternalFrame frame : getAllFrames()) {
-				if (!frame.isVisible() && frame instanceof InternalFormulario) {
-					InternalFormulario interno = (InternalFormulario) frame;
-					Objeto objeto = interno.getInternalContainer().getObjeto();
-					String grupoT = getGrupoTabela(objeto);
-					if (grupoTabela.equals(grupoT)) {
-						objeto.setVisivel(true);
-						interno.setVisible(true);
-						interno.checarRedimensionamento();
-						checarLargura(interno.getInternalContainer());
-					}
-				}
-			}
-		}
-
-		private void propriedades() {
-			StringBuilder sbi = new StringBuilder();
-			int invisiveis = 0;
-			int visiveis = 0;
-			for (Objeto objeto : objetos) {
-				if (objeto.visivel) {
-					visiveis++;
-				} else {
-					sbi.append(objeto.getId() + Constantes.QL);
-					invisiveis++;
-				}
-			}
-			StringBuilder sb = new StringBuilder();
-			sb.append(ObjetoMensagens.getString("label.total_objetos") + " " + (visiveis + invisiveis) + Constantes.QL);
-			sb.append(ObjetoMensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
-			sb.append(ObjetoMensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
-			if (sbi.length() > 0) {
-				sb.append(sbi);
-			}
-			File file = container.getArquivo();
-			if (file != null) {
-				sb.append("------------------" + Constantes.QL);
-				sb.append(ObjetoMensagens.getString("label.local_absoluto_arquivo") + " " + file.getAbsolutePath()
-						+ Constantes.QL);
-				sb.append(ObjetoMensagens.getString("label.local_relativo_arquivo") + " "
-						+ ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
-			}
-			Util.mensagem(formulario, sb.toString());
-		}
-	}
-
 	public void selecionarConexao(Conexao conexao) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
@@ -2950,5 +2834,125 @@ class CopiarColar {
 			contem = superficie.contem(o);
 		}
 		return o;
+	}
+}
+
+class SuperficiePopup2 extends Popup {
+	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
+	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
+	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
+	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
+	private Action propriedadesAcao = actionMenu("label.propriedades");
+	private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
+	private static final long serialVersionUID = 1L;
+	final ObjetoSuperficie superficie;
+	int xLocal;
+	int yLocal;
+
+	SuperficiePopup2(ObjetoSuperficie superficie) {
+		this.superficie = superficie;
+		addMenuItem(criarObjetoAcao);
+		addMenuItem(true, colarAcao);
+		add(true, superficie.getMenuAjustar());
+		addMenuItem(true, formulariosInvisiveisAcao);
+		addMenuItem(atualizarFormulariosAcao);
+		addMenuItem(limparFormulariosAcao);
+		add(true, superficie.getMenuLargura());
+		add(true, superficie.getMenuAjuste());
+		addMenuItem(true, propriedadesAcao);
+		eventos();
+	}
+
+	private void eventos() {
+		criarObjetoAcao
+				.setActionListener(e -> superficie.criarNovoObjeto(superficie.popup2.xLocal, superficie.popup2.yLocal));
+		colarAcao.setActionListener(
+				e -> CopiarColar.colar(superficie, true, superficie.popup2.xLocal, superficie.popup2.yLocal));
+		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
+		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
+		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
+		propriedadesAcao.setActionListener(e -> propriedades());
+	}
+
+	void preShow(boolean contemFrames) {
+		colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
+		superficie.getMenuLargura().habilitar(contemFrames);
+		superficie.getMenuAjustar().habilitar(contemFrames);
+		superficie.getMenuAjuste().habilitar(contemFrames);
+		formulariosInvisiveisAcao.setEnabled(contemFrames);
+		atualizarFormulariosAcao.setEnabled(contemFrames);
+		limparFormulariosAcao.setEnabled(contemFrames);
+	}
+
+	private String getGrupoTabela(Objeto objeto) {
+		return objeto.getGrupo() + " - " + objeto.getTabela();
+	}
+
+	private void formulariosInvisiveis() {
+		List<String> lista = new ArrayList<>();
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (!frame.isVisible() && frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				Objeto objeto = interno.getInternalContainer().getObjeto();
+				lista.add(getGrupoTabela(objeto));
+			}
+		}
+		if (lista.isEmpty()) {
+			Util.mensagem(superficie.formulario, ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
+			return;
+		}
+
+		Coletor coletor = new Coletor();
+		SetLista.view(ObjetoMensagens.getString("label.forms_invisiveis"), lista, coletor, superficie,
+				new SetLista.Config(true, true));
+		if (coletor.size() == 1) {
+			tornarVisivel(coletor.get(0));
+		}
+	}
+
+	private void tornarVisivel(String grupoTabela) {
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (!frame.isVisible() && frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				Objeto objeto = interno.getInternalContainer().getObjeto();
+				String grupoT = getGrupoTabela(objeto);
+				if (grupoTabela.equals(grupoT)) {
+					objeto.setVisivel(true);
+					interno.setVisible(true);
+					interno.checarRedimensionamento();
+					superficie.checarLargura(interno.getInternalContainer());
+				}
+			}
+		}
+	}
+
+	private void propriedades() {
+		StringBuilder sbi = new StringBuilder();
+		int invisiveis = 0;
+		int visiveis = 0;
+		for (Objeto objeto : superficie.objetos) {
+			if (objeto.visivel) {
+				visiveis++;
+			} else {
+				sbi.append(objeto.getId() + Constantes.QL);
+				invisiveis++;
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(ObjetoMensagens.getString("label.total_objetos") + " " + (visiveis + invisiveis) + Constantes.QL);
+		sb.append(ObjetoMensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
+		sb.append(ObjetoMensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
+		if (sbi.length() > 0) {
+			sb.append(sbi);
+		}
+		File file = superficie.container.getArquivo();
+		if (file != null) {
+			sb.append("------------------" + Constantes.QL);
+			sb.append(ObjetoMensagens.getString("label.local_absoluto_arquivo") + " " + file.getAbsolutePath()
+					+ Constantes.QL);
+			sb.append(ObjetoMensagens.getString("label.local_relativo_arquivo") + " "
+					+ ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
+		}
+		Util.mensagem(superficie.formulario, sb.toString());
 	}
 }
