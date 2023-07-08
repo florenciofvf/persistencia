@@ -306,7 +306,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	public void desativarObjetos() {
+	void desativarObjetos() {
 		for (Objeto objeto : objetos) {
 			objeto.desativar();
 		}
@@ -387,25 +387,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	public void alinharNomes() {
-		for (Objeto objeto : objetos) {
-			alinharNome(objeto);
-		}
-	}
-
-	public void alinharNome(Objeto objeto) {
-		if (objeto != null) {
-			Font font = getFont();
-			if (font != null) {
-				FontMetrics fm = getFontMetrics(font);
-				if (fm != null) {
-					objeto.alinhar(fm);
-				}
-			}
-		}
-	}
-
-	public void limparSelecao() {
+	void limparSelecao() {
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(false);
 		}
@@ -886,55 +868,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return formulario;
 	}
 
-	private class Area {
-		int largura;
-		int altura;
-		int x1;
-		int y1;
-		int x2;
-		int y2;
-		int x;
-		int y;
-
-		void ini() {
-			x = y = largura = altura = 0;
-			x1 = y1 = x2 = y2 = 0;
-		}
-
-		void desenhar(Graphics2D g2) {
-			if (largura > 2 && altura > 2) {
-				g2.drawRect(x, y, largura, altura);
-			}
-		}
-
-		void calc() {
-			largura = Math.abs(x1 - x2);
-			altura = Math.abs(y1 - y2);
-			x = Math.min(x1, x2);
-			y = Math.min(y1, y2);
-		}
-
-		boolean contem(Objeto objeto) {
-			return objeto.visivel && (objeto.x >= this.x && objeto.x + Objeto.DIAMETRO <= this.x + largura)
-					&& (objeto.y >= this.y && objeto.y + Objeto.DIAMETRO <= this.y + altura);
-		}
-	}
-
-	private class Linha {
-		int x1;
-		int y1;
-		int x2;
-		int y2;
-
-		void ini() {
-			x1 = y1 = x2 = y2 = 0;
-		}
-
-		void desenhar(Graphics2D g2) {
-			g2.drawLine(x1, y1, x2, y2);
-		}
-	}
-
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -1324,7 +1257,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			addRelacao(relacao);
 		}
 		removeAll();
-		alinharNomes();
 		repaint();
 		setPreferredSize(coletor.getDimension());
 		SwingUtilities.updateComponentTreeUI(getParent());
@@ -2961,5 +2893,54 @@ class ExportacaoImportacao {
 			}
 		}
 		superficie.salvarVinculacao(superficie.vinculacao);
+	}
+}
+
+class Area {
+	int largura;
+	int altura;
+	int x1;
+	int y1;
+	int x2;
+	int y2;
+	int x;
+	int y;
+
+	void ini() {
+		x = y = largura = altura = 0;
+		x1 = y1 = x2 = y2 = 0;
+	}
+
+	void desenhar(Graphics2D g2) {
+		if (largura > 2 && altura > 2) {
+			g2.drawRect(x, y, largura, altura);
+		}
+	}
+
+	void calc() {
+		largura = Math.abs(x1 - x2);
+		altura = Math.abs(y1 - y2);
+		x = Math.min(x1, x2);
+		y = Math.min(y1, y2);
+	}
+
+	boolean contem(Objeto objeto) {
+		return objeto.visivel && (objeto.x >= this.x && objeto.x + Objeto.DIAMETRO <= this.x + largura)
+				&& (objeto.y >= this.y && objeto.y + Objeto.DIAMETRO <= this.y + altura);
+	}
+}
+
+class Linha {
+	int x1;
+	int y1;
+	int x2;
+	int y2;
+
+	void ini() {
+		x1 = y1 = x2 = y2 = 0;
+	}
+
+	void desenhar(Graphics2D g2) {
+		g2.drawLine(x1, y1, x2, y2);
 	}
 }

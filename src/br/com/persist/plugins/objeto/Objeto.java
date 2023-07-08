@@ -4,7 +4,6 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Composite;
-import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
@@ -18,8 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
@@ -41,7 +38,6 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
-	private static final Logger LOG = Logger.getGlobal();
 	private Pesquisa pesquisaAdicaoHierarquico;
 	private final List<Referencia> referencias;
 	private Map<String, String> mapaSequencias;
@@ -301,16 +297,15 @@ public class Objeto implements Runnable {
 			g2.fillRoundRect(x, y, largura + 1, altura + 1, DIAMETRO, DIAMETRO);
 			Color inicio = cor.darker();
 			Color finall = cor.brighter();
-			Paint paint = new GradientPaint(x, y, inicio, x, (float) (y + altura), finall, false);
+			Paint paint = new GradientPaint(x, y, inicio, x, (y + altura), finall, false);
 			g2.setPaint(paint);
 			g2.fillRoundRect(x, y, largura, altura, DIAMETRO, DIAMETRO);
 			inicio = Color.WHITE;
-			paint = new GradientPaint(x, (float) (y + margem3), inicio, x, (float) (y + margem3 + altura22), finall,
-					false);
+			paint = new GradientPaint(x, (y + margem3), inicio, x, (y + margem3 + altura22), finall, false);
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
 			g2.setPaint(paint);
-			g2.setClip(new RoundRectangle2D.Float((float) (x + margem3), (float) (y + margem3), (float) (largura2 - 2),
-					altura22, altura3, altura3));
+			g2.setClip(new RoundRectangle2D.Float((x + margem3), (y + margem3), (largura2 - 2), altura22, altura3,
+					altura3));
 			g2.fillRoundRect(x + margem3, y + margem3, largura2 - 2, altura2, altura2, altura2);
 			g2.setComposite(composite);
 			g2.setClip(shape);
@@ -891,10 +886,6 @@ public class Objeto implements Runnable {
 	@Override
 	public String toString() {
 		return id;
-	}
-
-	public void alinhar(FontMetrics fm) {
-		LOG.log(Level.FINEST, "alinhar");
 	}
 
 	public void zoomMenos() {

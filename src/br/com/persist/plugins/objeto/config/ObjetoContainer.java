@@ -394,7 +394,6 @@ public class ObjetoContainer extends Panel {
 
 					if (!objetoSuperficie.contem(obj)) {
 						objeto.setId(id);
-						objetoSuperficie.alinharNome(objeto);
 					}
 				}
 			} else if (txtArquivo == e.getSource()) {
