@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,13 +99,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private final transient Linha linha = new Linha();
 	private static final long serialVersionUID = 1L;
 	private final transient Area area = new Area();
-	private transient Relacao[] relacoes;
 	transient Relacao selecionadoRelacao;
 	transient Objeto selecionadoObjeto;
 	final ObjetoContainer container;
 	private transient Thread thread;
 	private boolean validoArrastar;
 	final SuperficiePopup2 popup2;
+	transient Relacao[] relacoes;
 	final SuperficiePopup popup;
 	final Formulario formulario;
 	transient Objeto[] objetos;
@@ -307,13 +306,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	};
 
 	void desativarObjetos() {
-		for (Objeto objeto : objetos) {
-			objeto.desativar();
-		}
-		for (Relacao relacao : relacoes) {
-			relacao.desativar();
-		}
-		repaint();
+		ObjetoSuperficieUtil.desativarObjetos(this);
 	}
 
 	private transient javax.swing.Action macroLista = new AbstractAction() {
@@ -388,37 +381,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	};
 
 	void limparSelecao() {
-		for (Objeto objeto : objetos) {
-			objeto.setSelecionado(false);
-		}
+		ObjetoSuperficieUtil.limparSelecao(this);
 	}
 
 	public List<Objeto> getSelecionados() {
-		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : objetos) {
-			if (objeto.isSelecionado()) {
-				resp.add(objeto);
-			}
-		}
-		return resp;
+		return ObjetoSuperficieUtil.getSelecionados(this);
 	}
 
 	public List<Objeto> objetosComTabela() {
-		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				resp.add(objeto);
-			}
-		}
-		return resp;
+		return ObjetoSuperficieUtil.objetosComTabela(this);
 	}
 
 	public List<String> getListaStringIds() {
-		List<String> resp = new ArrayList<>();
-		for (Objeto objeto : objetos) {
-			resp.add(objeto.getId());
-		}
-		return resp;
+		return ObjetoSuperficieUtil.getListaStringIds(this);
 	}
 
 	public JComboBox<Objeto> criarComboObjetosSel() {
@@ -917,21 +892,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private Objeto getPrimeiroObjetoSelecionado() {
-		for (Objeto objeto : objetos) {
-			if (objeto.isSelecionado()) {
-				return objeto;
-			}
-		}
-		return null;
+		return ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
 	}
 
 	private Relacao getPrimeiroRelacaoSelecionado() {
-		for (Relacao relacao : relacoes) {
-			if (relacao.isSelecionado()) {
-				return relacao;
-			}
-		}
-		return null;
+		return ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
 	}
 
 	public void addObjeto(Objeto obj) {
@@ -993,22 +958,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public Relacao getRelacao(Objeto obj) {
-		if (obj != null) {
-			for (Relacao relacao : relacoes) {
-				if (relacao.contem(obj)) {
-					return relacao;
-				}
-			}
-		}
-		return null;
+		return ObjetoSuperficieUtil.getRelacao(this, obj);
 	}
 
 	public Set<String> getIdOrigens() {
-		Set<String> set = new HashSet<>();
-		for (Relacao relacao : relacoes) {
-			set.add(relacao.getOrigem().getId());
-		}
-		return set;
+		return ObjetoSuperficieUtil.getIdOrigens(this);
 	}
 
 	public void pontoOrigem(boolean b) {
@@ -1026,37 +980,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public List<Relacao> getRelacoes(Objeto obj) {
-		List<Relacao> lista = new ArrayList<>();
-		if (obj != null) {
-			for (Relacao relacao : relacoes) {
-				if (relacao.contem(obj)) {
-					lista.add(relacao);
-				}
-			}
-		}
-		return lista;
+		return ObjetoSuperficieUtil.getRelacoes(this, obj);
 	}
 
 	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
-		if (obj1 != null && obj2 != null) {
-			Relacao temp = new Relacao(obj1, obj2);
-			for (Relacao relacao : relacoes) {
-				if (relacao.equals(temp)) {
-					return relacao;
-				}
-			}
-		}
-		return null;
+		return ObjetoSuperficieUtil.getRelacao(this, obj1, obj2);
 	}
 
 	public boolean contemId(Objeto obj) {
-		for (int i = 0; i < objetos.length; i++) {
-			Objeto objeto = objetos[i];
-			if (objeto != obj && objeto.equalsId(obj)) {
-				return true;
-			}
-		}
-		return false;
+		return ObjetoSuperficieUtil.contemId(this, obj);
 	}
 
 	public boolean contem(Objeto obj) {
@@ -1068,12 +1000,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public Objeto getObjeto(String id) {
-		for (int i = 0; i < objetos.length; i++) {
-			if (objetos[i].getId().equals(id)) {
-				return objetos[i];
-			}
-		}
-		return null;
+		return ObjetoSuperficieUtil.getObjeto(this, id);
 	}
 
 	public int getIndice(Objeto obj) {
@@ -1291,31 +1218,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void desenharDesc(boolean b) {
-		for (Relacao relacao : relacoes) {
-			relacao.setDesenharDescricao(b);
-		}
-		repaint();
+		ObjetoSuperficieUtil.desenharDesc(this, b);
 	}
 
 	public void selecaoGeral(boolean b) {
-		for (Objeto objeto : objetos) {
-			objeto.setSelecionado(b);
-		}
-		repaint();
+		ObjetoSuperficieUtil.selecaoGeral(this, b);
 	}
 
 	public void desenharIds(boolean b) {
-		for (Objeto objeto : objetos) {
-			objeto.setDesenharId(b);
-		}
-		repaint();
+		ObjetoSuperficieUtil.desenharIds(this, b);
 	}
 
 	public void transparente(boolean b) {
-		for (Objeto objeto : objetos) {
-			objeto.setTransparente(b);
-		}
-		repaint();
+		ObjetoSuperficieUtil.transparente(this, b);
 	}
 
 	public void configEstado(byte estado) {
