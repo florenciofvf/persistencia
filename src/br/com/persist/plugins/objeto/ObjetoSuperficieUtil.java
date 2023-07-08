@@ -208,4 +208,47 @@ public class ObjetoSuperficieUtil {
 		vinculacao.salvar(superficie.arquivoVinculo, superficie);
 	}
 
+	public static void processar(ObjetoSuperficie superficie) {
+		for (Objeto objeto : superficie.objetos) {
+			if (objeto.isSelecionado()) {
+				objeto.setProcessar(true);
+				objeto.ativar();
+			}
+		}
+		for (Relacao relacao : superficie.relacoes) {
+			if (relacao.isSelecionado()) {
+				relacao.setProcessar(true);
+				relacao.ativar();
+			}
+		}
+		superficie.repaint();
+	}
+
+	public static void ativarObjetos(ObjetoSuperficie superficie, String string) {
+		if (Util.estaVazio(string)) {
+			return;
+		}
+		string = string.trim().toUpperCase();
+		for (Objeto objeto : superficie.objetos) {
+			if (objeto.getId().toUpperCase().indexOf(string) != -1) {
+				objeto.setProcessar(true);
+				objeto.ativar();
+			}
+		}
+		superficie.repaint();
+	}
+
+	public static void desativar(ObjetoSuperficie superficie) {
+		for (Objeto objeto : superficie.objetos) {
+			if (objeto.isSelecionado()) {
+				objeto.desativar();
+			}
+		}
+		for (Relacao relacao : superficie.relacoes) {
+			if (relacao.isSelecionado()) {
+				relacao.desativar();
+			}
+		}
+		superficie.repaint();
+	}
 }

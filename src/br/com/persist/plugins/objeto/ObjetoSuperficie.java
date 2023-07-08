@@ -256,52 +256,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (Objeto objeto : objetos) {
-				if (objeto.isSelecionado()) {
-					objeto.setProcessar(true);
-					objeto.ativar();
-				}
-			}
-			for (Relacao relacao : relacoes) {
-				if (relacao.isSelecionado()) {
-					relacao.setProcessar(true);
-					relacao.ativar();
-				}
-			}
-			repaint();
+			ObjetoSuperficieUtil.processar(ObjetoSuperficie.this);
 		}
 	};
-
-	public void ativarObjetos(String string) {
-		if (Util.estaVazio(string)) {
-			return;
-		}
-		string = string.trim().toUpperCase();
-		for (Objeto objeto : objetos) {
-			if (objeto.getId().toUpperCase().indexOf(string) != -1) {
-				objeto.setProcessar(true);
-				objeto.ativar();
-			}
-		}
-		repaint();
-	}
 
 	private transient javax.swing.Action threadDesativar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (Objeto objeto : objetos) {
-				if (objeto.isSelecionado()) {
-					objeto.desativar();
-				}
-			}
-			for (Relacao relacao : relacoes) {
-				if (relacao.isSelecionado()) {
-					relacao.desativar();
-				}
-			}
-			repaint();
+			ObjetoSuperficieUtil.desativar(ObjetoSuperficie.this);
 		}
 	};
 
@@ -911,10 +875,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					addObjeto(bkp[i]);
 				}
 			}
-			Relacao relacao = getRelacao(obj);
+			Relacao relacao = ObjetoSuperficieUtil.getRelacao(this, obj);
 			while (relacao != null) {
 				excluir(relacao);
-				relacao = getRelacao(obj);
+				relacao = ObjetoSuperficieUtil.getRelacao(this, obj);
 			}
 		}
 	}
@@ -943,10 +907,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				}
 			}
 		}
-	}
-
-	public Relacao getRelacao(Objeto obj) {
-		return ObjetoSuperficieUtil.getRelacao(this, obj);
 	}
 
 	public Set<String> getIdOrigens() {
