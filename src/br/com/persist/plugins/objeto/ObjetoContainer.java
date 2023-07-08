@@ -135,11 +135,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
-		checarSelecionarConexao(formulario, args);
-		checarConexaoInfo(formulario, args);
+		checarSelecionarConexao(args);
+		checarConexaoInfo(args);
 	}
 
-	private void checarSelecionarConexao(Formulario formulario, Map<String, Object> args) {
+	private void checarSelecionarConexao(Map<String, Object> args) {
 		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
@@ -148,7 +148,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 	}
 
 	@SuppressWarnings("unchecked")
-	private void checarConexaoInfo(Formulario formulario, Map<String, Object> args) {
+	private void checarConexaoInfo(Map<String, Object> args) {
 		List<ConexaoInfo> lista = (List<ConexaoInfo>) args.get(ConexaoEvento.COLETAR_INFO_CONEXAO);
 		if (lista != null) {
 			Conexao conexao = getConexaoPadrao();
@@ -427,14 +427,14 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		protected void copiar() {
-			if (ObjetoSuperficie.CopiarColar.copiar(objetoSuperficie)) {
+			if (CopiarColar.copiar(objetoSuperficie)) {
 				copiarMensagem(".");
 			}
 		}
 
 		@Override
 		protected void colar0() {
-			ObjetoSuperficie.CopiarColar.colar(objetoSuperficie, false, 0, 0);
+			CopiarColar.colar(objetoSuperficie, false, 0, 0);
 		}
 
 		private class ButtonStatus extends ButtonPopup {

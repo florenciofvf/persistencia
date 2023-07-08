@@ -1199,52 +1199,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return true;
 	}
 
-	public static class CopiarColar {
-		private static final List<Objeto> copiados = new ArrayList<>();
-
-		private CopiarColar() {
-		}
-
-		public static boolean copiar(ObjetoSuperficie objetoSuperficie) {
-			copiados.clear();
-			for (Objeto objeto : objetoSuperficie.getSelecionados()) {
-				copiados.add(objeto.clonar());
-			}
-			return !copiados.isEmpty();
-		}
-
-		public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {
-			superficie.limparSelecao();
-			for (Objeto objeto : copiados) {
-				Objeto clone = get(objeto, superficie);
-				superficie.addObjeto(clone);
-				clone.setSelecionado(true);
-				if (b) {
-					clone.setX(x);
-					clone.setY(y);
-				}
-			}
-			superficie.repaint();
-		}
-
-		public static boolean copiadosIsEmpty() {
-			return copiados.isEmpty();
-		}
-
-		private static Objeto get(Objeto objeto, ObjetoSuperficie superficie) {
-			Objeto o = objeto.clonar();
-			o.deltaX(Objeto.DIAMETRO);
-			o.deltaY(Objeto.DIAMETRO);
-			o.setId(objeto.getId() + "-" + Objeto.getSequencia());
-			boolean contem = superficie.contem(o);
-			while (contem) {
-				o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
-				contem = superficie.contem(o);
-			}
-			return o;
-		}
-	}
-
 	@Override
 	protected boolean contemReferencia(Objeto objeto) {
 		for (Objeto obj : objetos) {
@@ -2950,5 +2904,51 @@ class ThreadRecente extends Thread {
 		info.setCorFonte(objeto.getCorFonte());
 		info.setTransparente(true);
 		superficie.addObjeto(info);
+	}
+}
+
+class CopiarColar {
+	private static final List<Objeto> copiados = new ArrayList<>();
+
+	private CopiarColar() {
+	}
+
+	public static boolean copiar(ObjetoSuperficie objetoSuperficie) {
+		copiados.clear();
+		for (Objeto objeto : objetoSuperficie.getSelecionados()) {
+			copiados.add(objeto.clonar());
+		}
+		return !copiados.isEmpty();
+	}
+
+	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {
+		superficie.limparSelecao();
+		for (Objeto objeto : copiados) {
+			Objeto clone = get(objeto, superficie);
+			superficie.addObjeto(clone);
+			clone.setSelecionado(true);
+			if (b) {
+				clone.setX(x);
+				clone.setY(y);
+			}
+		}
+		superficie.repaint();
+	}
+
+	public static boolean copiadosIsEmpty() {
+		return copiados.isEmpty();
+	}
+
+	private static Objeto get(Objeto objeto, ObjetoSuperficie superficie) {
+		Objeto o = objeto.clonar();
+		o.deltaX(Objeto.DIAMETRO);
+		o.deltaY(Objeto.DIAMETRO);
+		o.setId(objeto.getId() + "-" + Objeto.getSequencia());
+		boolean contem = superficie.contem(o);
+		while (contem) {
+			o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
+			contem = superficie.contem(o);
+		}
+		return o;
 	}
 }
