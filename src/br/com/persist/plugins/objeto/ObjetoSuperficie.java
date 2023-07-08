@@ -95,7 +95,7 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
-	private final transient Vinculacao vinculacao = new Vinculacao();
+	final transient Vinculacao vinculacao = new Vinculacao();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
 	private static final long serialVersionUID = 1L;
@@ -106,13 +106,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	final ObjetoContainer container;
 	private transient Thread thread;
 	private boolean validoArrastar;
-	private String arquivoVinculo;
 	final SuperficiePopup2 popup2;
 	final SuperficiePopup popup;
 	final Formulario formulario;
 	transient Objeto[] objetos;
 	private boolean processar;
 	private int totalHoras;
+	String arquivoVinculo;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -870,7 +870,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	private InternalFormulario getInternalFormulario(Objeto objeto) {
+	InternalFormulario getInternalFormulario(Objeto objeto) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
@@ -1598,7 +1598,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef,
 			Metadado tabela) {
-		Exportacao exportacao = new Exportacao(principal, mapaRef, tabela.getPai());
+		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, mapaRef, tabela.getPai());
 		exportacao.criarPesquisa();
 		exportacao.processarDetalhes(tabela);
 		if (exportacao.erro) {
@@ -1629,13 +1629,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	private ExportacaoImportacao criarExportacaoImportacao(boolean exportacao, boolean circular) {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		ExportacaoImportacao expImp = new ExportacaoImportacao(exportacao, circular);
+		ExportacaoImportacao expImp = new ExportacaoImportacao(ObjetoSuperficie.this, exportacao, circular);
 		expImp.definirCentros(d);
 		expImp.criarVetor(d);
 		return expImp;
 	}
 
-	private void processarIdTabelaGrupoExportacao(Objeto objeto, Metadado tabelaRef) {
+	void processarIdTabelaGrupoExportacao(Objeto objeto, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
 		if (contemObjetoComTabela(nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo();
@@ -1644,458 +1644,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			objeto.setGrupo(tabelaRef.getNomeCampo());
 		} else {
 			objeto.setId(nomeTabela);
-		}
-	}
-
-	private class Exportacao {
-		private final Map<String, Object> mapaRef;
-		final Objeto principal;
-		final Metadado raiz;
-		Metadado campoFK;
-		Relacao relacao;
-		Objeto objeto;
-		boolean erro;
-
-		private Exportacao(Objeto principal, Map<String, Object> mapaRef, Metadado raiz) {
-			this.principal = principal;
-			this.mapaRef = mapaRef;
-			this.raiz = raiz;
-		}
-
-		private void criarPesquisa() {
-			criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
-					principal.getChaves());
-		}
-
-		private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
-			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
-		}
-
-		private void processarDetalhes(Metadado tabela) {
-			List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
-			Coletor coletor = new Coletor();
-			SetLista.view(principal.getId() + ObjetoMensagens.getString("label.adicionar_hierarquico"),
-					nomeCampos(campos), coletor, ObjetoSuperficie.this, new SetLista.Config(true, true));
-			if (coletor.size() == 1) {
-				processarCampoFK(getCampo(campos, coletor.get(0)));
-			} else {
-				erro = true;
-			}
-		}
-
-		private List<String> nomeCampos(List<Metadado> campos) {
-			return campos.stream().map(Metadado::getChaveTabelaReferencia).collect(Collectors.toList());
-		}
-
-		private Metadado getCampo(List<Metadado> campos, String nomeCampo) {
-			for (Metadado metadado : campos) {
-				if (metadado.getChaveTabelaReferencia().equals(nomeCampo)) {
-					return metadado;
-				}
-			}
-			return null;
-		}
-
-		private void processarCampoFK(Metadado campo) {
-			campoFK = campo;
-			criarEAdicionarObjeto();
-			criarEAdicionarRelacao();
-			processarIdTabelaGrupo();
-			processarChaves();
-		}
-
-		private void criarEAdicionarObjeto() {
-			Objeto obj = new Objeto(0, 0);
-			this.objeto = obj;
-			addObjeto(obj);
-		}
-
-		private void criarEAdicionarRelacao() {
-			Relacao rel = new Relacao(principal, false, objeto, true);
-			rel.setPontoDestino(false);
-			rel.setPontoOrigem(false);
-			rel.setQuebrado(true);
-			this.relacao = rel;
-			addRelacao(rel);
-		}
-
-		private void processarIdTabelaGrupo() {
-			Metadado tabelaRef = campoFK.getTabelaReferencia();
-			processarIdTabelaGrupoExportacao(objeto, tabelaRef);
-			objeto.setTabela(tabelaRef.getNomeTabela());
-		}
-
-		private void processarChaves() {
-			Metadado tabelaRef = campoFK.getTabelaReferencia();
-			Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
-			if (tabela != null) {
-				processarChaves(tabela);
-			}
-		}
-
-		private void processarChaves(Metadado tabela) {
-			Metadado tabelaRef = campoFK.getTabelaReferencia();
-			relacao.setChaveDestino(tabelaRef.getNomeCampo());
-			relacao.setChaveOrigem(principal.getChaves());
-			objeto.setChaves(tabela.getChaves());
-			referenciaNaPesquisa();
-		}
-
-		private void referenciaNaPesquisa() {
-			Metadado tabelaRef = campoFK.getTabelaReferencia();
-			ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
-		}
-
-		private void ref(String tabela, String campo, String grupo) {
-			Referencia ref = new Referencia(grupo, tabela, campo);
-			ref.setVazioInvisivel(true);
-			mapaRef.put("ref", ref);
-			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
-			objeto.addReferencia(pesquisa.getReferencia());
-			pesquisa.add(ref);
-		}
-
-		private void localizarObjeto() {
-			InternalFormulario interno = getInternalFormulario(principal);
-			if (interno != null) {
-				objeto.x = principal.x + Constantes.VINTE_CINCO;
-				objeto.y = interno.getY() + Constantes.TRINTA;
-				objeto.setDeslocamentoXId(28);
-				objeto.setDeslocamentoYId(24);
-				objeto.setChecarLargura(true);
-				objeto.setCorTmp(Color.GREEN);
-				limparSelecao();
-				objeto.setSelecionado(true);
-			}
-		}
-
-		private void setScriptAdicaoHierarquico() {
-			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
-			objeto.setPesquisaAdicaoHierarquico(pesquisa);
-			Pesquisa invertido = pesquisa.inverter(principal.getId(), null);
-			if (invertido != null) {
-				mapaRef.put(ObjetoConstantes.PESQUISA_INVERTIDO, invertido);
-				objeto.addPesquisa(invertido);
-				objeto.setBuscaAutoTemp(true);
-				objeto.addReferencias(invertido.getReferencias());
-				principal.addReferencia(invertido.getReferencia());
-			}
-		}
-	}
-
-	private class ExportacaoImportacao {
-		final List<Objeto> objetos = new ArrayList<>();
-		final Objeto principal = new Objeto(0, 0);
-		private final Map<String, Object> mapaRef;
-		private final List<Pesquisa> listaRef;
-		final boolean exportacao;
-		Metadado campoProcessado;
-		final boolean circular;
-		Metadado raiz;
-		Vetor vetor;
-		int centroX;
-		int centroY;
-		int graus;
-		int y;
-
-		private ExportacaoImportacao(boolean exportacao, boolean circular) {
-			mapaRef = new LinkedHashMap<>();
-			listaRef = new ArrayList<>();
-			this.exportacao = exportacao;
-			this.circular = circular;
-		}
-
-		private void definirCentros(Dimension d) {
-			centroY = d.height / 2 - 25;
-			centroX = d.width / 2;
-		}
-
-		private void criarVetor(Dimension d) {
-			int comprimento = Math.min(d.width, d.height) / 2 - 50;
-			vetor = new Vetor(comprimento, 0);
-		}
-
-		private void processarPrincipal(Metadado tabela) {
-			iniciarPrincipal(tabela);
-			addObjeto(principal);
-		}
-
-		private void iniciarPrincipal(Metadado metadado) {
-			principal.setTabela(metadado.getDescricao());
-			principal.setChaves(metadado.getChaves());
-			principal.setId(metadado.getDescricao());
-			raiz = metadado.getPai();
-		}
-
-		private void checarCriarPesquisa() {
-			if (exportacao) {
-				criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
-						principal.getChaves());
-			}
-		}
-
-		private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
-			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
-		}
-
-		private void processarDetalhes(Metadado tabela) {
-			List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(exportacao);
-			processarLista(campos);
-		}
-
-		private void processarLista(List<Metadado> campos) {
-			for (Metadado campo : campos) {
-				campoProcessado = campo;
-				Objeto objeto = criarEAdicionarObjeto();
-				Relacao relacao = criarEAdicionarRelacao(objeto);
-				processarIdTabelaGrupo(objeto);
-				processarChaves(objeto, relacao);
-			}
-		}
-
-		private Objeto criarEAdicionarObjeto() {
-			Objeto objeto = new Objeto(0, 0);
-			objetos.add(objeto);
-			addObjeto(objeto);
-			return objeto;
-		}
-
-		private Relacao criarEAdicionarRelacao(Objeto objeto) {
-			Relacao relacao = new Relacao(principal, !exportacao, objeto, exportacao);
-			relacao.setQuebrado(!circular);
-			if (!circular) {
-				relacao.setPontoDestino(false);
-				relacao.setPontoOrigem(false);
-			}
-			addRelacao(relacao);
-			return relacao;
-		}
-
-		private void processarIdTabelaGrupo(Objeto objeto) {
-			Metadado tabelaRef = campoProcessado.getTabelaReferencia();
-			if (exportacao) {
-				processarIdTabelaGrupoExportacao(objeto, tabelaRef);
-			} else {
-				processarIdTabelaGrupoImportacao(objeto, tabelaRef);
-			}
-			objeto.setTabela(tabelaRef.getNomeTabela());
-		}
-
-		private void processarIdTabelaGrupoImportacao(Objeto objeto, Metadado tabelaRef) {
-			String nomeTabela = tabelaRef.getNomeTabela();
-			if (contemObjetoComTabela(nomeTabela)) {
-				String id = nomeTabela + Constantes.SEP2 + campoProcessado.getDescricao();
-				objeto.setId(id);
-				checagemId(objeto, id, Constantes.SEP2);
-				objeto.setGrupo(campoProcessado.getDescricao());
-			} else {
-				objeto.setId(nomeTabela);
-			}
-		}
-
-		private void processarChaves(Objeto objeto, Relacao relacao) {
-			Metadado tabelaRef = campoProcessado.getTabelaReferencia();
-			Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
-			if (tabela != null) {
-				processarChaves(objeto, tabela, relacao);
-			}
-		}
-
-		private void processarChaves(Objeto objeto, Metadado tabela, Relacao relacao) {
-			Metadado tabelaRef = campoProcessado.getTabelaReferencia();
-			relacao.setChaveDestino(tabelaRef.getNomeCampo());
-			objeto.setChaves(tabela.getChaves());
-			if (exportacao) {
-				referenciaNaPesquisa(objeto, relacao);
-			} else {
-				pesquisaIndividualDetalhe(objeto, relacao);
-			}
-		}
-
-		private void referenciaNaPesquisa(Objeto objeto, Relacao relacao) {
-			Metadado tabelaRef = campoProcessado.getTabelaReferencia();
-			ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
-			relacao.setChaveOrigem(principal.getChaves());
-		}
-
-		private void ref(String tabela, String campo, String grupo) {
-			Referencia ref = new Referencia(grupo, tabela, campo);
-			ref.setVazioInvisivel(true);
-			mapaRef.put("ref", ref);
-			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
-			pesquisa.add(ref);
-		}
-
-		private void pesquisaIndividualDetalhe(Objeto objeto, Relacao relacao) {
-			Metadado campoDetalhe = campoProcessado;
-			Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
-			pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(),
-					principal.getGrupo(), principal.getTabela(), campoDetalhe.getDescricao());
-			relacao.setChaveOrigem(campoDetalhe.getDescricao());
-		}
-
-		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
-				String grupoDetalhe, String tabelaDetalhe, String campoDetalhe) {
-			Pesquisa pesquisa = new Pesquisa(tabelaPrincipal,
-					new Referencia(grupoDetalhe, tabelaDetalhe, campoDetalhe));
-			Referencia ref = new Referencia(grupoPrincipal, tabelaPrincipal, campoPrincipal);
-			ref.setVazioInvisivel(false);
-			listaRef.add(pesquisa);
-			pesquisa.add(ref);
-		}
-
-		private void localizarObjetos() {
-			if (circular) {
-				principal.x = centroX;
-				principal.y = centroY;
-				if (!objetos.isEmpty()) {
-					localizacaoCircular();
-				}
-			} else {
-				localizacaoHierarquica();
-			}
-		}
-
-		private void localizacaoCircular() {
-			graus = 360 / objetos.size();
-			for (Objeto objeto : objetos) {
-				objeto.x = centroX + (int) vetor.getX();
-				objeto.y = centroY + (int) vetor.getY();
-				vetor.rotacionar(graus);
-			}
-		}
-
-		private void localizacaoHierarquica() {
-			configuracaoPrincipal();
-			localizarHierarquico();
-			configuracaoPrincipalFinal();
-			atualizarSuperficie();
-			principal.setSelecionado(true);
-			for (Objeto objeto : objetos) {
-				objeto.setSelecionado(true);
-			}
-		}
-
-		private void configuracaoPrincipal() {
-			principal.x = Constantes.VINTE;
-			principal.y = Constantes.VINTE;
-			deslocamentos(principal);
-			y = principal.y;
-			if (exportacao) {
-				incY();
-			}
-		}
-
-		private void deslocamentos(Objeto objeto) {
-			objeto.setDeslocamentoXId(28);
-			objeto.setDeslocamentoYId(24);
-		}
-
-		private void incY() {
-			y += Constantes.CEM;
-		}
-
-		private void localizarHierarquico() {
-			for (Objeto obj : objetos) {
-				localizacaoDetalhe(obj);
-				if (exportacao) {
-					obj.x += Constantes.VINTE_CINCO;
-				}
-			}
-		}
-
-		private void localizacaoDetalhe(Objeto objeto) {
-			objeto.x = Constantes.VINTE;
-			deslocamentos(objeto);
-			objeto.y = y;
-			incY();
-		}
-
-		private void configuracaoPrincipalFinal() {
-			if (!exportacao) {
-				if (!objetos.isEmpty()) {
-					principal.x += Constantes.VINTE_CINCO;
-				}
-				principal.y = y;
-				incY();
-			}
-		}
-
-		private void atualizarSuperficie() {
-			if (!circular) {
-				setPreferredSize(new Dimension(0, y));
-				SwingUtilities.updateComponentTreeUI(getParent());
-			}
-		}
-
-		private String getString() {
-			try {
-				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
-				if (pesquisa != null) {
-					return ObjetoUtil.getDescricao(pesquisa);
-				}
-				StringWriter sw = new StringWriter();
-				XMLUtil util = new XMLUtil(sw);
-				boolean ql = false;
-				for (Pesquisa pesq : listaRef) {
-					pesq.salvar(util, ql);
-					ql = true;
-				}
-				util.close();
-				return sw.toString();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("DESCRICAO", ex, ObjetoSuperficie.this);
-			}
-			return Constantes.VAZIO;
-		}
-
-		public void vincular(AtomicReference<String> ref) {
-			try {
-				String nomeTabela = principal.getTabela().toLowerCase();
-				arquivoVinculo = nomeTabela + "_vinculo.xml";
-				Vinculacao vinculo = getVinculacao(arquivoVinculo, true);
-				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
-				if (vinculo != null && pesquisa != null) {
-					salvar(pesquisa);
-				} else if (vinculo != null && !listaRef.isEmpty()) {
-					salvar(listaRef);
-				}
-				ref.set(nomeTabela + ".xml");
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("VINCULAR", ex, ObjetoSuperficie.this);
-			}
-		}
-
-		private void salvar(Pesquisa pesquisa) {
-			try {
-				vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("SALVAR", ex, ObjetoSuperficie.this);
-				return;
-			}
-			vinculacao.adicionarPesquisa(pesquisa);
-			for (Referencia ref : pesquisa.getReferencias()) {
-				Pesquisa pesq = ref.inverter();
-				vinculacao.adicionarPesquisa(pesq);
-			}
-			salvarVinculacao(vinculacao);
-		}
-
-		private void salvar(List<Pesquisa> listaRef) {
-			try {
-				vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("VINCULAR", ex, ObjetoSuperficie.this);
-				return;
-			}
-			for (Pesquisa pesq : listaRef) {
-				vinculacao.adicionarPesquisa(pesq);
-				Pesquisa invertido = pesq.inverter(null, null);
-				if (invertido != null) {
-					vinculacao.adicionarPesquisa(invertido);
-				}
-			}
-			salvarVinculacao(vinculacao);
 		}
 	}
 
@@ -2958,5 +2506,460 @@ class SuperficiePopup extends Popup {
 				superficie.repaint();
 			}
 		}
+	}
+}
+
+class Exportacao {
+	private final Map<String, Object> mapaRef;
+	final ObjetoSuperficie superficie;
+	final Objeto principal;
+	final Metadado raiz;
+	Metadado campoFK;
+	Relacao relacao;
+	Objeto objeto;
+	boolean erro;
+
+	Exportacao(ObjetoSuperficie superficie, Objeto principal, Map<String, Object> mapaRef, Metadado raiz) {
+		this.superficie = superficie;
+		this.principal = principal;
+		this.mapaRef = mapaRef;
+		this.raiz = raiz;
+	}
+
+	void criarPesquisa() {
+		criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
+				principal.getChaves());
+	}
+
+	private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
+		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
+	}
+
+	void processarDetalhes(Metadado tabela) {
+		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
+		Coletor coletor = new Coletor();
+		SetLista.view(principal.getId() + ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos),
+				coletor, superficie, new SetLista.Config(true, true));
+		if (coletor.size() == 1) {
+			processarCampoFK(getCampo(campos, coletor.get(0)));
+		} else {
+			erro = true;
+		}
+	}
+
+	private List<String> nomeCampos(List<Metadado> campos) {
+		return campos.stream().map(Metadado::getChaveTabelaReferencia).collect(Collectors.toList());
+	}
+
+	private Metadado getCampo(List<Metadado> campos, String nomeCampo) {
+		for (Metadado metadado : campos) {
+			if (metadado.getChaveTabelaReferencia().equals(nomeCampo)) {
+				return metadado;
+			}
+		}
+		return null;
+	}
+
+	private void processarCampoFK(Metadado campo) {
+		campoFK = campo;
+		criarEAdicionarObjeto();
+		criarEAdicionarRelacao();
+		processarIdTabelaGrupo();
+		processarChaves();
+	}
+
+	private void criarEAdicionarObjeto() {
+		Objeto obj = new Objeto(0, 0);
+		this.objeto = obj;
+		superficie.addObjeto(obj);
+	}
+
+	private void criarEAdicionarRelacao() {
+		Relacao rel = new Relacao(principal, false, objeto, true);
+		rel.setPontoDestino(false);
+		rel.setPontoOrigem(false);
+		rel.setQuebrado(true);
+		this.relacao = rel;
+		superficie.addRelacao(rel);
+	}
+
+	private void processarIdTabelaGrupo() {
+		Metadado tabelaRef = campoFK.getTabelaReferencia();
+		superficie.processarIdTabelaGrupoExportacao(objeto, tabelaRef);
+		objeto.setTabela(tabelaRef.getNomeTabela());
+	}
+
+	private void processarChaves() {
+		Metadado tabelaRef = campoFK.getTabelaReferencia();
+		Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
+		if (tabela != null) {
+			processarChaves(tabela);
+		}
+	}
+
+	private void processarChaves(Metadado tabela) {
+		Metadado tabelaRef = campoFK.getTabelaReferencia();
+		relacao.setChaveDestino(tabelaRef.getNomeCampo());
+		relacao.setChaveOrigem(principal.getChaves());
+		objeto.setChaves(tabela.getChaves());
+		referenciaNaPesquisa();
+	}
+
+	private void referenciaNaPesquisa() {
+		Metadado tabelaRef = campoFK.getTabelaReferencia();
+		ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
+	}
+
+	private void ref(String tabela, String campo, String grupo) {
+		Referencia ref = new Referencia(grupo, tabela, campo);
+		ref.setVazioInvisivel(true);
+		mapaRef.put("ref", ref);
+		Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+		objeto.addReferencia(pesquisa.getReferencia());
+		pesquisa.add(ref);
+	}
+
+	void localizarObjeto() {
+		InternalFormulario interno = superficie.getInternalFormulario(principal);
+		if (interno != null) {
+			objeto.x = principal.x + Constantes.VINTE_CINCO;
+			objeto.y = interno.getY() + Constantes.TRINTA;
+			objeto.setDeslocamentoXId(28);
+			objeto.setDeslocamentoYId(24);
+			objeto.setChecarLargura(true);
+			objeto.setCorTmp(Color.GREEN);
+			superficie.limparSelecao();
+			objeto.setSelecionado(true);
+		}
+	}
+
+	void setScriptAdicaoHierarquico() {
+		Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+		objeto.setPesquisaAdicaoHierarquico(pesquisa);
+		Pesquisa invertido = pesquisa.inverter(principal.getId(), null);
+		if (invertido != null) {
+			mapaRef.put(ObjetoConstantes.PESQUISA_INVERTIDO, invertido);
+			objeto.addPesquisa(invertido);
+			objeto.setBuscaAutoTemp(true);
+			objeto.addReferencias(invertido.getReferencias());
+			principal.addReferencia(invertido.getReferencia());
+		}
+	}
+}
+
+class ExportacaoImportacao {
+	final List<Objeto> objetos = new ArrayList<>();
+	final Objeto principal = new Objeto(0, 0);
+	private final Map<String, Object> mapaRef;
+	private final List<Pesquisa> listaRef;
+	final ObjetoSuperficie superficie;
+	final boolean exportacao;
+	Metadado campoProcessado;
+	final boolean circular;
+	Metadado raiz;
+	Vetor vetor;
+	int centroX;
+	int centroY;
+	int graus;
+	int y;
+
+	ExportacaoImportacao(ObjetoSuperficie superficie, boolean exportacao, boolean circular) {
+		mapaRef = new LinkedHashMap<>();
+		this.superficie = superficie;
+		listaRef = new ArrayList<>();
+		this.exportacao = exportacao;
+		this.circular = circular;
+	}
+
+	void definirCentros(Dimension d) {
+		centroY = d.height / 2 - 25;
+		centroX = d.width / 2;
+	}
+
+	void criarVetor(Dimension d) {
+		int comprimento = Math.min(d.width, d.height) / 2 - 50;
+		vetor = new Vetor(comprimento, 0);
+	}
+
+	void processarPrincipal(Metadado tabela) {
+		iniciarPrincipal(tabela);
+		superficie.addObjeto(principal);
+	}
+
+	private void iniciarPrincipal(Metadado metadado) {
+		principal.setTabela(metadado.getDescricao());
+		principal.setChaves(metadado.getChaves());
+		principal.setId(metadado.getDescricao());
+		raiz = metadado.getPai();
+	}
+
+	void checarCriarPesquisa() {
+		if (exportacao) {
+			criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
+					principal.getChaves());
+		}
+	}
+
+	private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
+		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
+	}
+
+	void processarDetalhes(Metadado tabela) {
+		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(exportacao);
+		processarLista(campos);
+	}
+
+	private void processarLista(List<Metadado> campos) {
+		for (Metadado campo : campos) {
+			campoProcessado = campo;
+			Objeto objeto = criarEAdicionarObjeto();
+			Relacao relacao = criarEAdicionarRelacao(objeto);
+			processarIdTabelaGrupo(objeto);
+			processarChaves(objeto, relacao);
+		}
+	}
+
+	private Objeto criarEAdicionarObjeto() {
+		Objeto objeto = new Objeto(0, 0);
+		objetos.add(objeto);
+		superficie.addObjeto(objeto);
+		return objeto;
+	}
+
+	private Relacao criarEAdicionarRelacao(Objeto objeto) {
+		Relacao relacao = new Relacao(principal, !exportacao, objeto, exportacao);
+		relacao.setQuebrado(!circular);
+		if (!circular) {
+			relacao.setPontoDestino(false);
+			relacao.setPontoOrigem(false);
+		}
+		superficie.addRelacao(relacao);
+		return relacao;
+	}
+
+	private void processarIdTabelaGrupo(Objeto objeto) {
+		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
+		if (exportacao) {
+			superficie.processarIdTabelaGrupoExportacao(objeto, tabelaRef);
+		} else {
+			processarIdTabelaGrupoImportacao(objeto, tabelaRef);
+		}
+		objeto.setTabela(tabelaRef.getNomeTabela());
+	}
+
+	private void processarIdTabelaGrupoImportacao(Objeto objeto, Metadado tabelaRef) {
+		String nomeTabela = tabelaRef.getNomeTabela();
+		if (superficie.contemObjetoComTabela(nomeTabela)) {
+			String id = nomeTabela + Constantes.SEP2 + campoProcessado.getDescricao();
+			objeto.setId(id);
+			superficie.checagemId(objeto, id, Constantes.SEP2);
+			objeto.setGrupo(campoProcessado.getDescricao());
+		} else {
+			objeto.setId(nomeTabela);
+		}
+	}
+
+	private void processarChaves(Objeto objeto, Relacao relacao) {
+		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
+		Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
+		if (tabela != null) {
+			processarChaves(objeto, tabela, relacao);
+		}
+	}
+
+	private void processarChaves(Objeto objeto, Metadado tabela, Relacao relacao) {
+		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
+		relacao.setChaveDestino(tabelaRef.getNomeCampo());
+		objeto.setChaves(tabela.getChaves());
+		if (exportacao) {
+			referenciaNaPesquisa(objeto, relacao);
+		} else {
+			pesquisaIndividualDetalhe(objeto, relacao);
+		}
+	}
+
+	private void referenciaNaPesquisa(Objeto objeto, Relacao relacao) {
+		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
+		ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
+		relacao.setChaveOrigem(principal.getChaves());
+	}
+
+	private void ref(String tabela, String campo, String grupo) {
+		Referencia ref = new Referencia(grupo, tabela, campo);
+		ref.setVazioInvisivel(true);
+		mapaRef.put("ref", ref);
+		Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+		pesquisa.add(ref);
+	}
+
+	private void pesquisaIndividualDetalhe(Objeto objeto, Relacao relacao) {
+		Metadado campoDetalhe = campoProcessado;
+		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
+		pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(), principal.getGrupo(),
+				principal.getTabela(), campoDetalhe.getDescricao());
+		relacao.setChaveOrigem(campoDetalhe.getDescricao());
+	}
+
+	private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
+			String grupoDetalhe, String tabelaDetalhe, String campoDetalhe) {
+		Pesquisa pesquisa = new Pesquisa(tabelaPrincipal, new Referencia(grupoDetalhe, tabelaDetalhe, campoDetalhe));
+		Referencia ref = new Referencia(grupoPrincipal, tabelaPrincipal, campoPrincipal);
+		ref.setVazioInvisivel(false);
+		listaRef.add(pesquisa);
+		pesquisa.add(ref);
+	}
+
+	void localizarObjetos() {
+		if (circular) {
+			principal.x = centroX;
+			principal.y = centroY;
+			if (!objetos.isEmpty()) {
+				localizacaoCircular();
+			}
+		} else {
+			localizacaoHierarquica();
+		}
+	}
+
+	private void localizacaoCircular() {
+		graus = 360 / objetos.size();
+		for (Objeto objeto : objetos) {
+			objeto.x = centroX + (int) vetor.getX();
+			objeto.y = centroY + (int) vetor.getY();
+			vetor.rotacionar(graus);
+		}
+	}
+
+	private void localizacaoHierarquica() {
+		configuracaoPrincipal();
+		localizarHierarquico();
+		configuracaoPrincipalFinal();
+		atualizarSuperficie();
+		principal.setSelecionado(true);
+		for (Objeto objeto : objetos) {
+			objeto.setSelecionado(true);
+		}
+	}
+
+	private void configuracaoPrincipal() {
+		principal.x = Constantes.VINTE;
+		principal.y = Constantes.VINTE;
+		deslocamentos(principal);
+		y = principal.y;
+		if (exportacao) {
+			incY();
+		}
+	}
+
+	private void deslocamentos(Objeto objeto) {
+		objeto.setDeslocamentoXId(28);
+		objeto.setDeslocamentoYId(24);
+	}
+
+	private void incY() {
+		y += Constantes.CEM;
+	}
+
+	private void localizarHierarquico() {
+		for (Objeto obj : objetos) {
+			localizacaoDetalhe(obj);
+			if (exportacao) {
+				obj.x += Constantes.VINTE_CINCO;
+			}
+		}
+	}
+
+	private void localizacaoDetalhe(Objeto objeto) {
+		objeto.x = Constantes.VINTE;
+		deslocamentos(objeto);
+		objeto.y = y;
+		incY();
+	}
+
+	private void configuracaoPrincipalFinal() {
+		if (!exportacao) {
+			if (!objetos.isEmpty()) {
+				principal.x += Constantes.VINTE_CINCO;
+			}
+			principal.y = y;
+			incY();
+		}
+	}
+
+	private void atualizarSuperficie() {
+		if (!circular) {
+			superficie.setPreferredSize(new Dimension(0, y));
+			SwingUtilities.updateComponentTreeUI(superficie.getParent());
+		}
+	}
+
+	String getString() {
+		try {
+			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+			if (pesquisa != null) {
+				return ObjetoUtil.getDescricao(pesquisa);
+			}
+			StringWriter sw = new StringWriter();
+			XMLUtil util = new XMLUtil(sw);
+			boolean ql = false;
+			for (Pesquisa pesq : listaRef) {
+				pesq.salvar(util, ql);
+				ql = true;
+			}
+			util.close();
+			return sw.toString();
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("DESCRICAO", ex, superficie);
+		}
+		return Constantes.VAZIO;
+	}
+
+	public void vincular(AtomicReference<String> ref) {
+		try {
+			String nomeTabela = principal.getTabela().toLowerCase();
+			superficie.arquivoVinculo = nomeTabela + "_vinculo.xml";
+			Vinculacao vinculo = superficie.getVinculacao(superficie.arquivoVinculo, true);
+			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+			if (vinculo != null && pesquisa != null) {
+				salvar(pesquisa);
+			} else if (vinculo != null && !listaRef.isEmpty()) {
+				salvar(listaRef);
+			}
+			ref.set(nomeTabela + ".xml");
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("VINCULAR", ex, superficie);
+		}
+	}
+
+	private void salvar(Pesquisa pesquisa) {
+		try {
+			superficie.vinculacao.abrir(superficie.arquivoVinculo, superficie);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("SALVAR", ex, superficie);
+			return;
+		}
+		superficie.vinculacao.adicionarPesquisa(pesquisa);
+		for (Referencia ref : pesquisa.getReferencias()) {
+			Pesquisa pesq = ref.inverter();
+			superficie.vinculacao.adicionarPesquisa(pesq);
+		}
+		superficie.salvarVinculacao(superficie.vinculacao);
+	}
+
+	private void salvar(List<Pesquisa> listaRef) {
+		try {
+			superficie.vinculacao.abrir(superficie.arquivoVinculo, superficie);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("VINCULAR", ex, superficie);
+			return;
+		}
+		for (Pesquisa pesq : listaRef) {
+			superficie.vinculacao.adicionarPesquisa(pesq);
+			Pesquisa invertido = pesq.inverter(null, null);
+			if (invertido != null) {
+				superficie.vinculacao.adicionarPesquisa(invertido);
+			}
+		}
+		superficie.salvarVinculacao(superficie.vinculacao);
 	}
 }
