@@ -27,8 +27,8 @@ public class AddLista extends Matemat {
 		InstrucaoUtil.checarOperando(operandoE);
 		InstrucaoUtil.checarOperando(operandoD);
 		Lista lista = new Lista();
-		add(lista, operandoD);
 		add(lista, operandoE);
+		add(lista, operandoD);
 		pilhaOperando.push(lista);
 	}
 
