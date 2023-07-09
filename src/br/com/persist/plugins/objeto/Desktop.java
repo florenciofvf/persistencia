@@ -317,10 +317,25 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	};
 
 	protected boolean contemReferencia(Objeto objeto) {
+		if (objeto != null) {
+			LOG.log(Level.FINEST, objeto.getId());
+		}
 		return false;
 	}
 
 	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear) {
+		if (metadado == null) {
+			LOG.finest("processadoMetadado(): metadado null.");
+		}
+		if (point == null) {
+			LOG.finest("processadoMetadado(): point null.");
+		}
+		if (labelDireito) {
+			LOG.finest("processadoMetadado(): labelDireito.");
+		}
+		if (checarNomear) {
+			LOG.finest("processadoMetadado(): checarNomear.");
+		}
 		return false;
 	}
 
