@@ -160,12 +160,12 @@ class LoadPar extends No {
 	}
 }
 
-class HeadLista extends No {
+class LoadHeadLista extends No {
 	final Atom atom;
 	Neg neg;
 
-	public HeadLista(Atom atom) {
-		super(InstrucaoConstantes.HEAD_LISTA);
+	public LoadHeadLista(Atom atom) {
+		super(InstrucaoConstantes.LOAD_HEAD_LISTA);
 		this.atom = atom;
 	}
 
@@ -200,12 +200,12 @@ class HeadLista extends No {
 	}
 }
 
-class TailLista extends No {
+class LoadTailLista extends No {
 	final Atom atom;
 	Neg neg;
 
-	public TailLista(Atom atom) {
-		super(InstrucaoConstantes.TAIL_LISTA);
+	public LoadTailLista(Atom atom) {
+		super(InstrucaoConstantes.LOAD_TAIL_LISTA);
 		this.atom = atom;
 	}
 

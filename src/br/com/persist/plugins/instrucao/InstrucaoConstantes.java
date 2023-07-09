@@ -28,10 +28,10 @@ public class InstrucaoConstantes {
 	public static final String BIG_DECIMAL = "big_decimal";
 	public static final String STRING = "string";
 
+	public static final String LOAD_HEAD_LISTA = "load_head_lista";
+	public static final String LOAD_TAIL_LISTA = "load_tail_lista";
 	public static final String DECLARE_VAR = "declare_var";
 	public static final String MODIFIC_VAR = "modific_var";
-	public static final String HEAD_LISTA = "head_lista";
-	public static final String TAIL_LISTA = "tail_lista";
 	public static final String ADD_LISTA = "add_lista";
 	public static final String TAIL_CALL = "tailcall";
 	public static final String LOAD_PAR = "load_par";

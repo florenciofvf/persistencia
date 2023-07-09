@@ -491,6 +491,9 @@ public class InstrucaoAtom {
 	static boolean variavel(int i, final List<Atom> lista) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
+			if (atom.isHeadLista() || atom.isTailLista()) {
+				return false;
+			}
 			return atom.isVariavel();
 		}
 		return false;
@@ -499,6 +502,9 @@ public class InstrucaoAtom {
 	static boolean param(int i, final List<Atom> lista) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
+			if (atom.isHeadLista() || atom.isTailLista()) {
+				return false;
+			}
 			return atom.isParam();
 		}
 		return false;

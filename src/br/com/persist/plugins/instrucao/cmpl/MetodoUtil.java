@@ -73,9 +73,9 @@ class MetodoUtil {
 		while (indice < atoms.size()) {
 			Atom atom = getAtom(indice);
 			if (atom.isHeadLista()) {
-				pilhaNo.add(new HeadLista(atom));
+				pilhaNo.add(new LoadHeadLista(atom));
 			} else if (atom.isTailLista()) {
-				pilhaNo.add(new TailLista(atom));
+				pilhaNo.add(new LoadTailLista(atom));
 			} else if (atom.isStringAtom()) {
 				indice++;
 				indice += processoInvocacao(atom, indice);
