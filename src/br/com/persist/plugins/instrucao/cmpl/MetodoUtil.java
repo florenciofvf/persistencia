@@ -18,6 +18,37 @@ class MetodoUtil {
 	MetodoUtil(Metodo metodo) {
 		this.metodo = Objects.requireNonNull(metodo);
 		atoms = metodo.getAtoms();
+		normalizarLista(":");
+	}
+
+	private void normalizarLista(String op) {
+		AtomIndice atomIndice = InstrucaoAtom.getAtomIndiceParaValor(atoms, op);
+		while (atomIndice != null) {
+			processar(atomIndice);
+			atomIndice = InstrucaoAtom.getAtomIndiceParaValor(atoms, op);
+		}
+	}
+
+	private void processar(AtomIndice atomIndice) {
+		int antes = atomIndice.indice - 1;
+		int depois = atomIndice.indice + 1;
+		if (isHead(antes) && !isTail(depois)) {
+			atoms.get(antes).setHeadLista(true);
+			atoms.remove(atomIndice.indice);
+		} else if (!isHead(antes) && isTail(depois)) {
+			atoms.get(depois).setTailLista(true);
+			atoms.remove(atomIndice.indice);
+		} else {
+			atomIndice.atom.setProcessado(true);
+		}
+	}
+
+	private boolean isHead(int antes) {
+		return InstrucaoAtom.variavel(antes, atoms) || InstrucaoAtom.param(antes, atoms);
+	}
+
+	private boolean isTail(int depois) {
+		return InstrucaoAtom.variavel(depois, atoms) || InstrucaoAtom.param(depois, atoms);
 	}
 
 	private No throwInstrucaoException(int indice) throws InstrucaoException {

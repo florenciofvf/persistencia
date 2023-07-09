@@ -402,16 +402,6 @@ public class InstrucaoAtom {
 		return lista;
 	}
 
-	class AtomIndice {
-		final Atom atom;
-		final int indice;
-
-		public AtomIndice(Atom atom, int indice) {
-			this.indice = indice;
-			this.atom = atom;
-		}
-	}
-
 	private void normalizar(final List<Atom> lista, final String valor, boolean negar) throws InstrucaoException {
 		AtomIndice atomIndice = getAtomIndiceParaValor(lista, valor);
 		while (atomIndice != null) {
@@ -420,7 +410,7 @@ public class InstrucaoAtom {
 		}
 	}
 
-	private AtomIndice getAtomIndiceParaValor(final List<Atom> lista, Object valor) {
+	static AtomIndice getAtomIndiceParaValor(final List<Atom> lista, Object valor) {
 		for (int i = 0; i < lista.size(); i++) {
 			Atom atom = lista.get(i);
 			if (!atom.isProcessado() && valor.equals(atom.getValor())) {
@@ -498,7 +488,7 @@ public class InstrucaoAtom {
 		}
 	}
 
-	private boolean variavel(int i, final List<Atom> lista) {
+	static boolean variavel(int i, final List<Atom> lista) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
 			return atom.isVariavel();
@@ -506,7 +496,7 @@ public class InstrucaoAtom {
 		return false;
 	}
 
-	private boolean param(int i, final List<Atom> lista) {
+	static boolean param(int i, final List<Atom> lista) {
 		if (i >= 0 && i < lista.size()) {
 			Atom atom = lista.get(i);
 			return atom.isParam();
@@ -541,5 +531,15 @@ public class InstrucaoAtom {
 			return new Atom(antes.getValor() + atom.getValor(), Atom.BIG_DECIMAL, atom.getIndice() - 1);
 		}
 		return throwInstrucaoException();
+	}
+}
+
+class AtomIndice {
+	final Atom atom;
+	final int indice;
+
+	public AtomIndice(Atom atom, int indice) {
+		this.indice = indice;
+		this.atom = atom;
 	}
 }
