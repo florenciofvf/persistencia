@@ -82,6 +82,16 @@ public class Lista {
 		return createFalse();
 	}
 
+	public void addLista(Lista lista) {
+		if (lista != null) {
+			long size = lista.size().longValue();
+			for (long i = 0; i < size; i++) {
+				Object o = lista.get(i);
+				add(o);
+			}
+		}
+	}
+
 	public Object add(Object o) {
 		No no = new No(o);
 		if (cabeca == null) {
