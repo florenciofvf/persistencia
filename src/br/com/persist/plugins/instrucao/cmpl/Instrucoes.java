@@ -34,7 +34,7 @@ class NoRaiz extends No {
 }
 
 abstract class Comum extends No {
-	public Comum(String nome) {
+	protected Comum(String nome) {
 		super(Objects.requireNonNull(nome));
 	}
 
@@ -64,7 +64,7 @@ abstract class Comum extends No {
 abstract class Desvio extends Comum {
 	protected int salto;
 
-	public Desvio(String nome) {
+	protected Desvio(String nome) {
 		super(nome);
 	}
 
@@ -126,6 +126,86 @@ class LoadPar extends No {
 
 	public LoadPar(Atom atom) {
 		super(InstrucaoConstantes.LOAD_PAR);
+		this.atom = atom;
+	}
+
+	@Override
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		if (atom.isNegar()) {
+			neg = new Neg();
+		}
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		indice = atomic.getAndIncrement();
+		if (neg != null) {
+			neg.indexar(atomic);
+		}
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		if (neg != null) {
+			neg.configurarDesvio();
+		}
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		print(pw, nome, atom.getValor());
+		if (neg != null) {
+			neg.print(pw);
+		}
+	}
+}
+
+class HeadLista extends No {
+	final Atom atom;
+	Neg neg;
+
+	public HeadLista(Atom atom) {
+		super(InstrucaoConstantes.HEAD_LISTA);
+		this.atom = atom;
+	}
+
+	@Override
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		if (atom.isNegar()) {
+			neg = new Neg();
+		}
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		indice = atomic.getAndIncrement();
+		if (neg != null) {
+			neg.indexar(atomic);
+		}
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		if (neg != null) {
+			neg.configurarDesvio();
+		}
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		print(pw, nome, atom.getValor());
+		if (neg != null) {
+			neg.print(pw);
+		}
+	}
+}
+
+class TailLista extends No {
+	final Atom atom;
+	Neg neg;
+
+	public TailLista(Atom atom) {
+		super(InstrucaoConstantes.TAIL_LISTA);
 		this.atom = atom;
 	}
 
