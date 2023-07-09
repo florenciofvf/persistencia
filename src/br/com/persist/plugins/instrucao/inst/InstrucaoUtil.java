@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.inst;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import br.com.persist.assistencia.Lista;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InstrucaoUtil {
@@ -30,6 +31,12 @@ public class InstrucaoUtil {
 	public static void checarNumber(Object obj) throws InstrucaoException {
 		if (!(obj instanceof Number)) {
 			throw new InstrucaoException("erro.valor_nao_number", obj);
+		}
+	}
+
+	public static void checarLista(Object obj) throws InstrucaoException {
+		if (!(obj instanceof Lista)) {
+			throw new InstrucaoException("erro.valor_nao_lista", obj);
 		}
 	}
 

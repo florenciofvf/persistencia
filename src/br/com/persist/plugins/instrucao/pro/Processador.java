@@ -7,6 +7,7 @@ import java.util.Map;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.inst.Add;
+import br.com.persist.plugins.instrucao.inst.AddLista;
 import br.com.persist.plugins.instrucao.inst.And;
 import br.com.persist.plugins.instrucao.inst.DeclareVar;
 import br.com.persist.plugins.instrucao.inst.Diff;
@@ -15,7 +16,9 @@ import br.com.persist.plugins.instrucao.inst.Goto;
 import br.com.persist.plugins.instrucao.inst.Ifeq;
 import br.com.persist.plugins.instrucao.inst.Igual;
 import br.com.persist.plugins.instrucao.inst.Invoke;
+import br.com.persist.plugins.instrucao.inst.LoadHeadLista;
 import br.com.persist.plugins.instrucao.inst.LoadPar;
+import br.com.persist.plugins.instrucao.inst.LoadTailLista;
 import br.com.persist.plugins.instrucao.inst.LoadVar;
 import br.com.persist.plugins.instrucao.inst.Maior;
 import br.com.persist.plugins.instrucao.inst.MaiorI;
@@ -85,6 +88,7 @@ public class Processador {
 
 	static {
 		Instrucoes.add(new Add(null));
+		Instrucoes.add(new AddLista(null));
 		Instrucoes.add(new And(null));
 		Instrucoes.add(new DeclareVar(null));
 		Instrucoes.add(new Diff(null));
@@ -93,7 +97,9 @@ public class Processador {
 		Instrucoes.add(new Ifeq(null));
 		Instrucoes.add(new Igual(null));
 		Instrucoes.add(new Invoke(null));
+		Instrucoes.add(new LoadHeadLista(null));
 		Instrucoes.add(new LoadPar(null));
+		Instrucoes.add(new LoadTailLista(null));
 		Instrucoes.add(new LoadVar(null));
 		Instrucoes.add(new Maior(null));
 		Instrucoes.add(new MaiorI(null));

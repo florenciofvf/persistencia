@@ -8,7 +8,7 @@ public abstract class Instrucao {
 	protected final Metodo metodo;
 	protected final String nome;
 
-	public Instrucao(Metodo metodo, String nome) {
+	protected Instrucao(Metodo metodo, String nome) {
 		this.nome = Objects.requireNonNull(nome);
 		this.metodo = metodo;
 	}
