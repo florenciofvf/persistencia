@@ -243,8 +243,8 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 					objetoSuperficie.selecionarConexao(getConexaoPadrao());
 				}
 			});
-			txtPrefixoNomeTabela
-					.addActionListener(e -> objetoSuperficie.prefixoNomeTabela(txtPrefixoNomeTabela.getText()));
+			txtPrefixoNomeTabela.addActionListener(
+					e -> ObjetoSuperficieUtil.prefixoNomeTabela(objetoSuperficie, txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> objetoSuperficie.excluirSelecionados());
 			chkAjusteAutomatico.addActionListener(e -> setAjusteAutomaticoForm());
 			chkAjusteLarguraFrm.addActionListener(e -> setAjusteLarguraForm());

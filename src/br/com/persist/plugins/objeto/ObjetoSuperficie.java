@@ -81,7 +81,6 @@ import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
-import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.objeto.macro.MacroDialogo;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -90,8 +89,6 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
-import br.com.persist.plugins.variaveis.Variavel;
-import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
 	final transient Vinculacao vinculacao = new Vinculacao();
@@ -1414,24 +1411,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void prefixoNomeTabela(String prefixoNomeTabela) {
-		for (Objeto objeto : objetos) {
-			objeto.setPrefixoNomeTabela(prefixoNomeTabela);
-		}
-	}
-
-	boolean getContinua(List<Objeto> lista) {
-		for (Objeto objeto : lista) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
 		List<Objeto> lista = getSelecionados();
-		if (getContinua(lista)) {
+		if (ObjetoSuperficieUtil.getContinua(lista)) {
 			List<Objeto> selecionados = montarSelecionados(lista,
 					tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO);
 			destacar(conexao, tipoContainer, config, selecionados);
@@ -1471,123 +1453,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config, List<Objeto> selecionados) {
 		if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_FORMULARIO) {
-			destacarDesktopFormulario(selecionados, conexao, config);
+			ObjetoSuperficieDestacar.destacarDesktopFormulario(selecionados, conexao, config, formulario);
 		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_DESKTOP) {
-			destacarDeskopPagina(selecionados, conexao, config);
+			ObjetoSuperficieDestacar.destacarDeskopPagina(selecionados, conexao, config, formulario);
 		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_FICHARIO) {
-			destacarObjetoPagina(selecionados, conexao);
+			ObjetoSuperficieDestacar.destacarObjetoPagina(selecionados, conexao, formulario);
 		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO) {
-			destacarPropriaSuperficie(selecionados, conexao, config);
-		}
-	}
-
-	private void destacarDesktopFormulario(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
-		DesktopFormulario form = DesktopFormulario.criar(formulario);
-		int x = 10;
-		int y = 10;
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				if (objeto.getReferenciaPesquisa() != null) {
-					objeto.getReferenciaPesquisa().setValidoInvisibilidade(true);
-				}
-				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
-				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), false, config);
-				x += 25;
-				y += 25;
-			}
-		}
-		form.setVisible(false);
-		form.setVisible(true);
-	}
-
-	private void destacarDeskopPagina(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
-		Desktop desktop = new Desktop(false);
-		int x = 10;
-		int y = 10;
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				if (objeto.getReferenciaPesquisa() != null) {
-					objeto.getReferenciaPesquisa().setValidoInvisibilidade(true);
-				}
-				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
-				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), false, config);
-				x += 25;
-				y += 25;
-			}
-		}
-		formulario.adicionarPagina(desktop);
-	}
-
-	private void destacarObjetoPagina(List<Objeto> listaObjetos, Conexao conexao) {
-		for (Objeto objeto : listaObjetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				setComplemento(conexao, objeto);
-				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, false));
-			}
-		}
-	}
-
-	private void destacarPropriaSuperficie(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
-		Variavel variavelDeltaX = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO);
-		Variavel variavelDeltaY = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-		boolean salvar = false;
-		if (variavelDeltaX == null) {
-			variavelDeltaX = new Variavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO,
-					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(variavelDeltaX);
-			salvar = true;
-		}
-		if (variavelDeltaY == null) {
-			variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO,
-					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(variavelDeltaY);
-			salvar = true;
-		}
-		checarAtualizarVariavelProvedorSuperficie(salvar);
-		int x = variavelDeltaX.getInteiro(Constantes.TRINTA);
-		int y = variavelDeltaY.getInteiro(Constantes.TRINTA);
-		processarInternalFormulario(objetos, conexao, config, x, y);
-		repaint();
-	}
-
-	private void processarInternalFormulario(List<Objeto> objetos, Conexao conexao, InternalConfig config, int x,
-			int y) {
-		Variavel variavelLargura = VariavelProvedor.getVariavel(ObjetoConstantes.DESTACAR_PROPRIO_LARGURA_INTERNAL);
-		Variavel variavelAltura = VariavelProvedor.getVariavel(ObjetoConstantes.DESTACAR_PROPRIO_ALTURA_INTERNAL);
-		boolean salvar = false;
-		if (variavelLargura == null) {
-			variavelLargura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_LARGURA_INTERNAL,
-					Constantes.VAZIO + Constantes.QUATROCENTOS);
-			VariavelProvedor.adicionar(variavelLargura);
-			salvar = true;
-		}
-		if (variavelAltura == null) {
-			variavelAltura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_ALTURA_INTERNAL,
-					Constantes.VAZIO + Constantes.DUZENTOS);
-			VariavelProvedor.adicionar(variavelAltura);
-			salvar = true;
-		}
-		checarAtualizarVariavelProvedorSuperficie(salvar);
-		int largura = variavelLargura.getInteiro(Constantes.QUATROCENTOS);
-		int altura = variavelAltura.getInteiro(Constantes.DUZENTOS);
-		Dimension dimension = new Dimension(largura, altura);
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				Object[] array = InternalTransferidor.criarArray(conexao, objeto, dimension);
-				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), false,
-						config);
-			}
-		}
-	}
-
-	private void checarAtualizarVariavelProvedorSuperficie(boolean salvar) {
-		if (salvar) {
-			try {
-				VariavelProvedor.salvar();
-				VariavelProvedor.inicializar();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
-			}
+			ObjetoSuperficieDestacar.destacarPropriaSuperficie(this, selecionados, conexao, config);
 		}
 	}
 
@@ -2155,7 +2027,7 @@ class SuperficiePopup extends Popup {
 
 		private void destacarProprioContainer() {
 			List<Objeto> lista = superficie.getSelecionados();
-			if (superficie.getContinua(lista)) {
+			if (ObjetoSuperficieUtil.getContinua(lista)) {
 				String ajustes = nomeObjetosAjusteAuto(lista);
 				if (!Util.estaVazio(ajustes) && !Util.confirmar(superficie,
 						ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {

@@ -251,4 +251,19 @@ public class ObjetoSuperficieUtil {
 		}
 		superficie.repaint();
 	}
+
+	public static void prefixoNomeTabela(ObjetoSuperficie superficie, String prefixoNomeTabela) {
+		for (Objeto objeto : superficie.objetos) {
+			objeto.setPrefixoNomeTabela(prefixoNomeTabela);
+		}
+	}
+
+	public static boolean getContinua(List<Objeto> lista) {
+		for (Objeto objeto : lista) {
+			if (!Util.estaVazio(objeto.getTabela())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
