@@ -8,13 +8,14 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Infixa extends No {
+	protected short adicaolista = 50;
 	protected short matematico1 = 100;
 	protected short matematico2 = 120;
 	protected short matematico3 = 140;
 	protected short comparacao1 = 200;
 	protected short logico1 = 300;
 
-	public Infixa(String nome) {
+	protected Infixa(String nome) {
 		super(Objects.requireNonNull(nome));
 	}
 
@@ -78,6 +79,22 @@ class Somar extends Infixa {
 	@Override
 	public Infixa clonar() {
 		return new Somar();
+	}
+}
+
+class AddLista extends Infixa {
+	public AddLista() {
+		super(InstrucaoConstantes.ADD_LISTA);
+	}
+
+	@Override
+	public short getPrioridade() {
+		return adicaolista;
+	}
+
+	@Override
+	public Infixa clonar() {
+		return new AddLista();
 	}
 }
 

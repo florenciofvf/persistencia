@@ -84,6 +84,7 @@ public class InstrucaoAtom {
 		case '-':
 		case '%':
 		case '^':
+		case ':':
 			indice++;
 			return new Atom(c, Atom.FUNCAO_INFIXA, indice - 1);
 		case '*':

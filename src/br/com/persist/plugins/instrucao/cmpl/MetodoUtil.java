@@ -149,6 +149,7 @@ class MetodoUtil {
 
 	static {
 		infixas.put("+", new Somar());
+		infixas.put(":", new AddLista());
 		infixas.put("-", new Subtrair());
 		infixas.put("*", new Multiplicar());
 		infixas.put("**", new Pow());

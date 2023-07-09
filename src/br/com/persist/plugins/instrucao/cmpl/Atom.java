@@ -19,6 +19,8 @@ public class Atom {
 
 	private boolean processado;
 	private final String valor;
+	private boolean headLista;
+	private boolean tailLista;
 	private int lengthOffset;
 	private final int tipo;
 	private boolean negar;
@@ -115,6 +117,22 @@ public class Atom {
 
 	public boolean isParam() {
 		return tipo == PARAM;
+	}
+
+	public boolean isHeadLista() {
+		return headLista;
+	}
+
+	public void setHeadLista(boolean headLista) {
+		this.headLista = headLista;
+	}
+
+	public boolean isTailLista() {
+		return tailLista;
+	}
+
+	public void setTailLista(boolean tailLista) {
+		this.tailLista = tailLista;
 	}
 
 	public boolean isProcessado() {

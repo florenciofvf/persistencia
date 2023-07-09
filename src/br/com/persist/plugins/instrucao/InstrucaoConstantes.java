@@ -30,6 +30,7 @@ public class InstrucaoConstantes {
 
 	public static final String DECLARE_VAR = "declare_var";
 	public static final String MODIFIC_VAR = "modific_var";
+	public static final String ADD_LISTA = "add_lista";
 	public static final String TAIL_CALL = "tailcall";
 	public static final String LOAD_PAR = "load_par";
 	public static final String LOAD_VAR = "load_var";

@@ -85,6 +85,7 @@ public class Metodo {
 
 	public void addAtom(Atom atom) {
 		if (atom != null) {
+			atom.setProcessado(false);
 			atoms.add(atom);
 		}
 	}
