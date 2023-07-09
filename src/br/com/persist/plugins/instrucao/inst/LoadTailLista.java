@@ -21,6 +21,7 @@ public class LoadTailLista extends Instrucao {
 	@Override
 	public Instrucao clonar(Metodo metodo) {
 		LoadTailLista resp = new LoadTailLista(metodo);
+		resp.parametro = parametro;
 		resp.param = param;
 		return resp;
 	}

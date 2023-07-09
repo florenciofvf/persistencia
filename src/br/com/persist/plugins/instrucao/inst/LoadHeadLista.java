@@ -21,6 +21,7 @@ public class LoadHeadLista extends Instrucao {
 	@Override
 	public Instrucao clonar(Metodo metodo) {
 		LoadHeadLista resp = new LoadHeadLista(metodo);
+		resp.parametro = parametro;
 		resp.param = param;
 		return resp;
 	}
