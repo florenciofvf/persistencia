@@ -28,6 +28,7 @@ public class InstrucaoConstantes {
 	public static final String BIG_DECIMAL = "big_decimal";
 	public static final String STRING = "string";
 
+	public static final String LOAD_LISTA_VAZIA = "load_lista_vazia";
 	public static final String LOAD_HEAD_LISTA = "load_head_lista";
 	public static final String LOAD_TAIL_LISTA = "load_tail_lista";
 	public static final String DECLARE_VAR = "declare_var";

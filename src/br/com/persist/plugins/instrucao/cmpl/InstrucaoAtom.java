@@ -108,6 +108,9 @@ public class InstrucaoAtom {
 		case '>':
 			indice++;
 			return infixaMaior(c, indice - 1);
+		case '[':
+			indice++;
+			return listaVazia(indice - 1);
 		case '&':
 			indice++;
 			return infixaAnd(indice - 1);
@@ -289,6 +292,14 @@ public class InstrucaoAtom {
 			return new Atom(">=", Atom.FUNCAO_INFIXA, index);
 		}
 		return new Atom(c, Atom.FUNCAO_INFIXA, index);
+	}
+
+	private Atom listaVazia(int index) throws InstrucaoException {
+		if (indiceAtualEh(']')) {
+			indice++;
+			return new Atom("[]", Atom.LISTA_VAZIA, index);
+		}
+		return throwInstrucaoException();
 	}
 
 	private Atom infixaAnd(int index) throws InstrucaoException {

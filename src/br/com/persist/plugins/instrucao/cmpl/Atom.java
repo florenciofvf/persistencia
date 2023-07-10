@@ -6,6 +6,7 @@ public class Atom {
 	static final int FUNCAO_INFIXA = 1;
 	static final int PARENTESE_INI = 2;
 	static final int PARENTESE_FIM = 3;
+	static final int LISTA_VAZIA = 15;
 	static final int BIG_INTEGER = 4;
 	static final int BIG_DECIMAL = 5;
 	static final int STRING_ATOM = 6;
@@ -94,6 +95,10 @@ public class Atom {
 
 	public boolean isStringAtom() {
 		return tipo == STRING_ATOM;
+	}
+
+	public boolean isListaVazia() {
+		return tipo == LISTA_VAZIA;
 	}
 
 	public boolean isVariavel() {

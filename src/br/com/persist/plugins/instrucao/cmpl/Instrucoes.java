@@ -160,6 +160,12 @@ class LoadPar extends No {
 	}
 }
 
+class LoadListaVazia extends Comum {
+	public LoadListaVazia() {
+		super(InstrucaoConstantes.LOAD_LISTA_VAZIA);
+	}
+}
+
 class LoadHeadLista extends No {
 	final Atom atom;
 	Neg neg;

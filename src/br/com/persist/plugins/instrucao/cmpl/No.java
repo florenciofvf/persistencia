@@ -14,7 +14,7 @@ public abstract class No {
 	protected int indice;
 	protected No parent;
 
-	public No(String nome) {
+	protected No(String nome) {
 		nos = new ArrayList<>();
 		this.nome = nome;
 	}

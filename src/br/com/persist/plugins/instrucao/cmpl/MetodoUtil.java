@@ -51,6 +51,8 @@ class MetodoUtil {
 				indice += processoInvocacao(atom, indice);
 			} else if (atom.isParenteseIni()) {
 				processoExpressao(atom);
+			} else if (atom.isListaVazia()) {
+				pilhaNo.add(new LoadListaVazia());
 			} else if (atom.isFuncaoInfixa()) {
 				processoInfixa(atom);
 			} else if (atom.isParenteseFim()) {
