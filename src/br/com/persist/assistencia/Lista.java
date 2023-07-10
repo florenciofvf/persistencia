@@ -1,6 +1,7 @@
 package br.com.persist.assistencia;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class Lista {
 	private BigInteger comprimento;
@@ -154,6 +155,46 @@ public class Lista {
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		int hashCode = 1;
+		No no = cabeca;
+		while (no != null) {
+			hashCode = 31 * hashCode + no.hashCode();
+			no = no.proximo;
+		}
+		return hashCode;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		} else if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		if (obj instanceof Lista) {
+			Lista other = (Lista) obj;
+			if (!comprimento.equals(other.comprimento)) {
+				return false;
+			}
+			No no = cabeca;
+			No noOther = other.cabeca;
+			while (no != null && noOther != null) {
+				if (!no.equals(noOther)) {
+					return false;
+				}
+				noOther = noOther.proximo;
+				no = no.proximo;
+			}
+			return no == null && noOther == null;
+		}
+		return false;
+	}
+
 	private class No {
 		Object valor;
 		No proximo;
@@ -165,6 +206,28 @@ public class Lista {
 
 		private No(Object valor) {
 			this(valor, null);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(valor);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			} else if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			if (obj instanceof No) {
+				No other = (No) obj;
+				return Objects.equals(valor, other.valor);
+			}
+			return false;
 		}
 	}
 }
