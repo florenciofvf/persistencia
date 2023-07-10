@@ -16,6 +16,7 @@ public class Atom {
 	static final int VIRGULA = 11;
 	static final int STRING = 12;
 	static final int PARAM = 13;
+	static final int META = 14;
 
 	private boolean processado;
 	private final String valor;

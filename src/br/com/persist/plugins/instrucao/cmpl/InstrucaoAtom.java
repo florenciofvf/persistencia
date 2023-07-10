@@ -80,11 +80,14 @@ public class InstrucaoAtom {
 		case ',':
 			indice++;
 			return new Atom(c, Atom.VIRGULA, indice - 1);
+		case ':':
+			indice++;
+			return new Atom(c, Atom.META, indice - 1);
 		case '+':
 		case '-':
 		case '%':
 		case '^':
-		case ':':
+		case '@':
 			indice++;
 			return new Atom(c, Atom.FUNCAO_INFIXA, indice - 1);
 		case '*':
