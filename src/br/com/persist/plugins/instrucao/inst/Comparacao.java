@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import br.com.persist.plugins.instrucao.pro.Metodo;
 
 public abstract class Comparacao extends Logico {
-	public Comparacao(Metodo metodo, String nome) {
+	protected Comparacao(Metodo metodo, String nome) {
 		super(metodo, nome);
 	}
 

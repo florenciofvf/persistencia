@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import br.com.persist.plugins.instrucao.pro.Metodo;
 
 public abstract class Logico extends Matemat {
-	public Logico(Metodo metodo, String nome) {
+	protected Logico(Metodo metodo, String nome) {
 		super(metodo, nome);
 	}
 

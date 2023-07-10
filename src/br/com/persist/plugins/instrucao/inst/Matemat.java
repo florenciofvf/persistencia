@@ -7,7 +7,7 @@ import br.com.persist.plugins.instrucao.pro.Instrucao;
 import br.com.persist.plugins.instrucao.pro.Metodo;
 
 public abstract class Matemat extends Instrucao {
-	public Matemat(Metodo metodo, String nome) {
+	protected Matemat(Metodo metodo, String nome) {
 		super(metodo, nome);
 	}
 
