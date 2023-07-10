@@ -18,37 +18,6 @@ class MetodoUtil {
 	MetodoUtil(Metodo metodo) {
 		this.metodo = Objects.requireNonNull(metodo);
 		atoms = metodo.getAtoms();
-		normalizarLista(":");
-	}
-
-	private void normalizarLista(String op) {
-		AtomIndice atomIndice = InstrucaoAtom.getAtomIndiceParaValor(atoms, op);
-		while (atomIndice != null) {
-			processar(atomIndice);
-			atomIndice = InstrucaoAtom.getAtomIndiceParaValor(atoms, op);
-		}
-	}
-
-	private void processar(AtomIndice atomIndice) {
-		int antes = atomIndice.indice - 1;
-		int depois = atomIndice.indice + 1;
-		if (isHead(antes) && !isTail(depois)) {
-			atoms.get(antes).setHeadLista(true);
-			atoms.remove(atomIndice.indice);
-		} else if (!isHead(antes) && isTail(depois)) {
-			atoms.get(depois).setTailLista(true);
-			atoms.remove(atomIndice.indice);
-		} else {
-			atomIndice.atom.setProcessado(true);
-		}
-	}
-
-	private boolean isHead(int antes) {
-		return InstrucaoAtom.variavel(antes, atoms) || InstrucaoAtom.param(antes, atoms);
-	}
-
-	private boolean isTail(int depois) {
-		return InstrucaoAtom.variavel(depois, atoms) || InstrucaoAtom.param(depois, atoms);
 	}
 
 	private No throwInstrucaoException(int indice) throws InstrucaoException {
@@ -67,6 +36,7 @@ class MetodoUtil {
 	}
 
 	No montar() throws InstrucaoException {
+		normalizarAtomicoLista(":");
 		NoRaiz raiz = new NoRaiz();
 		pilhaNo.push(raiz);
 		int indice = 0;
@@ -102,6 +72,36 @@ class MetodoUtil {
 			throw new InstrucaoException(metodo.toString() + " <<< CHEQUE O COMANDO DE RETORNO", false);
 		}
 		return raiz.excluirUltimoNo();
+	}
+
+	private void normalizarAtomicoLista(String op) throws InstrucaoException {
+		AtomIndice atomIndice = InstrucaoAtom.getAtomIndiceParaValor(atoms, op);
+		while (atomIndice != null) {
+			processar(atomIndice);
+			atomIndice = InstrucaoAtom.getAtomIndiceParaValor(atoms, op);
+		}
+	}
+
+	private void processar(AtomIndice atomIndice) throws InstrucaoException {
+		int antes = atomIndice.indice - 1;
+		int depois = atomIndice.indice + 1;
+		if (isHead(antes)) {
+			atoms.get(antes).setHeadLista(true);
+			atoms.remove(atomIndice.indice);
+		} else if (isTail(depois)) {
+			atoms.get(depois).setTailLista(true);
+			atoms.remove(atomIndice.indice);
+		} else {
+			throwInstrucaoException(atomIndice.indice);
+		}
+	}
+
+	private boolean isHead(int antes) {
+		return InstrucaoAtom.variavel(antes, atoms) || InstrucaoAtom.param(antes, atoms);
+	}
+
+	private boolean isTail(int depois) {
+		return InstrucaoAtom.variavel(depois, atoms) || InstrucaoAtom.param(depois, atoms);
 	}
 
 	private int processoInvocacao(Atom atomInvoke, int indice) throws InstrucaoException {
@@ -184,7 +184,7 @@ class MetodoUtil {
 
 	static {
 		infixas.put("+", new Somar());
-		infixas.put(":", new AddLista());
+		infixas.put("@", new AddLista());
 		infixas.put("-", new Subtrair());
 		infixas.put("*", new Multiplicar());
 		infixas.put("**", new Pow());
