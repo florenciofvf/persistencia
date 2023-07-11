@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Icones;
@@ -72,6 +74,7 @@ class TabelaMemoria extends OrdemTable {
 }
 
 class TabelaContainer extends Panel {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final TabelaMemoria tabela;
@@ -141,6 +144,9 @@ class TabelaContainer extends Panel {
 	}
 
 	void dialogOpenedHandler(Dialog dialog) {
+		if (dialog != null) {
+			LOG.log(Level.FINEST, dialog.getName());
+		}
 		Util.ajustar(tabela, getGraphics());
 	}
 }

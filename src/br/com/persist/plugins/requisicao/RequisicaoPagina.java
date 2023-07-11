@@ -783,8 +783,9 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			atualizar(str);
 			try {
 				Thread.sleep(sleep);
-			} catch (Exception ex) {
+			} catch (InterruptedException ex) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, ex);
+				Thread.currentThread().interrupt();
 			}
 		}
 	}
