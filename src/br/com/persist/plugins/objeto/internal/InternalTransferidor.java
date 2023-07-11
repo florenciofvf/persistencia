@@ -9,8 +9,8 @@ import java.util.Objects;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
-import br.com.persist.plugins.objeto.ObjetoSuperficie;
 
 public class InternalTransferidor implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(InternalTransferidor.class, "Transferidor");
@@ -31,7 +31,7 @@ public class InternalTransferidor implements Transferable {
 	}
 
 	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension) {
-		ObjetoSuperficie.setComplemento(conexao, objeto);
+		Desktop.setComplemento(conexao, objeto);
 		return new Object[] { objeto, conexao, dimension };
 	}
 

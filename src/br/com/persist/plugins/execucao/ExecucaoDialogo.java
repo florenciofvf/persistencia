@@ -14,7 +14,7 @@ public class ExecucaoDialogo extends AbstratoDialogo {
 
 	private ExecucaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
-		container = new ExecucaoContainer(this, formulario, null);
+		container = new ExecucaoContainer(this, formulario);
 		container.setExecucaoDialogo(this);
 		montarLayout();
 	}

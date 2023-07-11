@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -137,7 +138,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private void topFormulario() {
 			formulario.setAlwaysOnTop(chkSempreTopForm.isSelected());
 			if (chkSempreTopForm.isSelected()) {
-				formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
+				formulario.setExtendedState(Frame.MAXIMIZED_BOTH);
 			}
 		}
 

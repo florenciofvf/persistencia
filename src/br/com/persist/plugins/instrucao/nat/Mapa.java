@@ -7,6 +7,6 @@ public class Mapa {
 	}
 
 	public static Object get(Object mapa, Object chave) {
-		return ((Map<?, ?>) mapa).get((String) chave);
+		return ((Map<?, ?>) mapa).get(chave);
 	}
 }

@@ -29,7 +29,7 @@ public class ExecucaoFabrica extends AbstratoFabricaContainer {
 	private class ExecucaoPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new ExecucaoContainer(null, formulario, null);
+			return new ExecucaoContainer(null, formulario);
 		}
 	}
 
@@ -46,9 +46,8 @@ public class ExecucaoFabrica extends AbstratoFabricaContainer {
 		private MenuExecucao(Formulario formulario) {
 			super(Constantes.LABEL_VAZIO, Icones.PANEL);
 			setText(ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
-			ficharioAcao
-					.setActionListener(e -> formulario.adicionarPagina(new ExecucaoContainer(null, formulario, null)));
-			formularioAcao.setActionListener(e -> ExecucaoFormulario.criar(formulario, Constantes.VAZIO));
+			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new ExecucaoContainer(null, formulario)));
+			formularioAcao.setActionListener(e -> ExecucaoFormulario.criar(formulario));
 			dialogoAcao.setActionListener(e -> ExecucaoDialogo.criar(formulario));
 		}
 	}

@@ -75,7 +75,7 @@ public class AbaView extends Panel implements ContainerTreeListener {
 
 	@Override
 	public void executarMemoria(ContainerTree tree) {
-		log.processarMemoria(tree.getObjetoSelecionado(), tree, formulario);
+		log.processarMemoria(tree.getObjetoSelecionado(), tree);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -152,7 +152,7 @@ class PanelLog extends Panel {
 		textArea.setText(sb.toString());
 	}
 
-	void processarMemoria(Container container, Component comp, Formulario formulario) {
+	void processarMemoria(Container container, Component comp) {
 		if (container == null) {
 			return;
 		}

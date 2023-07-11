@@ -310,8 +310,9 @@ public class AbaView extends Panel {
 				repaint();
 				try {
 					Thread.sleep(Config.getIntervaloRotacao());
-				} catch (Exception ex) {
+				} catch (InterruptedException ex) {
 					log.log(Level.SEVERE, ex.getMessage());
+					Thread.currentThread().interrupt();
 				}
 			}
 		}

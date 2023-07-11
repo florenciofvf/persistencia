@@ -33,7 +33,7 @@ public class ExecucaoContainer extends AbstratoContainer {
 	private ExecucaoDialogo execucaoDialogo;
 	private final ExecucaoSplit split;
 
-	public ExecucaoContainer(Janela janela, Formulario formulario, String conteudo) {
+	public ExecucaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		split = new ExecucaoSplit(formulario);
 		split.inicializar();
@@ -106,7 +106,7 @@ public class ExecucaoContainer extends AbstratoContainer {
 			if (execucaoDialogo != null) {
 				execucaoDialogo.excluirContainer();
 			}
-			ExecucaoFormulario.criar(formulario, Constantes.VAZIO);
+			ExecucaoFormulario.criar(formulario);
 		}
 
 		@Override

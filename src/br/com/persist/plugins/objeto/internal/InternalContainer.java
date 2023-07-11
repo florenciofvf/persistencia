@@ -1843,7 +1843,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				Coletor coletor = new Coletor();
 				SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 						InternalContainer.this, null);
-				Map<String, Object> map = modelo.getMap(linhas[0], coletor, null);
+				Map<String, Object> map = modelo.getMap(linhas[0], coletor);
 				try {
 					setVariaveis(biblioteca, map, conn);
 					List<Object> resp = processador.executar(nomeBiblio, "main");

@@ -60,7 +60,7 @@ public class HoraUtil {
 			String[] array = getArray(string, erro);
 			String hora = array[0];
 			checarLength(hora, erro);
-			return getNumero(hora, erro) * HORA;
+			return getNumero(hora) * HORA;
 		}
 
 		private static String[] getArray(String string, String erro) throws ObjetoException {
@@ -82,7 +82,7 @@ public class HoraUtil {
 			String[] array = getArray(string, erro);
 			String hora = array[1];
 			checarLength(hora, erro);
-			return getNumero(hora, erro) * MINUTO;
+			return getNumero(hora) * MINUTO;
 		}
 
 		private static int getSegundo(String string) throws ObjetoException {
@@ -90,10 +90,10 @@ public class HoraUtil {
 			String[] array = getArray(string, erro);
 			String hora = array[2];
 			checarLength(hora, erro);
-			return getNumero(hora, erro);
+			return getNumero(hora);
 		}
 
-		private static byte getNumero(String string, String erro) {
+		private static byte getNumero(String string) {
 			char c = string.charAt(0);
 			while (c == '0') {
 				string = string.substring(1);

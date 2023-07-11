@@ -10,9 +10,9 @@ public class ExecucaoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final ExecucaoContainer container;
 
-	private ExecucaoFormulario(Formulario formulario, String conteudo) {
+	private ExecucaoFormulario(Formulario formulario) {
 		super(ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
-		container = new ExecucaoContainer(this, formulario, conteudo);
+		container = new ExecucaoContainer(this, formulario);
 		container.setExecucaoFormulario(this);
 		montarLayout();
 	}
@@ -34,8 +34,8 @@ public class ExecucaoFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
-	public static void criar(Formulario formulario, String conteudo) {
-		ExecucaoFormulario form = new ExecucaoFormulario(formulario, conteudo);
+	public static void criar(Formulario formulario) {
+		ExecucaoFormulario form = new ExecucaoFormulario(formulario);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
