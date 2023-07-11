@@ -16,9 +16,11 @@ public class XML {
 	private static SAXParserFactory criarSAXParserFactory() throws XMLException {
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
+			factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+			factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 			factory.setNamespaceAware(true);
-			factory.setXIncludeAware(true);
 			return factory;
 		} catch (Exception e) {
 			throw new XMLException(e);
