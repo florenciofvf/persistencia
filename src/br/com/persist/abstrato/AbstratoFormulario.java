@@ -23,7 +23,7 @@ import br.com.persist.componente.Janela;
 public abstract class AbstratoFormulario extends JFrame implements Janela, WindowHandler {
 	private static final long serialVersionUID = 1L;
 
-	public AbstratoFormulario(String titulo) {
+	protected AbstratoFormulario(String titulo) {
 		super(titulo);
 		inicializar();
 	}

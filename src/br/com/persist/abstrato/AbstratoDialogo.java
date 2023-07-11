@@ -23,13 +23,13 @@ import br.com.persist.componente.Janela;
 public abstract class AbstratoDialogo extends JDialog implements Janela, DialogHandler {
 	private static final long serialVersionUID = 1L;
 
-	public AbstratoDialogo(Dialog dialog, String titulo) {
+	protected AbstratoDialogo(Dialog dialog, String titulo) {
 		super(dialog, titulo, true);
 		inicializar();
 		setLocationRelativeTo(dialog);
 	}
 
-	public AbstratoDialogo(Frame frame, String titulo) {
+	protected AbstratoDialogo(Frame frame, String titulo) {
 		super(frame, titulo, true);
 		inicializar();
 		setLocationRelativeTo(frame);

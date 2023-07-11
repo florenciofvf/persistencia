@@ -14,7 +14,7 @@ public class AnotacaoDialogo extends AbstratoDialogo {
 
 	private AnotacaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
-		container = new AnotacaoContainer(this, formulario, null);
+		container = new AnotacaoContainer(this, formulario);
 		container.setAnotacaoDialogo(this);
 		montarLayout();
 	}

@@ -11,7 +11,7 @@ public abstract class ButtonPopup extends Button {
 	private static final long serialVersionUID = 1L;
 	private Popup popup = new Popup();
 
-	public ButtonPopup(String chaveRotulo, Icon icon) {
+	protected ButtonPopup(String chaveRotulo, Icon icon) {
 		setToolTipText(Mensagens.getString(chaveRotulo));
 		addActionListener(e -> popupShow());
 		setComponentPopupMenu(popup);

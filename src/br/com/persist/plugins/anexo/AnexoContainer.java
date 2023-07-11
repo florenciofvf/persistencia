@@ -133,7 +133,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		private void topFormulario() {
 			formulario.setAlwaysOnTop(chkSempreTopForm.isSelected());
 			if (chkSempreTopForm.isSelected()) {
-				formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
+				formulario.setExtendedState(Frame.MAXIMIZED_BOTH);
 			}
 		}
 

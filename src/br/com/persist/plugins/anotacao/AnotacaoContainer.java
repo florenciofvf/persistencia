@@ -33,7 +33,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 	private AnotacaoDialogo anotacaoDialogo;
 	private final AnotacaoSplit split;
 
-	public AnotacaoContainer(Janela janela, Formulario formulario, String conteudo) {
+	public AnotacaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		split = new AnotacaoSplit();
 		split.inicializar();
@@ -106,7 +106,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 			if (anotacaoDialogo != null) {
 				anotacaoDialogo.excluirContainer();
 			}
-			AnotacaoFormulario.criar(formulario, Constantes.VAZIO);
+			AnotacaoFormulario.criar(formulario);
 		}
 
 		@Override

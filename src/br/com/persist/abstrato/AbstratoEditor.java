@@ -21,7 +21,7 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 	private JTable tabela;
 	private int linha;
 
-	public AbstratoEditor() {
+	protected AbstratoEditor() {
 		changeEvent = new ChangeEvent(this);
 		listeners = new ArrayList<>();
 	}

@@ -319,7 +319,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 	public void processar(Formulario formulario, Map<String, Object> args) {
 		Boolean fechar = (Boolean) args.get(FormularioEvento.FECHAR_FORMULARIO);
 		if (Boolean.TRUE.equals(fechar)) {
-			fechandoFormulario(formulario);
+			fechandoFormulario();
 		} else {
 			for (int i = 0; i < getTabCount(); i++) {
 				Pagina p = getPagina(i);
@@ -387,7 +387,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		pagina.adicionadoAoFichario(this);
 	}
 
-	public void fechandoFormulario(Formulario formulario) {
+	public void fechandoFormulario() {
 		try (PrintWriter pw = new PrintWriter(Constantes.PERSISTENCIA_FVF, StandardCharsets.UTF_8.name())) {
 			int total = getTabCount();
 			for (int i = 0; i < total; i++) {

@@ -202,7 +202,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String rotulo, boolean chaveRotulo) {
 		Label label = new Label(rotulo, chaveRotulo);
-		label.setHorizontalAlignment(Label.CENTER);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		return label;
 	}
 

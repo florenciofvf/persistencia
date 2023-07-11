@@ -15,7 +15,7 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 	private static final long serialVersionUID = 1L;
 	protected final Formulario formulario;
 
-	public AbstratoConfiguracao(Formulario formulario, String titulo) {
+	protected AbstratoConfiguracao(Formulario formulario, String titulo) {
 		setBorder(BorderFactory.createTitledBorder(Objects.requireNonNull(titulo)));
 		this.formulario = Objects.requireNonNull(formulario);
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.Map;
 
 import br.com.persist.data.Objeto;
@@ -34,7 +35,7 @@ public class RequestUtil {
 			Objeto objHeader = (Objeto) tipoHeader;
 			return objHeader.getAtributosString();
 		}
-		return null;
+		return new HashMap<>();
 	}
 
 	private static String getBodyParams(Objeto objeto) {
@@ -53,7 +54,7 @@ public class RequestUtil {
 		RequestResult result = new RequestResult();
 		URLConnection conn = url2.openConnection();
 		requestProperty(requestHeader, conn);
-		String verbo = getVerbo(requestHeader, conn);
+		String verbo = getVerbo(requestHeader);
 		checkDoOutput(parameters, conn, verbo);
 		conn.connect();
 		post(parameters, conn, verbo);
@@ -71,7 +72,7 @@ public class RequestUtil {
 		}
 	}
 
-	public static String getVerbo(Map<String, String> header, URLConnection conn) {
+	public static String getVerbo(Map<String, String> header) {
 		if (header != null) {
 			return header.get("Request-Method");
 		}

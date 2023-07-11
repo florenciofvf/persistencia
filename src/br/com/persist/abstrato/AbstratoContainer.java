@@ -15,7 +15,7 @@ public abstract class AbstratoContainer extends Panel implements Pagina, WindowH
 	private static final long serialVersionUID = 1L;
 	protected final Formulario formulario;
 
-	public AbstratoContainer(Formulario formulario) {
+	protected AbstratoContainer(Formulario formulario) {
 		this.formulario = formulario;
 	}
 

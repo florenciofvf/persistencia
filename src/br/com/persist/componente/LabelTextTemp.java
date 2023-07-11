@@ -37,8 +37,9 @@ public class LabelTextTemp extends JLabel implements Runnable {
 	public void run() {
 		try {
 			Thread.sleep(atraso);
-		} catch (Exception e) {
-			LOG.log(Level.FINEST, "run()");
+		} catch (InterruptedException e) {
+			LOG.log(Level.FINEST, "run()", e);
+			Thread.currentThread().interrupt();
 		}
 		setText(Constantes.VAZIO);
 	}

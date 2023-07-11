@@ -21,7 +21,7 @@ import br.com.persist.componente.Janela;
 public abstract class AbstratoInternalFrame extends JInternalFrame implements Janela, WindowInternalHandler {
 	private static final long serialVersionUID = 1L;
 
-	public AbstratoInternalFrame(String titulo) {
+	protected AbstratoInternalFrame(String titulo) {
 		super(titulo, true, true, true, true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());

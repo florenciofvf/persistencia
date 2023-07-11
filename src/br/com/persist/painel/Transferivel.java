@@ -7,6 +7,8 @@ import java.awt.dnd.DnDConstants;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import br.com.persist.componente.Panel;
 import br.com.persist.marca.XMLUtil;
@@ -16,6 +18,7 @@ public abstract class Transferivel extends Panel implements Transferable {
 	public static final int ACAO_VALIDA = DnDConstants.ACTION_MOVE;
 	public static final DataFlavor flavor = createDataFlavor();
 	private static final DataFlavor[] flavors = { flavor };
+	private static final Logger LOG = Logger.getGlobal();
 	public static final String RENOMEAR = "RENOMEAR";
 	private transient Setor setor;
 	private String title;
@@ -103,6 +106,9 @@ public abstract class Transferivel extends Panel implements Transferable {
 	}
 
 	public boolean associadoA(File file) {
+		if (file != null) {
+			LOG.log(Level.FINEST, file.getAbsolutePath());
+		}
 		return false;
 	}
 

@@ -10,9 +10,9 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final AnotacaoContainer container;
 
-	private AnotacaoFormulario(Formulario formulario, String conteudo) {
+	private AnotacaoFormulario(Formulario formulario) {
 		super(AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
-		container = new AnotacaoContainer(this, formulario, conteudo);
+		container = new AnotacaoContainer(this, formulario);
 		container.setAnotacaoFormulario(this);
 		montarLayout();
 	}
@@ -34,8 +34,8 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
-	public static void criar(Formulario formulario, String conteudo) {
-		AnotacaoFormulario form = new AnotacaoFormulario(formulario, conteudo);
+	public static void criar(Formulario formulario) {
+		AnotacaoFormulario form = new AnotacaoFormulario(formulario);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

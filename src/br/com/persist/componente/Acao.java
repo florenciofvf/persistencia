@@ -11,7 +11,7 @@ public abstract class Acao extends AbstractAction {
 	protected final String chave;
 	protected final boolean menu;
 
-	public Acao(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
+	protected Acao(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
 		setRotulo(menu, rotulo, chaveRotulo);
 		putValue(Action.SMALL_ICON, icone);
 		this.chave = rotulo;

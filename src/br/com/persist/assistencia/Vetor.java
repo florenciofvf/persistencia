@@ -91,7 +91,7 @@ public final class Vetor {
 		return grau * FVF;
 	}
 
-	public static void main(String args) {
+	public static void main() {
 		Vetor a = new Vetor(100, 0);
 		Vetor b = new Vetor(100, 0);
 		a.rotacionar(90);

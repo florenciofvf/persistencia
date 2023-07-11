@@ -29,7 +29,7 @@ public class AnotacaoFabrica extends AbstratoFabricaContainer {
 	private class AnotacaoPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new AnotacaoContainer(null, formulario, null);
+			return new AnotacaoContainer(null, formulario);
 		}
 	}
 
@@ -46,9 +46,8 @@ public class AnotacaoFabrica extends AbstratoFabricaContainer {
 		private MenuAnotacao(Formulario formulario) {
 			super(Constantes.LABEL_VAZIO, Icones.PANEL4);
 			setText(AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
-			ficharioAcao
-					.setActionListener(e -> formulario.adicionarPagina(new AnotacaoContainer(null, formulario, null)));
-			formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(formulario, Constantes.VAZIO));
+			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new AnotacaoContainer(null, formulario)));
+			formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(formulario));
 			dialogoAcao.setActionListener(e -> AnotacaoDialogo.criar(formulario));
 		}
 	}
