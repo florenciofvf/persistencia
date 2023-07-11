@@ -8,7 +8,7 @@ import br.com.persist.plugins.mapa.Objeto;
 public abstract class Organizador {
 	private final String id;
 
-	public Organizador(String id) {
+	protected Organizador(String id) {
 		this.id = id;
 	}
 

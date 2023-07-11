@@ -33,8 +33,9 @@ public class OrganizadorRandomico extends Organizador {
 	private void pausar() {
 		try {
 			Thread.sleep(10);
-		} catch (Exception e) {
+		} catch (InterruptedException e) {
 			LOG.log(Level.SEVERE, Constantes.INFO, e);
+			Thread.currentThread().interrupt();
 		}
 	}
 }

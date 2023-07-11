@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Mensagens;
@@ -146,7 +147,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String chaveRotulo) {
 		Label label = new Label(ObjetoMensagens.getString(chaveRotulo), false);
-		label.setHorizontalAlignment(Label.CENTER);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		return label;
 	}
 
@@ -214,9 +215,9 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			labelBuscarTotal.setForeground(ObjetoPreferencia.getCorTotalAtual());
 			labelComparacao.setForeground(ObjetoPreferencia.getCorComparaRec());
-			labelAntesProcessar.setHorizontalAlignment(Label.CENTER);
-			labelBuscarTotal.setHorizontalAlignment(Label.CENTER);
-			labelComparacao.setHorizontalAlignment(Label.CENTER);
+			labelAntesProcessar.setHorizontalAlignment(SwingConstants.CENTER);
+			labelBuscarTotal.setHorizontalAlignment(SwingConstants.CENTER);
+			labelComparacao.setHorizontalAlignment(SwingConstants.CENTER);
 			labelAntesProcessar.addMouseListener(mouseInner);
 			labelBuscarTotal.addMouseListener(mouseInner);
 			labelComparacao.addMouseListener(mouseInner);

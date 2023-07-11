@@ -101,18 +101,18 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
-		checarSelecionarConexao(formulario, args);
-		checarGetMetadado(formulario, args);
+		checarSelecionarConexao(args);
+		checarGetMetadado(args);
 	}
 
-	private void checarSelecionarConexao(Formulario formulario, Map<String, Object> args) {
+	private void checarSelecionarConexao(Map<String, Object> args) {
 		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 		}
 	}
 
-	private void checarGetMetadado(Formulario formulario, Map<String, Object> args) {
+	private void checarGetMetadado(Map<String, Object> args) {
 		String nome = (String) args.get(MetadadoEvento.GET_METADADO_OBJETO);
 		if (!Util.estaVazio(nome)) {
 			Metadado resposta = metadadoTree.getRaiz().getMetadado(nome);

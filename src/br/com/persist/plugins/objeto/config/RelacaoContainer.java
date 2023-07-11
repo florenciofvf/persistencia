@@ -30,6 +30,7 @@ import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -154,7 +155,7 @@ public class RelacaoContainer extends Panel {
 		private Box criarLinha(String rotulo, boolean chaveRotulo, JComponent componente) {
 			Box box = Box.createHorizontalBox();
 			Label label = new Label(rotulo, chaveRotulo);
-			label.setHorizontalAlignment(Label.RIGHT);
+			label.setHorizontalAlignment(SwingConstants.RIGHT);
 			label.setPreferredSize(new Dimension(160, 0));
 			label.setMinimumSize(new Dimension(160, 0));
 			box.add(label);

@@ -24,7 +24,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		montarLayout();
 	}
 
-	private ObjetoFormulario(Formulario formulario, ObjetoContainer container) {
+	private ObjetoFormulario(ObjetoContainer container) {
 		super(container.getFileName());
 		container.setObjetoFormulario(this);
 		this.container = container;
@@ -37,7 +37,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	}
 
 	public static ObjetoFormulario criar(Formulario formulario, ObjetoContainer container) {
-		ObjetoFormulario form = new ObjetoFormulario(formulario, container);
+		ObjetoFormulario form = new ObjetoFormulario(container);
 		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}

@@ -124,8 +124,8 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		model.getDados(linhas[rowIndex].indice, sb, coletor, conexao);
 	}
 
-	public Map<String, Object> getMap(int rowIndex, Coletor coletor, Conexao conexao) {
-		return model.getMap(linhas[rowIndex].indice, coletor, conexao);
+	public Map<String, Object> getMap(int rowIndex, Coletor coletor) {
+		return model.getMap(linhas[rowIndex].indice, coletor);
 	}
 
 	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere,

@@ -265,13 +265,13 @@ public class PersistenciaModelo implements TableModel {
 		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb, coletor, conexao);
 	}
 
-	public Map<String, Object> getMap(int rowIndex, Coletor coletor, Conexao conexao) {
+	public Map<String, Object> getMap(int rowIndex, Coletor coletor) {
 		List<Object> registro = registros.get(rowIndex);
 		List<Object> valores = new ArrayList<>();
 		for (Coluna coluna : colunas) {
 			valores.add(registro.get(coluna.getIndice()));
 		}
-		return getMap(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), coletor, conexao);
+		return getMap(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), coletor);
 	}
 
 	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere,
@@ -412,7 +412,7 @@ public class PersistenciaModelo implements TableModel {
 		}
 	}
 
-	private Map<String, Object> getMap(Coluna[] colunas, Object[] valores, Coletor coletor, Conexao conexao) {
+	private Map<String, Object> getMap(Coluna[] colunas, Object[] valores, Coletor coletor) {
 		Map<String, Object> map = new HashMap<>();
 		for (int i = 0; i < colunas.length; i++) {
 			Coluna coluna = colunas[i];

@@ -77,7 +77,7 @@ public class Objeto {
 				int metade = diamet / 2;
 				int xx = xOrigem + metade;
 				int yy = yOrigem + metade;
-				v.x = (double) (metade + 10);
+				v.x = (metade + 10);
 				v.y = 0;
 				v.z = 0;
 				v.rotacaoZ(-75);
