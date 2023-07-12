@@ -25,6 +25,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
@@ -69,6 +71,29 @@ public class Util {
 	private static Random random;
 
 	private Util() {
+	}
+
+	public static URL[] getURLs() {
+		try {
+			File[] files = new File("libs").listFiles();
+			List<File> lista = new ArrayList<>();
+			if (files != null) {
+				for (File f : files) {
+					String s = f.getName().toLowerCase();
+					if (s.endsWith(".jar")) {
+						lista.add(f);
+					}
+				}
+			}
+			URL[] urls = new URL[lista.size()];
+			for (int i = 0; i < lista.size(); i++) {
+				URI uri = lista.get(i).toURI();
+				urls[i] = uri.toURL();
+			}
+			return urls;
+		} catch (Exception e) {
+			throw new IllegalStateException();
+		}
 	}
 
 	public static boolean estaVazio(String s) {
