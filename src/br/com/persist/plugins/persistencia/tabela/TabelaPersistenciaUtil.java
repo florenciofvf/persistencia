@@ -169,7 +169,7 @@ public class TabelaPersistenciaUtil {
 			if (builder.length() > 0) {
 				builder.append(", ");
 			}
-			builder.append(method.getName() + ":");
+			builder.append(method.getName() + "->");
 			builder.append(method.invoke(instancia));
 		}
 		return builder.toString();
