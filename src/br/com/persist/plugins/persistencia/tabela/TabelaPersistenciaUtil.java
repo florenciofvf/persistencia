@@ -97,37 +97,23 @@ public class TabelaPersistenciaUtil {
 	}
 
 	private static String descreverInstanciaEnum(Field campoEnum, List<Valor> valores) throws IllegalAccessException {
-		Class<?> classeDoCampoEnum = campoEnum.getType();
-		Field[] fieldsEnum = classeDoCampoEnum.getFields();
+		Class<?> classeDoCampo = campoEnum.getType();
+		Object[] enums = classeDoCampo.getEnumConstants();
 		StringBuilder builder = new StringBuilder();
-		for (Field fieldEnum : fieldsEnum) {
+		for (Object instancia : enums) {
 			if (builder.length() > 0) {
 				builder.append("\n");
 			}
-			fieldEnum.setAccessible(true);
-			Object fieldInstancia = fieldEnum.get(campoEnum);
-			builder.append(descreverFieldInstancia(fieldEnum, fieldInstancia, valores));
+			if (sel(instancia, valores)) {
+				builder.append(">>> ");
+			}
+			builder.append(instancia);
+			builder.append(descreverInstancia(instancia));
 		}
 		return builder.toString();
 	}
 
-	private static String descreverFieldInstancia(Field fieldEnum, Object fieldInstancia, List<Valor> valores)
-			throws IllegalAccessException {
-		StringBuilder builder = new StringBuilder();
-		Class<?> classe = fieldInstancia.getClass();
-		Field[] fields = classe.getDeclaredFields();
-		if (contem(fieldInstancia, valores)) {
-			builder.append(">>> ");
-		}
-		if (contemValido(fields)) {
-			builder.append(fieldEnum.getName() + " = [" + getValorFields(fields, fieldInstancia) + "]");
-		} else {
-			builder.append(fieldInstancia);
-		}
-		return builder.toString();
-	}
-
-	private static boolean contem(Object instancia, List<Valor> valores) {
+	private static boolean sel(Object instancia, List<Valor> valores) {
 		for (Valor valor : valores) {
 			if (igual(instancia, valor)) {
 				return true;
@@ -146,6 +132,18 @@ public class TabelaPersistenciaUtil {
 			}
 		}
 		return false;
+	}
+
+	private static String descreverInstancia(Object fieldInstancia) throws IllegalAccessException {
+		StringBuilder builder = new StringBuilder();
+		Class<?> classe = fieldInstancia.getClass();
+		Field[] fields = classe.getDeclaredFields();
+//		if (contemValido(fields)) {
+//			builder.append(fieldEnum.getName() + " = [" + getValorFields(fields, fieldInstancia) + "]");
+//		} else {
+//			builder.append(fieldInstancia);
+//		}
+		return builder.toString();
 	}
 
 	private static boolean contemValido(Field[] fields) {
