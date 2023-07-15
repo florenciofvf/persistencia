@@ -2,7 +2,8 @@ package br.com.persist.plugins.persistencia.tabela;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,8 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
-	public static String descreverField(Field field, List<Valor> valores) throws IllegalAccessException {
+	public static String descreverField(Field field, List<Valor> valores)
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		if (field == null) {
 			return "";
 		}
@@ -92,11 +94,13 @@ public class TabelaPersistenciaUtil {
 		return field.getType().getName() + " " + field.getName() + ";\n";
 	}
 
-	private static String declaracaoDoCampoEnum(Field field, List<Valor> valores) throws IllegalAccessException {
-		return declaracaoDoCampo(field) + "\n" + descreverInstanciaEnum(field, valores);
+	private static String declaracaoDoCampoEnum(Field field, List<Valor> valores)
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		return declaracaoDoCampo(field) + "\n" + descreverEnum(field, valores);
 	}
 
-	private static String descreverInstanciaEnum(Field campoEnum, List<Valor> valores) throws IllegalAccessException {
+	private static String descreverEnum(Field campoEnum, List<Valor> valores)
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Class<?> classeDoCampo = campoEnum.getType();
 		Object[] enums = classeDoCampo.getEnumConstants();
 		StringBuilder builder = new StringBuilder();
@@ -108,7 +112,12 @@ public class TabelaPersistenciaUtil {
 				builder.append(">>> ");
 			}
 			builder.append(instancia);
-			builder.append(descreverInstancia(instancia));
+			Method[] metodosGet = getMetodosGet(instancia);
+			if (metodosGet.length > 0) {
+				builder.append(" = [");
+				builder.append(detalharInstancia(instancia, metodosGet));
+				builder.append("]");
+			}
 		}
 		return builder.toString();
 	}
@@ -134,37 +143,31 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
-	private static String descreverInstancia(Object fieldInstancia) throws IllegalAccessException {
-		StringBuilder builder = new StringBuilder();
-		Class<?> classe = fieldInstancia.getClass();
-		Field[] fields = classe.getDeclaredFields();
-//		if (contemValido(fields)) {
-//			builder.append(fieldEnum.getName() + " = [" + getValorFields(fields, fieldInstancia) + "]");
-//		} else {
-//			builder.append(fieldInstancia);
-//		}
-		return builder.toString();
-	}
-
-	private static boolean contemValido(Field[] fields) {
-		for (Field field : fields) {
-			if (!Modifier.isStatic(field.getModifiers())) {
-				return true;
+	private static Method[] getMetodosGet(Object instancia) {
+		Class<?> classe = instancia.getClass();
+		Method[] methods = classe.getDeclaredMethods();
+		List<Method> resp = new ArrayList<>();
+		for (Method method : methods) {
+			if (validoGet(method)) {
+				resp.add(method);
 			}
 		}
-		return false;
+		return resp.toArray(new Method[0]);
 	}
 
-	private static String getValorFields(Field[] fields, Object fieldInstancia) throws IllegalAccessException {
+	private static boolean validoGet(Method method) {
+		return method.getParameterCount() == 0;
+	}
+
+	private static String detalharInstancia(Object instancia, Method[] metodosGet)
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		StringBuilder builder = new StringBuilder();
-		for (Field field : fields) {
-			if (!Modifier.isStatic(field.getModifiers())) {
-				field.setAccessible(true);
-				if (builder.length() > 0) {
-					builder.append(", ");
-				}
-				builder.append(field.get(fieldInstancia));
+		for (Method method : metodosGet) {
+			if (builder.length() > 0) {
+				builder.append(", ");
 			}
+			builder.append(method.getName() + ":");
+			builder.append(method.invoke(instancia));
 		}
 		return builder.toString();
 	}

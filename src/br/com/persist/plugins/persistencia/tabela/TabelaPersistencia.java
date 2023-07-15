@@ -794,7 +794,7 @@ public class TabelaPersistencia extends JTable {
 						Set<String> set = new HashSet<>(lista);
 						String string = TabelaPersistenciaUtil.descreverField(field, criarListaValores(set));
 						Util.mensagem(TabelaPersistencia.this, string);
-					} catch (IllegalAccessException ex) {
+					} catch (Exception ex) {
 						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
 					}
 				});
