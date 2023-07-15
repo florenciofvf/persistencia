@@ -1,7 +1,0 @@
-{
-     "ambiente": "DESENVOLVIMENTO",
-     "url": "http://desenv.com.br",
-     "header": {
-         "header1": "valor1" 
-     }
-}
