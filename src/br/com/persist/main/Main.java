@@ -3,14 +3,6 @@ package br.com.persist.main;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +27,6 @@ public class Main {
 		Preferencias.inicializar();
 		installLookAndFeel();
 		Preferencias.abrir();
-		addURLs(getURLs());
 		Imagens.ini();
 		abrirForm();
 	}
@@ -87,50 +78,5 @@ public class Main {
 			}
 		}
 		return null;
-	}
-
-	private static void addURL(URL url) {
-		try {
-			URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-			Class<?> classe = URLClassLoader.class;
-			Method method = classe.getDeclaredMethod("addURL", URL.class);
-			method.setAccessible(true);
-			method.invoke(classLoader, url);
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, e);
-		}
-	}
-
-	private static URL[] getURLs() {
-		File[] files = new File("libs").listFiles();
-		List<URL> urls = new ArrayList<>();
-		addURL(files, urls);
-		return urls.toArray(new URL[urls.size()]);
-	}
-
-	private static void addURLs(URL[] urLs) {
-		for (URL url : urLs) {
-			addURL(url);
-		}
-	}
-
-	private static void addURL(File[] files, List<URL> urls) {
-		try {
-			if (files != null) {
-				addURLs(files, urls);
-			}
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, e);
-		}
-	}
-
-	private static void addURLs(File[] files, List<URL> urls) throws MalformedURLException {
-		for (File f : files) {
-			String s = f.getName().toLowerCase();
-			if (s.endsWith(".jar")) {
-				URI uri = f.toURI();
-				urls.add(uri.toURL());
-			}
-		}
 	}
 }
