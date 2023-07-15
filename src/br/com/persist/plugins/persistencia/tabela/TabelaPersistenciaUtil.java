@@ -75,10 +75,6 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
-	private static String declaracaoDoCampo(Field field) {
-		return field.getType().getName() + " " + field.getName() + ";\n";
-	}
-
 	public static String descreverField(Field field, List<Valor> valores) throws IllegalAccessException {
 		if (field == null) {
 			return "";
@@ -90,6 +86,10 @@ public class TabelaPersistenciaUtil {
 		Class<?> classe = field.getType();
 		Class<?> superClasse = classe.getSuperclass();
 		return superClasse != null && Enum.class.isAssignableFrom(superClasse);
+	}
+
+	private static String declaracaoDoCampo(Field field) {
+		return field.getType().getName() + " " + field.getName() + ";\n";
 	}
 
 	private static String declaracaoDoCampoEnum(Field field, List<Valor> valores) throws IllegalAccessException {
