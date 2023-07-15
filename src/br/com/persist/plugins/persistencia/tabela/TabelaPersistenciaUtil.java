@@ -83,7 +83,7 @@ public class TabelaPersistenciaUtil {
 		if (field == null) {
 			return "";
 		}
-		return ehCampoEnum(field) ? declaracaoDoCampoEnum(field, valores) : declaracaoDoCampo(field);
+		return !ehCampoEnum(field) ? declaracaoDoCampo(field) : declaracaoDoCampoEnum(field, valores);
 	}
 
 	private static boolean ehCampoEnum(Field field) {
