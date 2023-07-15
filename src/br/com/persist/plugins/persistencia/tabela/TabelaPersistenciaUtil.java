@@ -156,7 +156,10 @@ public class TabelaPersistenciaUtil {
 	}
 
 	private static boolean validoGet(Method method) {
-		return method.getParameterCount() == 0;
+		if (method.getName().startsWith("get")) {
+			return method.getParameterCount() == 0;
+		}
+		return false;
 	}
 
 	private static String detalharInstancia(Object instancia, Method[] metodosGet)
