@@ -114,9 +114,9 @@ public class TabelaPersistenciaUtil {
 			builder.append(instancia);
 			Method[] metodosGet = getMetodosGet(instancia);
 			if (metodosGet.length > 0) {
-				builder.append(" = [");
+				builder.append(" = (");
 				builder.append(detalharInstancia(instancia, metodosGet));
-				builder.append("]");
+				builder.append(")");
 			}
 		}
 		return builder.toString();
@@ -169,9 +169,21 @@ public class TabelaPersistenciaUtil {
 			if (builder.length() > 0) {
 				builder.append(", ");
 			}
-			builder.append(method.getName() + "->");
+			builder.append(nome(method.getName()) + "->");
 			builder.append(method.invoke(instancia));
 		}
 		return builder.toString();
+	}
+
+	private static String nome(String string) {
+		String name = string.substring(3);
+		if (name.isEmpty()) {
+			return string;
+		}
+		String pri = name.substring(0, 1).toLowerCase();
+		if (name.length() < 2) {
+			return pri;
+		}
+		return pri + name.substring(1);
 	}
 }
