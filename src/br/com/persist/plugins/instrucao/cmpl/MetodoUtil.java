@@ -60,7 +60,7 @@ class MetodoUtil {
 			} else if (ehTipoAtomico(atom)) {
 				pilhaNo.add(new Push(atom));
 			} else if (atom.isParam()) {
-				pilhaNo.add(new LoadPar(atom));
+				indice += processoParam(atom, indice);
 			} else if (atom.isVariavel()) {
 				pilhaNo.add(new LoadVar(atom));
 			} else if (atom.isVirgula()) {
@@ -149,6 +149,25 @@ class MetodoUtil {
 		return incremento;
 	}
 
+	private int processoParam(Atom atomParam, int indice) throws InstrucaoException {
+		indice++;
+		int incremento = 0;
+		if (indice < atoms.size()) {
+			Atom a = getAtom(indice);
+			if (a.isParenteseIni()) {
+				InvokeDin invoke = new InvokeDin(atomParam);
+				pilhaNo.add(invoke);
+				pilhaNo.push(invoke);
+				incremento = 1;
+			} else {
+				pilhaNo.add(new LoadPar(atomParam));
+			}
+		} else {
+			pilhaNo.add(new LoadPar(atomParam));
+		}
+		return incremento;
+	}
+
 	private void processoExpressao(Atom atom) throws InstrucaoException {
 		Expression expression = new Expression(atom);
 		pilhaNo.add(expression);
@@ -173,8 +192,8 @@ class MetodoUtil {
 
 	private void processoVirgula(int indice) throws InstrucaoException {
 		No no = pilhaNo.ref();
-		if ((no instanceof Invoke) || (no instanceof If) || (no instanceof DeclareVar) || (no instanceof ModificVar)
-				|| (no instanceof TailCall)) {
+		if ((no instanceof Invoke) || (no instanceof InvokeDin) || (no instanceof If) || (no instanceof DeclareVar)
+				|| (no instanceof ModificVar) || (no instanceof TailCall)) {
 			return;
 		}
 		throwInstrucaoException(indice);

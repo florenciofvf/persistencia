@@ -46,6 +46,7 @@ public class Objeto implements Runnable {
 	private boolean clonarAoDestacar = true;
 	private final List<Pesquisa> pesquisas;
 	private final Set<String> complementos;
+	private boolean tituloFormularioComId;
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
 	private boolean ajusteAutoForm = true;
@@ -335,6 +336,14 @@ public class Objeto implements Runnable {
 
 	public boolean isAjusteAutoForm() {
 		return ajusteAutoForm;
+	}
+
+	public boolean isTituloFormularioComId() {
+		return tituloFormularioComId;
+	}
+
+	public void setTituloFormularioComId(boolean tituloFormularioComId) {
+		this.tituloFormularioComId = tituloFormularioComId;
 	}
 
 	public void setAjusteAutoForm(boolean ajusteAutoForm) {
@@ -962,7 +971,10 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTitle(OrdenacaoModelo modelo) {
-		return getId() + " - " + getTabela() + " [" + modelo.getRowCount() + "]";
+		if (tituloFormularioComId) {
+			return getId() + " - " + getTabela() + " [" + modelo.getRowCount() + "]";
+		}
+		return getTabela() + " [" + modelo.getRowCount() + "]";
 	}
 
 	public int getDeslocamentoXId() {

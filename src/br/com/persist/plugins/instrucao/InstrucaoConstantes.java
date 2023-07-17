@@ -31,6 +31,7 @@ public class InstrucaoConstantes {
 	public static final String LOAD_LISTA_VAZIA = "load_lista_vazia";
 	public static final String LOAD_HEAD_LISTA = "load_head_lista";
 	public static final String LOAD_TAIL_LISTA = "load_tail_lista";
+	public static final String INVOKE_DIN = "invoke_dinamic";
 	public static final String DECLARE_VAR = "declare_var";
 	public static final String MODIFIC_VAR = "modific_var";
 	public static final String ADD_LISTA = "add_lista";

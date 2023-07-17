@@ -338,6 +338,58 @@ class Invoke extends No {
 	}
 }
 
+class InvokeDin extends No {
+	final Atom atom;
+	Neg neg;
+
+	public InvokeDin(Atom atom) {
+		super(atom.getValor());
+		this.atom = atom;
+	}
+
+	@Override
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		for (No no : nos) {
+			no.normalizarEstrutura(metodo);
+		}
+		if (atom.isNegar()) {
+			neg = new Neg();
+		}
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		for (No no : nos) {
+			no.indexar(atomic);
+		}
+		indice = atomic.getAndIncrement();
+		if (neg != null) {
+			neg.indexar(atomic);
+		}
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		for (No no : nos) {
+			no.configurarDesvio();
+		}
+		if (neg != null) {
+			neg.configurarDesvio();
+		}
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		for (No no : nos) {
+			no.print(pw);
+		}
+		print(pw, InstrucaoConstantes.INVOKE_DIN, nome);
+		if (neg != null) {
+			neg.print(pw);
+		}
+	}
+}
+
 class TailCall extends No {
 	public TailCall() {
 		super(InstrucaoConstantes.TAIL_CALL);
