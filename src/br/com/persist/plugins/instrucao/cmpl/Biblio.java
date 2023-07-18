@@ -12,6 +12,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public class Biblio {
 	private final Map<String, Atom> variaveis;
 	private final List<Metodo> metodos;
+	private int indiceLamda;
 
 	public Biblio() {
 		variaveis = new LinkedHashMap<>();
@@ -38,6 +39,10 @@ public class Biblio {
 		for (Metodo met : metodos) {
 			met.finalizar();
 		}
+	}
+
+	public int getIndiceLamda() {
+		return indiceLamda++;
 	}
 
 	boolean isEmpty() {

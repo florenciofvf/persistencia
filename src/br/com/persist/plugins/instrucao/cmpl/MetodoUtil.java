@@ -121,6 +121,10 @@ class MetodoUtil {
 			TailCall tailCall = new TailCall();
 			pilhaNo.add(tailCall);
 			pilhaNo.push(tailCall);
+		} else if (InstrucaoConstantes.LAMBDA.equals(nomeInvoke)) {
+			Lambda lambda = new Lambda(metodo);
+			pilhaNo.add(lambda);
+			pilhaNo.push(lambda);
 		} else if (InstrucaoConstantes.VAR.equals(nomeInvoke)) {
 			indice++;
 			Atom atomVar = getAtom(indice);

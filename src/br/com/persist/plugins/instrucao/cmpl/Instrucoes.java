@@ -426,6 +426,42 @@ class TailCall extends No {
 	}
 }
 
+class Lambda extends No {
+	public Lambda(Metodo metodo) {
+		super(metodo, InstrucaoConstantes.LAMBDA);
+	}
+
+	@Override
+	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
+		for (No no : nos) {
+			no.normalizarEstrutura(metodo);
+		}
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) throws InstrucaoException {
+		for (No no : nos) {
+			no.indexar(atomic);
+		}
+		indice = atomic.getAndIncrement();
+	}
+
+	@Override
+	public void configurarDesvio() throws InstrucaoException {
+		for (No no : nos) {
+			no.configurarDesvio();
+		}
+	}
+
+	@Override
+	public void print(PrintWriter pw) throws InstrucaoException {
+		for (No no : nos) {
+			no.print(pw);
+		}
+		print(pw, nome);
+	}
+}
+
 class Expression extends No {
 	final Atom atom;
 	Neg neg;

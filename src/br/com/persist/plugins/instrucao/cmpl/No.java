@@ -9,14 +9,20 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class No {
+	protected final Metodo metodo;
 	protected final List<No> nos;
 	protected String nome;
 	protected int indice;
 	protected No parent;
 
-	protected No(String nome) {
+	protected No(Metodo metodo, String nome) {
 		nos = new ArrayList<>();
+		this.metodo = metodo;
 		this.nome = nome;
+	}
+
+	protected No(String nome) {
+		this(null, nome);
 	}
 
 	public No add(No no) {
