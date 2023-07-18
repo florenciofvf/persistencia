@@ -427,8 +427,8 @@ class TailCall extends No {
 }
 
 class Lambda extends No {
-	public Lambda(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.LAMBDA);
+	public Lambda() {
+		super(InstrucaoConstantes.LAMBDA);
 	}
 
 	@Override

@@ -122,7 +122,7 @@ class MetodoUtil {
 			pilhaNo.add(tailCall);
 			pilhaNo.push(tailCall);
 		} else if (InstrucaoConstantes.LAMBDA.equals(nomeInvoke)) {
-			Lambda lambda = new Lambda(metodo);
+			Lambda lambda = new Lambda();
 			pilhaNo.add(lambda);
 			pilhaNo.push(lambda);
 		} else if (InstrucaoConstantes.VAR.equals(nomeInvoke)) {
