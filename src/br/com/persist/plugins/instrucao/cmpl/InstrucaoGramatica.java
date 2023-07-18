@@ -32,16 +32,16 @@ public class InstrucaoGramatica {
 
 	public Biblio montarBiblio() throws InstrucaoException {
 		Biblio biblio = new Biblio();
-		Metodo metodo = getMetodo();
+		Metodo metodo = getMetodo(biblio);
 		while (metodo != null) {
 			biblio.add(metodo);
-			metodo = getMetodo();
+			metodo = getMetodo(biblio);
 		}
 		biblio.montarMetodos();
 		return biblio;
 	}
 
-	private Metodo getMetodo() throws InstrucaoException {
+	private Metodo getMetodo(Biblio biblio) throws InstrucaoException {
 		if (indice >= atoms.size()) {
 			return null;
 		}
@@ -49,13 +49,13 @@ public class InstrucaoGramatica {
 		if (InstrucaoConstantes.FUNCAO_NATIVA.equals(atom.getValor())) {
 			indice++;
 			String biblioNativa = getBiblioNativa();
-			Metodo metodo = criarMetodo();
+			Metodo metodo = criarMetodo(biblio);
 			metodo.setBiblioNativa(biblioNativa);
 			metodo.setNativo(true);
 			return metodo;
 		} else if (InstrucaoConstantes.FUNCAO.equals(atom.getValor())) {
 			indice++;
-			Metodo metodo = criarMetodo();
+			Metodo metodo = criarMetodo(biblio);
 			for (Atom a : getAtoms()) {
 				metodo.addAtom(a);
 			}
@@ -79,7 +79,7 @@ public class InstrucaoGramatica {
 			}
 			checarPrefixo(atomPrefixo, atomValor);
 			indice++;
-			Metodo metodo = new Metodo(null);
+			Metodo metodo = new Metodo(biblio, null);
 			metodo.setAtomNomeVar(atomNomeVar);
 			metodo.setAtomValorVar(mergear(atomPrefixo, atomValor));
 			return metodo;
@@ -133,12 +133,12 @@ public class InstrucaoGramatica {
 		return resposta;
 	}
 
-	private Metodo criarMetodo() throws InstrucaoException {
+	private Metodo criarMetodo(Biblio biblio) throws InstrucaoException {
 		Metodo resp = null;
 		Atom atom = getAtom();
 		if (atom.isStringAtom()) {
 			checarNomeMetodo(atom);
-			resp = new Metodo(atom.getValor());
+			resp = new Metodo(biblio, atom.getValor());
 			indice++;
 		} else {
 			return throwInstrucaoException();

@@ -13,16 +13,22 @@ public class Metodo {
 	private final List<No> parametros;
 	private final List<Atom> atoms;
 	private String biblioNativa;
+	private final Biblio biblio;
 	private final String nome;
 	private Atom atomValorVar;
 	private Atom atomNomeVar;
 	private boolean nativo;
 	private No no;
 
-	public Metodo(String nome) {
+	public Metodo(Biblio biblio, String nome) {
 		parametros = new ArrayList<>();
 		atoms = new ArrayList<>();
+		this.biblio = biblio;
 		this.nome = nome;
+	}
+
+	public Biblio getBiblio() {
+		return biblio;
 	}
 
 	public No getNo() {
