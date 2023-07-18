@@ -197,7 +197,7 @@ class MetodoUtil {
 	private void processoVirgula(int indice) throws InstrucaoException {
 		No no = pilhaNo.ref();
 		if ((no instanceof Invoke) || (no instanceof InvokeDin) || (no instanceof If) || (no instanceof DeclareVar)
-				|| (no instanceof ModificVar) || (no instanceof TailCall)) {
+				|| (no instanceof ModificVar) || (no instanceof TailCall) || (no instanceof Lambda)) {
 			return;
 		}
 		throwInstrucaoException(indice);

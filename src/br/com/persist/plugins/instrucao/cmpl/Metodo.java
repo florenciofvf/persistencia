@@ -10,6 +10,8 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Metodo {
 	protected final Return retorn = new Return();
+	private final List<Metodo> metodosLambdas;
+	private final List<Lambda> lambdas;
 	private final List<No> parametros;
 	private final List<Atom> atoms;
 	private String biblioNativa;
@@ -21,10 +23,16 @@ public class Metodo {
 	private No no;
 
 	public Metodo(Biblio biblio, String nome) {
+		metodosLambdas = new ArrayList<>();
 		parametros = new ArrayList<>();
+		lambdas = new ArrayList<>();
 		atoms = new ArrayList<>();
 		this.biblio = biblio;
 		this.nome = nome;
+	}
+
+	void registrarLambda(Lambda lambda) {
+		lambdas.add(lambda);
 	}
 
 	public Biblio getBiblio() {
@@ -115,6 +123,21 @@ public class Metodo {
 		retorn.indexar(atomic);
 		no.configurarDesvio();
 		retorn.configurarDesvio();
+		processarLambdas();
+	}
+
+	private void processarLambdas() throws InstrucaoException {
+		for (Lambda lambda : lambdas) {
+			Metodo metodo = new Metodo(biblio, lambda.getNomeFinal());
+			for (No param : lambda.getParametros()) {
+				metodo.addParam(param);
+			}
+			metodo.no = lambda.getNoRaiz();
+			metodosLambdas.add(metodo);
+		}
+		for (Metodo met : metodosLambdas) {
+			met.finalizar();
+		}
 	}
 
 	public void print(PrintWriter pw) throws InstrucaoException {
@@ -128,6 +151,14 @@ public class Metodo {
 		}
 		no.print(pw);
 		retorn.print(pw);
+		printLambdas(pw);
+	}
+
+	private void printLambdas(PrintWriter pw) throws InstrucaoException {
+		for (Metodo metodo : metodosLambdas) {
+			pw.println();
+			metodo.print(pw);
+		}
 	}
 
 	public Return getReturn() {

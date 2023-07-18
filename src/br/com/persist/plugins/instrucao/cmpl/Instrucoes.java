@@ -1,6 +1,9 @@
 package br.com.persist.plugins.instrucao.cmpl;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -427,38 +430,56 @@ class TailCall extends No {
 }
 
 class Lambda extends No {
+	private final List<No> parametros;
+	private String nomeFinal;
+
 	public Lambda() {
 		super(InstrucaoConstantes.LAMBDA);
+		parametros = new ArrayList<>();
+	}
+
+	public String getNomeFinal() {
+		return nomeFinal;
+	}
+
+	public List<No> getParametros() {
+		return parametros;
 	}
 
 	@Override
 	public void normalizarEstrutura(Metodo metodo) throws InstrucaoException {
-		for (No no : nos) {
-			no.normalizarEstrutura(metodo);
-		}
+		nomeFinal = nome + "$" + metodo.getBiblio().getIndiceLamda();
+		metodo.registrarLambda(this);
 	}
 
 	@Override
 	public void indexar(AtomicInteger atomic) throws InstrucaoException {
-		for (No no : nos) {
-			no.indexar(atomic);
-		}
 		indice = atomic.getAndIncrement();
 	}
 
 	@Override
 	public void configurarDesvio() throws InstrucaoException {
-		for (No no : nos) {
-			no.configurarDesvio();
+		Iterator<No> it = nos.iterator();
+		while (it.hasNext()) {
+			No no = it.next();
+			if (no instanceof LoadPar) {
+				LoadPar loadPar = (LoadPar) no;
+				parametros.add(new Param(loadPar.atom.getValor()));
+				it.remove();
+			} else {
+				break;
+			}
 		}
+	}
+
+	public No getNoRaiz() throws InstrucaoException {
+		checarOperandos1();
+		return nos.get(0);
 	}
 
 	@Override
 	public void print(PrintWriter pw) throws InstrucaoException {
-		for (No no : nos) {
-			no.print(pw);
-		}
-		print(pw, nome);
+		print(pw, InstrucaoConstantes.PUSH_STRING, nomeFinal);
 	}
 }
 
