@@ -271,7 +271,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	private void clonar(Arquivo arquivo) {
 		try {
-			String resp = Util.copiar(arquivo.getFile());
+			String resp = Util.clonar(arquivo.getFile());
 			Util.mensagem(ArquivoContainer.this, resp);
 		} catch (IOException e) {
 			Util.mensagem(ArquivoContainer.this, e.getMessage());

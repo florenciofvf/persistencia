@@ -974,7 +974,7 @@ public class Util {
 		return s != null && s.startsWith("Mac OS");
 	}
 
-	public static String copiar(File file) throws IOException {
+	public static String clonar(File file) throws IOException {
 		if (file == null) {
 			return "ARQUIVO NULL";
 		}
