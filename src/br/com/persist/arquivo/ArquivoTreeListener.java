@@ -9,6 +9,8 @@ public interface ArquivoTreeListener {
 
 	public void novoDiretorio(ArquivoTree arquivoTree);
 
+	public void clonarArquivo(ArquivoTree arquivoTree);
+
 	public void abrirArquivo(ArquivoTree arquivoTree);
 
 	public void novoArquivo(ArquivoTree arquivoTree);

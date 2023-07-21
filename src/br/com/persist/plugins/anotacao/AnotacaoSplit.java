@@ -168,6 +168,23 @@ class AnotacaoSplit extends SplitPane {
 		}
 
 		@Override
+		public void clonarArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null) {
+				clonar(arquivo);
+			}
+		}
+
+		private void clonar(Arquivo arquivo) {
+			try {
+				String resp = Util.copiar(arquivo.getFile());
+				Util.mensagem(AnotacaoSplit.this, resp);
+			} catch (IOException e) {
+				Util.mensagem(AnotacaoSplit.this, e.getMessage());
+			}
+		}
+
+		@Override
 		public void diretorioArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null) {

@@ -168,6 +168,7 @@ public class ArquivoTree extends Tree {
 		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);
 		private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
 		private Action excluirAcao = Action.actionMenuExcluir();
+		private Action clonarAcao = Action.actionMenuClonar();
 		private static final long serialVersionUID = 1L;
 
 		private ArquivoPopup() {
@@ -177,11 +178,14 @@ public class ArquivoTree extends Tree {
 			addMenuItem(renomearAcao);
 			addMenuItem(excluirAcao);
 			addMenuItem(abrirAcao);
+			addSeparator();
+			addMenuItem(clonarAcao);
 			novoDiretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoDiretorio(ArquivoTree.this)));
 			diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(ArquivoTree.this)));
 			novoArquivoAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoArquivo(ArquivoTree.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTree.this)));
+			clonarAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarArquivo(ArquivoTree.this)));
 			abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(ArquivoTree.this)));
 		}
 
@@ -192,6 +196,7 @@ public class ArquivoTree extends Tree {
 				novoArquivoAcao.setEnabled(true);
 				renomearAcao.setEnabled(false);
 				excluirAcao.setEnabled(false);
+				clonarAcao.setEnabled(false);
 				abrirAcao.setEnabled(false);
 				return;
 			}
@@ -203,6 +208,7 @@ public class ArquivoTree extends Tree {
 			novoArquivoAcao.setEnabled(dir);
 			renomearAcao.setEnabled(both);
 			excluirAcao.setEnabled(both);
+			clonarAcao.setEnabled(file);
 			abrirAcao.setEnabled(file);
 		}
 	}
