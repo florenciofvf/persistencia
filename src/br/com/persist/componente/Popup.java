@@ -14,23 +14,24 @@ public class Popup extends JPopupMenu {
 		return add(menuItem);
 	}
 
-	public void addMenuItem(boolean separador, Action action) {
-		addMenuItem(separador, new MenuItem(action));
+	public MenuItem addMenuItem(boolean separador, Action action) {
+		return addMenuItem(separador, new MenuItem(action));
 	}
 
-	public void addMenuItem(boolean separador, MenuItem item) {
+	public MenuItem addMenuItem(boolean separador, MenuItem item) {
 		if (separador) {
 			addSeparator();
 		}
 		add(item);
+		return item;
 	}
 
-	public void addMenuItem(Action action) {
-		addMenuItem(false, action);
+	public MenuItem addMenuItem(Action action) {
+		return addMenuItem(false, action);
 	}
 
-	public void addMenuItem(MenuItem item) {
-		addMenuItem(false, item);
+	public MenuItem addMenuItem(MenuItem item) {
+		return addMenuItem(false, item);
 	}
 
 	public void limpar() {

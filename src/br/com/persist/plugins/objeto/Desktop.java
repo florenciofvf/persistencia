@@ -84,6 +84,14 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		}
 	}
 
+	public void limpar3() {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				((InternalFormulario) frame).limpar3();
+			}
+		}
+	}
+
 	public void limpar2() {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {

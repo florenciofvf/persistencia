@@ -2949,6 +2949,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
 	}
 
+	public void limpar3() {
+		if (getTotalRegistros() == 0) {
+			limpar2();
+		}
+	}
+
 	public void limparOutros(InternalContainer invocador) {
 		if (invocador != this) {
 			limpar2();

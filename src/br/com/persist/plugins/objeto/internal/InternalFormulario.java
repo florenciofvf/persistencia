@@ -462,6 +462,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.configuracaoDinamica(objeto);
 	}
 
+	public void limpar3() {
+		container.limpar3();
+	}
+
 	public void limpar2() {
 		container.limpar2();
 	}

@@ -1719,6 +1719,8 @@ class CopiarColar {
 }
 
 class SuperficiePopup2 extends Popup {
+	private Action limparFormulariosFiltroAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios_filtro",
+			Icones.NOVO);
 	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
@@ -1738,9 +1740,11 @@ class SuperficiePopup2 extends Popup {
 		addMenuItem(true, formulariosInvisiveisAcao);
 		addMenuItem(atualizarFormulariosAcao);
 		addMenuItem(limparFormulariosAcao);
+		MenuItem item = addMenuItem(limparFormulariosFiltroAcao);
 		add(true, superficie.getMenuLargura());
 		add(true, superficie.getMenuAjuste());
 		addMenuItem(true, propriedadesAcao);
+		item.setToolTipText(ObjetoMensagens.getString("hint.limpar_formularios_filtro"));
 		eventos();
 	}
 
@@ -1751,6 +1755,7 @@ class SuperficiePopup2 extends Popup {
 				e -> CopiarColar.colar(superficie, true, superficie.popup2.xLocal, superficie.popup2.yLocal));
 		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
 		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
+		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
 		propriedadesAcao.setActionListener(e -> propriedades());
 	}
