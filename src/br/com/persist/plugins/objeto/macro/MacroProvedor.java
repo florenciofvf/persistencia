@@ -11,7 +11,6 @@ import br.com.persist.plugins.objeto.macro.Macro.AbrirAuto;
 import br.com.persist.plugins.objeto.macro.Macro.AjusteAutoForm;
 import br.com.persist.plugins.objeto.macro.Macro.Bpnt;
 import br.com.persist.plugins.objeto.macro.Macro.Ccsc;
-import br.com.persist.plugins.objeto.macro.Macro.ChecarRegistro;
 import br.com.persist.plugins.objeto.macro.Macro.ColunaInfo;
 import br.com.persist.plugins.objeto.macro.Macro.CopiarDestacado;
 import br.com.persist.plugins.objeto.macro.Macro.Cor;
@@ -39,7 +38,6 @@ public class MacroProvedor {
 	private static final String DESCLOC_X_ID_DESC = "deslocXIdDesc";
 	private static final String DESCLOC_Y_ID_DESC = "deslocYIdDesc";
 	private static final String LARGURA_ROTULOS = "larguraRotulos";
-	private static final String CHECAR_REGISTRO = "checarRegistro";
 	private static final String PONTO_DESTINO = "pontoDestino";
 	private static final String TRANSPARENTE = "transparente";
 	private static final String PONTO_ORIGEM = "pontoOrigem";
@@ -98,7 +96,6 @@ public class MacroProvedor {
 		mapa.put(COPIAR_DESTACADO, new CopiarDestacado());
 		mapa.put(AJUSTE_AUTO_FORM, new AjusteAutoForm());
 		mapa.put(LARGURA_ROTULOS, new LarguraRotulos());
-		mapa.put(CHECAR_REGISTRO, new ChecarRegistro());
 		mapa.put(PONTO_DESTINO, new PontoDestino());
 		mapa.put(TRANSPARENTE, new Transparente());
 		mapa.put(PONTO_ORIGEM, new PontoOrigem());
@@ -135,12 +132,6 @@ public class MacroProvedor {
 
 	public static void desenharIdDescricao(Object valor) {
 		Instrucao instrucao = get(DESENHAR_ID_DESC);
-		instrucao.setValor(valor);
-		adicionar(instrucao);
-	}
-
-	public static void checarRegistro(Object valor) {
-		Instrucao instrucao = get(CHECAR_REGISTRO);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

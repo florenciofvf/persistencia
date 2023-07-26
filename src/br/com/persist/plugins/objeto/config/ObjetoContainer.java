@@ -189,7 +189,7 @@ public class ObjetoContainer extends Panel {
 			} else if ("DESTACAVEIS".equals(compChave.chave)) {
 				para.setDestacaveis(compChave.getText());
 			} else if ("CHECAR_REGISTRO".equals(compChave.chave)) {
-				para.setChecarRegistro(compChave.getBool());
+				para.setBiblioChecagem(compChave.getText());
 			}
 		}
 
@@ -254,7 +254,7 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class PanelGeral extends Panel implements ActionListener {
-		private CheckBox chkChecarRegistro = new CheckBox();
+		private TextField txtBiblioChecagem = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
 		private TextField txtDeslocXId = new TextField();
@@ -275,7 +275,7 @@ public class ObjetoContainer extends Panel {
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
 			chkCopiarDestac.setSelected(objeto.isClonarAoDestacar());
-			chkChecarRegistro.setSelected(objeto.isChecarRegistro());
+			txtBiblioChecagem.setText(objeto.getBiblioChecagem());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtIntervalo.setText(VAZIO + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
@@ -283,6 +283,7 @@ public class ObjetoContainer extends Panel {
 			txtX.setText(VAZIO + objeto.getX());
 			txtY.setText(VAZIO + objeto.getY());
 			txtId.setText(objeto.getId());
+			txtBiblioChecagem.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
@@ -290,7 +291,7 @@ public class ObjetoContainer extends Panel {
 			txtId.addFocusListener(focusListenerInner);
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
-			chkChecarRegistro.addActionListener(this);
+			txtBiblioChecagem.addActionListener(this);
 			chkTransparente.addActionListener(this);
 			chkCopiarDestac.addActionListener(this);
 			chkDesenharId.addActionListener(this);
@@ -319,9 +320,9 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
 					ObjetoMensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
+			container.add(criarLinha("label.checar_reg", txtBiblioChecagem));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
-			container.add(criarLinha("label.checar_reg", chkChecarRegistro));
 			container.add(criarLinhaRotulo("label.copiar_destacado", chkCopiarDestac));
 			container.add(criarLinhaCopiar("label.add_instrucao", txtInstrucao,
 					ObjetoMensagens.getString("hint.add_instrucao")));
@@ -341,13 +342,13 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void vincular() {
-			vinculados.add(new CompChave(chkChecarRegistro, "CHECAR_REGISTRO"));
+			vinculados.add(new CompChave(txtBiblioChecagem, "CHECAR_REGISTRO"));
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
 			vinculados.add(new CompChave(txtInstrucao, "INSTRUCAO"));
 			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
 
-			chkChecarRegistro.addMouseListener(listenerVinculado);
+			txtBiblioChecagem.addMouseListener(listenerVinculado);
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
 			txtInstrucao.addMouseListener(listenerVinculado);
@@ -403,10 +404,8 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
-			} else if (chkChecarRegistro == e.getSource()) {
-				CheckBox chk = (CheckBox) e.getSource();
-				objeto.setChecarRegistro(chk.isSelected());
-				MacroProvedor.checarRegistro(chk.isSelected());
+			} else if (txtBiblioChecagem == e.getSource()) {
+				objeto.setBiblioChecagem(txtBiblioChecagem.getText());
 			}
 			actionPerformedCont2(e);
 		}
