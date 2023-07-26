@@ -68,7 +68,7 @@ public class Objeto implements Runnable {
 	private ObjetoListener listener;
 	private boolean larguraRotulos;
 	private Color cor = COR_PADRAO;
-	private boolean checarRegistro;
+	private String biblioChecagem;
 	private boolean checarLargura;
 	private static long sequencia;
 	private boolean buscaAutoTemp;
@@ -147,7 +147,7 @@ public class Objeto implements Runnable {
 		o.deslocamentoYId = deslocamentoYId;
 		o.ajusteAutoForm = ajusteAutoForm;
 		o.larguraRotulos = larguraRotulos;
-		o.checarRegistro = checarRegistro;
+		o.biblioChecagem = biblioChecagem;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
 		o.addInstrucoes(instrucoes);
@@ -182,7 +182,6 @@ public class Objeto implements Runnable {
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
 		clonarAoDestacar = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		larguraRotulos = Boolean.parseBoolean(attr.getValue("larguraRotulos"));
-		checarRegistro = Boolean.parseBoolean(attr.getValue("checarRegistro"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
@@ -200,6 +199,7 @@ public class Objeto implements Runnable {
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
 		sane = Boolean.parseBoolean(attr.getValue("sane"));
 		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
+		biblioChecagem = attr.getValue("biblioChecagem");
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
@@ -237,11 +237,11 @@ public class Objeto implements Runnable {
 		util.atributoCheck("selectAlternativo", getSelectAlternativo());
 		util.atributoCheck("tabelaAlternativo", getTabelaAlternativo());
 		util.atributoCheck("apelidoParaJoins", getApelidoParaJoins());
+		util.atributoCheck("biblioChecagem", getBiblioChecagem());
 		util.atributoCheck("orderBy", getOrderBy());
 		util.atributoCheck("ajusteAutoForm", ajusteAutoForm);
 		util.atributoCheck("copiarDestac", clonarAoDestacar);
 		util.atributoCheck("larguraRotulos", larguraRotulos);
-		util.atributoCheck("checarRegistro", checarRegistro);
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
@@ -850,6 +850,17 @@ public class Objeto implements Runnable {
 		}
 	}
 
+	public String getBiblioChecagem() {
+		if (Util.estaVazio(biblioChecagem)) {
+			biblioChecagem = Constantes.VAZIO;
+		}
+		return biblioChecagem;
+	}
+
+	public void setBiblioChecagem(String biblioChecagem) {
+		this.biblioChecagem = biblioChecagem;
+	}
+
 	public String getChaveamento() {
 		if (Util.estaVazio(chaveamento)) {
 			chaveamento = Constantes.VAZIO;
@@ -1281,13 +1292,5 @@ public class Objeto implements Runnable {
 
 	public void setMetadado(Metadado metadado) {
 		this.metadado = metadado;
-	}
-
-	public boolean isChecarRegistro() {
-		return checarRegistro;
-	}
-
-	public void setChecarRegistro(boolean checarRegistro) {
-		this.checarRegistro = checarRegistro;
 	}
 }

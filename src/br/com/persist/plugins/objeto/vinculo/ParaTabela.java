@@ -17,7 +17,7 @@ public class ParaTabela {
 	private String selectAlternativo;
 	private String clonarAoDestacar;
 	private String larguraRotulos;
-	private String checarRegistro;
+	private String biblioChecagem;
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String transparente;
@@ -98,9 +98,6 @@ public class ParaTabela {
 		if (!Util.estaVazio(clonarAoDestacar)) {
 			objeto.setClonarAoDestacar(Boolean.parseBoolean(clonarAoDestacar));
 		}
-		if (!Util.estaVazio(checarRegistro)) {
-			objeto.setChecarRegistro(Boolean.parseBoolean(checarRegistro));
-		}
 		if (!Util.estaVazio(ajustarAltura)) {
 			objeto.setAjusteAutoForm(Boolean.parseBoolean(ajustarAltura));
 		}
@@ -133,6 +130,9 @@ public class ParaTabela {
 		}
 		if (!Util.estaVazio(apelido)) {
 			objeto.setApelidoParaJoins(apelido);
+		}
+		if (!Util.estaVazio(biblioChecagem)) {
+			objeto.setBiblioChecagem(biblioChecagem);
 		}
 		config2(objeto);
 	}
@@ -211,7 +211,7 @@ public class ParaTabela {
 		atributoValor(util, "selectAlternativo", selectAlternativo);
 		atributoValor(util, "clonarAoDestacar", clonarAoDestacar);
 		atributoValor(util, "larguraRotulos", larguraRotulos);
-		atributoValor(util, "checarRegistro", checarRegistro);
+		atributoValor(util, "biblioChecagem", biblioChecagem);
 		atributoValor(util, "finalConsulta", finalConsulta);
 		atributoValor(util, "ajustarAltura", ajustarAltura);
 		atributoValor(util, "transparente", transparente);
@@ -545,16 +545,16 @@ public class ParaTabela {
 		return transparente;
 	}
 
-	public String getChecarRegistro() {
-		return checarRegistro;
+	public String getBiblioChecagem() {
+		return biblioChecagem;
 	}
 
 	public void setTransparente(String transparente) {
 		this.transparente = transparente;
 	}
 
-	public void setChecarRegistro(String checarRegistro) {
-		this.checarRegistro = checarRegistro;
+	public void setBiblioChecagem(String biblioChecagem) {
+		this.biblioChecagem = biblioChecagem;
 	}
 
 	public String getClonarAoDestacar() {
