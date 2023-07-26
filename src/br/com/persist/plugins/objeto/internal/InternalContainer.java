@@ -1770,7 +1770,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void ini(Objeto objeto) {
-				if (objeto.isChecarRegistro()) {
+				if (!Util.estaVazio(objeto.getBiblioChecagem())) {
 					addMenuItem(checagemAcao);
 				}
 				if (objeto.getPesquisaAdicaoHierarquico() != null) {
@@ -1804,7 +1804,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void checarRegistro() {
-				String nomeBiblio = objeto.getTabela().toLowerCase();
+				String nomeBiblio = objeto.getBiblioChecagem();
 				Processador processador = new Processador();
 				Biblioteca biblioteca = null;
 				try {
