@@ -87,8 +87,8 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 	}
 
 	private void abrirOutraInstancia(Formulario formulario) {
-		String string = new File("persistencia.jar").getAbsolutePath();
-		if (!new File(string).exists()) {
+		String string = getPath();
+		if (string == null) {
 			String msg = Mensagens.getString("msg.arquivo_inexistente") + Constantes.QL2 + string;
 			Util.mensagem(formulario, msg);
 		} else {
@@ -98,5 +98,21 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 				Util.mensagem(formulario, e.getMessage());
 			}
 		}
+	}
+
+	private static String getPath() {
+		String string = new File("persistencia_launcher.jar").getAbsolutePath();
+		if (new File(string).exists()) {
+			return string;
+		}
+		string = new File("persistencia.jar").getAbsolutePath();
+		if (new File(string).exists()) {
+			return string;
+		}
+		string = new File("launcher.jar").getAbsolutePath();
+		if (new File(string).exists()) {
+			return string;
+		}
+		return null;
 	}
 }
