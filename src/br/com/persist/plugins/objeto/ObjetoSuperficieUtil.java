@@ -230,7 +230,8 @@ public class ObjetoSuperficieUtil {
 		}
 		string = string.trim().toUpperCase();
 		for (Objeto objeto : superficie.objetos) {
-			if (objeto.getId().toUpperCase().indexOf(string) != -1) {
+			if (objeto.getId().toUpperCase().indexOf(string) != -1
+					|| objeto.getTabela().toUpperCase().indexOf(string) != -1) {
 				objeto.setProcessar(true);
 				objeto.ativar();
 			}
