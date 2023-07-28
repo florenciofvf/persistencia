@@ -324,10 +324,10 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinhaRotulo("label.copiar_destacado", chkCopiarDestac));
-			container.add(criarLinhaCopiar("label.add_instrucao", txtInstrucao,
-					ObjetoMensagens.getString("hint.add_instrucao")));
-			container
-					.add(criarLinhaCopiar("label.add_filtro", txtFiltro, ObjetoMensagens.getString("hint.add_filtro")));
+			container.add(criarLinhaComLinkCopiar("label.add_instrucao", txtInstrucao,
+					ObjetoMensagens.getString("hint.add_instrucao"), PanelGeral.this::mensagemAddInstrucao));
+			container.add(criarLinhaComLinkCopiar("label.add_filtro", txtFiltro,
+					ObjetoMensagens.getString("hint.add_filtro"), PanelGeral.this::mensagemAddFiltro));
 			add(BorderLayout.CENTER, new ScrollPane(container));
 			vincular();
 		}
@@ -357,6 +357,14 @@ public class ObjetoContainer extends Panel {
 
 		private void mensagemPropriedadeArquivo(Label label) {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.propriedade_arquivo"));
+		}
+
+		private void mensagemAddInstrucao(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.add_instrucao"));
+		}
+
+		private void mensagemAddFiltro(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.add_filtro"));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
