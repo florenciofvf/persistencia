@@ -1290,7 +1290,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				break;
 			}
 		}
-		if (contem && Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
+		if (!contem) {
+			Util.mensagem(ObjetoSuperficie.this, ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
+			return;
+		}
+		if (Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
 			for (Objeto objeto : objetos) {
 				if (Util.estaVazio(objeto.getTabela())) {
 					excluir(objeto);
