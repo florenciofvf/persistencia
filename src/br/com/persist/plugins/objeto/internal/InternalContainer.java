@@ -1745,7 +1745,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 									: " WHERE 1=1 " + complementar;
 							String[] array = Persistencia.getTotalRegistros(conn,
 									objeto.getTabelaEsquema(conexao) + filtro);
-							toolbar.labelTotal.setText(Constantes.VAZIO + array[1]);
+							toolbar.labelTotal.setText(Util.formatarNumero(array[1]));
 							if (chkExibirInstrucao.isSelected()) {
 								Util.mensagem(InternalContainer.this, array[0]);
 							}

@@ -1129,6 +1129,36 @@ public class Util {
 		return sb.toString();
 	}
 
+	public static String formatarNumero(String string) {
+		if (string == null) {
+			return string;
+		}
+		Format format = new Format();
+		for (int i = string.length() - 1; i >= 0; i--) {
+			format.add(string.charAt(i));
+		}
+		return format.toString();
+	}
+
+	private static class Format {
+		StringBuilder sb = new StringBuilder();
+		int cont;
+
+		void add(char c) {
+			if (cont == 3) {
+				sb.insert(0, '.');
+				cont = 0;
+			}
+			sb.insert(0, c);
+			cont++;
+		}
+
+		@Override
+		public String toString() {
+			return sb.toString();
+		}
+	}
+
 	public static int[][] matrizSubsequencia(String strColuna, String strLinha) {
 		if (estaVazio(strColuna) || estaVazio(strLinha)) {
 			return new int[0][0];
