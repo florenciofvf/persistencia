@@ -863,6 +863,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		int indice = getIndice(obj);
 		if (indice >= 0) {
 			objetos[indice].setListener(null);
+			objetos[indice].associado = null;
 			objetos[indice].desativar();
 			objetos[indice] = null;
 			Objeto[] bkp = objetos;
@@ -1625,6 +1626,7 @@ class ThreadRecente extends Thread {
 		boolean processado = false;
 		menuItem.setEnabled(false);
 		int atual = 0;
+		List<Objeto> novos = new ArrayList<>();
 		for (Objeto objeto : superficie.objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				try {
@@ -1636,7 +1638,7 @@ class ThreadRecente extends Thread {
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
 					label.setText(++atual + " / " + total);
-					processarRecente(objeto, Integer.parseInt(i[1]), fm);
+					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
 					processado = true;
 					superficie.repaint();
 					sleep(ObjetoPreferencia.getIntervaloComparacao());
@@ -1647,12 +1649,15 @@ class ThreadRecente extends Thread {
 			}
 		}
 		if (processado) {
+			for (Objeto objeto : novos) {
+				incluir(objeto);
+			}
 			label.setText(ObjetoMensagens.getString("label.threadRecente"));
 		}
 		menuItem.setEnabled(true);
 	}
 
-	private void processarRecente(Objeto objeto, int totalRegistros, FontMetrics fm) {
+	private void processarRecente(Objeto objeto, int totalRegistros, FontMetrics fm, List<Objeto> novos) {
 		objeto.setCorFonte(ObjetoPreferencia.getCorComparaRec());
 		long diff = totalRegistros - objeto.getTotalRegistros();
 		if (diff == 0) {
@@ -1667,12 +1672,21 @@ class ThreadRecente extends Thread {
 			id = objeto.getTotalRegistros() + "" + diff + "=" + totalRegistros;
 		}
 		info.setId(id);
-		superficie.checagemId(info, id, Constantes.SEP2);
 		info.setDeslocamentoXId(objeto.getDeslocamentoXId());
 		info.setDeslocamentoYId(objeto.getDeslocamentoYId());
 		info.setCorFonte(objeto.getCorFonte());
 		info.setTransparente(true);
+		info.associado = objeto;
+		novos.add(info);
+	}
+
+	private void incluir(Objeto info) {
+		String id = info.getId();
+		superficie.checagemId(info, id, Constantes.SEP2);
+		Objeto origem = info.associado;
+		superficie.excluir(origem.associado);
 		superficie.addObjeto(info);
+		origem.associado = info;
 	}
 }
 

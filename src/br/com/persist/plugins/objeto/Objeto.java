@@ -83,6 +83,7 @@ public class Objeto implements Runnable {
 	private String destacaveis;
 	private String chaveamento;
 	private boolean colunaInfo;
+	protected Objeto associado;
 	private String sequencias;
 	private String mapeamento;
 	private boolean processar;
@@ -1292,5 +1293,11 @@ public class Objeto implements Runnable {
 
 	public void setMetadado(Metadado metadado) {
 		this.metadado = metadado;
+	}
+
+	public void configYAssociado() {
+		if (associado != null) {
+			associado.y = y;
+		}
 	}
 }
