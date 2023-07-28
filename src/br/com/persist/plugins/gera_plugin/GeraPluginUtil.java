@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import br.com.persist.assistencia.Constantes;
+
 public class GeraPluginUtil {
 	private GeraPluginUtil() {
 	}
@@ -86,11 +88,12 @@ public class GeraPluginUtil {
 	}
 
 	private static void gerarFabrica(Config config, String template, File file) throws IOException {
+		final String chaveRecurso = Constantes.SEP + "recurso" + Constantes.SEP;
 		try (PrintWriter pw = new PrintWriter(file)) {
 			BufferedReader br = criarBufferedReader(template);
 			String linha = br.readLine();
 			while (linha != null) {
-				if ("###recurso###".equals(linha)) {
+				if (chaveRecurso.equals(linha)) {
 					configRecurso(config, pw);
 				} else {
 					linha = config.processar(linha);

@@ -125,7 +125,7 @@ public class VariavelProvedor {
 	public static String substituir(String string) {
 		if (string != null) {
 			for (Variavel v : lista) {
-				string = string.replaceAll("#" + v.getNome() + "#", v.getValor());
+				string = string.replaceAll(Constantes.SEP + v.getNome() + Constantes.SEP, v.getValor());
 			}
 		}
 		return string;

@@ -2,6 +2,7 @@ package br.com.persist.plugins.gera_plugin;
 
 import java.io.File;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
 class Config {
@@ -28,7 +29,7 @@ class Config {
 	}
 
 	String tag(String string) {
-		return "###" + string + "###";
+		return Constantes.SEP + string + Constantes.SEP;
 	}
 
 	boolean comRecurso() {

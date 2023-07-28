@@ -2769,7 +2769,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		@Override
 		public void aplicarAlternativo(Alternativo alternativo) {
 			Conexao conexao = getConexao();
-			final String chave = "###";
+			final String chave = Constantes.SEP;
 			if (conexao == null) {
 				return;
 			}

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
@@ -77,9 +78,9 @@ public class ObjetoUtil {
 			while (it.hasNext()) {
 				Entry<String, List<String>> entry = it.next();
 				String valor = convert(entry.getValue());
-				instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", valor);
-				instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", valor);
-				instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", valor);
+				instrucao = instrucao.replaceAll(Constantes.SEP + entry.getKey().toUpperCase() + Constantes.SEP, valor);
+				instrucao = instrucao.replaceAll(Constantes.SEP + entry.getKey().toLowerCase() + Constantes.SEP, valor);
+				instrucao = instrucao.replaceAll(Constantes.SEP + entry.getKey() + Constantes.SEP, valor);
 			}
 		}
 		return VariavelProvedor.substituir(instrucao);
