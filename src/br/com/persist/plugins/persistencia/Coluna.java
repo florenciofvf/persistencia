@@ -165,7 +165,7 @@ public class Coluna {
 		if (Util.estaVazio(funcaoMap)) {
 			return string;
 		}
-		return Util.replaceAll(funcaoMap, "#valor#", string);
+		return Util.replaceAll(funcaoMap, Constantes.SEP + "valor" + Constantes.SEP, string);
 	}
 
 	public void setSequencia(String sequencia) {

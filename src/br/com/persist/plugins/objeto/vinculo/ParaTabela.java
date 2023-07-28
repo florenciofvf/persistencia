@@ -289,11 +289,11 @@ public class ParaTabela {
 		util.tab().atributo("bpnt", false).fecharTag();
 
 		Instrucao i = new Instrucao("Resumo da instrucao");
-		i.setValor("UPDATE candidato SET votos = 0 WHERE id = #id#");
+		i.setValor("UPDATE candidato SET votos = 0 WHERE id = ###id###");
 		i.salvar(util, false);
 
 		Filtro f = new Filtro("Resumo do filtro");
-		f.setValor("AND id = AND descricao like '%maria%'");
+		f.setValor("AND id = 1 AND descricao LIKE '%maria%'");
 		f.salvar(util, false);
 
 		util.finalizarTag(VinculoHandler.PARA);
