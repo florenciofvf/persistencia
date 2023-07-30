@@ -1578,6 +1578,10 @@ abstract class ThreadComparacao extends Thread {
 		}
 	}
 
+	String getString(String chave) {
+		return ObjetoMensagens.getString(chave);
+	}
+
 	void restaurarMemento() {
 		for (Objeto objeto : superficie.objetos) {
 			objeto.restaurarMemento();
@@ -1621,7 +1625,7 @@ class ThreadTotal extends ThreadComparacao {
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
 					objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
-					label.setText(++atual + " / " + total);
+					label.setText(getString("label.atualizando_upper") + " " + (++atual) + " / " + total);
 					objeto.setTotalRegistros(Long.parseLong(i[1]));
 					processado = true;
 					repaint();
@@ -1633,7 +1637,7 @@ class ThreadTotal extends ThreadComparacao {
 			}
 		}
 		if (processado) {
-			label.setText(ObjetoMensagens.getString("label.threadTotalAtual"));
+			label.setText(getString("label.threadTotalAtual"));
 			restaurarMemento();
 			repaint();
 		}
@@ -1670,7 +1674,7 @@ class ThreadRecente extends ThreadComparacao {
 								objeto.getTabela(), null);
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
-					label.setText(++atual + " / " + total);
+					label.setText(getString("label.comparando_upper") + " " + (++atual) + " / " + total);
 					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
 					processado = true;
 					repaint();
@@ -1682,7 +1686,7 @@ class ThreadRecente extends ThreadComparacao {
 			}
 		}
 		if (processado) {
-			label.setText(ObjetoMensagens.getString("label.threadRecente"));
+			label.setText(getString("label.threadCompRecente"));
 			for (Objeto objeto : novos) {
 				incluir(objeto);
 			}
