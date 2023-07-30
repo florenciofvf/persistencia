@@ -489,6 +489,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		private class ButtonInfo extends ButtonPopup {
 			private Action excluirSemTabelaAcao = acaoMenu("label.excluir_sem_tabela");
+			private MenuItem itemExcluirST = new MenuItem(excluirSemTabelaAcao);
 			private Action totalAtualAcao = acaoMenu("label.total_atual");
 			private Action comparaRecAcao = acaoMenu("label.compararRec");
 			private MenuItem itemTotalAtual = new MenuItem(totalAtualAcao);
@@ -499,11 +500,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				super("label.comparar", Icones.INFO);
 				addMenuItem(itemTotalAtual);
 				addMenuItem(true, itemComparaRec);
-				addMenuItem(true, excluirSemTabelaAcao);
-				totalAtualAcao.setActionListener(
-						e -> objetoSuperficie.atualizarTotal(getConexaoPadrao(), itemTotalAtual, labelStatus));
-				comparaRecAcao.setActionListener(
-						e -> objetoSuperficie.compararRecent(getConexaoPadrao(), itemComparaRec, labelStatus));
+				addMenuItem(true, itemExcluirST);
+				totalAtualAcao.setActionListener(e -> objetoSuperficie.atualizarTotal(getConexaoPadrao(),
+						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST }, labelStatus));
+				comparaRecAcao.setActionListener(e -> objetoSuperficie.compararRecent(getConexaoPadrao(),
+						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST }, labelStatus));
 				excluirSemTabelaAcao.setActionListener(e -> {
 					objetoSuperficie.excluirSemTabela();
 					labelStatus.limpar();

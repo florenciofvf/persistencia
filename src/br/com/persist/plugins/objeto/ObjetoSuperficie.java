@@ -1259,11 +1259,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		ExternalFormulario.criar(ref.get(), conexao, objeto);
 	}
 
-	public void atualizarTotal(Conexao conexao, MenuItem menuItem, Label label) {
+	public void atualizarTotal(Conexao conexao, MenuItem[] menuItens, Label label) {
 		if (conexao != null) {
 			int total = preTotalRecente(label);
 			if (total > 0) {
-				new ThreadTotal(ObjetoSuperficie.this, conexao, menuItem, label, total).start();
+				new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total).start();
 			}
 		} else {
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
@@ -1309,7 +1309,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		repaint();
 	}
 
-	public void compararRecent(Conexao conexao, MenuItem menuItem, Label label) {
+	public void compararRecent(Conexao conexao, MenuItem[] menuItens, Label label) {
 		if (conexao == null) {
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
 			return;
@@ -1320,7 +1320,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			if (fm != null) {
 				int total = preTotalRecente(label);
 				if (total > 0) {
-					new ThreadRecente(ObjetoSuperficie.this, conexao, fm, menuItem, label, total).start();
+					new ThreadRecente(ObjetoSuperficie.this, menuItens, conexao, label, total, fm).start();
 				}
 			}
 		}
