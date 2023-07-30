@@ -1625,7 +1625,7 @@ class ThreadTotal extends ThreadComparacao {
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
 					objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
-					label.setText(getString("label.atualizando_upper") + " " + (++atual) + " / " + total);
+					label.setText(getString("label.atualizando_upper") + " (" + (++atual) + " / " + total + ")");
 					objeto.setTotalRegistros(Long.parseLong(i[1]));
 					processado = true;
 					repaint();
@@ -1674,7 +1674,7 @@ class ThreadRecente extends ThreadComparacao {
 								objeto.getTabela(), null);
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
-					label.setText(getString("label.comparando_upper") + " " + (++atual) + " / " + total);
+					label.setText(getString("label.comparando_upper") + " (" + (++atual) + " / " + total + ")");
 					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
 					processado = true;
 					repaint();
