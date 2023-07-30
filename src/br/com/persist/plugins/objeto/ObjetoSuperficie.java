@@ -1546,19 +1546,56 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 }
 
-class ThreadTotal extends Thread {
+abstract class ThreadComparacao extends Thread {
 	final ObjetoSuperficie superficie;
-	final MenuItem menuItem;
+	final MenuItem[] menuItens;
 	final Conexao conexao;
+	final FontMetrics fm;
 	final Label label;
 	final int total;
 
-	ThreadTotal(ObjetoSuperficie superficie, Conexao conexao, MenuItem menuItem, Label label, int total) {
+	ThreadComparacao(ObjetoSuperficie superficie, MenuItem[] menuItens, Conexao conexao, Label label, int total,
+			FontMetrics fm) {
 		this.superficie = superficie;
-		this.menuItem = menuItem;
+		this.menuItens = menuItens;
 		this.conexao = conexao;
 		this.label = label;
 		this.total = total;
+		this.fm = fm;
+	}
+
+	void setItensEnabled(boolean b) {
+		for (MenuItem Item : menuItens) {
+			Item.setEnabled(b);
+		}
+	}
+
+	void sleepIntervaloComparacao() {
+		try {
+			Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
+		} catch (Exception ex) {
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	void restaurarMemento() {
+		for (Objeto objeto : superficie.objetos) {
+			objeto.restaurarMemento();
+		}
+	}
+
+	void repaint() {
+		superficie.repaint();
+	}
+
+	@Override
+	public void run() {
+	}
+}
+
+class ThreadTotal extends ThreadComparacao {
+	ThreadTotal(ObjetoSuperficie superficie, MenuItem[] menuItens, Conexao conexao, Label label, int total) {
+		super(superficie, menuItens, conexao, label, total, null);
 	}
 
 	@Override
@@ -1567,11 +1604,11 @@ class ThreadTotal extends Thread {
 			Util.mensagem(superficie, Constantes.DESCONECTADO);
 			return;
 		}
-		pausar();
+		sleepIntervaloComparacao();
 		label.setForeground(ObjetoPreferencia.getCorTotalAtual());
 		label.setText("0 / " + total);
 		boolean processado = false;
-		menuItem.setEnabled(false);
+		setItensEnabled(false);
 		int atual = 0;
 		for (Objeto objeto : superficie.objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
@@ -1587,8 +1624,8 @@ class ThreadTotal extends Thread {
 					label.setText(++atual + " / " + total);
 					objeto.setTotalRegistros(Long.parseLong(i[1]));
 					processado = true;
-					superficie.repaint();
-					Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
+					repaint();
+					sleepIntervaloComparacao();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("TOTAL", ex, superficie);
 					Thread.currentThread().interrupt();
@@ -1597,39 +1634,17 @@ class ThreadTotal extends Thread {
 		}
 		if (processado) {
 			label.setText(ObjetoMensagens.getString("label.threadTotalAtual"));
-			for (Objeto objeto : superficie.objetos) {
-				objeto.restaurarMemento();
-			}
-			superficie.repaint();
+			restaurarMemento();
+			repaint();
 		}
-		menuItem.setEnabled(true);
-	}
-
-	private void pausar() {
-		try {
-			Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
-		} catch (Exception ex) {
-			Thread.currentThread().interrupt();
-		}
+		setItensEnabled(true);
 	}
 }
 
-class ThreadRecente extends Thread {
-	final ObjetoSuperficie superficie;
-	final MenuItem menuItem;
-	final Conexao conexao;
-	final FontMetrics fm;
-	final Label label;
-	final int total;
-
-	ThreadRecente(ObjetoSuperficie superficie, Conexao conexao, FontMetrics fm, MenuItem menuItem, Label label,
-			int total) {
-		this.superficie = superficie;
-		this.menuItem = menuItem;
-		this.conexao = conexao;
-		this.label = label;
-		this.total = total;
-		this.fm = fm;
+class ThreadRecente extends ThreadComparacao {
+	ThreadRecente(ObjetoSuperficie superficie, MenuItem[] menuItens, Conexao conexao, Label label, int total,
+			FontMetrics fm) {
+		super(superficie, menuItens, conexao, label, total, fm);
 	}
 
 	@Override
@@ -1638,11 +1653,11 @@ class ThreadRecente extends Thread {
 			Util.mensagem(superficie, Constantes.DESCONECTADO);
 			return;
 		}
-		pausar();
+		sleepIntervaloComparacao();
 		label.setForeground(ObjetoPreferencia.getCorComparaRec());
 		label.setText("0 / " + total);
 		boolean processado = false;
-		menuItem.setEnabled(false);
+		setItensEnabled(false);
 		int atual = 0;
 		List<Objeto> novos = new ArrayList<>();
 		for (Objeto objeto : superficie.objetos) {
@@ -1658,8 +1673,8 @@ class ThreadRecente extends Thread {
 					label.setText(++atual + " / " + total);
 					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
 					processado = true;
-					superficie.repaint();
-					Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
+					repaint();
+					sleepIntervaloComparacao();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("RECENTE", ex, superficie);
 					Thread.currentThread().interrupt();
@@ -1671,20 +1686,10 @@ class ThreadRecente extends Thread {
 			for (Objeto objeto : novos) {
 				incluir(objeto);
 			}
-			for (Objeto objeto : superficie.objetos) {
-				objeto.restaurarMemento();
-			}
-			superficie.repaint();
+			restaurarMemento();
+			repaint();
 		}
-		menuItem.setEnabled(true);
-	}
-
-	private void pausar() {
-		try {
-			Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
-		} catch (Exception ex) {
-			Thread.currentThread().interrupt();
-		}
+		setItensEnabled(true);
 	}
 
 	private void processarRecente(Objeto objeto, int totalRegistros, FontMetrics fm, List<Objeto> novos) {
