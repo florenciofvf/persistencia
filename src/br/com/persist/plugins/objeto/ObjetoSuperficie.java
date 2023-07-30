@@ -1274,6 +1274,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		int total = 0;
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
+				objeto.criarMemento();
 				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
 				total++;
 			}
@@ -1566,6 +1567,7 @@ class ThreadTotal extends Thread {
 			Util.mensagem(superficie, Constantes.DESCONECTADO);
 			return;
 		}
+		pausar();
 		label.setForeground(ObjetoPreferencia.getCorTotalAtual());
 		label.setText("0 / " + total);
 		boolean processado = false;
@@ -1586,7 +1588,7 @@ class ThreadTotal extends Thread {
 					objeto.setTotalRegistros(Long.parseLong(i[1]));
 					processado = true;
 					superficie.repaint();
-					sleep(ObjetoPreferencia.getIntervaloComparacao());
+					Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("TOTAL", ex, superficie);
 					Thread.currentThread().interrupt();
@@ -1595,8 +1597,20 @@ class ThreadTotal extends Thread {
 		}
 		if (processado) {
 			label.setText(ObjetoMensagens.getString("label.threadTotalAtual"));
+			for (Objeto objeto : superficie.objetos) {
+				objeto.restaurarMemento();
+			}
+			superficie.repaint();
 		}
 		menuItem.setEnabled(true);
+	}
+
+	private void pausar() {
+		try {
+			Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
+		} catch (Exception ex) {
+			Thread.currentThread().interrupt();
+		}
 	}
 }
 
@@ -1624,6 +1638,7 @@ class ThreadRecente extends Thread {
 			Util.mensagem(superficie, Constantes.DESCONECTADO);
 			return;
 		}
+		pausar();
 		label.setForeground(ObjetoPreferencia.getCorComparaRec());
 		label.setText("0 / " + total);
 		boolean processado = false;
@@ -1644,7 +1659,7 @@ class ThreadRecente extends Thread {
 					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
 					processado = true;
 					superficie.repaint();
-					sleep(ObjetoPreferencia.getIntervaloComparacao());
+					Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("RECENTE", ex, superficie);
 					Thread.currentThread().interrupt();
@@ -1652,12 +1667,24 @@ class ThreadRecente extends Thread {
 			}
 		}
 		if (processado) {
+			label.setText(ObjetoMensagens.getString("label.threadRecente"));
 			for (Objeto objeto : novos) {
 				incluir(objeto);
 			}
-			label.setText(ObjetoMensagens.getString("label.threadRecente"));
+			for (Objeto objeto : superficie.objetos) {
+				objeto.restaurarMemento();
+			}
+			superficie.repaint();
 		}
 		menuItem.setEnabled(true);
+	}
+
+	private void pausar() {
+		try {
+			Thread.sleep(ObjetoPreferencia.getIntervaloComparacao());
+		} catch (Exception ex) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	private void processarRecente(Objeto objeto, int totalRegistros, FontMetrics fm, List<Objeto> novos) {

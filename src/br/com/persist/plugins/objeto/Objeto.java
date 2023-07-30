@@ -41,7 +41,6 @@ public class Objeto implements Runnable {
 	private Pesquisa pesquisaAdicaoHierarquico;
 	private final List<Referencia> referencias;
 	private Map<String, String> mapaSequencias;
-	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	private boolean clonarAoDestacar = true;
 	private final List<Pesquisa> pesquisas;
@@ -56,6 +55,7 @@ public class Objeto implements Runnable {
 	private boolean sequenciasAlterado;
 	private boolean desenharId = true;
 	private String esquemaAlternativo;
+	Color corFonte = COR_PADRAO_FONTE;
 	private String tabelaAlternativo;
 	private boolean abrirAuto = true;
 	private int deslocamentoXId = -5;
@@ -89,6 +89,7 @@ public class Objeto implements Runnable {
 	private boolean processar;
 	private Metadado metadado;
 	private String descricao;
+	private Memento memento;
 	protected int larguraId;
 	private String orderBy;
 	boolean visivel = true;
@@ -1305,5 +1306,27 @@ public class Objeto implements Runnable {
 			associado.x = x + larguraId + Objeto.DIAMETRO;
 			associado.y = y;
 		}
+	}
+
+	public void restaurarMemento() {
+		if (memento != null) {
+			memento.restaurar(this);
+		}
+	}
+
+	public void criarMemento() {
+		memento = new Memento(this);
+	}
+}
+
+class Memento {
+	private final Color corFonte;
+
+	Memento(Objeto objeto) {
+		corFonte = objeto.corFonte;
+	}
+
+	void restaurar(Objeto objeto) {
+		objeto.corFonte = corFonte;
 	}
 }
