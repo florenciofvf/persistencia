@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -395,6 +397,16 @@ public class ObjetoContainer extends Panel {
 			objetoSuperficie.repaint();
 		}
 
+		private void configLarguraFonte() {
+			Font font = getFont();
+			if (font != null) {
+				FontMetrics fm = getFontMetrics(font);
+				if (fm != null) {
+					objeto.setLarguraId(fm.stringWidth(objeto.getId()));
+				}
+			}
+		}
+
 		private void actionPerformedCont(ActionEvent e) {
 			if (txtId == e.getSource()) {
 				String id = txtId.getText();
@@ -404,6 +416,7 @@ public class ObjetoContainer extends Panel {
 
 					if (!objetoSuperficie.contem(obj)) {
 						objeto.setId(id);
+						configLarguraFonte();
 					}
 				}
 			} else if (txtArquivo == e.getSource()) {

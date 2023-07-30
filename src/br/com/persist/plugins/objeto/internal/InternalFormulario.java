@@ -491,7 +491,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (objeto != null) {
 			objeto.setX(getX() - deltaX);
 			objeto.setY(getY() - deltaY);
-			objeto.configYAssociado();
+			objeto.configLocalAssociado();
 		}
 	}
 
@@ -499,7 +499,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		Objeto objeto = container.getObjeto();
 		if (objeto != null) {
 			setLocation(objeto.getX() + deltaX, objeto.getY() + deltaY);
-			objeto.configYAssociado();
+			objeto.configLocalAssociado();
 		}
 	}
 

@@ -1301,6 +1301,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					excluir(objeto);
 				}
 			}
+			for (Objeto objeto : objetos) {
+				objeto.associado = null;
+			}
 		}
 		repaint();
 	}
@@ -1663,8 +1666,8 @@ class ThreadRecente extends Thread {
 		if (diff == 0) {
 			return;
 		}
-		int largura = fm.stringWidth(objeto.getId());
-		Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create2" : "delete");
+		objeto.larguraId = fm.stringWidth(objeto.getId());
+		Objeto info = new Objeto(0, 0, diff > 0 ? "create2" : "delete");
 		String id = null;
 		if (diff > 0) {
 			id = objeto.getTotalRegistros() + "+" + diff + "=" + totalRegistros;
@@ -1687,6 +1690,7 @@ class ThreadRecente extends Thread {
 		superficie.excluir(origem.associado);
 		superficie.addObjeto(info);
 		origem.associado = info;
+		origem.configLocalAssociado();
 	}
 }
 

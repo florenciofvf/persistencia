@@ -89,6 +89,7 @@ public class Objeto implements Runnable {
 	private boolean processar;
 	private Metadado metadado;
 	private String descricao;
+	protected int larguraId;
 	private String orderBy;
 	boolean visivel = true;
 	private String arquivo;
@@ -1295,8 +1296,13 @@ public class Objeto implements Runnable {
 		this.metadado = metadado;
 	}
 
-	public void configYAssociado() {
+	public void setLarguraId(int larguraId) {
+		this.larguraId = larguraId;
+	}
+
+	public void configLocalAssociado() {
 		if (associado != null) {
+			associado.x = x + larguraId + Objeto.DIAMETRO;
 			associado.y = y;
 		}
 	}
