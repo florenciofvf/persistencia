@@ -1621,17 +1621,17 @@ class ThreadTotal extends ThreadComparacao {
 		for (Objeto objeto : superficie.objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				try {
-					String[] i = { "0", "0" };
+					String[] array = { "0", "0" };
 					String suf = " (" + (++atual) + " / " + total + ")";
 					setText(getString("label.totalizando_id", objeto.getId()) + suf);
 					if (!Preferencias.isDesconectado()) {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
 								objeto.getTabela(), null);
-						i = Persistencia.getTotalRegistros(conn, aposFROM);
+						array = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
 					objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
-					objeto.setTotalRegistros(Long.parseLong(i[1]));
+					objeto.setTotalRegistros(Long.parseLong(array[1]));
 					setText(getString("label.totalizado_id", objeto.getId()) + suf);
 					processado = true;
 					repaint();
@@ -1673,16 +1673,16 @@ class ThreadRecente extends ThreadComparacao {
 		for (Objeto objeto : superficie.objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				try {
-					String[] i = { "0", "0" };
+					String[] array = { "0", "0" };
 					String suf = " (" + (++atual) + " / " + total + ")";
 					setText(getString("label.comparando_id", objeto.getId()) + suf);
 					if (!Preferencias.isDesconectado()) {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
 								objeto.getTabela(), null);
-						i = Persistencia.getTotalRegistros(conn, aposFROM);
+						array = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
-					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
+					processarRecente(objeto, Integer.parseInt(array[1]), fm, novos);
 					setText(getString("label.comparado_id", objeto.getId()) + suf);
 					processado = true;
 					repaint();

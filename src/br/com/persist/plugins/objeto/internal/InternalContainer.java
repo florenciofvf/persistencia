@@ -1647,6 +1647,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private class ButtonFuncoes extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private JCheckBoxMenuItem chkSubsTotalComparacao = new JCheckBoxMenuItem(
+					ObjetoMensagens.getString("label.subs_total_comparacao"));
 			private JCheckBoxMenuItem chkExibirInstrucao = new JCheckBoxMenuItem(
 					ObjetoMensagens.getString("label.exibir_instrucao"));
 
@@ -1655,6 +1657,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addMenuItem(new MinimoMaximoAcao(true));
 				addMenuItem(new MinimoMaximoAcao(false));
 				addSeparator();
+				addItem(chkSubsTotalComparacao);
 				addItem(chkExibirInstrucao);
 				addMenuItem(new TotalizarRegistrosAcao(false));
 				addMenuItem(new TotalizarRegistrosAcao(true));
@@ -1746,6 +1749,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							String[] array = Persistencia.getTotalRegistros(conn,
 									objeto.getTabelaEsquema(conexao) + filtro);
 							toolbar.labelTotal.setText(Util.formatarNumero(array[1]));
+							if (chkSubsTotalComparacao.isSelected()) {
+								objeto.setTotalRegistros(Long.parseLong(array[1]));
+							}
 							if (chkExibirInstrucao.isSelected()) {
 								Util.mensagem(InternalContainer.this, array[0]);
 							}
