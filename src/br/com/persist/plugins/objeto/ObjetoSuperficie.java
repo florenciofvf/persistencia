@@ -1578,8 +1578,8 @@ abstract class ThreadComparacao extends Thread {
 		}
 	}
 
-	String getString(String chave) {
-		return ObjetoMensagens.getString(chave);
+	String getString(String chave, Object... args) {
+		return ObjetoMensagens.getString(chave, args);
 	}
 
 	void restaurarMemento() {
@@ -1618,6 +1618,8 @@ class ThreadTotal extends ThreadComparacao {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				try {
 					String[] i = { "0", "0" };
+					String suf = " (" + (++atual) + " / " + total + ")";
+					label.setText(getString("label.totalizando_id", objeto.getId()) + suf);
 					if (!Preferencias.isDesconectado()) {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
@@ -1625,8 +1627,8 @@ class ThreadTotal extends ThreadComparacao {
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
 					objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
-					label.setText(getString("label.atualizando_upper") + " (" + (++atual) + " / " + total + ")");
 					objeto.setTotalRegistros(Long.parseLong(i[1]));
+					label.setText(getString("label.totalizado_id", objeto.getId()) + suf);
 					processado = true;
 					repaint();
 					sleepIntervaloComparacao();
@@ -1668,14 +1670,16 @@ class ThreadRecente extends ThreadComparacao {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				try {
 					String[] i = { "0", "0" };
+					String suf = " (" + (++atual) + " / " + total + ")";
+					label.setText(getString("label.comparando_id", objeto.getId()) + suf);
 					if (!Preferencias.isDesconectado()) {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
 								objeto.getTabela(), null);
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
-					label.setText(getString("label.comparando_upper") + " (" + (++atual) + " / " + total + ")");
 					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
+					label.setText(getString("label.comparado_id", objeto.getId()) + suf);
 					processado = true;
 					repaint();
 					sleepIntervaloComparacao();
