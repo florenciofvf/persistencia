@@ -1828,6 +1828,7 @@ class SuperficiePopup2 extends Popup {
 
 	void preShow(boolean contemFrames) {
 		colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
+		limparFormulariosFiltroAcao.setEnabled(contemFrames);
 		superficie.getMenuLargura().habilitar(contemFrames);
 		superficie.getMenuAjustar().habilitar(contemFrames);
 		superficie.getMenuAjuste().habilitar(contemFrames);
