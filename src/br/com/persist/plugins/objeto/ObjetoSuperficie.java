@@ -1578,6 +1578,10 @@ abstract class ThreadComparacao extends Thread {
 		}
 	}
 
+	void setText(String string) {
+		SwingUtilities.invokeLater(() -> label.setText(string));
+	}
+
 	String getString(String chave, Object... args) {
 		return ObjetoMensagens.getString(chave, args);
 	}
@@ -1619,7 +1623,7 @@ class ThreadTotal extends ThreadComparacao {
 				try {
 					String[] i = { "0", "0" };
 					String suf = " (" + (++atual) + " / " + total + ")";
-					label.setText(getString("label.totalizando_id", objeto.getId()) + suf);
+					setText(getString("label.totalizando_id", objeto.getId()) + suf);
 					if (!Preferencias.isDesconectado()) {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
@@ -1628,7 +1632,7 @@ class ThreadTotal extends ThreadComparacao {
 					}
 					objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 					objeto.setTotalRegistros(Long.parseLong(i[1]));
-					label.setText(getString("label.totalizado_id", objeto.getId()) + suf);
+					setText(getString("label.totalizado_id", objeto.getId()) + suf);
 					processado = true;
 					repaint();
 					sleepIntervaloComparacao();
@@ -1671,7 +1675,7 @@ class ThreadRecente extends ThreadComparacao {
 				try {
 					String[] i = { "0", "0" };
 					String suf = " (" + (++atual) + " / " + total + ")";
-					label.setText(getString("label.comparando_id", objeto.getId()) + suf);
+					setText(getString("label.comparando_id", objeto.getId()) + suf);
 					if (!Preferencias.isDesconectado()) {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
@@ -1679,7 +1683,7 @@ class ThreadRecente extends ThreadComparacao {
 						i = Persistencia.getTotalRegistros(conn, aposFROM);
 					}
 					processarRecente(objeto, Integer.parseInt(i[1]), fm, novos);
-					label.setText(getString("label.comparado_id", objeto.getId()) + suf);
+					setText(getString("label.comparado_id", objeto.getId()) + suf);
 					processado = true;
 					repaint();
 					sleepIntervaloComparacao();
