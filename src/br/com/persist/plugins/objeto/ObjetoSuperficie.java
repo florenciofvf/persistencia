@@ -1985,6 +1985,10 @@ class SuperficiePopup extends Popup {
 			inverterAcao.setActionListener(e -> inverterPosicao());
 		}
 
+		private void preShow() {
+			inverterAcao.setEnabled(superficie.getSelecionados().size() == Constantes.UM);
+		}
+
 		private void inverterPosicao() {
 			if (superficie.selecionadoObjeto != null) {
 				List<String> list = ObjetoSuperficieUtil.getListaStringIds(superficie);
@@ -2204,6 +2208,7 @@ class SuperficiePopup extends Popup {
 		menuCircular.setEnabled(objetoSelecionado);
 		itemPartir.setEnabled(!objetoSelecionado);
 		copiarAcao.setEnabled(objetoSelecionado);
+		menuDistribuicao.preShow();
 	}
 
 	private class PartirAcao extends Acao {
