@@ -50,6 +50,7 @@ public class SetLista {
 	public static class Config {
 		final boolean obrigatorio;
 		final boolean somenteUm;
+		String mensagem;
 		boolean criar;
 
 		public Config(boolean obrigatorio, boolean somenteUm) {
@@ -71,6 +72,14 @@ public class SetLista {
 
 		public void setCriar(boolean criar) {
 			this.criar = criar;
+		}
+
+		public String getMensagem() {
+			return mensagem;
+		}
+
+		public void setMensagem(String mensagem) {
+			this.mensagem = mensagem;
 		}
 	}
 
@@ -312,10 +321,16 @@ class SetListaDialogo extends AbstratoDialogo {
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
 			add(ordenarAcao);
-			add(chkTodos);
+			if (!config.somenteUm) {
+				add(chkTodos);
+			}
 			if (config.criar) {
 				add(criarAcao);
 				criarAcao.setActionListener(e -> criarCampo());
+			}
+			if (config.mensagem != null) {
+				add(label);
+				label.setText(" " + config.mensagem);
 			}
 			chkTodos.setSelected(!config.somenteUm);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));

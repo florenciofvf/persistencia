@@ -1993,8 +1993,10 @@ class SuperficiePopup extends Popup {
 				}
 				list.sort(Collator.getInstance());
 				Coletor coletor = new Coletor();
-				SetLista.view(superficie.selecionadoObjeto.getId(), list, coletor, superficie,
-						new SetLista.Config(true, true));
+				SetLista.Config config = new SetLista.Config(true, true);
+				config.setMensagem(ObjetoMensagens.getString("label.sel_outro_obj_para_trocar_pos_com",
+						superficie.selecionadoObjeto.getId()));
+				SetLista.view(superficie.selecionadoObjeto.getId(), list, coletor, superficie, config);
 				if (coletor.size() == 1) {
 					Objeto outro = superficie.getObjeto(coletor.get(0));
 					superficie.selecionadoObjeto.inverterPosicao(outro);
