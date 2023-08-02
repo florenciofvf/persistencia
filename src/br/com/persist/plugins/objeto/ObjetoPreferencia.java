@@ -9,6 +9,7 @@ public class ObjetoPreferencia {
 	private static boolean habilitadoEsquemaTabelaAlter;
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean pesquisaFormInternalLazy;
+	private static boolean exibirTotalColunasTabela;
 	private static boolean destacarInternalComCor;
 	private static int tipoContainerPesquisaAuto;
 	private static boolean abrirAutoDestacado;
@@ -29,6 +30,7 @@ public class ObjetoPreferencia {
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		habilitadoEsquemaTabelaAlter = pref.getBoolean("habilitado_esquema_tabela_alter", false);
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
+		exibirTotalColunasTabela = pref.getBoolean("exibir_total_colunas_tabela", false);
 		pesquisaFormInternalLazy = pref.getBoolean("pesquisa_form_internal_lazy", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
@@ -44,6 +46,7 @@ public class ObjetoPreferencia {
 		pref.putBoolean("habilitado_esquema_tabela_alter", habilitadoEsquemaTabelaAlter);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putBoolean("pesquisa_form_internal_lazy", pesquisaFormInternalLazy);
+		pref.putBoolean("exibir_total_colunas_tabela", exibirTotalColunasTabela);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
 		pref.putBoolean("destacar_internal_com_cor", destacarInternalComCor);
@@ -149,5 +152,13 @@ public class ObjetoPreferencia {
 
 	public static void setDestacarInternalComCor(boolean destacarInternalComCor) {
 		ObjetoPreferencia.destacarInternalComCor = destacarInternalComCor;
+	}
+
+	public static boolean isExibirTotalColunasTabela() {
+		return exibirTotalColunasTabela;
+	}
+
+	public static void setExibirTotalColunasTabela(boolean exibirTotalColunasTabela) {
+		ObjetoPreferencia.exibirTotalColunasTabela = exibirTotalColunasTabela;
 	}
 }

@@ -27,6 +27,8 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
+	private final CheckBox chkExibirTotalColunasTabela = new CheckBox(
+			ObjetoMensagens.getString("label.exibirTotalColunasTabelaTitle"), false);
 	private final CheckBox chkHabitEsquemaTabelaAlter = new CheckBox(
 			ObjetoMensagens.getString("label.habilitadoEsquemaTabelaAlter"), false);
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox(
@@ -81,6 +83,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
 
 		chkHabitEsquemaTabelaAlter.setSelected(ObjetoPreferencia.isHabilitadoEsquemaTabelaAlter());
+		chkExibirTotalColunasTabela.setSelected(ObjetoPreferencia.isExibirTotalColunasTabela());
 		chkPesquisaFormInternalLazy.setSelected(ObjetoPreferencia.isPesquisaFormInternalLazy());
 		chkHabitInnerJoinsObj.setSelected(ObjetoPreferencia.isHabilitadoInnerJoinsObjeto());
 		chkAtivarAbrirAutoDestac.setSelected(ObjetoPreferencia.isAbrirAutoDestacado());
@@ -94,7 +97,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervalo, panelIntervalos));
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
-				chkPesquisaFormInternalLazy, chkHabitEsquemaTabelaAlter, chkInternalComCor, chkHabitInnerJoinsObj));
+				chkExibirTotalColunasTabela, chkPesquisaFormInternalLazy, chkHabitEsquemaTabelaAlter, chkInternalComCor,
+				chkHabitInnerJoinsObj));
 		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
@@ -131,6 +135,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				.addActionListener(e -> ObjetoPreferencia.setDestacarInternalComCor(chkInternalComCor.isSelected()));
 		chkHabitEsquemaTabelaAlter.addActionListener(
 				e -> ObjetoPreferencia.setHabilitadoEsquemaTabelaAlter(chkHabitEsquemaTabelaAlter.isSelected()));
+		chkExibirTotalColunasTabela.addActionListener(
+				e -> ObjetoPreferencia.setExibirTotalColunasTabela(chkExibirTotalColunasTabela.isSelected()));
 		chkPesquisaFormInternalLazy.addActionListener(
 				e -> ObjetoPreferencia.setPesquisaFormInternalLazy(chkPesquisaFormInternalLazy.isSelected()));
 		chkHabitInnerJoinsObj.addActionListener(
