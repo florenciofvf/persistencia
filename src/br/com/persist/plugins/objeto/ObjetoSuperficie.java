@@ -1974,6 +1974,7 @@ class SuperficiePopup extends Popup {
 	}
 
 	private class MenuDistribuicao extends Menu {
+		Action inverterAcao2 = ObjetoSuperficie.acaoMenu("label.inverter_posicao2");
 		Action inverterAcao = ObjetoSuperficie.acaoMenu("label.inverter_posicao");
 		private static final long serialVersionUID = 1L;
 
@@ -1982,11 +1983,15 @@ class SuperficiePopup extends Popup {
 			add(new MenuItem(new DistribuicaoAcao(true, "label.horizontal")));
 			add(new MenuItem(new DistribuicaoAcao(false, "label.vertical")));
 			addMenuItem(true, inverterAcao);
+			addMenuItem(inverterAcao2);
+			inverterAcao2.setActionListener(e -> inverterPosicao2());
 			inverterAcao.setActionListener(e -> inverterPosicao());
 		}
 
 		private void preShow() {
-			inverterAcao.setEnabled(superficie.getSelecionados().size() == Constantes.UM);
+			List<Objeto> selecionados = superficie.getSelecionados();
+			inverterAcao2.setEnabled(selecionados.size() == Constantes.DOIS);
+			inverterAcao.setEnabled(selecionados.size() == Constantes.UM);
 		}
 
 		private void inverterPosicao() {
@@ -2003,16 +2008,25 @@ class SuperficiePopup extends Popup {
 						superficie.selecionadoObjeto.getId()));
 				SetLista.view(superficie.selecionadoObjeto.getId(), list, coletor, superficie, config);
 				if (coletor.size() == 1) {
-					inverter(superficie.getObjeto(coletor.get(0)));
+					inverter(superficie.selecionadoObjeto, superficie.getObjeto(coletor.get(0)));
 				}
 			}
 		}
 
-		private void inverter(Objeto outro) {
-			if (outro == null) {
+		private void inverterPosicao2() {
+			List<Objeto> selecionados = superficie.getSelecionados();
+			if (selecionados.size() == Constantes.DOIS) {
+				Objeto objeto1 = selecionados.get(0);
+				Objeto objeto2 = selecionados.get(1);
+				inverter(objeto1, objeto2);
+			}
+		}
+
+		private void inverter(Objeto objeto1, Objeto objeto2) {
+			if (objeto1 == null || objeto2 == null) {
 				return;
 			}
-			superficie.selecionadoObjeto.inverterPosicao(outro);
+			objeto1.inverterPosicao(objeto2);
 			superficie.getAjuste().aproximarObjetoFormulario(false, false);
 			superficie.getAjuste().empilharFormularios();
 			superficie.getAjuste().aproximarObjetoFormulario(true, true);
