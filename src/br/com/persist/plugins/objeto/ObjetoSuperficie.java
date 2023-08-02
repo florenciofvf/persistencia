@@ -1998,11 +1998,21 @@ class SuperficiePopup extends Popup {
 						superficie.selecionadoObjeto.getId()));
 				SetLista.view(superficie.selecionadoObjeto.getId(), list, coletor, superficie, config);
 				if (coletor.size() == 1) {
-					Objeto outro = superficie.getObjeto(coletor.get(0));
-					superficie.selecionadoObjeto.inverterPosicao(outro);
-					superficie.repaint();
+					inverter(superficie.getObjeto(coletor.get(0)));
 				}
 			}
+		}
+
+		private void inverter(Objeto outro) {
+			if (outro == null) {
+				return;
+			}
+			superficie.selecionadoObjeto.inverterPosicao(outro);
+			superficie.getAjuste().aproximarObjetoFormulario(false, false);
+			superficie.getAjuste().empilharFormularios();
+			superficie.getAjuste().aproximarObjetoFormulario(true, true);
+			superficie.getAjustar().usarFormularios(false);
+			superficie.repaint();
 		}
 	}
 
