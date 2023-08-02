@@ -55,6 +55,10 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getColumnCount();
 	}
 
+	public int getTotalColunas() {
+		return model.listarColunasTabela().size();
+	}
+
 	@Override
 	public String getColumnName(int column) {
 		return model.getColumnName(column);

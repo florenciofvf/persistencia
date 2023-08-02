@@ -985,10 +985,14 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTitle(OrdenacaoModelo modelo) {
-		if (tituloFormularioComId) {
-			return getId() + " - " + getTabela() + " [" + modelo.getRowCount() + "]";
+		String totalColunas = "";
+		if (ObjetoPreferencia.isExibirTotalColunasTabela()) {
+			totalColunas = " - {" + modelo.getTotalColunas() + "}";
 		}
-		return getTabela() + " [" + modelo.getRowCount() + "]";
+		if (tituloFormularioComId) {
+			return getId() + " - " + getTabela() + " [" + modelo.getRowCount() + "]" + totalColunas;
+		}
+		return getTabela() + " [" + modelo.getRowCount() + "]" + totalColunas;
 	}
 
 	public int getDeslocamentoXId() {

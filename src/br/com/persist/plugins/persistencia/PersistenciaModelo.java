@@ -168,6 +168,16 @@ public class PersistenciaModelo implements TableModel {
 		return lista;
 	}
 
+	public List<Coluna> listarColunasTabela() {
+		List<Coluna> lista = new ArrayList<>();
+		for (Coluna c : colunas) {
+			if (!c.isColunaInfo()) {
+				lista.add(c);
+			}
+		}
+		return lista;
+	}
+
 	public List<Coluna> getColunas(List<String> nomes) {
 		List<Coluna> lista = new ArrayList<>();
 		for (Coluna c : colunas) {
