@@ -3,11 +3,13 @@ package br.com.persist.plugins.instrucao.nat;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.nio.channels.FileChannel;
 
 import br.com.persist.assistencia.ArquivoString;
 import br.com.persist.assistencia.LinhaString;
@@ -222,6 +224,31 @@ public class Arquivo {
 		}
 		if (file.isDirectory()) {
 			throw new IOException("O arquivo n\u00e3o pode ser um diret\u00F3rio! >>> " + absoluto);
+		}
+	}
+
+	public static String copiar(Object absolutoOrigem, Object absolutoDestino) throws IOException {
+		if (absolutoOrigem == null) {
+			return "ORIGEM NULL";
+		}
+		File origem = new File(absolutoOrigem.toString());
+		if (!origem.isFile()) {
+			return "ORIGEM NAO EH ARQUIVO";
+		}
+		if (!origem.canRead()) {
+			return "ORIGEM NAO PODE SER LIDO";
+		}
+		if (absolutoDestino == null) {
+			return "DESTINO NULL";
+		}
+		File destino = new File(absolutoDestino.toString());
+		try (FileInputStream fis = new FileInputStream(origem)) {
+			try (FileOutputStream fos = new FileOutputStream(destino)) {
+				FileChannel channelIn = fis.getChannel();
+				FileChannel channelOut = fos.getChannel();
+				return destino.getAbsolutePath() + "\nTOTAL COPIADO(s): "
+						+ channelIn.transferTo(0, origem.length(), channelOut);
+			}
 		}
 	}
 }
