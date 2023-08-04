@@ -34,6 +34,7 @@ public class ParaTabela {
 	private String apelido;
 	private String orderBy;
 	private Color corFonte;
+	private Color corFundo;
 	private String chaves;
 	private String joins;
 	private String grupo;
@@ -171,6 +172,9 @@ public class ParaTabela {
 		if (corFonte != null) {
 			objeto.setCorFonte(corFonte);
 		}
+		if (corFundo != null) {
+			objeto.setCor(corFundo);
+		}
 		if (!Util.estaVazio(orderBy)) {
 			objeto.setOrderBy(orderBy);
 		}
@@ -204,6 +208,9 @@ public class ParaTabela {
 		atributoValor(util, VinculoHandler.ICONE, icone);
 		if (corFonte != null) {
 			atributoValor(util, VinculoHandler.COR_FONTE, Referencia.toHex(corFonte));
+		}
+		if (corFundo != null) {
+			atributoValor(util, VinculoHandler.COR_FUNDO, Referencia.toHex(corFundo));
 		}
 		atributoValor(util, "esquemaAlternativo", esquemaAlternativo);
 		atributoValor(util, "tabelaAlternativo", tabelaAlternativo);
@@ -258,7 +265,8 @@ public class ParaTabela {
 
 	public void modelo(XMLUtil util) {
 		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
-				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#AABBCC").ql();
+				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#AABBCC")
+				.atributo(VinculoHandler.COR_FUNDO, "#CAFEBB").ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("clonarAoDestacar", true).ql();
 		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
@@ -437,6 +445,10 @@ public class ParaTabela {
 		return corFonte;
 	}
 
+	public Color getCorFundo() {
+		return corFundo;
+	}
+
 	public String getAjustarAltura() {
 		return ajustarAltura;
 	}
@@ -503,6 +515,10 @@ public class ParaTabela {
 
 	public void setCorFonte(Color corFonte) {
 		this.corFonte = corFonte;
+	}
+
+	public void setCorFundo(Color corFundo) {
+		this.corFundo = corFundo;
 	}
 
 	public void setIcone(String icone) {

@@ -22,6 +22,7 @@ public class VinculoHandler extends XMLHandler {
 	public static final String INVISIVEL = "invisivel";
 	public static final String INSTRUCAO = "instrucao";
 	public static final String COR_FONTE = "corFonte";
+	public static final String COR_FUNDO = "corFundo";
 	public static final String PESQUISA = "pesquisa";
 	public static final String FILTRO = "filtro";
 	public static final String TABELA = "tabela";
@@ -146,6 +147,7 @@ public class VinculoHandler extends XMLHandler {
 		paraTabela.setBpnt(attributes.getValue("bpnt"));
 		paraTabela.setIcone(attributes.getValue(ICONE));
 		paraTabela.setCorFonte(getCorFonte(attributes));
+		paraTabela.setCorFundo(getCorFundo(attributes));
 		return paraTabela;
 	}
 
@@ -176,6 +178,14 @@ public class VinculoHandler extends XMLHandler {
 
 	private static Color getCorFonte(Attributes attributes) {
 		String corFonte = attributes.getValue(COR_FONTE);
+		if (!Util.estaVazio(corFonte)) {
+			return Color.decode(corFonte);
+		}
+		return null;
+	}
+
+	private static Color getCorFundo(Attributes attributes) {
+		String corFonte = attributes.getValue(COR_FUNDO);
 		if (!Util.estaVazio(corFonte)) {
 			return Color.decode(corFonte);
 		}

@@ -305,6 +305,9 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 	public synchronized int getIndice(File file) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Pagina pagina = getPagina(i);
+			if (pagina == null) {
+				continue;
+			}
 			File paginaFile = pagina.getFile();
 			if (paginaFile != null && file != null && paginaFile.getAbsolutePath().equals(file.getAbsolutePath())) {
 				return i;
@@ -323,7 +326,9 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		} else {
 			for (int i = 0; i < getTabCount(); i++) {
 				Pagina p = getPagina(i);
-				p.processar(formulario, args);
+				if (p != null) {
+					p.processar(formulario, args);
+				}
 			}
 		}
 	}
@@ -365,8 +370,10 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 
 	public synchronized void excluirPagina(int indice) {
 		Pagina pagina = getPagina(indice);
-		pagina.excluindoDoFichario(this);
-		remove(indice);
+		if (pagina != null) {
+			pagina.excluindoDoFichario(this);
+			remove(indice);
+		}
 	}
 
 	public synchronized void adicionarPagina(Pagina pagina) {
@@ -392,8 +399,10 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 			int total = getTabCount();
 			for (int i = 0; i < total; i++) {
 				Pagina pagina = getPagina(i);
-				pw.print(pagina.getClasseFabrica().getName() + Constantes.III + pagina.getStringPersistencia()
-						+ Constantes.QL);
+				if (pagina != null) {
+					pw.print(pagina.getClasseFabrica().getName() + Constantes.III + pagina.getStringPersistencia()
+							+ Constantes.QL);
+				}
 			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("SALVAR PAGINAS", ex, Fichario.this);
@@ -409,7 +418,9 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 				args.put(FicharioEvento.PAGINA_SELECIONADA, pagina);
 				for (int j = 0; j < getTabCount(); j++) {
 					Pagina p = getPagina(j);
-					p.processar(null, args);
+					if (p != null) {
+						p.processar(null, args);
+					}
 				}
 			}
 		}

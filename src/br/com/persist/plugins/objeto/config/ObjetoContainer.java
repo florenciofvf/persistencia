@@ -68,6 +68,7 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
 	private transient List<CompChave> vinculados = new ArrayList<>();
+	private String chaveMensagem = "msg.config_tabela_aba_banco";
 	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
 	private static final long serialVersionUID = 1L;
@@ -1044,19 +1045,19 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
-			private Action actionFonteVinculo = acaoIcon(labelVinculo, Icones.SUCESSO);
+			private Action actionCorFonteVinculo = acaoIcon(labelVinculo, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
-				addButton(actionFonteVinculo);
-				actionFonteVinculo.setActionListener(e -> fonteVinculo());
+				addButton(actionCorFonteVinculo);
+				actionCorFonteVinculo.setActionListener(e -> corFonteVinculo());
 			}
 
-			private void fonteVinculo() {
+			private void corFonteVinculo() {
 				if (Util.estaVazio(txtTabela.getText())) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.config_tabela_aba_banco"));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 					return;
 				}
 				Vinculacao vinculacao = null;
@@ -1116,11 +1117,35 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
+			private Action actionCorVinculo = acaoIcon(labelVinculo, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
+				addButton(actionCorVinculo);
+				actionCorVinculo.setActionListener(e -> corVinculo());
+			}
+
+			private void corVinculo() {
+				if (Util.estaVazio(txtTabela.getText())) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
+					return;
+				}
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = objetoSuperficie.getVinculacao();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("VINCULAR EM COR FUNDO", ex, ObjetoContainer.this);
+					return;
+				}
+				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
+				if (para == null) {
+					para = new ParaTabela(txtTabela.getText().trim());
+					vinculacao.putParaTabela(para);
+				}
+				para.setCorFundo(colorChooser.getColor());
+				salvarVinculacao(vinculacao);
 			}
 
 			@Override
@@ -1187,7 +1212,7 @@ public class ObjetoContainer extends Panel {
 
 		private void configIconeVinculo() {
 			if (Util.estaVazio(txtTabela.getText())) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.config_tabela_aba_banco"));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 				return;
 			}
 			Vinculacao vinculacao = null;
