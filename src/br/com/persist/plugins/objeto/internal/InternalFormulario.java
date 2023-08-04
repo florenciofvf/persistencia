@@ -458,6 +458,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.atualizarComplemento(objeto);
 	}
 
+	public void labelTotalRegistros(long total) {
+		container.labelTotalRegistros(total);
+	}
+
 	public void configuracaoDinamica(Objeto objeto) {
 		container.configuracaoDinamica(objeto);
 	}

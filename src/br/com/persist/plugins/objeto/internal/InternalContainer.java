@@ -1748,9 +1748,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 									: " WHERE 1=1 " + complementar;
 							String[] array = Persistencia.getTotalRegistros(conn,
 									objeto.getTabelaEsquema(conexao) + filtro);
-							toolbar.labelTotal.setText(Util.formatarNumero(array[1]));
+							long totalRegistros = Long.parseLong(array[1]);
+							labelTotalRegistros(totalRegistros);
 							if (chkSubsTotalComparacao.isSelected()) {
-								objeto.setTotalRegistros(Long.parseLong(array[1]));
+								objeto.setTotalRegistros(totalRegistros);
 							}
 							if (chkExibirInstrucao.isSelected()) {
 								Util.mensagem(InternalContainer.this, array[0]);
@@ -3328,6 +3329,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			buscaAuto = true;
 			toolbar.buttonPesquisa.complemento(obj);
 		}
+	}
+
+	public void labelTotalRegistros(long total) {
+		toolbar.labelTotal.setText(Util.formatarNumero("" + total));
 	}
 
 	public void configuracaoDinamica(Objeto objeto) {

@@ -1520,6 +1520,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	@Override
+	public void labelTotalRegistros(Objeto objeto) {
+		InternalFormulario interno = getInternalFormulario(objeto);
+		if (interno != null) {
+			interno.labelTotalRegistros(objeto.getTotalRegistros());
+		}
+	}
+
 	public void configuracaoDinamica(Component componente, Objeto objeto) {
 		InternalFormulario interno = getInternalFormulario(objeto);
 		if (interno == null) {
