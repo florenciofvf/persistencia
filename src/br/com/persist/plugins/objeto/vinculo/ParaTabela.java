@@ -301,7 +301,7 @@ public class ParaTabela {
 		i.salvar(util, false);
 
 		Filtro f = new Filtro("Resumo do filtro");
-		f.setValor("AND id = 1 AND descricao LIKE '%maria%'");
+		f.setValor("AND id = 1 AND descricao LIKE '%Descricao%'");
 		f.salvar(util, false);
 
 		util.finalizarTag(VinculoHandler.PARA);
