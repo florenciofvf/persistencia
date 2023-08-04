@@ -1948,6 +1948,11 @@ class SuperficiePopup extends Popup {
 			add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
 			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
 		}
+
+		private void preShow() {
+			List<Objeto> selecionados = superficie.getSelecionados();
+			setEnabled(selecionados.size() > Constantes.UM);
+		}
 	}
 
 	private class AlinhamentoAcao extends Acao {
@@ -1976,12 +1981,14 @@ class SuperficiePopup extends Popup {
 	private class MenuDistribuicao extends Menu {
 		Action inverterAcao2 = ObjetoSuperficie.acaoMenu("label.inverter_posicao2");
 		Action inverterAcao = ObjetoSuperficie.acaoMenu("label.inverter_posicao");
+		Acao distribuicaoHorAcao = new DistribuicaoAcao(true, "label.horizontal");
+		Acao distribuicaoVerAcao = new DistribuicaoAcao(false, "label.vertical");
 		private static final long serialVersionUID = 1L;
 
 		private MenuDistribuicao() {
 			super("label.distribuicao");
-			add(new MenuItem(new DistribuicaoAcao(true, "label.horizontal")));
-			add(new MenuItem(new DistribuicaoAcao(false, "label.vertical")));
+			add(new MenuItem(distribuicaoHorAcao));
+			add(new MenuItem(distribuicaoVerAcao));
 			addMenuItem(true, inverterAcao);
 			addMenuItem(inverterAcao2);
 			inverterAcao2.setActionListener(e -> inverterPosicao2());
@@ -1990,8 +1997,10 @@ class SuperficiePopup extends Popup {
 
 		private void preShow() {
 			List<Objeto> selecionados = superficie.getSelecionados();
-			inverterAcao2.setEnabled(selecionados.size() == Constantes.DOIS);
 			inverterAcao.setEnabled(selecionados.size() == Constantes.UM);
+			inverterAcao2.setEnabled(selecionados.size() == Constantes.DOIS);
+			distribuicaoHorAcao.setEnabled(selecionados.size() > Constantes.DOIS);
+			distribuicaoVerAcao.setEnabled(selecionados.size() > Constantes.DOIS);
 		}
 
 		private void inverterPosicao() {
@@ -2097,6 +2106,11 @@ class SuperficiePopup extends Popup {
 			exportacaoAcao.setActionListener(e -> abrirModal(Tipo.EXPORTACAO));
 			importacaoAcao.setActionListener(e -> abrirModal(Tipo.IMPORTACAO));
 			normalAcao.setActionListener(e -> abrirModal(Tipo.NORMAL));
+		}
+
+		private void preShow() {
+			List<Objeto> selecionados = superficie.getSelecionados();
+			setEnabled(selecionados.size() > Constantes.UM);
 		}
 
 		private void abrirModal(Tipo tipo) {
@@ -2212,17 +2226,19 @@ class SuperficiePopup extends Popup {
 	}
 
 	void preShow(boolean objetoSelecionado) {
-		itemDados.setEnabled(objetoSelecionado && superficie.selecionadoObjeto != null
-				&& !Util.estaVazio(superficie.selecionadoObjeto.getTabela()));
-		itemDados.setObject(itemDados.isEnabled() ? superficie.selecionadoObjeto : null);
+		Objeto objeto = superficie.selecionadoObjeto;
+		String nomeTabela = objeto != null ? objeto.getTabela() : null;
+		boolean comTabela = objetoSelecionado && objeto != null && !Util.estaVazio(nomeTabela);
+		itemDados.setEnabled(comTabela);
+		itemDados.setObject(itemDados.isEnabled() ? objeto : null);
 		menuDistribuicao.setEnabled(objetoSelecionado);
-		menuAlinhamento.setEnabled(objetoSelecionado);
 		relacoesAcao.setEnabled(objetoSelecionado);
-		menuDestacar.setEnabled(objetoSelecionado);
-		menuCircular.setEnabled(objetoSelecionado);
 		itemPartir.setEnabled(!objetoSelecionado);
 		copiarAcao.setEnabled(objetoSelecionado);
+		menuDestacar.setEnabled(comTabela);
 		menuDistribuicao.preShow();
+		menuAlinhamento.preShow();
+		menuCircular.preShow();
 	}
 
 	private class PartirAcao extends Acao {
