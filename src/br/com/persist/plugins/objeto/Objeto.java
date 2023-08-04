@@ -1242,6 +1242,9 @@ public class Objeto implements Runnable {
 
 	public void setTotalRegistros(long totalRegistros) {
 		this.totalRegistros = totalRegistros;
+		if (listener != null) {
+			listener.labelTotalRegistros(this);
+		}
 	}
 
 	public Pesquisa getPesquisaAdicaoHierarquico() {
