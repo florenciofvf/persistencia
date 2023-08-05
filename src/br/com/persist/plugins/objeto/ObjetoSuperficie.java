@@ -68,6 +68,8 @@ import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
+import br.com.persist.plugins.consulta.ConsultaDialogo;
+import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoConstantes;
 import br.com.persist.plugins.metadado.MetadadoEvento;
@@ -2137,14 +2139,21 @@ class SuperficiePopup extends Popup {
 		private MenuMestreDetalhe() {
 			super("label.mestre_detalhe");
 			addMenuItem(totalMestresComDetalhesAcao);
-			totalMestresComDetalhesAcao.setActionListener(e -> processar());
+			totalMestresComDetalhesAcao.setActionListener(
+					e -> processar(1, ObjetoMensagens.getString("label.total_mestres_com_detalhes")));
 		}
 
 		private void preShow(List<Objeto> selecionados) {
-			setEnabled(selecionados.size() == Constantes.DOIS);
+			boolean selecionado = false;
+			if (selecionados.size() == Constantes.DOIS) {
+				Objeto objeto1 = selecionados.get(0);
+				Objeto objeto2 = selecionados.get(1);
+				selecionado = !Util.estaVazio(objeto1.getTabela()) && !Util.estaVazio(objeto2.getTabela());
+			}
+			setEnabled(selecionado);
 		}
 
-		private void processar() {
+		private void processar(int tipo, String titulo) {
 			List<Objeto> selecionados = superficie.getSelecionados();
 			if (selecionados.size() == Constantes.DOIS) {
 				Objeto objeto1 = selecionados.get(0);
@@ -2159,7 +2168,7 @@ class SuperficiePopup extends Popup {
 					Objeto mestre = superficie.getObjeto(coletor.get(0));
 					MestreDetalhe mestreDetalhe = new MestreDetalhe(superficie, mestre == objeto1 ? objeto1 : objeto2,
 							mestre == objeto1 ? objeto2 : objeto1);
-					mestreDetalhe.processar();
+					mestreDetalhe.processar(tipo, false, superficie.container.getConexaoPadrao(), titulo);
 				}
 			}
 		}
@@ -2316,10 +2325,11 @@ class SuperficiePopup extends Popup {
 
 class MestreDetalhe {
 	final ObjetoSuperficie superficie;
-	final Objeto mestre;
+	String colunaDetalhe;
 	final Objeto detalhe;
 	String colunaMestre;
-	String colunaDetalhe;
+	final Objeto mestre;
+	Conexao conexao;
 
 	MestreDetalhe(ObjetoSuperficie superficie, Objeto mestre, Objeto detalhe) {
 		super();
@@ -2328,7 +2338,11 @@ class MestreDetalhe {
 		this.detalhe = detalhe;
 	}
 
-	void processar() {
+	void processar(int tipo, boolean abrirEmForm, Conexao conexao, String titulo) {
+		this.conexao = conexao;
+		if (conexao == null) {
+			return;
+		}
 		InternalFormulario internalMestre = superficie.getInternalFormulario(mestre);
 		if (internalMestre == null) {
 			Util.mensagem(superficie, ObjetoMensagens.getString("msg.sem_form_internal_associado", mestre.getId()));
@@ -2344,16 +2358,45 @@ class MestreDetalhe {
 		if (Util.estaVazio(colunaMestre)) {
 			return;
 		}
-		List<String> colunasDetalhe = internalMestre.getNomeColunas();
+		List<String> colunasDetalhe = internalDetalhe.getNomeColunas();
 		colunaDetalhe = selecionarColuna(colunasDetalhe, "msg.selecione_coluna_detalhe", detalhe.getId());
 		if (Util.estaVazio(colunaDetalhe)) {
 			return;
 		}
-		monstrarInstrucao();
+		montarInstrucao(tipo, abrirEmForm, conexao, titulo);
 	}
 
-	private void monstrarInstrucao() {
-		// TODO Auto-generated method stub
+	private void montarInstrucao(int tipo, boolean abrirEmForm, Conexao conexao, String titulo) {
+		String instrucao = null;
+		if (tipo == 1) {
+			instrucao = consultaTotalMestresComDetalhes();
+		}
+		selectFormDialog(abrirEmForm, conexao, instrucao, titulo);
+	}
+
+	private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
+		if (abrirEmForm) {
+			Formulario frame = superficie.getFormulario();
+			ConsultaFormulario form = ConsultaFormulario.criar2(frame, conexao, instrucao);
+			Formulario.posicionarJanela(frame, form);
+			form.setTitle(titulo);
+			form.setVisible(true);
+		} else {
+			Formulario frame = superficie.getFormulario();
+			Component comp = Util.getViewParent(superficie);
+			ConsultaDialogo form = ConsultaDialogo.criar2(frame, conexao, instrucao);
+			config2(comp, frame, form);
+			form.setTitle(titulo);
+			form.setVisible(true);
+		}
+	}
+
+	private void config2(Component c, Window parent, Window child) {
+		if (c instanceof Window) {
+			Util.configSizeLocation((Window) c, child, superficie);
+		} else {
+			Util.configSizeLocation(parent, child, superficie);
+		}
 	}
 
 	private String selecionarColuna(List<String> colunas, String chaveTitulo, String param) {
@@ -2364,6 +2407,14 @@ class MestreDetalhe {
 			return coletor.get(0);
 		}
 		return null;
+	}
+
+	private String consultaTotalMestresComDetalhes() {
+		StringBuilder sb = new StringBuilder(" SELECT COUNT(mestre." + colunaMestre + ")" + Constantes.QL);
+		sb.append(" FROM " + mestre.getTabelaEsquema2(conexao) + " mestre" + Constantes.QL);
+		sb.append(" WHERE EXISTS (SELECT detalhe." + colunaDetalhe + " FROM " + detalhe.getTabelaEsquema2(conexao)
+				+ " detalhe WHERE detalhe." + colunaDetalhe + " = mestre." + colunaMestre + ")");
+		return sb.toString();
 	}
 }
 

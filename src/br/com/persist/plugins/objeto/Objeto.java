@@ -586,6 +586,10 @@ public class Objeto implements Runnable {
 		return PersistenciaModelo.prefixarEsquema(conexao, getPrefixoNomeTabela(), getTabela(), getApelidoParaJoins());
 	}
 
+	public String getTabelaEsquema2(Conexao conexao) {
+		return PersistenciaModelo.prefixarEsquema(conexao, null, getTabela(), null);
+	}
+
 	public void select(StringBuilder sb, Conexao conexao) {
 		String sel = getSelectAlternativo();
 		if (Util.estaVazio(sel)) {
