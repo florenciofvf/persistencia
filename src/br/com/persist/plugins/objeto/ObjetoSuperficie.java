@@ -2383,7 +2383,7 @@ class MestreDetalhe {
 		} else if (tipo == 3) {
 			instrucao = objetoComTotalDeSeusFilhos();
 		}
-		selectFormDialog(abrirEmForm, conexao, instrucao, titulo + " Mestre=(" + mestre.getId() + ")");
+		selectFormDialog(abrirEmForm, conexao, instrucao, titulo + " [Objeto mestre: " + mestre.getId() + "]");
 	}
 
 	private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
@@ -2447,7 +2447,6 @@ class MestreDetalhe {
 		sb.append(fromMestre());
 		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
 		sb.append("\nGROUP BY " + colunaMestre());
-		sb.append("\nHAVING COUNT(" + colunaDetalhe() + ") > 1");
 		sb.append("\nORDER BY " + colunaMestre());
 		if (!Util.estaVazio(conexao.getFinalConsulta())) {
 			sb.append("\n" + conexao.getFinalConsulta());
