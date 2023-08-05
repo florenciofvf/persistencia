@@ -2134,13 +2134,17 @@ class SuperficiePopup extends Popup {
 
 	private class MenuMestreDetalhe extends Menu {
 		Action totalMestresComDetalhesAcao = ObjetoSuperficie.acaoMenu("label.total_mestres_com_detalhes");
+		Action mestresComTotalDetalhesAcao = ObjetoSuperficie.acaoMenu("label.mestres_com_total_detalhes");
 		private static final long serialVersionUID = 1L;
 
 		private MenuMestreDetalhe() {
 			super("label.mestre_detalhe");
 			addMenuItem(totalMestresComDetalhesAcao);
+			addMenuItem(mestresComTotalDetalhesAcao);
 			totalMestresComDetalhesAcao.setActionListener(
 					e -> processar(1, ObjetoMensagens.getString("label.total_mestres_com_detalhes")));
+			mestresComTotalDetalhesAcao.setActionListener(
+					e -> processar(2, ObjetoMensagens.getString("label.mestres_com_total_detalhes")));
 		}
 
 		private void preShow(List<Objeto> selecionados) {
@@ -2370,6 +2374,8 @@ class MestreDetalhe {
 		String instrucao = null;
 		if (tipo == 1) {
 			instrucao = consultaTotalMestresComDetalhes();
+		} else if (tipo == 2) {
+			instrucao = consultaMestresComTotalDetalhes();
 		}
 		selectFormDialog(abrirEmForm, conexao, instrucao, titulo);
 	}
@@ -2411,10 +2417,26 @@ class MestreDetalhe {
 
 	private String consultaTotalMestresComDetalhes() {
 		StringBuilder sb = new StringBuilder(" SELECT COUNT(mestre." + colunaMestre + ")" + Constantes.QL);
-		sb.append(" FROM " + mestre.getTabelaEsquema2(conexao) + " mestre" + Constantes.QL);
+		sb.append(fromMestre() + Constantes.QL);
 		sb.append(" WHERE EXISTS (SELECT detalhe." + colunaDetalhe + " FROM " + detalhe.getTabelaEsquema2(conexao)
 				+ " detalhe WHERE detalhe." + colunaDetalhe + " = mestre." + colunaMestre + ")");
 		return sb.toString();
+	}
+
+	private String consultaMestresComTotalDetalhes() {
+		StringBuilder sb = new StringBuilder(
+				" SELECT mestre." + colunaMestre + ", COUNT(detalhe." + colunaDetalhe + ")" + Constantes.QL);
+		sb.append(fromMestre() + Constantes.QL);
+		sb.append("   INNER JOIN " + detalhe.getTabelaEsquema2(conexao) + " detalhe ON detalhe." + colunaDetalhe
+				+ " = mestre." + colunaMestre + Constantes.QL);
+		sb.append(" GROUP BY mestre." + colunaMestre + Constantes.QL);
+		sb.append(" HAVING COUNT(detalhe." + colunaDetalhe + ") > 1" + Constantes.QL);
+		sb.append(" ORDER BY mestre." + colunaMestre + Constantes.QL);
+		return sb.toString();
+	}
+
+	private String fromMestre() {
+		return " FROM " + mestre.getTabelaEsquema2(conexao) + " mestre";
 	}
 }
 
