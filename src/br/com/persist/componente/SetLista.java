@@ -287,10 +287,12 @@ class SetListaDialogo extends AbstratoDialogo {
 			@Override
 			public void mouseClicked(MouseEvent event) {
 				int index = lista.locationToIndex(event.getPoint());
-				Item item = lista.getModel().getElementAt(index);
-				checarSomenteUm(item);
-				item.setSelecionado(!item.isSelecionado());
-				lista.repaint();
+				if (index != -1) {
+					Item item = lista.getModel().getElementAt(index);
+					checarSomenteUm(item);
+					item.setSelecionado(!item.isSelecionado());
+					lista.repaint();
+				}
 			}
 
 			private void checarSomenteUm(Item item) {
