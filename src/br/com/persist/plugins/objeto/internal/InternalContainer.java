@@ -418,9 +418,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private boolean todosVazio(String filtro, Conexao conexao) {
 		if (!Util.estaVazio(conexao.getFiltro())) {
 			return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro);
-		} else if (!Util.estaVazio(conexao.getFinalConsulta())) {
-			return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro)
-					&& Util.estaVazio(objeto.getFinalConsulta());
 		}
 		return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro)
 				&& Util.estaVazio(objeto.getFinalConsulta());
@@ -682,8 +679,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				String filtro = Constantes.VAZIO;
 				if (conexao != null && !Util.estaVazio(conexao.getFiltro())) {
 					filtro = conexao.getFiltro();
-				} else if (conexao != null && !Util.estaVazio(conexao.getFinalConsulta())) {
-					filtro = conexao.getFinalConsulta();
 				}
 				String string = Constantes.VAZIO;
 				if (!Util.estaVazio(txtComplemento.getText())) {
