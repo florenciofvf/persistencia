@@ -1961,8 +1961,7 @@ class SuperficiePopup extends Popup {
 			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
 		}
 
-		private void preShow() {
-			List<Objeto> selecionados = superficie.getSelecionados();
+		private void preShow(List<Objeto> selecionados) {
 			setEnabled(selecionados.size() > Constantes.UM);
 		}
 	}
@@ -2007,8 +2006,7 @@ class SuperficiePopup extends Popup {
 			inverterAcao.setActionListener(e -> inverterPosicao());
 		}
 
-		private void preShow() {
-			List<Objeto> selecionados = superficie.getSelecionados();
+		private void preShow(List<Objeto> selecionados) {
 			inverterAcao.setEnabled(selecionados.size() == Constantes.UM);
 			inverterAcao2.setEnabled(selecionados.size() == Constantes.DOIS);
 			distribuicaoHorAcao.setEnabled(selecionados.size() > Constantes.DOIS);
@@ -2120,8 +2118,7 @@ class SuperficiePopup extends Popup {
 			normalAcao.setActionListener(e -> abrirModal(Tipo.NORMAL));
 		}
 
-		private void preShow() {
-			List<Objeto> selecionados = superficie.getSelecionados();
+		private void preShow(List<Objeto> selecionados) {
 			setEnabled(selecionados.size() > Constantes.UM);
 		}
 
@@ -2299,10 +2296,10 @@ class SuperficiePopup extends Popup {
 		itemPartir.setEnabled(!objetoSelecionado);
 		copiarAcao.setEnabled(objetoSelecionado);
 		menuMestreDetalhe.preShow(selecionados);
+		menuDistribuicao.preShow(selecionados);
+		menuAlinhamento.preShow(selecionados);
+		menuCircular.preShow(selecionados);
 		menuDestacar.setEnabled(comTabela);
-		menuDistribuicao.preShow();
-		menuAlinhamento.preShow();
-		menuCircular.preShow();
 	}
 
 	private class PartirAcao extends Acao {
