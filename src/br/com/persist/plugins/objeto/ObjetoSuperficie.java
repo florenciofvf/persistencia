@@ -2133,18 +2133,22 @@ class SuperficiePopup extends Popup {
 	}
 
 	private class MenuMestreDetalhe extends Menu {
-		Action totalMestresComDetalhesAcao = ObjetoSuperficie.acaoMenu("label.total_mestres_com_detalhes");
-		Action mestresComTotalDetalhesAcao = ObjetoSuperficie.acaoMenu("label.mestres_com_total_detalhes");
+		Action qtdObjetosQuePossuemXFilhosAcao = ObjetoSuperficie.acaoMenu("label.qtd_objetos_que_possuem_x_filhos");
+		Action qtdObjetosQuePossuemFilhosAcao = ObjetoSuperficie.acaoMenu("label.qtd_objetos_que_possuem_filhos");
+		Action objetoComTotalDeSeusFilhosAcao = ObjetoSuperficie.acaoMenu("label.objeto_com_total_seus_filhos");
 		private static final long serialVersionUID = 1L;
 
 		private MenuMestreDetalhe() {
 			super("label.mestre_detalhe");
-			addMenuItem(totalMestresComDetalhesAcao);
-			addMenuItem(mestresComTotalDetalhesAcao);
-			totalMestresComDetalhesAcao.setActionListener(
-					e -> processar(1, ObjetoMensagens.getString("label.total_mestres_com_detalhes")));
-			mestresComTotalDetalhesAcao.setActionListener(
-					e -> processar(2, ObjetoMensagens.getString("label.mestres_com_total_detalhes")));
+			addMenuItem(qtdObjetosQuePossuemXFilhosAcao);
+			addMenuItem(qtdObjetosQuePossuemFilhosAcao);
+			addMenuItem(true, objetoComTotalDeSeusFilhosAcao);
+			qtdObjetosQuePossuemXFilhosAcao
+					.setActionListener(e -> processar(2, qtdObjetosQuePossuemXFilhosAcao.getText()));
+			qtdObjetosQuePossuemFilhosAcao
+					.setActionListener(e -> processar(1, qtdObjetosQuePossuemFilhosAcao.getText()));
+			objetoComTotalDeSeusFilhosAcao
+					.setActionListener(e -> processar(3, objetoComTotalDeSeusFilhosAcao.getText()));
 		}
 
 		private void preShow(List<Objeto> selecionados) {
@@ -2373,11 +2377,13 @@ class MestreDetalhe {
 	private void montarInstrucao(int tipo, boolean abrirEmForm, Conexao conexao, String titulo) {
 		String instrucao = null;
 		if (tipo == 1) {
-			instrucao = consultaTotalMestresComDetalhes();
+			instrucao = qtdObjetosQuePossuemFilhos();
 		} else if (tipo == 2) {
-			instrucao = consultaMestresComTotalDetalhes();
+			instrucao = qtdObjetosQuePossuemXFilhos();
+		} else if (tipo == 3) {
+			instrucao = objetoComTotalDeSeusFilhos();
 		}
-		selectFormDialog(abrirEmForm, conexao, instrucao, titulo);
+		selectFormDialog(abrirEmForm, conexao, instrucao, titulo + " Mestre=(" + mestre.getId() + ")");
 	}
 
 	private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
@@ -2415,31 +2421,58 @@ class MestreDetalhe {
 		return null;
 	}
 
-	private String consultaTotalMestresComDetalhes() {
-		StringBuilder sb = new StringBuilder(" SELECT COUNT(mestre." + colunaMestre + ")" + Constantes.QL);
-		sb.append(fromMestre() + Constantes.QL);
-		sb.append(" WHERE EXISTS (SELECT detalhe." + colunaDetalhe + " FROM " + detalhe.getTabelaEsquema2(conexao)
-				+ " detalhe WHERE detalhe." + colunaDetalhe + " = mestre." + colunaMestre + ")");
+	private String qtdObjetosQuePossuemFilhos() {
+		StringBuilder sb = new StringBuilder("SELECT COUNT(" + colunaMestre() + ")");
+		sb.append(fromMestre());
+		sb.append("\nWHERE EXISTS (SELECT " + colunaDetalhe() + " " + fromDetalhe(true) + " WHERE "
+				+ colunaDetalheIgualColunaMestre() + ")");
 		return sb.toString();
 	}
 
-	private String consultaMestresComTotalDetalhes() {
-		StringBuilder sb = new StringBuilder(
-				" SELECT mestre." + colunaMestre + ", COUNT(detalhe." + colunaDetalhe + ")" + Constantes.QL);
-		sb.append(fromMestre() + Constantes.QL);
-		sb.append("   INNER JOIN " + detalhe.getTabelaEsquema2(conexao) + " detalhe ON detalhe." + colunaDetalhe
-				+ " = mestre." + colunaMestre + Constantes.QL);
-		sb.append(" GROUP BY mestre." + colunaMestre + Constantes.QL);
-		sb.append(" HAVING COUNT(detalhe." + colunaDetalhe + ") > 1" + Constantes.QL);
-		sb.append(" ORDER BY mestre." + colunaMestre + Constantes.QL);
+	private String qtdObjetosQuePossuemXFilhos() {
+		StringBuilder sb = new StringBuilder("SELECT COUNT(" + colunaMestre() + ")");
+		sb.append(fromMestre());
+		sb.append("\nWHERE EXISTS (");
+		sb.append("SELECT " + colunaDetalhe() + ", COUNT(*)");
+		sb.append("\n  " + fromDetalhe(true));
+		sb.append("\n  WHERE " + colunaDetalheIgualColunaMestre());
+		sb.append("\n  GROUP BY " + colunaDetalhe());
+		sb.append("\n  HAVING COUNT(*) > 1");
+		sb.append("\n)");
+		return sb.toString();
+	}
+
+	private String objetoComTotalDeSeusFilhos() {
+		StringBuilder sb = new StringBuilder("SELECT " + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
+		sb.append(fromMestre());
+		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
+		sb.append("\nGROUP BY " + colunaMestre());
+		sb.append("\nHAVING COUNT(" + colunaDetalhe() + ") > 1");
+		sb.append("\nORDER BY " + colunaMestre());
 		if (!Util.estaVazio(conexao.getFinalConsulta())) {
-			sb.append(" " + conexao.getFinalConsulta() + Constantes.QL);
+			sb.append("\n" + conexao.getFinalConsulta());
 		}
 		return sb.toString();
 	}
 
 	private String fromMestre() {
-		return " FROM " + mestre.getTabelaEsquema2(conexao) + " mestre";
+		return "\nFROM " + mestre.getTabelaEsquema2(conexao) + " mestre";
+	}
+
+	private String fromDetalhe(boolean from) {
+		return (from ? "FROM " : "") + detalhe.getTabelaEsquema2(conexao) + " detalhe";
+	}
+
+	private String colunaMestre() {
+		return "mestre." + colunaMestre;
+	}
+
+	private String colunaDetalhe() {
+		return "detalhe." + colunaDetalhe;
+	}
+
+	private String colunaDetalheIgualColunaMestre() {
+		return colunaDetalhe() + " = " + colunaMestre();
 	}
 }
 

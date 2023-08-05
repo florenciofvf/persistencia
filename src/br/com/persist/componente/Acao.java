@@ -26,6 +26,10 @@ public abstract class Acao extends AbstractAction {
 		putValue(menu ? Action.NAME : Action.SHORT_DESCRIPTION, chaveRotulo ? Mensagens.getString(rotulo) : rotulo);
 	}
 
+	public String getText() {
+		return (String) getValue(menu ? Action.NAME : Action.SHORT_DESCRIPTION);
+	}
+
 	public void setRotulo(boolean menu, String chaveRotulo) {
 		setRotulo(menu, chaveRotulo, true);
 	}

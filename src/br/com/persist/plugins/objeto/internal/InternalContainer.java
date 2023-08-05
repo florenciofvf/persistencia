@@ -2996,9 +2996,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private String montarInstrucaoDistinct(Conexao conexao, String nome) {
-			StringBuilder sb = new StringBuilder("SELECT DISTINCT " + objeto.comApelido(nome) + " FROM ");
-			sb.append(objeto.getTabelaEsquema(conexao));
-			sb.append(" ORDER BY " + objeto.comApelido(nome));
+			StringBuilder sb = new StringBuilder("SELECT DISTINCT " + objeto.comApelido(nome));
+			sb.append("\nFROM " + objeto.getTabelaEsquema(conexao));
+			sb.append("\nORDER BY " + objeto.comApelido(nome));
 			return sb.toString();
 		}
 
