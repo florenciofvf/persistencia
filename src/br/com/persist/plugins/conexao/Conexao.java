@@ -12,7 +12,6 @@ import br.com.persist.marca.XMLUtil;
 
 public class Conexao {
 	private Map<String, String> mapaTiposFuncoes;
-	private String finalConsulta;
 	private String tiposFuncoes;
 	private final String nome;
 	private String constraint;
@@ -83,7 +82,6 @@ public class Conexao {
 
 	public Conexao clonar(String novoNome) {
 		Conexao c = new Conexao(novoNome);
-		c.finalConsulta = finalConsulta;
 		c.tiposFuncoes = tiposFuncoes;
 		c.constraint = constraint;
 		c.urlBanco = urlBanco;
@@ -98,7 +96,6 @@ public class Conexao {
 	}
 
 	public void aplicar(Attributes attr) {
-		finalConsulta = attr.getValue("finalConsulta");
 		tiposFuncoes = attr.getValue("tiposFuncoes");
 		constraint = attr.getValue("constraint");
 		urlBanco = attr.getValue("urlBanco");
@@ -117,7 +114,6 @@ public class Conexao {
 		util.atributo("usuario", usuario);
 		util.atributo("senha", senha);
 		util.atributo("filtro", filtro);
-		util.atributo("finalConsulta", finalConsulta);
 		util.atributo("constraint", constraint);
 		util.atributo("urlBanco", urlBanco);
 		util.atributo("catalogo", catalogo);
@@ -169,14 +165,6 @@ public class Conexao {
 
 	public void setCatalogo(String catalogo) {
 		this.catalogo = catalogo;
-	}
-
-	public String getFinalConsulta() {
-		return finalConsulta;
-	}
-
-	public void setFinalConsulta(String finalConsulta) {
-		this.finalConsulta = finalConsulta;
 	}
 
 	public String getFiltro() {

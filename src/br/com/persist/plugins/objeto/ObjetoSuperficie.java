@@ -2449,8 +2449,8 @@ class MestreDetalhe {
 		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
 		sb.append("\nGROUP BY " + colunaMestre());
 		sb.append("\nORDER BY COUNT(" + colunaDetalhe() + ") ASC");
-		if (!Util.estaVazio(conexao.getFinalConsulta())) {
-			sb.append("\n" + conexao.getFinalConsulta());
+		if (!Util.estaVazio(conexao.getFiltro())) {
+			sb.append("\n" + conexao.getFiltro());
 		}
 		sb.append("\n\n--ORDER BY " + colunaMestre() + " ASC");
 		return sb.toString();
