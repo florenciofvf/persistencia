@@ -2131,6 +2131,7 @@ class SuperficiePopup extends Popup {
 
 	private class MenuMestreDetalhe extends Menu {
 		Action qtdObjetosQuePossuemXFilhosAcao = ObjetoSuperficie.acaoMenu("label.qtd_objetos_que_possuem_x_filhos");
+		Action objetoComTotalDeSeusXFilhosAcao = ObjetoSuperficie.acaoMenu("label.objeto_com_total_seus_x_filhos");
 		Action qtdObjetosQuePossuemFilhosAcao = ObjetoSuperficie.acaoMenu("label.qtd_objetos_que_possuem_filhos");
 		Action objetoComTotalDeSeusFilhosAcao = ObjetoSuperficie.acaoMenu("label.objeto_com_total_seus_filhos");
 		private static final long serialVersionUID = 1L;
@@ -2139,11 +2140,14 @@ class SuperficiePopup extends Popup {
 			super("label.mestre_detalhe");
 			addMenuItem(qtdObjetosQuePossuemXFilhosAcao);
 			addMenuItem(qtdObjetosQuePossuemFilhosAcao);
-			addMenuItem(true, objetoComTotalDeSeusFilhosAcao);
+			addMenuItem(true, objetoComTotalDeSeusXFilhosAcao);
+			addMenuItem(objetoComTotalDeSeusFilhosAcao);
 			qtdObjetosQuePossuemXFilhosAcao
 					.setActionListener(e -> processar(2, qtdObjetosQuePossuemXFilhosAcao.getText()));
 			qtdObjetosQuePossuemFilhosAcao
 					.setActionListener(e -> processar(1, qtdObjetosQuePossuemFilhosAcao.getText()));
+			objetoComTotalDeSeusXFilhosAcao
+					.setActionListener(e -> processar(4, objetoComTotalDeSeusXFilhosAcao.getText()));
 			objetoComTotalDeSeusFilhosAcao
 					.setActionListener(e -> processar(3, objetoComTotalDeSeusFilhosAcao.getText()));
 		}
@@ -2380,6 +2384,8 @@ class MestreDetalhe {
 			instrucao = qtdObjetosQuePossuemXFilhos();
 		} else if (tipo == 3) {
 			instrucao = objetoComTotalDeSeusFilhos();
+		} else if (tipo == 4) {
+			instrucao = objetoComTotalDeSeusXFilhos();
 		}
 		selectFormDialog(abrirEmForm, conexao, instrucao, titulo + " [Objeto mestre: " + mestre.getId() + "]");
 	}
@@ -2433,6 +2439,11 @@ class MestreDetalhe {
 	private String qtdObjetosQuePossuemXFilhos() {
 		StringBuilder sb = new StringBuilder("SELECT COUNT(" + colunaMestre() + ")");
 		sb.append(fromMestre());
+		putExistsCount(sb);
+		return sb.toString();
+	}
+
+	private void putExistsCount(StringBuilder sb) {
 		sb.append("\nWHERE EXISTS (");
 		sb.append(select + colunaDetalhe() + ", COUNT(*)");
 		sb.append("\n  " + fromDetalhe(true));
@@ -2440,19 +2451,31 @@ class MestreDetalhe {
 		sb.append("\n  GROUP BY " + colunaDetalhe());
 		sb.append("\n  HAVING COUNT(*) > 1");
 		sb.append("\n)");
-		return sb.toString();
 	}
 
 	private String objetoComTotalDeSeusFilhos() {
 		StringBuilder sb = new StringBuilder(select + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
 		sb.append(fromMestre());
 		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
+		putGroupByAndFilter(sb);
+		return sb.toString();
+	}
+
+	private void putGroupByAndFilter(StringBuilder sb) {
 		sb.append("\nGROUP BY " + colunaMestre());
 		sb.append("\nORDER BY COUNT(" + colunaDetalhe() + ") ASC");
 		if (!Util.estaVazio(conexao.getFiltro())) {
 			sb.append("\n" + conexao.getFiltro());
 		}
 		sb.append("\n\n--ORDER BY " + colunaMestre() + " ASC");
+	}
+
+	private String objetoComTotalDeSeusXFilhos() {
+		StringBuilder sb = new StringBuilder(select + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
+		sb.append(fromMestre());
+		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
+		putExistsCount(sb);
+		putGroupByAndFilter(sb);
 		return sb.toString();
 	}
 
