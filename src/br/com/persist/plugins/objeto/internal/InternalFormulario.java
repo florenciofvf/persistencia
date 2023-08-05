@@ -434,6 +434,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return container;
 	}
 
+	public List<String> getNomeColunas() {
+		return container.getNomeColunas();
+	}
+
 	public void setReferenciaPesquisa(Referencia referencia) {
 		container.getObjeto().setReferenciaPesquisa(referencia);
 	}

@@ -212,6 +212,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		return acaoMenu(chave, null);
 	}
 
+	public List<String> getNomeColunas() {
+		return tabelaPersistencia.getListaNomeColunas(true);
+	}
+
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabelaPersistencia));

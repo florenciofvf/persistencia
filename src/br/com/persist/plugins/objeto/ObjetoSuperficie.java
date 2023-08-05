@@ -2145,6 +2145,23 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void processar() {
+			List<Objeto> selecionados = superficie.getSelecionados();
+			if (selecionados.size() == Constantes.DOIS) {
+				Objeto objeto1 = selecionados.get(0);
+				Objeto objeto2 = selecionados.get(1);
+				Coletor coletor = new Coletor();
+				List<String> ids = new ArrayList<>();
+				ids.add(objeto1.getId());
+				ids.add(objeto2.getId());
+				SetLista.view(ObjetoMensagens.getString("label.selecione_objeto_mestre"), ids, coletor, superficie,
+						new SetLista.Config(true, true));
+				if (coletor.size() == 1) {
+					Objeto mestre = superficie.getObjeto(coletor.get(0));
+					MestreDetalhe mestreDetalhe = new MestreDetalhe(superficie, mestre == objeto1 ? objeto1 : objeto2,
+							mestre == objeto1 ? objeto2 : objeto1);
+					mestreDetalhe.processar();
+				}
+			}
 		}
 	}
 
@@ -2294,6 +2311,59 @@ class SuperficiePopup extends Popup {
 				superficie.repaint();
 			}
 		}
+	}
+}
+
+class MestreDetalhe {
+	final ObjetoSuperficie superficie;
+	final Objeto mestre;
+	final Objeto detalhe;
+	String colunaMestre;
+	String colunaDetalhe;
+
+	MestreDetalhe(ObjetoSuperficie superficie, Objeto mestre, Objeto detalhe) {
+		super();
+		this.superficie = superficie;
+		this.mestre = mestre;
+		this.detalhe = detalhe;
+	}
+
+	void processar() {
+		InternalFormulario internalMestre = superficie.getInternalFormulario(mestre);
+		if (internalMestre == null) {
+			Util.mensagem(superficie, ObjetoMensagens.getString("msg.sem_form_internal_associado", mestre.getId()));
+			return;
+		}
+		InternalFormulario internalDetalhe = superficie.getInternalFormulario(detalhe);
+		if (internalDetalhe == null) {
+			Util.mensagem(superficie, ObjetoMensagens.getString("msg.sem_form_internal_associado", detalhe.getId()));
+			return;
+		}
+		List<String> colunasMestes = internalMestre.getNomeColunas();
+		colunaMestre = selecionarColuna(colunasMestes, "msg.selecione_coluna_mestre", mestre.getId());
+		if (Util.estaVazio(colunaMestre)) {
+			return;
+		}
+		List<String> colunasDetalhe = internalMestre.getNomeColunas();
+		colunaDetalhe = selecionarColuna(colunasDetalhe, "msg.selecione_coluna_detalhe", detalhe.getId());
+		if (Util.estaVazio(colunaDetalhe)) {
+			return;
+		}
+		monstrarInstrucao();
+	}
+
+	private void monstrarInstrucao() {
+		// TODO Auto-generated method stub
+	}
+
+	private String selecionarColuna(List<String> colunas, String chaveTitulo, String param) {
+		Coletor coletor = new Coletor();
+		SetLista.view(ObjetoMensagens.getString(chaveTitulo, param), colunas, coletor, superficie,
+				new SetLista.Config(true, true));
+		if (coletor.size() == 1) {
+			return coletor.get(0);
+		}
+		return null;
 	}
 }
 
