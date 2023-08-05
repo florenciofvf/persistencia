@@ -1921,6 +1921,7 @@ class SuperficiePopup2 extends Popup {
 class SuperficiePopup extends Popup {
 	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
 	Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
+	private MenuMestreDetalhe menuMestreDetalhe = new MenuMestreDetalhe();
 	private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
 	private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
 	private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
@@ -1940,6 +1941,7 @@ class SuperficiePopup extends Popup {
 		addMenuItem(true, copiarAcao);
 		add(true, menuDestacar);
 		add(true, menuCircular);
+		add(true, menuMestreDetalhe);
 		addMenuItem(true, excluirAcao);
 		add(true, itemPartir);
 		add(true, itemDados);
@@ -2128,6 +2130,24 @@ class SuperficiePopup extends Popup {
 		}
 	}
 
+	private class MenuMestreDetalhe extends Menu {
+		Action totalMestresComDetalhesAcao = ObjetoSuperficie.acaoMenu("label.total_mestres_com_detalhes");
+		private static final long serialVersionUID = 1L;
+
+		private MenuMestreDetalhe() {
+			super("label.mestre_detalhe");
+			addMenuItem(totalMestresComDetalhesAcao);
+			totalMestresComDetalhesAcao.setActionListener(e -> processar());
+		}
+
+		private void preShow(List<Objeto> selecionados) {
+			setEnabled(selecionados.size() == Constantes.DOIS);
+		}
+
+		private void processar() {
+		}
+	}
+
 	private class MenuDestacar extends MenuPadrao1 {
 		Action proprioAcao = ObjetoSuperficie.acaoMenu("label.proprio_container");
 		Action desktopAcao = Action.actionMenuDesktop();
@@ -2234,6 +2254,7 @@ class SuperficiePopup extends Popup {
 	}
 
 	void preShow(boolean objetoSelecionado) {
+		List<Objeto> selecionados = superficie.getSelecionados();
 		Objeto objeto = superficie.selecionadoObjeto;
 		String nomeTabela = objeto != null ? objeto.getTabela() : null;
 		boolean comTabela = objetoSelecionado && objeto != null && !Util.estaVazio(nomeTabela);
@@ -2243,6 +2264,7 @@ class SuperficiePopup extends Popup {
 		relacoesAcao.setEnabled(objetoSelecionado);
 		itemPartir.setEnabled(!objetoSelecionado);
 		copiarAcao.setEnabled(objetoSelecionado);
+		menuMestreDetalhe.preShow(selecionados);
 		menuDestacar.setEnabled(comTabela);
 		menuDistribuicao.preShow();
 		menuAlinhamento.preShow();
