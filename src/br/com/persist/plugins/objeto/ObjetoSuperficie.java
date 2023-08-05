@@ -2330,6 +2330,7 @@ class SuperficiePopup extends Popup {
 
 class MestreDetalhe {
 	final ObjetoSuperficie superficie;
+	String select = "SELECT ";
 	String colunaDetalhe;
 	final Objeto detalhe;
 	String colunaMestre;
@@ -2421,8 +2422,11 @@ class MestreDetalhe {
 	private String qtdObjetosQuePossuemFilhos() {
 		StringBuilder sb = new StringBuilder("SELECT COUNT(" + colunaMestre() + ")");
 		sb.append(fromMestre());
-		sb.append("\nWHERE EXISTS (SELECT " + colunaDetalhe() + " " + fromDetalhe(true) + " WHERE "
-				+ colunaDetalheIgualColunaMestre() + ")");
+		sb.append("\nWHERE EXISTS (");
+		sb.append(select + colunaDetalhe());
+		sb.append("\n  " + fromDetalhe(true));
+		sb.append("\n  WHERE " + colunaDetalheIgualColunaMestre());
+		sb.append("\n)");
 		return sb.toString();
 	}
 
@@ -2430,7 +2434,7 @@ class MestreDetalhe {
 		StringBuilder sb = new StringBuilder("SELECT COUNT(" + colunaMestre() + ")");
 		sb.append(fromMestre());
 		sb.append("\nWHERE EXISTS (");
-		sb.append("SELECT " + colunaDetalhe() + ", COUNT(*)");
+		sb.append(select + colunaDetalhe() + ", COUNT(*)");
 		sb.append("\n  " + fromDetalhe(true));
 		sb.append("\n  WHERE " + colunaDetalheIgualColunaMestre());
 		sb.append("\n  GROUP BY " + colunaDetalhe());
@@ -2440,14 +2444,15 @@ class MestreDetalhe {
 	}
 
 	private String objetoComTotalDeSeusFilhos() {
-		StringBuilder sb = new StringBuilder("SELECT " + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
+		StringBuilder sb = new StringBuilder(select + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
 		sb.append(fromMestre());
 		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
 		sb.append("\nGROUP BY " + colunaMestre());
-		sb.append("\nORDER BY " + colunaMestre());
+		sb.append("\nORDER BY COUNT(" + colunaDetalhe() + ") ASC");
 		if (!Util.estaVazio(conexao.getFinalConsulta())) {
 			sb.append("\n" + conexao.getFinalConsulta());
 		}
+		sb.append("\n\n--ORDER BY " + colunaMestre() + " ASC");
 		return sb.toString();
 	}
 
