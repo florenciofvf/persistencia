@@ -2432,6 +2432,9 @@ class MestreDetalhe {
 		sb.append(" GROUP BY mestre." + colunaMestre + Constantes.QL);
 		sb.append(" HAVING COUNT(detalhe." + colunaDetalhe + ") > 1" + Constantes.QL);
 		sb.append(" ORDER BY mestre." + colunaMestre + Constantes.QL);
+		if (!Util.estaVazio(conexao.getFinalConsulta())) {
+			sb.append(" " + conexao.getFinalConsulta() + Constantes.QL);
+		}
 		return sb.toString();
 	}
 
