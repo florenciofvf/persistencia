@@ -2443,6 +2443,23 @@ class MestreDetalhe {
 		return sb.toString();
 	}
 
+	private String objetoComTotalDeSeusFilhos() {
+		StringBuilder sb = new StringBuilder(select + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
+		sb.append(fromMestre());
+		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
+		putGroupByAndFilter(sb);
+		return sb.toString();
+	}
+
+	private String objetoComTotalDeSeusXFilhos() {
+		StringBuilder sb = new StringBuilder(select + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
+		sb.append(fromMestre());
+		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
+		putExistsCount(sb);
+		putGroupByAndFilter(sb);
+		return sb.toString();
+	}
+
 	private void putExistsCount(StringBuilder sb) {
 		sb.append("\nWHERE EXISTS (");
 		sb.append(select + colunaDetalhe() + ", COUNT(*)");
@@ -2453,30 +2470,15 @@ class MestreDetalhe {
 		sb.append("\n)");
 	}
 
-	private String objetoComTotalDeSeusFilhos() {
-		StringBuilder sb = new StringBuilder(select + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
-		sb.append(fromMestre());
-		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
-		putGroupByAndFilter(sb);
-		return sb.toString();
-	}
-
 	private void putGroupByAndFilter(StringBuilder sb) {
 		sb.append("\nGROUP BY " + colunaMestre());
 		sb.append("\nORDER BY COUNT(" + colunaDetalhe() + ") ASC");
 		if (!Util.estaVazio(conexao.getFiltro())) {
-			sb.append("\n" + conexao.getFiltro());
+			sb.append("\n\n--" + conexao.getFiltro());
+			sb.append("\n--ORDER BY " + colunaMestre() + " ASC");
+		} else {
+			sb.append("\n\n--ORDER BY " + colunaMestre() + " ASC");
 		}
-		sb.append("\n\n--ORDER BY " + colunaMestre() + " ASC");
-	}
-
-	private String objetoComTotalDeSeusXFilhos() {
-		StringBuilder sb = new StringBuilder(select + colunaMestre() + ", COUNT(" + colunaDetalhe() + ")");
-		sb.append(fromMestre());
-		sb.append("\n  INNER JOIN " + fromDetalhe(false) + " ON " + colunaDetalheIgualColunaMestre());
-		putExistsCount(sb);
-		putGroupByAndFilter(sb);
-		return sb.toString();
 	}
 
 	private String fromMestre() {
