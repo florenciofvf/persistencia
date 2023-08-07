@@ -75,7 +75,7 @@ public class IconeContainer extends Panel {
 
 		private void selecionar(String nomeIcone) {
 			if (nome.equalsIgnoreCase(nomeIcone)) {
-				setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
+				setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 			}
 		}
 
