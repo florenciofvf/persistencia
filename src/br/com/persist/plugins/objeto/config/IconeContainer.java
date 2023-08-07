@@ -74,7 +74,7 @@ public class IconeContainer extends Panel {
 		}
 
 		private void selecionar(String nomeIcone) {
-			if (nome.equals(nomeIcone)) {
+			if (nome.equalsIgnoreCase(nomeIcone)) {
 				setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
 			}
 		}
@@ -82,6 +82,7 @@ public class IconeContainer extends Panel {
 		private transient MouseListener mouseListenerInner = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				labelIcone.setToolTipText(nome);
 				labelIcone.setIcon(getIcon());
 				objeto.setIcone(nome);
 				MacroProvedor.imagem(objeto.getIcone());

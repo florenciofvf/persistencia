@@ -306,6 +306,7 @@ public class ObjetoContainer extends Panel {
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
 			if (objeto.getIcon() != null) {
+				labelIcone.setToolTipText(objeto.getIcone());
 				labelIcone.setIcon(objeto.getIcon());
 			}
 			PanelLeft panelIcone = new PanelLeft(labelIcone);
