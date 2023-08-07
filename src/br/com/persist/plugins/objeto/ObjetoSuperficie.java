@@ -2139,9 +2139,9 @@ class SuperficiePopup extends Popup {
 
 		private MenuMestreDetalhe() {
 			super("label.mestre_detalhe");
-			addMenuItem(maiorTotalFilhosDosObjetosAcao);
-			addMenuItem(true, qtdObjetosQuePossuemXFilhosAcao);
+			addMenuItem(qtdObjetosQuePossuemXFilhosAcao);
 			addMenuItem(qtdObjetosQuePossuemFilhosAcao);
+			addMenuItem(true, maiorTotalFilhosDosObjetosAcao);
 			addMenuItem(true, objetoComTotalDeSeusXFilhosAcao);
 			addMenuItem(objetoComTotalDeSeusFilhosAcao);
 			qtdObjetosQuePossuemXFilhosAcao
