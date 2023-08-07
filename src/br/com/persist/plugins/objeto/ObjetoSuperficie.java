@@ -2431,10 +2431,12 @@ class MestreDetalhe {
 	}
 
 	private String maiorTotalFilhosDosObjetos() {
-		StringBuilder sb = new StringBuilder("SELECT MAX(TOTAL) FROM (" + selectCountColunaDetalhe() + " AS TOTAL");
+		StringBuilder sb = new StringBuilder("SELECT MAX(tabela.TOTAL)");
+		sb.append("\nFROM (" + selectColunaMestre() + ", " + countColunaDetalhe() + " AS TOTAL");
 		sb.append(fromMestre());
 		sb.append(innerJoinDetalhe());
-		sb.append("\n)");
+		sb.append("\nGROUP BY " + colunaMestre());
+		sb.append("\n) tabela");
 		return sb.toString();
 	}
 
@@ -2520,10 +2522,6 @@ class MestreDetalhe {
 
 	private String colunaDetalheIgualColunaMestre() {
 		return colunaDetalhe() + " = " + colunaMestre();
-	}
-
-	private String selectCountColunaDetalhe() {
-		return "SELECT COUNT(" + colunaDetalhe() + ")";
 	}
 
 	private String selectCountColunaMestre() {
