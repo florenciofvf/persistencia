@@ -3700,7 +3700,8 @@ class InstrucaoCampo {
 		StringBuilder sb = new StringBuilder("SELECT MAX(tabela.TOTAL)");
 		sb.append("\nFROM (SELECT " + objeto.comApelido(campo) + ", COUNT(" + objeto.comApelido(campo) + ") AS TOTAL");
 		sb.append("\n    FROM " + objeto.getTabelaEsquema(conexao));
-		sb.append(groupBy());
+		sb.append("\n    GROUP BY " + objeto.comApelido(campo));
+		sb.append("\n    HAVING COUNT(" + objeto.comApelido(campo) + ") > 1");
 		sb.append("\n) tabela");
 		return sb.toString();
 	}
