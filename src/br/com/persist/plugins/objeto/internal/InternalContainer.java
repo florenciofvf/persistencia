@@ -2263,7 +2263,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (coletor.estaVazio()) {
 							return new StringBuilder();
 						}
-						objeto.setSelectAlternativo("SELECT " + getNomeColunas(coletor));
+						objeto.setSelectAlternativo(Constantes.SELECT + getNomeColunas(coletor));
 						StringBuilder builder = new StringBuilder();
 						montarSelect(conexao, complemento, builder);
 						objeto.setSelectAlternativo(selectAlter);
@@ -2980,41 +2980,51 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
-		public void selectDistinct(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+		public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
-				String instrucao = montarInstrucaoDistinct(conexao, nome);
+				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
+				String instrucao = instrucaoCampo.totalDoValorMaisRepetido();
 				if (!Util.estaVazio(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
 		}
 
-		private String montarInstrucaoDistinct(Conexao conexao, String nome) {
-			StringBuilder sb = new StringBuilder("SELECT DISTINCT " + objeto.comApelido(nome));
-			sb.append("\nFROM " + objeto.getTabelaEsquema(conexao));
-			sb.append("\nORDER BY " + objeto.comApelido(nome));
-			return sb.toString();
+		@Override
+		public void selectValorRepetidoComSuaQtd(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
+				String instrucao = instrucaoCampo.valorRepetidoComESuaQtd();
+				if (!Util.estaVazio(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		@Override
+		public void selectDistinct(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
+				String instrucao = instrucaoCampo.valorDistinto();
+				if (!Util.estaVazio(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
 		}
 
 		@Override
 		public void selectGroupBy(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
-				String instrucao = montarInstrucaoGroupBy(conexao, nome);
+				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
+				String instrucao = instrucaoCampo.valorAgrupado();
 				if (!Util.estaVazio(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
-		}
-
-		private String montarInstrucaoGroupBy(Conexao conexao, String nome) {
-			StringBuilder sb = new StringBuilder("SELECT " + objeto.comApelido(nome) + ", COUNT(*)");
-			sb.append("\nFROM " + objeto.getTabelaEsquema(conexao));
-			sb.append("\nWHERE " + objeto.comApelido(nome) + " IS NOT NULL");
-			sb.append("\nGROUP BY " + objeto.comApelido(nome));
-			sb.append("\nHAVING COUNT(*) > 1");
-			return sb.toString();
 		}
 
 		private Coletor getNomePesquisa() {
@@ -3635,5 +3645,63 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public void setInternalConfig(InternalConfig internalConfig) {
 		this.internalConfig = internalConfig;
+	}
+}
+
+class InstrucaoCampo {
+	final Conexao conexao;
+	final Objeto objeto;
+	final String campo;
+
+	InstrucaoCampo(Conexao conexao, Objeto objeto, String campo) {
+		this.conexao = conexao;
+		this.objeto = objeto;
+		this.campo = campo;
+	}
+
+	String fromTabela() {
+		return "\nFROM " + objeto.getTabelaEsquema(conexao);
+	}
+
+	String groupBy() {
+		return "\nGROUP BY " + objeto.comApelido(campo);
+	}
+
+	String valorAgrupado() {
+		StringBuilder sb = new StringBuilder(Constantes.SELECT + objeto.comApelido(campo) + ", COUNT(*)");
+		sb.append(fromTabela());
+		sb.append("\nWHERE " + objeto.comApelido(campo) + " IS NOT NULL");
+		sb.append(groupBy());
+		sb.append("\nHAVING COUNT(*) > 1");
+		return sb.toString();
+	}
+
+	String valorDistinto() {
+		StringBuilder sb = new StringBuilder("SELECT DISTINCT " + objeto.comApelido(campo));
+		sb.append(fromTabela());
+		sb.append("\nORDER BY " + objeto.comApelido(campo));
+		return sb.toString();
+	}
+
+	String valorRepetidoComESuaQtd() {
+		StringBuilder sb = new StringBuilder(
+				Constantes.SELECT + objeto.comApelido(campo) + ", COUNT(" + objeto.comApelido(campo) + ")");
+		sb.append(fromTabela());
+		sb.append("\nWHERE EXISTS (SELECT " + campo + ", COUNT(*)");
+		sb.append("\n    FROM " + objeto.getTabelaEsquema2(conexao));
+		sb.append("\n    GROUP BY " + campo);
+		sb.append("\n    HAVING COUNT(*) > 1");
+		sb.append("\n)");
+		sb.append(groupBy());
+		return sb.toString();
+	}
+
+	String totalDoValorMaisRepetido() {
+		StringBuilder sb = new StringBuilder("SELECT MAX(tabela.TOTAL)");
+		sb.append("\nFROM (SELECT " + objeto.comApelido(campo) + ", COUNT(" + objeto.comApelido(campo) + ") AS TOTAL");
+		sb.append("\n    FROM " + objeto.getTabelaEsquema(conexao));
+		sb.append(groupBy());
+		sb.append("\n) tabela");
+		return sb.toString();
 	}
 }

@@ -66,6 +66,7 @@ public class Constantes {
 	public static final int TREZENTOS_QUARENTA_UM = 341;
 	public static final String CONECTADO = "CONECTADO";
 	public static final String IMAGENS = "imagens";
+	public static final String SELECT = "SELECT ";
 	public static final String DIALOG = "DIALOG";
 	public static final String CAMPOS = "CAMPOS";
 	public static final String ICONE = "ICONE:";

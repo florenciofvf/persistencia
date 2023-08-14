@@ -375,6 +375,8 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuMetadados extends Menu {
 			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
+			private MenuTotalRepetidos totalRepetidos = new MenuTotalRepetidos();
+			private MenuRepetidoComQtd repetidoComQtd = new MenuRepetidoComQtd();
 			private Action importaDeAcao = acaoMenu("label.campo_importado_de");
 			private MenuSelectDistinct distinct = new MenuSelectDistinct();
 			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
@@ -387,6 +389,8 @@ public class TabelaPersistencia extends JTable {
 				addMenuItem(true, exportaParaAcao);
 				addMenuItem(true, importaDeAcao);
 				addSeparator();
+				add(totalRepetidos);
+				add(repetidoComQtd);
 				add(distinct);
 				add(groupBy);
 				exportaParaAcao.setActionListener(e -> importarExportarInfo(true));
@@ -422,6 +426,40 @@ public class TabelaPersistencia extends JTable {
 						listener.campoExportadoPara(coluna);
 					} else {
 						listener.campoImportadoDe(coluna);
+					}
+				}
+			}
+
+			private class MenuTotalRepetidos extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuTotalRepetidos() {
+					super(TabelaMensagens.getString("label.total_valor_mais_repetido"), false, null);
+					formularioAcao.setActionListener(e -> abrirSelect(true));
+					dialogoAcao.setActionListener(e -> abrirSelect(false));
+				}
+
+				private void abrirSelect(boolean abrirEmForm) {
+					if (listener != null) {
+						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+						listener.selectTotalValorMaisRepetido(TabelaPersistencia.this, coluna, abrirEmForm);
+					}
+				}
+			}
+
+			private class MenuRepetidoComQtd extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuRepetidoComQtd() {
+					super(TabelaMensagens.getString("label.valor_repetido_com_qtd"), false, null);
+					formularioAcao.setActionListener(e -> abrirSelect(true));
+					dialogoAcao.setActionListener(e -> abrirSelect(false));
+				}
+
+				private void abrirSelect(boolean abrirEmForm) {
+					if (listener != null) {
+						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+						listener.selectValorRepetidoComSuaQtd(TabelaPersistencia.this, coluna, abrirEmForm);
 					}
 				}
 			}
