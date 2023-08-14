@@ -391,6 +391,7 @@ public class TabelaPersistencia extends JTable {
 				addSeparator();
 				add(totalRepetidos);
 				add(repetidoComQtd);
+				addSeparator();
 				add(distinct);
 				add(groupBy);
 				exportaParaAcao.setActionListener(e -> importarExportarInfo(true));
