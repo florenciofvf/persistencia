@@ -3692,6 +3692,7 @@ class InstrucaoCampo {
 		sb.append("\n    GROUP BY " + campo);
 		sb.append("\n    HAVING COUNT(*) > 1");
 		sb.append("\n)");
+		sb.append("\nHAVING COUNT(*) > 1");
 		sb.append(groupBy());
 		return sb.toString();
 	}
