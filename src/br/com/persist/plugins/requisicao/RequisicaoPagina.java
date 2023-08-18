@@ -99,7 +99,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		this.requisicaoRota = requisicaoRota;
 		this.file = file;
 		montarLayout();
-		abrir();
+		abrir(true);
 	}
 
 	private class PopupFichario extends Popup {
@@ -472,7 +472,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		@Override
 		protected void baixar() {
-			abrir();
+			abrir(true);
 			selecao = null;
 			label.limpar();
 		}
@@ -535,7 +535,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		return RequisicaoContainer.ehArquivoReservadoIgnorados(getNome());
 	}
 
-	private void abrir() {
+	private void abrir(boolean checarModo) {
 		textArea.setText(Constantes.VAZIO);
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
@@ -554,7 +554,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
-		if (RequisicaoPreferencia.isAbrirModoTabela() && !ehArquivoReservadoMimes() && !ehArquivoReservadoIgnorados()) {
+		if (checarModo && RequisicaoPreferencia.isAbrirModoTabela() && !ehArquivoReservadoMimes()
+				&& !ehArquivoReservadoIgnorados()) {
 			SwingUtilities.invokeLater(() -> {
 				toolbar.modoTabelaHandler(true);
 				toolbar.chkModoTabela.setSelected(true);
@@ -703,6 +704,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
 			raf.seek(raf.length());
 			raf.writeBytes(string);
+			abrir(false);
 		}
 	}
 
