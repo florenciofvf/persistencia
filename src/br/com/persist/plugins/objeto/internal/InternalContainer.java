@@ -47,6 +47,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -1886,6 +1887,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuTemp extends Menu {
+				private Action selIntervaloColunaAcao = acaoMenu("label.selecionar_intervalo_registros");
 				private Action tabelasRepetidasAcao = acaoMenu("label.tabelas_repetidas");
 				private Action larTitTodosAcao = acaoMenu("label.largura_titulo_todos");
 				private Action colunasComplAcao = acaoMenu("label.colunas_complemento");
@@ -1898,10 +1900,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(corAcao);
 					addMenuItem(true, colunasComplAcao);
 					addMenuItem(true, larTitTodosAcao);
+					addMenuItem(true, selIntervaloColunaAcao);
 					addMenuItem(true, tabelasRepetidasAcao);
 					addMenuItem(true, destacarColunaAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
 					tabelasRepetidasAcao.hint(ObjetoMensagens.getString("hint.incon_link_auto"));
+					selIntervaloColunaAcao.setActionListener(e -> selIntervaloRegistro());
 					tabelasRepetidasAcao.setActionListener(e -> tabelasRepetidas());
 					colunasComplAcao.setActionListener(e -> totalColunasCompl());
 					destacarColunaAcao.setActionListener(e -> destacarColuna());
@@ -1955,6 +1959,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (coluna != -1) {
 							tabelaPersistencia.destacarColuna(coluna);
 						}
+					}
+				}
+
+				private void selIntervaloRegistro() {
+					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.intervalo",
+							ObjetoMensagens.getString("msg.selecionar_intervalo_registros"), Constantes.VAZIO);
+					if (resp != null && !Util.estaVazio(resp.toString())) {
+						selecionar(resp.toString().split(","));
+					}
+				}
+
+				private void selecionar(String[] array) {
+					List<Intervalo> lista = new ArrayList<>();
+					for (int i = 0; i < array.length; i++) {
+						if (i + 1 < array.length) {
+							String min = array[i].trim();
+							String max = array[i + 1].trim();
+							try {
+								lista.add(new Intervalo(Integer.parseInt(min), Integer.parseInt(max)));
+							} catch (Exception ex) {
+								//
+							}
+						}
+					}
+					for (Intervalo intervalo : lista) {
+						intervalo.selecionar(tabelaPersistencia);
 					}
 				}
 			}
@@ -3705,5 +3735,26 @@ class InstrucaoCampo {
 		sb.append("\n    HAVING COUNT(" + objeto.comApelido(campo) + ") > 1");
 		sb.append("\n) tabela");
 		return sb.toString();
+	}
+}
+
+class Intervalo {
+	final int min;
+	final int max;
+
+	public Intervalo(int min, int max) {
+		this.min = min;
+		this.max = max;
+	}
+
+	boolean valido(int rows) {
+		return (min <= max) && (min >= 0 && min < rows) && (max >= 0 && max < rows);
+	}
+
+	void selecionar(JTable table) {
+		int rows = table.getRowCount();
+		if (valido(rows)) {
+			table.addRowSelectionInterval(min, max);
+		}
 	}
 }
