@@ -1972,16 +1972,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void selecionar(String[] array) {
 					List<Intervalo> lista = new ArrayList<>();
-					for (int i = 0; i < array.length; i++) {
+					int i = 0;
+					while (i < array.length) {
 						if (i + 1 < array.length) {
 							String min = array[i].trim();
-							String max = array[i + 1].trim();
+							String max = array[++i].trim();
 							try {
 								lista.add(new Intervalo(Integer.parseInt(min), Integer.parseInt(max)));
 							} catch (Exception ex) {
 								//
 							}
 						}
+						i++;
 					}
 					tabelaPersistencia.clearSelection();
 					for (Intervalo intervalo : lista) {
