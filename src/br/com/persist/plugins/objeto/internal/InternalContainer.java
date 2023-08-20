@@ -1983,6 +1983,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					}
+					tabelaPersistencia.clearSelection();
 					for (Intervalo intervalo : lista) {
 						intervalo.selecionar(tabelaPersistencia);
 					}
