@@ -1989,6 +1989,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					for (Intervalo intervalo : lista) {
 						intervalo.selecionar(tabelaPersistencia);
 					}
+					tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 				}
 			}
 
