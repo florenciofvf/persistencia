@@ -577,6 +577,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			labelTotal.modoCopiar();
 		}
 
+		private void complementoNoFinal() {
+			int count = getComponentCount();
+			if (super.getComponent(count - 1) != txtComplemento) {
+				remove(txtComplemento);
+				add(txtComplemento);
+				SwingUtilities.updateComponentTreeUI(Toolbar.this);
+			}
+		}
+
 		private void exceptionDisable() {
 			msgException = Constantes.VAZIO;
 			exceptionAcao.setEnabled(false);
@@ -1888,6 +1897,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private class MenuTemp extends Menu {
 				private Action selIntervaloColunaAcao = acaoMenu("label.selecionar_intervalo_registros");
+				private Action complFinalBarraAcao = acaoMenu("label.complemento_no_final");
 				private Action tabelasRepetidasAcao = acaoMenu("label.tabelas_repetidas");
 				private Action larTitTodosAcao = acaoMenu("label.largura_titulo_todos");
 				private Action colunasComplAcao = acaoMenu("label.colunas_complemento");
@@ -1899,6 +1909,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					super("label.temp");
 					addMenuItem(corAcao);
 					addMenuItem(true, colunasComplAcao);
+					addMenuItem(true, complFinalBarraAcao);
 					addMenuItem(true, larTitTodosAcao);
 					addMenuItem(true, selIntervaloColunaAcao);
 					addMenuItem(true, tabelasRepetidasAcao);
@@ -1907,6 +1918,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					tabelasRepetidasAcao.hint(ObjetoMensagens.getString("hint.incon_link_auto"));
 					selIntervaloColunaAcao.setActionListener(e -> selIntervaloRegistro());
 					tabelasRepetidasAcao.setActionListener(e -> tabelasRepetidas());
+					complFinalBarraAcao.setActionListener(e -> complFinalBarra());
 					colunasComplAcao.setActionListener(e -> totalColunasCompl());
 					destacarColunaAcao.setActionListener(e -> destacarColuna());
 					corAcao.setActionListener(e -> configCor());
@@ -1925,6 +1937,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							LOG.log(Level.SEVERE, Constantes.ERRO, e);
 						}
 					}
+				}
+
+				private void complFinalBarra() {
+					toolbar.complementoNoFinal();
 				}
 
 				private void tabelasRepetidas() {
