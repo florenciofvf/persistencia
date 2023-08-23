@@ -2,6 +2,7 @@ package br.com.persist.plugins.variaveis;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,8 +101,16 @@ public class VariavelProvedor {
 			if (file.exists() && file.canRead()) {
 				XML.processar(file, new VariavelHandler());
 			}
+			lista.sort(new Compara());
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	private static class Compara implements Comparator<Variavel> {
+		@Override
+		public int compare(Variavel o1, Variavel o2) {
+			return o1.getNome().compareTo(o2.getNome());
 		}
 	}
 
