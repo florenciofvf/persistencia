@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
@@ -297,7 +298,7 @@ public class ParaTabela {
 		util.tab().atributo("bpnt", false).fecharTag();
 
 		Instrucao i = new Instrucao("Resumo da instrucao");
-		i.setValor("UPDATE candidato SET votos = 0 WHERE id = ###id###");
+		i.setValor("UPDATE candidato SET votos = 0 WHERE id = " + Constantes.SEP + "id" + Constantes.SEP);
 		i.salvar(util, false);
 
 		Filtro f = new Filtro("Resumo do filtro");
