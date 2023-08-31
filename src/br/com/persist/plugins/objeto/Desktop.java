@@ -324,6 +324,15 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		}
 	};
 
+	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) {
+		if (pesquisador != null) {
+			LOG.log(Level.FINEST, pesquisador.getId());
+		}
+		if (pesquisado != null) {
+			LOG.log(Level.FINEST, pesquisado.getId());
+		}
+	}
+
 	protected boolean contemReferencia(Objeto objeto) {
 		if (objeto != null) {
 			LOG.log(Level.FINEST, objeto.getId());
@@ -397,16 +406,17 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 				InternalFormulario interno = (InternalFormulario) frame;
 				List<Referencia> referencias = pesquisa.getReferencias();
 				interno.setProcessadoPesquisa(false);
-				pesquisar(conexao, argumentos, interno, referencias);
+				pesquisar(conexao, pesquisa, argumentos, interno, referencias);
 			}
 		}
 	}
 
-	private void pesquisar(Conexao conexao, String argumentos, InternalFormulario interno,
+	private void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos, InternalFormulario interno,
 			List<Referencia> referencias) {
 		for (Referencia referencia : referencias) {
 			if (interno.ehReferencia(referencia)) {
 				interno.setReferenciaPesquisa(referencia);
+				internoPesquisarAntes(pesquisa.getObjeto(), interno.getInternalContainer().getObjeto());
 				interno.pesquisar(conexao, referencia, argumentos);
 				interno.setProcessadoPesquisa(true);
 				referencia.setProcessado(true);

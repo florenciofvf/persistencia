@@ -1207,6 +1207,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
+	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) {
+		Relacao relacao = getRelacao(pesquisador, pesquisado);
+		if (relacao != null) {
+			relacao.setSelecionado(true);
+		}
+	}
+
+	@Override
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
 		if (conexao == null) {
 			conexao = container.getConexaoPadrao();

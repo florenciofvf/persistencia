@@ -15,6 +15,7 @@ public class Pesquisa {
 	private final List<Referencia> referenciasApos;
 	private final List<Referencia> referencias;
 	private final Referencia referencia;
+	private Objeto objeto;
 	private String nome;
 
 	public Pesquisa(String nome, Referencia ref) {
@@ -122,6 +123,14 @@ public class Pesquisa {
 			sb.append(ref.getConsulta() + Constantes.QL);
 		}
 		return sb.toString();
+	}
+
+	public Objeto getObjeto() {
+		return objeto;
+	}
+
+	public void setObjeto(Objeto objeto) {
+		this.objeto = objeto;
 	}
 
 	public String getTabela() {
