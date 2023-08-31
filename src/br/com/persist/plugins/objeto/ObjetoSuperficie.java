@@ -339,6 +339,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
+	private void deselRelacoes() {
+		for (Relacao relacao : relacoes) {
+			relacao.setSelecionado(false);
+		}
+	}
+
 	void limparSelecao() {
 		ObjetoSuperficieUtil.limparSelecao(this);
 	}
@@ -626,12 +632,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				popup2.yLocal = y;
 				popup2.preShow(getAllFrames().length > 0);
 				popup2.show(ObjetoSuperficie.this, x, y);
-			}
-		}
-
-		private void deselRelacoes() {
-			for (Relacao relacao : relacoes) {
-				relacao.setSelecionado(false);
 			}
 		}
 
@@ -1219,6 +1219,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (conexao == null) {
 			conexao = container.getConexaoPadrao();
 		}
+		deselRelacoes();
 		super.pesquisar(conexao, pesquisa, argumentos);
 		if (ObjetoPreferencia.isAbrirAuto()) {
 			limparSelecao();
