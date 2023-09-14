@@ -49,8 +49,8 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
-import br.com.persist.componente.TextField;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -178,6 +178,7 @@ public class UpdateContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action colarSemAspasAcao = acaoMenu("label.colar_sem_aspas");
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
 		private Action updateAcao = Action.actionIconUpdate();
@@ -192,10 +193,17 @@ public class UpdateContainer extends AbstratoContainer {
 			add(txtPesquisa);
 			add(chkPesquisaLocal);
 			add(label);
+			buttonColar.addSeparator();
+			buttonColar.addItem(colarSemAspasAcao);
+			colarSemAspasAcao.setActionListener(e -> colarSemAspas());
 			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			updateAcao.setActionListener(e -> atualizar());
 			txtPesquisa.addActionListener(this);
+		}
+
+		Action acaoMenu(String chave) {
+			return Action.acaoMenu(UpdateMensagens.getString(chave), null);
 		}
 
 		@Override
@@ -339,6 +347,38 @@ public class UpdateContainer extends AbstratoContainer {
 			} else {
 				label.limpar();
 			}
+		}
+
+		private void colarSemAspas() {
+			String string = Util.getContentTransfered();
+			if (Util.estaVazio(string)) {
+				return;
+			}
+			string = getString(string);
+			Util.insertStringArea(textArea, string);
+			consultaCor.processar(textArea.getStyledDocument());
+		}
+
+		private String getString(String string) {
+			String[] strings = string.split(Constantes.QL);
+			StringBuilder sb = new StringBuilder();
+			for (String s : strings) {
+				s = get(s);
+				sb.append(s + Constantes.QL);
+			}
+			return sb.toString();
+		}
+
+		private String get(String string) {
+			int pos = string.indexOf('"');
+			if (pos != -1) {
+				string = string.substring(pos + 1);
+			}
+			pos = string.lastIndexOf('"');
+			if (pos != -1) {
+				string = string.substring(0, pos);
+			}
+			return string;
 		}
 
 		@Override
