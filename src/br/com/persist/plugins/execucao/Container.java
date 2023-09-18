@@ -16,11 +16,13 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class Container {
+	private final List<Atributo> atributos;
 	private final List<Container> filhos;
 	private String string;
 	private Container pai;
 
 	public Container() {
+		atributos = new ArrayList<>();
 		filhos = new ArrayList<>();
 	}
 
@@ -30,7 +32,9 @@ public class Container {
 
 	public void lerAtributos(String tag, Attributes attributes) {
 		for (int i = 0; i < attributes.getLength(); i++) {
+			Atributo at = new Atributo(attributes.getQName(i), attributes.getValue(i));
 			string = attributes.getValue(i);
+			atributos.add(at);
 		}
 		if (string == null) {
 			throw new IllegalStateException("Nenhum atributo em: " + tag);
@@ -132,5 +136,30 @@ public class Container {
 				linha = br.readLine();
 			}
 		}
+	}
+
+	public String getChaveEditor() {
+		String editor = getValorAtributo("editor");
+		if (!Util.estaVazio(editor)) {
+			return editor;
+		}
+		Container container = pai;
+		while (container != null) {
+			editor = container.getValorAtributo("editor");
+			if (!Util.estaVazio(editor)) {
+				return editor;
+			}
+			container = container.pai;
+		}
+		return null;
+	}
+
+	private String getValorAtributo(String nome) {
+		for (Atributo atributo : atributos) {
+			if (atributo.getNome().equalsIgnoreCase(nome)) {
+				return atributo.getValor();
+			}
+		}
+		return null;
 	}
 }
