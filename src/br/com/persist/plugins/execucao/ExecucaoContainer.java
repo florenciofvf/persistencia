@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,12 +22,14 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
 
 public class ExecucaoContainer extends AbstratoContainer {
+	private static final Map<String, EditorCor> mapEditorCor;
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -188,4 +192,17 @@ public class ExecucaoContainer extends AbstratoContainer {
 			}
 		};
 	}
+
+	static {
+		mapEditorCor = new HashMap<>();
+		mapEditorCor.put("git", new GitCor());
+	}
+
+	public static EditorCor getEditorCor(String chave) {
+		return mapEditorCor.get(chave);
+	}
+}
+
+interface EditorCor {
+	void processar(TextPane textPane, StringBuilder sb);
 }
