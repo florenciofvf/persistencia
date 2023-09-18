@@ -135,7 +135,7 @@ class PanelLog extends Panel {
 		}
 		StringBuilder sb = new StringBuilder();
 		container.processar(sb, confirmar, comp, null);
-		textArea.setText(sb.toString());
+		text(container, sb);
 	}
 
 	void processarVar(Container container, Component comp, Formulario formulario) {
@@ -149,7 +149,7 @@ class PanelLog extends Panel {
 		dialogo.setVisible(true);
 		StringBuilder sb = new StringBuilder();
 		container.processar(sb, false, comp, coletor.getLista());
-		textArea.setText(sb.toString());
+		text(container, sb);
 	}
 
 	void processarMemoria(Container container, Component comp) {
@@ -161,6 +161,16 @@ class PanelLog extends Panel {
 		Variavel var = new Variavel("tmp", Util.getContentTransfered());
 		lista.add(var);
 		container.processar(sb, false, comp, lista);
-		textArea.setText(sb.toString());
+		text(container, sb);
+	}
+
+	private void text(Container container, StringBuilder sb) {
+		String editor = container.getChaveEditor();
+		EditorCor editorCor = ExecucaoContainer.getEditorCor(editor);
+		if (editorCor != null) {
+			editorCor.processar(textArea, sb);
+		} else {
+			textArea.setText(sb.toString());
+		}
 	}
 }
