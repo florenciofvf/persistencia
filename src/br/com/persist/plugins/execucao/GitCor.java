@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.UIDefaults;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
@@ -40,20 +41,25 @@ public class GitCor implements EditorCor {
 
 	public void processar(TextPane textPane, StringBuilder sb) {
 		StyledDocument doc = textPane.getStyledDocument();
+		UIDefaults defaults = new UIDefaults();
+		defaults.put("TextPane[Enabled].backgroundPainter", COLOR_EDITOR);
+		textPane.putClientProperty("Nimbus.Overrides", defaults);
+		textPane.putClientProperty("Nimbus.Overrides.InheritDefaults", true);
 		textPane.setBackground(COLOR_EDITOR);
 		try {
 			List<String> list = listString(sb);
 			for (String string : list) {
-				if (string.startsWith("---") || string.startsWith("+++")) {
+				String str = string.trim();
+				if (str.startsWith("---") || str.startsWith("+++") || str.startsWith("diff --git")) {
 					insert(doc, string, attYellow);
 
-				} else if (string.startsWith("@@")) {
+				} else if (str.startsWith("@@")) {
 					insert(doc, string, attCyan);
 
-				} else if (string.startsWith("-") || string.startsWith("modified:")) {
+				} else if (str.startsWith("-") || str.startsWith("modified:")) {
 					insert(doc, string, attRed);
 
-				} else if (string.startsWith("+")) {
+				} else if (str.startsWith("+")) {
 					insert(doc, string, attGreen);
 
 				} else {
