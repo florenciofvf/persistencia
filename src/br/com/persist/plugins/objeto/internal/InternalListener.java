@@ -21,7 +21,7 @@ public interface InternalListener {
 	public interface Vinculo {
 		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef);
 
-		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos);
+		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos, boolean soTotal);
 
 		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException;
 

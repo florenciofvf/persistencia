@@ -248,10 +248,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {
 		@Override
-		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
+		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos, boolean soTotal) {
 			checarDesktop();
 			if (desktop != null) {
-				desktop.pesquisar(conexao, pesquisa, argumentos);
+				desktop.pesquisar(conexao, pesquisa, argumentos, soTotal);
 			}
 		}
 
@@ -442,8 +442,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.getObjeto().setReferenciaPesquisa(referencia);
 	}
 
-	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos) {
-		container.pesquisar(conexao, referencia, argumentos);
+	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos, boolean soTotal) {
+		container.pesquisar(conexao, referencia, argumentos, soTotal);
 	}
 
 	public void pesquisarLink(Referencia referencia, String argumentos) {

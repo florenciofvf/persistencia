@@ -525,12 +525,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos) {
+	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos, boolean soTotal) {
 		if (conexao != null) {
 			selecionarConexao(conexao);
 			txtComplemento.setTextAnd(referencia.getCampo(), " IN (" + argumentos + ")" + referencia.getConcatenar());
-			destacarTitulo = true;
-			actionListenerInner.actionPerformed(null);
+			if (soTotal) {
+				toolbar.buttonFuncoes.totalRegistrosComFiltro();
+			} else {
+				destacarTitulo = true;
+				actionListenerInner.actionPerformed(null);
+			}
 		} else {
 			Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 		}
@@ -1009,6 +1013,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
+				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
+						ObjetoMensagens.getString("label.total_detalhes"));
 				private Action renomearAcao = actionMenu("label.renomear");
 				private Action excluirAcao = actionMenu("label.excluir");
 				private static final long serialVersionUID = 1L;
@@ -1018,6 +1024,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
+					addItem(chkTotalDetalhes);
 					addMenuItem(true, renomearAcao);
 					addMenuItem(true, excluirAcao);
 					addSeparator();
@@ -1289,12 +1296,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void pesquisar(List<String> lista, boolean apostrofes, int coluna) {
 					pesquisa.setObjeto(objeto);
-					pesquisa.setProcessado(false);
-					pesquisa.inicializarColetores(lista);
-					pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
+					if (!chkTotalDetalhes.isSelected()) {
+						pesquisa.setProcessado(false);
+						pesquisa.inicializarColetores(lista);
+						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
+					}
 					vinculoListener.pesquisar(getConexao(), pesquisa,
-							Util.getStringLista(lista, ", ", false, apostrofes));
-					pesquisarFinal(coluna);
+							Util.getStringLista(lista, ", ", false, apostrofes), chkTotalDetalhes.isSelected());
+					if (!chkTotalDetalhes.isSelected()) {
+						pesquisarFinal(coluna);
+					}
 				}
 
 				private void pesquisarFinal(int coluna) {
@@ -1657,6 +1668,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private class ButtonFuncoes extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private TotalizarRegistrosAcao totalRegistroAcao = new TotalizarRegistrosAcao(true);
 			private JCheckBoxMenuItem chkSubsTotalComparacao = new JCheckBoxMenuItem(
 					ObjetoMensagens.getString("label.subs_total_comparacao"));
 			private JCheckBoxMenuItem chkExibirInstrucao = new JCheckBoxMenuItem(
@@ -1670,8 +1682,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addItem(chkSubsTotalComparacao);
 				addItem(chkExibirInstrucao);
 				addMenuItem(new TotalizarRegistrosAcao(false));
-				addMenuItem(new TotalizarRegistrosAcao(true));
+				addMenuItem(totalRegistroAcao);
 				addMenuItem(true, new AlternativoAcao());
+			}
+
+			private void totalRegistrosComFiltro() {
+				chkExibirInstrucao.setSelected(false);
+				totalRegistroAcao.actionPerformed(null);
 			}
 
 			private class AlternativoAcao extends Action {
