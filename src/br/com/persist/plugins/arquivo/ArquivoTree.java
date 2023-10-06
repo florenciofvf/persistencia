@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -228,5 +229,10 @@ public class ArquivoTree extends Tree {
 	public void preencher(List<Arquivo> lista, String nome, boolean porParte) {
 		Arquivo raiz = getRaiz();
 		raiz.preencher(lista, nome, porParte);
+	}
+
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
+		Arquivo raiz = getRaiz();
+		raiz.contemConteudo(set, string, porParte);
 	}
 }

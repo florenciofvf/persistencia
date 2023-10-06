@@ -15,8 +15,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.Icon;
 
@@ -81,6 +83,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private final CheckBox chkSempreTopArq = new CheckBox();
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtArquivo = new TextField(35);
+		private final CheckBox chkPsqConteudo = new CheckBox();
 		private final CheckBox chkDuplicar = new CheckBox();
 		private final CheckBox chkLinkAuto = new CheckBox();
 		private static final long serialVersionUID = 1L;
@@ -90,6 +93,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR);
 			chkSempreTopArq.setToolTipText(ArquivoMensagens.getString("msg.arquivo.sempreTopArqu"));
 			chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
+			chkPsqConteudo.setToolTipText(ArquivoMensagens.getString("msg.pesq_no_conteudo"));
 			chkLinkAuto.setToolTipText(ArquivoMensagens.getString("msg.arquivo.link_auto"));
 			chkDuplicar.setToolTipText(ArquivoMensagens.getString("msg.arquivo.duplicar"));
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
@@ -103,6 +107,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			add(fecharAcao);
 			add(txtArquivo);
 			add(chkPorParte);
+			add(chkPsqConteudo);
 			add(label);
 			eventos();
 		}
@@ -118,11 +123,28 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtArquivo.getText())) {
-				pesquisa = getPesquisa(arquivoTree, pesquisa, txtArquivo.getText(), chkPorParte.isSelected());
-				pesquisa.selecionar(label);
+				if (chkPsqConteudo.isSelected()) {
+					Set<String> set = new LinkedHashSet<>();
+					arquivoTree.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected());
+					Util.mensagem(ArquivoContainer.this, getString(set));
+				} else {
+					pesquisa = getPesquisa(arquivoTree, pesquisa, txtArquivo.getText(), chkPorParte.isSelected());
+					pesquisa.selecionar(label);
+				}
 			} else {
 				label.limpar();
 			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
 		}
 
 		public ArquivoPesquisa getPesquisa(ArquivoTree arquivoTree, ArquivoPesquisa pesquisa, String string,

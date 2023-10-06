@@ -1045,6 +1045,24 @@ public class Util {
 		return null;
 	}
 
+	public static boolean contemStringEm(File file, String string, boolean porParte) {
+		if (file != null && file.exists()) {
+			string = string.toUpperCase();
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					if ((porParte && linha.toUpperCase().indexOf(string) != -1) || string.equals(linha.toUpperCase())) {
+						return true;
+					}
+					linha = br.readLine();
+				}
+			} catch (IOException ex) {
+				return false;
+			}
+		}
+		return false;
+	}
+
 	public static boolean contemNoArray(String string, String[] strings) {
 		if (strings != null) {
 			for (String s : strings) {
