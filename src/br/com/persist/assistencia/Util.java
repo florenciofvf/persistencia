@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -1291,5 +1292,14 @@ public class Util {
 	private static void resetDelete(int lengthOff, StringBuilder resposta, List<String> cache, int k) {
 		resposta.delete(0, resposta.length());
 		resposta.append(cache.get(k - 1 + lengthOff));
+	}
+
+	public static int stringWidth(Component component, String string) {
+		Font font = component.getFont();
+		if (font == null) {
+			return 0;
+		}
+		FontMetrics fontMetrics = component.getFontMetrics(font);
+		return fontMetrics == null ? 0 : fontMetrics.stringWidth(string);
 	}
 }
