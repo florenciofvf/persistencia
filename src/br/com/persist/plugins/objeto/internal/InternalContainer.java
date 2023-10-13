@@ -283,8 +283,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			super.setText(Util.ltrim(string));
 		}
 
-		private void setTextAnd(String campo, String string) {
-			setText(objeto.comApelido("AND", campo) + string);
+		private String getString(String campo, String string) {
+			return objeto.comApelido("AND", campo) + string;
 		}
 
 		private void focus() {
@@ -528,7 +528,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos, boolean soTotal) {
 		if (conexao != null) {
 			selecionarConexao(conexao);
-			txtComplemento.setTextAnd(referencia.getCampo(), " IN (" + argumentos + ")" + referencia.getConcatenar());
+			String string = txtComplemento.getString(referencia.getCampo(),
+					" IN (" + argumentos + ")" + referencia.getConcatenar());
+			if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth()) {
+				//
+			} else {
+				txtComplemento.setText(string);
+			}
 			if (soTotal) {
 				toolbar.buttonFuncoes.totalRegistrosComFiltro();
 			} else {
