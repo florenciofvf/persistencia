@@ -87,8 +87,7 @@ public class ComplementoContainer extends Panel {
 
 		@Override
 		protected void aplicar() {
-			String string = Util.normalizar(textArea.getText(), true);
-			listener.processarComplemento(string);
+			listener.processarComplemento(textArea.getText());
 			fechar();
 		}
 	}
