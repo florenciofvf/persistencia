@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
@@ -265,6 +267,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private class TxtComplemento extends JTextArea {
 		private static final long serialVersionUID = 1L;
+		private transient Imagem imagem;
 		private int ultimaAltura;
 
 		private boolean ajustarAltura() {
@@ -289,6 +292,29 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private void focus() {
 			SwingUtilities.invokeLater(this::requestFocus);
+		}
+
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
+			if (imagem != null) {
+				imagem.paint(g);
+			}
+		}
+	}
+
+	private transient Imagem imagem = new Imagem();
+
+	protected class Imagem {
+		final Image image;
+		String string;
+
+		Imagem() {
+			image = Toolkit.getDefaultToolkit().createImage(Icones.getURL("eye"));
+		}
+
+		void paint(Graphics g) {
+			g.drawImage(image, Constantes.CINCO, Constantes.QUATRO, null);
 		}
 	}
 
@@ -531,9 +557,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			String string = txtComplemento.getString(referencia.getCampo(),
 					" IN (" + argumentos + ")" + referencia.getConcatenar());
 			if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth()) {
-				//
+				imagem.string = string;
+				txtComplemento.setColumns(Constantes.DOIS);
+				txtComplemento.setText(Constantes.VAZIO);
+				txtComplemento.imagem = imagem;
 			} else {
 				txtComplemento.setText(string);
+				txtComplemento.imagem = null;
 			}
 			if (soTotal) {
 				toolbar.buttonFuncoes.totalRegistrosComFiltro();

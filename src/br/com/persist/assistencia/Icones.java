@@ -100,9 +100,13 @@ public class Icones {
 	private Icones() {
 	}
 
+	public static URL getURL(String nome) {
+		return Icones.class.getResource("/resources/" + nome + ".png");
+	}
+
 	private static ImageIcon criarImagem(String nome) {
 		try {
-			URL url = Icones.class.getResource("/resources/" + nome + ".png");
+			URL url = getURL(nome);
 			return new ImageIcon(url, nome);
 		} catch (Exception e) {
 			throw new IllegalStateException("Erro imagem! " + nome);
