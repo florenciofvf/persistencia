@@ -38,7 +38,7 @@ public class ComplementoContainer extends Panel {
 	public ComplementoContainer(Janela janela, ComplementoListener listener) {
 		listaComplementos = new JList<>(new ColecaoStringModelo(listener.getColecaoComplemento()));
 		listaComplementos.addMouseListener(mouseListenerInner);
-		textArea.setText(listener.getComplementoPadrao());
+		textArea.setText(listener.getComplemento());
 		this.listener = listener;
 		toolbar.ini(janela);
 		montarLayout();

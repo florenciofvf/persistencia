@@ -7,7 +7,7 @@ public interface ComplementoListener {
 
 	public Set<String> getColecaoComplemento();
 
-	public String getComplementoPadrao();
+	public String getComplemento();
 
 	public String getTitle();
 }

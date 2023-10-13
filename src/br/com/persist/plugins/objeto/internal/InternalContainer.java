@@ -286,6 +286,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			super.setText(Util.ltrim(string));
 		}
 
+		@Override
+		public String getText() {
+			if (imagem != null) {
+				return imagem.string;
+			}
+			return super.getText();
+		}
+
 		private String getString(String campo, String string) {
 			return objeto.comApelido("AND", campo) + string;
 		}
@@ -2762,6 +2770,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		@Override
 		public void processarComplemento(String string) {
 			txtComplemento.setText(string);
+			txtComplemento.imagem = null;
 			actionListenerInner.actionPerformed(null);
 		}
 
@@ -2771,7 +2780,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		@Override
-		public String getComplementoPadrao() {
+		public String getComplemento() {
 			return txtComplemento.getText();
 		}
 
