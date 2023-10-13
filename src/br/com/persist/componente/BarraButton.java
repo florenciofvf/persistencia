@@ -50,9 +50,9 @@ public abstract class BarraButton extends JToolBar
 	public void ini(Janela janela, BarraButtonEnum... enuns) {
 		this.janela = janela;
 		fecharAcao.setActionListener(e -> fechar());
-		Button button = new Button(fecharAcao);
-		button.setFocusable(false);
 		if (!(janela instanceof Nil)) {
+			Button button = new Button(fecharAcao);
+			button.setFocusable(false);
 			add(button);
 			setJanela(janela);
 			addSeparator();
