@@ -252,6 +252,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					getConexao();
 					actionListenerInner.actionPerformed(null);
 					e.consume();
+				} else {
+					txtComplemento.checkImagem();
 				}
 			}
 		});
@@ -307,6 +309,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			super.paint(g);
 			if (imagem != null) {
 				imagem.paint(g);
+			}
+		}
+
+		void checkImagem() {
+			if (imagem != null && getDocument().getLength() == 0) {
+				imagem = null;
+				repaint();
 			}
 		}
 	}
