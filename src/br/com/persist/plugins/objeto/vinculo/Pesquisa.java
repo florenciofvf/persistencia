@@ -15,6 +15,7 @@ public class Pesquisa {
 	private final List<Referencia> referenciasApos;
 	private final List<Referencia> referencias;
 	private final Referencia referencia;
+	private final List<Param> params;
 	private Objeto objeto;
 	private String nome;
 
@@ -25,6 +26,7 @@ public class Pesquisa {
 		}
 		referenciasApos = new ArrayList<>();
 		referencias = new ArrayList<>();
+		params = new ArrayList<>();
 		this.nome = nome;
 	}
 
@@ -97,6 +99,9 @@ public class Pesquisa {
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
 		referencia.salvar(false, util);
 		util.fecharTag();
+		for (Param par : params) {
+			par.salvar(util);
+		}
 		for (Referencia ref : referencias) {
 			ref.salvar(true, util);
 		}
@@ -147,6 +152,7 @@ public class Pesquisa {
 				.atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA).atributo(VinculoHandler.CAMPO, "PK")
 				.atributo(VinculoHandler.GRUPO, "").atributo(VinculoHandler.ICONE_GRUPO, "")
 				.atributo(VinculoHandler.ICONE, "").atributo(VinculoHandler.COR_FONTE, "#AABBCC").fecharTag();
+		new Param(".", ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo2(util);
 		util.finalizarTag(VinculoHandler.PESQUISA);
@@ -205,6 +211,12 @@ public class Pesquisa {
 
 	public List<Referencia> getReferenciasApos() {
 		return referenciasApos;
+	}
+
+	public void add(Param param) {
+		if (param != null) {
+			params.add(param);
+		}
 	}
 
 	public boolean add(Referencia ref) {

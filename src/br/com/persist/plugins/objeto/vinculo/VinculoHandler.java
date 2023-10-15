@@ -24,12 +24,16 @@ public class VinculoHandler extends XMLHandler {
 	public static final String COR_FONTE = "corFonte";
 	public static final String COR_FUNDO = "corFundo";
 	public static final String PESQUISA = "pesquisa";
+	public static final String ROTULO = "rotulo";
 	public static final String FILTRO = "filtro";
 	public static final String TABELA = "tabela";
 	public static final String CAMPO = "campo";
+	public static final String VALOR = "valor";
 	public static final String ICONE = "icone";
 	public static final String GRUPO = "grupo";
 	public static final String VAZIO = "vazio";
+	public static final String PARAM = "param";
+	public static final String CHAVE = "chave";
 	public static final String NOME = "nome";
 	public static final String PARA = "para";
 	public static final String REF = "ref";
@@ -76,6 +80,8 @@ public class VinculoHandler extends XMLHandler {
 			limpar();
 		} else if (REF.equals(qName) && selecionado != null) {
 			selecionado.add(criar(attributes));
+		} else if (PARAM.equals(qName) && selecionado != null) {
+			selecionado.add(criarParam(attributes));
 		}
 	}
 
@@ -149,6 +155,10 @@ public class VinculoHandler extends XMLHandler {
 		paraTabela.setCorFonte(getCorFonte(attributes));
 		paraTabela.setCorFundo(getCorFundo(attributes));
 		return paraTabela;
+	}
+
+	public static Param criarParam(Attributes attributes) {
+		return new Param(attributes.getValue(CHAVE), attributes.getValue(ROTULO), attributes.getValue(VALOR));
 	}
 
 	public static Referencia criar(Attributes attributes) {
