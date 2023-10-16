@@ -116,6 +116,7 @@ import br.com.persist.plugins.objeto.alter.AlternativoDialogo;
 import br.com.persist.plugins.objeto.alter.AlternativoListener;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
+import br.com.persist.plugins.objeto.vinculo.Param;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
@@ -1350,6 +1351,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void pesquisar(List<String> lista, boolean apostrofes, int coluna) {
 					pesquisa.setObjeto(objeto);
 					if (!chkTotalDetalhes.isSelected()) {
+						processarParams(pesquisa);
 						pesquisa.setProcessado(false);
 						pesquisa.inicializarColetores(lista);
 						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
@@ -1358,6 +1360,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.getStringLista(lista, ", ", false, apostrofes), chkTotalDetalhes.isSelected());
 					if (!chkTotalDetalhes.isSelected()) {
 						pesquisarFinal(coluna);
+					}
+				}
+
+				private void processarParams(Pesquisa pesquisa) {
+					pesquisa.clonarParams();
+					for (Param param : pesquisa.getCloneParams()) {
+						if (Util.estaVazio(param.getValor())) {
+							Object obj = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
+									"Valor para: " + param.getRotulo(), null);
+							param.setValor(obj == null ? Constantes.VAZIO : obj.toString());
+						}
 					}
 				}
 

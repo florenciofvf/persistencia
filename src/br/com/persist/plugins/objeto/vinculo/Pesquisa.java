@@ -14,6 +14,7 @@ import br.com.persist.plugins.objeto.Objeto;
 public class Pesquisa {
 	private final List<Referencia> referenciasApos;
 	private final List<Referencia> referencias;
+	private final List<Param> cloneParams;
 	private final Referencia referencia;
 	private final List<Param> params;
 	private Objeto objeto;
@@ -26,6 +27,7 @@ public class Pesquisa {
 		}
 		referenciasApos = new ArrayList<>();
 		referencias = new ArrayList<>();
+		cloneParams = new ArrayList<>();
 		params = new ArrayList<>();
 		this.nome = nome;
 	}
@@ -217,6 +219,21 @@ public class Pesquisa {
 		if (param != null) {
 			params.add(param);
 		}
+	}
+
+	public void clonarParams() {
+		cloneParams.clear();
+		for (Param param : getParams()) {
+			cloneParams.add(param.clonar());
+		}
+	}
+
+	public List<Param> getParams() {
+		return params;
+	}
+
+	public List<Param> getCloneParams() {
+		return cloneParams;
 	}
 
 	public boolean add(Referencia ref) {
