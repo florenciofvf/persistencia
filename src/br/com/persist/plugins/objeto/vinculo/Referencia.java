@@ -261,6 +261,16 @@ public class Referencia {
 		return sb.toString();
 	}
 
+	public String getConcatenar(List<Param> lista) {
+		String string = getConcatenar();
+		if (!Util.estaVazio(string)) {
+			for (Param param : lista) {
+				string = Util.replaceAll(string, Constantes.SEP + param.getChave() + Constantes.SEP, param.getValor());
+			}
+		}
+		return string;
+	}
+
 	public String getConcatenar() {
 		if (Util.estaVazio(concatenar)) {
 			return Constantes.VAZIO;
