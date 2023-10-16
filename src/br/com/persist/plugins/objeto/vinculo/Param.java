@@ -45,13 +45,13 @@ public class Param {
 		atributoValor(util, VinculoHandler.CHAVE, chave);
 		atributoValor(util, VinculoHandler.ROTULO, rotulo);
 		atributoValor(util, VinculoHandler.VALOR, valor);
-		util.finalizarTag(VinculoHandler.PARAM);
+		util.fecharTag(-1);
 	}
 
 	public void modelo(XMLUtil util) {
 		util.abrirTag(VinculoHandler.PARAM).atributo(VinculoHandler.CHAVE, "unico_dentro_desta_pesquisa")
 				.atributo(VinculoHandler.ROTULO, "Para dialogo valor dinamico")
-				.atributo(VinculoHandler.VALOR, "Sem valor sera dinamico").fecharTag2(-1);
+				.atributo(VinculoHandler.VALOR, "Sem valor sera dinamico").fecharTag(-1);
 	}
 
 	public static void atributoValor(XMLUtil util, String nome, String valor) {

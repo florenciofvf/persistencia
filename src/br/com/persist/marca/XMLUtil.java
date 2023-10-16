@@ -73,7 +73,7 @@ public class XMLUtil {
 		return print(">").ql();
 	}
 
-	public XMLUtil fecharTag2(int deltaTab) {
+	public XMLUtil fecharTag(int deltaTab) {
 		print("/>").ql();
 		tab += deltaTab;
 		return this;

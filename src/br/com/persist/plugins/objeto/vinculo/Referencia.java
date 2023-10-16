@@ -72,7 +72,7 @@ public class Referencia {
 		atributoValor(util, VinculoHandler.ICONE_GRUPO, iconeGrupo);
 		atributoValor(util, VinculoHandler.CONCATENAR, concatenar);
 		if (autonomo) {
-			util.fecharTag2(-1);
+			util.fecharTag(-1);
 		}
 	}
 
@@ -88,12 +88,12 @@ public class Referencia {
 		util.abrirTag(VinculoHandler.REF).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
 				.atributo(VinculoHandler.CAMPO, "FK").atributo(VinculoHandler.GRUPO, "")
 				.atributo(VinculoHandler.VAZIO, VinculoHandler.INVISIVEL).atributo(VinculoHandler.ICONE, "")
-				.atributo(VinculoHandler.COR_FONTE, "#AABBCC").atributo(VinculoHandler.CONCATENAR, "").fecharTag2(-1);
+				.atributo(VinculoHandler.COR_FONTE, "#AABBCC").atributo(VinculoHandler.CONCATENAR, "").fecharTag(-1);
 	}
 
 	public void modelo2(XMLUtil util) {
 		util.abrirTag(VinculoHandler.REF).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
-				.atributo(VinculoHandler.LIMPAR_APOS, true).fecharTag2(-1);
+				.atributo(VinculoHandler.LIMPAR_APOS, true).fecharTag(-1);
 	}
 
 	static void atributoValor(XMLUtil util, String nome, String valor) {
