@@ -569,11 +569,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos, boolean soTotal) {
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Referencia referencia, String argumentos,
+			boolean soTotal) {
 		if (conexao != null) {
 			selecionarConexao(conexao);
 			String string = txtComplemento.getString(referencia.getCampo(),
-					" IN (" + argumentos + ")" + referencia.getConcatenar());
+					" IN (" + argumentos + ")" + referencia.getConcatenar(pesquisa.getCloneParams()));
 			if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth()) {
 				imagem.string = string;
 				txtComplemento.setColumns(Constantes.DOIS);

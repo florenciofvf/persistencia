@@ -417,7 +417,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 			if (interno.ehReferencia(referencia)) {
 				interno.setReferenciaPesquisa(referencia);
 				internoPesquisarAntes(pesquisa.getObjeto(), interno.getInternalContainer().getObjeto());
-				interno.pesquisar(conexao, referencia, argumentos, soTotal);
+				interno.pesquisar(conexao, pesquisa, referencia, argumentos, soTotal);
 				interno.setProcessadoPesquisa(true);
 				referencia.setProcessado(true);
 			}
