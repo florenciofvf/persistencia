@@ -60,4 +60,9 @@ public abstract class Container {
 
 	public void salvar(Container pai, XMLUtil util) {
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + ": name=" + nome + (valor != null ? " value=" + valor : "");
+	}
 }
