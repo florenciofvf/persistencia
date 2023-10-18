@@ -7,9 +7,9 @@ import br.com.persist.marca.XMLUtil;
 
 public abstract class Container {
 	private final List<Container> filhos;
+	private final String nome;
 	protected Container pai;
 	private String valor;
-	final String nome;
 
 	protected Container(String nome) {
 		filhos = new ArrayList<>();
@@ -29,6 +29,9 @@ public abstract class Container {
 	}
 
 	public String getValor() {
+		if (valor == null) {
+			valor = "";
+		}
 		return valor;
 	}
 
@@ -55,5 +58,6 @@ public abstract class Container {
 		c.pai = this;
 	}
 
-	public abstract void salvar(Container pai, XMLUtil util);
+	public void salvar(Container pai, XMLUtil util) {
+	}
 }
