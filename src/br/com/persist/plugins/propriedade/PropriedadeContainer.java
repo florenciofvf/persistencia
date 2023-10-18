@@ -10,6 +10,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.Icon;
 
@@ -17,22 +23,30 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.plugins.update.UpdateConstantes;
 
 public class PropriedadeContainer extends AbstratoContainer {
 	private PropriedadeFormulario propriedadeFormulario;
+	private final TextPane textArea = new TextPane();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private PropriedadeDialogo propriedadeDialogo;
+	private final File file;
 
 	public PropriedadeContainer(Janela janela, Formulario formulario) {
 		super(formulario);
+		file = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + PropriedadeConstantes.PROPRIEDADES);
 		toolbar.ini(janela);
 		montarLayout();
+		abrir();
 	}
 
 	public PropriedadeDialogo getPropriedadeDialogo() {
@@ -59,6 +73,27 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, new ScrollPane(textArea));
+	}
+
+	private void abrir() {
+		abrirArquivo(file);
+	}
+
+	private void abrirArquivo(File file) {
+		textArea.limpar();
+		if (file.exists()) {
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					textArea.append(linha + Constantes.QL);
+					linha = br.readLine();
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
+			}
+		}
 	}
 
 	@Override
@@ -118,10 +153,23 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 		@Override
 		public void baixar() {
+			abrir();
 		}
 
 		@Override
 		public void salvar() {
+			if (Util.confirmaSalvar(PropriedadeContainer.this, Constantes.TRES)) {
+				salvarArquivo(file);
+			}
+		}
+
+		private void salvarArquivo(File file) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
+				pw.print(textArea.getText());
+				salvoMensagem();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, PropriedadeContainer.this);
+			}
 		}
 	}
 
