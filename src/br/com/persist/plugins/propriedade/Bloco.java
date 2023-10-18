@@ -39,6 +39,7 @@ public class Bloco extends Container {
 				put(param, config);
 			}
 		}
+		util.ql().tab().tab().conteudo("<!--" + getNome() + "-->").ql();
 		for (Propriedade prop : getPropriedades()) {
 			prop.salvar(this, util);
 		}

@@ -26,6 +26,7 @@ public class Propriedade extends Container {
 			string = Util.replaceAll(string, Constantes.SEP + entry.getKey() + Constantes.SEP, entry.getValue());
 		}
 
+		util.tab().tab();
 		util.abrirTag(PropriedadeHandler.PROPERTY);
 		util.atributo(PropriedadeHandler.NAME, getNome());
 		util.atributo(PropriedadeHandler.VALUE, string);
