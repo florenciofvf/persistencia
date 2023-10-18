@@ -18,12 +18,14 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import javax.swing.Icon;
+import javax.swing.JSplitPane;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
@@ -34,6 +36,7 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.update.UpdateConstantes;
 
 public class PropriedadeContainer extends AbstratoContainer {
+	private final TextPane textAreaResult = new TextPane();
 	private PropriedadeFormulario propriedadeFormulario;
 	private final TextPane textArea = new TextPane();
 	private static final long serialVersionUID = 1L;
@@ -72,8 +75,10 @@ public class PropriedadeContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(textArea),
+				new ScrollPane(textAreaResult));
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(textArea));
+		add(BorderLayout.CENTER, splitPane);
 	}
 
 	private void abrir() {
@@ -103,9 +108,30 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action gerarAcao = acaoIcon("label.gerar_conteudo", Icones.EXECUTAR);
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
+			addButton(gerarAcao);
+			gerarAcao.setActionListener(e -> gerar());
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(PropriedadeMensagens.getString(chave), icon);
+		}
+
+		private void gerar() {
+			String string = textArea.getText();
+			if (Util.estaVazio(string)) {
+				textAreaResult.setText("Editor vazio.");
+				return;
+			}
+			try {
+				Raiz raiz = PropriedadeUtil.criarRaiz(string);
+				textAreaResult.setText(PropriedadeUtil.getString(raiz));
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
+			}
 		}
 
 		@Override
