@@ -17,7 +17,6 @@ import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
-//		<menu classeFabrica="br.com.persist.plugins.propriedade.PropriedadeFabrica" ativo="true" />
 public class PropriedadeFabrica extends AbstratoFabricaContainer {
 	@Override
 	public void inicializar() {
