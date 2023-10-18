@@ -1,6 +1,7 @@
 package br.com.persist.plugins.propriedade;
 
-import br.com.persist.marca.XMLUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config extends Container {
 	public Config(String nome) {
@@ -16,8 +17,13 @@ public class Config extends Container {
 		}
 	}
 
-	@Override
-	public void salvar(Container pai, XMLUtil util) {
-		// TODO Auto-generated method stub
+	public List<Atributo> getAtributos() {
+		List<Atributo> resp = new ArrayList<>();
+		for (Container c : getFilhos()) {
+			if (c instanceof Atributo) {
+				resp.add((Atributo) c);
+			}
+		}
+		return resp;
 	}
 }
