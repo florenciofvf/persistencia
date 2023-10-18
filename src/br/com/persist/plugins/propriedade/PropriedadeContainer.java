@@ -46,7 +46,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	public PropriedadeContainer(Janela janela, Formulario formulario) {
 		super(formulario);
-		file = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + PropriedadeConstantes.PROPRIEDADES);
+		file = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + PropriedadeConstantes.PROPRIEDADES
+				+ ".xml");
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
