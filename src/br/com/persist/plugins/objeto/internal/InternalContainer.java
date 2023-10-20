@@ -1351,8 +1351,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void pesquisar(List<String> lista, boolean apostrofes, int coluna) {
 					pesquisa.setObjeto(objeto);
+					processarParams(pesquisa);
 					if (!chkTotalDetalhes.isSelected()) {
-						processarParams(pesquisa);
 						pesquisa.setProcessado(false);
 						pesquisa.inicializarColetores(lista);
 						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
