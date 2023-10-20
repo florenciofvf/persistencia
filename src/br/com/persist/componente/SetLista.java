@@ -34,6 +34,10 @@ public class SetLista {
 		if (config == null) {
 			config = new Config();
 		}
+		if (lista == null) {
+			lista = new ArrayList<>();
+		}
+		Collections.sort(lista);
 		Component comp = Util.getViewParent(c);
 		SetListaDialogo form = null;
 		if (comp instanceof Frame) {
