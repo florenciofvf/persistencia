@@ -169,6 +169,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private final Toolbar toolbar = new Toolbar();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
+	static final String WHERE = " WHERE ";
 	private boolean destacarTitulo;
 	private String ultimaConsulta;
 	private boolean buscaAuto;
@@ -1491,7 +1492,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (!coletor.estaVazio()) {
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
 									false, conexao);
-							instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false, conexao);
+							instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
 							if (!Util.estaVazio(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
 							}
@@ -1571,7 +1572,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							return;
 						}
 						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false, conexao);
-						instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false, conexao);
+						instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
 						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
 						}
@@ -1807,17 +1808,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private String montar(String[] chaves, String funcao, Conexao conexao) {
-					StringBuilder sb = new StringBuilder();
-					for (String chave : chaves) {
-						if (sb.length() > 0) {
-							sb.append(" ");
-						}
-						sb.append(objeto.comApelido("AND", chave));
-						sb.append(" = (SELECT " + funcao + "(" + chave + ")");
-						sb.append(" FROM ");
-						sb.append(objeto.getTabelaEsquema(conexao) + ")");
+					Filter filter = null;
+					for (int i = 0; i < chaves.length; i++) {
+						String campo = chaves[i];
+						int tab = chaves.length - i;
+						filter = new Filter(conexao, filter, funcao, campo, objeto, tab);
 					}
-					return sb.toString();
+					return filter != null ? filter.gerar() : "";
 				}
 			}
 
@@ -3844,11 +3841,58 @@ class InstrucaoCampo {
 	}
 }
 
+class Filter {
+	final Conexao conexao;
+	final Filter proximo;
+	final String funcao;
+	final String campo;
+	final Objeto obj;
+	final int tab;
+
+	Filter(Conexao conexao, Filter proximo, String funcao, String campo, Objeto obj, int tab) {
+		this.conexao = conexao;
+		this.proximo = proximo;
+		this.funcao = funcao;
+		this.campo = campo;
+		this.obj = obj;
+		this.tab = tab;
+	}
+
+	String gerar() {
+		StringBuilder sb = new StringBuilder();
+		if (proximo == null) {
+			sb.append(obj.comApelido(campo));
+			sb.append(" = (SELECT " + funcao + "(" + campo + ")");
+			sb.append(" FROM ");
+			sb.append(obj.getTabelaEsquema(conexao) + ")");
+		} else {
+			sb.append(campo + " = (SELECT " + funcao + "(" + proximo.getTmpCampo(campo) + ") FROM (" + Constantes.QL);
+			sb.append(getTab(1) + " SELECT * FROM " + obj.getTabelaEsquema(conexao) + InternalContainer.WHERE
+					+ proximo.gerar() + Constantes.QL);
+			sb.append(getTab(1) + ") " + proximo.getTmpCampo(null) + Constantes.QL);
+			sb.append(getTab(0) + ")");
+		}
+		return sb.toString();
+	}
+
+	private String getTmpCampo(String field) {
+		return "tmp_" + campo + (field != null ? "." + field : "");
+	}
+
+	private String getTab(int delta) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < tab + delta; i++) {
+			sb.append(Constantes.TAB);
+		}
+		return sb.toString();
+	}
+}
+
 class Intervalo {
 	final int min;
 	final int max;
 
-	public Intervalo(int min, int max) {
+	Intervalo(int min, int max) {
 		this.min = min;
 		this.max = max;
 	}
