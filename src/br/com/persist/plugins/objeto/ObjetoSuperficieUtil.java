@@ -17,6 +17,29 @@ public class ObjetoSuperficieUtil {
 	private ObjetoSuperficieUtil() {
 	}
 
+	public static void deselRelacoes(ObjetoSuperficie superficie) {
+		for (Relacao relacao : superficie.relacoes) {
+			relacao.setSelecionado(false);
+		}
+	}
+
+	public static void mover(ObjetoSuperficie superficie, char c) {
+		for (Objeto objeto : superficie.objetos) {
+			if (objeto.isSelecionado()) {
+				if (c == 'L') {
+					objeto.x -= 5;
+				} else if (c == 'R') {
+					objeto.x += 5;
+				} else if (c == 'U') {
+					objeto.y -= 5;
+				} else if (c == 'D') {
+					objeto.y += 5;
+				}
+			}
+		}
+		superficie.repaint();
+	}
+
 	public static void excluirSemTabela(ObjetoSuperficie superficie) {
 		boolean contem = false;
 		for (Objeto objeto : superficie.objetos) {

@@ -172,20 +172,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void mover(char c) {
-		for (Objeto objeto : objetos) {
-			if (objeto.isSelecionado()) {
-				if (c == 'L') {
-					objeto.x -= 5;
-				} else if (c == 'R') {
-					objeto.x += 5;
-				} else if (c == 'U') {
-					objeto.y -= 5;
-				} else if (c == 'D') {
-					objeto.y += 5;
-				}
-			}
-		}
-		repaint();
+		ObjetoSuperficieUtil.mover(this, c);
 	}
 
 	@Override
@@ -343,12 +330,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			repaint();
 		}
 	};
-
-	private void deselRelacoes() {
-		for (Relacao relacao : relacoes) {
-			relacao.setSelecionado(false);
-		}
-	}
 
 	InternalFormulario getInternalFormulario(Objeto objeto) {
 		return ObjetoSuperficieUtil.getInternalFormulario(this, objeto);
@@ -689,7 +670,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			area.y1 = y;
 			ultX = x;
 			ultY = y;
-			deselRelacoes();
+			ObjetoSuperficieUtil.deselRelacoes(ObjetoSuperficie.this);
 			pressedObjeto(ctrl, x, y, sel);
 			if (selecionadoObjeto != null) {
 				pressedObjetoFinal(ctrl, sel.get());
@@ -1211,7 +1192,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (conexao == null) {
 			conexao = container.getConexaoPadrao();
 		}
-		deselRelacoes();
+		ObjetoSuperficieUtil.deselRelacoes(this);
 		super.pesquisar(conexao, pesquisa, argumentos, soTotal);
 		if (ObjetoPreferencia.isAbrirAuto()) {
 			limparSelecao();
