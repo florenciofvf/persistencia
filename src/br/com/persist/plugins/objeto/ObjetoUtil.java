@@ -15,6 +15,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
@@ -98,12 +99,13 @@ public class ObjetoUtil {
 		return sb.toString();
 	}
 
-	public static void abrirArquivoVinculado(Component componente, File file) throws XMLException {
-		if (file == null) {
+	public static void abrirArquivoVinculado(Component componente, ArquivoVinculo av) throws XMLException {
+		if (av == null || !av.valido()) {
 			return;
 		}
+		File file = av.getFile();
 		if (!file.exists()) {
-			Vinculacao.criarArquivoVinculado(file);
+			Vinculacao.criarArquivoVinculado(av);
 		}
 		try {
 			Util.conteudo(componente, file);
@@ -120,19 +122,19 @@ public class ObjetoUtil {
 		return sw.toString();
 	}
 
-	public static Vinculacao getVinculacao(Component componente, String arquivo, boolean criarSeInexistente)
+	public static Vinculacao getVinculacao(Component componente, ArquivoVinculo av, boolean criarSeInexistente)
 			throws XMLException {
-		if (arquivo != null) {
-			File file = new File(arquivo);
+		if (av != null && av.valido()) {
+			File file = av.getFile();
 			if (!file.exists()) {
 				if (criarSeInexistente) {
-					Vinculacao.criarArquivoVinculado(file);
+					Vinculacao.criarArquivoVinculado(av);
 				} else {
 					return null;
 				}
 			}
 			Vinculacao vinculacao = new Vinculacao();
-			vinculacao.abrir(arquivo, componente);
+			vinculacao.abrir(av, componente);
 			return vinculacao;
 		}
 		return null;

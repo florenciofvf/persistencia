@@ -76,6 +76,7 @@ import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
+import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 
 public class ObjetoContainer extends AbstratoContainer implements SetFormulario {
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
@@ -286,13 +287,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		private void abrirArquivoVinculado() {
 			if (!Util.estaVazio(txtArquivoVinculo.getText())) {
-				String arq = txtArquivoVinculo.getText().trim();
-				arq = Util.replaceAll(arq, Constantes.SEP, Constantes.SEPARADOR);
-				File file = new File(arq);
+				ArquivoVinculo av = new ArquivoVinculo(txtArquivoVinculo.getText().trim());
 				try {
-					ObjetoUtil.abrirArquivoVinculado(ObjetoContainer.this, file);
+					ObjetoUtil.abrirArquivoVinculado(ObjetoContainer.this, av);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("ARQUIVO VINCULADO: " + file.getAbsolutePath(), ex, formulario);
+					Util.stackTraceAndMessage("ARQUIVO VINCULADO: " + av.getFile().getAbsolutePath(), ex, formulario);
 				}
 			}
 		}

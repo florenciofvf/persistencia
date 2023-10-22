@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -36,13 +35,12 @@ public class Vinculacao {
 		mapaParaTabela.put(paraTabela.getTabela(), paraTabela);
 	}
 
-	public void abrir(String arquivo, Component componente) throws XMLException {
+	public void abrir(ArquivoVinculo av, Component componente) throws XMLException {
 		mapaParaTabela.clear();
 		pesquisas.clear();
 		File file = null;
-		if (!Util.estaVazio(arquivo)) {
-			arquivo = Util.replaceAll(arquivo, Constantes.SEP, Constantes.SEPARADOR);
-			file = new File(arquivo);
+		if (av.valido()) {
+			file = av.getFile();
 		}
 		if (file != null && file.isFile()) {
 			try {
@@ -96,10 +94,10 @@ public class Vinculacao {
 		}
 	}
 
-	public void salvar(String arquivo, Component componente) {
+	public void salvar(ArquivoVinculo av, Component componente) {
 		File file = null;
-		if (!Util.estaVazio(arquivo)) {
-			file = new File(arquivo);
+		if (av.valido()) {
+			file = av.getFile();
 		}
 		if (file != null && file.isFile()) {
 			try {
@@ -123,15 +121,9 @@ public class Vinculacao {
 		}
 	}
 
-	public static void criarArquivoVinculado(File file) throws XMLException {
-		String path = file.getAbsolutePath();
-		if (path.contains("/") || path.contains("\\")) {
-			File parent = file.getParentFile();
-			if (parent != null && !parent.isDirectory()) {
-				parent.mkdir();
-			}
-		}
-		XMLUtil util = new XMLUtil(file);
+	public static void criarArquivoVinculado(ArquivoVinculo av) throws XMLException {
+		av.checarDiretorio();
+		XMLUtil util = new XMLUtil(av.getFile());
 		util.prologo();
 		util.abrirTag2(VINCULO);
 		util.print("<!--").ql();
