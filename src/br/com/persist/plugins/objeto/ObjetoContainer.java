@@ -254,8 +254,26 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			criarObjetoAcao.setActionListener(e -> criarObjeto());
 			txtArquivoVinculo.addKeyListener(new KeyAdapter() {
 				@Override
+				public void keyTyped(KeyEvent e) {
+					processar(e);
+				}
+
+				@Override
 				public void keyPressed(KeyEvent e) {
-					if (e.getKeyChar() <= ' ') {
+					processar(e);
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					processar(e);
+				}
+
+				public void processar(KeyEvent e) {
+					if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_DELETE
+							|| e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.isShiftDown()) {
+						return;
+					}
+					if (e.getKeyCode() <= KeyEvent.VK_SPACE) {
 						e.consume();
 					}
 				}
