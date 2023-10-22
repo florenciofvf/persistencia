@@ -269,11 +269,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				}
 
 				public void processar(KeyEvent e) {
-					if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_DELETE
-							|| e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.isShiftDown()) {
-						return;
-					}
-					if (e.getKeyCode() <= KeyEvent.VK_SPACE) {
+					if (e.getKeyChar() == ' ') {
 						e.consume();
 					}
 				}
