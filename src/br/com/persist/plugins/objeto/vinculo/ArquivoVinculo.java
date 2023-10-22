@@ -35,4 +35,8 @@ public class ArquivoVinculo {
 			}
 		}
 	}
+
+	public String getArquivo() {
+		return arquivo;
+	}
 }

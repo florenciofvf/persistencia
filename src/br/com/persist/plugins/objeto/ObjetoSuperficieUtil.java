@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
@@ -206,7 +205,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void salvarVinculacao(ObjetoSuperficie superficie, Vinculacao vinculacao) {
-		vinculacao.salvar(new ArquivoVinculo(superficie.arquivoVinculo), superficie);
+		vinculacao.salvar(superficie.criarArquivoVinculo(), superficie);
 	}
 
 	public static void processar(ObjetoSuperficie superficie) {

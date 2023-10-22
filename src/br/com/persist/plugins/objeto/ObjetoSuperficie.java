@@ -105,13 +105,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private transient Thread thread;
 	private boolean validoArrastar;
 	final SuperficiePopup2 popup2;
+	private String arquivoVinculo;
 	transient Relacao[] relacoes;
 	final SuperficiePopup popup;
 	final Formulario formulario;
 	transient Objeto[] objetos;
 	private boolean processar;
 	private int totalHoras;
-	String arquivoVinculo;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -1070,7 +1070,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		util.atributoCheck("processar", processar);
 		util.atributo("largura", getWidth());
 		util.atributo("altura", getHeight());
-		util.atributo("arquivoVinculo", getArquivoVinculo());
+		util.atributo("arquivoVinculo", criarArquivoVinculo().getArquivo());
 		if (conexao != null) {
 			util.atributo("conexao", conexao.getNome());
 		}
@@ -1486,13 +1486,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO) {
 			ObjetoSuperficieDestacar.destacarPropriaSuperficie(this, selecionados, conexao, config);
 		}
-	}
-
-	public String getArquivoVinculo() {
-		if (Util.estaVazio(arquivoVinculo)) {
-			arquivoVinculo = Constantes.VAZIO;
-		}
-		return arquivoVinculo;
 	}
 
 	public void setArquivoVinculo(String arquivoVinculo) {
@@ -2977,7 +2970,7 @@ class ExportacaoImportacao {
 	public void vincular(AtomicReference<String> ref) {
 		try {
 			String nomeTabela = principal.getTabela().toLowerCase();
-			superficie.arquivoVinculo = nomeTabela + "_vinculo.xml";
+			superficie.setArquivoVinculo(nomeTabela + "_vinculo.xml");
 			Vinculacao vinculo = superficie.getVinculacao(superficie.criarArquivoVinculo(), true);
 			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 			if (vinculo != null && pesquisa != null) {
