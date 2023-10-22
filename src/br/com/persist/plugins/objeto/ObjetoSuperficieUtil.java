@@ -5,11 +5,36 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JInternalFrame;
+
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
 	private ObjetoSuperficieUtil() {
+	}
+
+	public static InternalFormulario getInternalFormulario(ObjetoSuperficie superficie, Objeto objeto) {
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
+					return interno;
+				}
+			}
+		}
+		return null;
+	}
+
+	public static void selecionarConexao(ObjetoSuperficie superficie, Conexao conexao) {
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				interno.selecionarConexao(conexao);
+			}
+		}
 	}
 
 	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie) {

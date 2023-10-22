@@ -350,12 +350,81 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	InternalFormulario getInternalFormulario(Objeto objeto) {
+		return ObjetoSuperficieUtil.getInternalFormulario(this, objeto);
+	}
+
 	void limparSelecao() {
 		ObjetoSuperficieUtil.limparSelecao(this);
 	}
 
 	public List<Objeto> getSelecionados() {
 		return ObjetoSuperficieUtil.getSelecionados(this);
+	}
+
+	private Objeto getPrimeiroObjetoSelecionado() {
+		return ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
+	}
+
+	private Relacao getPrimeiroRelacaoSelecionado() {
+		return ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
+	}
+
+	public Set<String> getIdOrigens() {
+		return ObjetoSuperficieUtil.getIdOrigens(this);
+	}
+
+	public List<Relacao> getRelacoes(Objeto obj) {
+		return ObjetoSuperficieUtil.getRelacoes(this, obj);
+	}
+
+	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
+		return ObjetoSuperficieUtil.getRelacao(this, obj1, obj2);
+	}
+
+	public boolean contemId(Objeto obj) {
+		return ObjetoSuperficieUtil.contemId(this, obj);
+	}
+
+	public Objeto getObjeto(String id) {
+		return ObjetoSuperficieUtil.getObjeto(this, id);
+	}
+
+	public int getIndice(Objeto obj) {
+		return ObjetoSuperficieUtil.getIndice(this, obj);
+	}
+
+	public int getIndice(Relacao obj) {
+		return ObjetoSuperficieUtil.getIndice(this, obj);
+	}
+
+	public boolean contemObjetoComTabela(String nomeTabela) {
+		return ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela);
+	}
+
+	public void selecionarConexao(Conexao conexao) {
+		ObjetoSuperficieUtil.selecionarConexao(this, conexao);
+	}
+
+	@Override
+	protected boolean contemReferencia(Objeto objeto) {
+		return ObjetoSuperficieUtil.contemReferencia(this, objeto);
+	}
+
+	public void desenharDesc(boolean b) {
+		ObjetoSuperficieUtil.desenharDesc(this, b);
+	}
+
+	public void selecaoGeral(boolean b) {
+		ObjetoSuperficieUtil.selecaoGeral(this, b);
+	}
+
+	public void desenharIds(boolean b) {
+		ObjetoSuperficieUtil.desenharIds(this, b);
+	}
+
+	public void transparente(boolean b) {
+		ObjetoSuperficieUtil.transparente(this, b);
 	}
 
 	public JComboBox<Objeto> criarComboObjetosSel() {
@@ -783,18 +852,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	InternalFormulario getInternalFormulario(Objeto objeto) {
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
-					return interno;
-				}
-			}
-		}
-		return null;
-	}
-
 	public Formulario getFormulario() {
 		return formulario;
 	}
@@ -845,14 +902,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			relacao = getPrimeiroRelacaoSelecionado();
 		}
 		repaint();
-	}
-
-	private Objeto getPrimeiroObjetoSelecionado() {
-		return ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
-	}
-
-	private Relacao getPrimeiroRelacaoSelecionado() {
-		return ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
 	}
 
 	public void addObjeto(Objeto obj) {
@@ -914,10 +963,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public Set<String> getIdOrigens() {
-		return ObjetoSuperficieUtil.getIdOrigens(this);
-	}
-
 	public void pontoOrigem(boolean b) {
 		for (Relacao relacao : relacoes) {
 			relacao.setPontoOrigem(b);
@@ -932,40 +977,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		repaint();
 	}
 
-	public List<Relacao> getRelacoes(Objeto obj) {
-		return ObjetoSuperficieUtil.getRelacoes(this, obj);
-	}
-
-	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
-		return ObjetoSuperficieUtil.getRelacao(this, obj1, obj2);
-	}
-
-	public boolean contemId(Objeto obj) {
-		return ObjetoSuperficieUtil.contemId(this, obj);
-	}
-
 	public boolean contem(Objeto obj) {
 		return getIndice(obj) >= 0;
 	}
 
 	public boolean contem(Relacao obj) {
 		return getIndice(obj) >= 0;
-	}
-
-	public Objeto getObjeto(String id) {
-		return ObjetoSuperficieUtil.getObjeto(this, id);
-	}
-
-	public int getIndice(Objeto obj) {
-		return ObjetoSuperficieUtil.getIndice(this, obj);
-	}
-
-	public int getIndice(Relacao obj) {
-		return ObjetoSuperficieUtil.getIndice(this, obj);
-	}
-
-	public boolean contemObjetoComTabela(String nomeTabela) {
-		return ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela);
 	}
 
 	@Override
@@ -995,11 +1012,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return true;
 	}
 
-	@Override
-	protected boolean contemReferencia(Objeto objeto) {
-		return ObjetoSuperficieUtil.contemReferencia(this, objeto);
-	}
-
 	public void limpar() {
 		relacoes = new Relacao[0];
 		objetos = new Objeto[0];
@@ -1012,15 +1024,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	static Action acaoMenu(String chave) {
 		return acaoMenu(chave, null);
-	}
-
-	public void selecionarConexao(Conexao conexao) {
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				interno.selecionarConexao(conexao);
-			}
-		}
 	}
 
 	public void criarNovoObjeto(int x, int y) {
@@ -1140,22 +1143,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public Vinculacao getVinculacao(ArquivoVinculo av, boolean criarSeInexistente) throws XMLException {
 		return ObjetoUtil.getVinculacao(ObjetoSuperficie.this, av, criarSeInexistente);
-	}
-
-	public void desenharDesc(boolean b) {
-		ObjetoSuperficieUtil.desenharDesc(this, b);
-	}
-
-	public void selecaoGeral(boolean b) {
-		ObjetoSuperficieUtil.selecaoGeral(this, b);
-	}
-
-	public void desenharIds(boolean b) {
-		ObjetoSuperficieUtil.desenharIds(this, b);
-	}
-
-	public void transparente(boolean b) {
-		ObjetoSuperficieUtil.transparente(this, b);
 	}
 
 	public void configEstado(byte estado) {
