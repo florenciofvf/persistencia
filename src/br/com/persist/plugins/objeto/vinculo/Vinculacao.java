@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -40,6 +41,7 @@ public class Vinculacao {
 		pesquisas.clear();
 		File file = null;
 		if (!Util.estaVazio(arquivo)) {
+			arquivo = Util.replaceAll(arquivo, Constantes.SEP, Constantes.SEPARADOR);
 			file = new File(arquivo);
 		}
 		if (file != null && file.isFile()) {
@@ -122,6 +124,13 @@ public class Vinculacao {
 	}
 
 	public static void criarArquivoVinculado(File file) throws XMLException {
+		String path = file.getAbsolutePath();
+		if (path.contains("/") || path.contains("\\")) {
+			File parent = file.getParentFile();
+			if (parent != null && !parent.isDirectory()) {
+				parent.mkdir();
+			}
+		}
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
 		util.abrirTag2(VINCULO);

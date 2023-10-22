@@ -22,6 +22,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -251,6 +252,14 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
 			criarObjetoAcao.setActionListener(e -> criarObjeto());
+			txtArquivoVinculo.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyChar() <= ' ') {
+						e.consume();
+					}
+				}
+			});
 		}
 
 		private void destacarObjetos() {
@@ -263,7 +272,9 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		private void abrirArquivoVinculado() {
 			if (!Util.estaVazio(txtArquivoVinculo.getText())) {
-				File file = new File(txtArquivoVinculo.getText().trim());
+				String arq = txtArquivoVinculo.getText().trim();
+				arq = Util.replaceAll(arq, Constantes.SEP, Constantes.SEPARADOR);
+				File file = new File(arq);
 				try {
 					ObjetoUtil.abrirArquivoVinculado(ObjetoContainer.this, file);
 				} catch (Exception ex) {
