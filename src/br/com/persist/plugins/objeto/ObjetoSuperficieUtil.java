@@ -8,12 +8,52 @@ import java.util.Set;
 import javax.swing.JInternalFrame;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Label;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
 	private ObjetoSuperficieUtil() {
+	}
+
+	public static void excluirSemTabela(ObjetoSuperficie superficie) {
+		boolean contem = false;
+		for (Objeto objeto : superficie.objetos) {
+			if (Util.estaVazio(objeto.getTabela())) {
+				contem = true;
+				break;
+			}
+		}
+		if (!contem) {
+			Util.mensagem(superficie, ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
+			return;
+		}
+		if (Util.confirmaExclusao(superficie, true)) {
+			for (Objeto objeto : superficie.objetos) {
+				if (Util.estaVazio(objeto.getTabela())) {
+					superficie.excluir(objeto);
+				}
+			}
+			for (Objeto objeto : superficie.objetos) {
+				objeto.associado = null;
+			}
+		}
+		superficie.repaint();
+	}
+
+	public static int preTotalRecente(ObjetoSuperficie superficie, Label label) {
+		int total = 0;
+		for (Objeto objeto : superficie.objetos) {
+			if (!Util.estaVazio(objeto.getTabela())) {
+				objeto.criarMemento();
+				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
+				total++;
+			}
+		}
+		label.limpar();
+		superficie.repaint();
+		return total;
 	}
 
 	public static InternalFormulario getInternalFormulario(ObjetoSuperficie superficie, Objeto objeto) {

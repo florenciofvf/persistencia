@@ -1274,42 +1274,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private int preTotalRecente(Label label) {
-		int total = 0;
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				objeto.criarMemento();
-				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
-				total++;
-			}
-		}
-		label.limpar();
-		repaint();
-		return total;
+		return ObjetoSuperficieUtil.preTotalRecente(this, label);
 	}
 
 	public void excluirSemTabela() {
-		boolean contem = false;
-		for (Objeto objeto : objetos) {
-			if (Util.estaVazio(objeto.getTabela())) {
-				contem = true;
-				break;
-			}
-		}
-		if (!contem) {
-			Util.mensagem(ObjetoSuperficie.this, ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
-			return;
-		}
-		if (Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
-			for (Objeto objeto : objetos) {
-				if (Util.estaVazio(objeto.getTabela())) {
-					excluir(objeto);
-				}
-			}
-			for (Objeto objeto : objetos) {
-				objeto.associado = null;
-			}
-		}
-		repaint();
+		ObjetoSuperficieUtil.excluirSemTabela(this);
 	}
 
 	public void compararRecent(Conexao conexao, MenuItem[] menuItens, Label label) {
