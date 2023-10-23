@@ -682,6 +682,10 @@ public class Util {
 		return "'" + string + "'";
 	}
 
+	public static String citar2(String string) {
+		return "\"" + string + "\"";
+	}
+
 	public static void setContentTransfered(String string) {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		if (clipboard != null) {

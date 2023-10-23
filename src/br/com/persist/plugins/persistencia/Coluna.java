@@ -63,6 +63,11 @@ public class Coluna {
 
 	public String getDetalhe() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(Constantes.TAB + "@Column(name = " + Util.citar2(nome) + ")" + Constantes.QL);
+		String declaracao = "private " + getTipoNormal() + " " + nome.toLowerCase() + ";";
+		sb.append(Constantes.TAB + declaracao + Constantes.QL);
+		sb.append(Constantes.TAB + Util.completar("", declaracao.length(), '-') + Constantes.QL);
+
 		if (!Util.estaVazio(funcao)) {
 			sb.append("FUNCAO: " + funcao + Constantes.QL);
 		}
@@ -129,6 +134,11 @@ public class Coluna {
 
 	public String getTipo() {
 		return tipo;
+	}
+
+	public String getTipoNormal() {
+		int pos = tipo.lastIndexOf('.');
+		return pos != -1 ? tipo.substring(pos + 1) : tipo;
 	}
 
 	public int getIndice() {
