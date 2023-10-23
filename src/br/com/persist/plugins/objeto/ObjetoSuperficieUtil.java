@@ -12,10 +12,15 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
+import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
 	private ObjetoSuperficieUtil() {
+	}
+
+	public static ArquivoVinculo criarArquivoVinculo(ObjetoSuperficie superficie) {
+		return new ArquivoVinculo(superficie.arquivoVinculo);
 	}
 
 	public static void atualizarComplemento(ObjetoSuperficie superficie, Objeto objeto) {
@@ -332,7 +337,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void salvarVinculacao(ObjetoSuperficie superficie, Vinculacao vinculacao) {
-		vinculacao.salvar(superficie.criarArquivoVinculo(), superficie);
+		vinculacao.salvar(criarArquivoVinculo(superficie), superficie);
 	}
 
 	public static void processar(ObjetoSuperficie superficie) {

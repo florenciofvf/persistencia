@@ -104,13 +104,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private transient Thread thread;
 	private boolean validoArrastar;
 	final SuperficiePopup2 popup2;
-	private String arquivoVinculo;
 	transient Relacao[] relacoes;
 	final SuperficiePopup popup;
 	final Formulario formulario;
 	transient Objeto[] objetos;
 	private boolean processar;
 	private int totalHoras;
+	String arquivoVinculo;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -124,10 +124,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		this.container = container;
 		configurar();
 		limpar();
-	}
-
-	public ArquivoVinculo criarArquivoVinculo() {
-		return new ArquivoVinculo(arquivoVinculo);
 	}
 
 	private void configurar() {
@@ -959,7 +955,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		util.atributoCheck("processar", processar);
 		util.atributo("largura", getWidth());
 		util.atributo("altura", getHeight());
-		util.atributo("arquivoVinculo", criarArquivoVinculo().getArquivo());
+		util.atributo("arquivoVinculo", arquivoVinculo);
 		if (conexao != null) {
 			util.atributo("conexao", conexao.getNome());
 		}
@@ -1013,18 +1009,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 		ativar();
 		arquivoVinculo = coletor.getArquivoVinculo();
-		vinculacao.abrir(criarArquivoVinculo(), ObjetoSuperficie.this);
+		vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(this), ObjetoSuperficie.this);
 		for (Objeto objeto : objetos) {
 			vinculacao.processar(objeto);
 		}
 	}
 
 	public void preencherVinculacao(Vinculacao vinculacao) throws XMLException {
-		vinculacao.abrir(criarArquivoVinculo(), ObjetoSuperficie.this);
+		vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(this), ObjetoSuperficie.this);
 	}
 
 	public Vinculacao getVinculacao() throws XMLException {
-		return getVinculacao(criarArquivoVinculo(), false);
+		return getVinculacao(ObjetoSuperficieUtil.criarArquivoVinculo(this), false);
 	}
 
 	public Vinculacao getVinculacao(ArquivoVinculo av, boolean criarSeInexistente) throws XMLException {
@@ -2797,7 +2793,7 @@ class ExportacaoImportacao {
 		try {
 			String nomeTabela = principal.getTabela().toLowerCase();
 			superficie.setArquivoVinculo(nomeTabela + "_vinculo.xml");
-			Vinculacao vinculo = superficie.getVinculacao(superficie.criarArquivoVinculo(), true);
+			Vinculacao vinculo = superficie.getVinculacao(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), true);
 			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 			if (vinculo != null && pesquisa != null) {
 				salvar(pesquisa);
@@ -2812,7 +2808,7 @@ class ExportacaoImportacao {
 
 	private void salvar(Pesquisa pesquisa) {
 		try {
-			superficie.vinculacao.abrir(superficie.criarArquivoVinculo(), superficie);
+			superficie.vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("SALVAR", ex, superficie);
 			return;
@@ -2827,7 +2823,7 @@ class ExportacaoImportacao {
 
 	private void salvar(List<Pesquisa> listaRef) {
 		try {
-			superficie.vinculacao.abrir(superficie.criarArquivoVinculo(), superficie);
+			superficie.vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("VINCULAR", ex, superficie);
 			return;
