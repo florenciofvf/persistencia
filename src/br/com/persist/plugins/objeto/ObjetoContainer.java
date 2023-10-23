@@ -247,7 +247,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			});
 			txtPrefixoNomeTabela.addActionListener(
 					e -> ObjetoSuperficieUtil.prefixoNomeTabela(objetoSuperficie, txtPrefixoNomeTabela.getText()));
-			excluirAcao.setActionListener(e -> objetoSuperficie.excluirSelecionados());
+			excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(objetoSuperficie));
 			chkAjusteAutomatico.addActionListener(e -> setAjusteAutomaticoForm());
 			chkAjusteLarguraFrm.addActionListener(e -> setAjusteLarguraForm());
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
@@ -584,7 +584,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			objetoSuperficie.mover('R');
+			ObjetoSuperficieUtil.mover(objetoSuperficie, 'R');
 		}
 	};
 
@@ -593,7 +593,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			objetoSuperficie.mover('L');
+			ObjetoSuperficieUtil.mover(objetoSuperficie, 'L');
 		}
 	};
 
@@ -602,7 +602,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			objetoSuperficie.mover('D');
+			ObjetoSuperficieUtil.mover(objetoSuperficie, 'D');
 		}
 	};
 
@@ -611,7 +611,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			objetoSuperficie.mover('U');
+			ObjetoSuperficieUtil.mover(objetoSuperficie, 'U');
 		}
 	};
 

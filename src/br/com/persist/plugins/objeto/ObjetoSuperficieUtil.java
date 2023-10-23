@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 
 import br.com.persist.assistencia.Util;
@@ -17,6 +18,43 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
 	private ObjetoSuperficieUtil() {
+	}
+
+	public static void checagemId(ObjetoSuperficie superficie, Objeto objeto, String id, String sep) {
+		boolean contem = ObjetoSuperficieUtil.contemId(superficie, objeto);
+		while (contem) {
+			objeto.setId(id + sep + Objeto.novaSequencia());
+			contem = ObjetoSuperficieUtil.contemId(superficie, objeto);
+		}
+	}
+
+	public static void excluirSelecionados(ObjetoSuperficie superficie) {
+		Objeto objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(superficie);
+		boolean confirmado = false;
+		if (objeto != null) {
+			if (Util.confirmaExclusao(superficie, true)) {
+				confirmado = true;
+			} else {
+				return;
+			}
+		}
+		while (objeto != null) {
+			superficie.excluir(objeto);
+			objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(superficie);
+		}
+		Relacao relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(superficie);
+		if (relacao != null && !confirmado && !Util.confirmaExclusao(superficie, true)) {
+			return;
+		}
+		while (relacao != null) {
+			superficie.excluir(relacao);
+			relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(superficie);
+		}
+		superficie.repaint();
+	}
+
+	public static JComboBox<Objeto> criarComboObjetosSel(ObjetoSuperficie superficie) {
+		return new JComboBox<>(new ObjetoComboModelo(ObjetoSuperficieUtil.getSelecionados(superficie)));
 	}
 
 	public static ArquivoVinculo criarArquivoVinculo(ObjetoSuperficie superficie) {

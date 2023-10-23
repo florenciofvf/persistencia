@@ -33,7 +33,7 @@ public class CircularContainer extends Panel {
 	private final JComboBox<Tipo> comboTipo;
 
 	public CircularContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Tipo tipo) {
-		comboObjeto = objetoSuperficie.criarComboObjetosSel();
+		comboObjeto = ObjetoSuperficieUtil.criarComboObjetosSel(objetoSuperficie);
 		comboTipo = new JComboBox<>(Tipo.values());
 		this.objetoSuperficie = objetoSuperficie;
 		comboTipo.setSelectedItem(tipo);

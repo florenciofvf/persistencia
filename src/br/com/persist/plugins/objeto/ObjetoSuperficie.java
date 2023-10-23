@@ -39,7 +39,6 @@ import java.util.stream.Collectors;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.InputMap;
-import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -164,10 +163,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (popup2 != null) {
 			SwingUtilities.updateComponentTreeUI(popup2);
 		}
-	}
-
-	public void mover(char c) {
-		ObjetoSuperficieUtil.mover(this, c);
 	}
 
 	@Override
@@ -329,10 +324,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	@Override
 	protected boolean contemReferencia(Objeto objeto) {
 		return ObjetoSuperficieUtil.contemReferencia(this, objeto);
-	}
-
-	public JComboBox<Objeto> criarComboObjetosSel() {
-		return new JComboBox<>(new ObjetoComboModelo(ObjetoSuperficieUtil.getSelecionados(this)));
 	}
 
 	private void mousePressedPopup(MouseEvent e) {
@@ -783,31 +774,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void excluirSelecionados() {
-		Objeto objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
-		boolean confirmado = false;
-		if (objeto != null) {
-			if (Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
-				confirmado = true;
-			} else {
-				return;
-			}
-		}
-		while (objeto != null) {
-			excluir(objeto);
-			objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
-		}
-		Relacao relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
-		if (relacao != null && !confirmado && !Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
-			return;
-		}
-		while (relacao != null) {
-			excluir(relacao);
-			relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
-		}
-		repaint();
-	}
-
 	public void addObjeto(Objeto obj) {
 		if (obj == null || ObjetoSuperficieUtil.contem(this, obj)) {
 			return;
@@ -888,7 +854,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			}
 		}
 		novo.setId(id);
-		checagemId(novo, id, "-");
+		ObjetoSuperficieUtil.checagemId(this, novo, id, "-");
 		addObjeto(novo);
 		repaint();
 		return true;
@@ -910,18 +876,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public void criarNovoObjeto(int x, int y) {
 		Objeto novo = new Objeto(x, y);
-		checagemId(novo, Constantes.VAZIO, Constantes.VAZIO);
+		ObjetoSuperficieUtil.checagemId(this, novo, Constantes.VAZIO, Constantes.VAZIO);
 		addObjeto(novo);
 		ObjetoSuperficieUtil.limparSelecao(this);
 		repaint();
-	}
-
-	void checagemId(Objeto objeto, String id, String sep) {
-		boolean contem = ObjetoSuperficieUtil.contemId(this, objeto);
-		while (contem) {
-			objeto.setId(id + sep + Objeto.novaSequencia());
-			contem = ObjetoSuperficieUtil.contemId(this, objeto);
-		}
 	}
 
 	private InputMap inputMap() {
@@ -1267,7 +1225,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo();
 			objeto.setId(id);
-			checagemId(objeto, id, Constantes.SEP2);
+			ObjetoSuperficieUtil.checagemId(this, objeto, id, Constantes.SEP2);
 			objeto.setGrupo(tabelaRef.getNomeCampo());
 		} else {
 			objeto.setId(nomeTabela);
@@ -1568,7 +1526,7 @@ class ThreadRecente extends ThreadComparacao {
 
 	private void incluir(Objeto info) {
 		String id = info.getId();
-		superficie.checagemId(info, id, Constantes.SEP2);
+		ObjetoSuperficieUtil.checagemId(superficie, info, id, Constantes.SEP2);
 		Objeto origem = info.associado;
 		superficie.excluir(origem.associado);
 		superficie.addObjeto(info);
@@ -2071,7 +2029,7 @@ class SuperficiePopup extends Popup {
 				abrirObjeto((Objeto) object);
 			}
 		});
-		excluirAcao.setActionListener(e -> superficie.excluirSelecionados());
+		excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(superficie));
 		relacoesAcao.setActionListener(e -> {
 			if (superficie.selecionadoObjeto != null) {
 				selecionarRelacao(superficie.selecionadoObjeto);
@@ -2152,7 +2110,7 @@ class SuperficiePopup extends Popup {
 				Objeto novo = superficie.selecionadoRelacao.criarObjetoMeio();
 				Objeto destino = superficie.selecionadoRelacao.getDestino();
 				Objeto origem = superficie.selecionadoRelacao.getOrigem();
-				superficie.checagemId(novo, Constantes.VAZIO, Constantes.VAZIO);
+				ObjetoSuperficieUtil.checagemId(superficie, novo, Constantes.VAZIO, Constantes.VAZIO);
 				superficie.addObjeto(novo);
 				superficie.selecionadoRelacao.setSelecionado(false);
 				superficie.excluir(superficie.selecionadoRelacao);
@@ -2627,7 +2585,7 @@ class ExportacaoImportacao {
 		if (ObjetoSuperficieUtil.contemObjetoComTabela(superficie, nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + campoProcessado.getDescricao();
 			objeto.setId(id);
-			superficie.checagemId(objeto, id, Constantes.SEP2);
+			ObjetoSuperficieUtil.checagemId(superficie, objeto, id, Constantes.SEP2);
 			objeto.setGrupo(campoProcessado.getDescricao());
 		} else {
 			objeto.setId(nomeTabela);
