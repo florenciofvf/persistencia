@@ -6,7 +6,7 @@ import br.com.persist.assistencia.Constantes;
 
 public class ConexaoModelo extends AbstractTableModel {
 	private static final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "SELECT CONSTRAINT",
-			"FILTRO", "ESQUEMA", "CATALOGO", "TIPO=FUNCAO;TIPO=FUNCAO", "GRUPO" };
+			"FILTRO", "ESQUEMA", "CATALOGO", "TIPO=FUNCAO;TIPO=FUNCAO", "GRUPO", "LIMIT" };
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -60,6 +60,8 @@ public class ConexaoModelo extends AbstractTableModel {
 			return c.getTiposFuncoes();
 		case 11:
 			return c.getGrupo();
+		case 12:
+			return c.getLimit();
 		default:
 			return null;
 		}
@@ -105,6 +107,9 @@ public class ConexaoModelo extends AbstractTableModel {
 			break;
 		case 11:
 			c.setGrupo(valor);
+			break;
+		case 12:
+			c.setLimit(valor);
 			break;
 		default:
 		}

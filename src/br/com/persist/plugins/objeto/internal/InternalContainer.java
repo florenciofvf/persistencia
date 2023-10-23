@@ -3854,7 +3854,7 @@ class Filter {
 		sb.append(" = (SELECT " + funcao + "(" + campos[0] + ")");
 		sb.append(" FROM ");
 		sb.append(obj.getTabelaEsquema(conexao) + ")");
-		if (campos.length > 1) {
+		if (campos.length > 1 && !Util.estaVazio(conexao.getLimite())) {
 			sb.append(Constantes.QL);
 			sb.append(conexao.getLimite());
 		}

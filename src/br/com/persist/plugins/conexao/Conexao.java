@@ -23,6 +23,7 @@ public class Conexao {
 	private String filtro;
 	private String senha;
 	private String grupo;
+	private String limit;
 
 	public Conexao(String nome) {
 		if (Util.estaVazio(nome)) {
@@ -92,6 +93,7 @@ public class Conexao {
 		c.filtro = filtro;
 		c.senha = senha;
 		c.grupo = grupo;
+		c.limit = limit;
 		return c;
 	}
 
@@ -106,6 +108,7 @@ public class Conexao {
 		filtro = attr.getValue("filtro");
 		senha = attr.getValue("senha");
 		grupo = attr.getValue("grupo");
+		limit = attr.getValue("limit");
 	}
 
 	public void salvar(XMLUtil util) {
@@ -120,6 +123,7 @@ public class Conexao {
 		util.atributo("esquema", esquema);
 		util.atributo("driver", driver);
 		util.atributoCheck("grupo", grupo);
+		util.atributoCheck("limit", limit);
 		util.atributo("tiposFuncoes", tiposFuncoes);
 		util.fecharTag().finalizarTag("conexao");
 	}
@@ -194,6 +198,17 @@ public class Conexao {
 		this.grupo = grupo;
 	}
 
+	public String getLimit() {
+		if (limit == null) {
+			limit = Constantes.VAZIO;
+		}
+		return limit;
+	}
+
+	public void setLimit(String limit) {
+		this.limit = limit;
+	}
+
 	public Map<String, String> getMapaTiposFuncoes() {
 		if (mapaTiposFuncoes == null) {
 			mapaTiposFuncoes = ConexaoUtil.criarMapaTiposFuncoes(tiposFuncoes);
@@ -206,12 +221,6 @@ public class Conexao {
 	}
 
 	public String getLimite() {
-		if ("mysql".equalsIgnoreCase(grupo)) {
-			return "LIMIT 1";
-		}
-		if ("oracle".equalsIgnoreCase(grupo)) {
-			return "AND ROWNUM = 1";
-		}
-		return "";
+		return getLimit();
 	}
 }
