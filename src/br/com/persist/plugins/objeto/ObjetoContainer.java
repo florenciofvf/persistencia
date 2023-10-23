@@ -145,7 +145,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
-			objetoSuperficie.selecionarConexao(conexao);
+			ObjetoSuperficieUtil.selecionarConexao(objetoSuperficie, conexao);
 		}
 	}
 
@@ -242,7 +242,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		private void eventos() {
 			comboConexao.addItemListener(e -> {
 				if (ItemEvent.SELECTED == e.getStateChange()) {
-					objetoSuperficie.selecionarConexao(getConexaoPadrao());
+					ObjetoSuperficieUtil.selecionarConexao(objetoSuperficie, getConexaoPadrao());
 				}
 			});
 			txtPrefixoNomeTabela.addActionListener(
@@ -488,18 +488,18 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			}
 
 			private void eventos() {
-				selecaoGeralAcao.setActionListener(
-						e -> objetoSuperficie.selecaoGeral(((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				desenharDescAcao.setActionListener(
-						e -> objetoSuperficie.desenharDesc(((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				transparenteAcao.setActionListener(
-						e -> objetoSuperficie.transparente(((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				pontoDestinoAcao.setActionListener(
-						e -> objetoSuperficie.pontoDestino(((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				pontoOrigemAcao.setActionListener(
-						e -> objetoSuperficie.pontoOrigem(((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				desenharIdAcao.setActionListener(
-						e -> objetoSuperficie.desenharIds(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				selecaoGeralAcao.setActionListener(e -> ObjetoSuperficieUtil.selecaoGeral(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				desenharDescAcao.setActionListener(e -> ObjetoSuperficieUtil.desenharDesc(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				transparenteAcao.setActionListener(e -> ObjetoSuperficieUtil.transparente(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				pontoDestinoAcao.setActionListener(e -> ObjetoSuperficieUtil.pontoDestino(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				pontoOrigemAcao.setActionListener(e -> ObjetoSuperficieUtil.pontoOrigem(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				desenharIdAcao.setActionListener(e -> ObjetoSuperficieUtil.desenharIds(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				somarHorasAcao.addActionListener(
 						e -> objetoSuperficie.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				reiniciarAction.setActionListener(e -> objetoSuperficie.reiniciarHoras());

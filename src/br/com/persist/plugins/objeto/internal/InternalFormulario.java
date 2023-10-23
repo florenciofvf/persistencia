@@ -281,7 +281,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public void atualizarComplemento(Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).atualizarComplemento(objeto);
+				ObjetoSuperficieUtil.atualizarComplemento((ObjetoSuperficie) desktop, objeto);
 			}
 		}
 
@@ -296,7 +296,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public boolean validoInvisibilidade() {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				return ((ObjetoSuperficie) desktop).getIdOrigens().size() < 2;
+				return ObjetoSuperficieUtil.getIdOrigens((ObjetoSuperficie) desktop).size() < 2;
 			}
 			return true;
 		}
@@ -390,7 +390,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	public List<Relacao> listarRelacoes(Objeto objeto) {
 		checarDesktop();
 		if (desktop instanceof ObjetoSuperficie) {
-			return ((ObjetoSuperficie) desktop).getRelacoes(objeto);
+			return ObjetoSuperficieUtil.getRelacoes((ObjetoSuperficie) desktop, objeto);
 		}
 		return new ArrayList<>();
 	}

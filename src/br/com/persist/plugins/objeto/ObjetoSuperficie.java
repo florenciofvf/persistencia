@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -331,85 +330,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	InternalFormulario getInternalFormulario(Objeto objeto) {
-		return ObjetoSuperficieUtil.getInternalFormulario(this, objeto);
-	}
-
-	void limparSelecao() {
-		ObjetoSuperficieUtil.limparSelecao(this);
-	}
-
-	public List<Objeto> getSelecionados() {
-		return ObjetoSuperficieUtil.getSelecionados(this);
-	}
-
-	private Objeto getPrimeiroObjetoSelecionado() {
-		return ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
-	}
-
-	private Relacao getPrimeiroRelacaoSelecionado() {
-		return ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
-	}
-
-	public Set<String> getIdOrigens() {
-		return ObjetoSuperficieUtil.getIdOrigens(this);
-	}
-
-	public List<Relacao> getRelacoes(Objeto obj) {
-		return ObjetoSuperficieUtil.getRelacoes(this, obj);
-	}
-
-	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
-		return ObjetoSuperficieUtil.getRelacao(this, obj1, obj2);
-	}
-
-	public boolean contemId(Objeto obj) {
-		return ObjetoSuperficieUtil.contemId(this, obj);
-	}
-
-	public Objeto getObjeto(String id) {
-		return ObjetoSuperficieUtil.getObjeto(this, id);
-	}
-
-	public int getIndice(Objeto obj) {
-		return ObjetoSuperficieUtil.getIndice(this, obj);
-	}
-
-	public int getIndice(Relacao obj) {
-		return ObjetoSuperficieUtil.getIndice(this, obj);
-	}
-
-	public boolean contemObjetoComTabela(String nomeTabela) {
-		return ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela);
-	}
-
-	public void selecionarConexao(Conexao conexao) {
-		ObjetoSuperficieUtil.selecionarConexao(this, conexao);
-	}
-
 	@Override
 	protected boolean contemReferencia(Objeto objeto) {
 		return ObjetoSuperficieUtil.contemReferencia(this, objeto);
 	}
 
-	public void desenharDesc(boolean b) {
-		ObjetoSuperficieUtil.desenharDesc(this, b);
-	}
-
-	public void selecaoGeral(boolean b) {
-		ObjetoSuperficieUtil.selecaoGeral(this, b);
-	}
-
-	public void desenharIds(boolean b) {
-		ObjetoSuperficieUtil.desenharIds(this, b);
-	}
-
-	public void transparente(boolean b) {
-		ObjetoSuperficieUtil.transparente(this, b);
-	}
-
 	public JComboBox<Objeto> criarComboObjetosSel() {
-		return new JComboBox<>(new ObjetoComboModelo(getSelecionados()));
+		return new JComboBox<>(new ObjetoComboModelo(ObjetoSuperficieUtil.getSelecionados(this)));
 	}
 
 	private void mousePressedPopup(MouseEvent e) {
@@ -496,7 +423,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			} else {
 				int x = e.getX();
 				int y = e.getY();
-				limparSelecao();
+				ObjetoSuperficieUtil.limparSelecao(ObjetoSuperficie.this);
 				for (Objeto objeto : objetos) {
 					if (objeto.contem(x, y)) {
 						objeto.setSelecionado(true);
@@ -578,7 +505,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			for (Relacao relacao : relacoes) {
 				relacao.setSelecionado(false);
 			}
-			limparSelecao();
+			ObjetoSuperficieUtil.limparSelecao(ObjetoSuperficie.this);
 			ultX = e.getX();
 			ultY = e.getY();
 			origem = null;
@@ -635,7 +562,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				repaint();
 				return;
 			}
-			Relacao relacao = getRelacao(origem, destino);
+			Relacao relacao = ObjetoSuperficieUtil.getRelacao(ObjetoSuperficie.this, origem, destino);
 			if (relacao == null) {
 				relacao = new Relacao(origem, false, destino, !ctrl);
 				addRelacao(relacao);
@@ -719,7 +646,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 		private void pressedRelacao(boolean ctrl, int x, int y) {
 			if (!ctrl) {
-				limparSelecao();
+				ObjetoSuperficieUtil.limparSelecao(ObjetoSuperficie.this);
 				for (Relacao relacao : relacoes) {
 					if (relacao.contem(x, y)) {
 						relacao.setSelecionado(true);
@@ -807,7 +734,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				popup.configuracaoAcao.actionPerformed(null);
 			} else {
 				Conexao conexao = null;
-				InternalFormulario interno = getInternalFormulario(objeto);
+				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
 				if (interno != null) {
 					conexao = interno.getInternalContainer().getConexao();
 				}
@@ -861,7 +788,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void excluirSelecionados() {
-		Objeto objeto = getPrimeiroObjetoSelecionado();
+		Objeto objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
 		boolean confirmado = false;
 		if (objeto != null) {
 			if (Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
@@ -872,21 +799,21 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 		while (objeto != null) {
 			excluir(objeto);
-			objeto = getPrimeiroObjetoSelecionado();
+			objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this);
 		}
-		Relacao relacao = getPrimeiroRelacaoSelecionado();
+		Relacao relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
 		if (relacao != null && !confirmado && !Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
 			return;
 		}
 		while (relacao != null) {
 			excluir(relacao);
-			relacao = getPrimeiroRelacaoSelecionado();
+			relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(this);
 		}
 		repaint();
 	}
 
 	public void addObjeto(Objeto obj) {
-		if (obj == null || contem(obj)) {
+		if (obj == null || ObjetoSuperficieUtil.contem(this, obj)) {
 			return;
 		}
 		Objeto[] bkp = objetos;
@@ -897,7 +824,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void excluir(Objeto obj) {
-		int indice = getIndice(obj);
+		int indice = ObjetoSuperficieUtil.getIndice(this, obj);
 		if (indice >= 0) {
 			objetos[indice].setListener(null);
 			objetos[indice].associado = null;
@@ -919,7 +846,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void addRelacao(Relacao obj) {
-		if (obj == null || contem(obj)) {
+		if (obj == null || ObjetoSuperficieUtil.contem(this, obj)) {
 			return;
 		}
 		Relacao[] bkp = relacoes;
@@ -930,7 +857,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void excluir(Relacao obj) {
-		int indice = getIndice(obj);
+		int indice = ObjetoSuperficieUtil.getIndice(this, obj);
 		if (indice >= 0) {
 			relacoes[indice].setListener(null);
 			relacoes[indice] = null;
@@ -942,28 +869,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				}
 			}
 		}
-	}
-
-	public void pontoOrigem(boolean b) {
-		for (Relacao relacao : relacoes) {
-			relacao.setPontoOrigem(b);
-		}
-		repaint();
-	}
-
-	public void pontoDestino(boolean b) {
-		for (Relacao relacao : relacoes) {
-			relacao.setPontoDestino(b);
-		}
-		repaint();
-	}
-
-	public boolean contem(Objeto obj) {
-		return getIndice(obj) >= 0;
-	}
-
-	public boolean contem(Relacao obj) {
-		return getIndice(obj) >= 0;
 	}
 
 	@Override
@@ -1011,15 +916,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		Objeto novo = new Objeto(x, y);
 		checagemId(novo, Constantes.VAZIO, Constantes.VAZIO);
 		addObjeto(novo);
-		limparSelecao();
+		ObjetoSuperficieUtil.limparSelecao(this);
 		repaint();
 	}
 
 	void checagemId(Objeto objeto, String id, String sep) {
-		boolean contem = contemId(objeto);
+		boolean contem = ObjetoSuperficieUtil.contemId(this, objeto);
 		while (contem) {
 			objeto.setId(id + sep + Objeto.novaSequencia());
-			contem = contemId(objeto);
+			contem = ObjetoSuperficieUtil.contemId(this, objeto);
 		}
 	}
 
@@ -1143,7 +1048,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			}
 		}
 		if (objetos != null) {
-			limparSelecao();
+			ObjetoSuperficieUtil.limparSelecao(this);
 		}
 	}
 
@@ -1181,7 +1086,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	@Override
 	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) {
-		Relacao relacao = getRelacao(pesquisador, pesquisado);
+		Relacao relacao = ObjetoSuperficieUtil.getRelacao(this, pesquisador, pesquisado);
 		if (relacao != null) {
 			relacao.setSelecionado(true);
 		}
@@ -1195,9 +1100,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		ObjetoSuperficieUtil.deselRelacoes(this);
 		super.pesquisar(conexao, pesquisa, argumentos, soTotal);
 		if (ObjetoPreferencia.isAbrirAuto()) {
-			limparSelecao();
+			ObjetoSuperficieUtil.limparSelecao(this);
 			processarReferencias(conexao, pesquisa, argumentos);
-			if (getPrimeiroObjetoSelecionado() != null) {
+			if (ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this) != null) {
 				destacar(conexao, ObjetoPreferencia.getTipoContainerPesquisaAuto(), null);
 			}
 		}
@@ -1363,7 +1268,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	void processarIdTabelaGrupoExportacao(Objeto objeto, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
-		if (contemObjetoComTabela(nomeTabela)) {
+		if (ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo();
 			objeto.setId(id);
 			checagemId(objeto, id, Constantes.SEP2);
@@ -1374,7 +1279,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
-		List<Objeto> lista = getSelecionados();
+		List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(this);
 		if (ObjetoSuperficieUtil.getContinua(lista)) {
 			List<Objeto> selecionados = montarSelecionados(lista,
 					tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO);
@@ -1404,7 +1309,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private void montarSelecionadoProprio(List<Objeto> selecionados, Objeto objeto) {
-		InternalFormulario interno = getInternalFormulario(objeto);
+		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(this, objeto);
 		if (interno == null) {
 			selecionados.add(objeto);
 		} else {
@@ -1459,27 +1364,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void atualizarComplemento(Objeto objeto) {
-		InternalFormulario interno = getInternalFormulario(objeto);
-		if (interno != null) {
-			interno.atualizarComplemento(objeto);
-		}
-	}
-
 	@Override
 	public void labelTotalRegistros(Objeto objeto) {
-		InternalFormulario interno = getInternalFormulario(objeto);
+		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(this, objeto);
 		if (interno != null) {
 			interno.labelTotalRegistros(objeto.getTotalRegistros());
-		}
-	}
-
-	public void configuracaoDinamica(Component componente, Objeto objeto) {
-		InternalFormulario interno = getInternalFormulario(objeto);
-		if (interno == null) {
-			Util.mensagem(componente, ObjetoMensagens.getString("msg.sem_form_seq_chave_mapa", objeto.getId()));
-		} else {
-			interno.configuracaoDinamica(objeto);
 		}
 	}
 
@@ -1698,16 +1587,16 @@ class CopiarColar {
 	private CopiarColar() {
 	}
 
-	public static boolean copiar(ObjetoSuperficie objetoSuperficie) {
+	public static boolean copiar(ObjetoSuperficie superficie) {
 		copiados.clear();
-		for (Objeto objeto : objetoSuperficie.getSelecionados()) {
+		for (Objeto objeto : ObjetoSuperficieUtil.getSelecionados(superficie)) {
 			copiados.add(objeto.clonar());
 		}
 		return !copiados.isEmpty();
 	}
 
 	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {
-		superficie.limparSelecao();
+		ObjetoSuperficieUtil.limparSelecao(superficie);
 		for (Objeto objeto : copiados) {
 			Objeto clone = get(objeto, superficie);
 			superficie.addObjeto(clone);
@@ -1729,10 +1618,10 @@ class CopiarColar {
 		o.deltaX(Objeto.DIAMETRO);
 		o.deltaY(Objeto.DIAMETRO);
 		o.setId(objeto.getId() + "-" + Objeto.getSequencia());
-		boolean contem = superficie.contem(o);
+		boolean contem = ObjetoSuperficieUtil.contem(superficie, o);
 		while (contem) {
 			o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
-			contem = superficie.contem(o);
+			contem = ObjetoSuperficieUtil.contem(superficie, o);
 		}
 		return o;
 	}
@@ -1971,13 +1860,13 @@ class SuperficiePopup extends Popup {
 						superficie.selecionadoObjeto.getId()));
 				SetLista.view(superficie.selecionadoObjeto.getId(), list, coletor, superficie, config);
 				if (coletor.size() == 1) {
-					inverter(superficie.selecionadoObjeto, superficie.getObjeto(coletor.get(0)));
+					inverter(superficie.selecionadoObjeto, ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0)));
 				}
 			}
 		}
 
 		private void inverterPosicao2() {
-			List<Objeto> selecionados = superficie.getSelecionados();
+			List<Objeto> selecionados = ObjetoSuperficieUtil.getSelecionados(superficie);
 			if (selecionados.size() == Constantes.DOIS) {
 				Objeto objeto1 = selecionados.get(0);
 				Objeto objeto2 = selecionados.get(1);
@@ -2010,7 +1899,7 @@ class SuperficiePopup extends Popup {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (superficie.selecionadoObjeto != null) {
-				List<Objeto> lista = superficie.getSelecionados();
+				List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(superficie);
 				if (lista.size() < 3) {
 					return;
 				}
@@ -2067,7 +1956,7 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void abrirModal(Tipo tipo) {
-			if (superficie.getSelecionados().size() > Constantes.UM) {
+			if (ObjetoSuperficieUtil.getSelecionados(superficie).size() > Constantes.UM) {
 				CircularDialogo.criar(superficie.container.getFrame(), superficie, tipo);
 			}
 		}
@@ -2111,7 +2000,7 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void processar(int tipo, String titulo) {
-			List<Objeto> selecionados = superficie.getSelecionados();
+			List<Objeto> selecionados = ObjetoSuperficieUtil.getSelecionados(superficie);
 			if (selecionados.size() == Constantes.DOIS) {
 				Objeto objeto1 = selecionados.get(0);
 				Objeto objeto2 = selecionados.get(1);
@@ -2122,7 +2011,7 @@ class SuperficiePopup extends Popup {
 				SetLista.view(ObjetoMensagens.getString("label.selecione_objeto_mestre"), ids, coletor, superficie,
 						new SetLista.Config(true, true));
 				if (coletor.size() == 1) {
-					Objeto mestre = superficie.getObjeto(coletor.get(0));
+					Objeto mestre = ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0));
 					MestreDetalhe mestreDetalhe = new MestreDetalhe(superficie, mestre == objeto1 ? objeto1 : objeto2,
 							mestre == objeto1 ? objeto2 : objeto1);
 					mestreDetalhe.processar(tipo, false, superficie.container.getConexaoPadrao(), titulo);
@@ -2153,7 +2042,7 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void destacarProprioContainer() {
-			List<Objeto> lista = superficie.getSelecionados();
+			List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(superficie);
 			if (ObjetoSuperficieUtil.getContinua(lista)) {
 				String ajustes = nomeObjetosAjusteAuto(lista);
 				if (!Util.estaVazio(ajustes) && !Util.confirmar(superficie,
@@ -2209,7 +2098,7 @@ class SuperficiePopup extends Popup {
 	}
 
 	private void selecionarRelacao(Objeto objeto) {
-		List<Relacao> lista = superficie.getRelacoes(objeto);
+		List<Relacao> lista = ObjetoSuperficieUtil.getRelacoes(superficie, objeto);
 		List<String> ids = montarIds(lista, objeto);
 		if (!ids.isEmpty()) {
 			Coletor coletor = new Coletor();
@@ -2217,8 +2106,8 @@ class SuperficiePopup extends Popup {
 			if (coletor.size() == 1) {
 				superficie.selecionadoObjeto = null;
 				String id = coletor.get(0);
-				Objeto outro = superficie.getObjeto(id);
-				superficie.selecionadoRelacao = superficie.getRelacao(objeto, outro);
+				Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, id);
+				superficie.selecionadoRelacao = ObjetoSuperficieUtil.getRelacao(superficie, objeto, outro);
 				superficie.popup.configuracaoAcao.actionPerformed(null);
 			}
 		}
@@ -2237,7 +2126,7 @@ class SuperficiePopup extends Popup {
 	}
 
 	void preShow(boolean objetoSelecionado) {
-		List<Objeto> selecionados = superficie.getSelecionados();
+		List<Objeto> selecionados = ObjetoSuperficieUtil.getSelecionados(superficie);
 		Objeto objeto = superficie.selecionadoObjeto;
 		String nomeTabela = objeto != null ? objeto.getTabela() : null;
 		boolean comTabela = objetoSelecionado && objeto != null && !Util.estaVazio(nomeTabela);
@@ -2300,12 +2189,12 @@ class MestreDetalhe {
 		if (conexao == null) {
 			return;
 		}
-		InternalFormulario internalMestre = superficie.getInternalFormulario(mestre);
+		InternalFormulario internalMestre = ObjetoSuperficieUtil.getInternalFormulario(superficie, mestre);
 		if (internalMestre == null) {
 			Util.mensagem(superficie, ObjetoMensagens.getString("msg.sem_form_internal_associado", mestre.getId()));
 			return;
 		}
-		InternalFormulario internalDetalhe = superficie.getInternalFormulario(detalhe);
+		InternalFormulario internalDetalhe = ObjetoSuperficieUtil.getInternalFormulario(superficie, detalhe);
 		if (internalDetalhe == null) {
 			Util.mensagem(superficie, ObjetoMensagens.getString("msg.sem_form_internal_associado", detalhe.getId()));
 			return;
@@ -2610,7 +2499,7 @@ class Exportacao {
 	}
 
 	void localizarObjeto() {
-		InternalFormulario interno = superficie.getInternalFormulario(principal);
+		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(superficie, principal);
 		if (interno != null) {
 			objeto.x = principal.x + Constantes.VINTE_CINCO;
 			objeto.y = interno.getY() + Constantes.TRINTA;
@@ -2618,7 +2507,7 @@ class Exportacao {
 			objeto.setDeslocamentoYId(24);
 			objeto.setChecarLargura(true);
 			objeto.setCorTmp(Color.GREEN);
-			superficie.limparSelecao();
+			ObjetoSuperficieUtil.limparSelecao(superficie);
 			objeto.setSelecionado(true);
 		}
 	}
@@ -2739,7 +2628,7 @@ class ExportacaoImportacao {
 
 	private void processarIdTabelaGrupoImportacao(Objeto objeto, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
-		if (superficie.contemObjetoComTabela(nomeTabela)) {
+		if (ObjetoSuperficieUtil.contemObjetoComTabela(superficie, nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + campoProcessado.getDescricao();
 			objeto.setId(id);
 			superficie.checagemId(objeto, id, Constantes.SEP2);

@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,44 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
 	private ObjetoSuperficieUtil() {
+	}
+
+	public static void atualizarComplemento(ObjetoSuperficie superficie, Objeto objeto) {
+		InternalFormulario interno = getInternalFormulario(superficie, objeto);
+		if (interno != null) {
+			interno.atualizarComplemento(objeto);
+		}
+	}
+
+	public static void configuracaoDinamica(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
+		InternalFormulario interno = getInternalFormulario(superficie, objeto);
+		if (interno == null) {
+			Util.mensagem(componente, ObjetoMensagens.getString("msg.sem_form_seq_chave_mapa", objeto.getId()));
+		} else {
+			interno.configuracaoDinamica(objeto);
+		}
+	}
+
+	public static void pontoOrigem(ObjetoSuperficie superficie, boolean b) {
+		for (Relacao relacao : superficie.relacoes) {
+			relacao.setPontoOrigem(b);
+		}
+		superficie.repaint();
+	}
+
+	public static void pontoDestino(ObjetoSuperficie superficie, boolean b) {
+		for (Relacao relacao : superficie.relacoes) {
+			relacao.setPontoDestino(b);
+		}
+		superficie.repaint();
+	}
+
+	public static boolean contem(ObjetoSuperficie superficie, Objeto obj) {
+		return getIndice(superficie, obj) >= 0;
+	}
+
+	public static boolean contem(ObjetoSuperficie superficie, Relacao obj) {
+		return getIndice(superficie, obj) >= 0;
 	}
 
 	public static void deselRelacoes(ObjetoSuperficie superficie) {

@@ -1,5 +1,7 @@
 package br.com.persist.plugins.objeto.circular;
 
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -17,9 +19,8 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
-
-import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 
 public class CircularContainer extends Panel {
 	private final TextField txtGrauTotal = new TextField("360");
@@ -68,7 +69,7 @@ public class CircularContainer extends Panel {
 		}
 
 		private List<Objeto> getSelecionados(Objeto pivo) {
-			List<Objeto> resposta = new ArrayList<>(objetoSuperficie.getSelecionados());
+			List<Objeto> resposta = new ArrayList<>(ObjetoSuperficieUtil.getSelecionados(objetoSuperficie));
 			Iterator<Objeto> it = resposta.iterator();
 			while (it.hasNext()) {
 				if (it.next().equals(pivo)) {
@@ -121,7 +122,7 @@ public class CircularContainer extends Panel {
 		}
 
 		private void processarRelacao(Objeto objeto, Objeto pivo, Tipo tipo) {
-			Relacao relacao = objetoSuperficie.getRelacao(pivo, objeto);
+			Relacao relacao = ObjetoSuperficieUtil.getRelacao(objetoSuperficie, pivo, objeto);
 			if (relacao != null && tipo == Tipo.NORMAL) {
 				pontoNormal(relacao);
 			} else if (relacao != null && tipo == Tipo.EXPORTACAO) {

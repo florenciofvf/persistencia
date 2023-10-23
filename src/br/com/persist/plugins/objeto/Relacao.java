@@ -454,7 +454,7 @@ public class Relacao implements Runnable {
 		Objeto obj = new Objeto();
 		int cont = 0;
 		obj.setId(id + get(cont));
-		while (superficie.contemId(obj)) {
+		while (ObjetoSuperficieUtil.contemId(superficie, obj)) {
 			cont++;
 			obj.setId(id + get(cont));
 		}

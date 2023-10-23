@@ -416,7 +416,7 @@ public class ObjetoContainer extends Panel {
 					Objeto obj = new Objeto();
 					obj.setId(id);
 
-					if (!objetoSuperficie.contem(obj)) {
+					if (!ObjetoSuperficieUtil.contem(objetoSuperficie, obj)) {
 						objeto.setId(id);
 						configLarguraFonte();
 					}
@@ -784,7 +784,7 @@ public class ObjetoContainer extends Panel {
 			actionPerformedCont(e);
 			objetoSuperficie.repaint();
 			if (atom.get()) {
-				objetoSuperficie.configuracaoDinamica(ObjetoContainer.this, objeto);
+				ObjetoSuperficieUtil.configuracaoDinamica(objetoSuperficie, ObjetoContainer.this, objeto);
 			}
 		}
 
@@ -948,7 +948,7 @@ public class ObjetoContainer extends Panel {
 				horaAcao.setActionListener(e -> {
 					textField.setText(HoraUtil.getHoraAtual());
 					textField.postActionEvent();
-					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					List<Relacao> lista = ObjetoSuperficieUtil.getRelacoes(objetoSuperficie, objeto);
 					if (lista.size() == 1 && Util.confirmar(ObjetoContainer.this,
 							ObjetoMensagens.getString("msg.calcular_diferenca_em_horas"), false)) {
 						Relacao relacao = lista.get(0);
@@ -957,7 +957,7 @@ public class ObjetoContainer extends Panel {
 					}
 				});
 				diffHoraAcao.setActionListener(e -> {
-					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					List<Relacao> lista = ObjetoSuperficieUtil.getRelacoes(objetoSuperficie, objeto);
 					if (lista.size() == 1) {
 						Relacao relacao = lista.get(0);
 						relacao.processarHoraDiff(false);
@@ -965,7 +965,7 @@ public class ObjetoContainer extends Panel {
 					}
 				});
 				ativarHoraAcao.setActionListener(e -> {
-					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					List<Relacao> lista = ObjetoSuperficieUtil.getRelacoes(objetoSuperficie, objeto);
 					if (lista.size() == 1) {
 						Relacao relacao = lista.get(0);
 						relacao.setProcessar(true);
@@ -974,7 +974,7 @@ public class ObjetoContainer extends Panel {
 					}
 				});
 				desativarHoraAcao.setActionListener(e -> {
-					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					List<Relacao> lista = ObjetoSuperficieUtil.getRelacoes(objetoSuperficie, objeto);
 					if (lista.size() == 1) {
 						Relacao relacao = lista.get(0);
 						relacao.desativar();
