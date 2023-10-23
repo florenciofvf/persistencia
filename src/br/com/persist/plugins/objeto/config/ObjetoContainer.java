@@ -143,7 +143,7 @@ public class ObjetoContainer extends Panel {
 			}
 			Vinculacao vinculacao = null;
 			try {
-				vinculacao = objetoSuperficie.getVinculacao();
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("VINCULAR EM BANCO", ex, ObjetoContainer.this);
 				return;
@@ -1063,7 +1063,7 @@ public class ObjetoContainer extends Panel {
 				}
 				Vinculacao vinculacao = null;
 				try {
-					vinculacao = objetoSuperficie.getVinculacao();
+					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("VINCULAR EM COR FONTE", ex, ObjetoContainer.this);
 					return;
@@ -1135,7 +1135,7 @@ public class ObjetoContainer extends Panel {
 				}
 				Vinculacao vinculacao = null;
 				try {
-					vinculacao = objetoSuperficie.getVinculacao();
+					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("VINCULAR EM COR FUNDO", ex, ObjetoContainer.this);
 					return;
@@ -1218,7 +1218,7 @@ public class ObjetoContainer extends Panel {
 			}
 			Vinculacao vinculacao = null;
 			try {
-				vinculacao = objetoSuperficie.getVinculacao();
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("VINCULAR EM ICONE", ex, ObjetoContainer.this);
 				return;

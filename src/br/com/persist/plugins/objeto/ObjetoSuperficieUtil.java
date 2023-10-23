@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,13 +12,82 @@ import javax.swing.JInternalFrame;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
 	private ObjetoSuperficieUtil() {
+	}
+
+	public static void preencherVinculacao(ObjetoSuperficie superficie, Vinculacao vinculacao) throws XMLException {
+		vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
+	}
+
+	public static Vinculacao getVinculacao(ObjetoSuperficie superficie) throws XMLException {
+		return getVinculacao(superficie, ObjetoSuperficieUtil.criarArquivoVinculo(superficie), false);
+	}
+
+	public static Vinculacao getVinculacao(ObjetoSuperficie superficie, ArquivoVinculo av, boolean criarSeInexistente)
+			throws XMLException {
+		return ObjetoUtil.getVinculacao(superficie, av, criarSeInexistente);
+	}
+
+	public static void salvar(ObjetoSuperficie superficie, File file, Conexao conexao) throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		salvarAtributos(superficie, conexao, util);
+		util.fecharTag();
+		salvarObjetos(superficie, util);
+		salvarRelacoes(superficie, util);
+		salvarForms(superficie, util);
+		util.finalizarTag("fvf");
+		util.close();
+	}
+
+	private static void salvarAtributos(ObjetoSuperficie superficie, Conexao conexao, XMLUtil util) {
+		util.abrirTag("fvf");
+		util.atributo("ajusteAutoForm", superficie.isAjusteAutomaticoForm());
+		util.atributo("ajusteLarguraForm", superficie.isAjusteLarguraForm());
+		util.atributoCheck("processar", superficie.processar);
+		util.atributo("largura", superficie.getWidth());
+		util.atributo("altura", superficie.getHeight());
+		util.atributo("arquivoVinculo", superficie.arquivoVinculo);
+		if (conexao != null) {
+			util.atributo("conexao", conexao.getNome());
+		}
+	}
+
+	private static void salvarObjetos(ObjetoSuperficie superficie, XMLUtil util) {
+		for (Objeto objeto : superficie.objetos) {
+			objeto.salvar(util);
+		}
+		if (superficie.objetos.length > 0) {
+			util.ql();
+		}
+	}
+
+	private static void salvarRelacoes(ObjetoSuperficie superficie, XMLUtil util) {
+		for (Relacao relacao : superficie.relacoes) {
+			relacao.salvar(util);
+		}
+		if (superficie.relacoes.length > 0) {
+			util.ql();
+		}
+	}
+
+	private static void salvarForms(ObjetoSuperficie superficie, XMLUtil util) {
+		JInternalFrame[] frames = superficie.getAllFrames();
+		for (int i = frames.length - 1; i >= 0; i--) {
+			InternalFormulario interno = (InternalFormulario) frames[i];
+			InternalForm form = new InternalForm();
+			form.copiar(interno);
+			form.salvar(util);
+		}
 	}
 
 	public static void checagemId(ObjetoSuperficie superficie, Objeto objeto, String id, String sep) {

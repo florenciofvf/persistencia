@@ -427,7 +427,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		private void salvar(File file) {
 			try {
-				objetoSuperficie.salvar(file, getConexaoPadrao());
+				ObjetoSuperficieUtil.salvar(objetoSuperficie, file, getConexaoPadrao());
 				tituloTemporario = null;
 				salvoMensagem();
 			} catch (Exception e) {
@@ -530,7 +530,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				comparaRecAcao.setActionListener(e -> objetoSuperficie.compararRecent(getConexaoPadrao(),
 						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST }, labelStatus));
 				excluirSemTabelaAcao.setActionListener(e -> {
-					objetoSuperficie.excluirSemTabela();
+					ObjetoSuperficieUtil.excluirSemTabela(objetoSuperficie);
 					labelStatus.limpar();
 				});
 			}

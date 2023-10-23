@@ -79,11 +79,9 @@ import br.com.persist.plugins.objeto.config.RelacaoDialogo;
 import br.com.persist.plugins.objeto.internal.ExternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
-import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroDialogo;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
-import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
@@ -107,10 +105,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	final SuperficiePopup popup;
 	final Formulario formulario;
 	transient Objeto[] objetos;
-	private boolean processar;
 	private int totalHoras;
 	String arquivoVinculo;
 	private byte estado;
+	boolean processar;
 	private int ultX;
 	private int ultY;
 
@@ -833,6 +831,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	public void limpar() {
+		relacoes = new Relacao[0];
+		objetos = new Objeto[0];
+		repaint();
+	}
+
 	@Override
 	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear) {
 		if (metadado == null) {
@@ -858,12 +862,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		addObjeto(novo);
 		repaint();
 		return true;
-	}
-
-	public void limpar() {
-		relacoes = new Relacao[0];
-		objetos = new Objeto[0];
-		repaint();
 	}
 
 	static Action acaoMenu(String chave, Icon icon) {
@@ -894,59 +892,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.META_MASK);
 	}
 
-	public void salvar(File file, Conexao conexao) throws XMLException {
-		XMLUtil util = new XMLUtil(file);
-		util.prologo();
-		salvarAtributos(conexao, util);
-		util.fecharTag();
-		salvarObjetos(util);
-		salvarRelacoes(util);
-		salvarForms(util);
-		util.finalizarTag("fvf");
-		util.close();
-	}
-
-	private void salvarAtributos(Conexao conexao, XMLUtil util) {
-		util.abrirTag("fvf");
-		util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
-		util.atributo("ajusteLarguraForm", isAjusteLarguraForm());
-		util.atributoCheck("processar", processar);
-		util.atributo("largura", getWidth());
-		util.atributo("altura", getHeight());
-		util.atributo("arquivoVinculo", arquivoVinculo);
-		if (conexao != null) {
-			util.atributo("conexao", conexao.getNome());
-		}
-	}
-
-	private void salvarObjetos(XMLUtil util) {
-		for (Objeto objeto : objetos) {
-			objeto.salvar(util);
-		}
-		if (objetos.length > 0) {
-			util.ql();
-		}
-	}
-
-	private void salvarRelacoes(XMLUtil util) {
-		for (Relacao relacao : relacoes) {
-			relacao.salvar(util);
-		}
-		if (relacoes.length > 0) {
-			util.ql();
-		}
-	}
-
-	private void salvarForms(XMLUtil util) {
-		JInternalFrame[] frames = getAllFrames();
-		for (int i = frames.length - 1; i >= 0; i--) {
-			InternalFormulario interno = (InternalFormulario) frames[i];
-			InternalForm form = new InternalForm();
-			form.copiar(interno);
-			form.salvar(util);
-		}
-	}
-
 	public void abrir(ObjetoColetor coletor) throws XMLException {
 		limpar();
 		for (Objeto objeto : coletor.getObjetos()) {
@@ -971,18 +916,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		for (Objeto objeto : objetos) {
 			vinculacao.processar(objeto);
 		}
-	}
-
-	public void preencherVinculacao(Vinculacao vinculacao) throws XMLException {
-		vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(this), ObjetoSuperficie.this);
-	}
-
-	public Vinculacao getVinculacao() throws XMLException {
-		return getVinculacao(ObjetoSuperficieUtil.criarArquivoVinculo(this), false);
-	}
-
-	public Vinculacao getVinculacao(ArquivoVinculo av, boolean criarSeInexistente) throws XMLException {
-		return ObjetoUtil.getVinculacao(ObjetoSuperficie.this, av, criarSeInexistente);
 	}
 
 	public void configEstado(byte estado) {
@@ -1115,10 +1048,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	private int preTotalRecente(Label label) {
 		return ObjetoSuperficieUtil.preTotalRecente(this, label);
-	}
-
-	public void excluirSemTabela() {
-		ObjetoSuperficieUtil.excluirSemTabela(this);
 	}
 
 	public void compararRecent(Conexao conexao, MenuItem[] menuItens, Label label) {
@@ -2751,7 +2680,8 @@ class ExportacaoImportacao {
 		try {
 			String nomeTabela = principal.getTabela().toLowerCase();
 			superficie.setArquivoVinculo(nomeTabela + "_vinculo.xml");
-			Vinculacao vinculo = superficie.getVinculacao(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), true);
+			Vinculacao vinculo = ObjetoSuperficieUtil.getVinculacao(superficie,
+					ObjetoSuperficieUtil.criarArquivoVinculo(superficie), true);
 			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 			if (vinculo != null && pesquisa != null) {
 				salvar(pesquisa);

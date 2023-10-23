@@ -318,7 +318,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).preencherVinculacao(vinculacao);
+				ObjetoSuperficieUtil.preencherVinculacao((ObjetoSuperficie) desktop, vinculacao);
 			}
 		}
 
