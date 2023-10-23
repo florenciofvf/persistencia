@@ -1808,13 +1808,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private String montar(String[] chaves, String funcao, Conexao conexao) {
-					Filter filter = null;
-					for (int i = 0; i < chaves.length; i++) {
-						String campo = chaves[i];
-						int tab = chaves.length - i;
-						filter = new Filter(conexao, filter, funcao, campo, objeto, tab);
-					}
-					return filter != null ? filter.gerar() : "";
+					return new Filter(conexao, chaves, funcao, objeto).gerar();
 				}
 			}
 
@@ -3843,46 +3837,26 @@ class InstrucaoCampo {
 
 class Filter {
 	final Conexao conexao;
-	final Filter proximo;
+	final String[] campos;
 	final String funcao;
-	final String campo;
 	final Objeto obj;
-	final int tab;
 
-	Filter(Conexao conexao, Filter proximo, String funcao, String campo, Objeto obj, int tab) {
+	Filter(Conexao conexao, String[] campos, String funcao, Objeto obj) {
 		this.conexao = conexao;
-		this.proximo = proximo;
+		this.campos = campos;
 		this.funcao = funcao;
-		this.campo = campo;
 		this.obj = obj;
-		this.tab = tab;
 	}
 
 	String gerar() {
 		StringBuilder sb = new StringBuilder();
-		if (proximo == null) {
-			sb.append(obj.comApelido(campo));
-			sb.append(" = (SELECT " + funcao + "(" + campo + ")");
-			sb.append(" FROM ");
-			sb.append(obj.getTabelaEsquema(conexao) + ")");
-		} else {
-			sb.append(campo + " = (SELECT " + funcao + "(" + proximo.getTmpCampo(campo) + ") FROM (" + Constantes.QL);
-			sb.append(getTab(1) + " SELECT * FROM " + obj.getTabelaEsquema(conexao) + InternalContainer.WHERE
-					+ proximo.gerar() + Constantes.QL);
-			sb.append(getTab(1) + ") " + proximo.getTmpCampo(null) + Constantes.QL);
-			sb.append(getTab(0) + ")");
-		}
-		return sb.toString();
-	}
-
-	private String getTmpCampo(String field) {
-		return "tmp_" + campo + (field != null ? "." + field : "");
-	}
-
-	private String getTab(int delta) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < tab + delta; i++) {
-			sb.append(Constantes.TAB);
+		sb.append(obj.comApelido(campos[0]));
+		sb.append(" = (SELECT " + funcao + "(" + campos[0] + ")");
+		sb.append(" FROM ");
+		sb.append(obj.getTabelaEsquema(conexao) + ")");
+		if (campos.length > 1) {
+			sb.append(Constantes.QL);
+			sb.append(conexao.getLimite());
 		}
 		return sb.toString();
 	}

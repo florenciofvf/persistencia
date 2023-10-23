@@ -204,4 +204,14 @@ public class Conexao {
 	public void setMapaTiposFuncoes(Map<String, String> mapaTiposFuncoes) {
 		this.mapaTiposFuncoes = mapaTiposFuncoes;
 	}
+
+	public String getLimite() {
+		if ("mysql".equalsIgnoreCase(grupo)) {
+			return "LIMIT 1";
+		}
+		if ("oracle".equalsIgnoreCase(grupo)) {
+			return "AND ROWNUM = 1";
+		}
+		return "";
+	}
 }
