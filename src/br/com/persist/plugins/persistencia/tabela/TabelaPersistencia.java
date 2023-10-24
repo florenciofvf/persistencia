@@ -375,6 +375,7 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuMetadados extends Menu {
 			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
+			private MenuTotalQueRepetem totalQueRepetem = new MenuTotalQueRepetem();
 			private MenuTotalRepetidos totalRepetidos = new MenuTotalRepetidos();
 			private MenuRepetidoComQtd repetidoComQtd = new MenuRepetidoComQtd();
 			private Action importaDeAcao = acaoMenu("label.campo_importado_de");
@@ -389,6 +390,7 @@ public class TabelaPersistencia extends JTable {
 				addMenuItem(true, exportaParaAcao);
 				addMenuItem(true, importaDeAcao);
 				addSeparator();
+				add(totalQueRepetem);
 				add(totalRepetidos);
 				add(repetidoComQtd);
 				addSeparator();
@@ -427,6 +429,23 @@ public class TabelaPersistencia extends JTable {
 						listener.campoExportadoPara(coluna);
 					} else {
 						listener.campoImportadoDe(coluna);
+					}
+				}
+			}
+
+			private class MenuTotalQueRepetem extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuTotalQueRepetem() {
+					super(TabelaMensagens.getString("label.total_valores_que_repetem"), false, null);
+					formularioAcao.setActionListener(e -> abrirSelect(true));
+					dialogoAcao.setActionListener(e -> abrirSelect(false));
+				}
+
+				private void abrirSelect(boolean abrirEmForm) {
+					if (listener != null) {
+						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+						listener.selectTotalValoresQueRepetem(TabelaPersistencia.this, coluna, abrirEmForm);
 					}
 				}
 			}

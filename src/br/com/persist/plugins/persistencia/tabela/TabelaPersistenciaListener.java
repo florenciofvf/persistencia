@@ -8,6 +8,8 @@ public interface TabelaPersistenciaListener {
 
 	public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
 
+	public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
+
 	public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
 	public void selectValorRepetidoComSuaQtd(TabelaPersistencia tabelaPersistencia, String nome, boolean form);

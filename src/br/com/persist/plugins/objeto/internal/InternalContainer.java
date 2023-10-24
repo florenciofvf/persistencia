@@ -3107,6 +3107,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
+		public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
+				String instrucao = instrucaoCampo.totalValoresQueRepetem();
+				if (!Util.estaVazio(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		@Override
 		public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
@@ -3776,6 +3788,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 }
 
 class InstrucaoCampo {
+	private static final String HAVING_COUNT_1 = "\nHAVING COUNT(*) > 1";
+	private static final String HAVING_COUNT = "\n    HAVING COUNT(";
+	private static final String FROM_SELECT = "\nFROM (SELECT ";
+	private static final String GROUP_BY = "\n    GROUP BY ";
+	private static final String FROM = "\n    FROM ";
+	private static final String COUNT = ", COUNT(";
 	final Conexao conexao;
 	final Objeto objeto;
 	final String campo;
@@ -3799,7 +3817,7 @@ class InstrucaoCampo {
 		sb.append(fromTabela());
 		sb.append("\nWHERE " + objeto.comApelido(campo) + " IS NOT NULL");
 		sb.append(groupBy());
-		sb.append("\nHAVING COUNT(*) > 1");
+		sb.append(HAVING_COUNT_1);
 		return sb.toString();
 	}
 
@@ -3812,24 +3830,34 @@ class InstrucaoCampo {
 
 	String valorRepetidoComESuaQtd() {
 		StringBuilder sb = new StringBuilder(
-				Constantes.SELECT + objeto.comApelido(campo) + ", COUNT(" + objeto.comApelido(campo) + ")");
+				Constantes.SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ")");
 		sb.append(fromTabela());
 		sb.append("\nWHERE EXISTS (SELECT " + campo + ", COUNT(*)");
-		sb.append("\n    FROM " + objeto.getTabelaEsquema2(conexao));
-		sb.append("\n    GROUP BY " + campo);
+		sb.append(FROM + objeto.getTabelaEsquema2(conexao));
+		sb.append(GROUP_BY + campo);
 		sb.append("\n    HAVING COUNT(*) > 1");
 		sb.append("\n)");
-		sb.append("\nHAVING COUNT(*) > 1");
+		sb.append(HAVING_COUNT_1);
 		sb.append(groupBy());
 		return sb.toString();
 	}
 
 	String totalDoValorMaisRepetido() {
 		StringBuilder sb = new StringBuilder("SELECT MAX(tabela.TOTAL)");
-		sb.append("\nFROM (SELECT " + objeto.comApelido(campo) + ", COUNT(" + objeto.comApelido(campo) + ") AS TOTAL");
-		sb.append("\n    FROM " + objeto.getTabelaEsquema(conexao));
-		sb.append("\n    GROUP BY " + objeto.comApelido(campo));
-		sb.append("\n    HAVING COUNT(" + objeto.comApelido(campo) + ") > 1");
+		sb.append(FROM_SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ") AS TOTAL");
+		sb.append(FROM + objeto.getTabelaEsquema(conexao));
+		sb.append(GROUP_BY + objeto.comApelido(campo));
+		sb.append(HAVING_COUNT + objeto.comApelido(campo) + ") > 1");
+		sb.append("\n) tabela");
+		return sb.toString();
+	}
+
+	String totalValoresQueRepetem() {
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*)");
+		sb.append(FROM_SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ") AS TOTAL");
+		sb.append(FROM + objeto.getTabelaEsquema(conexao));
+		sb.append(GROUP_BY + objeto.comApelido(campo));
+		sb.append(HAVING_COUNT + objeto.comApelido(campo) + ") > 1");
 		sb.append("\n) tabela");
 		return sb.toString();
 	}
