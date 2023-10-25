@@ -180,11 +180,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		private Action excluirAcao = acaoIcon("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action arquivoVinculadoAcao = acaoMenu("label.abrir_criar_arq_vinculado");
 		private Action criarObjetoAcao = acaoIcon("label.criar_objeto", Icones.CRIAR);
+		private CheckBox chkAjusteAutoEmpilhaForm = new CheckBox();
+		private CheckBox chkAjusteAutoLarguraForm = new CheckBox();
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
 		private TextField txtDestacaObjeto = new TextField(10);
-		private CheckBox chkAjusteAutomatico = new CheckBox();
-		private CheckBox chkAjusteLarguraFrm = new CheckBox();
 		private Popup popupArquivoVinculado = new Popup();
 		private static final long serialVersionUID = 1L;
 		private Label labelStatus = new Label();
@@ -199,8 +199,8 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			add(btnArrasto);
 			add(btnSelecao);
 			add(true, new ButtonStatus());
-			add(true, chkAjusteAutomatico);
-			add(chkAjusteLarguraFrm);
+			add(true, chkAjusteAutoEmpilhaForm);
+			add(chkAjusteAutoLarguraForm);
 			add(true, comboConexao);
 			add(true, new ButtonInfo());
 			add(labelStatus);
@@ -227,8 +227,8 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private void configurar() {
-			chkAjusteLarguraFrm.setToolTipText(ObjetoMensagens.getString("label.ajuste_largura_form"));
-			chkAjusteAutomatico.setToolTipText(ObjetoMensagens.getString("label.ajuste_automatico"));
+			chkAjusteAutoLarguraForm.setToolTipText(ObjetoMensagens.getString("label.ajuste_largura_form"));
+			chkAjusteAutoEmpilhaForm.setToolTipText(ObjetoMensagens.getString("label.ajuste_automatico"));
 			txtArquivoVinculo.setToolTipText(ObjetoMensagens.getString("hint.arquivo_vinculado"));
 			txtDestacaObjeto.setToolTipText(ObjetoMensagens.getString("label.destacar_objetos"));
 			txtPrefixoNomeTabela.setToolTipText(ObjetoMensagens.getString("label.prefixo_nt"));
@@ -248,8 +248,8 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			txtPrefixoNomeTabela.addActionListener(
 					e -> ObjetoSuperficieUtil.prefixoNomeTabela(objetoSuperficie, txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(objetoSuperficie));
-			chkAjusteAutomatico.addActionListener(e -> setAjusteAutomaticoForm());
-			chkAjusteLarguraFrm.addActionListener(e -> setAjusteLarguraForm());
+			chkAjusteAutoEmpilhaForm.addActionListener(e -> setAjusteAutoEmpilhaForm());
+			chkAjusteAutoLarguraForm.addActionListener(e -> setAjusteAutoLarguraForm());
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
 			criarObjetoAcao.setActionListener(e -> criarObjeto());
@@ -314,16 +314,16 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			}
 		};
 
-		private void setAjusteLarguraForm() {
-			objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected());
-			if (chkAjusteLarguraFrm.isSelected()) {
+		private void setAjusteAutoLarguraForm() {
+			objetoSuperficie.setAjusteAutoLarguraForm(chkAjusteAutoLarguraForm.isSelected());
+			if (chkAjusteAutoLarguraForm.isSelected()) {
 				objetoSuperficie.configurarLargura(getSize());
 			}
 		}
 
-		private void setAjusteAutomaticoForm() {
-			objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected());
-			if (chkAjusteAutomatico.isSelected()) {
+		private void setAjusteAutoEmpilhaForm() {
+			objetoSuperficie.setAjusteAutoEmpilhaForm(chkAjusteAutoEmpilhaForm.isSelected());
+			if (chkAjusteAutoEmpilhaForm.isSelected()) {
 				objetoSuperficie.getAjuste().empilharFormularios();
 				objetoSuperficie.getAjuste().aproximarObjetoFormulario(true, true);
 				objetoSuperficie.getAjustar().usarFormularios(false);
@@ -631,9 +631,9 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		AtomicReference<String> ref = new AtomicReference<>();
 		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, ref);
 		if (!Util.estaVazio(ref.get())) {
-			objetoSuperficie.setAjusteAutomaticoForm(true);
+			objetoSuperficie.setAjusteAutoEmpilhaForm(true);
 			toolbar.txtArquivoVinculo.setText(ref.get());
-			objetoSuperficie.setAjusteLarguraForm(true);
+			objetoSuperficie.setAjusteAutoLarguraForm(true);
 			arquivo = new File(ref.get());
 			tituloTemp.set(arquivo.getName());
 			toolbar.salvar(arquivo);
@@ -658,10 +658,10 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
 			adicionarInternalFormulario(conexao, coletor, config);
 		}
-		toolbar.chkAjusteLarguraFrm.setSelected(coletor.getAjusteLarguraForm().get());
-		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
-		objetoSuperficie.setAjusteLarguraForm(coletor.getAjusteLarguraForm().get());
-		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
+		toolbar.chkAjusteAutoLarguraForm.setSelected(coletor.getAjusteLarguraForm().get());
+		objetoSuperficie.setAjusteAutoEmpilhaForm(coletor.getAjusteAutoForm().get());
+		objetoSuperficie.setAjusteAutoLarguraForm(coletor.getAjusteLarguraForm().get());
+		toolbar.chkAjusteAutoEmpilhaForm.setSelected(coletor.getAjusteAutoForm().get());
 		objetoSuperficie.configurarLargura(getSize());
 	}
 

@@ -76,7 +76,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	private void configurar2() {
-		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> checarMaximizado(evt.getNewValue()));
 		addMouseWheelListener(e -> checarAltura(e.getY(), e.getWheelRotation(), System.currentTimeMillis()));
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -86,16 +85,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		});
 	}
 
-	private void checarMaximizado(Object valor) {
-		checarDesktop();
-		if (desktop != null) {
-			desktop.setAjusteAutomatico(Boolean.FALSE.equals(valor));
-		}
-	}
-
 	public void checarRedimensionamento() {
 		checarDesktop();
-		if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
+		if (desktop != null && desktop.isAjusteAutoEmpilhaForm()) {
 			configurarAjustes(false);
 		}
 	}

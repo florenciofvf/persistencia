@@ -18,7 +18,7 @@ public class DesktopFormulario extends AbstratoFormulario {
 	private DesktopFormulario() {
 		super(Mensagens.getString(Constantes.LABEL_FORMULARIO));
 		desktop = new Desktop(false);
-		desktop.setAjusteLarguraForm(true);
+		desktop.setAjusteAutoLarguraForm(true);
 		desktop.addTotalDireitoAuto();
 		montarLayout();
 		config();

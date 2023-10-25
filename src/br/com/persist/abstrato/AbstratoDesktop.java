@@ -28,7 +28,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	protected final transient Ajustar ajustar = new Ajustar();
 	protected final transient Ajuste ajuste = new Ajuste();
 	private static final long serialVersionUID = 1L;
-	private boolean ajusteLarguraForm;
+	private boolean ajusteAutoEmpilhaForm;
+	private boolean ajusteAutoLarguraForm;
 
 	public MenuLargura getMenuLargura() {
 		return menuLargura;
@@ -204,7 +205,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 
 		private void ajusteLarguraForm(JCheckBoxMenuItem check) {
-			setAjusteLarguraForm(check.isSelected());
+			setAjusteAutoLarguraForm(check.isSelected());
 			if (check.isSelected()) {
 				larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
 			}
@@ -386,11 +387,19 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	public void windowOpenedHandler(Window window) {
 	}
 
-	public boolean isAjusteLarguraForm() {
-		return ajusteLarguraForm;
+	public boolean isAjusteAutoEmpilhaForm() {
+		return ajusteAutoEmpilhaForm;
 	}
 
-	public void setAjusteLarguraForm(boolean ajusteLarguraForm) {
-		this.ajusteLarguraForm = ajusteLarguraForm;
+	public void setAjusteAutoEmpilhaForm(boolean ajusteAutoEmpilhaForm) {
+		this.ajusteAutoEmpilhaForm = ajusteAutoEmpilhaForm;
+	}
+
+	public boolean isAjusteAutoLarguraForm() {
+		return ajusteAutoLarguraForm;
+	}
+
+	public void setAjusteAutoLarguraForm(boolean ajusteAutoLarguraForm) {
+		this.ajusteAutoLarguraForm = ajusteAutoLarguraForm;
 	}
 }

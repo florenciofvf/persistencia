@@ -139,7 +139,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void checarLargura(InternalContainer invocador) {
-		if (isAjusteLarguraForm()) {
+		if (isAjusteAutoLarguraForm()) {
 			setSize(container.getSize());
 			for (JInternalFrame frame : getAllFrames()) {
 				if (frame instanceof InternalFormulario) {
