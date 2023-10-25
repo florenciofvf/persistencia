@@ -1080,6 +1080,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
+	private void msgInexistenteMetadado(Objeto objeto) {
+		Util.mensagem(ObjetoSuperficie.this, ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
+	}
+
 	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
@@ -1087,26 +1091,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
 		if (metadado == null) {
 			mapaRef.put(ObjetoConstantes.ERROR, Boolean.TRUE);
-			Util.mensagem(ObjetoSuperficie.this,
-					ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
+			msgInexistenteMetadado(objeto);
 		} else {
 			if (conexao == null) {
 				conexao = container.getConexaoPadrao();
 			}
 			criarObjetoHierarquico(conexao, objeto, mapaRef, metadado);
-		}
-	}
-
-	public void getMetadado(AtomicReference<Object> ref, Objeto objeto) {
-		Map<String, Object> args = new HashMap<>();
-		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
-		formulario.processar(args);
-		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
-		if (metadado == null) {
-			Util.mensagem(ObjetoSuperficie.this,
-					ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
-		} else {
-			ref.set(metadado);
 		}
 	}
 
@@ -1122,6 +1112,43 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		exportacao.localizarObjeto();
 		exportacao.setScriptAdicaoHierarquico();
 		destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
+	}
+
+	public void adicionarHierarquicoAvulso(Conexao conexao, Objeto objeto) {
+		Map<String, Object> args = new HashMap<>();
+		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
+		formulario.processar(args);
+		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
+		if (metadado == null) {
+			msgInexistenteMetadado(objeto);
+		} else {
+			if (conexao == null) {
+				conexao = container.getConexaoPadrao();
+			}
+			criarObjetoHierarquicoAvulso(conexao, objeto, metadado);
+		}
+	}
+
+	private void criarObjetoHierarquicoAvulso(Conexao conexao, Objeto principal, Metadado tabela) {
+		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
+		Metadado avulsa = exportacao.getTabelaAvulsa();
+		if (avulsa != null) {
+			exportacao.adicionarObjetoAvulso(tabela);
+			exportacao.localizarObjeto();
+			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
+		}
+	}
+
+	public void getMetadado(AtomicReference<Object> ref, Objeto objeto) {
+		Map<String, Object> args = new HashMap<>();
+		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
+		formulario.processar(args);
+		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
+		if (metadado == null) {
+			msgInexistenteMetadado(objeto);
+		} else {
+			ref.set(metadado);
+		}
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
@@ -2297,6 +2324,19 @@ class Exportacao {
 		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
 	}
 
+	Metadado getTabelaAvulsa() {
+		List<Metadado> tabelas = new ArrayList<>();
+		raiz.preencher(tabelas);
+		Coletor coletor = new Coletor();
+		SetLista.view(principal.getId() + ObjetoMensagens.getString("label.selecione_tabela_avulsa"),
+				nomeTabelas(tabelas), coletor, superficie, new SetLista.Config(true, true));
+		if (coletor.size() == 1) {
+			String nomeTabela = coletor.get(0);
+			raiz.getMetadado(nomeTabela);
+		}
+		return null;
+	}
+
 	void processarDetalhes(Metadado tabela) {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
 		Coletor coletor = new Coletor();
@@ -2313,6 +2353,10 @@ class Exportacao {
 		return campos.stream().map(Metadado::getChaveTabelaReferencia).collect(Collectors.toList());
 	}
 
+	private List<String> nomeTabelas(List<Metadado> tabelas) {
+		return tabelas.stream().map(Metadado::getDescricao).collect(Collectors.toList());
+	}
+
 	private Metadado getCampo(List<Metadado> campos, String nomeCampo) {
 		for (Metadado metadado : campos) {
 			if (metadado.getChaveTabelaReferencia().equals(nomeCampo)) {
@@ -2320,6 +2364,12 @@ class Exportacao {
 			}
 		}
 		return null;
+	}
+
+	void adicionarObjetoAvulso(Metadado tabela) {
+		criarEAdicionarObjeto();
+		processarIdTabelaGrupoAvulso(tabela);
+		processarChavesAvulso(tabela);
 	}
 
 	private void processarCampoFK(Metadado campo) {
@@ -2332,6 +2382,7 @@ class Exportacao {
 
 	private void criarEAdicionarObjeto() {
 		Objeto obj = new Objeto(0, 0);
+		ObjetoSuperficieUtil.checagemId(superficie, obj, obj.getId(), Constantes.SEP2);
 		this.objeto = obj;
 		superficie.addObjeto(obj);
 	}
@@ -2351,6 +2402,11 @@ class Exportacao {
 		objeto.setTabela(tabelaRef.getNomeTabela());
 	}
 
+	private void processarIdTabelaGrupoAvulso(Metadado tabela) {
+		superficie.processarIdTabelaGrupoExportacao(objeto, tabela);
+		objeto.setTabela(tabela.getNomeTabela());
+	}
+
 	private void processarChaves() {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
@@ -2365,6 +2421,10 @@ class Exportacao {
 		relacao.setChaveOrigem(principal.getChaves());
 		objeto.setChaves(tabela.getChaves());
 		referenciaNaPesquisa();
+	}
+
+	private void processarChavesAvulso(Metadado tabela) {
+		objeto.setChaves(tabela.getChaves());
 	}
 
 	private void referenciaNaPesquisa() {
