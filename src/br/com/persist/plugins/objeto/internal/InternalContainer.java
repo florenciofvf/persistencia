@@ -3660,6 +3660,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public void setVinculoListener(InternalListener.Vinculo vinculoListener) {
+		toolbar.buttonInfo.adicionaHierarquicoAvulsoAcao.setEnabled(vinculoListener != null);
 		toolbar.buttonInfo.adicionaHierarquicoAcao.setEnabled(vinculoListener != null);
 		this.vinculoListener = vinculoListener;
 	}

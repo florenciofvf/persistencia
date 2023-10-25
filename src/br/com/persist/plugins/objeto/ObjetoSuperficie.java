@@ -1131,9 +1131,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	private void criarObjetoHierarquicoAvulso(Conexao conexao, Objeto principal, Metadado tabela) {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
-		Metadado avulsa = exportacao.getTabelaAvulsa();
-		if (avulsa != null) {
-			exportacao.adicionarObjetoAvulso(tabela);
+		Metadado tabelaAvulsa = exportacao.getTabelaAvulsa();
+		if (tabelaAvulsa != null) {
+			exportacao.adicionarObjetoAvulso(tabelaAvulsa);
 			exportacao.localizarObjeto();
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
@@ -1183,6 +1183,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			objeto.setId(id);
 			ObjetoSuperficieUtil.checagemId(this, objeto, id, Constantes.SEP2);
 			objeto.setGrupo(tabelaRef.getNomeCampo());
+		} else {
+			objeto.setId(nomeTabela);
+		}
+	}
+
+	void processarIdTabelaGrupoExportacaoAvulso(Objeto objeto, Metadado tabela) {
+		String nomeTabela = tabela.getDescricao();
+		if (ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela)) {
+			String id = nomeTabela + Constantes.SEP2 + tabela.getDescricao();
+			objeto.setId(id);
+			ObjetoSuperficieUtil.checagemId(this, objeto, id, Constantes.SEP2);
+			objeto.setGrupo(tabela.getDescricao());
 		} else {
 			objeto.setId(nomeTabela);
 		}
@@ -2332,7 +2344,7 @@ class Exportacao {
 				nomeTabelas(tabelas), coletor, superficie, new SetLista.Config(true, true));
 		if (coletor.size() == 1) {
 			String nomeTabela = coletor.get(0);
-			raiz.getMetadado(nomeTabela);
+			return raiz.getMetadado(nomeTabela);
 		}
 		return null;
 	}
@@ -2403,8 +2415,8 @@ class Exportacao {
 	}
 
 	private void processarIdTabelaGrupoAvulso(Metadado tabela) {
-		superficie.processarIdTabelaGrupoExportacao(objeto, tabela);
-		objeto.setTabela(tabela.getNomeTabela());
+		superficie.processarIdTabelaGrupoExportacaoAvulso(objeto, tabela);
+		objeto.setTabela(tabela.getDescricao());
 	}
 
 	private void processarChaves() {
