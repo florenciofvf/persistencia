@@ -1850,6 +1850,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonInfo extends ButtonPopup {
+			private AdicionaHierarquicoAvulsoAcao adicionaHierarquicoAvulsoAcao = new AdicionaHierarquicoAvulsoAcao();
 			private Action scriptAdicaoHierAcao = acaoMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
 			private AdicionaHierarquicoAcao adicionaHierarquicoAcao = new AdicionaHierarquicoAcao();
 			private Action checagemAcao = acaoMenu("label.checar_registro", Icones.SUCESSO);
@@ -1868,6 +1869,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (objeto.getPesquisaAdicaoHierarquico() != null) {
 					addMenuItem(scriptAdicaoHierAcao);
 				}
+				addMenuItem(adicionaHierarquicoAvulsoAcao);
 				addMenuItem(adicionaHierarquicoAcao);
 				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
@@ -2522,6 +2524,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
 						}
+					}
+				}
+			}
+
+			private class AdicionaHierarquicoAvulsoAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private AdicionaHierarquicoAvulsoAcao() {
+					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico3"), false, Icones.HIERARQUIA);
+					setEnabled(false);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (vinculoListener != null) {
+						vinculoListener.adicionarHierarquicoAvulso(getConexao(), objeto);
 					}
 				}
 			}

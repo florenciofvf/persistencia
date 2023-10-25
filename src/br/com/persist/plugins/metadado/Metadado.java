@@ -453,7 +453,7 @@ public class Metadado implements Transferable {
 		return lista;
 	}
 
-	private void preencher(List<Metadado> lista) {
+	public void preencher(List<Metadado> lista) {
 		for (Metadado campo : filhos) {
 			lista.add(campo);
 		}

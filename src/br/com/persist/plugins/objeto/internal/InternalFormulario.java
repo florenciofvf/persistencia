@@ -308,6 +308,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
+		public void adicionarHierarquicoAvulso(Conexao conexao, Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulso(conexao, objeto);
+			}
+		}
+
 		public void getMetadado(AtomicReference<Object> ref, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
