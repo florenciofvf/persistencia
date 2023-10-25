@@ -3461,7 +3461,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private void campoExportadoPara(Metadado metadado, String coluna) {
 			List<String> lista = metadado.getListaCampoExportadoPara(coluna);
-			String string = Util.getStringListaSemVirgula(lista, false);
+			String string = InternalUtil.campoExportadoPara(objeto.getTabela(), coluna, lista);
 			Util.mensagem(InternalContainer.this, string);
 		}
 
@@ -3485,7 +3485,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private void campoImportadoDe(Metadado metadado, String coluna) {
 			List<String> lista = metadado.getListaCampoImportadoDe(coluna);
-			String string = Util.getStringListaSemVirgula(lista, false);
+			String string = InternalUtil.campoImportadoDe(objeto.getTabela(), coluna, lista);
 			Util.mensagem(InternalContainer.this, string);
 		}
 	}
