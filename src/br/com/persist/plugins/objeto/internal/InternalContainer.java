@@ -255,6 +255,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					getConexao();
 					actionListenerInner.actionPerformed(null);
 					e.consume();
+				} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					txtComplemento.semRegistros = ConfiguraAlturaSemRegistros.SCROLL_SUL;
 				} else {
 					txtComplemento.checkImagem();
 				}
@@ -264,7 +266,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			@Override
 			public void componentResized(ComponentEvent e) {
 				if (txtComplemento.ajustarAltura() && configuraAlturaListener != null) {
-					configuraAlturaListener.configurarAltura(ConfiguraAlturaSemRegistros.SCROLL_SUL, false);
+					configuraAlturaListener.configurarAltura(txtComplemento.getSemRegistros(), false);
+					txtComplemento.semRegistros = ConfiguraAlturaSemRegistros.SCROLL_NORTE;
 				}
 			}
 		});
@@ -272,6 +275,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private class TxtComplemento extends JTextArea {
 		private static final long serialVersionUID = 1L;
+		ConfiguraAlturaSemRegistros semRegistros;
 		private transient Imagem imagem;
 		private int ultimaAltura;
 
@@ -320,6 +324,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				imagem = null;
 				repaint();
 			}
+		}
+
+		ConfiguraAlturaSemRegistros getSemRegistros() {
+			if (semRegistros == null) {
+				semRegistros = ConfiguraAlturaSemRegistros.SCROLL_NORTE;
+			}
+			return semRegistros;
 		}
 	}
 
