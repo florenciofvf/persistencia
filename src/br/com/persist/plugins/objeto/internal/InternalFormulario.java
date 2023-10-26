@@ -56,7 +56,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	public InternalFormulario(Conexao padrao, Objeto objeto, boolean buscaAuto) {
 		super(objeto.getId());
 		container = new InternalContainer(this, padrao, objeto, buscaAuto);
-		container.setConfiguraAlturaListener(InternalFormulario.this::configurarAltura);
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
@@ -64,6 +63,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
 		container.setVisibilidadeListener(visibilidadeListener);
+		container.setConfiguraAlturaListener(alturaListener);
 		container.setComponenteListener(componenteListener);
 		container.setVinculoListener(vinculoListener);
 		setFrameIcon(Icones.VAZIO);
@@ -123,9 +123,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 		if (novaAltura != alturaAtual) {
 			setSize(getWidth(), novaAltura);
-		}
-		if (update) {
-			SwingUtilities.updateComponentTreeUI(this);
+			if (update) {
+				SwingUtilities.updateComponentTreeUI(this);
+			}
 		}
 	}
 
@@ -143,7 +143,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				}
 			}
 		} else {
-			configurarAltura(totalRegistros, true, update);
+			processarAltura(alturaAtual, update);
 		}
 	}
 
@@ -183,7 +183,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void configurarAltura(int total, boolean norteSemRegistros, boolean update) {
+	private void processarAltura(int alturaAtual, boolean update) {
+		int totalRegistros = container.getTotalRegistros();
 		boolean salvar = false;
 		Variavel varMaximoRegistro = VariavelProvedor
 				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
@@ -202,28 +203,28 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			salvar = true;
 		}
 		checarAtualizarVariavelProvedor(salvar);
-		if (total < 1) {
-			if (norteSemRegistros) {
-				processarNorte(getHeight(), false);
-			} else {
-				processarSul(getHeight(), false);
-			}
+
+		if (totalRegistros < 1) {
+			processarSul(alturaAtual, update);
 		} else {
 			int alturaTitulo = getAlturaTitulo();
 			int alturaToolbar = container.getAlturaToolbar();
 			int alturaHeader = container.getAlturaTableHeader();
 			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader + Constantes.DEZ;
 			int maximoRegistros = varMaximoRegistro.getInteiro(Constantes.DEZ);
-			if (total > maximoRegistros) {
-				total = maximoRegistros;
+			if (totalRegistros > maximoRegistros) {
+				totalRegistros = maximoRegistros;
 			}
 			if (container.scrollVisivel()) {
-				total++;
+				totalRegistros++;
 			}
-			setSize(getWidth(), novaAltura + total * container.getAlturaTableRegistro());
-		}
-		if (update) {
-			SwingUtilities.updateComponentTreeUI(this);
+			int alturaFinal = novaAltura + totalRegistros * container.getAlturaTableRegistro();
+			if (alturaFinal != alturaAtual) {
+				setSize(getWidth(), alturaFinal);
+				if (update) {
+					SwingUtilities.updateComponentTreeUI(this);
+				}
+			}
 		}
 	}
 
@@ -354,6 +355,18 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (desktop != null) {
 				desktop.limparOutros(invocador);
 			}
+		}
+	};
+
+	private transient InternalListener.ConfiguraAltura alturaListener = new InternalListener.ConfiguraAltura() {
+		@Override
+		public void configurarAltura(boolean update) {
+			processarAltura(getAlturaAtual(), update);
+		}
+
+		@Override
+		public int getAlturaAtual() {
+			return getHeight();
 		}
 	};
 
