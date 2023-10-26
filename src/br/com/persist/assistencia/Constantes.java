@@ -28,7 +28,7 @@ public class Constantes {
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_APARENCIA = "label.aparencia";
 	public static final String GC_PREFERENCIAL = "GC_PREFERENCIAL";
-	public static final Dimension SIZE2 = new Dimension(900, 620);
+	public static final Dimension SIZE2 = new Dimension(900, 700);
 	public static final Dimension SIZE3 = new Dimension(400, 400);
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
