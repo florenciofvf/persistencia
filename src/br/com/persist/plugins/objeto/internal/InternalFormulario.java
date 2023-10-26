@@ -37,6 +37,7 @@ import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
+import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
@@ -143,7 +144,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				}
 			}
 		} else {
-			processarAltura(alturaAtual, update);
+			processarAltura(ConfiguraAlturaSemRegistros.SCROLL_SUL, alturaAtual, update);
 		}
 	}
 
@@ -183,7 +184,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	private void processarAltura(int alturaAtual, boolean update) {
+	private void processarAltura(ConfiguraAlturaSemRegistros semRegistros, int alturaAtual, boolean update) {
 		int totalRegistros = container.getTotalRegistros();
 		boolean salvar = false;
 		Variavel varMaximoRegistro = VariavelProvedor
@@ -205,7 +206,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		checarAtualizarVariavelProvedor(salvar);
 
 		if (totalRegistros < 1) {
-			processarSul(alturaAtual, update);
+			processarSemRegistros(semRegistros, alturaAtual, update);
 		} else {
 			int alturaTitulo = getAlturaTitulo();
 			int alturaToolbar = container.getAlturaToolbar();
@@ -225,6 +226,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 					SwingUtilities.updateComponentTreeUI(this);
 				}
 			}
+		}
+	}
+
+	private void processarSemRegistros(ConfiguraAlturaSemRegistros semRegistros, int alturaAtual, boolean update) {
+		if (ConfiguraAlturaSemRegistros.SCROLL_NORTE == semRegistros) {
+			processarNorte(alturaAtual, update);
+		} else if (ConfiguraAlturaSemRegistros.SCROLL_SUL == semRegistros) {
+			processarSul(alturaAtual, update);
 		}
 	}
 
@@ -360,8 +369,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private transient InternalListener.ConfiguraAltura alturaListener = new InternalListener.ConfiguraAltura() {
 		@Override
-		public void configurarAltura(boolean update) {
-			processarAltura(getAlturaAtual(), update);
+		public void configurarAltura(ConfiguraAlturaSemRegistros semRegistros, boolean update) {
+			processarAltura(semRegistros, getAlturaAtual(), update);
 		}
 
 		@Override

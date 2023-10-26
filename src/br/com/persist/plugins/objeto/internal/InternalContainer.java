@@ -114,6 +114,7 @@ import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.alter.Alternativo;
 import br.com.persist.plugins.objeto.alter.AlternativoDialogo;
 import br.com.persist.plugins.objeto.alter.AlternativoListener;
+import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Param;
@@ -263,7 +264,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			@Override
 			public void componentResized(ComponentEvent e) {
 				if (txtComplemento.ajustarAltura() && configuraAlturaListener != null) {
-					configuraAlturaListener.configurarAltura(getTotalRegistros(), false, false);
+					configuraAlturaListener.configurarAltura(ConfiguraAlturaSemRegistros.SCROLL_SUL, false);
 				}
 			}
 		});
@@ -566,7 +567,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void configurarAltura() {
 		if (objeto.isAjusteAutoForm() && configuraAlturaListener != null) {
-			configuraAlturaListener.configurarAltura(getTotalRegistros(), true, false);
+			configuraAlturaListener.configurarAltura(ConfiguraAlturaSemRegistros.SCROLL_NORTE, false);
 		}
 	}
 
@@ -1393,7 +1394,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 						Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
 						if (configuraAlturaListener != null) {
-							configuraAlturaListener.configurarAltura(getTotalRegistros(), false, false);
+							configuraAlturaListener.configurarAltura(ConfiguraAlturaSemRegistros.SCROLL_SUL, false);
 						}
 					}
 				}

@@ -44,8 +44,12 @@ public interface InternalListener {
 		public boolean validoInvisibilidade();
 	}
 
+	public enum ConfiguraAlturaSemRegistros {
+		SCROLL_NORTE, SCROLL_SUL
+	}
+
 	public interface ConfiguraAltura {
-		public void configurarAltura(boolean update);
+		public void configurarAltura(ConfiguraAlturaSemRegistros semRegistros, boolean update);
 
 		public int getAlturaAtual();
 	}
