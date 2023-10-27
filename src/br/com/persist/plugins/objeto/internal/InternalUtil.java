@@ -143,6 +143,8 @@ class JoinColumn {
 		sb.append(Util.citar2(nome));
 		sb.append(", referencedColumnName = ");
 		sb.append(Util.citar2(referenciado));
+		sb.append(", insertable = false");
+		sb.append(", updatable = false");
 		sb.append(")" + Constantes.QL);
 		return sb.toString();
 	}
