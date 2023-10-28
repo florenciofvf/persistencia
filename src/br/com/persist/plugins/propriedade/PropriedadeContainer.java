@@ -3,6 +3,7 @@ package br.com.persist.plugins.propriedade;
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
+import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
@@ -154,23 +155,13 @@ public class PropriedadeContainer extends AbstratoContainer {
 		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, BAIXAR, SALVAR);
 			addButton(gerarAcao);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
 			gerarAcao.setActionListener(e -> gerar());
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
-				selecao.selecionar(label);
-			} else {
-				label.limpar();
-			}
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
@@ -235,8 +226,17 @@ public class PropriedadeContainer extends AbstratoContainer {
 		}
 
 		@Override
+		protected void limpar() {
+			textArea.setText(Constantes.VAZIO);
+			selecao = null;
+			label.limpar();
+		}
+
+		@Override
 		public void baixar() {
 			abrir();
+			selecao = null;
+			label.limpar();
 		}
 
 		@Override
@@ -252,6 +252,16 @@ public class PropriedadeContainer extends AbstratoContainer {
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, PropriedadeContainer.this);
+			}
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtPesquisa.getText())) {
+				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao.selecionar(label);
+			} else {
+				label.limpar();
 			}
 		}
 	}
