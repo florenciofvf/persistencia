@@ -9,7 +9,10 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Rectangle;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,24 +22,31 @@ import java.nio.charset.StandardCharsets;
 
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
+import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
+import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.update.UpdateConstantes;
 
 public class PropriedadeContainer extends AbstratoContainer {
-	private final TextPane textAreaResult = new TextPane();
+	private final PainelResultado painelResultado = new PainelResultado();
 	private PropriedadeFormulario propriedadeFormulario;
 	private final TextPane textArea = new TextPane();
 	private static final long serialVersionUID = 1L;
@@ -76,10 +86,40 @@ public class PropriedadeContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(textArea),
-				new ScrollPane(textAreaResult));
-		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, splitPane);
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+		add(BorderLayout.CENTER, split);
+	}
+
+	private Panel criarPanel() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.NORTH, toolbar);
+		Panel panelArea = new Panel();
+		panelArea.add(BorderLayout.CENTER, textArea);
+		ScrollPane scrollPane = new ScrollPane(panelArea);
+		panel.add(BorderLayout.CENTER, scrollPane);
+		return panel;
+	}
+
+	private Panel criarPanelResultado() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.CENTER, painelResultado);
+		return panel;
+	}
+
+	private class PainelResultado extends Panel {
+		private static final long serialVersionUID = 1L;
+		private JTextPane textPane = new JTextPane();
+
+		private PainelResultado() {
+			add(BorderLayout.NORTH, new ToolbarPesquisa(textPane));
+			add(BorderLayout.CENTER, new ScrollPane(textPane));
+		}
+
+		private void setText(String string) {
+			textPane.setText(string);
+			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+		}
 	}
 
 	private void abrir() {
@@ -107,14 +147,30 @@ public class PropriedadeContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action gerarAcao = acaoIcon("label.gerar_conteudo", Icones.EXECUTAR);
+		private final TextField txtPesquisa = new TextField(35);
+		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
 			addButton(gerarAcao);
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
+			add(txtPesquisa);
+			add(label);
 			gerarAcao.setActionListener(e -> gerar());
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtPesquisa.getText())) {
+				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao.selecionar(label);
+			} else {
+				label.limpar();
+			}
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
@@ -124,12 +180,12 @@ public class PropriedadeContainer extends AbstratoContainer {
 		private void gerar() {
 			String string = textArea.getText();
 			if (Util.estaVazio(string)) {
-				textAreaResult.setText("Editor vazio.");
+				painelResultado.setText("Editor vazio.");
 				return;
 			}
 			try {
 				Raiz raiz = PropriedadeUtil.criarRaiz(string);
-				textAreaResult.setText(PropriedadeUtil.getString(raiz));
+				painelResultado.setText(PropriedadeUtil.getString(raiz));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
