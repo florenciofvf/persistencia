@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.marca.XMLUtil;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 public class Raiz extends Container {
 	private final Map<String, Config> mapConfig;
@@ -29,14 +30,14 @@ public class Raiz extends Container {
 	}
 
 	@Override
-	public void salvar(Container pai, XMLUtil util) {
+	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
 		List<Config> configs = getConfigs();
 		mapConfig.clear();
 		for (Config config : configs) {
 			mapConfig.put(config.getNome(), config);
 		}
 		for (Bloco bloco : getBlocos()) {
-			bloco.salvar(this, util);
+			bloco.processar(this, doc);
 		}
 	}
 

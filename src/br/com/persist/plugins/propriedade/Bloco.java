@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.marca.XMLUtil;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 public class Bloco extends Container {
 	private final Map<String, String> mapString;
@@ -29,7 +30,7 @@ public class Bloco extends Container {
 	}
 
 	@Override
-	public void salvar(Container pai, XMLUtil util) {
+	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
 		Map<String, Config> mapConfig = ((Raiz) pai).getMapConfig();
 		List<Param> params = getParams();
 		mapString.clear();
@@ -39,9 +40,9 @@ public class Bloco extends Container {
 				put(param, config);
 			}
 		}
-		util.ql().tab().tab().conteudo("<!--" + getNome() + "-->").ql();
+		PropriedadeUtil.bloco(getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
-			prop.salvar(this, util);
+			prop.processar(this, doc);
 		}
 	}
 

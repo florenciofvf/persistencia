@@ -121,6 +121,15 @@ public class PropriedadeContainer extends AbstratoContainer {
 			textPane.setText(string);
 			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 		}
+
+		private void processar(Raiz raiz) {
+			textPane.setText(Constantes.VAZIO);
+			try {
+				raiz.processar(null, textPane.getStyledDocument());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
+			}
+		}
 	}
 
 	private void abrir() {
@@ -176,7 +185,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 			}
 			try {
 				Raiz raiz = PropriedadeUtil.criarRaiz(string);
-				painelResultado.setText(PropriedadeUtil.getString(raiz));
+				painelResultado.processar(raiz);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}

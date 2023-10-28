@@ -2,9 +2,11 @@ package br.com.persist.plugins.propriedade;
 
 import java.util.Map;
 
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
-import br.com.persist.marca.XMLUtil;
 
 public class Propriedade extends Container {
 	public Propriedade(String nome, String valor) {
@@ -18,7 +20,7 @@ public class Propriedade extends Container {
 	}
 
 	@Override
-	public void salvar(Container pai, XMLUtil util) {
+	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
 		Map<String, String> mapString = ((Bloco) pai).getMapString();
 		String string = getValor();
 
@@ -26,10 +28,11 @@ public class Propriedade extends Container {
 			string = Util.replaceAll(string, Constantes.SEP + entry.getKey() + Constantes.SEP, entry.getValue());
 		}
 
-		util.tab().tab();
-		util.abrirTag(PropriedadeHandler.PROPERTY);
-		util.atributo(PropriedadeHandler.NAME, getNome());
-		util.atributo(PropriedadeHandler.VALUE, string);
-		util.fecharTag(-1);
+		PropriedadeUtil.iniPropriedade(PropriedadeHandler.PROPERTY, doc);
+		PropriedadeUtil.atributo(PropriedadeHandler.NAME, doc);
+		PropriedadeUtil.valorAtr(getNome(), doc);
+		PropriedadeUtil.atributo(PropriedadeHandler.VALUE, doc);
+		PropriedadeUtil.valorAtr(string, doc);
+		PropriedadeUtil.fimPropriedade(doc);
 	}
 }

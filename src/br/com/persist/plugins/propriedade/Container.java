@@ -3,7 +3,8 @@ package br.com.persist.plugins.propriedade;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.marca.XMLUtil;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 public abstract class Container {
 	private final List<Container> filhos;
@@ -58,7 +59,7 @@ public abstract class Container {
 		c.pai = this;
 	}
 
-	public void salvar(Container pai, XMLUtil util) {
+	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
 	}
 
 	@Override
