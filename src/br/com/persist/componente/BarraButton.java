@@ -94,10 +94,15 @@ public abstract class BarraButton extends JToolBar
 
 	private void configCopiar2(BarraButtonEnum... enuns) {
 		if (contem(COPIAR2, enuns)) {
-			addButton(copiar2Acao);
-			add(labelTextTemp2);
+			addCopiar2();
 			copiar2Acao.setActionListener(e -> copiar2());
 		}
+	}
+
+	public Action addCopiar2() {
+		addButton(copiar2Acao);
+		add(labelTextTemp2);
+		return copiar2Acao;
 	}
 
 	private void configColar0(BarraButtonEnum... enuns) {
@@ -358,7 +363,7 @@ public abstract class BarraButton extends JToolBar
 		labelTextTempSalvo.mensagemChave("msg.salvo");
 	}
 
-	protected void copiar2Mensagem(String string) {
+	public void copiar2Mensagem(String string) {
 		if (!Util.estaVazio(string)) {
 			labelTextTemp2.mensagemChave("msg.copiado");
 		}

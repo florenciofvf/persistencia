@@ -17,7 +17,7 @@ import br.com.persist.marca.XMLUtil;
 public class PropriedadeUtil {
 	private static final MutableAttributeSet attGreen;
 	private static final MutableAttributeSet attBlue;
-	private static final MutableAttributeSet attPink;
+	private static final MutableAttributeSet attRed;
 	private static final String TAB = "\t\t";
 
 	private PropriedadeUtil() {
@@ -32,10 +32,10 @@ public class PropriedadeUtil {
 	static {
 		attGreen = new SimpleAttributeSet();
 		attBlue = new SimpleAttributeSet();
-		attPink = new SimpleAttributeSet();
+		attRed = new SimpleAttributeSet();
 		StyleConstants.setForeground(attGreen, new Color(0, 125, 0));
 		StyleConstants.setForeground(attBlue, Color.BLUE);
-		StyleConstants.setForeground(attPink, Color.RED);
+		StyleConstants.setForeground(attRed, Color.RED);
 	}
 
 	static void bloco(String nome, StyledDocument doc) throws BadLocationException {
@@ -47,7 +47,7 @@ public class PropriedadeUtil {
 	}
 
 	static void atributo(String nome, StyledDocument doc) throws BadLocationException {
-		doc.insertString(doc.getLength(), " " + nome, attPink);
+		doc.insertString(doc.getLength(), " " + nome, attRed);
 		doc.insertString(doc.getLength(), "=", null);
 	}
 

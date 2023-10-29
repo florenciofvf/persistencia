@@ -110,11 +110,16 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	private class PainelResultado extends Panel {
 		private static final long serialVersionUID = 1L;
+		private final ToolbarPesquisa toolbarPesquisa;
 		private JTextPane textPane = new JTextPane();
 
 		private PainelResultado() {
-			add(BorderLayout.NORTH, new ToolbarPesquisa(textPane));
+			toolbarPesquisa = new ToolbarPesquisa(textPane);
+			add(BorderLayout.NORTH, toolbarPesquisa);
 			add(BorderLayout.CENTER, new ScrollPane(textPane));
+			Action copiar2Action = toolbarPesquisa.addCopiar2();
+			copiar2Action.hint(PropriedadeMensagens.getString("label.copiar_tudo"));
+			copiar2Action.setActionListener(e -> copiar2());
 		}
 
 		private void setText(String string) {
@@ -129,6 +134,15 @@ public class PropriedadeContainer extends AbstratoContainer {
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
+		}
+
+		private void copiar2() {
+			String string = textPane.getText();
+			Util.setContentTransfered(string);
+			toolbarPesquisa.copiar2Mensagem(string);
+			textPane.setSelectionStart(0);
+			textPane.setSelectionEnd(string.length());
+			textPane.requestFocus();
 		}
 	}
 
