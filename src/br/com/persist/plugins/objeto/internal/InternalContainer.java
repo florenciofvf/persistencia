@@ -3196,6 +3196,28 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
+		@Override
+		public void selectMinimo(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				String instrucao = new Filter(conexao, new String[] { nome }, "MIN", objeto).gerarCompleto();
+				if (!Util.estaVazio(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		@Override
+		public void selectMaximo(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				String instrucao = new Filter(conexao, new String[] { nome }, "MAX", objeto).gerarCompleto();
+				if (!Util.estaVazio(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
 		private Coletor getNomePesquisa() {
 			List<Pesquisa> pesquisas = objeto.getPesquisas();
 			List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
@@ -3917,6 +3939,13 @@ class Filter {
 			sb.append(Constantes.QL);
 			sb.append(conexao.getLimite());
 		}
+		return sb.toString();
+	}
+
+	String gerarCompleto() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM " + obj.getTabelaEsquema(conexao) + Constantes.QL);
+		sb.append("WHERE " + gerar());
 		return sb.toString();
 	}
 }

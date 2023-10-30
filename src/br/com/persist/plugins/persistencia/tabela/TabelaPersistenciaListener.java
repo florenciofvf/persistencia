@@ -22,6 +22,10 @@ public interface TabelaPersistenciaListener {
 
 	public void selectGroupBy(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
+	public void selectMinimo(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
+
+	public void selectMaximo(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
+
 	public void tabelaMouseClick(TabelaPersistencia tabelaPersistencia, int colunaClicada);
 
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome);
