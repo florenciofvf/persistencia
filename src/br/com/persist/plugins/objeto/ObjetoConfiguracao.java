@@ -97,7 +97,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervalo, panelIntervalos));
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
-				chkExibirTotalColunasTabela, chkPesquisaFormInternalLazy, chkHabitEsquemaTabelaAlter, chkInternalComCor,
+				chkPesquisaFormInternalLazy, chkInternalComCor, chkExibirTotalColunasTabela, chkHabitEsquemaTabelaAlter,
 				chkHabitInnerJoinsObj));
 		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
 		Insets insets = new Insets(5, 10, 5, 5);
