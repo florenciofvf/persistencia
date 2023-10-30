@@ -95,10 +95,9 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(buttonAplicarLA)));
 		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(buttonConectaDesconecta)));
-		muro.camada(
-				Muro.panelGrid(chkMonitorPreferencial, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
-						chkAbrirFormularioDireita, chkAbrirFormularioAbaixo, chkFecharComESCFormulario,
-						chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin, chkFicharioScroll));
+		muro.camada(Muro.panelGrid(chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
+				chkMonitorPreferencial, chkAbrirFormularioDireita, chkAbrirFormularioAbaixo, chkFecharComESCFormulario,
+				chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin, chkFicharioScroll));
 		if (Preferencias.isMonitorPreferencial()) {
 			muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.monitor_preferencial"),
 					new PainelMonitorPreferencial()));
