@@ -151,23 +151,23 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 	private List<String> validar() {
 		List<String> resp = new ArrayList<>();
-		if (Util.estaVazio(txtNomePlugin.getText()) || caracterInvalido(txtNomePlugin.getText())) {
+		if (Util.isEmpty(txtNomePlugin.getText()) || caracterInvalido(txtNomePlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.nome_plugin"));
 		} else if (txtNomePlugin.getText().length() < 2) {
 			resp.add(GeraPluginMensagens.getString("erro.nome_plugin_curto"));
 		}
-		if (Util.estaVazio(txtMinimPlugin.getText()) || caracterInvalido(txtMinimPlugin.getText())) {
+		if (Util.isEmpty(txtMinimPlugin.getText()) || caracterInvalido(txtMinimPlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
 		}
-		if (Util.estaVazio(txtDiretorioDestino.getText())) {
+		if (Util.isEmpty(txtDiretorioDestino.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_vazio"));
 		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
 		}
-		if (Util.estaVazio(txtPacotePlugin.getText()) || caracterInvalidoPacote(txtPacotePlugin.getText())) {
+		if (Util.isEmpty(txtPacotePlugin.getText()) || caracterInvalidoPacote(txtPacotePlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
 		}
-		if (!Util.estaVazio(txtDiretorioRecursos.getText()) && caracterInvalido(txtDiretorioRecursos.getText())) {
+		if (!Util.isEmpty(txtDiretorioRecursos.getText()) && caracterInvalido(txtDiretorioRecursos.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos"));
 		}
 		return resp;

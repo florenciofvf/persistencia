@@ -388,7 +388,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, Conexao conexao,
 			String consultaAlter) {
-		StringBuilder consulta = !Util.estaVazio(consultaAlter) ? new StringBuilder(consultaAlter)
+		StringBuilder consulta = !Util.isEmpty(consultaAlter) ? new StringBuilder(consultaAlter)
 				: getConsulta(conexao, complemento);
 		try {
 			Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -465,8 +465,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			destacarTitulo = false;
 			return false;
 		}
-		if (!Util.estaVazio(txtComplemento.getText()) || !Util.estaVazio(complemento)
-				|| !Util.estaVazio(objeto.getFinalConsulta()) || !objeto.isCcsc()) {
+		if (!Util.isEmpty(txtComplemento.getText()) || !Util.isEmpty(complemento)
+				|| !Util.isEmpty(objeto.getFinalConsulta()) || !objeto.isCcsc()) {
 			return true;
 		}
 		String msg = ObjetoMensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela());
@@ -474,11 +474,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private boolean todosVazio(String filtro, Conexao conexao) {
-		if (!Util.estaVazio(conexao.getFiltro())) {
-			return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro);
+		if (!Util.isEmpty(conexao.getFiltro())) {
+			return Util.isEmpty(txtComplemento.getText()) && Util.isEmpty(filtro);
 		}
-		return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro)
-				&& Util.estaVazio(objeto.getFinalConsulta());
+		return Util.isEmpty(txtComplemento.getText()) && Util.isEmpty(filtro)
+				&& Util.isEmpty(objeto.getFinalConsulta());
 	}
 
 	private PersistenciaModelo.Parametros criarParametros(Connection conn, Conexao conexao, String consulta) {
@@ -733,10 +733,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void limparPeloObjeto() {
 				String string = Constantes.VAZIO;
-				if (!Util.estaVazio(txtComplemento.getText())) {
+				if (!Util.isEmpty(txtComplemento.getText())) {
 					String[] simNao = getArraySimNao();
 					String opcao = opcaoConcatenar(simNao);
-					if (Util.estaVazio(opcao)) {
+					if (Util.isEmpty(opcao)) {
 						return;
 					}
 					if (simNao[0].equals(opcao)) {
@@ -759,14 +759,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private void limparUsandoConexao() {
 				Conexao conexao = getConexao();
 				String filtro = Constantes.VAZIO;
-				if (conexao != null && !Util.estaVazio(conexao.getFiltro())) {
+				if (conexao != null && !Util.isEmpty(conexao.getFiltro())) {
 					filtro = conexao.getFiltro();
 				}
 				String string = Constantes.VAZIO;
-				if (!Util.estaVazio(txtComplemento.getText())) {
+				if (!Util.isEmpty(txtComplemento.getText())) {
 					String[] simNao = getArraySimNao();
 					String opcao = opcaoConcatenar(simNao);
-					if (Util.estaVazio(opcao)) {
+					if (Util.isEmpty(opcao)) {
 						return;
 					}
 					if (simNao[0].equals(opcao)) {
@@ -880,7 +880,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				int i = 0;
 				objeto.ordenarFiltros();
 				for (Filtro f : objeto.getFiltros()) {
-					if (!Util.estaVazio(f.getValor())) {
+					if (!Util.isEmpty(f.getValor())) {
 						MenuFiltro menu = new MenuFiltro(f);
 						if (++i == 1) {
 							addSeparator();
@@ -893,7 +893,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private void processarInstrucao(Objeto objeto) {
 				objeto.ordenarInstrucoes();
 				for (Instrucao inst : objeto.getInstrucoes()) {
-					if (!Util.estaVazio(inst.getValor()) && inst.isComoFiltro()) {
+					if (!Util.isEmpty(inst.getValor()) && inst.isComoFiltro()) {
 						MenuInstrucao menu = new MenuInstrucao(inst);
 						addMenu(true, menu);
 					}
@@ -943,11 +943,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void copiarNomeTabela() {
 				Conexao conexao = getConexao();
-				if (conexao != null && !Util.estaVazio(conexao.getEsquema())
-						|| !Util.estaVazio(objeto.getApelidoParaJoins())) {
+				if (conexao != null && !Util.isEmpty(conexao.getEsquema())
+						|| !Util.isEmpty(objeto.getApelidoParaJoins())) {
 					String[] array = new String[] { objeto.getTabelaEsquema(conexao), objeto.getTabela() };
 					String opcao = Util.getValorInputDialog2(InternalContainer.this, null, array);
-					if (!Util.estaVazio(opcao)) {
+					if (!Util.isEmpty(opcao)) {
 						Util.setContentTransfered(opcao);
 					}
 				} else {
@@ -966,7 +966,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					return;
 				}
 				String complemento = Util.getContentTransfered();
-				if (Util.estaVazio(complemento)) {
+				if (Util.isEmpty(complemento)) {
 					txtComplemento.setText(objeto.getComplemento());
 				} else {
 					complemento = complemento.trim();
@@ -1327,7 +1327,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void renomear(Pesquisa pesq, Vinculacao vinculacao) {
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.renomear", objeto.getId(),
 							pesq.getNome());
-					if (resp != null && !Util.estaVazio(resp.toString())) {
+					if (resp != null && !Util.isEmpty(resp.toString())) {
 						String nomeBkp = pesquisa.getNome();
 						String nome = resp.toString();
 						if (nome.equalsIgnoreCase(pesquisa.getNome())) {
@@ -1380,7 +1380,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void processarParams(Pesquisa pesquisa) {
 					pesquisa.clonarParams();
 					for (Param param : pesquisa.getCloneParams()) {
-						if (Util.estaVazio(param.getValor())) {
+						if (Util.isEmpty(param.getValor())) {
 							Object obj = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
 									"Valor para: " + param.getRotulo(), null);
 							param.setValor(obj == null ? Constantes.VAZIO : obj.toString());
@@ -1437,7 +1437,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (objeto != null) {
 					objeto.ordenarInstrucoes();
 					for (Instrucao i : objeto.getInstrucoes()) {
-						if (!Util.estaVazio(i.getValor()) && !i.isComoFiltro()) {
+						if (!Util.isEmpty(i.getValor()) && !i.isComoFiltro()) {
 							MenuInstrucao menu = new MenuInstrucao(i);
 							listaMenuInstrucao.add(menu);
 							addMenu(true, menu);
@@ -1505,7 +1505,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
 									false, conexao);
 							instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
-							if (!Util.estaVazio(instrucao)) {
+							if (!Util.isEmpty(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
 							}
 						}
@@ -1545,7 +1545,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (!coletor.estaVazio()) {
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor, true,
 									conexao);
-							if (!Util.estaVazio(instrucao)) {
+							if (!Util.isEmpty(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 							}
 						}
@@ -1585,7 +1585,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false, conexao);
 						instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
-						if (!Util.estaVazio(instrucao)) {
+						if (!Util.isEmpty(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
 						}
 					}
@@ -1618,7 +1618,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							return;
 						}
 						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true, conexao);
-						if (!Util.estaVazio(instrucao)) {
+						if (!Util.isEmpty(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
@@ -1647,7 +1647,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							if (!coletor.estaVazio()) {
 								checarColunaInsertAlternativo(modelo, coletor);
 								String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor);
-								if (!Util.estaVazio(instrucao)) {
+								if (!Util.isEmpty(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 								}
 							}
@@ -1697,7 +1697,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					int[] linhas = tabelaPersistencia.getSelectedRows();
 					if (linhas != null && linhas.length > 0) {
 						Map<String, String> chaves = modelo.getMapaChaves(linhas[0], conexao);
-						if (chaves.isEmpty() || Util.estaVazio(instrucao.getValor())) {
+						if (chaves.isEmpty() || Util.isEmpty(instrucao.getValor())) {
 							return;
 						}
 						Map<String, List<String>> mapaChaves = criar(chaves);
@@ -1841,7 +1841,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							String complementar = complemento ? txtComplemento.getText() : Constantes.VAZIO;
-							String filtro = Util.estaVazio(complementar) ? Constantes.VAZIO
+							String filtro = Util.isEmpty(complementar) ? Constantes.VAZIO
 									: " WHERE 1=1 " + complementar;
 							String[] array = Persistencia.getTotalRegistros(conn,
 									objeto.getTabelaEsquema(conexao) + filtro);
@@ -1875,7 +1875,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void ini(Objeto objeto) {
-				if (!Util.estaVazio(objeto.getBiblioChecagem())) {
+				if (!Util.isEmpty(objeto.getBiblioChecagem())) {
 					addMenuItem(checagemAcao);
 				}
 				if (objeto.getPesquisaAdicaoHierarquico() != null) {
@@ -2018,7 +2018,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					int atual = txtComplemento.getColumns();
 					Object resp = Util.showInputDialog(InternalContainer.this, objeto.getId(),
 							ObjetoMensagens.getString("label.colunas_complemento"), String.valueOf(atual));
-					if (resp != null && !Util.estaVazio(resp.toString())) {
+					if (resp != null && !Util.isEmpty(resp.toString())) {
 						try {
 							int colunas = Util.getInt(resp.toString(), atual);
 							txtComplemento.setColumns(colunas);
@@ -2047,7 +2047,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void destacarColuna() {
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.coluna",
 							Mensagens.getString("label.coluna_outra_coluna"), Constantes.VAZIO);
-					if (resp != null && !Util.estaVazio(resp.toString())) {
+					if (resp != null && !Util.isEmpty(resp.toString())) {
 						destacarColuna(resp.toString(), true);
 					}
 				}
@@ -2060,7 +2060,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void destacarColunaTabela(String nome, boolean like) {
-					if (!Util.estaVazio(nome)) {
+					if (!Util.isEmpty(nome)) {
 						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome.trim(), like);
 						if (coluna != -1) {
 							tabelaPersistencia.destacarColuna(coluna);
@@ -2071,7 +2071,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void selIntervaloRegistro() {
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.intervalo",
 							ObjetoMensagens.getString("msg.selecionar_intervalo_registros"), Constantes.VAZIO);
-					if (resp != null && !Util.estaVazio(resp.toString())) {
+					if (resp != null && !Util.isEmpty(resp.toString())) {
 						selecionar(resp.toString().split(","));
 					}
 				}
@@ -2275,7 +2275,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 									coletor, InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
 								String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela(), coletor);
-								if (!Util.estaVazio(instrucao)) {
+								if (!Util.isEmpty(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 								}
 							}
@@ -2302,7 +2302,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							if (!coletor.estaVazio()) {
 								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor, true,
 										conexao);
-								if (!Util.estaVazio(instrucao)) {
+								if (!Util.isEmpty(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 								}
 							}
@@ -2324,7 +2324,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela(), true, conexao);
-							if (!Util.estaVazio(instrucao)) {
+							if (!Util.isEmpty(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 							}
 						}
@@ -2344,7 +2344,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							String instrucao = getConsulta(conexao, Constantes.VAZIO).toString();
-							if (!Util.estaVazio(instrucao)) {
+							if (!Util.isEmpty(instrucao)) {
 								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
 						}
@@ -2373,7 +2373,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						boolean quebrar = false;
 						for (Relacao relacao : relacoes) {
 							String frag = relacao.montarJoin();
-							if (!Util.estaVazio(frag)) {
+							if (!Util.isEmpty(frag)) {
 								if (bd.length() > 0) {
 									bd.append(Constantes.QL);
 									quebrar = true;
@@ -2430,7 +2430,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							if (sb.length() > 0) {
 								sb.append(", ");
 							}
-							if (!Util.estaVazio(objeto.getApelidoParaJoins())) {
+							if (!Util.isEmpty(objeto.getApelidoParaJoins())) {
 								sb.append(objeto.getApelidoParaJoins() + ".");
 							}
 							sb.append(string);
@@ -2442,7 +2442,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
-							if (!Util.estaVazio(instrucao)) {
+							if (!Util.isEmpty(instrucao)) {
 								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
 						}
@@ -2655,7 +2655,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void adicionar(Map<String, Object> mapaRef, Vinculacao vinculacao, String nome) {
 					Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
-					if (!Util.estaVazio(nome)) {
+					if (!Util.isEmpty(nome)) {
 						pesquisa.setNome(nome);
 					}
 					objeto.addPesquisa(pesquisa);
@@ -2909,7 +2909,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			String complemento = txtComplemento.getText();
 			if (!concatenar) {
 				complemento = Constantes.VAZIO;
-			} else if (!Util.estaVazio(complemento)) {
+			} else if (!Util.isEmpty(complemento)) {
 				complemento = complemento.trim();
 			}
 			txtComplemento.setText(Util.concatenar(complemento, sb.toString()));
@@ -2961,14 +2961,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		public void processarConsulta(String consultaAlter) {
-			if (!Util.estaVazio(consultaAlter)) {
+			if (!Util.isEmpty(consultaAlter)) {
 				processar(Constantes.VAZIO, null, null, consultaAlter);
 			}
 		}
 	}
 
 	public void aplicarConfig(InternalConfig config) {
-		if (!Util.estaVazio(config.getConexao())) {
+		if (!Util.isEmpty(config.getConexao())) {
 			Conexao conexaoSel = getConexaoSel(config.getConexao());
 			if (conexaoSel != null) {
 				comboConexao.setSelectedItem(conexaoSel);
@@ -3009,7 +3009,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private void destacarColunas() {
-		if (!Util.estaVazio(objeto.getDestacaveis())) {
+		if (!Util.isEmpty(objeto.getDestacaveis())) {
 			toolbar.buttonInfo.menuTemp.destacarColuna(objeto.getDestacaveis(), false);
 			tabelaPersistencia.deslocarColuna(objeto.getDestacaveis());
 		}
@@ -3142,7 +3142,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
 				String instrucao = instrucaoCampo.totalValoresQueRepetem();
-				if (!Util.estaVazio(instrucao)) {
+				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
@@ -3154,7 +3154,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
 				String instrucao = instrucaoCampo.totalDoValorMaisRepetido();
-				if (!Util.estaVazio(instrucao)) {
+				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
@@ -3166,7 +3166,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
 				String instrucao = instrucaoCampo.valorRepetidoComESuaQtd();
-				if (!Util.estaVazio(instrucao)) {
+				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
@@ -3178,7 +3178,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
 				String instrucao = instrucaoCampo.valorDistinto();
-				if (!Util.estaVazio(instrucao)) {
+				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
@@ -3190,7 +3190,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
 				String instrucao = instrucaoCampo.valorAgrupado();
-				if (!Util.estaVazio(instrucao)) {
+				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
@@ -3201,7 +3201,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				String instrucao = new Filter(conexao, new String[] { nome }, "MIN", objeto).gerarCompleto();
-				if (!Util.estaVazio(instrucao)) {
+				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
@@ -3212,7 +3212,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				String instrucao = new Filter(conexao, new String[] { nome }, "MAX", objeto).gerarCompleto();
-				if (!Util.estaVazio(instrucao)) {
+				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
@@ -3335,10 +3335,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		@Override
 		public void colocarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
 			String string = "";
-			if (!Util.estaVazio(txtComplemento.getText())) {
+			if (!Util.isEmpty(txtComplemento.getText())) {
 				String[] simNao = getArraySimNao();
 				String opcao = opcaoConcatenar(simNao);
-				if (Util.estaVazio(opcao)) {
+				if (Util.isEmpty(opcao)) {
 					return;
 				}
 				if (simNao[0].equals(opcao)) {
@@ -3346,11 +3346,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 			String prefixo = getPrefixo();
-			if (Util.estaVazio(prefixo)) {
+			if (Util.isEmpty(prefixo)) {
 				return;
 			}
 			String opcao = getOpcao();
-			if (Util.estaVazio(opcao)) {
+			if (Util.isEmpty(opcao)) {
 				return;
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
@@ -3385,10 +3385,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome, Coluna coluna) {
 			String string = Constantes.VAZIO;
-			if (!Util.estaVazio(txtComplemento.getText())) {
+			if (!Util.isEmpty(txtComplemento.getText())) {
 				String[] simNao = getArraySimNao();
 				String opcao = opcaoConcatenar(simNao);
-				if (Util.estaVazio(opcao)) {
+				if (Util.isEmpty(opcao)) {
 					return;
 				}
 				if (simNao[0].equals(opcao)) {
@@ -3396,11 +3396,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 			String prefixo = getPrefixo();
-			if (Util.estaVazio(prefixo)) {
+			if (Util.isEmpty(prefixo)) {
 				return;
 			}
 			String opcao = getOpcao();
-			if (Util.estaVazio(opcao)) {
+			if (Util.isEmpty(opcao)) {
 				return;
 			}
 			String valor = Constantes.VAZIO;
@@ -3828,7 +3828,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	static Icon iconePesquisa(Pesquisa pesquisa) {
 		String iconeGrupo = pesquisa.getReferencia().getIconeGrupo();
-		return Util.estaVazio(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
+		return Util.isEmpty(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
 	}
 
 	public InternalConfig getInternalConfig() {
@@ -3935,7 +3935,7 @@ class Filter {
 		sb.append(" = (SELECT " + funcao + "(" + campos[0] + ")");
 		sb.append(" FROM ");
 		sb.append(obj.getTabelaEsquema(conexao) + ")");
-		if (campos.length > 1 && !Util.estaVazio(conexao.getLimite())) {
+		if (campos.length > 1 && !Util.isEmpty(conexao.getLimite())) {
 			sb.append(Constantes.QL);
 			sb.append(conexao.getLimite());
 		}

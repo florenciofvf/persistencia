@@ -19,7 +19,7 @@ public class InternalUtil {
 		int total = modelo.getRowCount();
 		for (int i = 0; i < total; i++) {
 			Object obj = modelo.getValueAt(i, coluna);
-			if (obj != null && !Util.estaVazio(obj.toString())) {
+			if (obj != null && !Util.isEmpty(obj.toString())) {
 				referencia.atualizarColetores(obj.toString());
 			}
 		}

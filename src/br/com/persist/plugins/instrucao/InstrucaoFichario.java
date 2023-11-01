@@ -73,7 +73,7 @@ public class InstrucaoFichario extends JTabbedPane {
 	public void setConteudo(String conteudo, String idPagina) {
 		InstrucaoPagina pagina = getPagina(idPagina);
 		if (pagina != null) {
-			if (!Util.estaVazio(conteudo)) {
+			if (!Util.isEmpty(conteudo)) {
 				pagina.textArea.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));

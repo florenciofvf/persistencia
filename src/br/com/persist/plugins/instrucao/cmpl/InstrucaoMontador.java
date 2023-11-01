@@ -31,7 +31,7 @@ public class InstrucaoMontador {
 			return false;
 		}
 		String script = conteudo(file);
-		if (Util.estaVazio(script)) {
+		if (Util.isEmpty(script)) {
 			return false;
 		}
 		InstrucaoAtom lexico = new InstrucaoAtom(script);

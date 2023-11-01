@@ -15,7 +15,7 @@ public class InternalConfig {
 	public InternalConfig(String conexao, String grupo, String tabela) {
 		this.grupo = grupo == null ? "" : grupo;
 		this.conexao = conexao;
-		if (Util.estaVazio(tabela)) {
+		if (Util.isEmpty(tabela)) {
 			throw new IllegalStateException("Tabela vazia.");
 		}
 		this.tabela = tabela;
