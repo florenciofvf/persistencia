@@ -179,7 +179,7 @@ public class AlternativoContainer extends AbstratoContainer {
 
 		private String getValor(String mensagem, String padrao) {
 			Object resp = Util.getValorInputDialog(AlternativoContainer.this, "label.id", mensagem, padrao);
-			if (resp == null || Util.estaVazio(resp.toString())) {
+			if (resp == null || Util.isEmpty(resp.toString())) {
 				return null;
 			}
 			return resp.toString();

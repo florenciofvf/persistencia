@@ -6,7 +6,7 @@ public class Add {
 	private final String nome;
 
 	public Add(String nome) {
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalArgumentException("Nome do objeto vazio.");
 		}
 		this.nome = nome;

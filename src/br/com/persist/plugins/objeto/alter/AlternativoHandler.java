@@ -31,7 +31,7 @@ class AlternativoHandler extends XMLHandler {
 			selecionado = null;
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();
-			if (!Util.estaVazio(string)) {
+			if (!Util.isEmpty(string)) {
 				selecionado.setValor(string.trim());
 			}
 			limpar();

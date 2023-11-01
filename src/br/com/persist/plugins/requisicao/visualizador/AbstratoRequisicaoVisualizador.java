@@ -23,21 +23,21 @@ public abstract class AbstratoRequisicaoVisualizador implements RequisicaoVisual
 
 	@Override
 	public void adicionarMime(String mime) {
-		if (!Util.estaVazio(mime)) {
+		if (!Util.isEmpty(mime)) {
 			mimes.add(mime.trim());
 		}
 	}
 
 	@Override
 	public void excluirMime(String mime) {
-		if (!Util.estaVazio(mime)) {
+		if (!Util.isEmpty(mime)) {
 			mimes.remove(mime.trim());
 		}
 	}
 
 	@Override
 	public boolean contemMime(String mime) {
-		if (!Util.estaVazio(mime)) {
+		if (!Util.isEmpty(mime)) {
 			return mimes.contains(mime.trim());
 		}
 		return false;

@@ -3,7 +3,7 @@ package br.com.persist.abstrato;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-public class AbstratoMensagens {
+public abstract class AbstratoMensagens {
 	public static final ResourceBundle bundle = ResourceBundle
 			.getBundle(AbstratoMensagens.class.getPackage().getName() + ".mensagens");
 

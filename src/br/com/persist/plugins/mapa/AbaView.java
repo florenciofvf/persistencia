@@ -109,7 +109,7 @@ public class AbaView extends Panel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				panelView.localizar(txtPesquisa.getText());
 			}
 		}

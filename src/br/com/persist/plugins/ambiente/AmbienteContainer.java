@@ -104,7 +104,7 @@ public class AmbienteContainer extends AbstratoContainer {
 	}
 
 	private void abrir(String conteudo) {
-		if (!Util.estaVazio(conteudo)) {
+		if (!Util.isEmpty(conteudo)) {
 			textArea.setText(conteudo);
 			return;
 		}
@@ -158,7 +158,7 @@ public class AmbienteContainer extends AbstratoContainer {
 		private void pesquisarGeral() {
 			Object resp = Util.getValorInputDialog(AmbienteContainer.this, "label.atencao",
 					AmbienteMensagens.getString("label.pesquisa_geral"), null);
-			if (resp != null && !Util.estaVazio(resp.toString())) {
+			if (resp != null && !Util.isEmpty(resp.toString())) {
 				pesquisaGeral(resp.toString());
 			}
 		}
@@ -284,7 +284,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPesquisaLocal.isSelected()) {
 					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 					selecao.selecionar(label);
@@ -294,7 +294,7 @@ public class AmbienteContainer extends AbstratoContainer {
 				StringBuilder sb = new StringBuilder();
 				for (String arquivo : arquivos) {
 					String resultado = Util.pesquisar(new File(fileParent, arquivo), txtPesquisa.getText());
-					if (!Util.estaVazio(resultado)) {
+					if (!Util.isEmpty(resultado)) {
 						if (sb.length() > 0) {
 							sb.append(Constantes.QL);
 						}
@@ -311,13 +311,13 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		private void pesquisaGeral(String pesquisado) {
 			File[] arquivos = fileParent.listFiles();
-			if (arquivos == null || Util.estaVazio(pesquisado)) {
+			if (arquivos == null || Util.isEmpty(pesquisado)) {
 				return;
 			}
 			StringBuilder sb = new StringBuilder();
 			for (File arquivo : arquivos) {
 				String resultado = Util.pesquisar(arquivo, pesquisado);
-				if (!Util.estaVazio(resultado)) {
+				if (!Util.isEmpty(resultado)) {
 					if (sb.length() > 0) {
 						sb.append(Constantes.QL);
 					}

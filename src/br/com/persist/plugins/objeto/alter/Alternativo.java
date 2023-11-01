@@ -10,10 +10,10 @@ public class Alternativo {
 	private String valor;
 
 	public Alternativo(String resumo, String grupo) {
-		if (Util.estaVazio(resumo)) {
+		if (Util.isEmpty(resumo)) {
 			throw new IllegalArgumentException("Resumo nulo.");
 		}
-		if (Util.estaVazio(grupo)) {
+		if (Util.isEmpty(grupo)) {
 			throw new IllegalArgumentException("Grupo nulo.");
 		}
 		this.resumo = resumo;
@@ -48,7 +48,7 @@ public class Alternativo {
 	}
 
 	public boolean isValido() {
-		return !Util.estaVazio(resumo) && !Util.estaVazio(grupo);
+		return !Util.isEmpty(resumo) && !Util.isEmpty(grupo);
 	}
 
 	public void setValor(String valor) {
@@ -56,7 +56,7 @@ public class Alternativo {
 	}
 
 	public String getValor() {
-		if (Util.estaVazio(valor)) {
+		if (Util.isEmpty(valor)) {
 			valor = Constantes.VAZIO;
 		}
 		return valor;
