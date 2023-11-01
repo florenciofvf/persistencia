@@ -140,13 +140,13 @@ public class Container {
 
 	public String getChaveEditor() {
 		String editor = getValorAtributo("editor");
-		if (!Util.estaVazio(editor)) {
+		if (!Util.isEmpty(editor)) {
 			return editor;
 		}
 		Container container = pai;
 		while (container != null) {
 			editor = container.getValorAtributo("editor");
-			if (!Util.estaVazio(editor)) {
+			if (!Util.isEmpty(editor)) {
 				return editor;
 			}
 			container = container.pai;

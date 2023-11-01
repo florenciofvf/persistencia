@@ -354,7 +354,7 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected void copiarMensagem(String string) {
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			labelTextTemp.mensagemChave("msg.copiado");
 		}
 	}
@@ -364,7 +364,7 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	public void copiar2Mensagem(String string) {
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			labelTextTemp2.mensagemChave("msg.copiado");
 		}
 	}

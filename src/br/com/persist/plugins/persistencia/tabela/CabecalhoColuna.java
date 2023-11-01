@@ -111,7 +111,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		}
 
 		private void restaurar() {
-			if (!Util.estaVazio(filtroString)) {
+			if (!Util.isEmpty(filtroString)) {
 				setIcon(Icones.OLHO);
 			}
 		}
@@ -136,7 +136,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 			String string = filtro.filtroString;
 			setLayout(new BorderLayout());
 			this.filtro = filtro;
-			if (Util.estaVazio(string)) {
+			if (Util.isEmpty(string)) {
 				string = "AND " + filtro.coluna + " IN ()";
 			}
 			add(BorderLayout.CENTER, textField);

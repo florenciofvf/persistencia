@@ -44,7 +44,7 @@ public class DataContainer extends Panel {
 	}
 
 	private void setString(JTextPane area, String string) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return;
 		}
 		area.setText(Constantes.VAZIO);
@@ -102,7 +102,7 @@ public class DataContainer extends Panel {
 
 		@Override
 		protected void aplicar() {
-			if (Util.estaVazio(areaEdicao.getText())) {
+			if (Util.isEmpty(areaEdicao.getText())) {
 				return;
 			}
 			String string = Util.getString(areaEdicao);

@@ -165,7 +165,7 @@ public class ConexaoContainer extends AbstratoContainer {
 			StringBuilder builder = new StringBuilder();
 			for (ConexaoInfo info : lista) {
 				builder.append("PAGINA: " + info.getNomeAba() + Constantes.QL);
-				if (!Util.estaVazio(info.getConexaoFile())) {
+				if (!Util.isEmpty(info.getConexaoFile())) {
 					builder.append("ARQUIVO: " + info.getConexaoFile() + Constantes.QL);
 				}
 				builder.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
@@ -242,7 +242,7 @@ public class ConexaoContainer extends AbstratoContainer {
 		private String getValor(String padrao) {
 			Object resp = Util.getValorInputDialog(ConexaoContainer.this, "label.id",
 					ConexaoMensagens.getString("label.nome_conexao"), padrao);
-			if (resp == null || Util.estaVazio(resp.toString())) {
+			if (resp == null || Util.isEmpty(resp.toString())) {
 				return null;
 			}
 			return resp.toString();

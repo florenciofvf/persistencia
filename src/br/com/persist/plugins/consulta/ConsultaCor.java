@@ -58,7 +58,7 @@ public class ConsultaCor {
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(getClass().getResourceAsStream("consulta")))) {
 			String string = br.readLine();
-			while (!Util.estaVazio(string)) {
+			while (!Util.isEmpty(string)) {
 				lista.add(string);
 				string = br.readLine();
 			}

@@ -11,7 +11,7 @@ public class ConexaoUtil {
 
 	public static Map<String, String> criarMapaTiposFuncoes(String string) {
 		Map<String, String> mapa = new HashMap<>();
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			String[] strings = string.split(";");
 			if (strings != null) {
 				for (String chaveValor : strings) {

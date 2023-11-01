@@ -33,6 +33,6 @@ class Config {
 	}
 
 	boolean comRecurso() {
-		return !Util.estaVazio(recurso);
+		return !Util.isEmpty(recurso);
 	}
 }

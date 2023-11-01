@@ -211,7 +211,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private void abrir(String conteudo) {
-		if (!Util.estaVazio(conteudo)) {
+		if (!Util.isEmpty(conteudo)) {
 			textArea.setText(conteudo);
 			consultaCor.processar(textArea.getStyledDocument());
 			return;
@@ -400,7 +400,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPesquisaLocal.isSelected()) {
 					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 					selecao.selecionar(label);
@@ -410,7 +410,7 @@ public class ConsultaContainer extends AbstratoContainer {
 				StringBuilder sb = new StringBuilder();
 				for (String arquivo : arquivos) {
 					String resultado = Util.pesquisar(new File(fileParent, arquivo), txtPesquisa.getText());
-					if (!Util.estaVazio(resultado)) {
+					if (!Util.isEmpty(resultado)) {
 						if (sb.length() > 0) {
 							sb.append(Constantes.QL);
 						}
@@ -426,7 +426,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		private void colarSemAspas() {
 			String string = Util.getContentTransfered();
-			if (Util.estaVazio(string)) {
+			if (Util.isEmpty(string)) {
 				return;
 			}
 			string = getString(string);
@@ -458,7 +458,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void atualizar() {
-			if (!Util.estaVazio(textArea.getText())) {
+			if (!Util.isEmpty(textArea.getText())) {
 				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 				if (conexao != null) {
 					String consulta = Util.getString(textArea);

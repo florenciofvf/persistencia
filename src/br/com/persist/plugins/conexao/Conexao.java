@@ -26,7 +26,7 @@ public class Conexao {
 	private String limit;
 
 	public Conexao(String nome) {
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalArgumentException("Nome nulo.");
 		}
 		this.nome = nome;
@@ -78,7 +78,7 @@ public class Conexao {
 	}
 
 	public boolean isValido() {
-		return !Util.estaVazio(nome);
+		return !Util.isEmpty(nome);
 	}
 
 	public Conexao clonar(String novoNome) {

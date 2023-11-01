@@ -71,7 +71,7 @@ public class ComplementoContainer extends Panel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			String sel = listaComplementos.getSelectedValue();
-			if (!Util.estaVazio(sel)) {
+			if (!Util.isEmpty(sel)) {
 				String string = textArea.getText();
 				textArea.setText(string + " " + sel);
 			}

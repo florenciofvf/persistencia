@@ -68,7 +68,7 @@ public class Coluna {
 		sb.append(Constantes.TAB + declaracao + Constantes.QL);
 		sb.append(Constantes.TAB + Util.completar("", declaracao.length(), '-') + Constantes.QL);
 
-		if (!Util.estaVazio(funcao)) {
+		if (!Util.isEmpty(funcao)) {
 			sb.append("FUNCAO: " + funcao + Constantes.QL);
 		}
 		sb.append("AUTO_INCREMENTO: " + autoInc + Constantes.QL);
@@ -172,7 +172,7 @@ public class Coluna {
 			return string;
 		}
 		String funcaoMap = conexao.getMapaTiposFuncoes().get(tipo.toLowerCase());
-		if (Util.estaVazio(funcaoMap)) {
+		if (Util.isEmpty(funcaoMap)) {
 			return string;
 		}
 		return Util.replaceAll(funcaoMap, Constantes.SEP + "valor" + Constantes.SEP, string);
