@@ -529,7 +529,7 @@ public class PersistenciaModelo implements TableModel {
 	private void appendCampoValor(String string, StringBuilder campo, StringBuilder valor, Coluna coluna,
 			List<Object> registro, String prefixoNomeTabela, Conexao conexao) {
 		campo.append(Constantes.TAB + string + coluna.getNome() + Constantes.QL);
-		if (Util.estaVazio(coluna.getSequencia())) {
+		if (Util.isEmpty(coluna.getSequencia())) {
 			if (registro != null) {
 				Object valoR = registro.get(coluna.getIndice());
 				valor.append(Constantes.TAB + string + getValor(coluna, coluna.get(valoR, conexao)) + Constantes.QL);
@@ -545,20 +545,20 @@ public class PersistenciaModelo implements TableModel {
 
 	private void appendNomeColunaPreenchida(Coluna coluna, List<Object> registro, List<String> nomeColunas) {
 		Object valor = registro.get(coluna.getIndice());
-		if (valor != null && !Util.estaVazio(valor.toString())) {
+		if (valor != null && !Util.isEmpty(valor.toString())) {
 			nomeColunas.add(coluna.getNome());
 		}
 	}
 
 	private void contemCampoVazio(Coluna coluna, List<Object> registro, AtomicBoolean atomic) {
 		Object valor = registro.get(coluna.getIndice());
-		if (valor == null || Util.estaVazio(valor.toString())) {
+		if (valor == null || Util.isEmpty(valor.toString())) {
 			atomic.set(true);
 		}
 	}
 
 	private String getValor(Coluna coluna, String valor) {
-		return Util.estaVazio(coluna.getValorAlternativoInsert()) ? valor : coluna.getValorAlternativoInsert();
+		return Util.isEmpty(coluna.getValorAlternativoInsert()) ? valor : coluna.getValorAlternativoInsert();
 	}
 
 	private String gerarDelete(List<Object> registro, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
@@ -598,15 +598,15 @@ public class PersistenciaModelo implements TableModel {
 	public static String prefixarEsquema(Conexao conexao, String prefixoNomeTabela, String tabela, String apelido) {
 		String esquema = conexao == null ? Constantes.VAZIO : conexao.getEsquema();
 		String prefixoTabela = prefixoNomeTabela == null ? Constantes.VAZIO : prefixoNomeTabela;
-		String resp = (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + prefixoTabela + tabela;
-		if (!Util.estaVazio(apelido)) {
+		String resp = (Util.isEmpty(esquema) ? Constantes.VAZIO : esquema + ".") + prefixoTabela + tabela;
+		if (!Util.isEmpty(apelido)) {
 			resp += " " + apelido;
 		}
 		return resp;
 	}
 
 	public static boolean usarTabelaAlternativa(Conexao conexao, String esquemaAlternativo, String tabelaAlternativa) {
-		if (Util.estaVazio(esquemaAlternativo) || Util.estaVazio(tabelaAlternativa)) {
+		if (Util.isEmpty(esquemaAlternativo) || Util.isEmpty(tabelaAlternativa)) {
 			return false;
 		}
 		return esquemaAlternativo.equalsIgnoreCase(conexao.getEsquema());
@@ -631,7 +631,7 @@ public class PersistenciaModelo implements TableModel {
 	}
 
 	public String getPrefixoNomeTabela() {
-		if (Util.estaVazio(prefixoNomeTabela)) {
+		if (Util.isEmpty(prefixoNomeTabela)) {
 			prefixoNomeTabela = Constantes.VAZIO;
 		}
 		return prefixoNomeTabela;

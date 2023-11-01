@@ -26,7 +26,7 @@ public class ObjetoUtil {
 
 	public static Map<String, List<String>> criarMapaCampoNomes(String string) {
 		Map<String, List<String>> mapa = new HashMap<>();
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			String[] strings = string.split(";");
 			if (strings != null) {
 				for (String s : strings) {
@@ -56,7 +56,7 @@ public class ObjetoUtil {
 
 	public static Map<String, String> criarMapaSequencias(String string) {
 		Map<String, String> mapa = new HashMap<>();
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			String[] strings = string.split(";");
 			if (strings != null) {
 				for (String chaveValor : strings) {

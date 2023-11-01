@@ -278,19 +278,19 @@ class PanelQuebraLog extends Panel {
 
 	private void validar() throws QuebraLogException {
 		String origem = txtOrigem.getText();
-		if (Util.estaVazio(origem) || !new File(origem).isFile()) {
+		if (Util.isEmpty(origem) || !new File(origem).isFile()) {
 			txtOrigem.requestFocus();
 			throw new QuebraLogException("err.arquivo_origem");
 		}
 
 		String destino = txtDestino.getText();
-		if (Util.estaVazio(destino) || !new File(destino).isDirectory()) {
+		if (Util.isEmpty(destino) || !new File(destino).isDirectory()) {
 			txtDestino.requestFocus();
 			throw new QuebraLogException("err.arquivo_destino");
 		}
 
 		String total = txtTotal.getText();
-		if (Util.estaVazio(total) || totalInvalido(total)) {
+		if (Util.isEmpty(total) || totalInvalido(total)) {
 			txtTotal.requestFocus();
 			throw new QuebraLogException("err.total");
 		}
@@ -368,7 +368,7 @@ class PanelQuebraLog extends Panel {
 		sb.append(", SIZE=" + QuebraLog.atualizarTamanho(file));
 		labelStatus.setText(sb.toString());
 
-		if (Util.estaVazio(txtDestino.getText())) {
+		if (Util.isEmpty(txtDestino.getText())) {
 			txtDestino.setText(file.getParent());
 		}
 	}

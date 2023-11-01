@@ -22,7 +22,7 @@ public class Pesquisa {
 
 	public Pesquisa(String nome, Referencia ref) {
 		this.referencia = Objects.requireNonNull(ref);
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalStateException("Nome da pesquisa vazia.");
 		}
 		referenciasApos = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Pesquisa {
 	}
 
 	public void setNome(String nome) {
-		if (!Util.estaVazio(nome)) {
+		if (!Util.isEmpty(nome)) {
 			this.nome = nome;
 		}
 	}

@@ -28,7 +28,7 @@ public class Referencia {
 		this.grupo = grupo == null ? "" : grupo.trim();
 		this.campo = campo == null ? "" : campo.trim();
 		coletores = new ArrayList<>();
-		if (Util.estaVazio(tabela)) {
+		if (Util.isEmpty(tabela)) {
 			throw new IllegalStateException("Tabela vazia.");
 		}
 		this.tabela = tabela;
@@ -97,7 +97,7 @@ public class Referencia {
 	}
 
 	static void atributoValor(XMLUtil util, String nome, String valor) {
-		if (!Util.estaVazio(valor)) {
+		if (!Util.isEmpty(valor)) {
 			util.atributo(nome, valor);
 		}
 	}
@@ -255,7 +255,7 @@ public class Referencia {
 
 	public String toString2() {
 		StringBuilder sb = new StringBuilder(tabela + "." + campo);
-		if (!Util.estaVazio(grupo)) {
+		if (!Util.isEmpty(grupo)) {
 			sb.append(" GRUPO=" + grupo);
 		}
 		return sb.toString();
@@ -263,7 +263,7 @@ public class Referencia {
 
 	public String getConcatenar(List<Param> lista) {
 		String string = getConcatenar();
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			for (Param param : lista) {
 				string = Util.replaceAll(string, Constantes.SEP + param.getChave() + Constantes.SEP, param.getValor());
 			}
@@ -272,7 +272,7 @@ public class Referencia {
 	}
 
 	public String getConcatenar() {
-		if (Util.estaVazio(concatenar)) {
+		if (Util.isEmpty(concatenar)) {
 			return Constantes.VAZIO;
 		}
 		return " " + concatenar;

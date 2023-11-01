@@ -6,7 +6,7 @@ public class Ref {
 	private final String nome;
 
 	public Ref(String nome) {
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalArgumentException("Nome da referencia vazia.");
 		}
 		this.nome = nome;

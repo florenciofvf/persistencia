@@ -74,7 +74,7 @@ public class OrdenacaoModelo extends AbstractTableModel {
 			if (sb.length() > 0) {
 				sb.append(", ");
 			}
-			if (!Util.estaVazio(apelido)) {
+			if (!Util.isEmpty(apelido)) {
 				sb.append(apelido + ".");
 			}
 			sb.append(getColumnName(i));
@@ -199,15 +199,15 @@ public class OrdenacaoModelo extends AbstractTableModel {
 			String outra = (String) model.getValueAt(o.indice, coluna);
 
 			if (numero) {
-				Long valor = Util.estaVazio(string) ? 0 : Long.valueOf(string);
-				Long outro = Util.estaVazio(outra) ? 0 : Long.valueOf(outra);
+				Long valor = Util.isEmpty(string) ? 0 : Long.valueOf(string);
+				Long outro = Util.isEmpty(outra) ? 0 : Long.valueOf(outra);
 				if (descendente) {
 					return valor.compareTo(outro);
 				}
 				return outro.compareTo(valor);
 			} else {
-				string = Util.estaVazio(string) ? Constantes.VAZIO : string;
-				outra = Util.estaVazio(outra) ? Constantes.VAZIO : outra;
+				string = Util.isEmpty(string) ? Constantes.VAZIO : string;
+				outra = Util.isEmpty(outra) ? Constantes.VAZIO : outra;
 				if (descendente) {
 					return string.compareTo(outra);
 				}

@@ -9,10 +9,10 @@ public class Param {
 	private String valor;
 
 	public Param(String chave, String rotulo, String valor) {
-		if (Util.estaVazio(chave)) {
+		if (Util.isEmpty(chave)) {
 			throw new IllegalStateException("Chave vazia.");
 		}
-		if (Util.estaVazio(rotulo)) {
+		if (Util.isEmpty(rotulo)) {
 			throw new IllegalStateException("Rotulo vazio.");
 		}
 		this.chave = chave;

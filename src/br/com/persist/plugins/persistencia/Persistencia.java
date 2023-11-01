@@ -459,7 +459,7 @@ public class Persistencia {
 		List<String> lista = new ArrayList<>();
 		for (int i = 1; i <= totalColunas; i++) {
 			String s = rs.getString(i);
-			if (!Util.estaVazio(s)) {
+			if (!Util.isEmpty(s)) {
 				lista.add(s);
 			}
 		}

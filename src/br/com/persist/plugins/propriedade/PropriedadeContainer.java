@@ -193,7 +193,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 		private void gerar() {
 			String string = textArea.getText();
-			if (Util.estaVazio(string)) {
+			if (Util.isEmpty(string)) {
 				painelResultado.setText("Editor vazio.");
 				return;
 			}
@@ -280,7 +280,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {

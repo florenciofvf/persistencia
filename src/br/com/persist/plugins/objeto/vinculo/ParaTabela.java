@@ -46,7 +46,7 @@ public class ParaTabela {
 	final String tabela;
 
 	public ParaTabela(String tabela) {
-		if (Util.estaVazio(tabela)) {
+		if (Util.isEmpty(tabela)) {
 			throw new IllegalStateException("Tabela vazia.");
 		}
 		instrucoes = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ParaTabela {
 	}
 
 	public void addInstrucao(String instrucao) {
-		if (Util.estaVazio(instrucao)) {
+		if (Util.isEmpty(instrucao)) {
 			instrucao = "ALTERE PARA SUA INSTRUCAO";
 		}
 		Instrucao i = new Instrucao("Resumo");
@@ -81,7 +81,7 @@ public class ParaTabela {
 	}
 
 	public void addFiltro(String filtro) {
-		if (Util.estaVazio(filtro)) {
+		if (Util.isEmpty(filtro)) {
 			filtro = "ALTERE PARA SEU FILTRO";
 		}
 		Filtro f = new Filtro("Resumo");
@@ -97,77 +97,77 @@ public class ParaTabela {
 	}
 
 	public void config(Objeto objeto) {
-		if (!Util.estaVazio(clonarAoDestacar)) {
+		if (!Util.isEmpty(clonarAoDestacar)) {
 			objeto.setClonarAoDestacar(Boolean.parseBoolean(clonarAoDestacar));
 		}
-		if (!Util.estaVazio(ajustarAltura)) {
+		if (!Util.isEmpty(ajustarAltura)) {
 			objeto.setAjusteAutoForm(Boolean.parseBoolean(ajustarAltura));
 		}
-		if (!Util.estaVazio(transparente)) {
+		if (!Util.isEmpty(transparente)) {
 			objeto.setTransparente(Boolean.parseBoolean(transparente));
 		}
-		if (!Util.estaVazio(colunaInfo)) {
+		if (!Util.isEmpty(colunaInfo)) {
 			objeto.setColunaInfo(Boolean.parseBoolean(colunaInfo));
 		}
-		if (!Util.estaVazio(destacavel)) {
+		if (!Util.isEmpty(destacavel)) {
 			objeto.setAbrirAuto(Boolean.parseBoolean(destacavel));
 		}
-		if (!Util.estaVazio(linkAuto)) {
+		if (!Util.isEmpty(linkAuto)) {
 			objeto.setLinkAuto(Boolean.parseBoolean(linkAuto));
 		}
-		if (!Util.estaVazio(larguraRotulos)) {
+		if (!Util.isEmpty(larguraRotulos)) {
 			objeto.setLarguraRotulos(Boolean.parseBoolean(larguraRotulos));
 		}
-		if (!Util.estaVazio(prefixoNomeTabela)) {
+		if (!Util.isEmpty(prefixoNomeTabela)) {
 			objeto.setPrefixoNomeTabela(prefixoNomeTabela);
 		}
-		if (!Util.estaVazio(selectAlternativo)) {
+		if (!Util.isEmpty(selectAlternativo)) {
 			objeto.setSelectAlternativo(selectAlternativo);
 		}
-		if (!Util.estaVazio(bpnt)) {
+		if (!Util.isEmpty(bpnt)) {
 			objeto.setBpnt(Boolean.parseBoolean(bpnt));
 		}
-		if (!Util.estaVazio(finalConsulta)) {
+		if (!Util.isEmpty(finalConsulta)) {
 			objeto.setFinalConsulta(finalConsulta);
 		}
-		if (!Util.estaVazio(apelido)) {
+		if (!Util.isEmpty(apelido)) {
 			objeto.setApelidoParaJoins(apelido);
 		}
-		if (!Util.estaVazio(biblioChecagem)) {
+		if (!Util.isEmpty(biblioChecagem)) {
 			objeto.setBiblioChecagem(biblioChecagem);
 		}
 		config2(objeto);
 	}
 
 	private void config2(Objeto objeto) {
-		if (!Util.estaVazio(esquemaAlternativo)) {
+		if (!Util.isEmpty(esquemaAlternativo)) {
 			objeto.setEsquemaAlternativo(esquemaAlternativo);
 		}
-		if (!Util.estaVazio(tabelaAlternativo)) {
+		if (!Util.isEmpty(tabelaAlternativo)) {
 			objeto.setTabelaAlternativo(tabelaAlternativo);
 		}
-		if (!Util.estaVazio(sane)) {
+		if (!Util.isEmpty(sane)) {
 			objeto.setSane(Boolean.parseBoolean(sane));
 		}
-		if (!Util.estaVazio(ccsc)) {
+		if (!Util.isEmpty(ccsc)) {
 			objeto.setCcsc(Boolean.parseBoolean(ccsc));
 		}
-		if (!Util.estaVazio(complemento)) {
+		if (!Util.isEmpty(complemento)) {
 			objeto.setComplemento(complemento);
 		}
-		if (!Util.estaVazio(classBiblio)) {
+		if (!Util.isEmpty(classBiblio)) {
 			objeto.setClassBiblio(classBiblio);
 		}
-		if (!Util.estaVazio(destacaveis)) {
+		if (!Util.isEmpty(destacaveis)) {
 			objeto.setDestacaveis(destacaveis);
 		}
-		if (!Util.estaVazio(campoNomes)) {
+		if (!Util.isEmpty(campoNomes)) {
 			objeto.setChaveamento(campoNomes);
 		}
-		if (!Util.estaVazio(mapeamento)) {
+		if (!Util.isEmpty(mapeamento)) {
 			objeto.setMapeamento(mapeamento);
 		}
-		if (!Util.estaVazio(sequencias)) {
+		if (!Util.isEmpty(sequencias)) {
 			objeto.setSequencias(sequencias);
 		}
 		if (corFonte != null) {
@@ -176,23 +176,23 @@ public class ParaTabela {
 		if (corFundo != null) {
 			objeto.setCor(corFundo);
 		}
-		if (!Util.estaVazio(orderBy)) {
+		if (!Util.isEmpty(orderBy)) {
 			objeto.setOrderBy(orderBy);
 		}
-		if (!Util.estaVazio(tabelas)) {
+		if (!Util.isEmpty(tabelas)) {
 			objeto.setTabelas(tabelas);
 		}
 		config3(objeto);
 	}
 
 	private void config3(Objeto objeto) {
-		if (!Util.estaVazio(chaves)) {
+		if (!Util.isEmpty(chaves)) {
 			objeto.setChaves(chaves);
 		}
-		if (!Util.estaVazio(joins)) {
+		if (!Util.isEmpty(joins)) {
 			objeto.setJoins(joins);
 		}
-		if (!Util.estaVazio(grupo)) {
+		if (!Util.isEmpty(grupo)) {
 			objeto.setGrupo(grupo);
 		}
 		if (icone != null) {

@@ -71,13 +71,13 @@ public class Preferencias {
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
-		if (Util.estaVazio(formFichaDialogo)) {
+		if (Util.isEmpty(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
 		}
-		if (Util.estaVazio(formDialogo)) {
+		if (Util.isEmpty(formDialogo)) {
 			formDialogo = "FORM,DIALOG";
 		}
-		if (Util.estaVazio(formFicha)) {
+		if (Util.isEmpty(formFicha)) {
 			formFicha = "FORM,FICHA";
 		}
 		abrirOutras();
