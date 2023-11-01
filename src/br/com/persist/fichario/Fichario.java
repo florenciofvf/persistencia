@@ -444,7 +444,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
-				while (!Util.estaVazio(linha)) {
+				while (!Util.isEmpty(linha)) {
 					linhas.add(linha);
 					linha = br.readLine();
 				}

@@ -369,7 +369,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	}
 
 	private static boolean configComplemento(Conexao conexao, Objeto objeto) {
-		return !Util.estaVazio(conexao.getFiltro()) && Util.estaVazio(objeto.getComplemento());
+		return !Util.isEmpty(conexao.getFiltro()) && Util.isEmpty(objeto.getComplemento());
 	}
 
 	private void criarAdicionarInternaFormulario(Point point, boolean buscaAuto, InternalConfig config,

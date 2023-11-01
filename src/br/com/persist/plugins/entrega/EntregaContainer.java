@@ -195,7 +195,7 @@ public class EntregaContainer extends AbstratoContainer {
 		protected void novo() {
 			Object resp = Util.getValorInputDialog(EntregaContainer.this, "label.id",
 					Mensagens.getString("label.nome_arquivo"), Constantes.VAZIO);
-			if (resp == null || Util.estaVazio(resp.toString())) {
+			if (resp == null || Util.isEmpty(resp.toString())) {
 				return;
 			}
 			String nome = resp.toString();

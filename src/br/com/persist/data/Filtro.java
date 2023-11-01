@@ -37,7 +37,7 @@ public class Filtro {
 			return false;
 		}
 		for (String string : atributos) {
-			if (Util.estaVazio(string) || !objeto.contemAtributo(string)) {
+			if (Util.isEmpty(string) || !objeto.contemAtributo(string)) {
 				return false;
 			}
 		}

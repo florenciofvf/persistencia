@@ -140,7 +140,7 @@ public class Formulario extends JFrame implements SetFormulario {
 	}
 
 	public void adicionarFabrica(String chave, FabricaContainer fabrica) {
-		if (!Util.estaVazio(chave) && fabrica != null) {
+		if (!Util.isEmpty(chave) && fabrica != null) {
 			fabricas.put(chave, fabrica);
 		}
 	}

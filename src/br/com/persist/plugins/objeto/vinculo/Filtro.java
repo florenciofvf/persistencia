@@ -10,14 +10,14 @@ public class Filtro implements Comparable<Filtro> {
 	private int ordem;
 
 	public Filtro(String nome) {
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalStateException();
 		}
 		this.nome = nome;
 	}
 
 	public String getValor() {
-		if (Util.estaVazio(valor)) {
+		if (Util.isEmpty(valor)) {
 			valor = Constantes.VAZIO;
 		}
 		return valor;
@@ -46,7 +46,7 @@ public class Filtro implements Comparable<Filtro> {
 	}
 
 	public void salvar(XMLUtil util, boolean ql) {
-		if (!Util.estaVazio(getValor())) {
+		if (!Util.isEmpty(getValor())) {
 			if (ql) {
 				util.ql();
 			}
