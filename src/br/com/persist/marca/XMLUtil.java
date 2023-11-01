@@ -50,7 +50,7 @@ public class XMLUtil {
 	}
 
 	public XMLUtil atributoCheck(String nome, String valor) {
-		return Util.estaVazio(valor) ? this : print(" " + nome + "=" + citar(valor));
+		return Util.isEmpty(valor) ? this : print(" " + nome + "=" + citar(valor));
 	}
 
 	public XMLUtil atributo(String nome, String valor) {

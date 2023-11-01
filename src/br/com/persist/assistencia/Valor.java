@@ -20,7 +20,7 @@ public class Valor {
 	}
 
 	private static boolean ehNumero(String string) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return false;
 		}
 		for (char c : string.toCharArray()) {

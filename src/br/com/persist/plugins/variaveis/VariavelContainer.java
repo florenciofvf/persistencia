@@ -171,7 +171,7 @@ public class VariavelContainer extends AbstratoContainer {
 		private String getValor(String padrao) {
 			Object resp = Util.getValorInputDialog(VariavelContainer.this, "label.id",
 					VariavelMensagens.getString("label.nome_variavel"), padrao);
-			if (resp == null || Util.estaVazio(resp.toString())) {
+			if (resp == null || Util.isEmpty(resp.toString())) {
 				return null;
 			}
 			return resp.toString();

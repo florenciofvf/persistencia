@@ -92,7 +92,7 @@ public class SetLista {
 
 		public Coletor(String... strings) {
 			for (String string : strings) {
-				if (!Util.estaVazio(string)) {
+				if (!Util.isEmpty(string)) {
 					getLista().add(string);
 				}
 			}
@@ -122,7 +122,7 @@ public class SetLista {
 		}
 
 		public boolean contem(String string) {
-			return !Util.estaVazio(string) && getLista().contains(string);
+			return !Util.isEmpty(string) && getLista().contains(string);
 		}
 	}
 }
@@ -222,7 +222,7 @@ class SetListaModelo extends AbstractListModel<Item> {
 	}
 
 	public void addItem(String string) {
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			Item item = new Item(string, !config.somenteUm);
 			if (!listaItem.contains(item)) {
 				listaItem.add(item);
@@ -352,7 +352,7 @@ class SetListaDialogo extends AbstratoDialogo {
 		private void criarCampo() {
 			Object resp = Util.getValorInputDialog(SetListaDialogo.this, "label.atencao",
 					Mensagens.getString("label.nome"), null);
-			if (resp != null && !Util.estaVazio(resp.toString())) {
+			if (resp != null && !Util.isEmpty(resp.toString())) {
 				criarCampo(resp.toString().trim());
 			}
 		}

@@ -38,7 +38,7 @@ public class TabelaPersistenciaUtil {
 		List<String> resposta = new ArrayList<>();
 		for (int i : linhas) {
 			Object obj = modelo.getValueAt(i, coluna);
-			if (obj != null && !Util.estaVazio(obj.toString())) {
+			if (obj != null && !Util.isEmpty(obj.toString())) {
 				resposta.add(obj.toString());
 			}
 		}

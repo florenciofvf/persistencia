@@ -13,7 +13,7 @@ public class Variavel {
 	}
 
 	public Variavel(String nome, String valor) {
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalArgumentException("Nome nulo.");
 		}
 		this.valor = valor;
@@ -41,7 +41,7 @@ public class Variavel {
 	}
 
 	public boolean isValido() {
-		return !Util.estaVazio(nome) && !Util.estaVazio(valor);
+		return !Util.isEmpty(nome) && !Util.isEmpty(valor);
 	}
 
 	public void setValor(String valor) {
@@ -49,14 +49,14 @@ public class Variavel {
 	}
 
 	public String getValor() {
-		if (Util.estaVazio(valor)) {
+		if (Util.isEmpty(valor)) {
 			valor = Constantes.VAZIO;
 		}
 		return valor;
 	}
 
 	public int getInteiro(int padrao) {
-		if (Util.estaVazio(valor)) {
+		if (Util.isEmpty(valor)) {
 			return padrao;
 		}
 		try {

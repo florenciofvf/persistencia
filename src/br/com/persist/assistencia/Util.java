@@ -72,7 +72,7 @@ public class Util {
 	private Util() {
 	}
 
-	public static boolean estaVazio(String s) {
+	public static boolean isEmpty(String s) {
 		return s == null || s.trim().isEmpty();
 	}
 
@@ -88,7 +88,7 @@ public class Util {
 	}
 
 	public static String soNumeros(String s) {
-		if (estaVazio(s)) {
+		if (isEmpty(s)) {
 			return Constantes.VAZIO;
 		}
 		StringBuilder sb = new StringBuilder();
@@ -105,7 +105,7 @@ public class Util {
 	}
 
 	public static String soLetras(String s) {
-		if (estaVazio(s)) {
+		if (isEmpty(s)) {
 			return Constantes.VAZIO;
 		}
 		StringBuilder sb = new StringBuilder();
@@ -139,7 +139,7 @@ public class Util {
 		List<String> resposta = new ArrayList<>();
 		for (int i : linhas) {
 			Object obj = modelo.getValueAt(i, coluna);
-			if (obj != null && !Util.estaVazio(obj.toString())) {
+			if (obj != null && !Util.isEmpty(obj.toString())) {
 				resposta.add(obj.toString());
 			}
 		}
@@ -608,7 +608,7 @@ public class Util {
 	}
 
 	public static String getValorInputDialog2(Component parent, String mensagem, String[] botoes) {
-		String msg = estaVazio(mensagem) ? Mensagens.getString("label.selecione_opcao") : mensagem;
+		String msg = isEmpty(mensagem) ? Mensagens.getString("label.selecione_opcao") : mensagem;
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
 		int messageType = JOptionPane.INFORMATION_MESSAGE;
 		int optionType = JOptionPane.DEFAULT_OPTION;
@@ -650,7 +650,7 @@ public class Util {
 			boolean apostrofes) {
 		StringBuilder sb = new StringBuilder();
 		for (String string : lista) {
-			if (estaVazio(string)) {
+			if (isEmpty(string)) {
 				continue;
 			}
 			if (sb.length() > 0) {
@@ -667,7 +667,7 @@ public class Util {
 	public static String getStringListaSemVirgula(List<String> lista, boolean apostrofes) {
 		StringBuilder sb = new StringBuilder();
 		for (String string : lista) {
-			if (estaVazio(string)) {
+			if (isEmpty(string)) {
 				continue;
 			}
 			if (sb.length() > 0) {
@@ -741,7 +741,7 @@ public class Util {
 	}
 
 	public static int getInt(String string, int padrao) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return padrao;
 		}
 		try {
@@ -811,7 +811,7 @@ public class Util {
 	}
 
 	public static void selecionarTexto(JTextComponent area, String string) {
-		if (area == null || estaVazio(string)) {
+		if (area == null || isEmpty(string)) {
 			return;
 		}
 		String strArea = area.getText();
@@ -847,7 +847,7 @@ public class Util {
 	}
 
 	private static int getIni(int pos, String string) {
-		if (estaVazio(string) || pos < 1) {
+		if (isEmpty(string) || pos < 1) {
 			return 0;
 		}
 		StringBuilder sb = new StringBuilder(string.substring(0, pos));
@@ -865,11 +865,11 @@ public class Util {
 			return Constantes.VAZIO;
 		}
 		String string = area.getSelectedText();
-		if (estaVazio(string)) {
+		if (isEmpty(string)) {
 			selecionarTexto(area);
 		}
 		string = area.getSelectedText();
-		if (estaVazio(string)) {
+		if (isEmpty(string)) {
 			string = area.getText();
 		}
 		return string;
@@ -877,7 +877,7 @@ public class Util {
 
 	public static void getContentTransfered(JTextComponent area, boolean numeros, boolean letras) {
 		String string = getContentTransfered();
-		if (area == null || estaVazio(string)) {
+		if (area == null || isEmpty(string)) {
 			return;
 		}
 		string = getString(string, numeros, letras);
@@ -921,7 +921,7 @@ public class Util {
 	}
 
 	public static String replaceAll(String string, String atual, String novo) {
-		if (estaVazio(string) || atual == null || novo == null) {
+		if (isEmpty(string) || atual == null || novo == null) {
 			return string;
 		}
 		int indice = 0;
@@ -939,7 +939,7 @@ public class Util {
 	public static void destacar(StyledDocument doc, String pesquisado) {
 		try {
 			String string = doc.getText(0, doc.getLength());
-			if (estaVazio(string) || estaVazio(pesquisado)) {
+			if (isEmpty(string) || isEmpty(pesquisado)) {
 				return;
 			}
 			MutableAttributeSet att = new SimpleAttributeSet();
@@ -1080,7 +1080,7 @@ public class Util {
 	}
 
 	public static boolean criarDiretorio(String string) {
-		if (!estaVazio(string)) {
+		if (!isEmpty(string)) {
 			File file = new File(string);
 			if (file.isDirectory()) {
 				return true;
@@ -1115,7 +1115,7 @@ public class Util {
 	}
 
 	public static String ltrim(String s) {
-		if (Util.estaVazio(s)) {
+		if (Util.isEmpty(s)) {
 			return s;
 		}
 		int i = 0;
@@ -1131,7 +1131,7 @@ public class Util {
 		}
 		StringBuilder sb = new StringBuilder();
 		for (String string : strings) {
-			if (!estaVazio(string)) {
+			if (!isEmpty(string)) {
 				if (sb.length() > 0) {
 					sb.append(' ');
 				}
@@ -1183,7 +1183,7 @@ public class Util {
 	}
 
 	public static int[][] matrizSubsequencia(String strColuna, String strLinha) {
-		if (estaVazio(strColuna) || estaVazio(strLinha)) {
+		if (isEmpty(strColuna) || isEmpty(strLinha)) {
 			return new int[0][0];
 		}
 		int coluna = strColuna.length();

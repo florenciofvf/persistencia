@@ -258,14 +258,14 @@ public class TabelaPersistencia extends JTable {
 	}
 
 	public void deslocarColuna(String string) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return;
 		}
 		TableColumnModel columnModel = getColumnModel();
 		List<TableColumn> lista = new ArrayList<>();
 		String[] strings = string.split(",");
 		for (String str : strings) {
-			if (!Util.estaVazio(str)) {
+			if (!Util.isEmpty(str)) {
 				TableColumn tableColumn = getTableColumn(columnModel, str.trim());
 				if (tableColumn != null) {
 					columnModel.removeColumn(tableColumn);
@@ -294,7 +294,7 @@ public class TabelaPersistencia extends JTable {
 		TableColumn tableColumn = getTableColumn(coluna);
 		int atual = tableColumn.getWidth();
 		Object resp = Util.getValorInputDialog(TabelaPersistencia.this, "label.largura_manual", "" + atual, "" + atual);
-		if (resp == null || Util.estaVazio(resp.toString())) {
+		if (resp == null || Util.isEmpty(resp.toString())) {
 			return;
 		}
 		tableColumn.setPreferredWidth(Util.getInt(resp.toString(), atual));
@@ -588,7 +588,7 @@ public class TabelaPersistencia extends JTable {
 			int maior = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
 			for (int i = 0; i < model.getRowCount(); i++) {
 				Object obj = model.getValueAt(i, coluna);
-				if (obj != null && !Util.estaVazio(obj.toString())) {
+				if (obj != null && !Util.isEmpty(obj.toString())) {
 					int valor = fontMetrics.stringWidth(obj.toString()) + Constantes.TRINTA;
 					if (valor > maior) {
 						maior = valor;
@@ -618,14 +618,14 @@ public class TabelaPersistencia extends JTable {
 			}
 			limparItemMapeamento();
 			String valor = getMapeamento().get(chave.toLowerCase());
-			if (!Util.estaVazio(valor) || !Util.estaVazio(classBiblio)) {
+			if (!Util.isEmpty(valor) || !Util.isEmpty(classBiblio)) {
 				add(separatorInfo);
 			}
-			if (!Util.estaVazio(valor)) {
+			if (!Util.isEmpty(valor)) {
 				itemMapeamento.setText(valor);
 				add(itemMapeamento);
 			}
-			if (!Util.estaVazio(classBiblio)) {
+			if (!Util.isEmpty(classBiblio)) {
 				itemClassBiblio.setToolTipText(classBiblio);
 				itemClassBiblio.setText(getNome(classBiblio));
 				add(itemClassBiblio);
@@ -652,7 +652,7 @@ public class TabelaPersistencia extends JTable {
 
 			private void processar(Menu menu) {
 				String titulo = menu.getText();
-				if (!Util.estaVazio(titulo)) {
+				if (!Util.isEmpty(titulo)) {
 					if (titulo.startsWith(AND)) {
 						titulo = titulo.substring(AND.length());
 					} else {
@@ -664,7 +664,7 @@ public class TabelaPersistencia extends JTable {
 
 			private String get(Menu menu) {
 				String titulo = menu.getText();
-				if (!Util.estaVazio(titulo)) {
+				if (!Util.isEmpty(titulo)) {
 					return titulo.startsWith(AND) ? AND : Constantes.VAZIO;
 				}
 				return Constantes.VAZIO;
@@ -731,7 +731,7 @@ public class TabelaPersistencia extends JTable {
 			private void copiarAtalho(boolean aspas) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String string = Util.getStringLista(lista, ", ", false, aspas);
-				if (!Util.estaVazio(string)) {
+				if (!Util.isEmpty(string)) {
 					Util.setContentTransfered(string);
 					setIcon(Icones.SUCESSO);
 				}
@@ -768,7 +768,7 @@ public class TabelaPersistencia extends JTable {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					String memoria = Util.getContentTransfered();
 					memoria = Util.getString(memoria, numeros, letras);
-					if (aspas && !Util.estaVazio(memoria)) {
+					if (aspas && !Util.isEmpty(memoria)) {
 						memoria = Util.citar(memoria);
 					}
 					if (atalho) {
@@ -793,7 +793,7 @@ public class TabelaPersistencia extends JTable {
 			private void copiarIN(boolean aspas) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String complemento = Util.getStringLista(lista, ", ", false, aspas);
-				if (!Util.estaVazio(complemento)) {
+				if (!Util.isEmpty(complemento)) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					Util.setContentTransfered(processarTitulo.get(MenuIN.this) + coluna + " IN (" + complemento + ")");
 				} else {
@@ -818,7 +818,7 @@ public class TabelaPersistencia extends JTable {
 			private void copiarINDinamico(boolean aspas) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String complemento = Util.getStringLista(lista, ", ", false, aspas);
-				if (!Util.estaVazio(complemento)) {
+				if (!Util.isEmpty(complemento)) {
 					Util.setContentTransfered(
 							processarTitulo.get(MenuItemChaveamento.this) + nomeColuna + " IN (" + complemento + ")");
 				} else {

@@ -69,7 +69,7 @@ public class VinculoHandler extends XMLHandler {
 			}
 		} else if (PARA.equals(qName)) {
 			tabelaSelecionada = attributes.getValue(TABELA);
-			if (!Util.estaVazio(tabelaSelecionada)) {
+			if (!Util.isEmpty(tabelaSelecionada)) {
 				mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> criarParaTabela(tabelaSelecionada, attributes));
 			}
 		} else if (INSTRUCAO.equals(qName)) {
@@ -106,7 +106,7 @@ public class VinculoHandler extends XMLHandler {
 		boolean cf = Boolean.parseBoolean(attributes.getValue("comoFiltro"));
 		i.setComoFiltro(cf);
 		String ordem = attributes.getValue("ordem");
-		if (!Util.estaVazio(ordem)) {
+		if (!Util.isEmpty(ordem)) {
 			i.setOrdem(Integer.parseInt(ordem));
 		}
 		lista.add(i);
@@ -115,7 +115,7 @@ public class VinculoHandler extends XMLHandler {
 	private void addFiltro(Attributes attributes, List<Filtro> lista) {
 		Filtro f = new Filtro(attributes.getValue(NOME));
 		String ordem = attributes.getValue("ordem");
-		if (!Util.estaVazio(ordem)) {
+		if (!Util.isEmpty(ordem)) {
 			f.setOrdem(Integer.parseInt(ordem));
 		}
 		lista.add(f);
@@ -188,7 +188,7 @@ public class VinculoHandler extends XMLHandler {
 
 	private static Color getCorFonte(Attributes attributes) {
 		String corFonte = attributes.getValue(COR_FONTE);
-		if (!Util.estaVazio(corFonte)) {
+		if (!Util.isEmpty(corFonte)) {
 			return Color.decode(corFonte);
 		}
 		return null;
@@ -196,7 +196,7 @@ public class VinculoHandler extends XMLHandler {
 
 	private static Color getCorFundo(Attributes attributes) {
 		String corFonte = attributes.getValue(COR_FUNDO);
-		if (!Util.estaVazio(corFonte)) {
+		if (!Util.isEmpty(corFonte)) {
 			return Color.decode(corFonte);
 		}
 		return null;
@@ -204,7 +204,7 @@ public class VinculoHandler extends XMLHandler {
 
 	private static Color getCorFonte(Map<String, String> attributes) {
 		String corFonte = attributes.get(COR_FONTE);
-		if (!Util.estaVazio(corFonte)) {
+		if (!Util.isEmpty(corFonte)) {
 			return Color.decode(corFonte);
 		}
 		return null;
@@ -232,7 +232,7 @@ public class VinculoHandler extends XMLHandler {
 	private void setValorInstrucao(List<Instrucao> lista) {
 		Instrucao instrucao = lista.get(lista.size() - 1);
 		String string = builder.toString();
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			instrucao.setValor(string.trim());
 		}
 	}
@@ -240,7 +240,7 @@ public class VinculoHandler extends XMLHandler {
 	private void setValorFiltro(List<Filtro> lista) {
 		Filtro filtro = lista.get(lista.size() - 1);
 		String string = builder.toString();
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			filtro.setValor(string.trim());
 		}
 	}

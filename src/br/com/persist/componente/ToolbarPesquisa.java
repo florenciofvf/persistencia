@@ -49,7 +49,7 @@ public class ToolbarPesquisa extends BarraButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (!Util.estaVazio(txtPesquisa.getText())) {
+		if (!Util.isEmpty(txtPesquisa.getText())) {
 			selecao = Util.getSelecao(textPane, selecao, txtPesquisa.getText());
 			selecao.selecionar(label);
 		} else {

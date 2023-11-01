@@ -41,7 +41,7 @@ public class TextArea extends JScrollPane {
 	}
 
 	public boolean estaVazio() {
-		return Util.estaVazio(getText());
+		return Util.isEmpty(getText());
 	}
 
 	public String getSelectedText() {
