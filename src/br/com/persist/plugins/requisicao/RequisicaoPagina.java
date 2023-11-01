@@ -389,7 +389,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			}
 			String string = Util.getString(textArea);
 			Requisicao resp = null;
-			if (!Util.estaVazio(string)) {
+			if (!Util.isEmpty(string)) {
 				FragmentoUtil util = new FragmentoUtil(string);
 				List<String> lista = util.fragmentos();
 				if (lista.size() == 1) {
@@ -431,7 +431,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 
 		private Requisicao criar(String string) {
-			if (Util.estaVazio(string)) {
+			if (Util.isEmpty(string)) {
 				return null;
 			}
 			try {
@@ -460,7 +460,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		private void atualizarVar() {
 			String string = Util.getContentTransfered();
-			if (!Util.estaVazio(string)) {
+			if (!Util.isEmpty(string)) {
 				RequisicaoVisualizadorHeader.setAccesToken(string);
 			}
 		}
@@ -500,7 +500,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		protected void colar(boolean numeros, boolean letras) {
 			if (chkModoTabela.isSelected()) {
 				String string = Util.getContentTransfered();
-				if (!Util.estaVazio(string)) {
+				if (!Util.isEmpty(string)) {
 					tabela.adicionar(criar(string));
 				}
 			} else {
@@ -510,7 +510,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
@@ -588,7 +588,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public void formatar() {
-		if (!Util.estaVazio(textArea.getText())) {
+		if (!Util.isEmpty(textArea.getText())) {
 			String string = Util.getString(textArea);
 			conteudoJson(string, "formatar()");
 			textArea.requestFocus();
@@ -596,7 +596,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public void base64() {
-		if (!Util.estaVazio(textArea.getText())) {
+		if (!Util.isEmpty(textArea.getText())) {
 			String string = Util.getString(textArea);
 			conteudoTexto(Base64Util.criarBase64(string), "base64()");
 			textArea.requestFocus();
@@ -604,7 +604,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public void retornar64() {
-		if (!Util.estaVazio(textArea.getText())) {
+		if (!Util.isEmpty(textArea.getText())) {
 			String string = Util.getString(textArea);
 			try {
 				conteudoTexto(Base64Util.retornarBase64(string), "retornar64()");
@@ -627,7 +627,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void conteudoTexto(String string, String uri) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return;
 		}
 		try {
@@ -639,7 +639,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void conteudoJson(String string, String uri) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return;
 		}
 		try {
@@ -664,7 +664,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
 		} else {
-			if (!Util.estaVazio(textArea.getText())) {
+			if (!Util.isEmpty(textArea.getText())) {
 				String string = Util.getString(textArea);
 				processar(string);
 			}
@@ -710,11 +710,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 	@Override
 	public void processarRota(String rota, String link) {
-		if (Util.estaVazio(rota) || Util.estaVazio(link)) {
+		if (Util.isEmpty(rota) || Util.isEmpty(link)) {
 			return;
 		}
 		String valor = requisicaoRota.getValor(rota);
-		if (Util.estaVazio(valor)) {
+		if (Util.isEmpty(valor)) {
 			return;
 		}
 		try {
@@ -748,7 +748,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
 		} else {
-			if (!Util.estaVazio(textArea.getText())) {
+			if (!Util.isEmpty(textArea.getText())) {
 				String string = Util.getString(textArea);
 				adicionarRota(rota, string);
 			}

@@ -91,7 +91,7 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	}
 
 	private void totalElementos(JTextPane textPane) {
-		if (!Util.estaVazio(textPane.getText())) {
+		if (!Util.isEmpty(textPane.getText())) {
 			try {
 				Tipo json = parser.parse(textPane.getText());
 				if (json instanceof Array) {
@@ -107,14 +107,14 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	}
 
 	private void filtrarComAtributo(Tipo json, JTextPane textPane, TextField textField) {
-		if ((json instanceof Objeto || json instanceof Array) && !Util.estaVazio(textField.getText())) {
+		if ((json instanceof Objeto || json instanceof Array) && !Util.isEmpty(textField.getText())) {
 			String[] atributos = textField.getText().split(",");
 			filtrarComAtributos(json.clonar(), atributos, textPane);
 		}
 	}
 
 	private void filtrarSemAtributo(Tipo json, JTextPane textPane, TextField textField) {
-		if ((json instanceof Objeto || json instanceof Array) && !Util.estaVazio(textField.getText())) {
+		if ((json instanceof Objeto || json instanceof Array) && !Util.isEmpty(textField.getText())) {
 			String[] atributos = textField.getText().split(",");
 			filtrarSemAtributos(json.clonar(), atributos, textPane);
 		}

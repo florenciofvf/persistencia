@@ -54,7 +54,7 @@ public class RequisicaoPoolVisualizador {
 	}
 
 	private void processar(String string) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return;
 		}
 		if (string.charAt(0) == '\t' && selecionado != null) {

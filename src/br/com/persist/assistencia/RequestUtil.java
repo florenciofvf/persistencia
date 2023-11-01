@@ -19,7 +19,7 @@ public class RequestUtil {
 		if (objeto != null) {
 			Tipo tipoUrl = objeto.getValor("url");
 			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
-			if (Util.estaVazio(url)) {
+			if (Util.isEmpty(url)) {
 				return null;
 			}
 			Map<String, String> requestHeader = getRequestHeader(objeto);
@@ -80,13 +80,13 @@ public class RequestUtil {
 	}
 
 	private static void checkDoOutput(String parametros, URLConnection conn, String verbo) {
-		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
+		if ("POST".equalsIgnoreCase(verbo) && !Util.isEmpty(parametros)) {
 			conn.setDoOutput(true);
 		}
 	}
 
 	private static void post(String parametros, URLConnection conn, String verbo) throws IOException {
-		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
+		if ("POST".equalsIgnoreCase(verbo) && !Util.isEmpty(parametros)) {
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 			osw.write(parametros);
 			osw.flush();

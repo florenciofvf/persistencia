@@ -59,9 +59,9 @@ public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 					return;
 				}
 				String desc = e.getDescription();
-				if (!Util.estaVazio(desc)) {
+				if (!Util.isEmpty(desc)) {
 					String rota = getRequisicaoRota().getStringRota(desc);
-					if (!Util.estaVazio(rota)) {
+					if (!Util.isEmpty(rota)) {
 						getRequisicaoVisualizadorListener().processarRota(rota, desc);
 						return;
 					}
@@ -73,7 +73,7 @@ public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 		private void processarLink(JEditorPane pane, String desc) {
 			URL url = null;
 			Object resp = Util.getValorInputDialog(null, "label.atencao", "Complete a URL", desc);
-			if (resp != null && !Util.estaVazio(resp.toString())) {
+			if (resp != null && !Util.isEmpty(resp.toString())) {
 				try {
 					url = new URL(resp.toString().trim());
 				} catch (Exception ex) {

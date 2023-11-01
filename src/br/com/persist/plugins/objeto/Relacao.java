@@ -58,7 +58,7 @@ public class Relacao implements Runnable {
 	}
 
 	public String montarJoin() {
-		if (Util.estaVazio(getChaveOrigem()) || Util.estaVazio(getChaveDestino())) {
+		if (Util.isEmpty(getChaveOrigem()) || Util.isEmpty(getChaveDestino())) {
 			return Constantes.VAZIO;
 		}
 		StringBuilder sb = new StringBuilder(" ON");
@@ -296,7 +296,7 @@ public class Relacao implements Runnable {
 		util.atributoCheck("quebrado", quebrado);
 		util.atributo("cor", cor.getRGB());
 		util.fecharTag();
-		if (!Util.estaVazio(getDescricao())) {
+		if (!Util.isEmpty(getDescricao())) {
 			util.abrirTag2("desc");
 			util.conteudo("<![CDATA[").ql();
 			util.tab().conteudo(getDescricao()).ql();
@@ -557,7 +557,7 @@ public class Relacao implements Runnable {
 	}
 
 	public String getChaveDestino() {
-		if (Util.estaVazio(chaveDestino)) {
+		if (Util.isEmpty(chaveDestino)) {
 			chaveDestino = Constantes.VAZIO;
 		}
 		return chaveDestino;
@@ -568,7 +568,7 @@ public class Relacao implements Runnable {
 	}
 
 	public String getChaveOrigem() {
-		if (Util.estaVazio(chaveOrigem)) {
+		if (Util.isEmpty(chaveOrigem)) {
 			chaveOrigem = Constantes.VAZIO;
 		}
 		return chaveOrigem;

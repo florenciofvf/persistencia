@@ -19,7 +19,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 	}
 
 	public static void setAccesToken(String accessToken) {
-		if (!Util.estaVazio(accessToken)) {
+		if (!Util.isEmpty(accessToken)) {
 			Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
 			if (vAccessToken == null) {
 				VariavelProvedor.adicionar(RequisicaoConstantes.VAR_ACCESS_TOKEN, accessToken);
@@ -30,7 +30,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 	}
 
 	protected void setVarAuthToken(String varAuthToken, String string) {
-		if (Util.estaVazio(varAuthToken) || Util.estaVazio(string)) {
+		if (Util.isEmpty(varAuthToken) || Util.isEmpty(string)) {
 			return;
 		}
 		String str = "name=\"authenticity_token\" value=\"";
@@ -49,7 +49,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 	}
 
 	public static void setVarCookie(String varCookie, String cookie) {
-		if (Util.estaVazio(varCookie) || Util.estaVazio(cookie)) {
+		if (Util.isEmpty(varCookie) || Util.isEmpty(cookie)) {
 			return;
 		}
 		Variavel var = VariavelProvedor.getVariavel(varCookie);

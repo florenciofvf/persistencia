@@ -22,7 +22,7 @@ public class RequisicaoRota {
 	}
 
 	public String getStringRota(String string) {
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			for (Map.Entry<String, String> entry : rotas.entrySet()) {
 				String chave = entry.getKey();
 				if (string.startsWith(chave)) {
@@ -34,7 +34,7 @@ public class RequisicaoRota {
 	}
 
 	public void adicionar(String chave, String valor) {
-		if (!Util.estaVazio(chave)) {
+		if (!Util.isEmpty(chave)) {
 			rotas.put(chave, valor);
 		}
 	}

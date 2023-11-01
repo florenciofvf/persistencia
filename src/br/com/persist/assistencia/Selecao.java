@@ -14,12 +14,12 @@ public class Selecao implements Busca {
 	int indice;
 
 	public Selecao(JTextComponent component, String string) {
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			this.string = string.toLowerCase();
 		} else {
 			this.string = null;
 		}
-		if (component != null && !Util.estaVazio(component.getText())) {
+		if (component != null && !Util.isEmpty(component.getText())) {
 			this.component = component;
 		} else {
 			this.component = null;

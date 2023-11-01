@@ -76,7 +76,7 @@ public class RequestResult {
 	private String get(List<String> list) {
 		StringBuilder sb = new StringBuilder();
 		for (String string : list) {
-			if (!Util.estaVazio(string)) {
+			if (!Util.isEmpty(string)) {
 				if (sb.length() > 0) {
 					sb.append(" ");
 				}
