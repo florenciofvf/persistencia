@@ -112,7 +112,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtAnexo.getText())) {
+			if (!Util.isEmpty(txtAnexo.getText())) {
 				pesquisa = getPesquisa(anexoTree, pesquisa, txtAnexo.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
 			} else {
@@ -199,7 +199,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 					pw.println(entry.getKey());
 					pw.println(AnexoConstantes.ABRIR_VISIVEL + anexo.isAbrirVisivel());
 					pw.println(AnexoConstantes.PADRAO_ABRIR + anexo.isPadraoAbrir());
-					if (!Util.estaVazio(anexo.getNomeIcone())) {
+					if (!Util.isEmpty(anexo.getNomeIcone())) {
 						pw.println(Constantes.ICONE + anexo.getNomeIcone());
 					}
 					if (anexo.getCorFonte() != null) {
@@ -317,7 +317,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		}
 		Object resp = Util.getValorInputDialog(AnexoContainer.this, "label.renomear", anexo.toString(),
 				anexo.toString());
-		if (resp == null || Util.estaVazio(resp.toString())) {
+		if (resp == null || Util.isEmpty(resp.toString())) {
 			return;
 		}
 		if (anexo.renomear(resp.toString())) {
@@ -378,7 +378,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		Color corFonte = (Color) map.get(Constantes.COR_FONTE);
 		arquivo.setCorFonte(corFonte);
 		String nome = (String) map.get(Constantes.ICONE);
-		if (!Util.estaVazio(nome)) {
+		if (!Util.isEmpty(nome)) {
 			Icon icone = Imagens.getIcon(nome);
 			arquivo.setIcone(icone, nome);
 		}

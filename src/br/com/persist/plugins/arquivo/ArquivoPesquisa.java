@@ -18,7 +18,7 @@ public class ArquivoPesquisa implements Busca {
 		this.arquivoTree = arquivoTree;
 		this.porParte = porParte;
 		this.string = string;
-		if (arquivoTree != null && !Util.estaVazio(string)) {
+		if (arquivoTree != null && !Util.isEmpty(string)) {
 			arquivoTree.preencher(lista, string, porParte);
 		}
 	}

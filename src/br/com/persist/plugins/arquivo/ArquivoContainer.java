@@ -122,7 +122,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtArquivo.getText())) {
+			if (!Util.isEmpty(txtArquivo.getText())) {
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					arquivoTree.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected());

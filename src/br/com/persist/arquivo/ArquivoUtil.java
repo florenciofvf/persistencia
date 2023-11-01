@@ -87,7 +87,7 @@ public class ArquivoUtil {
 
 	public static String getNome(Component c, String padrao) {
 		Object resp = Util.getValorInputDialog(c, "label.id", Mensagens.getString("label.nome_arquivo"), padrao);
-		if (resp == null || Util.estaVazio(resp.toString())) {
+		if (resp == null || Util.isEmpty(resp.toString())) {
 			return null;
 		}
 		return resp.toString();

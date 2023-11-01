@@ -40,7 +40,7 @@ public class ArquivoUtil {
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				while (linha != null) {
-					if (!Util.estaVazio(linha)) {
+					if (!Util.isEmpty(linha)) {
 						lista.add(linha);
 					}
 					linha = br.readLine();

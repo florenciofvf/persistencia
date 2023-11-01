@@ -7,7 +7,7 @@ public class Atributo {
 	private final String valor;
 
 	public Atributo(String nome, String valor) {
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalArgumentException("Nome do atributo vazio.");
 		}
 		this.nome = nome;

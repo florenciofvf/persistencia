@@ -22,7 +22,7 @@ public class ArquivoVinculo {
 	}
 
 	public boolean valido() {
-		return !Util.estaVazio(arquivo);
+		return !Util.isEmpty(arquivo);
 	}
 
 	public void checarDiretorio() {

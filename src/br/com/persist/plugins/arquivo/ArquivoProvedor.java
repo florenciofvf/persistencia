@@ -31,7 +31,7 @@ public class ArquivoProvedor {
 	}
 
 	public static File restaurarStringPersistencia(String stringPersistencia) {
-		if (Util.estaVazio(stringPersistencia)) {
+		if (Util.isEmpty(stringPersistencia)) {
 			return null;
 		}
 		if (stringPersistencia.startsWith(Constantes.SEP)) {

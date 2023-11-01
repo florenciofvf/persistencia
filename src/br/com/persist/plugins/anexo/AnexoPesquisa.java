@@ -18,7 +18,7 @@ public class AnexoPesquisa implements Busca {
 		this.anexoTree = anexoTree;
 		this.porParte = porParte;
 		this.string = string;
-		if (anexoTree != null && !Util.estaVazio(string)) {
+		if (anexoTree != null && !Util.isEmpty(string)) {
 			anexoTree.preencher(lista, string, porParte);
 		}
 	}

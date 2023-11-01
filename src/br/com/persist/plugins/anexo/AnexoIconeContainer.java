@@ -97,7 +97,7 @@ public class AnexoIconeContainer extends Panel {
 
 		private void selecionar() {
 			String string = txtPesquisa.getText();
-			if (Util.estaVazio(string)) {
+			if (Util.isEmpty(string)) {
 				return;
 			}
 			for (LabelIcone icone : listaLabelIcone) {
