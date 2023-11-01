@@ -161,7 +161,7 @@ public class MapeamentoContainer extends AbstratoContainer {
 		private String getValor(String padrao) {
 			Object resp = Util.getValorInputDialog(MapeamentoContainer.this, "label.id",
 					MapeamentoMensagens.getString("label.nome_mapeamento"), padrao);
-			if (resp == null || Util.estaVazio(resp.toString())) {
+			if (resp == null || Util.isEmpty(resp.toString())) {
 				return null;
 			}
 			return resp.toString();

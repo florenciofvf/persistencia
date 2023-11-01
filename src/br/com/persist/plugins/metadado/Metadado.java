@@ -40,7 +40,7 @@ public class Metadado implements Transferable {
 	private String tag;
 
 	public Metadado(String descricao, boolean contabilizavel) {
-		if (Util.estaVazio(descricao)) {
+		if (Util.isEmpty(descricao)) {
 			throw new IllegalArgumentException();
 		}
 		this.contabilizavel = contabilizavel;
@@ -521,7 +521,7 @@ public class Metadado implements Transferable {
 	}
 
 	public String getTag() {
-		if (Util.estaVazio(tag)) {
+		if (Util.isEmpty(tag)) {
 			tag = Constantes.VAZIO;
 		}
 		return tag;

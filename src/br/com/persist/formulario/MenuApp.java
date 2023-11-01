@@ -72,7 +72,7 @@ public class MenuApp {
 	}
 
 	public Icon getIcon() {
-		if (Util.estaVazio(icone)) {
+		if (Util.isEmpty(icone)) {
 			return null;
 		}
 		return Imagens.getIcon(icone);

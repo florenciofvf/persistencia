@@ -145,7 +145,7 @@ public class MapaPagina extends Panel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!Util.estaVazio(txtPesquisa.getText())) {
+				if (!Util.isEmpty(txtPesquisa.getText())) {
 					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 					selecao.selecionar(label);
 				} else {

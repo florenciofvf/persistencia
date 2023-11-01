@@ -18,7 +18,7 @@ public class MetadadoPesquisa implements Busca {
 		this.metadadoTree = metadadoTree;
 		this.porParte = porParte;
 		this.string = string;
-		if (metadadoTree != null && !Util.estaVazio(string)) {
+		if (metadadoTree != null && !Util.isEmpty(string)) {
 			metadadoTree.preencher(lista, string, porParte);
 		}
 	}

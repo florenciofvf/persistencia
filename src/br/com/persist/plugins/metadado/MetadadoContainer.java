@@ -114,7 +114,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	private void checarGetMetadado(Map<String, Object> args) {
 		String nome = (String) args.get(MetadadoEvento.GET_METADADO_OBJETO);
-		if (!Util.estaVazio(nome)) {
+		if (!Util.isEmpty(nome)) {
 			Metadado resposta = metadadoTree.getRaiz().getMetadado(nome);
 			args.put(MetadadoConstantes.METADADO, resposta);
 		}
@@ -149,7 +149,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtMetadado.getText())) {
+			if (!Util.isEmpty(txtMetadado.getText())) {
 				pesquisa = getPesquisa(metadadoTree, pesquisa, txtMetadado.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
 			} else {
@@ -245,7 +245,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			private void localizarCampo() {
 				Object resp = Util.getValorInputDialog(MetadadoContainer.this, "label.atencao",
 						MetadadoMensagens.getString("label.localizar_campo"), null);
-				if (resp != null && !Util.estaVazio(resp.toString())) {
+				if (resp != null && !Util.isEmpty(resp.toString())) {
 					Map<String, Set<String>> map = metadadoTree.localizarCampo(resp.toString().toUpperCase());
 					Util.mensagemFormulario(MetadadoContainer.this, montarString(map));
 				}
@@ -378,7 +378,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, camposExportados, MetadadoConstantes.CAMPOS_EXPORTADOS,
 						MetadadoConstantes.CAMPO_EXPORTADO);
-				if (!Util.estaVazio(conexao.getConstraint())) {
+				if (!Util.isEmpty(conexao.getConstraint())) {
 					List<Metadado> constraints = converterConstraint(
 							Persistencia.listarConstraints(conn, conexao, tabela.getDescricao()));
 					preencher(tabela, constraints, MetadadoConstantes.CONSTRAINTS, MetadadoConstantes.CONSTRAINT);
