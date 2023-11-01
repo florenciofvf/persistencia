@@ -715,7 +715,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private void abrirObjeto(Objeto objeto) {
-			if (Util.estaVazio(objeto.getTabela())) {
+			if (Util.isEmpty(objeto.getTabela())) {
 				popup.configuracaoAcao.actionPerformed(null);
 			} else {
 				Conexao conexao = null;
@@ -726,7 +726,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				if (conexao == null) {
 					conexao = container.getConexaoPadrao();
 				}
-				if (Util.estaVazio(objeto.getArquivo())) {
+				if (Util.isEmpty(objeto.getArquivo())) {
 					criarExternalFormulario(conexao, objeto);
 				} else {
 					abrirArquivo(conexao, objeto, interno);
@@ -853,7 +853,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (checarNomear
 				&& Util.confirmar(ObjetoSuperficie.this, ObjetoMensagens.getString("msg.nomear_arrasto"), false)) {
 			Object resp = Util.getValorInputDialog(ObjetoSuperficie.this, "label.id", id, id);
-			if (resp != null && !Util.estaVazio(resp.toString())) {
+			if (resp != null && !Util.isEmpty(resp.toString())) {
 				id = resp.toString();
 			}
 		}
@@ -1262,7 +1262,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			Util.mensagem(c, ObjetoMensagens.getString("msg.sem_conexao_sel"));
 			return;
 		}
-		if (objeto != null && Util.estaVazio(objeto.getTabela())) {
+		if (objeto != null && Util.isEmpty(objeto.getTabela())) {
 			Util.mensagem(c, ObjetoMensagens.getString("msg.obj_sem_config_tabela", objeto.getId()));
 			return;
 		}
@@ -1384,7 +1384,7 @@ class ThreadTotal extends ThreadComparacao {
 		setItensEnabled(false);
 		int atual = 0;
 		for (Objeto objeto : superficie.objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				try {
 					String[] array = { "0", "0" };
 					String suf = " (" + (++atual) + " / " + total + ")";
@@ -1436,7 +1436,7 @@ class ThreadRecente extends ThreadComparacao {
 		int atual = 0;
 		List<Objeto> novos = new ArrayList<>();
 		for (Objeto objeto : superficie.objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				try {
 					String[] array = { "0", "0" };
 					String suf = " (" + (++atual) + " / " + total + ")";
@@ -1916,7 +1916,7 @@ class SuperficiePopup extends Popup {
 			if (selecionados.size() == Constantes.DOIS) {
 				Objeto objeto1 = selecionados.get(0);
 				Objeto objeto2 = selecionados.get(1);
-				selecionado = !Util.estaVazio(objeto1.getTabela()) && !Util.estaVazio(objeto2.getTabela());
+				selecionado = !Util.isEmpty(objeto1.getTabela()) && !Util.isEmpty(objeto2.getTabela());
 			}
 			setEnabled(selecionado);
 		}
@@ -1967,7 +1967,7 @@ class SuperficiePopup extends Popup {
 			List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(superficie);
 			if (ObjetoSuperficieUtil.getContinua(lista)) {
 				String ajustes = nomeObjetosAjusteAuto(lista);
-				if (!Util.estaVazio(ajustes) && !Util.confirmar(superficie,
+				if (!Util.isEmpty(ajustes) && !Util.confirmar(superficie,
 						ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {
 					return;
 				}
@@ -2051,7 +2051,7 @@ class SuperficiePopup extends Popup {
 		List<Objeto> selecionados = ObjetoSuperficieUtil.getSelecionados(superficie);
 		Objeto objeto = superficie.selecionadoObjeto;
 		String nomeTabela = objeto != null ? objeto.getTabela() : null;
-		boolean comTabela = objetoSelecionado && objeto != null && !Util.estaVazio(nomeTabela);
+		boolean comTabela = objetoSelecionado && objeto != null && !Util.isEmpty(nomeTabela);
 		itemDados.setEnabled(comTabela);
 		itemDados.setObject(itemDados.isEnabled() ? objeto : null);
 		menuDistribuicao.setEnabled(objetoSelecionado);
@@ -2123,12 +2123,12 @@ class MestreDetalhe {
 		}
 		List<String> colunasMestes = internalMestre.getNomeColunas();
 		colunaMestre = selecionarColuna(colunasMestes, "msg.selecione_coluna_mestre", mestre.getId());
-		if (Util.estaVazio(colunaMestre)) {
+		if (Util.isEmpty(colunaMestre)) {
 			return;
 		}
 		List<String> colunasDetalhe = internalDetalhe.getNomeColunas();
 		colunaDetalhe = selecionarColuna(colunasDetalhe, "msg.selecione_coluna_detalhe", detalhe.getId());
-		if (Util.estaVazio(colunaDetalhe)) {
+		if (Util.isEmpty(colunaDetalhe)) {
 			return;
 		}
 		montarInstrucao(tipo, abrirEmForm, conexao, titulo);
@@ -2246,7 +2246,7 @@ class MestreDetalhe {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\nGROUP BY " + colunaMestre());
 		sb.append("\nORDER BY COUNT(" + colunaDetalhe() + ") ASC");
-		if (!Util.estaVazio(conexao.getFiltro())) {
+		if (!Util.isEmpty(conexao.getFiltro())) {
 			sb.append("\n\n--" + conexao.getFiltro());
 			sb.append("\n--ORDER BY " + colunaMestre() + " ASC");
 		} else {

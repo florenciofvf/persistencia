@@ -55,7 +55,7 @@ public class MiscelaniaContainer extends Panel {
 
 	private void chave(StringBuilder builder) {
 		Map<String, List<String>> campoNomes = ObjetoUtil
-				.criarMapaCampoNomes(!Util.estaVazio(objeto.getChaveamento()) ? objeto.getChaveamento()
+				.criarMapaCampoNomes(!Util.isEmpty(objeto.getChaveamento()) ? objeto.getChaveamento()
 						: ObjetoMensagens.getString("hint.chaveamento"));
 		int i = 0;
 		for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
@@ -72,7 +72,7 @@ public class MiscelaniaContainer extends Panel {
 
 	private void mapa(StringBuilder builder) {
 		Map<String, String> campoChave = ObjetoUtil
-				.criarMapaCampoChave(!Util.estaVazio(objeto.getMapeamento()) ? objeto.getMapeamento()
+				.criarMapaCampoChave(!Util.isEmpty(objeto.getMapeamento()) ? objeto.getMapeamento()
 						: ObjetoMensagens.getString("hint.mapeamento"));
 		int i = 0;
 		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
@@ -89,7 +89,7 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	private void seque(StringBuilder builder) {
-		String[] sequencias = !Util.estaVazio(objeto.getSequencias()) ? objeto.getSequencias().split(";")
+		String[] sequencias = !Util.isEmpty(objeto.getSequencias()) ? objeto.getSequencias().split(";")
 				: ObjetoMensagens.getString("hint.sequencias").split(";");
 		for (int i = 0; i < sequencias.length; i++) {
 			if (i > 0) {

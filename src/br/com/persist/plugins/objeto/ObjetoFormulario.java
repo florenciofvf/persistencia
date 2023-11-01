@@ -52,7 +52,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 			boolean circular) {
 		AtomicReference<String> tituloTemp = new AtomicReference<>();
 		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, tituloTemp);
-		if (!Util.estaVazio(tituloTemp.get())) {
+		if (!Util.isEmpty(tituloTemp.get())) {
 			setTitle(tituloTemp.get());
 		}
 	}

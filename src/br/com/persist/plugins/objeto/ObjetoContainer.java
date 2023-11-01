@@ -278,7 +278,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private void destacarObjetos() {
-			if (Util.estaVazio(txtDestacaObjeto.getText())) {
+			if (Util.isEmpty(txtDestacaObjeto.getText())) {
 				ObjetoSuperficieUtil.desativarObjetos(objetoSuperficie);
 			} else {
 				ObjetoSuperficieUtil.ativarObjetos(objetoSuperficie, txtDestacaObjeto.getText());
@@ -286,7 +286,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private void abrirArquivoVinculado() {
-			if (!Util.estaVazio(txtArquivoVinculo.getText())) {
+			if (!Util.isEmpty(txtArquivoVinculo.getText())) {
 				ArquivoVinculo av = new ArquivoVinculo(txtArquivoVinculo.getText().trim());
 				try {
 					ObjetoUtil.abrirArquivoVinculado(ObjetoContainer.this, av);
@@ -308,7 +308,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			}
 
 			private void processar(MouseEvent e) {
-				if (e.isPopupTrigger() && !Util.estaVazio(txtArquivoVinculo.getText())) {
+				if (e.isPopupTrigger() && !Util.isEmpty(txtArquivoVinculo.getText())) {
 					popupArquivoVinculado.show(txtArquivoVinculo, e.getX(), e.getY());
 				}
 			}
@@ -630,7 +630,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 		AtomicReference<String> ref = new AtomicReference<>();
 		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, ref);
-		if (!Util.estaVazio(ref.get())) {
+		if (!Util.isEmpty(ref.get())) {
 			objetoSuperficie.setAjusteAutoEmpilhaForm(true);
 			toolbar.txtArquivoVinculo.setText(ref.get());
 			objetoSuperficie.setAjusteAutoLarguraForm(true);
@@ -667,14 +667,14 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 	private Conexao selecionarConexao(ObjetoColetor coletor, InternalConfig config) {
 		Conexao conexaoSel = null;
-		if (!Util.estaVazio(coletor.getSbConexao().toString())) {
+		if (!Util.isEmpty(coletor.getSbConexao().toString())) {
 			conexaoFile = coletor.getSbConexao().toString();
 			conexaoSel = getConexaoSel(conexaoFile);
 			if (conexaoSel != null) {
 				comboConexao.setSelectedItem(conexaoSel);
 			}
 		}
-		if (config != null && !Util.estaVazio(config.getConexao())) {
+		if (config != null && !Util.isEmpty(config.getConexao())) {
 			conexaoSel = getConexaoSel(config.getConexao());
 			if (conexaoSel != null) {
 				comboConexao.setSelectedItem(conexaoSel);

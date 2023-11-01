@@ -195,7 +195,7 @@ public class ObjetoSuperficieUtil {
 	public static void excluirSemTabela(ObjetoSuperficie superficie) {
 		boolean contem = false;
 		for (Objeto objeto : superficie.objetos) {
-			if (Util.estaVazio(objeto.getTabela())) {
+			if (Util.isEmpty(objeto.getTabela())) {
 				contem = true;
 				break;
 			}
@@ -206,7 +206,7 @@ public class ObjetoSuperficieUtil {
 		}
 		if (Util.confirmaExclusao(superficie, true)) {
 			for (Objeto objeto : superficie.objetos) {
-				if (Util.estaVazio(objeto.getTabela())) {
+				if (Util.isEmpty(objeto.getTabela())) {
 					superficie.excluir(objeto);
 				}
 			}
@@ -220,7 +220,7 @@ public class ObjetoSuperficieUtil {
 	public static int preTotalRecente(ObjetoSuperficie superficie, Label label) {
 		int total = 0;
 		for (Objeto objeto : superficie.objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				objeto.criarMemento();
 				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
 				total++;
@@ -255,7 +255,7 @@ public class ObjetoSuperficieUtil {
 	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie) {
 		List<Objeto> resp = new ArrayList<>();
 		for (Objeto objeto : superficie.objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				resp.add(objeto);
 			}
 		}
@@ -465,7 +465,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void ativarObjetos(ObjetoSuperficie superficie, String string) {
-		if (Util.estaVazio(string)) {
+		if (Util.isEmpty(string)) {
 			return;
 		}
 		string = string.trim().toUpperCase();
@@ -501,7 +501,7 @@ public class ObjetoSuperficieUtil {
 
 	public static boolean getContinua(List<Objeto> lista) {
 		for (Objeto objeto : lista) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				return true;
 			}
 		}

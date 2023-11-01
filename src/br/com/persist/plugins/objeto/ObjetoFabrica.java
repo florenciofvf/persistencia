@@ -136,7 +136,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			ObjetoContainer container = criarObjetoContainer(formulario);
 			AtomicReference<String> tituloTemp = new AtomicReference<>();
 			container.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular, tituloTemp);
-			if (Util.estaVazio(tituloTemp.get())) {
+			if (Util.isEmpty(tituloTemp.get())) {
 				container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
 			}
 			formulario.adicionarPagina(container);
@@ -154,7 +154,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			ObjetoContainer container = criarObjetoContainer(formulario);
 			AtomicReference<String> tituloTemp = new AtomicReference<>();
 			container.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular, tituloTemp);
-			if (Util.estaVazio(tituloTemp.get())) {
+			if (Util.isEmpty(tituloTemp.get())) {
 				container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
 			}
 			formulario.adicionarPagina(container);

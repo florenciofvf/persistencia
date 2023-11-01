@@ -222,7 +222,7 @@ public class Objeto implements Runnable {
 		joins = attr.getValue("joins");
 		id = attr.getValue("id");
 		String strIntervalo = attr.getValue("intervalo");
-		if (!Util.estaVazio(strIntervalo)) {
+		if (!Util.isEmpty(strIntervalo)) {
 			intervalo = Integer.parseInt(strIntervalo);
 		}
 	}
@@ -270,7 +270,7 @@ public class Objeto implements Runnable {
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag();
-		if (!Util.estaVazio(getDescricao())) {
+		if (!Util.isEmpty(getDescricao())) {
 			util.abrirTag2("desc");
 			util.conteudo("<![CDATA[").ql();
 			util.tab().conteudo(getDescricao()).ql();
@@ -367,7 +367,7 @@ public class Objeto implements Runnable {
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
-		if (!Util.estaVazio(complemento)) {
+		if (!Util.isEmpty(complemento)) {
 			complementos.add(complemento);
 		}
 	}
@@ -482,7 +482,7 @@ public class Objeto implements Runnable {
 
 	public void setIcone(String icone) {
 		this.icone = icone;
-		if (Util.estaVazio(this.icone)) {
+		if (Util.isEmpty(this.icone)) {
 			this.icone = Constantes.VAZIO;
 		} else {
 			icon = Imagens.getIcon(this.icone);
@@ -495,7 +495,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getApelidoParaJoins() {
-		if (Util.estaVazio(apelidoParaJoins)) {
+		if (Util.isEmpty(apelidoParaJoins)) {
 			apelidoParaJoins = Constantes.VAZIO;
 		}
 		return apelidoParaJoins;
@@ -506,14 +506,14 @@ public class Objeto implements Runnable {
 	}
 
 	public String getFinalConsulta() {
-		if (Util.estaVazio(finalConsulta)) {
+		if (Util.isEmpty(finalConsulta)) {
 			finalConsulta = Constantes.VAZIO;
 		}
 		return finalConsulta;
 	}
 
 	public String getOrderBy() {
-		if (Util.estaVazio(orderBy)) {
+		if (Util.isEmpty(orderBy)) {
 			orderBy = Constantes.VAZIO;
 		}
 		return orderBy;
@@ -524,35 +524,35 @@ public class Objeto implements Runnable {
 	}
 
 	public String getComplemento() {
-		if (Util.estaVazio(complemento)) {
+		if (Util.isEmpty(complemento)) {
 			complemento = Constantes.VAZIO;
 		}
 		return complemento;
 	}
 
 	public String getClassBiblio() {
-		if (Util.estaVazio(classBiblio)) {
+		if (Util.isEmpty(classBiblio)) {
 			classBiblio = Constantes.VAZIO;
 		}
 		return classBiblio;
 	}
 
 	public String getDestacaveis() {
-		if (Util.estaVazio(destacaveis)) {
+		if (Util.isEmpty(destacaveis)) {
 			destacaveis = Constantes.VAZIO;
 		}
 		return destacaveis;
 	}
 
 	public String getChaves() {
-		if (Util.estaVazio(chaves)) {
+		if (Util.isEmpty(chaves)) {
 			chaves = Constantes.VAZIO;
 		}
 		return chaves;
 	}
 
 	public String getMapeamento() {
-		if (Util.estaVazio(mapeamento)) {
+		if (Util.isEmpty(mapeamento)) {
 			mapeamento = Constantes.VAZIO;
 		}
 		return mapeamento;
@@ -564,7 +564,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getSequencias() {
-		if (Util.estaVazio(sequencias)) {
+		if (Util.isEmpty(sequencias)) {
 			sequencias = Constantes.VAZIO;
 		}
 		return sequencias;
@@ -572,7 +572,7 @@ public class Objeto implements Runnable {
 
 	public String[] getChavesArray() {
 		String chavesTmp = getChaves();
-		if (Util.estaVazio(chavesTmp)) {
+		if (Util.isEmpty(chavesTmp)) {
 			return Constantes.ARRAY_LENGTH_ZERO;
 		}
 		return chavesTmp.trim().split(",");
@@ -592,8 +592,8 @@ public class Objeto implements Runnable {
 
 	public void select(StringBuilder sb, Conexao conexao) {
 		String sel = getSelectAlternativo();
-		if (Util.estaVazio(sel)) {
-			if (!Util.estaVazio(apelidoParaJoins)) {
+		if (Util.isEmpty(sel)) {
+			if (!Util.isEmpty(apelidoParaJoins)) {
 				sb.append("SELECT " + apelidoParaJoins + ".* FROM " + getTabelaEsquema(conexao));
 			} else {
 				sb.append("SELECT * FROM " + getTabelaEsquema(conexao));
@@ -604,21 +604,21 @@ public class Objeto implements Runnable {
 	}
 
 	public String comApelido(String prefixo, String campo) {
-		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(campo)) {
+		if (Util.isEmpty(apelidoParaJoins) || Util.isEmpty(campo)) {
 			return prefixo + " " + campo;
 		}
 		return prefixo + " " + apelidoParaJoins + "." + campo;
 	}
 
 	public String comApelido(String campo) {
-		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(campo)) {
+		if (Util.isEmpty(apelidoParaJoins) || Util.isEmpty(campo)) {
 			return campo;
 		}
 		return apelidoParaJoins + "." + campo;
 	}
 
 	public String semApelido(String string) {
-		if (Util.estaVazio(apelidoParaJoins)) {
+		if (Util.isEmpty(apelidoParaJoins)) {
 			return string;
 		}
 		return Util.replaceAll(string, apelidoParaJoins + ".", "");
@@ -627,7 +627,7 @@ public class Objeto implements Runnable {
 	public void joins(StringBuilder sb, Conexao conexao, String prefixoNomeTabela) {
 		String tabs = getTabelas();
 		String jois = getJoins();
-		if (Util.estaVazio(tabs) || Util.estaVazio(jois)) {
+		if (Util.isEmpty(tabs) || Util.isEmpty(jois)) {
 			return;
 		}
 		String[] tabsArray = tabs.split(",");
@@ -645,9 +645,9 @@ public class Objeto implements Runnable {
 	}
 
 	public void orderBy(StringBuilder sb) {
-		if (!Util.estaVazio(orderBy)) {
+		if (!Util.isEmpty(orderBy)) {
 			sb.append(" ORDER BY ");
-			if (Util.estaVazio(apelidoParaJoins)) {
+			if (Util.isEmpty(apelidoParaJoins)) {
 				sb.append(orderBy);
 			} else {
 				String apelido = apelidoParaJoins + ".";
@@ -674,7 +674,7 @@ public class Objeto implements Runnable {
 	private boolean arrayValido(String... strings) {
 		if (strings != null) {
 			for (String string : strings) {
-				if (!Util.estaVazio(string)) {
+				if (!Util.isEmpty(string)) {
 					return true;
 				}
 			}
@@ -686,7 +686,7 @@ public class Objeto implements Runnable {
 		int i = 0;
 		for (; i < strings.length; i++) {
 			String s = strings[i];
-			if (!Util.estaVazio(s)) {
+			if (!Util.isEmpty(s)) {
 				s = s.trim();
 				insert(sb, s);
 				return ++i;
@@ -706,7 +706,7 @@ public class Objeto implements Runnable {
 	}
 
 	public static void concatenar(StringBuilder builder, String string) {
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			builder.append(" " + string.trim());
 		}
 	}
@@ -720,24 +720,24 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTabela() {
-		if (Util.estaVazio(tabela)) {
+		if (Util.isEmpty(tabela)) {
 			tabela = Constantes.VAZIO;
 		}
 		return tabela;
 	}
 
 	public String getApelidoParaJoinOuTabela() {
-		if (!Util.estaVazio(apelidoParaJoins)) {
+		if (!Util.isEmpty(apelidoParaJoins)) {
 			return apelidoParaJoins;
 		}
-		if (!Util.estaVazio(tabela)) {
+		if (!Util.isEmpty(tabela)) {
 			return tabela;
 		}
 		return Constantes.VAZIO;
 	}
 
 	public String getGrupo() {
-		if (Util.estaVazio(grupo)) {
+		if (Util.isEmpty(grupo)) {
 			grupo = Constantes.VAZIO;
 		}
 		return grupo;
@@ -748,35 +748,35 @@ public class Objeto implements Runnable {
 	}
 
 	public String getSelectAlternativo() {
-		if (Util.estaVazio(selectAlternativo)) {
+		if (Util.isEmpty(selectAlternativo)) {
 			selectAlternativo = Constantes.VAZIO;
 		}
 		return selectAlternativo;
 	}
 
 	public String getTabelas() {
-		if (Util.estaVazio(tabelas)) {
+		if (Util.isEmpty(tabelas)) {
 			tabelas = Constantes.VAZIO;
 		}
 		return tabelas;
 	}
 
 	public String getTabelaAlternativo() {
-		if (Util.estaVazio(tabelaAlternativo)) {
+		if (Util.isEmpty(tabelaAlternativo)) {
 			tabelaAlternativo = Constantes.VAZIO;
 		}
 		return tabelaAlternativo;
 	}
 
 	public String getEsquemaAlternativo() {
-		if (Util.estaVazio(esquemaAlternativo)) {
+		if (Util.isEmpty(esquemaAlternativo)) {
 			esquemaAlternativo = Constantes.VAZIO;
 		}
 		return esquemaAlternativo;
 	}
 
 	public String getJoins() {
-		if (Util.estaVazio(joins)) {
+		if (Util.isEmpty(joins)) {
 			joins = Constantes.VAZIO;
 		}
 		return joins;
@@ -811,7 +811,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void setId(String id) {
-		if (!Util.estaVazio(id)) {
+		if (!Util.isEmpty(id)) {
 			this.id = id;
 		}
 	}
@@ -858,7 +858,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getBiblioChecagem() {
-		if (Util.estaVazio(biblioChecagem)) {
+		if (Util.isEmpty(biblioChecagem)) {
 			biblioChecagem = Constantes.VAZIO;
 		}
 		return biblioChecagem;
@@ -869,7 +869,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getChaveamento() {
-		if (Util.estaVazio(chaveamento)) {
+		if (Util.isEmpty(chaveamento)) {
 			chaveamento = Constantes.VAZIO;
 		}
 		return chaveamento;
@@ -1080,7 +1080,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getPrefixoNomeTabela() {
-		if (Util.estaVazio(prefixoNomeTabela)) {
+		if (Util.isEmpty(prefixoNomeTabela)) {
 			prefixoNomeTabela = Constantes.VAZIO;
 		}
 		return prefixoNomeTabela;
@@ -1106,7 +1106,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getArquivo() {
-		if (Util.estaVazio(arquivo)) {
+		if (Util.isEmpty(arquivo)) {
 			arquivo = Constantes.VAZIO;
 		}
 		return arquivo;

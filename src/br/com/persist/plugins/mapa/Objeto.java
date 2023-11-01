@@ -35,7 +35,7 @@ public class Objeto {
 	int yOrigem;
 
 	public Objeto(String nome) {
-		if (Util.estaVazio(nome)) {
+		if (Util.isEmpty(nome)) {
 			throw new IllegalArgumentException("Nome do objeto vazio.");
 		}
 		referencias = new ArrayList<>();

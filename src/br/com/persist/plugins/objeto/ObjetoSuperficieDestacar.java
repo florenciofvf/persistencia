@@ -28,7 +28,7 @@ public class ObjetoSuperficieDestacar {
 		int x = 10;
 		int y = 10;
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				if (objeto.getReferenciaPesquisa() != null) {
 					objeto.getReferenciaPesquisa().setValidoInvisibilidade(true);
 				}
@@ -48,7 +48,7 @@ public class ObjetoSuperficieDestacar {
 		int x = 10;
 		int y = 10;
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				if (objeto.getReferenciaPesquisa() != null) {
 					objeto.getReferenciaPesquisa().setValidoInvisibilidade(true);
 				}
@@ -63,7 +63,7 @@ public class ObjetoSuperficieDestacar {
 
 	public static void destacarObjetoPagina(List<Objeto> listaObjetos, Conexao conexao, Formulario formulario) {
 		for (Objeto objeto : listaObjetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				Desktop.setComplemento(conexao, objeto);
 				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, false));
 			}
@@ -116,7 +116,7 @@ public class ObjetoSuperficieDestacar {
 		int altura = variavelAltura.getInteiro(Constantes.DUZENTOS);
 		Dimension dimension = new Dimension(largura, altura);
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, dimension);
 				superficie.montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y),
 						false, config);

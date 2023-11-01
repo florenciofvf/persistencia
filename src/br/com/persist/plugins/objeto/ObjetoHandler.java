@@ -71,7 +71,7 @@ public class ObjetoHandler extends XMLHandler {
 		coletor.getDimension().height = Integer.parseInt(attributes.getValue("altura"));
 		coletor.setArquivoVinculo(attributes.getValue("arquivoVinculo"));
 		String conexao = attributes.getValue("conexao");
-		if (!Util.estaVazio(conexao)) {
+		if (!Util.isEmpty(conexao)) {
 			coletor.getSbConexao().append(conexao);
 		}
 	}
@@ -96,7 +96,7 @@ public class ObjetoHandler extends XMLHandler {
 
 	private void setDescricao() {
 		String string = builder.toString();
-		if (!Util.estaVazio(string)) {
+		if (!Util.isEmpty(string)) {
 			if (selecionado instanceof Objeto) {
 				Objeto obj = (Objeto) selecionado;
 				obj.setDescricao(string.trim());

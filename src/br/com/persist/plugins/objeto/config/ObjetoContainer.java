@@ -109,7 +109,7 @@ public class ObjetoContainer extends Panel {
 
 		private void processar(MouseEvent e) {
 			JComponent comp = (JComponent) e.getSource();
-			if (e.isPopupTrigger() && !Util.estaVazio(txtTabela.getText())) {
+			if (e.isPopupTrigger() && !Util.isEmpty(txtTabela.getText())) {
 				popupVinculo.compChave = getCompChave(comp);
 				if (popupVinculo.showValido()) {
 					popupVinculo.show(comp, e.getX(), e.getY());
@@ -412,7 +412,7 @@ public class ObjetoContainer extends Panel {
 		private void actionPerformedCont(ActionEvent e) {
 			if (txtId == e.getSource()) {
 				String id = txtId.getText();
-				if (!Util.estaVazio(id)) {
+				if (!Util.isEmpty(id)) {
 					Objeto obj = new Objeto();
 					obj.setId(id);
 
@@ -881,7 +881,7 @@ public class ObjetoContainer extends Panel {
 		label.setPreferredSize(largura);
 		label.setMinimumSize(largura);
 		label.setMaximumSize(largura);
-		if (!Util.estaVazio(hint)) {
+		if (!Util.isEmpty(hint)) {
 			label.setToolTipText(hint);
 		}
 		linha.add(BorderLayout.CENTER, componente);
@@ -909,7 +909,7 @@ public class ObjetoContainer extends Panel {
 
 		private void copiar() {
 			String string = Util.getString(textField);
-			if (!Util.estaVazio(string)) {
+			if (!Util.isEmpty(string)) {
 				Util.setContentTransfered(string);
 				lblMsg.mensagemChave("msg.copiado");
 			}
@@ -1057,7 +1057,7 @@ public class ObjetoContainer extends Panel {
 			}
 
 			private void corFonteVinculo() {
-				if (Util.estaVazio(txtTabela.getText())) {
+				if (Util.isEmpty(txtTabela.getText())) {
 					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 					return;
 				}
@@ -1129,7 +1129,7 @@ public class ObjetoContainer extends Panel {
 			}
 
 			private void corVinculo() {
-				if (Util.estaVazio(txtTabela.getText())) {
+				if (Util.isEmpty(txtTabela.getText())) {
 					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 					return;
 				}
@@ -1206,13 +1206,13 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void processar(MouseEvent e) {
-			if (e.isPopupTrigger() && !Util.estaVazio(objeto.getIcone())) {
+			if (e.isPopupTrigger() && !Util.isEmpty(objeto.getIcone())) {
 				popup.show(label, e.getX(), e.getY());
 			}
 		}
 
 		private void configIconeVinculo() {
-			if (Util.estaVazio(txtTabela.getText())) {
+			if (Util.isEmpty(txtTabela.getText())) {
 				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 				return;
 			}
