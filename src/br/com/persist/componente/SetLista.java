@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -318,10 +320,12 @@ class SetListaDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, new ScrollPane(lista));
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private Action ordenarAcao = actionIcon("label.ordenar", Icones.ASC_TEXTO);
 		private Action criarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private final CheckBox chkTodos = new CheckBox("label.todos");
+		private final TextField txtPesquisa = new TextField(25);
+		private final CheckBox chkPorParte = new CheckBox(true);
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
@@ -338,9 +342,14 @@ class SetListaDialogo extends AbstratoDialogo {
 				add(label);
 				label.setText(" " + config.mensagem);
 			}
-			chkTodos.setSelected(!config.somenteUm);
+			add(txtPesquisa);
+			add(chkPorParte);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			ordenarAcao.setActionListener(e -> ordenar());
+			chkTodos.setSelected(!config.somenteUm);
+			txtPesquisa.addActionListener(this);
 		}
 
 		private void ordenar() {
@@ -394,6 +403,33 @@ class SetListaDialogo extends AbstratoDialogo {
 			}
 			coletor.setLista(listar);
 			janela.fechar();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			selecionar(false);
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				Item pesquisado = pesquisar(txtPesquisa.getText().toUpperCase(), chkPorParte.isSelected());
+				if (pesquisado != null) {
+					pesquisado.setSelecionado(true);
+					lista.repaint();
+				}
+			}
+		}
+
+		private Item pesquisar(String string, boolean porParte) {
+			ListModel<Item> model = lista.getModel();
+			for (int i = 0; i < model.getSize(); i++) {
+				Item item = model.getElementAt(i);
+				if (item.getRotulo() == null) {
+					continue;
+				}
+				String str = item.getRotulo().toUpperCase();
+				if ((porParte && str.indexOf(string) != -1) || str.equals(string)) {
+					return item;
+				}
+			}
+			return null;
 		}
 	}
 }
