@@ -3,6 +3,7 @@ package br.com.persist.componente;
 import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -192,9 +193,15 @@ class ItemRenderer extends JCheckBox implements ListCellRenderer<Item> {
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Item> list, Item value, int index, boolean isSelected,
 			boolean cellHasFocus) {
-		setBackground(list.getBackground());
-		setForeground(list.getForeground());
+		if (value.isSelecionado()) {
+			setBackground(Color.BLUE);
+			setForeground(Color.WHITE);
+		} else {
+			setBackground(list.getBackground());
+			setForeground(list.getForeground());
+		}
 		setSelected(value.isSelecionado());
+		setOpaque(value.isSelecionado());
 		setText(value.toString());
 		setFont(list.getFont());
 		return this;
@@ -324,7 +331,7 @@ class SetListaDialogo extends AbstratoDialogo {
 		private Action ordenarAcao = actionIcon("label.ordenar", Icones.ASC_TEXTO);
 		private Action criarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private final CheckBox chkTodos = new CheckBox("label.todos");
-		private final TextField txtPesquisa = new TextField(25);
+		private final TextField txtPesquisa = new TextField(19);
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private static final long serialVersionUID = 1L;
 
