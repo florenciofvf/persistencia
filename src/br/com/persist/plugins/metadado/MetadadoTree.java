@@ -176,8 +176,8 @@ public class MetadadoTree extends Tree {
 		private MenuAbrirImportacaoH menuAbrirImportacaoH = new MenuAbrirImportacaoH();
 		private MenuAbrirExportacaoC menuAbrirExportacaoC = new MenuAbrirExportacaoC();
 		private MenuAbrirImportacaoC menuAbrirImportacaoC = new MenuAbrirImportacaoC();
+		private Action dadosAcao = actionMenu("label.dados", Icones.TABELA);
 		private MenuExportacao menuExportacao = new MenuExportacao();
-		private Action dadosAcao = actionMenu("label.dados");
 		private MenuItem itemDados = new MenuItem(dadosAcao);
 		private static final long serialVersionUID = 1L;
 
