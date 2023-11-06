@@ -14,4 +14,6 @@ public interface MetadadoTreeListener {
 	public void exportarFichArquivo(MetadadoTree metadadoTree);
 
 	public void constraintInfo(MetadadoTree metadadoTree);
+
+	public void registros(MetadadoTree metadadoTree);
 }

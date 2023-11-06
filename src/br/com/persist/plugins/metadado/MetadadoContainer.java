@@ -50,6 +50,9 @@ import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
+import br.com.persist.plugins.objeto.Desktop;
+import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.internal.ExternalFormulario;
 import br.com.persist.plugins.persistencia.Exportado;
 import br.com.persist.plugins.persistencia.Importado;
 import br.com.persist.plugins.persistencia.Persistencia;
@@ -524,6 +527,19 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {
 			formulario.processar(criarArgs(metadado, MetadadoEvento.EXPORTAR_METADADO_RAIZ_FICH));
+		}
+	}
+
+	@Override
+	public void registros(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		Conexao conexao = getConexao();
+		if (conexao != null && metadado != null) {
+			Objeto objeto = new Objeto(0, 0);
+			objeto.setChaves(metadado.getChaves());
+			objeto.setTabela(metadado.getDescricao());
+			Desktop.setComplemento(conexao, objeto);
+			ExternalFormulario.criar(formulario, conexao, objeto);
 		}
 	}
 

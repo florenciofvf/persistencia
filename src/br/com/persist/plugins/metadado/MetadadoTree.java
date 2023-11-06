@@ -22,6 +22,7 @@ import javax.swing.tree.TreePath;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.Action;
+import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.SetLista;
@@ -176,6 +177,8 @@ public class MetadadoTree extends Tree {
 		private MenuAbrirExportacaoC menuAbrirExportacaoC = new MenuAbrirExportacaoC();
 		private MenuAbrirImportacaoC menuAbrirImportacaoC = new MenuAbrirImportacaoC();
 		private MenuExportacao menuExportacao = new MenuExportacao();
+		private Action dadosAcao = actionMenu("label.dados");
+		private MenuItem itemDados = new MenuItem(dadosAcao);
 		private static final long serialVersionUID = 1L;
 
 		private MetadadosPopup() {
@@ -184,10 +187,19 @@ public class MetadadoTree extends Tree {
 			add(menuAbrirImportacaoH);
 			add(menuAbrirExportacaoC);
 			add(menuAbrirImportacaoC);
+			add(true, itemDados);
 			addMenuItem(true, copiarDescricaoAcao);
 			addMenuItem(true, constraintInfoAction);
 			constraintInfoAction.setActionListener(e -> constraintInfo());
 			copiarDescricaoAcao.setActionListener(e -> copiarDescricao());
+			dadosAcao.setActionListener(e -> abrirObjeto());
+		}
+
+		private void abrirObjeto() {
+			Metadado metadado = getObjetoSelecionado();
+			if (metadado.isTabela()) {
+				ouvintes.forEach(o -> o.registros(MetadadoTree.this));
+			}
 		}
 
 		private void copiarDescricao() {
@@ -205,6 +217,7 @@ public class MetadadoTree extends Tree {
 			menuAbrirImportacaoH.setEnabled(ehTabela);
 			menuAbrirExportacaoC.setEnabled(ehTabela);
 			menuAbrirImportacaoC.setEnabled(ehTabela);
+			itemDados.setEnabled(ehTabela);
 		}
 
 		private class MenuExportacao extends MenuPadrao1 {
