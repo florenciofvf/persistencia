@@ -1678,13 +1678,13 @@ class SuperficiePopup2 extends Popup {
 class SuperficiePopup extends Popup {
 	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
 	Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
+	private Action relacoesAcao = actionMenu("label.relacoes", Icones.SETA);
 	private MenuMestreDetalhe menuMestreDetalhe = new MenuMestreDetalhe();
 	private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
 	private Action dadosAcao = actionMenu("label.dados", Icones.TABELA);
 	private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
 	private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 	private MenuItem itemPartir = new MenuItem(new PartirAcao());
-	private Action relacoesAcao = actionMenu("label.relacoes");
 	private MenuDestacar menuDestacar = new MenuDestacar();
 	private MenuCircular menuCircular = new MenuCircular();
 	private MenuItem itemDados = new MenuItem(dadosAcao);
