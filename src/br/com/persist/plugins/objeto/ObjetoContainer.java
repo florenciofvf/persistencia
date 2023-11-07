@@ -187,6 +187,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		private TextField txtDestacaObjeto = new TextField(10);
 		private Popup popupArquivoVinculado = new Popup();
 		private static final long serialVersionUID = 1L;
+		private Label labelStatus2 = new Label();
 		private Label labelStatus = new Label();
 
 		public void ini(Janela janela) {
@@ -207,6 +208,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			add(true, txtPrefixoNomeTabela);
 			add(true, txtArquivoVinculo);
 			add(true, txtDestacaObjeto);
+			add(labelStatus2);
 			eventos();
 			arquivoVinculadoAcao.setActionListener(e -> abrirArquivoVinculado());
 			txtArquivoVinculo.addMouseListener(mouseListenerPopupVinculado);
@@ -280,8 +282,10 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		private void destacarObjetos() {
 			if (Util.isEmpty(txtDestacaObjeto.getText())) {
 				ObjetoSuperficieUtil.desativarObjetos(objetoSuperficie);
+				labelStatus2.limpar();
 			} else {
-				ObjetoSuperficieUtil.ativarObjetos(objetoSuperficie, txtDestacaObjeto.getText());
+				int total = ObjetoSuperficieUtil.ativarObjetos(objetoSuperficie, txtDestacaObjeto.getText());
+				labelStatus2.setText("(" + total + ")");
 			}
 		}
 
@@ -407,6 +411,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				txtPrefixoNomeTabela.limpar();
 				txtDestacaObjeto.limpar();
 				tituloTemporario = null;
+				labelStatus2.limpar();
 				labelStatus.limpar();
 				ObjetoContainer.this.windowActivatedHandler(null);
 			} catch (Exception ex) {
@@ -531,6 +536,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST }, labelStatus));
 				excluirSemTabelaAcao.setActionListener(e -> {
 					ObjetoSuperficieUtil.excluirSemTabela(objetoSuperficie);
+					labelStatus2.limpar();
 					labelStatus.limpar();
 				});
 			}
@@ -551,6 +557,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			} else {
 				objetoFormulario.setTitle(arquivo.getName());
 			}
+			labelStatus2.limpar();
 			labelStatus.limpar();
 		}
 

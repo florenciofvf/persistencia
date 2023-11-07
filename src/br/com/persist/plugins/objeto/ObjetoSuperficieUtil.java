@@ -464,9 +464,10 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
-	public static void ativarObjetos(ObjetoSuperficie superficie, String string) {
+	public static int ativarObjetos(ObjetoSuperficie superficie, String string) {
+		int total = 0;
 		if (Util.isEmpty(string)) {
-			return;
+			return total;
 		}
 		string = string.trim().toUpperCase();
 		for (Objeto objeto : superficie.objetos) {
@@ -474,9 +475,11 @@ public class ObjetoSuperficieUtil {
 					|| objeto.getTabela().toUpperCase().indexOf(string) != -1) {
 				objeto.setProcessar(true);
 				objeto.ativar();
+				total++;
 			}
 		}
 		superficie.repaint();
+		return total;
 	}
 
 	public static void desativar(ObjetoSuperficie superficie) {
