@@ -15,4 +15,12 @@ public class Registro {
 			lista.add(cv);
 		}
 	}
+
+	public int getTotal() {
+		return lista.size();
+	}
+
+	public ChaveValor get(int i) {
+		return lista.get(i);
+	}
 }

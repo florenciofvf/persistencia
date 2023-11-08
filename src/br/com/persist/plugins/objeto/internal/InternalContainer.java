@@ -123,6 +123,7 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
 import br.com.persist.plugins.persistencia.Coluna;
+import br.com.persist.plugins.persistencia.FiltroUtil;
 import br.com.persist.plugins.persistencia.IndiceValor;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
@@ -130,6 +131,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaException;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo.Parametros;
+import br.com.persist.plugins.persistencia.Registro;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColuna;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColunaListener;
 import br.com.persist.plugins.persistencia.tabela.TabelaDialogo;
@@ -3029,6 +3031,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public String getComplementoChaves(boolean and, Conexao conexao) {
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
+		if (indices.isEmpty()) {
+			return Constantes.VAZIO;
+		}
+		List<Registro> registros = modelo.listarRegistrosChave(indices, conexao);
+		return new FiltroUtil(objeto, and, registros).gerar();
+	}
+
+	public String getComplemento(boolean and, Conexao conexao) {
 		StringBuilder sb = new StringBuilder();
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
