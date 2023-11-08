@@ -1,5 +1,6 @@
 package br.com.persist.plugins.persistencia;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -163,6 +164,16 @@ public class OrdenacaoModelo extends AbstractTableModel {
 
 	public Map<String, String> getMapaChaves(int rowIndex, Conexao conexao) {
 		return model.getMapaChaves(linhas[rowIndex].indice, conexao);
+	}
+
+	public List<Registro> listarRegistrosChave(List<Integer> indices, Conexao conexao) {
+		List<Registro> registros = new ArrayList<>();
+		List<Coluna> chaves = model.getChaves();
+		for (Integer ind : indices) {
+			Registro registro = model.criarRegistro(chaves, linhas[ind].indice, conexao);
+			registros.add(registro);
+		}
+		return registros;
 	}
 
 	public void excluirValoresChaves(List<List<IndiceValor>> listaValores) {

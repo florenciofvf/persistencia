@@ -387,6 +387,18 @@ public class PersistenciaModelo implements TableModel {
 		return resp;
 	}
 
+	public Registro criarRegistro(List<Coluna> chaves, int rowIndex, Conexao conexao) {
+		List<Object> registro = registros.get(rowIndex);
+		Registro resp = new Registro();
+		for (Coluna chave : chaves) {
+			String nome = chave.getNome();
+			Object valor = registro.get(chave.getIndice());
+			valor = chave.get(valor.toString(), conexao);
+			resp.add(new ChaveValor(nome, valor));
+		}
+		return resp;
+	}
+
 	public void excluirValoresChaves(List<IndiceValor> lista) {
 		int indice = getIndice(lista);
 		if (indice != -1) {
@@ -612,7 +624,7 @@ public class PersistenciaModelo implements TableModel {
 		return esquemaAlternativo.equalsIgnoreCase(conexao.getEsquema());
 	}
 
-	private List<Coluna> getChaves() {
+	List<Coluna> getChaves() {
 		return colunas.stream().filter(Coluna::isChave).collect(Collectors.toList());
 	}
 
