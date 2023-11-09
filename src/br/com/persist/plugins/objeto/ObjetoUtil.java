@@ -117,7 +117,7 @@ public class ObjetoUtil {
 	public static String getDescricao(Pesquisa pesquisa) throws XMLException {
 		StringWriter sw = new StringWriter();
 		XMLUtil util = new XMLUtil(sw);
-		pesquisa.salvar(util, false);
+		pesquisa.salvar(0, util, false);
 		util.close();
 		return sw.toString();
 	}

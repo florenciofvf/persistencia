@@ -60,10 +60,13 @@ public class Referencia {
 		return campo != null && campo.indexOf(',') != -1;
 	}
 
-	public void salvar(boolean autonomo, XMLUtil util) {
+	public void salvar(int indice, boolean autonomo, XMLUtil util) {
 		if (autonomo) {
 			if (isChaveMultipla()) {
-				util.ql().conteudo("<!-- MAIS DE UMA CHAVE NESTE ITEM-->").ql();
+				if (indice > 0) {
+					util.ql();
+				}
+				util.conteudo("<!-- MAIS DE UMA CHAVE NESTE ITEM-->").ql();
 			}
 			util.abrirTag(VinculoHandler.REF);
 		}

@@ -2749,9 +2749,11 @@ class ExportacaoImportacao {
 			StringWriter sw = new StringWriter();
 			XMLUtil util = new XMLUtil(sw);
 			boolean ql = false;
+			int indice = 0;
 			for (Pesquisa pesq : listaRef) {
-				pesq.salvar(util, ql);
+				pesq.salvar(indice, util, ql);
 				ql = true;
+				indice++;
 			}
 			util.close();
 			return sw.toString();

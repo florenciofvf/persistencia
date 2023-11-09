@@ -109,9 +109,11 @@ public class Vinculacao {
 					paraTabela.salvar(util, ql);
 					ql = true;
 				}
+				int indice = 0;
 				for (Pesquisa pesquisa : pesquisas) {
-					pesquisa.salvar(util, ql);
+					pesquisa.salvar(indice, util, ql);
 					ql = true;
+					indice++;
 				}
 				util.finalizarTag(VINCULO);
 				util.close();
