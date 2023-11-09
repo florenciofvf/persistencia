@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Valor;
+import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 
 public class TabelaPersistenciaUtil {
@@ -30,6 +31,25 @@ public class TabelaPersistenciaUtil {
 			}
 		}
 		return -1;
+	}
+
+	public static List<Object[]> getValoresLinha(TabelaPersistencia tabelaPersistencia, Coluna[] colunas,
+			boolean apostrofes) {
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+		List<Integer> linhas = Util.getIndicesLinha(tabelaPersistencia);
+		List<Object[]> resposta = new ArrayList<>();
+		for (int i : linhas) {
+			Object[] array = new Object[colunas.length];
+			for (int j = 0; j < colunas.length; j++) {
+				Object obj = modelo.getValueAt(i, colunas[j].getIndice());
+				if (obj != null && !Util.isEmpty(obj.toString())) {
+					String string = obj.toString();
+					array[j] = apostrofes ? Util.citar(string) : string;
+				}
+			}
+			resposta.add(array);
+		}
+		return resposta;
 	}
 
 	public static List<String> getValoresLinha(TabelaPersistencia tabelaPersistencia, int coluna) {

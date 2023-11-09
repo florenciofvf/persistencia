@@ -583,29 +583,80 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Referencia referencia, String argumentos,
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento,
 			boolean soTotal) {
 		if (conexao != null) {
 			selecionarConexao(conexao);
-			String string = txtComplemento.getString(referencia.getCampo(),
-					" IN (" + argumentos + ")" + referencia.getConcatenar(pesquisa.getCloneParams()));
-			if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth()) {
-				imagem.string = string;
-				txtComplemento.setColumns(Constantes.DOIS);
-				txtComplemento.setText(Constantes.VAZIO);
-				txtComplemento.imagem = imagem;
+			String string = null;
+			if (argumento.isArgString()) {
+				string = txtComplemento.getString(referencia.getCampo(), " IN (" + argumento.getArgumentosString() + ")"
+						+ referencia.getConcatenar(pesquisa.getCloneParams()));
 			} else {
-				txtComplemento.setText(string);
-				txtComplemento.imagem = null;
+				String[] array = referencia.getChavesArray();
+				if (array.length != argumento.getLengthArray()) {
+					return;
+				}
+				String filtro = montarFiltro(objeto, argumento, array);
+				string = filtro + referencia.getConcatenar(pesquisa.getCloneParams());
 			}
-			if (soTotal) {
-				toolbar.buttonFuncoes.totalRegistrosComFiltro();
-			} else {
-				destacarTitulo = true;
-				actionListenerInner.actionPerformed(null);
-			}
+			executarPesquisa(string, soTotal);
 		} else {
 			Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+		}
+	}
+
+	public static String montarFiltro(Objeto objeto, Argumento argumento, String[] array) {
+		List<String[]> lista = normalizar(objeto, argumento, array);
+		StringBuilder sb = new StringBuilder();
+		for (String[] termo : lista) {
+			if (sb.length() > 0) {
+				sb.append(" OR ");
+			}
+			sb.append(FiltroUtil.chaveValor(termo));
+		}
+		return concat(lista.size() > 1, "AND (") + concat(lista.size() == 1, "AND ") + sb.toString()
+				+ concat(lista.size() > 1, ")");
+	}
+
+	private static String concat(boolean test, String string) {
+		return test ? string : "";
+	}
+
+	private static List<String[]> normalizar(Objeto objeto, Argumento argumento, String[] array) {
+		String[] campos = new String[array.length];
+		for (int i = 0; i < campos.length; i++) {
+			campos[i] = objeto.comApelido(array[i]);
+		}
+		List<String[]> lista = new ArrayList<>();
+		for (Object[] arrayArg : argumento.getArgumentosArray()) {
+			String[] termo = new String[argumento.getLengthArray() * 2];
+			int indiceTermo = 0;
+			for (int i = 0; i < campos.length; i++) {
+				termo[indiceTermo] = campos[i];
+				indiceTermo++;
+				termo[indiceTermo] = arrayArg[i].toString();
+				indiceTermo++;
+			}
+			lista.add(termo);
+		}
+		return lista;
+	}
+
+	private void executarPesquisa(String string, boolean soTotal) {
+		if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth()) {
+			imagem.string = string;
+			txtComplemento.setColumns(Constantes.DOIS);
+			txtComplemento.setText(Constantes.VAZIO);
+			txtComplemento.imagem = imagem;
+		} else {
+			txtComplemento.setText(string);
+			txtComplemento.imagem = null;
+		}
+		if (soTotal) {
+			toolbar.buttonFuncoes.totalRegistrosComFiltro();
+		} else {
+			destacarTitulo = true;
+			actionListenerInner.actionPerformed(null);
 		}
 	}
 
@@ -1348,22 +1399,44 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void processar(boolean apostrofes) {
-					int coluna = -1;
-					if (vinculoListener != null) {
-						coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
-								pesquisa.getReferencia().getCampo(), false);
+					if (vinculoListener == null) {
+						return;
 					}
+					int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
+							pesquisa.getReferencia().getCampo(), false);
 					if (coluna != -1) {
 						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(tabelaPersistencia, coluna);
 						if (lista.isEmpty()) {
 							Util.mensagem(InternalContainer.this, pesquisa.getReferencia().getCampo() + " vazio.");
 						} else {
-							pesquisar(lista, apostrofes, coluna);
+							String argumentos = Util.getStringLista(lista, ", ", false, apostrofes);
+							Argumento argumento = new Argumento(null, argumentos, (byte) 0, true);
+							pesquisar(lista, argumento, coluna);
+						}
+					} else if (pesquisa.getReferencia().isChaveMultipla()) {
+						String[] array = pesquisa.getReferencia().getChavesArray();
+						Coluna[] colunas = new Coluna[array.length];
+						for (int i = 0; i < array.length; i++) {
+							Coluna chave = tabelaPersistencia.getColuna(array[i]);
+							if (chave == null) {
+								Util.mensagem(InternalContainer.this, array[i] + " inexistente! Cheque a pesquisa: "
+										+ pesquisa.getNomeParaMenuItem());
+								return;
+							}
+							colunas[i] = chave;
+						}
+						List<Object[]> lista = TabelaPersistenciaUtil.getValoresLinha(tabelaPersistencia, colunas,
+								apostrofes);
+						if (lista.isEmpty()) {
+							Util.mensagem(InternalContainer.this, pesquisa.getReferencia().getCampo() + " vazio.");
+						} else {
+							Argumento argumento = new Argumento(lista, null, (byte) array.length, false);
+							pesquisaArray(argumento);
 						}
 					}
 				}
 
-				private void pesquisar(List<String> lista, boolean apostrofes, int coluna) {
+				private void pesquisar(List<String> lista, Argumento argumento, int coluna) {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
 					if (!chkTotalDetalhes.isSelected()) {
@@ -1371,10 +1444,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						pesquisa.inicializarColetores(lista);
 						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
 					}
-					vinculoListener.pesquisar(getConexao(), pesquisa,
-							Util.getStringLista(lista, ", ", false, apostrofes), chkTotalDetalhes.isSelected());
+					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected());
 					if (!chkTotalDetalhes.isSelected()) {
 						pesquisarFinal(coluna);
+					}
+				}
+
+				private void pesquisaArray(Argumento argumento) {
+					pesquisa.setObjeto(objeto);
+					processarParams(pesquisa);
+					if (!chkTotalDetalhes.isSelected()) {
+						pesquisa.setProcessado(false);
+						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
+					}
+					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected());
+					if (!chkTotalDetalhes.isSelected()) {
+						pesquisarFinalArray();
 					}
 				}
 
@@ -1395,6 +1480,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						vinculoListener.pesquisarApos(objeto, pesquisa);
 					}
 					SwingUtilities.invokeLater(() -> processarColunaInfo(coluna));
+					SwingUtilities.invokeLater(InternalContainer.this::atualizar);
+				}
+
+				private void pesquisarFinalArray() {
+					super.habilitar(pesquisa.isProcessado());
+					if (pesquisa.isProcessado()) {
+						vinculoListener.pesquisarApos(objeto, pesquisa);
+					}
 					SwingUtilities.invokeLater(InternalContainer.this::atualizar);
 				}
 

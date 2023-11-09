@@ -76,6 +76,7 @@ import br.com.persist.plugins.objeto.circular.CircularDialogo;
 import br.com.persist.plugins.objeto.config.HoraUtil;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
 import br.com.persist.plugins.objeto.config.RelacaoDialogo;
+import br.com.persist.plugins.objeto.internal.Argumento;
 import br.com.persist.plugins.objeto.internal.ExternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
@@ -980,30 +981,30 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
-	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos, boolean soTotal) {
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal) {
 		if (conexao == null) {
 			conexao = container.getConexaoPadrao();
 		}
 		ObjetoSuperficieUtil.deselRelacoes(this);
-		super.pesquisar(conexao, pesquisa, argumentos, soTotal);
+		super.pesquisar(conexao, pesquisa, argumento, soTotal);
 		if (ObjetoPreferencia.isAbrirAuto()) {
 			ObjetoSuperficieUtil.limparSelecao(this);
-			processarReferencias(conexao, pesquisa, argumentos);
+			processarReferencias(conexao, pesquisa, argumento);
 			if (ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(this) != null) {
 				destacar(conexao, ObjetoPreferencia.getTipoContainerPesquisaAuto(), null);
 			}
 		}
 	}
 
-	private void processarReferencias(Conexao conexao, Pesquisa pesquisa, String argumentos) {
+	private void processarReferencias(Conexao conexao, Pesquisa pesquisa, Argumento argumento) {
 		for (Referencia referencia : pesquisa.getReferencias()) {
 			if (!referencia.isProcessado()) {
-				pesquisarReferencia(conexao, referencia, argumentos);
+				pesquisarReferencia(conexao, pesquisa, referencia, argumento);
 			}
 		}
 	}
 
-	private void pesquisarReferencia(Conexao conexao, Referencia referencia, String argumentos) {
+	private void pesquisarReferencia(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento) {
 		Objeto objeto = null;
 		for (Objeto obj : objetos) {
 			if (referencia.igual(obj)) {
@@ -1012,13 +1013,25 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			}
 		}
 		if (objeto != null && objeto.isAbrirAuto()) {
-			pesquisarReferencia(conexao, referencia, argumentos, objeto);
+			pesquisarReferencia(conexao, pesquisa, referencia, argumento, objeto);
 		}
 	}
 
-	private void pesquisarReferencia(Conexao conexao, Referencia referencia, String argumentos, Objeto objeto) {
-		String comApelido = objeto.comApelido("AND", referencia.getCampo());
-		objeto.setComplemento(comApelido + " IN (" + argumentos + ")" + referencia.getConcatenar());
+	private void pesquisarReferencia(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento,
+			Objeto objeto) {
+		String string = null;
+		if (argumento.isArgString()) {
+			string = objeto.comApelido("AND", referencia.getCampo()) + " IN (" + argumento.getArgumentosString() + ")"
+					+ referencia.getConcatenar(pesquisa.getCloneParams());
+		} else {
+			String[] array = referencia.getChavesArray();
+			if (array.length != argumento.getLengthArray()) {
+				return;
+			}
+			String filtro = InternalContainer.montarFiltro(objeto, argumento, array);
+			string = filtro + referencia.getConcatenar(pesquisa.getCloneParams());
+		}
+		objeto.setComplemento(string);
 		objeto.setReferenciaPesquisa(referencia);
 		if (ObjetoPreferencia.isAbrirAutoDestacado()) {
 			criarExternalFormulario(conexao != null ? conexao : container.getConexaoPadrao(), objeto.clonar());
