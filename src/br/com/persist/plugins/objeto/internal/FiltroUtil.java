@@ -1,10 +1,12 @@
-package br.com.persist.plugins.persistencia;
+package br.com.persist.plugins.objeto.internal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.persistencia.ChaveValor;
+import br.com.persist.plugins.persistencia.Registro;
 
 public class FiltroUtil {
 	private final List<Registro> lista;

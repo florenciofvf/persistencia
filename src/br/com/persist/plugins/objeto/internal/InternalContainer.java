@@ -123,7 +123,6 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
 import br.com.persist.plugins.persistencia.Coluna;
-import br.com.persist.plugins.persistencia.FiltroUtil;
 import br.com.persist.plugins.persistencia.IndiceValor;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
