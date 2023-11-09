@@ -98,6 +98,10 @@ public class TabelaPersistencia extends JTable {
 		return getModelo().getColunas(nomes);
 	}
 
+	public Coluna getColuna(String nome) {
+		return getModelo().getColuna(nome);
+	}
+
 	public OrdenacaoModelo getModelo() {
 		return (OrdenacaoModelo) getModel();
 	}

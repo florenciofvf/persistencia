@@ -44,6 +44,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
+import br.com.persist.plugins.objeto.internal.Argumento;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
@@ -398,24 +399,24 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		}
 	}
 
-	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos, boolean soTotal) {
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 				List<Referencia> referencias = pesquisa.getReferencias();
 				interno.setProcessadoPesquisa(false);
-				pesquisar(conexao, pesquisa, argumentos, interno, referencias, soTotal);
+				pesquisar(conexao, pesquisa, argumento, interno, referencias, soTotal);
 			}
 		}
 	}
 
-	private void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos, InternalFormulario interno,
+	private void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, InternalFormulario interno,
 			List<Referencia> referencias, boolean soTotal) {
 		for (Referencia referencia : referencias) {
 			if (interno.ehReferencia(referencia)) {
 				interno.setReferenciaPesquisa(referencia);
 				internoPesquisarAntes(pesquisa.getObjeto(), interno.getInternalContainer().getObjeto());
-				interno.pesquisar(conexao, pesquisa, referencia, argumentos, soTotal);
+				interno.pesquisar(conexao, pesquisa, referencia, argumento, soTotal);
 				interno.setProcessadoPesquisa(true);
 				referencia.setProcessado(true);
 			}

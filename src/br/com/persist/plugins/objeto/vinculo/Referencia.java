@@ -49,9 +49,20 @@ public class Referencia {
 		}
 	}
 
+	public String[] getChavesArray() {
+		if (Util.isEmpty(campo)) {
+			return Constantes.ARRAY_LENGTH_ZERO;
+		}
+		return campo.trim().split(",");
+	}
+
+	public boolean isChaveMultipla() {
+		return campo != null && campo.indexOf(',') != -1;
+	}
+
 	public void salvar(boolean autonomo, XMLUtil util) {
 		if (autonomo) {
-			if (campo != null && campo.indexOf(',') != -1) {
+			if (isChaveMultipla()) {
 				util.ql().conteudo("<!-- MAIS DE UMA CHAVE NESTE ITEM-->").ql();
 			}
 			util.abrirTag(VinculoHandler.REF);

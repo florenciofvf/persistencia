@@ -83,4 +83,17 @@ public class FiltroUtil {
 		sb.append(")");
 		return sb.toString();
 	}
+
+	static String chaveValor(String... strings) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < strings.length; i += 2) {
+			if (sb.length() > 0) {
+				sb.append(" AND ");
+			}
+			String chave = strings[i];
+			String valor = strings[i + 1];
+			sb.append(chave + " = " + valor);
+		}
+		return "(" + sb.toString() + ")";
+	}
 }
