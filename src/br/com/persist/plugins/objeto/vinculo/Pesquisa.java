@@ -91,14 +91,11 @@ public class Pesquisa {
 		return pesquisa != null && nome.equalsIgnoreCase(pesquisa.nome) && referencia.igual(pesquisa.referencia);
 	}
 
-	public void salvar(int indice, XMLUtil util, boolean ql) {
+	public void salvar(XMLUtil util, boolean ql) {
 		if (ql) {
 			util.ql();
 		}
 		if (referencia.isChaveMultipla()) {
-			if (indice > 0) {
-				util.ql();
-			}
 			util.conteudo("<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->").ql();
 		}
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
@@ -107,7 +104,7 @@ public class Pesquisa {
 		for (Param par : params) {
 			par.salvar(util);
 		}
-		indice = 0;
+		int indice = 0;
 		for (Referencia ref : referencias) {
 			ref.salvar(indice, true, util);
 			indice++;
