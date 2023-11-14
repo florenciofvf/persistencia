@@ -310,6 +310,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
+		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulsoAcima(conexao, objeto);
+			}
+		}
+
 		public void adicionarHierarquicoAvulso(Conexao conexao, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {

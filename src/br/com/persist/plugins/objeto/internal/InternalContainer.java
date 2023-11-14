@@ -1956,6 +1956,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonInfo extends ButtonPopup {
+			private AdicionaHierarquicoAvulsoAcimaAcao adicionaHierarquicoAvulsoAcimaAcao = new AdicionaHierarquicoAvulsoAcimaAcao();
 			private AdicionaHierarquicoAvulsoAcao adicionaHierarquicoAvulsoAcao = new AdicionaHierarquicoAvulsoAcao();
 			private Action scriptAdicaoHierAcao = acaoMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
 			private AdicionaHierarquicoAcao adicionaHierarquicoAcao = new AdicionaHierarquicoAcao();
@@ -1975,6 +1976,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (objeto.getPesquisaAdicaoHierarquico() != null) {
 					addMenuItem(scriptAdicaoHierAcao);
 				}
+				addMenuItem(adicionaHierarquicoAvulsoAcimaAcao);
 				addMenuItem(adicionaHierarquicoAvulsoAcao);
 				addMenuItem(adicionaHierarquicoAcao);
 				addMenuItem(true, new ChavesPrimariasAcao());
@@ -2630,6 +2632,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
 						}
+					}
+				}
+			}
+
+			private class AdicionaHierarquicoAvulsoAcimaAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private AdicionaHierarquicoAvulsoAcimaAcao() {
+					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico4"), false, Icones.HIERARQUIA);
+					setEnabled(false);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (vinculoListener != null) {
+						vinculoListener.adicionarHierarquicoAvulsoAcima(getConexao(), objeto);
 					}
 				}
 			}
@@ -3798,6 +3816,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public void setVinculoListener(InternalListener.Vinculo vinculoListener) {
+		toolbar.buttonInfo.adicionaHierarquicoAvulsoAcimaAcao.setEnabled(vinculoListener != null);
 		toolbar.buttonInfo.adicionaHierarquicoAvulsoAcao.setEnabled(vinculoListener != null);
 		toolbar.buttonInfo.adicionaHierarquicoAcao.setEnabled(vinculoListener != null);
 		this.vinculoListener = vinculoListener;

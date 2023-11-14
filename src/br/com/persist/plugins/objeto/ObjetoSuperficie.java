@@ -1127,6 +1127,21 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 	}
 
+	public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) {
+		Map<String, Object> args = new HashMap<>();
+		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
+		formulario.processar(args);
+		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
+		if (metadado == null) {
+			msgInexistenteMetadado(objeto);
+		} else {
+			if (conexao == null) {
+				conexao = container.getConexaoPadrao();
+			}
+			criarObjetoHierarquicoAvulsoAcima(conexao, objeto, metadado);
+		}
+	}
+
 	public void adicionarHierarquicoAvulso(Conexao conexao, Objeto objeto) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
@@ -1139,6 +1154,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				conexao = container.getConexaoPadrao();
 			}
 			criarObjetoHierarquicoAvulso(conexao, objeto, metadado);
+		}
+	}
+
+	private void criarObjetoHierarquicoAvulsoAcima(Conexao conexao, Objeto principal, Metadado tabela) {
+		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
+		Metadado tabelaAvulsa = exportacao.getTabelaAvulsa();
+		if (tabelaAvulsa != null) {
+			exportacao.adicionarObjetoAvulso(tabelaAvulsa);
+			exportacao.localizarObjetoAcima();
+			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
 	}
 
@@ -2464,6 +2489,20 @@ class Exportacao {
 		Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 		objeto.addReferencia(pesquisa.getReferencia());
 		pesquisa.add(ref);
+	}
+
+	void localizarObjetoAcima() {
+		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(superficie, principal);
+		if (interno != null) {
+			objeto.x = principal.x - Constantes.VINTE_CINCO;
+			objeto.y = interno.getY() - Constantes.TRINTA;
+			objeto.setDeslocamentoXId(28);
+			objeto.setDeslocamentoYId(24);
+			objeto.setChecarLargura(true);
+			objeto.setCorTmp(Color.GREEN);
+			ObjetoSuperficieUtil.limparSelecao(superficie);
+			objeto.setSelecionado(true);
+		}
 	}
 
 	void localizarObjeto() {
