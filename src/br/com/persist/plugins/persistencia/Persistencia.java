@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 
@@ -387,7 +388,8 @@ public class Persistencia {
 		try {
 			List<String> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
-			ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(), "%", new String[] { "TABLE" });
+			ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(), "%",
+					Preferencias.getGetObjetosBanco().split(","));
 			while (rs.next()) {
 				resposta.add(rs.getString(TABLE_NAME));
 			}

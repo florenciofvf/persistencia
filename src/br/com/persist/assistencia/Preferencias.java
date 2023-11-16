@@ -36,6 +36,7 @@ public class Preferencias {
 	private static boolean ficharioComRolagem;
 	private static int porcVerticalLocalForm;
 	private static String formFichaDialogo;
+	private static String getObjetosBanco;
 	private static int posicaoAbaFichario;
 	private static Color corFonteCopiado;
 	private static boolean tituloAbaMin;
@@ -68,11 +69,15 @@ public class Preferencias {
 		monitorPreferencial = pref.getBoolean("monitor_preferencial", false);
 		porcVerticalLocalForm = pref.getInt("porc_vertical_local_form", 70);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
+		getObjetosBanco = pref.get("get_objetos_banco", "TABLE");
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
 		if (Util.isEmpty(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
+		}
+		if (Util.isEmpty(getObjetosBanco)) {
+			getObjetosBanco = "TABLE";
 		}
 		if (Util.isEmpty(formDialogo)) {
 			formDialogo = "FORM,DIALOG";
@@ -110,6 +115,7 @@ public class Preferencias {
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
+		pref.put("get_objetos_banco", getObjetosBanco);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
 		salvarOutras();
@@ -220,6 +226,14 @@ public class Preferencias {
 
 	public static void setFormFichaDialogo(String formFichaDialogo) {
 		Preferencias.formFichaDialogo = formFichaDialogo;
+	}
+
+	public static String getGetObjetosBanco() {
+		return getObjetosBanco;
+	}
+
+	public static void setGetObjetosBanco(String getObjetosBanco) {
+		Preferencias.getObjetosBanco = getObjetosBanco;
 	}
 
 	public static String getFormDialogo() {
