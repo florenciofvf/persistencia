@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -133,6 +134,7 @@ public class SetLista {
 class Item implements Comparable<Item> {
 	private final String rotulo;
 	private boolean selecionado;
+	private int tag;
 
 	public Item(String rotulo, boolean sel) {
 		this.rotulo = rotulo;
@@ -153,6 +155,14 @@ class Item implements Comparable<Item> {
 
 	public String toString() {
 		return rotulo;
+	}
+
+	public int getTag() {
+		return tag;
+	}
+
+	public void setTag(int tag) {
+		this.tag = tag;
 	}
 
 	@Override
@@ -419,6 +429,11 @@ class SetListaDialogo extends AbstratoDialogo {
 				Item pesquisado = pesquisar(txtPesquisa.getText().toUpperCase(), chkPorParte.isSelected());
 				if (pesquisado != null) {
 					pesquisado.setSelecionado(true);
+					int index = pesquisado.getTag();
+					Rectangle rect = lista.getCellBounds(index, index);
+					if (rect != null) {
+						lista.scrollRectToVisible(rect);
+					}
 					lista.repaint();
 				}
 			}
@@ -433,6 +448,7 @@ class SetListaDialogo extends AbstratoDialogo {
 				}
 				String str = item.getRotulo().toUpperCase();
 				if ((porParte && str.indexOf(string) != -1) || str.equals(string)) {
+					item.setTag(i);
 					return item;
 				}
 			}
