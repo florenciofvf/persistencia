@@ -643,6 +643,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private void executarPesquisa(String string, boolean soTotal) {
+		setTextComplemento(string);
+		if (soTotal) {
+			toolbar.buttonFuncoes.totalRegistrosComFiltro();
+		} else {
+			destacarTitulo = true;
+			actionListenerInner.actionPerformed(null);
+		}
+	}
+
+	private void setTextComplemento(String string) {
+		if (string == null) {
+			string = Constantes.VAZIO;
+		}
 		if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth()) {
 			imagem.string = string;
 			txtComplemento.setColumns(Constantes.DOIS);
@@ -651,12 +664,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		} else {
 			txtComplemento.setText(string);
 			txtComplemento.imagem = null;
-		}
-		if (soTotal) {
-			toolbar.buttonFuncoes.totalRegistrosComFiltro();
-		} else {
-			destacarTitulo = true;
-			actionListenerInner.actionPerformed(null);
 		}
 	}
 
@@ -1019,14 +1026,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 				String complemento = Util.getContentTransfered();
 				if (Util.isEmpty(complemento)) {
-					txtComplemento.setText(objeto.getComplemento());
+					setTextComplemento(objeto.getComplemento());
 				} else {
 					complemento = complemento.trim();
 					if (normal) {
-						txtComplemento.setText(complemento);
+						setTextComplemento(complemento);
 					} else {
 						String s = txtComplemento.getText().trim();
-						txtComplemento.setText(Util.concatenar(s, complemento));
+						setTextComplemento(Util.concatenar(s, complemento));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
