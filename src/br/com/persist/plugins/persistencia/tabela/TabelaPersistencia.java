@@ -786,9 +786,12 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuIN extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
+			private JCheckBoxMenuItem chkConcatTransf = new JCheckBoxMenuItem(
+					TabelaMensagens.getString("label.concat_transfer"));
 
 			private MenuIN() {
 				super(Constantes.LABEL_VAZIO);
+				addItem(chkConcatTransf);
 				semAspasAcao.setActionListener(e -> copiarIN(false));
 				comAspasAcao.setActionListener(e -> copiarIN(true));
 				addMouseListener(processarTitulo);
@@ -799,7 +802,15 @@ public class TabelaPersistencia extends JTable {
 				String complemento = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.isEmpty(complemento)) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-					Util.setContentTransfered(processarTitulo.get(MenuIN.this) + coluna + " IN (" + complemento + ")");
+					String string = Constantes.VAZIO;
+					if (chkConcatTransf.isSelected()) {
+						String str = Util.getContentTransfered();
+						if (!Util.isEmpty(str)) {
+							string = str + " ";
+						}
+					}
+					Util.setContentTransfered(
+							string + processarTitulo.get(MenuIN.this) + coluna + " IN (" + complemento + ")");
 				} else {
 					Util.setContentTransfered(" ");
 				}
@@ -808,10 +819,13 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuItemChaveamento extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
+			private JCheckBoxMenuItem chkConcatTransf = new JCheckBoxMenuItem(
+					TabelaMensagens.getString("label.concat_transfer"));
 			private final String nomeColuna;
 
 			private MenuItemChaveamento(String coluna) {
 				super(Constantes.LABEL_VAZIO);
+				addItem(chkConcatTransf);
 				setText(AND + coluna + " IN");
 				this.nomeColuna = coluna;
 				semAspasAcao.setActionListener(e -> copiarINDinamico(false));
@@ -823,8 +837,15 @@ public class TabelaPersistencia extends JTable {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String complemento = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.isEmpty(complemento)) {
-					Util.setContentTransfered(
-							processarTitulo.get(MenuItemChaveamento.this) + nomeColuna + " IN (" + complemento + ")");
+					String string = Constantes.VAZIO;
+					if (chkConcatTransf.isSelected()) {
+						String str = Util.getContentTransfered();
+						if (!Util.isEmpty(str)) {
+							string = str + " ";
+						}
+					}
+					Util.setContentTransfered(string + processarTitulo.get(MenuItemChaveamento.this) + nomeColuna
+							+ " IN (" + complemento + ")");
 				} else {
 					Util.setContentTransfered(" ");
 				}
