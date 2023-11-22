@@ -3290,6 +3290,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		@Override
+		public void selectTotalMaiorLengthString(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
+				String instrucao = instrucaoCampo.totalDoMaiorLengthString();
+				if (!Util.isEmpty(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		@Override
 		public void selectValorRepetidoComSuaQtd(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
@@ -4042,6 +4054,12 @@ class InstrucaoCampo {
 		sb.append(GROUP_BY + objeto.comApelido(campo));
 		sb.append(HAVING_COUNT + objeto.comApelido(campo) + ") > 1");
 		sb.append("\n) tabela");
+		return sb.toString();
+	}
+
+	String totalDoMaiorLengthString() {
+		StringBuilder sb = new StringBuilder("SELECT MAX(LENGTH(" + objeto.comApelido(campo) + "))");
+		sb.append("\nFROM " + objeto.getTabelaEsquema(conexao));
 		return sb.toString();
 	}
 }

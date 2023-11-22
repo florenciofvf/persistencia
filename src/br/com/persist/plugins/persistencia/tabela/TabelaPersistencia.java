@@ -378,6 +378,7 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuMetadados extends Menu {
+			private MenuTotalLengthString maiorLengthString = new MenuTotalLengthString();
 			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
 			private MenuTotalQueRepetem totalQueRepetem = new MenuTotalQueRepetem();
 			private MenuTotalRepetidos totalRepetidos = new MenuTotalRepetidos();
@@ -398,6 +399,7 @@ public class TabelaPersistencia extends JTable {
 				addSeparator();
 				add(totalQueRepetem);
 				add(totalRepetidos);
+				add(maiorLengthString);
 				add(repetidoComQtd);
 				addSeparator();
 				add(distinct);
@@ -472,6 +474,23 @@ public class TabelaPersistencia extends JTable {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 						listener.selectTotalValorMaisRepetido(TabelaPersistencia.this, coluna, abrirEmForm);
+					}
+				}
+			}
+
+			private class MenuTotalLengthString extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuTotalLengthString() {
+					super(TabelaMensagens.getString("label.total_maior_length_string"), false, null);
+					formularioAcao.setActionListener(e -> abrirSelect(true));
+					dialogoAcao.setActionListener(e -> abrirSelect(false));
+				}
+
+				private void abrirSelect(boolean abrirEmForm) {
+					if (listener != null) {
+						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+						listener.selectTotalMaiorLengthString(TabelaPersistencia.this, coluna, abrirEmForm);
 					}
 				}
 			}

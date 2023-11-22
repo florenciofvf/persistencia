@@ -12,6 +12,8 @@ public interface TabelaPersistenciaListener {
 
 	public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
+	public void selectTotalMaiorLengthString(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
+
 	public void selectValorRepetidoComSuaQtd(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
 	public void colocarColunaComMemoria(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
