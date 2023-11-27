@@ -1,4 +1,4 @@
-package br.com.persist.complemento;
+package br.com.persist.plugins.objeto.complem;
 
 import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;

@@ -1,4 +1,4 @@
-package br.com.persist.complemento;
+package br.com.persist.plugins.objeto.complem;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
