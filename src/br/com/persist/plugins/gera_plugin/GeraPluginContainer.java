@@ -17,6 +17,8 @@ import java.util.List;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JSeparator;
 
@@ -154,9 +156,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 		add(BorderLayout.NORTH, toolbar);
 
 		Muro muro = new Muro();
+		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino, criarButtonDir())));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_min_plugin", txtMinimPlugin)));
-		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino)));
 		muro.camada(Muro.panelGrid(labelTextField("label.pacote_plugin", txtPacotePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_recursos", txtDiretorioRecursos)));
 		muro.camada(Muro.panelGrid(labelComboBox("label.icone_plugin", cmbIconePlugin)));
@@ -178,9 +180,16 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private Panel labelTextField(String chaveRotulo, TextField textField) {
+		return labelTextField(chaveRotulo, textField, null);
+	}
+
+	private Panel labelTextField(String chaveRotulo, TextField textField, JComponent comp) {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.WEST, criarLabel(chaveRotulo));
 		panel.add(BorderLayout.CENTER, textField);
+		if (comp != null) {
+			panel.add(BorderLayout.EAST, comp);
+		}
 		return panel;
 	}
 
@@ -189,6 +198,20 @@ public class GeraPluginContainer extends AbstratoContainer {
 		panel.add(BorderLayout.WEST, criarLabel(chaveRotulo));
 		panel.add(BorderLayout.CENTER, combo);
 		return panel;
+	}
+
+	private Button criarButtonDir() {
+		Button button = new Button("label.diretorio");
+		button.addActionListener(e -> {
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int i = fileChooser.showOpenDialog(GeraPluginContainer.this);
+			if (i == JFileChooser.APPROVE_OPTION) {
+				File sel = fileChooser.getSelectedFile();
+				txtDiretorioDestino.setText(sel.getAbsolutePath());
+			}
+		});
+		return button;
 	}
 
 	private List<String> validar() {
