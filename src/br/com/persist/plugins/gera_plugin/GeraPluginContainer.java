@@ -329,7 +329,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 		config.nomeCapUpper = config.nomeCap.toUpperCase();
 		config.nomeDecap = nome.substring(0, 1).toLowerCase() + nome.substring(1);
 		config.nomeDecapLower = config.nomeDecap.toLowerCase();
-		config.icone = cmbIconePlugin.getSelectedItem().toString();
+		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
+		config.icone = icone.string;
 		config.configuracao = chkComConfiguracao.isSelected();
 	}
 
