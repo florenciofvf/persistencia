@@ -14,8 +14,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JSeparator;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -36,8 +39,8 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class GeraPluginContainer extends AbstratoContainer {
+	private JComboBox<Icone> cmbIconePlugin = new JComboBox<>(arrayObjetoIcone());
 	private CheckBox chkComConfiguracao = criarCheckBox("label.com_configuracao");
-	private JComboBox<Object> cmbIconePlugin = new JComboBox<>(arrayNomeIcones());
 	private CheckBox chkComClasseUtil = criarCheckBox("label.com_classe_util");
 	private CheckBox chkComException = criarCheckBox("label.com_exception");
 	private CheckBox chkComProvedor = criarCheckBox("label.com_provedor");
@@ -60,6 +63,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 	public GeraPluginContainer(Janela janela, Formulario formulario) {
 		super(formulario);
+		cmbIconePlugin.setRenderer(new ItemRenderer());
 		toolbar.ini(janela);
 		montarLayout();
 	}
@@ -96,24 +100,60 @@ public class GeraPluginContainer extends AbstratoContainer {
 		return label;
 	}
 
-	private Object[] arrayNomeIcones() {
-		List<String> resp = new ArrayList<>();
+	private Icone[] arrayObjetoIcone() {
+		List<Icone> resp = new ArrayList<>();
 		Class<?> klass = Icones.class;
 		Field[] fields = klass.getDeclaredFields();
 		for (Field field : fields) {
 			Class<?> tipo = field.getType();
 			if (tipo.equals(Icon.class)) {
-				resp.add(field.getName());
+				try {
+					Icon icon = (Icon) field.get(Icones.class);
+					resp.add(new Icone(field.getName(), icon));
+				} catch (Exception e) {
+					//
+				}
 			}
 		}
-		return resp.toArray();
+		return resp.toArray(new Icone[0]);
+	}
+
+	class Icone {
+		final String string;
+		final Icon icon;
+
+		public Icone(String string, Icon icon) {
+			this.string = string;
+			this.icon = icon;
+		}
+
+		public String getString() {
+			return string;
+		}
+
+		public Icon getIcon() {
+			return icon;
+		}
+	}
+
+	class ItemRenderer extends DefaultListCellRenderer {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+				boolean cellHasFocus) {
+			super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+			Icone icone = (Icone) value;
+			setText(icone.string);
+			setIcon(icone.icon);
+			return this;
+		}
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 
 		Muro muro = new Muro();
-		muro.camada(textArea);
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_min_plugin", txtMinimPlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino)));
@@ -129,6 +169,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 		muro.camada(Muro.panelGrid(chkComHandler));
 		muro.camada(Muro.panelGrid(chkComModelo));
 		muro.camada(buttonGerar);
+		muro.camada(new JSeparator());
+		muro.camada(textArea);
 		add(BorderLayout.CENTER, muro);
 
 		buttonGerar.setIcon(Icones.EXECUTAR);
