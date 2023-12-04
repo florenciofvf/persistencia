@@ -83,7 +83,7 @@ public interface InternalListener {
 	}
 
 	public interface Componente {
-		public void getFormulario(AtomicReference<Formulario> ref);
+		public Formulario getFormulario();
 
 		public Component getComponente();
 	}

@@ -44,7 +44,7 @@ public class ObjetoSuperficieDestacar {
 
 	public static void destacarDeskopPagina(List<Objeto> objetos, Conexao conexao, InternalConfig config,
 			Formulario formulario) {
-		Desktop desktop = new Desktop(false);
+		Desktop desktop = new Desktop(formulario, false);
 		int x = 10;
 		int y = 10;
 		for (Objeto objeto : objetos) {

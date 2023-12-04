@@ -2897,9 +2897,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private Formulario getFormulario() {
 			if (componenteListener != null) {
-				AtomicReference<Formulario> ref = new AtomicReference<>();
-				componenteListener.getFormulario(ref);
-				return ref.get();
+				return componenteListener.getFormulario();
 			}
 			return null;
 		}

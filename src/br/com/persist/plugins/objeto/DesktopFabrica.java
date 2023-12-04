@@ -23,7 +23,7 @@ public class DesktopFabrica extends AbstratoFabricaContainer {
 	private class DesktopPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new Desktop(false);
+			return new Desktop(formulario, false);
 		}
 	}
 
@@ -42,7 +42,7 @@ public class DesktopFabrica extends AbstratoFabricaContainer {
 
 		private MenuDesktop(Formulario formulario) {
 			super(Constantes.LABEL_DESKTOP, Icones.PANEL2, false);
-			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new Desktop(false)));
+			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new Desktop(formulario, false)));
 			formularioAcao.setActionListener(e -> DesktopFormulario.criar(formulario));
 		}
 	}

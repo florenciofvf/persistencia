@@ -15,9 +15,9 @@ public class DesktopFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final Desktop desktop;
 
-	private DesktopFormulario() {
-		super(Mensagens.getString(Constantes.LABEL_FORMULARIO));
-		desktop = new Desktop(false);
+	private DesktopFormulario(Formulario formulario) {
+		super(formulario, Mensagens.getString(Constantes.LABEL_FORMULARIO));
+		desktop = new Desktop(formulario, false);
 		desktop.setAjusteAutoLarguraForm(true);
 		desktop.addTotalDireitoAuto();
 		montarLayout();
@@ -42,7 +42,7 @@ public class DesktopFormulario extends AbstratoFormulario {
 	}
 
 	public static DesktopFormulario criar(Formulario formulario) {
-		DesktopFormulario form = new DesktopFormulario();
+		DesktopFormulario form = new DesktopFormulario(formulario);
 		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}
