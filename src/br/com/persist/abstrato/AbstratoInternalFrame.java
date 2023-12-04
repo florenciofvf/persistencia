@@ -17,17 +17,24 @@ import javax.swing.event.InternalFrameEvent;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.Janela;
+import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoInternalFrame extends JInternalFrame implements Janela, WindowInternalHandler {
 	private static final long serialVersionUID = 1L;
+	protected final Formulario formulario;
 
-	protected AbstratoInternalFrame(String titulo) {
+	protected AbstratoInternalFrame(Formulario formulario, String titulo) {
 		super(titulo, true, true, true, true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
+		this.formulario = formulario;
 		setSize(Constantes.SIZE);
 		setActionESC();
 		configurar();
+	}
+
+	public Formulario getFormulario() {
+		return formulario;
 	}
 
 	@Override

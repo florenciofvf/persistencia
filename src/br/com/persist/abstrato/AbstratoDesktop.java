@@ -17,6 +17,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.Menu;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
+import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoDesktop extends JDesktopPane implements WindowHandler, FicharioHandler {
 	protected final transient Distribuicao distribuicao = new Distribuicao();
@@ -30,6 +31,15 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	private static final long serialVersionUID = 1L;
 	private boolean ajusteAutoEmpilhaForm;
 	private boolean ajusteAutoLarguraForm;
+	protected final Formulario formulario;
+
+	protected AbstratoDesktop(Formulario formulario) {
+		this.formulario = formulario;
+	}
+
+	public Formulario getFormulario() {
+		return formulario;
+	}
 
 	public MenuLargura getMenuLargura() {
 		return menuLargura;

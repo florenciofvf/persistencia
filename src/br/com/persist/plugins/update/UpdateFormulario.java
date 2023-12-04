@@ -14,14 +14,14 @@ public class UpdateFormulario extends AbstratoFormulario {
 	private final UpdateContainer container;
 
 	private UpdateFormulario(Formulario formulario, Conexao conexao, String conteudo) {
-		super(Mensagens.getString(Constantes.LABEL_UPDATE));
+		super(formulario, Mensagens.getString(Constantes.LABEL_UPDATE));
 		container = new UpdateContainer(this, formulario, conexao, conteudo);
 		container.setUpdateFormulario(this);
 		montarLayout();
 	}
 
 	private UpdateFormulario(UpdateContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_UPDATE));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_UPDATE));
 		container.setUpdateFormulario(this);
 		this.container = container;
 		container.setJanela(this);

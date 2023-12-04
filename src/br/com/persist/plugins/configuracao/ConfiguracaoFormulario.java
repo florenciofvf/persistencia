@@ -14,14 +14,14 @@ public class ConfiguracaoFormulario extends AbstratoFormulario {
 	private final ConfiguracaoContainer container;
 
 	private ConfiguracaoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
+		super(formulario, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfiguracaoContainer(this, formulario);
 		container.setConfiguracaoFormulario(this);
 		montarLayout();
 	}
 
 	private ConfiguracaoFormulario(ConfiguracaoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container.setConfiguracaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

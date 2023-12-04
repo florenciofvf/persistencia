@@ -11,14 +11,14 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 	private final AnotacaoContainer container;
 
 	private AnotacaoFormulario(Formulario formulario) {
-		super(AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
+		super(formulario, AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
 		container = new AnotacaoContainer(this, formulario);
 		container.setAnotacaoFormulario(this);
 		montarLayout();
 	}
 
 	private AnotacaoFormulario(AnotacaoContainer container) {
-		super(AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
+		super(container.getFormulario(), AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
 		container.setAnotacaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

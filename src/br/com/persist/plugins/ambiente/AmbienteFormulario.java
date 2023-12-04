@@ -11,14 +11,14 @@ public class AmbienteFormulario extends AbstratoFormulario {
 	private final AmbienteContainer container;
 
 	private AmbienteFormulario(Formulario formulario, String conteudo, Ambiente ambiente) {
-		super(ambiente.titulo);
+		super(formulario, ambiente.titulo);
 		container = new AmbienteContainer(this, formulario, conteudo, ambiente);
 		container.setAmbienteFormulario(this);
 		montarLayout();
 	}
 
 	private AmbienteFormulario(AmbienteContainer container) {
-		super(container.getAmbiente().titulo);
+		super(container.getFormulario(), container.getAmbiente().titulo);
 		container.setAmbienteFormulario(this);
 		this.container = container;
 		container.setJanela(this);

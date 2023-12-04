@@ -14,14 +14,14 @@ public class ConsultaFormulario extends AbstratoFormulario {
 	private final ConsultaContainer container;
 
 	private ConsultaFormulario(Formulario formulario, Conexao conexao, String conteudo) {
-		super(Mensagens.getString(Constantes.LABEL_CONSULTA));
+		super(formulario, Mensagens.getString(Constantes.LABEL_CONSULTA));
 		container = new ConsultaContainer(this, formulario, conexao, conteudo);
 		container.setConsultaFormulario(this);
 		montarLayout();
 	}
 
 	private ConsultaFormulario(ConsultaContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_CONSULTA));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_CONSULTA));
 		container.setConsultaFormulario(this);
 		this.container = container;
 		container.setJanela(this);

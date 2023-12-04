@@ -14,14 +14,14 @@ public class MetadadoFormulario extends AbstratoFormulario {
 	private final MetadadoContainer container;
 
 	private MetadadoFormulario(Formulario formulario, Conexao conexao) {
-		super(Mensagens.getString(Constantes.LABEL_METADADOS));
+		super(formulario, Mensagens.getString(Constantes.LABEL_METADADOS));
 		container = new MetadadoContainer(this, formulario, conexao);
 		container.setMetadadoFormulario(this);
 		montarLayout();
 	}
 
 	private MetadadoFormulario(MetadadoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_METADADOS));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_METADADOS));
 		container.setMetadadoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

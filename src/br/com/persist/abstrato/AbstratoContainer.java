@@ -19,6 +19,10 @@ public abstract class AbstratoContainer extends Panel implements Pagina, WindowH
 		this.formulario = formulario;
 	}
 
+	public Formulario getFormulario() {
+		return formulario;
+	}
+
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
 	}

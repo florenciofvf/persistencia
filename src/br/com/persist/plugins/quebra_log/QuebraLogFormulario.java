@@ -11,14 +11,14 @@ public class QuebraLogFormulario extends AbstratoFormulario {
 	private final QuebraLogContainer container;
 
 	private QuebraLogFormulario(Formulario formulario) {
-		super(QuebraLogMensagens.getString(QuebraLogConstantes.LABEL_QUEBRA_LOG));
+		super(formulario, QuebraLogMensagens.getString(QuebraLogConstantes.LABEL_QUEBRA_LOG));
 		container = new QuebraLogContainer(this, formulario);
 		container.setQuebraLogFormulario(this);
 		montarLayout();
 	}
 
 	private QuebraLogFormulario(QuebraLogContainer container) {
-		super(QuebraLogMensagens.getString(QuebraLogConstantes.LABEL_QUEBRA_LOG));
+		super(container.getFormulario(), QuebraLogMensagens.getString(QuebraLogConstantes.LABEL_QUEBRA_LOG));
 		container.setQuebraLogFormulario(this);
 		this.container = container;
 		container.setJanela(this);

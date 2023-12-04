@@ -13,14 +13,14 @@ public class AnexoFormulario extends AbstratoFormulario {
 	private final AnexoContainer container;
 
 	private AnexoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_ANEXOS));
+		super(formulario, Mensagens.getString(Constantes.LABEL_ANEXOS));
 		container = new AnexoContainer(this, formulario);
 		container.setAnexoFormulario(this);
 		montarLayout();
 	}
 
 	private AnexoFormulario(AnexoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_ANEXOS));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_ANEXOS));
 		container.setAnexoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

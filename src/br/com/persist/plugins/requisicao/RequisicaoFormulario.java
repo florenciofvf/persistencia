@@ -11,14 +11,14 @@ public class RequisicaoFormulario extends AbstratoFormulario {
 	private final RequisicaoContainer container;
 
 	private RequisicaoFormulario(Formulario formulario, String conteudo, String idPagina) {
-		super(RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO));
+		super(formulario, RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO));
 		container = new RequisicaoContainer(this, formulario, conteudo, idPagina);
 		container.setRequisicaoFormulario(this);
 		montarLayout();
 	}
 
 	private RequisicaoFormulario(RequisicaoContainer container) {
-		super(RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO));
+		super(container.getFormulario(), RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO));
 		container.setRequisicaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

@@ -19,13 +19,20 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Janela;
+import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoFormulario extends JFrame implements Janela, WindowHandler {
 	private static final long serialVersionUID = 1L;
+	protected final Formulario formulario;
 
-	protected AbstratoFormulario(String titulo) {
+	protected AbstratoFormulario(Formulario formulario, String titulo) {
 		super(titulo);
+		this.formulario = formulario;
 		inicializar();
+	}
+
+	public Formulario getFormulario() {
+		return formulario;
 	}
 
 	private void inicializar() {

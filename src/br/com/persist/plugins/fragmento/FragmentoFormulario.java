@@ -13,14 +13,14 @@ public class FragmentoFormulario extends AbstratoFormulario {
 	private final FragmentoContainer container;
 
 	private FragmentoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_FRAGMENTO));
+		super(formulario, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container = new FragmentoContainer(this, formulario, null);
 		container.setFragmentoFormulario(this);
 		montarLayout();
 	}
 
 	private FragmentoFormulario(FragmentoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_FRAGMENTO));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container.setFragmentoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

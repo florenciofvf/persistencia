@@ -13,14 +13,14 @@ public class MapeamentoFormulario extends AbstratoFormulario {
 	private final MapeamentoContainer container;
 
 	private MapeamentoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
+		super(formulario, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		container = new MapeamentoContainer(this, formulario);
 		container.setMapeamentoFormulario(this);
 		montarLayout();
 	}
 
 	private MapeamentoFormulario(MapeamentoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		container.setMapeamentoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

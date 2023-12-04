@@ -11,14 +11,14 @@ public class GeraPluginFormulario extends AbstratoFormulario {
 	private final GeraPluginContainer container;
 
 	private GeraPluginFormulario(Formulario formulario) {
-		super(GeraPluginMensagens.getString(GeraPluginConstantes.LABEL_GERA_PLUGIN));
+		super(formulario, GeraPluginMensagens.getString(GeraPluginConstantes.LABEL_GERA_PLUGIN));
 		container = new GeraPluginContainer(this, formulario);
 		container.setGeraPluginFormulario(this);
 		montarLayout();
 	}
 
 	private GeraPluginFormulario(GeraPluginContainer container) {
-		super(GeraPluginMensagens.getString(GeraPluginConstantes.LABEL_GERA_PLUGIN));
+		super(container.getFormulario(), GeraPluginMensagens.getString(GeraPluginConstantes.LABEL_GERA_PLUGIN));
 		container.setGeraPluginFormulario(this);
 		this.container = container;
 		container.setJanela(this);

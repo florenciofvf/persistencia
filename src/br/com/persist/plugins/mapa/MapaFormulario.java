@@ -11,14 +11,14 @@ public class MapaFormulario extends AbstratoFormulario {
 	private final MapaContainer container;
 
 	private MapaFormulario(Formulario formulario, String conteudo, String idPagina) {
-		super(MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
+		super(formulario, MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
 		container = new MapaContainer(this, formulario, conteudo, idPagina);
 		container.setMapaFormulario(this);
 		montarLayout();
 	}
 
 	private MapaFormulario(MapaContainer container) {
-		super(MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
+		super(container.getFormulario(), MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
 		container.setMapaFormulario(this);
 		this.container = container;
 		container.setJanela(this);

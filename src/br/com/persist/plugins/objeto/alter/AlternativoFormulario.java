@@ -13,14 +13,14 @@ public class AlternativoFormulario extends AbstratoFormulario {
 	private final AlternativoContainer container;
 
 	private AlternativoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_ALTERNATIVO));
+		super(formulario, Mensagens.getString(Constantes.LABEL_ALTERNATIVO));
 		container = new AlternativoContainer(this, formulario, null);
 		container.setAlternativoFormulario(this);
 		montarLayout();
 	}
 
 	private AlternativoFormulario(AlternativoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_ALTERNATIVO));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_ALTERNATIVO));
 		container.setAlternativoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

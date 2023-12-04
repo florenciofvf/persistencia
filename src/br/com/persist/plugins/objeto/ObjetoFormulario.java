@@ -18,14 +18,14 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	private final ObjetoContainer container;
 
 	private ObjetoFormulario(Formulario formulario, File file) {
-		super(file.getName());
+		super(formulario, file.getName());
 		container = new ObjetoContainer(this, formulario);
 		container.setObjetoFormulario(this);
 		montarLayout();
 	}
 
 	private ObjetoFormulario(ObjetoContainer container) {
-		super(container.getFileName());
+		super(container.getFormulario(), container.getFileName());
 		container.setObjetoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

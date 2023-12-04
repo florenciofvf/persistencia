@@ -11,14 +11,14 @@ public class ExecucaoFormulario extends AbstratoFormulario {
 	private final ExecucaoContainer container;
 
 	private ExecucaoFormulario(Formulario formulario) {
-		super(ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
+		super(formulario, ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
 		container = new ExecucaoContainer(this, formulario);
 		container.setExecucaoFormulario(this);
 		montarLayout();
 	}
 
 	private ExecucaoFormulario(ExecucaoContainer container) {
-		super(ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
+		super(container.getFormulario(), ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
 		container.setExecucaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

@@ -13,14 +13,14 @@ public class ArquivoFormulario extends AbstratoFormulario {
 	private final ArquivoContainer container;
 
 	private ArquivoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_ARQUIVOS));
+		super(formulario, Mensagens.getString(Constantes.LABEL_ARQUIVOS));
 		container = new ArquivoContainer(this, formulario);
 		container.setArquivoFormulario(this);
 		montarLayout();
 	}
 
 	private ArquivoFormulario(ArquivoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_ARQUIVOS));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_ARQUIVOS));
 		container.setArquivoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

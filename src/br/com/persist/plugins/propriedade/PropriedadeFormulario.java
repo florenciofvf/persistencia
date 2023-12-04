@@ -11,14 +11,14 @@ public class PropriedadeFormulario extends AbstratoFormulario {
 	private final PropriedadeContainer container;
 
 	private PropriedadeFormulario(Formulario formulario) {
-		super(PropriedadeMensagens.getString(PropriedadeConstantes.LABEL_PROPRIEDADE));
+		super(formulario, PropriedadeMensagens.getString(PropriedadeConstantes.LABEL_PROPRIEDADE));
 		container = new PropriedadeContainer(this, formulario);
 		container.setPropriedadeFormulario(this);
 		montarLayout();
 	}
 
 	private PropriedadeFormulario(PropriedadeContainer container) {
-		super(PropriedadeMensagens.getString(PropriedadeConstantes.LABEL_PROPRIEDADE));
+		super(container.getFormulario(), PropriedadeMensagens.getString(PropriedadeConstantes.LABEL_PROPRIEDADE));
 		container.setPropriedadeFormulario(this);
 		this.container = container;
 		container.setJanela(this);

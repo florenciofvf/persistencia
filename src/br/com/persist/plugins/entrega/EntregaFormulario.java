@@ -11,14 +11,14 @@ public class EntregaFormulario extends AbstratoFormulario {
 	private final EntregaContainer container;
 
 	private EntregaFormulario(Formulario formulario, String conteudo, String idPagina) {
-		super(EntregaMensagens.getString(EntregaConstantes.LABEL_ENTREGA));
+		super(formulario, EntregaMensagens.getString(EntregaConstantes.LABEL_ENTREGA));
 		container = new EntregaContainer(this, formulario, conteudo, idPagina);
 		container.setEntregaFormulario(this);
 		montarLayout();
 	}
 
 	private EntregaFormulario(EntregaContainer container) {
-		super(EntregaMensagens.getString(EntregaConstantes.LABEL_ENTREGA));
+		super(container.getFormulario(), EntregaMensagens.getString(EntregaConstantes.LABEL_ENTREGA));
 		container.setEntregaFormulario(this);
 		this.container = container;
 		container.setJanela(this);

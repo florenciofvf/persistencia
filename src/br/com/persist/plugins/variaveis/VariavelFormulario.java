@@ -13,14 +13,14 @@ public class VariavelFormulario extends AbstratoFormulario {
 	private final VariavelContainer container;
 
 	private VariavelFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_VARIAVEIS));
+		super(formulario, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container = new VariavelContainer(this, formulario, null);
 		container.setVariavelFormulario(this);
 		montarLayout();
 	}
 
 	private VariavelFormulario(VariavelContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_VARIAVEIS));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container.setVariavelFormulario(this);
 		this.container = container;
 		container.setJanela(this);

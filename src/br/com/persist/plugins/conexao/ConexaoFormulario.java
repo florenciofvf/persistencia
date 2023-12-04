@@ -13,14 +13,14 @@ public class ConexaoFormulario extends AbstratoFormulario {
 	private final ConexaoContainer container;
 
 	private ConexaoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_CONEXAO));
+		super(formulario, Mensagens.getString(Constantes.LABEL_CONEXAO));
 		container = new ConexaoContainer(this, formulario);
 		container.setConexaoFormulario(this);
 		montarLayout();
 	}
 
 	private ConexaoFormulario(ConexaoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_CONEXAO));
+		super(container.getFormulario(), Mensagens.getString(Constantes.LABEL_CONEXAO));
 		container.setConexaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

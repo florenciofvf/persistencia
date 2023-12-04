@@ -11,14 +11,14 @@ public class InstrucaoFormulario extends AbstratoFormulario {
 	private final InstrucaoContainer container;
 
 	private InstrucaoFormulario(Formulario formulario, String conteudo, String idPagina) {
-		super(InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
+		super(formulario, InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
 		container = new InstrucaoContainer(this, formulario, conteudo, idPagina);
 		container.setInstrucaoFormulario(this);
 		montarLayout();
 	}
 
 	private InstrucaoFormulario(InstrucaoContainer container) {
-		super(InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
+		super(container.getFormulario(), InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
 		container.setInstrucaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);
