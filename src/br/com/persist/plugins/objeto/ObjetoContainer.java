@@ -64,7 +64,6 @@ import br.com.persist.componente.ToggleButton;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.formulario.SetFormulario;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
@@ -78,7 +77,7 @@ import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 
-public class ObjetoContainer extends AbstratoContainer implements SetFormulario {
+public class ObjetoContainer extends AbstratoContainer {
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
@@ -892,10 +891,5 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				return Icones.CUBO;
 			}
 		};
-	}
-
-	@Override
-	public void set(AtomicReference<Formulario> ref) {
-		ref.set(formulario);
 	}
 }

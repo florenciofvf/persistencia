@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,7 +59,8 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	private static final long serialVersionUID = 1L;
 	private final ScrollPane scrollPane;
 
-	public Desktop(boolean extensao) {
+	public Desktop(Formulario formulario, boolean extensao) {
+		super(formulario);
 		if (!extensao) {
 			addMouseListener(mouseListenerInner);
 		}
@@ -377,7 +377,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 			Dimension dimension, Conexao conexao, Objeto objeto) {
 		setComplemento(conexao, objeto);
 		objeto.setChecarLargura(true);
-		InternalFormulario internal = new InternalFormulario(conexao, objeto, buscaAuto);
+		InternalFormulario internal = new InternalFormulario(formulario, conexao, objeto, buscaAuto);
 		internal.setInternalConfig(config);
 		internal.setLocation(point);
 		internal.setSize(dimension);
@@ -553,9 +553,5 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	@Override
 	public File getFile() {
 		return null;
-	}
-
-	public void setFormulario(AtomicReference<Formulario> ref) {
-		Formulario.setFormulario(ref, this);
 	}
 }

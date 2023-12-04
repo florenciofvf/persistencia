@@ -54,8 +54,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private Desktop desktop;
 	private long ultimo;
 
-	public InternalFormulario(Conexao padrao, Objeto objeto, boolean buscaAuto) {
-		super(objeto.getId());
+	public InternalFormulario(Formulario formulario, Conexao padrao, Objeto objeto, boolean buscaAuto) {
+		super(formulario, objeto.getId());
 		container = new InternalContainer(this, padrao, objeto, buscaAuto);
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
@@ -159,8 +159,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return 0;
 	}
 
-	public static InternalFormulario criar(Conexao padrao, Objeto objeto, boolean buscaAuto) {
-		return new InternalFormulario(padrao, objeto, buscaAuto);
+	public static InternalFormulario criar(Formulario formulario, Conexao padrao, Objeto objeto, boolean buscaAuto) {
+		return new InternalFormulario(formulario, padrao, objeto, buscaAuto);
 	}
 
 	private void checarDesktop() {
@@ -388,11 +388,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private transient InternalListener.Componente componenteListener = new InternalListener.Componente() {
 		@Override
-		public void getFormulario(AtomicReference<Formulario> ref) {
-			checarDesktop();
-			if (desktop != null) {
-				desktop.setFormulario(ref);
-			}
+		public Formulario getFormulario() {
+			return formulario;
 		}
 
 		@Override

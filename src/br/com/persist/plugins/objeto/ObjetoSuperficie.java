@@ -104,7 +104,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	final SuperficiePopup2 popup2;
 	transient Relacao[] relacoes;
 	final SuperficiePopup popup;
-	final Formulario formulario;
 	transient Objeto[] objetos;
 	private int totalHoras;
 	String arquivoVinculo;
@@ -114,11 +113,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private int ultY;
 
 	public ObjetoSuperficie(Formulario formulario, ObjetoContainer container) {
-		super(true);
+		super(formulario, true);
 		configEstado(ObjetoConstantes.SELECAO);
 		popup2 = new SuperficiePopup2(this);
 		popup = new SuperficiePopup(this);
-		this.formulario = formulario;
 		this.container = container;
 		configurar();
 		limpar();
@@ -746,10 +744,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	public Formulario getFormulario() {
-		return formulario;
-	}
-
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -1043,9 +1037,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	void criarExternalFormulario(Conexao conexao, Objeto objeto) {
 		setComplemento(conexao, objeto);
-		AtomicReference<Formulario> ref = new AtomicReference<>();
-		setFormulario(ref);
-		ExternalFormulario.criar(ref.get(), conexao, objeto);
+		ExternalFormulario.criar(formulario, conexao, objeto);
 	}
 
 	public void atualizarTotal(Conexao conexao, MenuItem[] menuItens, Label label) {
@@ -1313,14 +1305,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);
 			}
-		}
-	}
-
-	@Override
-	public void setFormulario(AtomicReference<Formulario> ref) {
-		container.set(ref);
-		if (ref.get() == null) {
-			super.setFormulario(ref);
 		}
 	}
 
@@ -1654,7 +1638,7 @@ class SuperficiePopup2 extends Popup {
 			}
 		}
 		if (lista.isEmpty()) {
-			Util.mensagem(superficie.formulario, ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
+			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
 			return;
 		}
 
@@ -1709,7 +1693,7 @@ class SuperficiePopup2 extends Popup {
 			sb.append(ObjetoMensagens.getString("label.local_relativo_arquivo") + " "
 					+ ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
 		}
-		Util.mensagem(superficie.formulario, sb.toString());
+		Util.mensagem(superficie.getFormulario(), sb.toString());
 	}
 }
 
