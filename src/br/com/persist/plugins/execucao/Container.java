@@ -99,6 +99,9 @@ public class Container {
 				sb.append("[" + comando + "]" + Constantes.QL2);
 			}
 			if (confirmar && !Util.confirmar(comp, comando, false)) {
+				if (sb != null && sb.length() > 0) {
+					sb.delete(0, sb.length());
+				}
 				return;
 			}
 			Process process = Runtime.getRuntime().exec(comando);

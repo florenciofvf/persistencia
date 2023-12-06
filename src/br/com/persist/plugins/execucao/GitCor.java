@@ -40,6 +40,9 @@ public class GitCor implements EditorCor {
 	}
 
 	public void processar(TextPane textPane, StringBuilder sb) {
+		if (sb == null || sb.length() == 0) {
+			return;
+		}
 		StyledDocument doc = textPane.getStyledDocument();
 		UIDefaults defaults = new UIDefaults();
 		defaults.put("TextPane[Enabled].backgroundPainter", COLOR_EDITOR);
