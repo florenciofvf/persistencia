@@ -762,8 +762,30 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		area.desenhar(g2);
 		if (processar && thread != null) {
 			g2.setFont(ObjetoConstantes.FONT_HORAS);
-			g2.drawString(HoraUtil.formatar(totalHoras), 300, 300);
-			g2.drawString(HoraUtil.getHoraAtual(), 300, 500);
+
+			int xValor = 40;
+			int xTexto = 550;
+			int yTodos = 300;
+
+			g2.drawString(HoraUtil.formatar(totalHoras), xValor, yTodos);
+			g2.drawString("<<< TRABALHANDO", xTexto, yTodos);
+			yTodos += 180;
+
+			g2.drawString(HoraUtil.getHoraAtual(), xValor, yTodos);
+			g2.drawString("<<< HORA ATUAL", xTexto, yTodos);
+			yTodos += 180;
+
+			int faltando = HoraUtil.OITO_HORAS - totalHoras;
+			if (faltando > 0) {
+				g2.drawString(HoraUtil.formatar(faltando), xValor, yTodos);
+				g2.drawString("<<< FALTANDO", xTexto, yTodos);
+			} else if (faltando < 0) {
+				g2.drawString(HoraUtil.formatar(faltando * -1), xValor, yTodos);
+				g2.drawString("<<< SALDO POSITIVO", xTexto, yTodos);
+			} else {
+				g2.drawString(HoraUtil.formatar(faltando), xValor, yTodos);
+				g2.drawString("<<< 8 HORAS", xTexto, yTodos);
+			}
 		}
 	}
 

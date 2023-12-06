@@ -10,7 +10,7 @@ public class ObjetoConstantes {
 	public static final String DESTACAR_PROPRIO_ALTURA_INTERNAL = "DESTACAR_PROPRIO_ALTURA_INTERNAL";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
-	public static final Font FONT_HORAS = new Font(Font.MONOSPACED, Font.BOLD, 150);
+	public static final Font FONT_HORAS = new Font(Font.MONOSPACED, Font.BOLD, 90);
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String PESQUISA_INVERTIDO = "pesquisa_invertido";
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";

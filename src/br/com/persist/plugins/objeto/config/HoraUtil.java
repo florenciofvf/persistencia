@@ -7,6 +7,7 @@ import br.com.persist.plugins.objeto.ObjetoException;
 public class HoraUtil {
 	public static final byte MINUTO = 60;
 	public static final short HORA = 60 * MINUTO;
+	public static final int OITO_HORAS = HORA * 8;
 
 	private HoraUtil() {
 	}
