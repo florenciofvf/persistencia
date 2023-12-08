@@ -33,7 +33,7 @@ public class MapaConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, MapaPreferencia.getMapaPosicaoAbaFichario());
-		chkExibirArqIgnorados.setSelected(MapaPreferencia.isExibirArqInvisivel());
+		chkExibirArqIgnorados.setSelected(MapaPreferencia.isExibirArqIgnorados());
 
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
@@ -44,7 +44,7 @@ public class MapaConfiguracao extends AbstratoConfiguracao {
 
 	private void configurar() {
 		chkExibirArqIgnorados
-				.addActionListener(e -> MapaPreferencia.setExibirArqInvisivel(chkExibirArqIgnorados.isSelected()));
+				.addActionListener(e -> MapaPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 	}
 
 	private Label criarLabelTituloRotulo(String rotulo) {

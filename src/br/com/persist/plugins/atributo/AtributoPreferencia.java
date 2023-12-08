@@ -7,8 +7,8 @@ import javax.swing.SwingConstants;
 import br.com.persist.formulario.Formulario;
 
 public class AtributoPreferencia {
-	private static boolean exibirArqIgnorados;
 	private static int atributoPosicaoAbaFichario;
+	private static boolean exibirArqIgnorados;
 
 	private AtributoPreferencia() {
 	}

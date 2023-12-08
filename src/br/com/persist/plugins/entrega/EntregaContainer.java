@@ -109,7 +109,7 @@ public class EntregaContainer extends AbstratoContainer {
 			if (files != null) {
 				List<EntregaPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
-					if ((ehArquivoReservado(f.getName()) && !EntregaPreferencia.isExibirArqInvisivel())
+					if ((ehArquivoReservado(f.getName()) && !EntregaPreferencia.isExibirArqIgnorados())
 							|| ArquivoUtil.contem(EntregaConstantes.ENTREGAS, f.getName())) {
 						continue;
 					}

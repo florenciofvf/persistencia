@@ -7,8 +7,8 @@ import javax.swing.SwingConstants;
 import br.com.persist.formulario.Formulario;
 
 public class MapaPreferencia {
-	private static boolean exibirArqInvisivel;
 	private static int mapaPosicaoAbaFichario;
+	private static boolean exibirArqIgnorados;
 
 	private MapaPreferencia() {
 	}
@@ -16,13 +16,13 @@ public class MapaPreferencia {
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		mapaPosicaoAbaFichario = pref.getInt("mapa_posicao_aba_fichario", SwingConstants.TOP);
-		exibirArqInvisivel = pref.getBoolean("mapa_exibir_arq_invisivel", false);
+		exibirArqIgnorados = pref.getBoolean("mapa_exibir_arq_ignorados", false);
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putInt("mapa_posicao_aba_fichario", mapaPosicaoAbaFichario);
-		pref.putBoolean("mapa_exibir_arq_invisivel", exibirArqInvisivel);
+		pref.putBoolean("mapa_exibir_arq_ignorados", exibirArqIgnorados);
 	}
 
 	public static int getMapaPosicaoAbaFichario() {
@@ -33,11 +33,11 @@ public class MapaPreferencia {
 		MapaPreferencia.mapaPosicaoAbaFichario = mapaPosicaoAbaFichario;
 	}
 
-	public static boolean isExibirArqInvisivel() {
-		return exibirArqInvisivel;
+	public static boolean isExibirArqIgnorados() {
+		return exibirArqIgnorados;
 	}
 
-	public static void setExibirArqInvisivel(boolean exibirArqInvisivel) {
-		MapaPreferencia.exibirArqInvisivel = exibirArqInvisivel;
+	public static void setExibirArqIgnorados(boolean exibirArqIgnorados) {
+		MapaPreferencia.exibirArqIgnorados = exibirArqIgnorados;
 	}
 }

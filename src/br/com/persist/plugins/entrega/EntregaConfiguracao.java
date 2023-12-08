@@ -33,7 +33,7 @@ public class EntregaConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, EntregaPreferencia.getEntregaPosicaoAbaFichario());
-		chkExibirArqIgnorados.setSelected(EntregaPreferencia.isExibirArqInvisivel());
+		chkExibirArqIgnorados.setSelected(EntregaPreferencia.isExibirArqIgnorados());
 
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
@@ -44,7 +44,7 @@ public class EntregaConfiguracao extends AbstratoConfiguracao {
 
 	private void configurar() {
 		chkExibirArqIgnorados
-				.addActionListener(e -> EntregaPreferencia.setExibirArqInvisivel(chkExibirArqIgnorados.isSelected()));
+				.addActionListener(e -> EntregaPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 	}
 
 	private Label criarLabelTituloRotulo(String rotulo) {

@@ -109,7 +109,7 @@ public class MapaContainer extends AbstratoContainer {
 			if (files != null) {
 				List<MapaPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
-					if ((ehArquivoReservado(f.getName()) && !MapaPreferencia.isExibirArqInvisivel())
+					if ((ehArquivoReservado(f.getName()) && !MapaPreferencia.isExibirArqIgnorados())
 							|| ArquivoUtil.contem(MapaConstantes.MAPAS, f.getName())) {
 						continue;
 					}

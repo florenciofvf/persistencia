@@ -7,8 +7,8 @@ import javax.swing.SwingConstants;
 import br.com.persist.formulario.Formulario;
 
 public class EntregaPreferencia {
-	private static boolean exibirArqInvisivel;
 	private static int entregaPosicaoAbaFichario;
+	private static boolean exibirArqIgnorados;
 
 	private EntregaPreferencia() {
 	}
@@ -16,13 +16,13 @@ public class EntregaPreferencia {
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		entregaPosicaoAbaFichario = pref.getInt("entrega_posicao_aba_fichario", SwingConstants.TOP);
-		exibirArqInvisivel = pref.getBoolean("entrega_exibir_arq_invisivel", false);
+		exibirArqIgnorados = pref.getBoolean("entrega_exibir_arq_ignorados", false);
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putInt("entrega_posicao_aba_fichario", entregaPosicaoAbaFichario);
-		pref.putBoolean("entrega_exibir_arq_invisivel", exibirArqInvisivel);
+		pref.putBoolean("entrega_exibir_arq_ignorados", exibirArqIgnorados);
 	}
 
 	public static int getEntregaPosicaoAbaFichario() {
@@ -33,11 +33,11 @@ public class EntregaPreferencia {
 		EntregaPreferencia.entregaPosicaoAbaFichario = entregaPosicaoAbaFichario;
 	}
 
-	public static boolean isExibirArqInvisivel() {
-		return exibirArqInvisivel;
+	public static boolean isExibirArqIgnorados() {
+		return exibirArqIgnorados;
 	}
 
-	public static void setExibirArqInvisivel(boolean exibirArqInvisivel) {
-		EntregaPreferencia.exibirArqInvisivel = exibirArqInvisivel;
+	public static void setExibirArqIgnorados(boolean exibirArqIgnorados) {
+		EntregaPreferencia.exibirArqIgnorados = exibirArqIgnorados;
 	}
 }
