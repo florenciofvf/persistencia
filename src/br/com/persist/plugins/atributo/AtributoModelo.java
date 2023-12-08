@@ -6,9 +6,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class AtributoModelo extends AbstractTableModel {
-	private static final Class<?>[] COLUNAS_CLASS = { String.class, Boolean.class };
+	private static final Class<?>[] COLUNAS_CLASS = { String.class, String.class, String.class, Boolean.class };
 	private final transient List<Atributo> lista = new ArrayList<>();
-	private static final String[] COLUNAS = { "NOME", "IGNORAR" };
+	private static final String[] COLUNAS = { "NOME", "CLASSE", "ABSOLUTO", "IGNORAR" };
 	private static final long serialVersionUID = 1L;
 
 	public Atributo getAtributo(int i) {
@@ -57,6 +57,10 @@ public class AtributoModelo extends AbstractTableModel {
 		if (columnIndex == 0) {
 			return atributo.getNome();
 		} else if (columnIndex == 1) {
+			return atributo.getClasse();
+		} else if (columnIndex == 2) {
+			return atributo.getAbsoluto();
+		} else if (columnIndex == 3) {
 			return atributo.isIgnorar();
 		}
 		return null;
@@ -70,7 +74,11 @@ public class AtributoModelo extends AbstractTableModel {
 		Atributo atributo = lista.get(rowIndex);
 		if (columnIndex == 0) {
 			atributo.setNome(aValue.toString());
-		} else if (columnIndex == 1 && aValue instanceof Boolean) {
+		} else if (columnIndex == 1) {
+			atributo.setClasse(aValue.toString());
+		} else if (columnIndex == 2) {
+			atributo.setAbsoluto(aValue.toString());
+		} else if (columnIndex == 3 && aValue instanceof Boolean) {
 			atributo.setIgnorar(((Boolean) aValue).booleanValue());
 		}
 	}
