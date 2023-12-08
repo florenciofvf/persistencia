@@ -10,9 +10,9 @@ public class AtributoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final AtributoContainer container;
 
-	private AtributoFormulario(Formulario formulario) {
+	private AtributoFormulario(Formulario formulario, String conteudo, String idPagina) {
 		super(formulario, AtributoMensagens.getString(AtributoConstantes.LABEL_ATRIBUTO));
-		container = new AtributoContainer(this, formulario);
+		container = new AtributoContainer(this, formulario, conteudo, idPagina);
 		container.setAtributoFormulario(this);
 		montarLayout();
 	}
@@ -34,8 +34,8 @@ public class AtributoFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
-	public static void criar(Formulario formulario) {
-		AtributoFormulario form = new AtributoFormulario(formulario);
+	public static void criar(Formulario formulario, String conteudo, String idPagina) {
+		AtributoFormulario form = new AtributoFormulario(formulario, conteudo, idPagina);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

@@ -37,7 +37,7 @@ public class AtributoFabrica extends AbstratoFabricaContainer {
 	private class AtributoPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new AtributoContainer(null, formulario);
+			return new AtributoContainer(null, formulario, null, stringPersistencia);
 		}
 	}
 
@@ -65,8 +65,8 @@ public class AtributoFabrica extends AbstratoFabricaContainer {
 		private MenuAtributo(Formulario formulario) {
 			super(Constantes.LABEL_VAZIO, Icones.REGION);
 			setText(AtributoMensagens.getString(AtributoConstantes.LABEL_ATRIBUTO));
-			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new AtributoContainer(null, formulario)));
-			formularioAcao.setActionListener(e -> AtributoFormulario.criar(formulario));
+			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new AtributoContainer(null, formulario, null, null)));
+			formularioAcao.setActionListener(e -> AtributoFormulario.criar(formulario, null, null));
 			dialogoAcao.setActionListener(e -> AtributoDialogo.criar(formulario));
 		}
 	}

@@ -14,7 +14,7 @@ public class AtributoDialogo extends AbstratoDialogo {
 
 	private AtributoDialogo(Frame frame, Formulario formulario) {
 		super(frame, AtributoMensagens.getString(AtributoConstantes.LABEL_ATRIBUTO));
-		container = new AtributoContainer(this, formulario);
+		container = new AtributoContainer(this, formulario, null, null);
 		container.setAtributoDialogo(this);
 		montarLayout();
 	}
