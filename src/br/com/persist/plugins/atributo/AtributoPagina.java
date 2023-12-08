@@ -9,17 +9,20 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -27,14 +30,18 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
+import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLUtil;
 
 public class AtributoPagina extends Panel {
 	private final PainelFichario fichario = new PainelFichario();
@@ -48,7 +55,7 @@ public class AtributoPagina extends Panel {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, painelAtributo, fichario);
+		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, fichario);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.2));
 		add(BorderLayout.CENTER, split);
 	}
@@ -122,6 +129,7 @@ public class AtributoPagina extends Panel {
 		}
 
 		private class Toolbar extends BarraButton implements ActionListener {
+			private Action tabelaAcao = acaoIcon("label.atualizar_tabela", Icones.SINCRONIZAR);
 			private final TextField txtPesquisa = new TextField(35);
 			private static final long serialVersionUID = 1L;
 			private transient Selecao selecao;
@@ -130,13 +138,33 @@ public class AtributoPagina extends Panel {
 				super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
 				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 				txtPesquisa.addActionListener(this);
+				addButton(tabelaAcao);
 				add(txtPesquisa);
 				add(label);
+				tabelaAcao.setActionListener(e -> carregar());
+			}
+
+			Action acaoIcon(String chave, Icon icon) {
+				return Action.acaoIcon(AtributoMensagens.getString(chave), icon);
 			}
 
 			@Override
 			protected void limpar() {
-				textArea.setText(Constantes.VAZIO);
+				try {
+					StringWriter sw = new StringWriter();
+					XMLUtil util = new XMLUtil(sw);
+					util.prologo();
+					util.abrirTag2("att");
+					util.abrirTag(AtributoConstantes.ATRIBUTO).atributo("nome", "nomeAtributo")
+							.atributo("classe", "obrigatorio ex: AtomicInteger")
+							.atributo("absoluto", "opcional ex:[java.util.concurrent.atomic.AtomicInteger]")
+							.fecharTag(-1);
+					util.finalizarTag("att");
+					util.close();
+					textArea.setText(sw.toString());
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
+				}
 			}
 
 			@Override
@@ -167,6 +195,19 @@ public class AtributoPagina extends Panel {
 				} else {
 					label.limpar();
 				}
+			}
+
+			private void carregar() {
+				try {
+					AtributoHandler handler = new AtributoHandler();
+					if (!Util.isEmpty(txtPesquisa.getText())) {
+						XML.processar(new ByteArrayInputStream(txtPesquisa.getText().getBytes()), handler);
+					}
+					tabela.setModel(new AtributoModelo(handler.getAtributos()));
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
+				}
+				SwingUtilities.updateComponentTreeUI(this);
 			}
 		}
 

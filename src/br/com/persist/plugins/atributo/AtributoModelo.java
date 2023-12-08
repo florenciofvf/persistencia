@@ -7,9 +7,17 @@ import javax.swing.table.AbstractTableModel;
 
 public class AtributoModelo extends AbstractTableModel {
 	private static final Class<?>[] COLUNAS_CLASS = { String.class, String.class, String.class, Boolean.class };
-	private final transient List<Atributo> lista = new ArrayList<>();
 	private static final String[] COLUNAS = { "NOME", "CLASSE", "ABSOLUTO", "IGNORAR" };
 	private static final long serialVersionUID = 1L;
+	private final transient List<Atributo> lista;
+
+	public AtributoModelo() {
+		this(null);
+	}
+
+	public AtributoModelo(List<Atributo> lista) {
+		this.lista = lista == null ? new ArrayList<>() : lista;
+	}
 
 	public Atributo getAtributo(int i) {
 		if (i >= 0 && i < lista.size()) {

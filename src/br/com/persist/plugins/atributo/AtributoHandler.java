@@ -23,4 +23,8 @@ class AtributoHandler extends XMLHandler {
 			atributos.add(atributo);
 		}
 	}
+
+	public List<Atributo> getAtributos() {
+		return atributos;
+	}
 }
