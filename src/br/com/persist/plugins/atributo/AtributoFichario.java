@@ -67,7 +67,7 @@ public class AtributoFichario extends JTabbedPane {
 		AtributoPagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.isEmpty(conteudo)) {
-				pagina.textArea.setText(conteudo);
+				pagina.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}
