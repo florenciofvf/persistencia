@@ -56,7 +56,7 @@ public class AtributoPagina extends Panel {
 
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, fichario);
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.2));
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(.33));
 		add(BorderLayout.CENTER, split);
 	}
 
@@ -130,7 +130,7 @@ public class AtributoPagina extends Panel {
 
 		private class Toolbar extends BarraButton implements ActionListener {
 			private Action tabelaAcao = acaoIcon("label.atualizar_tabela", Icones.SINCRONIZAR);
-			private final TextField txtPesquisa = new TextField(35);
+			private final TextField txtPesquisa = new TextField(15);
 			private static final long serialVersionUID = 1L;
 			private transient Selecao selecao;
 
@@ -200,8 +200,8 @@ public class AtributoPagina extends Panel {
 			private void carregar() {
 				try {
 					AtributoHandler handler = new AtributoHandler();
-					if (!Util.isEmpty(txtPesquisa.getText())) {
-						XML.processar(new ByteArrayInputStream(txtPesquisa.getText().getBytes()), handler);
+					if (!Util.isEmpty(textArea.getText())) {
+						XML.processar(new ByteArrayInputStream(textArea.getText().getBytes()), handler);
 					}
 					tabela.setModel(new AtributoModelo(handler.getAtributos()));
 				} catch (Exception ex) {
