@@ -242,7 +242,7 @@ public class AtributoContainer extends AbstratoContainer {
 
 		private void excluirAtivo() {
 			AtributoPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null && Util.confirmar(AtribiutoContainer.this,
+			if (ativa != null && Util.confirmar(AtributoContainer.this,
 					AtributoMensagens.getString("msg.confirmar_excluir_ativa"), false)) {
 				int indice = fichario.getSelectedIndex();
 				ativa.excluir();

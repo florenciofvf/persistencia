@@ -65,7 +65,8 @@ public class AtributoFabrica extends AbstratoFabricaContainer {
 		private MenuAtributo(Formulario formulario) {
 			super(Constantes.LABEL_VAZIO, Icones.REGION);
 			setText(AtributoMensagens.getString(AtributoConstantes.LABEL_ATRIBUTO));
-			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new AtributoContainer(null, formulario, null, null)));
+			ficharioAcao.setActionListener(
+					e -> formulario.adicionarPagina(new AtributoContainer(null, formulario, null, null)));
 			formularioAcao.setActionListener(e -> AtributoFormulario.criar(formulario, null, null));
 			dialogoAcao.setActionListener(e -> AtributoDialogo.criar(formulario));
 		}
