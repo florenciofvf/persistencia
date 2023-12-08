@@ -87,11 +87,11 @@ public class ###cap###Container extends AbstratoContainer {
 		}
 
 		@Override
-		public void baixar() {
+		protected void baixar() {
 		}
 
 		@Override
-		public void salvar() {
+		protected void salvar() {
 		}
 	}
 
