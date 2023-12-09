@@ -1,5 +1,7 @@
 package br.com.persist.plugins.atributo;
 
+import java.util.List;
+
 import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
@@ -60,6 +62,33 @@ public class Atributo {
 
 	public String gerarDeclaracao() {
 		return "\tprivate " + classe + " " + nome + ";" + Constantes.QL;
+	}
+
+	public static String gerarParamJS(List<Atributo> atributos) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\tfunction criarParam() {" + Constantes.QL);
+		sb.append(criarParamJS(atributos) + Constantes.QL);
+		sb.append("\t\treturn param;" + Constantes.QL);
+		sb.append("\t}" + Constantes.QL);
+		return sb.toString();
+	}
+
+	private static String criarParamJS(List<Atributo> atributos) {
+		StringBuilder sb = new StringBuilder("\t\tvar param = {" + Constantes.QL);
+		for (int i = 0; i < atributos.size(); i++) {
+			Atributo att = atributos.get(i);
+			sb.append(att.gerarDeclaracaoJS());
+			if (i + 1 < atributos.size()) {
+				sb.append(",");
+			}
+			sb.append(Constantes.QL);
+		}
+		sb.append("\t\t};" + Constantes.QL);
+		return sb.toString();
+	}
+
+	private String gerarDeclaracaoJS() {
+		return "\t\t\t" + nome + ": vm.filtro." + nome;
 	}
 
 	public String gerarDeclaracaoRS() {

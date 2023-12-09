@@ -528,6 +528,7 @@ class PainelJavaScript extends AbstratoPanel {
 	@Override
 	void gerar(List<Atributo> atributos) {
 		StringBuilder sb = new StringBuilder();
+		sb.append(Atributo.gerarParamJS(atributos) + Constantes.QL);
 		sb.append("\tfunction validarFiltro() {" + Constantes.QL);
 		if (atributos.size() > 1) {
 			sb.append(todosVazios(atributos));
