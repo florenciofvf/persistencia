@@ -273,15 +273,19 @@ class PainelFichario extends JTabbedPane {
 
 	PainelFichario() {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		adicionarAbas();
+		addAba(new PainelDTO());
+		addAba(new PainelView());
+		addAba(new PainelJavaScript());
+		addAba(new PainelFilter());
+		addAba(new PainelRest());
+		addAba(new PainelService());
+		addAba(new PainelBean());
+		addAba(new PainelDAO());
+		addAba(new PainelDAOImpl());
 	}
 
-	private void adicionarAbas() {
-		PainelDTO dto = new PainelDTO();
-		addTab(AtributoMensagens.getString(dto.getChaveTitulo()), dto);
-
-		PainelFilter filter = new PainelFilter();
-		addTab(AtributoMensagens.getString(filter.getChaveTitulo()), filter);
+	private void addAba(AbstratoPanel panel) {
+		addTab(AtributoMensagens.getString(panel.getChaveTitulo()), panel);
 	}
 }
 
@@ -353,6 +357,97 @@ class PainelFilter extends AbstratoPanel {
 	@Override
 	String getChaveTitulo() {
 		return "label.filter";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelRest extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.rest";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelService extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.service";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelBean extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.bean";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelDAO extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.dao";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelDAOImpl extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.dao_impl";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelJavaScript extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.java_script";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelView extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.view";
 	}
 
 	@Override
