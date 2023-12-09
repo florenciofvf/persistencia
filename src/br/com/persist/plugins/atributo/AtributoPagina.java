@@ -286,9 +286,9 @@ class PainelFichario extends JTabbedPane {
 	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		addAba(new PainelDTO(pagina));
+		addAba(new PainelFilter(pagina));
 		addAba(new PainelView(pagina));
 		addAba(new PainelJavaScript(pagina));
-		addAba(new PainelFilter(pagina));
 		addAba(new PainelRest(pagina));
 		addAba(new PainelService(pagina));
 		addAba(new PainelBean(pagina));
@@ -406,6 +406,25 @@ class PainelFilter extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringBuilder sb = new StringBuilder();
+		if (!atributos.isEmpty()) {
+			sb.append("import javax.ws.rs.QueryParam;" + Constantes.QL2);
+		}
+		sb.append("public class Filter {" + Constantes.QL);
+		int i = 0;
+		for (Atributo atributo : atributos) {
+			if (i++ > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(atributo.gerarDeclaracaoRS());
+		}
+		for (Atributo atributo : atributos) {
+			sb.append(Constantes.QL);
+			sb.append(atributo.gerarGet() + Constantes.QL);
+			sb.append(atributo.gerarSet());
+		}
+		sb.append("}" + Constantes.QL);
+		setText(sb.toString());
 	}
 }
 

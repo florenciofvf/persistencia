@@ -62,6 +62,11 @@ public class Atributo {
 		return "\tprivate " + classe + " " + nome + ";" + Constantes.QL;
 	}
 
+	public String gerarDeclaracaoRS() {
+		return "\t@QueryParam(" + Util.citar2(nome) + ")" + Constantes.QL + "\tprivate " + classe + " " + nome + ";"
+				+ Constantes.QL;
+	}
+
 	public String gerarGet() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\tpublic " + classe + " get" + Util.capitalize(nome) + "() {" + Constantes.QL);
