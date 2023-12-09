@@ -1,5 +1,6 @@
 package br.com.persist.plugins.atributo;
 
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
@@ -272,5 +273,89 @@ class PainelFichario extends JTabbedPane {
 
 	PainelFichario() {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		adicionarAbas();
+	}
+
+	private void adicionarAbas() {
+		PainelDTO dto = new PainelDTO();
+		addTab(AtributoMensagens.getString(dto.getChaveTitulo()), dto);
+
+		PainelFilter filter = new PainelFilter();
+		addTab(AtributoMensagens.getString(filter.getChaveTitulo()), filter);
+	}
+}
+
+abstract class AbstratoPanel extends Panel {
+	private static final long serialVersionUID = 1L;
+	protected final JTextPane textArea = new JTextPane();
+	private final Toolbar toolbar = new Toolbar();
+
+	AbstratoPanel() {
+		montarLayout();
+	}
+
+	private void montarLayout() {
+		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, criarPanelTextArea());
+	}
+
+	private Panel criarPanelTextArea() {
+		Panel panel = new Panel();
+		Panel panelArea = new Panel();
+		panelArea.add(BorderLayout.CENTER, textArea);
+		ScrollPane scrollPane = new ScrollPane(panelArea);
+		panel.add(BorderLayout.CENTER, scrollPane);
+		return panel;
+	}
+
+	private class Toolbar extends BarraButton {
+		private static final long serialVersionUID = 1L;
+
+		private Toolbar() {
+			super.ini(new Nil(), ATUALIZAR, COPIAR);
+		}
+
+		@Override
+		protected void atualizar() {
+			gerar();
+		}
+
+		@Override
+		protected void copiar() {
+			String string = Util.getString(textArea);
+			Util.setContentTransfered(string);
+			copiarMensagem(string);
+			textArea.requestFocus();
+		}
+	}
+
+	abstract String getChaveTitulo();
+
+	abstract void gerar();
+}
+
+class PainelDTO extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.dto";
+	}
+
+	@Override
+	void gerar() {
+	}
+}
+
+class PainelFilter extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	String getChaveTitulo() {
+		return "label.filter";
+	}
+
+	@Override
+	void gerar() {
 	}
 }
