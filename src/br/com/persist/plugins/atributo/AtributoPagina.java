@@ -351,6 +351,10 @@ abstract class AbstratoPanel extends Panel {
 		}
 	}
 
+	protected void setText(String string) {
+		textArea.setText(string);
+	}
+
 	abstract String getChaveTitulo();
 
 	abstract void gerar(List<Atributo> atributos);
@@ -370,6 +374,18 @@ class PainelDTO extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("public class DTO {" + Constantes.QL);
+		for (Atributo atributo : atributos) {
+			sb.append(atributo.gerarDeclaracao());
+		}
+		for (Atributo atributo : atributos) {
+			sb.append(Constantes.QL);
+			sb.append(atributo.gerarGet() + Constantes.QL);
+			sb.append(atributo.gerarSet());
+		}
+		sb.append("}" + Constantes.QL);
+		setText(sb.toString());
 	}
 }
 

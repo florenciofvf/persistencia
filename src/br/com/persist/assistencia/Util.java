@@ -1306,4 +1306,23 @@ public class Util {
 		FontMetrics fontMetrics = component.getFontMetrics(font);
 		return fontMetrics == null ? 0 : fontMetrics.stringWidth(string);
 	}
+
+	public static String capitalize(String string) {
+		if (isEmpty(string)) {
+			return string;
+		}
+		return string.substring(0, 1).toUpperCase() + string.substring(1);
+	}
+
+	public static String decapitalize(String string) {
+		if (isEmpty(string)) {
+			return string;
+		}
+		if (string.length() > 1 && Character.isUpperCase(string.charAt(0)) && Character.isUpperCase(string.charAt(1))) {
+			return string;
+		}
+		char[] chars = string.toCharArray();
+		chars[0] = Character.toLowerCase(chars[0]);
+		return new String(chars);
+	}
 }
