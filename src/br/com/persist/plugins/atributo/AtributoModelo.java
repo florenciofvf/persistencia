@@ -19,6 +19,10 @@ public class AtributoModelo extends AbstractTableModel {
 		this.lista = lista == null ? new ArrayList<>() : lista;
 	}
 
+	public List<Atributo> getLista() {
+		return lista;
+	}
+
 	public Atributo getAtributo(int i) {
 		if (i >= 0 && i < lista.size()) {
 			return lista.get(i);

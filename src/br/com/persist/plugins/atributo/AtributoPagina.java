@@ -21,6 +21,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
@@ -45,18 +47,19 @@ import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
 
 public class AtributoPagina extends Panel {
-	private final PainelFichario fichario = new PainelFichario();
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
+	private final PainelFichario painelFichario;
 
 	public AtributoPagina(File file) {
 		painelAtributo = new PainelAtributo(file);
+		painelFichario = new PainelFichario(this);
 		montarLayout();
 		abrir();
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, fichario);
+		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, painelFichario);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.33));
 		add(BorderLayout.CENTER, split);
 	}
@@ -83,6 +86,10 @@ public class AtributoPagina extends Panel {
 
 	public void setText(String conteudo) {
 		painelAtributo.textArea.setText(conteudo);
+	}
+
+	public List<Atributo> getAtributos() {
+		return painelAtributo.getAtributos();
 	}
 
 	class PainelAtributo extends Panel {
@@ -214,6 +221,10 @@ public class AtributoPagina extends Panel {
 			}
 		}
 
+		private List<Atributo> getAtributos() {
+			return ((AtributoModelo) tabela.getModel()).getLista();
+		}
+
 		private String getConteudo() {
 			return textArea.getText();
 		}
@@ -271,17 +282,18 @@ public class AtributoPagina extends Panel {
 class PainelFichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 
-	PainelFichario() {
+	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		addAba(new PainelDTO());
-		addAba(new PainelView());
-		addAba(new PainelJavaScript());
-		addAba(new PainelFilter());
-		addAba(new PainelRest());
-		addAba(new PainelService());
-		addAba(new PainelBean());
-		addAba(new PainelDAO());
-		addAba(new PainelDAOImpl());
+		addAba(new PainelDTO(pagina));
+		addAba(new PainelView(pagina));
+		addAba(new PainelJavaScript(pagina));
+		addAba(new PainelFilter(pagina));
+		addAba(new PainelRest(pagina));
+		addAba(new PainelService(pagina));
+		addAba(new PainelBean(pagina));
+		addAba(new PainelDAO(pagina));
+		addAba(new PainelDAOImpl(pagina));
+		addAba(new PainelTest(pagina));
 	}
 
 	private void addAba(AbstratoPanel panel) {
@@ -293,9 +305,11 @@ abstract class AbstratoPanel extends Panel {
 	private static final long serialVersionUID = 1L;
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
+	private final AtributoPagina pagina;
 
-	AbstratoPanel() {
+	AbstratoPanel(AtributoPagina pagina) {
 		montarLayout();
+		this.pagina = pagina;
 	}
 
 	private void montarLayout() {
@@ -321,7 +335,13 @@ abstract class AbstratoPanel extends Panel {
 
 		@Override
 		protected void atualizar() {
-			gerar();
+			List<Atributo> lista = new ArrayList<>();
+			for (Atributo att : pagina.getAtributos()) {
+				if (!att.isIgnorar()) {
+					lista.add(att);
+				}
+			}
+			gerar(lista);
 		}
 
 		@Override
@@ -335,11 +355,15 @@ abstract class AbstratoPanel extends Panel {
 
 	abstract String getChaveTitulo();
 
-	abstract void gerar();
+	abstract void gerar(List<Atributo> atributos);
 }
 
 class PainelDTO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelDTO(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -347,12 +371,16 @@ class PainelDTO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelFilter extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelFilter(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -360,12 +388,16 @@ class PainelFilter extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelRest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelRest(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -373,12 +405,16 @@ class PainelRest extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelService(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -386,12 +422,16 @@ class PainelService extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelBean extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelBean(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -399,12 +439,16 @@ class PainelBean extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelDAO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelDAO(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -412,12 +456,16 @@ class PainelDAO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelDAOImpl extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelDAOImpl(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -425,12 +473,16 @@ class PainelDAOImpl extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelJavaScript extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelJavaScript(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -438,12 +490,16 @@ class PainelJavaScript extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
 	}
 }
 
 class PainelView extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+
+	PainelView(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
 	String getChaveTitulo() {
@@ -451,6 +507,23 @@ class PainelView extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar() {
+	void gerar(List<Atributo> atributos) {
+	}
+}
+
+class PainelTest extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelTest(AtributoPagina pagina) {
+		super(pagina);
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.test";
+	}
+
+	@Override
+	void gerar(List<Atributo> atributos) {
 	}
 }
