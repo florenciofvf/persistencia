@@ -519,6 +519,10 @@ class PainelJavaScript extends AbstratoPanel {
 			}
 			sb.append(att.gerarObrigatorioJS());
 		}
+		if (!atributos.isEmpty()) {
+			sb.append(Constantes.QL);
+		}
+		sb.append("\t\treturn null;" + Constantes.QL);
 		sb.append("\t}" + Constantes.QL);
 		setText(sb.toString());
 	}

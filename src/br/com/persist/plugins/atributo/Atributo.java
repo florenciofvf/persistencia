@@ -81,7 +81,7 @@ public class Atributo {
 	public String gerarObrigatorioJS() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\t\tif(" + gerarIsVazioJS() + ") {" + Constantes.QL);
-		sb.append("\t\t\treturn 'Campo " + nome + " Obrigat\u00F3rio.';" + Constantes.QL);
+		sb.append("\t\t\treturn 'Campo " + rotulo + " Obrigat\u00F3rio.';" + Constantes.QL);
 		sb.append("\t\t}" + Constantes.QL);
 		return sb.toString();
 	}
