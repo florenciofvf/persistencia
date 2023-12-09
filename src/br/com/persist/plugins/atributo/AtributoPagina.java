@@ -165,9 +165,7 @@ public class AtributoPagina extends Panel {
 					util.prologo();
 					util.abrirTag2("att");
 					util.abrirTag(AtributoConstantes.ATRIBUTO).atributo("nome", "nomeAtributo")
-							.atributo("classe", "obrigatorio ex: AtomicInteger")
-							.atributo("absoluto", "opcional ex:[java.util.concurrent.atomic.AtomicInteger]")
-							.fecharTag(-1);
+							.atributo("rotulo", "R\u00F3tulo").atributo("classe", "Classe").fecharTag(-1);
 					util.finalizarTag("att");
 					util.close();
 					textArea.setText(sw.toString());

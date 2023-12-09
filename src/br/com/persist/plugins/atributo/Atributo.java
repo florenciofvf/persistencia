@@ -3,17 +3,17 @@ package br.com.persist.plugins.atributo;
 import org.xml.sax.Attributes;
 
 public class Atributo {
-	private String absoluto;
 	private boolean ignorar;
+	private String rotulo;
 	private String classe;
 	private String nome;
 
-	public String getAbsoluto() {
-		return absoluto;
+	public String getRotulo() {
+		return rotulo;
 	}
 
-	public void setAbsoluto(String absoluto) {
-		this.absoluto = absoluto;
+	public void setRotulo(String rotulo) {
+		this.rotulo = rotulo;
 	}
 
 	public boolean isIgnorar() {
@@ -41,7 +41,7 @@ public class Atributo {
 	}
 
 	public void aplicar(Attributes attr) {
-		absoluto = attr.getValue("absoluto");
+		rotulo = attr.getValue("rotulo");
 		classe = attr.getValue("classe");
 		nome = attr.getValue("nome");
 	}

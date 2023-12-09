@@ -6,8 +6,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class AtributoModelo extends AbstractTableModel {
-	private static final Class<?>[] COLUNAS_CLASS = { String.class, String.class, String.class, Boolean.class };
-	private static final String[] COLUNAS = { "NOME", "CLASSE", "ABSOLUTO", "IGNORAR" };
+	private static final String[] COLUNAS = { "IGNORAR", "NOME", "ROTULO", "CLASSE" };
 	private static final long serialVersionUID = 1L;
 	private final transient List<Atributo> lista;
 
@@ -55,7 +54,7 @@ public class AtributoModelo extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return COLUNAS_CLASS[columnIndex];
+		return columnIndex == 0 ? Boolean.class : String.class;
 	}
 
 	@Override
@@ -67,13 +66,13 @@ public class AtributoModelo extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Atributo atributo = lista.get(rowIndex);
 		if (columnIndex == 0) {
-			return atributo.getNome();
-		} else if (columnIndex == 1) {
-			return atributo.getClasse();
-		} else if (columnIndex == 2) {
-			return atributo.getAbsoluto();
-		} else if (columnIndex == 3) {
 			return atributo.isIgnorar();
+		} else if (columnIndex == 1) {
+			return atributo.getNome();
+		} else if (columnIndex == 2) {
+			return atributo.getRotulo();
+		} else if (columnIndex == 3) {
+			return atributo.getClasse();
 		}
 		return null;
 	}
@@ -84,14 +83,14 @@ public class AtributoModelo extends AbstractTableModel {
 			return;
 		}
 		Atributo atributo = lista.get(rowIndex);
-		if (columnIndex == 0) {
-			atributo.setNome(aValue.toString());
-		} else if (columnIndex == 1) {
-			atributo.setClasse(aValue.toString());
-		} else if (columnIndex == 2) {
-			atributo.setAbsoluto(aValue.toString());
-		} else if (columnIndex == 3 && aValue instanceof Boolean) {
+		if (columnIndex == 0 && aValue instanceof Boolean) {
 			atributo.setIgnorar(((Boolean) aValue).booleanValue());
+		} else if (columnIndex == 1) {
+			atributo.setNome(aValue.toString());
+		} else if (columnIndex == 2) {
+			atributo.setRotulo(aValue.toString());
+		} else if (columnIndex == 3) {
+			atributo.setClasse(aValue.toString());
 		}
 	}
 }
