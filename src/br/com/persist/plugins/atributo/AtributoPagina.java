@@ -117,6 +117,7 @@ public class AtributoPagina extends Panel {
 		private Panel criarPanelTabela() {
 			Panel panel = new Panel();
 			panel.add(BorderLayout.CENTER, new ScrollPane(tabela));
+			tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			return panel;
 		}
 
@@ -204,6 +205,7 @@ public class AtributoPagina extends Panel {
 						XML.processar(new ByteArrayInputStream(textArea.getText().getBytes()), handler);
 					}
 					tabela.setModel(new AtributoModelo(handler.getAtributos()));
+					Util.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
 				}
