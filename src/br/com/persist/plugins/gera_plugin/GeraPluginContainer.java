@@ -325,10 +325,10 @@ public class GeraPluginContainer extends AbstratoContainer {
 		config.nomeMin = txtMinimPlugin.getText();
 		config.pacote = txtPacotePlugin.getText();
 		config.recurso = txtDiretorioRecursos.getText();
-		config.nomeCap = nome.substring(0, 1).toUpperCase() + nome.substring(1);
-		config.nomeCapUpper = config.nomeCap.toUpperCase();
-		config.nomeDecap = nome.substring(0, 1).toLowerCase() + nome.substring(1);
-		config.nomeDecapLower = config.nomeDecap.toLowerCase();
+		config.nomeCapitalizado = Util.capitalize(nome);
+		config.nomeDecapitalizado = nome.substring(0, 1).toLowerCase() + nome.substring(1);
+		config.nomeCaixaAlta = nome.toUpperCase();
+		config.nomeCaixaBaixa = nome.toLowerCase();
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.configuracao = chkComConfiguracao.isSelected();

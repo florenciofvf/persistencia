@@ -14,7 +14,7 @@ public class GeraPluginUtil {
 	}
 
 	static void objeto(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + ".java");
+		File file = new File(config.destino, config.nomeCapitalizado + ".java");
 		gerar(config, "Objeto", file);
 	}
 
@@ -69,17 +69,17 @@ public class GeraPluginUtil {
 	}
 
 	static void fabricaDialogo(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Fabrica.java");
+		File file = new File(config.destino, config.nomeCapitalizado + "Fabrica.java");
 		gerarFabrica(config, "FabricaDialogo", file);
 	}
 
 	static void fabrica(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Fabrica.java");
+		File file = new File(config.destino, config.nomeCapitalizado + "Fabrica.java");
 		gerarFabrica(config, "Fabrica", file);
 	}
 
 	static void containerDialogo(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCap + "Container.java");
+		File file = new File(config.destino, config.nomeCapitalizado + "Container.java");
 		gerar(config, "ContainerDialogo", file);
 	}
 
@@ -112,11 +112,11 @@ public class GeraPluginUtil {
 		pw.println("\t@Override");
 		pw.println("\tpublic void inicializar() {");
 		if (config.configuracao) {
-			pw.println("\t\tbr.com.persist.assistencia.Preferencias.addOutraPreferencia(" + config.nomeCap
+			pw.println("\t\tbr.com.persist.assistencia.Preferencias.addOutraPreferencia(" + config.nomeCapitalizado
 					+ "Preferencia.class);");
 		}
 		if (config.comRecurso()) {
-			pw.println("\t\tbr.com.persist.assistencia.Util.criarDiretorio(" + config.nomeCap + "Constantes."
+			pw.println("\t\tbr.com.persist.assistencia.Util.criarDiretorio(" + config.nomeCapitalizado + "Constantes."
 					+ config.recurso + ");");
 		}
 		pw.println("\t}");
@@ -126,14 +126,14 @@ public class GeraPluginUtil {
 			pw.println("\t@Override");
 			pw.println(
 					"\tpublic br.com.persist.abstrato.AbstratoConfiguracao getConfiguracao(Formulario formulario) {");
-			pw.println("\t\treturn new " + config.nomeCap + "Configuracao(formulario);");
+			pw.println("\t\treturn new " + config.nomeCapitalizado + "Configuracao(formulario);");
 			pw.println("\t}");
 			pw.println();
 		}
 	}
 
 	private static void transferir(Config config, String objeto) throws IOException {
-		File file = new File(config.destino, config.nomeCap + objeto + ".java");
+		File file = new File(config.destino, config.nomeCapitalizado + objeto + ".java");
 		gerar(config, objeto, file);
 	}
 
