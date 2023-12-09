@@ -4,6 +4,7 @@ import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLUtil;
 
 public class Atributo {
 	private boolean ignorar;
@@ -43,6 +44,14 @@ public class Atributo {
 		this.nome = nome;
 	}
 
+	public void salvar(XMLUtil util) {
+		util.abrirTag(AtributoConstantes.ATRIBUTO);
+		util.atributo("nome", nome);
+		util.atributo("rotulo", rotulo);
+		util.atributo("classe", classe);
+		util.fecharTag(-1);
+	}
+
 	public void aplicar(Attributes attr) {
 		rotulo = attr.getValue("rotulo");
 		classe = attr.getValue("classe");
@@ -67,6 +76,18 @@ public class Atributo {
 		sb.append("\t\tthis." + nome + " = " + nome + ";" + Constantes.QL);
 		sb.append("\t}" + Constantes.QL);
 		return sb.toString();
+	}
+
+	public String gerarObrigatorioJS() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\t\tif(" + gerarIsVazioJS() + ") {" + Constantes.QL);
+		sb.append("\t\t\treturn 'Campo " + nome + " Obrigat\u00F3.';" + Constantes.QL);
+		sb.append("\t\t}" + Constantes.QL);
+		return sb.toString();
+	}
+
+	public String gerarIsVazioJS() {
+		return "isVazio(vm.filtro." + nome + ")";
 	}
 
 	@Override

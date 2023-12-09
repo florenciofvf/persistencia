@@ -164,8 +164,11 @@ public class AtributoPagina extends Panel {
 					XMLUtil util = new XMLUtil(sw);
 					util.prologo();
 					util.abrirTag2("att");
-					util.abrirTag(AtributoConstantes.ATRIBUTO).atributo("nome", "nomeAtributo")
-							.atributo("rotulo", "R\u00F3tulo").atributo("classe", "Classe").fecharTag(-1);
+					Atributo att = new Atributo();
+					att.setNome("nome");
+					att.setRotulo("Rotulo");
+					att.setClasse("Classe");
+					att.salvar(util);
 					util.finalizarTag("att");
 					util.close();
 					textArea.setText(sw.toString());
@@ -403,6 +406,36 @@ class PainelFilter extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\tfunction validarFiltro() {" + Constantes.QL);
+		sb.append(todosVazios(atributos));
+		for (Atributo att : atributos) {
+			sb.append(Constantes.QL);
+			sb.append(att.gerarObrigatorioJS());
+		}
+		sb.append("\t}" + Constantes.QL);
+		setText(sb.toString());
+	}
+
+	String todosVazios(List<Atributo> atributos) {
+		if (atributos.isEmpty()) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder("\t\tif(" + vazios(atributos) + ") {" + Constantes.QL);
+		sb.append("\t\t\treturn 'Favor preencher pelo ao menos um campo de pesquisa';" + Constantes.QL);
+		sb.append("\t\t}" + Constantes.QL);
+		return sb.toString();
+	}
+
+	private String vazios(List<Atributo> atributos) {
+		StringBuilder sb = new StringBuilder();
+		for (Atributo att : atributos) {
+			if (sb.length() > 0) {
+				sb.append(" && ");
+			}
+			sb.append(att.gerarIsVazioJS());
+		}
+		return sb.toString();
 	}
 }
 
