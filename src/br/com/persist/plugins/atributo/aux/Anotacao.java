@@ -7,6 +7,10 @@ public class Anotacao extends Container {
 	private final String valor;
 	private final boolean ql;
 
+	public Anotacao(String nome, String valor) {
+		this(nome, valor, false);
+	}
+
 	public Anotacao(String nome, String valor, boolean ql) {
 		this.nome = nome;
 		this.valor = valor;

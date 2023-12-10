@@ -13,7 +13,7 @@ public class MetodoSet extends Container {
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		pool.tab(tab).append("public void set" + Util.capitalize(tipo.nome) + "(" + tipo.toString() + ") {").ql();
-		new Atribuir("this.", tipo.nome, tipo.nome).gerar(tab, pool);
+		new Atribuir("this.", tipo.nome, tipo.nome).gerar(tab + 1, pool);
 		pool.tab(tab).append("}").ql();
 	}
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class Atributo {
 	private boolean ignorar;
@@ -46,6 +46,10 @@ public class Atributo {
 		this.nome = nome;
 	}
 
+	public Tipo criarTipo() {
+		return new Tipo(classe, nome);
+	}
+
 	public void salvar(XMLUtil util) {
 		util.abrirTag(AtributoConstantes.ATRIBUTO);
 		util.atributo("nome", nome);
@@ -58,10 +62,6 @@ public class Atributo {
 		rotulo = attr.getValue("rotulo");
 		classe = attr.getValue("classe");
 		nome = attr.getValue("nome");
-	}
-
-	public String gerarDeclaracao() {
-		return "\tprivate " + classe + " " + nome + ";" + Constantes.QL;
 	}
 
 	public static String gerarParamJS(List<Atributo> atributos) {
@@ -89,27 +89,6 @@ public class Atributo {
 
 	private String gerarDeclaracaoJS() {
 		return "\t\t\t" + nome + ": vm.filtro." + nome;
-	}
-
-	public String gerarDeclaracaoRS() {
-		return "\t@QueryParam(" + Util.citar2(nome) + ")" + Constantes.QL + "\tprivate " + classe + " " + nome + ";"
-				+ Constantes.QL;
-	}
-
-	public String gerarGet() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("\tpublic " + classe + " get" + Util.capitalize(nome) + "() {" + Constantes.QL);
-		sb.append("\t\treturn " + nome + ";" + Constantes.QL);
-		sb.append("\t}" + Constantes.QL);
-		return sb.toString();
-	}
-
-	public String gerarSet() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("\tpublic void " + "set" + Util.capitalize(nome) + "(" + classe + " " + nome + ") {" + Constantes.QL);
-		sb.append("\t\tthis." + nome + " = " + nome + ";" + Constantes.QL);
-		sb.append("\t}" + Constantes.QL);
-		return sb.toString();
 	}
 
 	public String gerarObrigatorioJS() {

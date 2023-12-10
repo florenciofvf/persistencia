@@ -18,5 +18,9 @@ public abstract class Container {
 		}
 	}
 
-	public abstract void gerar(int tab, StringPool pool);
+	public void gerar(int tab, StringPool pool) {
+		for (Container c : lista) {
+			c.gerar(tab, pool);
+		}
+	}
 }
