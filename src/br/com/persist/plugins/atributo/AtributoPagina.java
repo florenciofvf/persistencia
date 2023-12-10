@@ -36,6 +36,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.StringPool;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -45,6 +46,14 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.atributo.aux.Anotacao;
+import br.com.persist.plugins.atributo.aux.Campo;
+import br.com.persist.plugins.atributo.aux.Classe;
+import br.com.persist.plugins.atributo.aux.Import;
+import br.com.persist.plugins.atributo.aux.Linha;
+import br.com.persist.plugins.atributo.aux.MetodoGet;
+import br.com.persist.plugins.atributo.aux.MetodoSet;
+import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class AtributoPagina extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -377,18 +386,23 @@ class PainelDTO extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("public class DTO {" + Constantes.QL);
-		for (Atributo atributo : atributos) {
-			sb.append(atributo.gerarDeclaracao());
+		StringPool pool = new StringPool();
+		Classe classe = new Classe("DTO");
+		for (Atributo att : atributos) {
+			Campo campo = new Campo(null, att.criarTipo());
+			classe.add(campo);
 		}
-		for (Atributo atributo : atributos) {
-			sb.append(Constantes.QL);
-			sb.append(atributo.gerarGet() + Constantes.QL);
-			sb.append(atributo.gerarSet());
+		for (Atributo att : atributos) {
+			Tipo tipo = att.criarTipo();
+			MetodoGet get = new MetodoGet(tipo);
+			MetodoSet set = new MetodoSet(tipo);
+			classe.add(new Linha());
+			classe.add(get);
+			classe.add(new Linha());
+			classe.add(set);
 		}
-		sb.append("}" + Constantes.QL);
-		setText(sb.toString());
+		classe.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
 
@@ -406,25 +420,31 @@ class PainelFilter extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
-		StringBuilder sb = new StringBuilder();
+		StringPool pool = new StringPool();
+		Classe classe = new Classe("Filter");
 		if (!atributos.isEmpty()) {
-			sb.append("import javax.ws.rs.QueryParam;" + Constantes.QL2);
+			classe.add(new Import("javax.ws.rs.QueryParam"));
 		}
-		sb.append("public class Filter {" + Constantes.QL);
 		int i = 0;
-		for (Atributo atributo : atributos) {
+		for (Atributo att : atributos) {
 			if (i++ > 0) {
-				sb.append(Constantes.QL);
+				classe.add(new Linha());
 			}
-			sb.append(atributo.gerarDeclaracaoRS());
+			Anotacao ano = new Anotacao("QueryParam", Util.citar2(att.getNome()));
+			Campo campo = new Campo(ano, att.criarTipo());
+			classe.add(campo);
 		}
-		for (Atributo atributo : atributos) {
-			sb.append(Constantes.QL);
-			sb.append(atributo.gerarGet() + Constantes.QL);
-			sb.append(atributo.gerarSet());
+		for (Atributo att : atributos) {
+			Tipo tipo = att.criarTipo();
+			MetodoGet get = new MetodoGet(tipo);
+			MetodoSet set = new MetodoSet(tipo);
+			classe.add(new Linha());
+			classe.add(get);
+			classe.add(new Linha());
+			classe.add(set);
 		}
-		sb.append("}" + Constantes.QL);
-		setText(sb.toString());
+		classe.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
 
