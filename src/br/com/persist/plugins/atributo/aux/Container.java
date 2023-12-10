@@ -18,5 +18,5 @@ public abstract class Container {
 		}
 	}
 
-	public abstract void gerar(StringPool pool);
+	public abstract void gerar(int tab, StringPool pool);
 }
