@@ -632,7 +632,27 @@ class PainelJavaScript extends AbstratoPanel {
 		}
 		sb.append("\t\treturn null;" + Constantes.QL);
 		sb.append("\t}" + Constantes.QL);
-		setText(sb.toString());
+		setText(sb.toString() + getFnPesquisa());
+	}
+
+	private String getFnPesquisa() {
+		StringPool pool = new StringPool().ql();
+		pool.tab().append("vm.pesquisar = function() {").ql();
+		pool.tab(2).append("var msg = validarFiltro();").ql();
+		pool.tab(2).append("if(isVazio(msg)) {").ql();
+		pool.tab(3).append("Service.pesquisar(criarParam()).then(function(result) {").ql();
+		pool.tab(4).append("var lista = result.data;").ql();
+		pool.tab(4).append("vm.pesquisados.settings().dataset = lista;").ql();
+		pool.tab(4).append("vm.pesquisados.reload();").ql();
+		pool.tab(4).append("if(lista.length === 0) {").ql();
+		pool.tab(5).append("Msg.info('Nenhum registro encontrado');").ql();
+		pool.tab(4).append("}").ql();
+		pool.tab(3).append("});").ql();
+		pool.tab(2).append("} else {").ql();
+		pool.tab(3).append("Msg.error(msg);").ql();
+		pool.tab(2).append("}").ql();
+		pool.tab().append("};").ql();
+		return pool.toString();
 	}
 
 	String todosVazios(List<Atributo> atributos) {
