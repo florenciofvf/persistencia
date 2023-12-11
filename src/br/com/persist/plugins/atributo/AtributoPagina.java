@@ -769,28 +769,92 @@ class PainelJSController extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(Atributo.gerarParamJS(atributos) + Constantes.QL);
-		sb.append("\tfunction validarFiltro() {" + Constantes.QL);
-		if (atributos.size() > 1) {
-			sb.append(todosVazios(atributos));
-		}
-		for (Atributo att : atributos) {
-			if (atributos.size() > 1) {
-				sb.append(Constantes.QL);
-			}
-			sb.append(att.gerarObrigatorioJS());
-		}
-		if (!atributos.isEmpty()) {
-			sb.append(Constantes.QL);
-		}
-		sb.append("\t\treturn null;" + Constantes.QL);
-		sb.append("\t}" + Constantes.QL);
-		setText(sb.toString() + getFnPesquisa() + getFnPDF());
+		StringPool pool = new StringPool();
+		pool.append(gerarFnParam(atributos)).ql();
+		pool.append(gerarFnValidar(atributos)).ql();
+		pool.append(gerarFnPesquisa()).ql();
+		pool.append(gerarFnPDF());
+		setText(pool.toString());
 	}
 
-	private String getFnPesquisa() {
-		StringPool pool = new StringPool().ql();
+	private static String gerarFnParam(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+		pool.tab().append("function criarParam() {").ql();
+		pool.append(criarObjParam(2, atributos)).ql();
+		pool.tab(2).append("return param;").ql();
+		pool.tab().append("}").ql();
+		return pool.toString();
+	}
+
+	private static String criarObjParam(int tab, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+		pool.tab(tab).append("var param = {").ql();
+		for (int i = 0; i < atributos.size(); i++) {
+			Atributo att = atributos.get(i);
+			pool.tab(tab + 1).append(att.getNome() + ": vm.filtro." + att.getNome());
+			if (i + 1 < atributos.size()) {
+				pool.append(",");
+			}
+			pool.ql();
+		}
+		pool.tab(tab).append("};").ql();
+		return pool.toString();
+	}
+
+	private static String gerarFnValidar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+		pool.tab().append("function validarFiltro() {").ql();
+		if (atributos.size() > 1) {
+			pool.append(validarVazios(2, atributos));
+			pool.ql();
+		}
+		for (int i = 0; i < atributos.size(); i++) {
+			Atributo att = atributos.get(i);
+			pool.append(validarObrigatorio(2, att));
+			if (i + 1 < atributos.size()) {
+				pool.ql();
+			}
+		}
+		if (!atributos.isEmpty()) {
+			pool.ql();
+		}
+		pool.tab(2).append("return null;").ql();
+		pool.tab().append("}").ql();
+		return pool.toString();
+	}
+
+	private static String validarVazios(int tab, List<Atributo> atributos) {
+		if (atributos.isEmpty()) {
+			return "";
+		}
+		StringPool pool = new StringPool();
+		pool.tab(tab).append("if(" + vazios(atributos) + ") {").ql();
+		pool.tab(tab + 1).append("return 'Favor preencher pelo ao menos um campo de pesquisa';").ql();
+		pool.tab(tab).append("}").ql();
+		return pool.toString();
+	}
+
+	private static String vazios(List<Atributo> atributos) {
+		StringBuilder sb = new StringBuilder();
+		for (Atributo att : atributos) {
+			if (sb.length() > 0) {
+				sb.append(" && ");
+			}
+			sb.append(att.gerarIsVazioJS());
+		}
+		return sb.toString();
+	}
+
+	private static String validarObrigatorio(int tab, Atributo att) {
+		StringPool pool = new StringPool();
+		pool.tab(tab).append("if(" + att.gerarIsVazioJS() + ") {").ql();
+		pool.tab(tab + 1).append("return 'Campo " + att.getRotulo() + " Obrigat\u00F3rio.';").ql();
+		pool.tab(tab).append("}").ql();
+		return pool.toString();
+	}
+
+	private String gerarFnPesquisa() {
+		StringPool pool = new StringPool();
 		pool.tab().append("vm.pesquisar = function() {").ql();
 		pool.tab(2).append("var msg = validarFiltro();").ql();
 		pool.tab(2).append("if(isVazio(msg)) {").ql();
@@ -811,8 +875,8 @@ class PainelJSController extends AbstratoPanel {
 		return pool.toString();
 	}
 
-	private String getFnPDF() {
-		StringPool pool = new StringPool().ql();
+	private String gerarFnPDF() {
+		StringPool pool = new StringPool();
 		pool.tab().append("vm.gerarPDF = function() {").ql();
 		pool.tab(2).append("var msg = validarFiltro();").ql();
 		pool.tab(2).append("if(isVazio(msg)) {").ql();
@@ -832,27 +896,6 @@ class PainelJSController extends AbstratoPanel {
 		pool.tab(2).append("}").ql();
 		pool.tab().append("};").ql();
 		return pool.toString();
-	}
-
-	String todosVazios(List<Atributo> atributos) {
-		if (atributos.isEmpty()) {
-			return "";
-		}
-		StringBuilder sb = new StringBuilder("\t\tif(" + vazios(atributos) + ") {" + Constantes.QL);
-		sb.append("\t\t\treturn 'Favor preencher pelo ao menos um campo de pesquisa';" + Constantes.QL);
-		sb.append("\t\t}" + Constantes.QL);
-		return sb.toString();
-	}
-
-	private String vazios(List<Atributo> atributos) {
-		StringBuilder sb = new StringBuilder();
-		for (Atributo att : atributos) {
-			if (sb.length() > 0) {
-				sb.append(" && ");
-			}
-			sb.append(att.gerarIsVazioJS());
-		}
-		return sb.toString();
 	}
 }
 
