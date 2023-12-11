@@ -66,6 +66,7 @@ import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class AtributoPagina extends Panel {
 	public static final Import IMPORT_LIST = new Import("java.util.List");
+	public static final Tipo SERVICE = new Tipo("Service", "service");
 	public static final Tipo FILTER = new Tipo("Filter", "filter");
 	public static final String PESQUISAR = "pesquisar";
 	public static final String LIST_DTO = "List<DTO>";
@@ -521,7 +522,7 @@ class PainelRest extends AbstratoPanel {
 
 		Anotacao inject = new Anotacao("Inject", null, true);
 		classe.add(inject);
-		Campo service = new Campo(new Tipo("Service", "service"));
+		Campo service = new Campo(AtributoPagina.SERVICE);
 		classe.add(service);
 		classe.ql();
 
@@ -827,5 +828,38 @@ class PainelTest extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(new Import("org.junit.Test"));
+			arquivo.add(new Import("org.junit.runner.RunWith"));
+			arquivo.add(new Import("org.mockito.InjectMocks"));
+			arquivo.add(new Import("org.mockito.Mock"));
+			arquivo.add(new Import("org.mockito.junit.MockitoJUnitRunner"));
+			arquivo.ql();
+
+			Anotacao runWith = new Anotacao("RunWith", "MockitoJUnitRunner.class", true);
+			arquivo.add(runWith);
+		}
+
+		Classe classe = new Classe("Test");
+		arquivo.add(classe);
+
+		Anotacao injectMocks = new Anotacao("InjectMocks", null, true);
+		classe.add(injectMocks);
+		Campo service = new Campo(AtributoPagina.SERVICE);
+		classe.add(service);
+		classe.ql();
+
+		Parametros params = new Parametros();
+		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "void", AtributoPagina.PESQUISAR + "Test", params);
+		funcao.add(new Comentario("..."));
+
+		classe.add(new Anotacao("Test", null, true));
+		classe.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
