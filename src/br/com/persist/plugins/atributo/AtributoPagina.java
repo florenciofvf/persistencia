@@ -65,6 +65,8 @@ import br.com.persist.plugins.atributo.aux.Tipo;
 public class AtributoPagina extends Panel {
 	public static final Import IMPORT_LIST = new Import("java.util.List");
 	public static final Tipo FILTER = new Tipo("Filter", "filter");
+	public static final String PESQUISAR = "pesquisar";
+	public static final String LIST_DTO = "List<DTO>";
 
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
@@ -529,7 +531,7 @@ class PainelRest extends AbstratoPanel {
 		params.add(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
 		params.add(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao("public", "List<DTO>", "pesquisar", params);
+		Funcao funcao = new Funcao("public", AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		funcao.add(new Return("", "service.pesquisar(filter)"));
 		classe.add(funcao);
 
@@ -570,7 +572,7 @@ class PainelService extends AbstratoPanel {
 
 		Parametros params = new Parametros();
 		params.add(AtributoPagina.FILTER);
-		FuncaoInter funcao = new FuncaoInter("List<DTO>", "pesquisar", params);
+		FuncaoInter funcao = new FuncaoInter(AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		interfac.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -623,7 +625,7 @@ class PainelBean extends AbstratoPanel {
 
 		Parametros params = new Parametros();
 		params.add(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao("public", "List<DTO>", "pesquisar", params);
+		Funcao funcao = new Funcao("public", AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		funcao.add(new Return("", "dao.pesquisar(filter)"));
 		classe.add(funcao);
 
@@ -646,6 +648,24 @@ class PainelDAO extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(AtributoPagina.IMPORT_LIST);
+			arquivo.ql();
+		}
+
+		Interface interfac = new Interface("DAO");
+		arquivo.add(interfac);
+
+		Parametros params = new Parametros();
+		params.add(AtributoPagina.FILTER);
+		FuncaoInter funcao = new FuncaoInter(AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		interfac.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
 
