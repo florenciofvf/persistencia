@@ -314,8 +314,8 @@ class PainelFichario extends JTabbedPane {
 		addAba(new PainelDTO(pagina));
 		addAba(new PainelFilter(pagina));
 		addAba(new PainelView(pagina));
-		addAba(new PainelJavaScript(pagina));
-		addAba(new PainelJavaScriptService(pagina));
+		addAba(new PainelJSController(pagina));
+		addAba(new PainelJSService(pagina));
 		addAba(new PainelRest(pagina));
 		addAba(new PainelService(pagina));
 		addAba(new PainelBean(pagina));
@@ -755,16 +755,16 @@ class PainelDAOImpl extends AbstratoPanel {
 	}
 }
 
-class PainelJavaScript extends AbstratoPanel {
+class PainelJSController extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelJavaScript(AtributoPagina pagina) {
+	PainelJSController(AtributoPagina pagina) {
 		super(pagina);
 	}
 
 	@Override
 	String getChaveTitulo() {
-		return "label.java_script";
+		return "label.js_controller";
 	}
 
 	@Override
@@ -856,16 +856,16 @@ class PainelJavaScript extends AbstratoPanel {
 	}
 }
 
-class PainelJavaScriptService extends AbstratoPanel {
+class PainelJSService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelJavaScriptService(AtributoPagina pagina) {
+	PainelJSService(AtributoPagina pagina) {
 		super(pagina);
 	}
 
 	@Override
 	String getChaveTitulo() {
-		return "label.java_script_service";
+		return "label.js_service";
 	}
 
 	@Override
