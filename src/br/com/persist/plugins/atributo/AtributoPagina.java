@@ -50,10 +50,12 @@ import br.com.persist.plugins.atributo.aux.Anotacao;
 import br.com.persist.plugins.atributo.aux.Arquivo;
 import br.com.persist.plugins.atributo.aux.Campo;
 import br.com.persist.plugins.atributo.aux.Classe;
+import br.com.persist.plugins.atributo.aux.Comentario;
 import br.com.persist.plugins.atributo.aux.Espaco;
 import br.com.persist.plugins.atributo.aux.Funcao;
 import br.com.persist.plugins.atributo.aux.FuncaoInter;
 import br.com.persist.plugins.atributo.aux.Import;
+import br.com.persist.plugins.atributo.aux.Instrucao;
 import br.com.persist.plugins.atributo.aux.Interface;
 import br.com.persist.plugins.atributo.aux.Linha;
 import br.com.persist.plugins.atributo.aux.MetodoGet;
@@ -67,6 +69,7 @@ public class AtributoPagina extends Panel {
 	public static final Tipo FILTER = new Tipo("Filter", "filter");
 	public static final String PESQUISAR = "pesquisar";
 	public static final String LIST_DTO = "List<DTO>";
+	public static final String PUBLIC = "public";
 
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
@@ -531,7 +534,7 @@ class PainelRest extends AbstratoPanel {
 		params.add(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
 		params.add(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao("public", AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		funcao.add(new Return("", "service.pesquisar(filter)"));
 		classe.add(funcao);
 
@@ -625,7 +628,7 @@ class PainelBean extends AbstratoPanel {
 
 		Parametros params = new Parametros();
 		params.add(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao("public", AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		funcao.add(new Return("", "dao.pesquisar(filter)"));
 		classe.add(funcao);
 
@@ -683,6 +686,37 @@ class PainelDAOImpl extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(new Import("java.util.ArrayList"));
+			arquivo.add(AtributoPagina.IMPORT_LIST);
+			arquivo.ql();
+			arquivo.add(new Import("javax.persistence.EntityManager"));
+			arquivo.add(new Import("javax.persistence.PersistenceContext"));
+		}
+
+		Classe classe = new Classe("DAOImpl implements DAO");
+		arquivo.add(classe);
+
+		Anotacao context = new Anotacao("PersistenceContext", "unitName = " + Util.citar2("nomeUnit"), true);
+		classe.add(context);
+		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
+		classe.add(entityManager);
+		classe.ql();
+
+		Parametros params = new Parametros();
+		params.add(AtributoPagina.FILTER);
+		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		funcao.add(new Instrucao("List<DTO> resp = new ArrayList<>()"));
+		funcao.add(new Comentario("entityManager.find..."));
+		funcao.ql();
+		funcao.add(new Return("", "resp"));
+		classe.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
 
