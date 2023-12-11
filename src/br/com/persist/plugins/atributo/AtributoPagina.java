@@ -314,6 +314,7 @@ class PainelFichario extends JTabbedPane {
 		addAba(new PainelFilter(pagina));
 		addAba(new PainelView(pagina));
 		addAba(new PainelJavaScript(pagina));
+		addAba(new PainelJavaScriptService(pagina));
 		addAba(new PainelRest(pagina));
 		addAba(new PainelService(pagina));
 		addAba(new PainelBean(pagina));
@@ -752,7 +753,7 @@ class PainelJavaScript extends AbstratoPanel {
 		}
 		sb.append("\t\treturn null;" + Constantes.QL);
 		sb.append("\t}" + Constantes.QL);
-		setText(sb.toString() + getFnPesquisa());
+		setText(sb.toString() + getFnPesquisa() + getFnPDF());
 	}
 
 	private String getFnPesquisa() {
@@ -766,10 +767,35 @@ class PainelJavaScript extends AbstratoPanel {
 		pool.tab(4).append("vm.pesquisados.reload();").ql();
 		pool.tab(4).append("if(lista.length === 0) {").ql();
 		pool.tab(5).append("Msg.info('Nenhum registro encontrado');").ql();
+		pool.tab(5).append("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');").ql();
 		pool.tab(4).append("}").ql();
 		pool.tab(3).append("});").ql();
 		pool.tab(2).append("} else {").ql();
 		pool.tab(3).append("Msg.error(msg);").ql();
+		pool.tab(3).append("$scope.$emit('msg', msg, null, 'warning');").ql();
+		pool.tab(2).append("}").ql();
+		pool.tab().append("};").ql();
+		return pool.toString();
+	}
+
+	private String getFnPDF() {
+		StringPool pool = new StringPool().ql();
+		pool.tab().append("vm.gerarPDF = function() {").ql();
+		pool.tab(2).append("var msg = validarFiltro();").ql();
+		pool.tab(2).append("if(isVazio(msg)) {").ql();
+		pool.tab(3).append("Service.gerarPDF(criarParam()).then(function(result) {").ql();
+		pool.tab(4).append("var file = new Blob([result.data], {type: 'application/pdf'});").ql();
+		pool.tab(4).append("var downloadLink = angular.element('<a></a>');").ql();
+		pool.tab(4).append("downloadLink.attr('href', window.URL.createObjectURL(file));").ql();
+		pool.tab(4).append("downloadLink.attr('download', \"arquivo.pdf\");").ql();
+		pool.tab(4).append("var link = downloadLink[0];").ql();
+		pool.tab(4).append("document.body.appendChild(link);").ql();
+		pool.tab(4).append("link.click();").ql();
+		pool.tab(4).append("document.body.removeChild(link);").ql();
+		pool.tab(3).append("});").ql();
+		pool.tab(2).append("} else {").ql();
+		pool.tab(3).append("Msg.error(msg);").ql();
+		pool.tab(3).append("$scope.$emit('msg', msg, null, 'warning');").ql();
 		pool.tab(2).append("}").ql();
 		pool.tab().append("};").ql();
 		return pool.toString();
@@ -794,6 +820,36 @@ class PainelJavaScript extends AbstratoPanel {
 			sb.append(att.gerarIsVazioJS());
 		}
 		return sb.toString();
+	}
+}
+
+class PainelJavaScriptService extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelJavaScriptService(AtributoPagina pagina) {
+		super(pagina);
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.java_script_service";
+	}
+
+	@Override
+	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+		pool.append("Service.$inject = ['Restangular'];").ql();
+		pool.append("function Service(Restangular) {").ql();
+		pool.tab().append("var PATH = 'endPointRest';").ql(2);
+		pool.tab().append("return {").ql();
+		pool.tab(2).append("gerarPDF: function(filtro) {").ql();
+		pool.tab(3).append(
+				"return Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro);")
+				.ql();
+		pool.tab(2).append("}").ql();
+		pool.tab().append("};").ql();
+		pool.append("}").ql();
+		setText(pool.toString());
 	}
 }
 
