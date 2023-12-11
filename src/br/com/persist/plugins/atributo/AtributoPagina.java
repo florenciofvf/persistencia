@@ -63,7 +63,9 @@ import br.com.persist.plugins.atributo.aux.Return;
 import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class AtributoPagina extends Panel {
+	public static final Import IMPORT_LIST = new Import("java.util.List");
 	public static final Tipo FILTER = new Tipo("Filter", "filter");
+
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
@@ -486,7 +488,7 @@ class PainelRest extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(new Import("java.util.List"));
+			arquivo.add(AtributoPagina.IMPORT_LIST);
 			arquivo.ql();
 			arquivo.add(new Import("javax.inject.Inject"));
 			arquivo.ql();
@@ -554,7 +556,7 @@ class PainelService extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(new Import("java.util.List"));
+			arquivo.add(AtributoPagina.IMPORT_LIST);
 			arquivo.ql();
 			arquivo.add(new Import("javax.ejb.Local"));
 			arquivo.ql();
@@ -590,6 +592,43 @@ class PainelBean extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(AtributoPagina.IMPORT_LIST);
+			arquivo.ql();
+			arquivo.add(new Import("javax.ejb.LocalBean"));
+			arquivo.add(new Import("javax.ejb.Stateless"));
+			arquivo.add(new Import("javax.ejb.TransactionManagement"));
+			arquivo.add(new Import("javax.ejb.TransactionManagementType"));
+			arquivo.ql();
+
+			Anotacao stateless = new Anotacao("Stateless", null, true);
+			arquivo.add(stateless);
+			Anotacao localBean = new Anotacao("LocalBean", null, true);
+			arquivo.add(localBean);
+			Anotacao transaction = new Anotacao("TransactionManagement", "TransactionManagementType.CONTAINER", true);
+			arquivo.add(transaction);
+		}
+
+		Classe classe = new Classe("Bean implements Service");
+		arquivo.add(classe);
+
+		Anotacao inject = new Anotacao("Inject", null, true);
+		classe.add(inject);
+		Campo service = new Campo(new Tipo("DAO", "dao"));
+		classe.add(service);
+		classe.ql();
+
+		Parametros params = new Parametros();
+		params.add(AtributoPagina.FILTER);
+		Funcao funcao = new Funcao("public", "List<DTO>", "pesquisar", params);
+		funcao.add(new Return("", "dao.pesquisar(filter)"));
+		classe.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
 
