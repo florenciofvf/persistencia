@@ -770,10 +770,16 @@ class PainelJSController extends AbstratoPanel {
 	@Override
 	void gerar(List<Atributo> atributos) {
 		StringPool pool = new StringPool();
+		pool.append("Controller.$inject = ['$scope', '$state', 'NgTableParams', 'Service'];").ql();
+		pool.append("function Controller('$scope', '$state', 'NgTableParams', Service) {").ql();
+		pool.tab().append("var vm = this;").ql(2);
+		pool.tab().append("vm.pesquisados = new NgTableParams();").ql();
+		pool.tab().append("vm.filtro = {};").ql(2);
 		pool.append(gerarFnParam(atributos)).ql();
 		pool.append(gerarFnValidar(atributos)).ql();
 		pool.append(gerarFnPesquisa()).ql();
 		pool.append(gerarFnPDF());
+		pool.append("}").ql();
 		setText(pool.toString());
 	}
 
