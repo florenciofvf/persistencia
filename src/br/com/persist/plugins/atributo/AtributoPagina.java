@@ -47,6 +47,7 @@ import br.com.persist.componente.TextField;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.atributo.aux.Anotacao;
+import br.com.persist.plugins.atributo.aux.Arquivo;
 import br.com.persist.plugins.atributo.aux.Campo;
 import br.com.persist.plugins.atributo.aux.Classe;
 import br.com.persist.plugins.atributo.aux.Import;
@@ -388,10 +389,12 @@ class PainelDTO extends AbstratoPanel {
 	void gerar(List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Classe classe = new Classe("DTO");
+
 		for (Atributo att : atributos) {
-			Campo campo = new Campo(null, att.criarTipo());
+			Campo campo = new Campo(att.criarTipo());
 			classe.add(campo);
 		}
+
 		for (Atributo att : atributos) {
 			Tipo tipo = att.criarTipo();
 			MetodoGet get = new MetodoGet(tipo);
@@ -401,6 +404,7 @@ class PainelDTO extends AbstratoPanel {
 			classe.add(new Linha());
 			classe.add(set);
 		}
+
 		classe.gerar(0, pool);
 		setText(pool.toString());
 	}
@@ -421,19 +425,27 @@ class PainelFilter extends AbstratoPanel {
 	@Override
 	void gerar(List<Atributo> atributos) {
 		StringPool pool = new StringPool();
-		Classe classe = new Classe("Filter");
+
+		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			classe.add(new Import("javax.ws.rs.QueryParam"));
+			arquivo.add(new Import("javax.ws.rs.QueryParam"));
+			arquivo.ql();
 		}
+
+		Classe classe = new Classe("Filter");
+		arquivo.add(classe);
+
 		int i = 0;
 		for (Atributo att : atributos) {
 			if (i++ > 0) {
 				classe.add(new Linha());
 			}
-			Anotacao ano = new Anotacao("QueryParam", Util.citar2(att.getNome()));
-			Campo campo = new Campo(ano, att.criarTipo());
+			Anotacao anotacao = new Anotacao("QueryParam", Util.citar2(att.getNome()), true);
+			classe.add(anotacao);
+			Campo campo = new Campo(att.criarTipo());
 			classe.add(campo);
 		}
+
 		for (Atributo att : atributos) {
 			Tipo tipo = att.criarTipo();
 			MetodoGet get = new MetodoGet(tipo);
@@ -443,7 +455,8 @@ class PainelFilter extends AbstratoPanel {
 			classe.add(new Linha());
 			classe.add(set);
 		}
-		classe.gerar(0, pool);
+
+		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 }
@@ -462,6 +475,47 @@ class PainelRest extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(new Import("javax.inject.Inject"));
+			arquivo.ql();
+			arquivo.add(new Import("javax.ws.rs.Consumes"));
+			arquivo.add(new Import("javax.ws.rs.Produces"));
+			arquivo.ql();
+			arquivo.add(new Import("javax.ws.rs.core.MediaType"));
+			arquivo.ql();
+			arquivo.add(new Import("javax.ws.rs.BeanParam"));
+			arquivo.add(new Import("javax.ws.rs.GET"));
+			arquivo.add(new Import("javax.ws.rs.Path"));
+			arquivo.add(new Import("javax.ws.rs.Produces"));
+			arquivo.add(new Import("javax.ws.rs.QueryParam"));
+			arquivo.add(new Import("javax.ws.rs.core.MediaType"));
+			arquivo.ql();
+			arquivo.add(new Import("br.gov.dpf.framework.seguranca.RestSeguranca"));
+			arquivo.ql();
+
+			Anotacao path = new Anotacao("Path", Util.citar2("endPointRest"), true);
+			arquivo.add(path);
+		}
+
+		Classe classe = new Classe("Rest extends ApplicationRest");
+		arquivo.add(classe);
+
+		Anotacao inject = new Anotacao("Inject", null, true);
+		classe.add(inject);
+		Campo service = new Campo(new Tipo("Service", "service"));
+		classe.add(service);
+		classe.ql();
+
+		classe.add(new Anotacao("GET", null, true));
+		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
+		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_JSON}", true));
+		classe.add(new Anotacao("Consumes", "{MediaType.APPLICATION_JSON}", true));
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
 

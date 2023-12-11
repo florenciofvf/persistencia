@@ -12,6 +12,10 @@ public abstract class Container {
 		lista = new ArrayList<>();
 	}
 
+	public void ql() {
+		add(new Linha());
+	}
+
 	public void add(Container c) {
 		if (c != null) {
 			lista.add(c);
