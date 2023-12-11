@@ -50,10 +50,14 @@ import br.com.persist.plugins.atributo.aux.Anotacao;
 import br.com.persist.plugins.atributo.aux.Arquivo;
 import br.com.persist.plugins.atributo.aux.Campo;
 import br.com.persist.plugins.atributo.aux.Classe;
+import br.com.persist.plugins.atributo.aux.Espaco;
+import br.com.persist.plugins.atributo.aux.Funcao;
 import br.com.persist.plugins.atributo.aux.Import;
 import br.com.persist.plugins.atributo.aux.Linha;
 import br.com.persist.plugins.atributo.aux.MetodoGet;
 import br.com.persist.plugins.atributo.aux.MetodoSet;
+import br.com.persist.plugins.atributo.aux.Parametros;
+import br.com.persist.plugins.atributo.aux.Return;
 import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class AtributoPagina extends Panel {
@@ -479,6 +483,8 @@ class PainelRest extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
+			arquivo.add(new Import("java.util.List"));
+			arquivo.ql();
 			arquivo.add(new Import("javax.inject.Inject"));
 			arquivo.ql();
 			arquivo.add(new Import("javax.ws.rs.Consumes"));
@@ -513,6 +519,14 @@ class PainelRest extends AbstratoPanel {
 		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_JSON}", true));
 		classe.add(new Anotacao("Consumes", "{MediaType.APPLICATION_JSON}", true));
+
+		Parametros params = new Parametros();
+		params.add(new Anotacao("BeanParam", null));
+		params.add(new Espaco());
+		params.add(new Tipo("Filter", "filter"));
+		Funcao funcao = new Funcao("public", "List<DTO>", "pesquisar", params);
+		funcao.add(new Return("", "service.pesquisar(filter)"));
+		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());

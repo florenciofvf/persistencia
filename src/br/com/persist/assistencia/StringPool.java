@@ -7,6 +7,10 @@ public class StringPool {
 		sb = new StringBuilder();
 	}
 
+	public int length() {
+		return sb.length();
+	}
+
 	public StringPool tab() {
 		return tab(1);
 	}
