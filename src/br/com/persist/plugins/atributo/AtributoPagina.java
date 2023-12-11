@@ -924,6 +924,9 @@ class PainelJSService extends AbstratoPanel {
 		pool.append("function Service(Restangular) {").ql();
 		pool.tab().append("var PATH = 'endPointRest';").ql(2);
 		pool.tab().append("return {").ql();
+		pool.tab(2).append("pesquisar: function(filtro) {").ql();
+		pool.tab(3).append("return Restangular.all(PATH).customGET('pesquisar', filtro);").ql();
+		pool.tab(2).append("},").ql();
 		pool.tab(2).append("gerarPDF: function(filtro) {").ql();
 		pool.tab(3).append(
 				"return Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro);")
