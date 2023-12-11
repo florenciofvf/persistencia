@@ -52,7 +52,9 @@ import br.com.persist.plugins.atributo.aux.Campo;
 import br.com.persist.plugins.atributo.aux.Classe;
 import br.com.persist.plugins.atributo.aux.Espaco;
 import br.com.persist.plugins.atributo.aux.Funcao;
+import br.com.persist.plugins.atributo.aux.FuncaoInter;
 import br.com.persist.plugins.atributo.aux.Import;
+import br.com.persist.plugins.atributo.aux.Interface;
 import br.com.persist.plugins.atributo.aux.Linha;
 import br.com.persist.plugins.atributo.aux.MetodoGet;
 import br.com.persist.plugins.atributo.aux.MetodoSet;
@@ -61,6 +63,7 @@ import br.com.persist.plugins.atributo.aux.Return;
 import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class AtributoPagina extends Panel {
+	public static final Tipo FILTER = new Tipo("Filter", "filter");
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
@@ -523,7 +526,7 @@ class PainelRest extends AbstratoPanel {
 		Parametros params = new Parametros();
 		params.add(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
-		params.add(new Tipo("Filter", "filter"));
+		params.add(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao("public", "List<DTO>", "pesquisar", params);
 		funcao.add(new Return("", "service.pesquisar(filter)"));
 		classe.add(funcao);
@@ -547,6 +550,29 @@ class PainelService extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(new Import("java.util.List"));
+			arquivo.ql();
+			arquivo.add(new Import("javax.ejb.Local"));
+			arquivo.ql();
+
+			Anotacao local = new Anotacao("Local", null, true);
+			arquivo.add(local);
+		}
+
+		Interface interfac = new Interface("Service");
+		arquivo.add(interfac);
+
+		Parametros params = new Parametros();
+		params.add(AtributoPagina.FILTER);
+		FuncaoInter funcao = new FuncaoInter("List<DTO>", "pesquisar", params);
+		interfac.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
 	}
 }
 
