@@ -811,6 +811,17 @@ class PainelView extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+		if (!atributos.isEmpty()) {
+			pool.tab(2).append("<div class='row'>").ql();
+			for (Atributo att : atributos) {
+				pool.tab(3).append("<div class='col-sm--X'>").ql();
+				pool.tab(4).append("{{" + att.getNome() + "}}").ql();
+				pool.tab(3).append("</div>").ql();
+			}
+			pool.tab(2).append("</div>").ql();
+		}
+		setText(pool.toString());
 	}
 }
 
