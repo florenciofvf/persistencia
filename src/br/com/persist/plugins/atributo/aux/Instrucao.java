@@ -2,11 +2,9 @@ package br.com.persist.plugins.atributo.aux;
 
 import br.com.persist.assistencia.StringPool;
 
-public class Instrucao extends Container {
-	private final String string;
-
+public class Instrucao extends ContainerString {
 	public Instrucao(String string) {
-		this.string = string;
+		super(string);
 	}
 
 	@Override

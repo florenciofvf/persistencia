@@ -2,11 +2,9 @@ package br.com.persist.plugins.atributo.aux;
 
 import br.com.persist.assistencia.StringPool;
 
-public class InvocaProm extends Container {
-	private final String string;
-
+public class InvocaProm extends ContainerString {
 	public InvocaProm(String string) {
-		this.string = string;
+		super(string);
 	}
 
 	@Override

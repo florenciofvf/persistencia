@@ -2,11 +2,9 @@ package br.com.persist.plugins.atributo.aux;
 
 import br.com.persist.assistencia.StringPool;
 
-public class Fragmento extends Container {
-	final String string;
-
+public class Fragmento extends ContainerString {
 	public Fragmento(String string) {
-		this.string = string;
+		super(string);
 	}
 
 	@Override
