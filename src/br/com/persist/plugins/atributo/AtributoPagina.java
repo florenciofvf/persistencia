@@ -521,49 +521,43 @@ class PainelRest extends AbstratoPanel {
 		Classe classe = new Classe("Rest extends ApplicationRest");
 		arquivo.add(classe);
 
-		injetar(classe, AtributoPagina.SERVICE);
-		classe.ql();
-		injetar(classe, new Tipo("ServicePDF", "servicePDF"));
-		classe.ql();
-		criarGetListaDTO(classe);
-		classe.ql();
+		injetar(classe, AtributoPagina.SERVICE).ql();
+		injetar(classe, new Tipo("ServicePDF", "servicePDF")).ql();
+		criarGetListaDTO(classe).ql();
 		criarGetGerarPDF(classe);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private void injetar(Classe classe, Tipo tipo) {
+	private Classe injetar(Classe classe, Tipo tipo) {
 		Anotacao inject = new Anotacao("Inject", null, true);
 		classe.add(inject);
 		Campo service = new Campo(tipo);
 		classe.add(service);
+		return classe;
 	}
 
-	private void criarGetListaDTO(Classe classe) {
+	private Classe criarGetListaDTO(Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
 		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
 		classe.add(new Anotacao("Consumes", AtributoPagina.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", AtributoPagina.APPLICATION_JSON, true));
 
-		Parametros params = new Parametros(new Anotacao("BeanParam", null));
-		params.add(new Espaco());
-		params.add(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR,
+				beanParam());
 		funcao.addReturn("service.pesquisar(filter)");
 		classe.add(funcao);
+		return classe;
 	}
 
-	private void criarGetGerarPDF(Classe classe) {
+	private Classe criarGetGerarPDF(Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
 		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
 		classe.add(new Anotacao("Consumes", AtributoPagina.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
 
-		Parametros params = new Parametros(new Anotacao("BeanParam", null));
-		params.add(new Espaco());
-		params.add(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "Response", "gerarPDF", params);
+		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "Response", "gerarPDF", beanParam());
 		funcao.addInstrucao("DadosDTO dto = service.recuperarDTO(filter)");
 		funcao.addInstrucao("byte[] bytes = servicePDF.gerarPDF(dto)").ql();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
@@ -571,6 +565,14 @@ class PainelRest extends AbstratoPanel {
 		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
 		funcao.addReturn("response.build()");
 		classe.add(funcao);
+		return classe;
+	}
+
+	private Parametros beanParam() {
+		Parametros params = new Parametros(new Anotacao("BeanParam", null));
+		params.add(new Espaco());
+		params.add(AtributoPagina.FILTER);
+		return params;
 	}
 }
 
