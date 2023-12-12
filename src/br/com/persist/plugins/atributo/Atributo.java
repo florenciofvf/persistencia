@@ -60,8 +60,8 @@ public class Atributo {
 	public void salvar(XMLUtil util) {
 		util.abrirTag(AtributoConstantes.ATRIBUTO);
 		util.atributo("nome", nome);
-		util.atributo("rotulo", rotulo);
-		util.atributo("classe", classe);
+		util.atributoCheck("rotulo", rotulo);
+		util.atributoCheck("classe", classe);
 		util.atributoCheck("viewToBack", viewToBack);
 		util.fecharTag(-1);
 	}
