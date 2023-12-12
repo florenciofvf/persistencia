@@ -53,6 +53,7 @@ import br.com.persist.plugins.atributo.aux.Classe;
 import br.com.persist.plugins.atributo.aux.Comentario;
 import br.com.persist.plugins.atributo.aux.Container;
 import br.com.persist.plugins.atributo.aux.Espaco;
+import br.com.persist.plugins.atributo.aux.Fragmento;
 import br.com.persist.plugins.atributo.aux.Funcao;
 import br.com.persist.plugins.atributo.aux.FuncaoInter;
 import br.com.persist.plugins.atributo.aux.FuncaoJS;
@@ -67,6 +68,7 @@ import br.com.persist.plugins.atributo.aux.Return;
 import br.com.persist.plugins.atributo.aux.ReturnJS;
 import br.com.persist.plugins.atributo.aux.Tipo;
 import br.com.persist.plugins.atributo.aux.Var;
+import br.com.persist.plugins.atributo.aux.VarObjJS;
 
 public class AtributoPagina extends Panel {
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
@@ -767,10 +769,6 @@ class PainelJSController extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
-//		pool.append(gerarFnParam(atributos)).ql();
-//		pool.append(gerarFnValidar(atributos)).ql();
-//		pool.append(gerarFnPesquisa()).ql();
-//		pool.append(gerarFnPDF());
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -794,32 +792,34 @@ class PainelJSController extends AbstratoPanel {
 		funcao.add(new Instrucao("vm.filtro = {}"));
 		funcao.ql();
 
+		funcao.add(fnParam(atributos));
+//		pool.append(gerarFnValidar(atributos)).ql();
+//		pool.append(gerarFnPesquisa()).ql();
+//		pool.append(gerarFnPDF());
+
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private static String gerarFnParam(List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-		pool.tab().append("function criarParam() {").ql();
-		pool.append(criarObjParam(2, atributos)).ql();
-		pool.tab(2).append("return param;").ql();
-		pool.tab().append("}").ql();
-		return pool.toString();
+	private Container fnParam(List<Atributo> atributos) {
+		FuncaoJS funcao = new FuncaoJS("function criarParam", new Parametros());
+		funcao.add(objParam(atributos));
+		funcao.ql();
+		funcao.add(new Return("", "param"));
+		return funcao;
 	}
 
-	private static String criarObjParam(int tab, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-		pool.tab(tab).append("var param = {").ql();
+	private Container objParam(List<Atributo> atributos) {
+		VarObjJS obj = new VarObjJS("param");
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			pool.tab(tab + 1).append(att.getNome() + ": vm.filtro." + att.getNome());
+			obj.add(new Fragmento(att.getNome() + ": vm.filtro." + att.getNome()));
 			if (i + 1 < atributos.size()) {
-				pool.append(",");
+				obj.append(",");
 			}
-			pool.ql();
+			obj.ql();
 		}
-		pool.tab(tab).append("};").ql();
-		return pool.toString();
+		return obj;
 	}
 
 	private static String gerarFnValidar(List<Atributo> atributos) {
