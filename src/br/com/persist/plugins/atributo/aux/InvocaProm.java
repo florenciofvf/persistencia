@@ -5,8 +5,8 @@ import br.com.persist.assistencia.StringPool;
 public class InvocaProm extends Container {
 	private final String string;
 
-	public InvocaProm(String nome) {
-		this.string = nome;
+	public InvocaProm(String string) {
+		this.string = string;
 	}
 
 	@Override

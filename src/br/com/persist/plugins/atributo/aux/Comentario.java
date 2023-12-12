@@ -11,6 +11,6 @@ public class Comentario extends Container {
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append("//" + string).append(";").ql();
+		pool.tab(tab).append("//" + string).ql();
 	}
 }

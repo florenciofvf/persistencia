@@ -52,6 +52,7 @@ import br.com.persist.plugins.atributo.aux.Campo;
 import br.com.persist.plugins.atributo.aux.Classe;
 import br.com.persist.plugins.atributo.aux.Comentario;
 import br.com.persist.plugins.atributo.aux.Container;
+import br.com.persist.plugins.atributo.aux.Else;
 import br.com.persist.plugins.atributo.aux.Espaco;
 import br.com.persist.plugins.atributo.aux.Fragmento;
 import br.com.persist.plugins.atributo.aux.Funcao;
@@ -61,6 +62,7 @@ import br.com.persist.plugins.atributo.aux.If;
 import br.com.persist.plugins.atributo.aux.Import;
 import br.com.persist.plugins.atributo.aux.Instrucao;
 import br.com.persist.plugins.atributo.aux.Interface;
+import br.com.persist.plugins.atributo.aux.InvocaProm;
 import br.com.persist.plugins.atributo.aux.Linha;
 import br.com.persist.plugins.atributo.aux.MetodoGet;
 import br.com.persist.plugins.atributo.aux.MetodoSet;
@@ -519,7 +521,7 @@ class PainelRest extends AbstratoPanel {
 			arquivo.add(new Import("javax.ws.rs.QueryParam"));
 			arquivo.add(new Import("javax.ws.rs.core.MediaType"));
 			arquivo.ql();
-			arquivo.add(new Comentario("br.gov.dpf.framework.seguranca.RestSeguranca"));
+			arquivo.add(new Comentario("br.gov.dpf.framework.seguranca.RestSeguranca;"));
 			arquivo.ql();
 
 			Anotacao path = new Anotacao("Path", Util.citar2("endPointRest"), true);
@@ -796,8 +798,10 @@ class PainelJSController extends AbstratoPanel {
 		funcao.add(fnParam(atributos));
 		funcao.ql();
 		funcao.add(fnValidar(atributos));
-//		pool.append(gerarFnPesquisa()).ql();
-//		pool.append(gerarFnPDF());
+		funcao.ql();
+		funcao.add(fnPesquisa());
+		funcao.ql();
+		funcao.add(fnPDF());
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -867,49 +871,56 @@ class PainelJSController extends AbstratoPanel {
 		return iff;
 	}
 
-	private String gerarFnPesquisa() {
-		StringPool pool = new StringPool();
-		pool.tab().append("vm.pesquisar = function() {").ql();
-		pool.tab(2).append("var msg = validarFiltro();").ql();
-		pool.tab(2).append("if(isVazio(msg)) {").ql();
-		pool.tab(3).append("Service.pesquisar(criarParam()).then(function(result) {").ql();
-		pool.tab(4).append("var lista = result.data;").ql();
-		pool.tab(4).append("vm.pesquisados.settings().dataset = lista;").ql();
-		pool.tab(4).append("vm.pesquisados.reload();").ql();
-		pool.tab(4).append("if(lista.length === 0) {").ql();
-		pool.tab(5).append("Msg.info('Nenhum registro encontrado');").ql();
-		pool.tab(5).append("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');").ql();
-		pool.tab(4).append("}").ql();
-		pool.tab(3).append("});").ql();
-		pool.tab(2).append("} else {").ql();
-		pool.tab(3).append("Msg.error(msg);").ql();
-		pool.tab(3).append("$scope.$emit('msg', msg, null, 'warning');").ql();
-		pool.tab(2).append("}").ql();
-		pool.tab().append("};").ql();
-		return pool.toString();
+	private Container fnPesquisa() {
+		FuncaoJS funcao = new FuncaoJS("vm.pesquisar = function", new Parametros());
+		funcao.addInstrucao("var msg = validarFiltro()");
+
+		Else elsee = new Else();
+		elsee.add(new Comentario("Msg.error(msg);"));
+		elsee.add(new Comentario("$scope.$emit('msg', msg, null, 'warning');"));
+
+		If iff = new If("isVazio(msg)", elsee);
+		funcao.add(iff);
+
+		InvocaProm invocaProm = new InvocaProm("Service.pesquisar(criarParam()).then(function(result) {");
+		iff.add(invocaProm);
+
+		invocaProm.addInstrucao("var lista = result.data");
+		invocaProm.addInstrucao("vm.pesquisados.settings().dataset = lista");
+		invocaProm.addInstrucao("vm.pesquisados.reload()");
+
+		If ifLength = new If("lista.length === 0", null);
+		invocaProm.add(ifLength);
+		ifLength.addComentario("Msg.info('Nenhum registro encontrado');");
+		ifLength.addComentario("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');");
+
+		return funcao;
 	}
 
-	private String gerarFnPDF() {
-		StringPool pool = new StringPool();
-		pool.tab().append("vm.gerarPDF = function() {").ql();
-		pool.tab(2).append("var msg = validarFiltro();").ql();
-		pool.tab(2).append("if(isVazio(msg)) {").ql();
-		pool.tab(3).append("Service.gerarPDF(criarParam()).then(function(result) {").ql();
-		pool.tab(4).append("var file = new Blob([result.data], {type: 'application/pdf'});").ql();
-		pool.tab(4).append("var downloadLink = angular.element('<a></a>');").ql();
-		pool.tab(4).append("downloadLink.attr('href', window.URL.createObjectURL(file));").ql();
-		pool.tab(4).append("downloadLink.attr('download', \"arquivo.pdf\");").ql();
-		pool.tab(4).append("var link = downloadLink[0];").ql();
-		pool.tab(4).append("document.body.appendChild(link);").ql();
-		pool.tab(4).append("link.click();").ql();
-		pool.tab(4).append("document.body.removeChild(link);").ql();
-		pool.tab(3).append("});").ql();
-		pool.tab(2).append("} else {").ql();
-		pool.tab(3).append("Msg.error(msg);").ql();
-		pool.tab(3).append("$scope.$emit('msg', msg, null, 'warning');").ql();
-		pool.tab(2).append("}").ql();
-		pool.tab().append("};").ql();
-		return pool.toString();
+	private Container fnPDF() {
+		FuncaoJS funcao = new FuncaoJS("vm.gerarPDF = function", new Parametros());
+		funcao.addInstrucao("var msg = validarFiltro()");
+
+		Else elsee = new Else();
+		elsee.add(new Comentario("Msg.error(msg);"));
+		elsee.add(new Comentario("$scope.$emit('msg', msg, null, 'warning');"));
+
+		If iff = new If("isVazio(msg)", elsee);
+		funcao.add(iff);
+
+		InvocaProm invocaProm = new InvocaProm("Service.gerarPDF(criarParam()).then(function(result) {");
+		iff.add(invocaProm);
+
+		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
+		invocaProm.addInstrucao("var downloadLink = angular.element('<a></a>')");
+		invocaProm.addInstrucao("downloadLink.attr('href', window.URL.createObjectURL(file))");
+		invocaProm.addInstrucao("downloadLink.attr('download', \"arquivo.pdf\")");
+		invocaProm.addInstrucao("var link = downloadLink[0]");
+		invocaProm.addInstrucao("document.body.appendChild(link)");
+		invocaProm.addInstrucao("link.click()");
+		invocaProm.addInstrucao("document.body.removeChild(link)");
+
+		return funcao;
 	}
 }
 

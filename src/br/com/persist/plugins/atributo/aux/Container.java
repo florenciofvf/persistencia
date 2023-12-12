@@ -26,6 +26,16 @@ public abstract class Container {
 		}
 	}
 
+	public void addInstrucao(String string) {
+		if (string != null) {
+			add(new Instrucao(string));
+		}
+	}
+
+	public void addComentario(String string) {
+		add(new Comentario(string));
+	}
+
 	public void gerar(int tab, StringPool pool) {
 		for (Container c : lista) {
 			c.gerar(tab, pool);
