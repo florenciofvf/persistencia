@@ -16,9 +16,7 @@ public class FuncaoJS extends Container {
 		pool.tab(tab).append(nome);
 		parametros.gerar(0, pool);
 		pool.append(" {").ql();
-		for (Container c : lista) {
-			c.gerar(tab + 1, pool);
-		}
+		super.gerar(tab + 1, pool);
 		pool.tab(tab).append("}");
 		if (!nome.startsWith("function")) {
 			pool.append(";");

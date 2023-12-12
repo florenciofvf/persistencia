@@ -11,10 +11,8 @@ public class InvocaProm extends Container {
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append(string);
-		for (Container c : lista) {
-			c.gerar(tab + 1, pool);
-		}
+		pool.tab(tab).append(string).ql();
+		super.gerar(tab + 1, pool);
 		pool.tab(tab).append("});").ql();
 	}
 }

@@ -12,9 +12,7 @@ public class Interface extends Container {
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		pool.append("public interface " + nome + " {").ql();
-		for (Container c : lista) {
-			c.gerar(1, pool);
-		}
+		super.gerar(1, pool);
 		pool.append("}");
 	}
 }

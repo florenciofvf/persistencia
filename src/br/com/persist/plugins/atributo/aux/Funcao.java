@@ -20,9 +20,7 @@ public class Funcao extends Container {
 		pool.tab(tab).append(visibilidade + " " + retorno + " " + nome);
 		parametros.gerar(0, pool);
 		pool.append(" {").ql();
-		for (Container c : lista) {
-			c.gerar(tab + 1, pool);
-		}
+		super.gerar(tab + 1, pool);
 		pool.tab(tab).append("}").ql();
 	}
 }
