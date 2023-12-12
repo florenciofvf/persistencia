@@ -717,7 +717,7 @@ class PainelDAOImpl extends AbstratoPanel {
 			arquivo.addImport("java.util.ArrayList");
 			arquivo.add(AtributoPagina.IMPORT_LIST).ql();
 			arquivo.addImport("javax.persistence.EntityManager");
-			arquivo.addImport("javax.persistence.PersistenceContext");
+			arquivo.addImport("javax.persistence.PersistenceContext").ql();
 		}
 
 		Classe classe = new Classe("DAOImpl implements DAO");
