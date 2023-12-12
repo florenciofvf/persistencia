@@ -204,6 +204,7 @@ public class AtributoPagina extends Panel {
 				att.setNome("nome");
 				att.setRotulo("Rotulo");
 				att.setClasse("Classe");
+				att.setViewToBack("[nomeFuncaoJS]");
 				setText(att);
 			}
 
@@ -894,7 +895,8 @@ class PainelJSController extends AbstratoPanel {
 
 	private Container ifObrigatorio(Atributo att) {
 		If iff = new If(att.gerarIsVazioJS(), null);
-		iff.addReturn("'Campo " + att.getRotulo() + " Obrigat\u00F3rio.'");
+		String campo = Util.isEmpty(att.getRotulo()) ? att.getNome() : att.getRotulo();
+		iff.addReturn("'Campo " + campo + " Obrigat\u00F3rio.'");
 		return iff;
 	}
 
