@@ -2,21 +2,29 @@ package br.com.persist.plugins.atributo;
 
 import java.awt.BorderLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.io.File;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.PanelCenter;
+import br.com.persist.componente.TextField;
 import br.com.persist.formulario.Formulario;
 
 public class AtributoConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
+	private final Button btnDirPadraoSelArquivos = new Button("label.diretorio");
+	private final TextField txtDirPadraoSelArquivos = new TextField();
 	private static final long serialVersionUID = 1L;
 
 	private final transient NomeValor[] posicoes = {
@@ -33,9 +41,12 @@ public class AtributoConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, AtributoPreferencia.getAtributoPosicaoAbaFichario());
+		txtDirPadraoSelArquivos.setText(AtributoPreferencia.getDirPadraoSelecaoArquivos());
 		chkExibirArqIgnorados.setSelected(AtributoPreferencia.isExibirArqIgnorados());
 
 		Muro muro = new Muro();
+		muro.camada(Muro.panelGrid(new PanelCenter(criarLabel("label.dir_padrao_arquivos"), btnDirPadraoSelArquivos)));
+		muro.camada(txtDirPadraoSelArquivos);
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
@@ -45,6 +56,24 @@ public class AtributoConfiguracao extends AbstratoConfiguracao {
 	private void configurar() {
 		chkExibirArqIgnorados
 				.addActionListener(e -> AtributoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
+		txtDirPadraoSelArquivos.addActionListener(
+				e -> AtributoPreferencia.setDirPadraoSelecaoArquivos(txtDirPadraoSelArquivos.getText()));
+		txtDirPadraoSelArquivos.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				AtributoPreferencia.setDirPadraoSelecaoArquivos(txtDirPadraoSelArquivos.getText());
+			}
+		});
+		btnDirPadraoSelArquivos.addActionListener(e -> {
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int i = fileChooser.showOpenDialog(AtributoConfiguracao.this);
+			if (i == JFileChooser.APPROVE_OPTION) {
+				File sel = fileChooser.getSelectedFile();
+				txtDirPadraoSelArquivos.setText(sel.getAbsolutePath());
+				AtributoPreferencia.setDirPadraoSelecaoArquivos(txtDirPadraoSelArquivos.getText());
+			}
+		});
 	}
 
 	private Label criarLabelTituloRotulo(String rotulo) {

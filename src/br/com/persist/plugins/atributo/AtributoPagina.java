@@ -270,7 +270,7 @@ public class AtributoPagina extends Panel {
 			}
 
 			private void lerArquivo() {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser fileChooser = new JFileChooser(AtributoPreferencia.getDirPadraoSelecaoArquivos());
 				int i = fileChooser.showOpenDialog(AtributoPagina.this);
 				if (i == JFileChooser.APPROVE_OPTION) {
 					File sel = fileChooser.getSelectedFile();
