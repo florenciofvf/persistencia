@@ -57,6 +57,7 @@ import br.com.persist.plugins.atributo.aux.Fragmento;
 import br.com.persist.plugins.atributo.aux.Funcao;
 import br.com.persist.plugins.atributo.aux.FuncaoInter;
 import br.com.persist.plugins.atributo.aux.FuncaoJS;
+import br.com.persist.plugins.atributo.aux.If;
 import br.com.persist.plugins.atributo.aux.Import;
 import br.com.persist.plugins.atributo.aux.Instrucao;
 import br.com.persist.plugins.atributo.aux.Interface;
@@ -793,7 +794,8 @@ class PainelJSController extends AbstratoPanel {
 		funcao.ql();
 
 		funcao.add(fnParam(atributos));
-//		pool.append(gerarFnValidar(atributos)).ql();
+		funcao.ql();
+		funcao.add(fnValidar(atributos));
 //		pool.append(gerarFnPesquisa()).ql();
 //		pool.append(gerarFnPDF());
 
@@ -822,37 +824,30 @@ class PainelJSController extends AbstratoPanel {
 		return obj;
 	}
 
-	private static String gerarFnValidar(List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-		pool.tab().append("function validarFiltro() {").ql();
+	private Container fnValidar(List<Atributo> atributos) {
+		FuncaoJS funcao = new FuncaoJS("function validarFiltro", new Parametros());
 		if (atributos.size() > 1) {
-			pool.append(validarVazios(2, atributos));
-			pool.ql();
+			funcao.add(ifVazios(atributos));
+			funcao.ql();
 		}
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			pool.append(validarObrigatorio(2, att));
+			funcao.add(ifObrigatorio(att));
 			if (i + 1 < atributos.size()) {
-				pool.ql();
+				funcao.ql();
 			}
 		}
 		if (!atributos.isEmpty()) {
-			pool.ql();
+			funcao.ql();
 		}
-		pool.tab(2).append("return null;").ql();
-		pool.tab().append("}").ql();
-		return pool.toString();
+		funcao.add(new Return("", "null"));
+		return funcao;
 	}
 
-	private static String validarVazios(int tab, List<Atributo> atributos) {
-		if (atributos.isEmpty()) {
-			return "";
-		}
-		StringPool pool = new StringPool();
-		pool.tab(tab).append("if(" + vazios(atributos) + ") {").ql();
-		pool.tab(tab + 1).append("return 'Favor preencher pelo ao menos um campo de pesquisa';").ql();
-		pool.tab(tab).append("}").ql();
-		return pool.toString();
+	private Container ifVazios(List<Atributo> atributos) {
+		If iff = new If(vazios(atributos), null);
+		iff.add(new Return("", "'Favor preencher pelo ao menos um campo de pesquisa'"));
+		return iff;
 	}
 
 	private static String vazios(List<Atributo> atributos) {
@@ -866,12 +861,10 @@ class PainelJSController extends AbstratoPanel {
 		return sb.toString();
 	}
 
-	private static String validarObrigatorio(int tab, Atributo att) {
-		StringPool pool = new StringPool();
-		pool.tab(tab).append("if(" + att.gerarIsVazioJS() + ") {").ql();
-		pool.tab(tab + 1).append("return 'Campo " + att.getRotulo() + " Obrigat\u00F3rio.';").ql();
-		pool.tab(tab).append("}").ql();
-		return pool.toString();
+	private Container ifObrigatorio(Atributo att) {
+		If iff = new If(att.gerarIsVazioJS(), null);
+		iff.add(new Return("", "'Campo " + att.getRotulo() + " Obrigat\u00F3rio.'"));
+		return iff;
 	}
 
 	private String gerarFnPesquisa() {
