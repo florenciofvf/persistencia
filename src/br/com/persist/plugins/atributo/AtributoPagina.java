@@ -767,17 +767,34 @@ class PainelJSController extends AbstratoPanel {
 
 	@Override
 	void gerar(List<Atributo> atributos) {
+//		pool.append(gerarFnParam(atributos)).ql();
+//		pool.append(gerarFnValidar(atributos)).ql();
+//		pool.append(gerarFnPesquisa()).ql();
+//		pool.append(gerarFnPDF());
 		StringPool pool = new StringPool();
-		pool.append("Controller.$inject = ['$scope', '$state', 'NgTableParams', 'Service'];").ql();
-		pool.append("function Controller('$scope', '$state', 'NgTableParams', Service) {").ql();
-		pool.tab().append("var vm = this;").ql(2);
-		pool.tab().append("vm.pesquisados = new NgTableParams();").ql();
-		pool.tab().append("vm.filtro = {};").ql(2);
-		pool.append(gerarFnParam(atributos)).ql();
-		pool.append(gerarFnValidar(atributos)).ql();
-		pool.append(gerarFnPesquisa()).ql();
-		pool.append(gerarFnPDF());
-		pool.append("}").ql();
+
+		Arquivo arquivo = new Arquivo();
+		arquivo.add(new Instrucao("Controller.$inject = ['$scope', '$state', 'NgTableParams', 'Service']"));
+
+		String string = ", ";
+		Parametros params = new Parametros();
+		params.add(new Var("$scope"));
+		params.append(string);
+		params.add(new Var("$state"));
+		params.append(string);
+		params.add(new Var("NgTableParams"));
+		params.append(string);
+		params.add(new Var("Service"));
+		FuncaoJS funcao = new FuncaoJS("function Controller", params);
+		arquivo.add(funcao);
+
+		funcao.add(new Instrucao("var vm = this"));
+		funcao.ql();
+		funcao.add(new Instrucao("vm.pesquisados = new NgTableParams()"));
+		funcao.add(new Instrucao("vm.filtro = {}"));
+		funcao.ql();
+
+		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
