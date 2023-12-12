@@ -838,6 +838,7 @@ class PainelJSController extends AbstratoPanel {
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
 		funcao.addInstrucao("vm." + filtro + " = {}").ql();
 
+		funcao.add(fnLimparFiltro(filtro)).ql();
 		funcao.add(fnGetTime()).ql();
 		funcao.add(fnParam(filtro, atributos)).ql();
 		funcao.add(fnValidar(filtro, atributos)).ql();
@@ -846,6 +847,12 @@ class PainelJSController extends AbstratoPanel {
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
+	}
+
+	private Container fnLimparFiltro(String filtro) {
+		FuncaoJS funcao = new FuncaoJS("vm.limpar" + Util.capitalize(filtro) + " = function", new Parametros());
+		funcao.addInstrucao("vm." + filtro + " = {}").ql();
+		return funcao;
 	}
 
 	private Container fnGetTime() {
@@ -1042,6 +1049,10 @@ class PainelView extends AbstratoPanel {
 	@Override
 	void gerar(List<Atributo> atributos) {
 		StringPool pool = new StringPool();
+
+		String filtro = getValorTextField2(AtributoPagina.FILTRO);
+		String funcao = getValorTextField(AtributoPagina.PESQUISAR);
+
 		if (!atributos.isEmpty()) {
 			pool.tab(2).append("<div class='row'>").ql();
 			for (Atributo att : atributos) {
@@ -1051,6 +1062,13 @@ class PainelView extends AbstratoPanel {
 			}
 			pool.tab(2).append("</div>").ql();
 		}
+
+		pool.ql();
+		pool.append("<button id=\"pesquisar\" ng-click=\"vm." + funcao
+				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Pesquisar</button>");
+		pool.append("<button id=\"limpar\" ng-click=\"vm.limpar" + filtro
+				+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
+
 		setText(pool.toString());
 	}
 }
