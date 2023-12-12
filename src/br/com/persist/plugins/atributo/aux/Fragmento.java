@@ -5,8 +5,8 @@ import br.com.persist.assistencia.StringPool;
 public class Fragmento extends Container {
 	final String string;
 
-	public Fragmento(String nome) {
-		this.string = nome;
+	public Fragmento(String string) {
+		this.string = string;
 	}
 
 	@Override

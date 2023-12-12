@@ -16,6 +16,10 @@ public abstract class Container {
 		add(new Linha());
 	}
 
+	public void append(String string) {
+		add(new Sequencia(string));
+	}
+
 	public void add(Container c) {
 		if (c != null) {
 			lista.add(c);
