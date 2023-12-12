@@ -2,10 +2,12 @@ package br.com.persist.plugins.atributo;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class Atributo {
+	private String viewToBack;
 	private boolean ignorar;
 	private String rotulo;
 	private String classe;
@@ -43,6 +45,14 @@ public class Atributo {
 		this.nome = nome;
 	}
 
+	public String getViewToBack() {
+		return viewToBack;
+	}
+
+	public void setViewToBack(String viewToBack) {
+		this.viewToBack = viewToBack;
+	}
+
 	public Tipo criarTipo() {
 		return new Tipo(classe, nome);
 	}
@@ -52,10 +62,12 @@ public class Atributo {
 		util.atributo("nome", nome);
 		util.atributo("rotulo", rotulo);
 		util.atributo("classe", classe);
+		util.atributoCheck("viewToBack", viewToBack);
 		util.fecharTag(-1);
 	}
 
 	public void aplicar(Attributes attr) {
+		viewToBack = attr.getValue("viewToBack");
 		rotulo = attr.getValue("rotulo");
 		classe = attr.getValue("classe");
 		nome = attr.getValue("nome");
@@ -63,6 +75,13 @@ public class Atributo {
 
 	public String gerarIsVazioJS() {
 		return "isVazio(vm.filtro." + nome + ")";
+	}
+
+	public String gerarViewToBack() {
+		if (Util.isEmpty(viewToBack)) {
+			return "vm.filtro." + nome;
+		}
+		return viewToBack + "(vm.filtro." + nome + ")";
 	}
 
 	@Override

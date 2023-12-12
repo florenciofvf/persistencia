@@ -6,4 +6,9 @@ public abstract class ContainerString extends Container {
 	protected ContainerString(String string) {
 		this.string = string;
 	}
+
+	@Override
+	public String toString() {
+		return string;
+	}
 }

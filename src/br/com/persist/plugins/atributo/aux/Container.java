@@ -12,46 +12,56 @@ public abstract class Container {
 		lista = new ArrayList<>();
 	}
 
-	public void ql() {
+	public Container ql() {
 		add(new Linha());
+		return this;
 	}
 
-	public void append(String string) {
+	public Container append(String string) {
 		add(new Sequencia(string));
+		return this;
 	}
 
-	public void add(Container c) {
+	public Container add(Container c) {
 		if (c != null) {
 			lista.add(c);
 		}
+		return this;
 	}
 
-	public void addInstrucao(String string) {
+	public Container addInstrucao(String string) {
 		add(new Instrucao(string));
+		return this;
 	}
 
-	public void addComentario(String string) {
+	public Container addComentario(String string) {
 		add(new Comentario(string));
+		return this;
 	}
 
-	public void addFragmento(String string) {
+	public Container addFragmento(String string) {
 		add(new Fragmento(string));
+		return this;
 	}
 
-	public void addImport(String string) {
+	public Container addImport(String string) {
 		add(new Import(string));
+		return this;
 	}
 
-	public void addVar(String string) {
+	public Container addVar(String string) {
 		add(new Var(string));
+		return this;
 	}
 
-	public void addReturn(String string) {
+	public Container addReturn(String string) {
 		addReturn("", string);
+		return this;
 	}
 
-	public void addReturn(String prefixo, String string) {
+	public Container addReturn(String prefixo, String string) {
 		add(new Return(prefixo, string));
+		return this;
 	}
 
 	public void gerar(int tab, StringPool pool) {

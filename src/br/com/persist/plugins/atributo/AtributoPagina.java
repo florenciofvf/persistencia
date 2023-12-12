@@ -792,16 +792,23 @@ class PainelJSController extends AbstratoPanel {
 		funcao.addInstrucao("vm.filtro = {}");
 		funcao.ql();
 
-		funcao.add(fnParam(atributos));
-		funcao.ql();
-		funcao.add(fnValidar(atributos));
-		funcao.ql();
-		funcao.add(fnPesquisa());
-		funcao.ql();
+		funcao.add(fnGetTime()).ql();
+		funcao.add(fnParam(atributos)).ql();
+		funcao.add(fnValidar(atributos)).ql();
+		funcao.add(fnPesquisa()).ql();
 		funcao.add(fnPDF());
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
+	}
+
+	private Container fnGetTime() {
+		FuncaoJS funcao = new FuncaoJS("function getTime", new Parametros(new Var("obj")));
+		If iff = new If("obj instanceof Date", null);
+		iff.addReturn("obj.getTime()");
+		funcao.add(iff);
+		funcao.addReturn("null");
+		return funcao;
 	}
 
 	private Container fnParam(List<Atributo> atributos) {
@@ -816,7 +823,7 @@ class PainelJSController extends AbstratoPanel {
 		VarObjJS obj = new VarObjJS("param");
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			obj.addFragmento(att.getNome() + ": vm.filtro." + att.getNome());
+			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack());
 			if (i + 1 < atributos.size()) {
 				obj.append(",");
 			}

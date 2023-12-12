@@ -11,9 +11,4 @@ public class Fragmento extends ContainerString {
 	public void gerar(int tab, StringPool pool) {
 		pool.tab(tab).append(string);
 	}
-
-	@Override
-	public String toString() {
-		return string;
-	}
 }
