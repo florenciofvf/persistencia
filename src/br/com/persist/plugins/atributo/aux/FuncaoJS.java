@@ -18,7 +18,7 @@ public class FuncaoJS extends Container {
 		pool.append(" {").ql();
 		super.gerar(tab + 1, pool);
 		pool.tab(tab).append("}");
-		if (!nome.startsWith("function")) {
+		if (nome.contains("=")) {
 			pool.append(";");
 		}
 		pool.ql();

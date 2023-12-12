@@ -51,9 +51,11 @@ import br.com.persist.plugins.atributo.aux.Arquivo;
 import br.com.persist.plugins.atributo.aux.Campo;
 import br.com.persist.plugins.atributo.aux.Classe;
 import br.com.persist.plugins.atributo.aux.Comentario;
+import br.com.persist.plugins.atributo.aux.Container;
 import br.com.persist.plugins.atributo.aux.Espaco;
 import br.com.persist.plugins.atributo.aux.Funcao;
 import br.com.persist.plugins.atributo.aux.FuncaoInter;
+import br.com.persist.plugins.atributo.aux.FuncaoJS;
 import br.com.persist.plugins.atributo.aux.Import;
 import br.com.persist.plugins.atributo.aux.Instrucao;
 import br.com.persist.plugins.atributo.aux.Interface;
@@ -62,7 +64,9 @@ import br.com.persist.plugins.atributo.aux.MetodoGet;
 import br.com.persist.plugins.atributo.aux.MetodoSet;
 import br.com.persist.plugins.atributo.aux.Parametros;
 import br.com.persist.plugins.atributo.aux.Return;
+import br.com.persist.plugins.atributo.aux.ReturnJS;
 import br.com.persist.plugins.atributo.aux.Tipo;
+import br.com.persist.plugins.atributo.aux.Var;
 
 public class AtributoPagina extends Panel {
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
@@ -547,8 +551,7 @@ class PainelRest extends AbstratoPanel {
 		classe.add(new Anotacao("Consumes", AtributoPagina.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", AtributoPagina.APPLICATION_JSON, true));
 
-		Parametros params = new Parametros();
-		params.add(new Anotacao("BeanParam", null));
+		Parametros params = new Parametros(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
 		params.add(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
@@ -562,8 +565,7 @@ class PainelRest extends AbstratoPanel {
 		classe.add(new Anotacao("Consumes", AtributoPagina.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
 
-		Parametros params = new Parametros();
-		params.add(new Anotacao("BeanParam", null));
+		Parametros params = new Parametros(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
 		params.add(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "Response", "gerarPDF", params);
@@ -608,8 +610,7 @@ class PainelService extends AbstratoPanel {
 		Interface interfac = new Interface("Service");
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros();
-		params.add(AtributoPagina.FILTER);
+		Parametros params = new Parametros(AtributoPagina.FILTER);
 		FuncaoInter funcao = new FuncaoInter(AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		interfac.add(funcao);
 
@@ -661,8 +662,7 @@ class PainelBean extends AbstratoPanel {
 		classe.add(service);
 		classe.ql();
 
-		Parametros params = new Parametros();
-		params.add(AtributoPagina.FILTER);
+		Parametros params = new Parametros(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		funcao.add(new Return("", "dao.pesquisar(filter)"));
 		classe.add(funcao);
@@ -697,8 +697,7 @@ class PainelDAO extends AbstratoPanel {
 		Interface interfac = new Interface("DAO");
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros();
-		params.add(AtributoPagina.FILTER);
+		Parametros params = new Parametros(AtributoPagina.FILTER);
 		FuncaoInter funcao = new FuncaoInter(AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		interfac.add(funcao);
 
@@ -741,8 +740,7 @@ class PainelDAOImpl extends AbstratoPanel {
 		classe.add(entityManager);
 		classe.ql();
 
-		Parametros params = new Parametros();
-		params.add(AtributoPagina.FILTER);
+		Parametros params = new Parametros(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
 		funcao.add(new Instrucao("List<DTO> resp = new ArrayList<>()"));
 		funcao.add(new Comentario("entityManager.find..."));
@@ -920,21 +918,39 @@ class PainelJSService extends AbstratoPanel {
 	@Override
 	void gerar(List<Atributo> atributos) {
 		StringPool pool = new StringPool();
-		pool.append("Service.$inject = ['Restangular'];").ql();
-		pool.append("function Service(Restangular) {").ql();
-		pool.tab().append("var PATH = 'endPointRest';").ql(2);
-		pool.tab().append("return {").ql();
-		pool.tab(2).append("pesquisar: function(filtro) {").ql();
-		pool.tab(3).append("return Restangular.all(PATH).customGET('pesquisar', filtro);").ql();
-		pool.tab(2).append("},").ql();
-		pool.tab(2).append("gerarPDF: function(filtro) {").ql();
-		pool.tab(3).append(
-				"return Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro);")
-				.ql();
-		pool.tab(2).append("}").ql();
-		pool.tab().append("};").ql();
-		pool.append("}").ql();
+
+		Arquivo arquivo = new Arquivo();
+		arquivo.add(new Instrucao("Service.$inject = ['Restangular']"));
+
+		Parametros params = new Parametros(new Var("Restangular"));
+		FuncaoJS funcao = new FuncaoJS("function Service", params);
+		arquivo.add(funcao);
+
+		funcao.add(new Instrucao("var PATH = 'endPointRest'"));
+		funcao.ql();
+		ReturnJS returnJS = new ReturnJS();
+		funcao.add(returnJS);
+
+		returnJS.add(fnPesquisar());
+		returnJS.add(fnGerarPDF());
+
+		arquivo.gerar(0, pool);
 		setText(pool.toString());
+	}
+
+	private Container fnPesquisar() {
+		Parametros params = new Parametros(new Var("filtro"));
+		FuncaoJS funcao = new FuncaoJS("pesquisar: function", params);
+		funcao.add(new Return("", "Restangular.all(PATH).customGET('pesquisar', filtro)"));
+		return funcao;
+	}
+
+	private Container fnGerarPDF() {
+		Parametros params = new Parametros(new Var("filtro"));
+		FuncaoJS funcao = new FuncaoJS(",gerarPDF: function", params);
+		funcao.add(new Return("",
+				"Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro)"));
+		return funcao;
 	}
 }
 
