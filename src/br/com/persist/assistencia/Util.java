@@ -936,6 +936,44 @@ public class Util {
 		return string;
 	}
 
+	public static List<String> extrairValorNgModel(String string) {
+		List<String> resp = new ArrayList<>();
+		if (isEmpty(string)) {
+			return resp;
+		}
+		String ngModel = "ng-model=\"";
+		int pos = string.indexOf(ngModel);
+		while (pos != -1) {
+			String valor = extrairValor(string, pos + ngModel.length());
+			if (isEmpty(valor)) {
+				break;
+			}
+			resp.add(valor);
+			pos = string.indexOf(ngModel, pos + ngModel.length() + valor.length());
+		}
+		return resp;
+	}
+
+	private static String extrairValor(String string, int pos) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = pos; i < string.length(); i++) {
+			char c = string.charAt(i);
+			if (valido(c)) {
+				sb.append(c);
+			} else if (c == '\"') {
+				break;
+			} else {
+				return "";
+			}
+		}
+		return sb.toString();
+	}
+
+	private static boolean valido(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '.'
+				|| c == '$';
+	}
+
 	public static void destacar(StyledDocument doc, String pesquisado) {
 		try {
 			String string = doc.getText(0, doc.getLength());

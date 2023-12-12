@@ -26,12 +26,14 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
+import javax.swing.JFileChooser;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -171,6 +173,7 @@ public class AtributoPagina extends Panel {
 
 		private class Toolbar extends BarraButton implements ActionListener {
 			private Action tabelaAcao = acaoIcon("label.atualizar_tabela", Icones.SINCRONIZAR);
+			private Action modelIdAcao = acaoMenu("label.ler_id", Icones.FIELDS);
 			private final TextField txtPesquisa = new TextField(15);
 			private static final long serialVersionUID = 1L;
 			private transient Selecao selecao;
@@ -182,7 +185,13 @@ public class AtributoPagina extends Panel {
 				addButton(tabelaAcao);
 				add(txtPesquisa);
 				add(label);
+				addButton(modelIdAcao);
+				modelIdAcao.setActionListener(e -> lerArquivo());
 				tabelaAcao.setActionListener(e -> carregar());
+			}
+
+			Action acaoMenu(String chave, Icon icon) {
+				return Action.acaoMenu(AtributoMensagens.getString(chave), icon);
 			}
 
 			Action acaoIcon(String chave, Icon icon) {
@@ -191,16 +200,22 @@ public class AtributoPagina extends Panel {
 
 			@Override
 			protected void limpar() {
+				Atributo att = new Atributo();
+				att.setNome("nome");
+				att.setRotulo("Rotulo");
+				att.setClasse("Classe");
+				setText(att);
+			}
+
+			private void setText(Atributo... atributos) {
 				try {
 					StringWriter sw = new StringWriter();
 					XMLUtil util = new XMLUtil(sw);
 					util.prologo();
 					util.abrirTag2("att");
-					Atributo att = new Atributo();
-					att.setNome("nome");
-					att.setRotulo("Rotulo");
-					att.setClasse("Classe");
-					att.salvar(util);
+					for (Atributo att : atributos) {
+						att.salvar(util);
+					}
 					util.finalizarTag("att");
 					util.close();
 					textArea.setText(sw.toString());
@@ -251,6 +266,35 @@ public class AtributoPagina extends Panel {
 					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
 				}
 				SwingUtilities.updateComponentTreeUI(this);
+			}
+
+			private void lerArquivo() {
+				JFileChooser fileChooser = new JFileChooser();
+				int i = fileChooser.showOpenDialog(AtributoPagina.this);
+				if (i == JFileChooser.APPROVE_OPTION) {
+					File sel = fileChooser.getSelectedFile();
+					lerArquivo(sel);
+				}
+			}
+
+			private void lerArquivo(File file) {
+				List<String> lista = ArquivoUtil.lerArquivo(file);
+				List<Atributo> atributos = new ArrayList<>();
+				for (String string : lista) {
+					List<String> ngs = Util.extrairValorNgModel(string);
+					for (String ng : ngs) {
+						atributos.add(criarAtributo(ng));
+					}
+				}
+				setText(atributos.toArray(new Atributo[0]));
+			}
+
+			private Atributo criarAtributo(String string) {
+				int pos = string.lastIndexOf(".");
+				String nome = pos != -1 ? string.substring(pos + 1) : string;
+				Atributo att = new Atributo();
+				att.setNome(nome);
+				return att;
 			}
 		}
 
