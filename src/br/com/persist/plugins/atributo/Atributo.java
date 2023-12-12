@@ -73,15 +73,15 @@ public class Atributo {
 		nome = attr.getValue("nome");
 	}
 
-	public String gerarIsVazioJS() {
-		return "isVazio(vm.filtro." + nome + ")";
+	public String gerarIsVazioJS(String filtro) {
+		return "isVazio(vm." + filtro + "." + nome + ")";
 	}
 
-	public String gerarViewToBack() {
+	public String gerarViewToBack(String filtro) {
 		if (Util.isEmpty(viewToBack)) {
-			return "vm.filtro." + nome;
+			return "vm." + filtro + "." + nome;
 		}
-		return viewToBack + "(vm.filtro." + nome + ")";
+		return viewToBack + "(vm." + filtro + "." + nome + ")";
 	}
 
 	@Override

@@ -79,6 +79,7 @@ public class AtributoPagina extends Panel {
 	public static final Tipo FILTER = new Tipo("Filter", "filter");
 	public static final String PESQUISAR = "pesquisar";
 	public static final String LIST_DTO = "List<DTO>";
+	public static final String FILTRO = "filtro";
 	public static final String PUBLIC = "public";
 
 	private static final long serialVersionUID = 1L;
@@ -383,6 +384,7 @@ class PainelFichario extends JTabbedPane {
 
 abstract class AbstratoPanel extends Panel {
 	private static final long serialVersionUID = 1L;
+	protected final TextField textField2 = new TextField(15);
 	protected final TextField textField = new TextField(15);
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
@@ -439,8 +441,16 @@ abstract class AbstratoPanel extends Panel {
 		textArea.setText(string);
 	}
 
+	protected void addTextField2() {
+		toolbar.add(textField2);
+	}
+
 	protected String getValorTextField(String padrao) {
 		return Util.isEmpty(textField.getText()) ? padrao : textField.getText();
+	}
+
+	protected String getValorTextField2(String padrao) {
+		return Util.isEmpty(textField2.getText()) ? padrao : textField2.getText();
 	}
 
 	abstract String getChaveTitulo();
@@ -797,6 +807,7 @@ class PainelJSController extends AbstratoPanel {
 
 	PainelJSController(AtributoPagina pagina) {
 		super(pagina);
+		addTextField2();
 	}
 
 	@Override
@@ -808,6 +819,7 @@ class PainelJSController extends AbstratoPanel {
 	void gerar(List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
+		String filtro = getValorTextField2(AtributoPagina.FILTRO);
 		String nome = getValorTextField("Controller");
 
 		Arquivo arquivo = new Arquivo();
@@ -824,13 +836,13 @@ class PainelJSController extends AbstratoPanel {
 
 		funcao.addInstrucao("var vm = this").ql();
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
-		funcao.addInstrucao("vm.filtro = {}").ql();
+		funcao.addInstrucao("vm." + filtro + " = {}").ql();
 
 		funcao.add(fnGetTime()).ql();
-		funcao.add(fnParam(atributos)).ql();
-		funcao.add(fnValidar(atributos)).ql();
-		funcao.add(fnPesquisa()).ql();
-		funcao.add(fnPDF());
+		funcao.add(fnParam(filtro, atributos)).ql();
+		funcao.add(fnValidar(filtro, atributos)).ql();
+		funcao.add(fnPesquisa(filtro)).ql();
+		funcao.add(fnPDF(filtro));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -845,18 +857,18 @@ class PainelJSController extends AbstratoPanel {
 		return funcao;
 	}
 
-	private Container fnParam(List<Atributo> atributos) {
-		FuncaoJS funcao = new FuncaoJS("function criarParam", new Parametros());
-		funcao.add(objParam(atributos)).ql();
+	private Container fnParam(String filtro, List<Atributo> atributos) {
+		FuncaoJS funcao = new FuncaoJS("function criarParam" + Util.capitalize(filtro), new Parametros());
+		funcao.add(objParam(filtro, atributos)).ql();
 		funcao.addReturn("param");
 		return funcao;
 	}
 
-	private Container objParam(List<Atributo> atributos) {
+	private Container objParam(String filtro, List<Atributo> atributos) {
 		VarObjJS obj = new VarObjJS("param");
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack());
+			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack(filtro));
 			if (i + 1 < atributos.size()) {
 				obj.append(",");
 			}
@@ -865,14 +877,14 @@ class PainelJSController extends AbstratoPanel {
 		return obj;
 	}
 
-	private Container fnValidar(List<Atributo> atributos) {
-		FuncaoJS funcao = new FuncaoJS("function validarFiltro", new Parametros());
+	private Container fnValidar(String filtro, List<Atributo> atributos) {
+		FuncaoJS funcao = new FuncaoJS("function validar" + Util.capitalize(filtro), new Parametros());
 		if (atributos.size() > 1) {
-			funcao.add(ifVazios(atributos)).ql();
+			funcao.add(ifVazios(filtro, atributos)).ql();
 		}
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			funcao.add(ifObrigatorio(att));
+			funcao.add(ifObrigatorio(filtro, att));
 			if (i + 1 < atributos.size()) {
 				funcao.ql();
 			}
@@ -884,33 +896,33 @@ class PainelJSController extends AbstratoPanel {
 		return funcao;
 	}
 
-	private Container ifVazios(List<Atributo> atributos) {
-		If iff = new If(vazios(atributos), null);
+	private Container ifVazios(String filtro, List<Atributo> atributos) {
+		If iff = new If(vazios(filtro, atributos), null);
 		iff.addReturn("'Favor preencher pelo ao menos um campo de pesquisa'");
 		return iff;
 	}
 
-	private static String vazios(List<Atributo> atributos) {
+	private static String vazios(String filtro, List<Atributo> atributos) {
 		StringBuilder sb = new StringBuilder();
 		for (Atributo att : atributos) {
 			if (sb.length() > 0) {
 				sb.append(" && ");
 			}
-			sb.append(att.gerarIsVazioJS());
+			sb.append(att.gerarIsVazioJS(filtro));
 		}
 		return sb.toString();
 	}
 
-	private Container ifObrigatorio(Atributo att) {
-		If iff = new If(att.gerarIsVazioJS(), null);
+	private Container ifObrigatorio(String filtro, Atributo att) {
+		If iff = new If(att.gerarIsVazioJS(filtro), null);
 		String campo = Util.isEmpty(att.getRotulo()) ? att.getNome() : att.getRotulo();
 		iff.addReturn("'Campo " + campo + " Obrigat\u00F3rio.'");
 		return iff;
 	}
 
-	private Container fnPesquisa() {
+	private Container fnPesquisa(String filtro) {
 		FuncaoJS funcao = new FuncaoJS("vm.pesquisar = function", new Parametros());
-		funcao.addInstrucao("var msg = validarFiltro()");
+		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
 		elsee.addComentario("Msg.error(msg);");
@@ -919,7 +931,8 @@ class PainelJSController extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm("Service.pesquisar(criarParam()).then(function(result) {");
+		InvocaProm invocaProm = new InvocaProm(
+				"Service.pesquisar(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
 		invocaProm.addInstrucao("var lista = result.data");
@@ -934,9 +947,9 @@ class PainelJSController extends AbstratoPanel {
 		return funcao;
 	}
 
-	private Container fnPDF() {
+	private Container fnPDF(String filtro) {
 		FuncaoJS funcao = new FuncaoJS("vm.gerarPDF = function", new Parametros());
-		funcao.addInstrucao("var msg = validarFiltro()");
+		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
 		elsee.addComentario("Msg.error(msg);");
@@ -945,7 +958,8 @@ class PainelJSController extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm("Service.gerarPDF(criarParam()).then(function(result) {");
+		InvocaProm invocaProm = new InvocaProm(
+				"Service.gerarPDF(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
 		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
@@ -998,14 +1012,14 @@ class PainelJSService extends AbstratoPanel {
 	}
 
 	private Container fnPesquisar() {
-		Parametros params = new Parametros(new Var("filtro"));
+		Parametros params = new Parametros(new Var(AtributoPagina.FILTRO));
 		FuncaoJS funcao = new FuncaoJS("pesquisar: function", params);
 		funcao.addReturn("Restangular.all(PATH).customGET('pesquisar', filtro)");
 		return funcao;
 	}
 
 	private Container fnGerarPDF() {
-		Parametros params = new Parametros(new Var("filtro"));
+		Parametros params = new Parametros(new Var(AtributoPagina.FILTRO));
 		FuncaoJS funcao = new FuncaoJS(",gerarPDF: function", params);
 		funcao.addReturn(
 				"Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro)");
