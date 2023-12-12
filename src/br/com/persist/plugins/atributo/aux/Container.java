@@ -27,13 +27,31 @@ public abstract class Container {
 	}
 
 	public void addInstrucao(String string) {
-		if (string != null) {
-			add(new Instrucao(string));
-		}
+		add(new Instrucao(string));
 	}
 
 	public void addComentario(String string) {
 		add(new Comentario(string));
+	}
+
+	public void addFragmento(String string) {
+		add(new Fragmento(string));
+	}
+
+	public void addImport(String string) {
+		add(new Import(string));
+	}
+
+	public void addVar(String string) {
+		add(new Var(string));
+	}
+
+	public void addReturn(String string) {
+		addReturn("", string);
+	}
+
+	public void addReturn(String prefixo, String string) {
+		add(new Return(prefixo, string));
 	}
 
 	public void gerar(int tab, StringPool pool) {

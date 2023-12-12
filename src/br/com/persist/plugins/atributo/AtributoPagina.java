@@ -50,24 +50,20 @@ import br.com.persist.plugins.atributo.aux.Anotacao;
 import br.com.persist.plugins.atributo.aux.Arquivo;
 import br.com.persist.plugins.atributo.aux.Campo;
 import br.com.persist.plugins.atributo.aux.Classe;
-import br.com.persist.plugins.atributo.aux.Comentario;
 import br.com.persist.plugins.atributo.aux.Container;
 import br.com.persist.plugins.atributo.aux.Else;
 import br.com.persist.plugins.atributo.aux.Espaco;
-import br.com.persist.plugins.atributo.aux.Fragmento;
 import br.com.persist.plugins.atributo.aux.Funcao;
 import br.com.persist.plugins.atributo.aux.FuncaoInter;
 import br.com.persist.plugins.atributo.aux.FuncaoJS;
 import br.com.persist.plugins.atributo.aux.If;
 import br.com.persist.plugins.atributo.aux.Import;
-import br.com.persist.plugins.atributo.aux.Instrucao;
 import br.com.persist.plugins.atributo.aux.Interface;
 import br.com.persist.plugins.atributo.aux.InvocaProm;
 import br.com.persist.plugins.atributo.aux.Linha;
 import br.com.persist.plugins.atributo.aux.MetodoGet;
 import br.com.persist.plugins.atributo.aux.MetodoSet;
 import br.com.persist.plugins.atributo.aux.Parametros;
-import br.com.persist.plugins.atributo.aux.Return;
 import br.com.persist.plugins.atributo.aux.ReturnJS;
 import br.com.persist.plugins.atributo.aux.Tipo;
 import br.com.persist.plugins.atributo.aux.Var;
@@ -76,7 +72,8 @@ import br.com.persist.plugins.atributo.aux.VarObjJS;
 public class AtributoPagina extends Panel {
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
 	public static final Import IMPORT_LIST = new Import("java.util.List");
-	public static final Tipo SERVICE = new Tipo("Service", "service");
+	public static final String STR_SERVICE = "Service";
+	public static final Tipo SERVICE = new Tipo(STR_SERVICE, "service");
 	public static final Tipo FILTER = new Tipo("Filter", "filter");
 	public static final String PESQUISAR = "pesquisar";
 	public static final String LIST_DTO = "List<DTO>";
@@ -454,7 +451,7 @@ class PainelFilter extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(new Import("javax.ws.rs.QueryParam"));
+			arquivo.addImport("javax.ws.rs.QueryParam");
 			arquivo.ql();
 		}
 
@@ -507,21 +504,21 @@ class PainelRest extends AbstratoPanel {
 		if (!atributos.isEmpty()) {
 			arquivo.add(AtributoPagina.IMPORT_LIST);
 			arquivo.ql();
-			arquivo.add(new Import("javax.inject.Inject"));
+			arquivo.addImport("javax.inject.Inject");
 			arquivo.ql();
-			arquivo.add(new Import("javax.ws.rs.Consumes"));
-			arquivo.add(new Import("javax.ws.rs.Produces"));
+			arquivo.addImport("javax.ws.rs.Consumes");
+			arquivo.addImport("javax.ws.rs.Produces");
 			arquivo.ql();
-			arquivo.add(new Import("javax.ws.rs.core.MediaType"));
+			arquivo.addImport("javax.ws.rs.core.MediaType");
 			arquivo.ql();
-			arquivo.add(new Import("javax.ws.rs.BeanParam"));
-			arquivo.add(new Import("javax.ws.rs.GET"));
-			arquivo.add(new Import("javax.ws.rs.Path"));
-			arquivo.add(new Import("javax.ws.rs.Produces"));
-			arquivo.add(new Import("javax.ws.rs.QueryParam"));
-			arquivo.add(new Import("javax.ws.rs.core.MediaType"));
+			arquivo.addImport("javax.ws.rs.BeanParam");
+			arquivo.addImport("javax.ws.rs.GET");
+			arquivo.addImport("javax.ws.rs.Path");
+			arquivo.addImport("javax.ws.rs.Produces");
+			arquivo.addImport("javax.ws.rs.QueryParam");
+			arquivo.addImport("javax.ws.rs.core.MediaType");
 			arquivo.ql();
-			arquivo.add(new Comentario("br.gov.dpf.framework.seguranca.RestSeguranca;"));
+			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;");
 			arquivo.ql();
 
 			Anotacao path = new Anotacao("Path", Util.citar2("endPointRest"), true);
@@ -560,7 +557,7 @@ class PainelRest extends AbstratoPanel {
 		params.add(new Espaco());
 		params.add(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
-		funcao.add(new Return("", "service.pesquisar(filter)"));
+		funcao.addReturn("service.pesquisar(filter)");
 		classe.add(funcao);
 	}
 
@@ -574,13 +571,13 @@ class PainelRest extends AbstratoPanel {
 		params.add(new Espaco());
 		params.add(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "Response", "gerarPDF", params);
-		funcao.add(new Instrucao("DadosDTO dto = service.recuperarDTO(filter)"));
-		funcao.add(new Instrucao("byte[] bytes = servicePDF.gerarPDF(dto)"));
+		funcao.addInstrucao("DadosDTO dto = service.recuperarDTO(filter)");
+		funcao.addInstrucao("byte[] bytes = servicePDF.gerarPDF(dto)");
 		funcao.ql();
-		funcao.add(new Instrucao("ResponseBuilder response = Response.ok(bytes)"));
-		funcao.add(new Instrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.dpf\")"));
-		funcao.add(new Instrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)"));
-		funcao.add(new Return("", "response.build()"));
+		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
+		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.dpf\")");
+		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
+		funcao.addReturn("response.build()");
 		classe.add(funcao);
 	}
 }
@@ -605,14 +602,14 @@ class PainelService extends AbstratoPanel {
 		if (!atributos.isEmpty()) {
 			arquivo.add(AtributoPagina.IMPORT_LIST);
 			arquivo.ql();
-			arquivo.add(new Import("javax.ejb.Local"));
+			arquivo.addImport("javax.ejb.Local");
 			arquivo.ql();
 
 			Anotacao local = new Anotacao("Local", null, true);
 			arquivo.add(local);
 		}
 
-		Interface interfac = new Interface("Service");
+		Interface interfac = new Interface(AtributoPagina.STR_SERVICE);
 		arquivo.add(interfac);
 
 		Parametros params = new Parametros(AtributoPagina.FILTER);
@@ -644,10 +641,10 @@ class PainelBean extends AbstratoPanel {
 		if (!atributos.isEmpty()) {
 			arquivo.add(AtributoPagina.IMPORT_LIST);
 			arquivo.ql();
-			arquivo.add(new Import("javax.ejb.LocalBean"));
-			arquivo.add(new Import("javax.ejb.Stateless"));
-			arquivo.add(new Import("javax.ejb.TransactionManagement"));
-			arquivo.add(new Import("javax.ejb.TransactionManagementType"));
+			arquivo.addImport("javax.ejb.LocalBean");
+			arquivo.addImport("javax.ejb.Stateless");
+			arquivo.addImport("javax.ejb.TransactionManagement");
+			arquivo.addImport("javax.ejb.TransactionManagementType");
 			arquivo.ql();
 
 			Anotacao stateless = new Anotacao("Stateless", null, true);
@@ -669,7 +666,7 @@ class PainelBean extends AbstratoPanel {
 
 		Parametros params = new Parametros(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
-		funcao.add(new Return("", "dao.pesquisar(filter)"));
+		funcao.addReturn("dao.pesquisar(filter)");
 		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -729,11 +726,11 @@ class PainelDAOImpl extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(new Import("java.util.ArrayList"));
+			arquivo.addImport("java.util.ArrayList");
 			arquivo.add(AtributoPagina.IMPORT_LIST);
 			arquivo.ql();
-			arquivo.add(new Import("javax.persistence.EntityManager"));
-			arquivo.add(new Import("javax.persistence.PersistenceContext"));
+			arquivo.addImport("javax.persistence.EntityManager");
+			arquivo.addImport("javax.persistence.PersistenceContext");
 		}
 
 		Classe classe = new Classe("DAOImpl implements DAO");
@@ -747,10 +744,10 @@ class PainelDAOImpl extends AbstratoPanel {
 
 		Parametros params = new Parametros(AtributoPagina.FILTER);
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
-		funcao.add(new Instrucao("List<DTO> resp = new ArrayList<>()"));
-		funcao.add(new Comentario("entityManager.find..."));
+		funcao.addInstrucao("List<DTO> resp = new ArrayList<>()");
+		funcao.addComentario("entityManager.find...");
 		funcao.ql();
-		funcao.add(new Return("", "resp"));
+		funcao.addReturn("resp");
 		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -775,24 +772,24 @@ class PainelJSController extends AbstratoPanel {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
-		arquivo.add(new Instrucao("Controller.$inject = ['$scope', '$state', 'NgTableParams', 'Service']"));
+		arquivo.addInstrucao("Controller.$inject = ['$scope', '$state', 'NgTableParams', 'Service']");
 
 		String string = ", ";
 		Parametros params = new Parametros();
-		params.add(new Var("$scope"));
+		params.addVar("$scope");
 		params.append(string);
-		params.add(new Var("$state"));
+		params.addVar("$state");
 		params.append(string);
-		params.add(new Var("NgTableParams"));
+		params.addVar("NgTableParams");
 		params.append(string);
-		params.add(new Var("Service"));
+		params.addVar(AtributoPagina.STR_SERVICE);
 		FuncaoJS funcao = new FuncaoJS("function Controller", params);
 		arquivo.add(funcao);
 
-		funcao.add(new Instrucao("var vm = this"));
+		funcao.addInstrucao("var vm = this");
 		funcao.ql();
-		funcao.add(new Instrucao("vm.pesquisados = new NgTableParams()"));
-		funcao.add(new Instrucao("vm.filtro = {}"));
+		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
+		funcao.addInstrucao("vm.filtro = {}");
 		funcao.ql();
 
 		funcao.add(fnParam(atributos));
@@ -811,7 +808,7 @@ class PainelJSController extends AbstratoPanel {
 		FuncaoJS funcao = new FuncaoJS("function criarParam", new Parametros());
 		funcao.add(objParam(atributos));
 		funcao.ql();
-		funcao.add(new Return("", "param"));
+		funcao.addReturn("param");
 		return funcao;
 	}
 
@@ -819,7 +816,7 @@ class PainelJSController extends AbstratoPanel {
 		VarObjJS obj = new VarObjJS("param");
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			obj.add(new Fragmento(att.getNome() + ": vm.filtro." + att.getNome()));
+			obj.addFragmento(att.getNome() + ": vm.filtro." + att.getNome());
 			if (i + 1 < atributos.size()) {
 				obj.append(",");
 			}
@@ -844,13 +841,13 @@ class PainelJSController extends AbstratoPanel {
 		if (!atributos.isEmpty()) {
 			funcao.ql();
 		}
-		funcao.add(new Return("", "null"));
+		funcao.addReturn("null");
 		return funcao;
 	}
 
 	private Container ifVazios(List<Atributo> atributos) {
 		If iff = new If(vazios(atributos), null);
-		iff.add(new Return("", "'Favor preencher pelo ao menos um campo de pesquisa'"));
+		iff.addReturn("'Favor preencher pelo ao menos um campo de pesquisa'");
 		return iff;
 	}
 
@@ -867,7 +864,7 @@ class PainelJSController extends AbstratoPanel {
 
 	private Container ifObrigatorio(Atributo att) {
 		If iff = new If(att.gerarIsVazioJS(), null);
-		iff.add(new Return("", "'Campo " + att.getRotulo() + " Obrigat\u00F3rio.'"));
+		iff.addReturn("'Campo " + att.getRotulo() + " Obrigat\u00F3rio.'");
 		return iff;
 	}
 
@@ -876,8 +873,8 @@ class PainelJSController extends AbstratoPanel {
 		funcao.addInstrucao("var msg = validarFiltro()");
 
 		Else elsee = new Else();
-		elsee.add(new Comentario("Msg.error(msg);"));
-		elsee.add(new Comentario("$scope.$emit('msg', msg, null, 'warning');"));
+		elsee.addComentario("Msg.error(msg);");
+		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
 
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
@@ -902,8 +899,8 @@ class PainelJSController extends AbstratoPanel {
 		funcao.addInstrucao("var msg = validarFiltro()");
 
 		Else elsee = new Else();
-		elsee.add(new Comentario("Msg.error(msg);"));
-		elsee.add(new Comentario("$scope.$emit('msg', msg, null, 'warning');"));
+		elsee.addComentario("Msg.error(msg);");
+		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
 
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
@@ -941,13 +938,13 @@ class PainelJSService extends AbstratoPanel {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
-		arquivo.add(new Instrucao("Service.$inject = ['Restangular']"));
+		arquivo.addInstrucao("Service.$inject = ['Restangular']");
 
 		Parametros params = new Parametros(new Var("Restangular"));
 		FuncaoJS funcao = new FuncaoJS("function Service", params);
 		arquivo.add(funcao);
 
-		funcao.add(new Instrucao("var PATH = 'endPointRest'"));
+		funcao.addInstrucao("var PATH = 'endPointRest'");
 		funcao.ql();
 		ReturnJS returnJS = new ReturnJS();
 		funcao.add(returnJS);
@@ -962,15 +959,15 @@ class PainelJSService extends AbstratoPanel {
 	private Container fnPesquisar() {
 		Parametros params = new Parametros(new Var("filtro"));
 		FuncaoJS funcao = new FuncaoJS("pesquisar: function", params);
-		funcao.add(new Return("", "Restangular.all(PATH).customGET('pesquisar', filtro)"));
+		funcao.addReturn("Restangular.all(PATH).customGET('pesquisar', filtro)");
 		return funcao;
 	}
 
 	private Container fnGerarPDF() {
 		Parametros params = new Parametros(new Var("filtro"));
 		FuncaoJS funcao = new FuncaoJS(",gerarPDF: function", params);
-		funcao.add(new Return("",
-				"Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro)"));
+		funcao.addReturn(
+				"Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro)");
 		return funcao;
 	}
 }
@@ -1021,11 +1018,11 @@ class PainelTest extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(new Import("org.junit.Test"));
-			arquivo.add(new Import("org.junit.runner.RunWith"));
-			arquivo.add(new Import("org.mockito.InjectMocks"));
-			arquivo.add(new Import("org.mockito.Mock"));
-			arquivo.add(new Import("org.mockito.junit.MockitoJUnitRunner"));
+			arquivo.addImport("org.junit.Test");
+			arquivo.addImport("org.junit.runner.RunWith");
+			arquivo.addImport("org.mockito.InjectMocks");
+			arquivo.addImport("org.mockito.Mock");
+			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner");
 			arquivo.ql();
 
 			Anotacao runWith = new Anotacao("RunWith", "MockitoJUnitRunner.class", true);
@@ -1043,7 +1040,7 @@ class PainelTest extends AbstratoPanel {
 
 		Parametros params = new Parametros();
 		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "void", AtributoPagina.PESQUISAR + "Test", params);
-		funcao.add(new Comentario("..."));
+		funcao.addComentario("...");
 
 		classe.add(new Anotacao("Test", null, true));
 		classe.add(funcao);

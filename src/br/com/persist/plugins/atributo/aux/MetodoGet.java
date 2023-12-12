@@ -13,7 +13,7 @@ public class MetodoGet extends Container {
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		Funcao funcao = new Funcao("public", tipo.classe, "get" + Util.capitalize(tipo.nome), new Parametros());
-		funcao.add(new Return("", tipo.nome));
+		funcao.addReturn(tipo.nome);
 		funcao.gerar(tab, pool);
 	}
 }
