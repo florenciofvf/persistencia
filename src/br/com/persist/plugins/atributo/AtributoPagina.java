@@ -358,9 +358,9 @@ class PainelFichario extends JTabbedPane {
 	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		addAba(new PainelView(pagina));
-		addAba(new PainelJSFilter(pagina));
-		addAba(new PainelJSController(pagina));
-		addAba(new PainelJSService(pagina));
+		addAba(new PainelFilterJS(pagina));
+		addAba(new PainelControllerJS(pagina));
+		addAba(new PainelServiceJS(pagina));
 		addAba(new PainelDTO(pagina));
 		addAba(new PainelFilter(pagina));
 		addAba(new PainelRest(pagina));
@@ -489,10 +489,10 @@ class PainelView extends AbstratoPanel {
 	}
 }
 
-class PainelJSFilter extends AbstratoPanel {
+class PainelFilterJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelJSFilter(AtributoPagina pagina) {
+	PainelFilterJS(AtributoPagina pagina) {
 		super(pagina, AtributoConstantes.FILTRO);
 	}
 
@@ -607,10 +607,10 @@ class PainelJSFilter extends AbstratoPanel {
 	}
 }
 
-class PainelJSController extends AbstratoPanel {
+class PainelControllerJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelJSController(AtributoPagina pagina) {
+	PainelControllerJS(AtributoPagina pagina) {
 		super(pagina, "Controller");
 	}
 
@@ -717,10 +717,10 @@ class PainelJSController extends AbstratoPanel {
 	}
 }
 
-class PainelJSService extends AbstratoPanel {
+class PainelServiceJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelJSService(AtributoPagina pagina) {
+	PainelServiceJS(AtributoPagina pagina) {
 		super(pagina, Constantes.SERVICE);
 	}
 
