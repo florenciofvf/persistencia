@@ -937,7 +937,7 @@ class PainelRest extends AbstratoPanel {
 
 	private Classe criarGetListaDTO(AtributoSuporte suporte, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
-		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
+		classe.add(new Anotacao("Path", Util.citar2(suporte.pesquisarView()), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", AtributoConstantes.APPLICATION_JSON, true));
 
@@ -950,7 +950,7 @@ class PainelRest extends AbstratoPanel {
 
 	private Classe criarGetGerarPDF(AtributoSuporte suporte, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
-		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
+		classe.add(new Anotacao("Path", Util.citar2(suporte.exportarView() + "PDF"), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
 
