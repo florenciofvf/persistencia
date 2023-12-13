@@ -61,7 +61,6 @@ import br.com.persist.plugins.atributo.aux.FuncaoJS;
 import br.com.persist.plugins.atributo.aux.If;
 import br.com.persist.plugins.atributo.aux.Interface;
 import br.com.persist.plugins.atributo.aux.InvocaProm;
-import br.com.persist.plugins.atributo.aux.Linha;
 import br.com.persist.plugins.atributo.aux.MetodoGet;
 import br.com.persist.plugins.atributo.aux.MetodoSet;
 import br.com.persist.plugins.atributo.aux.Parametros;
@@ -474,10 +473,8 @@ class PainelDTO extends AbstratoPanel {
 			Tipo tipo = att.criarTipo();
 			MetodoGet get = new MetodoGet(tipo);
 			MetodoSet set = new MetodoSet(tipo);
-			classe.add(new Linha());
-			classe.add(get);
-			classe.add(new Linha());
-			classe.add(set);
+			classe.ql().add(get);
+			classe.ql().add(set);
 		}
 
 		classe.gerar(0, pool);
@@ -517,7 +514,7 @@ class PainelFilter extends AbstratoPanel {
 		int i = 0;
 		for (Atributo att : atributos) {
 			if (i++ > 0) {
-				classe.add(new Linha());
+				classe.ql();
 			}
 			Anotacao anotacao = new Anotacao("QueryParam", Util.citar2(att.getNome()), true);
 			classe.add(anotacao);
@@ -529,10 +526,8 @@ class PainelFilter extends AbstratoPanel {
 			Tipo tipo = att.criarTipo();
 			MetodoGet get = new MetodoGet(tipo);
 			MetodoSet set = new MetodoSet(tipo);
-			classe.add(new Linha());
-			classe.add(get);
-			classe.add(new Linha());
-			classe.add(set);
+			classe.ql().add(get);
+			classe.ql().add(set);
 		}
 
 		arquivo.gerar(0, pool);
@@ -583,10 +578,10 @@ class PainelRest extends AbstratoPanel {
 		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");
 		arquivo.add(classe);
 
-		injetar(classe, AtributoConstantes.TIPO_SERVICE).ql();
+		injetar(classe, suporte.getTipoService()).ql();
 		injetar(classe, new Tipo("ServicePDF", "servicePDF")).ql();
 		criarGetListaDTO(suporte, classe).ql();
-		criarGetGerarPDF(classe);
+		criarGetGerarPDF(suporte, classe);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -607,33 +602,33 @@ class PainelRest extends AbstratoPanel {
 		classe.add(new Anotacao("Produces", AtributoConstantes.APPLICATION_JSON, true));
 
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
-				beanParam());
+				beanParam(suporte));
 		funcao.addReturn("service.pesquisar(filter)");
 		classe.add(funcao);
 		return classe;
 	}
 
-	private Classe criarGetGerarPDF(Classe classe) {
+	private Classe criarGetGerarPDF(AtributoSuporte suporte, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
 		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
 
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", "gerarPDF", beanParam());
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", "gerarPDF", beanParam(suporte));
 		funcao.addInstrucao("DadosDTO dto = service.recuperarDTO(filter)");
 		funcao.addInstrucao("byte[] bytes = servicePDF.gerarPDF(dto)").ql();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
-		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.dpf\")");
+		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
 		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
 		funcao.addReturn("response.build()");
 		classe.add(funcao);
 		return classe;
 	}
 
-	private Parametros beanParam() {
+	private Parametros beanParam(AtributoSuporte suporte) {
 		Parametros params = new Parametros(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
-		params.add(AtributoConstantes.TIPO_FILTER);
+		params.add(suporte.getTipoFilter());
 		return params;
 	}
 
@@ -671,7 +666,7 @@ class PainelService extends AbstratoPanel {
 		Interface interfac = new Interface(suporte.getService());
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		Parametros params = new Parametros(suporte.getTipoFilter());
 		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), AtributoConstantes.PESQUISAR, params);
 		interfac.add(funcao);
 
@@ -720,12 +715,11 @@ class PainelBean extends AbstratoPanel {
 		Classe classe = new Classe(suporte.getBean() + " implements " + suporte.getService());
 		arquivo.add(classe);
 
-		Anotacao inject = new Anotacao("Inject", null, true);
-		classe.add(inject);
-		Campo service = new Campo(new Tipo("DAO", "dao"));
+		classe.add(new Anotacao("Inject", null, true));
+		Campo service = new Campo(suporte.getTipoDAO());
 		classe.add(service).ql();
 
-		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		Parametros params = new Parametros(suporte.getTipoFilter());
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
 				params);
 		funcao.addReturn("dao.pesquisar(filter)");
@@ -765,7 +759,7 @@ class PainelDAO extends AbstratoPanel {
 		Interface interfac = new Interface(suporte.getDao());
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		Parametros params = new Parametros(suporte.getTipoFilter());
 		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), AtributoConstantes.PESQUISAR, params);
 		interfac.add(funcao);
 
@@ -811,10 +805,10 @@ class PainelDAOImpl extends AbstratoPanel {
 		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
 		classe.add(entityManager).ql();
 
-		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		Parametros params = new Parametros(suporte.getTipoFilter());
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
 				params);
-		funcao.addInstrucao("List<DTO> resp = new ArrayList<>()");
+		funcao.addInstrucao(suporte.getListDto() + " resp = new ArrayList<>()");
 		funcao.addComentario("entityManager.find...").ql();
 		funcao.addReturn("resp");
 		classe.add(funcao);
@@ -849,14 +843,15 @@ class PainelJSFilter extends AbstratoPanel {
 		String nome = suporte.getController();
 
 		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(nome + ".$inject = ['$scope', '$state', 'NgTableParams', 'Service']");
+		arquivo.addInstrucao(
+				nome + ".$inject = ['$scope', '$state', 'NgTableParams', '" + suporte.getServiceJS() + "']");
 
 		String string = ", ";
 		Parametros params = new Parametros();
 		params.addVar("$scope").append(string);
 		params.addVar("$state").append(string);
 		params.addVar("NgTableParams").append(string);
-		params.addVar(Constantes.SERVICE);
+		params.addVar(suporte.getServiceJS());
 		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
@@ -966,14 +961,15 @@ class PainelJSController extends AbstratoPanel {
 		String nome = suporte.getController();
 
 		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(nome + ".$inject = ['$scope', '$state', 'NgTableParams', 'Service']");
+		arquivo.addInstrucao(
+				nome + ".$inject = ['$scope', '$state', 'NgTableParams', '" + suporte.getServiceJS() + "']");
 
 		String string = ", ";
 		Parametros params = new Parametros();
 		params.addVar("$scope").append(string);
 		params.addVar("$state").append(string);
 		params.addVar("NgTableParams").append(string);
-		params.addVar(Constantes.SERVICE);
+		params.addVar(suporte.getServiceJS());
 		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
@@ -982,8 +978,8 @@ class PainelJSController extends AbstratoPanel {
 		funcao.addInstrucao("vm." + filtro + " = {}").ql();
 
 		funcao.add(fnLimparFiltro(filtro)).ql();
-		funcao.add(fnPesquisa(filtro)).ql();
-		funcao.add(fnPDF(filtro));
+		funcao.add(fnPesquisa(suporte, filtro)).ql();
+		funcao.add(fnPDF(suporte, filtro));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -995,7 +991,7 @@ class PainelJSController extends AbstratoPanel {
 		return funcao;
 	}
 
-	private Container fnPesquisa(String filtro) {
+	private Container fnPesquisa(AtributoSuporte suporte, String filtro) {
 		FuncaoJS funcao = new FuncaoJS("vm.pesquisar = function", new Parametros());
 		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
@@ -1006,8 +1002,8 @@ class PainelJSController extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm(
-				"Service.pesquisar(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
+		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + ".pesquisar(criarParam"
+				+ Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
 		invocaProm.addInstrucao("var lista = result.data");
@@ -1022,7 +1018,7 @@ class PainelJSController extends AbstratoPanel {
 		return funcao;
 	}
 
-	private Container fnPDF(String filtro) {
+	private Container fnPDF(AtributoSuporte suporte, String filtro) {
 		FuncaoJS funcao = new FuncaoJS("vm.gerarPDF = function", new Parametros());
 		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
@@ -1033,8 +1029,8 @@ class PainelJSController extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm(
-				"Service.gerarPDF(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
+		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + ".gerarPDF(criarParam" + Util.capitalize(filtro)
+				+ "()).then(function(result) {");
 		iff.add(invocaProm);
 
 		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
@@ -1188,13 +1184,12 @@ class PainelTest extends AbstratoPanel {
 		Classe classe = new Classe(suporte.getTest());
 		arquivo.add(classe);
 
-		Anotacao injectMocks = new Anotacao("InjectMocks", null, true);
-		classe.add(injectMocks);
-		Campo service = new Campo(AtributoConstantes.TIPO_SERVICE);
+		classe.add(new Anotacao("InjectMocks", null, true));
+		Campo service = new Campo(suporte.getTipoService());
 		classe.add(service).ql();
 
-		Parametros params = new Parametros();
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "void", AtributoConstantes.PESQUISAR + "Test", params);
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "void", AtributoConstantes.PESQUISAR + "Test",
+				new Parametros());
 		funcao.addComentario("...");
 
 		classe.add(new Anotacao("Test", null, true));

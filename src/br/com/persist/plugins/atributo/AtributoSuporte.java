@@ -1,6 +1,7 @@
 package br.com.persist.plugins.atributo;
 
 import br.com.persist.componente.TextField;
+import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class AtributoSuporte {
 	private TextField view;
@@ -88,6 +89,10 @@ public class AtributoSuporte {
 		return dto.getText();
 	}
 
+	public Tipo getTipoFilter() {
+		return new Tipo(getFilter(), "filter");
+	}
+
 	public String getFilter() {
 		return filter.getText();
 	}
@@ -96,12 +101,20 @@ public class AtributoSuporte {
 		return rest.getText();
 	}
 
+	public Tipo getTipoService() {
+		return new Tipo(getService(), "service");
+	}
+
 	public String getService() {
 		return service.getText();
 	}
 
 	public String getBean() {
 		return bean.getText();
+	}
+
+	public Tipo getTipoDAO() {
+		return new Tipo(getDao(), "dao");
 	}
 
 	public String getDao() {
