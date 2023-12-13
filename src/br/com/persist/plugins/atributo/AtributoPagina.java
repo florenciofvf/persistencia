@@ -194,11 +194,12 @@ public class AtributoPagina extends Panel {
 
 			@Override
 			protected void limpar() {
+				String s = Constantes.SEP + "valor" + Constantes.SEP;
 				Atributo att = new Atributo();
 				att.setNome("nome");
 				att.setRotulo("Rotulo");
 				att.setClasse("Classe");
-				att.setViewToBack("[nomeFuncaoJS]");
+				att.setViewToBack("[funcaoJS(" + s + ")]");
 				setText(att);
 			}
 

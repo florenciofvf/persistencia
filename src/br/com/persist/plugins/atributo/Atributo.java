@@ -2,6 +2,7 @@ package br.com.persist.plugins.atributo;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.atributo.aux.Tipo;
@@ -78,10 +79,11 @@ public class Atributo {
 	}
 
 	public String gerarViewToBack(String filtro) {
+		final String string = "vm." + filtro + "." + nome;
 		if (Util.isEmpty(viewToBack)) {
-			return "vm." + filtro + "." + nome;
+			return string;
 		}
-		return viewToBack + "(vm." + filtro + "." + nome + ")";
+		return Util.replaceAll(viewToBack, Constantes.SEP + "valor" + Constantes.SEP, string);
 	}
 
 	@Override
