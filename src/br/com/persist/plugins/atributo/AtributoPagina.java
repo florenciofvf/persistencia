@@ -758,7 +758,7 @@ class PainelServiceJS extends AbstratoPanel {
 		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
-		funcao.addInstrucao("var PATH = 'endPointRest'").ql();
+		funcao.addInstrucao("var PATH = '" + suporte.getViewDecap() + "'").ql();
 		ReturnJS returnJS = new ReturnJS();
 		funcao.add(returnJS);
 
@@ -913,7 +913,7 @@ class PainelRest extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
 			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").ql();
 
-			arquivo.add(new Anotacao("Path", Util.citar2("endPointRest"), true));
+			arquivo.add(new Anotacao("Path", Util.citar2(suporte.getViewDecap()), true));
 		}
 
 		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");

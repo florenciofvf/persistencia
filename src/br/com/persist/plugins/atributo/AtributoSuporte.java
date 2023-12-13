@@ -78,6 +78,10 @@ public class AtributoSuporte {
 		return "exportar" + Util.capitalize(getView());
 	}
 
+	public String getViewDecap() {
+		return Util.decapitalize(getView());
+	}
+
 	public String getView() {
 		return view.getText();
 	}
