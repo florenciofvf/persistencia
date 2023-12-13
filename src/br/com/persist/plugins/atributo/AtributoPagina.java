@@ -475,7 +475,10 @@ class PainelView extends AbstratoPanel {
 
 		pool.ql();
 		pool.tab().append("<button id=\"pesquisar\" ng-click=\"vm." + suporte.pesquisarView()
-				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Pesquisar</button>")
+				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-search\"></i>Pesquisar</button>")
+				.ql();
+		pool.tab().append("<button id=\"exportar\" ng-click=\"vm." + suporte.exportarView()
+				+ "PDF()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Exportar PDF</button>")
 				.ql();
 		pool.tab().append("<button id=\"limpar\" ng-click=\"vm." + suporte.limparFiltro()
 				+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
