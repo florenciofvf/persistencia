@@ -80,6 +80,10 @@ public class AtributoSuporte {
 		return serviceJS.getText();
 	}
 
+	public String getListDto() {
+		return "List<" + getDto() + ">";
+	}
+
 	public String getDto() {
 		return dto.getText();
 	}

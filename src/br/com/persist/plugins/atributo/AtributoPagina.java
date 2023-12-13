@@ -59,7 +59,6 @@ import br.com.persist.plugins.atributo.aux.Funcao;
 import br.com.persist.plugins.atributo.aux.FuncaoInter;
 import br.com.persist.plugins.atributo.aux.FuncaoJS;
 import br.com.persist.plugins.atributo.aux.If;
-import br.com.persist.plugins.atributo.aux.Import;
 import br.com.persist.plugins.atributo.aux.Interface;
 import br.com.persist.plugins.atributo.aux.InvocaProm;
 import br.com.persist.plugins.atributo.aux.Linha;
@@ -72,18 +71,7 @@ import br.com.persist.plugins.atributo.aux.Var;
 import br.com.persist.plugins.atributo.aux.VarObjJS;
 
 public class AtributoPagina extends Panel {
-	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
 	private final transient AtributoSuporte suporte = new AtributoSuporte();
-	public static final Import IMPORT_LIST = new Import("java.util.List");
-	public static final String STR_SERVICE = "Service";
-	public static final Tipo SERVICE = new Tipo(STR_SERVICE, "service");
-	public static final Tipo FILTER = new Tipo("Filter", "filter");
-	public static final String PESQUISAR = "pesquisar";
-	public static final String FUNCTION = "function ";
-	public static final String LIST_DTO = "List<DTO>";
-	public static final String FILTRO = "filtro";
-	public static final String PUBLIC = "public";
-
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
@@ -575,7 +563,7 @@ class PainelRest extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoPagina.IMPORT_LIST).ql();
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 			arquivo.addImport("javax.inject.Inject").ql();
 			arquivo.addImport("javax.ws.rs.Consumes");
 			arquivo.addImport("javax.ws.rs.Produces").ql();
@@ -595,9 +583,9 @@ class PainelRest extends AbstratoPanel {
 		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");
 		arquivo.add(classe);
 
-		injetar(classe, AtributoPagina.SERVICE).ql();
+		injetar(classe, AtributoConstantes.TIPO_SERVICE).ql();
 		injetar(classe, new Tipo("ServicePDF", "servicePDF")).ql();
-		criarGetListaDTO(classe).ql();
+		criarGetListaDTO(suporte, classe).ql();
 		criarGetGerarPDF(classe);
 
 		arquivo.gerar(0, pool);
@@ -612,13 +600,13 @@ class PainelRest extends AbstratoPanel {
 		return classe;
 	}
 
-	private Classe criarGetListaDTO(Classe classe) {
+	private Classe criarGetListaDTO(AtributoSuporte suporte, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
 		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
-		classe.add(new Anotacao("Consumes", AtributoPagina.APPLICATION_JSON, true));
-		classe.add(new Anotacao("Produces", AtributoPagina.APPLICATION_JSON, true));
+		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
+		classe.add(new Anotacao("Produces", AtributoConstantes.APPLICATION_JSON, true));
 
-		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR,
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
 				beanParam());
 		funcao.addReturn("service.pesquisar(filter)");
 		classe.add(funcao);
@@ -628,10 +616,10 @@ class PainelRest extends AbstratoPanel {
 	private Classe criarGetGerarPDF(Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
 		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
-		classe.add(new Anotacao("Consumes", AtributoPagina.APPLICATION_JSON, true));
+		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
 
-		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "Response", "gerarPDF", beanParam());
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", "gerarPDF", beanParam());
 		funcao.addInstrucao("DadosDTO dto = service.recuperarDTO(filter)");
 		funcao.addInstrucao("byte[] bytes = servicePDF.gerarPDF(dto)").ql();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
@@ -645,7 +633,7 @@ class PainelRest extends AbstratoPanel {
 	private Parametros beanParam() {
 		Parametros params = new Parametros(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
-		params.add(AtributoPagina.FILTER);
+		params.add(AtributoConstantes.TIPO_FILTER);
 		return params;
 	}
 
@@ -659,7 +647,7 @@ class PainelService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelService(AtributoPagina pagina) {
-		super(pagina, AtributoPagina.STR_SERVICE);
+		super(pagina, Constantes.SERVICE);
 	}
 
 	@Override
@@ -673,7 +661,7 @@ class PainelService extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoPagina.IMPORT_LIST).ql();
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 			arquivo.addImport("javax.ejb.Local").ql();
 
 			Anotacao local = new Anotacao("Local", null, true);
@@ -683,8 +671,8 @@ class PainelService extends AbstratoPanel {
 		Interface interfac = new Interface(suporte.getService());
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(AtributoPagina.FILTER);
-		FuncaoInter funcao = new FuncaoInter(AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), AtributoConstantes.PESQUISAR, params);
 		interfac.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -715,7 +703,7 @@ class PainelBean extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoPagina.IMPORT_LIST).ql();
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 			arquivo.addImport("javax.ejb.LocalBean");
 			arquivo.addImport("javax.ejb.Stateless");
 			arquivo.addImport("javax.ejb.TransactionManagement");
@@ -737,8 +725,9 @@ class PainelBean extends AbstratoPanel {
 		Campo service = new Campo(new Tipo("DAO", "dao"));
 		classe.add(service).ql();
 
-		Parametros params = new Parametros(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
+				params);
 		funcao.addReturn("dao.pesquisar(filter)");
 		classe.add(funcao);
 
@@ -770,14 +759,14 @@ class PainelDAO extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoPagina.IMPORT_LIST).ql();
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 		}
 
 		Interface interfac = new Interface(suporte.getDao());
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(AtributoPagina.FILTER);
-		FuncaoInter funcao = new FuncaoInter(AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), AtributoConstantes.PESQUISAR, params);
 		interfac.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -809,7 +798,7 @@ class PainelDAOImpl extends AbstratoPanel {
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
 			arquivo.addImport("java.util.ArrayList");
-			arquivo.add(AtributoPagina.IMPORT_LIST).ql();
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 			arquivo.addImport("javax.persistence.EntityManager");
 			arquivo.addImport("javax.persistence.PersistenceContext").ql();
 		}
@@ -822,8 +811,9 @@ class PainelDAOImpl extends AbstratoPanel {
 		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
 		classe.add(entityManager).ql();
 
-		Parametros params = new Parametros(AtributoPagina.FILTER);
-		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, AtributoPagina.LIST_DTO, AtributoPagina.PESQUISAR, params);
+		Parametros params = new Parametros(AtributoConstantes.TIPO_FILTER);
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
+				params);
 		funcao.addInstrucao("List<DTO> resp = new ArrayList<>()");
 		funcao.addComentario("entityManager.find...").ql();
 		funcao.addReturn("resp");
@@ -843,7 +833,7 @@ class PainelJSFilter extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelJSFilter(AtributoPagina pagina) {
-		super(pagina, AtributoPagina.FILTRO);
+		super(pagina, AtributoConstantes.FILTRO);
 	}
 
 	@Override
@@ -866,8 +856,8 @@ class PainelJSFilter extends AbstratoPanel {
 		params.addVar("$scope").append(string);
 		params.addVar("$state").append(string);
 		params.addVar("NgTableParams").append(string);
-		params.addVar(AtributoPagina.STR_SERVICE);
-		FuncaoJS funcao = new FuncaoJS(AtributoPagina.FUNCTION + nome, params);
+		params.addVar(Constantes.SERVICE);
+		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
 		funcao.add(fnGetTime()).ql();
@@ -983,8 +973,8 @@ class PainelJSController extends AbstratoPanel {
 		params.addVar("$scope").append(string);
 		params.addVar("$state").append(string);
 		params.addVar("NgTableParams").append(string);
-		params.addVar(AtributoPagina.STR_SERVICE);
-		FuncaoJS funcao = new FuncaoJS(AtributoPagina.FUNCTION + nome, params);
+		params.addVar(Constantes.SERVICE);
+		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
 		funcao.addInstrucao("var vm = this").ql();
@@ -1069,7 +1059,7 @@ class PainelJSService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelJSService(AtributoPagina pagina) {
-		super(pagina, AtributoPagina.STR_SERVICE);
+		super(pagina, Constantes.SERVICE);
 	}
 
 	@Override
@@ -1087,7 +1077,7 @@ class PainelJSService extends AbstratoPanel {
 		arquivo.addInstrucao(nome + ".$inject = ['Restangular']");
 
 		Parametros params = new Parametros(new Var("Restangular"));
-		FuncaoJS funcao = new FuncaoJS(AtributoPagina.FUNCTION + nome, params);
+		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
 		funcao.addInstrucao("var PATH = 'endPointRest'").ql();
@@ -1102,14 +1092,14 @@ class PainelJSService extends AbstratoPanel {
 	}
 
 	private Container fnPesquisar() {
-		Parametros params = new Parametros(new Var(AtributoPagina.FILTRO));
+		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
 		FuncaoJS funcao = new FuncaoJS("pesquisar: function", params);
 		funcao.addReturn("Restangular.all(PATH).customGET('pesquisar', filtro)");
 		return funcao;
 	}
 
 	private Container fnGerarPDF() {
-		Parametros params = new Parametros(new Var(AtributoPagina.FILTRO));
+		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
 		FuncaoJS funcao = new FuncaoJS(",gerarPDF: function", params);
 		funcao.addReturn(
 				"Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro)");
@@ -1200,11 +1190,11 @@ class PainelTest extends AbstratoPanel {
 
 		Anotacao injectMocks = new Anotacao("InjectMocks", null, true);
 		classe.add(injectMocks);
-		Campo service = new Campo(AtributoPagina.SERVICE);
+		Campo service = new Campo(AtributoConstantes.TIPO_SERVICE);
 		classe.add(service).ql();
 
 		Parametros params = new Parametros();
-		Funcao funcao = new Funcao(AtributoPagina.PUBLIC, "void", AtributoPagina.PESQUISAR + "Test", params);
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "void", AtributoConstantes.PESQUISAR + "Test", params);
 		funcao.addComentario("...");
 
 		classe.add(new Anotacao("Test", null, true));
