@@ -1,5 +1,6 @@
 package br.com.persist.plugins.atributo;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.atributo.aux.Tipo;
 
@@ -65,8 +66,24 @@ public class AtributoSuporte {
 		this.test = test;
 	}
 
+	public String pesquisarViewFilter() {
+		return pesquisarView() + "(filter)";
+	}
+
+	public String pesquisarView() {
+		return "pesquisar" + Util.capitalize(getView());
+	}
+
+	public String exportarView() {
+		return "exportar" + Util.capitalize(getView());
+	}
+
 	public String getView() {
 		return view.getText();
+	}
+
+	public String limparFiltro() {
+		return "limpar" + Util.capitalize(getFilterJS());
 	}
 
 	public String getFilterJS() {

@@ -447,371 +447,45 @@ abstract class AbstratoPanel extends Panel {
 	abstract String getChaveTitulo();
 }
 
-class PainelDTO extends AbstratoPanel {
+class PainelView extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelDTO(AtributoPagina pagina) {
-		super(pagina, "DTO");
+	PainelView(AtributoPagina pagina) {
+		super(pagina, "Pessoa");
 	}
 
 	@Override
 	String getChaveTitulo() {
-		return "label.dto";
-	}
-
-	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-		Classe classe = new Classe(suporte.getDto());
-
-		for (Atributo att : atributos) {
-			Campo campo = new Campo(att.criarTipo());
-			classe.add(campo);
-		}
-
-		for (Atributo att : atributos) {
-			Tipo tipo = att.criarTipo();
-			MetodoGet get = new MetodoGet(tipo);
-			MetodoSet set = new MetodoSet(tipo);
-			classe.ql().add(get);
-			classe.ql().add(set);
-		}
-
-		classe.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setDto(textField);
-	}
-}
-
-class PainelFilter extends AbstratoPanel {
-	private static final long serialVersionUID = 1L;
-
-	PainelFilter(AtributoPagina pagina) {
-		super(pagina, "Filter");
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.filter";
+		return "label.view";
 	}
 
 	@Override
 	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.addImport("javax.ws.rs.QueryParam").ql();
-		}
-
-		Classe classe = new Classe(suporte.getFilter());
-		arquivo.add(classe);
-
-		int i = 0;
-		for (Atributo att : atributos) {
-			if (i++ > 0) {
-				classe.ql();
+			pool.tab(2).append("<div class='row'>").ql();
+			for (Atributo att : atributos) {
+				pool.tab(3).append("<div class='col-sm--X'>").ql();
+				pool.tab(4).append("{{" + att.getNome() + "}}").ql();
+				pool.tab(3).append("</div>").ql();
 			}
-			classe.add(new Anotacao("QueryParam", Util.citar2(att.getNome()), true));
-			Campo campo = new Campo(att.criarTipo());
-			classe.add(campo);
+			pool.tab(2).append("</div>").ql();
 		}
 
-		for (Atributo att : atributos) {
-			Tipo tipo = att.criarTipo();
-			MetodoGet get = new MetodoGet(tipo);
-			MetodoSet set = new MetodoSet(tipo);
-			classe.ql().add(get);
-			classe.ql().add(set);
-		}
+		pool.ql();
+		pool.tab().append("<button id=\"pesquisar\" ng-click=\"vm." + suporte.pesquisarView()
+				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Pesquisar</button>")
+				.ql();
+		pool.tab().append("<button id=\"limpar\" ng-click=\"vm." + suporte.limparFiltro()
+				+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
 
-		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
 	@Override
 	void registrar(AtributoSuporte suporte) {
-		suporte.setFilter(textField);
-	}
-}
-
-class PainelRest extends AbstratoPanel {
-	private static final long serialVersionUID = 1L;
-
-	PainelRest(AtributoPagina pagina) {
-		super(pagina, "Rest");
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.rest";
-	}
-
-	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-
-		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
-			arquivo.addImport("javax.inject.Inject").ql();
-			arquivo.addImport("javax.ws.rs.Consumes");
-			arquivo.addImport("javax.ws.rs.Produces").ql();
-			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
-			arquivo.addImport("javax.ws.rs.BeanParam");
-			arquivo.addImport("javax.ws.rs.GET");
-			arquivo.addImport("javax.ws.rs.Path");
-			arquivo.addImport("javax.ws.rs.Produces");
-			arquivo.addImport("javax.ws.rs.QueryParam");
-			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
-			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").ql();
-
-			arquivo.add(new Anotacao("Path", Util.citar2("endPointRest"), true));
-		}
-
-		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");
-		arquivo.add(classe);
-
-		injetar(classe, suporte.getTipoService()).ql();
-		injetar(classe, new Tipo("ServicePDF", "servicePDF")).ql();
-		criarGetListaDTO(suporte, classe).ql();
-		criarGetGerarPDF(suporte, classe);
-
-		arquivo.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	private Classe injetar(Classe classe, Tipo tipo) {
-		classe.add(new Anotacao("Inject", null, true));
-		Campo service = new Campo(tipo);
-		classe.add(service);
-		return classe;
-	}
-
-	private Classe criarGetListaDTO(AtributoSuporte suporte, Classe classe) {
-		classe.add(new Anotacao("GET", null, true));
-		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
-		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
-		classe.add(new Anotacao("Produces", AtributoConstantes.APPLICATION_JSON, true));
-
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
-				beanParam(suporte));
-		funcao.addReturn("service.pesquisar(filter)");
-		classe.add(funcao);
-		return classe;
-	}
-
-	private Classe criarGetGerarPDF(AtributoSuporte suporte, Classe classe) {
-		classe.add(new Anotacao("GET", null, true));
-		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
-		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
-		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
-
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", "gerarPDF", beanParam(suporte));
-		funcao.addInstrucao("DadosDTO dto = service.recuperarDTO(filter)");
-		funcao.addInstrucao("byte[] bytes = servicePDF.gerarPDF(dto)").ql();
-		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
-		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
-		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
-		funcao.addReturn("response.build()");
-		classe.add(funcao);
-		return classe;
-	}
-
-	private Parametros beanParam(AtributoSuporte suporte) {
-		Parametros params = new Parametros(new Anotacao("BeanParam", null));
-		params.add(new Espaco());
-		params.add(suporte.getTipoFilter());
-		return params;
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setRest(textField);
-	}
-}
-
-class PainelService extends AbstratoPanel {
-	private static final long serialVersionUID = 1L;
-
-	PainelService(AtributoPagina pagina) {
-		super(pagina, Constantes.SERVICE);
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.service";
-	}
-
-	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-
-		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
-			arquivo.addImport("javax.ejb.Local").ql();
-
-			arquivo.add(new Anotacao("Local", null, true));
-		}
-
-		Interface interfac = new Interface(suporte.getService());
-		arquivo.add(interfac);
-
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), AtributoConstantes.PESQUISAR, params);
-		interfac.add(funcao);
-
-		arquivo.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setService(textField);
-	}
-}
-
-class PainelBean extends AbstratoPanel {
-	private static final long serialVersionUID = 1L;
-
-	PainelBean(AtributoPagina pagina) {
-		super(pagina, "Bean");
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.bean";
-	}
-
-	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-
-		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
-			arquivo.addImport("javax.ejb.LocalBean");
-			arquivo.addImport("javax.ejb.Stateless");
-			arquivo.addImport("javax.ejb.TransactionManagement");
-			arquivo.addImport("javax.ejb.TransactionManagementType").ql();
-
-			arquivo.add(new Anotacao("Stateless", null, true));
-			arquivo.add(new Anotacao("LocalBean", null, true));
-			arquivo.add(new Anotacao("TransactionManagement", "TransactionManagementType.CONTAINER", true));
-		}
-
-		Classe classe = new Classe(suporte.getBean() + " implements " + suporte.getService());
-		arquivo.add(classe);
-
-		classe.add(new Anotacao("Inject", null, true));
-		Campo service = new Campo(suporte.getTipoDAO());
-		classe.add(service).ql();
-
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
-				params);
-		funcao.addReturn("dao.pesquisar(filter)");
-		classe.add(funcao);
-
-		arquivo.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setBean(textField);
-	}
-}
-
-class PainelDAO extends AbstratoPanel {
-	private static final long serialVersionUID = 1L;
-
-	PainelDAO(AtributoPagina pagina) {
-		super(pagina, "DAO");
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.dao";
-	}
-
-	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-
-		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
-		}
-
-		Interface interfac = new Interface(suporte.getDao());
-		arquivo.add(interfac);
-
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), AtributoConstantes.PESQUISAR, params);
-		interfac.add(funcao);
-
-		arquivo.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setDao(textField);
-	}
-}
-
-class PainelDAOImpl extends AbstratoPanel {
-	private static final long serialVersionUID = 1L;
-
-	PainelDAOImpl(AtributoPagina pagina) {
-		super(pagina, "DAOImpl");
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.dao_impl";
-	}
-
-	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-
-		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.addImport("java.util.ArrayList");
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
-			arquivo.addImport("javax.persistence.EntityManager");
-			arquivo.addImport("javax.persistence.PersistenceContext").ql();
-		}
-
-		Classe classe = new Classe(suporte.getDaoImpl() + " implements " + suporte.getDao());
-		arquivo.add(classe);
-
-		classe.add(new Anotacao("PersistenceContext", "unitName = " + Util.citar2("nomeUnit"), true));
-		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
-		classe.add(entityManager).ql();
-
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), AtributoConstantes.PESQUISAR,
-				params);
-		funcao.addInstrucao(suporte.getListDto() + " resp = new ArrayList<>()");
-		funcao.addComentario("entityManager.find...").ql();
-		funcao.addReturn("resp");
-		classe.add(funcao);
-
-		arquivo.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setDaoImpl(textField);
+		suporte.setView(textField);
 	}
 }
 
@@ -969,7 +643,7 @@ class PainelJSController extends AbstratoPanel {
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
 		funcao.addInstrucao("vm." + filtro + " = {}").ql();
 
-		funcao.add(fnLimparFiltro(filtro)).ql();
+		funcao.add(fnLimparFiltro(suporte, filtro)).ql();
 		funcao.add(fnPesquisa(suporte, filtro)).ql();
 		funcao.add(fnPDF(suporte, filtro));
 
@@ -977,14 +651,14 @@ class PainelJSController extends AbstratoPanel {
 		setText(pool.toString());
 	}
 
-	private Container fnLimparFiltro(String filtro) {
-		FuncaoJS funcao = new FuncaoJS("vm.limpar" + Util.capitalize(filtro) + " = function", new Parametros());
+	private Container fnLimparFiltro(AtributoSuporte suporte, String filtro) {
+		FuncaoJS funcao = new FuncaoJS("vm." + suporte.limparFiltro() + " = function", new Parametros());
 		funcao.addInstrucao("vm." + filtro + " = {}");
 		return funcao;
 	}
 
 	private Container fnPesquisa(AtributoSuporte suporte, String filtro) {
-		FuncaoJS funcao = new FuncaoJS("vm.pesquisar = function", new Parametros());
+		FuncaoJS funcao = new FuncaoJS("vm." + suporte.pesquisarView() + " = function", new Parametros());
 		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
@@ -994,7 +668,7 @@ class PainelJSController extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + ".pesquisar(criarParam"
+		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + "." + suporte.pesquisarView() + "(criarParam"
 				+ Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
@@ -1011,7 +685,7 @@ class PainelJSController extends AbstratoPanel {
 	}
 
 	private Container fnPDF(AtributoSuporte suporte, String filtro) {
-		FuncaoJS funcao = new FuncaoJS("vm.gerarPDF = function", new Parametros());
+		FuncaoJS funcao = new FuncaoJS("vm." + suporte.exportarView() + "PDF = function", new Parametros());
 		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
@@ -1021,8 +695,8 @@ class PainelJSController extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + ".gerarPDF(criarParam" + Util.capitalize(filtro)
-				+ "()).then(function(result) {");
+		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + "." + suporte.exportarView() + "PDF(criarParam"
+				+ Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
 		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
@@ -1072,25 +746,25 @@ class PainelJSService extends AbstratoPanel {
 		ReturnJS returnJS = new ReturnJS();
 		funcao.add(returnJS);
 
-		returnJS.add(fnPesquisar());
-		returnJS.add(fnGerarPDF());
+		returnJS.add(fnPesquisar(suporte));
+		returnJS.add(fnGerarPDF(suporte));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private Container fnPesquisar() {
+	private Container fnPesquisar(AtributoSuporte suporte) {
 		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS("pesquisar: function", params);
-		funcao.addReturn("Restangular.all(PATH).customGET('pesquisar', filtro)");
+		FuncaoJS funcao = new FuncaoJS(suporte.pesquisarView() + ": function", params);
+		funcao.addReturn("Restangular.all(PATH).customGET('" + suporte.pesquisarView() + "', filtro)");
 		return funcao;
 	}
 
-	private Container fnGerarPDF() {
+	private Container fnGerarPDF(AtributoSuporte suporte) {
 		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS(",gerarPDF: function", params);
-		funcao.addReturn(
-				"Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro)");
+		FuncaoJS funcao = new FuncaoJS("," + suporte.exportarView() + "PDF: function", params);
+		funcao.addReturn("Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('"
+				+ suporte.exportarView() + "PDF', filtro)");
 		return funcao;
 	}
 
@@ -1100,48 +774,370 @@ class PainelJSService extends AbstratoPanel {
 	}
 }
 
-class PainelView extends AbstratoPanel {
+class PainelDTO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelView(AtributoPagina pagina) {
-		super(pagina, "Pessoa");
+	PainelDTO(AtributoPagina pagina) {
+		super(pagina, "DTO");
 	}
 
 	@Override
 	String getChaveTitulo() {
-		return "label.view";
+		return "label.dto";
+	}
+
+	@Override
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+		Classe classe = new Classe(suporte.getDto());
+
+		for (Atributo att : atributos) {
+			Campo campo = new Campo(att.criarTipo());
+			classe.add(campo);
+		}
+
+		for (Atributo att : atributos) {
+			Tipo tipo = att.criarTipo();
+			MetodoGet get = new MetodoGet(tipo);
+			MetodoSet set = new MetodoSet(tipo);
+			classe.ql().add(get);
+			classe.ql().add(set);
+		}
+
+		classe.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setDto(textField);
+	}
+}
+
+class PainelFilter extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelFilter(AtributoPagina pagina) {
+		super(pagina, "Filter");
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.filter";
 	}
 
 	@Override
 	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = suporte.getFilterJS();
-		String funcao = suporte.getView();
-
+		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			pool.tab(2).append("<div class='row'>").ql();
-			for (Atributo att : atributos) {
-				pool.tab(3).append("<div class='col-sm--X'>").ql();
-				pool.tab(4).append("{{" + att.getNome() + "}}").ql();
-				pool.tab(3).append("</div>").ql();
-			}
-			pool.tab(2).append("</div>").ql();
+			arquivo.addImport("javax.ws.rs.QueryParam").ql();
 		}
 
-		pool.ql();
-		pool.tab().append("<button id=\"pesquisar\" ng-click=\"vm.pesquisar" + Util.capitalize(funcao)
-				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Pesquisar</button>")
-				.ql();
-		pool.tab().append("<button id=\"limpar\" ng-click=\"vm.limpar" + Util.capitalize(filtro)
-				+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
+		Classe classe = new Classe(suporte.getFilter());
+		arquivo.add(classe);
 
+		int i = 0;
+		for (Atributo att : atributos) {
+			if (i++ > 0) {
+				classe.ql();
+			}
+			classe.add(new Anotacao("QueryParam", Util.citar2(att.getNome()), true));
+			Campo campo = new Campo(att.criarTipo());
+			classe.add(campo);
+		}
+
+		for (Atributo att : atributos) {
+			Tipo tipo = att.criarTipo();
+			MetodoGet get = new MetodoGet(tipo);
+			MetodoSet set = new MetodoSet(tipo);
+			classe.ql().add(get);
+			classe.ql().add(set);
+		}
+
+		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
 	@Override
 	void registrar(AtributoSuporte suporte) {
-		suporte.setView(textField);
+		suporte.setFilter(textField);
+	}
+}
+
+class PainelRest extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelRest(AtributoPagina pagina) {
+		super(pagina, "Rest");
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.rest";
+	}
+
+	@Override
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+			arquivo.addImport("javax.inject.Inject").ql();
+			arquivo.addImport("javax.ws.rs.Consumes");
+			arquivo.addImport("javax.ws.rs.Produces").ql();
+			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
+			arquivo.addImport("javax.ws.rs.BeanParam");
+			arquivo.addImport("javax.ws.rs.GET");
+			arquivo.addImport("javax.ws.rs.Path");
+			arquivo.addImport("javax.ws.rs.Produces");
+			arquivo.addImport("javax.ws.rs.QueryParam");
+			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
+			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").ql();
+
+			arquivo.add(new Anotacao("Path", Util.citar2("endPointRest"), true));
+		}
+
+		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");
+		arquivo.add(classe);
+
+		injetar(classe, suporte.getTipoService()).ql();
+		injetar(classe, new Tipo(suporte.getService() + "PDF", "servicePDF")).ql();
+		criarGetListaDTO(suporte, classe).ql();
+		criarGetGerarPDF(suporte, classe);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	private Classe injetar(Classe classe, Tipo tipo) {
+		classe.add(new Anotacao("Inject", null, true));
+		Campo service = new Campo(tipo);
+		classe.add(service);
+		return classe;
+	}
+
+	private Classe criarGetListaDTO(AtributoSuporte suporte, Classe classe) {
+		classe.add(new Anotacao("GET", null, true));
+		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
+		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
+		classe.add(new Anotacao("Produces", AtributoConstantes.APPLICATION_JSON, true));
+
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), suporte.pesquisarView(),
+				beanParam(suporte));
+		funcao.addReturn("service." + suporte.pesquisarViewFilter());
+		classe.add(funcao);
+		return classe;
+	}
+
+	private Classe criarGetGerarPDF(AtributoSuporte suporte, Classe classe) {
+		classe.add(new Anotacao("GET", null, true));
+		classe.add(new Anotacao("Path", Util.citar2("endPointMetodo"), true));
+		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
+		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
+
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", suporte.exportarView() + "PDF",
+				beanParam(suporte));
+		funcao.addInstrucao(suporte.getListDto() + " dtos = service." + suporte.pesquisarViewFilter());
+		funcao.addInstrucao("byte[] bytes = servicePDF." + suporte.exportarView() + "PDF(dtos)").ql();
+		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
+		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
+		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
+		funcao.addReturn("response.build()");
+		classe.add(funcao);
+		return classe;
+	}
+
+	private Parametros beanParam(AtributoSuporte suporte) {
+		Parametros params = new Parametros(new Anotacao("BeanParam", null));
+		params.add(new Espaco());
+		params.add(suporte.getTipoFilter());
+		return params;
+	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setRest(textField);
+	}
+}
+
+class PainelService extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelService(AtributoPagina pagina) {
+		super(pagina, Constantes.SERVICE);
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.service";
+	}
+
+	@Override
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+			arquivo.addImport("javax.ejb.Local").ql();
+
+			arquivo.add(new Anotacao("Local", null, true));
+		}
+
+		Interface interfac = new Interface(suporte.getService());
+		arquivo.add(interfac);
+
+		Parametros params = new Parametros(suporte.getTipoFilter());
+		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), suporte.pesquisarView(), params);
+		interfac.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setService(textField);
+	}
+}
+
+class PainelBean extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelBean(AtributoPagina pagina) {
+		super(pagina, "Bean");
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.bean";
+	}
+
+	@Override
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+			arquivo.addImport("javax.ejb.LocalBean");
+			arquivo.addImport("javax.ejb.Stateless");
+			arquivo.addImport("javax.ejb.TransactionManagement");
+			arquivo.addImport("javax.ejb.TransactionManagementType").ql();
+
+			arquivo.add(new Anotacao("Stateless", null, true));
+			arquivo.add(new Anotacao("LocalBean", null, true));
+			arquivo.add(new Anotacao("TransactionManagement", "TransactionManagementType.CONTAINER", true));
+		}
+
+		Classe classe = new Classe(suporte.getBean() + " implements " + suporte.getService());
+		arquivo.add(classe);
+
+		classe.add(new Anotacao("Inject", null, true));
+		Campo service = new Campo(suporte.getTipoDAO());
+		classe.add(service).ql();
+
+		Parametros params = new Parametros(suporte.getTipoFilter());
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), suporte.pesquisarView(), params);
+		funcao.addReturn("dao." + suporte.pesquisarViewFilter());
+		classe.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setBean(textField);
+	}
+}
+
+class PainelDAO extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelDAO(AtributoPagina pagina) {
+		super(pagina, "DAO");
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.dao";
+	}
+
+	@Override
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+		}
+
+		Interface interfac = new Interface(suporte.getDao());
+		arquivo.add(interfac);
+
+		Parametros params = new Parametros(suporte.getTipoFilter());
+		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), suporte.pesquisarView(), params);
+		interfac.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setDao(textField);
+	}
+}
+
+class PainelDAOImpl extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelDAOImpl(AtributoPagina pagina) {
+		super(pagina, "DAOImpl");
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.dao_impl";
+	}
+
+	@Override
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		Arquivo arquivo = new Arquivo();
+		if (!atributos.isEmpty()) {
+			arquivo.addImport("java.util.ArrayList");
+			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+			arquivo.addImport("javax.persistence.EntityManager");
+			arquivo.addImport("javax.persistence.PersistenceContext").ql();
+		}
+
+		Classe classe = new Classe(suporte.getDaoImpl() + " implements " + suporte.getDao());
+		arquivo.add(classe);
+
+		classe.add(new Anotacao("PersistenceContext", "unitName = " + Util.citar2("nomeUnit"), true));
+		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
+		classe.add(entityManager).ql();
+
+		Parametros params = new Parametros(suporte.getTipoFilter());
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), suporte.pesquisarView(), params);
+		funcao.addInstrucao(suporte.getListDto() + " resp = new ArrayList<>()");
+		funcao.addComentario("entityManager.find...").ql();
+		funcao.addReturn("resp");
+		classe.add(funcao);
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setDaoImpl(textField);
 	}
 }
 
@@ -1179,7 +1175,7 @@ class PainelTest extends AbstratoPanel {
 		Campo service = new Campo(suporte.getTipoService());
 		classe.add(service).ql();
 
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "void", AtributoConstantes.PESQUISAR + "Test",
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "void", suporte.pesquisarView() + "Test",
 				new Parametros());
 		funcao.addComentario("...");
 
