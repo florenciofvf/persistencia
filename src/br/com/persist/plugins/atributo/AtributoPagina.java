@@ -516,8 +516,7 @@ class PainelFilter extends AbstratoPanel {
 			if (i++ > 0) {
 				classe.ql();
 			}
-			Anotacao anotacao = new Anotacao("QueryParam", Util.citar2(att.getNome()), true);
-			classe.add(anotacao);
+			classe.add(new Anotacao("QueryParam", Util.citar2(att.getNome()), true));
 			Campo campo = new Campo(att.criarTipo());
 			classe.add(campo);
 		}
@@ -571,8 +570,7 @@ class PainelRest extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
 			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").ql();
 
-			Anotacao path = new Anotacao("Path", Util.citar2("endPointRest"), true);
-			arquivo.add(path);
+			arquivo.add(new Anotacao("Path", Util.citar2("endPointRest"), true));
 		}
 
 		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");
@@ -588,8 +586,7 @@ class PainelRest extends AbstratoPanel {
 	}
 
 	private Classe injetar(Classe classe, Tipo tipo) {
-		Anotacao inject = new Anotacao("Inject", null, true);
-		classe.add(inject);
+		classe.add(new Anotacao("Inject", null, true));
 		Campo service = new Campo(tipo);
 		classe.add(service);
 		return classe;
@@ -659,8 +656,7 @@ class PainelService extends AbstratoPanel {
 			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 			arquivo.addImport("javax.ejb.Local").ql();
 
-			Anotacao local = new Anotacao("Local", null, true);
-			arquivo.add(local);
+			arquivo.add(new Anotacao("Local", null, true));
 		}
 
 		Interface interfac = new Interface(suporte.getService());
@@ -704,12 +700,9 @@ class PainelBean extends AbstratoPanel {
 			arquivo.addImport("javax.ejb.TransactionManagement");
 			arquivo.addImport("javax.ejb.TransactionManagementType").ql();
 
-			Anotacao stateless = new Anotacao("Stateless", null, true);
-			arquivo.add(stateless);
-			Anotacao localBean = new Anotacao("LocalBean", null, true);
-			arquivo.add(localBean);
-			Anotacao transaction = new Anotacao("TransactionManagement", "TransactionManagementType.CONTAINER", true);
-			arquivo.add(transaction);
+			arquivo.add(new Anotacao("Stateless", null, true));
+			arquivo.add(new Anotacao("LocalBean", null, true));
+			arquivo.add(new Anotacao("TransactionManagement", "TransactionManagementType.CONTAINER", true));
 		}
 
 		Classe classe = new Classe(suporte.getBean() + " implements " + suporte.getService());
@@ -800,8 +793,7 @@ class PainelDAOImpl extends AbstratoPanel {
 		Classe classe = new Classe(suporte.getDaoImpl() + " implements " + suporte.getDao());
 		arquivo.add(classe);
 
-		Anotacao context = new Anotacao("PersistenceContext", "unitName = " + Util.citar2("nomeUnit"), true);
-		classe.add(context);
+		classe.add(new Anotacao("PersistenceContext", "unitName = " + Util.citar2("nomeUnit"), true));
 		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
 		classe.add(entityManager).ql();
 
@@ -1177,8 +1169,7 @@ class PainelTest extends AbstratoPanel {
 			arquivo.addImport("org.mockito.Mock");
 			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").ql();
 
-			Anotacao runWith = new Anotacao("RunWith", "MockitoJUnitRunner.class", true);
-			arquivo.add(runWith);
+			arquivo.add(new Anotacao("RunWith", "MockitoJUnitRunner.class", true));
 		}
 
 		Classe classe = new Classe(suporte.getTest());
