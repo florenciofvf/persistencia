@@ -379,7 +379,7 @@ class PainelFichario extends JTabbedPane {
 
 abstract class AbstratoPanel extends Panel {
 	private static final long serialVersionUID = 1L;
-	protected final TextField textField = new TextField(15);
+	protected final TextField textField = new TextField(30);
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private final AtributoPagina pagina;
