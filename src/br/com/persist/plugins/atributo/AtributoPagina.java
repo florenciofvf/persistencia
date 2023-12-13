@@ -563,6 +563,7 @@ class PainelFilterJS extends AbstratoPanel {
 
 	private Container fnValidar(String filtro, List<Atributo> atributos) {
 		FuncaoJS funcao = new FuncaoJS("function validar" + Util.capitalize(filtro), new Parametros());
+		funcao.addComentario("$scope.$emit('msgClear');");
 		if (atributos.size() > 1) {
 			funcao.add(ifVazios(filtro, atributos)).ql();
 		}
