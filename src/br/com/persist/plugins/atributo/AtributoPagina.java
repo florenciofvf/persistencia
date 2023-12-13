@@ -73,11 +73,13 @@ import br.com.persist.plugins.atributo.aux.VarObjJS;
 
 public class AtributoPagina extends Panel {
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
+	private final transient AtributoSuporte suporte = new AtributoSuporte();
 	public static final Import IMPORT_LIST = new Import("java.util.List");
 	public static final String STR_SERVICE = "Service";
 	public static final Tipo SERVICE = new Tipo(STR_SERVICE, "service");
 	public static final Tipo FILTER = new Tipo("Filter", "filter");
 	public static final String PESQUISAR = "pesquisar";
+	public static final String FUNCTION = "function ";
 	public static final String LIST_DTO = "List<DTO>";
 	public static final String FILTRO = "filtro";
 	public static final String PUBLIC = "public";
@@ -97,6 +99,10 @@ public class AtributoPagina extends Panel {
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, painelFichario);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.33));
 		add(BorderLayout.CENTER, split);
+	}
+
+	public AtributoSuporte getSuporte() {
+		return suporte;
 	}
 
 	public String getConteudo() {
@@ -364,11 +370,12 @@ class PainelFichario extends JTabbedPane {
 
 	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		addAba(new PainelDTO(pagina));
-		addAba(new PainelFilter(pagina));
 		addAba(new PainelView(pagina));
+		addAba(new PainelJSFilter(pagina));
 		addAba(new PainelJSController(pagina));
 		addAba(new PainelJSService(pagina));
+		addAba(new PainelDTO(pagina));
+		addAba(new PainelFilter(pagina));
 		addAba(new PainelRest(pagina));
 		addAba(new PainelService(pagina));
 		addAba(new PainelBean(pagina));
@@ -378,21 +385,26 @@ class PainelFichario extends JTabbedPane {
 	}
 
 	private void addAba(AbstratoPanel panel) {
+		panel.registrar(panel.getPagina().getSuporte());
 		addTab(AtributoMensagens.getString(panel.getChaveTitulo()), panel);
 	}
 }
 
 abstract class AbstratoPanel extends Panel {
 	private static final long serialVersionUID = 1L;
-	protected final TextField textField2 = new TextField(15);
 	protected final TextField textField = new TextField(15);
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private final AtributoPagina pagina;
 
-	AbstratoPanel(AtributoPagina pagina) {
+	AbstratoPanel(AtributoPagina pagina, String padrao) {
+		textField.setText(padrao);
 		this.pagina = pagina;
 		montarLayout();
+	}
+
+	public AtributoPagina getPagina() {
+		return pagina;
 	}
 
 	private void montarLayout() {
@@ -425,7 +437,7 @@ abstract class AbstratoPanel extends Panel {
 					lista.add(att);
 				}
 			}
-			gerar(lista);
+			gerar(pagina.getSuporte(), lista);
 		}
 
 		@Override
@@ -441,28 +453,18 @@ abstract class AbstratoPanel extends Panel {
 		textArea.setText(string);
 	}
 
-	protected void addTextField2() {
-		toolbar.add(textField2);
-	}
+	abstract void gerar(AtributoSuporte suporte, List<Atributo> atributos);
 
-	protected String getValorTextField(String padrao) {
-		return Util.isEmpty(textField.getText()) ? padrao : textField.getText();
-	}
-
-	protected String getValorTextField2(String padrao) {
-		return Util.isEmpty(textField2.getText()) ? padrao : textField2.getText();
-	}
+	abstract void registrar(AtributoSuporte suporte);
 
 	abstract String getChaveTitulo();
-
-	abstract void gerar(List<Atributo> atributos);
 }
 
 class PainelDTO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDTO(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, "DTO");
 	}
 
 	@Override
@@ -471,9 +473,9 @@ class PainelDTO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
-		Classe classe = new Classe(getValorTextField("DTO"));
+		Classe classe = new Classe(suporte.getDto());
 
 		for (Atributo att : atributos) {
 			Campo campo = new Campo(att.criarTipo());
@@ -493,13 +495,18 @@ class PainelDTO extends AbstratoPanel {
 		classe.gerar(0, pool);
 		setText(pool.toString());
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setDto(textField);
+	}
 }
 
 class PainelFilter extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelFilter(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, "Filter");
 	}
 
 	@Override
@@ -508,7 +515,7 @@ class PainelFilter extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -516,7 +523,7 @@ class PainelFilter extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.QueryParam").ql();
 		}
 
-		Classe classe = new Classe(getValorTextField("Filter"));
+		Classe classe = new Classe(suporte.getFilter());
 		arquivo.add(classe);
 
 		int i = 0;
@@ -543,13 +550,18 @@ class PainelFilter extends AbstratoPanel {
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setFilter(textField);
+	}
 }
 
 class PainelRest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelRest(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, "Rest");
 	}
 
 	@Override
@@ -558,7 +570,7 @@ class PainelRest extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -580,7 +592,7 @@ class PainelRest extends AbstratoPanel {
 			arquivo.add(path);
 		}
 
-		Classe classe = new Classe(getValorTextField("Rest") + " extends ApplicationRest");
+		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");
 		arquivo.add(classe);
 
 		injetar(classe, AtributoPagina.SERVICE).ql();
@@ -636,13 +648,18 @@ class PainelRest extends AbstratoPanel {
 		params.add(AtributoPagina.FILTER);
 		return params;
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setRest(textField);
+	}
 }
 
 class PainelService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelService(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, AtributoPagina.STR_SERVICE);
 	}
 
 	@Override
@@ -651,7 +668,7 @@ class PainelService extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -663,7 +680,7 @@ class PainelService extends AbstratoPanel {
 			arquivo.add(local);
 		}
 
-		Interface interfac = new Interface(getValorTextField(AtributoPagina.STR_SERVICE));
+		Interface interfac = new Interface(suporte.getService());
 		arquivo.add(interfac);
 
 		Parametros params = new Parametros(AtributoPagina.FILTER);
@@ -673,13 +690,18 @@ class PainelService extends AbstratoPanel {
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setService(textField);
+	}
 }
 
 class PainelBean extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelBean(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, "Bean");
 	}
 
 	@Override
@@ -688,7 +710,7 @@ class PainelBean extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -707,7 +729,7 @@ class PainelBean extends AbstratoPanel {
 			arquivo.add(transaction);
 		}
 
-		Classe classe = new Classe(getValorTextField("Bean") + " implements Service");
+		Classe classe = new Classe(suporte.getBean() + " implements " + suporte.getService());
 		arquivo.add(classe);
 
 		Anotacao inject = new Anotacao("Inject", null, true);
@@ -723,13 +745,18 @@ class PainelBean extends AbstratoPanel {
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setBean(textField);
+	}
 }
 
 class PainelDAO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDAO(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, "DAO");
 	}
 
 	@Override
@@ -738,7 +765,7 @@ class PainelDAO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -746,7 +773,7 @@ class PainelDAO extends AbstratoPanel {
 			arquivo.add(AtributoPagina.IMPORT_LIST).ql();
 		}
 
-		Interface interfac = new Interface(getValorTextField("DAO"));
+		Interface interfac = new Interface(suporte.getDao());
 		arquivo.add(interfac);
 
 		Parametros params = new Parametros(AtributoPagina.FILTER);
@@ -756,13 +783,18 @@ class PainelDAO extends AbstratoPanel {
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setDao(textField);
+	}
 }
 
 class PainelDAOImpl extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDAOImpl(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, "DAOImpl");
 	}
 
 	@Override
@@ -771,7 +803,7 @@ class PainelDAOImpl extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -782,7 +814,7 @@ class PainelDAOImpl extends AbstratoPanel {
 			arquivo.addImport("javax.persistence.PersistenceContext").ql();
 		}
 
-		Classe classe = new Classe(getValorTextField("DAOImpl") + " implements DAO");
+		Classe classe = new Classe(suporte.getDaoImpl() + " implements " + suporte.getDao());
 		arquivo.add(classe);
 
 		Anotacao context = new Anotacao("PersistenceContext", "unitName = " + Util.citar2("nomeUnit"), true);
@@ -800,27 +832,31 @@ class PainelDAOImpl extends AbstratoPanel {
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setDaoImpl(textField);
+	}
 }
 
-class PainelJSController extends AbstratoPanel {
+class PainelJSFilter extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelJSController(AtributoPagina pagina) {
-		super(pagina);
-		addTextField2();
+	PainelJSFilter(AtributoPagina pagina) {
+		super(pagina, AtributoPagina.FILTRO);
 	}
 
 	@Override
 	String getChaveTitulo() {
-		return "label.js_controller";
+		return "label.js_filter";
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = getValorTextField2(AtributoPagina.FILTRO);
-		String nome = getValorTextField("Controller");
+		String filtro = suporte.getFilterJS();
+		String nome = suporte.getController();
 
 		Arquivo arquivo = new Arquivo();
 		arquivo.addInstrucao(nome + ".$inject = ['$scope', '$state', 'NgTableParams', 'Service']");
@@ -831,28 +867,15 @@ class PainelJSController extends AbstratoPanel {
 		params.addVar("$state").append(string);
 		params.addVar("NgTableParams").append(string);
 		params.addVar(AtributoPagina.STR_SERVICE);
-		FuncaoJS funcao = new FuncaoJS("function " + nome, params);
+		FuncaoJS funcao = new FuncaoJS(AtributoPagina.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
-		funcao.addInstrucao("var vm = this").ql();
-		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
-		funcao.addInstrucao("vm." + filtro + " = {}").ql();
-
-		funcao.add(fnLimparFiltro(filtro)).ql();
 		funcao.add(fnGetTime()).ql();
 		funcao.add(fnParam(filtro, atributos)).ql();
-		funcao.add(fnValidar(filtro, atributos)).ql();
-		funcao.add(fnPesquisa(filtro)).ql();
-		funcao.add(fnPDF(filtro));
+		funcao.add(fnValidar(filtro, atributos));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
-	}
-
-	private Container fnLimparFiltro(String filtro) {
-		FuncaoJS funcao = new FuncaoJS("vm.limpar" + Util.capitalize(filtro) + " = function", new Parametros());
-		funcao.addInstrucao("vm." + filtro + " = {}");
-		return funcao;
 	}
 
 	private Container fnGetTime() {
@@ -927,6 +950,61 @@ class PainelJSController extends AbstratoPanel {
 		return iff;
 	}
 
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setFilterJS(textField);
+	}
+}
+
+class PainelJSController extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelJSController(AtributoPagina pagina) {
+		super(pagina, "Controller");
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.js_controller";
+	}
+
+	@Override
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		String filtro = suporte.getFilterJS();
+		String nome = suporte.getController();
+
+		Arquivo arquivo = new Arquivo();
+		arquivo.addInstrucao(nome + ".$inject = ['$scope', '$state', 'NgTableParams', 'Service']");
+
+		String string = ", ";
+		Parametros params = new Parametros();
+		params.addVar("$scope").append(string);
+		params.addVar("$state").append(string);
+		params.addVar("NgTableParams").append(string);
+		params.addVar(AtributoPagina.STR_SERVICE);
+		FuncaoJS funcao = new FuncaoJS(AtributoPagina.FUNCTION + nome, params);
+		arquivo.add(funcao);
+
+		funcao.addInstrucao("var vm = this").ql();
+		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
+		funcao.addInstrucao("vm." + filtro + " = {}").ql();
+
+		funcao.add(fnLimparFiltro(filtro)).ql();
+		funcao.add(fnPesquisa(filtro)).ql();
+		funcao.add(fnPDF(filtro));
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	private Container fnLimparFiltro(String filtro) {
+		FuncaoJS funcao = new FuncaoJS("vm.limpar" + Util.capitalize(filtro) + " = function", new Parametros());
+		funcao.addInstrucao("vm." + filtro + " = {}");
+		return funcao;
+	}
+
 	private Container fnPesquisa(String filtro) {
 		FuncaoJS funcao = new FuncaoJS("vm.pesquisar = function", new Parametros());
 		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
@@ -980,13 +1058,18 @@ class PainelJSController extends AbstratoPanel {
 
 		return funcao;
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setController(textField);
+	}
 }
 
 class PainelJSService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelJSService(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, AtributoPagina.STR_SERVICE);
 	}
 
 	@Override
@@ -995,16 +1078,16 @@ class PainelJSService extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String nome = getValorTextField(AtributoPagina.STR_SERVICE);
+		String nome = suporte.getServiceJS();
 
 		Arquivo arquivo = new Arquivo();
 		arquivo.addInstrucao(nome + ".$inject = ['Restangular']");
 
 		Parametros params = new Parametros(new Var("Restangular"));
-		FuncaoJS funcao = new FuncaoJS("function " + nome, params);
+		FuncaoJS funcao = new FuncaoJS(AtributoPagina.FUNCTION + nome, params);
 		arquivo.add(funcao);
 
 		funcao.addInstrucao("var PATH = 'endPointRest'").ql();
@@ -1032,14 +1115,18 @@ class PainelJSService extends AbstratoPanel {
 				"Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('gerarPDF', filtro)");
 		return funcao;
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setServiceJS(textField);
+	}
 }
 
 class PainelView extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelView(AtributoPagina pagina) {
-		super(pagina);
-		addTextField2();
+		super(pagina, "Pessoa");
 	}
 
 	@Override
@@ -1048,11 +1135,11 @@ class PainelView extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String funcao = getValorTextField(AtributoPagina.PESQUISAR);
-		String filtro = getValorTextField2(AtributoPagina.FILTRO);
+		String filtro = suporte.getFilterJS();
+		String funcao = suporte.getView();
 
 		if (!atributos.isEmpty()) {
 			pool.tab(2).append("<div class='row'>").ql();
@@ -1073,13 +1160,18 @@ class PainelView extends AbstratoPanel {
 
 		setText(pool.toString());
 	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setView(textField);
+	}
 }
 
 class PainelTest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelTest(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, "Test");
 	}
 
 	@Override
@@ -1088,7 +1180,7 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(List<Atributo> atributos) {
+	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1103,7 +1195,7 @@ class PainelTest extends AbstratoPanel {
 			arquivo.add(runWith);
 		}
 
-		Classe classe = new Classe(getValorTextField("Test"));
+		Classe classe = new Classe(suporte.getTest());
 		arquivo.add(classe);
 
 		Anotacao injectMocks = new Anotacao("InjectMocks", null, true);
@@ -1120,5 +1212,10 @@ class PainelTest extends AbstratoPanel {
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
+	}
+
+	@Override
+	void registrar(AtributoSuporte suporte) {
+		suporte.setTest(textField);
 	}
 }
