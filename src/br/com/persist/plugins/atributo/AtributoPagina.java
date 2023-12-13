@@ -649,7 +649,8 @@ class PainelControllerJS extends AbstratoPanel {
 
 		funcao.add(fnLimparFiltro(suporte, filtro)).ql();
 		funcao.add(fnPesquisa(suporte, filtro)).ql();
-		funcao.add(fnPDF(suporte, filtro));
+		funcao.add(fnPDF(suporte, filtro)).ql();
+		funcao.add(fnProcessarFile());
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -703,15 +704,26 @@ class PainelControllerJS extends AbstratoPanel {
 				+ Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
-		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
-		invocaProm.addInstrucao("var downloadLink = angular.element('<a></a>')");
-		invocaProm.addInstrucao("downloadLink.attr('href', window.URL.createObjectURL(file))");
-		invocaProm.addInstrucao("downloadLink.attr('download', \"arquivo.pdf\")");
-		invocaProm.addInstrucao("var link = downloadLink[0]");
-		invocaProm.addInstrucao("document.body.appendChild(link)");
-		invocaProm.addInstrucao("link.click()");
-		invocaProm.addInstrucao("document.body.removeChild(link)");
+		invocaProm.addComentario("var file = new Blob([result.data], {type: 'application/octet-stream'});");
+		invocaProm.addComentario("processarFile(file, \"arquivo.xls\");");
 
+		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
+		invocaProm.addInstrucao("processarFile(file, \"arquivo.pdf\")");
+
+		return funcao;
+	}
+
+	private Container fnProcessarFile() {
+		Parametros params = new Parametros();
+		params.addVar("file").append(", ").addVar("arquivo");
+		FuncaoJS funcao = new FuncaoJS("function processarFile", params);
+		funcao.addInstrucao("var downloadLink = angular.element('<a></a>')");
+		funcao.addInstrucao("downloadLink.attr('href', window.URL.createObjectURL(file))");
+		funcao.addInstrucao("downloadLink.attr('download', arquivo)");
+		funcao.addInstrucao("var link = downloadLink[0]");
+		funcao.addInstrucao("document.body.appendChild(link)");
+		funcao.addInstrucao("link.click()");
+		funcao.addInstrucao("document.body.removeChild(link)");
 		return funcao;
 	}
 
