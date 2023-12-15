@@ -7,6 +7,7 @@ import br.com.persist.assistencia.Util;
 
 public class Mapa {
 	private final List<ChaveValor> lista;
+	protected Mapa parent;
 
 	public Mapa() {
 		lista = new ArrayList<>();
@@ -21,6 +22,9 @@ public class Mapa {
 			return;
 		}
 		lista.add(cv);
+		if (valor instanceof Mapa) {
+			((Mapa) valor).parent = this;
+		}
 	}
 
 	public Object get(String chave) {
@@ -33,6 +37,10 @@ public class Mapa {
 			}
 		}
 		return null;
+	}
+
+	public Mapa getParent() {
+		return parent;
 	}
 
 	public int getSize() {
