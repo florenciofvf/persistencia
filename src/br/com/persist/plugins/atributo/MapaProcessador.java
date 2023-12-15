@@ -68,14 +68,18 @@ public class MapaProcessador {
 			throw new IllegalStateException(indice + " <<< String nao encerrada >>> " + sb.toString());
 		}
 		indice++;
-		return new Token(sb.toString());
+		String str = sb.toString();
+		if (Util.isEmpty(str)) {
+			throw new IllegalStateException("String vazia >>> " + indice);
+		}
+		return new Token(str);
 	}
 
 	public void processar() {
 		Token token = proximoToken();
 		while (token != null) {
 			if (":".equals(token.string)) {
-				mapaHander.separator();
+				mapaHander.separador();
 			} else if ("{".equals(token.string)) {
 				mapaHander.iniMapa();
 			} else if ("}".equals(token.string)) {
