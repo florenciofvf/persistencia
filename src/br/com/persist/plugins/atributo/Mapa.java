@@ -42,7 +42,7 @@ public class Mapa {
 
 	public String getString(String chave) {
 		Object resp = get(chave);
-		return resp != null ? resp.toString() : "null";
+		return resp != null ? resp.toString() : "";
 	}
 
 	public Mapa getParent() {

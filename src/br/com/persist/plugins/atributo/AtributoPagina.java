@@ -305,6 +305,16 @@ public class AtributoPagina extends Panel {
 				Mapa resp = new Mapa();
 				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
 				resp.put(AtributoConstantes.FILTRO, AtributoConstantes.FILTRO);
+				resp.put(AtributoConstantes.CONTROLLER_JS, AtributoConstantes.CONTROLLER_JS);
+				resp.put(AtributoConstantes.SERVICE_JS, criarMapa(AtributoConstantes.SERVICE_JS));
+				resp.put(AtributoConstantes.DTO, AtributoConstantes.DTO);
+				resp.put(AtributoConstantes.FILTER, AtributoConstantes.FILTER);
+				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST));
+				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
+				resp.put(AtributoConstantes.BEAN, AtributoConstantes.BEAN);
+				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO));
+				resp.put(AtributoConstantes.DAO_IMPL, AtributoConstantes.DAO_IMPL);
+				resp.put(AtributoConstantes.TEST, criarMapa(AtributoConstantes.TEST));
 				return resp;
 			}
 
@@ -313,6 +323,14 @@ public class AtributoPagina extends Panel {
 				for (Atributo att : atributos) {
 					resp.put(att.getNome(), att.criarMapa());
 				}
+				return resp;
+			}
+
+			private Mapa criarMapa(String arquivo) {
+				Mapa resp = new Mapa();
+				resp.put("componente", Util.capitalize(arquivo));
+				resp.put("pesquisar", "pesquisar");
+				resp.put("exportar", "exportar");
 				return resp;
 			}
 		}
