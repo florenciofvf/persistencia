@@ -1,10 +1,7 @@
 package br.com.persist.plugins.atributo;
 
-import org.xml.sax.Attributes;
-
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
-import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.atributo.aux.Tipo;
 
 public class Atributo {
@@ -58,20 +55,20 @@ public class Atributo {
 		return new Tipo(classe, nome);
 	}
 
-	public void salvar(XMLUtil util) {
-		util.abrirTag(AtributoConstantes.ATRIBUTO);
-		util.atributo("nome", nome);
-		util.atributoCheck("rotulo", rotulo);
-		util.atributoCheck("classe", classe);
-		util.atributoCheck("viewToBack", viewToBack);
-		util.fecharTag(-1);
+	public Mapa criarMapa() {
+		Mapa mapa = new Mapa();
+		mapa.put("nome", nome);
+		mapa.put("rotulo", rotulo);
+		mapa.put("classe", classe);
+		mapa.put("viewToBack", viewToBack);
+		return mapa;
 	}
 
-	public void aplicar(Attributes attr) {
-		viewToBack = attr.getValue("viewToBack");
-		rotulo = attr.getValue("rotulo");
-		classe = attr.getValue("classe");
-		nome = attr.getValue("nome");
+	public void aplicar(Mapa mapa) {
+		viewToBack = mapa.getString("viewToBack");
+		rotulo = mapa.getString("rotulo");
+		classe = mapa.getString("classe");
+		nome = mapa.getString("nome");
 	}
 
 	public String gerarIsVazioJS(String filtro) {

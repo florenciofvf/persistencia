@@ -40,6 +40,11 @@ public class Mapa {
 		return null;
 	}
 
+	public String getString(String chave) {
+		Object resp = get(chave);
+		return resp != null ? resp.toString() : "null";
+	}
+
 	public Mapa getParent() {
 		return parent;
 	}

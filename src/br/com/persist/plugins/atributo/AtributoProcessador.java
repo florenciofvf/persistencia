@@ -5,12 +5,12 @@ import java.util.Objects;
 import br.com.persist.assistencia.Util;
 
 public class AtributoProcessador {
-	private final AtributoHander hander;
+	private final AtributoHandler handler;
 	private final String string;
 	private int indice;
 
-	public AtributoProcessador(AtributoHander hander, String string) {
-		this.hander = Objects.requireNonNull(hander);
+	public AtributoProcessador(AtributoHandler handler, String string) {
+		this.handler = Objects.requireNonNull(handler);
 		this.string = Objects.requireNonNull(string);
 	}
 
@@ -79,13 +79,13 @@ public class AtributoProcessador {
 		Token token = proximoToken();
 		while (token != null) {
 			if (":".equals(token.string)) {
-				hander.separador();
+				handler.separador();
 			} else if ("{".equals(token.string)) {
-				hander.iniMapa();
+				handler.iniMapa();
 			} else if ("}".equals(token.string)) {
-				hander.fimMapa();
+				handler.fimMapa();
 			} else {
-				hander.setString(token.string);
+				handler.setString(token.string);
 			}
 			token = proximoToken();
 		}

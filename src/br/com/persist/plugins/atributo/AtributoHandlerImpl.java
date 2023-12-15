@@ -1,6 +1,6 @@
 package br.com.persist.plugins.atributo;
 
-public class AtributoHandlerImpl implements AtributoHander {
+public class AtributoHandlerImpl implements AtributoHandler {
 	private String ultima;
 	private boolean sep;
 	private Mapa raiz;

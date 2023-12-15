@@ -10,13 +10,11 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -46,8 +44,6 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
-import br.com.persist.marca.XML;
-import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.atributo.aux.Anotacao;
 import br.com.persist.plugins.atributo.aux.Arquivo;
 import br.com.persist.plugins.atributo.aux.Campo;
@@ -74,12 +70,20 @@ public class AtributoPagina extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
+	private transient Mapa mapa;
 
 	public AtributoPagina(File file) {
 		painelAtributo = new PainelAtributo(file);
 		painelFichario = new PainelFichario(this);
 		montarLayout();
 		abrir();
+	}
+
+	public Mapa getMapa() {
+		if (mapa == null) {
+			mapa = new Mapa();
+		}
+		return mapa;
 	}
 
 	private void montarLayout() {
@@ -200,21 +204,13 @@ public class AtributoPagina extends Panel {
 				att.setRotulo("Rotulo");
 				att.setClasse("Classe");
 				att.setViewToBack("[funcaoJS(" + s + ")]");
-				setText(att);
+				criarNovoArquivo(att);
 			}
 
-			private void setText(Atributo... atributos) {
+			private void criarNovoArquivo(Atributo... atributos) {
 				try {
-					StringWriter sw = new StringWriter();
-					XMLUtil util = new XMLUtil(sw);
-					util.prologo();
-					util.abrirTag2("att");
-					for (Atributo att : atributos) {
-						att.salvar(util);
-					}
-					util.finalizarTag("att");
-					util.close();
-					textArea.setText(sw.toString());
+					Mapa mapaHierarquia = criarMapaHierarquia(atributos);
+					textArea.setText(mapaHierarquia.toString());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
 				}
@@ -252,12 +248,23 @@ public class AtributoPagina extends Panel {
 
 			private void carregar() {
 				try {
-					AtributoHandler handler = new AtributoHandler();
 					if (!Util.isEmpty(textArea.getText())) {
-						XML.processar(new ByteArrayInputStream(textArea.getText().getBytes()), handler);
+						AtributoHandlerImpl handler = new AtributoHandlerImpl();
+						AtributoProcessador processador = new AtributoProcessador(handler, textArea.getText());
+						processador.processar();
+						mapa = handler.getRaiz();
+						if (mapa != null && mapa.get(AtributoConstantes.ATRIBUTOS) != null) {
+							Mapa mapAtributos = (Mapa) mapa.get(AtributoConstantes.ATRIBUTOS);
+							List<Atributo> atributos = new ArrayList<>();
+							for (Object valor : mapAtributos.getValores()) {
+								Atributo att = new Atributo();
+								att.aplicar((Mapa) valor);
+								atributos.add(att);
+							}
+							tabela.setModel(new AtributoModelo(atributos));
+							Util.ajustar(tabela, getGraphics());
+						}
 					}
-					tabela.setModel(new AtributoModelo(handler.getAtributos()));
-					Util.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
 				}
@@ -282,7 +289,7 @@ public class AtributoPagina extends Panel {
 						atributos.add(criarAtributo(ng));
 					}
 				}
-				setText(atributos.toArray(new Atributo[0]));
+				criarNovoArquivo(atributos.toArray(new Atributo[0]));
 			}
 
 			private Atributo criarAtributo(String string) {
@@ -292,6 +299,21 @@ public class AtributoPagina extends Panel {
 				att.setClasse("String");
 				att.setNome(nome);
 				return att;
+			}
+
+			private Mapa criarMapaHierarquia(Atributo... atributos) {
+				Mapa resp = new Mapa();
+				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
+				resp.put(AtributoConstantes.FILTRO, AtributoConstantes.FILTRO);
+				return resp;
+			}
+
+			private Mapa criarMapaAtributos(Atributo... atributos) {
+				Mapa resp = new Mapa();
+				for (Atributo att : atributos) {
+					resp.put(att.getNome(), att.criarMapa());
+				}
+				return resp;
 			}
 		}
 
