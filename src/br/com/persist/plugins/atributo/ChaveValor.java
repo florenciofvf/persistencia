@@ -2,6 +2,8 @@ package br.com.persist.plugins.atributo;
 
 import java.util.Objects;
 
+import br.com.persist.assistencia.Util;
+
 public class ChaveValor {
 	private final String chave;
 	private final Object valor;
@@ -41,6 +43,6 @@ public class ChaveValor {
 
 	@Override
 	public String toString() {
-		return chave;
+		return Util.citar2(chave);
 	}
 }
