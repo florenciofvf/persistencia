@@ -4,13 +4,13 @@ import java.util.Objects;
 
 import br.com.persist.assistencia.Util;
 
-public class MapaProcessador {
-	private final MapaHander mapaHander;
+public class AtributoProcessador {
+	private final AtributoHander hander;
 	private final String string;
 	private int indice;
 
-	public MapaProcessador(MapaHander mapaHander, String string) {
-		this.mapaHander = Objects.requireNonNull(mapaHander);
+	public AtributoProcessador(AtributoHander hander, String string) {
+		this.hander = Objects.requireNonNull(hander);
 		this.string = Objects.requireNonNull(string);
 	}
 
@@ -79,13 +79,13 @@ public class MapaProcessador {
 		Token token = proximoToken();
 		while (token != null) {
 			if (":".equals(token.string)) {
-				mapaHander.separador();
+				hander.separador();
 			} else if ("{".equals(token.string)) {
-				mapaHander.iniMapa();
+				hander.iniMapa();
 			} else if ("}".equals(token.string)) {
-				mapaHander.fimMapa();
+				hander.fimMapa();
 			} else {
-				mapaHander.setString(token.string);
+				hander.setString(token.string);
 			}
 			token = proximoToken();
 		}

@@ -1,6 +1,6 @@
 package br.com.persist.plugins.atributo;
 
-public interface MapaHander {
+public interface AtributoHander {
 	public void setString(String string);
 
 	public void separador();
