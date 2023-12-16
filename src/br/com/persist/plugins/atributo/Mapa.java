@@ -45,6 +45,11 @@ public class Mapa {
 		return resp != null ? resp.toString() : "";
 	}
 
+	public Mapa getMapa(String chave) {
+		Object resp = get(chave);
+		return resp instanceof Mapa ? (Mapa) resp : null;
+	}
+
 	public Mapa getParent() {
 		return parent;
 	}

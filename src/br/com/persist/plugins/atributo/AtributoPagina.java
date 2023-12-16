@@ -66,7 +66,6 @@ import br.com.persist.plugins.atributo.aux.Var;
 import br.com.persist.plugins.atributo.aux.VarObjJS;
 
 public class AtributoPagina extends Panel {
-	private final transient AtributoSuporte suporte = new AtributoSuporte();
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
@@ -90,10 +89,6 @@ public class AtributoPagina extends Panel {
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, painelFichario);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.33));
 		add(BorderLayout.CENTER, split);
-	}
-
-	public AtributoSuporte getSuporte() {
-		return suporte;
 	}
 
 	public String getConteudo() {
@@ -305,11 +300,13 @@ public class AtributoPagina extends Panel {
 				Mapa resp = new Mapa();
 				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
 				resp.put(AtributoConstantes.FILTRO, AtributoConstantes.FILTRO);
-				resp.put(AtributoConstantes.CONTROLLER_JS, AtributoConstantes.CONTROLLER_JS);
+				resp.put(AtributoConstantes.CONTROLLER_JS, criarMapa(AtributoConstantes.CONTROLLER_JS,
+						new ChaveValor(AtributoConstantes.LIMPAR_FILTRO, AtributoConstantes.LIMPAR_FILTRO)));
 				resp.put(AtributoConstantes.SERVICE_JS, criarMapa(AtributoConstantes.SERVICE_JS));
 				resp.put(AtributoConstantes.DTO, AtributoConstantes.DTO);
 				resp.put(AtributoConstantes.FILTER, AtributoConstantes.FILTER);
-				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST));
+				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST,
+						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
 				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
 				resp.put(AtributoConstantes.BEAN, AtributoConstantes.BEAN);
 				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO));
@@ -326,11 +323,14 @@ public class AtributoPagina extends Panel {
 				return resp;
 			}
 
-			private Mapa criarMapa(String arquivo) {
+			private Mapa criarMapa(String arquivo, ChaveValor... cvs) {
 				Mapa resp = new Mapa();
-				resp.put("componente", Util.capitalize(arquivo));
-				resp.put("pesquisar", "pesquisar");
-				resp.put("exportar", "exportar");
+				resp.put(AtributoConstantes.COMPONENTE, Util.capitalize(arquivo));
+				resp.put(AtributoConstantes.PESQUISAR, AtributoConstantes.PESQUISAR);
+				resp.put(AtributoConstantes.EXPORTAR, AtributoConstantes.EXPORTAR);
+				for (ChaveValor cv : cvs) {
+					resp.put(cv.getChave(), cv.getValor());
+				}
 				return resp;
 			}
 		}
@@ -399,7 +399,8 @@ class PainelFichario extends JTabbedPane {
 	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		addAba(new PainelView(pagina));
-		addAba(new PainelFilterJS(pagina));
+		addAba(new PainelValidarJS(pagina));
+		addAba(new PainelParamJS(pagina));
 		addAba(new PainelControllerJS(pagina));
 		addAba(new PainelServiceJS(pagina));
 		addAba(new PainelDTO(pagina));
@@ -413,20 +414,17 @@ class PainelFichario extends JTabbedPane {
 	}
 
 	private void addAba(AbstratoPanel panel) {
-		panel.registrar(panel.getPagina().getSuporte());
 		addTab(AtributoMensagens.getString(panel.getChaveTitulo()), panel);
 	}
 }
 
 abstract class AbstratoPanel extends Panel {
 	private static final long serialVersionUID = 1L;
-	protected final TextField textField = new TextField(30);
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private final AtributoPagina pagina;
 
-	AbstratoPanel(AtributoPagina pagina, String padrao) {
-		textField.setText(padrao);
+	AbstratoPanel(AtributoPagina pagina) {
 		this.pagina = pagina;
 		montarLayout();
 	}
@@ -454,7 +452,6 @@ abstract class AbstratoPanel extends Panel {
 
 		private Toolbar() {
 			super.ini(new Nil(), ATUALIZAR, COPIAR);
-			add(textField);
 		}
 
 		@Override
@@ -465,7 +462,7 @@ abstract class AbstratoPanel extends Panel {
 					lista.add(att);
 				}
 			}
-			gerar(pagina.getSuporte(), lista);
+			gerar(pagina.getMapa(), lista);
 		}
 
 		@Override
@@ -481,9 +478,7 @@ abstract class AbstratoPanel extends Panel {
 		textArea.setText(string);
 	}
 
-	abstract void gerar(AtributoSuporte suporte, List<Atributo> atributos);
-
-	abstract void registrar(AtributoSuporte suporte);
+	abstract void gerar(Mapa raiz, List<Atributo> atributos);
 
 	abstract String getChaveTitulo();
 }
@@ -492,7 +487,7 @@ class PainelView extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelView(AtributoPagina pagina) {
-		super(pagina, "Pessoa");
+		super(pagina);
 	}
 
 	@Override
@@ -501,7 +496,7 @@ class PainelView extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		if (!atributos.isEmpty()) {
@@ -514,59 +509,57 @@ class PainelView extends AbstratoPanel {
 			pool.tab(2).append("</div>").ql();
 		}
 
+		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
+
+		if (mapaControllerJS == null) {
+			return;
+		}
+
 		pool.ql();
-		pool.tab().append("<button id=\"pesquisar\" ng-click=\"vm." + suporte.pesquisarView()
+		pool.tab().append("<button id=\"pesquisar\" ng-click=\"vm." + AtributoUtil.getPesquisar(mapaControllerJS)
 				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-search\"></i>Pesquisar</button>")
 				.ql();
-		pool.tab().append("<button id=\"exportar\" ng-click=\"vm." + suporte.exportarView()
+		pool.tab().append("<button id=\"exportar\" ng-click=\"vm." + AtributoUtil.getExportar(mapaControllerJS)
 				+ "PDF()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Exportar PDF</button>")
 				.ql();
-		pool.tab().append("<button id=\"limpar\" ng-click=\"vm." + suporte.limparFiltro()
-				+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
+		pool.tab()
+				.append("<button id=\"limpar\" ng-click=\"vm."
+						+ mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO)
+						+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
 
 		setText(pool.toString());
 	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setView(textField);
-	}
 }
 
-class PainelFilterJS extends AbstratoPanel {
+class PainelValidarJS extends PainelControllerJS {
 	private static final long serialVersionUID = 1L;
 
-	PainelFilterJS(AtributoPagina pagina) {
-		super(pagina, AtributoConstantes.FILTRO);
+	PainelValidarJS(AtributoPagina pagina) {
+		super(pagina);
 	}
 
 	@Override
 	String getChaveTitulo() {
-		return "label.js_filter";
+		return "label.validar_js";
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = suporte.getFilterJS();
-		String nome = suporte.getController();
+		String filtro = AtributoUtil.getFiltro(raiz);
 
-		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(
-				nome + ".$inject = ['$scope', '$state', 'NgTableParams', '" + suporte.getServiceJS() + "']");
+		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
+		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
 
-		String string = ", ";
-		Parametros params = new Parametros();
-		params.addVar("$scope").append(string);
-		params.addVar("$state").append(string);
-		params.addVar("NgTableParams").append(string);
-		params.addVar(suporte.getServiceJS());
-		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
-		arquivo.add(funcao);
+		if (mapaControllerJS == null || mapaServiceJS == null) {
+			return;
+		}
+
+		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
 
 		funcao.add(fnGetTime()).ql();
-		funcao.add(fnParam(filtro, atributos)).ql();
 		funcao.add(fnValidar(filtro, atributos));
 
 		arquivo.gerar(0, pool);
@@ -580,26 +573,6 @@ class PainelFilterJS extends AbstratoPanel {
 		funcao.add(iff);
 		funcao.addReturn("null");
 		return funcao;
-	}
-
-	private Container fnParam(String filtro, List<Atributo> atributos) {
-		FuncaoJS funcao = new FuncaoJS("function criarParam" + Util.capitalize(filtro), new Parametros());
-		funcao.add(objParam(filtro, atributos)).ql();
-		funcao.addReturn("param");
-		return funcao;
-	}
-
-	private Container objParam(String filtro, List<Atributo> atributos) {
-		VarObjJS obj = new VarObjJS("param");
-		for (int i = 0; i < atributos.size(); i++) {
-			Atributo att = atributos.get(i);
-			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack(filtro));
-			if (i + 1 < atributos.size()) {
-				obj.append(",");
-			}
-			obj.ql();
-		}
-		return obj;
 	}
 
 	private Container fnValidar(String filtro, List<Atributo> atributos) {
@@ -645,10 +618,59 @@ class PainelFilterJS extends AbstratoPanel {
 		iff.addReturn("'Campo " + campo + " Obrigat\u00F3rio.'");
 		return iff;
 	}
+}
+
+class PainelParamJS extends PainelControllerJS {
+	private static final long serialVersionUID = 1L;
+
+	PainelParamJS(AtributoPagina pagina) {
+		super(pagina);
+	}
 
 	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setFilterJS(textField);
+	String getChaveTitulo() {
+		return "label.param_js";
+	}
+
+	@Override
+	void gerar(Mapa raiz, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		String filtro = AtributoUtil.getFiltro(raiz);
+
+		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
+		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
+
+		if (mapaControllerJS == null || mapaServiceJS == null) {
+			return;
+		}
+
+		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
+		funcao.add(fnParam(filtro, atributos)).ql();
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	private Container fnParam(String filtro, List<Atributo> atributos) {
+		FuncaoJS funcao = new FuncaoJS("function criarParam" + Util.capitalize(filtro), new Parametros());
+		funcao.add(objParam(filtro, atributos)).ql();
+		funcao.addReturn("param");
+		return funcao;
+	}
+
+	private Container objParam(String filtro, List<Atributo> atributos) {
+		VarObjJS obj = new VarObjJS("param");
+		for (int i = 0; i < atributos.size(); i++) {
+			Atributo att = atributos.get(i);
+			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack(filtro));
+			if (i + 1 < atributos.size()) {
+				obj.append(",");
+			}
+			obj.ql();
+		}
+		return obj;
 	}
 }
 
@@ -656,7 +678,7 @@ class PainelControllerJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelControllerJS(AtributoPagina pagina) {
-		super(pagina, "Controller");
+		super(pagina);
 	}
 
 	@Override
@@ -665,46 +687,63 @@ class PainelControllerJS extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = suporte.getFilterJS();
-		String nome = suporte.getController();
+		String filtro = AtributoUtil.getFiltro(raiz);
 
-		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(
-				nome + ".$inject = ['$scope', '$state', 'NgTableParams', '" + suporte.getServiceJS() + "']");
+		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
+		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
 
-		String string = ", ";
-		Parametros params = new Parametros();
-		params.addVar("$scope").append(string);
-		params.addVar("$state").append(string);
-		params.addVar("NgTableParams").append(string);
-		params.addVar(suporte.getServiceJS());
-		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
-		arquivo.add(funcao);
+		if (mapaControllerJS == null || mapaServiceJS == null) {
+			return;
+		}
 
+		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
 		funcao.addInstrucao("var vm = this").ql();
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
 		funcao.addInstrucao("vm." + filtro + " = {}").ql();
 
-		funcao.add(fnLimparFiltro(suporte, filtro)).ql();
-		funcao.add(fnPesquisa(suporte, filtro)).ql();
-		funcao.add(fnPDF(suporte, filtro)).ql();
+		funcao.add(fnLimparFiltro(mapaControllerJS, filtro)).ql();
+		funcao.add(fnPesquisa(mapaControllerJS, mapaServiceJS, filtro)).ql();
+		funcao.add(fnPDF(mapaControllerJS, mapaServiceJS, filtro)).ql();
 		funcao.add(fnProcessarFile());
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private Container fnLimparFiltro(AtributoSuporte suporte, String filtro) {
-		FuncaoJS funcao = new FuncaoJS("vm." + suporte.limparFiltro() + " = function", new Parametros());
+	protected Arquivo criarArquivo(Mapa mapaControllerJS, Mapa mapaServiceJS) {
+		Arquivo arquivo = new Arquivo();
+		arquivo.addInstrucao(
+				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
+						+ AtributoUtil.getComponente(mapaServiceJS) + "']");
+
+		String string = ", ";
+		Parametros params = new Parametros();
+		params.addVar("$scope").append(string);
+		params.addVar("$state").append(string);
+		params.addVar("NgTableParams").append(string);
+		params.addVar(AtributoUtil.getComponente(mapaServiceJS));
+		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS),
+				params);
+		arquivo.add(funcao);
+
+		return arquivo;
+	}
+
+	private Container fnLimparFiltro(Mapa mapaControllerJS, String filtro) {
+		FuncaoJS funcao = new FuncaoJS(
+				"vm." + mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO) + AtributoConstantes.FUNCTION2,
+				new Parametros());
 		funcao.addInstrucao("vm." + filtro + " = {}");
 		return funcao;
 	}
 
-	private Container fnPesquisa(AtributoSuporte suporte, String filtro) {
-		FuncaoJS funcao = new FuncaoJS("vm." + suporte.pesquisarView() + " = function", new Parametros());
+	private Container fnPesquisa(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
+		FuncaoJS funcao = new FuncaoJS(
+				"vm." + AtributoUtil.getPesquisar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
 		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
@@ -714,8 +753,9 @@ class PainelControllerJS extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + "." + suporte.pesquisarView() + "(criarParam"
-				+ Util.capitalize(filtro) + "()).then(function(result) {");
+		InvocaProm invocaProm = new InvocaProm(
+				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getPesquisar(mapaServiceJS)
+						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
 		invocaProm.addInstrucao("var lista = result.data");
@@ -730,8 +770,9 @@ class PainelControllerJS extends AbstratoPanel {
 		return funcao;
 	}
 
-	private Container fnPDF(AtributoSuporte suporte, String filtro) {
-		FuncaoJS funcao = new FuncaoJS("vm." + suporte.exportarView() + "PDF = function", new Parametros());
+	private Container fnPDF(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
+		FuncaoJS funcao = new FuncaoJS(
+				"vm." + AtributoUtil.getExportar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
 		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
@@ -741,8 +782,9 @@ class PainelControllerJS extends AbstratoPanel {
 		If iff = new If("isVazio(msg)", elsee);
 		funcao.add(iff);
 
-		InvocaProm invocaProm = new InvocaProm(suporte.getServiceJS() + "." + suporte.exportarView() + "PDF(criarParam"
-				+ Util.capitalize(filtro) + "()).then(function(result) {");
+		InvocaProm invocaProm = new InvocaProm(
+				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getExportar(mapaServiceJS)
+						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
 		iff.add(invocaProm);
 
 		invocaProm.addComentario("var file = new Blob([result.data], {type: 'application/octet-stream'});");
@@ -767,18 +809,13 @@ class PainelControllerJS extends AbstratoPanel {
 		funcao.addInstrucao("document.body.removeChild(link)");
 		return funcao;
 	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setController(textField);
-	}
 }
 
 class PainelServiceJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelServiceJS(AtributoPagina pagina) {
-		super(pagina, Constantes.SERVICE);
+		super(pagina);
 	}
 
 	@Override
@@ -787,47 +824,47 @@ class PainelServiceJS extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String nome = suporte.getServiceJS();
+		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
+		Mapa mapaRest = AtributoUtil.getMapaRest(raiz);
+
+		if (mapaServiceJS == null || mapaRest == null) {
+			return;
+		}
 
 		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(nome + ".$inject = ['Restangular']");
+		arquivo.addInstrucao(AtributoUtil.getComponente(mapaServiceJS) + ".$inject = ['Restangular']");
 
 		Parametros params = new Parametros(new Var("Restangular"));
-		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + nome, params);
+		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaServiceJS), params);
 		arquivo.add(funcao);
 
-		funcao.addInstrucao("var PATH = '" + suporte.getViewDecap() + "'").ql();
+		funcao.addInstrucao("var PATH = '" + mapaRest.getString(AtributoConstantes.END_POINT) + "'").ql();
 		ReturnJS returnJS = new ReturnJS();
 		funcao.add(returnJS);
 
-		returnJS.add(fnPesquisar(suporte));
-		returnJS.add(fnGerarPDF(suporte));
+		returnJS.add(fnPesquisar(mapaServiceJS, mapaRest));
+		returnJS.add(fnGerarPDF(mapaServiceJS, mapaRest));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private Container fnPesquisar(AtributoSuporte suporte) {
+	private Container fnPesquisar(Mapa mapaServiceJS, Mapa mapaRest) {
 		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS(suporte.pesquisarView() + ": function", params);
-		funcao.addReturn("Restangular.all(PATH).customGET('" + suporte.pesquisarView() + "', filtro)");
+		FuncaoJS funcao = new FuncaoJS(AtributoUtil.getPesquisar(mapaServiceJS) + ": function", params);
+		funcao.addReturn("Restangular.all(PATH).customGET('" + AtributoUtil.getPesquisar(mapaRest) + "', filtro)");
 		return funcao;
 	}
 
-	private Container fnGerarPDF(AtributoSuporte suporte) {
+	private Container fnGerarPDF(Mapa mapaServiceJS, Mapa mapaRest) {
 		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS("," + suporte.exportarView() + "PDF: function", params);
+		FuncaoJS funcao = new FuncaoJS("," + AtributoUtil.getExportar(mapaServiceJS) + ": function", params);
 		funcao.addReturn("Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('"
-				+ suporte.exportarView() + "PDF', filtro)");
+				+ AtributoUtil.getExportar(mapaRest) + "', filtro)");
 		return funcao;
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setServiceJS(textField);
 	}
 }
 
@@ -835,7 +872,7 @@ class PainelDTO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDTO(AtributoPagina pagina) {
-		super(pagina, "DTO");
+		super(pagina);
 	}
 
 	@Override
@@ -844,9 +881,9 @@ class PainelDTO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
-		Classe classe = new Classe(suporte.getDto());
+		Classe classe = new Classe(AtributoUtil.getDTO(raiz));
 
 		for (Atributo att : atributos) {
 			Campo campo = new Campo(att.criarTipo());
@@ -864,18 +901,13 @@ class PainelDTO extends AbstratoPanel {
 		classe.gerar(0, pool);
 		setText(pool.toString());
 	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setDto(textField);
-	}
 }
 
 class PainelFilter extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelFilter(AtributoPagina pagina) {
-		super(pagina, "Filter");
+		super(pagina);
 	}
 
 	@Override
@@ -884,7 +916,7 @@ class PainelFilter extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -892,7 +924,7 @@ class PainelFilter extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.QueryParam").ql();
 		}
 
-		Classe classe = new Classe(suporte.getFilter());
+		Classe classe = new Classe(AtributoUtil.getFilter(raiz));
 		arquivo.add(classe);
 
 		int i = 0;
@@ -916,18 +948,13 @@ class PainelFilter extends AbstratoPanel {
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setFilter(textField);
-	}
 }
 
 class PainelRest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelRest(AtributoPagina pagina) {
-		super(pagina, "Rest");
+		super(pagina);
 	}
 
 	@Override
@@ -936,8 +963,15 @@ class PainelRest extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
+
+		Mapa mapaService = AtributoUtil.getMapaService(raiz);
+		Mapa mapaRest = AtributoUtil.getMapaRest(raiz);
+
+		if (mapaService == null || mapaRest == null) {
+			return;
+		}
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
@@ -954,16 +988,16 @@ class PainelRest extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
 			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").ql();
 
-			arquivo.add(new Anotacao("Path", Util.citar2(suporte.getViewDecap()), true));
+			arquivo.add(new Anotacao("Path", mapaRest.getString(AtributoConstantes.END_POINT), true));
 		}
 
-		Classe classe = new Classe(suporte.getRest() + " extends ApplicationRest");
+		Classe classe = new Classe(AtributoUtil.getComponente(mapaRest) + " extends ApplicationRest");
 		arquivo.add(classe);
 
-		injetar(classe, suporte.getTipoService()).ql();
-		injetar(classe, new Tipo(suporte.getService() + "PDF", "servicePDF")).ql();
-		criarGetListaDTO(suporte, classe).ql();
-		criarGetGerarPDF(suporte, classe);
+		injetar(classe, new Tipo(AtributoUtil.getComponente(mapaService), "service")).ql();
+		injetar(classe, new Tipo(AtributoUtil.getComponente(mapaService) + "PDF", "servicePDF")).ql();
+		criarGetListaDTO(raiz, mapaRest, mapaService, classe).ql();
+		criarGetGerarPDF(raiz, mapaRest, mapaService, classe);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -976,29 +1010,30 @@ class PainelRest extends AbstratoPanel {
 		return classe;
 	}
 
-	private Classe criarGetListaDTO(AtributoSuporte suporte, Classe classe) {
+	private Classe criarGetListaDTO(Mapa raiz, Mapa mapaRest, Mapa mapaService, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
-		classe.add(new Anotacao("Path", Util.citar2(suporte.pesquisarView()), true));
+		classe.add(new Anotacao("Path", Util.citar2(AtributoUtil.getPesquisar(mapaRest)), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", AtributoConstantes.APPLICATION_JSON, true));
 
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), suporte.pesquisarView(),
-				beanParam(suporte));
-		funcao.addReturn("service." + suporte.pesquisarViewFilter());
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
+				AtributoUtil.getPesquisar(mapaRest), beanParam(raiz));
+		funcao.addReturn("service." + AtributoUtil.pesquisarFilter(mapaService));
 		classe.add(funcao);
 		return classe;
 	}
 
-	private Classe criarGetGerarPDF(AtributoSuporte suporte, Classe classe) {
+	private Classe criarGetGerarPDF(Mapa raiz, Mapa mapaRest, Mapa mapaService, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
-		classe.add(new Anotacao("Path", Util.citar2(suporte.exportarView() + "PDF"), true));
+		classe.add(new Anotacao("Path", Util.citar2(Util.citar2(AtributoUtil.getExportar(mapaRest))), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
 
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", suporte.exportarView() + "PDF",
-				beanParam(suporte));
-		funcao.addInstrucao(suporte.getListDto() + " dtos = service." + suporte.pesquisarViewFilter());
-		funcao.addInstrucao("byte[] bytes = servicePDF." + suporte.exportarView() + "PDF(dtos)").ql();
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", AtributoUtil.getExportar(mapaRest),
+				beanParam(raiz));
+		funcao.addInstrucao(
+				AtributoUtil.getListDTO(raiz) + " dtos = service." + AtributoUtil.pesquisarFilter(mapaService));
+		funcao.addInstrucao("byte[] bytes = servicePDF." + AtributoUtil.getExportar(mapaService) + "(dtos)").ql();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
 		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
 		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
@@ -1007,16 +1042,11 @@ class PainelRest extends AbstratoPanel {
 		return classe;
 	}
 
-	private Parametros beanParam(AtributoSuporte suporte) {
+	private Parametros beanParam(Mapa raiz) {
 		Parametros params = new Parametros(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
-		params.add(suporte.getTipoFilter());
+		params.add(AtributoUtil.getTipoFilter(raiz));
 		return params;
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setRest(textField);
 	}
 }
 
@@ -1024,7 +1054,7 @@ class PainelService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelService(AtributoPagina pagina) {
-		super(pagina, Constantes.SERVICE);
+		super(pagina);
 	}
 
 	@Override
@@ -1033,7 +1063,7 @@ class PainelService extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1044,20 +1074,22 @@ class PainelService extends AbstratoPanel {
 			arquivo.add(new Anotacao("Local", null, true));
 		}
 
-		Interface interfac = new Interface(suporte.getService());
+		Mapa mapaService = AtributoUtil.getMapaService(raiz);
+
+		if (mapaService == null) {
+			return;
+		}
+
+		Interface interfac = new Interface(AtributoUtil.getComponente(mapaService));
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), suporte.pesquisarView(), params);
+		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
+		FuncaoInter funcao = new FuncaoInter(AtributoUtil.getListDTO(raiz), AtributoUtil.getPesquisar(mapaService),
+				params);
 		interfac.add(funcao);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setService(textField);
 	}
 }
 
@@ -1065,7 +1097,7 @@ class PainelBean extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelBean(AtributoPagina pagina) {
-		super(pagina, "Bean");
+		super(pagina);
 	}
 
 	@Override
@@ -1074,7 +1106,7 @@ class PainelBean extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1090,25 +1122,29 @@ class PainelBean extends AbstratoPanel {
 			arquivo.add(new Anotacao("TransactionManagement", "TransactionManagementType.CONTAINER", true));
 		}
 
-		Classe classe = new Classe(suporte.getBean() + " implements " + suporte.getService());
+		String bean = AtributoUtil.getBean(raiz);
+		Mapa mapaDAO = AtributoUtil.getMapaDAO(raiz);
+		Mapa mapaService = AtributoUtil.getMapaService(raiz);
+
+		if (mapaDAO == null || mapaService == null) {
+			return;
+		}
+
+		Classe classe = new Classe(bean + " implements " + AtributoUtil.getComponente(mapaService));
 		arquivo.add(classe);
 
 		classe.add(new Anotacao("Inject", null, true));
-		Campo service = new Campo(suporte.getTipoDAO());
+		Campo service = new Campo(AtributoUtil.getTipoDAO(mapaDAO));
 		classe.add(service).ql();
 
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), suporte.pesquisarView(), params);
-		funcao.addReturn("dao." + suporte.pesquisarViewFilter());
+		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
+				AtributoUtil.getPesquisar(mapaService), params);
+		funcao.addReturn("dao." + AtributoUtil.pesquisarFilter(mapaDAO));
 		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setBean(textField);
 	}
 }
 
@@ -1116,7 +1152,7 @@ class PainelDAO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDAO(AtributoPagina pagina) {
-		super(pagina, "DAO");
+		super(pagina);
 	}
 
 	@Override
@@ -1125,7 +1161,7 @@ class PainelDAO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1133,20 +1169,21 @@ class PainelDAO extends AbstratoPanel {
 			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 		}
 
-		Interface interfac = new Interface(suporte.getDao());
+		Mapa mapaDAO = AtributoUtil.getMapaDAO(raiz);
+
+		if (mapaDAO == null) {
+			return;
+		}
+
+		Interface interfac = new Interface(AtributoUtil.getComponente(mapaDAO));
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		FuncaoInter funcao = new FuncaoInter(suporte.getListDto(), suporte.pesquisarView(), params);
+		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
+		FuncaoInter funcao = new FuncaoInter(AtributoUtil.getListDTO(raiz), AtributoUtil.getPesquisar(mapaDAO), params);
 		interfac.add(funcao);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setDao(textField);
 	}
 }
 
@@ -1154,7 +1191,7 @@ class PainelDAOImpl extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDAOImpl(AtributoPagina pagina) {
-		super(pagina, "DAOImpl");
+		super(pagina);
 	}
 
 	@Override
@@ -1163,7 +1200,7 @@ class PainelDAOImpl extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1174,16 +1211,24 @@ class PainelDAOImpl extends AbstratoPanel {
 			arquivo.addImport("javax.persistence.PersistenceContext").ql();
 		}
 
-		Classe classe = new Classe(suporte.getDaoImpl() + " implements " + suporte.getDao());
+		String daoImpl = AtributoUtil.getDAOImpl(raiz);
+		Mapa mapaDAO = AtributoUtil.getMapaDAO(raiz);
+
+		if (mapaDAO == null) {
+			return;
+		}
+
+		Classe classe = new Classe(daoImpl + " implements " + AtributoUtil.getComponente(mapaDAO));
 		arquivo.add(classe);
 
 		classe.add(new Anotacao("PersistenceContext", "unitName = " + Util.citar2("nomeUnit"), true));
 		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
 		classe.add(entityManager).ql();
 
-		Parametros params = new Parametros(suporte.getTipoFilter());
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, suporte.getListDto(), suporte.pesquisarView(), params);
-		funcao.addInstrucao(suporte.getListDto() + " resp = new ArrayList<>()");
+		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
+				AtributoUtil.getPesquisar(mapaDAO), params);
+		funcao.addInstrucao(AtributoUtil.getListDTO(raiz) + " resp = new ArrayList<>()");
 		funcao.addComentario("entityManager.find...").ql();
 		funcao.addReturn("resp");
 		classe.add(funcao);
@@ -1191,18 +1236,13 @@ class PainelDAOImpl extends AbstratoPanel {
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setDaoImpl(textField);
-	}
 }
 
 class PainelTest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelTest(AtributoPagina pagina) {
-		super(pagina, "Test");
+		super(pagina);
 	}
 
 	@Override
@@ -1211,7 +1251,7 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(AtributoSuporte suporte, List<Atributo> atributos) {
+	void gerar(Mapa raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1225,26 +1265,35 @@ class PainelTest extends AbstratoPanel {
 			arquivo.add(new Anotacao("RunWith", "MockitoJUnitRunner.class", true));
 		}
 
-		Classe classe = new Classe(suporte.getTest());
+		Mapa mapaService = AtributoUtil.getMapaService(raiz);
+		Mapa mapaTest = AtributoUtil.getMapaTest(raiz);
+
+		if (mapaService == null || mapaTest == null) {
+			return;
+		}
+
+		Classe classe = new Classe(AtributoUtil.getComponente(mapaTest));
 		arquivo.add(classe);
 
 		classe.add(new Anotacao("InjectMocks", null, true));
-		Campo service = new Campo(suporte.getTipoService());
+		Campo service = new Campo(new Tipo(AtributoUtil.getComponente(mapaService), "service"));
 		classe.add(service).ql();
 
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "void", suporte.pesquisarView() + "Test",
+		Funcao funcaoPesquisar = new Funcao(AtributoConstantes.PUBLIC, "void", AtributoUtil.getPesquisar(mapaTest),
 				new Parametros());
-		funcao.addComentario("...");
+		funcaoPesquisar.addComentario("...");
 
 		classe.add(new Anotacao("Test", null, true));
-		classe.add(funcao);
+		classe.add(funcaoPesquisar);
+
+		Funcao funcaoExportar = new Funcao(AtributoConstantes.PUBLIC, "void", AtributoUtil.getExportar(mapaTest),
+				new Parametros());
+		funcaoExportar.addComentario("...");
+
+		classe.add(new Anotacao("Test", null, true));
+		classe.add(funcaoExportar);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
-	}
-
-	@Override
-	void registrar(AtributoSuporte suporte) {
-		suporte.setTest(textField);
 	}
 }

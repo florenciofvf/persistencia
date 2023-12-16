@@ -29,6 +29,13 @@ public abstract class Container {
 		return this;
 	}
 
+	public Container get(int indice) {
+		if (indice >= 0 && indice < lista.size()) {
+			return lista.get(indice);
+		}
+		return null;
+	}
+
 	public Container addInstrucao(String string) {
 		add(new Instrucao(string));
 		return this;
