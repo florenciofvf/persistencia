@@ -61,6 +61,7 @@ public class Atributo {
 		mapa.put("rotulo", rotulo);
 		mapa.put("classe", classe);
 		mapa.put("viewToBack", viewToBack);
+		mapa.setFormatEspecial(true);
 		return mapa;
 	}
 

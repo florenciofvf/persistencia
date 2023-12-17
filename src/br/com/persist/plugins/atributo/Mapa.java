@@ -8,6 +8,7 @@ import br.com.persist.assistencia.Util;
 
 public class Mapa {
 	private final List<ChaveValor> lista;
+	private boolean formatEspecial;
 	protected Mapa parent;
 
 	public Mapa() {
@@ -62,6 +63,14 @@ public class Mapa {
 		lista.clear();
 	}
 
+	public boolean isFormatEspecial() {
+		return formatEspecial;
+	}
+
+	public void setFormatEspecial(boolean formatEspecial) {
+		this.formatEspecial = formatEspecial;
+	}
+
 	public List<String> getChaves() {
 		List<String> resp = new ArrayList<>();
 		for (ChaveValor cv : lista) {
@@ -94,14 +103,14 @@ public class Mapa {
 			ChaveValor cv = it.next();
 			Object valor = cv.getValor();
 			String toStr = (valor instanceof String) ? Util.citar2(valor.toString()) : ((Mapa) valor).toString(tab + 1);
-			sb.append(tabular(tab + 1) + cv + ": " + toStr);
+			sb.append(tabular(tab + 1) + Util.citar2(cv.getChave()) + ": " + toStr);
 		}
 		while (it.hasNext()) {
-			sb.append("\n");
+			sb.append(formatEspecial ? " " : "\n");
 			ChaveValor cv = it.next();
 			Object valor = cv.getValor();
 			String toStr = (valor instanceof String) ? Util.citar2(valor.toString()) : ((Mapa) valor).toString(tab + 1);
-			sb.append(tabular(tab + 1) + cv + ": " + toStr);
+			sb.append((formatEspecial ? "" : tabular(tab + 1)) + Util.citar2(cv.getChave()) + ": " + toStr);
 		}
 		sb.append("\n" + tabular(tab) + "}");
 		return sb.toString();
