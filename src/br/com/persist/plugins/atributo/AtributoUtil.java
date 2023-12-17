@@ -79,11 +79,11 @@ public class AtributoUtil {
 		return mapa.getString(AtributoConstantes.PESQUISAR);
 	}
 
-	public static String getExportar(Mapa mapa) {
-		return mapa.getString(AtributoConstantes.EXPORTAR);
+	public static String getPesquisarFilter(Mapa mapa) {
+		return AtributoUtil.getPesquisar(mapa) + "(filter)";
 	}
 
-	public static String pesquisarFilter(Mapa mapa) {
-		return AtributoUtil.getPesquisar(mapa) + "(filter)";
+	public static String getExportar(Mapa mapa) {
+		return mapa.getString(AtributoConstantes.EXPORTAR);
 	}
 }

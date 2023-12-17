@@ -1018,7 +1018,7 @@ class PainelRest extends AbstratoPanel {
 
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
 				AtributoUtil.getPesquisar(mapaRest), beanParam(raiz));
-		funcao.addReturn("service." + AtributoUtil.pesquisarFilter(mapaService));
+		funcao.addReturn("service." + AtributoUtil.getPesquisarFilter(mapaService));
 		classe.add(funcao);
 		return classe;
 	}
@@ -1032,7 +1032,7 @@ class PainelRest extends AbstratoPanel {
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", AtributoUtil.getExportar(mapaRest),
 				beanParam(raiz));
 		funcao.addInstrucao(
-				AtributoUtil.getListDTO(raiz) + " dtos = service." + AtributoUtil.pesquisarFilter(mapaService));
+				AtributoUtil.getListDTO(raiz) + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
 		funcao.addInstrucao("byte[] bytes = servicePDF." + AtributoUtil.getExportar(mapaService) + "(dtos)").ql();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
 		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
@@ -1140,7 +1140,7 @@ class PainelBean extends AbstratoPanel {
 		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
 				AtributoUtil.getPesquisar(mapaService), params);
-		funcao.addReturn("dao." + AtributoUtil.pesquisarFilter(mapaDAO));
+		funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
 		classe.add(new Anotacao("Override", null, true));
 		classe.add(funcao);
 
