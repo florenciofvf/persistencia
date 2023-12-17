@@ -520,7 +520,7 @@ class PainelView extends AbstratoPanel {
 				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-search\"></i>Pesquisar</button>")
 				.ql();
 		pool.tab().append("<button id=\"exportar\" ng-click=\"vm." + AtributoUtil.getExportar(mapaControllerJS)
-				+ "PDF()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Exportar PDF</button>")
+				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Exportar PDF</button>")
 				.ql();
 		pool.tab()
 				.append("<button id=\"limpar\" ng-click=\"vm."
@@ -647,7 +647,7 @@ class PainelParamJS extends PainelControllerJS {
 
 		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
 		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
-		funcao.add(fnParam(filtro, atributos)).ql();
+		funcao.add(fnParam(filtro, atributos));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -683,7 +683,7 @@ class PainelControllerJS extends AbstratoPanel {
 
 	@Override
 	String getChaveTitulo() {
-		return "label.js_controller";
+		return "label.controller_js";
 	}
 
 	@Override
@@ -820,7 +820,7 @@ class PainelServiceJS extends AbstratoPanel {
 
 	@Override
 	String getChaveTitulo() {
-		return "label.js_service";
+		return "label.service_js";
 	}
 
 	@Override
@@ -988,7 +988,7 @@ class PainelRest extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
 			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").ql();
 
-			arquivo.add(new Anotacao("Path", mapaRest.getString(AtributoConstantes.END_POINT), true));
+			arquivo.add(new Anotacao("Path", Util.citar2(mapaRest.getString(AtributoConstantes.END_POINT)), true));
 		}
 
 		Classe classe = new Classe(AtributoUtil.getComponente(mapaRest) + " extends ApplicationRest");
@@ -1025,7 +1025,7 @@ class PainelRest extends AbstratoPanel {
 
 	private Classe criarGetGerarPDF(Mapa raiz, Mapa mapaRest, Mapa mapaService, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
-		classe.add(new Anotacao("Path", Util.citar2(Util.citar2(AtributoUtil.getExportar(mapaRest))), true));
+		classe.add(new Anotacao("Path", Util.citar2(AtributoUtil.getExportar(mapaRest)), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", "{MediaType.APPLICATION_OCTET_STREAM}", true));
 
@@ -1141,6 +1141,7 @@ class PainelBean extends AbstratoPanel {
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
 				AtributoUtil.getPesquisar(mapaService), params);
 		funcao.addReturn("dao." + AtributoUtil.pesquisarFilter(mapaDAO));
+		classe.add(new Anotacao("Override", null, true));
 		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -1231,6 +1232,7 @@ class PainelDAOImpl extends AbstratoPanel {
 		funcao.addInstrucao(AtributoUtil.getListDTO(raiz) + " resp = new ArrayList<>()");
 		funcao.addComentario("entityManager.find...").ql();
 		funcao.addReturn("resp");
+		classe.add(new Anotacao("Override", null, true));
 		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -1284,7 +1286,7 @@ class PainelTest extends AbstratoPanel {
 		funcaoPesquisar.addComentario("...");
 
 		classe.add(new Anotacao("Test", null, true));
-		classe.add(funcaoPesquisar);
+		classe.add(funcaoPesquisar).ql();
 
 		Funcao funcaoExportar = new Funcao(AtributoConstantes.PUBLIC, "void", AtributoUtil.getExportar(mapaTest),
 				new Parametros());
