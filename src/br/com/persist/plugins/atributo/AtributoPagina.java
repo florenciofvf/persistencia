@@ -399,9 +399,9 @@ class PainelFichario extends JTabbedPane {
 	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		addAba(new PainelView(pagina));
+		addAba(new PainelControllerJS(pagina));
 		addAba(new PainelParamJS(pagina));
 		addAba(new PainelValidarJS(pagina));
-		addAba(new PainelControllerJS(pagina));
 		addAba(new PainelServiceJS(pagina));
 		addAba(new PainelDTO(pagina));
 		addAba(new PainelFilter(pagina));
@@ -528,6 +528,143 @@ class PainelView extends AbstratoPanel {
 						+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
 
 		setText(pool.toString());
+	}
+}
+
+class PainelControllerJS extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelControllerJS(AtributoPagina pagina) {
+		super(pagina);
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.controller_js";
+	}
+
+	@Override
+	void gerar(Mapa raiz, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		String filtro = AtributoUtil.getFiltro(raiz);
+
+		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
+		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
+
+		if (mapaControllerJS == null || mapaServiceJS == null) {
+			return;
+		}
+
+		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
+		funcao.addInstrucao("var vm = this").ql();
+		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
+		funcao.addInstrucao("vm." + filtro + " = {}").ql();
+
+		funcao.add(fnLimparFiltro(mapaControllerJS, filtro)).ql();
+		funcao.add(fnPesquisa(mapaControllerJS, mapaServiceJS, filtro)).ql();
+		funcao.add(fnPDF(mapaControllerJS, mapaServiceJS, filtro)).ql();
+		funcao.add(fnProcessarFile());
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	protected Arquivo criarArquivo(Mapa mapaControllerJS, Mapa mapaServiceJS) {
+		Arquivo arquivo = new Arquivo();
+		arquivo.addInstrucao(
+				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
+						+ AtributoUtil.getComponente(mapaServiceJS) + "']");
+
+		String string = ", ";
+		Parametros params = new Parametros();
+		params.addVar("$scope").append(string);
+		params.addVar("$state").append(string);
+		params.addVar("NgTableParams").append(string);
+		params.addVar(AtributoUtil.getComponente(mapaServiceJS));
+		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS),
+				params);
+		arquivo.add(funcao);
+
+		return arquivo;
+	}
+
+	private Container fnLimparFiltro(Mapa mapaControllerJS, String filtro) {
+		FuncaoJS funcao = new FuncaoJS(
+				"vm." + mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO) + AtributoConstantes.FUNCTION2,
+				new Parametros());
+		funcao.addInstrucao("vm." + filtro + " = {}");
+		return funcao;
+	}
+
+	private Container fnPesquisa(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
+		FuncaoJS funcao = new FuncaoJS(
+				"vm." + AtributoUtil.getPesquisar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
+		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
+
+		Else elsee = new Else();
+		elsee.addComentario("Msg.error(msg);");
+		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
+
+		If iff = new If("isVazio(msg)", elsee);
+		funcao.add(iff);
+
+		InvocaProm invocaProm = new InvocaProm(
+				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getPesquisar(mapaServiceJS)
+						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
+		iff.add(invocaProm);
+
+		invocaProm.addInstrucao("var lista = result.data");
+		invocaProm.addInstrucao("vm.pesquisados.settings().dataset = lista");
+		invocaProm.addInstrucao("vm.pesquisados.reload()");
+
+		If ifLength = new If("lista.length === 0", null);
+		invocaProm.add(ifLength);
+		ifLength.addComentario("Msg.info('Nenhum registro encontrado');");
+		ifLength.addComentario("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');");
+
+		return funcao;
+	}
+
+	private Container fnPDF(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
+		FuncaoJS funcao = new FuncaoJS(
+				"vm." + AtributoUtil.getExportar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
+		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
+
+		Else elsee = new Else();
+		elsee.addComentario("Msg.error(msg);");
+		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
+
+		If iff = new If("isVazio(msg)", elsee);
+		funcao.add(iff);
+
+		InvocaProm invocaProm = new InvocaProm(
+				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getExportar(mapaServiceJS)
+						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
+		iff.add(invocaProm);
+
+		invocaProm.addComentario("var file = new Blob([result.data], {type: 'application/octet-stream'});");
+		invocaProm.addComentario("processarFile(file, \"arquivo.xls\");");
+
+		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
+		invocaProm.addInstrucao("processarFile(file, \"arquivo.pdf\")");
+
+		return funcao;
+	}
+
+	private Container fnProcessarFile() {
+		Parametros params = new Parametros();
+		params.addVar("file").append(", ").addVar("arquivo");
+		FuncaoJS funcao = new FuncaoJS("function processarFile", params);
+		funcao.addInstrucao("var downloadLink = angular.element('<a></a>')");
+		funcao.addInstrucao("downloadLink.attr('href', window.URL.createObjectURL(file))");
+		funcao.addInstrucao("downloadLink.attr('download', arquivo)");
+		funcao.addInstrucao("var link = downloadLink[0]");
+		funcao.addInstrucao("document.body.appendChild(link)");
+		funcao.addInstrucao("link.click()");
+		funcao.addInstrucao("document.body.removeChild(link)");
+		return funcao;
 	}
 }
 
@@ -671,143 +808,6 @@ class PainelValidarJS extends PainelControllerJS {
 		String campo = Util.isEmpty(att.getRotulo()) ? att.getNome() : att.getRotulo();
 		iff.addReturn("'Campo " + campo + " Obrigat\u00F3rio.'");
 		return iff;
-	}
-}
-
-class PainelControllerJS extends AbstratoPanel {
-	private static final long serialVersionUID = 1L;
-
-	PainelControllerJS(AtributoPagina pagina) {
-		super(pagina);
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.controller_js";
-	}
-
-	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-
-		String filtro = AtributoUtil.getFiltro(raiz);
-
-		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
-		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
-
-		if (mapaControllerJS == null || mapaServiceJS == null) {
-			return;
-		}
-
-		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
-		funcao.addInstrucao("var vm = this").ql();
-		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
-		funcao.addInstrucao("vm." + filtro + " = {}").ql();
-
-		funcao.add(fnLimparFiltro(mapaControllerJS, filtro)).ql();
-		funcao.add(fnPesquisa(mapaControllerJS, mapaServiceJS, filtro)).ql();
-		funcao.add(fnPDF(mapaControllerJS, mapaServiceJS, filtro)).ql();
-		funcao.add(fnProcessarFile());
-
-		arquivo.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	protected Arquivo criarArquivo(Mapa mapaControllerJS, Mapa mapaServiceJS) {
-		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(
-				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
-						+ AtributoUtil.getComponente(mapaServiceJS) + "']");
-
-		String string = ", ";
-		Parametros params = new Parametros();
-		params.addVar("$scope").append(string);
-		params.addVar("$state").append(string);
-		params.addVar("NgTableParams").append(string);
-		params.addVar(AtributoUtil.getComponente(mapaServiceJS));
-		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS),
-				params);
-		arquivo.add(funcao);
-
-		return arquivo;
-	}
-
-	private Container fnLimparFiltro(Mapa mapaControllerJS, String filtro) {
-		FuncaoJS funcao = new FuncaoJS(
-				"vm." + mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO) + AtributoConstantes.FUNCTION2,
-				new Parametros());
-		funcao.addInstrucao("vm." + filtro + " = {}");
-		return funcao;
-	}
-
-	private Container fnPesquisa(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
-		FuncaoJS funcao = new FuncaoJS(
-				"vm." + AtributoUtil.getPesquisar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
-		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
-
-		Else elsee = new Else();
-		elsee.addComentario("Msg.error(msg);");
-		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
-
-		If iff = new If("isVazio(msg)", elsee);
-		funcao.add(iff);
-
-		InvocaProm invocaProm = new InvocaProm(
-				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getPesquisar(mapaServiceJS)
-						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
-		iff.add(invocaProm);
-
-		invocaProm.addInstrucao("var lista = result.data");
-		invocaProm.addInstrucao("vm.pesquisados.settings().dataset = lista");
-		invocaProm.addInstrucao("vm.pesquisados.reload()");
-
-		If ifLength = new If("lista.length === 0", null);
-		invocaProm.add(ifLength);
-		ifLength.addComentario("Msg.info('Nenhum registro encontrado');");
-		ifLength.addComentario("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');");
-
-		return funcao;
-	}
-
-	private Container fnPDF(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
-		FuncaoJS funcao = new FuncaoJS(
-				"vm." + AtributoUtil.getExportar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
-		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
-
-		Else elsee = new Else();
-		elsee.addComentario("Msg.error(msg);");
-		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
-
-		If iff = new If("isVazio(msg)", elsee);
-		funcao.add(iff);
-
-		InvocaProm invocaProm = new InvocaProm(
-				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getExportar(mapaServiceJS)
-						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
-		iff.add(invocaProm);
-
-		invocaProm.addComentario("var file = new Blob([result.data], {type: 'application/octet-stream'});");
-		invocaProm.addComentario("processarFile(file, \"arquivo.xls\");");
-
-		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
-		invocaProm.addInstrucao("processarFile(file, \"arquivo.pdf\")");
-
-		return funcao;
-	}
-
-	private Container fnProcessarFile() {
-		Parametros params = new Parametros();
-		params.addVar("file").append(", ").addVar("arquivo");
-		FuncaoJS funcao = new FuncaoJS("function processarFile", params);
-		funcao.addInstrucao("var downloadLink = angular.element('<a></a>')");
-		funcao.addInstrucao("downloadLink.attr('href', window.URL.createObjectURL(file))");
-		funcao.addInstrucao("downloadLink.attr('download', arquivo)");
-		funcao.addInstrucao("var link = downloadLink[0]");
-		funcao.addInstrucao("document.body.appendChild(link)");
-		funcao.addInstrucao("link.click()");
-		funcao.addInstrucao("document.body.removeChild(link)");
-		return funcao;
 	}
 }
 
