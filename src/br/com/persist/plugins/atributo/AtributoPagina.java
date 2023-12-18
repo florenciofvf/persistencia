@@ -1086,6 +1086,10 @@ class PainelService extends AbstratoPanel {
 		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
 		FuncaoInter funcao = new FuncaoInter(AtributoUtil.getListDTO(raiz), AtributoUtil.getPesquisar(mapaService),
 				params);
+		interfac.add(funcao).ql();
+
+		params = new Parametros(new Tipo("List<" + AtributoUtil.getDTO(raiz) + ">", "dtos"));
+		funcao = new FuncaoInter("byte[]", AtributoUtil.getExportar(mapaService), params);
 		interfac.add(funcao);
 
 		arquivo.gerar(0, pool);
