@@ -399,8 +399,8 @@ class PainelFichario extends JTabbedPane {
 	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		addAba(new PainelView(pagina));
-		addAba(new PainelValidarJS(pagina));
 		addAba(new PainelParamJS(pagina));
+		addAba(new PainelValidarJS(pagina));
 		addAba(new PainelControllerJS(pagina));
 		addAba(new PainelServiceJS(pagina));
 		addAba(new PainelDTO(pagina));
@@ -531,6 +531,60 @@ class PainelView extends AbstratoPanel {
 	}
 }
 
+class PainelParamJS extends PainelControllerJS {
+	private static final long serialVersionUID = 1L;
+
+	PainelParamJS(AtributoPagina pagina) {
+		super(pagina);
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.param_js";
+	}
+
+	@Override
+	void gerar(Mapa raiz, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+
+		String filtro = AtributoUtil.getFiltro(raiz);
+
+		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
+		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
+
+		if (mapaControllerJS == null || mapaServiceJS == null) {
+			return;
+		}
+
+		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
+		funcao.add(fnParam(filtro, atributos));
+
+		arquivo.gerar(0, pool);
+		setText(pool.toString());
+	}
+
+	private Container fnParam(String filtro, List<Atributo> atributos) {
+		FuncaoJS funcao = new FuncaoJS("function criarParam" + Util.capitalize(filtro), new Parametros());
+		funcao.add(objParam(filtro, atributos)).ql();
+		funcao.addReturn("param");
+		return funcao;
+	}
+
+	private Container objParam(String filtro, List<Atributo> atributos) {
+		VarObjJS obj = new VarObjJS("param");
+		for (int i = 0; i < atributos.size(); i++) {
+			Atributo att = atributos.get(i);
+			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack(filtro));
+			if (i + 1 < atributos.size()) {
+				obj.append(",");
+			}
+			obj.ql();
+		}
+		return obj;
+	}
+}
+
 class PainelValidarJS extends PainelControllerJS {
 	private static final long serialVersionUID = 1L;
 
@@ -617,60 +671,6 @@ class PainelValidarJS extends PainelControllerJS {
 		String campo = Util.isEmpty(att.getRotulo()) ? att.getNome() : att.getRotulo();
 		iff.addReturn("'Campo " + campo + " Obrigat\u00F3rio.'");
 		return iff;
-	}
-}
-
-class PainelParamJS extends PainelControllerJS {
-	private static final long serialVersionUID = 1L;
-
-	PainelParamJS(AtributoPagina pagina) {
-		super(pagina);
-	}
-
-	@Override
-	String getChaveTitulo() {
-		return "label.param_js";
-	}
-
-	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
-		StringPool pool = new StringPool();
-
-		String filtro = AtributoUtil.getFiltro(raiz);
-
-		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
-		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
-
-		if (mapaControllerJS == null || mapaServiceJS == null) {
-			return;
-		}
-
-		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
-		funcao.add(fnParam(filtro, atributos));
-
-		arquivo.gerar(0, pool);
-		setText(pool.toString());
-	}
-
-	private Container fnParam(String filtro, List<Atributo> atributos) {
-		FuncaoJS funcao = new FuncaoJS("function criarParam" + Util.capitalize(filtro), new Parametros());
-		funcao.add(objParam(filtro, atributos)).ql();
-		funcao.addReturn("param");
-		return funcao;
-	}
-
-	private Container objParam(String filtro, List<Atributo> atributos) {
-		VarObjJS obj = new VarObjJS("param");
-		for (int i = 0; i < atributos.size(); i++) {
-			Atributo att = atributos.get(i);
-			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack(filtro));
-			if (i + 1 < atributos.size()) {
-				obj.append(",");
-			}
-			obj.ql();
-		}
-		return obj;
 	}
 }
 
