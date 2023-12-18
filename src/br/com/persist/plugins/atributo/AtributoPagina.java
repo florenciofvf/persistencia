@@ -1145,7 +1145,13 @@ class PainelBean extends AbstratoPanel {
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
 				AtributoUtil.getPesquisar(mapaService), params);
 		funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
-		classe.add(new Anotacao("Override", null, true));
+		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, null, true));
+		classe.add(funcao).ql();
+
+		params = new Parametros(new Tipo("List<" + AtributoUtil.getDTO(raiz) + ">", "dtos"));
+		funcao = new Funcao(AtributoConstantes.PUBLIC, "byte[]", AtributoUtil.getExportar(mapaService), params);
+		funcao.addReturn("new byte[0]");
+		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, null, true));
 		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -1236,7 +1242,7 @@ class PainelDAOImpl extends AbstratoPanel {
 		funcao.addInstrucao(AtributoUtil.getListDTO(raiz) + " resp = new ArrayList<>()");
 		funcao.addComentario("entityManager.find...").ql();
 		funcao.addReturn("resp");
-		classe.add(new Anotacao("Override", null, true));
+		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, null, true));
 		classe.add(funcao);
 
 		arquivo.gerar(0, pool);

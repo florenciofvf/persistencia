@@ -18,6 +18,7 @@ public class AtributoConstantes {
 	public static final String PESQUISAR = "pesquisar";
 	public static final String FUNCTION = "function ";
 	public static final String END_POINT = "endPoint";
+	public static final String OVERRIDE = "Override";
 	public static final String EXPORTAR = "exportar";
 	public static final String ATRIBUTO = "atributo";
 	public static final String DAO_IMPL = "daoImpl";
