@@ -954,6 +954,9 @@ public class ObjetoContainer extends Panel {
 						Relacao relacao = lista.get(0);
 						relacao.processarHoraDiff(false);
 						objetoSuperficie.repaint();
+					} else if (lista.size() == 1 && Util.confirmar(ObjetoContainer.this,
+							ObjetoMensagens.getString("msg.ativar_diff_em_horas"), false)) {
+						ativarHoraAcao.actionPerformed(null);
 					}
 				});
 				diffHoraAcao.setActionListener(e -> {
