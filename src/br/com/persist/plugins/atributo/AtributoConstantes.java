@@ -12,6 +12,7 @@ public class AtributoConstantes {
 	public static final String LIMPAR_FILTRO = "limparFiltro";
 	public static final String COMPONENTE = "componente";
 	public static final String FUNCTION2 = " = function";
+	public static final String FUNCTION3 = ": function";
 	public static final String SERVICE_JS = "serviceJS";
 	public static final String IGNORADOS = "ignorados";
 	public static final String ATRIBUTOS = "atributos";

@@ -533,6 +533,7 @@ class PainelView extends AbstratoPanel {
 
 class PainelControllerJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
+	protected transient FuncaoJS funcaoController;
 
 	PainelControllerJS(AtributoPagina pagina) {
 		super(pagina);
@@ -557,7 +558,7 @@ class PainelControllerJS extends AbstratoPanel {
 		}
 
 		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
+		FuncaoJS funcao = funcaoController;
 		funcao.addInstrucao("var vm = this").ql();
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
 		funcao.addInstrucao("vm." + filtro + " = {}").ql();
@@ -575,7 +576,8 @@ class PainelControllerJS extends AbstratoPanel {
 		Arquivo arquivo = new Arquivo();
 		arquivo.addInstrucao(
 				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
-						+ AtributoUtil.getComponente(mapaServiceJS) + "']");
+						+ AtributoUtil.getComponente(mapaServiceJS) + "']")
+				.ql();
 
 		String string = ", ";
 		Parametros params = new Parametros();
@@ -583,9 +585,9 @@ class PainelControllerJS extends AbstratoPanel {
 		params.addVar("$state").append(string);
 		params.addVar("NgTableParams").append(string);
 		params.addVar(AtributoUtil.getComponente(mapaServiceJS));
-		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS),
+		funcaoController = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS),
 				params);
-		arquivo.add(funcao);
+		arquivo.add(funcaoController);
 
 		return arquivo;
 	}
@@ -694,7 +696,7 @@ class PainelParamJS extends PainelControllerJS {
 		}
 
 		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
+		FuncaoJS funcao = funcaoController;
 		funcao.add(fnParam(filtro, atributos));
 
 		arquivo.gerar(0, pool);
@@ -748,7 +750,7 @@ class PainelValidarJS extends PainelControllerJS {
 		}
 
 		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = (FuncaoJS) arquivo.get(1);
+		FuncaoJS funcao = funcaoController;
 
 		funcao.add(fnGetTime()).ql();
 		funcao.add(fnValidar(filtro, atributos));
@@ -835,7 +837,7 @@ class PainelServiceJS extends AbstratoPanel {
 		}
 
 		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(AtributoUtil.getComponente(mapaServiceJS) + ".$inject = ['Restangular']");
+		arquivo.addInstrucao(AtributoUtil.getComponente(mapaServiceJS) + ".$inject = ['Restangular']").ql();
 
 		Parametros params = new Parametros(new Var("Restangular"));
 		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaServiceJS), params);
@@ -854,14 +856,15 @@ class PainelServiceJS extends AbstratoPanel {
 
 	private Container fnPesquisar(Mapa mapaServiceJS, Mapa mapaRest) {
 		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS(AtributoUtil.getPesquisar(mapaServiceJS) + ": function", params);
+		FuncaoJS funcao = new FuncaoJS(AtributoUtil.getPesquisar(mapaServiceJS) + AtributoConstantes.FUNCTION3, params);
 		funcao.addReturn("Restangular.all(PATH).customGET('" + AtributoUtil.getPesquisar(mapaRest) + "', filtro)");
 		return funcao;
 	}
 
 	private Container fnGerarPDF(Mapa mapaServiceJS, Mapa mapaRest) {
 		Parametros params = new Parametros(new Var(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS("," + AtributoUtil.getExportar(mapaServiceJS) + ": function", params);
+		FuncaoJS funcao = new FuncaoJS(AtributoUtil.getExportar(mapaServiceJS) + AtributoConstantes.FUNCTION3, params);
+		funcao.setStrFinal("");
 		funcao.addReturn("Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('"
 				+ AtributoUtil.getExportar(mapaRest) + "', filtro)");
 		return funcao;

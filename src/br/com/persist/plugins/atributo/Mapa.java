@@ -117,10 +117,11 @@ public class Mapa {
 	}
 
 	private String tabular(int i) {
+		i *= 4;
 		StringBuilder sb = new StringBuilder();
 		int c = 0;
 		while (c < i) {
-			sb.append("\t");
+			sb.append(" ");
 			c++;
 		}
 		return sb.toString();
