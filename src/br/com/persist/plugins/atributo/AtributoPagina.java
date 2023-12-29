@@ -247,10 +247,9 @@ public class AtributoPagina extends Panel {
 						AtributoHandlerImpl handler = new AtributoHandlerImpl();
 						AtributoProcessador processador = new AtributoProcessador(handler, textArea.getText());
 						processador.processar();
-						Mapa mapa = handler.getRaiz();
-						raiz = new Raiz(mapa);
-						if (mapa != null && mapa.get(AtributoConstantes.ATRIBUTOS) != null) {
-							Mapa mapAtributos = (Mapa) mapa.get(AtributoConstantes.ATRIBUTOS);
+						raiz = new Raiz(handler.getRaiz());
+						if (raiz.getMapaAtributos() != null) {
+							Mapa mapAtributos = raiz.getMapaAtributos();
 							List<Atributo> atributos = new ArrayList<>();
 							for (Object valor : mapAtributos.getValores()) {
 								Atributo att = new Atributo();
@@ -1137,7 +1136,7 @@ class PainelBean extends AbstratoPanel {
 		arquivo.add(classe);
 
 		classe.add(new Anotacao("Inject", null, true));
-		Campo service = new Campo(AtributoUtil.getTipoDAO(mapaDAO));
+		Campo service = new Campo(raiz.getTipoDAO());
 		classe.add(service).ql();
 
 		Parametros params = new Parametros(raiz.getTipoFilter());

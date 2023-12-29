@@ -70,6 +70,14 @@ public class Raiz {
 		return mapa.getMapa(AtributoConstantes.DAO);
 	}
 
+	public Tipo getTipoDAO() {
+		Mapa mapaDAO = getMapaDAO();
+		if (mapaDAO == null) {
+			return null;
+		}
+		return new Tipo(AtributoUtil.getComponente(mapaDAO), "dao");
+	}
+
 	public String getDAOImpl() {
 		return mapa.getString(AtributoConstantes.DAO_IMPL);
 	}
