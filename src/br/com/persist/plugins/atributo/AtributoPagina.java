@@ -69,7 +69,7 @@ public class AtributoPagina extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
-	private transient Mapa mapa;
+	private transient Raiz raiz;
 
 	public AtributoPagina(File file) {
 		painelAtributo = new PainelAtributo(file);
@@ -78,11 +78,11 @@ public class AtributoPagina extends Panel {
 		abrir();
 	}
 
-	public Mapa getMapa() {
-		if (mapa == null) {
-			mapa = new Mapa();
+	public Raiz getRaiz() {
+		if (raiz == null) {
+			raiz = new Raiz();
 		}
-		return mapa;
+		return raiz;
 	}
 
 	private void montarLayout() {
@@ -247,7 +247,8 @@ public class AtributoPagina extends Panel {
 						AtributoHandlerImpl handler = new AtributoHandlerImpl();
 						AtributoProcessador processador = new AtributoProcessador(handler, textArea.getText());
 						processador.processar();
-						mapa = handler.getRaiz();
+						Mapa mapa = handler.getRaiz();
+						raiz = new Raiz(mapa);
 						if (mapa != null && mapa.get(AtributoConstantes.ATRIBUTOS) != null) {
 							Mapa mapAtributos = (Mapa) mapa.get(AtributoConstantes.ATRIBUTOS);
 							List<Atributo> atributos = new ArrayList<>();
@@ -462,7 +463,7 @@ abstract class AbstratoPanel extends Panel {
 					lista.add(att);
 				}
 			}
-			gerar(pagina.getMapa(), lista);
+			gerar(pagina.getRaiz(), lista);
 		}
 
 		@Override
@@ -478,7 +479,7 @@ abstract class AbstratoPanel extends Panel {
 		textArea.setText(string);
 	}
 
-	abstract void gerar(Mapa raiz, List<Atributo> atributos);
+	abstract void gerar(Raiz raiz, List<Atributo> atributos);
 
 	abstract String getChaveTitulo();
 }
@@ -496,7 +497,7 @@ class PainelView extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		if (!atributos.isEmpty()) {
@@ -509,7 +510,7 @@ class PainelView extends AbstratoPanel {
 			pool.tab(2).append("</div>").ql();
 		}
 
-		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
+		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 
 		if (mapaControllerJS == null) {
 			return;
@@ -544,13 +545,13 @@ class PainelControllerJS extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = AtributoUtil.getFiltro(raiz);
+		String filtro = raiz.getFiltro();
 
-		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
-		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
+		Mapa mapaControllerJS = raiz.getMapaControllerJS();
+		Mapa mapaServiceJS = raiz.getMapaServiceJS();
 
 		if (mapaControllerJS == null || mapaServiceJS == null) {
 			return;
@@ -681,13 +682,13 @@ class PainelParamJS extends PainelControllerJS {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = AtributoUtil.getFiltro(raiz);
+		String filtro = raiz.getFiltro();
 
-		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
-		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
+		Mapa mapaControllerJS = raiz.getMapaControllerJS();
+		Mapa mapaServiceJS = raiz.getMapaServiceJS();
 
 		if (mapaControllerJS == null || mapaServiceJS == null) {
 			return;
@@ -735,13 +736,13 @@ class PainelValidarJS extends PainelControllerJS {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = AtributoUtil.getFiltro(raiz);
+		String filtro = raiz.getFiltro();
 
-		Mapa mapaControllerJS = AtributoUtil.getMapaControllerJS(raiz);
-		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
+		Mapa mapaControllerJS = raiz.getMapaControllerJS();
+		Mapa mapaServiceJS = raiz.getMapaServiceJS();
 
 		if (mapaControllerJS == null || mapaServiceJS == null) {
 			return;
@@ -824,11 +825,11 @@ class PainelServiceJS extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		Mapa mapaServiceJS = AtributoUtil.getMapaServiceJS(raiz);
-		Mapa mapaRest = AtributoUtil.getMapaRest(raiz);
+		Mapa mapaServiceJS = raiz.getMapaServiceJS();
+		Mapa mapaRest = raiz.getMapaRest();
 
 		if (mapaServiceJS == null || mapaRest == null) {
 			return;
@@ -881,9 +882,9 @@ class PainelDTO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
-		Classe classe = new Classe(AtributoUtil.getDTO(raiz));
+		Classe classe = new Classe(raiz.getDTO());
 
 		for (Atributo att : atributos) {
 			Campo campo = new Campo(att.criarTipo());
@@ -916,7 +917,7 @@ class PainelFilter extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -924,7 +925,7 @@ class PainelFilter extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.QueryParam").ql();
 		}
 
-		Classe classe = new Classe(AtributoUtil.getFilter(raiz));
+		Classe classe = new Classe(raiz.getFilter());
 		arquivo.add(classe);
 
 		int i = 0;
@@ -963,11 +964,11 @@ class PainelRest extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		Mapa mapaService = AtributoUtil.getMapaService(raiz);
-		Mapa mapaRest = AtributoUtil.getMapaRest(raiz);
+		Mapa mapaService = raiz.getMapaService();
+		Mapa mapaRest = raiz.getMapaRest();
 
 		if (mapaService == null || mapaRest == null) {
 			return;
@@ -1010,20 +1011,20 @@ class PainelRest extends AbstratoPanel {
 		return classe;
 	}
 
-	private Classe criarGetListaDTO(Mapa raiz, Mapa mapaRest, Mapa mapaService, Classe classe) {
+	private Classe criarGetListaDTO(Raiz raiz, Mapa mapaRest, Mapa mapaService, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
 		classe.add(new Anotacao("Path", Util.citar2(AtributoUtil.getPesquisar(mapaRest)), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
 		classe.add(new Anotacao("Produces", AtributoConstantes.APPLICATION_JSON, true));
 
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
-				AtributoUtil.getPesquisar(mapaRest), beanParam(raiz));
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, raiz.getListDTO(), AtributoUtil.getPesquisar(mapaRest),
+				beanParam(raiz));
 		funcao.addReturn("service." + AtributoUtil.getPesquisarFilter(mapaService));
 		classe.add(funcao);
 		return classe;
 	}
 
-	private Classe criarGetGerarPDF(Mapa raiz, Mapa mapaRest, Mapa mapaService, Classe classe) {
+	private Classe criarGetGerarPDF(Raiz raiz, Mapa mapaRest, Mapa mapaService, Classe classe) {
 		classe.add(new Anotacao("GET", null, true));
 		classe.add(new Anotacao("Path", Util.citar2(AtributoUtil.getExportar(mapaRest)), true));
 		classe.add(new Anotacao("Consumes", AtributoConstantes.APPLICATION_JSON, true));
@@ -1031,8 +1032,7 @@ class PainelRest extends AbstratoPanel {
 
 		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, "Response", AtributoUtil.getExportar(mapaRest),
 				beanParam(raiz));
-		funcao.addInstrucao(
-				AtributoUtil.getListDTO(raiz) + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
+		funcao.addInstrucao(raiz.getListDTO() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
 		funcao.addInstrucao("byte[] bytes = servicePDF." + AtributoUtil.getExportar(mapaService) + "(dtos)").ql();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
 		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
@@ -1042,10 +1042,10 @@ class PainelRest extends AbstratoPanel {
 		return classe;
 	}
 
-	private Parametros beanParam(Mapa raiz) {
+	private Parametros beanParam(Raiz raiz) {
 		Parametros params = new Parametros(new Anotacao("BeanParam", null));
 		params.add(new Espaco());
-		params.add(AtributoUtil.getTipoFilter(raiz));
+		params.add(raiz.getTipoFilter());
 		return params;
 	}
 }
@@ -1063,7 +1063,7 @@ class PainelService extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1074,7 +1074,7 @@ class PainelService extends AbstratoPanel {
 			arquivo.add(new Anotacao("Local", null, true));
 		}
 
-		Mapa mapaService = AtributoUtil.getMapaService(raiz);
+		Mapa mapaService = raiz.getMapaService();
 
 		if (mapaService == null) {
 			return;
@@ -1083,12 +1083,11 @@ class PainelService extends AbstratoPanel {
 		Interface interfac = new Interface(AtributoUtil.getComponente(mapaService));
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
-		FuncaoInter funcao = new FuncaoInter(AtributoUtil.getListDTO(raiz), AtributoUtil.getPesquisar(mapaService),
-				params);
+		Parametros params = new Parametros(raiz.getTipoFilter());
+		FuncaoInter funcao = new FuncaoInter(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService), params);
 		interfac.add(funcao).ql();
 
-		params = new Parametros(new Tipo("List<" + AtributoUtil.getDTO(raiz) + ">", "dtos"));
+		params = new Parametros(new Tipo(raiz.getListDTO(), "dtos"));
 		funcao = new FuncaoInter("byte[]", AtributoUtil.getExportar(mapaService), params);
 		interfac.add(funcao);
 
@@ -1110,7 +1109,7 @@ class PainelBean extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1126,9 +1125,9 @@ class PainelBean extends AbstratoPanel {
 			arquivo.add(new Anotacao("TransactionManagement", "TransactionManagementType.CONTAINER", true));
 		}
 
-		String bean = AtributoUtil.getBean(raiz);
-		Mapa mapaDAO = AtributoUtil.getMapaDAO(raiz);
-		Mapa mapaService = AtributoUtil.getMapaService(raiz);
+		String bean = raiz.getBean();
+		Mapa mapaDAO = raiz.getMapaDAO();
+		Mapa mapaService = raiz.getMapaService();
 
 		if (mapaDAO == null || mapaService == null) {
 			return;
@@ -1141,14 +1140,14 @@ class PainelBean extends AbstratoPanel {
 		Campo service = new Campo(AtributoUtil.getTipoDAO(mapaDAO));
 		classe.add(service).ql();
 
-		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
-				AtributoUtil.getPesquisar(mapaService), params);
+		Parametros params = new Parametros(raiz.getTipoFilter());
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService),
+				params);
 		funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
 		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, null, true));
 		classe.add(funcao).ql();
 
-		params = new Parametros(new Tipo("List<" + AtributoUtil.getDTO(raiz) + ">", "dtos"));
+		params = new Parametros(new Tipo(raiz.getListDTO(), "dtos"));
 		funcao = new Funcao(AtributoConstantes.PUBLIC, "byte[]", AtributoUtil.getExportar(mapaService), params);
 		funcao.addReturn("new byte[0]");
 		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, null, true));
@@ -1172,7 +1171,7 @@ class PainelDAO extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1180,7 +1179,7 @@ class PainelDAO extends AbstratoPanel {
 			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
 		}
 
-		Mapa mapaDAO = AtributoUtil.getMapaDAO(raiz);
+		Mapa mapaDAO = raiz.getMapaDAO();
 
 		if (mapaDAO == null) {
 			return;
@@ -1189,8 +1188,8 @@ class PainelDAO extends AbstratoPanel {
 		Interface interfac = new Interface(AtributoUtil.getComponente(mapaDAO));
 		arquivo.add(interfac);
 
-		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
-		FuncaoInter funcao = new FuncaoInter(AtributoUtil.getListDTO(raiz), AtributoUtil.getPesquisar(mapaDAO), params);
+		Parametros params = new Parametros(raiz.getTipoFilter());
+		FuncaoInter funcao = new FuncaoInter(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO), params);
 		interfac.add(funcao);
 
 		arquivo.gerar(0, pool);
@@ -1211,7 +1210,7 @@ class PainelDAOImpl extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1222,8 +1221,8 @@ class PainelDAOImpl extends AbstratoPanel {
 			arquivo.addImport("javax.persistence.PersistenceContext").ql();
 		}
 
-		String daoImpl = AtributoUtil.getDAOImpl(raiz);
-		Mapa mapaDAO = AtributoUtil.getMapaDAO(raiz);
+		String daoImpl = raiz.getDAOImpl();
+		Mapa mapaDAO = raiz.getMapaDAO();
 
 		if (mapaDAO == null) {
 			return;
@@ -1236,10 +1235,10 @@ class PainelDAOImpl extends AbstratoPanel {
 		Campo entityManager = new Campo(new Tipo("EntityManager", "entityManager"));
 		classe.add(entityManager).ql();
 
-		Parametros params = new Parametros(AtributoUtil.getTipoFilter(raiz));
-		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, AtributoUtil.getListDTO(raiz),
-				AtributoUtil.getPesquisar(mapaDAO), params);
-		funcao.addInstrucao(AtributoUtil.getListDTO(raiz) + " resp = new ArrayList<>()");
+		Parametros params = new Parametros(raiz.getTipoFilter());
+		Funcao funcao = new Funcao(AtributoConstantes.PUBLIC, raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO),
+				params);
+		funcao.addInstrucao(raiz.getListDTO() + " resp = new ArrayList<>()");
 		funcao.addComentario("entityManager.find...").ql();
 		funcao.addReturn("resp");
 		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, null, true));
@@ -1263,7 +1262,7 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	@Override
-	void gerar(Mapa raiz, List<Atributo> atributos) {
+	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1277,8 +1276,8 @@ class PainelTest extends AbstratoPanel {
 			arquivo.add(new Anotacao("RunWith", "MockitoJUnitRunner.class", true));
 		}
 
-		Mapa mapaService = AtributoUtil.getMapaService(raiz);
-		Mapa mapaTest = AtributoUtil.getMapaTest(raiz);
+		Mapa mapaService = raiz.getMapaService();
+		Mapa mapaTest = raiz.getMapaTest();
 
 		if (mapaService == null || mapaTest == null) {
 			return;
