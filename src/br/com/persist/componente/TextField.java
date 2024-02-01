@@ -25,6 +25,10 @@ public class TextField extends JTextField {
 		setText(Constantes.VAZIO);
 	}
 
+	private boolean lower(char c) {
+		return c >= 'a' && c <= 'z';
+	}
+
 	public void ignorarMinusculo() {
 		addKeyListener(new KeyAdapter() {
 			@Override
@@ -46,10 +50,6 @@ public class TextField extends JTextField {
 				if (lower(e.getKeyChar())) {
 					e.consume();
 				}
-			}
-
-			private boolean lower(char c) {
-				return c >= 'a' && c <= 'z';
 			}
 		});
 	}
@@ -74,6 +74,39 @@ public class TextField extends JTextField {
 			public void processar(KeyEvent e) {
 				if (e.getKeyChar() == ' ') {
 					e.consume();
+				}
+			}
+		});
+	}
+
+	public void somenteLetras() {
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				char ch = e.getKeyChar();
+				setEditable(Character.isLetter(ch) || Character.isISOControl(ch));
+			}
+		});
+	}
+
+	public void somenteLetrasUpper() {
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				processar(e);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				processar(e);
+			}
+
+			public void processar(KeyEvent e) {
+				char ch = e.getKeyChar();
+				boolean b = Character.isLetter(ch) || Character.isISOControl(ch);
+				setEditable(b);
+				if (b && lower(ch)) {
+					setText(getText().toUpperCase());
 				}
 			}
 		});

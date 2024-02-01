@@ -177,6 +177,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 		buttonGerar.setIcon(Icones.EXECUTAR);
 		buttonGerar.addActionListener(e -> gerarArquivos());
+		txtDiretorioRecursos.somenteLetrasUpper();
 	}
 
 	private Panel labelTextField(String chaveRotulo, TextField textField) {
