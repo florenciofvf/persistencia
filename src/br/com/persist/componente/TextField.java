@@ -29,6 +29,10 @@ public class TextField extends JTextField {
 		return c >= 'a' && c <= 'z';
 	}
 
+	private boolean upper(char c) {
+		return c >= 'A' && c <= 'Z';
+	}
+
 	public void ignorarMinusculo() {
 		addKeyListener(new KeyAdapter() {
 			@Override
@@ -128,7 +132,7 @@ public class TextField extends JTextField {
 				char ch = e.getKeyChar();
 				boolean b = Character.isLetter(ch) || Character.isISOControl(ch);
 				setEditable(b);
-				if (b && lower(ch)) {
+				if (b && upper(ch)) {
 					setText(getText().toLowerCase());
 				}
 			}
