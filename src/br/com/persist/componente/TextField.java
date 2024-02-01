@@ -111,4 +111,27 @@ public class TextField extends JTextField {
 			}
 		});
 	}
+
+	public void somenteLetrasLower() {
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				processar(e);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				processar(e);
+			}
+
+			public void processar(KeyEvent e) {
+				char ch = e.getKeyChar();
+				boolean b = Character.isLetter(ch) || Character.isISOControl(ch);
+				setEditable(b);
+				if (b && lower(ch)) {
+					setText(getText().toLowerCase());
+				}
+			}
+		});
+	}
 }

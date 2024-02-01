@@ -68,6 +68,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		cmbIconePlugin.setRenderer(new ItemRenderer());
 		toolbar.ini(janela);
 		montarLayout();
+		configurar();
 	}
 
 	public GeraPluginDialogo getGeraPluginDialogo() {
@@ -177,6 +178,11 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 		buttonGerar.setIcon(Icones.EXECUTAR);
 		buttonGerar.addActionListener(e -> gerarArquivos());
+	}
+
+	private void configurar() {
+		txtNomePlugin.somenteLetras();
+		txtMinimPlugin.somenteLetrasLower();
 		txtDiretorioRecursos.somenteLetrasUpper();
 	}
 
