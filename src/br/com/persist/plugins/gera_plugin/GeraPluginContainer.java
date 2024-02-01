@@ -221,27 +221,43 @@ public class GeraPluginContainer extends AbstratoContainer {
 		return button;
 	}
 
+	private String mensagemObrigatoria(String key) {
+		return GeraPluginMensagens.getString("erro.campo_obrigatorio", GeraPluginMensagens.getString(key));
+	}
+
 	private List<String> validar() {
 		List<String> resp = new ArrayList<>();
-		if (Util.isEmpty(txtNomePlugin.getText()) || caracterInvalido(txtNomePlugin.getText())) {
+
+		if (Util.isEmpty(txtDiretorioDestino.getText())) {
+			resp.add(mensagemObrigatoria("label.diretorio_destino"));
+		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
+		}
+
+		if (Util.isEmpty(txtNomePlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.nome_plugin"));
+		} else if (caracterInvalido(txtNomePlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.nome_plugin"));
 		} else if (txtNomePlugin.getText().length() < 2) {
 			resp.add(GeraPluginMensagens.getString("erro.nome_plugin_curto"));
 		}
-		if (Util.isEmpty(txtMinimPlugin.getText()) || caracterInvalido(txtMinimPlugin.getText())) {
+
+		if (Util.isEmpty(txtMinimPlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.nome_min_plugin"));
+		} else if (caracterInvalido(txtMinimPlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
 		}
-		if (Util.isEmpty(txtDiretorioDestino.getText())) {
-			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_vazio"));
-		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
-			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
-		}
-		if (Util.isEmpty(txtPacotePlugin.getText()) || caracterInvalidoPacote(txtPacotePlugin.getText())) {
+
+		if (Util.isEmpty(txtPacotePlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.pacote_plugin"));
+		} else if (caracterInvalidoPacote(txtPacotePlugin.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
 		}
+
 		if (!Util.isEmpty(txtDiretorioRecursos.getText()) && caracterInvalido(txtDiretorioRecursos.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos"));
 		}
+
 		return resp;
 	}
 
