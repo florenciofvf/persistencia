@@ -20,7 +20,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
-import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -172,9 +173,10 @@ public class GeraPluginContainer extends AbstratoContainer {
 		muro.camada(Muro.panelGrid(chkComHandler));
 		muro.camada(Muro.panelGrid(chkComModelo));
 		muro.camada(buttonGerar);
-		muro.camada(new JSeparator());
-		muro.camada(textArea);
-		add(BorderLayout.CENTER, muro);
+
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, muro, textArea);
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(.77));
+		add(BorderLayout.CENTER, split);
 
 		buttonGerar.setIcon(Icones.EXECUTAR);
 		buttonGerar.addActionListener(e -> gerarArquivos());
