@@ -16,6 +16,7 @@ class Config {
 	String pacote;
 	String icone;
 	File destino;
+	String meta;
 
 	String processar(String string) {
 		string = Util.replaceAll(string, tag("decapLower"), nomeCaixaBaixa);

@@ -1163,6 +1163,21 @@ public class Util {
 		return s.substring(i);
 	}
 
+	public static String trim(String s, char c, boolean ini) {
+		if (s != null) {
+			if (ini) {
+				while (s.length() > 0 && s.charAt(0) == c) {
+					s = s.substring(1);
+				}
+			} else {
+				while (s.length() > 0 && s.charAt(s.length() - 1) == c) {
+					s = s.substring(0, s.length() - 1);
+				}
+			}
+		}
+		return s;
+	}
+
 	public static String concatenar(String... strings) {
 		if (strings == null) {
 			return Constantes.VAZIO;

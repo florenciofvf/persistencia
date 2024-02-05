@@ -348,7 +348,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		config.destino = new File(txtDiretorioDestino.getText());
 		String nome = txtNomePlugin.getText();
 		config.nomeMin = txtMinimPlugin.getText();
-		config.pacote = txtPacotePlugin.getText();
+		config.pacote = trimP(txtPacotePlugin.getText());
 		config.recurso = txtDiretorioRecursos.getText();
 		config.nomeCapitalizado = Util.capitalize(nome);
 		config.nomeDecapitalizado = nome.substring(0, 1).toLowerCase() + nome.substring(1);
@@ -357,6 +357,14 @@ public class GeraPluginContainer extends AbstratoContainer {
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.configuracao = chkComConfiguracao.isSelected();
+		if (!Util.isEmpty(config.recurso) && !config.recurso.equals(config.nomeCaixaAlta)) {
+			config.meta = "\tpublic static final String " + config.recurso + " = \"" + config.recurso.toLowerCase()
+					+ "\";";
+		}
+	}
+
+	private static String trimP(String string) {
+		return Util.trim(Util.trim(string, '.', true), '.', false);
 	}
 
 	@Override
