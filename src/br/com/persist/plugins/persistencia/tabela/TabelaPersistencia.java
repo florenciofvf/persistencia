@@ -20,6 +20,7 @@ import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -335,6 +336,7 @@ public class TabelaPersistencia extends JTable {
 		private Action larguraTituloAcao = acaoMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = acaoMenu("label.largura_minima");
 		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();
+		private MenuExibirLinhas menuExibirLinhas = new MenuExibirLinhas();
 		private ItemClassBiblio itemClassBiblio = new ItemClassBiblio();
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private MenuMetadados menuMetadados = new MenuMetadados();
@@ -361,6 +363,7 @@ public class TabelaPersistencia extends JTable {
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_t", false, false));
 			add(true, menuCopiarLinhas);
+			add(menuExibirLinhas);
 			add(true, menuIN);
 			eventos();
 		}
@@ -757,6 +760,31 @@ public class TabelaPersistencia extends JTable {
 				if (!Util.isEmpty(string)) {
 					Util.setContentTransfered(string);
 					setIcon(Icones.SUCESSO);
+				}
+			}
+		}
+
+		private class MenuExibirLinhas extends Menu {
+			private Action msgPadraoAcao = acaoMenu("label.msg_padrao");
+			private Action msgOptionAcao = acaoMenu("label.msg_option");
+			private static final long serialVersionUID = 1L;
+
+			private MenuExibirLinhas() {
+				super(TabelaMensagens.getString("label.exibir_valores"), false, null);
+				addMenuItem(msgPadraoAcao);
+				addMenuItem(msgOptionAcao);
+				msgPadraoAcao.setActionListener(e -> exibirValores(false));
+				msgOptionAcao.setActionListener(e -> exibirValores(true));
+			}
+
+			private void exibirValores(boolean option) {
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
+				String string = Util.getStringLista(lista, Constantes.QL2, true, false);
+				if (option) {
+					JOptionPane.showMessageDialog(TabelaPersistencia.this, string, "Mensagem",
+							JOptionPane.PLAIN_MESSAGE);
+				} else {
+					Util.mensagem(TabelaPersistencia.this, string);
 				}
 			}
 		}
