@@ -67,9 +67,18 @@ import br.com.persist.mensagem.MensagemFormulario;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
+	private static boolean mensagemHtml;
 	private static Random random;
 
 	private Util() {
+	}
+
+	public static boolean isMensagemHtml() {
+		return mensagemHtml;
+	}
+
+	public static void setMensagemHtml(boolean mensagemHtml) {
+		Util.mensagemHtml = mensagemHtml;
 	}
 
 	public static boolean isEmpty(String s) {

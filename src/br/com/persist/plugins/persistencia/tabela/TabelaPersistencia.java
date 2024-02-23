@@ -20,7 +20,6 @@ import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -781,11 +780,17 @@ public class TabelaPersistencia extends JTable {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String string = Util.getStringLista(lista, Constantes.QL2, true, false);
 				if (option) {
-					JOptionPane.showMessageDialog(TabelaPersistencia.this, string, "Mensagem",
-							JOptionPane.PLAIN_MESSAGE);
-				} else {
-					Util.mensagem(TabelaPersistencia.this, string);
+					StringBuilder sb = new StringBuilder("<html>");
+					sb.append("<head>");
+					sb.append("</head>");
+					sb.append("<body>");
+					sb.append(string);
+					sb.append("</body>");
+					sb.append("</html>");
+					Util.setMensagemHtml(true);
+					string = sb.toString();
 				}
+				Util.mensagem(TabelaPersistencia.this, string);
 			}
 		}
 

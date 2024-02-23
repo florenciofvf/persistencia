@@ -28,6 +28,11 @@ public class MensagemContainer extends Panel {
 
 	public MensagemContainer(Janela janela, String string, File file) {
 		this.file = file;
+		if (Util.isMensagemHtml()) {
+			textArea.setContentType("text/html");
+			textArea.setEditable(false);
+			Util.setMensagemHtml(false);
+		}
 		textArea.setText(string);
 		toolbar.ini(janela);
 		montarLayout();
