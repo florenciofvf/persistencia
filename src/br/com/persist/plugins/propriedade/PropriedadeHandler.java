@@ -6,13 +6,6 @@ import org.xml.sax.SAXException;
 import br.com.persist.marca.XMLHandler;
 
 class PropriedadeHandler extends XMLHandler {
-	public static final String ATRIBUTO = "atributo";
-	public static final String PROPERTY = "property";
-	public static final String CONFIG = "config";
-	public static final String BLOCO = "bloco";
-	public static final String PARAM = "param";
-	public static final String VALUE = "value";
-	public static final String NAME = "name";
 	private Container selecionado;
 	private Raiz raiz;
 
@@ -37,25 +30,21 @@ class PropriedadeHandler extends XMLHandler {
 		return raiz;
 	}
 
-	private String getName(Attributes atts) {
-		return atts.getValue(NAME);
-	}
-
-	private String getValue(Attributes atts) {
-		return atts.getValue(VALUE);
+	private String get(Attributes atts, String chave) {
+		return atts.getValue(chave);
 	}
 
 	private Container criar(String qName, Attributes atts) {
-		if (CONFIG.equals(qName)) {
-			return new Config(getName(atts));
-		} else if (ATRIBUTO.equals(qName)) {
-			return new Atributo(getName(atts), getValue(atts));
-		} else if (BLOCO.equals(qName)) {
-			return new Bloco(getName(atts));
-		} else if (PARAM.equals(qName)) {
-			return new Param(getName(atts), getValue(atts));
-		} else if (PROPERTY.equals(qName)) {
-			return new Propriedade(getName(atts), getValue(atts));
+		if ("objeto".equals(qName)) {
+			return new Objeto(get(atts, "id"));
+		} else if ("campo".equals(qName)) {
+			return new Campo(get(atts, "nome"), get(atts, "valor"));
+		} else if ("bloco".equals(qName)) {
+			return new Bloco(get(atts, "nome"));
+		} else if ("map".equals(qName)) {
+			return new Map(get(atts, "chave"), get(atts, "idObjeto"));
+		} else if ("property".equals(qName)) {
+			return new Propriedade(get(atts, "name"), get(atts, "value"));
 		}
 		throw new IllegalStateException();
 	}

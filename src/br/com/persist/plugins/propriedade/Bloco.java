@@ -1,28 +1,27 @@
 package br.com.persist.plugins.propriedade;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 public class Bloco extends Container {
-	private final Map<String, String> mapString;
+	private List<Map> cacheMaps;
+	private final String nome;
 
 	public Bloco(String nome) {
-		super(nome);
-		mapString = new HashMap<>();
+		this.nome = Objects.requireNonNull(nome);
 	}
 
-	public Map<String, String> getMapString() {
-		return mapString;
+	public String getNome() {
+		return nome;
 	}
 
 	@Override
 	public void adicionar(Container c) {
-		if (c instanceof Param || c instanceof Propriedade) {
+		if (c instanceof Map || c instanceof Propriedade) {
 			super.adicionar(c);
 		} else {
 			throw new IllegalStateException();
@@ -31,35 +30,10 @@ public class Bloco extends Container {
 
 	@Override
 	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
-		Map<String, Config> mapConfig = ((Raiz) pai).getMapConfig();
-		List<Param> params = getParams();
-		mapString.clear();
-		for (Param param : params) {
-			Config config = mapConfig.get(param.getValor());
-			if (config != null) {
-				put(param, config);
-			}
-		}
 		PropriedadeUtil.bloco(getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
 			prop.processar(this, doc);
 		}
-	}
-
-	private void put(Param param, Config config) {
-		for (Atributo att : config.getAtributos()) {
-			mapString.put(param.getNome() + "." + att.getNome(), att.getValor());
-		}
-	}
-
-	private List<Param> getParams() {
-		List<Param> resp = new ArrayList<>();
-		for (Container c : getFilhos()) {
-			if (c instanceof Param) {
-				resp.add((Param) c);
-			}
-		}
-		return resp;
 	}
 
 	private List<Propriedade> getPropriedades() {
@@ -70,5 +44,33 @@ public class Bloco extends Container {
 			}
 		}
 		return resp;
+	}
+
+	List<Map> getCacheMaps() {
+		if (cacheMaps != null) {
+			return cacheMaps;
+		}
+		cacheMaps = new ArrayList<>();
+		for (Container c : getFilhos()) {
+			if (c instanceof Map) {
+				cacheMaps.add((Map) c);
+			}
+		}
+		return cacheMaps;
+	}
+
+	Objeto getObjeto(String id) {
+		Raiz raiz = (Raiz) pai;
+		for (Objeto obj : raiz.getCacheObjetos()) {
+			if (id.equals(obj.getId())) {
+				return obj;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "Bloco [nome=" + nome + "]";
 	}
 }

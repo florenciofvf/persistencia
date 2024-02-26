@@ -1,28 +1,17 @@
 package br.com.persist.plugins.propriedade;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 public class Raiz extends Container {
-	private final Map<String, Config> mapConfig;
-
-	public Raiz() {
-		super(null);
-		mapConfig = new HashMap<>();
-	}
-
-	public Map<String, Config> getMapConfig() {
-		return mapConfig;
-	}
+	private List<Objeto> cacheObjetos;
 
 	@Override
 	public void adicionar(Container c) {
-		if (c instanceof Config || c instanceof Bloco) {
+		if (c instanceof Objeto || c instanceof Bloco) {
 			super.adicionar(c);
 		} else {
 			throw new IllegalStateException();
@@ -31,24 +20,9 @@ public class Raiz extends Container {
 
 	@Override
 	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
-		List<Config> configs = getConfigs();
-		mapConfig.clear();
-		for (Config config : configs) {
-			mapConfig.put(config.getNome(), config);
-		}
 		for (Bloco bloco : getBlocos()) {
 			bloco.processar(this, doc);
 		}
-	}
-
-	private List<Config> getConfigs() {
-		List<Config> resp = new ArrayList<>();
-		for (Container c : getFilhos()) {
-			if (c instanceof Config) {
-				resp.add((Config) c);
-			}
-		}
-		return resp;
 	}
 
 	private List<Bloco> getBlocos() {
@@ -59,5 +33,18 @@ public class Raiz extends Container {
 			}
 		}
 		return resp;
+	}
+
+	List<Objeto> getCacheObjetos() {
+		if (cacheObjetos != null) {
+			return cacheObjetos;
+		}
+		cacheObjetos = new ArrayList<>();
+		for (Container c : getFilhos()) {
+			if (c instanceof Objeto) {
+				cacheObjetos.add((Objeto) c);
+			}
+		}
+		return cacheObjetos;
 	}
 }

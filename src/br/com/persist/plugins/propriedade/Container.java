@@ -8,13 +8,10 @@ import javax.swing.text.StyledDocument;
 
 public abstract class Container {
 	private final List<Container> filhos;
-	private final String nome;
 	protected Container pai;
-	private String valor;
 
-	protected Container(String nome) {
+	protected Container() {
 		filhos = new ArrayList<>();
-		this.nome = nome;
 	}
 
 	public Container getPai() {
@@ -25,27 +22,12 @@ public abstract class Container {
 		this.pai = pai;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public String getValor() {
-		if (valor == null) {
-			valor = "";
-		}
-		return valor;
-	}
-
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
-
 	public List<Container> getFilhos() {
 		return filhos;
 	}
 
 	public void excluir(Container c) {
-		if (c == this || c.pai == this) {
+		if (c.pai == this) {
 			filhos.remove(c);
 			c.pai = null;
 		}
@@ -60,10 +42,5 @@ public abstract class Container {
 	}
 
 	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
-	}
-
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + ": name=" + nome + (valor != null ? " value=" + valor : "");
 	}
 }
