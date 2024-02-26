@@ -40,7 +40,10 @@ class PropriedadeHandler extends XMLHandler {
 		} else if ("campo".equals(qName)) {
 			return new Campo(get(atts, "nome"), get(atts, "valor"));
 		} else if ("bloco".equals(qName)) {
-			return new Bloco(get(atts, "nome"));
+			Bloco bloco = new Bloco(get(atts, "nome"));
+			String string = get(atts, "invalido");
+			bloco.setInvalido("true".equalsIgnoreCase(string));
+			return bloco;
 		} else if ("map".equals(qName)) {
 			return new Map(get(atts, "chave"), get(atts, "idObjeto"));
 		} else if ("property".equals(qName)) {

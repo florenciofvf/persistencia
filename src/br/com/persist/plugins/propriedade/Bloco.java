@@ -12,6 +12,7 @@ import br.com.persist.assistencia.Constantes;
 public class Bloco extends Container {
 	private List<Map> cacheMaps;
 	private final String nome;
+	private boolean invalido;
 
 	public Bloco(String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -19,6 +20,14 @@ public class Bloco extends Container {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public boolean isInvalido() {
+		return invalido;
+	}
+
+	public void setInvalido(boolean invalido) {
+		this.invalido = invalido;
 	}
 
 	@Override
@@ -32,6 +41,9 @@ public class Bloco extends Container {
 
 	@Override
 	public void processar(StyledDocument doc) throws BadLocationException {
+		if (invalido) {
+			return;
+		}
 		PropriedadeUtil.bloco(Constantes.TAB2, getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
 			prop.processar(doc);
