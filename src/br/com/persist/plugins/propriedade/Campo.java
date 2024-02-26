@@ -2,6 +2,11 @@ package br.com.persist.plugins.propriedade;
 
 import java.util.Objects;
 
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+
+import br.com.persist.assistencia.Constantes;
+
 public class Campo extends Container {
 	private final String nome;
 	private final String valor;
@@ -22,6 +27,14 @@ public class Campo extends Container {
 	@Override
 	public void adicionar(Container c) {
 		throw new IllegalStateException();
+	}
+
+	@Override
+	public void color(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagSimples(Constantes.TAB2, "campo", doc);
+		PropriedadeUtil.atributo("nome", nome, doc);
+		PropriedadeUtil.atributo("valor", valor, doc);
+		PropriedadeUtil.fimTagSimples(doc);
 	}
 
 	@Override

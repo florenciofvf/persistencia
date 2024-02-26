@@ -18,7 +18,6 @@ public class PropriedadeUtil {
 	private static final MutableAttributeSet attGreen;
 	private static final MutableAttributeSet attBlue;
 	private static final MutableAttributeSet attRed;
-	private static final String TAB = "\t\t";
 
 	private PropriedadeUtil() {
 	}
@@ -38,24 +37,41 @@ public class PropriedadeUtil {
 		StyleConstants.setForeground(attRed, Color.RED);
 	}
 
-	static void bloco(String nome, StyledDocument doc) throws BadLocationException {
-		doc.insertString(doc.getLength(), Constantes.QL + TAB + "<!-- " + nome + " -->" + Constantes.QL, attBlue);
+	static void bloco(String tab, String nome, StyledDocument doc) throws BadLocationException {
+		doc.insertString(doc.getLength(), Constantes.QL + tab + "<!-- " + nome + " -->" + Constantes.QL, attBlue);
 	}
 
-	static void iniPropriedade(String nome, StyledDocument doc) throws BadLocationException {
-		doc.insertString(doc.getLength(), TAB + "<" + nome, attGreen);
+	static void iniTagSimples(String tab, String nome, StyledDocument doc) throws BadLocationException {
+		doc.insertString(doc.getLength(), tab + "<" + nome, attGreen);
 	}
 
-	static void atributo(String nome, StyledDocument doc) throws BadLocationException {
+	static void fimTagSimples(StyledDocument doc) throws BadLocationException {
+		doc.insertString(doc.getLength(), "/>" + Constantes.QL, attGreen);
+	}
+
+	static void iniTagComposta(String tab, String nome, StyledDocument doc) throws BadLocationException {
+		iniTagSimples(tab, nome, doc);
+	}
+
+	static void fimTagComposta(String tab, String nome, StyledDocument doc) throws BadLocationException {
+		doc.insertString(doc.getLength(), tab + "</" + nome + ">" + Constantes.QL, attGreen);
+	}
+
+	static void fimTagComposta(StyledDocument doc) throws BadLocationException {
+		doc.insertString(doc.getLength(), ">" + Constantes.QL, attGreen);
+	}
+
+	static void atributoNome(String nome, StyledDocument doc) throws BadLocationException {
 		doc.insertString(doc.getLength(), " " + nome, attRed);
 		doc.insertString(doc.getLength(), "=", null);
 	}
 
-	static void valorAtr(String str, StyledDocument doc) throws BadLocationException {
+	static void atributoValor(String str, StyledDocument doc) throws BadLocationException {
 		doc.insertString(doc.getLength(), XMLUtil.citar(str), attBlue);
 	}
 
-	static void fimPropriedade(StyledDocument doc) throws BadLocationException {
-		doc.insertString(doc.getLength(), "/>" + Constantes.QL, attGreen);
+	static void atributo(String nome, String valor, StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.atributoNome(nome, doc);
+		PropriedadeUtil.atributoValor(valor, doc);
 	}
 }

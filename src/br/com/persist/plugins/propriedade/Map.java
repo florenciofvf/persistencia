@@ -2,6 +2,11 @@ package br.com.persist.plugins.propriedade;
 
 import java.util.Objects;
 
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+
+import br.com.persist.assistencia.Constantes;
+
 public class Map extends Container {
 	private final String chave;
 	private final String idObjeto;
@@ -22,6 +27,14 @@ public class Map extends Container {
 	@Override
 	public void adicionar(Container c) {
 		throw new IllegalStateException();
+	}
+
+	@Override
+	public void color(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagSimples(Constantes.TAB2, "map", doc);
+		PropriedadeUtil.atributo("chave", chave, doc);
+		PropriedadeUtil.atributo("idObjeto", idObjeto, doc);
+		PropriedadeUtil.fimTagSimples(doc);
 	}
 
 	public String substituir(String string) {
