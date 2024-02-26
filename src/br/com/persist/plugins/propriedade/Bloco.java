@@ -54,6 +54,9 @@ public class Bloco extends Container {
 	public void color(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta(Constantes.TAB, "bloco", doc);
 		PropriedadeUtil.atributo("nome", nome, doc);
+		if (invalido) {
+			PropriedadeUtil.atributo("invalido", "true", doc);
+		}
 		PropriedadeUtil.fimTagComposta(doc);
 		for (Map map : getCacheMaps()) {
 			map.color(doc);
