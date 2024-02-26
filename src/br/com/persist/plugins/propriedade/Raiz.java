@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import br.com.persist.assistencia.Constantes;
+
 public class Raiz extends Container {
 	private List<Objeto> cacheObjetos;
 
@@ -19,10 +21,25 @@ public class Raiz extends Container {
 	}
 
 	@Override
-	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
+	public void processar(StyledDocument doc) throws BadLocationException {
 		for (Bloco bloco : getBlocos()) {
-			bloco.processar(this, doc);
+			bloco.processar(doc);
 		}
+	}
+
+	@Override
+	public void color(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagComposta("", "system-properties", doc);
+		PropriedadeUtil.fimTagComposta(doc);
+		for (Objeto objeto : getCacheObjetos()) {
+			objeto.color(doc);
+			doc.insertString(doc.getLength(), Constantes.QL, null);
+		}
+		doc.insertString(doc.getLength(), Constantes.QL, null);
+		for (Bloco bloco : getBlocos()) {
+			bloco.color(doc);
+		}
+		PropriedadeUtil.fimTagComposta("", "system-properties", doc);
 	}
 
 	private List<Bloco> getBlocos() {

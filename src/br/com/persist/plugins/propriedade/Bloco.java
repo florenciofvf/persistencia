@@ -7,6 +7,8 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import br.com.persist.assistencia.Constantes;
+
 public class Bloco extends Container {
 	private List<Map> cacheMaps;
 	private final String nome;
@@ -29,11 +31,26 @@ public class Bloco extends Container {
 	}
 
 	@Override
-	public void processar(Container pai, StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.bloco(getNome(), doc);
+	public void processar(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.bloco(Constantes.TAB, getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
-			prop.processar(this, doc);
+			prop.processar(doc);
 		}
+	}
+
+	@Override
+	public void color(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagComposta(Constantes.TAB, "bloco", doc);
+		PropriedadeUtil.atributo("nome", nome, doc);
+		PropriedadeUtil.fimTagComposta(doc);
+		for (Map map : getCacheMaps()) {
+			map.color(doc);
+		}
+		doc.insertString(doc.getLength(), Constantes.QL, null);
+		for (Propriedade prop : getPropriedades()) {
+			prop.color(doc);
+		}
+		PropriedadeUtil.fimTagComposta(Constantes.TAB, "bloco", doc);
 	}
 
 	private List<Propriedade> getPropriedades() {

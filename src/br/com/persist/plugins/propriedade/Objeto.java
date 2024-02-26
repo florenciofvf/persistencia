@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
@@ -26,6 +29,17 @@ public class Objeto extends Container {
 		} else {
 			throw new IllegalStateException();
 		}
+	}
+
+	@Override
+	public void color(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagComposta(Constantes.TAB, "objeto", doc);
+		PropriedadeUtil.atributo("id", id, doc);
+		PropriedadeUtil.fimTagComposta(doc);
+		for (Campo campo : getCacheCampos()) {
+			campo.color(doc);
+		}
+		PropriedadeUtil.fimTagComposta(Constantes.TAB, "objeto", doc);
 	}
 
 	List<Campo> getCacheCampos() {
