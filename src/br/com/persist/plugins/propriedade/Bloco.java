@@ -32,7 +32,7 @@ public class Bloco extends Container {
 
 	@Override
 	public void processar(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.bloco(Constantes.TAB, getNome(), doc);
+		PropriedadeUtil.bloco(Constantes.TAB2, getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
 			prop.processar(doc);
 		}
@@ -46,7 +46,9 @@ public class Bloco extends Container {
 		for (Map map : getCacheMaps()) {
 			map.color(doc);
 		}
-		doc.insertString(doc.getLength(), Constantes.QL, null);
+		if (!getCacheMaps().isEmpty()) {
+			doc.insertString(doc.getLength(), Constantes.QL, null);
+		}
 		for (Propriedade prop : getPropriedades()) {
 			prop.color(doc);
 		}

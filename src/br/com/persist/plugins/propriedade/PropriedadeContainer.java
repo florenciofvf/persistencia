@@ -160,6 +160,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
+				toolbar.gerar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}

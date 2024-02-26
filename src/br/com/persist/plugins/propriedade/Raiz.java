@@ -37,6 +37,7 @@ public class Raiz extends Container {
 		}
 		doc.insertString(doc.getLength(), Constantes.QL, null);
 		for (Bloco bloco : getBlocos()) {
+			doc.insertString(doc.getLength(), Constantes.QL, null);
 			bloco.color(doc);
 		}
 		PropriedadeUtil.fimTagComposta("", "system-properties", doc);
