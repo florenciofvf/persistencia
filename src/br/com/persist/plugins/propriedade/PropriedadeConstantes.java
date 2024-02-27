@@ -1,6 +1,10 @@
 package br.com.persist.plugins.propriedade;
 
+import java.awt.GraphicsEnvironment;
+
 public class PropriedadeConstantes {
+	protected static final String[] FONTES = GraphicsEnvironment.getLocalGraphicsEnvironment()
+			.getAvailableFontFamilyNames();
 	public static final String LABEL_PROPRIEDADE_MIN = "label.propriedade_min";
 	public static final String PAINEL_PROPRIEDADE = "PAINEL PROPRIEDADE";
 	public static final String LABEL_PROPRIEDADE = "label.propriedade";

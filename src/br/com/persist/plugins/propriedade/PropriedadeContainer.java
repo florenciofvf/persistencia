@@ -10,10 +10,12 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +24,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import javax.swing.Icon;
+import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -127,6 +130,10 @@ public class PropriedadeContainer extends AbstratoContainer {
 			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 		}
 
+		void setFontTextArea(Font font) {
+			textPane.setFont(font);
+		}
+
 		private void processar(Raiz raiz) {
 			textPane.setText(Constantes.VAZIO);
 			try {
@@ -173,18 +180,21 @@ public class PropriedadeContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
+		private JComboBox<String> comboFontes = new JComboBox<>(PropriedadeConstantes.FONTES);
 		private Action gerarAcao = acaoIcon("label.gerar_conteudo", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, BAIXAR, SALVAR);
 			addButton(gerarAcao);
+			add(comboFontes);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+			comboFontes.addItemListener(Toolbar.this::alterarFonte);
 			gerarAcao.setActionListener(e -> gerar());
 		}
 
@@ -223,6 +233,24 @@ public class PropriedadeContainer extends AbstratoContainer {
 			} else if (propriedadeDialogo != null) {
 				propriedadeDialogo.excluirContainer();
 				PropriedadeFormulario.criar(formulario, PropriedadeContainer.this);
+			}
+		}
+
+		private void alterarFonte(ItemEvent e) {
+			if (ItemEvent.SELECTED == e.getStateChange()) {
+				Object object = comboFontes.getSelectedItem();
+				if (object instanceof String) {
+					Font font = getFont();
+					alterar(font, (String) object);
+				}
+			}
+		}
+
+		private void alterar(Font font, String nome) {
+			if (font != null) {
+				Font nova = new Font(nome, font.getStyle(), font.getSize());
+				painelResultado.setFontTextArea(nova);
+				textArea.setFont(nova);
 			}
 		}
 
