@@ -410,7 +410,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			objeto.setBuscaAutoTemp(false);
 			buscaAuto = true;
 		}
-		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
+		int count = tabelaPersistencia.getModel().getRowCount();
+		objeto.setCorTemp(count > 0 ? Color.CYAN : Color.WHITE);
+		toolbar.buttonPesquisa.habilitar(count > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		configurarAltura();
 	}

@@ -992,6 +992,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) {
 		Relacao relacao = ObjetoSuperficieUtil.getRelacao(this, pesquisador, pesquisado);
 		if (relacao != null) {
+			relacao.setObjetoTemp(pesquisado);
 			relacao.setSelecionado(true);
 		}
 	}

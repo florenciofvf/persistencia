@@ -108,6 +108,7 @@ public class Objeto implements Runnable {
 	private String id;
 	protected int x;
 	protected int y;
+	Color corTemp;
 
 	public Objeto() {
 		this(0, 0, null, null);
@@ -1327,6 +1328,14 @@ public class Objeto implements Runnable {
 
 	public void criarMemento() {
 		memento = new Memento(this);
+	}
+
+	public Color getCorTemp() {
+		return corTemp;
+	}
+
+	public void setCorTemp(Color corTemp) {
+		this.corTemp = corTemp;
 	}
 }
 

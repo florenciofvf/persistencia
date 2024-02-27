@@ -172,6 +172,7 @@ public class ObjetoSuperficieUtil {
 	public static void deselRelacoes(ObjetoSuperficie superficie) {
 		for (Relacao relacao : superficie.relacoes) {
 			relacao.setSelecionado(false);
+			relacao.setObjetoTemp(null);
 		}
 	}
 

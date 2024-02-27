@@ -30,6 +30,7 @@ public class Relacao implements Runnable {
 	private final Objeto origem;
 	private boolean selecionado;
 	private String chaveOrigem;
+	private Objeto objetoTemp;
 	private boolean processar;
 	private boolean quebrado;
 	private String descricao;
@@ -315,7 +316,11 @@ public class Relacao implements Runnable {
 		g2.setColor(cor);
 		if (selecionado) {
 			g2.setStroke(Constantes.STROKE_PADRAO);
-			g2.setColor(Color.CYAN);
+			if (objetoTemp == null || objetoTemp.corTemp == null) {
+				g2.setColor(Color.CYAN);
+			} else {
+				g2.setColor(objetoTemp.corTemp);
+			}
 		}
 		int x1 = origem.x + raio;
 		int y1 = origem.y + raio;
@@ -576,5 +581,13 @@ public class Relacao implements Runnable {
 
 	public void setChaveOrigem(String chaveOrigem) {
 		this.chaveOrigem = chaveOrigem;
+	}
+
+	public Objeto getObjetoTemp() {
+		return objetoTemp;
+	}
+
+	public void setObjetoTemp(Objeto objetoTemp) {
+		this.objetoTemp = objetoTemp;
 	}
 }
