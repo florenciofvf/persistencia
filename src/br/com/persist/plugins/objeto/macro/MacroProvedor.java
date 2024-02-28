@@ -9,6 +9,7 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.Macro.AbrirAuto;
 import br.com.persist.plugins.objeto.macro.Macro.AjusteAutoForm;
+import br.com.persist.plugins.objeto.macro.Macro.AjusteLargForm;
 import br.com.persist.plugins.objeto.macro.Macro.Bpnt;
 import br.com.persist.plugins.objeto.macro.Macro.Ccsc;
 import br.com.persist.plugins.objeto.macro.Macro.ColunaInfo;
@@ -34,6 +35,7 @@ public class MacroProvedor {
 	private static final Map<String, Instrucao> mapa = new HashMap<>();
 	private static final String COPIAR_DESTACADO = "copiarDestacado";
 	private static final String AJUSTE_AUTO_FORM = "ajusteAutoForm";
+	private static final String AJUSTE_LARG_FORM = "ajusteLargForm";
 	private static final String DESENHAR_ID_DESC = "desenharIdDesc";
 	private static final String DESCLOC_X_ID_DESC = "deslocXIdDesc";
 	private static final String DESCLOC_Y_ID_DESC = "deslocYIdDesc";
@@ -95,6 +97,7 @@ public class MacroProvedor {
 		mapa.put(DESENHAR_ID_DESC, new DesenharIdDescricao());
 		mapa.put(COPIAR_DESTACADO, new CopiarDestacado());
 		mapa.put(AJUSTE_AUTO_FORM, new AjusteAutoForm());
+		mapa.put(AJUSTE_LARG_FORM, new AjusteLargForm());
 		mapa.put(LARGURA_ROTULOS, new LarguraRotulos());
 		mapa.put(PONTO_DESTINO, new PontoDestino());
 		mapa.put(TRANSPARENTE, new Transparente());
@@ -216,6 +219,12 @@ public class MacroProvedor {
 
 	public static void ajusteAutoForm(Object valor) {
 		Instrucao instrucao = get(AJUSTE_AUTO_FORM);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public static void ajusteLargForm(Object valor) {
+		Instrucao instrucao = get(AJUSTE_LARG_FORM);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

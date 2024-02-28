@@ -177,6 +177,7 @@ public class ObjetoContainer extends Panel {
 			}
 			processar1(para);
 			processar2(para);
+			processar3(para);
 			salvarVinculacao(vinculacao);
 		}
 
@@ -221,8 +222,14 @@ public class ObjetoContainer extends Panel {
 				para.setCcsc(compChave.getBool());
 			} else if ("BPNT".equals(compChave.chave)) {
 				para.setBpnt(compChave.getBool());
-			} else if ("AJUSTE_AUTO".equals(compChave.chave)) {
+			}
+		}
+
+		void processar3(ParaTabela para) {
+			if ("AJUSTE_AUTO".equals(compChave.chave)) {
 				para.setAjustarAltura(compChave.getBool());
+			} else if ("AJUSTE_LARG".equals(compChave.chave)) {
+				para.setAjustarLargura(compChave.getBool());
 			} else if ("INSTRUCAO".equals(compChave.chave)) {
 				para.addInstrucao(compChave.getText());
 			} else if ("FILTRO".equals(compChave.chave)) {
@@ -456,6 +463,7 @@ public class ObjetoContainer extends Panel {
 	private class PanelBanco extends Panel implements ActionListener {
 		private TextField txtFinalConsulta = new TextField();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
+		private CheckBox chkAjusteLargForm = new CheckBox();
 		private CheckBox chkLarguraRotulos = new CheckBox();
 		private TextField txtEsquemaAlter = new TextField();
 		private TextField txtChaveamento = new TextField();
@@ -483,6 +491,7 @@ public class ObjetoContainer extends Panel {
 
 		private PanelBanco() {
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
+			chkAjusteLargForm.setSelected(objeto.isAjustarLargura());
 			chkLarguraRotulos.setSelected(objeto.isLarguraRotulos());
 			txtEsquemaAlter.setText(objeto.getEsquemaAlternativo());
 			txtTabelaAlter.setText(objeto.getTabelaAlternativo());
@@ -527,6 +536,7 @@ public class ObjetoContainer extends Panel {
 			txtJoins.addFocusListener(focusListenerInner);
 			txtGrupo.addFocusListener(focusListenerInner);
 			chkAjusteAutoForm.addActionListener(this);
+			chkAjusteLargForm.addActionListener(this);
 			chkLarguraRotulos.addActionListener(this);
 			txtFinalConsulta.addActionListener(this);
 			txtEsquemaAlter.addActionListener(this);
@@ -588,6 +598,8 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.bpnt", chkBPNT, ObjetoMensagens.getString("hint.bpnt")));
 			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.ajuste_auto_form"), false,
 					chkAjusteAutoForm, ObjetoMensagens.getString("hint.ajuste_auto_form"), null));
+			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.ajuste_larg_form"), false,
+					chkAjusteLargForm, ObjetoMensagens.getString("hint.ajuste_larg_form"), null));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtComplemento.addMouseListener(complementoListener);
 			txtClassBiblio.addMouseListener(classBiblioListener);
@@ -602,6 +614,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(chkLarguraRotulos, "LARGURA_ROTULOS"));
 			vinculados.add(new CompChave(txtFinalConsulta, "FINAL_CONSULTA"));
 			vinculados.add(new CompChave(chkAjusteAutoForm, "AJUSTE_AUTO"));
+			vinculados.add(new CompChave(chkAjusteLargForm, "AJUSTE_LARG"));
 			vinculados.add(new CompChave(txtEsquemaAlter, "ESQUEMA_ALTER"));
 			vinculados.add(new CompChave(txtTabelaAlter, "TABELA_ALTER"));
 			vinculados.add(new CompChave(txtSelectAlter, "SELECT_ALTER"));
@@ -626,6 +639,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(chkBPNT, "BPNT"));
 
 			chkAjusteAutoForm.addMouseListener(listenerVinculado);
+			chkAjusteLargForm.addMouseListener(listenerVinculado);
 			chkLarguraRotulos.addMouseListener(listenerVinculado);
 			txtFinalConsulta.addMouseListener(listenerVinculado);
 			txtEsquemaAlter.addMouseListener(listenerVinculado);
@@ -826,6 +840,10 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAjusteAutoForm(chk.isSelected());
 				MacroProvedor.ajusteAutoForm(chk.isSelected());
+			} else if (chkAjusteLargForm == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setAjustarLargura(chk.isSelected());
+				MacroProvedor.ajusteLargForm(chk.isSelected());
 			} else if (txtTabelas == e.getSource()) {
 				objeto.setTabelas(txtTabelas.getText());
 			} else if (txtEsquemaAlter == e.getSource()) {

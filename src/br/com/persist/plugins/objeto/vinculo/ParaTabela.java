@@ -19,6 +19,7 @@ public class ParaTabela {
 	private String clonarAoDestacar;
 	private String larguraRotulos;
 	private String biblioChecagem;
+	private String ajustarLargura;
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String transparente;
@@ -99,6 +100,9 @@ public class ParaTabela {
 	public void config(Objeto objeto) {
 		if (!Util.isEmpty(clonarAoDestacar)) {
 			objeto.setClonarAoDestacar(Boolean.parseBoolean(clonarAoDestacar));
+		}
+		if (!Util.isEmpty(ajustarLargura)) {
+			objeto.setAjustarLargura(Boolean.parseBoolean(ajustarLargura));
 		}
 		if (!Util.isEmpty(ajustarAltura)) {
 			objeto.setAjusteAutoForm(Boolean.parseBoolean(ajustarAltura));
@@ -220,6 +224,7 @@ public class ParaTabela {
 		atributoValor(util, "clonarAoDestacar", clonarAoDestacar);
 		atributoValor(util, "larguraRotulos", larguraRotulos);
 		atributoValor(util, "biblioChecagem", biblioChecagem);
+		atributoValor(util, "ajustarLargura", ajustarLargura);
 		atributoValor(util, "finalConsulta", finalConsulta);
 		atributoValor(util, "ajustarAltura", ajustarAltura);
 		atributoValor(util, "transparente", transparente);
@@ -276,6 +281,7 @@ public class ParaTabela {
 		util.tab().atributo("tabelaAlternativo", "").ql();
 		util.tab().atributo("larguraRotulos", false).ql();
 		util.tab().atributo("checarRegistro", false).ql();
+		util.tab().atributo("ajustarLargura", true).ql();
 		util.tab().atributo("ajustarAltura", true).ql();
 		util.tab().atributo("transparente", false).ql();
 		util.tab().atributo("colunaInfo", false).ql();
@@ -456,6 +462,14 @@ public class ParaTabela {
 
 	public void setAjustarAltura(String ajustarAltura) {
 		this.ajustarAltura = ajustarAltura;
+	}
+
+	public String getAjustarLargura() {
+		return ajustarLargura;
+	}
+
+	public void setAjustarLargura(String ajustarLargura) {
+		this.ajustarLargura = ajustarLargura;
 	}
 
 	public String getColunaInfo() {

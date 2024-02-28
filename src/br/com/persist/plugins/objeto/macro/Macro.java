@@ -178,6 +178,18 @@ public class Macro {
 		}
 	}
 
+	static class AjusteLargForm extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setAjustarLargura((Boolean) valor);
+		}
+	}
+
 	static class PontoDestino extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
