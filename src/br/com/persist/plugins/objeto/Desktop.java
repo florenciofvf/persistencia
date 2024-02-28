@@ -108,6 +108,14 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	}
 
 	@Override
+	public boolean ajustarLargura(JInternalFrame frame) {
+		if (frame instanceof InternalFormulario) {
+			return ((InternalFormulario) frame).isAjustarLargura();
+		}
+		return true;
+	}
+
+	@Override
 	public void empilharFormulariosImpl() {
 		JInternalFrame[] frames = getAllFrames();
 		if (frames.length > 0) {

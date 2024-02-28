@@ -3247,6 +3247,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
+	public boolean isAjustarLargura() {
+		return objeto.isAjustarLargura();
+	}
+
 	public void limparOutros(InternalContainer invocador) {
 		if (invocador != this) {
 			limpar2();

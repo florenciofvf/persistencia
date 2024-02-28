@@ -49,6 +49,7 @@ public class Objeto implements Runnable {
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
 	private boolean ajusteAutoForm = true;
+	private boolean ajustarLargura = true;
 	private boolean chaveamentoAlterado;
 	private final List<Filtro> filtros;
 	private boolean mapeamentoAlterado;
@@ -150,6 +151,7 @@ public class Objeto implements Runnable {
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.ajusteAutoForm = ajusteAutoForm;
+		o.ajustarLargura = ajustarLargura;
 		o.larguraRotulos = larguraRotulos;
 		o.biblioChecagem = biblioChecagem;
 		o.finalConsulta = finalConsulta;
@@ -184,6 +186,7 @@ public class Objeto implements Runnable {
 
 	public void aplicar(Attributes attr) {
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
+		ajustarLargura = Boolean.parseBoolean(attr.getValue("ajustarLargura"));
 		clonarAoDestacar = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		larguraRotulos = Boolean.parseBoolean(attr.getValue("larguraRotulos"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
@@ -244,6 +247,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("biblioChecagem", getBiblioChecagem());
 		util.atributoCheck("orderBy", getOrderBy());
 		util.atributoCheck("ajusteAutoForm", ajusteAutoForm);
+		util.atributoCheck("ajustarLargura", ajustarLargura);
 		util.atributoCheck("copiarDestac", clonarAoDestacar);
 		util.atributoCheck("larguraRotulos", larguraRotulos);
 		util.atributo("desloc_x_id", deslocamentoXId);
@@ -342,6 +346,10 @@ public class Objeto implements Runnable {
 		return ajusteAutoForm;
 	}
 
+	public boolean isAjustarLargura() {
+		return ajustarLargura;
+	}
+
 	public boolean isTituloFormularioComId() {
 		return tituloFormularioComId;
 	}
@@ -352,6 +360,10 @@ public class Objeto implements Runnable {
 
 	public void setAjusteAutoForm(boolean ajusteAutoForm) {
 		this.ajusteAutoForm = ajusteAutoForm;
+	}
+
+	public void setAjustarLargura(boolean ajustarLargura) {
+		this.ajustarLargura = ajustarLargura;
 	}
 
 	public void setTransparente(boolean transparente) {

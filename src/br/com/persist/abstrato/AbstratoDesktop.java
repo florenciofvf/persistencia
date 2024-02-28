@@ -151,13 +151,13 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			int largura = getSize().width - 20;
 			if (internal != null) {
 				for (JInternalFrame frame : getAllFrames()) {
-					if (frame.isVisible() && frame == internal) {
+					if (frame.isVisible() && frame == internal && ajustarLargura(frame)) {
 						configurar(larguraEnum, largura, frame);
 					}
 				}
 			} else {
 				for (JInternalFrame frame : getAllFrames()) {
-					if (frame.isVisible()) {
+					if (frame.isVisible() && ajustarLargura(frame)) {
 						configurar(larguraEnum, largura, frame);
 					}
 				}
@@ -184,6 +184,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	public abstract void empilharFormulariosImpl();
+
+	public abstract boolean ajustarLargura(JInternalFrame frame);
 
 	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree);
 
