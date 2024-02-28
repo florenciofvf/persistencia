@@ -130,6 +130,7 @@ public class VinculoHandler extends XMLHandler {
 		paraTabela.setClonarAoDestacar(attributes.getValue("clonarAoDestacar"));
 		paraTabela.setLarguraRotulos(attributes.getValue("larguraRotulos"));
 		paraTabela.setBiblioChecagem(attributes.getValue("biblioChecagem"));
+		paraTabela.setAjustarLargura(attributes.getValue("ajustarLargura"));
 		paraTabela.setFinalConsulta(attributes.getValue("finalConsulta"));
 		paraTabela.setAjustarAltura(attributes.getValue("ajustarAltura"));
 		paraTabela.setTransparente(attributes.getValue("transparente"));
