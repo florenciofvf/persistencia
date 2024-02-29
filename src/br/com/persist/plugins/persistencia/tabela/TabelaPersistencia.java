@@ -362,9 +362,9 @@ public class TabelaPersistencia extends JTable {
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_t", false, false));
-			add(true, menuAbrirArquivo);
-			add(menuCopiarLinhas);
+			add(true, menuCopiarLinhas);
 			add(menuExibirLinhas);
+			add(menuAbrirArquivo);
 			add(true, menuIN);
 			eventos();
 		}
