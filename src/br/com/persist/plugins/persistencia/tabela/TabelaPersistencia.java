@@ -801,7 +801,7 @@ public class TabelaPersistencia extends JTable {
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrirArquivo() {
-				super(TabelaMensagens.getString("Abrir arquivo(os)"), false, null);
+				super(TabelaMensagens.getString("label.abrir_arquivos"), false, null);
 				addMenuItem(abrirAcao);
 				abrirAcao.setActionListener(e -> abrir());
 			}
