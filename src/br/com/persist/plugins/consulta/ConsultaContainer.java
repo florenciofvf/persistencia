@@ -256,6 +256,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action colarApartirNcaractAcao = acaoMenu("label.colar_apartir_n_caracteres");
 		private Action colarSemAspasAcao = acaoMenu("label.colar_sem_aspas");
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
@@ -270,7 +271,9 @@ public class ConsultaContainer extends AbstratoContainer {
 			add(chkPesquisaLocal);
 			add(label);
 			buttonColar.addSeparator();
+			buttonColar.addItem(colarApartirNcaractAcao);
 			buttonColar.addItem(colarSemAspasAcao);
+			colarApartirNcaractAcao.setActionListener(e -> colarApartirNCaract());
 			colarSemAspasAcao.setActionListener(e -> colarSemAspas());
 			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
@@ -422,6 +425,45 @@ public class ConsultaContainer extends AbstratoContainer {
 			} else {
 				label.limpar();
 			}
+		}
+
+		private void colarApartirNCaract() {
+			String string = Util.getContentTransfered();
+			if (Util.isEmpty(string)) {
+				return;
+			}
+			Object resp = Util.showInputDialog(ConsultaContainer.this, Mensagens.getString("label.atencao"),
+					ConsultaMensagens.getString("label.apartir_n_caracteres"), "1");
+			if (resp != null && !Util.isEmpty(resp.toString())) {
+				try {
+					int total = Util.getInt(resp.toString().trim(), 1);
+					string = getStringApartir(string, total);
+					Util.insertStringArea(textArea, string);
+					consultaCor.processar(textArea.getStyledDocument());
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, this);
+				}
+			}
+		}
+
+		private String getStringApartir(String string, int num) {
+			String[] strings = string.split(Constantes.QL);
+			StringBuilder sb = new StringBuilder();
+			for (String s : strings) {
+				s = getApartir(s, num);
+				sb.append(s + Constantes.QL);
+			}
+			return sb.toString();
+		}
+
+		private String getApartir(String string, int num) {
+			if (num > string.length()) {
+				num = string.length() + 1;
+			}
+			if (num < 1) {
+				num = 1;
+			}
+			return string.substring(num - 1);
 		}
 
 		private void colarSemAspas() {
