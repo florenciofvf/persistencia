@@ -334,6 +334,7 @@ public class TabelaPersistencia extends JTable {
 		private Action larguraColunaAcao = actionMenu("label.largura_manual");
 		private Action larguraTituloAcao = acaoMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = acaoMenu("label.largura_minima");
+		private MenuAbrirArquivo menuAbrirArquivo = new MenuAbrirArquivo();
 		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();
 		private MenuExibirLinhas menuExibirLinhas = new MenuExibirLinhas();
 		private ItemClassBiblio itemClassBiblio = new ItemClassBiblio();
@@ -361,7 +362,8 @@ public class TabelaPersistencia extends JTable {
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_t", false, false));
-			add(true, menuCopiarLinhas);
+			add(true, menuAbrirArquivo);
+			add(menuCopiarLinhas);
 			add(menuExibirLinhas);
 			add(true, menuIN);
 			eventos();
@@ -791,6 +793,22 @@ public class TabelaPersistencia extends JTable {
 					string = sb.toString();
 				}
 				Util.mensagem(TabelaPersistencia.this, string);
+			}
+		}
+
+		private class MenuAbrirArquivo extends Menu {
+			private Action abrirAcao = acaoMenu("label.abrir");
+			private static final long serialVersionUID = 1L;
+
+			private MenuAbrirArquivo() {
+				super(TabelaMensagens.getString("Abrir arquivo(os)"), false, null);
+				addMenuItem(abrirAcao);
+				abrirAcao.setActionListener(e -> abrir());
+			}
+
+			private void abrir() {
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
+				Util.abrir(TabelaPersistencia.this, lista);
 			}
 		}
 

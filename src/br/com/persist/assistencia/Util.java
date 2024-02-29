@@ -2,6 +2,7 @@ package br.com.persist.assistencia;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -68,9 +69,14 @@ import br.com.persist.mensagem.MensagemFormulario;
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
 	private static boolean mensagemHtml;
+	private static Desktop desktop;
 	private static Random random;
 
 	private Util() {
+	}
+
+	static {
+		desktop = Desktop.getDesktop();
 	}
 
 	public static boolean isMensagemHtml() {
@@ -1386,5 +1392,17 @@ public class Util {
 		char[] chars = string.toCharArray();
 		chars[0] = Character.toLowerCase(chars[0]);
 		return new String(chars);
+	}
+
+	public static void abrir(Component c, List<String> lista) {
+		for (String string : lista) {
+			if (!isEmpty(string)) {
+				try {
+					desktop.open(new File(string));
+				} catch (IOException ex) {
+					Util.mensagem(c, ex.getMessage());
+				}
+			}
+		}
 	}
 }
