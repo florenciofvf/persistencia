@@ -1398,7 +1398,10 @@ public class Util {
 		for (String string : lista) {
 			if (!isEmpty(string)) {
 				try {
-					desktop.open(new File(string));
+					File file = new File(string);
+					if (file.exists()) {
+						desktop.open(file);
+					}
 				} catch (IOException ex) {
 					Util.mensagem(c, ex.getMessage());
 				}
