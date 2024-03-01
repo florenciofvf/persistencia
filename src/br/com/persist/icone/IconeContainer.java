@@ -1,5 +1,6 @@
 package br.com.persist.icone;
 
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
@@ -31,6 +32,7 @@ public class IconeContainer extends Panel {
 	private final List<LabelIcone> listaLabelIcone;
 	private final transient IconeListener listener;
 	private final Toolbar toolbar = new Toolbar();
+	private static String nomeIconeCopiado;
 	private final String iconeSel;
 	private int totalIcones;
 
@@ -73,7 +75,7 @@ public class IconeContainer extends Panel {
 		}
 
 		private void selecionar(String nomeIcone) {
-			if (nome.equals(nomeIcone)) {
+			if (nome.equalsIgnoreCase(nomeIcone)) {
 				setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
 			}
 		}
@@ -92,7 +94,7 @@ public class IconeContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, LIMPAR);
+			super.ini(janela, LIMPAR, COPIAR);
 			add(true, txtPesquisa);
 			txtPesquisa.addActionListener(e -> selecionar());
 		}
@@ -108,9 +110,23 @@ public class IconeContainer extends Panel {
 		}
 
 		@Override
+		protected void copiar() {
+			setNomeIconeCopiado(iconeSel);
+			fechar();
+		}
+
+		@Override
 		protected void limpar() {
 			listener.limparIcone();
 			fechar();
 		}
+	}
+
+	public static String getNomeIconeCopiado() {
+		return nomeIconeCopiado;
+	}
+
+	public static void setNomeIconeCopiado(String nomeIconeCopiado) {
+		IconeContainer.nomeIconeCopiado = nomeIconeCopiado;
 	}
 }

@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto.config;
 
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
@@ -96,7 +97,7 @@ public class IconeContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, LIMPAR);
+			super.ini(janela, LIMPAR, COPIAR);
 			add(true, txtPesquisa);
 			txtPesquisa.addActionListener(e -> selecionar());
 		}
@@ -109,6 +110,12 @@ public class IconeContainer extends Panel {
 			for (LabelIcone icone : listaLabelIcone) {
 				icone.selecionar(string);
 			}
+		}
+
+		@Override
+		protected void copiar() {
+			br.com.persist.icone.IconeContainer.setNomeIconeCopiado(objeto.getIcone());
+			fechar();
 		}
 
 		@Override
