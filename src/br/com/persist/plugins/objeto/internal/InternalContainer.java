@@ -1248,7 +1248,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 
 					private void icone() {
-						IconeDialogo.criar(pesquisa.getNomeParaMenuItem(), new ListenerIcone(),
+						IconeDialogo.criar(InternalContainer.this, pesquisa.getNomeParaMenuItem(), new ListenerIcone(),
 								pesquisa.getReferencia().getIconeGrupo());
 					}
 
