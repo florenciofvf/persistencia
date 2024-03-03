@@ -184,6 +184,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
 		private TextField txtDestacaObjeto = new TextField(10);
+		private ButtonStatus buttonStatus = new ButtonStatus();
 		private Popup popupArquivoVinculado = new Popup();
 		private static final long serialVersionUID = 1L;
 		private Label labelStatus2 = new Label();
@@ -198,7 +199,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(true, btnRotulos);
 			add(btnArrasto);
 			add(btnSelecao);
-			add(true, new ButtonStatus());
+			add(true, buttonStatus);
 			add(true, chkAjusteAutoEmpilhaForm);
 			add(chkAjusteAutoLarguraForm);
 			add(true, comboConexao);
@@ -409,6 +410,7 @@ public class ObjetoContainer extends AbstratoContainer {
 				abrir(arquivo, objetoColetor, config);
 				txtPrefixoNomeTabela.limpar();
 				txtDestacaObjeto.limpar();
+				buttonStatus.reiniciar();
 				tituloTemporario = null;
 				labelStatus2.limpar();
 				labelStatus.limpar();
@@ -476,13 +478,15 @@ public class ObjetoContainer extends AbstratoContainer {
 			private Action desenharIdAcao = actionMenu("label.desenhar_id", Icones.LABEL);
 			private Action pontoOrigemAcao = acaoMenu("label.ponto_origem", Icones.RECT);
 			private Action reiniciarAction = acaoMenu("label.reiniciar_horas");
+			private JCheckBoxMenuItem checkBoxComparaRegistro = new JCheckBoxMenuItem(compararRegistroAcao);
+			private JCheckBoxMenuItem checkBoxSelecaoGeral = new JCheckBoxMenuItem(selecaoGeralAcao);
 			private static final long serialVersionUID = 1L;
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);
-				addItem(new JCheckBoxMenuItem(compararRegistroAcao));
+				addItem(checkBoxComparaRegistro);
 				addSeparator();
-				addItem(new JCheckBoxMenuItem(selecaoGeralAcao));
+				addItem(checkBoxSelecaoGeral);
 				addItem(new JCheckBoxMenuItem(desenharDescAcao));
 				addItem(new JCheckBoxMenuItem(desenharIdAcao));
 				addItem(new JCheckBoxMenuItem(transparenteAcao));
@@ -517,6 +521,11 @@ public class ObjetoContainer extends AbstratoContainer {
 			@Override
 			protected void popupPreShow() {
 				somarHorasAcao.setSelected(objetoSuperficie.isProcessando());
+			}
+
+			private void reiniciar() {
+				checkBoxComparaRegistro.setSelected(false);
+				checkBoxSelecaoGeral.setSelected(false);
 			}
 		}
 
