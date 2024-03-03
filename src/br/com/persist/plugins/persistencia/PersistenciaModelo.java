@@ -224,6 +224,16 @@ public class PersistenciaModelo implements TableModel {
 		return null;
 	}
 
+	public int getIndice(String nome) {
+		for (int i = 0; i < colunas.size(); i++) {
+			Coluna c = colunas.get(i);
+			if (c.getNome().equalsIgnoreCase(nome)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return String.class;
