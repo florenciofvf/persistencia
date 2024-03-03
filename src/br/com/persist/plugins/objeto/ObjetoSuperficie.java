@@ -1744,8 +1744,8 @@ class SuperficiePopup extends Popup {
 		add(menuAlinhamento);
 		add(true, menuDistribuicao);
 		addMenuItem(true, copiarIconeAcao);
-		addMenuItem(true, colarIconeAcao);
-		addMenuItem(copiarAcao);
+		addMenuItem(colarIconeAcao);
+		addMenuItem(true, copiarAcao);
 		add(true, menuDestacar);
 		add(true, menuCircular);
 		add(true, menuMestreDetalhe);
