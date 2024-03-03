@@ -423,6 +423,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(persistenciaModelo);
 		persistenciaModelo.setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
 		objeto.setComplemento(txtComplemento.getText());
+		configurarCompararRegistroAntes();
 		tabelaPersistencia.setModel(modeloOrdenacao);
 		persistenciaModelo.setConexao(conexao);
 		persistenciaModelo.setComponente(this);
@@ -430,6 +431,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		checarAtributosObjeto();
 		checarScrollPane();
 		return modeloOrdenacao;
+	}
+
+	private void configurarCompararRegistroAntes() {
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+		if (objeto.isCompararRegistro() && modelo.getRowCount() == 1) {
+			tabelaPersistencia.setModeloBackup(modelo);
+		} else {
+			tabelaPersistencia.setModeloBackup(null);
+		}
 	}
 
 	private void checarAtributosObjeto() {
@@ -500,12 +510,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private void configurarCabecalhoTabela(OrdenacaoModelo modeloOrdenacao, CabecalhoColuna cabecalho) {
+		boolean cellRendererComparacao = objeto.isCompararRegistro() && tabelaPersistencia.getModeloBackup() != null
+				&& modeloOrdenacao.getRowCount() == 1;
 		TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
 		List<Coluna> colunas = modeloOrdenacao.getModelo().getColunas();
 		for (int i = 0; i < colunas.size(); i++) {
 			TableColumn tableColumn = columnModel.getColumn(i);
 			Coluna coluna = colunas.get(i);
-			configTableColumn(tableColumn, coluna);
+			configTableColumn(cellRendererComparacao, tableColumn, coluna);
 			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
 					!coluna.isColunaInfo());
 			if (cabecalhoColuna.equals(cabecalho)) {
@@ -571,7 +583,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	private void configTableColumn(TableColumn tableColumn, Coluna coluna) {
+	private void configTableColumn(boolean cellRendererComparacao, TableColumn tableColumn, Coluna coluna) {
+		if (cellRendererComparacao) {
+			tableColumn.setCellRenderer(new ComparaRegistroRenderer());
+			return;
+		}
 		if (coluna.isChave()) {
 			tableColumn.setCellRenderer(new CellRenderer());
 		}

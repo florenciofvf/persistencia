@@ -49,6 +49,7 @@ public class TabelaPersistencia extends JTable {
 	private static final long serialVersionUID = 1L;
 	private Map<String, List<String>> chaveamento;
 	private Map<String, String> mapeamento;
+	private OrdenacaoModelo modeloBackup;
 	private String classBiblio;
 	private boolean arrastado;
 
@@ -72,6 +73,14 @@ public class TabelaPersistencia extends JTable {
 			throw new IllegalStateException("PersistenciaOrdenacaoModelo inconsistente.");
 		}
 		super.setModel(dataModel);
+	}
+
+	public OrdenacaoModelo getModeloBackup() {
+		return modeloBackup;
+	}
+
+	public void setModeloBackup(OrdenacaoModelo modeloBackup) {
+		this.modeloBackup = modeloBackup;
 	}
 
 	public String getNomeColunas(String apelido) {
