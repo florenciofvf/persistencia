@@ -2079,6 +2079,7 @@ class SuperficiePopup extends Popup {
 			Objeto objeto = (Objeto) action.getObject();
 			objeto.setIcone(nome);
 			MacroProvedor.imagem(objeto.getIcone());
+			superficie.repaint();
 		}
 	}
 
