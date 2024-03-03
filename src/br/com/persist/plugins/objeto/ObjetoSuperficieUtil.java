@@ -391,6 +391,13 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
+	public static void compararRegistro(ObjetoSuperficie superficie, boolean b) {
+		for (Objeto objeto : superficie.objetos) {
+			objeto.setCompararRegistro(b);
+		}
+		superficie.repaint();
+	}
+
 	public static void desenharIds(ObjetoSuperficie superficie, boolean b) {
 		for (Objeto objeto : superficie.objetos) {
 			objeto.setDesenharId(b);

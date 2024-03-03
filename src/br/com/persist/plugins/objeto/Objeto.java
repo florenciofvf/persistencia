@@ -57,6 +57,7 @@ public class Objeto implements Runnable {
 	private boolean desenharId = true;
 	private String esquemaAlternativo;
 	Color corFonte = COR_PADRAO_FONTE;
+	private boolean compararRegistro;
 	private String tabelaAlternativo;
 	private boolean abrirAuto = true;
 	private int deslocamentoXId = -5;
@@ -1348,6 +1349,14 @@ public class Objeto implements Runnable {
 
 	public void setCorTemp(Color corTemp) {
 		this.corTemp = corTemp;
+	}
+
+	public boolean isCompararRegistro() {
+		return compararRegistro;
+	}
+
+	public void setCompararRegistro(boolean compararRegistro) {
+		this.compararRegistro = compararRegistro;
 	}
 }
 

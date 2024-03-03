@@ -468,6 +468,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private class ButtonStatus extends ButtonPopup {
 			private JCheckBoxMenuItem somarHorasAcao = new JCheckBoxMenuItem(
 					ObjetoMensagens.getString("label.somar_em_horas"));
+			private Action compararRegistroAcao = acaoMenu("label.comparar_registro", Icones.OLHO);
 			private Action desenharDescAcao = actionMenu("label.desenhar_desc", Icones.TAG);
 			private Action transparenteAcao = actionMenu("label.transparente", Icones.RECT);
 			private Action selecaoGeralAcao = acaoMenu("label.selecao_todos", Icones.TAG2);
@@ -479,6 +480,8 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);
+				addItem(new JCheckBoxMenuItem(compararRegistroAcao));
+				addSeparator();
 				addItem(new JCheckBoxMenuItem(selecaoGeralAcao));
 				addItem(new JCheckBoxMenuItem(desenharDescAcao));
 				addItem(new JCheckBoxMenuItem(desenharIdAcao));
@@ -492,6 +495,8 @@ public class ObjetoContainer extends AbstratoContainer {
 			}
 
 			private void eventos() {
+				compararRegistroAcao.setActionListener(e -> ObjetoSuperficieUtil.compararRegistro(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				selecaoGeralAcao.setActionListener(e -> ObjetoSuperficieUtil.selecaoGeral(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				desenharDescAcao.setActionListener(e -> ObjetoSuperficieUtil.desenharDesc(objetoSuperficie,
