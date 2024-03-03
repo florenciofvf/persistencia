@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.Objects;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -13,6 +14,11 @@ import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 
 public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
+	private final String nomeColuna;
+
+	public ComparaRegistroRenderer(String nomeColuna) {
+		this.nomeColuna = Objects.requireNonNull(nomeColuna);
+	}
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -21,7 +27,7 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		TabelaPersistencia tabelaPersistencia = (TabelaPersistencia) table;
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
-		Coluna colunaModelo = modelo.getColuna(column);
+		Coluna colunaModelo = modelo.getColuna(nomeColuna);
 		Coluna colunaBackup = backup.getColuna(colunaModelo.getNome());
 
 		if (colunaBackup == null) {
@@ -29,8 +35,10 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 			setForeground(Color.WHITE);
 			return this;
 		} else {
-			String strModelo = modelo.getValueAt(0, colunaModelo.getIndice()).toString();
-			String strBackup = backup.getValueAt(0, colunaBackup.getIndice()).toString();
+			int indiceModelo = modelo.getIndice(colunaModelo);
+			int indiceBackup = backup.getIndice(colunaBackup);
+			String strModelo = modelo.getValueAt(0, indiceModelo).toString();
+			String strBackup = backup.getValueAt(0, indiceBackup).toString();
 			if (!Util.isEmpty(strModelo) && Util.isEmpty(strBackup)) {
 				setBackground(Color.GREEN);
 				setForeground(Color.BLACK);
