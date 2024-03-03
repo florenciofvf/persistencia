@@ -8,6 +8,7 @@ import br.com.persist.assistencia.Mensagens;
 
 public abstract class Acao extends AbstractAction {
 	private static final long serialVersionUID = 1L;
+	private transient Object object;
 	protected final String chave;
 	protected final boolean menu;
 
@@ -44,5 +45,13 @@ public abstract class Acao extends AbstractAction {
 
 	public void hint(String string) {
 		putValue(Action.SHORT_DESCRIPTION, string);
+	}
+
+	public Object getObject() {
+		return object;
+	}
+
+	public void setObject(Object object) {
+		this.object = object;
 	}
 }

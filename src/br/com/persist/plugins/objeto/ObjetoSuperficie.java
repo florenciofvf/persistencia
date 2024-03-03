@@ -61,6 +61,7 @@ import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.icone.IconeContainer;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
@@ -1722,6 +1723,7 @@ class SuperficiePopup2 extends Popup {
 
 class SuperficiePopup extends Popup {
 	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
+	private Action copiarIconeAcao = ObjetoSuperficie.acaoMenu("label.copiar_icone", Icones.COPIA);
 	Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
 	private Action relacoesAcao = actionMenu("label.relacoes", Icones.SETA);
 	private MenuMestreDetalhe menuMestreDetalhe = new MenuMestreDetalhe();
@@ -1740,7 +1742,8 @@ class SuperficiePopup extends Popup {
 		this.superficie = superficie;
 		add(menuAlinhamento);
 		add(true, menuDistribuicao);
-		addMenuItem(true, copiarAcao);
+		addMenuItem(true, copiarIconeAcao);
+		addMenuItem(copiarAcao);
 		add(true, menuDestacar);
 		add(true, menuCircular);
 		add(true, menuMestreDetalhe);
@@ -2056,7 +2059,15 @@ class SuperficiePopup extends Popup {
 				RelacaoDialogo.criar(frame, superficie, superficie.selecionadoRelacao);
 			}
 		});
+		copiarIconeAcao.setActionListener(e -> copiarIcone(copiarIconeAcao));
 		copiarAcao.setActionListener(e -> CopiarColar.copiar(superficie));
+	}
+
+	private void copiarIcone(Action action) {
+		if (action.getObject() instanceof Objeto) {
+			Objeto objeto = (Objeto) action.getObject();
+			IconeContainer.setNomeIconeCopiado(objeto.getIcone());
+		}
 	}
 
 	private void abrirObjeto(Objeto objeto) {
@@ -2097,6 +2108,8 @@ class SuperficiePopup extends Popup {
 		Objeto objeto = superficie.selecionadoObjeto;
 		String nomeTabela = objeto != null ? objeto.getTabela() : null;
 		boolean comTabela = objetoSelecionado && objeto != null && !Util.isEmpty(nomeTabela);
+		copiarIconeAcao.setEnabled(validoCopiarIcone(selecionados));
+		copiarIconeAcao.setObject(copiarIconeAcao.isEnabled() ? objeto : null);
 		itemDados.setEnabled(comTabela);
 		itemDados.setObject(itemDados.isEnabled() ? objeto : null);
 		menuDistribuicao.setEnabled(objetoSelecionado);
@@ -2108,6 +2121,15 @@ class SuperficiePopup extends Popup {
 		menuAlinhamento.preShow(selecionados);
 		menuCircular.preShow(selecionados);
 		menuDestacar.setEnabled(comTabela);
+	}
+
+	private boolean validoCopiarIcone(List<Objeto> selecionados) {
+		boolean resposta = false;
+		if (selecionados.size() == Constantes.UM) {
+			Objeto objeto = selecionados.get(0);
+			resposta = !Util.isEmpty(objeto.getIcone());
+		}
+		return resposta;
 	}
 
 	private class PartirAcao extends Acao {
