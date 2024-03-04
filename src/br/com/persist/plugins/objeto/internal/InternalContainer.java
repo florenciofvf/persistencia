@@ -586,6 +586,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private void configTableColumn(boolean cellRendererComparacao, TableColumn tableColumn, Coluna coluna) {
 		if (cellRendererComparacao) {
 			tableColumn.setCellRenderer(new ComparaRegistroRenderer(toolbar, coluna.getNome()));
+			toolbar.exceptionDisable();
 			return;
 		}
 		if (coluna.isChave()) {

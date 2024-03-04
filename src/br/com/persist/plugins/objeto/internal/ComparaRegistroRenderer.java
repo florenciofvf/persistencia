@@ -32,7 +32,6 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
 		Coluna colunaModelo = modelo.getColuna(nomeColuna);
 		Coluna colunaBackup = backup.getColuna(colunaModelo.getNome());
-		toolbar.exceptionDisable();
 
 		if (colunaBackup == null) {
 			toolbar.exceptionEnable("NOVA COLUNA ADICIONADA");
