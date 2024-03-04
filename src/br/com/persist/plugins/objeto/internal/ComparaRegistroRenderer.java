@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.objeto.internal.InternalContainer.Toolbar;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
@@ -15,9 +16,11 @@ import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 	private final String nomeColuna;
+	private final Toolbar toolbar;
 
-	public ComparaRegistroRenderer(String nomeColuna) {
+	public ComparaRegistroRenderer(Toolbar toolbar, String nomeColuna) {
 		this.nomeColuna = Objects.requireNonNull(nomeColuna);
+		this.toolbar = Objects.requireNonNull(toolbar);
 	}
 
 	@Override
@@ -29,20 +32,25 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
 		Coluna colunaModelo = modelo.getColuna(nomeColuna);
 		Coluna colunaBackup = backup.getColuna(colunaModelo.getNome());
+		toolbar.exceptionDisable();
 
 		if (colunaBackup == null) {
+			toolbar.exceptionEnable("NOVA COLUNA ADICIONADA");
 			setBackground(Color.BLACK);
 			setForeground(Color.WHITE);
 		} else {
 			String strModelo = modelo.getValueAt(0, colunaModelo.getIndice()).toString();
 			String strBackup = backup.getValueAt(0, colunaBackup.getIndice()).toString();
 			if (!Util.isEmpty(strModelo) && Util.isEmpty(strBackup)) {
+				toolbar.exceptionEnable("NOVO VALOR EM: " + nomeColuna);
 				setBackground(Color.GREEN);
 				setForeground(Color.BLACK);
 			} else if (Util.isEmpty(strModelo) && !Util.isEmpty(strBackup)) {
+				toolbar.exceptionEnable("REMOVIDO VALOR EM: " + nomeColuna);
 				setBackground(Color.RED);
 				setForeground(Color.BLACK);
 			} else if (!Util.isEmpty(strModelo) && !Util.isEmpty(strBackup) && !strModelo.equals(strBackup)) {
+				toolbar.exceptionEnable("ALTERADO VALOR EM: " + nomeColuna);
 				setBackground(Color.ORANGE);
 				setForeground(Color.BLACK);
 			}

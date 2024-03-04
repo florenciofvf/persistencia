@@ -25,6 +25,7 @@ public class Icones {
 	public static final Icon SEPARADOR = criarImagem("separador");
 	public static final Icon EXCEPTION = criarImagem("exception");
 	public static final Icon ARRASTAR2 = criarImagem("synonym2");
+	public static final Icon GLOBO_GIF = criarImagemGIF("globo");
 	public static final Icon EXECUTAR = criarImagem("executar");
 	public static final Icon EXPANDIR = criarImagem("expandir");
 	public static final Icon VERTICAL = criarImagem("vertical");
@@ -117,7 +118,7 @@ public class Icones {
 		}
 	}
 
-	public static ImageIcon criarImagemGIF(String nome) {
+	private static ImageIcon criarImagemGIF(String nome) {
 		try {
 			URL url = getURL(nome, "gif");
 			return new ImageIcon(url, nome);

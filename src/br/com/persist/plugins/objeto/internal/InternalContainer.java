@@ -585,7 +585,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void configTableColumn(boolean cellRendererComparacao, TableColumn tableColumn, Coluna coluna) {
 		if (cellRendererComparacao) {
-			tableColumn.setCellRenderer(new ComparaRegistroRenderer(coluna.getNome()));
+			tableColumn.setCellRenderer(new ComparaRegistroRenderer(toolbar, coluna.getNome()));
 			return;
 		}
 		if (coluna.isChave()) {
@@ -686,7 +686,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	private class Toolbar extends BarraButton {
+	class Toolbar extends BarraButton {
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
 		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
 		private final ButtonComplemento buttonComplemento = new ButtonComplemento();
@@ -736,16 +736,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
-		private void exceptionDisable() {
-			msgException = Constantes.VAZIO;
-			exceptionAcao.setEnabled(false);
-			exceptionAcao.icon(null);
+		void exceptionDisable() {
+			if (exceptionAcao.isEnabled()) {
+				msgException = Constantes.VAZIO;
+				exceptionAcao.setEnabled(false);
+				exceptionAcao.icon(null);
+			}
 		}
 
-		private void exceptionEnable(String string) {
-			exceptionAcao.icon(Icones.criarImagemGIF("globo"));
-			exceptionAcao.setEnabled(true);
-			msgException = string;
+		void exceptionEnable(String string) {
+			if (!exceptionAcao.isEnabled()) {
+				exceptionAcao.icon(Icones.GLOBO_GIF);
+				exceptionAcao.setEnabled(true);
+				msgException = string;
+			}
 		}
 
 		private void exceptionMsg() {
