@@ -726,6 +726,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			setFloatable(false);
 			exceptionAcao.setActionListener(e -> exceptionMsg());
 			labelTotal.modoCopiar();
+			exceptionDisable();
 		}
 
 		private void complementoNoFinal() {
