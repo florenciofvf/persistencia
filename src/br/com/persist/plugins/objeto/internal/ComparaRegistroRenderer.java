@@ -33,12 +33,9 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		if (colunaBackup == null) {
 			setBackground(Color.BLACK);
 			setForeground(Color.WHITE);
-			return this;
 		} else {
-			int indiceModelo = modelo.getIndice(colunaModelo);
-			int indiceBackup = backup.getIndice(colunaBackup);
-			String strModelo = modelo.getValueAt(0, indiceModelo).toString();
-			String strBackup = backup.getValueAt(0, indiceBackup).toString();
+			String strModelo = modelo.getValueAt(0, colunaModelo.getIndice()).toString();
+			String strBackup = backup.getValueAt(0, colunaBackup.getIndice()).toString();
 			if (!Util.isEmpty(strModelo) && Util.isEmpty(strBackup)) {
 				setBackground(Color.GREEN);
 				setForeground(Color.BLACK);
