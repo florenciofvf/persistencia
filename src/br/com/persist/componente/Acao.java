@@ -14,9 +14,9 @@ public abstract class Acao extends AbstractAction {
 
 	protected Acao(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
 		setRotulo(menu, rotulo, chaveRotulo);
-		putValue(Action.SMALL_ICON, icone);
 		this.chave = rotulo;
 		this.menu = menu;
+		icon(icone);
 	}
 
 	public String getChave() {
@@ -37,6 +37,10 @@ public abstract class Acao extends AbstractAction {
 
 	public void rotulo(String chaveRotulo) {
 		setRotulo(menu, chaveRotulo);
+	}
+
+	public void icon(Icon icone) {
+		putValue(Action.SMALL_ICON, icone);
 	}
 
 	public void text(String rotulo) {

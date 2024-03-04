@@ -687,10 +687,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action exceptionAcao = actionIcon("label.exception", Icones.EXCEPTION);
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
 		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
 		private final ButtonComplemento buttonComplemento = new ButtonComplemento();
+		private Action exceptionAcao = actionIcon("label.exception", null);
 		private final ButtonPesquisa buttonPesquisa = new ButtonPesquisa();
 		private final ButtonFuncoes buttonFuncoes = new ButtonFuncoes();
 		private final ButtonFragVar buttonFragVar = new ButtonFragVar();
@@ -739,11 +739,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		private void exceptionDisable() {
 			msgException = Constantes.VAZIO;
 			exceptionAcao.setEnabled(false);
+			exceptionAcao.icon(null);
 		}
 
 		private void exceptionEnable(String string) {
-			msgException = string;
+			exceptionAcao.icon(Icones.criarImagemGIF("globo"));
 			exceptionAcao.setEnabled(true);
+			msgException = string;
 		}
 
 		private void exceptionMsg() {

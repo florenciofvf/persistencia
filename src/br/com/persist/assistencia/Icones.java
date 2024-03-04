@@ -101,12 +101,25 @@ public class Icones {
 	}
 
 	public static URL getURL(String nome) {
-		return Icones.class.getResource("/resources/" + nome + ".png");
+		return getURL(nome, "png");
+	}
+
+	private static URL getURL(String nome, String ext) {
+		return Icones.class.getResource("/resources/" + nome + "." + ext);
 	}
 
 	private static ImageIcon criarImagem(String nome) {
 		try {
-			URL url = getURL(nome);
+			URL url = getURL(nome, "png");
+			return new ImageIcon(url, nome);
+		} catch (Exception e) {
+			throw new IllegalStateException("Erro imagem! " + nome);
+		}
+	}
+
+	public static ImageIcon criarImagemGIF(String nome) {
+		try {
+			URL url = getURL(nome, "gif");
 			return new ImageIcon(url, nome);
 		} catch (Exception e) {
 			throw new IllegalStateException("Erro imagem! " + nome);
