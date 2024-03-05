@@ -43,6 +43,12 @@ public class MensagemContainer extends Panel {
 		add(BorderLayout.CENTER, new ScrollPane(textArea));
 	}
 
+	public void setSel(String string) {
+		if (string != null) {
+			toolbar.txtPesquisa.setText(string);
+		}
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;

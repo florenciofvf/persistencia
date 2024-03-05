@@ -96,12 +96,12 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
-	public static String descreverField(Field field, List<Valor> valores)
+	public static String descreverField(Field field, List<Valor> valores, List<String> selecionados)
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		if (field == null) {
 			return "";
 		}
-		return !ehCampoEnum(field) ? declaracaoDoCampo(field) : declaracaoDoCampoEnum(field, valores);
+		return !ehCampoEnum(field) ? declaracaoDoCampo(field) : declaracaoDoCampoEnum(field, valores, selecionados);
 	}
 
 	private static boolean ehCampoEnum(Field field) {
@@ -114,32 +114,52 @@ public class TabelaPersistenciaUtil {
 		return field.getType().getName() + " " + field.getName() + ";\n";
 	}
 
-	private static String declaracaoDoCampoEnum(Field field, List<Valor> valores)
+	private static String declaracaoDoCampoEnum(Field field, List<Valor> valores, List<String> selecionados)
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		return declaracaoDoCampo(field) + "\n" + descreverEnum(field, valores);
+		return declaracaoDoCampo(field) + "\n" + descreverEnum(field, valores, selecionados);
 	}
 
-	private static String descreverEnum(Field campoEnum, List<Valor> valores)
+	private static String descreverEnum(Field campoEnum, List<Valor> valores, List<String> selecionados)
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Class<?> classeDoCampo = campoEnum.getType();
 		Object[] enums = classeDoCampo.getEnumConstants();
 		StringBuilder builder = new StringBuilder();
 		for (Object instancia : enums) {
+			StringBuilder sb = new StringBuilder();
 			if (builder.length() > 0) {
 				builder.append("\n");
 			}
 			if (sel(instancia, valores)) {
-				builder.append(">>> ");
+				String string = ">>> ";
+				builder.append(string);
+				sb.append(string);
 			}
-			builder.append(instancia);
+			String valueOf = String.valueOf(instancia);
+			builder.append(valueOf);
+			appendIf(sb, valueOf);
 			Method[] metodosGet = getMetodosGet(instancia);
 			if (metodosGet.length > 0) {
-				builder.append(" = (");
-				builder.append(detalharInstancia(instancia, metodosGet));
-				builder.append(")");
+				String string = " = (";
+				builder.append(string);
+				appendIf(sb, string);
+				string = detalharInstancia(instancia, metodosGet);
+				builder.append(string);
+				appendIf(sb, string);
+				string = ")";
+				builder.append(string);
+				appendIf(sb, string);
+			}
+			if (sb.length() > 0) {
+				selecionados.add(sb.toString());
 			}
 		}
 		return builder.toString();
+	}
+
+	private static void appendIf(StringBuilder sb, String string) {
+		if (sb.length() > 0) {
+			sb.append(string);
+		}
 	}
 
 	private static boolean sel(Object instancia, List<Valor> valores) {

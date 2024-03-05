@@ -993,8 +993,11 @@ public class TabelaPersistencia extends JTable {
 						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this,
 								indiceColuna);
 						Set<String> set = new HashSet<>(lista);
-						String string = TabelaPersistenciaUtil.descreverField(field, criarListaValores(set));
-						Util.mensagem(TabelaPersistencia.this, string);
+						List<String> selecionados = new ArrayList<>();
+						String string = TabelaPersistenciaUtil.descreverField(field, criarListaValores(set),
+								selecionados);
+						String sel = selecionados.size() == 1 ? selecionados.get(0) : null;
+						Util.mensagemSel(TabelaPersistencia.this, string, sel);
 					} catch (Exception ex) {
 						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
 					}

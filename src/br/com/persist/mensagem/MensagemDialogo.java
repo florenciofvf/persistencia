@@ -40,4 +40,8 @@ public class MensagemDialogo extends AbstratoDialogo {
 	public void dialogOpenedHandler(Dialog dialog) {
 		container.dialogOpenedHandler();
 	}
+
+	public void setSel(String sel) {
+		container.setSel(sel);
+	}
 }

@@ -363,9 +363,20 @@ public class Util {
 	public static void mensagem(Component componente, String string, File file) {
 		Component view = getViewParent(componente);
 		if (view instanceof Frame) {
-			mensagemFrame(string, file, view);
+			mensagemFrame(string, file, view, null);
 		} else if (view instanceof Dialog) {
-			mensagemDialogo(string, file, view);
+			mensagemDialogo(string, file, view, null);
+		} else {
+			messageDialog(componente, string);
+		}
+	}
+
+	public static void mensagemSel(Component componente, String string, String sel) {
+		Component view = getViewParent(componente);
+		if (view instanceof Frame) {
+			mensagemFrame(string, null, view, sel);
+		} else if (view instanceof Dialog) {
+			mensagemDialogo(string, null, view, sel);
 		} else {
 			messageDialog(componente, string);
 		}
@@ -378,19 +389,21 @@ public class Util {
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
-	private static void mensagemDialogo(String string, File file, Component view) {
+	private static void mensagemDialogo(String string, File file, Component view, String sel) {
 		Dialog dialog = (Dialog) view;
 		MensagemDialogo mensagem = MensagemDialogo.criar(dialog, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
+		mensagem.setSel(sel);
 		mensagem.setSize(new Dimension(500, 300));
 		mensagem.setLocationRelativeTo(dialog);
 		mensagem.setVisible(true);
 	}
 
-	private static void mensagemFrame(String string, File file, Component view) {
+	private static void mensagemFrame(String string, File file, Component view, String sel) {
 		Frame frame = (Frame) view;
 		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
+		mensagem.setSel(sel);
 		mensagem.setSize(new Dimension(500, 300));
 		mensagem.setLocationRelativeTo(frame);
 		mensagem.setVisible(true);
