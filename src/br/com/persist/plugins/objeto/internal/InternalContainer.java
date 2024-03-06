@@ -2258,8 +2258,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuAlinhamento extends Menu {
-				private Action somenteDireitoAlinhadoAcao = acaoMenu("label.somente_direito_alinhado",
+				private Action direitoAlinhadoFalseAcao = acaoMenu("label.direito_alinhado_false",
 						Icones.ALINHA_DIREITO);
+				private Action direitoAlinhadoTrueAcao = acaoMenu("label.direito_alinhado_true", Icones.ALINHA_DIREITO);
 				private Action somenteDireitoAcao = acaoMenu("label.somente_direito", Icones.ALINHA_DIREITO);
 				private Action esquerdoAcao = actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
 				private Action mesmaLarguraAcao = acaoMenu("label.mesma_largura", Icones.LARGURA);
@@ -2272,9 +2273,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(esquerdoAcao);
 					addMenuItem(mesmaLarguraAcao);
 					addMenuItem(true, somenteDireitoAcao);
-					addMenuItem(somenteDireitoAlinhadoAcao);
-					somenteDireitoAlinhadoAcao
-							.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_PERM_AJUSTAR_FORM));
+					addMenuItem(direitoAlinhadoFalseAcao);
+					addMenuItem(direitoAlinhadoTrueAcao);
+					direitoAlinhadoFalseAcao
+							.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_AJUSTAR_LARG_FALSE));
+					direitoAlinhadoTrueAcao
+							.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_AJUSTAR_LARG_TRUE));
 					somenteDireitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO));
 					esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
 					direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
