@@ -1650,6 +1650,23 @@ class SuperficiePopup2 extends Popup {
 		formulariosInvisiveisAcao.setEnabled(contemFrames);
 		atualizarFormulariosAcao.setEnabled(contemFrames);
 		limparFormulariosAcao.setEnabled(contemFrames);
+		if (contemFrames && contemExcecao()) {
+			formulariosComExcecaoAcao.icon(Icones.GLOBO_GIF);
+		} else {
+			formulariosComExcecaoAcao.icon(null);
+		}
+	}
+
+	private boolean contemExcecao() {
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				if (interno.contemExcecao()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private String getGrupoTabela(Objeto objeto) {
@@ -1661,8 +1678,8 @@ class SuperficiePopup2 extends Popup {
 		for (JInternalFrame frame : superficie.getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
-				Objeto objeto = interno.getInternalContainer().getObjeto();
 				if (interno.contemExcecao()) {
+					Objeto objeto = interno.getInternalContainer().getObjeto();
 					if (builder.length() > 0) {
 						builder.append(Constantes.QL);
 					}
