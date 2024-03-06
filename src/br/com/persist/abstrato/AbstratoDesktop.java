@@ -81,7 +81,9 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			} else if (DesktopAlinhamento.DIREITO == alinhar) {
 				direito(ref);
 			} else if (DesktopAlinhamento.COMPLETAR_DIREITO == alinhar) {
-				completarDireito(ref);
+				completarDireito(ref, false);
+			} else if (DesktopAlinhamento.COMPLETAR_DIREITO_PERM_AJUSTAR_FORM == alinhar) {
+				completarDireito(ref, true);
 			}
 		}
 
@@ -105,7 +107,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			}
 		}
 
-		private void completarDireito(JInternalFrame ref) {
+		private void completarDireito(JInternalFrame ref, boolean ajusteLargura) {
 			int xlargura = ref.getX() + ref.getWidth();
 			for (JInternalFrame frame : getAllFrames()) {
 				if (frame.isVisible()) {
@@ -113,9 +115,19 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 					int diff = xlargura - xLargura2;
 					int novaLargura = frame.getWidth() + diff;
 					if (novaLargura > Constantes.DEZ) {
-						frame.setSize(novaLargura, frame.getHeight());
+						completarADireitaAlinhado(ajusteLargura, frame, novaLargura);
 					}
 				}
+			}
+		}
+
+		private void completarADireitaAlinhado(boolean ajusteLargura, JInternalFrame frame, int novaLargura) {
+			if (ajusteLargura) {
+				if (ajustarLargura(frame)) {
+					frame.setSize(novaLargura, frame.getHeight());
+				}
+			} else {
+				frame.setSize(novaLargura, frame.getHeight());
 			}
 		}
 

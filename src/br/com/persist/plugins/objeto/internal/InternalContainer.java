@@ -2258,6 +2258,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuAlinhamento extends Menu {
+				private Action somenteDireitoAlinhadoAcao = acaoMenu("label.somente_direito_alinhado",
+						Icones.ALINHA_DIREITO);
 				private Action somenteDireitoAcao = acaoMenu("label.somente_direito", Icones.ALINHA_DIREITO);
 				private Action esquerdoAcao = actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
 				private Action mesmaLarguraAcao = acaoMenu("label.mesma_largura", Icones.LARGURA);
@@ -2269,7 +2271,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(direitoAcao);
 					addMenuItem(esquerdoAcao);
 					addMenuItem(mesmaLarguraAcao);
-					addMenuItem(somenteDireitoAcao);
+					addMenuItem(true, somenteDireitoAcao);
+					addMenuItem(somenteDireitoAlinhadoAcao);
+					somenteDireitoAlinhadoAcao
+							.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_PERM_AJUSTAR_FORM));
 					somenteDireitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO));
 					esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
 					direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
