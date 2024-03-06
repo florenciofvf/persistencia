@@ -1600,6 +1600,7 @@ class SuperficiePopup2 extends Popup {
 			Icones.NOVO);
 	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
+	private Action formulariosComExcecaoAcao = ObjetoSuperficie.acaoMenu("label.forms_com_excecao");
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
 	private Action propriedadesAcao = actionMenu("label.propriedades");
@@ -1614,7 +1615,8 @@ class SuperficiePopup2 extends Popup {
 		addMenuItem(criarObjetoAcao);
 		addMenuItem(true, colarAcao);
 		add(true, superficie.getMenuAjustar());
-		addMenuItem(true, formulariosInvisiveisAcao);
+		addMenuItem(true, formulariosComExcecaoAcao);
+		addMenuItem(formulariosInvisiveisAcao);
 		addMenuItem(atualizarFormulariosAcao);
 		addMenuItem(limparFormulariosAcao);
 		MenuItem item = addMenuItem(limparFormulariosFiltroAcao);
@@ -1631,6 +1633,7 @@ class SuperficiePopup2 extends Popup {
 		colarAcao.setActionListener(
 				e -> CopiarColar.colar(superficie, true, superficie.popup2.xLocal, superficie.popup2.yLocal));
 		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
+		formulariosComExcecaoAcao.setActionListener(e -> formulariosComExcecao());
 		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
 		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
@@ -1643,6 +1646,7 @@ class SuperficiePopup2 extends Popup {
 		superficie.getMenuLargura().habilitar(contemFrames);
 		superficie.getMenuAjustar().habilitar(contemFrames);
 		superficie.getMenuAjuste().habilitar(contemFrames);
+		formulariosComExcecaoAcao.setEnabled(contemFrames);
 		formulariosInvisiveisAcao.setEnabled(contemFrames);
 		atualizarFormulariosAcao.setEnabled(contemFrames);
 		limparFormulariosAcao.setEnabled(contemFrames);
@@ -1650,6 +1654,27 @@ class SuperficiePopup2 extends Popup {
 
 	private String getGrupoTabela(Objeto objeto) {
 		return objeto.getGrupo() + " - " + objeto.getTabela();
+	}
+
+	private void formulariosComExcecao() {
+		StringBuilder builder = new StringBuilder();
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				Objeto objeto = interno.getInternalContainer().getObjeto();
+				if (interno.contemExcecao()) {
+					if (builder.length() > 0) {
+						builder.append(Constantes.QL);
+					}
+					builder.append(objeto.getId() + " - " + interno.getTitle());
+				}
+			}
+		}
+		if (builder.length() == 0) {
+			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_com_excecao"));
+		} else {
+			Util.mensagem(superficie.getFormulario(), builder.toString());
+		}
 	}
 
 	private void formulariosInvisiveis() {

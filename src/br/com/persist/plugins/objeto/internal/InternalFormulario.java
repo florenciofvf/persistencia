@@ -508,6 +508,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return container.isAjustarLargura();
 	}
 
+	public boolean contemExcecao() {
+		return container.contemExcecao();
+	}
+
 	public void limparOutros(InternalContainer invocador) {
 		container.limparOutros(invocador);
 	}

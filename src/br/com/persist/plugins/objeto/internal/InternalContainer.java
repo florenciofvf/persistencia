@@ -754,6 +754,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
+		boolean contemExcecao() {
+			return exceptionAcao.isEnabled();
+		}
+
 		private void exceptionMsg() {
 			Util.mensagem(InternalContainer.this, msgException);
 		}
@@ -3298,6 +3302,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public boolean isAjustarLargura() {
 		return objeto.isAjustarLargura();
+	}
+
+	public boolean contemExcecao() {
+		return toolbar.contemExcecao();
 	}
 
 	public void limparOutros(InternalContainer invocador) {
