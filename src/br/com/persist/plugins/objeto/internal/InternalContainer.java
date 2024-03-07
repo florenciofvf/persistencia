@@ -2268,7 +2268,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private static final long serialVersionUID = 1L;
 
 				private MenuAlinhamento() {
-					super("label.alinhamento", Icones.LARGURA);
+					super(ObjetoMensagens.getString("label.alinhamento_internal_outros"), false, Icones.LARGURA);
 					addMenuItem(direitoAcao);
 					addMenuItem(esquerdoAcao);
 					addMenuItem(mesmaLarguraAcao);
