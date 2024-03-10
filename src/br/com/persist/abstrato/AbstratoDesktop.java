@@ -325,6 +325,10 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			empilharAcao.setEnabled(b);
 			setEnabled(b);
 		}
+
+		public void setNivelTranspFormsIgnorados(boolean b) {
+			nivelTranspFormsIgnorados.setEnabled(b);
+		}
 	}
 
 	public class Ajustar {

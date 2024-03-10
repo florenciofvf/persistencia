@@ -409,6 +409,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 
 		private void preShow() {
 			menuLargura.setTotalDireitoAuto(isAjusteAutoLarguraForm());
+			menuAjuste.setNivelTranspFormsIgnorados(false);
 		}
 	}
 
