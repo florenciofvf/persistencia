@@ -106,6 +106,18 @@ public class Macro {
 		}
 	}
 
+	static class Ignorar extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setIgnorar((Boolean) valor);
+		}
+	}
+
 	static class Ccsc extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {

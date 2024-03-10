@@ -20,6 +20,7 @@ import br.com.persist.plugins.objeto.macro.Macro.DesenharIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.DeslocamentoXIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.DeslocamentoYIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.Icone;
+import br.com.persist.plugins.objeto.macro.Macro.Ignorar;
 import br.com.persist.plugins.objeto.macro.Macro.LarguraRotulos;
 import br.com.persist.plugins.objeto.macro.Macro.LinkAuto;
 import br.com.persist.plugins.objeto.macro.Macro.PontoDestino;
@@ -48,6 +49,7 @@ public class MacroProvedor {
 	private static final String COR_FONTE = "corFonte";
 	private static final String LINK_AUTO = "linkAuto";
 	private static final String QUEBRADO = "quebrado";
+	private static final String IGNORAR = "ignorar";
 	private static final String ICONE = "icone";
 	private static final String CCSC = "ccsc";
 	private static final String SANE = "sane";
@@ -107,6 +109,7 @@ public class MacroProvedor {
 		mapa.put(LINK_AUTO, new LinkAuto());
 		mapa.put(COR_FONTE, new CorFonte());
 		mapa.put(QUEBRADO, new Quebrado());
+		mapa.put(IGNORAR, new Ignorar());
 		mapa.put(ICONE, new Icone());
 		mapa.put(CCSC, new Ccsc());
 		mapa.put(SANE, new Sane());
@@ -177,6 +180,12 @@ public class MacroProvedor {
 
 	public static void semArgNaoExec(Object valor) {
 		Instrucao instrucao = get(SANE);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public static void ignorar(Object valor) {
+		Instrucao instrucao = get(IGNORAR);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

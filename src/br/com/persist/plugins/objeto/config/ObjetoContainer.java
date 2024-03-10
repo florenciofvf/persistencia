@@ -216,6 +216,8 @@ public class ObjetoContainer extends Panel {
 				para.setTransparente(compChave.getBool());
 			} else if ("CLONAR_DESTA".equals(compChave.chave)) {
 				para.setClonarAoDestacar(compChave.getBool());
+			} else if ("IGNORAR".equals(compChave.chave)) {
+				para.setIgnorar(compChave.getBool());
 			} else if ("SANE".equals(compChave.chave)) {
 				para.setSane(compChave.getBool());
 			} else if ("CCSC".equals(compChave.chave)) {
@@ -485,6 +487,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtChaves = new TextField();
 		private TextField txtGrupo = new TextField();
 		private TextField txtJoins = new TextField();
+		private CheckBox chkIgnorar = new CheckBox();
 		private CheckBox chkCCSC = new CheckBox();
 		private CheckBox chkSANE = new CheckBox();
 		private CheckBox chkBPNT = new CheckBox();
@@ -508,6 +511,7 @@ public class ObjetoContainer extends Panel {
 			txtSequencias.setText(objeto.getSequencias());
 			txtMapeamento.setText(objeto.getMapeamento());
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
+			chkIgnorar.setSelected(objeto.isIgnorar());
 			txtOrderBy.setText(objeto.getOrderBy());
 			txtTabelas.setText(objeto.getTabelas());
 			txtTabela.setText(objeto.getTabela());
@@ -555,6 +559,7 @@ public class ObjetoContainer extends Panel {
 			txtOrderBy.addActionListener(this);
 			txtTabelas.addActionListener(this);
 			txtApelido.addActionListener(this);
+			chkIgnorar.addActionListener(this);
 			txtChaves.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtGrupo.addActionListener(this);
@@ -600,6 +605,7 @@ public class ObjetoContainer extends Panel {
 					chkAjusteAutoForm, ObjetoMensagens.getString("hint.ajuste_auto_form"), null));
 			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.ajuste_larg_form"), false,
 					chkAjusteLargForm, ObjetoMensagens.getString("hint.ajuste_larg_form"), null));
+			container.add(criarLinha("label.ignorar", chkIgnorar, ObjetoMensagens.getString("hint.ignorar")));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtComplemento.addMouseListener(complementoListener);
 			txtClassBiblio.addMouseListener(classBiblioListener);
@@ -631,6 +637,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtOrderBy, "ORDER_BY"));
 			vinculados.add(new CompChave(txtApelido, "APELIDO"));
 			vinculados.add(new CompChave(txtTabelas, "TABELAS"));
+			vinculados.add(new CompChave(chkIgnorar, "IGNORAR"));
 			vinculados.add(new CompChave(txtChaves, "CHAVES"));
 			vinculados.add(new CompChave(txtJoins, "JOINS"));
 			vinculados.add(new CompChave(txtGrupo, "GRUPO"));
@@ -658,6 +665,7 @@ public class ObjetoContainer extends Panel {
 			txtOrderBy.addMouseListener(listenerVinculado);
 			txtTabelas.addMouseListener(listenerVinculado);
 			txtApelido.addMouseListener(listenerVinculado);
+			chkIgnorar.addMouseListener(listenerVinculado);
 			txtChaves.addMouseListener(listenerVinculado);
 			txtJoins.addMouseListener(listenerVinculado);
 			txtGrupo.addMouseListener(listenerVinculado);
@@ -823,6 +831,10 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setCcsc(chk.isSelected());
 				MacroProvedor.confirmarCsc(chk.isSelected());
+			} else if (chkIgnorar == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setIgnorar(chk.isSelected());
+				MacroProvedor.ignorar(chk.isSelected());
 			} else if (chkSANE == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setSane(chk.isSelected());
