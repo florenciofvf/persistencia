@@ -37,6 +37,7 @@ public class ParaTabela {
 	private String orderBy;
 	private Color corFonte;
 	private Color corFundo;
+	private String ignorar;
 	private String chaves;
 	private String joins;
 	private String grupo;
@@ -147,6 +148,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(esquemaAlternativo)) {
 			objeto.setEsquemaAlternativo(esquemaAlternativo);
 		}
+		if (!Util.isEmpty(ignorar)) {
+			objeto.setIgnorar(Boolean.parseBoolean(ignorar));
+		}
 		if (!Util.isEmpty(tabelaAlternativo)) {
 			objeto.setTabelaAlternativo(tabelaAlternativo);
 		}
@@ -240,6 +244,7 @@ public class ParaTabela {
 		atributoValor(util, "apelido", apelido);
 		atributoValor(util, "orderBy", orderBy);
 		atributoValor(util, "tabelas", tabelas);
+		atributoValor(util, "ignorar", ignorar);
 		atributoValor(util, "chaves", chaves);
 		atributoValor(util, "joins", joins);
 		atributoValor(util, VinculoHandler.GRUPO, grupo);
@@ -295,6 +300,7 @@ public class ParaTabela {
 		util.tab().atributo("campoNomes", "").ql();
 		util.tab().atributo("linkAuto", true).ql();
 		util.tab().atributo("apelido", "ape").ql();
+		util.tab().atributo("ignorar", false).ql();
 		util.tab().atributo("orderBy", "").ql();
 		util.tab().atributo("tabelas", "").ql();
 		util.tab().atributo("chaves", "").ql();
@@ -510,6 +516,14 @@ public class ParaTabela {
 
 	public void setSane(String sane) {
 		this.sane = sane;
+	}
+
+	public String getIgnorar() {
+		return ignorar;
+	}
+
+	public void setIgnorar(String ignorar) {
+		this.ignorar = ignorar;
 	}
 
 	public String getCcsc() {

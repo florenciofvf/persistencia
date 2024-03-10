@@ -91,6 +91,7 @@ public class Objeto implements Runnable {
 	private boolean processar;
 	private Metadado metadado;
 	private String descricao;
+	private boolean ignorar;
 	private Memento memento;
 	protected int larguraId;
 	private String orderBy;
@@ -174,6 +175,7 @@ public class Objeto implements Runnable {
 		o.tabelas = tabelas;
 		o.arquivo = arquivo;
 		o.orderBy = orderBy;
+		o.ignorar = ignorar;
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.grupo = grupo;
@@ -200,6 +202,7 @@ public class Objeto implements Runnable {
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		esquemaAlternativo = attr.getValue("esquemaAlternativo");
+		ignorar = Boolean.parseBoolean(attr.getValue("ignorar"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		selectAlternativo = attr.getValue("selectAlternativo");
 		tabelaAlternativo = attr.getValue("tabelaAlternativo");
@@ -267,6 +270,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("chaves", getChaves());
 		util.atributoCheck("linkAuto", linkAuto);
 		util.atributoCheck("grupo", getGrupo());
+		util.atributoCheck("ignorar", ignorar);
 		util.atributo("cor", cor.getRGB());
 		util.atributoCheck("joins", getJoins());
 		util.atributoCheck("icone", icone);
@@ -1075,6 +1079,14 @@ public class Objeto implements Runnable {
 
 	public void setSane(boolean sane) {
 		this.sane = sane;
+	}
+
+	public boolean isIgnorar() {
+		return ignorar;
+	}
+
+	public void setIgnorar(boolean ignorar) {
+		this.ignorar = ignorar;
 	}
 
 	public void setMapeamento(String mapeamento) {

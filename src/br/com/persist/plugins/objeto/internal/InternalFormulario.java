@@ -1,11 +1,13 @@
 package br.com.persist.plugins.objeto.internal;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
@@ -45,6 +47,7 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalFormulario extends AbstratoInternalFrame {
+	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.1f);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final InternalContainer container;
@@ -436,6 +439,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	@Override
 	public void paint(Graphics g) {
+		if (container.getObjeto().isIgnorar()) {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setComposite(composite);
+		}
 		super.paint(g);
 		if (dimension != null) {
 			g.setColor(Color.ORANGE);
