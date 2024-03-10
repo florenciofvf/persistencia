@@ -244,6 +244,16 @@ public class ObjetoSuperficieUtil {
 		return null;
 	}
 
+	public static void setTransparenciaInternalFormulario(ObjetoSuperficie superficie, float nivel) {
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				interno.setNivelTransparencia(nivel);
+			}
+		}
+		superficie.repaint();
+	}
+
 	public static void selecionarConexao(ObjetoSuperficie superficie, Conexao conexao) {
 		for (JInternalFrame frame : superficie.getAllFrames()) {
 			if (frame instanceof InternalFormulario) {

@@ -116,6 +116,11 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	}
 
 	@Override
+	public void nivelTransparenciaFormsIgnorados() {
+		LOG.log(Level.FINEST, "nivelTransparenciaFormsIgnorados");
+	}
+
+	@Override
 	public void empilharFormulariosImpl() {
 		JInternalFrame[] frames = getAllFrames();
 		if (frames.length > 0) {

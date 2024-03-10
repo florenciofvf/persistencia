@@ -3,6 +3,8 @@ package br.com.persist.plugins.objeto;
 import java.awt.Font;
 
 public class ObjetoConstantes {
+	protected static final String[] NIVEIS_TRANSPARENCIA_FORM = { "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6",
+			"0.7", "0.8", "0.9", "1.0" };
 	public static final String ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS";
 	public static final String ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS";
 	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";

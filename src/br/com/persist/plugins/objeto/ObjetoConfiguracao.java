@@ -29,8 +29,7 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
-	private final JComboBox<String> cmbNivelTransparencia = new JComboBox<>(
-			new String[] { "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" });
+	private final JComboBox<String> cmbNivelTransparencia = new JComboBox<>(ObjetoConstantes.NIVEIS_TRANSPARENCIA_FORM);
 	private final CheckBox chkExibirTotalColunasTabela = new CheckBox(
 			ObjetoMensagens.getString("label.exibirTotalColunasTabelaTitle"), false);
 	private final CheckBox chkHabitEsquemaTabelaAlter = new CheckBox(

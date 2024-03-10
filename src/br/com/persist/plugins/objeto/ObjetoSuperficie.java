@@ -40,9 +40,11 @@ import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.abstrato.AbstratoMensagens;
 import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -1353,6 +1355,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			} catch (PropertyVetoException e) {
 				LOG.log(Level.FINEST, "{0}", e.getMessage());
 			}
+		}
+	}
+
+	@Override
+	public void nivelTransparenciaFormsIgnorados() {
+		Object resp = JOptionPane.showInputDialog(this,
+				AbstratoMensagens.getString("label.nivel_transp_forms_ignorados"), Mensagens.getString("label.atencao"),
+				JOptionPane.INFORMATION_MESSAGE, null, ObjetoConstantes.NIVEIS_TRANSPARENCIA_FORM,
+				"" + ObjetoPreferencia.getNivelTransparencia());
+		if (resp != null && !Util.isEmpty(resp.toString())) {
+			ObjetoSuperficieUtil.setTransparenciaInternalFormulario(this, Float.parseFloat(resp.toString().trim()));
 		}
 	}
 }

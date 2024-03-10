@@ -438,6 +438,12 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
+	public void setNivelTransparencia(float nivel) {
+		if (nivel >= 0.0f && nivel <= 1.0f) {
+			composite = composite.derive(nivel);
+		}
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		if (container.getObjeto().isIgnorar()) {

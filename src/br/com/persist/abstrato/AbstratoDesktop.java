@@ -200,6 +200,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 	public abstract void empilharFormulariosImpl();
 
+	public abstract void nivelTransparenciaFormsIgnorados();
+
 	public abstract boolean ajustarLargura(JInternalFrame frame);
 
 	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree);
@@ -290,6 +292,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	public class MenuAjuste extends Menu {
+		private Action nivelTranspFormsIgnorados = acaoMenu("label.nivel_transp_forms_ignorados");
 		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
 		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
 		private Action distribuirAcao = actionMenu("label.distribuir", Icones.CENTRALIZAR);
@@ -299,19 +302,22 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 		protected MenuAjuste() {
 			super(AbstratoMensagens.getString("label.ajuste"), false, Icones.RECT);
-			addMenuItem(aproximarFormAoObjetoAcao);
+			addMenuItem(nivelTranspFormsIgnorados);
+			addMenuItem(true, aproximarFormAoObjetoAcao);
 			addMenuItem(aproximarObjetoAoFormAcao);
-			addMenuItem(empilharAcao);
+			addMenuItem(true, empilharAcao);
 			addMenuItem(centralizarAcao);
 			addMenuItem(distribuirAcao);
 			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
 			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false));
+			nivelTranspFormsIgnorados.setActionListener(e -> ajuste.nivelTranspFormsIgnorados());
 			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 		}
 
 		public void habilitar(boolean b) {
+			nivelTranspFormsIgnorados.setEnabled(b);
 			aproximarFormAoObjetoAcao.setEnabled(b);
 			aproximarObjetoAoFormAcao.setEnabled(b);
 			centralizarAcao.setEnabled(b);
@@ -369,6 +375,10 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	public class Ajuste {
+		public void nivelTranspFormsIgnorados() {
+			nivelTransparenciaFormsIgnorados();
+		}
+
 		public void empilharFormularios() {
 			empilharFormulariosImpl();
 		}
