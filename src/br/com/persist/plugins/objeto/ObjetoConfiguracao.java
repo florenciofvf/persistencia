@@ -6,6 +6,7 @@ import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Window;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
@@ -14,6 +15,7 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
@@ -27,6 +29,8 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
+	private final JComboBox<String> cmbNivelTransparencia = new JComboBox<>(
+			new String[] { "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0" });
 	private final CheckBox chkExibirTotalColunasTabela = new CheckBox(
 			ObjetoMensagens.getString("label.exibirTotalColunasTabelaTitle"), false);
 	private final CheckBox chkHabitEsquemaTabelaAlter = new CheckBox(
@@ -82,6 +86,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				ObjetoPreferencia.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
 
+		cmbNivelTransparencia.setSelectedItem(String.valueOf(ObjetoPreferencia.getNivelTransparencia()));
 		chkHabitEsquemaTabelaAlter.setSelected(ObjetoPreferencia.isHabilitadoEsquemaTabelaAlter());
 		chkExibirTotalColunasTabela.setSelected(ObjetoPreferencia.isExibirTotalColunasTabela());
 		chkPesquisaFormInternalLazy.setSelected(ObjetoPreferencia.isPesquisaFormInternalLazy());
@@ -100,6 +105,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				chkPesquisaFormInternalLazy, chkInternalComCor, chkExibirTotalColunasTabela, chkHabitEsquemaTabelaAlter,
 				chkHabitInnerJoinsObj));
 		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
+		muro.camada(Muro
+				.panelGridBorderTop(new PanelCenter(criarLabel("label.nivel_transparencia"), cmbNivelTransparencia)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
 		add(BorderLayout.CENTER, muro);
@@ -149,12 +156,22 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			ObjetoPreferencia.setAbrirAuto(chkAtivarAbrirAuto.isSelected());
 			checkPesquisa();
 		});
+		cmbNivelTransparencia.addItemListener(e -> {
+			if (ItemEvent.SELECTED == e.getStateChange()) {
+				float nivel = Float.parseFloat(cmbNivelTransparencia.getSelectedItem().toString());
+				ObjetoPreferencia.setNivelTransparencia(nivel);
+			}
+		});
 	}
 
 	private Label criarLabelTitulo(String chaveRotulo) {
 		Label label = new Label(ObjetoMensagens.getString(chaveRotulo), false);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		return label;
+	}
+
+	public Label criarLabel(String chaveRotulo) {
+		return new Label(ObjetoMensagens.getString(chaveRotulo), false);
 	}
 
 	private class NomeValor {

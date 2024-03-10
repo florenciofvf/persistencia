@@ -47,7 +47,8 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalFormulario extends AbstratoInternalFrame {
-	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.1f);
+	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+			ObjetoPreferencia.getNivelTransparencia());
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final InternalContainer container;

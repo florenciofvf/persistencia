@@ -15,6 +15,7 @@ public class ObjetoPreferencia {
 	private static boolean abrirAutoDestacado;
 	private static Color corAntesTotalRecente;
 	private static int intervaloPesquisaAuto;
+	private static float nivelTransparencia;
 	private static int intervaloComparacao;
 	private static Color corTotalAtual;
 	private static Color corComparaRec;
@@ -37,6 +38,7 @@ public class ObjetoPreferencia {
 		destacarInternalComCor = pref.getBoolean("destacar_internal_com_cor", false);
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
+		nivelTransparencia = pref.getFloat("nivel_transparencia", 1.0f);
 		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
 		abrirAuto = pref.getBoolean("abrir_auto", false);
 	}
@@ -52,6 +54,7 @@ public class ObjetoPreferencia {
 		pref.putBoolean("destacar_internal_com_cor", destacarInternalComCor);
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
+		pref.putFloat("nivel_transparencia", nivelTransparencia);
 		pref.putInt("intervalo_comparacao", intervaloComparacao);
 		pref.putInt("cor_total_atual", corTotalAtual.getRGB());
 		pref.putInt("cor_compara_rec", corComparaRec.getRGB());
@@ -160,5 +163,13 @@ public class ObjetoPreferencia {
 
 	public static void setExibirTotalColunasTabela(boolean exibirTotalColunasTabela) {
 		ObjetoPreferencia.exibirTotalColunasTabela = exibirTotalColunasTabela;
+	}
+
+	public static float getNivelTransparencia() {
+		return nivelTransparencia;
+	}
+
+	public static void setNivelTransparencia(float nivelTransparencia) {
+		ObjetoPreferencia.nivelTransparencia = nivelTransparencia;
 	}
 }
