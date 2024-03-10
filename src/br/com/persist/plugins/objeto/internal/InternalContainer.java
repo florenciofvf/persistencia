@@ -392,7 +392,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			String consultaAlter) {
 		if (objeto.isIgnorar()) {
 			Variavel vl2 = toolbar.buttonBaixar.getVariavelLimpar2();
-			consultaAlter = vl2.getValor();
+			txtComplemento.setText(vl2.getValor());
+			consultaAlter = null;
 		}
 		StringBuilder consulta = !Util.isEmpty(consultaAlter) ? new StringBuilder(consultaAlter)
 				: getConsulta(conexao, complemento);
