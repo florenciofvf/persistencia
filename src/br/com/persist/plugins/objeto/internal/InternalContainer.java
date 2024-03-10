@@ -390,6 +390,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, Conexao conexao,
 			String consultaAlter) {
+		if (objeto.isIgnorar()) {
+			Variavel vl2 = toolbar.buttonBaixar.getVariavelLimpar2();
+			consultaAlter = vl2.getValor();
+		}
 		StringBuilder consulta = !Util.isEmpty(consultaAlter) ? new StringBuilder(consultaAlter)
 				: getConsulta(conexao, complemento);
 		try {
@@ -870,16 +874,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void limpar2() {
+				Variavel vl2 = getVariavelLimpar2();
+				txtComplemento.setText(vl2.getValor());
+				actionListenerInner.actionPerformed(null);
+			}
+
+			private Variavel getVariavelLimpar2() {
 				boolean salvar = false;
-				Variavel cv = VariavelProvedor.getVariavel("LIMPAR2");
-				if (cv == null) {
-					cv = new Variavel("LIMPAR2", "AND 1 > 2");
-					VariavelProvedor.adicionar(cv);
+				Variavel vl2 = VariavelProvedor.getVariavel("LIMPAR2");
+				if (vl2 == null) {
+					vl2 = new Variavel("LIMPAR2", "AND 1 > 2");
+					VariavelProvedor.adicionar(vl2);
 					salvar = true;
 				}
 				checarSalvarVariavelProvedor(salvar);
-				txtComplemento.setText(cv.getValor());
-				actionListenerInner.actionPerformed(null);
+				return vl2;
 			}
 
 			private void limparOutros() {

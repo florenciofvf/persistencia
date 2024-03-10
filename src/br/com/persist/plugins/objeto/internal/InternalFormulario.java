@@ -97,7 +97,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	private synchronized void checarAltura(int y, int precisao, long time) {
-		if (precisao == 0) {
+		if (precisao == 0 || container.getObjeto().isIgnorar()) {
 			return;
 		}
 		long diff = time - ultimo;
