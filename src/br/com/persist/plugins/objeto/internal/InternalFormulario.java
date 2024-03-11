@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +46,12 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalFormulario extends AbstratoInternalFrame {
+	private final transient AlphaComposite compositeDestaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+			0.0f);
 	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 			ObjetoPreferencia.getNivelTransparencia());
 	private static final Logger LOG = Logger.getGlobal();
+	private transient AlphaComposite compositeDestacar;
 	private static final long serialVersionUID = 1L;
 	private final InternalContainer container;
 	private boolean processadoPesquisa;
@@ -425,16 +427,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	public void selecionar(boolean b) {
-		try {
-			if (isEnabled() && isVisible()) {
-				setSelected(b);
-				if (ObjetoPreferencia.isDestacarInternalComCor()) {
-					dimension = b ? getSize() : null;
-					repaint();
-				}
+		if (isEnabled() && isVisible()) {
+			compositeDestacar = b ? compositeDestaque : null;
+			if (ObjetoPreferencia.isDestacarInternalComCor()) {
+				dimension = b ? getSize() : null;
+				compositeDestacar = null;
 			}
-		} catch (PropertyVetoException e) {
-			LOG.log(Level.FINEST, "{0}", b);
+			repaint();
 		}
 	}
 
@@ -446,9 +445,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	@Override
 	public void paint(Graphics g) {
-		if (container.getObjeto().isIgnorar()) {
+		if (compositeDestacar != null || container.getObjeto().isIgnorar()) {
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setComposite(composite);
+			g2.setComposite(compositeDestacar != null ? compositeDestacar : composite);
 		}
 		super.paint(g);
 		if (dimension != null) {
@@ -581,5 +580,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			processado = true;
 			container.windowInternalActivatedHandler(this);
 		}
+	}
+
+	public AlphaComposite getCompositeDestacar() {
+		return compositeDestacar;
+	}
+
+	public void setCompositeDestacar(AlphaComposite compositeDestacar) {
+		this.compositeDestacar = compositeDestacar;
 	}
 }

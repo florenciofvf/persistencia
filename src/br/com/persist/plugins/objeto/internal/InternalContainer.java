@@ -196,22 +196,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		processar("", g, null, null);
 	}
 
-	protected void atualizar() {
-		Container parent = this;
-		Desktop desktop = null;
-		while (parent != null) {
-			if (parent instanceof Desktop) {
-				desktop = (Desktop) parent;
-				break;
-			}
-			parent = parent.getParent();
-		}
-		if (desktop != null) {
-			SwingUtilities.updateComponentTreeUI(desktop);
-			desktop.repaint();
-		}
-	}
-
 	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 	}
@@ -3825,6 +3809,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				selecaoListener.selecionar(false);
 			}
 			destacarTitulo = false;
+			atualizar();
 		}
 
 		private void destacarTitulo(String titulo) {
@@ -3838,6 +3823,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				SwingUtilities.invokeLater(() -> selecaoListener.selecionar(indice % 2 == 0));
 			}
 			indice--;
+		}
+	}
+
+	private void atualizar() {
+		Container parent = this;
+		Desktop desktop = null;
+		while (parent != null) {
+			if (parent instanceof Desktop) {
+				desktop = (Desktop) parent;
+				break;
+			}
+			parent = parent.getParent();
+		}
+		if (desktop != null) {
+			desktop.repaint();
 		}
 	}
 
