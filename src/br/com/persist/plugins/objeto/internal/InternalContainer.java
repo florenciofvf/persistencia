@@ -49,8 +49,10 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -1455,13 +1457,30 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void preProcessar(boolean apostrofes) {
+					processar(apostrofes);
 					Desktop desktop = getDesktop();
-					if (desktop != null) {
-						desktop.getAjustar().retirarRolagem();
-						SwingUtilities.invokeLater(() -> processar(apostrofes));
-					} else {
-						processar(apostrofes);
+					if (desktop != null && componenteListener != null) {
+						JScrollPane scroll = getScroll(desktop);
+						if (scroll != null) {
+							JViewport viewPort = scroll.getViewport();
+							if (viewPort != null) {
+								viewPort.scrollRectToVisible(componenteListener.getComponente().getBounds());
+							}
+						}
 					}
+				}
+
+				private JScrollPane getScroll(Desktop desktop) {
+					Container parent = desktop;
+					JScrollPane scroll = null;
+					while (parent != null) {
+						if (parent instanceof JScrollPane) {
+							scroll = (JScrollPane) parent;
+							break;
+						}
+						parent = parent.getParent();
+					}
+					return scroll;
 				}
 
 				private void processar(boolean apostrofes) {
