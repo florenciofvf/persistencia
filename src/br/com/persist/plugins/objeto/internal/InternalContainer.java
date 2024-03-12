@@ -9,6 +9,7 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.dnd.DnDConstants;
@@ -1457,19 +1458,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void preProcessar(boolean apostrofes) {
+					Desktop desktop = getDesktop();
+					JViewport viewPort = getViewPort(desktop);
+					Point last = getViewPosition(viewPort);
 					processar(apostrofes);
-					SwingUtilities.invokeLater(this::setViewPosition);
+					SwingUtilities.invokeLater(() -> setViewPosition(desktop, last));
 				}
 
-				private void setViewPosition() {
-					Desktop desktop = getDesktop();
-					if (desktop != null && componenteListener != null) {
-						JScrollPane scroll = getScroll(desktop);
-						if (scroll != null && scroll.getViewport() != null) {
-							JViewport viewPort = scroll.getViewport();
-							viewPort.setViewPosition(componenteListener.getComponente().getLocation());
-						}
-					}
+				private JViewport getViewPort(Desktop desktop) {
+					JScrollPane scroll = getScroll(desktop);
+					return scroll != null ? scroll.getViewport() : null;
 				}
 
 				private JScrollPane getScroll(Desktop desktop) {
@@ -1483,6 +1481,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						parent = parent.getParent();
 					}
 					return scroll;
+				}
+
+				private Point getViewPosition(JViewport viewPort) {
+					return viewPort != null ? viewPort.getViewPosition() : null;
+				}
+
+				private void setViewPosition(Desktop desktop, Point point) {
+					if (desktop != null && componenteListener != null) {
+						JViewport viewPort = getViewPort(desktop);
+						if (viewPort != null) {
+							if (point == null) {
+								viewPort.setViewPosition(componenteListener.getComponente().getLocation());
+							} else {
+								viewPort.setViewPosition(point);
+							}
+						}
+					}
 				}
 
 				private void processar(boolean apostrofes) {
