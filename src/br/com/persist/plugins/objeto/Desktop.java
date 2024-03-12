@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JInternalFrame;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -212,7 +211,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 
 	private void updateOuRepaint(boolean updateTree) {
 		if (updateTree) {
-			SwingUtilities.updateComponentTreeUI(getParent());
+			Util.updateComponentTreeUI(getParent());
 		} else {
 			repaint();
 		}

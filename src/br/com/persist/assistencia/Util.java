@@ -45,6 +45,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -77,6 +78,10 @@ public class Util {
 
 	static {
 		desktop = Desktop.getDesktop();
+	}
+
+	public static void updateComponentTreeUI(Component c) {
+		SwingUtilities.updateComponentTreeUI(c);
 	}
 
 	public static boolean isMensagemHtml() {

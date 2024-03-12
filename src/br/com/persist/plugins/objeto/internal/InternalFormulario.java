@@ -19,13 +19,13 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.Formulario;
@@ -131,7 +131,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (novaAltura != alturaAtual) {
 			setSize(getWidth(), novaAltura);
 			if (update) {
-				SwingUtilities.updateComponentTreeUI(this);
+				Util.updateComponentTreeUI(this);
 			}
 		}
 	}
@@ -146,7 +146,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (novaAltura != alturaAtual) {
 				setSize(getWidth(), novaAltura);
 				if (update) {
-					SwingUtilities.updateComponentTreeUI(this);
+					Util.updateComponentTreeUI(this);
 				}
 			}
 		} else {
@@ -229,7 +229,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (alturaFinal != alturaAtual) {
 				setSize(getWidth(), alturaFinal);
 				if (update) {
-					SwingUtilities.updateComponentTreeUI(this);
+					Util.updateComponentTreeUI(this);
 				}
 			}
 		}

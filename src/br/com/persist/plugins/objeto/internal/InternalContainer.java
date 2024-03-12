@@ -450,7 +450,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			remove(panelAguardando);
 			scrollPane.getViewport().setView(tabelaPersistencia);
 			add(BorderLayout.CENTER, scrollPane);
-			SwingUtilities.updateComponentTreeUI(InternalContainer.this);
+			Util.updateComponentTreeUI(InternalContainer.this);
 		}
 	}
 
@@ -726,7 +726,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (super.getComponent(count - 1) != txtComplemento) {
 				remove(txtComplemento);
 				add(txtComplemento);
-				SwingUtilities.updateComponentTreeUI(Toolbar.this);
+				Util.updateComponentTreeUI(Toolbar.this);
 			}
 		}
 
@@ -2220,7 +2220,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							int colunas = Util.getInt(resp.toString(), atual);
 							txtComplemento.setColumns(colunas);
-							SwingUtilities.updateComponentTreeUI(InternalContainer.this);
+							Util.updateComponentTreeUI(InternalContainer.this);
 						} catch (Exception e) {
 							LOG.log(Level.SEVERE, Constantes.ERRO, e);
 						}
@@ -2239,7 +2239,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Color cor = InternalContainer.this.getBackground();
 					cor = JColorChooser.showDialog(InternalContainer.this, "Cor", cor);
 					InternalContainer.this.setBackground(cor);
-					SwingUtilities.updateComponentTreeUI(InternalContainer.this);
+					Util.updateComponentTreeUI(InternalContainer.this);
 				}
 
 				private void destacarColuna() {

@@ -158,10 +158,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	public void updateUI() {
 		super.updateUI();
 		if (popup != null) {
-			SwingUtilities.updateComponentTreeUI(popup);
+			Util.updateComponentTreeUI(popup);
 		}
 		if (popup2 != null) {
-			SwingUtilities.updateComponentTreeUI(popup2);
+			Util.updateComponentTreeUI(popup2);
 		}
 	}
 
@@ -923,7 +923,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		removeAll();
 		repaint();
 		setPreferredSize(coletor.getDimension());
-		SwingUtilities.updateComponentTreeUI(getParent());
+		Util.updateComponentTreeUI(getParent());
 		for (Objeto objeto : coletor.getObjetos()) {
 			objeto.ativar();
 		}
@@ -1108,7 +1108,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			}
 		}
 		setPreferredSize(new Dimension(0, y));
-		SwingUtilities.updateComponentTreeUI(getParent());
+		Util.updateComponentTreeUI(getParent());
 	}
 
 	private void msgInexistenteMetadado(Objeto objeto) {
@@ -2874,7 +2874,7 @@ class ExportacaoImportacao {
 	private void atualizarSuperficie() {
 		if (!circular) {
 			superficie.setPreferredSize(new Dimension(0, y));
-			SwingUtilities.updateComponentTreeUI(superficie.getParent());
+			Util.updateComponentTreeUI(superficie.getParent());
 		}
 	}
 

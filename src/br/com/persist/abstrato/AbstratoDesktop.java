@@ -8,7 +8,6 @@ import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -306,13 +305,13 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 				int largura = Integer.parseInt(strings[0].trim());
 				int altura = Integer.parseInt(strings[1].trim());
 				setPreferredSize(new Dimension(largura, altura));
-				SwingUtilities.updateComponentTreeUI(getParent());
+				Util.updateComponentTreeUI(getParent());
 			}
 		}
 
 		public void retirarRolagem() {
 			setPreferredSize(new Dimension(1, 1));
-			SwingUtilities.updateComponentTreeUI(getParent());
+			Util.updateComponentTreeUI(getParent());
 		}
 
 		public void usarFormularios(boolean updateTree) {
@@ -333,7 +332,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			}
 			setPreferredSize(new Dimension(largura, altura + Constantes.QUARENTA_UM));
 			if (updateTree) {
-				SwingUtilities.updateComponentTreeUI(getParent());
+				Util.updateComponentTreeUI(getParent());
 			}
 		}
 	}
