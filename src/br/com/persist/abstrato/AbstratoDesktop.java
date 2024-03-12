@@ -148,56 +148,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public class Larguras {
-		public void mesma(JInternalFrame ref) {
-			int largura = ref.getWidth();
-			for (JInternalFrame frame : getAllFrames()) {
-				if (frame.isVisible()) {
-					frame.setSize(largura, frame.getHeight());
-				}
-			}
-		}
-
-		public void configurar(DesktopLargura larguraEnum) {
-			configurar(larguraEnum, null);
-		}
-
-		public void configurar(DesktopLargura larguraEnum, JInternalFrame internal) {
-			int largura = getSize().width - 20;
-			if (internal != null) {
-				for (JInternalFrame frame : getAllFrames()) {
-					if (frame.isVisible() && frame == internal && ajustarLargura(frame)) {
-						configurar(larguraEnum, largura, frame);
-					}
-				}
-			} else {
-				for (JInternalFrame frame : getAllFrames()) {
-					if (frame.isVisible() && ajustarLargura(frame)) {
-						configurar(larguraEnum, largura, frame);
-					}
-				}
-			}
-			if (DesktopLargura.TOTAL == larguraEnum) {
-				alinhamento.centralizar();
-			}
-		}
-
-		private void configurar(DesktopLargura larguraEnum, int largura, JInternalFrame frame) {
-			Dimension size = frame.getSize();
-			Point local = frame.getLocation();
-			if (DesktopLargura.TOTAL == larguraEnum) {
-				frame.setLocation(0, local.y);
-				frame.setSize(largura, size.height);
-			} else if (DesktopLargura.TOTAL_A_DIREITA == larguraEnum) {
-				frame.setSize(largura - local.x, size.height);
-			} else if (DesktopLargura.TOTAL_A_ESQUERDA == larguraEnum) {
-				int total = (local.x + size.width) - 10;
-				frame.setSize(total, size.height);
-				frame.setLocation(10, local.y);
-			}
-		}
-	}
-
 	public abstract void empilharFormulariosImpl();
 
 	public abstract void nivelTransparenciaFormsIgnorados();
@@ -205,6 +155,14 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	public abstract boolean ajustarLargura(JInternalFrame frame);
 
 	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree);
+
+	static Action acaoMenu(String chave, Icon icon) {
+		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
+	}
+
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
+	}
 
 	public void addTotalDireitoAuto() {
 		menuLargura.addTotalDireitoAuto();
@@ -262,6 +220,56 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
+	public class Larguras {
+		public void mesma(JInternalFrame ref) {
+			int largura = ref.getWidth();
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame.isVisible()) {
+					frame.setSize(largura, frame.getHeight());
+				}
+			}
+		}
+
+		public void configurar(DesktopLargura larguraEnum) {
+			configurar(larguraEnum, null);
+		}
+
+		public void configurar(DesktopLargura larguraEnum, JInternalFrame internal) {
+			int largura = getSize().width - 20;
+			if (internal != null) {
+				for (JInternalFrame frame : getAllFrames()) {
+					if (frame.isVisible() && frame == internal && ajustarLargura(frame)) {
+						configurar(larguraEnum, largura, frame);
+					}
+				}
+			} else {
+				for (JInternalFrame frame : getAllFrames()) {
+					if (frame.isVisible() && ajustarLargura(frame)) {
+						configurar(larguraEnum, largura, frame);
+					}
+				}
+			}
+			if (DesktopLargura.TOTAL == larguraEnum) {
+				alinhamento.centralizar();
+			}
+		}
+
+		private void configurar(DesktopLargura larguraEnum, int largura, JInternalFrame frame) {
+			Dimension size = frame.getSize();
+			Point local = frame.getLocation();
+			if (DesktopLargura.TOTAL == larguraEnum) {
+				frame.setLocation(0, local.y);
+				frame.setSize(largura, size.height);
+			} else if (DesktopLargura.TOTAL_A_DIREITA == larguraEnum) {
+				frame.setSize(largura - local.x, size.height);
+			} else if (DesktopLargura.TOTAL_A_ESQUERDA == larguraEnum) {
+				int total = (local.x + size.width) - 10;
+				frame.setSize(total, size.height);
+				frame.setLocation(10, local.y);
+			}
+		}
+	}
+
 	public class MenuAjustar extends Menu {
 		private Action usarFormularioAcao = acaoMenu("label.usar_formularios");
 		private Action dimensaoManualAcao = acaoMenu("label.dimensao_manual");
@@ -280,54 +288,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 		public void habilitar(boolean b) {
 			usarFormularioAcao.setEnabled(b);
-		}
-	}
-
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
-	}
-
-	static Action acaoMenu(String chave) {
-		return acaoMenu(chave, null);
-	}
-
-	public class MenuAjuste extends Menu {
-		private Action nivelTranspFormsIgnorados = acaoMenu("label.nivel_transp_forms_ignorados");
-		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
-		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
-		private Action distribuirAcao = actionMenu("label.distribuir", Icones.CENTRALIZAR);
-		private Action centralizarAcao = actionMenu("label.centralizar", Icones.LARGURA);
-		private Action empilharAcao = acaoMenu("label.empilhar_formularios");
-		private static final long serialVersionUID = 1L;
-
-		protected MenuAjuste() {
-			super(AbstratoMensagens.getString("label.ajuste"), false, Icones.RECT);
-			addMenuItem(nivelTranspFormsIgnorados);
-			addMenuItem(true, aproximarFormAoObjetoAcao);
-			addMenuItem(aproximarObjetoAoFormAcao);
-			addMenuItem(true, empilharAcao);
-			addMenuItem(centralizarAcao);
-			addMenuItem(distribuirAcao);
-			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
-			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false));
-			nivelTranspFormsIgnorados.setActionListener(e -> ajuste.nivelTranspFormsIgnorados());
-			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
-			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
-			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
-		}
-
-		public void habilitar(boolean b) {
-			nivelTranspFormsIgnorados.setEnabled(b);
-			aproximarFormAoObjetoAcao.setEnabled(b);
-			aproximarObjetoAoFormAcao.setEnabled(b);
-			centralizarAcao.setEnabled(b);
-			distribuirAcao.setEnabled(b);
-			empilharAcao.setEnabled(b);
-			setEnabled(b);
-		}
-
-		public void setNivelTranspFormsIgnorados(boolean b) {
-			nivelTranspFormsIgnorados.setEnabled(b);
 		}
 	}
 
@@ -375,6 +335,46 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			if (updateTree) {
 				SwingUtilities.updateComponentTreeUI(getParent());
 			}
+		}
+	}
+
+	public class MenuAjuste extends Menu {
+		private Action nivelTranspFormsIgnorados = acaoMenu("label.nivel_transp_forms_ignorados");
+		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
+		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
+		private Action distribuirAcao = actionMenu("label.distribuir", Icones.CENTRALIZAR);
+		private Action centralizarAcao = actionMenu("label.centralizar", Icones.LARGURA);
+		private Action empilharAcao = acaoMenu("label.empilhar_formularios");
+		private static final long serialVersionUID = 1L;
+
+		protected MenuAjuste() {
+			super(AbstratoMensagens.getString("label.ajuste"), false, Icones.RECT);
+			addMenuItem(nivelTranspFormsIgnorados);
+			addMenuItem(true, aproximarFormAoObjetoAcao);
+			addMenuItem(aproximarObjetoAoFormAcao);
+			addMenuItem(true, empilharAcao);
+			addMenuItem(centralizarAcao);
+			addMenuItem(distribuirAcao);
+			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
+			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false));
+			nivelTranspFormsIgnorados.setActionListener(e -> ajuste.nivelTranspFormsIgnorados());
+			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
+			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
+			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
+		}
+
+		public void habilitar(boolean b) {
+			nivelTranspFormsIgnorados.setEnabled(b);
+			aproximarFormAoObjetoAcao.setEnabled(b);
+			aproximarObjetoAoFormAcao.setEnabled(b);
+			centralizarAcao.setEnabled(b);
+			distribuirAcao.setEnabled(b);
+			empilharAcao.setEnabled(b);
+			setEnabled(b);
+		}
+
+		public void setNivelTranspFormsIgnorados(boolean b) {
+			nivelTranspFormsIgnorados.setEnabled(b);
 		}
 	}
 
