@@ -1458,14 +1458,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void preProcessar(boolean apostrofes) {
 					processar(apostrofes);
+					SwingUtilities.invokeLater(this::setViewPosition);
+				}
+
+				private void setViewPosition() {
 					Desktop desktop = getDesktop();
 					if (desktop != null && componenteListener != null) {
 						JScrollPane scroll = getScroll(desktop);
-						if (scroll != null) {
+						if (scroll != null && scroll.getViewport() != null) {
 							JViewport viewPort = scroll.getViewport();
-							if (viewPort != null) {
-								viewPort.scrollRectToVisible(componenteListener.getComponente().getBounds());
-							}
+							viewPort.setViewPosition(componenteListener.getComponente().getLocation());
 						}
 					}
 				}
