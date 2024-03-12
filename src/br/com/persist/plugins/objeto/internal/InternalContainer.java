@@ -1184,15 +1184,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
-					semAspasAcao.setActionListener(e -> processar(false));
-					comAspasAcao.setActionListener(e -> processar(true));
+					semAspasAcao.setActionListener(e -> preProcessar(false));
+					comAspasAcao.setActionListener(e -> preProcessar(true));
 					renomearAcao.setActionListener(e -> renomear());
 					excluirAcao.setActionListener(e -> excluir());
 					addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							if (comAspasAcao.isEnabled()) {
-								processar(true);
+								preProcessar(true);
 							}
 						}
 					});
@@ -1451,6 +1451,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							setText(pesq.getNomeParaMenuItem());
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
+					}
+				}
+
+				private void preProcessar(boolean apostrofes) {
+					Desktop desktop = getDesktop();
+					if (desktop != null) {
+						desktop.getAjustar().retirarRolagem();
+						SwingUtilities.invokeLater(() -> processar(apostrofes));
+					} else {
+						processar(apostrofes);
 					}
 				}
 
@@ -3827,6 +3837,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private void atualizar() {
+		Desktop desktop = getDesktop();
+		if (desktop != null) {
+			desktop.repaint();
+		}
+	}
+
+	private Desktop getDesktop() {
 		Container parent = this;
 		Desktop desktop = null;
 		while (parent != null) {
@@ -3836,9 +3853,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			parent = parent.getParent();
 		}
-		if (desktop != null) {
-			desktop.repaint();
-		}
+		return desktop;
 	}
 
 	public InternalListener.ConfiguraAltura getConfiguraAlturaListener() {
