@@ -1472,7 +1472,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					JViewport viewPort = getViewPort(desktop);
 					Point last = getViewPosition(viewPort);
 					processar(apostrofes);
-					if (desktop != null && viewPort != null && last != null && componenteListener != null) {
+					if (ObjetoPreferencia.isMoverTopoFormOrigemPesquisa() && desktop != null && viewPort != null
+							&& last != null && componenteListener != null) {
 						final Point point = componenteListener.getComponente().getLocation();
 						if (point != null) {
 							Animar animar = new Animar(last.y, point.y,

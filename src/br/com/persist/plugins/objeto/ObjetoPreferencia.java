@@ -7,10 +7,10 @@ import br.com.persist.formulario.Formulario;
 
 public class ObjetoPreferencia {
 	private static boolean habilitadoEsquemaTabelaAlter;
+	private static boolean moverTopoFormOrigemPesquisa;
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean pesquisaFormInternalLazy;
 	private static boolean exibirTotalColunasTabela;
-	private static boolean destacarInternalComCor;
 	private static int tipoContainerPesquisaAuto;
 	private static boolean abrirAutoDestacado;
 	private static Color corAntesTotalRecente;
@@ -30,12 +30,12 @@ public class ObjetoPreferencia {
 				ObjetoConstantes.TIPO_CONTAINER_FORMULARIO);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		habilitadoEsquemaTabelaAlter = pref.getBoolean("habilitado_esquema_tabela_alter", false);
+		moverTopoFormOrigemPesquisa = pref.getBoolean("mover_topo_form_origem_pesquisa", false);
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		exibirTotalColunasTabela = pref.getBoolean("exibir_total_colunas_tabela", false);
 		pesquisaFormInternalLazy = pref.getBoolean("pesquisa_form_internal_lazy", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
-		destacarInternalComCor = pref.getBoolean("destacar_internal_com_cor", false);
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		nivelTransparencia = pref.getFloat("nivel_transparencia", 1.0f);
@@ -46,12 +46,12 @@ public class ObjetoPreferencia {
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("habilitado_esquema_tabela_alter", habilitadoEsquemaTabelaAlter);
+		pref.putBoolean("mover_topo_form_origem_pesquisa", moverTopoFormOrigemPesquisa);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putBoolean("pesquisa_form_internal_lazy", pesquisaFormInternalLazy);
 		pref.putBoolean("exibir_total_colunas_tabela", exibirTotalColunasTabela);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
-		pref.putBoolean("destacar_internal_com_cor", destacarInternalComCor);
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
 		pref.putFloat("nivel_transparencia", nivelTransparencia);
@@ -149,12 +149,12 @@ public class ObjetoPreferencia {
 		ObjetoPreferencia.pesquisaFormInternalLazy = pesquisaFormInternalLazy;
 	}
 
-	public static boolean isDestacarInternalComCor() {
-		return destacarInternalComCor;
+	public static boolean isMoverTopoFormOrigemPesquisa() {
+		return moverTopoFormOrigemPesquisa;
 	}
 
-	public static void setDestacarInternalComCor(boolean destacarInternalComCor) {
-		ObjetoPreferencia.destacarInternalComCor = destacarInternalComCor;
+	public static void setMoverTopoFormOrigemPesquisa(boolean moverTopoFormOrigemPesquisa) {
+		ObjetoPreferencia.moverTopoFormOrigemPesquisa = moverTopoFormOrigemPesquisa;
 	}
 
 	public static boolean isExibirTotalColunasTabela() {

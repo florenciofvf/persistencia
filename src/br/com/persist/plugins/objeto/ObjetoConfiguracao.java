@@ -42,8 +42,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			ObjetoMensagens.getString("label.abrir_auto_destacado"), false);
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox(ObjetoMensagens.getString("label.ativar_abrir_auto"),
 			false);
-	private final CheckBox chkInternalComCor = new CheckBox(
-			ObjetoMensagens.getString("label.destacar_internal_com_cor"), false);
+	private final CheckBox chkMoverTopoFormOrigemPesquisa = new CheckBox(
+			ObjetoMensagens.getString("label.mover_topo_form_origem_pesquisa"), false);
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
@@ -86,12 +86,12 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
 
 		cmbNivelTransparencia.setSelectedItem(String.valueOf(ObjetoPreferencia.getNivelTransparencia()));
+		chkMoverTopoFormOrigemPesquisa.setSelected(ObjetoPreferencia.isMoverTopoFormOrigemPesquisa());
 		chkHabitEsquemaTabelaAlter.setSelected(ObjetoPreferencia.isHabilitadoEsquemaTabelaAlter());
 		chkExibirTotalColunasTabela.setSelected(ObjetoPreferencia.isExibirTotalColunasTabela());
 		chkPesquisaFormInternalLazy.setSelected(ObjetoPreferencia.isPesquisaFormInternalLazy());
 		chkHabitInnerJoinsObj.setSelected(ObjetoPreferencia.isHabilitadoInnerJoinsObjeto());
 		chkAtivarAbrirAutoDestac.setSelected(ObjetoPreferencia.isAbrirAutoDestacado());
-		chkInternalComCor.setSelected(ObjetoPreferencia.isDestacarInternalComCor());
 		chkAtivarAbrirAuto.setSelected(ObjetoPreferencia.isAbrirAuto());
 
 		Muro muro = new Muro();
@@ -101,8 +101,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervalo, panelIntervalos));
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
-				chkPesquisaFormInternalLazy, chkInternalComCor, chkExibirTotalColunasTabela, chkHabitEsquemaTabelaAlter,
-				chkHabitInnerJoinsObj));
+				chkPesquisaFormInternalLazy, chkMoverTopoFormOrigemPesquisa, chkExibirTotalColunasTabela,
+				chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj));
 		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
 		muro.camada(Muro
 				.panelGridBorderTop(new PanelCenter(criarLabel("label.nivel_transparencia"), cmbNivelTransparencia)));
@@ -137,8 +137,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void configurar() {
-		chkInternalComCor
-				.addActionListener(e -> ObjetoPreferencia.setDestacarInternalComCor(chkInternalComCor.isSelected()));
+		chkMoverTopoFormOrigemPesquisa.addActionListener(
+				e -> ObjetoPreferencia.setMoverTopoFormOrigemPesquisa(chkMoverTopoFormOrigemPesquisa.isSelected()));
 		chkHabitEsquemaTabelaAlter.addActionListener(
 				e -> ObjetoPreferencia.setHabilitadoEsquemaTabelaAlter(chkHabitEsquemaTabelaAlter.isSelected()));
 		chkExibirTotalColunasTabela.addActionListener(
