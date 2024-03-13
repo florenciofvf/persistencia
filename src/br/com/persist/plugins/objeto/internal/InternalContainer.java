@@ -549,7 +549,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			boolean visivel = objeto.isVisivel();
 			objeto.setVisivel(!invisivel);
 			visibilidadeListener.setVisible(!invisivel);
-			setBackground(!visivel && objeto.isVisivel() ? Color.RED : null);
+			setBackground(!visivel && objeto.isVisivel() ? Color.GREEN : null);
 			if (!visivel && objeto.isVisivel()) {
 				visibilidadeListener.checarLargura(InternalContainer.this);
 			}
