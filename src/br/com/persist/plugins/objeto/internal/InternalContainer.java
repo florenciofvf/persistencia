@@ -1472,7 +1472,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					JViewport viewPort = getViewPort(desktop);
 					Point last = getViewPosition(viewPort);
 					processar(apostrofes);
-					SwingUtilities.invokeLater(() -> setViewPosition(desktop, last));
+					if (desktop != null && viewPort != null && last != null && componenteListener != null) {
+						final Point point = componenteListener.getComponente().getLocation();
+						if (point != null) {
+							Animar animar = new Animar(last.y, point.y,
+									y -> setViewPosition(viewPort, new Point(last.x, y)), 5, 50);
+							animar.iniciar();
+						}
+					}
 				}
 
 				private JViewport getViewPort(Desktop desktop) {
@@ -1497,16 +1504,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					return viewPort != null ? viewPort.getViewPosition() : null;
 				}
 
-				private void setViewPosition(Desktop desktop, Point point) {
-					if (desktop != null && componenteListener != null) {
-						JViewport viewPort = getViewPort(desktop);
-						if (viewPort != null) {
-							if (point == null) {
-								viewPort.setViewPosition(componenteListener.getComponente().getLocation());
-							} else {
-								viewPort.setViewPosition(point);
-							}
-						}
+				private void setViewPosition(JViewport viewPort, Point point) {
+					if (viewPort != null) {
+						SwingUtilities.invokeLater(() -> viewPort.setViewPosition(point));
 					}
 				}
 
