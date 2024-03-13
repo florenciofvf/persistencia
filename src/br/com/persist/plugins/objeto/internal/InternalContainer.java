@@ -4259,3 +4259,55 @@ class Intervalo {
 		}
 	}
 }
+
+class Animar extends Thread {
+	final AnimarListener listener;
+	final int delta;
+	final int delay;
+	final int pivo;
+	final int para;
+	int status;
+
+	public Animar(int pivo, int para, AnimarListener listener, int delta, int delay) {
+		this.listener = listener;
+		this.delta = delta;
+		this.delay = delay;
+		this.pivo = pivo;
+		this.para = para;
+		status = pivo;
+	}
+
+	void atualizarStatus() {
+		if (pivo < para) {
+			status += delta;
+		} else {
+			status -= delta;
+		}
+	}
+
+	boolean processado() {
+		return (pivo < para) ? status >= para : status <= para;
+	}
+
+	void iniciar() {
+		start();
+	}
+
+	@Override
+	public void run() {
+		while (!processado() && !Thread.currentThread().isInterrupted()) {
+			atualizarStatus();
+			listener.atualizar(status);
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+}
+
+@FunctionalInterface
+interface AnimarListener {
+	void atualizar(int valor);
+}
