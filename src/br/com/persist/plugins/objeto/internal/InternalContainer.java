@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.dnd.DnDConstants;
@@ -263,6 +264,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private class TxtComplemento extends JTextArea {
+		private boolean ignoreScrollRectToVisible = true;
 		private static final long serialVersionUID = 1L;
 		ConfiguraAlturaSemRegistros semRegistros;
 		private transient Imagem imagem;
@@ -282,6 +284,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		@Override
 		public void setText(String string) {
 			super.setText(Util.ltrim(string));
+		}
+
+		@Override
+		public void scrollRectToVisible(Rectangle aRect) {
+			if (ignoreScrollRectToVisible) {
+				return;
+			}
+			super.scrollRectToVisible(aRect);
 		}
 
 		@Override
