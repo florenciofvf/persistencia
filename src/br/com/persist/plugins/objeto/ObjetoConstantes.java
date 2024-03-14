@@ -16,6 +16,9 @@ public class ObjetoConstantes {
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String PESQUISA_INVERTIDO = "pesquisa_invertido";
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
+	public static final int TIPO_DESTAC_FORM_VISIBILIDADE = 0;
+	public static final int TIPO_DESTAC_FORM_COR_FUNDO = 1;
+	public static final int TIPO_DESTAC_FORM_TITULO = 2;
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;

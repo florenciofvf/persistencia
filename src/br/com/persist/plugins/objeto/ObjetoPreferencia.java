@@ -12,6 +12,7 @@ public class ObjetoPreferencia {
 	private static boolean pesquisaFormInternalLazy;
 	private static boolean exibirTotalColunasTabela;
 	private static int tipoContainerPesquisaAuto;
+	private static int tipoDestaqueFormulario;
 	private static boolean abrirAutoDestacado;
 	private static Color corAntesTotalRecente;
 	private static int intervaloPesquisaAuto;
@@ -26,6 +27,8 @@ public class ObjetoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		tipoDestaqueFormulario = pref.getInt("tipo_destaque_formulario_pesquisado",
+				ObjetoConstantes.TIPO_DESTAC_FORM_VISIBILIDADE);
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto",
 				ObjetoConstantes.TIPO_CONTAINER_FORMULARIO);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
@@ -48,6 +51,7 @@ public class ObjetoPreferencia {
 		pref.putBoolean("habilitado_esquema_tabela_alter", habilitadoEsquemaTabelaAlter);
 		pref.putBoolean("mover_topo_form_origem_pesquisa", moverTopoFormOrigemPesquisa);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
+		pref.putInt("tipo_destaque_formulario_pesquisado", tipoDestaqueFormulario);
 		pref.putBoolean("pesquisa_form_internal_lazy", pesquisaFormInternalLazy);
 		pref.putBoolean("exibir_total_colunas_tabela", exibirTotalColunasTabela);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
@@ -171,5 +175,13 @@ public class ObjetoPreferencia {
 
 	public static void setNivelTransparencia(float nivelTransparencia) {
 		ObjetoPreferencia.nivelTransparencia = nivelTransparencia;
+	}
+
+	public static int getTipoDestaqueFormulario() {
+		return tipoDestaqueFormulario;
+	}
+
+	public static void setTipoDestaqueFormulario(int tipoDestaqueFormulario) {
+		ObjetoPreferencia.tipoDestaqueFormulario = tipoDestaqueFormulario;
 	}
 }

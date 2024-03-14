@@ -44,6 +44,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			false);
 	private final CheckBox chkMoverTopoFormOrigemPesquisa = new CheckBox(
 			ObjetoMensagens.getString("label.mover_topo_form_origem_pesquisa"), false);
+	private final ButtonGroup grupoTiposDestacForm = new ButtonGroup();
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
@@ -66,6 +67,10 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			new NomeValor("label.30000", 30000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.40000", 40000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.60000", 60000, NomeValor.INTERVALO_AUTO) };
+	private final transient NomeValor[] destacForm = {
+			new NomeValor("label.visibilidade", ObjetoConstantes.TIPO_DESTAC_FORM_VISIBILIDADE, NomeValor.DESTAC_FORM),
+			new NomeValor("label.cor_fundo", ObjetoConstantes.TIPO_DESTAC_FORM_COR_FUNDO, NomeValor.DESTAC_FORM),
+			new NomeValor("label.titulo", ObjetoConstantes.TIPO_DESTAC_FORM_TITULO, NomeValor.DESTAC_FORM) };
 	private final transient NomeValor[] destacados = {
 			new NomeValor("label.formulario", ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
 			new NomeValor("label.fichario", ObjetoConstantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
@@ -81,6 +86,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private void montarLayout() {
 		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara,
 				ObjetoPreferencia.getIntervaloComparacao());
+		PanelCenter panelDestacForm = criarPainelGrupoDestacForm(destacForm,
+				ObjetoPreferencia.getTipoDestaqueFormulario());
 		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados,
 				ObjetoPreferencia.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
@@ -95,20 +102,34 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		chkAtivarAbrirAuto.setSelected(ObjetoPreferencia.isAbrirAuto());
 
 		Muro muro = new Muro();
+		Label tituloDestacForm = criarLabelTitulo("label.tipo_destaque_formulario_pesquisado");
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervalo, panelIntervalos));
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
-				chkPesquisaFormInternalLazy, chkMoverTopoFormOrigemPesquisa, chkExibirTotalColunasTabela,
+				chkPesquisaFormInternalLazy, chkExibirTotalColunasTabela, chkMoverTopoFormOrigemPesquisa,
 				chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj));
-		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
+		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados,
+				tituloDestacForm, panelDestacForm));
 		muro.camada(Muro
 				.panelGridBorderTop(new PanelCenter(criarLabel("label.nivel_transparencia"), cmbNivelTransparencia)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
 		add(BorderLayout.CENTER, muro);
+	}
+
+	private PanelCenter criarPainelGrupoDestacForm(NomeValor[] nomeValores, int padrao) {
+		PanelCenter panel = new PanelCenter();
+		for (int i = 0; i < nomeValores.length; i++) {
+			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
+			radio.setSelected(radio.nomeValor.valor == padrao);
+			radio.setMargin(new Insets(5, 10, 5, 5));
+			panel.add(radio);
+			grupoTiposDestacForm.add(radio);
+		}
+		return panel;
 	}
 
 	private PanelCenter criarPainelGrupoDestac(NomeValor[] nomeValores, int padrao) {
@@ -176,6 +197,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private class NomeValor {
 		private static final byte INTERVALO_COMPARA = 5;
 		private static final byte INTERVALO_AUTO = 2;
+		private static final byte DESTAC_FORM = 6;
 		private static final byte DESTACADOS = 3;
 		private final String nome;
 		private final int valor;
@@ -202,6 +224,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 					ObjetoPreferencia.setIntervaloComparacao(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
 					ObjetoPreferencia.setTipoContainerPesquisaAuto(nomeValor.valor);
+				} else if (nomeValor.tipo == NomeValor.DESTAC_FORM) {
+					ObjetoPreferencia.setTipoDestaqueFormulario(nomeValor.valor);
 				}
 			});
 		}
