@@ -177,7 +177,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
 	static final String WHERE = " WHERE ";
-	private boolean destacarTitulo;
 	private String ultimaConsulta;
 	private boolean buscaAuto;
 	private int contadorAuto;
@@ -398,7 +397,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			Connection conn = ConexaoProvedor.getConnection(conexao);
 			Parametros param = criarParametros(conn, conexao, consulta.toString());
 			OrdenacaoModelo modeloOrdenacao = consultarEModeloOrdenacao(conexao, param);
-			threadTitulo(getTituloAtualizado());
+			destacarPesquisado(getTituloAtualizado());
 			cabecalhoFiltro = null;
 			atualizarTitulo();
 			configurarCabecalhoTabela(modeloOrdenacao, cabecalho);
@@ -478,7 +477,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		if (objeto.isSane() && todosVazio(complemento, conexao)) {
 			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela());
 			Util.mensagem(InternalContainer.this, msg);
-			destacarTitulo = false;
 			return false;
 		}
 		if (!Util.isEmpty(txtComplemento.getText()) || !Util.isEmpty(complemento)
@@ -669,7 +667,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		if (soTotal) {
 			toolbar.buttonFuncoes.totalRegistrosComFiltro();
 		} else {
-			destacarTitulo = true;
 			actionListenerInner.actionPerformed(null);
 		}
 	}
@@ -3213,7 +3210,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		String complemento = txtComplemento.getText();
 		txtComplemento.setText(config.getComplemento());
 		processado.set(true);
-		destacarTitulo = true;
 		actionListenerInner.actionPerformed(null);
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
 		if (!processado.get()) {
@@ -3830,11 +3826,63 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		comboConexao.setSelectedItem(conexao);
 	}
 
-	private void threadTitulo(String titulo) {
-		if (tituloListener == null || !destacarTitulo) {
+	private void destacarPesquisado(String titulo) {
+		if (objeto.getReferenciaPesquisa() == null) {
 			return;
 		}
-		new Thread(new DestaqueTitulo(titulo)).start();
+		if (ObjetoPreferencia.getTipoDestaqueFormulario() == ObjetoConstantes.TIPO_DESTAC_FORM_VISIBILIDADE) {
+			new Thread(new DestaqueVisibilidade()).start();
+		} else if (ObjetoPreferencia.getTipoDestaqueFormulario() == ObjetoConstantes.TIPO_DESTAC_FORM_COR_FUNDO) {
+			new Thread(new DestaqueCorFundo()).start();
+		} else if (ObjetoPreferencia.getTipoDestaqueFormulario() == ObjetoConstantes.TIPO_DESTAC_FORM_TITULO) {
+			new Thread(new DestaqueTitulo(titulo)).start();
+		}
+	}
+
+	private class DestaqueVisibilidade implements Runnable {
+		private int contador;
+
+		@Override
+		public synchronized void run() {
+			while (contador < Constantes.DEZ && !Thread.currentThread().isInterrupted()) {
+				try {
+					if (selecaoListener != null) {
+						selecaoListener.visibilidade(contador % 2 == 0);
+					}
+					wait(500);
+					contador++;
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
+			}
+			if (selecaoListener != null) {
+				selecaoListener.visibilidade(false);
+			}
+			atualizar();
+		}
+	}
+
+	private class DestaqueCorFundo implements Runnable {
+		private int contador;
+
+		@Override
+		public synchronized void run() {
+			while (contador < Constantes.DEZ && !Thread.currentThread().isInterrupted()) {
+				try {
+					if (selecaoListener != null) {
+						selecaoListener.corFundo(contador % 2 == 0);
+					}
+					wait(500);
+					contador++;
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
+			}
+			if (selecaoListener != null) {
+				selecaoListener.corFundo(false);
+			}
+			atualizar();
+		}
 	}
 
 	private class DestaqueTitulo implements Runnable {
@@ -3850,7 +3898,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		@Override
 		public synchronized void run() {
-			while (destacarTitulo && contador < Constantes.DEZ && !Thread.currentThread().isInterrupted()) {
+			while (contador < Constantes.DEZ && !Thread.currentThread().isInterrupted()) {
 				try {
 					destacarTitulo(original);
 					wait(500);
@@ -3862,10 +3910,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (tituloListener != null) {
 				tituloListener.setTitulo(original);
 			}
-			if (selecaoListener != null) {
-				selecaoListener.selecionar(false);
-			}
-			destacarTitulo = false;
 			atualizar();
 		}
 
@@ -3875,9 +3919,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			if (tituloListener != null) {
 				tituloListener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
-			}
-			if (selecaoListener != null) {
-				SwingUtilities.invokeLater(() -> selecaoListener.selecionar(indice % 2 == 0));
 			}
 			indice--;
 		}

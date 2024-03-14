@@ -46,16 +46,14 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalFormulario extends AbstratoInternalFrame {
-	private final transient AlphaComposite compositeDestaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-			0.3f);
 	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 			ObjetoPreferencia.getNivelTransparencia());
 	private static final Logger LOG = Logger.getGlobal();
 	private transient AlphaComposite compositeDestacar;
 	private static final long serialVersionUID = 1L;
 	private final InternalContainer container;
+	private Dimension dimensionDestacar;
 	private boolean processadoPesquisa;
-	private Dimension dimension;
 	private boolean processado;
 	private Desktop desktop;
 	private long ultimo;
@@ -65,7 +63,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container = new InternalContainer(this, padrao, objeto, buscaAuto);
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
-		container.setSelecaoListener(InternalFormulario.this::selecionar);
 		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
@@ -73,6 +70,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setConfiguraAlturaListener(alturaListener);
 		container.setComponenteListener(componenteListener);
 		container.setVinculoListener(vinculoListener);
+		container.setSelecaoListener(selecaoListener);
 		setFrameIcon(Icones.VAZIO);
 		montarLayout();
 		configurar2();
@@ -404,6 +402,24 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	};
 
+	private transient InternalListener.Selecao selecaoListener = new InternalListener.Selecao() {
+		@Override
+		public void visibilidade(boolean b) {
+			if (isEnabled() && isVisible()) {
+				compositeDestacar = b ? composite : null;
+				repaint();
+			}
+		}
+
+		@Override
+		public void corFundo(boolean b) {
+			if (isEnabled() && isVisible()) {
+				dimensionDestacar = b ? getSize() : null;
+				repaint();
+			}
+		}
+	};
+
 	public void alinhar(DesktopAlinhamento opcao) {
 		checarDesktop();
 		if (desktop != null) {
@@ -426,17 +442,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return new ArrayList<>();
 	}
 
-	public void selecionar(boolean b) {
-		if (isEnabled() && isVisible()) {
-			compositeDestacar = b ? compositeDestaque : null;
-			if (ObjetoPreferencia.isDestacarInternalComCor()) {
-				dimension = b ? getSize() : null;
-				compositeDestacar = null;
-			}
-			repaint();
-		}
-	}
-
 	public void setNivelTransparencia(float nivel) {
 		if (nivel >= 0.0f && nivel <= 1.0f) {
 			composite = composite.derive(nivel);
@@ -450,9 +455,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			g2.setComposite(compositeDestacar != null ? compositeDestacar : composite);
 		}
 		super.paint(g);
-		if (dimension != null) {
+		if (dimensionDestacar != null) {
 			g.setColor(Color.ORANGE);
-			g.fillRect(0, 0, dimension.width, dimension.height);
+			g.fillRect(0, 0, dimensionDestacar.width, dimensionDestacar.height);
 		}
 	}
 

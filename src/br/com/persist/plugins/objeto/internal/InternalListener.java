@@ -79,7 +79,9 @@ public interface InternalListener {
 	}
 
 	public interface Selecao {
-		public void selecionar(boolean b);
+		public void visibilidade(boolean b);
+
+		public void corFundo(boolean b);
 	}
 
 	public interface Componente {
