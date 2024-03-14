@@ -2193,6 +2193,8 @@ class SuperficiePopup extends Popup {
 		menuDestacar.setEnabled(comTabela);
 		if (objetoSelecionado) {
 			configuracaoAcao.setEnabled(selecionados.size() == Constantes.UM);
+		} else {
+			configuracaoAcao.setEnabled(true);
 		}
 	}
 
