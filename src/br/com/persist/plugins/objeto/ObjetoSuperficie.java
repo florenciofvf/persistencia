@@ -2176,14 +2176,14 @@ class SuperficiePopup extends Popup {
 		Objeto objeto = superficie.selecionadoObjeto;
 		String nomeTabela = objeto != null ? objeto.getTabela() : null;
 		boolean comTabela = objetoSelecionado && objeto != null && !Util.isEmpty(nomeTabela);
+		relacoesAcao.setEnabled(objetoSelecionado && selecionados.size() == Constantes.UM);
+		itemDados.setEnabled(comTabela && selecionados.size() == Constantes.UM);
 		copiarIconeAcao.setEnabled(checarCopiarColarIcone(true, selecionados));
 		copiarIconeAcao.setObject(copiarIconeAcao.isEnabled() ? objeto : null);
 		colarIconeAcao.setEnabled(checarCopiarColarIcone(false, selecionados));
 		colarIconeAcao.setObject(colarIconeAcao.isEnabled() ? objeto : null);
-		itemDados.setEnabled(comTabela);
 		itemDados.setObject(itemDados.isEnabled() ? objeto : null);
 		menuDistribuicao.setEnabled(objetoSelecionado);
-		relacoesAcao.setEnabled(objetoSelecionado);
 		itemPartir.setEnabled(!objetoSelecionado);
 		copiarAcao.setEnabled(objetoSelecionado);
 		menuMestreDetalhe.preShow(selecionados);
@@ -2191,6 +2191,9 @@ class SuperficiePopup extends Popup {
 		menuAlinhamento.preShow(selecionados);
 		menuCircular.preShow(selecionados);
 		menuDestacar.setEnabled(comTabela);
+		if (objetoSelecionado) {
+			configuracaoAcao.setEnabled(selecionados.size() == Constantes.UM);
+		}
 	}
 
 	private boolean checarCopiarColarIcone(boolean copiar, List<Objeto> selecionados) {
