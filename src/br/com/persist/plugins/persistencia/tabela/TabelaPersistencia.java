@@ -264,7 +264,7 @@ public class TabelaPersistencia extends JTable {
 		TableColumn tableColumn = getTableColumn(coluna);
 		CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
 		if (cabecalho != null) {
-			cabecalho.setBackground(Color.RED);
+			cabecalho.setBackground(Color.BLUE);
 			SwingUtilities.updateComponentTreeUI(this);
 			tornarVisivel(0, coluna);
 		}
