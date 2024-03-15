@@ -1,6 +1,7 @@
 package br.com.persist.plugins.persistencia.tabela;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.KeyAdapter;
@@ -61,6 +62,14 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 
 	public Coluna getColuna() {
 		return coluna;
+	}
+
+	@Override
+	public void setForeground(Color fg) {
+		super.setForeground(fg);
+		if (descricao != null) {
+			descricao.setForeground(fg);
+		}
 	}
 
 	private class Descricao extends Label {
