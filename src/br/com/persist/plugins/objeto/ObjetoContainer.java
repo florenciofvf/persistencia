@@ -182,7 +182,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private CheckBox chkAjusteAutoEmpilhaForm = new CheckBox();
 		private CheckBox chkAjusteAutoLarguraForm = new CheckBox();
 		private TextField txtPrefixoNomeTabela = new TextField(5);
-		private TextField txtArquivoVinculo = new TextField(10);
+		private TextField txtArquivoVinculo = new TextField(20);
 		private TextField txtDestacaObjeto = new TextField(10);
 		private ButtonStatus buttonStatus = new ButtonStatus();
 		private Popup popupArquivoVinculado = new Popup();
@@ -206,8 +206,8 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(true, new ButtonInfo());
 			add(labelStatus);
 			add(true, txtPrefixoNomeTabela);
-			add(true, txtArquivoVinculo);
 			add(true, txtDestacaObjeto);
+			add(true, txtArquivoVinculo);
 			add(labelStatus2);
 			eventos();
 			arquivoVinculadoAcao.setActionListener(e -> abrirArquivoVinculado());
