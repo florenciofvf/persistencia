@@ -544,11 +544,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private void processarReferenciaVisibilidade(Referencia referencia, OrdenacaoModelo modelo) {
 		if (visibilidadeListener != null && referencia.isValidoInvisibilidade()) {
 			boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
-			boolean visivel = objeto.isVisivel();
+			boolean visivelBk = objeto.isVisivel();
 			objeto.setVisivel(!invisivel);
 			visibilidadeListener.setVisible(!invisivel);
-			setBackground(!visivel && objeto.isVisivel() ? Color.GREEN : null);
-			if (!visivel && objeto.isVisivel()) {
+			setBackground(!visivelBk && objeto.isVisivel() ? Color.GREEN : null);
+			if (!visivelBk && objeto.isVisivel()) {
+				Util.updateComponentTreeUI(this);
 				visibilidadeListener.checarLargura(InternalContainer.this);
 			}
 			visibilidadeListener.checarRedimensionamento();
