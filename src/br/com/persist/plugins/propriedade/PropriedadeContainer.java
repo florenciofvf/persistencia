@@ -2,6 +2,8 @@ package br.com.persist.plugins.propriedade;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
@@ -187,7 +189,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, BAIXAR, SALVAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, BAIXAR, SALVAR,
+					COPIAR, COLAR);
 			addButton(gerarAcao);
 			add(comboFontes);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
@@ -315,6 +318,19 @@ public class PropriedadeContainer extends AbstratoContainer {
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, PropriedadeContainer.this);
 			}
+		}
+
+		@Override
+		protected void copiar() {
+			String string = Util.getString(textArea);
+			Util.setContentTransfered(string);
+			copiarMensagem(string);
+			textArea.requestFocus();
+		}
+
+		@Override
+		protected void colar(boolean numeros, boolean letras) {
+			Util.getContentTransfered(textArea, numeros, letras);
 		}
 
 		@Override
