@@ -338,6 +338,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	public class MenuAjuste extends Menu {
+		private Action aproximarEmpilharUsarFormsAcao = acaoMenu("label.aproximar_empilhar_usar_forms");
 		private Action nivelTranspFormsIgnorados = acaoMenu("label.nivel_transp_forms_ignorados");
 		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
 		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
@@ -351,7 +352,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			addMenuItem(nivelTranspFormsIgnorados);
 			addMenuItem(true, aproximarFormAoObjetoAcao);
 			addMenuItem(aproximarObjetoAoFormAcao);
-			addMenuItem(true, empilharAcao);
+			addMenuItem(true, aproximarEmpilharUsarFormsAcao);
+			addMenuItem(empilharAcao);
 			addMenuItem(centralizarAcao);
 			addMenuItem(distribuirAcao);
 			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
@@ -360,9 +362,23 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
+			aproximarEmpilharUsarFormsAcao.setActionListener(e -> aproximarEmpilharUsarForms());
+			aproximarEmpilharUsarFormsAcao.hint(AbstratoMensagens.getString("label.aproximar_form_ao_objeto") + " > "
+					+ AbstratoMensagens.getString("label.empilhar_formularios") + " > "
+					+ AbstratoMensagens.getString("label.aproximar_objeto_ao_form") + " > "
+					+ AbstratoMensagens.getString("label.usar_formularios"));
+		}
+
+		private void aproximarEmpilharUsarForms() {
+			ajuste.aproximarObjetoFormulario(false, false);
+			ajuste.empilharFormularios();
+			ajuste.aproximarObjetoFormulario(true, true);
+			ajustar.usarFormularios(false);
+			repaint();
 		}
 
 		public void habilitar(boolean b) {
+			aproximarEmpilharUsarFormsAcao.setEnabled(b);
 			nivelTranspFormsIgnorados.setEnabled(b);
 			aproximarFormAoObjetoAcao.setEnabled(b);
 			aproximarObjetoAoFormAcao.setEnabled(b);
