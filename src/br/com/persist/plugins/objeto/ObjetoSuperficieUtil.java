@@ -422,6 +422,13 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
+	public static void ignorar(ObjetoSuperficie superficie, boolean b) {
+		for (Objeto objeto : superficie.objetos) {
+			objeto.setIgnorar(b);
+		}
+		superficie.repaint();
+	}
+
 	public static int getIndice(ObjetoSuperficie superficie, Objeto obj) {
 		if (obj != null) {
 			for (int i = 0; i < superficie.objetos.length; i++) {
