@@ -1791,6 +1791,7 @@ class SuperficiePopup extends Popup {
 	private MenuDestacar menuDestacar = new MenuDestacar();
 	private MenuCircular menuCircular = new MenuCircular();
 	private MenuItem itemDados = new MenuItem(dadosAcao);
+	private MenuIgnorar menuIgnorar = new MenuIgnorar();
 	private static final long serialVersionUID = 1L;
 	final ObjetoSuperficie superficie;
 
@@ -1803,6 +1804,7 @@ class SuperficiePopup extends Popup {
 		addMenuItem(true, copiarAcao);
 		add(true, menuDestacar);
 		add(true, menuCircular);
+		add(true, menuIgnorar);
 		add(true, menuMestreDetalhe);
 		addMenuItem(true, excluirAcao);
 		add(true, itemPartir);
@@ -1986,6 +1988,32 @@ class SuperficiePopup extends Popup {
 			if (ObjetoSuperficieUtil.getSelecionados(superficie).size() > Constantes.UM) {
 				CircularDialogo.criar(superficie.container.getFrame(), superficie, tipo);
 			}
+		}
+	}
+
+	private class MenuIgnorar extends Menu {
+		private Action ignorarFalseAcao = actionMenu("label.false");
+		private Action ignorarTrueAcao = actionMenu("label.true");
+		private static final long serialVersionUID = 1L;
+
+		private MenuIgnorar() {
+			super(Constantes.LABEL_IGNORAR);
+			addMenuItem(ignorarFalseAcao);
+			addMenuItem(true, ignorarTrueAcao);
+			ignorarFalseAcao.setActionListener(e -> ignorar(false));
+			ignorarTrueAcao.setActionListener(e -> ignorar(true));
+		}
+
+		private void preShow(List<Objeto> selecionados) {
+			setEnabled(selecionados.size() > Constantes.ZERO);
+		}
+
+		private void ignorar(boolean b) {
+			List<Objeto> selecionados = ObjetoSuperficieUtil.getSelecionados(superficie);
+			for (Objeto objeto : selecionados) {
+				objeto.setIgnorar(b);
+			}
+			superficie.repaint();
 		}
 	}
 
@@ -2190,6 +2218,7 @@ class SuperficiePopup extends Popup {
 		menuDistribuicao.preShow(selecionados);
 		menuAlinhamento.preShow(selecionados);
 		menuCircular.preShow(selecionados);
+		menuIgnorar.preShow(selecionados);
 		menuDestacar.setEnabled(comTabela);
 		if (objetoSelecionado) {
 			configuracaoAcao.setEnabled(selecionados.size() == Constantes.UM);
