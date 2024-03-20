@@ -282,7 +282,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		@Override
 		public void setText(String string) {
-			super.setText(Util.ltrim(string));
+			if (string == null) {
+				string = Constantes.VAZIO;
+			}
+			string = Util.ltrim(string);
+			if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth() && toolbar.getHeight() > 0) {
+				imagemTxtComplemento.string = string;
+				super.setText(Constantes.VAZIO);
+				imagem = imagemTxtComplemento;
+				setColumns(Constantes.DOIS);
+			} else {
+				super.setText(string);
+				imagem = null;
+			}
 		}
 
 		@Override
@@ -332,7 +344,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	private transient Imagem imagem = new Imagem();
+	private transient Imagem imagemTxtComplemento = new Imagem();
 
 	protected class Imagem {
 		final Image image;
@@ -664,26 +676,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private void executarPesquisa(String string, boolean soTotal) {
-		setTextComplemento(string);
+		txtComplemento.setText(string);
 		if (soTotal) {
 			toolbar.buttonFuncoes.totalRegistrosComFiltro();
 		} else {
 			actionListenerInner.actionPerformed(null);
-		}
-	}
-
-	private void setTextComplemento(String string) {
-		if (string == null) {
-			string = Constantes.VAZIO;
-		}
-		if (Util.stringWidth(InternalContainer.this, string) > toolbar.getWidth()) {
-			imagem.string = string;
-			txtComplemento.setColumns(Constantes.DOIS);
-			txtComplemento.setText(Constantes.VAZIO);
-			txtComplemento.imagem = imagem;
-		} else {
-			txtComplemento.setText(string);
-			txtComplemento.imagem = null;
 		}
 	}
 
@@ -1062,14 +1059,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 				String complemento = Util.getContentTransfered();
 				if (Util.isEmpty(complemento)) {
-					setTextComplemento(objeto.getComplemento());
+					txtComplemento.setText(objeto.getComplemento());
 				} else {
 					complemento = complemento.trim();
 					if (normal) {
-						setTextComplemento(complemento);
+						txtComplemento.setText(complemento);
 					} else {
 						String s = txtComplemento.getText().trim();
-						setTextComplemento(Util.concatenar(s, complemento));
+						txtComplemento.setText(Util.concatenar(s, complemento));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
