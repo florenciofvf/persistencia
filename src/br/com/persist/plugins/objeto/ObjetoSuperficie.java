@@ -1699,7 +1699,7 @@ class SuperficiePopup2 extends Popup {
 					interno.setVisible(b);
 				}
 			}
-			superficie.atualizarFormularios();
+			superficie.getMenuAjuste().aproximarEmpilharUsarForms();
 		}
 	}
 

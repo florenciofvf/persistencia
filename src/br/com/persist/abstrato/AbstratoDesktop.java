@@ -369,7 +369,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 					+ AbstratoMensagens.getString("label.usar_formularios"));
 		}
 
-		private void aproximarEmpilharUsarForms() {
+		public void aproximarEmpilharUsarForms() {
 			ajuste.aproximarObjetoFormulario(false, false);
 			ajuste.empilharFormularios();
 			ajuste.aproximarObjetoFormulario(true, true);
