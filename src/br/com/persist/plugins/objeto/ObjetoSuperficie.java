@@ -1618,6 +1618,7 @@ class SuperficiePopup2 extends Popup {
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
 	private Action propriedadesAcao = actionMenu("label.propriedades");
 	private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
+	private MenuIgnorados menuIgnorados = new MenuIgnorados();
 	private static final long serialVersionUID = 1L;
 	final ObjetoSuperficie superficie;
 	int xLocal;
@@ -1635,6 +1636,7 @@ class SuperficiePopup2 extends Popup {
 		MenuItem item = addMenuItem(limparFormulariosFiltroAcao);
 		add(true, superficie.getMenuLargura());
 		add(true, superficie.getMenuAjuste());
+		add(true, menuIgnorados);
 		addMenuItem(true, propriedadesAcao);
 		item.setToolTipText(ObjetoMensagens.getString("hint.limpar_formularios_filtro"));
 		eventos();
@@ -1663,10 +1665,41 @@ class SuperficiePopup2 extends Popup {
 		formulariosInvisiveisAcao.setEnabled(contemFrames);
 		atualizarFormulariosAcao.setEnabled(contemFrames);
 		limparFormulariosAcao.setEnabled(contemFrames);
+		menuIgnorados.preShow();
 		if (contemFrames && contemExcecao()) {
 			formulariosComExcecaoAcao.icon(Icones.GLOBO_GIF);
 		} else {
 			formulariosComExcecaoAcao.icon(null);
+		}
+	}
+
+	private class MenuIgnorados extends Menu {
+		private Action invisivelAcao = actionMenu("label.invisivel");
+		private Action visivelAcao = actionMenu("label.visivel");
+		private static final long serialVersionUID = 1L;
+
+		private MenuIgnorados() {
+			super("label.ignorados");
+			addMenuItem(invisivelAcao);
+			addMenuItem(true, visivelAcao);
+			invisivelAcao.setActionListener(e -> processar(false));
+			visivelAcao.setActionListener(e -> processar(true));
+		}
+
+		private void preShow() {
+			setEnabled(!ObjetoSuperficieUtil.getIgnorados(superficie).isEmpty());
+		}
+
+		private void processar(boolean b) {
+			List<Objeto> ignorados = ObjetoSuperficieUtil.getIgnorados(superficie);
+			for (Objeto objeto : ignorados) {
+				objeto.setVisivel(b);
+				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(superficie, objeto);
+				if (interno != null) {
+					interno.setVisible(b);
+				}
+			}
+			superficie.atualizarFormularios();
 		}
 	}
 

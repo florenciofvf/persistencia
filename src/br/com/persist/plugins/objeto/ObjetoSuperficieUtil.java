@@ -291,6 +291,16 @@ public class ObjetoSuperficieUtil {
 		return resp;
 	}
 
+	public static List<Objeto> getIgnorados(ObjetoSuperficie superficie) {
+		List<Objeto> resp = new ArrayList<>();
+		for (Objeto objeto : superficie.objetos) {
+			if (objeto.isIgnorar()) {
+				resp.add(objeto);
+			}
+		}
+		return resp;
+	}
+
 	public static void desativarObjetos(ObjetoSuperficie superficie) {
 		for (Objeto objeto : superficie.objetos) {
 			objeto.desativar();
