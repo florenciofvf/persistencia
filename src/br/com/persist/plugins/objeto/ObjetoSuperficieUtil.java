@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto;
 import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -82,11 +83,14 @@ public class ObjetoSuperficieUtil {
 
 	private static void salvarForms(ObjetoSuperficie superficie, XMLUtil util) {
 		JInternalFrame[] frames = superficie.getAllFrames();
-		for (int i = frames.length - 1; i >= 0; i--) {
-			InternalFormulario interno = (InternalFormulario) frames[i];
-			InternalForm form = new InternalForm();
-			form.copiar(interno);
-			form.salvar(util);
+		if (frames.length > 0) {
+			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
+			for (JInternalFrame frame : frames) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				InternalForm form = new InternalForm();
+				form.copiar(interno);
+				form.salvar(util);
+			}
 		}
 	}
 
