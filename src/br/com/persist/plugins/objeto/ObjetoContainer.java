@@ -424,7 +424,14 @@ public class ObjetoContainer extends AbstratoContainer {
 		protected void salvar() {
 			if (arquivo != null) {
 				if (Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
-					salvar(arquivo);
+					int total = objetoSuperficie.getTotalFormsInvisiveis();
+					if (total > 0) {
+						Util.mensagem(ObjetoContainer.this,
+								ObjetoMensagens.getString("msg.salvar_com_form_invisivel", total));
+						salvarComo();
+					} else {
+						salvar(arquivo);
+					}
 				}
 			} else {
 				salvarComo();

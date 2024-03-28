@@ -73,6 +73,16 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
+	public int getTotalFormsInvisiveis() {
+		int total = 0;
+		for (JInternalFrame frame : getAllFrames()) {
+			if (!frame.isVisible() || frame.isIcon()) {
+				total++;
+			}
+		}
+		return total;
+	}
+
 	public class Alinhamento {
 		public void alinhar(JInternalFrame ref, DesktopAlinhamento alinhar) {
 			if (DesktopAlinhamento.ESQUERDO == alinhar) {
