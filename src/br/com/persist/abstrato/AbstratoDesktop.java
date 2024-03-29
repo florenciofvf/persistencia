@@ -76,7 +76,27 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	public int getTotalFormsInvisiveis() {
 		int total = 0;
 		for (JInternalFrame frame : getAllFrames()) {
-			if (!frame.isVisible() || frame.isIcon()) {
+			if (!frame.isVisible()) {
+				total++;
+			}
+		}
+		return total;
+	}
+
+	public int getTotalFormsMinimizados() {
+		int total = 0;
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame.isIcon()) {
+				total++;
+			}
+		}
+		return total;
+	}
+
+	public int getTotalFormsMaximizados() {
+		int total = 0;
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame.isMaximum()) {
 				total++;
 			}
 		}

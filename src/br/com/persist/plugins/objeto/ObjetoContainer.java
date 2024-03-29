@@ -424,10 +424,18 @@ public class ObjetoContainer extends AbstratoContainer {
 		protected void salvar() {
 			if (arquivo != null) {
 				if (Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
-					int total = objetoSuperficie.getTotalFormsInvisiveis();
-					if (total > 0) {
-						Util.mensagem(ObjetoContainer.this,
-								ObjetoMensagens.getString("msg.salvar_com_form_invisivel", total));
+					int invisiveis = objetoSuperficie.getTotalFormsInvisiveis();
+					int minimizado = objetoSuperficie.getTotalFormsMinimizados();
+					int maximizado = objetoSuperficie.getTotalFormsMaximizados();
+					if (invisiveis + minimizado + maximizado > 0) {
+						StringBuilder sb = new StringBuilder(
+								ObjetoMensagens.getString("msg.salvar_com_form_invisivel") + Constantes.QL);
+
+						append(sb, "msg.salvar_com_form_invisivel_inv", invisiveis);
+						append(sb, "msg.salvar_com_form_invisivel_min", minimizado);
+						append(sb, "msg.salvar_com_form_invisivel_max", maximizado);
+
+						Util.mensagem(ObjetoContainer.this, sb.toString());
 						salvarComo();
 					} else {
 						salvar(arquivo);
@@ -435,6 +443,12 @@ public class ObjetoContainer extends AbstratoContainer {
 				}
 			} else {
 				salvarComo();
+			}
+		}
+
+		private void append(StringBuilder sb, String chave, int total) {
+			if (total > 0) {
+				sb.append(Constantes.QL + ObjetoMensagens.getString(chave, total));
 			}
 		}
 
