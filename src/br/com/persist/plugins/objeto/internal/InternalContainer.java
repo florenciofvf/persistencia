@@ -2304,40 +2304,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuAlinhamento extends Menu {
-				private Action direitoAlinhadoFalseAcao = acaoMenu("label.direito_alinhado_false",
-						Icones.ALINHA_DIREITO);
-				private Action direitoAlinhadoTrueAcao = acaoMenu("label.direito_alinhado_true", Icones.ALINHA_DIREITO);
-				private Action somenteDireitoAcao = acaoMenu("label.somente_direito", Icones.ALINHA_DIREITO);
-				private Action esquerdoAcao = actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
-				private Action mesmaLarguraAcao = acaoMenu("label.mesma_largura", Icones.LARGURA);
-				private Action direitoAcao = actionMenu("label.direito", Icones.ALINHA_DIREITO);
 				private static final long serialVersionUID = 1L;
+				private SemResize semResize = new SemResize();
+				private ComResize comResize = new ComResize();
 
 				private MenuAlinhamento() {
 					super(ObjetoMensagens.getString("label.alinhamento_internal_outros"), false, Icones.LARGURA);
-					addMenuItem(direitoAcao);
-					addMenuItem(esquerdoAcao);
-					addMenuItem(mesmaLarguraAcao);
-					addMenuItem(true, somenteDireitoAcao);
-					addMenuItem(direitoAlinhadoFalseAcao);
-					addMenuItem(direitoAlinhadoTrueAcao);
-					direitoAlinhadoFalseAcao
-							.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_AJUSTAR_LARG_FALSE));
-					direitoAlinhadoTrueAcao
-							.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_AJUSTAR_LARG_TRUE));
-					somenteDireitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO));
-					esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
-					direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
+					add(semResize);
+					add(true, comResize);
 					setToolTipText(ObjetoMensagens.getString("hint.alinhamento_internal"));
-					mesmaLarguraAcao.setActionListener(e -> mesma());
 					habilitar(false);
 				}
 
 				void habilitar(boolean b) {
-					somenteDireitoAcao.setEnabled(b);
-					mesmaLarguraAcao.setEnabled(b);
-					esquerdoAcao.setEnabled(b);
-					direitoAcao.setEnabled(b);
+					semResize.habilitar(b);
+					comResize.habilitar(b);
 					setEnabled(b);
 				}
 
@@ -2347,9 +2328,61 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void mesma() {
-					if (larguraListener != null) {
-						larguraListener.mesma();
+				private class SemResize extends Menu {
+					private Action esquerdoAcao = actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
+					private Action direitoAcao = actionMenu("label.direito", Icones.ALINHA_DIREITO);
+					private static final long serialVersionUID = 1L;
+
+					private SemResize() {
+						super(ObjetoMensagens.getString("label.sem_resize"), false, null);
+						addMenuItem(direitoAcao);
+						addMenuItem(esquerdoAcao);
+						esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
+						direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
+					}
+
+					void habilitar(boolean b) {
+						esquerdoAcao.setEnabled(b);
+						direitoAcao.setEnabled(b);
+						setEnabled(b);
+					}
+				}
+
+				private class ComResize extends Menu {
+					private Action direitoAlinhadoFalseAcao = acaoMenu("label.direito_alinhado_false",
+							Icones.ALINHA_DIREITO);
+					private Action direitoAlinhadoTrueAcao = acaoMenu("label.direito_alinhado_true",
+							Icones.ALINHA_DIREITO);
+					private Action somenteDireitoAcao = acaoMenu("label.somente_direito", Icones.ALINHA_DIREITO);
+					private Action mesmaLarguraAcao = acaoMenu("label.mesma_largura", Icones.LARGURA);
+					private static final long serialVersionUID = 1L;
+
+					private ComResize() {
+						super(ObjetoMensagens.getString("label.com_resize"), false, null);
+						addMenuItem(mesmaLarguraAcao);
+						addMenuItem(true, somenteDireitoAcao);
+						addMenuItem(direitoAlinhadoFalseAcao);
+						addMenuItem(direitoAlinhadoTrueAcao);
+						direitoAlinhadoFalseAcao.setActionListener(
+								e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_AJUSTAR_LARG_FALSE));
+						direitoAlinhadoTrueAcao.setActionListener(
+								e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO_AJUSTAR_LARG_TRUE));
+						somenteDireitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO));
+						mesmaLarguraAcao.setActionListener(e -> mesma());
+					}
+
+					void habilitar(boolean b) {
+						direitoAlinhadoFalseAcao.setEnabled(b);
+						direitoAlinhadoTrueAcao.setEnabled(b);
+						somenteDireitoAcao.setEnabled(b);
+						mesmaLarguraAcao.setEnabled(b);
+						setEnabled(b);
+					}
+
+					private void mesma() {
+						if (larguraListener != null) {
+							larguraListener.mesma();
+						}
 					}
 				}
 			}
