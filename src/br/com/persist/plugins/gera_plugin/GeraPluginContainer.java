@@ -48,6 +48,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private CheckBox chkComException = criarCheckBox("label.com_exception");
 	private CheckBox chkComProvedor = criarCheckBox("label.com_provedor");
 	private CheckBox chkComListener = criarCheckBox("label.com_listener");
+	private CheckBox chkComFichario = criarCheckBox("label.com_fichario");
 	private CheckBox chkComDialogo = criarCheckBox("label.com_dialogo");
 	private CheckBox chkComHandler = criarCheckBox("label.com_handler");
 	private CheckBox chkComModelo = criarCheckBox("label.com_modelo");
@@ -169,6 +170,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		muro.camada(Muro.panelGrid(chkComException));
 		muro.camada(Muro.panelGrid(chkComProvedor));
 		muro.camada(Muro.panelGrid(chkComListener));
+		muro.camada(Muro.panelGrid(chkComFichario));
 		muro.camada(Muro.panelGrid(chkComDialogo));
 		muro.camada(Muro.panelGrid(chkComHandler));
 		muro.camada(Muro.panelGrid(chkComModelo));
@@ -316,6 +318,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 			} else {
 				GeraPluginUtil.container(config);
 				GeraPluginUtil.fabrica(config);
+			}
+			if (chkComFichario.isSelected()) {
+				GeraPluginUtil.fichario(config);
 			}
 			if (config.configuracao) {
 				GeraPluginUtil.preferencias(config);

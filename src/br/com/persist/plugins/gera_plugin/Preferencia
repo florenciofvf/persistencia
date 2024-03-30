@@ -2,9 +2,12 @@ package ###package###;
 
 import java.util.prefs.Preferences;
 
+import javax.swing.SwingConstants;
+
 import br.com.persist.formulario.Formulario;
 
 public class ###cap###Preferencia {
+	private static int ###decapLower###PosicaoAbaFichario;
 	private static boolean exibirArqIgnorados;
 
 	private ###cap###Preferencia() {
@@ -12,12 +15,22 @@ public class ###cap###Preferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		###decapLower###PosicaoAbaFichario = pref.getInt("###decapLower###_posicao_aba_fichario", SwingConstants.TOP);
 		exibirArqIgnorados = pref.getBoolean("###decapLower###_exibir_arq_ignorados", false);
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		pref.putInt("###decapLower###_posicao_aba_fichario", ###decapLower###PosicaoAbaFichario);
 		pref.putBoolean("###decapLower###_exibir_arq_ignorados", exibirArqIgnorados);
+	}
+
+	public static int get###cap###PosicaoAbaFichario() {
+		return ###decapLower###PosicaoAbaFichario;
+	}
+
+	public static void set###cap###PosicaoAbaFichario(int ###decapLower###PosicaoAbaFichario) {
+		###cap###Preferencia.###decapLower###PosicaoAbaFichario = ###decapLower###PosicaoAbaFichario;
 	}
 
 	public static boolean isExibirArqIgnorados() {

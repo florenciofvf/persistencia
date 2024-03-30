@@ -1,0 +1,75 @@
+package ###package###;
+
+import java.awt.Component;
+
+import javax.swing.JTabbedPane;
+
+import br.com.persist.assistencia.Util;
+
+public class ###cap###Fichario extends JTabbedPane {
+	private static final long serialVersionUID = 1L;
+
+	public ###cap###Fichario() {
+		setTabPlacement(###cap###Preferencia.get###cap###PosicaoAbaFichario());
+	}
+
+	public void adicionarPagina(###cap###Pagina pagina) {
+		addTab(pagina.getNome(), pagina);
+		int ultimoIndice = getTabCount() - 1;
+		setSelectedIndex(ultimoIndice);
+	}
+
+	public void excluirPaginas() {
+		while (getTabCount() > 0) {
+			removeTabAt(0);
+		}
+	}
+
+	public int getIndiceAtivo() {
+		return getSelectedIndex();
+	}
+
+	public ###cap###Pagina getPaginaAtiva() {
+		int indice = getSelectedIndex();
+		if (indice != -1) {
+			return (###cap###Pagina) getComponentAt(indice);
+		}
+		return null;
+	}
+
+	private ###cap###Pagina getPagina(String idPagina) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof ###cap###Pagina) {
+				###cap###Pagina p = (###cap###Pagina) cmp;
+				if (p.getNome().equals(idPagina)) {
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+
+	private int getIndicePagina(###cap###Pagina pagina) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof ###cap###Pagina) {
+				###cap###Pagina p = (###cap###Pagina) cmp;
+				if (p == pagina) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	public void setConteudo(String conteudo, String idPagina) {
+		###cap###Pagina pagina = getPagina(idPagina);
+		if (pagina != null) {
+			if (!Util.isEmpty(conteudo)) {
+				pagina.textArea.setText(conteudo);
+			}
+			setSelectedIndex(getIndicePagina(pagina));
+		}
+	}
+}

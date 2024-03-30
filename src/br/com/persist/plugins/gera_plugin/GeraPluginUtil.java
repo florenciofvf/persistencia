@@ -29,6 +29,11 @@ public class GeraPluginUtil {
 		transferir(config, "Preferencia");
 	}
 
+	static void fichario(Config config) throws IOException {
+		transferir(config, "Fichario");
+		transferir(config, "Pagina");
+	}
+
 	static void constantes(Config config) throws IOException {
 		transferir(config, "Constantes");
 	}
