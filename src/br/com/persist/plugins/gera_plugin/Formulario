@@ -6,20 +6,20 @@ import java.awt.Window;
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.formulario.Formulario;
 
-public class ###cap###Formulario extends AbstratoFormulario {
+public class ###nameCap###Formulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
-	private final ###cap###Container container;
+	private final ###nameCap###Container container;
 
-	private ###cap###Formulario(Formulario formulario) {
-		super(formulario, ###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###));
-		container = new ###cap###Container(this, formulario);
-		container.set###cap###Formulario(this);
+	private ###nameCap###Formulario(Formulario formulario) {
+		super(formulario, ###nameCap###Mensagens.getString(###nameCap###Constantes.LABEL_###nameUpper###));
+		container = new ###nameCap###Container(this, formulario);
+		container.set###nameCap###Formulario(this);
 		montarLayout();
 	}
 
-	private ###cap###Formulario(###cap###Container container) {
-		super(container.getFormulario(), ###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###));
-		container.set###cap###Formulario(this);
+	private ###nameCap###Formulario(###nameCap###Container container) {
+		super(container.getFormulario(), ###nameCap###Mensagens.getString(###nameCap###Constantes.LABEL_###nameUpper###));
+		container.set###nameCap###Formulario(this);
 		this.container = container;
 		container.setJanela(this);
 		montarLayout();
@@ -29,20 +29,20 @@ public class ###cap###Formulario extends AbstratoFormulario {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static void criar(Formulario formulario, ###cap###Container container) {
-		###cap###Formulario form = new ###cap###Formulario(container);
+	public static void criar(Formulario formulario, ###nameCap###Container container) {
+		###nameCap###Formulario form = new ###nameCap###Formulario(container);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
-		###cap###Formulario form = new ###cap###Formulario(formulario);
+		###nameCap###Formulario form = new ###nameCap###Formulario(formulario);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
-		container.set###cap###Formulario(null);
+		container.set###nameCap###Formulario(null);
 		fechar();
 	}
 

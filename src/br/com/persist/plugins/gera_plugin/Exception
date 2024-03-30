@@ -1,17 +1,17 @@
 package ###package###;
 
-public class ###cap###Exception extends Exception {
+public class ###nameCap###Exception extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	public ###cap###Exception(Throwable cause) {
+	public ###nameCap###Exception(Throwable cause) {
 		super(cause);
 	}
 
-	public ###cap###Exception(String chave) {
-		super(###cap###Mensagens.getString(chave));
+	public ###nameCap###Exception(String chave) {
+		super(###nameCap###Mensagens.getString(chave));
 	}
 
-	public ###cap###Exception(String chave, Object... argumentos) {
-		super(###cap###Mensagens.getString(chave, argumentos));
+	public ###nameCap###Exception(String chave, Object... argumentos) {
+		super(###nameCap###Mensagens.getString(chave, argumentos));
 	}
 }

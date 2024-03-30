@@ -1,6 +1,6 @@
 package ###package###;
 
-public class ###cap###Provedor {
-	private ###cap###Provedor() {
+public class ###nameCap###Provedor {
+	private ###nameCap###Provedor() {
 	}
 }

@@ -15,7 +15,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
-public class ###cap###Configuracao extends AbstratoConfiguracao {
+public class ###nameCap###Configuracao extends AbstratoConfiguracao {
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 	private static final long serialVersionUID = 1L;
 
@@ -25,15 +25,15 @@ public class ###cap###Configuracao extends AbstratoConfiguracao {
 			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
 			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
 
-	public ###cap###Configuracao(Formulario formulario) {
-		super(formulario, ###cap###Mensagens.getString("label.plugin_###decapLower###"));
+	public ###nameCap###Configuracao(Formulario formulario) {
+		super(formulario, ###nameCap###Mensagens.getString("label.plugin_###nameLower###"));
 		montarLayout();
 		configurar();
 	}
 
 	private void montarLayout() {
-		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, ###cap###Preferencia.get###cap###PosicaoAbaFichario());
-		chkExibirArqIgnorados.setSelected(###cap###Preferencia.isExibirArqIgnorados());
+		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, ###nameCap###Preferencia.get###nameCap###PosicaoAbaFichario());
+		chkExibirArqIgnorados.setSelected(###nameCap###Preferencia.isExibirArqIgnorados());
 
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
@@ -44,11 +44,11 @@ public class ###cap###Configuracao extends AbstratoConfiguracao {
 
 	private void configurar() {
 		chkExibirArqIgnorados
-				.addActionListener(e -> ###cap###Preferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
+				.addActionListener(e -> ###nameCap###Preferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 	}
 
 	private Label criarLabelTituloRotulo(String rotulo) {
-		return criarLabelTitulo(###cap###Mensagens.getString(rotulo), false);
+		return criarLabelTitulo(###nameCap###Mensagens.getString(rotulo), false);
 	}
 
 	private Label criarLabelTitulo(String rotulo, boolean chaveRotulo) {
@@ -58,11 +58,11 @@ public class ###cap###Configuracao extends AbstratoConfiguracao {
 	}
 
 	public Label criarLabel(String chaveRotulo) {
-		return new Label(###cap###Mensagens.getString(chaveRotulo), false);
+		return new Label(###nameCap###Mensagens.getString(chaveRotulo), false);
 	}
 
 	static CheckBox criarCheckBox(String chaveRotulo) {
-		return new CheckBox(###cap###Mensagens.getString(chaveRotulo), false);
+		return new CheckBox(###nameCap###Mensagens.getString(chaveRotulo), false);
 	}
 
 	private class NomeValor {
@@ -100,7 +100,7 @@ public class ###cap###Configuracao extends AbstratoConfiguracao {
 			this.nomeValor = nomeValor;
 			addActionListener(e -> {
 				if (nomeValor.tipo == NomeValor.POSICAO_ABA) {
-					###cap###Preferencia.set###cap###PosicaoAbaFichario(nomeValor.valor);
+					###nameCap###Preferencia.set###nameCap###PosicaoAbaFichario(nomeValor.valor);
 				}
 			});
 		}

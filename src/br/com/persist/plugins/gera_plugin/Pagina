@@ -35,7 +35,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 
-public class ###cap###Pagina extends Panel {
+public class ###nameCap###Pagina extends Panel {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane textArea = new JTextPane();
 	private static final long serialVersionUID = 1L;
@@ -43,7 +43,7 @@ public class ###cap###Pagina extends Panel {
 	private ScrollPane scrollPane;
 	private final File file;
 
-	public ###cap###Pagina(File file) {
+	public ###nameCap###Pagina(File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.file = file;
 		montarLayout();
@@ -152,7 +152,7 @@ public class ###cap###Pagina extends Panel {
 				textArea.setText(sb.toString());
 				setValueScrollPane(value);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(###cap###Constantes.PAINEL_###capUpper###, ex, this);
+				Util.stackTraceAndMessage(###nameCap###Constantes.PAINEL_###nameUpper###, ex, this);
 			}
 		}
 	}
@@ -163,20 +163,20 @@ public class ###cap###Pagina extends Panel {
 			try {
 				Files.delete(path);
 			} catch (IOException e) {
-				Util.stackTraceAndMessage(###cap###Constantes.PAINEL_###capUpper###, e, this);
+				Util.stackTraceAndMessage(###nameCap###Constantes.PAINEL_###nameUpper###, e, this);
 			}
 		}
 	}
 
 	public void salvar(AtomicBoolean atomic) {
-		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, ###cap###Mensagens.getString("msg.confirmar_salvar_ativa"))) {
+		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, ###nameCap###Mensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
 		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 			pw.print(textArea.getText());
 			atomic.set(true);
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage(###cap###Constantes.PAINEL_###capUpper###, ex, this);
+			Util.stackTraceAndMessage(###nameCap###Constantes.PAINEL_###nameUpper###, ex, this);
 		}
 	}
 }

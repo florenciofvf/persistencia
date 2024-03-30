@@ -1,6 +1,6 @@
 package ###package###;
 
-public class ###cap### {
+public class ###nameCap### {
 	private String nome;
 
 	public String getNome() {

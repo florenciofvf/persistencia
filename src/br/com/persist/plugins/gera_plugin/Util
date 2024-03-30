@@ -1,6 +1,6 @@
 package ###package###;
 
-public class ###cap###Util {
-	private ###cap###Util() {
+public class ###nameCap###Util {
+	private ###nameCap###Util() {
 	}
 }

@@ -21,12 +21,12 @@ public abstract class Builder {
 	}
 
 	public void gerar() throws IOException {
-		File file = new File(config.diretorioDestino, config.nomeCapitalizado + objeto + ".java");
+		File file = new File(config.diretorioDestino, config.nameCap + objeto + ".java");
 		try (PrintWriter pw = new PrintWriter(file)) {
 			pw.println("package " + config.pacote + ";");
 			pw.println();
 			templateImport(pw);
-			pw.println("public class " + config.nomeCapitalizado + objeto + extende + " {");
+			pw.println("public class " + config.nameCap + objeto + extende + " {");
 			templateClass(pw);
 			pw.print("}");
 		}

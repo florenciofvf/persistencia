@@ -8,13 +8,13 @@ import br.com.persist.assistencia.Util;
 
 class Config {
 	final File diretorioDestino;
-	String nomeDecapitalizado;
-	String nomeCapitalizado;
-	String nomeCaixaBaixa;
-	String nomeCaixaAlta;
 	boolean configuracao;
 	boolean comDialogo;
-	String nomeMin;
+	String nameUpper;
+	String nameLower;
+	String nameDecap;
+	String nameCap;
+	String nameMin;
 	String recurso;
 	String pacote;
 	String icone;
@@ -24,11 +24,11 @@ class Config {
 	}
 
 	String processar(String string) {
-		string = Util.replaceAll(string, tag("decapLower"), nomeCaixaBaixa);
-		string = Util.replaceAll(string, tag("decap"), nomeDecapitalizado);
-		string = Util.replaceAll(string, tag("capUpper"), nomeCaixaAlta);
-		string = Util.replaceAll(string, tag("cap"), nomeCapitalizado);
-		string = Util.replaceAll(string, tag("nomeMin"), nomeMin);
+		string = Util.replaceAll(string, tag("nameUpper"), nameUpper);
+		string = Util.replaceAll(string, tag("nameLower"), nameLower);
+		string = Util.replaceAll(string, tag("nameDecap"), nameDecap);
+		string = Util.replaceAll(string, tag("nameCap"), nameCap);
+		string = Util.replaceAll(string, tag("nameMin"), nameMin);
 		string = Util.replaceAll(string, tag("package"), pacote);
 		string = Util.replaceAll(string, tag("icone"), icone);
 		return string;

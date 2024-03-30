@@ -6,14 +6,14 @@ import javax.swing.JTabbedPane;
 
 import br.com.persist.assistencia.Util;
 
-public class ###cap###Fichario extends JTabbedPane {
+public class ###nameCap###Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 
-	public ###cap###Fichario() {
-		setTabPlacement(###cap###Preferencia.get###cap###PosicaoAbaFichario());
+	public ###nameCap###Fichario() {
+		setTabPlacement(###nameCap###Preferencia.get###nameCap###PosicaoAbaFichario());
 	}
 
-	public void adicionarPagina(###cap###Pagina pagina) {
+	public void adicionarPagina(###nameCap###Pagina pagina) {
 		addTab(pagina.getNome(), pagina);
 		int ultimoIndice = getTabCount() - 1;
 		setSelectedIndex(ultimoIndice);
@@ -29,19 +29,19 @@ public class ###cap###Fichario extends JTabbedPane {
 		return getSelectedIndex();
 	}
 
-	public ###cap###Pagina getPaginaAtiva() {
+	public ###nameCap###Pagina getPaginaAtiva() {
 		int indice = getSelectedIndex();
 		if (indice != -1) {
-			return (###cap###Pagina) getComponentAt(indice);
+			return (###nameCap###Pagina) getComponentAt(indice);
 		}
 		return null;
 	}
 
-	private ###cap###Pagina getPagina(String idPagina) {
+	private ###nameCap###Pagina getPagina(String idPagina) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Component cmp = getComponentAt(i);
-			if (cmp instanceof ###cap###Pagina) {
-				###cap###Pagina p = (###cap###Pagina) cmp;
+			if (cmp instanceof ###nameCap###Pagina) {
+				###nameCap###Pagina p = (###nameCap###Pagina) cmp;
 				if (p.getNome().equals(idPagina)) {
 					return p;
 				}
@@ -50,11 +50,11 @@ public class ###cap###Fichario extends JTabbedPane {
 		return null;
 	}
 
-	private int getIndicePagina(###cap###Pagina pagina) {
+	private int getIndicePagina(###nameCap###Pagina pagina) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Component cmp = getComponentAt(i);
-			if (cmp instanceof ###cap###Pagina) {
-				###cap###Pagina p = (###cap###Pagina) cmp;
+			if (cmp instanceof ###nameCap###Pagina) {
+				###nameCap###Pagina p = (###nameCap###Pagina) cmp;
 				if (p == pagina) {
 					return i;
 				}
@@ -64,7 +64,7 @@ public class ###cap###Fichario extends JTabbedPane {
 	}
 
 	public void setConteudo(String conteudo, String idPagina) {
-		###cap###Pagina pagina = getPagina(idPagina);
+		###nameCap###Pagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.isEmpty(conteudo)) {
 				pagina.textArea.setText(conteudo);

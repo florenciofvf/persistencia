@@ -1,5 +1,5 @@
 package ###package###;
 
-public interface ###cap###Listener {
-	public void processar(###cap### ###decap###);
+public interface ###nameCap###Listener {
+	public void processar(###nameCap### ###nameDecap###);
 }

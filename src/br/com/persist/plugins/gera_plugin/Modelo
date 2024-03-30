@@ -5,21 +5,21 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class ###cap###Modelo extends AbstractTableModel {
-	private final transient List<###cap###> lista = new ArrayList<>();
+public class ###nameCap###Modelo extends AbstractTableModel {
+	private final transient List<###nameCap###> lista = new ArrayList<>();
 	private static final String[] COLUNAS = { "NOME" };
 	private static final long serialVersionUID = 1L;
 
-	public ###cap### get###cap###(int i) {
+	public ###nameCap### get###nameCap###(int i) {
 		if (i >= 0 && i < lista.size()) {
 			return lista.get(i);
 		}
 		return null;
 	}
 
-	public int adicionar(###cap### ###decap###) {
-		if (###decap### != null) {
-			lista.add(###decap###);
+	public int adicionar(###nameCap### ###nameDecap###) {
+		if (###nameDecap### != null) {
+			lista.add(###nameDecap###);
 			return lista.size() - 1;
 		}
 		return -1;
@@ -52,9 +52,9 @@ public class ###cap###Modelo extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		###cap### ###decap### = lista.get(rowIndex);
+		###nameCap### ###nameDecap### = lista.get(rowIndex);
 		if (columnIndex == 0) {
-			return ###decap###.getNome();
+			return ###nameDecap###.getNome();
 		}
 		return null;
 	}
@@ -64,9 +64,9 @@ public class ###cap###Modelo extends AbstractTableModel {
 		if (aValue == null) {
 			return;
 		}
-		###cap### ###decap### = lista.get(rowIndex);
+		###nameCap### ###nameDecap### = lista.get(rowIndex);
 		if (columnIndex == 0) {
-			###decap###.setNome(aValue.toString());
+			###nameDecap###.setNome(aValue.toString());
 		}
 	}
 }

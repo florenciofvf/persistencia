@@ -3,11 +3,11 @@ package ###package###;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-public class ###cap###Mensagens {
+public class ###nameCap###Mensagens {
 	public static final ResourceBundle bundle = ResourceBundle
-			.getBundle(###cap###Mensagens.class.getPackage().getName() + ".mensagens");
+			.getBundle(###nameCap###Mensagens.class.getPackage().getName() + ".mensagens");
 
-	private ###cap###Mensagens() {
+	private ###nameCap###Mensagens() {
 	}
 
 	public static String getString(String chave, Object... argumentos) {

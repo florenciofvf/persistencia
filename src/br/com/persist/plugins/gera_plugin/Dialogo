@@ -8,14 +8,14 @@ import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 
-public class ###cap###Dialogo extends AbstratoDialogo {
+public class ###nameCap###Dialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
-	private final ###cap###Container container;
+	private final ###nameCap###Container container;
 
-	private ###cap###Dialogo(Frame frame, Formulario formulario) {
-		super(frame, ###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###));
-		container = new ###cap###Container(this, formulario);
-		container.set###cap###Dialogo(this);
+	private ###nameCap###Dialogo(Frame frame, Formulario formulario) {
+		super(frame, ###nameCap###Mensagens.getString(###nameCap###Constantes.LABEL_###nameUpper###));
+		container = new ###nameCap###Container(this, formulario);
+		container.set###nameCap###Dialogo(this);
 		montarLayout();
 	}
 
@@ -24,7 +24,7 @@ public class ###cap###Dialogo extends AbstratoDialogo {
 	}
 
 	public static void criar(Formulario formulario) {
-		###cap###Dialogo form = new ###cap###Dialogo(formulario, formulario);
+		###nameCap###Dialogo form = new ###nameCap###Dialogo(formulario, formulario);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 	}
@@ -32,7 +32,7 @@ public class ###cap###Dialogo extends AbstratoDialogo {
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
-		container.set###cap###Dialogo(null);
+		container.set###nameCap###Dialogo(null);
 		fechar();
 	}
 

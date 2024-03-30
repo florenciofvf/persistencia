@@ -22,23 +22,23 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class ###cap###Container extends AbstratoContainer {
-	private ###cap###Formulario ###decap###Formulario;
+public class ###nameCap###Container extends AbstratoContainer {
+	private ###nameCap###Formulario ###nameDecap###Formulario;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 
-	public ###cap###Container(Janela janela, Formulario formulario) {
+	public ###nameCap###Container(Janela janela, Formulario formulario) {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 	}
 
-	public ###cap###Formulario get###cap###Formulario() {
-		return ###decap###Formulario;
+	public ###nameCap###Formulario get###nameCap###Formulario() {
+		return ###nameDecap###Formulario;
 	}
 
-	public void set###cap###Formulario(###cap###Formulario ###decap###Formulario) {
-		this.###decap###Formulario = ###decap###Formulario;
+	public void set###nameCap###Formulario(###nameCap###Formulario ###nameDecap###Formulario) {
+		this.###nameDecap###Formulario = ###nameDecap###Formulario;
 	}
 
 	private void montarLayout() {
@@ -59,22 +59,22 @@ public class ###cap###Container extends AbstratoContainer {
 
 		@Override
 		protected void destacarEmFormulario() {
-			if (formulario.excluirPagina(###cap###Container.this)) {
-				###cap###Formulario.criar(formulario, ###cap###Container.this);
+			if (formulario.excluirPagina(###nameCap###Container.this)) {
+				###nameCap###Formulario.criar(formulario, ###nameCap###Container.this);
 			}
 		}
 
 		@Override
 		protected void retornarAoFichario() {
-			if (###decap###Formulario != null) {
-				###decap###Formulario.excluirContainer();
-				formulario.adicionarPagina(###cap###Container.this);
+			if (###nameDecap###Formulario != null) {
+				###nameDecap###Formulario.excluirContainer();
+				formulario.adicionarPagina(###nameCap###Container.this);
 			}
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
-			###cap###Formulario.criar(formulario);
+			###nameCap###Formulario.criar(formulario);
 		}
 
 		@Override
@@ -112,7 +112,7 @@ public class ###cap###Container extends AbstratoContainer {
 
 	@Override
 	public Class<?> getClasseFabrica() {
-		return ###cap###Fabrica.class;
+		return ###nameCap###Fabrica.class;
 	}
 
 	@Override
@@ -125,17 +125,17 @@ public class ###cap###Container extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return ###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###_MIN);
+				return ###nameCap###Mensagens.getString(###nameCap###Constantes.LABEL_###nameUpper###_MIN);
 			}
 
 			@Override
 			public String getTitulo() {
-				return ###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###);
+				return ###nameCap###Mensagens.getString(###nameCap###Constantes.LABEL_###nameUpper###);
 			}
 
 			@Override
 			public String getHint() {
-				return ###cap###Mensagens.getString(###cap###Constantes.LABEL_###capUpper###);
+				return ###nameCap###Mensagens.getString(###nameCap###Constantes.LABEL_###nameUpper###);
 			}
 
 			@Override

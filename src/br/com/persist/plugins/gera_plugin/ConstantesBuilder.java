@@ -12,20 +12,19 @@ public class ConstantesBuilder extends Builder {
 
 	@Override
 	void templateClass(PrintWriter pw) throws IOException {
-		publicConstant(pw,
-				"String LABEL_" + config.nomeCaixaAlta + "_MIN = \"label." + config.nomeCaixaBaixa + "_min\"");
-		publicConstant(pw, "String PAINEL_" + config.nomeCaixaAlta + " = \"PAINEL " + config.nomeCaixaAlta + "\"");
-		publicConstant(pw, "String LABEL_" + config.nomeCaixaAlta + " = \"label." + config.nomeCaixaBaixa + "\"");
-		publicConstant(pw, "String " + config.nomeCaixaAlta + " = \"" + config.nomeCaixaBaixa + "\"");
+		publicConstant(pw, "String LABEL_" + config.nameUpper + "_MIN = \"label." + config.nameLower + "_min\"");
+		publicConstant(pw, "String PAINEL_" + config.nameUpper + " = \"PAINEL " + config.nameUpper + "\"");
+		publicConstant(pw, "String LABEL_" + config.nameUpper + " = \"label." + config.nameLower + "\"");
+		publicConstant(pw, "String " + config.nameUpper + " = \"" + config.nameLower + "\"");
 
-		if (!Util.isEmpty(config.recurso) && !config.recurso.equals(config.nomeCaixaAlta)) {
+		if (!Util.isEmpty(config.recurso) && !config.recurso.equals(config.nameUpper)) {
 			publicConstant(pw, "String " + config.recurso + " = \"" + config.recurso.toLowerCase() + "\"");
 		}
 
 		publicConstant(pw, "String IGNORADOS = \"ignorados\"");
 		pw.println();
 
-		privateMethod(pw, config.nomeCapitalizado + objeto + "()");
+		privateMethod(pw, config.nameCap + objeto + "()");
 		finalMethod(pw, false);
 	}
 }

@@ -350,13 +350,13 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private void criarConfig() {
 		config = new Config(new File(txtDiretorioDestino.getText()));
 		String nome = txtNomePlugin.getText();
-		config.nomeMin = txtMinimPlugin.getText();
+		config.nameMin = txtMinimPlugin.getText();
 		config.pacote = trimP(txtPacotePlugin.getText());
 		config.recurso = txtDiretorioRecursos.getText();
-		config.nomeCapitalizado = Util.capitalize(nome);
-		config.nomeDecapitalizado = nome.substring(0, 1).toLowerCase() + nome.substring(1);
-		config.nomeCaixaAlta = nome.toUpperCase();
-		config.nomeCaixaBaixa = nome.toLowerCase();
+		config.nameCap = Util.capitalize(nome);
+		config.nameDecap = nome.substring(0, 1).toLowerCase() + nome.substring(1);
+		config.nameUpper = nome.toUpperCase();
+		config.nameLower = nome.toLowerCase();
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.configuracao = chkComConfiguracao.isSelected();
