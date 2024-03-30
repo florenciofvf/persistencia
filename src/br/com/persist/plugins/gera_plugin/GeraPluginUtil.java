@@ -8,19 +8,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Util;
 
 public class GeraPluginUtil {
 	private GeraPluginUtil() {
 	}
 
 	static void objeto(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCapitalizado + ".java");
+		File file = new File(config.diretorioDestino, config.nomeCapitalizado + ".java");
 		gerar(config, "Objeto", file);
 	}
 
 	static void mensagensProp(Config config) throws IOException {
-		File file = new File(config.destino, "mensagens.properties");
+		File file = new File(config.diretorioDestino, "mensagens.properties");
 		gerar(config, "mensagens_prop", file);
 	}
 
@@ -32,10 +31,6 @@ public class GeraPluginUtil {
 	static void fichario(Config config) throws IOException {
 		transferir(config, "Fichario");
 		transferir(config, "Pagina");
-	}
-
-	static void constantes(Config config) throws IOException {
-		transferir(config, "Constantes");
 	}
 
 	static void mensagens(Config config) throws IOException {
@@ -75,17 +70,17 @@ public class GeraPluginUtil {
 	}
 
 	static void fabricaDialogo(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCapitalizado + "Fabrica.java");
+		File file = new File(config.diretorioDestino, config.nomeCapitalizado + "Fabrica.java");
 		gerarFabrica(config, "FabricaDialogo", file);
 	}
 
 	static void fabrica(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCapitalizado + "Fabrica.java");
+		File file = new File(config.diretorioDestino, config.nomeCapitalizado + "Fabrica.java");
 		gerarFabrica(config, "Fabrica", file);
 	}
 
 	static void containerDialogo(Config config) throws IOException {
-		File file = new File(config.destino, config.nomeCapitalizado + "Container.java");
+		File file = new File(config.diretorioDestino, config.nomeCapitalizado + "Container.java");
 		gerar(config, "ContainerDialogo", file);
 	}
 
@@ -139,24 +134,17 @@ public class GeraPluginUtil {
 	}
 
 	private static void transferir(Config config, String objeto) throws IOException {
-		File file = new File(config.destino, config.nomeCapitalizado + objeto + ".java");
+		File file = new File(config.diretorioDestino, config.nomeCapitalizado + objeto + ".java");
 		gerar(config, objeto, file);
 	}
 
 	private static void gerar(Config config, String template, File file) throws IOException {
-		final String meta = Constantes.SEP + "meta" + Constantes.SEP;
 		try (PrintWriter pw = new PrintWriter(file)) {
 			BufferedReader br = criarBufferedReader(template);
 			String linha = br.readLine();
 			while (linha != null) {
-				if (meta.equals(linha)) {
-					if (!Util.isEmpty(config.meta)) {
-						pw.println(config.meta);
-					}
-				} else {
-					linha = config.processar(linha);
-					pw.println(linha);
-				}
+				linha = config.processar(linha);
+				pw.println(linha);
 				linha = br.readLine();
 			}
 			br.close();

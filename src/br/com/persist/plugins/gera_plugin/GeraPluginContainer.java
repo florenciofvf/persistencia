@@ -306,8 +306,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private void gerar() {
 		criarConfig();
 		try {
+			new ConstantesBuilder(config).gerar();
 			GeraPluginUtil.mensagensProp(config);
-			GeraPluginUtil.constantes(config);
 			GeraPluginUtil.formulario(config);
 			GeraPluginUtil.mensagens(config);
 			GeraPluginUtil.objeto(config);
@@ -349,8 +349,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private void criarConfig() {
-		config = new Config();
-		config.destino = new File(txtDiretorioDestino.getText());
+		config = new Config(new File(txtDiretorioDestino.getText()));
 		String nome = txtNomePlugin.getText();
 		config.nomeMin = txtMinimPlugin.getText();
 		config.pacote = trimP(txtPacotePlugin.getText());
@@ -362,10 +361,6 @@ public class GeraPluginContainer extends AbstratoContainer {
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.configuracao = chkComConfiguracao.isSelected();
-		if (!Util.isEmpty(config.recurso) && !config.recurso.equals(config.nomeCaixaAlta)) {
-			config.meta = "\tpublic static final String " + config.recurso + " = \"" + config.recurso.toLowerCase()
-					+ "\";";
-		}
 	}
 
 	private static String trimP(String string) {

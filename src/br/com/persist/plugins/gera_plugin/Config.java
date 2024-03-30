@@ -1,11 +1,13 @@
 package br.com.persist.plugins.gera_plugin;
 
 import java.io.File;
+import java.util.Objects;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
 class Config {
+	final File diretorioDestino;
 	String nomeDecapitalizado;
 	String nomeCapitalizado;
 	String nomeCaixaBaixa;
@@ -15,8 +17,10 @@ class Config {
 	String recurso;
 	String pacote;
 	String icone;
-	File destino;
-	String meta;
+
+	public Config(File diretorioDestino) {
+		this.diretorioDestino = Objects.requireNonNull(diretorioDestino);
+	}
 
 	String processar(String string) {
 		string = Util.replaceAll(string, tag("decapLower"), nomeCaixaBaixa);
