@@ -2,7 +2,7 @@ package br.com.persist.plugins.atributo;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.atributo.aux.Tipo;
+import br.com.persist.geradores.Variavel;
 
 public class Atributo {
 	private String viewToBack;
@@ -51,8 +51,8 @@ public class Atributo {
 		this.viewToBack = viewToBack;
 	}
 
-	public Tipo criarTipo() {
-		return new Tipo(classe, nome);
+	public Variavel criarVariavel() {
+		return new Variavel(classe, nome);
 	}
 
 	public Mapa criarMapa() {

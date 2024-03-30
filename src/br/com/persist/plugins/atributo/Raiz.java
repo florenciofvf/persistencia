@@ -1,7 +1,7 @@
 package br.com.persist.plugins.atributo;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.atributo.aux.Tipo;
+import br.com.persist.geradores.Variavel;
 
 public class Raiz {
 	private final Mapa mapa;
@@ -50,8 +50,8 @@ public class Raiz {
 		return mapa.getString(AtributoConstantes.FILTER);
 	}
 
-	public Tipo getTipoFilter() {
-		return new Tipo(getFilter(), "filter");
+	public Variavel getTipoFilter() {
+		return new Variavel(getFilter(), "filter");
 	}
 
 	public Mapa getMapaRest() {
@@ -70,12 +70,12 @@ public class Raiz {
 		return mapa.getMapa(AtributoConstantes.DAO);
 	}
 
-	public Tipo getTipoDAO() {
+	public Variavel getTipoDAO() {
 		Mapa mapaDAO = getMapaDAO();
 		if (mapaDAO == null) {
 			return null;
 		}
-		return new Tipo(AtributoUtil.getComponente(mapaDAO), "dao");
+		return new Variavel(AtributoUtil.getComponente(mapaDAO), "dao");
 	}
 
 	public String getDAOImpl() {
