@@ -37,8 +37,12 @@ public abstract class Builder {
 
 	abstract void templateClass(PrintWriter pw) throws IOException;
 
+	void override(String tab, PrintWriter pw) {
+		pw.println(tab + "\t@Override");
+	}
+
 	void override(PrintWriter pw) {
-		pw.println("\t@Override");
+		override("", pw);
 	}
 
 	void importar(PrintWriter pw, String string) {
@@ -49,34 +53,62 @@ public abstract class Builder {
 		pw.println("\tpublic static final " + string + ";");
 	}
 
+	void publicMethod(String tab, PrintWriter pw, String string) {
+		pw.println(tab + "\tpublic " + string + " {");
+	}
+
 	void publicMethod(PrintWriter pw, String string) {
-		pw.println("\tpublic " + string + " {");
+		publicMethod("", pw, string);
+	}
+
+	void privateMethod(String tab, PrintWriter pw, String string) {
+		pw.println(tab + "\tprivate " + string + " {");
 	}
 
 	void privateMethod(PrintWriter pw, String string) {
-		pw.println("\tprivate " + string + " {");
+		privateMethod("", pw, string);
 	}
 
 	void privateClass(PrintWriter pw, String string) {
 		pw.println("\tprivate class " + string + " {");
 	}
 
+	void returnMethod(String tab, PrintWriter pw, String string) {
+		pw.println(tab + "\t\treturn " + string + ";");
+	}
+
 	void returnMethod(PrintWriter pw, String string) {
-		pw.println("\t\treturn " + string + ";");
+		returnMethod("", pw, string);
+	}
+
+	void instrucao(String tab, PrintWriter pw, String string) {
+		pw.println(tab + "\t\t" + string + ";");
 	}
 
 	void instrucao(PrintWriter pw, String string) {
-		pw.println("\t\t" + string + ";");
+		instrucao("", pw, string);
 	}
 
-	void finalMethod(PrintWriter pw) {
-		finalMethod(pw, true);
+	void fragmento(String tab, PrintWriter pw, String string) {
+		pw.println(tab + string);
 	}
 
-	void finalMethod(PrintWriter pw, boolean nl) {
-		pw.println("\t}");
+	void finalMethod(String tab, PrintWriter pw, boolean nl) {
+		pw.println(tab + "\t}");
 		if (nl) {
 			pw.println();
 		}
+	}
+
+	void finalMethod(PrintWriter pw, boolean nl) {
+		finalMethod("", pw, nl);
+	}
+
+	void finalMethod(String tab, PrintWriter pw) {
+		finalMethod(tab, pw, true);
+	}
+
+	void finalMethod(PrintWriter pw) {
+		finalMethod("", pw, true);
 	}
 }
