@@ -13,6 +13,7 @@ class Config {
 	String nomeCaixaBaixa;
 	String nomeCaixaAlta;
 	boolean configuracao;
+	boolean comDialogo;
 	String nomeMin;
 	String recurso;
 	String pacote;

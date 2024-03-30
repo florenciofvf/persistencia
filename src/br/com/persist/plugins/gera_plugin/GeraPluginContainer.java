@@ -308,16 +308,15 @@ public class GeraPluginContainer extends AbstratoContainer {
 		try {
 			new ConstantesBuilder(config).gerar();
 			GeraPluginUtil.mensagensProp(config);
+			new FabricaBuilder(config).gerar();
 			GeraPluginUtil.formulario(config);
 			GeraPluginUtil.mensagens(config);
 			GeraPluginUtil.objeto(config);
 			if (chkComDialogo.isSelected()) {
 				GeraPluginUtil.containerDialogo(config);
-				GeraPluginUtil.fabricaDialogo(config);
 				GeraPluginUtil.dialogo(config);
 			} else {
 				GeraPluginUtil.container(config);
-				GeraPluginUtil.fabrica(config);
 			}
 			if (chkComFichario.isSelected()) {
 				GeraPluginUtil.fichario(config);
@@ -361,6 +360,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.configuracao = chkComConfiguracao.isSelected();
+		config.comDialogo = chkComDialogo.isSelected();
 	}
 
 	private static String trimP(String string) {
