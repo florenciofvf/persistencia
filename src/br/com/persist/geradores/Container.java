@@ -136,6 +136,18 @@ public abstract class Container extends Objeto {
 		return tre;
 	}
 
+	public ElseIf criarElseIf(String condicao) {
+		ElseIf elseIf = new ElseIf(condicao);
+		add(elseIf);
+		return elseIf;
+	}
+
+	public For criarFor(String condicao) {
+		For loop = new For(condicao);
+		add(loop);
+		return loop;
+	}
+
 	public If criarIf(String condicao, Else elsee) {
 		If se = new If(condicao, elsee);
 		add(se);
@@ -189,5 +201,9 @@ public abstract class Container extends Objeto {
 	public Container addReturn(String string) {
 		add(new Retornar(string));
 		return this;
+	}
+
+	public Container addReturn() {
+		return addInstrucao("return");
 	}
 }

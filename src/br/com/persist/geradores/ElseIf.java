@@ -5,7 +5,7 @@ import br.com.persist.assistencia.StringPool;
 public class ElseIf extends Container {
 	private final String condicao;
 
-	public ElseIf(String condicao) {
+	protected ElseIf(String condicao) {
 		super("ElseIf");
 		this.condicao = condicao;
 	}

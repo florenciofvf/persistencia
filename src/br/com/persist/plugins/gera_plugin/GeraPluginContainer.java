@@ -258,6 +258,10 @@ public class GeraPluginContainer extends AbstratoContainer {
 			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
 		}
 
+		if (chkComFichario.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_fichario"));
+		}
+
 		if (!Util.isEmpty(txtDiretorioRecursos.getText()) && caracterInvalido(txtDiretorioRecursos.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos"));
 		}
@@ -307,16 +311,14 @@ public class GeraPluginContainer extends AbstratoContainer {
 		criarConfig();
 		try {
 			new ConstantesBuilder(config).gerar();
+			new ContainerBuilder(config).gerar();
 			GeraPluginUtil.mensagensProp(config);
 			new FabricaBuilder(config).gerar();
 			GeraPluginUtil.formulario(config);
 			GeraPluginUtil.mensagens(config);
 			GeraPluginUtil.objeto(config);
 			if (chkComDialogo.isSelected()) {
-				GeraPluginUtil.containerDialogo(config);
 				GeraPluginUtil.dialogo(config);
-			} else {
-				GeraPluginUtil.container(config);
 			}
 			if (chkComFichario.isSelected()) {
 				GeraPluginUtil.fichario(config);
@@ -360,6 +362,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.configuracao = chkComConfiguracao.isSelected();
+		config.comFichario = chkComFichario.isSelected();
 		config.comDialogo = chkComDialogo.isSelected();
 	}
 

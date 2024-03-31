@@ -67,15 +67,6 @@ public class GeraPluginUtil {
 		transferir(config, "Util");
 	}
 
-	static void containerDialogo(Config config) throws IOException {
-		File file = new File(config.diretorioDestino, config.nameCap + "Container.java");
-		gerar(config, "ContainerDialogo", file);
-	}
-
-	static void container(Config config) throws IOException {
-		transferir(config, "Container");
-	}
-
 	private static void transferir(Config config, String objeto) throws IOException {
 		File file = new File(config.diretorioDestino, config.nameCap + objeto + ".java");
 		gerar(config, objeto, file);
