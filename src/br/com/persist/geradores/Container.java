@@ -62,6 +62,12 @@ public abstract class Container extends Objeto {
 		}
 	}
 
+	public InterfacePublica criarInterfacePublica(String string) {
+		InterfacePublica interfacee = new InterfacePublica(string);
+		add(interfacee);
+		return interfacee;
+	}
+
 	public ClassePublica criarClassePublica(String string) {
 		ClassePublica classe = new ClassePublica(string);
 		add(classe);
@@ -72,6 +78,12 @@ public abstract class Container extends Objeto {
 		ClassePrivada classe = new ClassePrivada(string);
 		add(classe);
 		return classe;
+	}
+
+	public FuncaoAbstrata criarFuncaoAbstrata(String retorno, String nome, Parametros param) {
+		FuncaoAbstrata funcao = new FuncaoAbstrata(retorno, nome, param);
+		add(funcao);
+		return funcao;
 	}
 
 	public FuncaoPublica criarFuncaoPublica(String retorno, String nome, Parametros param) {
@@ -130,6 +142,18 @@ public abstract class Container extends Objeto {
 		return criarConstrutorPublico(nome, new Parametros());
 	}
 
+	public MetodoGet criarMetodoGet(Variavel variavel) {
+		MetodoGet get = new MetodoGet(variavel);
+		add(get);
+		return get;
+	}
+
+	public MetodoSet criarMetodoSet(Variavel variavel) {
+		MetodoSet set = new MetodoSet(variavel);
+		add(set);
+		return set;
+	}
+
 	public Try criarTry(Catch catche) {
 		Try tre = new Try(catche);
 		add(tre);
@@ -173,6 +197,16 @@ public abstract class Container extends Objeto {
 		return this;
 	}
 
+	public Container addCampoPrivado(Variavel variavel) {
+		add(new CampoPrivado(variavel));
+		return this;
+	}
+
+	public Container addVariavel(Variavel variavel) {
+		add(variavel);
+		return this;
+	}
+
 	public Container addInstrucao(String string) {
 		add(new Instrucao(string));
 		return this;
@@ -183,9 +217,22 @@ public abstract class Container extends Objeto {
 		return this;
 	}
 
-	public Container addOverride() {
-		add(new Anotacao("Override", true));
+	public Container addAnotacao(String string, boolean ql) {
+		add(new Anotacao(string, ql));
 		return this;
+	}
+
+	public Container addAnotacaoPath(String string) {
+		add(new AnotacaoPath(string));
+		return this;
+	}
+
+	public Container addAnotacao(String string) {
+		return addAnotacao(string, true);
+	}
+
+	public Container addOverride() {
+		return addAnotacao("Override");
 	}
 
 	public Container addImport(String string) {
@@ -205,5 +252,16 @@ public abstract class Container extends Objeto {
 
 	public Container addReturn() {
 		return addInstrucao("return");
+	}
+
+	public Container addEspaco() {
+		add(new Espaco());
+		return this;
+	}
+
+	public FuncaoJS criarFuncaoJS(String nome, Parametros param) {
+		FuncaoJS funcao = new FuncaoJS(nome, param);
+		add(funcao);
+		return funcao;
 	}
 }

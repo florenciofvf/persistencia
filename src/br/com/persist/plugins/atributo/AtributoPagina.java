@@ -561,13 +561,13 @@ class PainelControllerJS extends AbstratoPanel {
 
 		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
 		FuncaoJS funcao = funcaoController;
-		funcao.addInstrucao("var vm = this").ql();
+		funcao.addInstrucao("var vm = this").newLine();
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
-		funcao.addInstrucao("vm." + filtro + " = {}").ql();
+		funcao.addInstrucao("vm." + filtro + " = {}").newLine();
 
-		funcao.add(fnLimparFiltro(mapaControllerJS, filtro)).ql();
-		funcao.add(fnPesquisa(mapaControllerJS, mapaServiceJS, filtro)).ql();
-		funcao.add(fnPDF(mapaControllerJS, mapaServiceJS, filtro)).ql();
+		funcao.add(fnLimparFiltro(mapaControllerJS, filtro)).newLine();
+		funcao.add(fnPesquisa(mapaControllerJS, mapaServiceJS, filtro)).newLine();
+		funcao.add(fnPDF(mapaControllerJS, mapaServiceJS, filtro)).newLine();
 		funcao.add(fnProcessarFile());
 
 		arquivo.gerar(0, pool);
@@ -579,17 +579,16 @@ class PainelControllerJS extends AbstratoPanel {
 		arquivo.addInstrucao(
 				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
 						+ AtributoUtil.getComponente(mapaServiceJS) + "']")
-				.ql();
+				.newLine();
 
 		String string = ", ";
-		Parametros params = new Parametros();
-		params.addVarJS("$scope").append(string);
-		params.addVarJS("$state").append(string);
-		params.addVarJS("NgTableParams").append(string);
+		Parametros params = new Parametros("$scope");
+		params.addString(string);
+		params.addVarJS("$state").addString(string);
+		params.addVarJS("NgTableParams").addString(string);
 		params.addVarJS(AtributoUtil.getComponente(mapaServiceJS));
-		funcaoController = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS),
-				params);
-		arquivo.add(funcaoController);
+		funcaoController = arquivo
+				.criarFuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS), params);
 
 		return arquivo;
 	}
@@ -707,7 +706,7 @@ class PainelParamJS extends PainelControllerJS {
 
 	private Container fnParam(String filtro, List<Atributo> atributos) {
 		FuncaoJS funcao = new FuncaoJS("function criarParam" + Util.capitalize(filtro), new Parametros());
-		funcao.add(objParam(filtro, atributos)).ql();
+		funcao.add(objParam(filtro, atributos)).newLine();
 		funcao.addReturn("param");
 		return funcao;
 	}
@@ -720,7 +719,7 @@ class PainelParamJS extends PainelControllerJS {
 			if (i + 1 < atributos.size()) {
 				obj.append(",");
 			}
-			obj.ql();
+			obj.newLine();
 		}
 		return obj;
 	}
@@ -754,7 +753,7 @@ class PainelValidarJS extends PainelControllerJS {
 		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
 		FuncaoJS funcao = funcaoController;
 
-		funcao.add(fnGetTime()).ql();
+		funcao.add(fnGetTime()).newLine();
 		funcao.add(fnValidar(filtro, atributos));
 
 		arquivo.gerar(0, pool);
@@ -774,17 +773,17 @@ class PainelValidarJS extends PainelControllerJS {
 		FuncaoJS funcao = new FuncaoJS("function validar" + Util.capitalize(filtro), new Parametros());
 		funcao.addComentario("$scope.$emit('msgClear');");
 		if (atributos.size() > 1) {
-			funcao.add(ifVazios(filtro, atributos)).ql();
+			funcao.add(ifVazios(filtro, atributos)).newLine();
 		}
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
 			funcao.add(ifObrigatorio(filtro, att));
 			if (i + 1 < atributos.size()) {
-				funcao.ql();
+				funcao.newLine();
 			}
 		}
 		if (!atributos.isEmpty()) {
-			funcao.ql();
+			funcao.newLine();
 		}
 		funcao.addReturn("null");
 		return funcao;
@@ -839,13 +838,13 @@ class PainelServiceJS extends AbstratoPanel {
 		}
 
 		Arquivo arquivo = new Arquivo();
-		arquivo.addInstrucao(AtributoUtil.getComponente(mapaServiceJS) + ".$inject = ['Restangular']").ql();
+		arquivo.addInstrucao(AtributoUtil.getComponente(mapaServiceJS) + ".$inject = ['Restangular']").newLine();
 
 		Parametros params = new Parametros(new VarJS("Restangular"));
-		FuncaoJS funcao = new FuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaServiceJS), params);
-		arquivo.add(funcao);
+		FuncaoJS funcao = arquivo.criarFuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaServiceJS),
+				params);
 
-		funcao.addInstrucao("var PATH = '" + mapaRest.getString(AtributoConstantes.END_POINT) + "'").ql();
+		funcao.addInstrucao("var PATH = '" + mapaRest.getString(AtributoConstantes.END_POINT) + "'").newLine();
 		ReturnJS returnJS = new ReturnJS();
 		funcao.add(returnJS);
 
@@ -888,19 +887,19 @@ class PainelDTO extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
-		ClassePublica classe = new ClassePublica(raiz.getDTO());
+		Arquivo arquivo = new Arquivo();
+		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTO());
 
 		for (Atributo att : atributos) {
-			CampoPrivado campo = new CampoPrivado(att.criarVariavel());
-			classe.add(campo);
+			classe.addCampoPrivado(att.criarVariavel());
 		}
 
 		for (Atributo att : atributos) {
 			Variavel tipo = att.criarVariavel();
-			MetodoGet get = new MetodoGet(tipo);
-			MetodoSet set = new MetodoSet(tipo);
-			classe.ql().add(get);
-			classe.ql().add(set);
+			classe.criarMetodoGet(tipo);
+			classe.newLine();
+			classe.criarMetodoSet(tipo);
+			classe.newLine();
 		}
 
 		classe.gerar(0, pool);
@@ -926,28 +925,26 @@ class PainelFilter extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.addImport("javax.ws.rs.QueryParam").ql();
+			arquivo.addImport("javax.ws.rs.QueryParam").newLine();
 		}
 
-		ClassePublica classe = new ClassePublica(raiz.getFilter());
-		arquivo.add(classe);
+		ClassePublica classe = arquivo.criarClassePublica(raiz.getFilter());
 
 		int i = 0;
 		for (Atributo att : atributos) {
 			if (i++ > 0) {
-				classe.ql();
+				classe.newLine();
 			}
-			classe.add(new Anotacao("QueryParam(" + Util.citar2(att.getNome()) + ")", true));
-			CampoPrivado campo = new CampoPrivado(att.criarVariavel());
-			classe.add(campo);
+			classe.addAnotacao("QueryParam(" + Util.citar2(att.getNome()) + ")");
+			classe.addCampoPrivado(att.criarVariavel());
 		}
 
 		for (Atributo att : atributos) {
 			Variavel tipo = att.criarVariavel();
-			MetodoGet get = new MetodoGet(tipo);
-			MetodoSet set = new MetodoSet(tipo);
-			classe.ql().add(get);
-			classe.ql().add(set);
+			classe.criarMetodoGet(tipo);
+			classe.newLine();
+			classe.criarMetodoSet(tipo);
+			classe.newLine();
 		}
 
 		arquivo.gerar(0, pool);
@@ -980,28 +977,28 @@ class PainelRest extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
-			arquivo.addImport("javax.inject.Inject").ql();
+			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
+			arquivo.addImport("javax.inject.Inject").newLine();
 			arquivo.addImport("javax.ws.rs.Consumes");
-			arquivo.addImport("javax.ws.rs.Produces").ql();
-			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
+			arquivo.addImport("javax.ws.rs.Produces").newLine();
+			arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
 			arquivo.addImport("javax.ws.rs.BeanParam");
 			arquivo.addImport("javax.ws.rs.GET");
 			arquivo.addImport("javax.ws.rs.Path");
 			arquivo.addImport("javax.ws.rs.Produces");
 			arquivo.addImport("javax.ws.rs.QueryParam");
-			arquivo.addImport("javax.ws.rs.core.MediaType").ql();
-			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").ql();
+			arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
+			arquivo.addComentario("br.gov.dpf.framework.seguranca.RestSeguranca;").newLine();
 
-			arquivo.add(new AnotacaoPath(Util.citar2(mapaRest.getString(AtributoConstantes.END_POINT)), true));
+			arquivo.addAnotacaoPath(Util.citar2(mapaRest.getString(AtributoConstantes.END_POINT)));
 		}
 
-		ClassePublica classe = new ClassePublica(AtributoUtil.getComponente(mapaRest) + " extends ApplicationRest");
-		arquivo.add(classe);
+		ClassePublica classe = arquivo
+				.criarClassePublica(AtributoUtil.getComponente(mapaRest) + " extends ApplicationRest");
 
-		injetar(classe, new Variavel(AtributoUtil.getComponente(mapaService), "service")).ql();
-		injetar(classe, new Variavel(AtributoUtil.getComponente(mapaService) + "PDF", "servicePDF")).ql();
-		criarGetListaDTO(raiz, mapaRest, mapaService, classe).ql();
+		injetar(classe, new Variavel(AtributoUtil.getComponente(mapaService), "service")).newLine();
+		injetar(classe, new Variavel(AtributoUtil.getComponente(mapaService) + "PDF", "servicePDF")).newLine();
+		criarGetListaDTO(raiz, mapaRest, mapaService, classe).newLine();
 		criarGetGerarPDF(raiz, mapaRest, mapaService, classe);
 
 		arquivo.gerar(0, pool);
@@ -1009,46 +1006,46 @@ class PainelRest extends AbstratoPanel {
 	}
 
 	private ClassePublica injetar(ClassePublica classe, Variavel tipo) {
-		classe.add(new Anotacao("Inject", true));
-		CampoPrivado service = new CampoPrivado(tipo);
-		classe.add(service);
+		classe.addAnotacao("Inject");
+		classe.addCampoPrivado(tipo);
 		return classe;
 	}
 
 	private ClassePublica criarGetListaDTO(Raiz raiz, Mapa mapaRest, Mapa mapaService, ClassePublica classe) {
-		classe.add(new Anotacao("GET", true));
-		classe.add(new AnotacaoPath(Util.citar2(AtributoUtil.getPesquisar(mapaRest)), true));
-		classe.add(new Anotacao("Consumes(" + AtributoConstantes.APPLICATION_JSON + ")", true));
-		classe.add(new Anotacao("Produces(" + AtributoConstantes.APPLICATION_JSON + ")", true));
+		classe.addAnotacao("GET");
+		classe.addAnotacaoPath(Util.citar2(AtributoUtil.getPesquisar(mapaRest)));
+		classe.addAnotacao("Consumes(" + AtributoConstantes.APPLICATION_JSON + ")");
+		classe.addAnotacao("Produces(" + AtributoConstantes.APPLICATION_JSON + ")");
 
-		FuncaoPublica funcao = new FuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaRest),
+		FuncaoPublica funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaRest),
 				beanParam(raiz));
 		funcao.addReturn("service." + AtributoUtil.getPesquisarFilter(mapaService));
-		classe.add(funcao);
+
 		return classe;
 	}
 
 	private ClassePublica criarGetGerarPDF(Raiz raiz, Mapa mapaRest, Mapa mapaService, ClassePublica classe) {
-		classe.add(new Anotacao("GET", true));
-		classe.add(new AnotacaoPath(Util.citar2(AtributoUtil.getExportar(mapaRest)), true));
-		classe.add(new Anotacao("Consumes(" + AtributoConstantes.APPLICATION_JSON + ")", true));
-		classe.add(new Anotacao("Produces(" + "{MediaType.APPLICATION_OCTET_STREAM}" + ")", true));
+		classe.addAnotacao("GET");
+		classe.addAnotacaoPath(Util.citar2(AtributoUtil.getExportar(mapaRest)));
+		classe.addAnotacao("Consumes(" + AtributoConstantes.APPLICATION_JSON + ")");
+		classe.addAnotacao("Produces(" + "{MediaType.APPLICATION_OCTET_STREAM}" + ")");
 
-		FuncaoPublica funcao = new FuncaoPublica("Response", AtributoUtil.getExportar(mapaRest), beanParam(raiz));
+		FuncaoPublica funcao = classe.criarFuncaoPublica("Response", AtributoUtil.getExportar(mapaRest),
+				beanParam(raiz));
 		funcao.addInstrucao(raiz.getListDTO() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
-		funcao.addInstrucao("byte[] bytes = servicePDF." + AtributoUtil.getExportar(mapaService) + "(dtos)").ql();
+		funcao.addInstrucao("byte[] bytes = servicePDF." + AtributoUtil.getExportar(mapaService) + "(dtos)").newLine();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
 		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
 		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
 		funcao.addReturn("response.build()");
-		classe.add(funcao);
+
 		return classe;
 	}
 
 	private Parametros beanParam(Raiz raiz) {
-		Parametros params = new Parametros(new Anotacao("BeanParam"));
-		params.add(new Espaco());
-		params.add(raiz.getTipoFilter());
+		Parametros params = new Parametros("BeanParam");
+		params.addEspaco();
+		params.addVariavel(raiz.getTipoFilter());
 		return params;
 	}
 }
@@ -1071,10 +1068,10 @@ class PainelService extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
-			arquivo.addImport("javax.ejb.Local").ql();
+			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
+			arquivo.addImport("javax.ejb.Local").newLine();
 
-			arquivo.add(new Anotacao("Local", true));
+			arquivo.addAnotacao("Local");
 		}
 
 		Mapa mapaService = raiz.getMapaService();
@@ -1083,16 +1080,14 @@ class PainelService extends AbstratoPanel {
 			return;
 		}
 
-		InterfacePublica interfac = new InterfacePublica(AtributoUtil.getComponente(mapaService));
-		arquivo.add(interfac);
+		InterfacePublica interfacee = arquivo.criarInterfacePublica(AtributoUtil.getComponente(mapaService));
 
-		Parametros params = new Parametros(raiz.getTipoFilter());
-		FuncaoAbstrata funcao = new FuncaoAbstrata(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService), params);
-		interfac.add(funcao).ql();
+		interfacee.criarFuncaoAbstrata(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService),
+				new Parametros(raiz.getTipoFilter()));
+		interfacee.newLine();
 
-		params = new Parametros(new Variavel(raiz.getListDTO(), "dtos"));
-		funcao = new FuncaoAbstrata("byte[]", AtributoUtil.getExportar(mapaService), params);
-		interfac.add(funcao);
+		interfacee.criarFuncaoAbstrata("byte[]", AtributoUtil.getExportar(mapaService),
+				new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -1117,15 +1112,15 @@ class PainelBean extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 			arquivo.addImport("javax.ejb.LocalBean");
 			arquivo.addImport("javax.ejb.Stateless");
 			arquivo.addImport("javax.ejb.TransactionManagement");
-			arquivo.addImport("javax.ejb.TransactionManagementType").ql();
+			arquivo.addImport("javax.ejb.TransactionManagementType").newLine();
 
-			arquivo.add(new Anotacao("Stateless", true));
-			arquivo.add(new Anotacao("LocalBean", true));
-			arquivo.add(new Anotacao("TransactionManagement(TransactionManagementType.CONTAINER)", true));
+			arquivo.addAnotacao("Stateless");
+			arquivo.addAnotacao("LocalBean");
+			arquivo.addAnotacao("TransactionManagement(TransactionManagementType.CONTAINER)");
 		}
 
 		String bean = raiz.getBean();
@@ -1136,24 +1131,22 @@ class PainelBean extends AbstratoPanel {
 			return;
 		}
 
-		ClassePublica classe = new ClassePublica(bean + " implements " + AtributoUtil.getComponente(mapaService));
-		arquivo.add(classe);
+		ClassePublica classe = arquivo
+				.criarClassePublica(bean + " implements " + AtributoUtil.getComponente(mapaService));
 
-		classe.add(new Anotacao("Inject", true));
-		CampoPrivado service = new CampoPrivado(raiz.getTipoDAO());
-		classe.add(service).ql();
+		classe.addAnotacao("Inject");
+		classe.addCampoPrivado(raiz.getTipoDAO()).newLine();
 
-		Parametros params = new Parametros(raiz.getTipoFilter());
-		Funcao funcao = new FuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService), params);
+		classe.addOverride();
+		Funcao funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService),
+				new Parametros(raiz.getTipoFilter()));
 		funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
-		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, true));
-		classe.add(funcao).ql();
+		classe.newLine();
 
-		params = new Parametros(new Variavel(raiz.getListDTO(), "dtos"));
-		funcao = new FuncaoPublica("byte[]", AtributoUtil.getExportar(mapaService), params);
+		classe.addOverride();
+		funcao = classe.criarFuncaoPublica("byte[]", AtributoUtil.getExportar(mapaService),
+				new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
 		funcao.addReturn("new byte[0]");
-		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, true));
-		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -1178,7 +1171,7 @@ class PainelDAO extends AbstratoPanel {
 
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 		}
 
 		Mapa mapaDAO = raiz.getMapaDAO();
@@ -1187,12 +1180,10 @@ class PainelDAO extends AbstratoPanel {
 			return;
 		}
 
-		InterfacePublica interfac = new InterfacePublica(AtributoUtil.getComponente(mapaDAO));
-		arquivo.add(interfac);
+		InterfacePublica interfacee = arquivo.criarInterfacePublica(AtributoUtil.getComponente(mapaDAO));
 
-		Parametros params = new Parametros(raiz.getTipoFilter());
-		FuncaoAbstrata funcao = new FuncaoAbstrata(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO), params);
-		interfac.add(funcao);
+		interfacee.criarFuncaoAbstrata(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO),
+				new Parametros(raiz.getTipoFilter()));
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -1218,9 +1209,9 @@ class PainelDAOImpl extends AbstratoPanel {
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
 			arquivo.addImport("java.util.ArrayList");
-			arquivo.add(AtributoConstantes.IMPORT_LIST).ql();
+			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 			arquivo.addImport("javax.persistence.EntityManager");
-			arquivo.addImport("javax.persistence.PersistenceContext").ql();
+			arquivo.addImport("javax.persistence.PersistenceContext").newLine();
 		}
 
 		String daoImpl = raiz.getDAOImpl();
@@ -1230,20 +1221,19 @@ class PainelDAOImpl extends AbstratoPanel {
 			return;
 		}
 
-		ClassePublica classe = new ClassePublica(daoImpl + " implements " + AtributoUtil.getComponente(mapaDAO));
-		arquivo.add(classe);
+		ClassePublica classe = arquivo
+				.criarClassePublica(daoImpl + " implements " + AtributoUtil.getComponente(mapaDAO));
 
-		classe.add(new Anotacao("PersistenceContext(" + "unitName = " + Util.citar2("nomeUnit") + ")", true));
-		CampoPrivado entityManager = new CampoPrivado(new Variavel("EntityManager", "entityManager"));
-		classe.add(entityManager).ql();
+		classe.addAnotacao("PersistenceContext(" + "unitName = " + Util.citar2("nomeUnit") + ")");
+		classe.addCampoPrivado(new Variavel("EntityManager", "entityManager"));
+		classe.newLine();
 
-		Parametros params = new Parametros(raiz.getTipoFilter());
-		Funcao funcao = new FuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO), params);
+		classe.addOverride();
+		Funcao funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO),
+				new Parametros(raiz.getTipoFilter()));
 		funcao.addInstrucao(raiz.getListDTO() + " resp = new ArrayList<>()");
-		funcao.addComentario("entityManager.find...").ql();
+		funcao.addComentario("entityManager.find...").newLine();
 		funcao.addReturn("resp");
-		classe.add(new Anotacao(AtributoConstantes.OVERRIDE, true));
-		classe.add(funcao);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
@@ -1272,9 +1262,9 @@ class PainelTest extends AbstratoPanel {
 			arquivo.addImport("org.junit.runner.RunWith");
 			arquivo.addImport("org.mockito.InjectMocks");
 			arquivo.addImport("org.mockito.Mock");
-			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").ql();
+			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
 
-			arquivo.add(new Anotacao("RunWith(MockitoJUnitRunner.class", true));
+			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class");
 		}
 
 		Mapa mapaService = raiz.getMapaService();
@@ -1284,24 +1274,20 @@ class PainelTest extends AbstratoPanel {
 			return;
 		}
 
-		ClassePublica classe = new ClassePublica(AtributoUtil.getComponente(mapaTest));
-		arquivo.add(classe);
+		ClassePublica classe = arquivo.criarClassePublica(AtributoUtil.getComponente(mapaTest));
 
-		classe.add(new Anotacao("InjectMocks", true));
-		CampoPrivado service = new CampoPrivado(new Variavel(AtributoUtil.getComponente(mapaService), "service"));
-		classe.add(service).ql();
+		classe.addAnotacao("InjectMocks");
+		classe.addCampoPrivado(new Variavel(AtributoUtil.getComponente(mapaService), "service")).newLine();
 
-		Funcao funcaoPesquisar = new FuncaoPublica("void", AtributoUtil.getPesquisar(mapaTest), new Parametros());
+		classe.addAnotacao("Test");
+		Funcao funcaoPesquisar = classe.criarFuncaoPublica("void", AtributoUtil.getPesquisar(mapaTest));
 		funcaoPesquisar.addComentario("...");
 
-		classe.add(new Anotacao("Test", true));
-		classe.add(funcaoPesquisar).ql();
+		classe.newLine();
 
-		Funcao funcaoExportar = new FuncaoPublica("void", AtributoUtil.getExportar(mapaTest), new Parametros());
+		classe.addAnotacao("Test");
+		Funcao funcaoExportar = classe.criarFuncaoPublica("void", AtributoUtil.getExportar(mapaTest));
 		funcaoExportar.addComentario("...");
-
-		classe.add(new Anotacao("Test", true));
-		classe.add(funcaoExportar);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
