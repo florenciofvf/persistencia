@@ -3,7 +3,7 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 import br.com.persist.assistencia.Util;
 
-public class MetodoGet extends Container {
+public class MetodoGet extends Objeto {
 	private final Variavel variavel;
 
 	protected MetodoGet(Variavel variavel) {

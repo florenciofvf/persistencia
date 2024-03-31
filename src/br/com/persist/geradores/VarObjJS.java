@@ -2,7 +2,7 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class VarObjJS extends Container {
+public class VarObjJS extends ContainerJS {
 	private final String nomeObj;
 
 	public VarObjJS(String nomeObj) {

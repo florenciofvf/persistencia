@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.StringPool;
-import br.com.persist.assistencia.Util;
 
 public abstract class Container extends Objeto {
 	protected final List<Objeto> objetos;
@@ -62,102 +61,10 @@ public abstract class Container extends Objeto {
 		}
 	}
 
-	public InterfacePublica criarInterfacePublica(String string) {
-		InterfacePublica interfacee = new InterfacePublica(string);
-		add(interfacee);
-		return interfacee;
-	}
-
-	public ClassePublica criarClassePublica(String string) {
-		ClassePublica classe = new ClassePublica(string);
-		add(classe);
-		return classe;
-	}
-
-	public ClassePrivada criarClassePrivada(String string) {
-		ClassePrivada classe = new ClassePrivada(string);
-		add(classe);
-		return classe;
-	}
-
-	public FuncaoAbstrata criarFuncaoAbstrata(String retorno, String nome, Parametros param) {
-		FuncaoAbstrata funcao = new FuncaoAbstrata(retorno, nome, param);
-		add(funcao);
-		return funcao;
-	}
-
-	public FuncaoPublica criarFuncaoPublica(String retorno, String nome, Parametros param) {
-		FuncaoPublica funcao = new FuncaoPublica(retorno, nome, param);
-		add(funcao);
-		return funcao;
-	}
-
-	public FuncaoPublica criarFuncaoPublica(String retorno, String nome) {
-		return criarFuncaoPublica(retorno, nome, new Parametros());
-	}
-
-	public FuncaoProtegida criarFuncaoProtegida(String retorno, String nome, Parametros param) {
-		FuncaoProtegida funcao = new FuncaoProtegida(retorno, nome, param);
-		add(funcao);
-		return funcao;
-	}
-
-	public FuncaoProtegida criarFuncaoProtegida(String retorno, String nome) {
-		return criarFuncaoProtegida(retorno, nome, new Parametros());
-	}
-
-	public FuncaoDefault criarFuncaoDefault(String retorno, String nome, Parametros param) {
-		FuncaoDefault funcao = new FuncaoDefault(retorno, nome, param);
-		add(funcao);
-		return funcao;
-	}
-
-	public FuncaoDefault criarFuncaoDefault(String retorno, String nome) {
-		return criarFuncaoDefault(retorno, nome, new Parametros());
-	}
-
-	public FuncaoPrivada criarFuncaoPrivada(String retorno, String nome, Parametros param) {
-		FuncaoPrivada funcao = new FuncaoPrivada(retorno, nome, param);
-		add(funcao);
-		return funcao;
-	}
-
-	public FuncaoPrivada criarFuncaoPrivada(String retorno, String nome) {
-		return criarFuncaoPrivada(retorno, nome, new Parametros());
-	}
-
-	public ConstrutorPublico criarConstrutorPublico(String nome, Parametros param) {
-		ConstrutorPublico construtor = new ConstrutorPublico(nome, param);
-		add(construtor);
-		return construtor;
-	}
-
-	public ConstrutorPrivado criarConstrutorPrivado(String nome, Parametros param) {
-		ConstrutorPrivado construtor = new ConstrutorPrivado(nome, param);
-		add(construtor);
-		return construtor;
-	}
-
-	public ConstrutorPublico criarConstrutorPublico(String nome) {
-		return criarConstrutorPublico(nome, new Parametros());
-	}
-
-	public MetodoGet criarMetodoGet(Variavel variavel) {
-		MetodoGet get = new MetodoGet(variavel);
-		add(get);
-		return get;
-	}
-
-	public MetodoSet criarMetodoSet(Variavel variavel) {
-		MetodoSet set = new MetodoSet(variavel);
-		add(set);
-		return set;
-	}
-
-	public Try criarTry(Catch catche) {
-		Try tre = new Try(catche);
-		add(tre);
-		return tre;
+	public If criarIf(String condicao, Else elsee) {
+		If se = new If(condicao, elsee);
+		add(se);
+		return se;
 	}
 
 	public ElseIf criarElseIf(String condicao) {
@@ -172,10 +79,10 @@ public abstract class Container extends Objeto {
 		return loop;
 	}
 
-	public If criarIf(String condicao, Else elsee) {
-		If se = new If(condicao, elsee);
-		add(se);
-		return se;
+	public Try criarTry(Catch catche) {
+		Try tre = new Try(catche);
+		add(tre);
+		return tre;
 	}
 
 	public Container newLine() {
@@ -188,25 +95,6 @@ public abstract class Container extends Objeto {
 		return this;
 	}
 
-	public Container addCampoConstanteString(String nome, String valor) {
-		return addCampoConstante(new Variavel("String", nome), Util.citar2(valor));
-	}
-
-	public Container addCampoConstante(Variavel var, String valor) {
-		add(new CampoConstante(var, valor));
-		return this;
-	}
-
-	public Container addCampoPrivado(Variavel variavel) {
-		add(new CampoPrivado(variavel));
-		return this;
-	}
-
-	public Container addVariavel(Variavel variavel) {
-		add(variavel);
-		return this;
-	}
-
 	public Container addInstrucao(String string) {
 		add(new Instrucao(string));
 		return this;
@@ -214,34 +102,6 @@ public abstract class Container extends Objeto {
 
 	public Container addComentario(String string) {
 		add(new Comentario(string));
-		return this;
-	}
-
-	public Container addAnotacao(String string, boolean ql) {
-		add(new Anotacao(string, ql));
-		return this;
-	}
-
-	public Container addAnotacaoPath(String string) {
-		add(new AnotacaoPath(string));
-		return this;
-	}
-
-	public Container addAnotacao(String string) {
-		return addAnotacao(string, true);
-	}
-
-	public Container addOverride() {
-		return addAnotacao("Override");
-	}
-
-	public Container addImport(String string) {
-		add(new Importar(string));
-		return this;
-	}
-
-	public Container addVarJS(String string) {
-		add(new VarJS(string));
 		return this;
 	}
 
@@ -257,11 +117,5 @@ public abstract class Container extends Objeto {
 	public Container addEspaco() {
 		add(new Espaco());
 		return this;
-	}
-
-	public FuncaoJS criarFuncaoJS(String nome, Parametros param) {
-		FuncaoJS funcao = new FuncaoJS(nome, param);
-		add(funcao);
-		return funcao;
 	}
 }

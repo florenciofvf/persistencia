@@ -2,7 +2,7 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class ClassePublica extends Container {
+public class ClassePublica extends ContainerJV {
 	private final String string;
 
 	protected ClassePublica(String string) {

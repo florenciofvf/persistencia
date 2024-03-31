@@ -2,7 +2,7 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public abstract class Funcao extends Container {
+public abstract class Funcao extends ContainerJV {
 	private final String modificadores;
 	private final String retorno;
 	private final String nome;

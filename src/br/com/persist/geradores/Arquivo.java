@@ -1,6 +1,6 @@
 package br.com.persist.geradores;
 
-public class Arquivo extends Container {
+public class Arquivo extends ContainerJV {
 	public Arquivo() {
 		super("Arquivo");
 	}

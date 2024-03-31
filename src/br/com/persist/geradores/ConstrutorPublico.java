@@ -2,7 +2,7 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class ConstrutorPublico extends Container {
+public class ConstrutorPublico extends ContainerJV {
 	private final String nome;
 	private final Parametros parametros;
 
