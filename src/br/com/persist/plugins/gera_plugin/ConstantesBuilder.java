@@ -1,9 +1,7 @@
 package br.com.persist.plugins.gera_plugin;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import br.com.persist.assistencia.Util;
+import br.com.persist.geradores.ClassePublica;
 
 public class ConstantesBuilder extends Builder {
 	protected ConstantesBuilder(Config config) {
@@ -11,20 +9,17 @@ public class ConstantesBuilder extends Builder {
 	}
 
 	@Override
-	void templateClass(PrintWriter pw) throws IOException {
-		publicConstant(pw, "String LABEL_" + config.nameUpper + "_MIN = \"label." + config.nameLower + "_min\"");
-		publicConstant(pw, "String PAINEL_" + config.nameUpper + " = \"PAINEL " + config.nameUpper + "\"");
-		publicConstant(pw, "String LABEL_" + config.nameUpper + " = \"label." + config.nameLower + "\"");
-		publicConstant(pw, "String " + config.nameUpper + " = \"" + config.nameLower + "\"");
+	void templateClass(ClassePublica classe) {
+		classe.addCampoConstanteString(config.nameUpperEntre("LABEL_", "_MIN"), config.nameLowerEntre("label.", "_min"));
+		classe.addCampoConstanteString(config.nameUpperApos("PAINEL_"), config.nameUpperApos("PAINEL "));
+		classe.addCampoConstanteString(config.nameUpperApos("LABEL_"), config.nameLowerApos("label."));
+		classe.addCampoConstanteString(config.nameUpper, config.nameLower);
 
 		if (!Util.isEmpty(config.recurso) && !config.recurso.equals(config.nameUpper)) {
-			publicConstant(pw, "String " + config.recurso + " = \"" + config.recurso.toLowerCase() + "\"");
+			classe.addCampoConstanteString(config.recurso, config.recurso.toLowerCase());
 		}
 
-		publicConstant(pw, "String IGNORADOS = \"ignorados\"");
-		pw.println();
-
-		privateMethod(pw, config.nameCap + objeto + "()");
-		finalMethod(pw, false);
+		classe.addCampoConstanteString("IGNORADOS", "ignorados").newLine();
+		classe.criarConstrutorPublico(config.nameCapAntes(objeto));
 	}
 }

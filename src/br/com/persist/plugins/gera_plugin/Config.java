@@ -9,6 +9,7 @@ import br.com.persist.assistencia.Util;
 class Config {
 	final File diretorioDestino;
 	boolean configuracao;
+	boolean comFichario;
 	boolean comDialogo;
 	String nameUpper;
 	String nameLower;
@@ -40,5 +41,65 @@ class Config {
 
 	boolean comRecurso() {
 		return !Util.isEmpty(recurso);
+	}
+
+	String nameLowerEntre(String prefixo, String sufixo) {
+		return prefixo + nameLower + sufixo;
+	}
+
+	String nameUpperEntre(String prefixo, String sufixo) {
+		return prefixo + nameUpper + sufixo;
+	}
+
+	String nameLowerApos(String string) {
+		return nameLower + string;
+	}
+
+	String nameUpperApos(String string) {
+		return nameUpper + string;
+	}
+
+	String nameCapAntes(String string) {
+		return nameCap + string;
+	}
+
+	String nameCapPreferencia() {
+		return nameCap + "Preferencia";
+	}
+
+	String nameCapConstantes() {
+		return nameCap + "Constantes";
+	}
+
+	String nameCapFormulario() {
+		return nameCap + "Formulario";
+	}
+
+	String nameCapContainer() {
+		return nameCap + "Container";
+	}
+
+	String nameCapFichario() {
+		return nameCap + "Fichario";
+	}
+
+	String nameCapDialogo() {
+		return nameCap + "Dialogo";
+	}
+
+	String nameCapServico() {
+		return nameCap + "Servico";
+	}
+
+	String nameCapPagina() {
+		return nameCap + "Pagina";
+	}
+
+	String nameDecapFormulario() {
+		return nameDecap + "Formulario";
+	}
+
+	String nameDecapDialogo() {
+		return nameDecap + "Dialogo";
 	}
 }
