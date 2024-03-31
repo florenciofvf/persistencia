@@ -12,6 +12,14 @@ public class Variavel extends Objeto {
 		this.nome = nome;
 	}
 
+	public String getTipo() {
+		return tipo;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		pool.append(tipo + " " + nome);
