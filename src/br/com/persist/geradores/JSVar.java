@@ -2,9 +2,9 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class VarJS extends ObjetoString {
-	public VarJS(String string) {
-		super("VarJS", string);
+public class JSVar extends ObjetoString {
+	public JSVar(String string) {
+		super("JSVar", string);
 	}
 
 	@Override

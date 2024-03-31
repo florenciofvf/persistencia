@@ -2,13 +2,13 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class FuncaoJS extends ContainerJS {
+public class JSFuncao extends ContainerJS {
 	private final Parametros parametros;
 	private final String nome;
 	private String strFinal;
 
-	protected FuncaoJS(String nome, Parametros parametros) {
-		super("FuncaoJS");
+	protected JSFuncao(String nome, Parametros parametros) {
+		super("JSFuncao");
 		this.nome = nome;
 		this.parametros = parametros;
 	}

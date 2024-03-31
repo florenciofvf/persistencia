@@ -5,14 +5,32 @@ public class ContainerJS extends Container {
 		super(id);
 	}
 
-	public FuncaoJS criarFuncaoJS(String nome, Parametros param) {
-		FuncaoJS funcao = new FuncaoJS(nome, param);
+	public JSFuncao criarJSFuncao(String nome, Parametros param) {
+		JSFuncao funcao = new JSFuncao(nome, param);
 		add(funcao);
 		return funcao;
 	}
 
-	public Container addVarJS(String string) {
-		add(new VarJS(string));
+	public JSInvocaProm criarJSInvocaProm(String string) {
+		JSInvocaProm obj = new JSInvocaProm(string);
+		add(obj);
+		return obj;
+	}
+
+	public JSVarObj criarJSVarObj(String nome) {
+		JSVarObj obj = new JSVarObj(nome);
+		add(obj);
+		return obj;
+	}
+
+	public JSReturnObj criarJSReturnObj() {
+		JSReturnObj obj = new JSReturnObj();
+		add(obj);
+		return obj;
+	}
+
+	public Container addJSVar(String string) {
+		add(new JSVar(string));
 		return this;
 	}
 }

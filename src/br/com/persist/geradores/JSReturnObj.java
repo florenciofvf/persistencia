@@ -2,9 +2,9 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class ReturnJS extends ContainerJS {
-	protected ReturnJS() {
-		super("ReturnJS");
+public class JSReturnObj extends ContainerJS {
+	protected JSReturnObj() {
+		super("JSReturnObj");
 	}
 
 	@Override

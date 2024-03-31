@@ -2,11 +2,11 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class VarObjJS extends ContainerJS {
+public class JSVarObj extends ContainerJS {
 	private final String nomeObj;
 
-	public VarObjJS(String nomeObj) {
-		super("VarObjJS");
+	protected JSVarObj(String nomeObj) {
+		super("JSVarObj");
 		this.nomeObj = nomeObj;
 	}
 

@@ -2,11 +2,11 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class InvocaPromJS extends ContainerJS {
+public class JSInvocaProm extends ContainerJS {
 	private final String string;
 
-	protected InvocaPromJS(String string) {
-		super("InvocaProm");
+	protected JSInvocaProm(String string) {
+		super("JSInvocaProm");
 		this.string = string;
 	}
 
