@@ -6,7 +6,7 @@ public class Atribuir extends Objeto {
 	private final String esquerdo;
 	private final String direito;
 
-	public Atribuir(String esquerdo, String direito) {
+	protected Atribuir(String esquerdo, String direito) {
 		super("Atribuir");
 		this.esquerdo = esquerdo;
 		this.direito = direito;

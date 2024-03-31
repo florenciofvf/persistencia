@@ -3,7 +3,7 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public class Importar extends ObjetoString {
-	public Importar(String string) {
+	protected Importar(String string) {
 		super("Importar", string);
 	}
 

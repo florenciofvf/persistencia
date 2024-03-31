@@ -6,14 +6,14 @@ public class InterfacePublica extends Container {
 	private final String string;
 
 	public InterfacePublica(String string) {
-		super("Interface");
+		super("InterfacePublica");
 		this.string = string;
 	}
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		pool.append("public interface " + string + " {").ql();
-		super.gerar(1, pool);
+		super.gerar(tab, pool);
 		pool.append("}");
 	}
 }

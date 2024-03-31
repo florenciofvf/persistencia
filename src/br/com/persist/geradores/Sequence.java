@@ -3,7 +3,7 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public class Sequence extends ObjetoString {
-	public Sequence(String string) {
+	protected Sequence(String string) {
 		super("Sequence", string);
 	}
 

@@ -5,12 +5,12 @@ import br.com.persist.assistencia.StringPool;
 public class AnotacaoPath extends ObjetoString {
 	private final boolean ql;
 
-	public AnotacaoPath(String string, boolean ql) {
+	protected AnotacaoPath(String string, boolean ql) {
 		super("AnotacaoPath", string);
 		this.ql = ql;
 	}
 
-	public AnotacaoPath(String string) {
+	protected AnotacaoPath(String string) {
 		this(string, false);
 	}
 

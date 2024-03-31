@@ -3,7 +3,7 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public class Instrucao extends ObjetoString {
-	public Instrucao(String string) {
+	protected Instrucao(String string) {
 		super("Instrucao", string);
 	}
 

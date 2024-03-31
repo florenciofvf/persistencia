@@ -3,7 +3,7 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public class Retornar extends ObjetoString {
-	public Retornar(String string) {
+	protected Retornar(String string) {
 		super("Retornar", string);
 	}
 

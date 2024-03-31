@@ -5,15 +5,15 @@ import br.com.persist.assistencia.StringPool;
 public class ClassePublica extends Container {
 	private final String string;
 
-	public ClassePublica(String string) {
-		super("ClassePublida");
+	protected ClassePublica(String string) {
+		super("ClassePublica");
 		this.string = string;
 	}
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		pool.append("public class " + string + " {").ql();
-		super.gerar(1, pool);
+		super.gerar(tab, pool);
 		pool.append("}");
 	}
 }

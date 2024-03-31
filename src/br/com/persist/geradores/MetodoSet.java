@@ -6,7 +6,7 @@ import br.com.persist.assistencia.Util;
 public class MetodoSet extends Container {
 	private final Variavel variavel;
 
-	public MetodoSet(Variavel variavel) {
+	protected MetodoSet(Variavel variavel) {
 		super("MetodoSet");
 		this.variavel = variavel;
 	}

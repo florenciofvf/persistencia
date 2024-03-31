@@ -5,7 +5,7 @@ import br.com.persist.assistencia.StringPool;
 public class CampoPrivado extends Objeto {
 	private final Variavel variavel;
 
-	public CampoPrivado(Variavel variavel) {
+	protected CampoPrivado(Variavel variavel) {
 		super("CampoPrivado");
 		this.variavel = variavel;
 	}

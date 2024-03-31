@@ -2,18 +2,18 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class InvocaProm extends Container {
+public class ClassePrivada extends Container {
 	private final String string;
 
-	protected InvocaProm(String string) {
-		super("InvocaProm");
+	protected ClassePrivada(String string) {
+		super("ClassePrivada");
 		this.string = string;
 	}
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append(string).ql();
+		pool.append("private class " + string + " {").ql();
 		super.gerar(tab, pool);
-		pool.tab(tab).append("});").ql();
+		pool.append("}");
 	}
 }

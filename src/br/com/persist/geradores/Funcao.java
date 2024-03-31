@@ -8,8 +8,8 @@ public abstract class Funcao extends Container {
 	private final String nome;
 	private final Parametros parametros;
 
-	protected Funcao(String modificadores, String retorno, String nome, Parametros parametros) {
-		super("Funcao");
+	protected Funcao(String id, String modificadores, String retorno, String nome, Parametros parametros) {
+		super(id);
 		this.modificadores = modificadores;
 		this.parametros = parametros;
 		this.retorno = retorno;
@@ -21,7 +21,7 @@ public abstract class Funcao extends Container {
 		pool.tab(tab).append(modificadores + " " + retorno + " " + nome);
 		parametros.gerar(0, pool);
 		pool.append(" {").ql();
-		super.gerar(tab + 1, pool);
+		super.gerar(tab, pool);
 		pool.tab(tab).append("}").ql();
 	}
 }

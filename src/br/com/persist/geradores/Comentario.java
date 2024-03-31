@@ -3,7 +3,7 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public class Comentario extends ObjetoString {
-	public Comentario(String string) {
+	protected Comentario(String string) {
 		super("Comentario", string);
 	}
 

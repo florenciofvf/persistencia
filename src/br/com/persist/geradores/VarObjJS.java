@@ -13,7 +13,7 @@ public class VarObjJS extends Container {
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		pool.tab(tab).append("var " + nomeObj + " = {").ql();
-		super.gerar(tab + 1, pool);
+		super.gerar(tab, pool);
 		pool.tab(tab).append("};").ql();
 	}
 }

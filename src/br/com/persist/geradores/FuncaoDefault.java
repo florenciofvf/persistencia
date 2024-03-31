@@ -2,13 +2,13 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class FuncaoAbstrata extends Objeto {
+public class FuncaoDefault extends Container {
 	private final String retorno;
 	private final String nome;
 	private final Parametros parametros;
 
-	protected FuncaoAbstrata(String retorno, String nome, Parametros parametros) {
-		super("FuncaoAbstrata");
+	protected FuncaoDefault(String retorno, String nome, Parametros parametros) {
+		super("FuncaoDefault");
 		this.parametros = parametros;
 		this.retorno = retorno;
 		this.nome = nome;
@@ -18,6 +18,8 @@ public class FuncaoAbstrata extends Objeto {
 	public void gerar(int tab, StringPool pool) {
 		pool.tab(tab).append(retorno + " " + nome);
 		parametros.gerar(0, pool);
-		pool.append(";").ql();
+		pool.append(" {").ql();
+		super.gerar(tab, pool);
+		pool.tab(tab).append("}").ql();
 	}
 }

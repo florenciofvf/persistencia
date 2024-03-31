@@ -7,7 +7,7 @@ public class FuncaoJS extends Container {
 	private final String nome;
 	private String strFinal;
 
-	public FuncaoJS(String nome, Parametros parametros) {
+	protected FuncaoJS(String nome, Parametros parametros) {
 		super("FuncaoJS");
 		this.nome = nome;
 		this.parametros = parametros;
@@ -18,7 +18,7 @@ public class FuncaoJS extends Container {
 		pool.tab(tab).append(nome);
 		parametros.gerar(0, pool);
 		pool.append(" {").ql();
-		super.gerar(tab + 1, pool);
+		super.gerar(tab, pool);
 		pool.tab(tab).append("}");
 		if (nome.contains("=")) {
 			pool.append(strFinal == null ? ";" : strFinal);

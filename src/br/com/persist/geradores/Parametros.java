@@ -12,6 +12,10 @@ public class Parametros extends Container {
 		add(o);
 	}
 
+	public Parametros(String s) {
+		this(new Sequence(s));
+	}
+
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		pool.append("(");
