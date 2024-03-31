@@ -10,7 +10,8 @@ public class ConstantesBuilder extends Builder {
 
 	@Override
 	void templateClass(ClassePublica classe) {
-		classe.addCampoConstanteString(config.nameUpperEntre("LABEL_", "_MIN"), config.nameLowerEntre("label.", "_min"));
+		classe.addCampoConstanteString(config.nameUpperEntre("LABEL_", "_MIN"),
+				config.nameLowerEntre("label.", "_min"));
 		classe.addCampoConstanteString(config.nameUpperApos("PAINEL_"), config.nameUpperApos("PAINEL "));
 		classe.addCampoConstanteString(config.nameUpperApos("LABEL_"), config.nameLowerApos("label."));
 		classe.addCampoConstanteString(config.nameUpper, config.nameLower);
