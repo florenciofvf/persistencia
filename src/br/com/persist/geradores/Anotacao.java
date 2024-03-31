@@ -11,7 +11,7 @@ public class Anotacao extends ObjetoString {
 	}
 
 	protected Anotacao(String string) {
-		this(string, false);
+		this(string, true);
 	}
 
 	@Override

@@ -1,15 +1,13 @@
 package br.com.persist.plugins.atributo;
 
-import br.com.persist.geradores.Importar;
-
 public class AtributoConstantes {
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
-	public static final Importar IMPORT_LIST = new Importar("java.util.List");
 	public static final String LABEL_ATRIBUTO_MIN = "label.atributo_min";
 	public static final String PAINEL_ATRIBUTO = "PAINEL ATRIBUTO";
 	public static final String LABEL_ATRIBUTO = "label.atributo";
 	public static final String CONTROLLER_JS = "controllerJS";
 	public static final String LIMPAR_FILTRO = "limparFiltro";
+	public static final String IMPORT_LIST = "java.util.List";
 	public static final String COMPONENTE = "componente";
 	public static final String FUNCTION2 = " = function";
 	public static final String FUNCTION3 = ": function";
@@ -19,7 +17,6 @@ public class AtributoConstantes {
 	public static final String PESQUISAR = "pesquisar";
 	public static final String FUNCTION = "function ";
 	public static final String END_POINT = "endPoint";
-	public static final String OVERRIDE = "Override";
 	public static final String EXPORTAR = "exportar";
 	public static final String ATRIBUTO = "atributo";
 	public static final String DAO_IMPL = "daoImpl";
