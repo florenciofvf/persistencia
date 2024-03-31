@@ -52,15 +52,19 @@ class Config {
 	}
 
 	String nameLowerApos(String string) {
-		return nameLower + string;
+		return string + nameLower;
 	}
 
 	String nameUpperApos(String string) {
-		return nameUpper + string;
+		return string + nameUpper;
 	}
 
-	String nameCapAntes(String string) {
-		return nameCap + string;
+	String nameCapPaginaServico() {
+		return nameCap + "PaginaServico";
+	}
+
+	String nameCapConfiguracao() {
+		return nameCap + "Configuracao";
 	}
 
 	String nameCapPreferencia() {
@@ -79,12 +83,20 @@ class Config {
 		return nameCap + "Container";
 	}
 
+	String nameCapMensagens() {
+		return nameCap + "Mensagens";
+	}
+
 	String nameCapFichario() {
 		return nameCap + "Fichario";
 	}
 
 	String nameCapDialogo() {
 		return nameCap + "Dialogo";
+	}
+
+	String nameCapFabrica() {
+		return nameCap + "Fabrica";
 	}
 
 	String nameCapServico() {

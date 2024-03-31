@@ -3,7 +3,7 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public class Parametros extends Container {
-	public Parametros() {
+	protected Parametros() {
 		super("Parametros");
 	}
 

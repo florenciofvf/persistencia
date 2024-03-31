@@ -20,6 +20,6 @@ public class ConstantesBuilder extends Builder {
 		}
 
 		classe.addCampoConstanteString("IGNORADOS", "ignorados").newLine();
-		classe.criarConstrutorPublico(config.nameCapAntes(objeto));
+		classe.criarConstrutorPublico(config.nameCapConstantes());
 	}
 }

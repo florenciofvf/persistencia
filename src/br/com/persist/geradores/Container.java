@@ -120,6 +120,12 @@ public abstract class Container extends Objeto {
 		return construtor;
 	}
 
+	public ConstrutorPrivado criarConstrutorPrivado(String nome, Parametros param) {
+		ConstrutorPrivado construtor = new ConstrutorPrivado(nome, param);
+		add(construtor);
+		return construtor;
+	}
+
 	public ConstrutorPublico criarConstrutorPublico(String nome) {
 		return criarConstrutorPublico(nome, new Parametros());
 	}
@@ -136,7 +142,7 @@ public abstract class Container extends Objeto {
 		return se;
 	}
 
-	public Container ql() {
+	public Container newLine() {
 		add(new NewLine());
 		return this;
 	}
