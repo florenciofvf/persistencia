@@ -1109,15 +1109,14 @@ class PainelBean extends AbstratoPanel {
 				.criarClassePublica(bean + " implements " + AtributoUtil.getComponente(mapaService));
 
 		classe.addAnotacao("Inject");
-		classe.addCampoPrivado(raiz.getTipoDAO()).newLine();
+		classe.addCampoPrivado(raiz.getTipoDAO());
 
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService),
 				new Parametros(raiz.getTipoFilter()));
 		funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
-		classe.newLine();
 
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("byte[]", AtributoUtil.getExportar(mapaService),
 				new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
 		funcao.addReturn("new byte[0]");
@@ -1200,9 +1199,8 @@ class PainelDAOImpl extends AbstratoPanel {
 
 		classe.addAnotacao("PersistenceContext(" + "unitName = " + Util.citar2("nomeUnit") + ")");
 		classe.addCampoPrivado(new Variavel("EntityManager", "entityManager"));
-		classe.newLine();
 
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO),
 				new Parametros(raiz.getTipoFilter()));
 		funcao.addInstrucao(raiz.getListDTO() + " resp = new ArrayList<>()");

@@ -67,15 +67,17 @@ public class ContainerBuilder extends Builder {
 
 	@Override
 	void templateClass(ClassePublica classe) {
-		classe.addInstrucao(
-				"private static final File file = new File(" + config.nameCapConstantes() + "." + config.recurso + ")");
-		classe.addInstrucao(
-				"private final " + config.nameCapFichario() + " fichario = new " + config.nameCapFichario() + "()");
+		if (config.comFichario) {
+			classe.addInstrucao("private static final File file = new File(" + config.nameCapConstantes() + "."
+					+ config.recurso + ")");
+			classe.addInstrucao(
+					"private final " + config.nameCapFichario() + " fichario = new " + config.nameCapFichario() + "()");
+		}
 		classe.addInstrucao("private static final long serialVersionUID = 1L");
 		classe.addInstrucao("private final Toolbar toolbar = new Toolbar()");
-		classe.addInstrucao("private" + config.nameCapFormulario() + " " + config.nameDecapFormulario());
+		classe.addInstrucao("private " + config.nameCapFormulario() + " " + config.nameDecapFormulario());
 		if (config.comDialogo) {
-			classe.addInstrucao("private" + config.nameCapDialogo() + " " + config.nameDecapDialogo());
+			classe.addInstrucao("private " + config.nameCapDialogo() + " " + config.nameDecapDialogo());
 		}
 		classe.newLine();
 		Container construtor = null;
@@ -91,6 +93,7 @@ public class ContainerBuilder extends Builder {
 		construtor.addInstrucao("montarLayout()");
 
 		if (config.comDialogo) {
+			classe.newLine();
 			Funcao funcao = classe.criarFuncaoPublica(config.nameCapDialogo(), "get" + config.nameCapDialogo());
 			funcao.addReturn(config.nameDecapDialogo());
 
@@ -101,9 +104,11 @@ public class ContainerBuilder extends Builder {
 			se.addInstrucao(config.nameDecapFormulario() + " = null");
 		}
 
+		classe.newLine();
 		Funcao funcao = classe.criarFuncaoPublica(config.nameCapFormulario(), "get" + config.nameCapFormulario());
 		funcao.addReturn(config.nameDecapFormulario());
 
+		classe.newLine();
 		funcao = classe.criarFuncaoPublica("void", "set" + config.nameCapFormulario(),
 				new Parametros(config.nameCapFormulario() + " " + config.nameDecapFormulario()));
 		funcao.addInstrucao("this." + config.nameDecapFormulario() + " = " + config.nameDecapFormulario());
@@ -113,38 +118,45 @@ public class ContainerBuilder extends Builder {
 			se.addInstrucao(config.nameDecapDialogo() + " = null");
 		}
 
+		classe.newLine();
 		funcao = classe.criarFuncaoPrivada("void", "montarLayout");
 		funcao.addInstrucao("add(BorderLayout.NORTH, toolbar)");
 		if (config.comFichario) {
 			funcao.addInstrucao("add(BorderLayout.CENTER, fichario)");
 		}
 
-		classe.addOverride();
-		funcao = classe.criarFuncaoPrivada("void", "setJanela", new Parametros("Janela janela"));
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "setJanela", new Parametros("Janela janela"));
 		funcao.addInstrucao("toolbar.setJanela(janela)");
 
-		templateFichario(classe);
+		if (config.comFichario) {
+			templateFichario(classe);
+		}
 		templateToolbar(classe);
 		finalizar(classe);
 		titulo(classe);
 	}
 
 	private void templateFichario(ClassePublica classe) {
+		classe.newLine();
 		Funcao funcao = classe.criarFuncaoPublica(STRING, "getConteudo");
 		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 		If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
 		se.addInstrucao("return ativa.getConteudo()");
 		funcao.addReturn("null");
 
+		classe.newLine();
 		funcao = classe.criarFuncaoPublica(STRING, "getIdPagina");
 		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 		If se2 = funcao.criarIf(ATIVA_DIFF_NULL, null);
 		se2.addReturn("ativa.getNome()");
 		funcao.addReturn("null");
 
+		classe.newLine();
 		funcao = classe.criarFuncaoPublica("int", "getIndice");
 		funcao.addReturn("fichario.getIndiceAtivo()");
 
+		classe.newLine();
 		FuncaoDefault funcaoDefault = classe.criarFuncaoDefault("static boolean", "ehArquivoReservado",
 				new Parametros("String nome"));
 		funcaoDefault.addReturn(config.nameCapConstantes() + ".IGNORADOS.equalsIgnoreCase(nome)");
@@ -153,6 +165,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void templateAbrir(ClassePublica classe) {
+		classe.newLine();
 		Funcao funcao = classe.criarFuncaoPrivada("void", "abrir", new Parametros("String conteudo, String idPagina"));
 		funcao.addInstrucao("ArquivoUtil.lerArquivo(" + config.nameCapConstantes() + "." + config.recurso
 				+ ", new File(file, " + config.nameCapConstantes() + ".IGNORADOS))");
@@ -181,6 +194,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void templateToolbar(ClassePublica classe) {
+		classe.newLine();
 		ClassePrivada classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton");
 
 		if (config.comFichario) {
@@ -222,7 +236,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void destacar(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "destacarEmFormulario");
 
 		If se = funcao.criarIf("formulario.excluirPagina(" + config.nameCapContainer() + DOT_THIS, null);
@@ -237,7 +251,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void retornar(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "retornarAoFichario");
 
 		If se = funcao.criarIf(config.nameDecapFormulario() + DIFF_NULL, null);
@@ -252,7 +266,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void clonar(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "clonarEmFormulario");
 
 		if (config.comDialogo) {
@@ -264,7 +278,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void abrir(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "abrirEmFormulario");
 
 		if (config.comDialogo) {
@@ -280,25 +294,25 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void windowOpended(ClassePrivada classe) {
-		classe.addOverride();
-		Funcao funcao = classe.criarFuncaoProtegida("void", "windowOpenedHandler", new Parametros("Window window"));
+		classe.addOverride(true);
+		Funcao funcao = classe.criarFuncaoPublica("void", "windowOpenedHandler", new Parametros("Window window"));
 		funcao.addInstrucao("buttonDestacar.estadoFormulario()");
 	}
 
 	private void dialogOpened(ClassePrivada classe) {
-		classe.addOverride();
-		Funcao funcao = classe.criarFuncaoProtegida("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
+		classe.addOverride(true);
+		Funcao funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
 		funcao.addInstrucao("buttonDestacar.estadoDialogo()");
 	}
 
 	private void adicionadoAoFichario(ClassePrivada classe) {
-		classe.addOverride();
-		Funcao funcao = classe.criarFuncaoProtegida("void", "adicionadoAoFichario");
+		classe.newLine();
+		FuncaoDefault funcao = classe.criarFuncaoDefault("void", "adicionadoAoFichario");
 		funcao.addInstrucao("buttonDestacar.estadoFichario()");
 	}
 
 	private void novo(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "novo");
 		funcao.addInstrucao("Object resp = Util.getValorInputDialog(" + config.nameCapContainer()
 				+ ".this, \"label.id\", Mensagens.getString(\"label.nome_arquivo\"), Constantes.VAZIO)");
@@ -330,7 +344,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void baixar(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "baixar");
 		if (config.comFichario) {
 			funcao.addInstrucao("abrir(null, getIdPagina())");
@@ -338,7 +352,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void salvar(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "salvar");
 		if (config.comFichario) {
 			funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
@@ -355,7 +369,7 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void excluir(ClassePrivada classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "excluirAtivo");
 		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 
@@ -367,24 +381,21 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void finalizar(ClassePublica classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "adicionadoAoFichario", new Parametros("Fichario fichario"));
 		funcao.addInstrucao("toolbar.adicionadoAoFichario()");
-		classe.newLine();
 
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "windowOpenedHandler", new Parametros("Window window"));
 		funcao.addInstrucao("toolbar.windowOpenedHandler(window)");
-		classe.newLine();
 
 		if (config.comDialogo) {
-			classe.addOverride();
+			classe.addOverride(true);
 			funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
 			funcao.addInstrucao("toolbar.dialogOpenedHandler(dialog)");
-			classe.newLine();
 		}
 
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica(STRING, "getStringPersistencia");
 		if (config.comFichario) {
 			funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
@@ -392,43 +403,37 @@ public class ContainerBuilder extends Builder {
 			se.addReturn("ativa.getNome()");
 		}
 		funcao.addReturn("Constantes.VAZIO");
-		classe.newLine();
 
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("Class<?>", "getClasseFabrica");
 		funcao.addReturn(config.nameCapFabrica() + ".class");
-		classe.newLine();
 
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("Component", "getComponent");
 		funcao.addReturn("this");
-		classe.newLine();
 	}
 
 	private void titulo(ClassePublica classe) {
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("Titulo", "getTitulo");
 		RetornoClasseAnonima anonima = funcao.criarRetornoClasseAnonima("AbstratoTitulo");
 
-		anonima.addOverride();
+		anonima.addOverride(false);
 		funcao = anonima.criarFuncaoPublica(STRING, "getTituloMin");
 		funcao.addReturn(config.nameCapMensagens() + GET_STRING + config.nameCapConstantes() + "."
 				+ config.nameUpperEntre(LABEL, "_MIN") + ")");
-		anonima.newLine();
 
-		anonima.addOverride();
+		anonima.addOverride(true);
 		funcao = anonima.criarFuncaoPublica(STRING, "getTitulo");
 		funcao.addReturn(config.nameCapMensagens() + GET_STRING + config.nameCapConstantes() + "."
 				+ config.nameUpperApos(LABEL) + ")");
-		anonima.newLine();
 
-		anonima.addOverride();
+		anonima.addOverride(true);
 		funcao = anonima.criarFuncaoPublica(STRING, "getHint");
 		funcao.addReturn(config.nameCapMensagens() + GET_STRING + config.nameCapConstantes() + "."
 				+ config.nameUpperApos(LABEL) + ")");
-		anonima.newLine();
 
-		anonima.addOverride();
+		anonima.addOverride(true);
 		funcao = anonima.criarFuncaoPublica("Icon", "getIcone");
 		funcao.addReturn("Icones." + config.icone);
 	}

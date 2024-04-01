@@ -8,7 +8,7 @@ import br.com.persist.assistencia.Util;
 
 class Config {
 	final File diretorioDestino;
-	boolean configuracao;
+	boolean comConfiguracao;
 	boolean comFichario;
 	boolean comDialogo;
 	String nameUpper;

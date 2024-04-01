@@ -17,7 +17,7 @@ public class ConstrutorPrivado extends ContainerJV {
 		pool.tab(tab).append("private " + nome);
 		parametros.gerar(0, pool);
 		pool.append(" {").ql();
-		super.gerar(tab + 1, pool);
+		super.gerar(tab, pool);
 		pool.tab(tab).append("}").ql();
 	}
 }

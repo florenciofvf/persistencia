@@ -59,8 +59,7 @@ public class DialogoBuilder extends Builder {
 		funcao.addInstrucao(CONTAINER_SET + config.nameCapDialogo() + "(null)");
 		funcao.addInstrucao("fechar()");
 
-		classe.newLine();
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
 		funcao.addInstrucao("container.dialogOpenedHandler(dialog)");
 	}

@@ -83,14 +83,18 @@ public class ContainerJV extends Container {
 		return construtor;
 	}
 
+	public ConstrutorPublico criarConstrutorPublico(String nome) {
+		return criarConstrutorPublico(nome, new Parametros());
+	}
+
 	public ConstrutorPrivado criarConstrutorPrivado(String nome, Parametros param) {
 		ConstrutorPrivado construtor = new ConstrutorPrivado(nome, param);
 		add(construtor);
 		return construtor;
 	}
 
-	public ConstrutorPublico criarConstrutorPublico(String nome) {
-		return criarConstrutorPublico(nome, new Parametros());
+	public ConstrutorPrivado criarConstrutorPrivado(String nome) {
+		return criarConstrutorPrivado(nome, new Parametros());
 	}
 
 	public MetodoGet criarMetodoGet(Variavel variavel) {
@@ -138,7 +142,10 @@ public class ContainerJV extends Container {
 		return addAnotacao(string, true);
 	}
 
-	public Container addOverride() {
+	public Container addOverride(boolean newLine) {
+		if (newLine) {
+			newLine();
+		}
 		return addAnotacao("Override");
 	}
 

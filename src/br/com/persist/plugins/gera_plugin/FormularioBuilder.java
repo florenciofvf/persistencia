@@ -28,7 +28,7 @@ public class FormularioBuilder extends Builder {
 	@Override
 	void templateClass(ClassePublica classe) {
 		classe.addInstrucao("private static final long serialVersionUID = 1L");
-		classe.addInstrucao("private final " + config.nameCapContainer() + CONTAINER);
+		classe.addInstrucao("private final " + config.nameCapContainer() + CONTAINER).newLine();
 
 		ConstrutorPrivado construtor = null;
 		if (config.comFichario) {
@@ -88,8 +88,7 @@ public class FormularioBuilder extends Builder {
 		funcao.addInstrucao(CONTAINER_SET + config.nameCapFormulario() + "(null)");
 		funcao.addInstrucao("fechar()");
 
-		classe.newLine();
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "windowOpenedHandler", new Parametros("Window window"));
 		funcao.addInstrucao("container.windowOpenedHandler(window)");
 	}

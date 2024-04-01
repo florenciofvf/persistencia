@@ -12,8 +12,8 @@ public class ClassePublica extends ContainerJV {
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.append("public class " + string + " {").ql();
+		pool.tab(tab).append("public class " + string + " {").ql();
 		super.gerar(tab, pool);
-		pool.append("}");
+		pool.tab(tab).append("}").ql();
 	}
 }

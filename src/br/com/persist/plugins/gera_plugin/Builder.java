@@ -36,7 +36,7 @@ public abstract class Builder {
 			ClassePublica classe = arquivo.criarClassePublica(config.nameCap + objeto + extende);
 			templateClass(classe);
 
-			arquivo.gerar(0, pool);
+			arquivo.gerar(-1, pool);
 			pw.print(pool.toString());
 		}
 	}

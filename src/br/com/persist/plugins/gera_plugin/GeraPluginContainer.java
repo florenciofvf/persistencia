@@ -323,7 +323,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 			if (chkComFichario.isSelected()) {
 				GeraPluginUtil.fichario(config);
 			}
-			if (config.configuracao) {
+			if (config.comConfiguracao) {
 				GeraPluginUtil.preferencias(config);
 			}
 			if (chkComHandler.isSelected()) {
@@ -361,7 +361,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		config.nameLower = nome.toLowerCase();
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
-		config.configuracao = chkComConfiguracao.isSelected();
+		config.comConfiguracao = chkComConfiguracao.isSelected();
 		config.comFichario = chkComFichario.isSelected();
 		config.comDialogo = chkComDialogo.isSelected();
 	}

@@ -26,7 +26,7 @@ public class FabricaBuilder extends Builder {
 		arquivo.addImport("br.com.persist.abstrato.Servico");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
-		if (config.configuracao) {
+		if (config.comConfiguracao) {
 			arquivo.addImport("br.com.persist.abstrato.AbstratoConfiguracao");
 			arquivo.addImport("br.com.persist.assistencia.Preferencias");
 		}
@@ -44,41 +44,43 @@ public class FabricaBuilder extends Builder {
 
 	@Override
 	void templateClass(ClassePublica classe) {
-		if (config.configuracao && config.comRecurso()) {
-			classe.addOverride();
+		if (config.comConfiguracao || config.comRecurso()) {
+			classe.addOverride(false);
 			Funcao funcao = classe.criarFuncaoPublica("void", "inicializar");
-			if (config.configuracao) {
+			if (config.comConfiguracao) {
 				funcao.addInstrucao("Preferencias.addOutraPreferencia(" + config.nameCapPreferencia() + ".class)");
 			}
 			if (config.comRecurso()) {
 				funcao.addInstrucao("Util.criarDiretorio(" + config.nameCapConstantes() + "." + config.recurso + ")");
 			}
-			if (config.configuracao) {
-				classe.addOverride();
+			if (config.comConfiguracao) {
+				classe.addOverride(true);
 				funcao = classe.criarFuncaoPublica("AbstratoConfiguracao", "getConfiguracao",
 						new Parametros(new Variavel("Formulario", "formulario")));
 				funcao.addReturn("new " + config.nameCapConfiguracao() + "(formulario)");
 			}
 		}
 
-		classe.addOverride();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("PaginaServico", "getPaginaServico");
 		funcao.addReturn("new " + config.nameCapPaginaServico() + "()");
 
+		classe.newLine();
 		ClassePrivada classePrivada = classe
 				.criarClassePrivada(config.nameCapPaginaServico() + " implements PaginaServico");
-		classePrivada.addOverride();
+		classePrivada.addOverride(false);
 		funcao = classePrivada.criarFuncaoPublica("Pagina", "criarPagina",
 				new Parametros("Formulario formulario, String stringPersistencia"));
 		funcao.addReturn("new " + config.nameCapContainer() + "(null, formulario)");
 
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("List<Servico>", "getServicos", new Parametros("Formulario formulario"));
 		funcao.addReturn("Arrays.asList(new " + config.nameCap + "Servico())");
 
+		classe.newLine();
 		classe.criarClassePrivada(config.nameCapServico() + " extends AbstratoServico");
 
-		classe.addOverride();
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("List<JMenuItem>", "criarMenuItens",
 				new Parametros("Formulario formulario, JMenu menu"));
 		If se = funcao.criarIf("menu.getItemCount() > 0", null);
@@ -88,6 +90,7 @@ public class FabricaBuilder extends Builder {
 		funcao.addInstrucao("lista.add(new Menu" + config.nameCap + "(formulario))");
 		funcao.addReturn("lista");
 
+		classe.newLine();
 		classePrivada = classe.criarClassePrivada("Menu" + config.nameCap + " extends MenuPadrao1");
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
 		ConstrutorPrivado construtor = classePrivada.criarConstrutorPrivado("Menu" + config.nameCap,
