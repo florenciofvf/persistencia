@@ -2,22 +2,22 @@ package br.com.persist.geradores;
 
 import br.com.persist.assistencia.StringPool;
 
-public class JSFuncao extends ContainerJS {
+public class JSFuncaoAtributo extends ContainerJS {
 	private final Parametros parametros;
 	private final String nome;
 
-	protected JSFuncao(String nome, Parametros parametros) {
-		super("JSFuncao");
+	protected JSFuncaoAtributo(String nome, Parametros parametros) {
+		super("JSFuncaoAtributo");
 		this.nome = nome;
 		this.parametros = parametros;
 	}
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append("function " + nome);
+		pool.tab(tab).append(nome + " = function");
 		parametros.gerar(0, pool);
 		pool.append(" {").ql();
 		super.gerar(tab, pool);
-		pool.tab(tab).append("}").ql();
+		pool.tab(tab).append("};").ql();
 	}
 }

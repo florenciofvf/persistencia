@@ -3,9 +3,9 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public class FuncaoAbstrata extends Objeto {
+	private final Parametros parametros;
 	private final String retorno;
 	private final String nome;
-	private final Parametros parametros;
 
 	protected FuncaoAbstrata(String retorno, String nome, Parametros parametros) {
 		super("FuncaoAbstrata");

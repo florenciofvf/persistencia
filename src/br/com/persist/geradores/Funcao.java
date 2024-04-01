@@ -3,10 +3,10 @@ package br.com.persist.geradores;
 import br.com.persist.assistencia.StringPool;
 
 public abstract class Funcao extends ContainerJV {
+	private final Parametros parametros;
 	private final String modificadores;
 	private final String retorno;
 	private final String nome;
-	private final Parametros parametros;
 
 	protected Funcao(String id, String modificadores, String retorno, String nome, Parametros parametros) {
 		super(id);
