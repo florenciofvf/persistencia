@@ -81,12 +81,6 @@ public abstract class Container extends Objeto {
 		return se;
 	}
 
-	public ElseIf criarElseIf(String condicao) {
-		ElseIf elseIf = new ElseIf(condicao);
-		add(elseIf);
-		return elseIf;
-	}
-
 	public For criarFor(String condicao) {
 		For loop = new For(condicao);
 		add(loop);

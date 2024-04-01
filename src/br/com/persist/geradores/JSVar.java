@@ -9,6 +9,6 @@ public class JSVar extends ObjetoString {
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append(string);
+		pool.append(string);
 	}
 }

@@ -568,7 +568,7 @@ class PainelControllerJS extends AbstratoPanel {
 		funcao.newLine();
 		fnProcessarFile(funcao);
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 
@@ -684,7 +684,7 @@ class PainelParamJS extends PainelControllerJS {
 		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
 		fnParam(funcao, filtro, atributos);
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 
@@ -736,7 +736,7 @@ class PainelValidarJS extends PainelControllerJS {
 		funcao.newLine();
 		fnValidar(funcao, filtro, atributos);
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 
@@ -825,7 +825,7 @@ class PainelServiceJS extends AbstratoPanel {
 		fnPesquisar(returnObj, mapaServiceJS, mapaRest);
 		fnGerarPDF(returnObj, mapaServiceJS, mapaRest);
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 

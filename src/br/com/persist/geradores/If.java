@@ -22,4 +22,10 @@ public class If extends Container {
 			elsee.gerar(tab, pool);
 		}
 	}
+
+	public ElseIf criarElseIf(String condicao) {
+		ElseIf elseIf = new ElseIf(condicao);
+		add(elseIf);
+		return elseIf;
+	}
 }
