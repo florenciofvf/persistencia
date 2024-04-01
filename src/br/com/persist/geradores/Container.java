@@ -54,11 +54,25 @@ public abstract class Container extends Objeto {
 		return null;
 	}
 
+	public boolean isEmpty() {
+		return objetos.isEmpty();
+	}
+
+	public int size() {
+		return objetos.size();
+	}
+
 	@Override
 	public void gerar(int tab, StringPool pool) {
 		for (Objeto o : objetos) {
 			o.gerar(tab + 1, pool);
 		}
+	}
+
+	public JSInvocaProm criarJSInvocaProm(String string) {
+		JSInvocaProm obj = new JSInvocaProm(string);
+		add(obj);
+		return obj;
 	}
 
 	public If criarIf(String condicao, Else elsee) {

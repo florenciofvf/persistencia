@@ -35,12 +35,6 @@ public class ContainerJS extends Container {
 		return criarJSFuncaoPropriedade(separar, nome, new Parametros());
 	}
 
-	public JSInvocaProm criarJSInvocaProm(String string) {
-		JSInvocaProm obj = new JSInvocaProm(string);
-		add(obj);
-		return obj;
-	}
-
 	public JSVarObj criarJSVarObj(String nome) {
 		JSVarObj obj = new JSVarObj(nome);
 		add(obj);
@@ -51,6 +45,11 @@ public class ContainerJS extends Container {
 		JSReturnObj obj = new JSReturnObj();
 		add(obj);
 		return obj;
+	}
+
+	public Container addJSAtributo(boolean separar, String nome, String valor) {
+		add(new JSAtributo(separar, nome, valor));
+		return this;
 	}
 
 	public Container addJSVar(String string) {

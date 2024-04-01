@@ -44,27 +44,23 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
-import br.com.persist.geradores.Anotacao;
-import br.com.persist.geradores.AnotacaoPath;
 import br.com.persist.geradores.Arquivo;
-import br.com.persist.geradores.CampoPrivado;
 import br.com.persist.geradores.ClassePublica;
 import br.com.persist.geradores.Container;
 import br.com.persist.geradores.Else;
-import br.com.persist.geradores.Espaco;
 import br.com.persist.geradores.Funcao;
-import br.com.persist.geradores.FuncaoAbstrata;
-import br.com.persist.geradores.FuncaoJS;
 import br.com.persist.geradores.FuncaoPublica;
 import br.com.persist.geradores.If;
 import br.com.persist.geradores.InterfacePublica;
-import br.com.persist.geradores.InvocaProm;
-import br.com.persist.geradores.MetodoGet;
-import br.com.persist.geradores.MetodoSet;
+import br.com.persist.geradores.JSArquivo;
+import br.com.persist.geradores.JSFuncao;
+import br.com.persist.geradores.JSFuncaoAtributo;
+import br.com.persist.geradores.JSFuncaoPropriedade;
+import br.com.persist.geradores.JSInvocaProm;
+import br.com.persist.geradores.JSReturnObj;
+import br.com.persist.geradores.JSVar;
+import br.com.persist.geradores.JSVarObj;
 import br.com.persist.geradores.Parametros;
-import br.com.persist.geradores.ReturnJS;
-import br.com.persist.geradores.VarJS;
-import br.com.persist.geradores.VarObjJS;
 import br.com.persist.geradores.Variavel;
 
 public class AtributoPagina extends Panel {
@@ -535,7 +531,6 @@ class PainelView extends AbstratoPanel {
 
 class PainelControllerJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
-	protected transient FuncaoJS funcaoController;
 
 	PainelControllerJS(AtributoPagina pagina) {
 		super(pagina);
@@ -559,115 +554,104 @@ class PainelControllerJS extends AbstratoPanel {
 			return;
 		}
 
-		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = funcaoController;
+		JSArquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
 		funcao.addInstrucao("var vm = this").newLine();
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
 		funcao.addInstrucao("vm." + filtro + " = {}").newLine();
 
-		funcao.add(fnLimparFiltro(mapaControllerJS, filtro)).newLine();
-		funcao.add(fnPesquisa(mapaControllerJS, mapaServiceJS, filtro)).newLine();
-		funcao.add(fnPDF(mapaControllerJS, mapaServiceJS, filtro)).newLine();
-		funcao.add(fnProcessarFile());
+		fnLimparFiltro(funcao, mapaControllerJS, filtro);
+		funcao.newLine();
+		fnPesquisa(funcao, mapaControllerJS, mapaServiceJS, filtro);
+		funcao.newLine();
+		fnExportar(funcao, mapaControllerJS, mapaServiceJS, filtro);
+		funcao.newLine();
+		fnProcessarFile(funcao);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	protected Arquivo criarArquivo(Mapa mapaControllerJS, Mapa mapaServiceJS) {
-		Arquivo arquivo = new Arquivo();
+	protected JSArquivo criarArquivo(Mapa mapaControllerJS, Mapa mapaServiceJS) {
+		JSArquivo arquivo = new JSArquivo();
 		arquivo.addInstrucao(
 				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
 						+ AtributoUtil.getComponente(mapaServiceJS) + "']")
 				.newLine();
-
-		String string = ", ";
-		Parametros params = new Parametros("$scope");
-		params.addString(string);
-		params.addVarJS("$state").addString(string);
-		params.addVarJS("NgTableParams").addString(string);
-		params.addVarJS(AtributoUtil.getComponente(mapaServiceJS));
-		funcaoController = arquivo
-				.criarFuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaControllerJS), params);
-
 		return arquivo;
 	}
 
-	private Container fnLimparFiltro(Mapa mapaControllerJS, String filtro) {
-		FuncaoJS funcao = new FuncaoJS(
-				"vm." + mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO) + AtributoConstantes.FUNCTION2,
-				new Parametros());
-		funcao.addInstrucao("vm." + filtro + " = {}");
-		return funcao;
+	protected JSFuncao criarFuncao(JSArquivo arquivo, Mapa mapaControllerJS, Mapa mapaServiceJS) {
+		final String string = ", ";
+		Parametros params = new Parametros("$scope");
+		params.addString(string).addString("$state").addString(string).addString("NgTableParams").addString(string)
+				.addString(AtributoUtil.getComponente(mapaServiceJS));
+		return arquivo.criarJSFuncao(AtributoUtil.getComponente(mapaControllerJS), params);
 	}
 
-	private Container fnPesquisa(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
-		FuncaoJS funcao = new FuncaoJS(
-				"vm." + AtributoUtil.getPesquisar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
-		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
+	private void fnLimparFiltro(JSFuncao funcao, Mapa mapaControllerJS, String filtro) {
+		JSFuncaoAtributo limpar = funcao
+				.criarJSFuncaoAtributo("vm." + mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO));
+		limpar.addInstrucao("vm." + filtro + " = {}");
+	}
+
+	private void fnPesquisa(JSFuncao funcao, Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
+		JSFuncaoAtributo pesquisar = funcao.criarJSFuncaoAtributo("vm." + AtributoUtil.getPesquisar(mapaControllerJS));
+		pesquisar.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
 		elsee.addComentario("Msg.error(msg);");
 		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
 
-		If iff = new If("isVazio(msg)", elsee);
-		funcao.add(iff);
+		If iff = pesquisar.criarIf("isVazio(msg)", elsee);
 
-		InvocaProm invocaProm = new InvocaProm(
+		JSInvocaProm invocaProm = iff.criarJSInvocaProm(
 				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getPesquisar(mapaServiceJS)
 						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
-		iff.add(invocaProm);
 
 		invocaProm.addInstrucao("var lista = result.data");
 		invocaProm.addInstrucao("vm.pesquisados.settings().dataset = lista");
 		invocaProm.addInstrucao("vm.pesquisados.reload()");
 
-		If ifLength = new If("lista.length === 0", null);
-		invocaProm.add(ifLength);
+		If ifLength = invocaProm.criarIf("lista.length === 0", null);
+
 		ifLength.addComentario("Msg.info('Nenhum registro encontrado');");
 		ifLength.addComentario("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');");
-
-		return funcao;
 	}
 
-	private Container fnPDF(Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
-		FuncaoJS funcao = new FuncaoJS(
-				"vm." + AtributoUtil.getExportar(mapaControllerJS) + AtributoConstantes.FUNCTION2, new Parametros());
-		funcao.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
+	private void fnExportar(JSFuncao funcao, Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
+		JSFuncaoAtributo exportar = funcao.criarJSFuncaoAtributo("vm." + AtributoUtil.getExportar(mapaControllerJS));
+		exportar.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
 		elsee.addComentario("Msg.error(msg);");
 		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
 
-		If iff = new If("isVazio(msg)", elsee);
-		funcao.add(iff);
+		If iff = exportar.criarIf("isVazio(msg)", elsee);
 
-		InvocaProm invocaProm = new InvocaProm(
+		JSInvocaProm invocaProm = iff.criarJSInvocaProm(
 				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getExportar(mapaServiceJS)
 						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
-		iff.add(invocaProm);
 
 		invocaProm.addComentario("var file = new Blob([result.data], {type: 'application/octet-stream'});");
 		invocaProm.addComentario("processarFile(file, \"arquivo.xls\");");
 
 		invocaProm.addInstrucao("var file = new Blob([result.data], {type: 'application/pdf'})");
 		invocaProm.addInstrucao("processarFile(file, \"arquivo.pdf\")");
-
-		return funcao;
 	}
 
-	private Container fnProcessarFile() {
-		Parametros params = new Parametros();
-		params.addVarJS("file").append(", ").addVarJS("arquivo");
-		FuncaoJS funcao = new FuncaoJS("function processarFile", params);
-		funcao.addInstrucao("var downloadLink = angular.element('<a></a>')");
-		funcao.addInstrucao("downloadLink.attr('href', window.URL.createObjectURL(file))");
-		funcao.addInstrucao("downloadLink.attr('download', arquivo)");
-		funcao.addInstrucao("var link = downloadLink[0]");
-		funcao.addInstrucao("document.body.appendChild(link)");
-		funcao.addInstrucao("link.click()");
-		funcao.addInstrucao("document.body.removeChild(link)");
-		return funcao;
+	private Container fnProcessarFile(JSFuncao funcao) {
+		Parametros params = new Parametros("file");
+		params.addString(", ").addString("arquivo");
+		JSFuncao processar = funcao.criarJSFuncao("processarFile", params);
+		processar.addInstrucao("var downloadLink = angular.element('<a></a>')");
+		processar.addInstrucao("downloadLink.attr('href', window.URL.createObjectURL(file))");
+		processar.addInstrucao("downloadLink.attr('download', arquivo)");
+		processar.addInstrucao("var link = downloadLink[0]");
+		processar.addInstrucao("document.body.appendChild(link)");
+		processar.addInstrucao("link.click()");
+		processar.addInstrucao("document.body.removeChild(link)");
+		return processar;
 	}
 }
 
@@ -696,32 +680,27 @@ class PainelParamJS extends PainelControllerJS {
 			return;
 		}
 
-		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = funcaoController;
-		funcao.add(fnParam(filtro, atributos));
+		JSArquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
+		fnParam(funcao, filtro, atributos);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private Container fnParam(String filtro, List<Atributo> atributos) {
-		FuncaoJS funcao = new FuncaoJS("function criarParam" + Util.capitalize(filtro), new Parametros());
-		funcao.add(objParam(filtro, atributos)).newLine();
-		funcao.addReturn("param");
-		return funcao;
+	private void fnParam(JSFuncao funcao, String filtro, List<Atributo> atributos) {
+		JSFuncao criarParam = funcao.criarJSFuncao("criarParam" + Util.capitalize(filtro));
+		objParam(criarParam, filtro, atributos);
+		criarParam.newLine();
+		criarParam.addReturn("param");
 	}
 
-	private Container objParam(String filtro, List<Atributo> atributos) {
-		VarObjJS obj = new VarObjJS("param");
+	private void objParam(JSFuncao funcao, String filtro, List<Atributo> atributos) {
+		JSVarObj obj = funcao.criarJSVarObj("param");
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			obj.addFragmento(att.getNome() + ": " + att.gerarViewToBack(filtro));
-			if (i + 1 < atributos.size()) {
-				obj.append(",");
-			}
-			obj.newLine();
+			obj.addJSAtributo(i + 1 < atributos.size(), att.getNome(), att.gerarViewToBack(filtro));
 		}
-		return obj;
 	}
 }
 
@@ -750,49 +729,47 @@ class PainelValidarJS extends PainelControllerJS {
 			return;
 		}
 
-		Arquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
-		FuncaoJS funcao = funcaoController;
+		JSArquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
+		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
 
-		funcao.add(fnGetTime()).newLine();
-		funcao.add(fnValidar(filtro, atributos));
+		fnGetTime(funcao);
+		funcao.newLine();
+		fnValidar(funcao, filtro, atributos);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private Container fnGetTime() {
-		FuncaoJS funcao = new FuncaoJS("function getTime", new Parametros(new VarJS("obj")));
-		If iff = new If("obj instanceof Date", null);
+	private void fnGetTime(JSFuncao funcao) {
+		JSFuncao getTime = funcao.criarJSFuncao("getTime", new Parametros(new JSVar("obj")));
+		If iff = getTime.criarIf("obj instanceof Date", null);
 		iff.addReturn("obj.getTime()");
-		funcao.add(iff);
-		funcao.addReturn("null");
-		return funcao;
+		getTime.addReturn("null");
 	}
 
-	private Container fnValidar(String filtro, List<Atributo> atributos) {
-		FuncaoJS funcao = new FuncaoJS("function validar" + Util.capitalize(filtro), new Parametros());
-		funcao.addComentario("$scope.$emit('msgClear');");
+	private void fnValidar(JSFuncao funcao, String filtro, List<Atributo> atributos) {
+		JSFuncao validar = funcao.criarJSFuncao("validar" + Util.capitalize(filtro));
+		validar.addComentario("$scope.$emit('msgClear');");
 		if (atributos.size() > 1) {
-			funcao.add(ifVazios(filtro, atributos)).newLine();
+			ifVazios(validar, filtro, atributos);
+			validar.newLine();
 		}
 		for (int i = 0; i < atributos.size(); i++) {
 			Atributo att = atributos.get(i);
-			funcao.add(ifObrigatorio(filtro, att));
+			ifObrigatorio(validar, filtro, att);
 			if (i + 1 < atributos.size()) {
-				funcao.newLine();
+				validar.newLine();
 			}
 		}
 		if (!atributos.isEmpty()) {
-			funcao.newLine();
+			validar.newLine();
 		}
-		funcao.addReturn("null");
-		return funcao;
+		validar.addReturn("null");
 	}
 
-	private Container ifVazios(String filtro, List<Atributo> atributos) {
-		If iff = new If(vazios(filtro, atributos), null);
+	private void ifVazios(JSFuncao funcao, String filtro, List<Atributo> atributos) {
+		If iff = funcao.criarIf(vazios(filtro, atributos), null);
 		iff.addReturn("'Favor preencher pelo ao menos um campo de pesquisa'");
-		return iff;
 	}
 
 	private static String vazios(String filtro, List<Atributo> atributos) {
@@ -806,11 +783,10 @@ class PainelValidarJS extends PainelControllerJS {
 		return sb.toString();
 	}
 
-	private Container ifObrigatorio(String filtro, Atributo att) {
-		If iff = new If(att.gerarIsVazioJS(filtro), null);
+	private void ifObrigatorio(JSFuncao funcao, String filtro, Atributo att) {
+		If iff = funcao.criarIf(att.gerarIsVazioJS(filtro), null);
 		String campo = Util.isEmpty(att.getRotulo()) ? att.getNome() : att.getRotulo();
 		iff.addReturn("'Campo " + campo + " Obrigat\u00F3rio.'");
-		return iff;
 	}
 }
 
@@ -837,38 +813,35 @@ class PainelServiceJS extends AbstratoPanel {
 			return;
 		}
 
-		Arquivo arquivo = new Arquivo();
+		JSArquivo arquivo = new JSArquivo();
 		arquivo.addInstrucao(AtributoUtil.getComponente(mapaServiceJS) + ".$inject = ['Restangular']").newLine();
 
-		Parametros params = new Parametros(new VarJS("Restangular"));
-		FuncaoJS funcao = arquivo.criarFuncaoJS(AtributoConstantes.FUNCTION + AtributoUtil.getComponente(mapaServiceJS),
-				params);
+		Parametros params = new Parametros(new JSVar("Restangular"));
+		JSFuncao funcao = arquivo.criarJSFuncao(AtributoUtil.getComponente(mapaServiceJS), params);
 
 		funcao.addInstrucao("var PATH = '" + mapaRest.getString(AtributoConstantes.END_POINT) + "'").newLine();
-		ReturnJS returnJS = new ReturnJS();
-		funcao.add(returnJS);
+		JSReturnObj returnObj = funcao.criarJSReturnObj();
 
-		returnJS.add(fnPesquisar(mapaServiceJS, mapaRest));
-		returnJS.add(fnGerarPDF(mapaServiceJS, mapaRest));
+		fnPesquisar(returnObj, mapaServiceJS, mapaRest);
+		fnGerarPDF(returnObj, mapaServiceJS, mapaRest);
 
 		arquivo.gerar(0, pool);
 		setText(pool.toString());
 	}
 
-	private Container fnPesquisar(Mapa mapaServiceJS, Mapa mapaRest) {
-		Parametros params = new Parametros(new VarJS(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS(AtributoUtil.getPesquisar(mapaServiceJS) + AtributoConstantes.FUNCTION3, params);
+	private void fnPesquisar(JSReturnObj returnObj, Mapa mapaServiceJS, Mapa mapaRest) {
+		Parametros params = new Parametros(new JSVar(AtributoConstantes.FILTRO));
+		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(true, AtributoUtil.getPesquisar(mapaServiceJS),
+				params);
 		funcao.addReturn("Restangular.all(PATH).customGET('" + AtributoUtil.getPesquisar(mapaRest) + "', filtro)");
-		return funcao;
 	}
 
-	private Container fnGerarPDF(Mapa mapaServiceJS, Mapa mapaRest) {
-		Parametros params = new Parametros(new VarJS(AtributoConstantes.FILTRO));
-		FuncaoJS funcao = new FuncaoJS(AtributoUtil.getExportar(mapaServiceJS) + AtributoConstantes.FUNCTION3, params);
-		funcao.setStrFinal("");
+	private void fnGerarPDF(JSReturnObj returnObj, Mapa mapaServiceJS, Mapa mapaRest) {
+		Parametros params = new Parametros(new JSVar(AtributoConstantes.FILTRO));
+		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(false, AtributoUtil.getExportar(mapaServiceJS),
+				params);
 		funcao.addReturn("Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('"
 				+ AtributoUtil.getExportar(mapaRest) + "', filtro)");
-		return funcao;
 	}
 }
 
@@ -1045,7 +1018,8 @@ class PainelRest extends AbstratoPanel {
 	private Parametros beanParam(Raiz raiz) {
 		Parametros params = new Parametros("BeanParam");
 		params.addEspaco();
-		params.addVariavel(raiz.getTipoFilter());
+		Variavel var = raiz.getTipoFilter();
+		params.addString(var.getTipo() + " " + var.getNome());
 		return params;
 	}
 }
