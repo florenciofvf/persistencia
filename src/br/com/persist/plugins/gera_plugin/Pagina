@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -100,10 +101,6 @@ public class ###nameCap###Pagina extends Panel {
 
 		Action acaoIcon(String chave, Icon icon) {
 			return Action.acaoIcon(###nameCap###Mensagens.getString(chave), icon);
-		}
-
-		Action acaoIcon(String chave) {
-			return acaoIcon(chave, null);
 		}
 
 		private void executar() {
