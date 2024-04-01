@@ -33,7 +33,11 @@ public class DialogoBuilder extends Builder {
 				new Parametros("Frame frame, Formulario formulario"));
 		construtor.addInstrucao("super(frame, " + config.nameCapMensagens() + ".getString(" + config.nameCapConstantes()
 				+ ".LABEL_" + config.nameUpper + "))");
-		construtor.addInstrucao("container = new " + config.nameCapContainer() + "(this, formulario, null, null)");
+		if (config.comFichario) {
+			construtor.addInstrucao("container = new " + config.nameCapContainer() + "(this, formulario, null, null)");
+		} else {
+			construtor.addInstrucao("container = new " + config.nameCapContainer() + "(this, formulario)");
+		}
 		construtor.addInstrucao(CONTAINER_SET + config.nameCapDialogo() + "(this)");
 		construtor.addInstrucao("montarLayout()");
 

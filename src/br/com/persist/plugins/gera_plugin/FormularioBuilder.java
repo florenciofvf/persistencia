@@ -8,7 +8,10 @@ import br.com.persist.geradores.Parametros;
 
 public class FormularioBuilder extends Builder {
 	private static final String CONTAINER_SET = "container.set";
+	private static final String STATIC_VOID = "static void";
+	private static final String NEW_FORM = " form = new ";
 	private static final String CONTAINER = " container";
+	private static final String CRIAR = "criar";
 
 	protected FormularioBuilder(Config config) {
 		super("Formulario", "extends AbstratoFormulario", config);
@@ -27,12 +30,22 @@ public class FormularioBuilder extends Builder {
 		classe.addInstrucao("private static final long serialVersionUID = 1L");
 		classe.addInstrucao("private final " + config.nameCapContainer() + CONTAINER);
 
-		ConstrutorPrivado construtor = classe.criarConstrutorPrivado(config.nameCapFormulario(),
-				new Parametros("Formulario formulario, String conteudo, String idPagina"));
+		ConstrutorPrivado construtor = null;
+		if (config.comFichario) {
+			construtor = classe.criarConstrutorPrivado(config.nameCapFormulario(),
+					new Parametros("Formulario formulario, String conteudo, String idPagina"));
+		} else {
+			construtor = classe.criarConstrutorPrivado(config.nameCapFormulario(),
+					new Parametros("Formulario formulario"));
+		}
 		construtor.addInstrucao("super(formulario, " + config.nameCapMensagens() + ".getString("
 				+ config.nameCapConstantes() + ".LABEL_" + config.nameUpper + "))");
-		construtor.addInstrucao(
-				"container = new " + config.nameCapContainer() + "(this, formulario, conteudo, idPagina)");
+		if (config.comFichario) {
+			construtor.addInstrucao(
+					"container = new " + config.nameCapContainer() + "(this, formulario, conteudo, idPagina)");
+		} else {
+			construtor.addInstrucao("container = new " + config.nameCapContainer() + "(this, formulario)");
+		}
 		construtor.addInstrucao(CONTAINER_SET + config.nameCapFormulario() + "(this)");
 		construtor.addInstrucao("montarLayout()");
 
@@ -51,16 +64,21 @@ public class FormularioBuilder extends Builder {
 		funcao.addInstrucao("add(BorderLayout.CENTER, container)");
 
 		classe.newLine();
-		funcao = classe.criarFuncaoPublica("static void", "criar",
+		funcao = classe.criarFuncaoPublica(STATIC_VOID, CRIAR,
 				new Parametros("Formulario formulario, " + config.nameCapContainer() + CONTAINER));
-		funcao.addInstrucao(config.nameCapFormulario() + " form = new " + config.nameCapFormulario() + "(container)");
+		funcao.addInstrucao(config.nameCapFormulario() + NEW_FORM + config.nameCapFormulario() + "(container)");
 		funcao.addInstrucao("Formulario.posicionarJanela(formulario, form)");
 
 		classe.newLine();
-		funcao = classe.criarFuncaoPublica("static void", "criar",
-				new Parametros("Formulario formulario, String conteudo, String idPagina"));
-		funcao.addInstrucao(config.nameCapFormulario() + " form = new " + config.nameCapFormulario()
-				+ "(formulario, conteudo, idPagina)");
+		if (config.comFichario) {
+			funcao = classe.criarFuncaoPublica(STATIC_VOID, CRIAR,
+					new Parametros("Formulario formulario, String conteudo, String idPagina"));
+			funcao.addInstrucao(config.nameCapFormulario() + NEW_FORM + config.nameCapFormulario()
+					+ "(formulario, conteudo, idPagina)");
+		} else {
+			funcao = classe.criarFuncaoPublica(STATIC_VOID, CRIAR, new Parametros("Formulario formulario"));
+			funcao.addInstrucao(config.nameCapFormulario() + NEW_FORM + config.nameCapFormulario() + "(formulario)");
+		}
 		funcao.addInstrucao("Formulario.posicionarJanela(formulario, form)");
 
 		classe.newLine();

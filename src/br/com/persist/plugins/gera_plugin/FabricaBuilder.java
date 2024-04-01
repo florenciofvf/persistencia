@@ -101,10 +101,17 @@ public class FabricaBuilder extends Builder {
 
 		construtor.addInstrucao("setText(" + config.nameCapMensagens() + ".getString(" + config.nameCapConstantes()
 				+ ".LABEL_" + config.nameUpper + "))");
-		construtor.addInstrucao("ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new "
-				+ config.nameCapContainer() + "(null, formulario)))");
-		construtor.addInstrucao(
-				"formularioAcao.setActionListener(e -> " + config.nameCapFormulario() + ".criar(formulario))");
+		if (config.comFichario) {
+			construtor.addInstrucao("ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new "
+					+ config.nameCapContainer() + "(null, formulario, null, null)))");
+			construtor.addInstrucao("formularioAcao.setActionListener(e -> " + config.nameCapFormulario()
+					+ ".criar(formulario, null, null))");
+		} else {
+			construtor.addInstrucao("ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new "
+					+ config.nameCapContainer() + "(null, formulario)))");
+			construtor.addInstrucao(
+					"formularioAcao.setActionListener(e -> " + config.nameCapFormulario() + ".criar(formulario))");
+		}
 		if (config.comDialogo) {
 			construtor.addInstrucao(
 					"dialogoAcao.setActionListener(e -> " + config.nameCapDialogo() + ".criar(formulario))");
