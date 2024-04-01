@@ -868,14 +868,14 @@ class PainelDTO extends AbstratoPanel {
 		}
 
 		for (Atributo att : atributos) {
+			classe.newLine();
 			Variavel tipo = att.criarVariavel();
 			classe.criarMetodoGet(tipo);
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
-			classe.newLine();
 		}
 
-		classe.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
@@ -913,14 +913,14 @@ class PainelFilter extends AbstratoPanel {
 		}
 
 		for (Atributo att : atributos) {
+			classe.newLine();
 			Variavel tipo = att.criarVariavel();
 			classe.criarMetodoGet(tipo);
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
-			classe.newLine();
 		}
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
@@ -974,7 +974,7 @@ class PainelRest extends AbstratoPanel {
 		criarGetListaDTO(raiz, mapaRest, mapaService, classe).newLine();
 		criarGetGerarPDF(raiz, mapaRest, mapaService, classe);
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 
@@ -1063,7 +1063,7 @@ class PainelService extends AbstratoPanel {
 		interfacee.criarFuncaoAbstrata("byte[]", AtributoUtil.getExportar(mapaService),
 				new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
@@ -1121,7 +1121,7 @@ class PainelBean extends AbstratoPanel {
 				new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
 		funcao.addReturn("new byte[0]");
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
@@ -1158,7 +1158,7 @@ class PainelDAO extends AbstratoPanel {
 		interfacee.criarFuncaoAbstrata(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO),
 				new Parametros(raiz.getTipoFilter()));
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
@@ -1207,7 +1207,7 @@ class PainelDAOImpl extends AbstratoPanel {
 		funcao.addComentario("entityManager.find...").newLine();
 		funcao.addReturn("resp");
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
@@ -1261,7 +1261,7 @@ class PainelTest extends AbstratoPanel {
 		Funcao funcaoExportar = classe.criarFuncaoPublica("void", AtributoUtil.getExportar(mapaTest));
 		funcaoExportar.addComentario("...");
 
-		arquivo.gerar(0, pool);
+		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
