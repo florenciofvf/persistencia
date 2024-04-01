@@ -5,3 +5,4 @@ label.exibir_arq_ignorados=Exibir arquivo ignorados
 label.plugin_###nameLower###=Plugin ###nameCap###
 label.###nameLower###=###nameCap###
 label.###nameLower###_min=###nameMin###
+label.executar=Executar
