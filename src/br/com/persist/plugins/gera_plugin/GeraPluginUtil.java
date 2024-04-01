@@ -35,14 +35,6 @@ public class GeraPluginUtil {
 		transferir(config, "Mensagens");
 	}
 
-	static void formulario(Config config) throws IOException {
-		transferir(config, "Formulario");
-	}
-
-	static void dialogo(Config config) throws IOException {
-		transferir(config, "Dialogo");
-	}
-
 	static void exception(Config config) throws IOException {
 		transferir(config, "Exception");
 	}

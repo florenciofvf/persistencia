@@ -310,15 +310,15 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private void gerar() {
 		criarConfig();
 		try {
+			new FormularioBuilder(config).gerar();
 			new ConstantesBuilder(config).gerar();
 			new ContainerBuilder(config).gerar();
 			GeraPluginUtil.mensagensProp(config);
 			new FabricaBuilder(config).gerar();
-			GeraPluginUtil.formulario(config);
 			GeraPluginUtil.mensagens(config);
 			GeraPluginUtil.objeto(config);
 			if (chkComDialogo.isSelected()) {
-				GeraPluginUtil.dialogo(config);
+				new DialogoBuilder(config).gerar();
 			}
 			if (chkComFichario.isSelected()) {
 				GeraPluginUtil.fichario(config);
