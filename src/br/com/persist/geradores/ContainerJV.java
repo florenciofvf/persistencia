@@ -13,6 +13,12 @@ public class ContainerJV extends Container {
 		return interfacee;
 	}
 
+	public RetornoClasseAnonima criarRetornoClasseAnonima(String string) {
+		RetornoClasseAnonima classe = new RetornoClasseAnonima(string);
+		add(classe);
+		return classe;
+	}
+
 	public ClassePublica criarClassePublica(String string) {
 		ClassePublica classe = new ClassePublica(string);
 		add(classe);

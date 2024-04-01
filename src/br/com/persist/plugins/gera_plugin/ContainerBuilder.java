@@ -11,14 +11,18 @@ import br.com.persist.geradores.Funcao;
 import br.com.persist.geradores.FuncaoDefault;
 import br.com.persist.geradores.If;
 import br.com.persist.geradores.Parametros;
+import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
 public class ContainerBuilder extends Builder {
 	private static final String ATIVA_PAGINA_ATIVA = " ativa = fichario.getPaginaAtiva()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String ATIVA_DIFF_NULL = "ativa != null";
+	private static final String GET_STRING = ".getString(";
 	private static final String DIFF_NULL = " != null";
 	private static final String DOT_THIS = ".this)";
+	private static final String STRING = "String";
+	private static final String LABEL = "LABEL_";
 
 	protected ContainerBuilder(Config config) {
 		super("Container", "extends AbstratoContainer", config);
@@ -121,16 +125,18 @@ public class ContainerBuilder extends Builder {
 
 		templateFichario(classe);
 		templateToolbar(classe);
+		finalizar(classe);
+		titulo(classe);
 	}
 
 	private void templateFichario(ClassePublica classe) {
-		Funcao funcao = classe.criarFuncaoPublica("String", "getConteudo");
+		Funcao funcao = classe.criarFuncaoPublica(STRING, "getConteudo");
 		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 		If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
 		se.addInstrucao("return ativa.getConteudo()");
 		funcao.addReturn("null");
 
-		funcao = classe.criarFuncaoPublica("String", "getIdPagina");
+		funcao = classe.criarFuncaoPublica(STRING, "getIdPagina");
 		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 		If se2 = funcao.criarIf(ATIVA_DIFF_NULL, null);
 		se2.addReturn("ativa.getNome()");
@@ -358,5 +364,72 @@ public class ContainerBuilder extends Builder {
 		se.addInstrucao("int indice = fichario.getSelectedIndex()");
 		se.addInstrucao("ativa.excluir()");
 		se.addInstrucao("fichario.remove(indice)");
+	}
+
+	private void finalizar(ClassePublica classe) {
+		classe.addOverride();
+		Funcao funcao = classe.criarFuncaoPublica("void", "adicionadoAoFichario", new Parametros("Fichario fichario"));
+		funcao.addInstrucao("toolbar.adicionadoAoFichario()");
+		classe.newLine();
+
+		classe.addOverride();
+		funcao = classe.criarFuncaoPublica("void", "windowOpenedHandler", new Parametros("Window window"));
+		funcao.addInstrucao("toolbar.windowOpenedHandler(window)");
+		classe.newLine();
+
+		if (config.comDialogo) {
+			classe.addOverride();
+			funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
+			funcao.addInstrucao("toolbar.dialogOpenedHandler(dialog)");
+			classe.newLine();
+		}
+
+		classe.addOverride();
+		funcao = classe.criarFuncaoPublica(STRING, "getStringPersistencia");
+		if (config.comFichario) {
+			funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
+			If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
+			se.addReturn("ativa.getNome()");
+		}
+		funcao.addReturn("Constantes.VAZIO");
+		classe.newLine();
+
+		classe.addOverride();
+		funcao = classe.criarFuncaoPublica("Class<?>", "getClasseFabrica");
+		funcao.addReturn(config.nameCapFabrica() + ".class");
+		classe.newLine();
+
+		classe.addOverride();
+		funcao = classe.criarFuncaoPublica("Component", "getComponent");
+		funcao.addReturn("this");
+		classe.newLine();
+	}
+
+	private void titulo(ClassePublica classe) {
+		classe.addOverride();
+		Funcao funcao = classe.criarFuncaoPublica("Titulo", "getTitulo");
+		RetornoClasseAnonima anonima = funcao.criarRetornoClasseAnonima("AbstratoTitulo");
+
+		anonima.addOverride();
+		funcao = anonima.criarFuncaoPublica(STRING, "getTituloMin");
+		funcao.addReturn(config.nameCapMensagens() + GET_STRING + config.nameCapConstantes() + "."
+				+ config.nameUpperEntre(LABEL, "_MIN") + ")");
+		anonima.newLine();
+
+		anonima.addOverride();
+		funcao = anonima.criarFuncaoPublica(STRING, "getTitulo");
+		funcao.addReturn(config.nameCapMensagens() + GET_STRING + config.nameCapConstantes() + "."
+				+ config.nameUpperApos(LABEL) + ")");
+		anonima.newLine();
+
+		anonima.addOverride();
+		funcao = anonima.criarFuncaoPublica(STRING, "getHint");
+		funcao.addReturn(config.nameCapMensagens() + GET_STRING + config.nameCapConstantes() + "."
+				+ config.nameUpperApos(LABEL) + ")");
+		anonima.newLine();
+
+		anonima.addOverride();
+		funcao = anonima.criarFuncaoPublica("Icon", "getIcone");
+		funcao.addReturn("Icones." + config.icone);
 	}
 }
