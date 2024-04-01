@@ -12,7 +12,7 @@ public class ElseIf extends Container {
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append("} else if (" + condicao + ") {").ql();
-		super.gerar(tab, pool);
+		pool.tab(tab - 1).append("} else if (" + condicao + ") {").ql();
+		super.gerar(tab - 1, pool);
 	}
 }

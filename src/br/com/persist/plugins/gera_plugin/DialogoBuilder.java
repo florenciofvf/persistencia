@@ -27,7 +27,7 @@ public class DialogoBuilder extends Builder {
 	@Override
 	void templateClass(ClassePublica classe) {
 		classe.addInstrucao("private static final long serialVersionUID = 1L");
-		classe.addInstrucao("private final " + config.nameCapContainer() + CONTAINER);
+		classe.addInstrucao("private final " + config.nameCapContainer() + CONTAINER).newLine();
 
 		ConstrutorPrivado construtor = classe.criarConstrutorPrivado(config.nameCapDialogo(),
 				new Parametros("Frame frame, Formulario formulario"));

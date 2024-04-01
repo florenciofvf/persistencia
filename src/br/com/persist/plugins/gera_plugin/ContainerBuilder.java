@@ -92,6 +92,10 @@ public class ContainerBuilder extends Builder {
 		construtor.addInstrucao("toolbar.ini(janela)");
 		construtor.addInstrucao("montarLayout()");
 
+		if (config.comFichario) {
+			construtor.addInstrucao("abrir(conteudo, idPagina)");
+		}
+
 		if (config.comDialogo) {
 			classe.newLine();
 			Funcao funcao = classe.criarFuncaoPublica(config.nameCapDialogo(), "get" + config.nameCapDialogo());
@@ -360,6 +364,7 @@ public class ContainerBuilder extends Builder {
 			If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
 			se.addInstrucao("salvar(ativa)");
 
+			classe.newLine();
 			funcao = classe.criarFuncaoPrivada("void", "salvar", new Parametros(config.nameCapPagina() + " ativa"));
 			funcao.addInstrucao("AtomicBoolean atomic = new AtomicBoolean(false)");
 			funcao.addInstrucao("ativa.salvar(atomic)");
@@ -369,8 +374,8 @@ public class ContainerBuilder extends Builder {
 	}
 
 	private void excluir(ClassePrivada classe) {
-		classe.addOverride(true);
-		Funcao funcao = classe.criarFuncaoProtegida("void", "excluirAtivo");
+		classe.newLine();
+		Funcao funcao = classe.criarFuncaoPrivada("void", "excluirAtivo");
 		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 
 		If se = funcao.criarIf("ativa != null && Util.confirmar(" + config.nameCapContainer() + ".this, "

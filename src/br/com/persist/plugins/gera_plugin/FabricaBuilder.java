@@ -71,7 +71,11 @@ public class FabricaBuilder extends Builder {
 		classePrivada.addOverride(false);
 		funcao = classePrivada.criarFuncaoPublica("Pagina", "criarPagina",
 				new Parametros("Formulario formulario, String stringPersistencia"));
-		funcao.addReturn("new " + config.nameCapContainer() + "(null, formulario)");
+		if (config.comFichario) {
+			funcao.addReturn("new " + config.nameCapContainer() + "(null, formulario, null, stringPersistencia)");
+		} else {
+			funcao.addReturn("new " + config.nameCapContainer() + "(null, formulario)");
+		}
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("List<Servico>", "getServicos", new Parametros("Formulario formulario"));
