@@ -9,6 +9,6 @@ public class Package extends ObjetoString {
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append("package " + string).append(";").ql();
+		pool.tab(0).append("package " + string).append(";").ql();
 	}
 }

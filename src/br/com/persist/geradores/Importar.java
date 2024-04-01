@@ -9,6 +9,6 @@ public class Importar extends ObjetoString {
 
 	@Override
 	public void gerar(int tab, StringPool pool) {
-		pool.tab(tab).append("import " + string).append(";").ql();
+		pool.tab(0).append("import " + string).append(";").ql();
 	}
 }
