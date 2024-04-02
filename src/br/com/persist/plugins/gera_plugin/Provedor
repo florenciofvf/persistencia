@@ -1,6 +1,17 @@
 package ###package###;
 
 public class ###nameCap###Provedor {
+	private static final List<###nameCap###> lista = new ArrayList<>();
+
 	private ###nameCap###Provedor() {
+	}
+
+	public static ###nameCap### get###nameCap###(String nome) {
+		for (###nameCap### obj : lista) {
+			if (obj.getNome().equals(nome)) {
+				return obj;
+			}
+		}
+		return null;
 	}
 }
