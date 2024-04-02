@@ -39,6 +39,7 @@ class MouseMove extends Robo {
 	@Override
 	void processar(Robot robot, String[] params) {
 		if (params.length == 3) {
+			robot.delay(DELAY);
 			robot.mouseMove(parseInt(params[1]), parseInt(params[2]));
 		}
 	}
@@ -52,6 +53,7 @@ class MousePress extends Robo {
 	@Override
 	void processar(Robot robot, String[] params) {
 		if (params.length == 2) {
+			robot.delay(DELAY);
 			robot.mousePress(parseInt(params[1]));
 		}
 	}
@@ -65,6 +67,7 @@ class MouseRelease extends Robo {
 	@Override
 	void processar(Robot robot, String[] params) {
 		if (params.length == 2) {
+			robot.delay(DELAY);
 			robot.mouseRelease(parseInt(params[1]));
 		}
 	}
@@ -78,6 +81,7 @@ class MouseWheel extends Robo {
 	@Override
 	void processar(Robot robot, String[] params) {
 		if (params.length == 2) {
+			robot.delay(DELAY);
 			robot.mouseWheel(parseInt(params[1]));
 		}
 	}
@@ -91,6 +95,7 @@ class KeyPress extends Robo {
 	@Override
 	void processar(Robot robot, String[] params) {
 		if (params.length == 2) {
+			robot.delay(DELAY);
 			robot.keyPress(parseInt(params[1]));
 		}
 	}
@@ -104,6 +109,7 @@ class KeyRelease extends Robo {
 	@Override
 	void processar(Robot robot, String[] params) {
 		if (params.length == 2) {
+			robot.delay(DELAY);
 			robot.keyRelease(parseInt(params[1]));
 		}
 	}
@@ -118,6 +124,8 @@ class Delay extends Robo {
 	void processar(Robot robot, String[] params) {
 		if (params.length == 2) {
 			robot.delay(parseInt(params[1]));
+		} else {
+			robot.delay(DELAY);
 		}
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Robot;
 import java.util.Objects;
 
 public abstract class Robo {
+	protected static final int DELAY = 200;
 	private final String nome;
 
 	protected Robo(String nome) {
