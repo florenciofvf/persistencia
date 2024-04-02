@@ -94,8 +94,8 @@ public class RoboPagina extends Panel {
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
+			executarAcao.setActionListener(e -> new Thread(this::executar).start());
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
 			addButton(executarAcao);
 			add(txtPesquisa);
