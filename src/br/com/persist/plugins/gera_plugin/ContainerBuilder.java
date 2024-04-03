@@ -208,11 +208,14 @@ public class ContainerBuilder extends Builder {
 
 	private void templateToolbar(ClassePublica classe) {
 		classe.newLine();
-		ClassePrivada classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton");
+		ClassePrivada classePrivada = null;
 
 		if (config.comFichario) {
+			classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
 			classePrivada.addInstrucao("private final TextField txtArquivo = new TextField(35)");
 			classePrivada.addInstrucao("private Action excluirAtivoAcao = actionIconExcluir()");
+		} else {
+			classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton");
 		}
 
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();

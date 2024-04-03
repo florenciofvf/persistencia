@@ -1,5 +1,8 @@
 package ###package###;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ###nameCap###Provedor {
 	private static final List<###nameCap###> lista = new ArrayList<>();
 
