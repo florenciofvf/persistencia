@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import br.com.persist.assistencia.Util;
 
 public class Arquivo {
 	private static final Logger LOG = Logger.getGlobal();
@@ -193,6 +196,15 @@ public class Arquivo {
 		}
 		for (Arquivo a : filhos) {
 			a.preencher(lista, descricao, porParte);
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		if (Util.contemStringEm(file, string, true)) {
+			set.add(file.getAbsolutePath());
+		}
+		for (Arquivo a : filhos) {
+			a.contemConteudo(set, string);
 		}
 	}
 

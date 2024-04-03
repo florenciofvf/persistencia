@@ -259,6 +259,6 @@ class TokenUtil {
 	}
 
 	boolean valida(String s) {
-		return s.length() > 0 && !s.startsWith("#");
+		return s.length() > 0 && !s.startsWith("#") && !s.startsWith("--") && !s.startsWith(".");
 	}
 }

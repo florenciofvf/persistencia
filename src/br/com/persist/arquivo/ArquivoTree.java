@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.tree.TreePath;
 
@@ -79,6 +80,11 @@ public class ArquivoTree extends Tree {
 	public void preencher(List<Arquivo> lista, String nome, boolean porParte) {
 		Arquivo raiz = getRaiz();
 		raiz.preencher(lista, nome, porParte);
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		Arquivo raiz = getRaiz();
+		raiz.contemConteudo(set, string);
 	}
 
 	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
