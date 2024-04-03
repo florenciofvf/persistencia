@@ -47,7 +47,6 @@ public class ContainerBuilder extends Builder {
 
 		arquivo.addImport("java.awt.event.ActionEvent");
 		arquivo.addImport("java.awt.event.ActionListener");
-		arquivo.addImport("java.util.HashMap");
 		arquivo.addImport("java.util.LinkedHashSet");
 		arquivo.addImport("java.util.Set");
 
