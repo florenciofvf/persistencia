@@ -1,6 +1,7 @@
 package ###package###;
 
 import java.awt.Component;
+import java.util.Set;
 
 import javax.swing.JTabbedPane;
 
@@ -70,6 +71,16 @@ public class ###nameCap###Fichario extends JTabbedPane {
 				pagina.textArea.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof ###nameCap###Pagina) {
+				###nameCap###Pagina p = (###nameCap###Pagina) cmp;
+				p.contemConteudo(set, string);
+			}
 		}
 	}
 }

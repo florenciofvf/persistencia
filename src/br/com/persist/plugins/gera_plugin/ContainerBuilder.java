@@ -18,6 +18,7 @@ public class ContainerBuilder extends Builder {
 	private static final String ATIVA_PAGINA_ATIVA = " ativa = fichario.getPaginaAtiva()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String ATIVA_DIFF_NULL = "ativa != null";
+	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";
 	private static final String DIFF_NULL = " != null";
 	private static final String DOT_THIS = ".this)";
@@ -43,6 +44,13 @@ public class ContainerBuilder extends Builder {
 			arquivo.addImport("java.awt.Dialog");
 		}
 		arquivo.addImport("java.awt.Window");
+
+		arquivo.addImport("java.awt.event.ActionEvent");
+		arquivo.addImport("java.awt.event.ActionListener");
+		arquivo.addImport("java.util.HashMap");
+		arquivo.addImport("java.util.LinkedHashSet");
+		arquivo.addImport("java.util.Set");
+
 		arquivo.addImport("java.io.File");
 		arquivo.addImport("java.io.IOException");
 		arquivo.addImport("java.util.ArrayList");
@@ -60,6 +68,7 @@ public class ContainerBuilder extends Builder {
 		arquivo.addImport("br.com.persist.componente.Action");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
+		arquivo.addImport("br.com.persist.componente.TextField");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
 		arquivo.addImport("br.com.persist.formulario.Formulario").newLine();
@@ -202,6 +211,7 @@ public class ContainerBuilder extends Builder {
 		ClassePrivada classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton");
 
 		if (config.comFichario) {
+			classePrivada.addInstrucao("private final TextField txtArquivo = new TextField(35)");
 			classePrivada.addInstrucao("private Action excluirAtivoAcao = actionIconExcluir()");
 		}
 
@@ -212,12 +222,18 @@ public class ContainerBuilder extends Builder {
 			funcao.addInstrucao(
 					"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR)");
 			funcao.addInstrucao("addButton(excluirAtivoAcao)");
+			funcao.addInstrucao("add(txtArquivo)");
+			funcao.addInstrucao("txtArquivo.setToolTipText(Mensagens.getString(\"label.pesquisar\"))");
 			funcao.addInstrucao("excluirAtivoAcao.setActionListener(e -> excluirAtivo())");
+			funcao.addInstrucao("txtArquivo.addActionListener(this)");
 		} else {
 			funcao.addInstrucao(
 					"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR)");
 		}
 
+		if (config.comFichario) {
+			contemConteudo(classePrivada);
+		}
 		destacar(classePrivada);
 		retornar(classePrivada);
 		if (config.comFichario) {
@@ -237,6 +253,25 @@ public class ContainerBuilder extends Builder {
 		if (config.comFichario) {
 			excluir(classePrivada);
 		}
+	}
+
+	private void contemConteudo(ClassePrivada classe) {
+		classe.addOverride(true);
+		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
+
+		If se = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", null);
+		se.addInstrucao("Set<String> set = new LinkedHashSet<>()");
+		se.addInstrucao("fichario.contemConteudo(set, txtArquivo.getText())");
+		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPrivada(STRING, "getString", new Parametros("Set<String> set"));
+		funcao.addInstrucao("StringBuilder sb = new StringBuilder()");
+		For loop = funcao.criarFor("String string : set");
+		se = loop.criarIf("sb.length() > 0", null);
+		se.addInstrucao("sb.append(Constantes.QL)");
+		loop.addInstrucao("sb.append(string)");
+		funcao.addReturn("sb.toString()");
 	}
 
 	private void destacar(ClassePrivada classe) {
@@ -326,14 +361,14 @@ public class ContainerBuilder extends Builder {
 
 		funcao.addInstrucao("String nome = resp.toString()");
 		se = funcao.criarIf("ehArquivoReservado(nome)", null);
-		se.addInstrucao("Util.mensagem(" + config.nameCapContainer()
+		se.addInstrucao(UTIL_MSG + config.nameCapContainer()
 				+ ".this, Mensagens.getString(\"label.indentificador_reservado\"))");
 		se.addReturn();
 		funcao.newLine();
 
 		funcao.addInstrucao("File f = new File(file, nome)");
 		se = funcao.criarIf("f.exists()", null);
-		se.addInstrucao("Util.mensagem(" + config.nameCapContainer()
+		se.addInstrucao(UTIL_MSG + config.nameCapContainer()
 				+ ".this, Mensagens.getString(\"label.indentificador_ja_existente\"))");
 		se.addReturn();
 

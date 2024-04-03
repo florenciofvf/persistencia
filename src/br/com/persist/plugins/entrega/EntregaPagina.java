@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JSplitPane;
@@ -177,6 +178,12 @@ public class EntregaPagina extends Panel {
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(EntregaConstantes.PAINEL_ENTREGA, ex, this);
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		if (Util.contemStringEm(file, string, true)) {
+			set.add(file.getAbsolutePath());
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package br.com.persist.plugins.entrega;
 
 import java.awt.Component;
+import java.util.Set;
 
 import javax.swing.JTabbedPane;
 
@@ -70,6 +71,16 @@ public class EntregaFichario extends JTabbedPane {
 				pagina.textArea.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof EntregaPagina) {
+				EntregaPagina p = (EntregaPagina) cmp;
+				p.contemConteudo(set, string);
+			}
 		}
 	}
 }
