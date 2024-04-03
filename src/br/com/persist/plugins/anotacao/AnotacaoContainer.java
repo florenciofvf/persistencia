@@ -92,16 +92,6 @@ public class AnotacaoContainer extends AbstratoContainer {
 		}
 
 		@Override
-		protected void destacarEmFormulario() {
-			if (formulario.excluirPagina(AnotacaoContainer.this)) {
-				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
-			} else if (anotacaoDialogo != null) {
-				anotacaoDialogo.excluirContainer();
-				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
-			}
-		}
-
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtArquivo.getText())) {
 				Set<String> set = new LinkedHashSet<>();
@@ -119,6 +109,16 @@ public class AnotacaoContainer extends AbstratoContainer {
 				sb.append(string);
 			}
 			return sb.toString();
+		}
+
+		@Override
+		protected void destacarEmFormulario() {
+			if (formulario.excluirPagina(AnotacaoContainer.this)) {
+				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
+			} else if (anotacaoDialogo != null) {
+				anotacaoDialogo.excluirContainer();
+				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
+			}
 		}
 
 		@Override

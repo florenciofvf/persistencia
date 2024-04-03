@@ -9,8 +9,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +24,11 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -77,11 +84,35 @@ public class ExecucaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
+		private final TextField txtArquivo = new TextField(35);
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
+			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtArquivo.addActionListener(this);
+			add(txtArquivo);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtArquivo.getText())) {
+				Set<String> set = new LinkedHashSet<>();
+				split.contemConteudo(set, txtArquivo.getText());
+				Util.mensagem(ExecucaoContainer.this, getString(set));
+			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
 		}
 
 		@Override
