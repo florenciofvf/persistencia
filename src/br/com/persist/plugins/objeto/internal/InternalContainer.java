@@ -2064,11 +2064,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonInfo extends ButtonPopup {
-			private AdicionaHierarquicoAvulsoAcimaAcao adicionaHierarquicoAvulsoAcimaAcao = new AdicionaHierarquicoAvulsoAcimaAcao();
-			private AdicionaHierarquicoAvulsoAcao adicionaHierarquicoAvulsoAcao = new AdicionaHierarquicoAvulsoAcao();
 			private Action scriptAdicaoHierAcao = acaoMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
-			private AdicionaHierarquicoAcao adicionaHierarquicoAcao = new AdicionaHierarquicoAcao();
 			private Action checagemAcao = acaoMenu("label.checar_registro", Icones.SUCESSO);
+			private MenuAddHierarquico menuAddHierarquico = new MenuAddHierarquico();
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 			private static final long serialVersionUID = 1L;
 			private MenuTemp menuTemp = new MenuTemp();
@@ -2084,9 +2082,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (objeto.getPesquisaAdicaoHierarquico() != null) {
 					addMenuItem(scriptAdicaoHierAcao);
 				}
-				addMenuItem(adicionaHierarquicoAvulsoAcimaAcao);
-				addMenuItem(adicionaHierarquicoAvulsoAcao);
-				addMenuItem(adicionaHierarquicoAcao);
+				addMenu(menuAddHierarquico);
 				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
@@ -2786,169 +2782,185 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
-			private class AdicionaHierarquicoAvulsoAcimaAcao extends Action {
+			private class MenuAddHierarquico extends Menu {
+				private RelacionadoAbaixoAcao relacionadoAbaixoAcao = new RelacionadoAbaixoAcao();
+				private AvulsoAbaixoAcao avulsoAbaixoAcao = new AvulsoAbaixoAcao();
+				private AvulsoAcimaAcao avulsoAcimaAcao = new AvulsoAcimaAcao();
 				private static final long serialVersionUID = 1L;
 
-				private AdicionaHierarquicoAvulsoAcimaAcao() {
-					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico4"), false, Icones.HIERARQUIA);
-					setEnabled(false);
+				private MenuAddHierarquico() {
+					super(ObjetoMensagens.getString("label.adicionar_hierarquico2"), false, Icones.HIERARQUIA);
+					addMenuItem(relacionadoAbaixoAcao);
+					addMenuItem(true, avulsoAcimaAcao);
+					addMenuItem(avulsoAbaixoAcao);
+					habilitar(false);
 				}
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (vinculoListener != null) {
-						vinculoListener.adicionarHierarquicoAvulsoAcima(getConexao(), objeto);
+				void habilitar(boolean b) {
+					setEnabled(b);
+				}
+
+				private class AvulsoAcimaAcao extends Action {
+					private static final long serialVersionUID = 1L;
+
+					private AvulsoAcimaAcao() {
+						super(true, ObjetoMensagens.getString("label.adicionar_hierarquico4"), false, Icones.UPDATE);
 					}
-				}
-			}
 
-			private class AdicionaHierarquicoAvulsoAcao extends Action {
-				private static final long serialVersionUID = 1L;
-
-				private AdicionaHierarquicoAvulsoAcao() {
-					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico3"), false, Icones.HIERARQUIA);
-					setEnabled(false);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (vinculoListener != null) {
-						vinculoListener.adicionarHierarquicoAvulso(getConexao(), objeto);
-					}
-				}
-			}
-
-			private class AdicionaHierarquicoAcao extends Action {
-				private static final long serialVersionUID = 1L;
-
-				private AdicionaHierarquicoAcao() {
-					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico2"), false, Icones.HIERARQUIA);
-					setEnabled(false);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (vinculoListener != null) {
-						Map<String, Object> mapaRef = new HashMap<>();
-						mapaRef.put(ObjetoConstantes.ERROR, Boolean.FALSE);
-						vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
-						processarMapaReferencia(mapaRef);
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (vinculoListener != null) {
+							vinculoListener.adicionarHierarquicoAvulsoAcima(getConexao(), objeto);
+						}
 					}
 				}
 
-				private void processarMapaReferencia(Map<String, Object> mapaRef) {
-					Boolean erro = (Boolean) mapaRef.get(ObjetoConstantes.ERROR);
-					if (erro.booleanValue() || mapaRef.get(VinculoHandler.PESQUISA) == null
-							|| mapaRef.get("ref") == null) {
-						return;
+				private class AvulsoAbaixoAcao extends Action {
+					private static final long serialVersionUID = 1L;
+
+					private AvulsoAbaixoAcao() {
+						super(true, ObjetoMensagens.getString("label.adicionar_hierarquico3"), false, Icones.BAIXAR);
 					}
-					Vinculacao vinculacao = new Vinculacao();
-					try {
-						vinculoListener.preencherVinculacao(vinculacao);
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
-						return;
-					}
-					if (objeto.getPesquisas().isEmpty()) {
-						processarPesquisaVazio(mapaRef, vinculacao);
-					} else {
-						processarPesquisa(mapaRef, vinculacao);
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (vinculoListener != null) {
+							vinculoListener.adicionarHierarquicoAvulso(getConexao(), objeto);
+						}
 					}
 				}
 
-				private void processarPesquisaVazio(Map<String, Object> mapaRef, Vinculacao vinculacao) {
-					Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
-					Coletor coletor = new Coletor();
-					Config config = new SetLista.Config(true, true);
-					config.setCriar(true);
-					SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA),
-							Arrays.asList(pesquisa.getNome()), coletor, InternalContainer.this, config);
-					if (coletor.size() == 1) {
-						adicionar(mapaRef, vinculacao, coletor.get(0));
-						vinculoListener.salvarVinculacao(vinculacao);
-					}
-				}
+				private class RelacionadoAbaixoAcao extends Action {
+					private static final long serialVersionUID = 1L;
 
-				private void processarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao) {
-					List<Pesquisa> pesquisas = objeto.getPesquisas();
-					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
-					Coletor coletor = new Coletor();
-					Config config = new SetLista.Config(true, true);
-					config.setCriar(true);
-					SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA), nomes, coletor,
-							InternalContainer.this, config);
-					if (coletor.size() == 1 && !contem(pesquisas, coletor.get(0))) {
-						adicionar(mapaRef, vinculacao, coletor.get(0));
-						vinculoListener.salvarVinculacao(vinculacao);
-						return;
+					private RelacionadoAbaixoAcao() {
+						super(true, ObjetoMensagens.getString("label.adicionar_hierarquico5"), false, Icones.BAIXAR);
 					}
-					atualizarPesquisa(mapaRef, vinculacao, pesquisas, coletor);
-				}
 
-				private void atualizarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao,
-						List<Pesquisa> pesquisas, Coletor coletor) {
-					AtomicBoolean atom = new AtomicBoolean(false);
-					for (Pesquisa pesquisa : pesquisas) {
-						if (selecionado(pesquisa, coletor.getLista())) {
-							Referencia ref = (Referencia) mapaRef.get("ref");
-							atualizarPesquisa(vinculacao, atom, pesquisa, ref);
-							if (addInvertido(mapaRef, vinculacao)) {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (vinculoListener != null) {
+							Map<String, Object> mapaRef = new HashMap<>();
+							mapaRef.put(ObjetoConstantes.ERROR, Boolean.FALSE);
+							vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
+							processarMapaReferencia(mapaRef);
+						}
+					}
+
+					private void processarMapaReferencia(Map<String, Object> mapaRef) {
+						Boolean erro = (Boolean) mapaRef.get(ObjetoConstantes.ERROR);
+						if (erro.booleanValue() || mapaRef.get(VinculoHandler.PESQUISA) == null
+								|| mapaRef.get("ref") == null) {
+							return;
+						}
+						Vinculacao vinculacao = new Vinculacao();
+						try {
+							vinculoListener.preencherVinculacao(vinculacao);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							return;
+						}
+						if (objeto.getPesquisas().isEmpty()) {
+							processarPesquisaVazio(mapaRef, vinculacao);
+						} else {
+							processarPesquisa(mapaRef, vinculacao);
+						}
+					}
+
+					private void processarPesquisaVazio(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+						Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
+						Coletor coletor = new Coletor();
+						Config config = new SetLista.Config(true, true);
+						config.setCriar(true);
+						SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA),
+								Arrays.asList(pesquisa.getNome()), coletor, InternalContainer.this, config);
+						if (coletor.size() == 1) {
+							adicionar(mapaRef, vinculacao, coletor.get(0));
+							vinculoListener.salvarVinculacao(vinculacao);
+						}
+					}
+
+					private void processarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+						List<Pesquisa> pesquisas = objeto.getPesquisas();
+						List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
+						Coletor coletor = new Coletor();
+						Config config = new SetLista.Config(true, true);
+						config.setCriar(true);
+						SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA), nomes, coletor,
+								InternalContainer.this, config);
+						if (coletor.size() == 1 && !contem(pesquisas, coletor.get(0))) {
+							adicionar(mapaRef, vinculacao, coletor.get(0));
+							vinculoListener.salvarVinculacao(vinculacao);
+							return;
+						}
+						atualizarPesquisa(mapaRef, vinculacao, pesquisas, coletor);
+					}
+
+					private void atualizarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao,
+							List<Pesquisa> pesquisas, Coletor coletor) {
+						AtomicBoolean atom = new AtomicBoolean(false);
+						for (Pesquisa pesquisa : pesquisas) {
+							if (selecionado(pesquisa, coletor.getLista())) {
+								Referencia ref = (Referencia) mapaRef.get("ref");
+								atualizarPesquisa(vinculacao, atom, pesquisa, ref);
+								if (addInvertido(mapaRef, vinculacao)) {
+									atom.set(true);
+								}
+								objeto.addReferencia(ref);
+								pesquisa.add(ref);
+								buscaAuto = true;
+							}
+						}
+						if (atom.get()) {
+							vinculoListener.salvarVinculacao(vinculacao);
+						}
+					}
+
+					private void atualizarPesquisa(Vinculacao vinculacao, AtomicBoolean atom, Pesquisa pesquisa,
+							Referencia ref) {
+						List<Pesquisa> lista = vinculacao.getPesquisas(objeto);
+						for (Pesquisa pesq : lista) {
+							if (pesq.ehEquivalente(pesquisa, objeto) && pesq.add(ref)) {
 								atom.set(true);
 							}
-							objeto.addReferencia(ref);
-							pesquisa.add(ref);
-							buscaAuto = true;
 						}
 					}
-					if (atom.get()) {
-						vinculoListener.salvarVinculacao(vinculacao);
-					}
-				}
 
-				private void atualizarPesquisa(Vinculacao vinculacao, AtomicBoolean atom, Pesquisa pesquisa,
-						Referencia ref) {
-					List<Pesquisa> lista = vinculacao.getPesquisas(objeto);
-					for (Pesquisa pesq : lista) {
-						if (pesq.ehEquivalente(pesquisa, objeto) && pesq.add(ref)) {
-							atom.set(true);
+					private void adicionar(Map<String, Object> mapaRef, Vinculacao vinculacao, String nome) {
+						Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
+						if (!Util.isEmpty(nome)) {
+							pesquisa.setNome(nome);
 						}
+						objeto.addPesquisa(pesquisa);
+						objeto.addReferencias(pesquisa.getReferencias());
+						vinculacao.adicionarPesquisa(pesquisa);
+						buttonPesquisa.complemento(objeto);
+						addInvertido(mapaRef, vinculacao);
+						buscaAuto = true;
 					}
-				}
 
-				private void adicionar(Map<String, Object> mapaRef, Vinculacao vinculacao, String nome) {
-					Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
-					if (!Util.isEmpty(nome)) {
-						pesquisa.setNome(nome);
+					private boolean addInvertido(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+						Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA_INVERTIDO);
+						return vinculacao.adicionarPesquisa(pesquisa);
 					}
-					objeto.addPesquisa(pesquisa);
-					objeto.addReferencias(pesquisa.getReferencias());
-					vinculacao.adicionarPesquisa(pesquisa);
-					buttonPesquisa.complemento(objeto);
-					addInvertido(mapaRef, vinculacao);
-					buscaAuto = true;
-				}
 
-				private boolean addInvertido(Map<String, Object> mapaRef, Vinculacao vinculacao) {
-					Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA_INVERTIDO);
-					return vinculacao.adicionarPesquisa(pesquisa);
-				}
-
-				private boolean selecionado(Pesquisa pesquisa, List<String> lista) {
-					for (String string : lista) {
-						if (string.equalsIgnoreCase(pesquisa.getNome())) {
-							return true;
+					private boolean selecionado(Pesquisa pesquisa, List<String> lista) {
+						for (String string : lista) {
+							if (string.equalsIgnoreCase(pesquisa.getNome())) {
+								return true;
+							}
 						}
+						return false;
 					}
-					return false;
-				}
 
-				private boolean contem(List<Pesquisa> pesquisas, String string) {
-					for (Pesquisa pesquisa : pesquisas) {
-						if (pesquisa.getNome().equalsIgnoreCase(string)) {
-							return true;
+					private boolean contem(List<Pesquisa> pesquisas, String string) {
+						for (Pesquisa pesquisa : pesquisas) {
+							if (pesquisa.getNome().equalsIgnoreCase(string)) {
+								return true;
+							}
 						}
+						return false;
 					}
-					return false;
 				}
 			}
 
@@ -4049,10 +4061,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public void setVinculoListener(InternalListener.Vinculo vinculoListener) {
-		toolbar.buttonInfo.adicionaHierarquicoAvulsoAcimaAcao.setEnabled(vinculoListener != null);
-		toolbar.buttonInfo.adicionaHierarquicoAvulsoAcao.setEnabled(vinculoListener != null);
-		toolbar.buttonInfo.adicionaHierarquicoAcao.setEnabled(vinculoListener != null);
 		this.vinculoListener = vinculoListener;
+		toolbar.buttonInfo.menuAddHierarquico.habilitar(vinculoListener != null);
 	}
 
 	public InternalListener.RelacaoObjeto getRelacaoObjetoListener() {
