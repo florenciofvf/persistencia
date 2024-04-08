@@ -23,9 +23,13 @@ public interface InternalListener {
 
 		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef);
 
-		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto);
+		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto);
 
-		public void adicionarHierarquicoAvulso(Conexao conexao, Objeto objeto);
+		public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto);
+
+		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto);
+
+		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto);
 
 		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException;
 

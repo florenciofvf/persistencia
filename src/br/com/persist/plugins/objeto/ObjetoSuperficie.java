@@ -1145,6 +1145,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 	}
 
+	public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto) {
+	}
+
+	public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto) {
+	}
+
 	public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
@@ -1160,7 +1166,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void adicionarHierarquicoAvulso(Conexao conexao, Objeto objeto) {
+	public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
 		formulario.processar(args);

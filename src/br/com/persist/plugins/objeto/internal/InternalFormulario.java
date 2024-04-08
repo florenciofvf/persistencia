@@ -314,17 +314,31 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
+		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).adicionarHierarquicoInvisivelAbaixo(conexao, objeto);
+			}
+		}
+
+		public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).adicionarHierarquicoInvisivelAcima(conexao, objeto);
+			}
+		}
+
+		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulsoAbaixo(conexao, objeto);
+			}
+		}
+
 		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulsoAcima(conexao, objeto);
-			}
-		}
-
-		public void adicionarHierarquicoAvulso(Conexao conexao, Objeto objeto) {
-			checarDesktop();
-			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulso(conexao, objeto);
 			}
 		}
 

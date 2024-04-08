@@ -2067,6 +2067,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private Action scriptAdicaoHierAcao = acaoMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
 			private Action checagemAcao = acaoMenu("label.checar_registro", Icones.SUCESSO);
 			private MenuAddHierarquico menuAddHierarquico = new MenuAddHierarquico();
+			private MenuAddInvisivel menuAddInvisivel = new MenuAddInvisivel();
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 			private static final long serialVersionUID = 1L;
 			private MenuTemp menuTemp = new MenuTemp();
@@ -2083,6 +2084,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(scriptAdicaoHierAcao);
 				}
 				addMenu(menuAddHierarquico);
+				addMenu(menuAddInvisivel);
 				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
@@ -2782,6 +2784,48 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
+			private class MenuAddInvisivel extends Menu {
+				private AbaixoAcao abaixoAcao = new AbaixoAcao();
+				private static final long serialVersionUID = 1L;
+				private AcimaAcao acimaAcao = new AcimaAcao();
+
+				private MenuAddInvisivel() {
+					super(ObjetoMensagens.getString("label.adicionar_invisivel"), false, Icones.HIERARQUIA);
+					addMenuItem(acimaAcao);
+					addMenuItem(abaixoAcao);
+				}
+
+				private class AcimaAcao extends Action {
+					private static final long serialVersionUID = 1L;
+
+					private AcimaAcao() {
+						super(true, "label.acima", Icones.UPDATE);
+					}
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (vinculoListener != null) {
+							vinculoListener.adicionarHierarquicoInvisivelAcima(getConexao(), objeto);
+						}
+					}
+				}
+
+				private class AbaixoAcao extends Action {
+					private static final long serialVersionUID = 1L;
+
+					private AbaixoAcao() {
+						super(true, "label.abaixo", Icones.BAIXAR);
+					}
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (vinculoListener != null) {
+							vinculoListener.adicionarHierarquicoInvisivelAbaixo(getConexao(), objeto);
+						}
+					}
+				}
+			}
+
 			private class MenuAddHierarquico extends Menu {
 				private RelacionadoAbaixoAcao relacionadoAbaixoAcao = new RelacionadoAbaixoAcao();
 				private AvulsoAbaixoAcao avulsoAbaixoAcao = new AvulsoAbaixoAcao();
@@ -2825,7 +2869,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (vinculoListener != null) {
-							vinculoListener.adicionarHierarquicoAvulso(getConexao(), objeto);
+							vinculoListener.adicionarHierarquicoAvulsoAbaixo(getConexao(), objeto);
 						}
 					}
 				}
