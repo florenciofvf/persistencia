@@ -129,7 +129,7 @@ public class ObjetoSuperficieUtil {
 					objeto.setVisivel(true);
 					interno.setVisible(true);
 					if (point != null) {
-						interno.setLocation(point);
+						interno.setLocation(interno.getX(), point.y);
 					}
 					interno.checarRedimensionamento();
 					superficie.checarLargura(interno.getInternalContainer());
