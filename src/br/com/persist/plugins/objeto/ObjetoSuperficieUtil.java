@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.Component;
+import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,6 +100,41 @@ public class ObjetoSuperficieUtil {
 		while (contem) {
 			objeto.setId(id + sep + Objeto.novaSequencia());
 			contem = ObjetoSuperficieUtil.contemId(superficie, objeto);
+		}
+	}
+
+	private static String getGrupoTabela(Objeto objeto) {
+		return objeto.getGrupo() + " - " + objeto.getTabela();
+	}
+
+	public static List<String> getListaFormulariosInvisiveis(ObjetoSuperficie superficie) {
+		List<String> lista = new ArrayList<>();
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (!frame.isVisible() && frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				Objeto objeto = interno.getInternalContainer().getObjeto();
+				lista.add(getGrupoTabela(objeto));
+			}
+		}
+		return lista;
+	}
+
+	public static void tornarVisivel(ObjetoSuperficie superficie, String grupoTabela, Point point) {
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (!frame.isVisible() && frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				Objeto objeto = interno.getInternalContainer().getObjeto();
+				String grupoT = getGrupoTabela(objeto);
+				if (grupoT.equals(grupoTabela)) {
+					objeto.setVisivel(true);
+					interno.setVisible(true);
+					if (point != null) {
+						interno.setLocation(point);
+					}
+					interno.checarRedimensionamento();
+					superficie.checarLargura(interno.getInternalContainer());
+				}
+			}
 		}
 	}
 

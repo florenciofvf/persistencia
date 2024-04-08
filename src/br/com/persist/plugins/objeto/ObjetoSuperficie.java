@@ -1140,7 +1140,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			mapaRef.put(ObjetoConstantes.ERROR, Boolean.TRUE);
 			return;
 		}
-		exportacao.localizarObjeto();
+		exportacao.localizarObjetoAbaixo();
 		exportacao.setScriptAdicaoHierarquico();
 		destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 	}
@@ -1177,7 +1177,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			if (conexao == null) {
 				conexao = container.getConexaoPadrao();
 			}
-			criarObjetoHierarquicoAvulso(conexao, objeto, metadado);
+			criarObjetoHierarquicoAvulsoAbaixo(conexao, objeto, metadado);
 		}
 	}
 
@@ -1191,12 +1191,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private void criarObjetoHierarquicoAvulso(Conexao conexao, Objeto principal, Metadado tabela) {
+	private void criarObjetoHierarquicoAvulsoAbaixo(Conexao conexao, Objeto principal, Metadado tabela) {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
 		Metadado tabelaAvulsa = exportacao.getTabelaAvulsa();
 		if (tabelaAvulsa != null) {
 			exportacao.adicionarObjetoAvulso(tabelaAvulsa);
-			exportacao.localizarObjeto();
+			exportacao.localizarObjetoAbaixo();
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
 	}
@@ -1721,10 +1721,6 @@ class SuperficiePopup2 extends Popup {
 		return false;
 	}
 
-	private String getGrupoTabela(Objeto objeto) {
-		return objeto.getGrupo() + " - " + objeto.getTabela();
-	}
-
 	private void formulariosComExcecao() {
 		StringBuilder builder = new StringBuilder();
 		for (JInternalFrame frame : superficie.getAllFrames()) {
@@ -1747,19 +1743,11 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void formulariosInvisiveis() {
-		List<String> lista = new ArrayList<>();
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (!frame.isVisible() && frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				Objeto objeto = interno.getInternalContainer().getObjeto();
-				lista.add(getGrupoTabela(objeto));
-			}
-		}
+		List<String> lista = ObjetoSuperficieUtil.getListaFormulariosInvisiveis(superficie);
 		if (lista.isEmpty()) {
 			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
 			return;
 		}
-
 		Coletor coletor = new Coletor();
 		SetLista.view(ObjetoMensagens.getString("label.forms_invisiveis"), lista, coletor, superficie,
 				new SetLista.Config(true, true));
@@ -1769,19 +1757,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void tornarVisivel(String grupoTabela) {
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (!frame.isVisible() && frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				Objeto objeto = interno.getInternalContainer().getObjeto();
-				String grupoT = getGrupoTabela(objeto);
-				if (grupoTabela.equals(grupoT)) {
-					objeto.setVisivel(true);
-					interno.setVisible(true);
-					interno.checarRedimensionamento();
-					superficie.checarLargura(interno.getInternalContainer());
-				}
-			}
-		}
+		ObjetoSuperficieUtil.tornarVisivel(superficie, grupoTabela, null);
 	}
 
 	private void propriedades() {
@@ -2677,7 +2653,7 @@ class Exportacao {
 		}
 	}
 
-	void localizarObjeto() {
+	void localizarObjetoAbaixo() {
 		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(superficie, principal);
 		if (interno != null) {
 			objeto.x = principal.x + Constantes.VINTE_CINCO;
