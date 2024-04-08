@@ -1145,10 +1145,40 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 	}
 
-	public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto) {
+	public void adicionarHierarquicoInvisivelAbaixo(Point point) {
+		if (point != null) {
+			point.y += Constantes.TRINTA;
+		}
+		Coletor coletor = getColetorFormsInvisiveis();
+		if (coletor.size() == 1) {
+			tornarVisivel(coletor.get(0), point);
+		}
 	}
 
-	public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto) {
+	public void adicionarHierarquicoInvisivelAcima(Point point) {
+		if (point != null) {
+			point.y -= Constantes.TRINTA;
+		}
+		Coletor coletor = getColetorFormsInvisiveis();
+		if (coletor.size() == 1) {
+			tornarVisivel(coletor.get(0), point);
+		}
+	}
+
+	public Coletor getColetorFormsInvisiveis() {
+		Coletor coletor = new Coletor();
+		List<String> lista = ObjetoSuperficieUtil.getListaFormulariosInvisiveis(this);
+		if (lista.isEmpty()) {
+			Util.mensagem(getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
+			return coletor;
+		}
+		SetLista.view(ObjetoMensagens.getString("label.forms_invisiveis"), lista, coletor, this,
+				new SetLista.Config(true, true));
+		return coletor;
+	}
+
+	private void tornarVisivel(String grupoTabela, Point point) {
+		ObjetoSuperficieUtil.tornarVisivel(this, grupoTabela, point);
 	}
 
 	public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) {
@@ -1743,14 +1773,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void formulariosInvisiveis() {
-		List<String> lista = ObjetoSuperficieUtil.getListaFormulariosInvisiveis(superficie);
-		if (lista.isEmpty()) {
-			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
-			return;
-		}
-		Coletor coletor = new Coletor();
-		SetLista.view(ObjetoMensagens.getString("label.forms_invisiveis"), lista, coletor, superficie,
-				new SetLista.Config(true, true));
+		Coletor coletor = superficie.getColetorFormsInvisiveis();
 		if (coletor.size() == 1) {
 			tornarVisivel(coletor.get(0));
 		}

@@ -2793,6 +2793,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					super(ObjetoMensagens.getString("label.adicionar_invisivel"), false, Icones.HIERARQUIA);
 					addMenuItem(acimaAcao);
 					addMenuItem(abaixoAcao);
+					habilitar(false);
+				}
+
+				void habilitar(boolean b) {
+					setEnabled(b);
 				}
 
 				private class AcimaAcao extends Action {
@@ -4107,6 +4112,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	public void setVinculoListener(InternalListener.Vinculo vinculoListener) {
 		this.vinculoListener = vinculoListener;
 		toolbar.buttonInfo.menuAddHierarquico.habilitar(vinculoListener != null);
+		toolbar.buttonInfo.menuAddInvisivel.habilitar(vinculoListener != null);
 	}
 
 	public InternalListener.RelacaoObjeto getRelacaoObjetoListener() {
