@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
@@ -218,6 +219,12 @@ public class RoboPagina extends Panel {
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RoboConstantes.PAINEL_ROBO, ex, this);
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		if (Util.contemStringEm(file, string, true)) {
+			set.add(file.getAbsolutePath());
 		}
 	}
 }

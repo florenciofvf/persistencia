@@ -12,6 +12,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +35,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -129,7 +134,8 @@ public class RoboContainer extends AbstratoContainer {
 		fichario.setConteudo(conteudo, idPagina);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
+		private final TextField txtArquivo = new TextField(35);
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
 
@@ -137,7 +143,30 @@ public class RoboContainer extends AbstratoContainer {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
+			add(txtArquivo);
+			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
+			txtArquivo.addActionListener(this);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtArquivo.getText())) {
+				Set<String> set = new LinkedHashSet<>();
+				fichario.contemConteudo(set, txtArquivo.getText());
+				Util.mensagem(RoboContainer.this, getString(set));
+			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
 		}
 
 		@Override

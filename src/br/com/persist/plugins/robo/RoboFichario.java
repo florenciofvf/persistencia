@@ -1,6 +1,8 @@
 package br.com.persist.plugins.robo;
 
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.util.Set;
 
 import javax.swing.JTabbedPane;
 
@@ -70,6 +72,19 @@ public class RoboFichario extends JTabbedPane {
 				pagina.textArea.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof RoboPagina) {
+				RoboPagina p = (RoboPagina) cmp;
+				p.contemConteudo(set, string);
+			}
+		}
+		if (set.isEmpty()) {
+			Toolkit.getDefaultToolkit().beep();
 		}
 	}
 }

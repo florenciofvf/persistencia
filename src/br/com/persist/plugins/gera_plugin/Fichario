@@ -1,6 +1,7 @@
 package ###package###;
 
 import java.awt.Component;
+import java.awt.Toolkit;
 import java.util.Set;
 
 import javax.swing.JTabbedPane;
