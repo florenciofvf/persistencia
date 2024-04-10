@@ -24,7 +24,7 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 	protected final Formulario formulario;
 
 	protected AbstratoInternalFrame(Formulario formulario, String titulo) {
-		super(titulo, true, true, true, true);
+		super(titulo, true, true, false, false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		this.formulario = formulario;
