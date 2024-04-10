@@ -82,5 +82,8 @@ public class ###nameCap###Fichario extends JTabbedPane {
 				p.contemConteudo(set, string);
 			}
 		}
+		if (set.isEmpty()) {
+			Toolkit.getDefaultToolkit().beep();
+		}
 	}
 }
