@@ -1712,14 +1712,17 @@ class SuperficiePopup2 extends Popup {
 	private class MenuIgnorados extends Menu {
 		private Action invisivelAcao = actionMenu("label.invisivel");
 		private Action visivelAcao = actionMenu("label.visivel");
+		private Action falseAcao = actionMenu("label.false");
 		private static final long serialVersionUID = 1L;
 
 		private MenuIgnorados() {
 			super("label.ignorados");
 			addMenuItem(invisivelAcao);
 			addMenuItem(true, visivelAcao);
+			addMenuItem(true, falseAcao);
 			invisivelAcao.setActionListener(e -> processar(false));
 			visivelAcao.setActionListener(e -> processar(true));
+			falseAcao.setActionListener(e -> ignorar(false));
 		}
 
 		private void preShow() {
@@ -1736,6 +1739,14 @@ class SuperficiePopup2 extends Popup {
 				}
 			}
 			superficie.getMenuAjuste().aproximarEmpilharUsarForms();
+		}
+
+		private void ignorar(boolean b) {
+			List<Objeto> ignorados = ObjetoSuperficieUtil.getIgnorados(superficie);
+			for (Objeto objeto : ignorados) {
+				objeto.setIgnorar(b);
+			}
+			superficie.repaint();
 		}
 	}
 
