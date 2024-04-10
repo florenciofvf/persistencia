@@ -2538,11 +2538,13 @@ class Exportacao {
 
 	void criarPesquisa() {
 		criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
-				principal.getChaves());
+				principal.getChaves(), "executar");
 	}
 
-	private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
-		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
+	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {
+		Referencia ref = new Referencia(grupo, tabela, campo);
+		ref.setIconeGrupo(iconeGrupo);
+		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref));
 	}
 
 	Metadado getTabelaAvulsa() {
@@ -2753,12 +2755,14 @@ class ExportacaoImportacao {
 	void checarCriarPesquisa() {
 		if (exportacao) {
 			criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
-					principal.getChaves());
+					principal.getChaves(), "executar");
 		}
 	}
 
-	private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
-		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
+	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {
+		Referencia ref = new Referencia(grupo, tabela, campo);
+		ref.setIconeGrupo(iconeGrupo);
+		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref));
 	}
 
 	void processarDetalhes(Metadado tabela) {
