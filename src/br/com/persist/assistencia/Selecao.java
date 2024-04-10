@@ -59,7 +59,7 @@ public class Selecao implements Busca {
 			return;
 		}
 		if (component == null) {
-			label.setText(Constantes.VAZIO);
+			label.limpar();
 			return;
 		}
 		if (indice < getTotal()) {
