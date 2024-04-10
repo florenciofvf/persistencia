@@ -1,5 +1,6 @@
 package br.com.persist.arquivo;
 
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -85,6 +86,9 @@ public class ArquivoTree extends Tree {
 	public void contemConteudo(Set<String> set, String string) {
 		Arquivo raiz = getRaiz();
 		raiz.contemConteudo(set, string);
+		if (set.isEmpty()) {
+			Toolkit.getDefaultToolkit().beep();
+		}
 	}
 
 	private transient KeyAdapter keyListenerInner = new KeyAdapter() {

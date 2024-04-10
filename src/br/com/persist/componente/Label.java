@@ -1,6 +1,7 @@
 package br.com.persist.componente;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 
 import javax.swing.JLabel;
 
@@ -37,6 +38,7 @@ public class Label extends JLabel {
 	}
 
 	public void limpar() {
+		Toolkit.getDefaultToolkit().beep();
 		setText(Constantes.VAZIO);
 	}
 

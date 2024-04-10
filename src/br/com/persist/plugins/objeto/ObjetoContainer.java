@@ -14,6 +14,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
@@ -285,6 +286,9 @@ public class ObjetoContainer extends AbstratoContainer {
 				labelStatus2.limpar();
 			} else {
 				int total = ObjetoSuperficieUtil.ativarObjetos(objetoSuperficie, txtDestacaObjeto.getText());
+				if (total == 0) {
+					Toolkit.getDefaultToolkit().beep();
+				}
 				labelStatus2.setText("(" + total + ")");
 			}
 		}
