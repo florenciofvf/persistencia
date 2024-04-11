@@ -2549,7 +2549,7 @@ class Exportacao {
 
 	void criarPesquisa() {
 		criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
-				principal.getChaves(), "executar");
+				principal.getChaves(), null);
 	}
 
 	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {
@@ -2713,6 +2713,7 @@ class Exportacao {
 			objeto.setBuscaAutoTemp(true);
 			objeto.addReferencias(invertido.getReferencias());
 			principal.addReferencia(invertido.getReferencia());
+			ObjetoSuperficieUtil.configurarIconeGrupo(principal, invertido);
 		}
 	}
 }
