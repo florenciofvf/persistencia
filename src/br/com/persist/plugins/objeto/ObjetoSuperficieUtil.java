@@ -20,6 +20,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
@@ -584,5 +585,14 @@ public class ObjetoSuperficieUtil {
 			}
 		}
 		return false;
+	}
+
+	public static void configurarIconeGrupo(Objeto objeto, Pesquisa pesquisa) {
+		if (objeto == null || pesquisa == null) {
+			return;
+		}
+		if (!Util.isEmpty(objeto.getIcone()) && Util.isEmpty(pesquisa.getReferencia().getIconeGrupo())) {
+			pesquisa.getReferencia().setIconeGrupo(objeto.getIcone());
+		}
 	}
 }

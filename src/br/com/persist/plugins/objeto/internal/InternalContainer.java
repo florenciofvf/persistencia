@@ -112,6 +112,7 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
+import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.alter.Alternativo;
@@ -3676,6 +3677,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (invertido != null) {
 				objDetalhe.addPesquisa(invertido);
 				objDetalhe.addReferencias(invertido.getReferencias());
+				ObjetoSuperficieUtil.configurarIconeGrupo(objeto, invertido);
 				objeto.addReferencia(invertido.getReferencia());
 				vinculacao.adicionarPesquisa(invertido);
 				vinculoListener.atualizarComplemento(objDetalhe);
