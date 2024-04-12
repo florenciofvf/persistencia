@@ -31,8 +31,11 @@ public class Referencia {
 		this.tabela = tabela;
 	}
 
-	public Pesquisa inverter(String iconeGrupo) {
-		Pesquisa resp = new Pesquisa(pesquisa.getReferencia().tabela, clonar(), iconeGrupo);
+	public Pesquisa rotuloDe(Objeto objeto) {
+		if (objeto == null || pesquisa == null) {
+			return null;
+		}
+		Pesquisa resp = new Pesquisa(objeto.getId(), clonar(), objeto.getIcone());
 		resp.add(pesquisa.getReferencia().clonar());
 		return resp;
 	}

@@ -42,36 +42,30 @@ public class Pesquisa {
 		this.iconeGrupo = iconeGrupo;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
 	public void setNome(String nome) {
 		if (!Util.isEmpty(nome)) {
 			this.nome = nome;
 		}
 	}
 
-	public Pesquisa inverter(String nome, Objeto objeto, String iconeGrupo) {
-		return objeto == null ? inverter(nome, iconeGrupo) : inverter2(nome, objeto, iconeGrupo);
-	}
-
-	private Pesquisa inverter(String nome, String iconeGrupo) {
-		if (referencias.size() != 1) {
-			return null;
-		}
-		Referencia ref = referencias.get(0);
-		nome = nome == null ? referencia.getTabela() : nome;
-		Pesquisa resp = new Pesquisa(nome, ref.clonar(), iconeGrupo);
-		resp.add(referencia.clonar());
-		return resp;
-	}
-
-	private Pesquisa inverter2(String nome, Objeto objeto, String iconeGrupo) {
+	public Referencia get(Objeto objeto) {
 		for (Referencia ref : referencias) {
 			if (ref.igual(objeto)) {
-				Pesquisa resp = new Pesquisa(nome, ref.clonar(), iconeGrupo);
-				resp.add(referencia.clonar());
-				return resp;
+				return ref;
 			}
 		}
 		return null;
+	}
+
+	public Referencia get() {
+		if (referencias.size() != 1) {
+			return null;
+		}
+		return referencias.get(0);
 	}
 
 	public void processar(Objeto objeto) {
@@ -169,10 +163,6 @@ public class Pesquisa {
 		new Referencia(null, ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo2(util);
 		util.finalizarTag(VinculoHandler.PESQUISA);
-	}
-
-	public String getNome() {
-		return nome;
 	}
 
 	public Referencia getReferencia() {
