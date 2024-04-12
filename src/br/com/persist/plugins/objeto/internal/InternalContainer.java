@@ -1175,6 +1175,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private class MenuPesquisa extends MenuPadrao2 {
 				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.total_detalhes"));
+				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
 				private Action renomearAcao = actionMenu("label.renomear");
 				private Action excluirAcao = actionMenu("label.excluir");
 				private static final long serialVersionUID = 1L;
@@ -1185,18 +1186,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addItem(chkTotalDetalhes);
-					addMenuItem(true, renomearAcao);
+					addMenuItem(true, nomeReferAcao);
+					addMenuItem(renomearAcao);
 					addMenuItem(true, excluirAcao);
 					addSeparator();
 					add(menuInfo);
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
-					menuUtil.habilitar(pesquisa.getReferencias().size() == 1);
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
+					nomeReferAcao.setActionListener(e -> nomeRefer());
 					renomearAcao.setActionListener(e -> renomear());
 					excluirAcao.setActionListener(e -> excluir());
+					int size = pesquisa.getReferencias().size();
+					nomeReferAcao.setEnabled(size == 1);
+					menuUtil.habilitar(size == 1);
 					addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
@@ -1454,6 +1459,42 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							&& vinculacao.excluir(pesq) && objeto.excluir(pesquisa)) {
 						vinculoListener.salvarVinculacao(vinculacao);
 						toolbar.buttonPesquisa.complemento(objeto);
+					}
+				}
+
+				private void nomeRefer() {
+					Referencia ref = pesquisa.get();
+					if (vinculoListener == null || ref == null) {
+						return;
+					}
+					Objeto objetoRef = vinculoListener.getObjeto(ref);
+					if (objetoRef == null) {
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
+					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+					if (pesq != null && !Util.isEmpty(objetoRef.getId())) {
+						String nomeBkp = pesquisa.getNome();
+						String nome = objetoRef.getId();
+						if (nome.equalsIgnoreCase(pesquisa.getNome())) {
+							return;
+						}
+						pesquisa.setNome(nome);
+						if (vinculacao.getPesquisa(pesquisa) != null) {
+							Util.mensagem(InternalContainer.this,
+									ObjetoMensagens.getString("msg.nome_pesquisa_existente", nome));
+							pesquisa.setNome(nomeBkp);
+						} else {
+							pesq.setNome(nome);
+							setText(pesq.getNomeParaMenuItem());
+							vinculoListener.salvarVinculacao(vinculacao);
+						}
 					}
 				}
 
