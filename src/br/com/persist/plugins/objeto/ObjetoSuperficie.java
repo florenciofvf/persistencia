@@ -2705,7 +2705,11 @@ class Exportacao {
 	void setScriptAdicaoHierarquico() {
 		Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 		objeto.setPesquisaAdicaoHierarquico(pesquisa);
-		Pesquisa invertido = pesquisa.inverter(principal.getId(), null, principal.getIcone());
+		Referencia ref = pesquisa.get();
+		if (ref == null) {
+			return;
+		}
+		Pesquisa invertido = ref.rotuloDe(principal);
 		if (invertido != null) {
 			mapaRef.put(ObjetoConstantes.PESQUISA_INVERTIDO, invertido);
 			objeto.addPesquisa(invertido);
@@ -3012,7 +3016,7 @@ class ExportacaoImportacao {
 		}
 		superficie.vinculacao.adicionarPesquisa(pesquisa);
 		for (Referencia ref : pesquisa.getReferencias()) {
-			Pesquisa pesq = ref.inverter(null);
+			Pesquisa pesq = ref.rotuloDe(principal);
 			superficie.vinculacao.adicionarPesquisa(pesq);
 		}
 		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
@@ -3027,9 +3031,8 @@ class ExportacaoImportacao {
 		}
 		for (Pesquisa pesq : listaRef) {
 			superficie.vinculacao.adicionarPesquisa(pesq);
-			Pesquisa invertido = pesq.inverter(null, null, null);
-			if (invertido != null) {
-				superficie.vinculacao.adicionarPesquisa(invertido);
+			for (Referencia ref : pesq.getReferencias()) {
+				superficie.vinculacao.adicionarPesquisa(ref.rotuloDe(principal));
 			}
 		}
 		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
