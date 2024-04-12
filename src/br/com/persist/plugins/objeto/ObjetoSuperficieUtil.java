@@ -591,8 +591,8 @@ public class ObjetoSuperficieUtil {
 		if (objeto == null || pesquisa == null) {
 			return;
 		}
-		if (!Util.isEmpty(objeto.getIcone()) && Util.isEmpty(pesquisa.getReferencia().getIconeGrupo())) {
-			pesquisa.getReferencia().setIconeGrupo(objeto.getIcone());
+		if (!Util.isEmpty(objeto.getIcone()) && Util.isEmpty(pesquisa.getIconeGrupo())) {
+			pesquisa.setIconeGrupo(objeto.getIcone());
 		}
 	}
 }

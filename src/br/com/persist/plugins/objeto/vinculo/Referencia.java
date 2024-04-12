@@ -18,11 +18,8 @@ public class Referencia {
 	private final String campo;
 	private boolean processado;
 	private boolean limparApos;
-	private String iconeGrupo;
 	private String concatenar;
 	Pesquisa pesquisa;
-	Color corFonte;
-	String icone;
 
 	public Referencia(String grupo, String tabela, String campo) {
 		this.grupo = grupo == null ? "" : grupo.trim();
@@ -38,15 +35,6 @@ public class Referencia {
 		Pesquisa resp = new Pesquisa(pesquisa.getReferencia().tabela, clonar());
 		resp.add(pesquisa.getReferencia().clonar());
 		return resp;
-	}
-
-	public void config(Objeto objeto) {
-		if (corFonte != null) {
-			objeto.setCorFonte(corFonte);
-		}
-		if (icone != null) {
-			objeto.setIcone(icone);
-		}
 	}
 
 	public String[] getChavesArray() {
@@ -76,14 +64,9 @@ public class Referencia {
 		if (limparApos) {
 			atributoValor(util, VinculoHandler.LIMPAR_APOS, "" + limparApos);
 		}
-		atributoValor(util, VinculoHandler.ICONE, icone);
 		if (vazioInvisivel) {
 			atributoValor(util, VinculoHandler.VAZIO, VinculoHandler.INVISIVEL);
 		}
-		if (corFonte != null) {
-			atributoValor(util, VinculoHandler.COR_FONTE, toHex(corFonte));
-		}
-		atributoValor(util, VinculoHandler.ICONE_GRUPO, iconeGrupo);
 		atributoValor(util, VinculoHandler.CONCATENAR, concatenar);
 		if (autonomo) {
 			util.fecharTag(-1);
@@ -101,8 +84,8 @@ public class Referencia {
 	public void modelo(XMLUtil util) {
 		util.abrirTag(VinculoHandler.REF).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
 				.atributo(VinculoHandler.CAMPO, "FK").atributo(VinculoHandler.GRUPO, "")
-				.atributo(VinculoHandler.VAZIO, VinculoHandler.INVISIVEL).atributo(VinculoHandler.ICONE, "")
-				.atributo(VinculoHandler.COR_FONTE, "#AABBCC").atributo(VinculoHandler.CONCATENAR, "").fecharTag(-1);
+				.atributo(VinculoHandler.VAZIO, VinculoHandler.INVISIVEL).atributo(VinculoHandler.CONCATENAR, "")
+				.fecharTag(-1);
 	}
 
 	public void modelo2(XMLUtil util) {
@@ -228,30 +211,6 @@ public class Referencia {
 
 	public void setLimparApos(boolean limparApos) {
 		this.limparApos = limparApos;
-	}
-
-	public Color getCorFonte() {
-		return corFonte;
-	}
-
-	public void setCorFonte(Color corFonte) {
-		this.corFonte = corFonte;
-	}
-
-	public String getIcone() {
-		return icone;
-	}
-
-	public void setIcone(String icone) {
-		this.icone = icone;
-	}
-
-	public String getIconeGrupo() {
-		return iconeGrupo;
-	}
-
-	public void setIconeGrupo(String iconeGrupo) {
-		this.iconeGrupo = iconeGrupo;
 	}
 
 	public boolean isValidoInvisibilidade() {

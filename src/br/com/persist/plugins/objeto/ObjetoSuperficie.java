@@ -2554,8 +2554,7 @@ class Exportacao {
 
 	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {
 		Referencia ref = new Referencia(grupo, tabela, campo);
-		ref.setIconeGrupo(iconeGrupo);
-		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref));
+		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref, iconeGrupo));
 	}
 
 	Metadado getTabelaAvulsa() {
@@ -2773,8 +2772,7 @@ class ExportacaoImportacao {
 
 	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {
 		Referencia ref = new Referencia(grupo, tabela, campo);
-		ref.setIconeGrupo(iconeGrupo);
-		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref));
+		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref, iconeGrupo));
 	}
 
 	void processarDetalhes(Metadado tabela) {

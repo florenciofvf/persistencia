@@ -17,10 +17,11 @@ public class Pesquisa {
 	private final List<Param> cloneParams;
 	private final Referencia referencia;
 	private final List<Param> params;
+	private String iconeGrupo;
 	private Objeto objeto;
 	private String nome;
 
-	public Pesquisa(String nome, Referencia ref) {
+	public Pesquisa(String nome, Referencia ref, String iconeGrupo) {
 		this.referencia = Objects.requireNonNull(ref);
 		if (Util.isEmpty(nome)) {
 			throw new IllegalStateException("Nome da pesquisa vazia.");
@@ -28,8 +29,17 @@ public class Pesquisa {
 		referenciasApos = new ArrayList<>();
 		referencias = new ArrayList<>();
 		cloneParams = new ArrayList<>();
+		this.iconeGrupo = iconeGrupo;
 		params = new ArrayList<>();
 		this.nome = nome;
+	}
+
+	public String getIconeGrupo() {
+		return iconeGrupo;
+	}
+
+	public void setIconeGrupo(String iconeGrupo) {
+		this.iconeGrupo = iconeGrupo;
 	}
 
 	public void setNome(String nome) {
@@ -68,12 +78,10 @@ public class Pesquisa {
 		if (referencia.igual(objeto)) {
 			objeto.addPesquisa(this);
 			objeto.addReferencias(referencias);
-			referencia.config(objeto);
 		}
 		for (Referencia ref : referencias) {
 			if (ref.igual(objeto)) {
 				objeto.addReferencia(ref.getPesquisa().referencia);
-				ref.config(objeto);
 			}
 		}
 	}
@@ -99,6 +107,7 @@ public class Pesquisa {
 			util.conteudo("<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->").ql();
 		}
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
+		Referencia.atributoValor(util, VinculoHandler.ICONE_GRUPO, iconeGrupo);
 		referencia.salvar(0, false, util);
 		util.fecharTag();
 		for (Param par : params) {
@@ -155,8 +164,7 @@ public class Pesquisa {
 		util.ql();
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, "Nome da pesquisa")
 				.atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA).atributo(VinculoHandler.CAMPO, "PK")
-				.atributo(VinculoHandler.GRUPO, "").atributo(VinculoHandler.ICONE_GRUPO, "")
-				.atributo(VinculoHandler.ICONE, "").atributo(VinculoHandler.COR_FONTE, "#AABBCC").fecharTag();
+				.atributo(VinculoHandler.GRUPO, "").atributo(VinculoHandler.ICONE_GRUPO, "").fecharTag();
 		new Param(".", ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo2(util);

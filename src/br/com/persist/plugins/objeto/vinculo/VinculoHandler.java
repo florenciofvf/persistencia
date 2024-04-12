@@ -64,6 +64,7 @@ public class VinculoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (PESQUISA.equals(qName)) {
 			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes));
+			selecionado.setIconeGrupo(attributes.getValue(ICONE_GRUPO));
 			if (!Pesquisa.contem(selecionado, pesquisas)) {
 				pesquisas.add(selecionado);
 			}
@@ -168,11 +169,8 @@ public class VinculoHandler extends XMLHandler {
 				attributes.getValue(CAMPO));
 		ref.setVazioInvisivel(INVISIVEL.equalsIgnoreCase(attributes.getValue(VAZIO)));
 		String limparApos = attributes.getValue(LIMPAR_APOS);
-		ref.setIconeGrupo(attributes.getValue(ICONE_GRUPO));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
 		ref.setConcatenar(attributes.getValue(CONCATENAR));
-		ref.setIcone(attributes.getValue(ICONE));
-		ref.setCorFonte(getCorFonte(attributes));
 		return ref;
 	}
 
@@ -180,11 +178,8 @@ public class VinculoHandler extends XMLHandler {
 		Referencia ref = new Referencia(attributes.get(GRUPO), attributes.get(TABELA), attributes.get(CAMPO));
 		ref.setVazioInvisivel(INVISIVEL.equalsIgnoreCase(attributes.get(VAZIO)));
 		String limparApos = attributes.get(LIMPAR_APOS);
-		ref.setIconeGrupo(attributes.get(ICONE_GRUPO));
 		ref.setConcatenar(attributes.get(CONCATENAR));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
-		ref.setCorFonte(getCorFonte(attributes));
-		ref.setIcone(attributes.get(ICONE));
 		return ref;
 	}
 
@@ -198,14 +193,6 @@ public class VinculoHandler extends XMLHandler {
 
 	private static Color getCorFundo(Attributes attributes) {
 		String corFonte = attributes.getValue(COR_FUNDO);
-		if (!Util.isEmpty(corFonte)) {
-			return Color.decode(corFonte);
-		}
-		return null;
-	}
-
-	private static Color getCorFonte(Map<String, String> attributes) {
-		String corFonte = attributes.get(COR_FONTE);
 		if (!Util.isEmpty(corFonte)) {
 			return Color.decode(corFonte);
 		}

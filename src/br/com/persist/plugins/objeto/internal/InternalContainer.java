@@ -1297,15 +1297,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 						if (pesq != null) {
 							MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
-							pesquisa.getReferencia().setIconeGrupo(nomeIcone);
-							pesq.getReferencia().setIconeGrupo(nomeIcone);
+							pesquisa.setIconeGrupo(nomeIcone);
+							pesq.setIconeGrupo(nomeIcone);
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
 					}
 
 					private void icone() {
 						IconeDialogo.criar(InternalContainer.this, pesquisa.getNomeParaMenuItem(), new ListenerIcone(),
-								pesquisa.getReferencia().getIconeGrupo());
+								pesquisa.getIconeGrupo());
 					}
 
 					private class ListenerIcone implements IconeListener {
@@ -1324,8 +1324,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 							if (pesq != null) {
 								MenuPesquisa.this.setIcon(Imagens.getIcon(nome));
-								pesquisa.getReferencia().setIconeGrupo(nome);
-								pesq.getReferencia().setIconeGrupo(nome);
+								pesquisa.setIconeGrupo(nome);
+								pesq.setIconeGrupo(nome);
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
 						}
@@ -1345,8 +1345,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 							if (pesq != null) {
 								MenuPesquisa.this.setIcon(null);
-								pesquisa.getReferencia().setIconeGrupo(Constantes.VAZIO);
-								pesq.getReferencia().setIconeGrupo(Constantes.VAZIO);
+								pesquisa.setIconeGrupo(Constantes.VAZIO);
+								pesq.setIconeGrupo(Constantes.VAZIO);
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
 						}
@@ -4245,7 +4245,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	static Icon iconePesquisa(Pesquisa pesquisa) {
-		String iconeGrupo = pesquisa.getReferencia().getIconeGrupo();
+		String iconeGrupo = pesquisa.getIconeGrupo();
 		return Util.isEmpty(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
 	}
 
