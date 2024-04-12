@@ -45,6 +45,8 @@ public interface InternalListener {
 
 		public void atualizarComplemento(Objeto objeto);
 
+		public Objeto getObjeto(Referencia ref);
+
 		public List<Objeto> objetosComTabela();
 
 		public boolean validoInvisibilidade();

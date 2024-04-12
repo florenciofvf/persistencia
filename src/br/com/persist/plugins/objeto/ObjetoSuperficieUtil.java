@@ -20,6 +20,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
+import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
@@ -301,6 +302,18 @@ public class ObjetoSuperficieUtil {
 				interno.selecionarConexao(conexao);
 			}
 		}
+	}
+
+	public static Objeto getObjeto(ObjetoSuperficie superficie, Referencia ref) {
+		if (ref == null) {
+			return null;
+		}
+		for (Objeto objeto : superficie.objetos) {
+			if (ref.igual(objeto)) {
+				return objeto;
+			}
+		}
+		return null;
 	}
 
 	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie) {

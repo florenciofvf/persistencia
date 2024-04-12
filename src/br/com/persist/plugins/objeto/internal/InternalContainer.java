@@ -1192,6 +1192,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
+					menuUtil.habilitar(pesquisa.getReferencias().size() == 1);
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					renomearAcao.setActionListener(e -> renomear());
@@ -1261,6 +1262,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private Action vazioInvisivelAcao = acaoMenu("label.vazio_invisivel");
 					private Action vazioVisivelAcao = acaoMenu("label.vazio_visivel");
 					private Action iconeColarAcao = actionMenu("label.colar_icone");
+					private Action iconeRefAcao = acaoMenu("label.icone_apontado");
 					private Action iconeAcao = actionMenu("label.icone");
 					private static final long serialVersionUID = 1L;
 
@@ -1270,15 +1272,47 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						addMenuItem(excLimparRestoAcao);
 						addMenuItem(true, vazioInvisivelAcao);
 						addMenuItem(vazioVisivelAcao);
-						addMenuItem(true, iconeAcao);
+						addMenuItem(true, iconeRefAcao);
 						addMenuItem(iconeColarAcao);
+						addMenuItem(iconeAcao);
 						iconeAcao.hint(ObjetoMensagens.getString("hint.pesquisa.icone.excluir"));
-						addLimparRestoAcao.setActionListener(e -> processar(true));
 						excLimparRestoAcao.setActionListener(e -> processar(false));
+						addLimparRestoAcao.setActionListener(e -> processar(true));
 						vazioInvisivelAcao.setActionListener(e -> vazio(true));
 						vazioVisivelAcao.setActionListener(e -> vazio(false));
 						iconeColarAcao.setActionListener(e -> iconeColar());
+						iconeRefAcao.setActionListener(e -> iconeRefer());
 						iconeAcao.setActionListener(e -> icone());
+					}
+
+					private void habilitar(boolean b) {
+						iconeRefAcao.setEnabled(b);
+					}
+
+					public void iconeRefer() {
+						Referencia ref = pesquisa.get();
+						if (vinculoListener == null || ref == null) {
+							return;
+						}
+						Objeto objetoIcone = vinculoListener.getObjeto(ref);
+						if (objetoIcone == null || Util.isEmpty(objetoIcone.getIcone())) {
+							return;
+						}
+						String nomeIcone = objetoIcone.getIcone();
+						Vinculacao vinculacao = new Vinculacao();
+						try {
+							vinculoListener.preencherVinculacao(vinculacao);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							return;
+						}
+						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+						if (pesq != null) {
+							MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
+							pesquisa.setIconeGrupo(nomeIcone);
+							pesq.setIconeGrupo(nomeIcone);
+							vinculoListener.salvarVinculacao(vinculacao);
+						}
 					}
 
 					public void iconeColar() {

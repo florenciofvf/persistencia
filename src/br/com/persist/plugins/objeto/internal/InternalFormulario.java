@@ -291,6 +291,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
+		public Objeto getObjeto(Referencia ref) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				return ObjetoSuperficieUtil.getObjeto((ObjetoSuperficie) desktop, ref);
+			}
+			return null;
+		}
+
 		public List<Objeto> objetosComTabela() {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
