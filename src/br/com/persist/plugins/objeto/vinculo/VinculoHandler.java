@@ -63,8 +63,7 @@ public class VinculoHandler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (PESQUISA.equals(qName)) {
-			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes));
-			selecionado.setIconeGrupo(attributes.getValue(ICONE_GRUPO));
+			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes), attributes.getValue(ICONE_GRUPO));
 			if (!Pesquisa.contem(selecionado, pesquisas)) {
 				pesquisas.add(selecionado);
 			}

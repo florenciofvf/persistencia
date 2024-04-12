@@ -112,7 +112,6 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
-import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.alter.Alternativo;
@@ -3635,7 +3634,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				return;
 			}
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa,
-					new Referencia(objeto.getGrupo(), objeto.getTabela(), coluna));
+					new Referencia(objeto.getGrupo(), objeto.getTabela(), coluna), objeto.getIcone());
 			Referencia referencia = new Referencia(objDetalhe.getGrupo(), objDetalhe.getTabela(), coletor.get(0));
 			referencia.setVazioInvisivel(true);
 			Pesquisa existente = objeto.getPesquisa(pesquisa);
@@ -3673,11 +3672,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void processarInvertido(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) {
-			Pesquisa invertido = pesquisa.inverter(objeto.getId(), objDetalhe);
+			Pesquisa invertido = pesquisa.inverter(objeto.getId(), objDetalhe, objeto.getIcone());
 			if (invertido != null) {
 				objDetalhe.addPesquisa(invertido);
 				objDetalhe.addReferencias(invertido.getReferencias());
-				ObjetoSuperficieUtil.configurarIconeGrupo(objeto, invertido);
 				objeto.addReferencia(invertido.getReferencia());
 				vinculacao.adicionarPesquisa(invertido);
 				vinculoListener.atualizarComplemento(objDetalhe);

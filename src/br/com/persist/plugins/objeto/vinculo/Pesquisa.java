@@ -48,25 +48,25 @@ public class Pesquisa {
 		}
 	}
 
-	public Pesquisa inverter(String nome, Objeto objeto) {
-		return objeto == null ? inverter(nome) : inverter2(nome, objeto);
+	public Pesquisa inverter(String nome, Objeto objeto, String iconeGrupo) {
+		return objeto == null ? inverter(nome, iconeGrupo) : inverter2(nome, objeto, iconeGrupo);
 	}
 
-	private Pesquisa inverter(String nome) {
+	private Pesquisa inverter(String nome, String iconeGrupo) {
 		if (referencias.size() != 1) {
 			return null;
 		}
 		Referencia ref = referencias.get(0);
 		nome = nome == null ? referencia.getTabela() : nome;
-		Pesquisa resp = new Pesquisa(nome, ref.clonar());
+		Pesquisa resp = new Pesquisa(nome, ref.clonar(), iconeGrupo);
 		resp.add(referencia.clonar());
 		return resp;
 	}
 
-	private Pesquisa inverter2(String nome, Objeto objeto) {
+	private Pesquisa inverter2(String nome, Objeto objeto, String iconeGrupo) {
 		for (Referencia ref : referencias) {
 			if (ref.igual(objeto)) {
-				Pesquisa resp = new Pesquisa(nome, ref.clonar());
+				Pesquisa resp = new Pesquisa(nome, ref.clonar(), iconeGrupo);
 				resp.add(referencia.clonar());
 				return resp;
 			}

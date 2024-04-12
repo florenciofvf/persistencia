@@ -128,7 +128,7 @@ public class Vinculacao {
 		util.abrirTag2(VINCULO);
 		util.print("<!--").ql();
 		new ParaTabela(".").modelo(util);
-		new Pesquisa(".", new Referencia(null, ".", null)).modelo(util);
+		new Pesquisa(".", new Referencia(null, ".", null), null).modelo(util);
 		util.print("-->").ql();
 		util.finalizarTag(VINCULO);
 		util.close();

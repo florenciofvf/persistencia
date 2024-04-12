@@ -2705,14 +2705,13 @@ class Exportacao {
 	void setScriptAdicaoHierarquico() {
 		Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 		objeto.setPesquisaAdicaoHierarquico(pesquisa);
-		Pesquisa invertido = pesquisa.inverter(principal.getId(), null);
+		Pesquisa invertido = pesquisa.inverter(principal.getId(), null, principal.getIcone());
 		if (invertido != null) {
 			mapaRef.put(ObjetoConstantes.PESQUISA_INVERTIDO, invertido);
 			objeto.addPesquisa(invertido);
 			objeto.setBuscaAutoTemp(true);
 			objeto.addReferencias(invertido.getReferencias());
 			principal.addReferencia(invertido.getReferencia());
-			ObjetoSuperficieUtil.configurarIconeGrupo(principal, invertido);
 		}
 	}
 }
@@ -2736,8 +2735,8 @@ class ExportacaoImportacao {
 	ExportacaoImportacao(ObjetoSuperficie superficie, boolean exportacao, boolean circular) {
 		mapaRef = new LinkedHashMap<>();
 		this.superficie = superficie;
-		listaRef = new ArrayList<>();
 		this.exportacao = exportacao;
+		listaRef = new ArrayList<>();
 		this.circular = circular;
 	}
 
@@ -2873,7 +2872,8 @@ class ExportacaoImportacao {
 
 	private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
 			String grupoDetalhe, String tabelaDetalhe, String campoDetalhe) {
-		Pesquisa pesquisa = new Pesquisa(tabelaPrincipal, new Referencia(grupoDetalhe, tabelaDetalhe, campoDetalhe));
+		Pesquisa pesquisa = new Pesquisa(tabelaPrincipal, new Referencia(grupoDetalhe, tabelaDetalhe, campoDetalhe),
+				null);
 		Referencia ref = new Referencia(grupoPrincipal, tabelaPrincipal, campoPrincipal);
 		ref.setVazioInvisivel(false);
 		listaRef.add(pesquisa);
@@ -3012,7 +3012,7 @@ class ExportacaoImportacao {
 		}
 		superficie.vinculacao.adicionarPesquisa(pesquisa);
 		for (Referencia ref : pesquisa.getReferencias()) {
-			Pesquisa pesq = ref.inverter();
+			Pesquisa pesq = ref.inverter(null);
 			superficie.vinculacao.adicionarPesquisa(pesq);
 		}
 		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
@@ -3027,7 +3027,7 @@ class ExportacaoImportacao {
 		}
 		for (Pesquisa pesq : listaRef) {
 			superficie.vinculacao.adicionarPesquisa(pesq);
-			Pesquisa invertido = pesq.inverter(null, null);
+			Pesquisa invertido = pesq.inverter(null, null, null);
 			if (invertido != null) {
 				superficie.vinculacao.adicionarPesquisa(invertido);
 			}

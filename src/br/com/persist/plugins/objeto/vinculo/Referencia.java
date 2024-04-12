@@ -31,8 +31,8 @@ public class Referencia {
 		this.tabela = tabela;
 	}
 
-	public Pesquisa inverter() {
-		Pesquisa resp = new Pesquisa(pesquisa.getReferencia().tabela, clonar());
+	public Pesquisa inverter(String iconeGrupo) {
+		Pesquisa resp = new Pesquisa(pesquisa.getReferencia().tabela, clonar(), iconeGrupo);
 		resp.add(pesquisa.getReferencia().clonar());
 		return resp;
 	}
