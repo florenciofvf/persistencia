@@ -2549,7 +2549,7 @@ class Exportacao {
 
 	void criarPesquisa() {
 		criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
-				principal.getChaves(), null);
+				principal.getChaves(), "executar");
 	}
 
 	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {

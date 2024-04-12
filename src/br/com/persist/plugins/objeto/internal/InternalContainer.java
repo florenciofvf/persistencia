@@ -3634,7 +3634,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				return;
 			}
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa,
-					new Referencia(objeto.getGrupo(), objeto.getTabela(), coluna), objeto.getIcone());
+					new Referencia(objeto.getGrupo(), objeto.getTabela(), coluna), null);
 			Referencia referencia = new Referencia(objDetalhe.getGrupo(), objDetalhe.getTabela(), coletor.get(0));
 			referencia.setVazioInvisivel(true);
 			Pesquisa existente = objeto.getPesquisa(pesquisa);
@@ -3644,6 +3644,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				atualizar(vinculacao, pesquisa, referencia, objDetalhe);
 			} else {
 				pesquisa.add(referencia);
+				pesquisa.setIconeGrupo(objDetalhe.getIcone());
 				adicionar(vinculacao, pesquisa, objDetalhe);
 			}
 		}
@@ -3672,7 +3673,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void processarInvertido(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) {
-			Pesquisa invertido = pesquisa.inverter(objeto.getId(), objDetalhe, objeto.getIcone());
+			Referencia ref = pesquisa.get(objDetalhe);
+			if (ref == null) {
+				return;
+			}
+			Pesquisa invertido = ref.rotuloDe(objeto);
 			if (invertido != null) {
 				objDetalhe.addPesquisa(invertido);
 				objDetalhe.addReferencias(invertido.getReferencias());
