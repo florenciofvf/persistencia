@@ -1,6 +1,5 @@
 package br.com.persist.plugins.objeto.vinculo;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,8 +20,6 @@ public class VinculoHandler extends XMLHandler {
 	public static final String CONCATENAR = "concatenar";
 	public static final String INVISIVEL = "invisivel";
 	public static final String INSTRUCAO = "instrucao";
-	public static final String COR_FONTE = "corFonte";
-	public static final String COR_FUNDO = "corFundo";
 	public static final String PESQUISA = "pesquisa";
 	public static final String ROTULO = "rotulo";
 	public static final String FILTRO = "filtro";
@@ -123,39 +120,7 @@ public class VinculoHandler extends XMLHandler {
 
 	private static ParaTabela criarParaTabela(String tabela, Attributes attributes) {
 		ParaTabela paraTabela = new ParaTabela(tabela);
-		paraTabela.setEsquemaAlternativo(attributes.getValue("esquemaAlternativo"));
-		paraTabela.setTabelaAlternativo(attributes.getValue("tabelaAlternativo"));
-		paraTabela.setPrefixoNomeTabela(attributes.getValue("prefixoNomeTabela"));
-		paraTabela.setSelectAlternativo(attributes.getValue("selectAlternativo"));
-		paraTabela.setClonarAoDestacar(attributes.getValue("clonarAoDestacar"));
-		paraTabela.setLarguraRotulos(attributes.getValue("larguraRotulos"));
-		paraTabela.setBiblioChecagem(attributes.getValue("biblioChecagem"));
-		paraTabela.setAjustarLargura(attributes.getValue("ajustarLargura"));
-		paraTabela.setFinalConsulta(attributes.getValue("finalConsulta"));
-		paraTabela.setAjustarAltura(attributes.getValue("ajustarAltura"));
-		paraTabela.setTransparente(attributes.getValue("transparente"));
-		paraTabela.setComplemento(attributes.getValue("complemento"));
-		paraTabela.setClassBiblio(attributes.getValue("classBiblio"));
-		paraTabela.setDestacaveis(attributes.getValue("destacaveis"));
-		paraTabela.setMapeamento(attributes.getValue("mapeamento"));
-		paraTabela.setSequencias(attributes.getValue("sequencias"));
-		paraTabela.setCampoNomes(attributes.getValue("campoNomes"));
-		paraTabela.setColunaInfo(attributes.getValue("colunaInfo"));
-		paraTabela.setDestacavel(attributes.getValue("destacavel"));
-		paraTabela.setLinkAuto(attributes.getValue("linkAuto"));
-		paraTabela.setApelido(attributes.getValue("apelido"));
-		paraTabela.setOrderBy(attributes.getValue("orderBy"));
-		paraTabela.setTabelas(attributes.getValue("tabelas"));
-		paraTabela.setIgnorar(attributes.getValue("ignorar"));
-		paraTabela.setChaves(attributes.getValue("chaves"));
-		paraTabela.setJoins(attributes.getValue("joins"));
-		paraTabela.setGrupo(attributes.getValue(GRUPO));
-		paraTabela.setSane(attributes.getValue("sane"));
-		paraTabela.setCcsc(attributes.getValue("ccsc"));
-		paraTabela.setBpnt(attributes.getValue("bpnt"));
-		paraTabela.setIcone(attributes.getValue(ICONE));
-		paraTabela.setCorFonte(getCorFonte(attributes));
-		paraTabela.setCorFundo(getCorFundo(attributes));
+		paraTabela.aplicar(attributes);
 		return paraTabela;
 	}
 
@@ -180,22 +145,6 @@ public class VinculoHandler extends XMLHandler {
 		ref.setConcatenar(attributes.get(CONCATENAR));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
 		return ref;
-	}
-
-	private static Color getCorFonte(Attributes attributes) {
-		String corFonte = attributes.getValue(COR_FONTE);
-		if (!Util.isEmpty(corFonte)) {
-			return Color.decode(corFonte);
-		}
-		return null;
-	}
-
-	private static Color getCorFundo(Attributes attributes) {
-		String corFonte = attributes.getValue(COR_FUNDO);
-		if (!Util.isEmpty(corFonte)) {
-			return Color.decode(corFonte);
-		}
-		return null;
 	}
 
 	@Override
