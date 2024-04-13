@@ -1173,6 +1173,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
+				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.total_detalhes"));
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
@@ -1186,7 +1187,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addItem(chkTotalDetalhes);
-					addMenuItem(true, nomeReferAcao);
+					addMenuItem(true, nomeIconeReferAcao);
+					addMenuItem(nomeReferAcao);
 					addMenuItem(renomearAcao);
 					addMenuItem(true, excluirAcao);
 					addSeparator();
@@ -1194,12 +1196,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
+					nomeIconeReferAcao.setActionListener(e -> nomeIconeRefer());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					nomeReferAcao.setActionListener(e -> nomeRefer());
 					renomearAcao.setActionListener(e -> renomear());
 					excluirAcao.setActionListener(e -> excluir());
 					int size = pesquisa.getReferencias().size();
+					nomeIconeReferAcao.setEnabled(size == 1);
 					nomeReferAcao.setEnabled(size == 1);
 					menuUtil.habilitar(size == 1);
 					addMouseListener(new MouseAdapter() {
@@ -1299,11 +1303,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (vinculoListener == null || ref == null) {
 							return;
 						}
-						Objeto objetoIcone = vinculoListener.getObjeto(ref);
-						if (objetoIcone == null || Util.isEmpty(objetoIcone.getIcone())) {
+						Objeto objetoRef = vinculoListener.getObjeto(ref);
+						if (objetoRef == null || Util.isEmpty(objetoRef.getIcone())) {
 							return;
 						}
-						String nomeIcone = objetoIcone.getIcone();
+						String nomeIcone = objetoRef.getIcone();
 						Vinculacao vinculacao = new Vinculacao();
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
@@ -1313,11 +1317,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 						if (pesq != null) {
-							MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
-							pesquisa.setIconeGrupo(nomeIcone);
-							pesq.setIconeGrupo(nomeIcone);
-							vinculoListener.salvarVinculacao(vinculacao);
+							configurarIcone(nomeIcone, vinculacao, pesq);
 						}
+					}
+
+					private void configurarIcone(String nomeIcone, Vinculacao vinculacao, Pesquisa pesq) {
+						MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
+						pesquisa.setIconeGrupo(nomeIcone);
+						pesq.setIconeGrupo(nomeIcone);
+						vinculoListener.salvarVinculacao(vinculacao);
 					}
 
 					public void iconeColar() {
@@ -1334,10 +1342,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 						if (pesq != null) {
-							MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
-							pesquisa.setIconeGrupo(nomeIcone);
-							pesq.setIconeGrupo(nomeIcone);
-							vinculoListener.salvarVinculacao(vinculacao);
+							configurarIcone(nomeIcone, vinculacao, pesq);
 						}
 					}
 
@@ -1361,10 +1366,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 							if (pesq != null) {
-								MenuPesquisa.this.setIcon(Imagens.getIcon(nome));
-								pesquisa.setIconeGrupo(nome);
-								pesq.setIconeGrupo(nome);
-								vinculoListener.salvarVinculacao(vinculacao);
+								configurarIcone(nome, vinculacao, pesq);
 							}
 						}
 
@@ -1462,6 +1464,47 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
+				private void nomeIconeRefer() {
+					Referencia ref = pesquisa.get();
+					if (vinculoListener == null || ref == null) {
+						return;
+					}
+					Objeto objetoRef = vinculoListener.getObjeto(ref);
+					if (objetoRef == null) {
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
+					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+					if (pesq != null && !Util.isEmpty(objetoRef.getId())) {
+						String nomeBkp = pesquisa.getNome();
+						String nome = objetoRef.getId();
+						if (nome.equalsIgnoreCase(pesquisa.getNome())) {
+							return;
+						}
+						pesquisa.setNome(nome);
+						if (vinculacao.getPesquisa(pesquisa) != null) {
+							msgNomePesquisaExistente(nome);
+							pesquisa.setNome(nomeBkp);
+						} else {
+							pesq.setNome(nome);
+							setText(pesq.getNomeParaMenuItem());
+							String nomeIcone = objetoRef.getIcone();
+							if (!Util.isEmpty(nomeIcone)) {
+								setIcon(Imagens.getIcon(nomeIcone));
+								pesquisa.setIconeGrupo(nomeIcone);
+								pesq.setIconeGrupo(nomeIcone);
+							}
+							vinculoListener.salvarVinculacao(vinculacao);
+						}
+					}
+				}
+
 				private void nomeRefer() {
 					Referencia ref = pesquisa.get();
 					if (vinculoListener == null || ref == null) {
@@ -1487,8 +1530,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 						pesquisa.setNome(nome);
 						if (vinculacao.getPesquisa(pesquisa) != null) {
-							Util.mensagem(InternalContainer.this,
-									ObjetoMensagens.getString("msg.nome_pesquisa_existente", nome));
+							msgNomePesquisaExistente(nome);
 							pesquisa.setNome(nomeBkp);
 						} else {
 							pesq.setNome(nome);
@@ -1496,6 +1538,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
 					}
+				}
+
+				private void msgNomePesquisaExistente(String nome) {
+					Util.mensagem(InternalContainer.this,
+							ObjetoMensagens.getString("msg.nome_pesquisa_existente", nome));
 				}
 
 				private void renomear() {
@@ -1526,8 +1573,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 						pesquisa.setNome(nome);
 						if (vinculacao.getPesquisa(pesquisa) != null) {
-							Util.mensagem(InternalContainer.this,
-									ObjetoMensagens.getString("msg.nome_pesquisa_existente", nome));
+							msgNomePesquisaExistente(nome);
 							pesquisa.setNome(nomeBkp);
 						} else {
 							pesq.setNome(nome);
