@@ -1485,6 +1485,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						String nomeBkp = pesquisa.getNome();
 						String nome = objetoRef.getId();
 						if (nome.equalsIgnoreCase(pesquisa.getNome())) {
+							checarConfigurarIcone(objetoRef, vinculacao, pesq);
 							return;
 						}
 						pesquisa.setNome(nome);
@@ -1496,13 +1497,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							setText(pesq.getNomeParaMenuItem());
 							String nomeIcone = objetoRef.getIcone();
 							if (!Util.isEmpty(nomeIcone)) {
-								setIcon(Imagens.getIcon(nomeIcone));
-								pesquisa.setIconeGrupo(nomeIcone);
-								pesq.setIconeGrupo(nomeIcone);
+								configurarIcone(pesq, nomeIcone);
 							}
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
 					}
+				}
+
+				private void checarConfigurarIcone(Objeto objetoRef, Vinculacao vinculacao, Pesquisa pesq) {
+					String nomeIcone = objetoRef.getIcone();
+					if (!Util.isEmpty(nomeIcone)) {
+						configurarIcone(pesq, nomeIcone);
+						vinculoListener.salvarVinculacao(vinculacao);
+					}
+				}
+
+				private void configurarIcone(Pesquisa pesq, String nomeIcone) {
+					setIcon(Imagens.getIcon(nomeIcone));
+					pesquisa.setIconeGrupo(nomeIcone);
+					pesq.setIconeGrupo(nomeIcone);
 				}
 
 				private void nomeRefer() {
