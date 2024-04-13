@@ -29,6 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -179,6 +180,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private Action excluirAcao = acaoIcon("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action arquivoVinculadoAcao = acaoMenu("label.abrir_criar_arq_vinculado");
+		private Action arquivoContainerAcao = acaoMenu("label.abrir_arquivo_principal");
 		private Action criarObjetoAcao = acaoIcon("label.criar_objeto", Icones.CRIAR);
 		private CheckBox chkAjusteAutoEmpilhaForm = new CheckBox();
 		private CheckBox chkAjusteAutoLarguraForm = new CheckBox();
@@ -212,9 +214,11 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(labelStatus2);
 			eventos();
 			arquivoVinculadoAcao.setActionListener(e -> abrirArquivoVinculado());
+			arquivoContainerAcao.setActionListener(e -> abrirArquivoContainer());
 			txtArquivoVinculo.addMouseListener(mouseListenerPopupVinculado);
 			txtDestacaObjeto.addActionListener(e -> destacarObjetos());
 			popupArquivoVinculado.add(arquivoVinculadoAcao);
+			popupArquivoVinculado.addMenuItem(true, arquivoContainerAcao);
 		}
 
 		Action acaoMenu(String chave, Icon icon) {
@@ -300,6 +304,16 @@ public class ObjetoContainer extends AbstratoContainer {
 					ObjetoUtil.abrirArquivoVinculado(ObjetoContainer.this, av);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("ARQUIVO VINCULADO: " + av.getFile().getAbsolutePath(), ex, formulario);
+				}
+			}
+		}
+
+		private void abrirArquivoContainer() {
+			if (arquivo != null && arquivo.isFile()) {
+				try {
+					Util.conteudo(ObjetoContainer.this, arquivo);
+				} catch (IOException e) {
+					Util.mensagem(ObjetoContainer.this, e.getMessage());
 				}
 			}
 		}
