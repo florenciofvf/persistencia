@@ -345,10 +345,10 @@ public class ParaTabela {
 		util.tab().atributo(SELECT_ALTERNATIVO, "").ql();
 		util.tab().atributo(TABELA_ALTERNATIVO, "").ql();
 		util.tab().atributo(LARGURA_ROTULOS, false).ql();
-		util.tab().atributo(BIBLIO_CHECAGEM, false).ql();
 		util.tab().atributo(AJUSTAR_LARGURA, true).ql();
 		util.tab().atributo(AJUSTAR_ALTURA, true).ql();
 		util.tab().atributo(STR_DESTACAVEL, true).ql();
+		util.tab().atributo(BIBLIO_CHECAGEM, "").ql();
 		util.tab().atributo(STR_COMPLEMENTO, "").ql();
 		util.tab().atributo(STR_DESTACAVEIS, "").ql();
 		util.tab().atributo(COLUNA_INFO, false).ql();
