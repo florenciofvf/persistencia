@@ -24,7 +24,7 @@ public class Vinculacao {
 	}
 
 	public boolean adicionarPesquisa(Pesquisa pesquisa) {
-		if (pesquisa != null && !Pesquisa.contem(pesquisa, pesquisas)) {
+		if (pesquisa != null && !PesquisaUtil.contem(pesquisa, pesquisas)) {
 			pesquisas.add(pesquisa);
 			return true;
 		}

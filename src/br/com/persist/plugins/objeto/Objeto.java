@@ -31,7 +31,9 @@ import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
+import br.com.persist.plugins.objeto.vinculo.PesquisaUtil;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
+import br.com.persist.plugins.objeto.vinculo.ReferenciaUtil;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
@@ -1155,7 +1157,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void addReferencia(Referencia ref) {
-		if (ref != null && !Pesquisa.contem(ref, referencias)) {
+		if (ref != null && !ReferenciaUtil.contem(ref, referencias)) {
 			referencias.add(ref);
 		}
 	}
@@ -1214,7 +1216,7 @@ public class Objeto implements Runnable {
 	}
 
 	public boolean addPesquisa(Pesquisa pesq) {
-		if (pesq != null && !Pesquisa.contem(pesq, pesquisas)) {
+		if (pesq != null && !PesquisaUtil.contem(pesq, pesquisas)) {
 			pesquisas.add(pesq);
 			return true;
 		}

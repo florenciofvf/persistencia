@@ -61,7 +61,7 @@ public class VinculoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (PESQUISA.equals(qName)) {
 			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes), attributes.getValue(ICONE_GRUPO));
-			if (!Pesquisa.contem(selecionado, pesquisas)) {
+			if (!PesquisaUtil.contem(selecionado, pesquisas)) {
 				pesquisas.add(selecionado);
 			}
 		} else if (PARA.equals(qName)) {

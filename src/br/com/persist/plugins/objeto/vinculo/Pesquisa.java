@@ -239,11 +239,11 @@ public class Pesquisa {
 
 	public boolean add(Referencia ref) {
 		if (ref != null) {
-			if (!ref.isLimparApos() && !contem(ref, referencias)) {
+			if (!ref.isLimparApos() && !ReferenciaUtil.contem(ref, referencias)) {
 				referencias.add(ref);
 				ref.pesquisa = this;
 				return true;
-			} else if (ref.isLimparApos() && !contem(ref, referenciasApos)) {
+			} else if (ref.isLimparApos() && !ReferenciaUtil.contem(ref, referenciasApos)) {
 				referenciasApos.add(ref);
 				return true;
 			}
@@ -284,33 +284,6 @@ public class Pesquisa {
 		for (Referencia ref : referencias) {
 			add(ref);
 		}
-	}
-
-	public static boolean contem(Pesquisa pesquisa, List<Pesquisa> pesquisas) {
-		for (Pesquisa pesq : pesquisas) {
-			if (pesq.nome.equalsIgnoreCase(pesquisa.nome) && pesq.referencia.igual(pesquisa.referencia)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static boolean contem(Referencia ref, List<Referencia> referencias) {
-		for (Referencia r : referencias) {
-			if (r.igual(ref)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static boolean contem2(Referencia ref, List<Referencia> referencias) {
-		for (Referencia r : referencias) {
-			if (r.igual2(ref)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public String getNomeParaMenuItem() {

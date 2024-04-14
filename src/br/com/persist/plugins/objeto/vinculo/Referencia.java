@@ -123,10 +123,6 @@ public class Referencia {
 				&& campo.equalsIgnoreCase(ref.campo);
 	}
 
-	public boolean igual2(Referencia ref) {
-		return ref != null && grupo.equalsIgnoreCase(ref.grupo) && tabela.equalsIgnoreCase(ref.tabela);
-	}
-
 	public boolean igual(Objeto objeto) {
 		return objeto != null && grupo.equalsIgnoreCase(objeto.getGrupo())
 				&& tabela.equalsIgnoreCase(objeto.getTabela());
