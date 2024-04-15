@@ -108,6 +108,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	transient Relacao[] relacoes;
 	final SuperficiePopup popup;
 	transient Objeto[] objetos;
+	private int totalArrastado;
 	private int totalHoras;
 	String arquivoVinculo;
 	private byte estado;
@@ -578,6 +579,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			selecionadoRelacao = null;
 			selecionadoObjeto = null;
 			validoArrastar = false;
+			totalArrastado = 0;
 			int x = e.getX();
 			int y = e.getY();
 			area.x1 = x;
@@ -652,8 +654,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			int recX = e.getX();
 			int recY = e.getY();
 			if (validoArrastar) {
+				totalArrastado = 0;
 				for (Objeto objeto : objetos) {
 					if (objeto.isSelecionado()) {
+						totalArrastado++;
 						if (alt && !shift) {
 							objeto.x += recX - ultX;
 						} else if (!alt && shift) {
@@ -678,6 +682,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			totalArrastado = 0;
 			int x = e.getX();
 			int y = e.getY();
 			if (area.largura > Objeto.DIAMETRO && area.altura > Objeto.DIAMETRO) {
@@ -703,6 +708,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			totalArrastado = 0;
 			if (selecionadoObjeto != null && !selecionadoObjeto.isSelecionado()) {
 				selecionadoObjeto = null;
 			}
@@ -755,6 +761,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if (estado == ObjetoConstantes.RELACAO) {
 			linha.desenhar(g2);
+		}
+		if (totalArrastado == 1) {
+			Color cor = g2.getColor();
+			g2.setColor(Color.WHITE);
+			int lar = getWidth();
+			int alt = getHeight();
+			for (int x = Constantes.VINTE_CINCO; x < lar; x += Constantes.VINTE_CINCO) {
+				g2.drawLine(x, 0, x, alt);
+			}
+			for (int y = Constantes.TRINTA; y < alt; y += Constantes.TRINTA) {
+				g2.drawLine(0, y, lar, y);
+			}
+			g2.setColor(cor);
 		}
 		for (Relacao relacao : relacoes) {
 			relacao.desenhar(g2, stroke);
