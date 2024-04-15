@@ -20,6 +20,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
+import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
@@ -162,6 +163,50 @@ public class ObjetoSuperficieUtil {
 			relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(superficie);
 		}
 		superficie.repaint();
+	}
+
+	public static void todosIconesParaArquivoVinculado(ObjetoSuperficie superficie) {
+		if (Util.isEmpty(superficie.arquivoVinculo)) {
+			Util.mensagem(superficie, ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_inexistente"));
+			return;
+		}
+		List<Objeto> objetosTabelaIcone = getObjetosTabelaIcone(superficie);
+		if (objetosTabelaIcone.isEmpty()) {
+			Util.mensagem(superficie, ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_sem_objetos"));
+			return;
+		}
+		if (!Util.confirmar(superficie, ObjetoMensagens.getString("msg.confirmar_todos_icones_arquivo_vinculado"),
+				false)) {
+			return;
+		}
+		Vinculacao vinculacao = new Vinculacao();
+		try {
+			ObjetoSuperficieUtil.preencherVinculacao(superficie, vinculacao);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("TODOS_ICONES_PARA_ARQUIVO_VINCULADO", ex, superficie);
+			return;
+		}
+		for (Objeto objeto : objetosTabelaIcone) {
+			String tabela = objeto.getTabela().trim();
+			ParaTabela para = vinculacao.getParaTabela(tabela);
+			if (para == null) {
+				para = new ParaTabela(tabela);
+				vinculacao.putParaTabela(para);
+			}
+			para.setIcone(objeto.getIcone());
+		}
+		ObjetoSuperficieUtil.salvarVinculacao(superficie, vinculacao);
+		Util.mensagem(superficie, "SUCESSO");
+	}
+
+	public static List<Objeto> getObjetosTabelaIcone(ObjetoSuperficie superficie) {
+		List<Objeto> resp = new ArrayList<>();
+		for (Objeto objeto : superficie.objetos) {
+			if (!Util.isEmpty(objeto.getTabela()) && !Util.isEmpty(objeto.getIcone())) {
+				resp.add(objeto);
+			}
+		}
+		return resp;
 	}
 
 	public static JComboBox<Objeto> criarComboObjetosSel(ObjetoSuperficie superficie) {

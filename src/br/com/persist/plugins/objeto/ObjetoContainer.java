@@ -510,6 +510,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			private JCheckBoxMenuItem somarHorasAcao = new JCheckBoxMenuItem(
 					ObjetoMensagens.getString("label.somar_em_horas"));
 			private Action compararRegistroAcao = acaoMenu("label.comparar_registro", Icones.OLHO);
+			private Action todosIconesParaTabelaAcao = acaoMenu("label.todos_icone_para_tabela");
 			private Action desenharDescAcao = actionMenu("label.desenhar_desc", Icones.TAG);
 			private Action transparenteAcao = actionMenu("label.transparente", Icones.RECT);
 			private Action selecaoGeralAcao = acaoMenu("label.selecao_todos", Icones.TAG2);
@@ -524,6 +525,8 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);
+				addMenuItem(todosIconesParaTabelaAcao);
+				addSeparator();
 				addItem(checkBoxComparaRegistro);
 				addSeparator();
 				addItem(checkBoxSelecaoGeral);
@@ -541,6 +544,8 @@ public class ObjetoContainer extends AbstratoContainer {
 			}
 
 			private void eventos() {
+				todosIconesParaTabelaAcao
+						.setActionListener(e -> ObjetoSuperficieUtil.todosIconesParaArquivoVinculado(objetoSuperficie));
 				compararRegistroAcao.setActionListener(e -> ObjetoSuperficieUtil.compararRegistro(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				selecaoGeralAcao.setActionListener(e -> ObjetoSuperficieUtil.selecaoGeral(objetoSuperficie,

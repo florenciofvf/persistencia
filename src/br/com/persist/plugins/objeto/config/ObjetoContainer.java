@@ -151,9 +151,10 @@ public class ObjetoContainer extends Panel {
 			if (vinculacao == null) {
 				return;
 			}
-			ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
+			String tabela = txtTabela.getText().trim();
+			ParaTabela para = vinculacao.getParaTabela(tabela);
 			if (para == null) {
-				para = new ParaTabela(txtTabela.getText().trim());
+				para = new ParaTabela(tabela);
 				vinculacao.putParaTabela(para);
 			}
 			if ("APELIDO".equals(compChave.chave)) {
@@ -1101,9 +1102,10 @@ public class ObjetoContainer extends Panel {
 					Util.stackTraceAndMessage("VINCULAR EM COR FONTE", ex, ObjetoContainer.this);
 					return;
 				}
-				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
+				String tabela = txtTabela.getText().trim();
+				ParaTabela para = vinculacao.getParaTabela(tabela);
 				if (para == null) {
-					para = new ParaTabela(txtTabela.getText().trim());
+					para = new ParaTabela(tabela);
 					vinculacao.putParaTabela(para);
 				}
 				para.setCorFonte(colorChooser.getColor());
@@ -1173,9 +1175,10 @@ public class ObjetoContainer extends Panel {
 					Util.stackTraceAndMessage("VINCULAR EM COR FUNDO", ex, ObjetoContainer.this);
 					return;
 				}
-				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
+				String tabela = txtTabela.getText().trim();
+				ParaTabela para = vinculacao.getParaTabela(tabela);
 				if (para == null) {
-					para = new ParaTabela(txtTabela.getText().trim());
+					para = new ParaTabela(tabela);
 					vinculacao.putParaTabela(para);
 				}
 				para.setCorFundo(colorChooser.getColor());
@@ -1256,9 +1259,10 @@ public class ObjetoContainer extends Panel {
 				Util.stackTraceAndMessage("VINCULAR EM ICONE", ex, ObjetoContainer.this);
 				return;
 			}
-			ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
+			String tabela = txtTabela.getText().trim();
+			ParaTabela para = vinculacao.getParaTabela(tabela);
 			if (para == null) {
-				para = new ParaTabela(txtTabela.getText().trim());
+				para = new ParaTabela(tabela);
 				vinculacao.putParaTabela(para);
 			}
 			para.setIcone(objeto.getIcone());
