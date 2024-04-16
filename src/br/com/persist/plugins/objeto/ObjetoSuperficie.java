@@ -680,8 +680,33 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			repaint();
 		}
 
+		private void localizarSe(Objeto objeto) {
+			final int raio = Objeto.DIAMETRO / 2;
+			int restoX = (objeto.x + raio) / Constantes.VINTE_CINCO;
+			int restoY = (objeto.y + raio) / Constantes.TRINTA;
+			if ((restoX <= 7 || restoX >= 18) && (restoY <= 10 || restoY >= 20)) {
+				if (restoX <= 7) {
+					objeto.x -= restoX;
+				} else {
+					objeto.x += (Constantes.VINTE_CINCO - restoX);
+				}
+				if (restoY <= 10) {
+					objeto.y -= restoY;
+				} else {
+					objeto.y += (Constantes.TRINTA - restoY);
+				}
+			}
+		}
+
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (totalArrastado == 1) {
+				for (Objeto objeto : objetos) {
+					if (objeto.isSelecionado()) {
+						localizarSe(objeto);
+					}
+				}
+			}
 			totalArrastado = 0;
 			int x = e.getX();
 			int y = e.getY();
