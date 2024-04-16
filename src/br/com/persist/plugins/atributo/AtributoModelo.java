@@ -6,7 +6,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class AtributoModelo extends AbstractTableModel {
-	private static final String[] COLUNAS = { "IGNORAR", "NOME", "ROTULO", "CLASSE", "VIEW_TO_BACK" };
+	private static final Class<?>[] CLASS_COLUNAS = { Boolean.class, String.class, String.class, String.class,
+			String.class, Boolean.class };
+	private static final String[] COLUNAS = { "IGNORAR", "NOME", "ROTULO", "CLASSE", "VIEW_TO_BACK", "PARSE_DATE" };
 	private static final long serialVersionUID = 1L;
 	private final transient List<Atributo> lista;
 
@@ -54,7 +56,7 @@ public class AtributoModelo extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return columnIndex == 0 ? Boolean.class : String.class;
+		return CLASS_COLUNAS[columnIndex];
 	}
 
 	@Override
@@ -75,6 +77,8 @@ public class AtributoModelo extends AbstractTableModel {
 			return atributo.getClasse();
 		} else if (columnIndex == 4) {
 			return atributo.getViewToBack();
+		} else if (columnIndex == 5) {
+			return atributo.getParseDateBoolean();
 		}
 		return null;
 	}
@@ -95,6 +99,8 @@ public class AtributoModelo extends AbstractTableModel {
 			atributo.setClasse(aValue.toString());
 		} else if (columnIndex == 4) {
 			atributo.setViewToBack(aValue.toString());
+		} else if (columnIndex == 5) {
+			atributo.setParseDate(aValue.toString());
 		}
 	}
 }

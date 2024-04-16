@@ -6,6 +6,7 @@ import br.com.persist.geradores.Variavel;
 
 public class Atributo {
 	private String viewToBack;
+	private String parseDate;
 	private boolean ignorar;
 	private String rotulo;
 	private String classe;
@@ -17,6 +18,21 @@ public class Atributo {
 
 	public void setRotulo(String rotulo) {
 		this.rotulo = rotulo;
+	}
+
+	public String getParseDate() {
+		if (parseDate == null) {
+			parseDate = "";
+		}
+		return parseDate;
+	}
+
+	public Boolean getParseDateBoolean() {
+		return Boolean.valueOf(parseDate);
+	}
+
+	public void setParseDate(String parseDate) {
+		this.parseDate = parseDate;
 	}
 
 	public boolean isIgnorar() {
@@ -61,12 +77,14 @@ public class Atributo {
 		mapa.put("rotulo", rotulo);
 		mapa.put("classe", classe);
 		mapa.put("viewToBack", viewToBack);
+		mapa.put("parseDate", getParseDate());
 		mapa.setFormatEspecial(true);
 		return mapa;
 	}
 
 	public void aplicar(Mapa mapa) {
 		viewToBack = mapa.getString("viewToBack");
+		parseDate = mapa.getString("parseDate");
 		rotulo = mapa.getString("rotulo");
 		classe = mapa.getString("classe");
 		nome = mapa.getString("nome");

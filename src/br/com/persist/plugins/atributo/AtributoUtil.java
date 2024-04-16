@@ -1,5 +1,7 @@
 package br.com.persist.plugins.atributo;
 
+import java.util.List;
+
 public class AtributoUtil {
 	private AtributoUtil() {
 	}
@@ -18,5 +20,17 @@ public class AtributoUtil {
 
 	public static String getPesquisarFilter(Mapa mapa) {
 		return AtributoUtil.getPesquisar(mapa) + "(filter)";
+	}
+
+	public static boolean contemParseDateValido(List<Atributo> atributos) {
+		if (atributos == null) {
+			return false;
+		}
+		for (Atributo att : atributos) {
+			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

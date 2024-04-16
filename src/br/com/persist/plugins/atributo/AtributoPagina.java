@@ -861,6 +861,9 @@ class PainelDTO extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
+		if (AtributoUtil.contemParseDateValido(atributos)) {
+			arquivo.addImport("java.util.Date").newLine();
+		}
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTO());
 
 		for (Atributo att : atributos) {
@@ -873,6 +876,12 @@ class PainelDTO extends AbstratoPanel {
 			classe.criarMetodoGet(tipo);
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
+
+			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
+				funcao.addReturn("DataUtil.parseDate(" + att.getNome() + ")");
+			}
 		}
 
 		arquivo.gerar(-1, pool);
@@ -897,6 +906,9 @@ class PainelFilter extends AbstratoPanel {
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
+		if (AtributoUtil.contemParseDateValido(atributos)) {
+			arquivo.addImport("java.util.Date").newLine();
+		}
 		if (!atributos.isEmpty()) {
 			arquivo.addImport("javax.ws.rs.QueryParam").newLine();
 		}
@@ -918,6 +930,12 @@ class PainelFilter extends AbstratoPanel {
 			classe.criarMetodoGet(tipo);
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
+
+			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
+				funcao.addReturn("DataUtil.parseDate(" + att.getNome() + ")");
+			}
 		}
 
 		arquivo.gerar(-1, pool);
@@ -1016,7 +1034,7 @@ class PainelRest extends AbstratoPanel {
 	}
 
 	private Parametros beanParam(Raiz raiz) {
-		Parametros params = new Parametros("BeanParam");
+		Parametros params = new Parametros("@BeanParam");
 		params.addEspaco();
 		Variavel var = raiz.getTipoFilter();
 		params.addString(var.getTipo() + " " + var.getNome());
