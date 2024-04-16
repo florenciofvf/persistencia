@@ -21,8 +21,8 @@ public class Atributo {
 	}
 
 	public String getParseDate() {
-		if (parseDate == null) {
-			parseDate = "";
+		if (Util.isEmpty(parseDate)) {
+			parseDate = "false";
 		}
 		return parseDate;
 	}
