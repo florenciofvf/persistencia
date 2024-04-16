@@ -874,14 +874,13 @@ class PainelDTO extends AbstratoPanel {
 			classe.newLine();
 			Variavel tipo = att.criarVariavel();
 			classe.criarMetodoGet(tipo);
-			classe.newLine();
-			classe.criarMetodoSet(tipo);
-
 			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
 				classe.newLine();
 				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
 				funcao.addReturn("DataUtil.parseDate(" + att.getNome() + ")");
 			}
+			classe.newLine();
+			classe.criarMetodoSet(tipo);
 		}
 
 		arquivo.gerar(-1, pool);
@@ -928,14 +927,13 @@ class PainelFilter extends AbstratoPanel {
 			classe.newLine();
 			Variavel tipo = att.criarVariavel();
 			classe.criarMetodoGet(tipo);
-			classe.newLine();
-			classe.criarMetodoSet(tipo);
-
 			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
 				classe.newLine();
 				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
 				funcao.addReturn("DataUtil.parseDate(" + att.getNome() + ")");
 			}
+			classe.newLine();
+			classe.criarMetodoSet(tipo);
 		}
 
 		arquivo.gerar(-1, pool);
