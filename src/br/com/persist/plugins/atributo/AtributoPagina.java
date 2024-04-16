@@ -397,9 +397,9 @@ class PainelFichario extends JTabbedPane {
 	PainelFichario(AtributoPagina pagina) {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		addAba(new PainelView(pagina));
-		addAba(new PainelControllerJS(pagina));
-		addAba(new PainelParamJS(pagina));
 		addAba(new PainelValidarJS(pagina));
+		addAba(new PainelParamJS(pagina));
+		addAba(new PainelControllerJS(pagina));
 		addAba(new PainelServiceJS(pagina));
 		addAba(new PainelDTO(pagina));
 		addAba(new PainelFilter(pagina));
