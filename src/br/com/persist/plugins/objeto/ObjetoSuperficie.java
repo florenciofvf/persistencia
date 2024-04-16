@@ -682,15 +682,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 		private void localizarSe(Objeto objeto) {
 			final int raio = Objeto.DIAMETRO / 2;
-			int restoX = (objeto.x + raio) / Constantes.VINTE_CINCO;
-			int restoY = (objeto.y + raio) / Constantes.TRINTA;
-			if ((restoX <= 7 || restoX >= 18) && (restoY <= 10 || restoY >= 20)) {
-				if (restoX <= 7) {
+			int restoX = (objeto.x + raio) % Constantes.VINTE_CINCO;
+			int restoY = (objeto.y + raio) % Constantes.TRINTA;
+			if ((restoX <= 12 || restoX >= 14) && (restoY <= 14 || restoY >= 16)) {
+				if (restoX <= 12) {
 					objeto.x -= restoX;
 				} else {
 					objeto.x += (Constantes.VINTE_CINCO - restoX);
 				}
-				if (restoY <= 10) {
+				if (restoY <= 14) {
 					objeto.y -= restoY;
 				} else {
 					objeto.y += (Constantes.TRINTA - restoY);
