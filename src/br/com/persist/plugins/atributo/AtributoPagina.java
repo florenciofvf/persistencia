@@ -401,9 +401,9 @@ class PainelFichario extends JTabbedPane {
 		addAba(new PainelParamJS(pagina));
 		addAba(new PainelControllerJS(pagina));
 		addAba(new PainelServiceJS(pagina));
-		addAba(new PainelDTO(pagina));
 		addAba(new PainelFilter(pagina));
 		addAba(new PainelRest(pagina));
+		addAba(new PainelDTO(pagina));
 		addAba(new PainelService(pagina));
 		addAba(new PainelBean(pagina));
 		addAba(new PainelDAO(pagina));
