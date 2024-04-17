@@ -306,9 +306,9 @@ public class AtributoPagina extends Panel {
 						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
 				resp.put(AtributoConstantes.DTO, AtributoConstantes.DTO.toUpperCase());
 				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
-				resp.put(AtributoConstantes.BEAN, AtributoConstantes.BEAN);
-				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO));
-				resp.put(AtributoConstantes.DAO_IMPL, AtributoConstantes.DAO_IMPL);
+				resp.put(AtributoConstantes.BEAN, Util.capitalize(AtributoConstantes.BEAN));
+				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO.toUpperCase()));
+				resp.put(AtributoConstantes.DAO_IMPL, AtributoConstantes.DAO_IMP2);
 				resp.put(AtributoConstantes.TEST, criarMapa(AtributoConstantes.TEST));
 				return resp;
 			}

@@ -18,6 +18,7 @@ public class AtributoConstantes {
 	public static final String EXPORTAR = "exportar";
 	public static final String ATRIBUTO = "atributo";
 	public static final String DAO_IMPL = "daoImpl";
+	public static final String DAO_IMP2 = "DAOImpl";
 	public static final String SERVICE = "service";
 	public static final String FILTER = "filter";
 	public static final String PUBLIC = "public";
