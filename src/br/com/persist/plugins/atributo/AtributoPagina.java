@@ -561,7 +561,32 @@ class PainelView extends AbstratoPanel {
 	}
 }
 
-class PainelControllerJS extends AbstratoPanel {
+abstract class AbstratoPainelJS extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	AbstratoPainelJS(AtributoPagina pagina, boolean comCheckModelo) {
+		super(pagina, comCheckModelo);
+	}
+
+	protected JSArquivo criarArquivo(Mapa mapaControllerJS, Mapa mapaServiceJS) {
+		JSArquivo arquivo = new JSArquivo();
+		arquivo.addInstrucao(
+				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
+						+ AtributoUtil.getComponente(mapaServiceJS) + "']")
+				.newLine();
+		return arquivo;
+	}
+
+	protected JSFuncao criarFuncao(JSArquivo arquivo, Mapa mapaControllerJS, Mapa mapaServiceJS) {
+		final String string = ", ";
+		Parametros params = new Parametros("$scope");
+		params.addString(string).addString("$state").addString(string).addString("NgTableParams").addString(string)
+				.addString(AtributoUtil.getComponente(mapaServiceJS));
+		return arquivo.criarJSFuncao(AtributoUtil.getComponente(mapaControllerJS), params);
+	}
+}
+
+class PainelControllerJS extends AbstratoPainelJS {
 	private static final long serialVersionUID = 1L;
 
 	PainelControllerJS(AtributoPagina pagina) {
@@ -602,23 +627,6 @@ class PainelControllerJS extends AbstratoPanel {
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
-	}
-
-	protected JSArquivo criarArquivo(Mapa mapaControllerJS, Mapa mapaServiceJS) {
-		JSArquivo arquivo = new JSArquivo();
-		arquivo.addInstrucao(
-				AtributoUtil.getComponente(mapaControllerJS) + ".$inject = ['$scope', '$state', 'NgTableParams', '"
-						+ AtributoUtil.getComponente(mapaServiceJS) + "']")
-				.newLine();
-		return arquivo;
-	}
-
-	protected JSFuncao criarFuncao(JSArquivo arquivo, Mapa mapaControllerJS, Mapa mapaServiceJS) {
-		final String string = ", ";
-		Parametros params = new Parametros("$scope");
-		params.addString(string).addString("$state").addString(string).addString("NgTableParams").addString(string)
-				.addString(AtributoUtil.getComponente(mapaServiceJS));
-		return arquivo.criarJSFuncao(AtributoUtil.getComponente(mapaControllerJS), params);
 	}
 
 	private void fnLimparFiltro(JSFuncao funcao, Mapa mapaControllerJS, String filtro) {
@@ -688,11 +696,11 @@ class PainelControllerJS extends AbstratoPanel {
 	}
 }
 
-class PainelParamJS extends PainelControllerJS {
+class PainelParamJS extends AbstratoPainelJS {
 	private static final long serialVersionUID = 1L;
 
 	PainelParamJS(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 	}
 
 	@Override
@@ -737,11 +745,11 @@ class PainelParamJS extends PainelControllerJS {
 	}
 }
 
-class PainelValidarJS extends PainelControllerJS {
+class PainelValidarJS extends AbstratoPainelJS {
 	private static final long serialVersionUID = 1L;
 
 	PainelValidarJS(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 	}
 
 	@Override
