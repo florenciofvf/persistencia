@@ -42,8 +42,16 @@ public class Raiz {
 		return mapa.getMapa(AtributoConstantes.SERVICE_JS);
 	}
 
+	public String getDTOTodos() {
+		return mapa.getString(AtributoConstantes.DTO_TODOS);
+	}
+
 	public String getDTO() {
 		return mapa.getString(AtributoConstantes.DTO);
+	}
+
+	public String getListDTOTodos() {
+		return "List<" + getDTOTodos() + ">";
 	}
 
 	public String getListDTO() {

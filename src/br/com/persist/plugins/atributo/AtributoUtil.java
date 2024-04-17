@@ -10,6 +10,10 @@ public class AtributoUtil {
 		return mapa.getString(AtributoConstantes.COMPONENTE);
 	}
 
+	public static String getBuscarTodos(Mapa mapa) {
+		return mapa.getString(AtributoConstantes.BUSCAR_TODOS);
+	}
+
 	public static String getPesquisar(Mapa mapa) {
 		return mapa.getString(AtributoConstantes.PESQUISAR);
 	}
