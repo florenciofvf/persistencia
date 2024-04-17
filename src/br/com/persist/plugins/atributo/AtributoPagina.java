@@ -1126,7 +1126,7 @@ class PainelRest extends AbstratoPanel {
 		classe.addAnotacao(PRODUCES + AtributoConstantes.APPLICATION_JSON + ")");
 
 		FuncaoPublica funcao = classe.criarFuncaoPublica(raiz.getListDTOTodos(), AtributoUtil.getBuscarTodos(mapaRest));
-		funcao.addReturn("service." + AtributoUtil.getBuscarTodos(mapaService));
+		funcao.addReturn("service." + AtributoUtil.getBuscarTodos(mapaService) + "()");
 
 		return classe;
 	}
@@ -1264,7 +1264,7 @@ class PainelBean extends AbstratoPanel {
 
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica(raiz.getListDTOTodos(), AtributoUtil.getBuscarTodos(mapaService));
-		funcao.addReturn("dao." + AtributoUtil.getBuscarTodos(mapaDAO));
+		funcao.addReturn("dao." + AtributoUtil.getBuscarTodos(mapaDAO) + "()");
 
 		classe.addOverride(true);
 		String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
