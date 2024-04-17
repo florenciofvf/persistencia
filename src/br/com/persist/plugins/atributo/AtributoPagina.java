@@ -610,7 +610,7 @@ class PainelControllerJS extends AbstratoPanel {
 		pesquisar.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
-		elsee.addComentario("Msg.error(msg);");
+		elsee.addComentario("MensagemService.error(msg);");
 		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
 
 		If iff = pesquisar.criarIf("isVazio(msg)", elsee);
@@ -620,12 +620,13 @@ class PainelControllerJS extends AbstratoPanel {
 						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
 
 		invocaProm.addInstrucao("var lista = result.data");
-		invocaProm.addInstrucao("vm.pesquisados.settings().dataset = lista");
+		invocaProm.addComentario("vm.pesquisados.settings().dataset = lista;");
+		invocaProm.addInstrucao("vm.pesquisados.settings({data: lista})");
 		invocaProm.addInstrucao("vm.pesquisados.reload()");
 
 		If ifLength = invocaProm.criarIf("lista.length === 0", null);
 
-		ifLength.addComentario("Msg.info('Nenhum registro encontrado');");
+		ifLength.addComentario("MensagemService.info('Nenhum registro encontrado');");
 		ifLength.addComentario("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');");
 	}
 
@@ -634,7 +635,7 @@ class PainelControllerJS extends AbstratoPanel {
 		exportar.addInstrucao("var msg = validar" + Util.capitalize(filtro) + "()");
 
 		Else elsee = new Else();
-		elsee.addComentario("Msg.error(msg);");
+		elsee.addComentario("MensagemService.error(msg);");
 		elsee.addComentario("$scope.$emit('msg', msg, null, 'warning');");
 
 		If iff = exportar.criarIf("isVazio(msg)", elsee);
