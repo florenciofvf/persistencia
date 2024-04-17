@@ -54,9 +54,6 @@ public class LegadoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		if (menu.getItemCount() > 0) {
-			menu.addSeparator();
-		}
 		List<JMenuItem> lista = new ArrayList<>();
 		lista.add(new MenuLegado(formulario));
 		return lista;

@@ -175,9 +175,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		if (menu.getItemCount() > 0) {
-			menu.addSeparator();
-		}
 		List<JMenuItem> lista = new ArrayList<>();
 		JMenuItem itemNovo = new JMenuItem(Mensagens.getString(Constantes.LABEL_NOVO), Icones.CUBO);
 		itemNovo.addActionListener(e -> novo(formulario));

@@ -40,9 +40,6 @@ public class QuebraLogFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		if (menu.getItemCount() > 0) {
-			menu.addSeparator();
-		}
 		List<JMenuItem> lista = new ArrayList<>();
 		lista.add(new MenuQuebraLog(formulario));
 		return lista;

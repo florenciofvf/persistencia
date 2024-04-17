@@ -18,6 +18,7 @@ import br.com.persist.componente.Menu;
 public class MenuApp {
 	private final List<MenuApp> filhos;
 	private String classeFabrica;
+	private boolean separador;
 	private String descricao;
 	private boolean ativo;
 	private String icone;
@@ -65,6 +66,7 @@ public class MenuApp {
 	}
 
 	public void aplicar(Attributes attr) {
+		separador = Boolean.parseBoolean(attr.getValue("separador"));
 		ativo = Boolean.parseBoolean(attr.getValue("ativo"));
 		classeFabrica = attr.getValue("classeFabrica");
 		descricao = attr.getValue("descricao");
@@ -82,6 +84,9 @@ public class MenuApp {
 		Menu menu = new Menu(descricao, false, getIcon());
 		for (MenuApp filho : filhos) {
 			if (filho.ativo) {
+				if (filho.separador) {
+					menu.addSeparator();
+				}
 				List<JMenuItem> itens = filho.criarItens(formulario, menu);
 				for (JMenuItem item : itens) {
 					menu.add(item);

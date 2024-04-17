@@ -58,9 +58,6 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		if (menu.getItemCount() > 0) {
-			menu.addSeparator();
-		}
 		JMenuItem itemOutraInstancia = new JMenuItem(FormularioMensagens.getString("label.abrir_outra_instancia"),
 				Icones.CRIAR2);
 		JMenuItem itemFecharEConexao = new JMenuItem(FormularioMensagens.getString("label.fechar_com_conexao"),

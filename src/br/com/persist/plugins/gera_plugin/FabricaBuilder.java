@@ -5,7 +5,6 @@ import br.com.persist.geradores.ClassePrivada;
 import br.com.persist.geradores.ClassePublica;
 import br.com.persist.geradores.ConstrutorPrivado;
 import br.com.persist.geradores.Funcao;
-import br.com.persist.geradores.If;
 import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.Variavel;
 
@@ -87,8 +86,6 @@ public class FabricaBuilder extends Builder {
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("List<JMenuItem>", "criarMenuItens",
 				new Parametros("Formulario formulario, JMenu menu"));
-		If se = funcao.criarIf("menu.getItemCount() > 0", null);
-		se.addInstrucao("menu.addSeparator()");
 
 		funcao.addInstrucao("List<JMenuItem> lista = new ArrayList<>()");
 		funcao.addInstrucao("lista.add(new Menu" + config.nameCap + "(formulario))");
