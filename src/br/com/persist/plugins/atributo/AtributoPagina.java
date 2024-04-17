@@ -649,15 +649,21 @@ class PainelControllerJS extends AbstratoPainelJS {
 				AtributoUtil.getComponente(mapaServiceJS) + "." + AtributoUtil.getPesquisar(mapaServiceJS)
 						+ "(criarParam" + Util.capitalize(filtro) + "()).then(function(result) {");
 
-		invocaProm.addInstrucao("var lista = result.data");
-		invocaProm.addComentario("vm.pesquisados.settings().dataset = lista;");
-		invocaProm.addInstrucao("vm.pesquisados.settings({data: lista})");
-		invocaProm.addInstrucao("vm.pesquisados.reload()");
+		if (chkModeloLista.isSelected()) {
+			invocaProm.addInstrucao("var lista = result.data");
+			invocaProm.addComentario("vm.pesquisados.settings().dataset = lista;");
+			invocaProm.addInstrucao("vm.pesquisados.settings({data: lista})");
+			invocaProm.addInstrucao("vm.pesquisados.reload()");
 
-		If ifLength = invocaProm.criarIf("lista.length === 0", null);
-
-		ifLength.addComentario("MensagemService.info('Nenhum registro encontrado');");
-		ifLength.addComentario("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');");
+			If ifLength = invocaProm.criarIf("lista.length === 0", null);
+			ifLength.addComentario("MensagemService.info('Nenhum registro encontrado');");
+			ifLength.addComentario("$scope.$emit('msg', 'Nenhum registro encontrado', null, 'warning');");
+		} else {
+			Else elseData = new Else();
+			elseData.addInstrucao("console.log('Sem data')");
+			If ifData = invocaProm.criarIf("result.data", elseData);
+			ifData.addInstrucao("var dto = result.data.plain()");
+		}
 	}
 
 	private void fnExportar(JSFuncao funcao, Mapa mapaControllerJS, Mapa mapaServiceJS, String filtro) {
@@ -1047,8 +1053,8 @@ class PainelRest extends AbstratoPanel {
 		classe.addAnotacao("Consumes(" + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao("Produces(" + AtributoConstantes.APPLICATION_JSON + ")");
 
-		FuncaoPublica funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaRest),
-				beanParam(raiz));
+		String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+		FuncaoPublica funcao = classe.criarFuncaoPublica(retorno, AtributoUtil.getPesquisar(mapaRest), beanParam(raiz));
 		funcao.addReturn("service." + AtributoUtil.getPesquisarFilter(mapaService));
 
 		return classe;
@@ -1113,7 +1119,8 @@ class PainelService extends AbstratoPanel {
 
 		InterfacePublica interfacee = arquivo.criarInterfacePublica(AtributoUtil.getComponente(mapaService));
 
-		interfacee.criarFuncaoAbstrata(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService),
+		String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+		interfacee.criarFuncaoAbstrata(retorno, AtributoUtil.getPesquisar(mapaService),
 				new Parametros(raiz.getTipoFilter()));
 		interfacee.newLine();
 
@@ -1169,7 +1176,8 @@ class PainelBean extends AbstratoPanel {
 		classe.addCampoPrivado(raiz.getTipoDAO());
 
 		classe.addOverride(true);
-		Funcao funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaService),
+		String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+		Funcao funcao = classe.criarFuncaoPublica(retorno, AtributoUtil.getPesquisar(mapaService),
 				new Parametros(raiz.getTipoFilter()));
 		funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
 
@@ -1212,7 +1220,8 @@ class PainelDAO extends AbstratoPanel {
 
 		InterfacePublica interfacee = arquivo.criarInterfacePublica(AtributoUtil.getComponente(mapaDAO));
 
-		interfacee.criarFuncaoAbstrata(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO),
+		String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+		interfacee.criarFuncaoAbstrata(retorno, AtributoUtil.getPesquisar(mapaDAO),
 				new Parametros(raiz.getTipoFilter()));
 
 		arquivo.gerar(-1, pool);
@@ -1258,9 +1267,14 @@ class PainelDAOImpl extends AbstratoPanel {
 		classe.addCampoPrivado(new Variavel("EntityManager", "entityManager"));
 
 		classe.addOverride(true);
-		Funcao funcao = classe.criarFuncaoPublica(raiz.getListDTO(), AtributoUtil.getPesquisar(mapaDAO),
+		String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+		Funcao funcao = classe.criarFuncaoPublica(retorno, AtributoUtil.getPesquisar(mapaDAO),
 				new Parametros(raiz.getTipoFilter()));
-		funcao.addInstrucao(raiz.getListDTO() + " resp = new ArrayList<>()");
+		if (chkModeloLista.isSelected()) {
+			funcao.addInstrucao(raiz.getListDTO() + " resp = new ArrayList<>()");
+		} else {
+			funcao.addInstrucao(raiz.getDTO() + " resp = null");
+		}
 		funcao.addComentario("entityManager.find...").newLine();
 		funcao.addReturn("resp");
 
