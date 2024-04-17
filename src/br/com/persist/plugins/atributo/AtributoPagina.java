@@ -909,6 +909,8 @@ class PainelDTO extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
+		arquivo.addAnotacao("JsonIgnoreProperties(ignoreUnknown = true)");
+
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport("java.util.Date").newLine();
 		}
