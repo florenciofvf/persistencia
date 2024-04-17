@@ -8,6 +8,7 @@ public class AtributoConstantes {
 	public static final String CONTROLLER_JS = "controllerJS";
 	public static final String LIMPAR_FILTRO = "limparFiltro";
 	public static final String IMPORT_LIST = "java.util.List";
+	public static final String MODELO_LISTA = "modeloLista";
 	public static final String COMPONENTE = "componente";
 	public static final String SERVICE_JS = "serviceJS";
 	public static final String IGNORADOS = "ignorados";

@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -40,6 +41,7 @@ import br.com.persist.assistencia.StringPool;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -256,6 +258,7 @@ public class AtributoPagina extends Panel {
 						AtributoProcessador processador = new AtributoProcessador(handler, textArea.getText());
 						processador.processar();
 						raiz = new Raiz(handler.getRaiz());
+						painelFichario.selecionarModeloLista(raiz.isModeloLista());
 						if (raiz.getMapaAtributos() != null) {
 							Mapa mapAtributos = raiz.getMapaAtributos();
 							List<Atributo> atributos = new ArrayList<>();
@@ -306,6 +309,7 @@ public class AtributoPagina extends Panel {
 
 			private Mapa criarMapaHierarquia(Atributo... atributos) {
 				Mapa resp = new Mapa();
+				resp.put(AtributoConstantes.MODELO_LISTA, "true");
 				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
 				resp.put(AtributoConstantes.FILTRO_JS, AtributoConstantes.FILTRO);
 				resp.put(AtributoConstantes.CONTROLLER_JS, criarMapa(AtributoConstantes.CONTROLLER_JS,
@@ -424,26 +428,44 @@ class PainelFichario extends JTabbedPane {
 	private void addAba(AbstratoPanel panel) {
 		addTab(AtributoMensagens.getString(panel.getChaveTitulo()), panel);
 	}
+
+	void selecionarModeloLista(boolean b) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof AbstratoPanel) {
+				AbstratoPanel p = (AbstratoPanel) cmp;
+				p.selecionarModeloLista(b);
+			}
+		}
+	}
 }
 
 abstract class AbstratoPanel extends Panel {
+	protected final CheckBox chkModeloLista = new CheckBox(AtributoMensagens.getString("label.modelo_lista"), false);
 	private static final long serialVersionUID = 1L;
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private final AtributoPagina pagina;
 
-	AbstratoPanel(AtributoPagina pagina) {
+	AbstratoPanel(AtributoPagina pagina, boolean comCheckModelo) {
 		this.pagina = pagina;
-		montarLayout();
+		montarLayout(comCheckModelo);
 	}
 
 	public AtributoPagina getPagina() {
 		return pagina;
 	}
 
-	private void montarLayout() {
+	private void montarLayout(boolean comCheckModelo) {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, criarPanelTextArea());
+		if (comCheckModelo) {
+			toolbar.add(chkModeloLista);
+		}
+	}
+
+	void selecionarModeloLista(boolean b) {
+		chkModeloLista.setSelected(b);
 	}
 
 	private Panel criarPanelTextArea() {
@@ -495,7 +517,7 @@ class PainelView extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelView(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 	}
 
 	@Override
@@ -543,7 +565,7 @@ class PainelControllerJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelControllerJS(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, true);
 	}
 
 	@Override
@@ -805,7 +827,7 @@ class PainelServiceJS extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelServiceJS(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 	}
 
 	@Override
@@ -860,7 +882,7 @@ class PainelDTO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDTO(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 	}
 
 	@Override
@@ -903,7 +925,7 @@ class PainelFilter extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelFilter(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 	}
 
 	@Override
@@ -956,7 +978,7 @@ class PainelRest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelRest(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, true);
 	}
 
 	@Override
@@ -1055,7 +1077,7 @@ class PainelService extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelService(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, true);
 	}
 
 	@Override
@@ -1099,7 +1121,7 @@ class PainelBean extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelBean(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, true);
 	}
 
 	@Override
@@ -1157,7 +1179,7 @@ class PainelDAO extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDAO(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, true);
 	}
 
 	@Override
@@ -1194,7 +1216,7 @@ class PainelDAOImpl extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelDAOImpl(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, true);
 	}
 
 	@Override
@@ -1243,7 +1265,7 @@ class PainelTest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
 	PainelTest(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 	}
 
 	@Override

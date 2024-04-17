@@ -18,6 +18,10 @@ public class Raiz {
 		return mapa;
 	}
 
+	public boolean isModeloLista() {
+		return Boolean.parseBoolean(mapa.getString(AtributoConstantes.MODELO_LISTA));
+	}
+
 	public Mapa getMapaAtributos() {
 		return mapa.getMapa(AtributoConstantes.ATRIBUTOS);
 	}
