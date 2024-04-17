@@ -302,6 +302,7 @@ public class AtributoPagina extends Panel {
 				int pos = string.lastIndexOf(".");
 				String nome = pos != -1 ? string.substring(pos + 1) : string;
 				Atributo att = new Atributo();
+				att.setRotulo(Util.capitalize(nome));
 				att.setClasse("String");
 				att.setNome(nome);
 				return att;
