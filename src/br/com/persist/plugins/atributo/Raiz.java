@@ -22,12 +22,12 @@ public class Raiz {
 		return mapa.getMapa(AtributoConstantes.ATRIBUTOS);
 	}
 
-	public String getFiltroCapitalize() {
-		return Util.capitalize(getFiltro());
+	public String getFiltroJSCapitalize() {
+		return Util.capitalize(getFiltroJS());
 	}
 
-	public String getFiltro() {
-		return mapa.getString(AtributoConstantes.FILTRO);
+	public String getFiltroJS() {
+		return mapa.getString(AtributoConstantes.FILTRO_JS);
 	}
 
 	public Mapa getMapaControllerJS() {

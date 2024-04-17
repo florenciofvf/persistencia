@@ -297,14 +297,14 @@ public class AtributoPagina extends Panel {
 			private Mapa criarMapaHierarquia(Atributo... atributos) {
 				Mapa resp = new Mapa();
 				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
-				resp.put(AtributoConstantes.FILTRO, AtributoConstantes.FILTRO);
+				resp.put(AtributoConstantes.FILTRO_JS, AtributoConstantes.FILTRO);
 				resp.put(AtributoConstantes.CONTROLLER_JS, criarMapa(AtributoConstantes.CONTROLLER_JS,
 						new ChaveValor(AtributoConstantes.LIMPAR_FILTRO, AtributoConstantes.LIMPAR_FILTRO)));
 				resp.put(AtributoConstantes.SERVICE_JS, criarMapa(AtributoConstantes.SERVICE_JS));
-				resp.put(AtributoConstantes.DTO, AtributoConstantes.DTO);
-				resp.put(AtributoConstantes.FILTER, AtributoConstantes.FILTER);
+				resp.put(AtributoConstantes.FILTER, Util.capitalize(AtributoConstantes.FILTER));
 				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST,
 						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
+				resp.put(AtributoConstantes.DTO, AtributoConstantes.DTO.toUpperCase());
 				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
 				resp.put(AtributoConstantes.BEAN, AtributoConstantes.BEAN);
 				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO));
@@ -545,7 +545,7 @@ class PainelControllerJS extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = raiz.getFiltro();
+		String filtro = raiz.getFiltroJS();
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
@@ -671,7 +671,7 @@ class PainelParamJS extends PainelControllerJS {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = raiz.getFiltro();
+		String filtro = raiz.getFiltroJS();
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
@@ -720,7 +720,7 @@ class PainelValidarJS extends PainelControllerJS {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		String filtro = raiz.getFiltro();
+		String filtro = raiz.getFiltroJS();
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();

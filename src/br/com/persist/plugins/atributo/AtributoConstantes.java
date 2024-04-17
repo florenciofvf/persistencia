@@ -13,6 +13,7 @@ public class AtributoConstantes {
 	public static final String IGNORADOS = "ignorados";
 	public static final String ATRIBUTOS = "atributos";
 	public static final String PESQUISAR = "pesquisar";
+	public static final String FILTRO_JS = "filtroJS";
 	public static final String END_POINT = "endPoint";
 	public static final String EXPORTAR = "exportar";
 	public static final String ATRIBUTO = "atributo";
