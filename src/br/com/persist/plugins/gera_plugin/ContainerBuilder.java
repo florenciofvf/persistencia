@@ -109,6 +109,7 @@ public class ContainerBuilder extends Builder {
 			Funcao funcao = classe.criarFuncaoPublica(config.nameCapDialogo(), "get" + config.nameCapDialogo());
 			funcao.addReturn(config.nameDecapDialogo());
 
+			classe.newLine();
 			funcao = classe.criarFuncaoPublica("void", "set" + config.nameCapDialogo(),
 					new Parametros(config.nameCapDialogo() + " " + config.nameDecapDialogo()));
 			funcao.addInstrucao("this." + config.nameDecapDialogo() + " = " + config.nameDecapDialogo());
