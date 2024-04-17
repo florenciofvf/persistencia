@@ -203,7 +203,17 @@ public class AtributoPagina extends Panel {
 			private void criarNovoArquivo(Atributo... atributos) {
 				try {
 					Mapa mapaHierarquia = criarMapaHierarquia(atributos);
-					textArea.setText(mapaHierarquia.toString());
+					StringBuilder sb = new StringBuilder();
+					for (ChaveValor cv : mapaHierarquia.getLista()) {
+						if (sb.length() > 0) {
+							sb.append("\n\n");
+						}
+						Object valor = cv.getValor();
+						String toStr = (valor instanceof String) ? Util.citar2(valor.toString())
+								: ((Mapa) valor).toString(1);
+						sb.append(Mapa.tabular(1) + Util.citar2(cv.getChave()) + ": " + toStr);
+					}
+					textArea.setText("{\n" + sb.toString() + "\n}");
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
 				}

@@ -8,7 +8,7 @@ import br.com.persist.assistencia.Util;
 
 public class Mapa {
 	private final List<ChaveValor> lista;
-	private boolean formatEspecial;
+	private boolean semFormatacao;
 	protected Mapa parent;
 
 	public Mapa() {
@@ -63,12 +63,12 @@ public class Mapa {
 		lista.clear();
 	}
 
-	public boolean isFormatEspecial() {
-		return formatEspecial;
+	public boolean isSemFormatacao() {
+		return semFormatacao;
 	}
 
-	public void setFormatEspecial(boolean formatEspecial) {
-		this.formatEspecial = formatEspecial;
+	public void setSemFormatacao(boolean semFormatacao) {
+		this.semFormatacao = semFormatacao;
 	}
 
 	public List<String> getChaves() {
@@ -87,6 +87,10 @@ public class Mapa {
 		return resp;
 	}
 
+	public List<ChaveValor> getLista() {
+		return lista;
+	}
+
 	private boolean valorValido(Object valor) {
 		return (valor instanceof String) || (valor instanceof Mapa);
 	}
@@ -96,7 +100,7 @@ public class Mapa {
 		return toString(0);
 	}
 
-	private String toString(int tab) {
+	public String toString(int tab) {
 		StringBuilder sb = new StringBuilder("{\n");
 		Iterator<ChaveValor> it = lista.iterator();
 		if (it.hasNext()) {
@@ -106,17 +110,17 @@ public class Mapa {
 			sb.append(tabular(tab + 1) + Util.citar2(cv.getChave()) + ": " + toStr);
 		}
 		while (it.hasNext()) {
-			sb.append(formatEspecial ? " " : "\n");
+			sb.append(semFormatacao ? " " : "\n");
 			ChaveValor cv = it.next();
 			Object valor = cv.getValor();
 			String toStr = (valor instanceof String) ? Util.citar2(valor.toString()) : ((Mapa) valor).toString(tab + 1);
-			sb.append((formatEspecial ? "" : tabular(tab + 1)) + Util.citar2(cv.getChave()) + ": " + toStr);
+			sb.append((semFormatacao ? "" : tabular(tab + 1)) + Util.citar2(cv.getChave()) + ": " + toStr);
 		}
 		sb.append("\n" + tabular(tab) + "}");
 		return sb.toString();
 	}
 
-	private String tabular(int i) {
+	public static String tabular(int i) {
 		i *= 4;
 		StringBuilder sb = new StringBuilder();
 		int c = 0;

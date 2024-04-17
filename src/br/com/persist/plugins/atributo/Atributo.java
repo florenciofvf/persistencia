@@ -78,7 +78,7 @@ public class Atributo {
 		mapa.put("classe", classe);
 		mapa.put("viewToBack", viewToBack);
 		mapa.put("parseDate", getParseDate());
-		mapa.setFormatEspecial(true);
+		mapa.setSemFormatacao(true);
 		return mapa;
 	}
 
