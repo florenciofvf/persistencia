@@ -895,7 +895,7 @@ class PainelServiceJS extends AbstratoPanel {
 	private void fnBuscarTodos(JSReturnObj returnObj, Mapa mapaServiceJS, Mapa mapaRest) {
 		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(true,
 				AtributoUtil.getBuscarTodos(mapaServiceJS));
-		funcao.addReturn("Restangular.all(PATH).customGET('" + AtributoUtil.getBuscarTodos(mapaRest) + "')");
+		funcao.addReturn("Restangular.all(PATH).customGET('" + AtributoUtil.getBuscarTodos(mapaRest) + "', {})");
 	}
 
 	private void fnPesquisar(JSReturnObj returnObj, Mapa mapaServiceJS, Mapa mapaRest) {
