@@ -321,6 +321,7 @@ public class AtributoPagina extends Panel {
 						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
 				resp.put(AtributoConstantes.DTO, AtributoConstantes.DTO.toUpperCase());
 				resp.put(AtributoConstantes.DTO_TODOS, Util.capitalize(AtributoConstantes.DTO_TODOS));
+				resp.put(AtributoConstantes.DTO_DETALHE, Util.capitalize(AtributoConstantes.DTO_DETALHE));
 				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
 				resp.put(AtributoConstantes.BEAN, Util.capitalize(AtributoConstantes.BEAN));
 				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO.toUpperCase()));
@@ -343,6 +344,7 @@ public class AtributoPagina extends Panel {
 				resp.put(AtributoConstantes.BUSCAR_TODOS, AtributoConstantes.BUSCAR_TODOS);
 				resp.put(AtributoConstantes.PESQUISAR, AtributoConstantes.PESQUISAR);
 				resp.put(AtributoConstantes.EXPORTAR, AtributoConstantes.EXPORTAR);
+				resp.put(AtributoConstantes.DETALHAR, AtributoConstantes.DETALHAR);
 				for (ChaveValor cv : cvs) {
 					resp.put(cv.getChave(), cv.getValor());
 				}
@@ -422,6 +424,7 @@ class PainelFichario extends JTabbedPane {
 		addAba(new PainelRest(pagina));
 		addAba(new PainelDTO(pagina));
 		addAba(new PainelDTOTodos(pagina));
+		addAba(new PainelDTODetalhe(pagina));
 		addAba(new PainelService(pagina));
 		addAba(new PainelBean(pagina));
 		addAba(new PainelDAO(pagina));
@@ -930,7 +933,7 @@ class PainelDTO extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		arquivo.addAnotacao("JsonIgnoreProperties(ignoreUnknown = true)");
+		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
 
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
@@ -975,12 +978,57 @@ class PainelDTOTodos extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		arquivo.addAnotacao("JsonIgnoreProperties(ignoreUnknown = true)");
+		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
 
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTOTodos());
+
+		for (Atributo att : atributos) {
+			classe.addCampoPrivado(att.criarVariavel());
+		}
+
+		for (Atributo att : atributos) {
+			classe.newLine();
+			Variavel tipo = att.criarVariavel();
+			classe.criarMetodoGet(tipo);
+			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
+				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
+			}
+			classe.newLine();
+			classe.criarMetodoSet(tipo);
+		}
+
+		arquivo.gerar(-1, pool);
+		setText(pool.toString());
+	}
+}
+
+class PainelDTODetalhe extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelDTODetalhe(AtributoPagina pagina) {
+		super(pagina, false);
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.dto_detalhe";
+	}
+
+	@Override
+	void gerar(Raiz raiz, List<Atributo> atributos) {
+		StringPool pool = new StringPool();
+		Arquivo arquivo = new Arquivo();
+		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
+
+		if (AtributoUtil.contemParseDateValido(atributos)) {
+			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
+		}
+		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTODetalhe());
 
 		for (Atributo att : atributos) {
 			classe.addCampoPrivado(att.criarVariavel());

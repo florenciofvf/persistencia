@@ -22,6 +22,10 @@ public class AtributoUtil {
 		return mapa.getString(AtributoConstantes.EXPORTAR);
 	}
 
+	public static String getDetalhar(Mapa mapa) {
+		return mapa.getString(AtributoConstantes.DETALHAR);
+	}
+
 	public static String getPesquisarFilter(Mapa mapa) {
 		return AtributoUtil.getPesquisar(mapa) + "(filter)";
 	}

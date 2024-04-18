@@ -1,6 +1,7 @@
 package br.com.persist.plugins.atributo;
 
 public class AtributoConstantes {
+	public static final String IGNORE_PROPERTIES = "JsonIgnoreProperties(ignoreUnknown = true)";
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
 	public static final String DATA_UTIL_PARSE_DATE = "DataUtil.parseDate(";
 	public static final String LABEL_ATRIBUTO_MIN = "label.atributo_min";
@@ -12,6 +13,7 @@ public class AtributoConstantes {
 	public static final String IMPORT_LIST = "java.util.List";
 	public static final String MODELO_LISTA = "modeloLista";
 	public static final String BUSCAR_TODOS = "buscarTodos";
+	public static final String DTO_DETALHE = "dtoDetalhe";
 	public static final String COMPONENTE = "componente";
 	public static final String SERVICE_JS = "serviceJS";
 	public static final String IGNORADOS = "ignorados";
@@ -22,6 +24,7 @@ public class AtributoConstantes {
 	public static final String DTO_TODOS = "dtoTodos";
 	public static final String EXPORTAR = "exportar";
 	public static final String ATRIBUTO = "atributo";
+	public static final String DETALHAR = "detalhar";
 	public static final String DAO_IMPL = "daoImpl";
 	public static final String DAO_IMP2 = "DAOImpl";
 	public static final String SERVICE = "service";
