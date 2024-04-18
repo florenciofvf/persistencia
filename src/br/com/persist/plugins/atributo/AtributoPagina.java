@@ -453,6 +453,7 @@ abstract class AbstratoPanel extends Panel {
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private final AtributoPagina pagina;
+	protected int contador;
 
 	AbstratoPanel(AtributoPagina pagina, boolean comCheckModelo) {
 		this.pagina = pagina;
@@ -1330,25 +1331,35 @@ class PainelService extends AbstratoPanel {
 		String nome = AtributoUtil.getBuscarTodos(mapaService);
 		if (!Util.isEmpty(nome)) {
 			interfacee.criarFuncaoAbstrata(raiz.getListDTOTodos(), nome);
+			contador++;
 		}
 
 		nome = AtributoUtil.getPesquisar(mapaService);
 		if (!Util.isEmpty(nome)) {
 			String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
-			interfacee.newLine();
+			if (contador > 0) {
+				interfacee.newLine();
+			}
 			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilter()));
+			contador++;
 		}
 
 		nome = AtributoUtil.getDetalhar(mapaService);
 		if (!Util.isEmpty(nome)) {
-			interfacee.newLine();
+			if (contador > 0) {
+				interfacee.newLine();
+			}
 			interfacee.criarFuncaoAbstrata(raiz.getDTODetalhe(), nome, new Parametros(AtributoConstantes.LONG_ID));
+			contador++;
 		}
 
 		nome = AtributoUtil.getExportar(mapaService);
 		if (!Util.isEmpty(nome)) {
-			interfacee.newLine();
+			if (contador > 0) {
+				interfacee.newLine();
+			}
 			interfacee.criarFuncaoAbstrata("byte[]", nome, new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
+			contador++;
 		}
 
 		arquivo.gerar(-1, pool);
@@ -1466,19 +1477,26 @@ class PainelDAO extends AbstratoPanel {
 		String nome = AtributoUtil.getBuscarTodos(mapaDAO);
 		if (!Util.isEmpty(nome)) {
 			interfacee.criarFuncaoAbstrata(raiz.getListDTOTodos(), nome);
+			contador++;
 		}
 
 		nome = AtributoUtil.getPesquisar(mapaDAO);
 		if (!Util.isEmpty(nome)) {
 			String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
-			interfacee.newLine();
+			if (contador > 0) {
+				interfacee.newLine();
+			}
 			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilter()));
+			contador++;
 		}
 
 		nome = AtributoUtil.getDetalhar(mapaDAO);
 		if (!Util.isEmpty(nome)) {
-			interfacee.newLine();
+			if (contador > 0) {
+				interfacee.newLine();
+			}
 			interfacee.criarFuncaoAbstrata(raiz.getDTODetalhe(), nome, new Parametros(AtributoConstantes.LONG_ID));
+			contador++;
 		}
 
 		arquivo.gerar(-1, pool);
