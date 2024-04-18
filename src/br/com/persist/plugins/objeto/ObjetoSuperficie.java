@@ -2385,12 +2385,12 @@ class MestreDetalhe {
 			return;
 		}
 		List<String> colunasMestes = internalMestre.getNomeColunas();
-		colunaMestre = selecionarColuna(colunasMestes, "msg.selecione_coluna_mestre", mestre.getId());
+		colunaMestre = selecionarColuna(colunasMestes, "msg.selecione_coluna_mestre", mestre.getId(), null);
 		if (Util.isEmpty(colunaMestre)) {
 			return;
 		}
 		List<String> colunasDetalhe = internalDetalhe.getNomeColunas();
-		colunaDetalhe = selecionarColuna(colunasDetalhe, "msg.selecione_coluna_detalhe", detalhe.getId());
+		colunaDetalhe = selecionarColuna(colunasDetalhe, "msg.selecione_coluna_detalhe", detalhe.getId(), colunaMestre);
 		if (Util.isEmpty(colunaDetalhe)) {
 			return;
 		}
@@ -2438,10 +2438,10 @@ class MestreDetalhe {
 		}
 	}
 
-	private String selecionarColuna(List<String> colunas, String chaveTitulo, String param) {
+	private String selecionarColuna(List<String> colunas, String chaveTitulo, String param, String selecionarItem) {
 		Coletor coletor = new Coletor();
 		SetLista.view(ObjetoMensagens.getString(chaveTitulo, param), colunas, coletor, superficie,
-				new SetLista.Config(true, true));
+				new SetLista.Config(true, true, selecionarItem));
 		if (coletor.size() == 1) {
 			return coletor.get(0);
 		}

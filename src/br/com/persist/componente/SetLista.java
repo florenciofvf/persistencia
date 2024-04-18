@@ -56,14 +56,20 @@ public class SetLista {
 	}
 
 	public static class Config {
+		final String selecionarItemIgual;
 		final boolean obrigatorio;
 		final boolean somenteUm;
 		String mensagem;
 		boolean criar;
 
-		public Config(boolean obrigatorio, boolean somenteUm) {
+		public Config(boolean obrigatorio, boolean somenteUm, String selecionarItemIgual) {
+			this.selecionarItemIgual = selecionarItemIgual;
 			this.obrigatorio = obrigatorio;
 			this.somenteUm = somenteUm;
+		}
+
+		public Config(boolean obrigatorio, boolean somenteUm) {
+			this(obrigatorio, somenteUm, null);
 		}
 
 		public Config(boolean somenteUm) {
@@ -163,6 +169,12 @@ class Item implements Comparable<Item> {
 
 	public void setTag(int tag) {
 		this.tag = tag;
+	}
+
+	public void selecionarSe(Config config) {
+		if (rotulo != null && rotulo.equalsIgnoreCase(config.selecionarItemIgual)) {
+			selecionado = true;
+		}
 	}
 
 	@Override
@@ -283,7 +295,7 @@ class SetListaDialogo extends AbstratoDialogo {
 	}
 
 	private void init(List<String> listaString) {
-		lista.setModel(criarModel(listaString, config));
+		lista.setModel(criarModel(listaString));
 		lista.setCellRenderer(new ItemRenderer());
 		setSize(Constantes.SIZE3);
 		toolbar.ini(this);
@@ -291,7 +303,7 @@ class SetListaDialogo extends AbstratoDialogo {
 		eventos();
 	}
 
-	private ListModel<Item> criarModel(List<String> lista, Config config) {
+	private ListModel<Item> criarModel(List<String> lista) {
 		boolean sel = lista.size() == 1 || !config.somenteUm;
 		List<Item> listaItem = criarListaItem(lista, sel);
 		return new SetListaModelo(listaItem, config);
@@ -300,7 +312,9 @@ class SetListaDialogo extends AbstratoDialogo {
 	private List<Item> criarListaItem(List<String> lista, boolean sel) {
 		List<Item> listaItem = new ArrayList<>();
 		for (String string : lista) {
-			listaItem.add(new Item(string, sel));
+			Item item = new Item(string, sel);
+			item.selecionarSe(config);
+			listaItem.add(item);
 		}
 		return listaItem;
 	}
