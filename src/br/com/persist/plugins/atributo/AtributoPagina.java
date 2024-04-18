@@ -1533,20 +1533,24 @@ class PainelTest extends AbstratoPanel {
 		ClassePublica classe = arquivo.criarClassePublica(AtributoUtil.getComponente(mapaTest));
 
 		classe.addAnotacao("InjectMocks");
-		classe.addCampoPrivado(new Variavel(AtributoUtil.getComponente(mapaService), "service")).newLine();
+		classe.addCampoPrivado(new Variavel(AtributoUtil.getComponente(mapaService), "service"));
 
+		classe.newLine();
 		classe.addAnotacao("Test");
 		Funcao funcao = classe.criarFuncaoPublica("void", AtributoUtil.getBuscarTodos(mapaTest));
 		funcao.addComentario("...");
 
+		classe.newLine();
 		classe.addAnotacao("Test");
 		funcao = classe.criarFuncaoPublica("void", AtributoUtil.getPesquisar(mapaTest));
 		funcao.addComentario("...");
 
+		classe.newLine();
 		classe.addAnotacao("Test");
 		funcao = classe.criarFuncaoPublica("void", AtributoUtil.getDetalhar(mapaTest));
 		funcao.addComentario("...");
 
+		classe.newLine();
 		classe.addAnotacao("Test");
 		funcao = classe.criarFuncaoPublica("void", AtributoUtil.getExportar(mapaTest));
 		funcao.addComentario("...");
