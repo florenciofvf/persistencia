@@ -2895,11 +2895,34 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
+			private class ChavesExportadasAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private ChavesExportadasAcao() {
+					super(true, ObjetoMensagens.getString("label.chaves_exportadas"), false, Icones.KEY);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = getConexao();
+					if (conexao != null) {
+						try {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							MemoriaModelo modelo = Persistencia.criarModeloChavesExportadas(conn, conexao,
+									objeto.getTabela());
+							TabelaDialogo.criar(InternalContainer.this, objeto.getTitle("CHAVES-EXPORTADAS"), modelo);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
+						}
+					}
+				}
+			}
+
 			private class ChavesImportadasAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
 				private ChavesImportadasAcao() {
-					super(true, "label.chaves_importadas", Icones.KEY);
+					super(true, ObjetoMensagens.getString("label.chaves_importadas"), false, Icones.KEY);
 				}
 
 				@Override
@@ -3143,29 +3166,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 						return false;
-					}
-				}
-			}
-
-			private class ChavesExportadasAcao extends Action {
-				private static final long serialVersionUID = 1L;
-
-				private ChavesExportadasAcao() {
-					super(true, "label.chaves_exportadas", Icones.KEY);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = getConexao();
-					if (conexao != null) {
-						try {
-							Connection conn = ConexaoProvedor.getConnection(conexao);
-							MemoriaModelo modelo = Persistencia.criarModeloChavesExportadas(conn, conexao,
-									objeto.getTabela());
-							TabelaDialogo.criar(InternalContainer.this, objeto.getTitle("CHAVES-EXPORTADAS"), modelo);
-						} catch (Exception ex) {
-							Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
-						}
 					}
 				}
 			}
