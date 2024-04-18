@@ -28,6 +28,7 @@ public class AtributoConstantes {
 	public static final String DAO_IMPL = "daoImpl";
 	public static final String DAO_IMP2 = "DAOImpl";
 	public static final String SERVICE = "service";
+	public static final String LONG_ID = "Long id";
 	public static final String FILTER = "filter";
 	public static final String PUBLIC = "public";
 	public static final String FILTRO = "filtro";
