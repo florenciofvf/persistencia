@@ -63,6 +63,7 @@ public class RelacaoContainer extends Panel {
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Relacao relacao;
+	private String ultimoCampoSelecionado;
 
 	public RelacaoContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Relacao relacao) {
 		this.objetoSuperficie = Objects.requireNonNull(objetoSuperficie);
@@ -463,9 +464,11 @@ public class RelacaoContainer extends Panel {
 
 		private void exibirCampos() {
 			Coletor coletor = new Coletor();
-			objetoSuperficie.selecionarCampo(objeto, coletor, RelacaoContainer.this);
+			objetoSuperficie.selecionarCampo(objeto, coletor, RelacaoContainer.this, ultimoCampoSelecionado);
 			if (coletor.size() == 1) {
-				textField.setText(coletor.get(0));
+				String string = coletor.get(0);
+				ultimoCampoSelecionado = string;
+				textField.setText(string);
 				textField.postActionEvent();
 			}
 		}

@@ -21,6 +21,8 @@ public interface InternalListener {
 	public interface Vinculo {
 		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal);
 
+		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem);
+
 		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef);
 
 		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto);
@@ -32,8 +34,6 @@ public interface InternalListener {
 		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto);
 
 		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException;
-
-		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c);
 
 		public void getMetadado(AtomicReference<Object> ref, Objeto objeto);
 

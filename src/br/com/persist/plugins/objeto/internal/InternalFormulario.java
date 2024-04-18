@@ -277,10 +277,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
-		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c) {
+		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).selecionarCampo(objeto, coletor, c);
+				((ObjetoSuperficie) desktop).selecionarCampo(objeto, coletor, c, selecionarItem);
 			}
 		}
 

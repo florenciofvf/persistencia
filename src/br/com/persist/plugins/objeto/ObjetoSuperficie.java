@@ -1392,7 +1392,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		this.arquivoVinculo = arquivoVinculo;
 	}
 
-	public void selecionarCampo(Objeto objeto, Coletor coletor, Component c) {
+	public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem) {
 		Conexao conexao = container.getConexaoPadrao();
 		if (conexao == null) {
 			Util.mensagem(c, ObjetoMensagens.getString("msg.sem_conexao_sel"));
@@ -1407,7 +1407,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela());
 				SetLista.view(ObjetoMensagens.getString("label.colunas_de", objeto.getId()), modelo.getLista(2),
-						coletor, c, new SetLista.Config(false, true));
+						coletor, c, new SetLista.Config(false, true, selecionarItem));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);
 			}

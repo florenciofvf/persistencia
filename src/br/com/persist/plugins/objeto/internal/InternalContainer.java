@@ -3756,7 +3756,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private void criarAtualizarPesquisa(String coluna, String nomePesquisa, Objeto objDetalhe) {
 			Coletor coletor = new Coletor();
-			vinculoListener.selecionarCampo(objDetalhe, coletor, InternalContainer.this);
+			vinculoListener.selecionarCampo(objDetalhe, coletor, InternalContainer.this, coluna);
 			if (coletor.size() != 1) {
 				return;
 			}
