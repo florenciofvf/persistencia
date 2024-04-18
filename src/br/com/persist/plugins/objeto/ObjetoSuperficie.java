@@ -2364,7 +2364,6 @@ class MestreDetalhe {
 	Conexao conexao;
 
 	MestreDetalhe(ObjetoSuperficie superficie, Objeto mestre, Objeto detalhe) {
-		super();
 		this.superficie = superficie;
 		this.mestre = mestre;
 		this.detalhe = detalhe;
@@ -2465,7 +2464,7 @@ class MestreDetalhe {
 		sb.append(whereExists());
 		sb.append(selectColunaDetalhe());
 		sb.append(fromDetalhe());
-		sb.append(whereColunaDetalheIgualColunaMestre());
+		sb.append(whereColunaMestreIgualColunaDetalhe());
 		sb.append("\n)");
 		return sb.toString();
 	}
@@ -2499,7 +2498,7 @@ class MestreDetalhe {
 		sb.append(whereExists());
 		sb.append(selectColunaDetalhe() + ", COUNT(*)");
 		sb.append(fromDetalhe());
-		sb.append(whereColunaDetalheIgualColunaMestre());
+		sb.append(whereColunaMestreIgualColunaDetalhe());
 		sb.append("\n  GROUP BY " + colunaDetalhe());
 		sb.append("\n  HAVING COUNT(*) > 1");
 		sb.append("\n)");
@@ -2520,7 +2519,7 @@ class MestreDetalhe {
 	}
 
 	private String innerJoinDetalhe() {
-		return "\n  INNER JOIN " + fromDetalhe2() + " ON " + colunaDetalheIgualColunaMestre();
+		return "\n  INNER JOIN " + fromDetalhe2() + " ON " + colunaMestreIgualColunaDetalhe();
 	}
 
 	private String fromDetalhe2() {
@@ -2535,12 +2534,12 @@ class MestreDetalhe {
 		return "\nFROM " + mestre.getTabelaEsquema2(conexao) + " mestre";
 	}
 
-	private String whereColunaDetalheIgualColunaMestre() {
-		return "\n  WHERE " + colunaDetalheIgualColunaMestre();
+	private String whereColunaMestreIgualColunaDetalhe() {
+		return "\n  WHERE " + colunaMestreIgualColunaDetalhe();
 	}
 
-	private String colunaDetalheIgualColunaMestre() {
-		return colunaDetalhe() + " = " + colunaMestre();
+	private String colunaMestreIgualColunaDetalhe() {
+		return colunaMestre() + " = " + colunaDetalhe();
 	}
 
 	private String selectCountColunaMestre() {
