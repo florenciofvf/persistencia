@@ -354,8 +354,6 @@ public class RelacaoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private PanelGeral() {
-			add(new PanelLado(true));
-			add(new PanelLado(false));
 			chkQuebrado.addActionListener(this);
 			add(BorderLayout.NORTH, chkQuebrado);
 			chkQuebrado.setSelected(relacao.isQuebrado());
