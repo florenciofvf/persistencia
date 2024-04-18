@@ -13,7 +13,7 @@ import br.com.persist.assistencia.Util;
 public abstract class Legado {
 	protected static final Map<String, String> map;
 	protected final List<String> metas;
-	protected boolean valido;
+	protected boolean ativo;
 	protected String column;
 	protected String type;
 	protected String name;
@@ -23,7 +23,7 @@ public abstract class Legado {
 	}
 
 	public void aplicar(Attributes attr) {
-		valido = true;
+		ativo = true;
 		type = typeMap(attr.getValue("type"));
 		int pos = type.indexOf("#");
 		if (pos != -1) {
@@ -37,14 +37,14 @@ public abstract class Legado {
 		type = typeNormal(type);
 		column = attr.getValue("column");
 		name = attr.getValue("name");
-		String strValido = attr.getValue("valido");
-		if (!Util.isEmpty(strValido)) {
-			valido = "true".equalsIgnoreCase(strValido);
+		String strAtivo = attr.getValue("ativo");
+		if (!Util.isEmpty(strAtivo)) {
+			ativo = "true".equalsIgnoreCase(strAtivo);
 		}
 	}
 
 	public void gerar(PrintWriter pw) {
-		if (!valido) {
+		if (!ativo) {
 			return;
 		}
 		pw.println();
