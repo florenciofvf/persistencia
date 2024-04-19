@@ -608,6 +608,11 @@ class PainelControllerJS extends AbstratoPainelJS {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFiltroJS())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTRO_JS));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		String filtro = raiz.getFiltroJS();
@@ -763,6 +768,11 @@ class PainelParamJS extends AbstratoPainelJS {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFiltroJS())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTRO_JS));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		String filtro = raiz.getFiltroJS();
@@ -812,6 +822,11 @@ class PainelValidarJS extends AbstratoPainelJS {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFiltroJS())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTRO_JS));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		String filtro = raiz.getFiltroJS();
@@ -996,6 +1011,10 @@ class PainelDTO extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getDTO())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.DTO));
+			return;
+		}
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
@@ -1041,6 +1060,11 @@ class PainelDTOTodos extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getDTOTodos())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.DTO_TODOS));
+			return;
+		}
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
@@ -1086,6 +1110,11 @@ class PainelDTODetalhe extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getDTODetalhe())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.DTO_DETALHE));
+			return;
+		}
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
@@ -1131,6 +1160,10 @@ class PainelFilter extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFilter())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();

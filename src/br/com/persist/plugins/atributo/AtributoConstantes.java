@@ -2,6 +2,7 @@ package br.com.persist.plugins.atributo;
 
 public class AtributoConstantes {
 	public static final String IGNORE_PROPERTIES = "JsonIgnoreProperties(ignoreUnknown = true)";
+	public static final String MSG_PROP_NAO_DEFINIDA = "msg.propriedade_nao_definida";
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
 	public static final String DATA_UTIL_PARSE_DATE = "DataUtil.parseDate(";
 	public static final String LABEL_ATRIBUTO_MIN = "label.atributo_min";
