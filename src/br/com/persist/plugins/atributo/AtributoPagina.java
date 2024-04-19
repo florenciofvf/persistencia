@@ -887,6 +887,7 @@ class PainelValidarJS extends AbstratoPainelJS {
 class PainelServiceJS extends AbstratoPanel {
 	private static final String PATH_CUSTOM_GET = "Restangular.all(PATH).customGET('";
 	private static final String FILTRO_SUFIX = "', filtro)";
+	private transient JSFuncaoPropriedade ultimaAdicionada;
 	private static final long serialVersionUID = 1L;
 
 	PainelServiceJS(AtributoPagina pagina) {
@@ -932,8 +933,9 @@ class PainelServiceJS extends AbstratoPanel {
 		if (Util.isEmpty(nome)) {
 			return;
 		}
-		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(true, nome);
+		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(false, nome);
 		funcao.addReturn(PATH_CUSTOM_GET + AtributoUtil.getBuscarTodos(mapaRest) + "', {})");
+		ultimaAdicionada = funcao;
 	}
 
 	private void fnPesquisar(JSReturnObj returnObj, Mapa mapaServiceJS, Mapa mapaRest) {
@@ -941,9 +943,13 @@ class PainelServiceJS extends AbstratoPanel {
 		if (Util.isEmpty(nome)) {
 			return;
 		}
+		if (ultimaAdicionada != null) {
+			ultimaAdicionada.setSeparar(true);
+		}
 		Parametros params = new Parametros(new JSVar(AtributoConstantes.FILTRO));
-		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(true, nome, params);
+		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(false, nome, params);
 		funcao.addReturn(PATH_CUSTOM_GET + AtributoUtil.getPesquisar(mapaRest) + FILTRO_SUFIX);
+		ultimaAdicionada = funcao;
 	}
 
 	private void fnDetalhar(JSReturnObj returnObj, Mapa mapaServiceJS, Mapa mapaRest) {
@@ -951,9 +957,13 @@ class PainelServiceJS extends AbstratoPanel {
 		if (Util.isEmpty(nome)) {
 			return;
 		}
+		if (ultimaAdicionada != null) {
+			ultimaAdicionada.setSeparar(true);
+		}
 		Parametros params = new Parametros(new JSVar(AtributoConstantes.FILTRO));
-		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(true, nome, params);
+		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(false, nome, params);
 		funcao.addReturn(PATH_CUSTOM_GET + AtributoUtil.getDetalhar(mapaRest) + FILTRO_SUFIX);
+		ultimaAdicionada = funcao;
 	}
 
 	private void fnExportar(JSReturnObj returnObj, Mapa mapaServiceJS, Mapa mapaRest) {
@@ -961,10 +971,14 @@ class PainelServiceJS extends AbstratoPanel {
 		if (Util.isEmpty(nome)) {
 			return;
 		}
+		if (ultimaAdicionada != null) {
+			ultimaAdicionada.setSeparar(true);
+		}
 		Parametros params = new Parametros(new JSVar(AtributoConstantes.FILTRO));
 		JSFuncaoPropriedade funcao = returnObj.criarJSFuncaoPropriedade(false, nome, params);
 		funcao.addReturn("Restangular.all(PATH).withHttpConfig({responseType: \"arraybuffer\"}).customGET('"
 				+ AtributoUtil.getExportar(mapaRest) + FILTRO_SUFIX);
+		ultimaAdicionada = funcao;
 	}
 }
 

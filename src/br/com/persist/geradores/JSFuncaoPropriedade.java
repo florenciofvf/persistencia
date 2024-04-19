@@ -4,14 +4,22 @@ import br.com.persist.assistencia.StringPool;
 
 public class JSFuncaoPropriedade extends ContainerJS {
 	private final Parametros parametros;
-	private final boolean separar;
 	private final String nome;
+	private boolean separar;
 
 	protected JSFuncaoPropriedade(boolean separar, String nome, Parametros parametros) {
 		super("JSFuncaoPropriedade");
 		this.nome = nome;
 		this.separar = separar;
 		this.parametros = parametros;
+	}
+
+	public void setSeparar(boolean separar) {
+		this.separar = separar;
+	}
+
+	public boolean isSeparar() {
+		return separar;
 	}
 
 	@Override
