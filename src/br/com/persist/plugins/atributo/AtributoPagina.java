@@ -1220,6 +1220,10 @@ class PainelRest extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFilter())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		Mapa mapaService = raiz.getMapaService();
@@ -1357,6 +1361,10 @@ class PainelService extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFilter())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1428,6 +1436,10 @@ class PainelBean extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFilter())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1506,6 +1518,10 @@ class PainelDAO extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFilter())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
@@ -1566,6 +1582,10 @@ class PainelDAOImpl extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		if (Util.isEmpty(raiz.getFilter())) {
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			return;
+		}
 		StringPool pool = new StringPool();
 
 		Arquivo arquivo = new Arquivo();
