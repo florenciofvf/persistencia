@@ -422,9 +422,9 @@ class PainelFichario extends JTabbedPane {
 		addAba(new PainelServiceJS(pagina));
 		addAba(new PainelFilter(pagina));
 		addAba(new PainelRest(pagina));
-		addAba(new PainelDTO(pagina));
-		addAba(new PainelDTOTodos(pagina));
+		addAba(new PainelDTOPesquisa(pagina));
 		addAba(new PainelDTODetalhe(pagina));
+		addAba(new PainelDTOTodos(pagina));
 		addAba(new PainelService(pagina));
 		addAba(new PainelBean(pagina));
 		addAba(new PainelDAO(pagina));
@@ -763,7 +763,7 @@ class PainelParamJS extends AbstratoPainelJS {
 
 	@Override
 	String getChaveTitulo() {
-		return "label.param_js";
+		return "label.filter_js";
 	}
 
 	@Override
@@ -997,16 +997,16 @@ class PainelServiceJS extends AbstratoPanel {
 	}
 }
 
-class PainelDTO extends AbstratoPanel {
+class PainelDTOPesquisa extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelDTO(AtributoPagina pagina) {
+	PainelDTOPesquisa(AtributoPagina pagina) {
 		super(pagina, false);
 	}
 
 	@Override
 	String getChaveTitulo() {
-		return "label.dto";
+		return "label.dto_pesquisa";
 	}
 
 	@Override
@@ -1155,7 +1155,7 @@ class PainelFilter extends AbstratoPanel {
 
 	@Override
 	String getChaveTitulo() {
-		return "label.filter";
+		return "label.filter_jv";
 	}
 
 	@Override
