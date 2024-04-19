@@ -554,17 +554,26 @@ class PainelView extends AbstratoPanel {
 			return;
 		}
 
-		pool.ql();
-		pool.tab().append("<button id=\"pesquisar\" ng-click=\"vm." + AtributoUtil.getPesquisar(mapaControllerJS)
-				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-search\"></i>Pesquisar</button>")
-				.ql();
-		pool.tab().append("<button id=\"exportar\" ng-click=\"vm." + AtributoUtil.getExportar(mapaControllerJS)
-				+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Exportar PDF</button>")
-				.ql();
-		pool.tab()
-				.append("<button id=\"limpar\" ng-click=\"vm."
-						+ mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO)
-						+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
+		String nome = AtributoUtil.getPesquisar(mapaControllerJS);
+		if (!Util.isEmpty(nome)) {
+			pool.ql();
+			pool.tab().append("<button id=\"pesquisar\" ng-click=\"vm." + nome
+					+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-search\"></i>Pesquisar</button>");
+		}
+
+		nome = AtributoUtil.getExportar(mapaControllerJS);
+		if (!Util.isEmpty(nome)) {
+			pool.ql();
+			pool.tab().append("<button id=\"exportar\" ng-click=\"vm." + nome
+					+ "()\" class=\"btn btn--primary btn--sm m-l-0-5\"><i class=\"i i-file-pdf-o\"></i>Exportar PDF</button>");
+		}
+
+		nome = mapaControllerJS.getString(AtributoConstantes.LIMPAR_FILTRO);
+		if (!Util.isEmpty(nome)) {
+			pool.ql();
+			pool.tab().append("<button id=\"limpar\" ng-click=\"vm." + nome
+					+ "()\" class=\"btn btn--default btn--sm m-l-0-5\">Limpar</button>");
+		}
 
 		setText(pool.toString());
 	}
