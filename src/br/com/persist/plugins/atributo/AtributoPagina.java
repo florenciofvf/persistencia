@@ -310,18 +310,18 @@ public class AtributoPagina extends Panel {
 
 			private Mapa criarMapaHierarquia(Atributo... atributos) {
 				Mapa resp = new Mapa();
-				resp.put(AtributoConstantes.MODELO_LISTA, "true");
 				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
-				resp.put(AtributoConstantes.FILTRO_JS, AtributoConstantes.FILTRO);
+				resp.put(AtributoConstantes.PESQUISAR_RETORNO_LISTA, "true");
+				resp.put(AtributoConstantes.FILTER_JS, AtributoConstantes.FILTER_JS);
 				resp.put(AtributoConstantes.CONTROLLER_JS, criarMapa(AtributoConstantes.CONTROLLER_JS,
 						new ChaveValor(AtributoConstantes.LIMPAR_FILTRO, AtributoConstantes.LIMPAR_FILTRO)));
 				resp.put(AtributoConstantes.SERVICE_JS, criarMapa(AtributoConstantes.SERVICE_JS));
-				resp.put(AtributoConstantes.FILTER, Util.capitalize(AtributoConstantes.FILTER));
+				resp.put(AtributoConstantes.FILTER_JV, Util.capitalize(AtributoConstantes.FILTER_JV));
 				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST,
 						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
-				resp.put(AtributoConstantes.DTO, AtributoConstantes.DTO.toUpperCase());
+				resp.put(AtributoConstantes.DTO_PESQUISAR, Util.capitalize(AtributoConstantes.DTO_PESQUISAR));
+				resp.put(AtributoConstantes.DTO_DETALHAR, Util.capitalize(AtributoConstantes.DTO_DETALHAR));
 				resp.put(AtributoConstantes.DTO_TODOS, Util.capitalize(AtributoConstantes.DTO_TODOS));
-				resp.put(AtributoConstantes.DTO_DETALHE, Util.capitalize(AtributoConstantes.DTO_DETALHE));
 				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
 				resp.put(AtributoConstantes.BEAN, Util.capitalize(AtributoConstantes.BEAN));
 				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO.toUpperCase()));
@@ -417,10 +417,10 @@ class PainelFichario extends JTabbedPane {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		addAba(new PainelView(pagina));
 		addAba(new PainelValidarJS(pagina));
-		addAba(new PainelParamJS(pagina));
+		addAba(new PainelFilterJS(pagina));
 		addAba(new PainelControllerJS(pagina));
 		addAba(new PainelServiceJS(pagina));
-		addAba(new PainelFilter(pagina));
+		addAba(new PainelFilterJV(pagina));
 		addAba(new PainelRest(pagina));
 		addAba(new PainelDTOPesquisa(pagina));
 		addAba(new PainelDTODetalhe(pagina));
@@ -448,7 +448,8 @@ class PainelFichario extends JTabbedPane {
 }
 
 abstract class AbstratoPanel extends Panel {
-	protected final CheckBox chkModeloLista = new CheckBox(AtributoMensagens.getString("label.modelo_lista"), false);
+	protected final CheckBox chkModeloLista = new CheckBox(AtributoMensagens.getString("label.pesquisar_retorno_lista"),
+			false);
 	private static final long serialVersionUID = 1L;
 	protected final JTextPane textArea = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
@@ -610,7 +611,7 @@ class PainelControllerJS extends AbstratoPainelJS {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFiltroJS())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTRO_JS));
+					AtributoConstantes.FILTER_JS));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -754,10 +755,10 @@ class PainelControllerJS extends AbstratoPainelJS {
 	}
 }
 
-class PainelParamJS extends AbstratoPainelJS {
+class PainelFilterJS extends AbstratoPainelJS {
 	private static final long serialVersionUID = 1L;
 
-	PainelParamJS(AtributoPagina pagina) {
+	PainelFilterJS(AtributoPagina pagina) {
 		super(pagina, false);
 	}
 
@@ -770,7 +771,7 @@ class PainelParamJS extends AbstratoPainelJS {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFiltroJS())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTRO_JS));
+					AtributoConstantes.FILTER_JS));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -824,7 +825,7 @@ class PainelValidarJS extends AbstratoPainelJS {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFiltroJS())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTRO_JS));
+					AtributoConstantes.FILTER_JS));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1012,7 +1013,8 @@ class PainelDTOPesquisa extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getDTO())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.DTO));
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.DTO_PESQUISAR));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1112,7 +1114,7 @@ class PainelDTODetalhe extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getDTODetalhe())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.DTO_DETALHE));
+					AtributoConstantes.DTO_DETALHAR));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1146,10 +1148,10 @@ class PainelDTODetalhe extends AbstratoPanel {
 	}
 }
 
-class PainelFilter extends AbstratoPanel {
+class PainelFilterJV extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	PainelFilter(AtributoPagina pagina) {
+	PainelFilterJV(AtributoPagina pagina) {
 		super(pagina, false);
 	}
 
@@ -1161,7 +1163,8 @@ class PainelFilter extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilter())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1221,7 +1224,8 @@ class PainelRest extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilter())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1362,7 +1366,8 @@ class PainelService extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilter())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1437,7 +1442,8 @@ class PainelBean extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilter())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1519,7 +1525,8 @@ class PainelDAO extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilter())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV));
 			return;
 		}
 		StringPool pool = new StringPool();
@@ -1583,7 +1590,8 @@ class PainelDAOImpl extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilter())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA, AtributoConstantes.FILTER));
+			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV));
 			return;
 		}
 		StringPool pool = new StringPool();

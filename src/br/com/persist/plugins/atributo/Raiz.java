@@ -19,7 +19,7 @@ public class Raiz {
 	}
 
 	public boolean isModeloLista() {
-		return Boolean.parseBoolean(mapa.getString(AtributoConstantes.MODELO_LISTA));
+		return Boolean.parseBoolean(mapa.getString(AtributoConstantes.PESQUISAR_RETORNO_LISTA));
 	}
 
 	public Mapa getMapaAtributos() {
@@ -31,7 +31,7 @@ public class Raiz {
 	}
 
 	public String getFiltroJS() {
-		return mapa.getString(AtributoConstantes.FILTRO_JS);
+		return mapa.getString(AtributoConstantes.FILTER_JS);
 	}
 
 	public Mapa getMapaControllerJS() {
@@ -43,7 +43,7 @@ public class Raiz {
 	}
 
 	public String getDTODetalhe() {
-		return mapa.getString(AtributoConstantes.DTO_DETALHE);
+		return mapa.getString(AtributoConstantes.DTO_DETALHAR);
 	}
 
 	public String getDTOTodos() {
@@ -51,7 +51,7 @@ public class Raiz {
 	}
 
 	public String getDTO() {
-		return mapa.getString(AtributoConstantes.DTO);
+		return mapa.getString(AtributoConstantes.DTO_PESQUISAR);
 	}
 
 	public String getListDTOTodos() {
@@ -63,7 +63,7 @@ public class Raiz {
 	}
 
 	public String getFilter() {
-		return mapa.getString(AtributoConstantes.FILTER);
+		return mapa.getString(AtributoConstantes.FILTER_JV);
 	}
 
 	public Variavel getTipoFilter() {
