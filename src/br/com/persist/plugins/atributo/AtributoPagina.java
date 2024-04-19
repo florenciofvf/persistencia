@@ -1008,7 +1008,42 @@ class PainelServiceJS extends AbstratoPanel {
 	}
 }
 
-class PainelDTOPesquisa extends AbstratoPanel {
+abstract class AbstratoDTO extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	AbstratoDTO(AtributoPagina pagina, boolean comCheckModelo) {
+		super(pagina, comCheckModelo);
+	}
+
+	protected void camposEGetsESets(List<Atributo> atributos, ClassePublica classe) {
+		for (Atributo att : atributos) {
+			classe.addCampoPrivado(att.criarVariavel());
+		}
+		getsESets(atributos, classe);
+	}
+
+	static void getsESets(List<Atributo> atributos, ClassePublica classe) {
+		for (Atributo att : atributos) {
+			classe.newLine();
+			Variavel tipo = att.criarVariavel();
+			classe.criarMetodoGet(tipo);
+			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
+				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
+			}
+			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
+				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
+			}
+			classe.newLine();
+			classe.criarMetodoSet(tipo);
+		}
+	}
+}
+
+class PainelDTOPesquisa extends AbstratoDTO {
 	private static final long serialVersionUID = 1L;
 
 	PainelDTOPesquisa(AtributoPagina pagina) {
@@ -1030,40 +1065,17 @@ class PainelDTOPesquisa extends AbstratoPanel {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
-
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTO());
-
-		for (Atributo att : atributos) {
-			classe.addCampoPrivado(att.criarVariavel());
-		}
-
-		for (Atributo att : atributos) {
-			classe.newLine();
-			Variavel tipo = att.criarVariavel();
-			classe.criarMetodoGet(tipo);
-			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
-				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
-			}
-			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
-				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
-			}
-			classe.newLine();
-			classe.criarMetodoSet(tipo);
-		}
-
+		camposEGetsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
 
-class PainelDTOTodos extends AbstratoPanel {
+class PainelDTOTodos extends AbstratoDTO {
 	private static final long serialVersionUID = 1L;
 
 	PainelDTOTodos(AtributoPagina pagina) {
@@ -1085,40 +1097,17 @@ class PainelDTOTodos extends AbstratoPanel {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
-
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTOTodos());
-
-		for (Atributo att : atributos) {
-			classe.addCampoPrivado(att.criarVariavel());
-		}
-
-		for (Atributo att : atributos) {
-			classe.newLine();
-			Variavel tipo = att.criarVariavel();
-			classe.criarMetodoGet(tipo);
-			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
-				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
-			}
-			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
-				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
-			}
-			classe.newLine();
-			classe.criarMetodoSet(tipo);
-		}
-
+		camposEGetsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 }
 
-class PainelDTODetalhe extends AbstratoPanel {
+class PainelDTODetalhe extends AbstratoDTO {
 	private static final long serialVersionUID = 1L;
 
 	PainelDTODetalhe(AtributoPagina pagina) {
@@ -1140,34 +1129,11 @@ class PainelDTODetalhe extends AbstratoPanel {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
-
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTODetalhe());
-
-		for (Atributo att : atributos) {
-			classe.addCampoPrivado(att.criarVariavel());
-		}
-
-		for (Atributo att : atributos) {
-			classe.newLine();
-			Variavel tipo = att.criarVariavel();
-			classe.criarMetodoGet(tipo);
-			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
-				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
-			}
-			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
-				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
-			}
-			classe.newLine();
-			classe.criarMetodoSet(tipo);
-		}
-
+		camposEGetsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
@@ -1193,7 +1159,6 @@ class PainelFilterJV extends AbstratoPanel {
 			return;
 		}
 		StringPool pool = new StringPool();
-
 		Arquivo arquivo = new Arquivo();
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
@@ -1213,24 +1178,7 @@ class PainelFilterJV extends AbstratoPanel {
 			classe.addCampoPrivado(att.criarVariavel());
 		}
 
-		for (Atributo att : atributos) {
-			classe.newLine();
-			Variavel tipo = att.criarVariavel();
-			classe.criarMetodoGet(tipo);
-			if (Boolean.TRUE.equals(att.getParseDateBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
-				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
-			}
-			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
-				classe.newLine();
-				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
-				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
-			}
-			classe.newLine();
-			classe.criarMetodoSet(tipo);
-		}
-
+		AbstratoDTO.getsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
