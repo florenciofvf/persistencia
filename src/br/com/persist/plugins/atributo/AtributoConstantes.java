@@ -12,6 +12,7 @@ public class AtributoConstantes {
 	public static final String DTO_PESQUISAR = "dtoRetornoPesquisar";
 	public static final String PAINEL_ATRIBUTO = "PAINEL ATRIBUTO";
 	public static final String DTO_DETALHAR = "dtoRetornoDetalhar";
+	public static final String UTIL_PARSE_LONG = "Util.parseLong(";
 	public static final String JAVA_UTIL_DATE = "java.util.Date";
 	public static final String LABEL_ATRIBUTO = "label.atributo";
 	public static final String CONTROLLER_JS = "controllerJS";

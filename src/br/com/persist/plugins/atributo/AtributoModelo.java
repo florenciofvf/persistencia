@@ -7,8 +7,9 @@ import javax.swing.table.AbstractTableModel;
 
 public class AtributoModelo extends AbstractTableModel {
 	private static final Class<?>[] CLASS_COLUNAS = { Boolean.class, String.class, String.class, String.class,
-			String.class, Boolean.class };
-	private static final String[] COLUNAS = { "IGNORAR", "NOME", "ROTULO", "CLASSE", "VIEW_TO_BACK", "PARSE_DATE" };
+			String.class, Boolean.class, Boolean.class };
+	private static final String[] COLUNAS = { "IGNORAR", "NOME", "ROTULO", "CLASSE", "VIEW_TO_BACK", "PARSE_DATE",
+			"PARSE_LONG" };
 	private static final long serialVersionUID = 1L;
 	private final transient List<Atributo> lista;
 
@@ -79,6 +80,8 @@ public class AtributoModelo extends AbstractTableModel {
 			return atributo.getViewToBack();
 		} else if (columnIndex == 5) {
 			return atributo.getParseDateBoolean();
+		} else if (columnIndex == 6) {
+			return atributo.getParseLongBoolean();
 		}
 		return null;
 	}
@@ -101,6 +104,8 @@ public class AtributoModelo extends AbstractTableModel {
 			atributo.setViewToBack(aValue.toString());
 		} else if (columnIndex == 5) {
 			atributo.setParseDate(aValue.toString());
+		} else if (columnIndex == 6) {
+			atributo.setParseLong(aValue.toString());
 		}
 	}
 }

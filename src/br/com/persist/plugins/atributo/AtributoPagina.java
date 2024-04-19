@@ -1039,6 +1039,11 @@ class PainelDTOPesquisa extends AbstratoPanel {
 				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
 				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
 			}
+			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
+				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
+			}
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
 		}
@@ -1089,6 +1094,11 @@ class PainelDTOTodos extends AbstratoPanel {
 				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
 				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
 			}
+			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
+				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
+			}
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
 		}
@@ -1138,6 +1148,11 @@ class PainelDTODetalhe extends AbstratoPanel {
 				classe.newLine();
 				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
 				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
+			}
+			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
+				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
 			}
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
@@ -1196,6 +1211,11 @@ class PainelFilterJV extends AbstratoPanel {
 				classe.newLine();
 				Funcao funcao = classe.criarFuncaoPublica("Date", "get" + Util.capitalize(att.getNome()) + "Date");
 				funcao.addReturn(AtributoConstantes.DATA_UTIL_PARSE_DATE + att.getNome() + ")");
+			}
+			if (Boolean.TRUE.equals(att.getParseLongBoolean())) {
+				classe.newLine();
+				Funcao funcao = classe.criarFuncaoPublica("Long", "get" + Util.capitalize(att.getNome()) + "Long");
+				funcao.addReturn(AtributoConstantes.UTIL_PARSE_LONG + att.getNome() + ")");
 			}
 			classe.newLine();
 			classe.criarMetodoSet(tipo);
