@@ -926,6 +926,7 @@ class PainelServiceJS extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		ultimaAdicionada = null;
 		StringPool pool = new StringPool();
 
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
@@ -1394,6 +1395,7 @@ class PainelService extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		contador = 0;
 		if (Util.isEmpty(raiz.getFilter())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
@@ -1553,6 +1555,7 @@ class PainelDAO extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
+		contador = 0;
 		if (Util.isEmpty(raiz.getFilter())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
