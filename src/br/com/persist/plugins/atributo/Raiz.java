@@ -18,7 +18,7 @@ public class Raiz {
 		return mapa;
 	}
 
-	public boolean isModeloLista() {
+	public boolean isPesquisarRetornoLista() {
 		return Boolean.parseBoolean(mapa.getString(AtributoConstantes.PESQUISAR_RETORNO_LISTA));
 	}
 
@@ -26,11 +26,11 @@ public class Raiz {
 		return mapa.getMapa(AtributoConstantes.ATRIBUTOS);
 	}
 
-	public String getFiltroJSCapitalize() {
-		return Util.capitalize(getFiltroJS());
+	public String getFilterJSCapitalize() {
+		return Util.capitalize(getFilterJSPesquisarExportar());
 	}
 
-	public String getFiltroJS() {
+	public String getFilterJSPesquisarExportar() {
 		return mapa.getString(AtributoConstantes.FILTER_JS);
 	}
 
@@ -42,6 +42,10 @@ public class Raiz {
 		return mapa.getMapa(AtributoConstantes.SERVICE_JS);
 	}
 
+	public String getDTOPesquisa() {
+		return mapa.getString(AtributoConstantes.DTO_PESQUISAR);
+	}
+
 	public String getDTODetalhe() {
 		return mapa.getString(AtributoConstantes.DTO_DETALHAR);
 	}
@@ -50,24 +54,20 @@ public class Raiz {
 		return mapa.getString(AtributoConstantes.DTO_TODOS);
 	}
 
-	public String getDTO() {
-		return mapa.getString(AtributoConstantes.DTO_PESQUISAR);
-	}
-
 	public String getListDTOTodos() {
 		return "List<" + getDTOTodos() + ">";
 	}
 
-	public String getListDTO() {
-		return "List<" + getDTO() + ">";
+	public String getListDTOPesquisa() {
+		return "List<" + getDTOPesquisa() + ">";
 	}
 
-	public String getFilter() {
+	public String getFilterJVPesquisarExportar() {
 		return mapa.getString(AtributoConstantes.FILTER_JV);
 	}
 
-	public Variavel getTipoFilter() {
-		return new Variavel(getFilter(), "filter");
+	public Variavel getTipoFilterJVPesquisarExportar() {
+		return new Variavel(getFilterJVPesquisarExportar(), "filter");
 	}
 
 	public Mapa getMapaRest() {

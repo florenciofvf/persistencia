@@ -258,7 +258,7 @@ public class AtributoPagina extends Panel {
 						AtributoProcessador processador = new AtributoProcessador(handler, textArea.getText());
 						processador.processar();
 						raiz = new Raiz(handler.getRaiz());
-						painelFichario.selecionarModeloLista(raiz.isModeloLista());
+						painelFichario.selecionarModeloLista(raiz.isPesquisarRetornoLista());
 						if (raiz.getMapaAtributos() != null) {
 							Mapa mapAtributos = raiz.getMapaAtributos();
 							List<Atributo> atributos = new ArrayList<>();
@@ -618,14 +618,14 @@ class PainelControllerJS extends AbstratoPainelJS {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getFiltroJS())) {
+		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JS));
 			return;
 		}
 		StringPool pool = new StringPool();
 
-		String filtro = raiz.getFiltroJS();
+		String filtro = raiz.getFilterJSPesquisarExportar();
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
@@ -778,14 +778,14 @@ class PainelFilterJS extends AbstratoPainelJS {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getFiltroJS())) {
+		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JS));
 			return;
 		}
 		StringPool pool = new StringPool();
 
-		String filtro = raiz.getFiltroJS();
+		String filtro = raiz.getFilterJSPesquisarExportar();
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
@@ -832,14 +832,14 @@ class PainelValidarJS extends AbstratoPainelJS {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getFiltroJS())) {
+		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JS));
 			return;
 		}
 		StringPool pool = new StringPool();
 
-		String filtro = raiz.getFiltroJS();
+		String filtro = raiz.getFilterJSPesquisarExportar();
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
@@ -1057,7 +1057,7 @@ class PainelDTOPesquisa extends AbstratoDTO {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getDTO())) {
+		if (Util.isEmpty(raiz.getDTOPesquisa())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.DTO_PESQUISAR));
 			return;
@@ -1068,7 +1068,7 @@ class PainelDTOPesquisa extends AbstratoDTO {
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
-		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTO());
+		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTOPesquisa());
 		camposEGetsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
@@ -1153,7 +1153,7 @@ class PainelFilterJV extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getFilter())) {
+		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
 			return;
@@ -1167,7 +1167,7 @@ class PainelFilterJV extends AbstratoPanel {
 			arquivo.addImport("javax.ws.rs.QueryParam").newLine();
 		}
 
-		ClassePublica classe = arquivo.criarClassePublica(raiz.getFilter());
+		ClassePublica classe = arquivo.criarClassePublica(raiz.getFilterJVPesquisarExportar());
 
 		int i = 0;
 		for (Atributo att : atributos) {
@@ -1201,7 +1201,7 @@ class PainelRest extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getFilter())) {
+		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
 			return;
@@ -1279,7 +1279,7 @@ class PainelRest extends AbstratoPanel {
 		classe.addAnotacao(CONSUMES + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao(PRODUCES + AtributoConstantes.APPLICATION_JSON + ")");
 
-		String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+		String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
 		FuncaoPublica funcao = classe.criarFuncaoPublica(retorno, nome, beanParam(raiz));
 		funcao.addReturn(SERVICE + AtributoUtil.getPesquisarFilter(mapaService));
 	}
@@ -1312,7 +1312,8 @@ class PainelRest extends AbstratoPanel {
 		classe.addAnotacao(PRODUCES + "{MediaType.APPLICATION_OCTET_STREAM}" + ")");
 
 		FuncaoPublica funcao = classe.criarFuncaoPublica("Response", nome, beanParam(raiz));
-		funcao.addInstrucao(raiz.getListDTO() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
+		funcao.addInstrucao(
+				raiz.getListDTOPesquisa() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
 		funcao.addInstrucao("byte[] bytes = servicePDF." + AtributoUtil.getExportar(mapaService) + "(dtos)").newLine();
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
 		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
@@ -1323,7 +1324,7 @@ class PainelRest extends AbstratoPanel {
 	private Parametros beanParam(Raiz raiz) {
 		Parametros params = new Parametros("@BeanParam");
 		params.addEspaco();
-		Variavel var = raiz.getTipoFilter();
+		Variavel var = raiz.getTipoFilterJVPesquisarExportar();
 		params.addString(var.getTipo() + " " + var.getNome());
 		return params;
 	}
@@ -1344,7 +1345,7 @@ class PainelService extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		contador = 0;
-		if (Util.isEmpty(raiz.getFilter())) {
+		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
 			return;
@@ -1375,11 +1376,11 @@ class PainelService extends AbstratoPanel {
 
 		nome = AtributoUtil.getPesquisar(mapaService);
 		if (!Util.isEmpty(nome)) {
-			String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+			String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
 			if (contador > 0) {
 				interfacee.newLine();
 			}
-			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilter()));
+			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilterJVPesquisarExportar()));
 			contador++;
 		}
 
@@ -1397,7 +1398,8 @@ class PainelService extends AbstratoPanel {
 			if (contador > 0) {
 				interfacee.newLine();
 			}
-			interfacee.criarFuncaoAbstrata("byte[]", nome, new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
+			interfacee.criarFuncaoAbstrata("byte[]", nome,
+					new Parametros(new Variavel(raiz.getListDTOPesquisa(), "dtos")));
 			contador++;
 		}
 
@@ -1420,7 +1422,7 @@ class PainelBean extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getFilter())) {
+		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
 			return;
@@ -1464,9 +1466,9 @@ class PainelBean extends AbstratoPanel {
 
 		nome = AtributoUtil.getPesquisar(mapaService);
 		if (!Util.isEmpty(nome)) {
-			String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+			String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
 			classe.addOverride(true);
-			funcao = classe.criarFuncaoPublica(retorno, nome, new Parametros(raiz.getTipoFilter()));
+			funcao = classe.criarFuncaoPublica(retorno, nome, new Parametros(raiz.getTipoFilterJVPesquisarExportar()));
 			funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
 		}
 
@@ -1480,7 +1482,8 @@ class PainelBean extends AbstratoPanel {
 		nome = AtributoUtil.getExportar(mapaService);
 		if (!Util.isEmpty(nome)) {
 			classe.addOverride(true);
-			funcao = classe.criarFuncaoPublica("byte[]", nome, new Parametros(new Variavel(raiz.getListDTO(), "dtos")));
+			funcao = classe.criarFuncaoPublica("byte[]", nome,
+					new Parametros(new Variavel(raiz.getListDTOPesquisa(), "dtos")));
 			funcao.addReturn("new byte[0]");
 		}
 
@@ -1504,7 +1507,7 @@ class PainelDAO extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		contador = 0;
-		if (Util.isEmpty(raiz.getFilter())) {
+		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
 			return;
@@ -1532,11 +1535,11 @@ class PainelDAO extends AbstratoPanel {
 
 		nome = AtributoUtil.getPesquisar(mapaDAO);
 		if (!Util.isEmpty(nome)) {
-			String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+			String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
 			if (contador > 0) {
 				interfacee.newLine();
 			}
-			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilter()));
+			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilterJVPesquisarExportar()));
 			contador++;
 		}
 
@@ -1569,7 +1572,7 @@ class PainelDAOImpl extends AbstratoPanel {
 
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
-		if (Util.isEmpty(raiz.getFilter())) {
+		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
 			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JV));
 			return;
@@ -1610,13 +1613,13 @@ class PainelDAOImpl extends AbstratoPanel {
 
 		nome = AtributoUtil.getPesquisar(mapaDAO);
 		if (!Util.isEmpty(nome)) {
-			String retorno = chkModeloLista.isSelected() ? raiz.getListDTO() : raiz.getDTO();
+			String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
 			classe.addOverride(true);
-			funcao = classe.criarFuncaoPublica(retorno, nome, new Parametros(raiz.getTipoFilter()));
+			funcao = classe.criarFuncaoPublica(retorno, nome, new Parametros(raiz.getTipoFilterJVPesquisarExportar()));
 			if (chkModeloLista.isSelected()) {
-				funcao.addInstrucao(raiz.getListDTO() + " resp = new ArrayList<>()");
+				funcao.addInstrucao(raiz.getListDTOPesquisa() + " resp = new ArrayList<>()");
 			} else {
-				funcao.addInstrucao(raiz.getDTO() + " resp = null");
+				funcao.addInstrucao(raiz.getDTOPesquisa() + " resp = null");
 			}
 			funcao.addComentario(ENTITY_MANAGER_FIND).newLine();
 			funcao.addReturn("resp");
