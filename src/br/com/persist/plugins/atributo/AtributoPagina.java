@@ -433,7 +433,8 @@ class PainelFichario extends JTabbedPane {
 	}
 
 	private void addAba(AbstratoPanel panel) {
-		addTab(AtributoMensagens.getString(panel.getChaveTitulo()), panel);
+		addTab(AtributoMensagens.getString(panel.getChaveTitulo()), null, panel,
+				AtributoMensagens.getString(panel.getChaveTooltip()));
 	}
 
 	void selecionarModeloLista(boolean b) {
@@ -519,6 +520,8 @@ abstract class AbstratoPanel extends Panel {
 
 	abstract void gerar(Raiz raiz, List<Atributo> atributos);
 
+	abstract String getChaveTooltip();
+
 	abstract String getChaveTitulo();
 }
 
@@ -527,6 +530,11 @@ class PainelView extends AbstratoPanel {
 
 	PainelView(AtributoPagina pagina) {
 		super(pagina, false);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.view";
 	}
 
 	@Override
@@ -609,6 +617,11 @@ class PainelControllerJS extends AbstratoPainelJS {
 
 	PainelControllerJS(AtributoPagina pagina) {
 		super(pagina, true);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.controller_js";
 	}
 
 	@Override
@@ -772,6 +785,11 @@ class PainelFilterJS extends AbstratoPainelJS {
 	}
 
 	@Override
+	String getChaveTooltip() {
+		return "label.filter_js_tooltip";
+	}
+
+	@Override
 	String getChaveTitulo() {
 		return "label.filter_js";
 	}
@@ -823,6 +841,11 @@ class PainelValidarJS extends AbstratoPainelJS {
 
 	PainelValidarJS(AtributoPagina pagina) {
 		super(pagina, false);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.validar_js";
 	}
 
 	@Override
@@ -917,6 +940,11 @@ class PainelServiceJS extends AbstratoPanel {
 
 	PainelServiceJS(AtributoPagina pagina) {
 		super(pagina, false);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.service_js";
 	}
 
 	@Override
@@ -1051,6 +1079,11 @@ class PainelDTOPesquisa extends AbstratoDTO {
 	}
 
 	@Override
+	String getChaveTooltip() {
+		return "label.dto_pesquisa_tooltip";
+	}
+
+	@Override
 	String getChaveTitulo() {
 		return "label.dto_pesquisa";
 	}
@@ -1080,6 +1113,11 @@ class PainelDTOTodos extends AbstratoDTO {
 
 	PainelDTOTodos(AtributoPagina pagina) {
 		super(pagina, false);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.dto_todos_tooltip";
 	}
 
 	@Override
@@ -1115,6 +1153,11 @@ class PainelDTODetalhe extends AbstratoDTO {
 	}
 
 	@Override
+	String getChaveTooltip() {
+		return "label.dto_detalhe_tooltip";
+	}
+
+	@Override
 	String getChaveTitulo() {
 		return "label.dto_detalhe";
 	}
@@ -1144,6 +1187,11 @@ class PainelFilterJV extends AbstratoPanel {
 
 	PainelFilterJV(AtributoPagina pagina) {
 		super(pagina, false);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.filter_jv_tooltip";
 	}
 
 	@Override
@@ -1192,6 +1240,11 @@ class PainelRest extends AbstratoPanel {
 
 	PainelRest(AtributoPagina pagina) {
 		super(pagina, true);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.rest";
 	}
 
 	@Override
@@ -1338,6 +1391,11 @@ class PainelService extends AbstratoPanel {
 	}
 
 	@Override
+	String getChaveTooltip() {
+		return "label.service_tooltip";
+	}
+
+	@Override
 	String getChaveTitulo() {
 		return "label.service";
 	}
@@ -1413,6 +1471,11 @@ class PainelBean extends AbstratoPanel {
 
 	PainelBean(AtributoPagina pagina) {
 		super(pagina, true);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.bean";
 	}
 
 	@Override
@@ -1500,6 +1563,11 @@ class PainelDAO extends AbstratoPanel {
 	}
 
 	@Override
+	String getChaveTooltip() {
+		return "label.dao";
+	}
+
+	@Override
 	String getChaveTitulo() {
 		return "label.dao";
 	}
@@ -1563,6 +1631,11 @@ class PainelDAOImpl extends AbstratoPanel {
 
 	PainelDAOImpl(AtributoPagina pagina) {
 		super(pagina, true);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.dao_impl";
 	}
 
 	@Override
@@ -1647,6 +1720,11 @@ class PainelTest extends AbstratoPanel {
 
 	PainelTest(AtributoPagina pagina) {
 		super(pagina, false);
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.test_tooltip";
 	}
 
 	@Override
