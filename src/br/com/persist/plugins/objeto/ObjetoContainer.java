@@ -347,7 +347,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			objetoSuperficie.setAjusteAutoEmpilhaForm(chkAjusteAutoEmpilhaForm.isSelected());
 			if (chkAjusteAutoEmpilhaForm.isSelected()) {
 				objetoSuperficie.getAjuste().empilharFormularios();
-				objetoSuperficie.getAjuste().aproximarObjetoFormulario(true, true);
+				objetoSuperficie.getAjuste().aproximarObjetoFormulario(true, true, null);
 				objetoSuperficie.getAjustar().usarFormularios(false);
 			}
 		}

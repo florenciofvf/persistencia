@@ -695,6 +695,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				} else {
 					objeto.y += (Constantes.TRINTA - restoY);
 				}
+				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
+				if (interno != null) {
+					aproximarObjetoFormularioImpl(false, false, interno);
+				}
 			}
 		}
 
@@ -2001,9 +2005,9 @@ class SuperficiePopup extends Popup {
 				return;
 			}
 			objeto1.inverterPosicao(objeto2);
-			superficie.getAjuste().aproximarObjetoFormulario(false, false);
+			superficie.getAjuste().aproximarObjetoFormulario(false, false, null);
 			superficie.getAjuste().empilharFormularios();
-			superficie.getAjuste().aproximarObjetoFormulario(true, true);
+			superficie.getAjuste().aproximarObjetoFormulario(true, true, null);
 			superficie.getAjustar().usarFormularios(false);
 			superficie.repaint();
 		}

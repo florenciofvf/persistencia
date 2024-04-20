@@ -183,7 +183,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	public void configurarAjustes(boolean updateTree) {
 		if (desktop != null) {
 			desktop.getAjuste().empilharFormularios();
-			desktop.getAjuste().aproximarObjetoFormulario(true, updateTree);
+			desktop.getAjuste().aproximarObjetoFormulario(true, updateTree, null);
 			desktop.getAjustar().usarFormularios(false);
 		}
 	}

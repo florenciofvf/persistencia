@@ -162,7 +162,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	}
 
 	@Override
-	public void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree) {
+	public void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree, JInternalFrame frame) {
 		boolean salvar = false;
 		Variavel variavelDeltaX = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO);
 		Variavel variavelDeltaY = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO);
@@ -179,7 +179,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 			salvar = true;
 		}
 		checarAtualizarVariavelProvedor(salvar);
-		aproximar(objetoAoFormulario, variavelDeltaX, variavelDeltaY);
+		aproximar(objetoAoFormulario, variavelDeltaX, variavelDeltaY, frame);
 		updateOuRepaint(updateTree);
 	}
 
@@ -194,10 +194,14 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		}
 	}
 
-	private void aproximar(boolean objetoAoFormulario, Variavel variavelDeltaX, Variavel variavelDeltaY) {
+	private void aproximar(boolean objetoAoFormulario, Variavel variavelDeltaX, Variavel variavelDeltaY,
+			JInternalFrame internalFrame) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame.isVisible() && frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
+				if (internalFrame != null && internalFrame != frame) {
+					continue;
+				}
 				if (objetoAoFormulario) {
 					interno.aproximarObjetoAoFormulario(variavelDeltaX.getInteiro(Constantes.TRINTA),
 							variavelDeltaY.getInteiro(Constantes.TRINTA));

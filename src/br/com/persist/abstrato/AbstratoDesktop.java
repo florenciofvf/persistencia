@@ -183,7 +183,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 	public abstract boolean ajustarLargura(JInternalFrame frame);
 
-	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree);
+	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree,
+			JInternalFrame frame);
 
 	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
@@ -386,8 +387,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			addMenuItem(empilharAcao);
 			addMenuItem(centralizarAcao);
 			addMenuItem(distribuirAcao);
-			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
-			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false));
+			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false, null));
+			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false, null));
 			nivelTranspFormsIgnorados.setActionListener(e -> ajuste.nivelTranspFormsIgnorados());
 			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
@@ -400,9 +401,9 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 
 		public void aproximarEmpilharUsarForms() {
-			ajuste.aproximarObjetoFormulario(false, false);
+			ajuste.aproximarObjetoFormulario(false, false, null);
 			ajuste.empilharFormularios();
-			ajuste.aproximarObjetoFormulario(true, true);
+			ajuste.aproximarObjetoFormulario(true, true, null);
 			ajustar.usarFormularios(false);
 			repaint();
 		}
@@ -432,8 +433,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			empilharFormulariosImpl();
 		}
 
-		public void aproximarObjetoFormulario(boolean objetoAoFormulario, boolean updateTree) {
-			aproximarObjetoFormularioImpl(objetoAoFormulario, updateTree);
+		public void aproximarObjetoFormulario(boolean objetoAoFormulario, boolean updateTree, JInternalFrame frame) {
+			aproximarObjetoFormularioImpl(objetoAoFormulario, updateTree, frame);
 		}
 	}
 
