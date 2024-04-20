@@ -698,6 +698,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
 				if (interno != null) {
 					aproximarObjetoFormularioImpl(false, false, interno);
+					larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
 				}
 			}
 		}
