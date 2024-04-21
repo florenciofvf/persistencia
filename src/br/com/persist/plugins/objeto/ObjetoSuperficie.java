@@ -691,24 +691,30 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 		private void localizarSe(Objeto objeto) {
 			final int raio = Objeto.DIAMETRO / 2;
-			int restoX = (objeto.x + raio) % Constantes.VINTE_CINCO;
-			int restoY = (objeto.y + raio) % Constantes.TRINTA;
-			if ((restoX <= 7 || restoX >= 9) && (restoY <= 7 || restoY >= 9)) {
-				if (restoX <= 7) {
+			int restoX = (objeto.x + raio) % Constantes.GRADE;
+			int restoY = (objeto.y + raio) % Constantes.GRADE;
+			int gradeM = Constantes.GRADE / 2;
+			if (restoX == 0 && restoY == 0) {
+				return;
+			}
+			if (restoX != 0) {
+				if (restoX <= gradeM) {
 					objeto.x -= restoX;
 				} else {
-					objeto.x += (Constantes.QUINZE - restoX);
+					objeto.x += (Constantes.GRADE - restoX);
 				}
-				if (restoY <= 7) {
+			}
+			if (restoY != 0) {
+				if (restoY <= gradeM) {
 					objeto.y -= restoY;
 				} else {
-					objeto.y += (Constantes.QUINZE - restoY);
+					objeto.y += (Constantes.GRADE - restoY);
 				}
-				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
-				if (interno != null) {
-					aproximarObjetoFormularioImpl(false, false, interno);
-					larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
-				}
+			}
+			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
+			if (interno != null) {
+				aproximarObjetoFormularioImpl(false, false, interno);
+				larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
 			}
 		}
 
@@ -806,10 +812,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			g2.setColor(Color.LIGHT_GRAY);
 			int lar = getWidth();
 			int alt = getHeight();
-			for (int x = Constantes.QUINZE; x < lar; x += Constantes.QUINZE) {
+			for (int x = Constantes.GRADE; x < lar; x += Constantes.GRADE) {
 				g2.drawLine(x, 0, x, alt);
 			}
-			for (int y = Constantes.QUINZE; y < alt; y += Constantes.QUINZE) {
+			for (int y = Constantes.GRADE; y < alt; y += Constantes.GRADE) {
 				g2.drawLine(0, y, lar, y);
 			}
 			g2.setColor(cor);

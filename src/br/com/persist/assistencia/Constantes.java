@@ -97,7 +97,7 @@ public class Constantes {
 	public static final String QL = "\n";
 	public static final int SETENTA = 70;
 	public static final int TRINTA = 30;
-	public static final int QUINZE = 15;
+	public static final int GRADE = 16;
 	public static final int VINTE = 20;
 	public static final String U = "_";
 	public static final int QUATRO = 4;
