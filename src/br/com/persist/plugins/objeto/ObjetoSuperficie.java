@@ -322,6 +322,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
+	public int getTotalArrastado() {
+		return totalArrastado;
+	}
+
+	public void setTotalArrastado(int totalArrastado) {
+		this.totalArrastado = totalArrastado;
+		repaint();
+	}
+
 	@Override
 	protected boolean contemReferencia(Objeto objeto) {
 		return ObjetoSuperficieUtil.contemReferencia(this, objeto);
@@ -684,16 +693,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			final int raio = Objeto.DIAMETRO / 2;
 			int restoX = (objeto.x + raio) % Constantes.VINTE_CINCO;
 			int restoY = (objeto.y + raio) % Constantes.TRINTA;
-			if ((restoX <= 12 || restoX >= 14) && (restoY <= 14 || restoY >= 16)) {
-				if (restoX <= 12) {
+			if ((restoX <= 7 || restoX >= 9) && (restoY <= 7 || restoY >= 9)) {
+				if (restoX <= 7) {
 					objeto.x -= restoX;
 				} else {
-					objeto.x += (Constantes.VINTE_CINCO - restoX);
+					objeto.x += (Constantes.QUINZE - restoX);
 				}
-				if (restoY <= 14) {
+				if (restoY <= 7) {
 					objeto.y -= restoY;
 				} else {
-					objeto.y += (Constantes.TRINTA - restoY);
+					objeto.y += (Constantes.QUINZE - restoY);
 				}
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
 				if (interno != null) {
@@ -794,13 +803,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 		if (totalArrastado == 1) {
 			Color cor = g2.getColor();
-			g2.setColor(Color.WHITE);
+			g2.setColor(Color.LIGHT_GRAY);
 			int lar = getWidth();
 			int alt = getHeight();
-			for (int x = Constantes.VINTE_CINCO; x < lar; x += Constantes.VINTE_CINCO) {
+			for (int x = Constantes.QUINZE; x < lar; x += Constantes.QUINZE) {
 				g2.drawLine(x, 0, x, alt);
 			}
-			for (int y = Constantes.TRINTA; y < alt; y += Constantes.TRINTA) {
+			for (int y = Constantes.QUINZE; y < alt; y += Constantes.QUINZE) {
 				g2.drawLine(0, y, lar, y);
 			}
 			g2.setColor(cor);

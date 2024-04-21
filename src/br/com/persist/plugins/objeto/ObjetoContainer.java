@@ -521,6 +521,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			private Action reiniciarAction = acaoMenu("label.reiniciar_horas");
 			private JCheckBoxMenuItem checkBoxComparaRegistro = new JCheckBoxMenuItem(compararRegistroAcao);
 			private JCheckBoxMenuItem checkBoxSelecaoGeral = new JCheckBoxMenuItem(selecaoGeralAcao);
+			private Action gradeAction = acaoMenu("label.grade");
 			private static final long serialVersionUID = 1L;
 
 			private ButtonStatus() {
@@ -540,6 +541,8 @@ public class ObjetoContainer extends AbstratoContainer {
 				addSeparator();
 				addMenuItem(reiniciarAction);
 				addItem(somarHorasAcao);
+				addSeparator();
+				addMenuItem(gradeAction);
 				eventos();
 			}
 
@@ -563,6 +566,7 @@ public class ObjetoContainer extends AbstratoContainer {
 				somarHorasAcao.addActionListener(
 						e -> objetoSuperficie.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				reiniciarAction.setActionListener(e -> objetoSuperficie.reiniciarHoras());
+				gradeAction.setActionListener(e -> objetoSuperficie.setTotalArrastado(1));
 				ignorarAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorar(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 			}
