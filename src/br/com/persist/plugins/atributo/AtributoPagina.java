@@ -632,7 +632,7 @@ class PainelControllerJS extends AbstratoPainelJS {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
-			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA_ASK,
 					AtributoConstantes.FILTER_JS);
 			if (!Util.confirmar(this, msg, false)) {
 				return;
