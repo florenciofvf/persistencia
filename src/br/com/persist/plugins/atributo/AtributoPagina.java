@@ -548,15 +548,13 @@ class PainelView extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 
-		if (!atributos.isEmpty()) {
-			pool.tab(2).append("<div class='row'>").ql();
-			for (Atributo att : atributos) {
-				pool.tab(3).append("<div class='col-sm--X'>").ql();
-				pool.tab(4).append("{{" + att.getNome() + "}}").ql();
-				pool.tab(3).append("</div>").ql();
-			}
-			pool.tab(2).append("</div>").ql();
+		pool.tab(2).append("<div class='row'>").ql();
+		for (Atributo att : atributos) {
+			pool.tab(3).append("<div class='col-sm--X'>").ql();
+			pool.tab(4).append("{{" + att.getNome() + "}}").ql();
+			pool.tab(3).append("</div>").ql();
 		}
+		pool.tab(2).append("</div>").ql();
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		if (mapaControllerJS == null) {
@@ -1287,22 +1285,19 @@ class PainelRest extends AbstratoPanel {
 		}
 
 		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
-			arquivo.addImport("javax.inject.Inject").newLine();
-			arquivo.addImport("javax.ws.rs.Consumes");
-			arquivo.addImport("javax.ws.rs.Produces").newLine();
-			arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
-			arquivo.addImport("javax.ws.rs.BeanParam");
-			arquivo.addImport("javax.ws.rs.GET");
-			arquivo.addImport("javax.ws.rs.Path");
-			arquivo.addImport("javax.ws.rs.Produces");
-			arquivo.addImport("javax.ws.rs.QueryParam");
-			arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
-			arquivo.addComentario("br.com.empresa.framework.seguranca.RestSeguranca;").newLine();
-
-			arquivo.addAnotacaoPath(Util.citar2(mapaRest.getString(AtributoConstantes.END_POINT)));
-		}
+		arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
+		arquivo.addImport("javax.inject.Inject").newLine();
+		arquivo.addImport("javax.ws.rs.Consumes");
+		arquivo.addImport("javax.ws.rs.Produces").newLine();
+		arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
+		arquivo.addImport("javax.ws.rs.BeanParam");
+		arquivo.addImport("javax.ws.rs.GET");
+		arquivo.addImport("javax.ws.rs.Path");
+		arquivo.addImport("javax.ws.rs.Produces");
+		arquivo.addImport("javax.ws.rs.QueryParam");
+		arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
+		arquivo.addComentario("br.com.empresa.framework.seguranca.RestSeguranca;").newLine();
+		arquivo.addAnotacaoPath(Util.citar2(mapaRest.getString(AtributoConstantes.END_POINT)));
 
 		ClassePublica classe = arquivo
 				.criarClassePublica(AtributoUtil.getComponente(mapaRest) + " extends ApplicationRest");
@@ -1432,11 +1427,9 @@ class PainelService extends AbstratoPanel {
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
-			arquivo.addImport("javax.ejb.Local").newLine();
-			arquivo.addAnotacao("Local");
-		}
+		arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
+		arquivo.addImport("javax.ejb.Local").newLine();
+		arquivo.addAnotacao("Local");
 
 		Mapa mapaService = raiz.getMapaService();
 		if (mapaService == null) {
@@ -1514,17 +1507,14 @@ class PainelBean extends AbstratoPanel {
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
-			arquivo.addImport("javax.ejb.LocalBean");
-			arquivo.addImport("javax.ejb.Stateless");
-			arquivo.addImport("javax.ejb.TransactionManagement");
-			arquivo.addImport("javax.ejb.TransactionManagementType").newLine();
-
-			arquivo.addAnotacao("Stateless");
-			arquivo.addAnotacao("LocalBean");
-			arquivo.addAnotacao("TransactionManagement(TransactionManagementType.CONTAINER)");
-		}
+		arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
+		arquivo.addImport("javax.ejb.LocalBean");
+		arquivo.addImport("javax.ejb.Stateless");
+		arquivo.addImport("javax.ejb.TransactionManagement");
+		arquivo.addImport("javax.ejb.TransactionManagementType").newLine();
+		arquivo.addAnotacao("Stateless");
+		arquivo.addAnotacao("LocalBean");
+		arquivo.addAnotacao("TransactionManagement(TransactionManagementType.CONTAINER)");
 
 		String bean = raiz.getBean();
 		Mapa mapaDAO = raiz.getMapaDAO();
@@ -1605,9 +1595,7 @@ class PainelDAO extends AbstratoPanel {
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
-		}
+		arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 
 		Mapa mapaDAO = raiz.getMapaDAO();
 		if (mapaDAO == null) {
@@ -1678,12 +1666,10 @@ class PainelDAOImpl extends AbstratoPanel {
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.addImport("java.util.ArrayList");
-			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
-			arquivo.addImport("javax.persistence.EntityManager");
-			arquivo.addImport("javax.persistence.PersistenceContext").newLine();
-		}
+		arquivo.addImport("java.util.ArrayList");
+		arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
+		arquivo.addImport("javax.persistence.EntityManager");
+		arquivo.addImport("javax.persistence.PersistenceContext").newLine();
 
 		String daoImpl = raiz.getDAOImpl();
 		Mapa mapaDAO = raiz.getMapaDAO();
@@ -1760,15 +1746,12 @@ class PainelTest extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		if (!atributos.isEmpty()) {
-			arquivo.addImport("org.junit.Test");
-			arquivo.addImport("org.junit.runner.RunWith");
-			arquivo.addImport("org.mockito.InjectMocks");
-			arquivo.addImport("org.mockito.Mock");
-			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
-
-			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class");
-		}
+		arquivo.addImport("org.junit.Test");
+		arquivo.addImport("org.junit.runner.RunWith");
+		arquivo.addImport("org.mockito.InjectMocks");
+		arquivo.addImport("org.mockito.Mock");
+		arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
+		arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class");
 
 		Mapa mapaService = raiz.getMapaService();
 		Mapa mapaTest = raiz.getMapaTest();
