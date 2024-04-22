@@ -79,9 +79,6 @@ public class AtributoPagina extends Panel {
 	}
 
 	public Raiz getRaiz() {
-		if (raiz == null) {
-			raiz = new Raiz();
-		}
 		return raiz;
 	}
 
@@ -502,7 +499,12 @@ abstract class AbstratoPanel extends Panel {
 					lista.add(att);
 				}
 			}
-			gerar(pagina.getRaiz(), lista);
+			Raiz raiz = pagina.getRaiz();
+			if (raiz != null) {
+				gerar(raiz, lista);
+			} else {
+				Util.mensagem(AbstratoPanel.this, AtributoMensagens.getString("msg.hierarquia_nao_definida"));
+			}
 		}
 
 		@Override
