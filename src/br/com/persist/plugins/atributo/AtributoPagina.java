@@ -557,7 +557,6 @@ class PainelView extends AbstratoPanel {
 		}
 
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
-
 		if (mapaControllerJS == null) {
 			return;
 		}
@@ -638,17 +637,15 @@ class PainelControllerJS extends AbstratoPainelJS {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
 		String filtro = raiz.getFilterJSPesquisarExportar();
-
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
-
 		if (mapaControllerJS == null || mapaServiceJS == null) {
 			return;
 		}
 
+		StringPool pool = new StringPool();
 		JSArquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
 		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
 		funcao.addInstrucao("var vm = this").newLine();
@@ -808,17 +805,15 @@ class PainelFilterJS extends AbstratoPainelJS {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
 		String filtro = raiz.getFilterJSPesquisarExportar();
-
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
-
 		if (mapaControllerJS == null || mapaServiceJS == null) {
 			return;
 		}
 
+		StringPool pool = new StringPool();
 		JSArquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
 		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
 		fnParam(funcao, filtro, atributos);
@@ -869,17 +864,15 @@ class PainelValidarJS extends AbstratoPainelJS {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
 		String filtro = raiz.getFilterJSPesquisarExportar();
-
 		Mapa mapaControllerJS = raiz.getMapaControllerJS();
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
-
 		if (mapaControllerJS == null || mapaServiceJS == null) {
 			return;
 		}
 
+		StringPool pool = new StringPool();
 		JSArquivo arquivo = criarArquivo(mapaControllerJS, mapaServiceJS);
 		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
 
@@ -964,15 +957,13 @@ class PainelServiceJS extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		ultimaAdicionada = null;
-		StringPool pool = new StringPool();
-
 		Mapa mapaServiceJS = raiz.getMapaServiceJS();
 		Mapa mapaRest = raiz.getMapaRest();
-
 		if (mapaServiceJS == null || mapaRest == null) {
 			return;
 		}
 
+		StringPool pool = new StringPool();
 		JSArquivo arquivo = new JSArquivo();
 		arquivo.addInstrucao(AtributoUtil.getComponente(mapaServiceJS) + ".$inject = ['Restangular']").newLine();
 
@@ -1106,12 +1097,14 @@ class PainelDTOPesquisa extends AbstratoDTO {
 				return;
 			}
 		}
+
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
+
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTOPesquisa());
 		camposEGetsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
@@ -1145,12 +1138,14 @@ class PainelDTOTodos extends AbstratoDTO {
 				return;
 			}
 		}
+
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
+
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTOTodos());
 		camposEGetsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
@@ -1184,12 +1179,14 @@ class PainelDTODetalhe extends AbstratoDTO {
 				return;
 			}
 		}
+
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		arquivo.addAnotacao(AtributoConstantes.IGNORE_PROPERTIES);
 		if (AtributoUtil.contemParseDateValido(atributos)) {
 			arquivo.addImport(AtributoConstantes.JAVA_UTIL_DATE).newLine();
 		}
+
 		ClassePublica classe = arquivo.criarClassePublica(raiz.getDTODetalhe());
 		camposEGetsESets(atributos, classe);
 		arquivo.gerar(-1, pool);
@@ -1223,6 +1220,7 @@ class PainelFilterJV extends AbstratoPanel {
 				return;
 			}
 		}
+
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		if (AtributoUtil.contemParseDateValido(atributos)) {
@@ -1278,11 +1276,10 @@ class PainelRest extends AbstratoPanel {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
+		StringPool pool = new StringPool();
 		Mapa mapaService = raiz.getMapaService();
 		Mapa mapaRest = raiz.getMapaRest();
-
 		if (mapaService == null || mapaRest == null) {
 			return;
 		}
@@ -1335,7 +1332,6 @@ class PainelRest extends AbstratoPanel {
 		classe.addAnotacaoPath(Util.citar2(nome));
 		classe.addAnotacao(CONSUMES + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao(PRODUCES + AtributoConstantes.APPLICATION_JSON + ")");
-
 		FuncaoPublica funcao = classe.criarFuncaoPublica(raiz.getListDTOTodos(), nome);
 		funcao.addReturn(SERVICE + AtributoUtil.getBuscarTodos(mapaService) + "()");
 	}
@@ -1361,6 +1357,7 @@ class PainelRest extends AbstratoPanel {
 		if (Util.isEmpty(nome)) {
 			return;
 		}
+
 		classe.newLine();
 		classe.addAnotacao("GET");
 		classe.addAnotacaoPath(Util.citar2(nome));
@@ -1377,6 +1374,7 @@ class PainelRest extends AbstratoPanel {
 		if (Util.isEmpty(nome)) {
 			return;
 		}
+
 		classe.newLine();
 		classe.addAnotacao("GET");
 		classe.addAnotacaoPath(Util.citar2(nome));
@@ -1429,18 +1427,16 @@ class PainelService extends AbstratoPanel {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
+		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
 			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 			arquivo.addImport("javax.ejb.Local").newLine();
-
 			arquivo.addAnotacao("Local");
 		}
 
 		Mapa mapaService = raiz.getMapaService();
-
 		if (mapaService == null) {
 			return;
 		}
@@ -1456,27 +1452,21 @@ class PainelService extends AbstratoPanel {
 		nome = AtributoUtil.getPesquisar(mapaService);
 		if (!Util.isEmpty(nome)) {
 			String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
-			if (contador > 0) {
-				interfacee.newLine();
-			}
+			checkNewLine(interfacee);
 			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilterJVPesquisarExportar()));
 			contador++;
 		}
 
 		nome = AtributoUtil.getDetalhar(mapaService);
 		if (!Util.isEmpty(nome)) {
-			if (contador > 0) {
-				interfacee.newLine();
-			}
+			checkNewLine(interfacee);
 			interfacee.criarFuncaoAbstrata(raiz.getDTODetalhe(), nome, new Parametros(AtributoConstantes.LONG_ID));
 			contador++;
 		}
 
 		nome = AtributoUtil.getExportar(mapaService);
 		if (!Util.isEmpty(nome)) {
-			if (contador > 0) {
-				interfacee.newLine();
-			}
+			checkNewLine(interfacee);
 			interfacee.criarFuncaoAbstrata("byte[]", nome,
 					new Parametros(new Variavel(raiz.getListDTOPesquisa(), "dtos")));
 			contador++;
@@ -1484,6 +1474,12 @@ class PainelService extends AbstratoPanel {
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
+	}
+
+	private void checkNewLine(InterfacePublica interfacee) {
+		if (contador > 0) {
+			interfacee.newLine();
+		}
 	}
 }
 
@@ -1513,8 +1509,8 @@ class PainelBean extends AbstratoPanel {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
+		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
 			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
@@ -1531,7 +1527,6 @@ class PainelBean extends AbstratoPanel {
 		String bean = raiz.getBean();
 		Mapa mapaDAO = raiz.getMapaDAO();
 		Mapa mapaService = raiz.getMapaService();
-
 		if (mapaDAO == null || mapaService == null) {
 			return;
 		}
@@ -1605,15 +1600,14 @@ class PainelDAO extends AbstratoPanel {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
+		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
 			arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 		}
 
 		Mapa mapaDAO = raiz.getMapaDAO();
-
 		if (mapaDAO == null) {
 			return;
 		}
@@ -1629,24 +1623,26 @@ class PainelDAO extends AbstratoPanel {
 		nome = AtributoUtil.getPesquisar(mapaDAO);
 		if (!Util.isEmpty(nome)) {
 			String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
-			if (contador > 0) {
-				interfacee.newLine();
-			}
+			checkNewLine(interfacee);
 			interfacee.criarFuncaoAbstrata(retorno, nome, new Parametros(raiz.getTipoFilterJVPesquisarExportar()));
 			contador++;
 		}
 
 		nome = AtributoUtil.getDetalhar(mapaDAO);
 		if (!Util.isEmpty(nome)) {
-			if (contador > 0) {
-				interfacee.newLine();
-			}
+			checkNewLine(interfacee);
 			interfacee.criarFuncaoAbstrata(raiz.getDTODetalhe(), nome, new Parametros(AtributoConstantes.LONG_ID));
 			contador++;
 		}
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
+	}
+
+	private void checkNewLine(InterfacePublica interfacee) {
+		if (contador > 0) {
+			interfacee.newLine();
+		}
 	}
 }
 
@@ -1677,8 +1673,8 @@ class PainelDAOImpl extends AbstratoPanel {
 				return;
 			}
 		}
-		StringPool pool = new StringPool();
 
+		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
 			arquivo.addImport("java.util.ArrayList");
@@ -1689,7 +1685,6 @@ class PainelDAOImpl extends AbstratoPanel {
 
 		String daoImpl = raiz.getDAOImpl();
 		Mapa mapaDAO = raiz.getMapaDAO();
-
 		if (mapaDAO == null) {
 			return;
 		}
@@ -1762,7 +1757,6 @@ class PainelTest extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
-
 		Arquivo arquivo = new Arquivo();
 		if (!atributos.isEmpty()) {
 			arquivo.addImport("org.junit.Test");
@@ -1776,7 +1770,6 @@ class PainelTest extends AbstratoPanel {
 
 		Mapa mapaService = raiz.getMapaService();
 		Mapa mapaTest = raiz.getMapaTest();
-
 		if (mapaService == null || mapaTest == null) {
 			return;
 		}
