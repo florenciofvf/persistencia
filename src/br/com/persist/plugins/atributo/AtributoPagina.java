@@ -632,7 +632,7 @@ class PainelControllerJS extends AbstratoPainelJS {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
-			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA_ASK,
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
 					AtributoConstantes.FILTER_JS);
 			if (!Util.confirmar(this, msg, false)) {
 				return;
@@ -802,9 +802,11 @@ class PainelFilterJS extends AbstratoPainelJS {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JS));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JS);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
@@ -861,9 +863,11 @@ class PainelValidarJS extends AbstratoPainelJS {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JS));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JS);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
@@ -1096,9 +1100,11 @@ class PainelDTOPesquisa extends AbstratoDTO {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getDTOPesquisa())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.DTO_PESQUISAR));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.DTO_PESQUISAR);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
@@ -1133,9 +1139,11 @@ class PainelDTOTodos extends AbstratoDTO {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getDTOTodos())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.DTO_TODOS));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.DTO_TODOS);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
@@ -1170,9 +1178,11 @@ class PainelDTODetalhe extends AbstratoDTO {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getDTODetalhe())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.DTO_DETALHAR));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.DTO_DETALHAR);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
@@ -1207,9 +1217,11 @@ class PainelFilterJV extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JV));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
@@ -1260,9 +1272,11 @@ class PainelRest extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JV));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
@@ -1409,9 +1423,11 @@ class PainelService extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		contador = 0;
 		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JV));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
@@ -1491,9 +1507,11 @@ class PainelBean extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JV));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
@@ -1581,9 +1599,11 @@ class PainelDAO extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		contador = 0;
 		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JV));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
@@ -1651,9 +1671,11 @@ class PainelDAOImpl extends AbstratoPanel {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJVPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JV));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JV);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
