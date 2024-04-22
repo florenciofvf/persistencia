@@ -632,9 +632,11 @@ class PainelControllerJS extends AbstratoPainelJS {
 	@Override
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		if (Util.isEmpty(raiz.getFilterJSPesquisarExportar())) {
-			setText(AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
-					AtributoConstantes.FILTER_JS));
-			return;
+			String msg = AtributoMensagens.getString(AtributoConstantes.MSG_PROP_NAO_DEFINIDA,
+					AtributoConstantes.FILTER_JS);
+			if (!Util.confirmar(this, msg, false)) {
+				return;
+			}
 		}
 		StringPool pool = new StringPool();
 
@@ -651,7 +653,9 @@ class PainelControllerJS extends AbstratoPainelJS {
 		JSFuncao funcao = criarFuncao(arquivo, mapaControllerJS, mapaServiceJS);
 		funcao.addInstrucao("var vm = this").newLine();
 		funcao.addInstrucao("vm.pesquisados = new NgTableParams()");
-		funcao.addInstrucao("vm." + filtro + " = {}");
+		if (!Util.isEmpty(filtro)) {
+			funcao.addInstrucao("vm." + filtro + " = {}");
+		}
 
 		fnLimparFiltro(funcao, mapaControllerJS, filtro);
 		fnBuscarTodos(funcao, mapaControllerJS, mapaServiceJS);
@@ -670,6 +674,7 @@ class PainelControllerJS extends AbstratoPainelJS {
 		}
 		funcao.newLine();
 		JSFuncaoAtributo limpar = funcao.criarJSFuncaoAtributo("vm." + nome);
+		limpar.addComentario("$scope.$emit('msgClear');");
 		limpar.addInstrucao("vm." + filtro + " = {}");
 	}
 

@@ -2,6 +2,7 @@ package br.com.persist.plugins.atributo;
 
 public class AtributoConstantes {
 	public static final String IGNORE_PROPERTIES = "JsonIgnoreProperties(ignoreUnknown = true)";
+	public static final String MSG_PROP_NAO_DEFINIDA_ASK = "msg.propriedade_nao_definida_ask";
 	public static final String MSG_PROP_NAO_DEFINIDA = "msg.propriedade_nao_definida";
 	public static final String PESQUISAR_RETORNO_LISTA = "pesquisarRetornoEmLista";
 	public static final String APPLICATION_JSON = "{MediaType.APPLICATION_JSON}";
