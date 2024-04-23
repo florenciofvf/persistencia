@@ -122,6 +122,8 @@ import br.com.persist.plugins.objeto.complem.ComplementoListener;
 import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
+import br.com.persist.plugins.objeto.vinculo.OrdenarDialogo;
+import br.com.persist.plugins.objeto.vinculo.OrdenarListener;
 import br.com.persist.plugins.objeto.vinculo.Param;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -1173,6 +1175,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
+				private Action ordenarAcao = actionMenu("label.ordenar", Icones.ASC_TEXTO);
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.total_detalhes"));
@@ -1190,6 +1193,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(true, nomeIconeReferAcao);
 					addMenuItem(nomeReferAcao);
 					addMenuItem(renomearAcao);
+					addMenuItem(ordenarAcao);
 					addMenuItem(true, excluirAcao);
 					addSeparator();
 					add(menuInfo);
@@ -1201,6 +1205,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					nomeReferAcao.setActionListener(e -> nomeRefer());
 					renomearAcao.setActionListener(e -> renomear());
+					ordenarAcao.setActionListener(e -> ordenar());
 					excluirAcao.setActionListener(e -> excluir());
 					int size = pesquisa.getReferencias().size();
 					nomeIconeReferAcao.setEnabled(size == 1);
@@ -1592,6 +1597,44 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							pesq.setNome(nome);
 							setText(pesq.getNomeParaMenuItem());
 							vinculoListener.salvarVinculacao(vinculacao);
+						}
+					}
+				}
+
+				private void ordenar() {
+					if (vinculoListener == null) {
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
+					List<Pesquisa> pesquisas = vinculacao.getPesquisas(objeto);
+					OrdenarDialogo.criar(InternalContainer.this, objeto.getId(),
+							new ListenerOrdenar(pesquisas, vinculacao));
+				}
+
+				private class ListenerOrdenar implements OrdenarListener {
+					final List<Pesquisa> pesquisas;
+					final Vinculacao vinculacao;
+
+					ListenerOrdenar(List<Pesquisa> pesquisas, Vinculacao vinculacao) {
+						this.vinculacao = vinculacao;
+						this.pesquisas = pesquisas;
+					}
+
+					public List<Pesquisa> getPesquisas() {
+						return pesquisas;
+					}
+
+					@Override
+					public void salvar() {
+						if (vinculoListener != null) {
+							vinculoListener.salvarVinculacao(vinculacao);
+							toolbar.buttonPesquisa.complemento(objeto);
 						}
 					}
 				}
