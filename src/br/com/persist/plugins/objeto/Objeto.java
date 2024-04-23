@@ -1223,7 +1223,10 @@ public class Objeto implements Runnable {
 		return false;
 	}
 
-	public List<Pesquisa> getPesquisas() {
+	public List<Pesquisa> getPesquisas(boolean ordenar) {
+		if (ordenar) {
+			Collections.sort(pesquisas, (Pesquisa o1, Pesquisa o2) -> o1.getOrdem() - o2.getOrdem());
+		}
 		return pesquisas;
 	}
 

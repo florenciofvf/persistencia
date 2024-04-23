@@ -31,6 +31,7 @@ public class VinculoHandler extends XMLHandler {
 	public static final String VAZIO = "vazio";
 	public static final String PARAM = "param";
 	public static final String CHAVE = "chave";
+	public static final String ORDEM = "ordem";
 	public static final String NOME = "nome";
 	public static final String PARA = "para";
 	public static final String REF = "ref";
@@ -61,6 +62,10 @@ public class VinculoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (PESQUISA.equals(qName)) {
 			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes), attributes.getValue(ICONE_GRUPO));
+			String ordem = attributes.getValue(ORDEM);
+			if (!Util.isEmpty(ordem)) {
+				selecionado.setOrdem(Integer.parseInt(ordem));
+			}
 			if (!PesquisaUtil.contem(selecionado, pesquisas)) {
 				pesquisas.add(selecionado);
 			}
@@ -102,7 +107,7 @@ public class VinculoHandler extends XMLHandler {
 		i.setSelecaoMultipla(sm);
 		boolean cf = Boolean.parseBoolean(attributes.getValue("comoFiltro"));
 		i.setComoFiltro(cf);
-		String ordem = attributes.getValue("ordem");
+		String ordem = attributes.getValue(ORDEM);
 		if (!Util.isEmpty(ordem)) {
 			i.setOrdem(Integer.parseInt(ordem));
 		}
@@ -111,7 +116,7 @@ public class VinculoHandler extends XMLHandler {
 
 	private void addFiltro(Attributes attributes, List<Filtro> lista) {
 		Filtro f = new Filtro(attributes.getValue(NOME));
-		String ordem = attributes.getValue("ordem");
+		String ordem = attributes.getValue(ORDEM);
 		if (!Util.isEmpty(ordem)) {
 			f.setOrdem(Integer.parseInt(ordem));
 		}

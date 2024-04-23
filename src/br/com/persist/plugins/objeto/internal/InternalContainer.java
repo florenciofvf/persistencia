@@ -1157,7 +1157,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void complemento(Objeto objeto) {
 				limparPopup();
-				List<Pesquisa> pesquisas = objeto.getPesquisas();
+				List<Pesquisa> pesquisas = objeto.getPesquisas(true);
 				for (Pesquisa p : pesquisas) {
 					addMenu(new MenuPesquisa(p));
 				}
@@ -3066,7 +3066,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
-						if (objeto.getPesquisas().isEmpty()) {
+						if (objeto.getPesquisas(false).isEmpty()) {
 							processarPesquisaVazio(mapaRef, vinculacao);
 						} else {
 							processarPesquisa(mapaRef, vinculacao);
@@ -3087,7 +3087,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 
 					private void processarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao) {
-						List<Pesquisa> pesquisas = objeto.getPesquisas();
+						List<Pesquisa> pesquisas = objeto.getPesquisas(false);
 						List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 						Coletor coletor = new Coletor();
 						Config config = new SetLista.Config(true, true);
@@ -3703,7 +3703,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private Coletor getNomePesquisa() {
-			List<Pesquisa> pesquisas = objeto.getPesquisas();
+			List<Pesquisa> pesquisas = objeto.getPesquisas(false);
 			List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 			Coletor coletor = new Coletor();
 			Config config = new SetLista.Config(true, true);
@@ -4014,7 +4014,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public void atualizarComplemento(Objeto obj) {
-		if (obj != null && obj == objeto && !obj.getPesquisas().isEmpty()) {
+		if (obj != null && obj == objeto && !obj.getPesquisas(false).isEmpty()) {
 			buscaAuto = true;
 			toolbar.buttonPesquisa.complemento(obj);
 		}

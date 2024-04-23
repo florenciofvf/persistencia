@@ -20,6 +20,7 @@ public class Pesquisa {
 	private String iconeGrupo;
 	private Objeto objeto;
 	private String nome;
+	private int ordem;
 
 	public Pesquisa(String nome, Referencia ref, String iconeGrupo) {
 		this.referencia = Objects.requireNonNull(ref);
@@ -40,6 +41,14 @@ public class Pesquisa {
 
 	public void setIconeGrupo(String iconeGrupo) {
 		this.iconeGrupo = iconeGrupo;
+	}
+
+	public int getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
 	}
 
 	public String getNome() {
@@ -102,6 +111,7 @@ public class Pesquisa {
 		}
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
 		Referencia.atributoValor(util, VinculoHandler.ICONE_GRUPO, iconeGrupo);
+		util.atributo(VinculoHandler.ORDEM, ordem);
 		referencia.salvar(0, false, util);
 		util.fecharTag();
 		for (Param par : params) {
@@ -158,7 +168,8 @@ public class Pesquisa {
 		util.ql();
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, "Nome da pesquisa")
 				.atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA).atributo(VinculoHandler.CAMPO, "PK")
-				.atributo(VinculoHandler.GRUPO, "").atributo(VinculoHandler.ICONE_GRUPO, "").fecharTag();
+				.atributo(VinculoHandler.GRUPO, "").atributo(VinculoHandler.ICONE_GRUPO, "")
+				.atributo(VinculoHandler.ORDEM, 0).fecharTag();
 		new Param(".", ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo2(util);
