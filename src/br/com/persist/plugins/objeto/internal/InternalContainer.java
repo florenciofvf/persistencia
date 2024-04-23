@@ -1633,6 +1633,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					@Override
 					public void salvar() {
 						if (vinculoListener != null) {
+							for (Pesquisa p : pesquisas) {
+								Pesquisa pesq = objeto.getPesquisa(p);
+								if (p != null) {
+									pesq.setOrdem(p.getOrdem());
+								}
+							}
 							vinculoListener.salvarVinculacao(vinculacao);
 							toolbar.buttonPesquisa.complemento(objeto);
 						}

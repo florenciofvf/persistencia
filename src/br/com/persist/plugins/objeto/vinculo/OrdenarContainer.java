@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.util.Objects;
 
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -25,6 +26,8 @@ public class OrdenarContainer extends Panel {
 
 	private void montarLayout() {
 		JTable table = new JTable(new OrdenarModelo(listener.getPesquisas()));
+		TableColumnModel columnModel = table.getColumnModel();
+		columnModel.getColumn(1).setCellRenderer(new OrdenarRenderer());
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		add(BorderLayout.CENTER, new ScrollPane(table));
 		add(BorderLayout.NORTH, toolbar);
