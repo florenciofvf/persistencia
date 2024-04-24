@@ -1548,15 +1548,17 @@ class PainelBean extends AbstratoPanel {
 		ClassePublica classe = arquivo
 				.criarClassePublica(bean + " implements " + AtributoUtil.getComponente(mapaService));
 
+		Variavel varDAO = raiz.getTipoDAO();
+		String daoDot = varDAO.getNome() + ".";
 		classe.addAnotacao("Inject");
-		classe.addCampoPrivado(raiz.getTipoDAO());
+		classe.addCampoPrivado(varDAO);
 
 		Funcao funcao = null;
 		String nome = AtributoUtil.getBuscarTodos(mapaService);
 		if (!Util.isEmpty(nome)) {
 			classe.addOverride(true);
 			funcao = classe.criarFuncaoPublica(raiz.getListDTOTodos(), nome);
-			funcao.addReturn("dao." + AtributoUtil.getBuscarTodos(mapaDAO) + "()");
+			funcao.addReturn(daoDot + AtributoUtil.getBuscarTodos(mapaDAO) + "()");
 		}
 
 		nome = AtributoUtil.getPesquisar(mapaService);
@@ -1564,14 +1566,14 @@ class PainelBean extends AbstratoPanel {
 			String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
 			classe.addOverride(true);
 			funcao = classe.criarFuncaoPublica(retorno, nome, new Parametros(raiz.getTipoFilterJVPesquisarExportar()));
-			funcao.addReturn("dao." + AtributoUtil.getPesquisarFilter(mapaDAO));
+			funcao.addReturn(daoDot + AtributoUtil.getPesquisarFilter(mapaDAO));
 		}
 
 		nome = AtributoUtil.getDetalhar(mapaService);
 		if (!Util.isEmpty(nome)) {
 			classe.addOverride(true);
 			funcao = classe.criarFuncaoPublica(raiz.getDTODetalhe(), nome, new Parametros(AtributoConstantes.LONG_ID));
-			funcao.addReturn("dao." + AtributoUtil.getDetalhar(mapaDAO) + "(id)");
+			funcao.addReturn(daoDot + AtributoUtil.getDetalhar(mapaDAO) + "(id)");
 		}
 
 		nome = AtributoUtil.getExportar(mapaService);

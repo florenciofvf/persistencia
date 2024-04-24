@@ -91,7 +91,11 @@ public class Raiz {
 		if (mapaDAO == null) {
 			return null;
 		}
-		return new Variavel(AtributoUtil.getComponente(mapaDAO), "dao");
+		String dao = AtributoUtil.getComponente(mapaDAO);
+		if (Util.isEmpty(dao)) {
+			dao = "Dao";
+		}
+		return new Variavel(dao, Util.decapitalize(dao));
 	}
 
 	public String getDAOImpl() {
