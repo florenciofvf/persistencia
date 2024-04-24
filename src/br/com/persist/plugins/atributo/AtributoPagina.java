@@ -1379,9 +1379,17 @@ class PainelRest extends AbstratoPanel {
 		classe.addAnotacao(PRODUCES + "{MediaType.APPLICATION_OCTET_STREAM}" + ")");
 
 		FuncaoPublica funcao = classe.criarFuncaoPublica("Response", nome, beanParam(raiz));
-		funcao.addInstrucao(
-				raiz.getListDTOPesquisa() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
-		funcao.addInstrucao("byte[] bytes = servicePDF." + AtributoUtil.getExportar(mapaService) + "(dtos)").newLine();
+		if (chkModeloLista.isSelected()) {
+			funcao.addInstrucao(
+					raiz.getListDTOPesquisa() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
+			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = servicePDF."
+					+ AtributoUtil.getExportar(mapaService) + "(dtos)").newLine();
+		} else {
+			funcao.addInstrucao(
+					raiz.getDTOPesquisa() + " dto = service." + AtributoUtil.getPesquisarFilter(mapaService));
+			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = servicePDF."
+					+ AtributoUtil.getExportar(mapaService) + "(dto)").newLine();
+		}
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
 		funcao.addInstrucao("response.header(\"Content-Disposition\", \"attachment;filename=arquivo.pdf\")");
 		funcao.addInstrucao("response.header(\"Content-type\", MediaType.APPLICATION_OCTET_STREAM)");
@@ -1462,8 +1470,13 @@ class PainelService extends AbstratoPanel {
 		nome = AtributoUtil.getExportar(mapaService);
 		if (!Util.isEmpty(nome)) {
 			checkNewLine(interfacee);
-			interfacee.criarFuncaoAbstrata("byte[]", nome,
-					new Parametros(new Variavel(raiz.getListDTOPesquisa(), "dtos")));
+			if (chkModeloLista.isSelected()) {
+				interfacee.criarFuncaoAbstrata(AtributoConstantes.BYTE_ARRAY, nome,
+						new Parametros(new Variavel(raiz.getListDTOPesquisa(), "dtos")));
+			} else {
+				interfacee.criarFuncaoAbstrata(AtributoConstantes.BYTE_ARRAY, nome,
+						new Parametros(new Variavel(raiz.getDTOPesquisa(), "dto")));
+			}
 			contador++;
 		}
 
@@ -1555,8 +1568,13 @@ class PainelBean extends AbstratoPanel {
 		nome = AtributoUtil.getExportar(mapaService);
 		if (!Util.isEmpty(nome)) {
 			classe.addOverride(true);
-			funcao = classe.criarFuncaoPublica("byte[]", nome,
-					new Parametros(new Variavel(raiz.getListDTOPesquisa(), "dtos")));
+			if (chkModeloLista.isSelected()) {
+				funcao = classe.criarFuncaoPublica(AtributoConstantes.BYTE_ARRAY, nome,
+						new Parametros(new Variavel(raiz.getListDTOPesquisa(), "dtos")));
+			} else {
+				funcao = classe.criarFuncaoPublica(AtributoConstantes.BYTE_ARRAY, nome,
+						new Parametros(new Variavel(raiz.getDTOPesquisa(), "dto")));
+			}
 			funcao.addReturn("new byte[0]");
 		}
 

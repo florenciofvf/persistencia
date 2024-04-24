@@ -29,6 +29,7 @@ public class AtributoConstantes {
 	public static final String EXPORTAR = "exportar";
 	public static final String ATRIBUTO = "atributo";
 	public static final String DETALHAR = "detalhar";
+	public static final String BYTE_ARRAY = "byte[]";
 	public static final String DAO_IMPL = "daoImpl";
 	public static final String DAO_IMP2 = "DAOImpl";
 	public static final String SERVICE = "service";
