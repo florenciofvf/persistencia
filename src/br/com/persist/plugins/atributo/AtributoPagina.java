@@ -1297,14 +1297,15 @@ class PainelRest extends AbstratoPanel {
 		arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 		arquivo.addImport("javax.inject.Inject").newLine();
 		arquivo.addImport("javax.ws.rs.Consumes");
-		arquivo.addImport("javax.ws.rs.Produces").newLine();
-		arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
+		arquivo.addImport("javax.ws.rs.Produces");
 		arquivo.addImport("javax.ws.rs.BeanParam");
 		arquivo.addImport("javax.ws.rs.GET");
 		arquivo.addImport("javax.ws.rs.Path");
 		arquivo.addImport("javax.ws.rs.Produces");
 		arquivo.addImport("javax.ws.rs.QueryParam");
-		arquivo.addImport("javax.ws.rs.core.MediaType").newLine();
+		arquivo.addImport("javax.ws.rs.core.MediaType");
+		arquivo.addImport("javax.ws.rs.core.Response");
+		arquivo.addImport("javax.ws.rs.core.Response.ResponseBuilder").newLine();
 		arquivo.addComentario("br.com.empresa.framework.seguranca.RestSeguranca;").newLine();
 		arquivo.addAnotacaoPath(Util.citar2(mapaRest.getString(AtributoConstantes.END_POINT)));
 
