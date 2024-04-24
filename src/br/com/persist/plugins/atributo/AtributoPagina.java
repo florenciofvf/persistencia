@@ -1390,12 +1390,12 @@ class PainelRest extends AbstratoPanel {
 		FuncaoPublica funcao = classe.criarFuncaoPublica("Response", nome, beanParam(raiz));
 		if (chkModeloLista.isSelected()) {
 			funcao.addInstrucao(
-					raiz.getListDTOPesquisa() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
+					raiz.getListDTOPesquisa() + " dtos = " + serviceDot + AtributoUtil.getPesquisarFilter(mapaService));
 			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = " + servicePdfDot
 					+ AtributoUtil.getExportar(mapaService) + "(dtos)").newLine();
 		} else {
 			funcao.addInstrucao(
-					raiz.getDTOPesquisa() + " dto = service." + AtributoUtil.getPesquisarFilter(mapaService));
+					raiz.getDTOPesquisa() + " dto = " + serviceDot + AtributoUtil.getPesquisarFilter(mapaService));
 			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = " + servicePdfDot
 					+ AtributoUtil.getExportar(mapaService) + "(dto)").newLine();
 		}
