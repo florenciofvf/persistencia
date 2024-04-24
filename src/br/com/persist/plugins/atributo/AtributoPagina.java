@@ -1250,8 +1250,9 @@ class PainelFilterJV extends AbstratoPanel {
 class PainelRest extends AbstratoPanel {
 	private static final String CONSUMES = "Consumes(";
 	private static final String PRODUCES = "Produces(";
-	private static final String SERVICE = "service.";
 	private static final long serialVersionUID = 1L;
+	private String servicePdfDot;
+	private String serviceDot;
 
 	PainelRest(AtributoPagina pagina) {
 		super(pagina, true);
@@ -1284,6 +1285,14 @@ class PainelRest extends AbstratoPanel {
 			return;
 		}
 
+		String service = AtributoUtil.getComponente(mapaService);
+		if (Util.isEmpty(service)) {
+			service = "service";
+		}
+		serviceDot = Util.decapitalize(service + ".");
+		String servicePdf = service + "PDF";
+		servicePdfDot = Util.decapitalize(servicePdf + ".");
+
 		Arquivo arquivo = new Arquivo();
 		arquivo.addImport(AtributoConstantes.IMPORT_LIST).newLine();
 		arquivo.addImport("javax.inject.Inject").newLine();
@@ -1302,8 +1311,8 @@ class PainelRest extends AbstratoPanel {
 		ClassePublica classe = arquivo
 				.criarClassePublica(AtributoUtil.getComponente(mapaRest) + " extends ApplicationRest");
 
-		injetar(classe, new Variavel(AtributoUtil.getComponente(mapaService), "service")).newLine();
-		injetar(classe, new Variavel(AtributoUtil.getComponente(mapaService) + "PDF", "servicePDF"));
+		injetar(classe, new Variavel(service, Util.decapitalize(service))).newLine();
+		injetar(classe, new Variavel(servicePdf, Util.decapitalize(servicePdf)));
 		criarBuscarTodos(raiz, mapaRest, mapaService, classe);
 		criarPesquisar(raiz, mapaRest, mapaService, classe);
 		criarDetalhar(raiz, mapaRest, mapaService, classe);
@@ -1330,7 +1339,7 @@ class PainelRest extends AbstratoPanel {
 		classe.addAnotacao(CONSUMES + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao(PRODUCES + AtributoConstantes.APPLICATION_JSON + ")");
 		FuncaoPublica funcao = classe.criarFuncaoPublica(raiz.getListDTOTodos(), nome);
-		funcao.addReturn(SERVICE + AtributoUtil.getBuscarTodos(mapaService) + "()");
+		funcao.addReturn(serviceDot + AtributoUtil.getBuscarTodos(mapaService) + "()");
 	}
 
 	private void criarPesquisar(Raiz raiz, Mapa mapaRest, Mapa mapaService, ClassePublica classe) {
@@ -1346,7 +1355,7 @@ class PainelRest extends AbstratoPanel {
 
 		String retorno = chkModeloLista.isSelected() ? raiz.getListDTOPesquisa() : raiz.getDTOPesquisa();
 		FuncaoPublica funcao = classe.criarFuncaoPublica(retorno, nome, beanParam(raiz));
-		funcao.addReturn(SERVICE + AtributoUtil.getPesquisarFilter(mapaService));
+		funcao.addReturn(serviceDot + AtributoUtil.getPesquisarFilter(mapaService));
 	}
 
 	private void criarDetalhar(Raiz raiz, Mapa mapaRest, Mapa mapaService, ClassePublica classe) {
@@ -1363,7 +1372,7 @@ class PainelRest extends AbstratoPanel {
 
 		FuncaoPublica funcao = classe.criarFuncaoPublica(raiz.getDTODetalhe(), nome,
 				new Parametros("@QueryParam(\"id\") Long id"));
-		funcao.addReturn(SERVICE + AtributoUtil.getDetalhar(mapaService) + "(id)");
+		funcao.addReturn(serviceDot + AtributoUtil.getDetalhar(mapaService) + "(id)");
 	}
 
 	private void criarExportar(Raiz raiz, Mapa mapaRest, Mapa mapaService, ClassePublica classe) {
@@ -1382,12 +1391,12 @@ class PainelRest extends AbstratoPanel {
 		if (chkModeloLista.isSelected()) {
 			funcao.addInstrucao(
 					raiz.getListDTOPesquisa() + " dtos = service." + AtributoUtil.getPesquisarFilter(mapaService));
-			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = servicePDF."
+			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = " + servicePdfDot
 					+ AtributoUtil.getExportar(mapaService) + "(dtos)").newLine();
 		} else {
 			funcao.addInstrucao(
 					raiz.getDTOPesquisa() + " dto = service." + AtributoUtil.getPesquisarFilter(mapaService));
-			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = servicePDF."
+			funcao.addInstrucao(AtributoConstantes.BYTE_ARRAY + " bytes = " + servicePdfDot
 					+ AtributoUtil.getExportar(mapaService) + "(dto)").newLine();
 		}
 		funcao.addInstrucao("ResponseBuilder response = Response.ok(bytes)");
