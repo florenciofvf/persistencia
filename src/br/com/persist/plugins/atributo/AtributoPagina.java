@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
@@ -204,8 +205,9 @@ public class AtributoPagina extends Panel {
 					Mapa mapaHierarquia = criarMapaHierarquia(atributos);
 					StringBuilder sb = new StringBuilder();
 					for (ChaveValor cv : mapaHierarquia.getLista()) {
-						if (sb.length() > 0) {
-							sb.append("\n\n");
+						if (cv.getValor() instanceof Separador) {
+							((Separador) cv.getValor()).processar(sb);
+							continue;
 						}
 						Object valor = cv.getValor();
 						String toStr = (valor instanceof String) ? Util.citar2(valor.toString())
@@ -307,24 +309,47 @@ public class AtributoPagina extends Panel {
 
 			private Mapa criarMapaHierarquia(Atributo... atributos) {
 				Mapa resp = new Mapa();
+				AtomicInteger atom = new AtomicInteger(1);
 				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.PESQUISAR_RETORNO_LISTA, "true");
+				separador(resp, atom);
 				resp.put(AtributoConstantes.FILTER_JS, AtributoConstantes.FILTER_JS);
+				separador(resp, atom, Constantes.QL);
 				resp.put(AtributoConstantes.FILTER_JV, Util.capitalize(AtributoConstantes.FILTER_JV));
+				separador(resp, atom, Constantes.QL);
 				resp.put(AtributoConstantes.DTO_PESQUISAR, Util.capitalize(AtributoConstantes.DTO_PESQUISAR));
+				separador(resp, atom, Constantes.QL);
 				resp.put(AtributoConstantes.DTO_DETALHAR, Util.capitalize(AtributoConstantes.DTO_DETALHAR));
+				separador(resp, atom, Constantes.QL);
 				resp.put(AtributoConstantes.DTO_TODOS, Util.capitalize(AtributoConstantes.DTO_TODOS));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.CONTROLLER_JS, criarMapa(AtributoConstantes.CONTROLLER_JS,
 						new ChaveValor(AtributoConstantes.LIMPAR_FILTRO, AtributoConstantes.LIMPAR_FILTRO)));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.SERVICE_JS, criarMapa(AtributoConstantes.SERVICE_JS));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST,
 						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.BEAN, Util.capitalize(AtributoConstantes.BEAN));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO.toUpperCase()));
+				separador(resp, atom);
 				resp.put(AtributoConstantes.DAO_IMPL, AtributoConstantes.DAO_IMP2);
+				separador(resp, atom);
 				resp.put(AtributoConstantes.TEST, criarMapa(AtributoConstantes.TEST));
 				return resp;
+			}
+
+			void separador(Mapa mapa, AtomicInteger atom, String string) {
+				mapa.put(String.valueOf(atom.incrementAndGet()), new Separador(string));
+			}
+
+			void separador(Mapa mapa, AtomicInteger atom) {
+				separador(mapa, atom, null);
 			}
 
 			private Mapa criarMapaAtributos(Atributo... atributos) {
