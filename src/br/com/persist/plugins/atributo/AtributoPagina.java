@@ -310,15 +310,15 @@ public class AtributoPagina extends Panel {
 				resp.put(AtributoConstantes.ATRIBUTOS, criarMapaAtributos(atributos));
 				resp.put(AtributoConstantes.PESQUISAR_RETORNO_LISTA, "true");
 				resp.put(AtributoConstantes.FILTER_JS, AtributoConstantes.FILTER_JS);
-				resp.put(AtributoConstantes.CONTROLLER_JS, criarMapa(AtributoConstantes.CONTROLLER_JS,
-						new ChaveValor(AtributoConstantes.LIMPAR_FILTRO, AtributoConstantes.LIMPAR_FILTRO)));
-				resp.put(AtributoConstantes.SERVICE_JS, criarMapa(AtributoConstantes.SERVICE_JS));
 				resp.put(AtributoConstantes.FILTER_JV, Util.capitalize(AtributoConstantes.FILTER_JV));
-				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST,
-						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
 				resp.put(AtributoConstantes.DTO_PESQUISAR, Util.capitalize(AtributoConstantes.DTO_PESQUISAR));
 				resp.put(AtributoConstantes.DTO_DETALHAR, Util.capitalize(AtributoConstantes.DTO_DETALHAR));
 				resp.put(AtributoConstantes.DTO_TODOS, Util.capitalize(AtributoConstantes.DTO_TODOS));
+				resp.put(AtributoConstantes.CONTROLLER_JS, criarMapa(AtributoConstantes.CONTROLLER_JS,
+						new ChaveValor(AtributoConstantes.LIMPAR_FILTRO, AtributoConstantes.LIMPAR_FILTRO)));
+				resp.put(AtributoConstantes.SERVICE_JS, criarMapa(AtributoConstantes.SERVICE_JS));
+				resp.put(AtributoConstantes.REST, criarMapa(AtributoConstantes.REST,
+						new ChaveValor(AtributoConstantes.END_POINT, AtributoConstantes.END_POINT)));
 				resp.put(AtributoConstantes.SERVICE, criarMapa(AtributoConstantes.SERVICE));
 				resp.put(AtributoConstantes.BEAN, Util.capitalize(AtributoConstantes.BEAN));
 				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO.toUpperCase()));
