@@ -3402,7 +3402,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private transient FragmentoListener fragmentoListener = new FragmentoListener() {
 		@Override
-		public void aplicarFragmento(List<Fragmento> fragmentos, boolean concatenar) {
+		public void aplicarFragmento(List<Fragmento> fragmentos, boolean concatenar, boolean and) {
 			StringBuilder sb = new StringBuilder();
 			for (Fragmento f : fragmentos) {
 				if (sb.length() > 0) {

@@ -1,7 +1,7 @@
 package br.com.persist.plugins.fragmento;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
-import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO3;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
@@ -98,8 +98,9 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela, FragmentoListener listener) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					EXCLUIR, COPIAR, APLICAR_BOTAO);
-			buttonAplicar.setTextAplicar2(FragmentoMensagens.getString("label.aplicar_concatenado"));
+					EXCLUIR, COPIAR, APLICAR_BOTAO3);
+			buttonAplicar.setTextAplicar2(FragmentoMensagens.getString("label.aplicar_concatenado_and"));
+			buttonAplicar.setTextAplicar3(FragmentoMensagens.getString("label.aplicar_concatenado_or"));
 			setListener(listener);
 		}
 
@@ -228,7 +229,7 @@ public class FragmentoContainer extends AbstratoContainer {
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
 			if (linhas != null && linhas.length > 0) {
-				aplicarListaFragmento(linhas, false);
+				aplicarListaFragmento(linhas, false, false);
 			} else {
 				mensagem();
 			}
@@ -238,23 +239,38 @@ public class FragmentoContainer extends AbstratoContainer {
 		protected void aplicar2() {
 			int[] linhas = tabela.getSelectedRows();
 			if (linhas != null && linhas.length > 0) {
-				aplicarListaFragmento(linhas, true);
+				aplicarListaFragmento(linhas, true, true);
 			} else {
 				mensagem();
 			}
 		}
 
-		private void aplicarListaFragmento(int[] linhas, boolean concatenar) {
-			List<Fragmento> frags = new ArrayList<>();
-			for (int i : linhas) {
-				frags.add(FragmentoProvedor.getFragmento(i));
+		@Override
+		protected void aplicar3() {
+			int[] linhas = tabela.getSelectedRows();
+			if (linhas != null && linhas.length > 0) {
+				aplicarListaFragmento(linhas, true, false);
+			} else {
+				mensagem();
 			}
-			aplicarFragmento(frags, concatenar);
 		}
 
-		private void aplicarFragmento(List<Fragmento> frags, boolean concatenar) {
+		private void aplicarListaFragmento(int[] linhas, boolean concatenar, boolean and) {
+			List<Fragmento> frags = new ArrayList<>();
+			for (int i : linhas) {
+				Fragmento fragmento = FragmentoProvedor.getFragmento(i);
+				if (concatenar && !and) {
+					frags.add(fragmento.cloneOr());
+				} else {
+					frags.add(fragmento);
+				}
+			}
+			aplicarFragmento(frags, concatenar, and);
+		}
+
+		private void aplicarFragmento(List<Fragmento> frags, boolean concatenar, boolean and) {
 			try {
-				listener.aplicarFragmento(frags, concatenar);
+				listener.aplicarFragmento(frags, concatenar, and);
 			} finally {
 				if (janela != null) {
 					janela.fechar();

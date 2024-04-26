@@ -74,6 +74,7 @@ public abstract class BarraButton extends JToolBar
 		configColar2(enuns);
 		configAplicar(enuns);
 		configButtonAplicar(enuns);
+		configButtonAplicar3(enuns);
 		configBackup(enuns);
 	}
 
@@ -257,22 +258,38 @@ public abstract class BarraButton extends JToolBar
 
 	private void configButtonAplicar(BarraButtonEnum... enuns) {
 		if (contem(APLICAR_BOTAO, enuns)) {
-			buttonAplicar = new ButtonAplicar();
+			buttonAplicar = new ButtonAplicar(false);
+			add(buttonAplicar);
+		}
+	}
+
+	private void configButtonAplicar3(BarraButtonEnum... enuns) {
+		if (contem(APLICAR_BOTAO3, enuns)) {
+			buttonAplicar = new ButtonAplicar(true);
 			add(buttonAplicar);
 		}
 	}
 
 	protected class ButtonAplicar extends ButtonPopup {
+		protected Action aplicar3Acao = actionMenu(Constantes.LABEL_APLICAR);
 		protected Action aplicar2Acao = actionMenu(Constantes.LABEL_APLICAR);
 		protected Action aplicarAcao = actionMenu(Constantes.LABEL_APLICAR);
 		private static final long serialVersionUID = 1L;
 
-		protected ButtonAplicar() {
+		protected ButtonAplicar(boolean tres) {
 			super(Constantes.LABEL_APLICAR, Icones.SUCESSO);
 			addMenuItem(aplicarAcao);
 			aplicarAcao.setActionListener(e -> aplicar());
 			addMenuItem(true, aplicar2Acao);
 			aplicar2Acao.setActionListener(e -> aplicar2());
+			if (tres) {
+				addMenuItem(true, aplicar3Acao);
+				aplicar3Acao.setActionListener(e -> aplicar3());
+			}
+		}
+
+		public void setTextAplicar3(String text) {
+			aplicar3Acao.text(text);
 		}
 
 		public void setTextAplicar2(String text) {
@@ -419,6 +436,10 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected void aplicar2() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void aplicar3() {
 		throw new UnsupportedOperationException();
 	}
 

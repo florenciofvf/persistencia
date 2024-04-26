@@ -61,4 +61,14 @@ public class Fragmento {
 		}
 		return valor;
 	}
+
+	public Fragmento cloneOr() {
+		String string = getValor().toUpperCase().trim();
+		if (string.startsWith("AND ")) {
+			string = "OR " + getValor().trim().substring(4);
+		}
+		Fragmento resp = new Fragmento(resumo, grupo);
+		resp.setValor(string);
+		return resp;
+	}
 }
