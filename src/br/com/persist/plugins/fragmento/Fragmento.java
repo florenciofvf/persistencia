@@ -65,7 +65,11 @@ public class Fragmento {
 	public Fragmento cloneOr() {
 		String string = getValor().toUpperCase().trim();
 		if (string.startsWith("AND ")) {
-			string = "OR " + getValor().trim().substring(4);
+			if (getValor().trim().startsWith("and ")) {
+				string = "or " + getValor().trim().substring(4);
+			} else {
+				string = "OR " + getValor().trim().substring(4);
+			}
 		}
 		Fragmento resp = new Fragmento(resumo, grupo);
 		resp.setValor(string);
