@@ -648,6 +648,27 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
+	private void pesquisarEmMemoria(Argumento argumento, Referencia referencia) {
+		if (argumento instanceof ArgumentoString) {
+			String argumentos = ((ArgumentoString) argumento).getString();
+			if (objeto.isLinkAuto() && argumentos != null) {
+				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+				String[] strings = argumentos.split(",");
+				tabelaPersistencia.clearSelection();
+				selecionarRegistros(referencia, strings, modelo);
+			}
+		} else if (argumento instanceof ArgumentoArray) {
+			ArgumentoArray argumentoArray = (ArgumentoArray) argumento;
+			String[] chavesReferencia = referencia.getChavesArray();
+			if (chavesReferencia.length != argumentoArray.getQtdChaves()) {
+				return;
+			}
+			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+			tabelaPersistencia.clearSelection();
+			selecionarRegistros(chavesReferencia, argumentoArray.getValoresChaves(), modelo);
+		}
+	}
+
 	private void selecionarRegistros(Referencia referencia, String[] argumentos, OrdenacaoModelo modelo) {
 		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo(), false);
 		if (coluna != -1) {
@@ -663,17 +684,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	private void pesquisarEmMemoria(Argumento argumento, Referencia referencia) {
-		if (argumento instanceof ArgumentoString) {
-			String argumentos = ((ArgumentoString) argumento).getString();
-			if (objeto.isLinkAuto() && argumentos != null) {
-				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-				String[] strings = argumentos.split(",");
-				tabelaPersistencia.clearSelection();
-				selecionarRegistros(referencia, strings, modelo);
+	private void selecionarRegistros(String[] chavesReferencia, List<Object[]> argumentos, OrdenacaoModelo modelo) {
+		int[] indicesColuna = new int[chavesReferencia.length];
+		for (int i = 0; i < indicesColuna.length; i++) {
+			indicesColuna[i] = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, chavesReferencia[i], false);
+			if (indicesColuna[i] == -1) {
+				return;
 			}
-		} else if (argumento instanceof ArgumentoArray) {
 		}
+		for (int i = 0; i < modelo.getRowCount(); i++) {
+			for (Object[] arg : argumentos) {
+				if (igual(arg, indicesColuna, modelo, i)) {
+					tabelaPersistencia.addRowSelectionInterval(i, i);
+				}
+			}
+		}
+		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
+	}
+
+	private boolean igual(Object[] arg, int[] indicesColuna, OrdenacaoModelo modelo, int row) {
+		boolean resp = true;
+		for (int indice = 0; indice < indicesColuna.length; indice++) {
+			if (!arg[indice].equals(modelo.getValueAt(row, indicesColuna[indice]))) {
+				resp = false;
+			}
+		}
+		return resp;
 	}
 
 	public static String montarFiltro(Objeto objeto, ArgumentoArray argumentoArray, String[] chavesReferencia) {
