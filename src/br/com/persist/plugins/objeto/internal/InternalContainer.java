@@ -622,25 +622,44 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento,
 			boolean soTotal, boolean emForms) {
-		if (conexao != null) {
-			selecionarConexao(conexao);
-			String string = null;
-			if (argumento instanceof ArgumentoString) {
-				string = txtComplemento.getString(referencia.getCampo(),
-						" IN (" + ((ArgumentoString) argumento).getString() + ")"
-								+ referencia.getConcatenar(pesquisa.getCloneParams()));
-			} else if (argumento instanceof ArgumentoArray) {
-				ArgumentoArray argumentoArray = (ArgumentoArray) argumento;
-				String[] chavesReferencia = referencia.getChavesArray();
-				if (chavesReferencia.length != argumentoArray.getQtdChaves()) {
-					return;
-				}
-				String filtro = montarFiltro(objeto, argumentoArray, chavesReferencia);
-				string = filtro + referencia.getConcatenar(pesquisa.getCloneParams());
-			}
-			executarPesquisa(string, soTotal);
+		if (emForms) {
+			pesquisarEmMemoria(argumento, referencia);
 		} else {
-			Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+			if (conexao != null) {
+				selecionarConexao(conexao);
+				String string = null;
+				if (argumento instanceof ArgumentoString) {
+					string = txtComplemento.getString(referencia.getCampo(),
+							" IN (" + ((ArgumentoString) argumento).getString() + ")"
+									+ referencia.getConcatenar(pesquisa.getCloneParams()));
+				} else if (argumento instanceof ArgumentoArray) {
+					ArgumentoArray argumentoArray = (ArgumentoArray) argumento;
+					String[] chavesReferencia = referencia.getChavesArray();
+					if (chavesReferencia.length != argumentoArray.getQtdChaves()) {
+						return;
+					}
+					String filtro = montarFiltro(objeto, argumentoArray, chavesReferencia);
+					string = filtro + referencia.getConcatenar(pesquisa.getCloneParams());
+				}
+				executarPesquisa(string, soTotal);
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+			}
+		}
+	}
+
+	private void pesquisarEmMemoria(Argumento argumento, Referencia referencia) {
+		if (argumento instanceof ArgumentoString) {
+			String argumentos = ((ArgumentoString) argumento).getString();
+			if (objeto.isLinkAuto() && argumentos != null) {
+				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+				String[] strings = argumentos.split(",");
+				tabelaPersistencia.clearSelection();
+				for (String string : strings) {
+					selecionarRegistros(referencia, string.trim(), modelo);
+				}
+			}
+		} else if (argumento instanceof ArgumentoArray) {
 		}
 	}
 
