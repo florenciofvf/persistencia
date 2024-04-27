@@ -648,6 +648,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
+	private void selecionarRegistros(Referencia referencia, String[] argumentos, OrdenacaoModelo modelo) {
+		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo(), false);
+		if (coluna != -1) {
+			for (int i = 0; i < modelo.getRowCount(); i++) {
+				for (String arg : argumentos) {
+					if (arg.trim().equals(modelo.getValueAt(i, coluna))) {
+						tabelaPersistencia.addRowSelectionInterval(i, i);
+						tabelaPersistencia.tornarVisivel(i, coluna);
+					}
+				}
+			}
+			tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
+		}
+	}
+
 	private void pesquisarEmMemoria(Argumento argumento, Referencia referencia) {
 		if (argumento instanceof ArgumentoString) {
 			String argumentos = ((ArgumentoString) argumento).getString();
@@ -655,9 +670,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 				String[] strings = argumentos.split(",");
 				tabelaPersistencia.clearSelection();
-				for (String string : strings) {
-					selecionarRegistros(referencia, string.trim(), modelo);
-				}
+				selecionarRegistros(referencia, strings, modelo);
 			}
 		} else if (argumento instanceof ArgumentoArray) {
 		}
