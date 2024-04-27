@@ -3861,7 +3861,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			List<String> ids = objetos.stream().map(Objeto::getId).collect(Collectors.toList());
 			Coletor coletor = new Coletor();
 			SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.nome_outra_tabela"), ids, coletor,
-					InternalContainer.this, new SetLista.Config(true, true));
+					InternalContainer.this, new SetLista.Config(true, true, nomePesquisa));
 			if (coletor.size() != 1) {
 				return;
 			}
