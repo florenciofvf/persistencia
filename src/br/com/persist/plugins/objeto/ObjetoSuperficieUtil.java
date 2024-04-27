@@ -17,10 +17,15 @@ import br.com.persist.componente.Label;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.objeto.internal.Argumento;
+import br.com.persist.plugins.objeto.internal.ArgumentoArray;
+import br.com.persist.plugins.objeto.internal.ArgumentoString;
+import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
@@ -642,5 +647,32 @@ public class ObjetoSuperficieUtil {
 			}
 		}
 		return false;
+	}
+
+	public static void pesquisarReferencia(ObjetoSuperficie superficie, Conexao conexao, Pesquisa pesquisa,
+			Referencia referencia, Argumento argumento, Objeto objeto) {
+		String string = null;
+		if (argumento instanceof ArgumentoString) {
+			string = objeto.comApelido("AND", referencia.getCampo()) + " IN ("
+					+ ((ArgumentoString) argumento).getString() + ")"
+					+ referencia.getConcatenar(pesquisa.getCloneParams());
+		} else if (argumento instanceof ArgumentoArray) {
+			ArgumentoArray argumentoArray = (ArgumentoArray) argumento;
+			String[] chavesReferencia = referencia.getChavesArray();
+			if (chavesReferencia.length != argumentoArray.getQtdChaves()) {
+				return;
+			}
+			String filtro = InternalContainer.montarFiltro(objeto, argumentoArray, chavesReferencia);
+			string = filtro + referencia.getConcatenar(pesquisa.getCloneParams());
+		}
+		objeto.setComplemento(string);
+		objeto.setReferenciaPesquisa(referencia);
+		if (ObjetoPreferencia.isAbrirAutoDestacado()) {
+			superficie.criarExternalFormulario(conexao != null ? conexao : superficie.container.getConexaoPadrao(),
+					objeto.clonar());
+		} else {
+			objeto.setSelecionado(true);
+		}
+		referencia.setProcessado(true);
 	}
 }
