@@ -46,6 +46,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
@@ -620,7 +621,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento,
-			boolean soTotal) {
+			boolean soTotal, boolean emForms) {
 		if (conexao != null) {
 			selecionarConexao(conexao);
 			String string = null;
@@ -1179,6 +1180,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private class MenuPesquisa extends MenuPadrao2 {
 				private Action ordenarAcao = actionMenu("label.ordenar", Icones.ASC_TEXTO);
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
+				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
+						ObjetoMensagens.getString("label.pesquisa_em_forms"));
 				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.total_detalhes"));
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
@@ -1191,6 +1194,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
+					addItem(chkPesqEmMemoria);
 					addItem(chkTotalDetalhes);
 					addMenuItem(true, nomeIconeReferAcao);
 					addMenuItem(nomeReferAcao);
@@ -1221,6 +1225,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					});
+					ButtonGroup group = new ButtonGroup();
+					group.add(chkPesqEmMemoria);
+					group.add(chkTotalDetalhes);
 				}
 
 				private class MenuInfo extends Menu {
@@ -1732,13 +1739,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void pesquisar(List<String> lista, Argumento argumento, int coluna) {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
-					if (!chkTotalDetalhes.isSelected()) {
+					if (!chkTotalDetalhes.isSelected() && !chkPesqEmMemoria.isSelected()) {
 						pesquisa.setProcessado(false);
 						pesquisa.inicializarColetores(lista);
 						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
 					}
-					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected());
-					if (!chkTotalDetalhes.isSelected()) {
+					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected(),
+							chkPesqEmMemoria.isSelected());
+					if (!chkTotalDetalhes.isSelected() && !chkPesqEmMemoria.isSelected()) {
 						pesquisarFinal(coluna);
 					}
 				}
@@ -1750,7 +1758,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						pesquisa.setProcessado(false);
 						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
 					}
-					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected());
+					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected(),
+							chkPesqEmMemoria.isSelected());
 					if (!chkTotalDetalhes.isSelected()) {
 						pesquisarFinalArray();
 					}

@@ -1065,12 +1065,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
-	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal) {
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms) {
 		if (conexao == null) {
 			conexao = container.getConexaoPadrao();
 		}
 		ObjetoSuperficieUtil.deselRelacoes(this);
-		super.pesquisar(conexao, pesquisa, argumento, soTotal);
+		super.pesquisar(conexao, pesquisa, argumento, soTotal, emForms);
 		if (ObjetoPreferencia.isAbrirAuto()) {
 			ObjetoSuperficieUtil.limparSelecao(this);
 			processarReferencias(conexao, pesquisa, argumento);

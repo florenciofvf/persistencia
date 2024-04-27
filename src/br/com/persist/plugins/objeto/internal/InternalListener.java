@@ -19,7 +19,8 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public interface InternalListener {
 	public interface Vinculo {
-		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal);
+		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal,
+				boolean emForms);
 
 		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem);
 
