@@ -129,6 +129,7 @@ import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
+import br.com.persist.plugins.persistencia.ChaveValor;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.IndiceValor;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
@@ -623,15 +624,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		if (conexao != null) {
 			selecionarConexao(conexao);
 			String string = null;
-			if (argumento.isArgString()) {
-				string = txtComplemento.getString(referencia.getCampo(), " IN (" + argumento.getArgumentosString() + ")"
-						+ referencia.getConcatenar(pesquisa.getCloneParams()));
-			} else {
-				String[] array = referencia.getChavesArray();
-				if (array.length != argumento.getLengthArray()) {
+			if (argumento instanceof ArgumentoString) {
+				string = txtComplemento.getString(referencia.getCampo(),
+						" IN (" + ((ArgumentoString) argumento).getString() + ")"
+								+ referencia.getConcatenar(pesquisa.getCloneParams()));
+			} else if (argumento instanceof ArgumentoArray) {
+				ArgumentoArray argumentoArray = (ArgumentoArray) argumento;
+				String[] chavesReferencia = referencia.getChavesArray();
+				if (chavesReferencia.length != argumentoArray.getQtdChaves()) {
 					return;
 				}
-				String filtro = montarFiltro(objeto, argumento, array);
+				String filtro = montarFiltro(objeto, argumentoArray, chavesReferencia);
 				string = filtro + referencia.getConcatenar(pesquisa.getCloneParams());
 			}
 			executarPesquisa(string, soTotal);
@@ -640,41 +643,40 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	public static String montarFiltro(Objeto objeto, Argumento argumento, String[] array) {
-		List<String[]> lista = normalizar(objeto, argumento, array);
+	public static String montarFiltro(Objeto objeto, ArgumentoArray argumentoArray, String[] chavesReferencia) {
+		List<ChaveValor[]> listaArrayCV = listarArrayChaveValor(objeto, argumentoArray, chavesReferencia);
 		StringBuilder sb = new StringBuilder();
-		for (String[] termo : lista) {
+		for (ChaveValor[] arrayCV : listaArrayCV) {
 			if (sb.length() > 0) {
 				sb.append(" OR ");
 			}
-			sb.append(FiltroUtil.chaveValor(termo));
+			sb.append(FiltroUtil.termo(arrayCV));
 		}
-		return concat(lista.size() > 1, "AND (") + concat(lista.size() == 1, "AND ") + sb.toString()
-				+ concat(lista.size() > 1, ")");
+		return concat(listaArrayCV.size() > 1, "AND (") + concat(listaArrayCV.size() == 1, "AND ") + sb.toString()
+				+ concat(listaArrayCV.size() > 1, ")");
 	}
 
 	private static String concat(boolean test, String string) {
 		return test ? string : "";
 	}
 
-	private static List<String[]> normalizar(Objeto objeto, Argumento argumento, String[] array) {
-		String[] campos = new String[array.length];
-		for (int i = 0; i < campos.length; i++) {
-			campos[i] = objeto.comApelido(array[i]);
+	private static List<ChaveValor[]> listarArrayChaveValor(Objeto objeto, ArgumentoArray argumentoArray,
+			String[] chavesReferencia) {
+		String[] colunas = new String[chavesReferencia.length];
+		for (int i = 0; i < colunas.length; i++) {
+			colunas[i] = objeto.comApelido(chavesReferencia[i]);
 		}
-		List<String[]> lista = new ArrayList<>();
-		for (Object[] arrayArg : argumento.getArgumentosArray()) {
-			String[] termo = new String[argumento.getLengthArray() * 2];
-			int indiceTermo = 0;
-			for (int i = 0; i < campos.length; i++) {
-				termo[indiceTermo] = campos[i];
-				indiceTermo++;
-				termo[indiceTermo] = arrayArg[i].toString();
-				indiceTermo++;
+		List<ChaveValor[]> resposta = new ArrayList<>();
+		for (Object[] valores : argumentoArray.getValoresChaves()) {
+			ChaveValor[] arrayCV = new ChaveValor[chavesReferencia.length];
+			for (int i = 0; i < colunas.length; i++) {
+				String chave = colunas[i];
+				Object valor = valores[i];
+				arrayCV[i] = new ChaveValor(chave, valor);
 			}
-			lista.add(termo);
+			resposta.add(arrayCV);
 		}
-		return lista;
+		return resposta;
 	}
 
 	private void executarPesquisa(String string, boolean soTotal) {
@@ -1701,27 +1703,27 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.mensagem(InternalContainer.this, pesquisa.getReferencia().getCampo() + " vazio.");
 						} else {
 							String argumentos = Util.getStringLista(lista, ", ", false, apostrofes);
-							Argumento argumento = new Argumento(null, argumentos, (byte) 0, true);
+							Argumento argumento = new ArgumentoString(argumentos);
 							pesquisar(lista, argumento, coluna);
 						}
 					} else if (pesquisa.getReferencia().isChaveMultipla()) {
-						String[] array = pesquisa.getReferencia().getChavesArray();
-						Coluna[] colunas = new Coluna[array.length];
-						for (int i = 0; i < array.length; i++) {
-							Coluna chave = tabelaPersistencia.getColuna(array[i]);
+						String[] chavesReferencia = pesquisa.getReferencia().getChavesArray();
+						Coluna[] chaves = new Coluna[chavesReferencia.length];
+						for (int i = 0; i < chavesReferencia.length; i++) {
+							Coluna chave = tabelaPersistencia.getColuna(chavesReferencia[i]);
 							if (chave == null) {
-								Util.mensagem(InternalContainer.this, array[i] + " inexistente! Cheque a pesquisa: "
-										+ pesquisa.getNomeParaMenuItem());
+								Util.mensagem(InternalContainer.this, chavesReferencia[i]
+										+ " inexistente! Cheque a pesquisa: " + pesquisa.getNomeParaMenuItem());
 								return;
 							}
-							colunas[i] = chave;
+							chaves[i] = chave;
 						}
-						List<Object[]> lista = TabelaPersistenciaUtil.getValoresLinha(tabelaPersistencia, colunas,
-								apostrofes);
-						if (lista.isEmpty()) {
+						List<Object[]> valoresChaves = TabelaPersistenciaUtil.getValoresLinha(tabelaPersistencia,
+								chaves, apostrofes);
+						if (valoresChaves.isEmpty()) {
 							Util.mensagem(InternalContainer.this, pesquisa.getReferencia().getCampo() + " vazio.");
 						} else {
-							Argumento argumento = new Argumento(lista, null, (byte) array.length, false);
+							Argumento argumento = new ArgumentoArray(valoresChaves, chavesReferencia.length);
 							pesquisaArray(argumento);
 						}
 					}

@@ -84,15 +84,13 @@ public class FiltroUtil {
 		return sb.toString();
 	}
 
-	static String chaveValor(String... strings) {
+	static String termo(ChaveValor... cvs) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < strings.length; i += 2) {
+		for (ChaveValor cv : cvs) {
 			if (sb.length() > 0) {
 				sb.append(" AND ");
 			}
-			String chave = strings[i];
-			String valor = strings[i + 1];
-			sb.append(chave + " = " + valor);
+			sb.append(cv.getChave() + " = " + cv.getValor());
 		}
 		return "(" + sb.toString() + ")";
 	}
