@@ -24,11 +24,11 @@ import br.com.persist.componente.ScrollPane;
 
 public class OrdenarManualDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
-	private final OrdenarContainer container;
+	private final OrdenarManualContainer container;
 
 	private OrdenarManualDialogo(String titulo, OrdenarListener listener) {
 		super((Dialog) null, titulo);
-		container = new OrdenarContainer(this, listener);
+		container = new OrdenarManualContainer(this, listener);
 		setTitle(listener.getPesquisas().size() + " - " + getTitle());
 		montarLayout();
 	}
@@ -45,21 +45,21 @@ public class OrdenarManualDialogo extends AbstratoDialogo {
 	}
 }
 
-class OrdenarContainer extends Panel {
+class OrdenarManualContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final transient OrdenarListener listener;
 	private final Toolbar toolbar = new Toolbar();
 
-	public OrdenarContainer(Janela janela, OrdenarListener listener) {
+	public OrdenarManualContainer(Janela janela, OrdenarListener listener) {
 		this.listener = Objects.requireNonNull(listener);
 		toolbar.ini(janela);
 		montarLayout();
 	}
 
 	private void montarLayout() {
-		JTable table = new JTable(new OrdenarModelo(listener.getPesquisas()));
+		JTable table = new JTable(new OrdenarManualModelo(listener.getPesquisas()));
 		TableColumnModel columnModel = table.getColumnModel();
-		columnModel.getColumn(1).setCellRenderer(new OrdenarRenderer());
+		columnModel.getColumn(1).setCellRenderer(new OrdenarManualRenderer());
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		add(BorderLayout.CENTER, new ScrollPane(table));
 		add(BorderLayout.NORTH, toolbar);
@@ -80,12 +80,12 @@ class OrdenarContainer extends Panel {
 	}
 }
 
-class OrdenarModelo extends AbstractTableModel {
+class OrdenarManualModelo extends AbstractTableModel {
 	private static final String[] COLUNAS = { "ORDEM", "NOME" };
 	private static final long serialVersionUID = 1L;
 	private final transient List<Pesquisa> lista;
 
-	public OrdenarModelo(List<Pesquisa> lista) {
+	public OrdenarManualModelo(List<Pesquisa> lista) {
 		this.lista = lista == null ? new ArrayList<>() : lista;
 	}
 
@@ -140,7 +140,7 @@ class OrdenarModelo extends AbstractTableModel {
 	}
 }
 
-class OrdenarRenderer extends DefaultTableCellRenderer {
+class OrdenarManualRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	@Override

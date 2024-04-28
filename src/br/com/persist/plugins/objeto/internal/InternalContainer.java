@@ -123,8 +123,9 @@ import br.com.persist.plugins.objeto.complem.ComplementoListener;
 import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
-import br.com.persist.plugins.objeto.vinculo.OrdenarManualDialogo;
+import br.com.persist.plugins.objeto.vinculo.OrdenarArrastoDialogo;
 import br.com.persist.plugins.objeto.vinculo.OrdenarListener;
+import br.com.persist.plugins.objeto.vinculo.OrdenarManualDialogo;
 import br.com.persist.plugins.objeto.vinculo.Param;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -1252,7 +1253,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
-				private Action ordenarAcao = actionMenu("label.ordenar_manual", Icones.ASC_TEXTO);
+				private Action ordenarArrastoAcao = actionMenu("label.ordenar_arrasto", Icones.ASC_TEXTO);
+				private Action ordenarManualAcao = actionMenu("label.ordenar_manual", Icones.ASC_TEXTO);
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
@@ -1273,7 +1275,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(true, nomeIconeReferAcao);
 					addMenuItem(nomeReferAcao);
 					addMenuItem(renomearAcao);
-					addMenuItem(ordenarAcao);
+					addMenuItem(true, ordenarManualAcao);
+					addMenuItem(ordenarArrastoAcao);
 					addMenuItem(true, excluirAcao);
 					addSeparator();
 					add(menuInfo);
@@ -1281,11 +1284,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					add(menuUtil);
 					this.pesquisa = pesquisa;
 					nomeIconeReferAcao.setActionListener(e -> nomeIconeRefer());
+					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
+					ordenarManualAcao.setActionListener(e -> ordenarManual());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					nomeReferAcao.setActionListener(e -> nomeRefer());
 					renomearAcao.setActionListener(e -> renomear());
-					ordenarAcao.setActionListener(e -> ordenar());
 					excluirAcao.setActionListener(e -> excluir());
 					int size = pesquisa.getReferencias().size();
 					nomeIconeReferAcao.setEnabled(size == 1);
@@ -1684,7 +1688,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void ordenar() {
+				private void ordenarArrasto() {
+					if (vinculoListener == null) {
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
+					List<Pesquisa> pesquisas = vinculacao.getPesquisas(objeto);
+					OrdenarArrastoDialogo.criar(InternalContainer.this, objeto.getId(),
+							new ListenerOrdenar(pesquisas, vinculacao));
+				}
+
+				private void ordenarManual() {
 					if (vinculoListener == null) {
 						return;
 					}
