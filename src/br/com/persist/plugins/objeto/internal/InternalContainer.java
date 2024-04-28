@@ -123,7 +123,7 @@ import br.com.persist.plugins.objeto.complem.ComplementoListener;
 import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
-import br.com.persist.plugins.objeto.vinculo.OrdenarDialogo;
+import br.com.persist.plugins.objeto.vinculo.OrdenarManualDialogo;
 import br.com.persist.plugins.objeto.vinculo.OrdenarListener;
 import br.com.persist.plugins.objeto.vinculo.Param;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -1252,7 +1252,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
-				private Action ordenarAcao = actionMenu("label.ordenar", Icones.ASC_TEXTO);
+				private Action ordenarAcao = actionMenu("label.ordenar_manual", Icones.ASC_TEXTO);
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
@@ -1696,7 +1696,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					List<Pesquisa> pesquisas = vinculacao.getPesquisas(objeto);
-					OrdenarDialogo.criar(InternalContainer.this, objeto.getId(),
+					OrdenarManualDialogo.criar(InternalContainer.this, objeto.getId(),
 							new ListenerOrdenar(pesquisas, vinculacao));
 				}
 
