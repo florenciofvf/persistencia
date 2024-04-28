@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -72,17 +74,19 @@ class OrdenarArrastoContainer extends Panel {
 
 class OrdenarArrastoPainelArea extends Panel {
 	private final transient OrdenarArrastoPesquisaItem[] itens;
+	transient OrdenarArrastoPesquisaItem selecionado;
 	private static final long serialVersionUID = 1L;
-	private final List<Pesquisa> pesquisas;
+	private int ultY;
 
 	public OrdenarArrastoPainelArea(List<Pesquisa> pesquisas) {
-		this.pesquisas = pesquisas;
 		itens = new OrdenarArrastoPesquisaItem[pesquisas.size()];
 		for (int i = 0; i < itens.length; i++) {
 			itens[i] = new OrdenarArrastoPesquisaItem(pesquisas.get(i));
 		}
 		Arrays.sort(itens, (o1, o2) -> o1.ordemOriginal - o2.ordemOriginal);
 		empilharItens();
+		addMouseMotionListener(mouseAdapterArrasto);
+		addMouseListener(mouseAdapterArrasto);
 	}
 
 	void empilharItens() {
@@ -103,6 +107,42 @@ class OrdenarArrastoPainelArea extends Panel {
 			item.desenhar(g2);
 		}
 	}
+
+	private transient MouseAdapter mouseAdapterArrasto = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			selecionado = null;
+			int x = e.getX();
+			ultY = e.getY();
+			for (OrdenarArrastoPesquisaItem item : itens) {
+				if (item.contem(x, ultY)) {
+					selecionado = item;
+				}
+			}
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			int recY = e.getY();
+			if (selecionado != null) {
+				selecionado.y += recY - ultY;
+			}
+			ultY = recY;
+			repaint();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			ultY = e.getY();
+			Arrays.sort(itens, (o1, o2) -> o1.y - o2.y);
+			empilharItens();
+			for (int i = 0; i < itens.length; i++) {
+				OrdenarArrastoPesquisaItem item = itens[i];
+				item.pesquisa.setOrdem(i);
+			}
+			repaint();
+		}
+	};
 }
 
 class OrdenarArrastoPesquisaItem {
@@ -123,6 +163,10 @@ class OrdenarArrastoPesquisaItem {
 
 	void desenhar(Graphics2D g2) {
 		g2.drawRoundRect(x, y, largura, altura, 5, 5);
-		g2.drawString(nome, x + 20, y + alturaM);
+		g2.drawString(pesquisa.getOrdem() + ": " + nome, x + 20, y + alturaM);
+	}
+
+	public boolean contem(int x, int y) {
+		return (x >= this.x && x <= this.x + largura) && (y >= this.y && y <= this.y + altura);
 	}
 }
