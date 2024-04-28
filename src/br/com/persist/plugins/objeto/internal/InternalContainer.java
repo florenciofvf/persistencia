@@ -636,6 +636,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					ArgumentoArray argumentoArray = (ArgumentoArray) argumento;
 					String[] chavesReferencia = referencia.getChavesArray();
 					if (chavesReferencia.length != argumentoArray.getQtdChaves()) {
+						msgTotalChavesDiferente(argumentoArray.getQtdChaves(), chavesReferencia.length);
 						return;
 					}
 					String filtro = montarFiltro(objeto, argumentoArray, chavesReferencia);
@@ -661,12 +662,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			ArgumentoArray argumentoArray = (ArgumentoArray) argumento;
 			String[] chavesReferencia = referencia.getChavesArray();
 			if (chavesReferencia.length != argumentoArray.getQtdChaves()) {
+				msgTotalChavesDiferente(argumentoArray.getQtdChaves(), chavesReferencia.length);
 				return;
 			}
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 			tabelaPersistencia.clearSelection();
 			selecionarRegistros(chavesReferencia, argumentoArray.getValoresChaves(), modelo);
 		}
+	}
+
+	private void msgTotalChavesDiferente(int totalPesq, int totalRef) {
+		toolbar.exceptionEnable("TOTAL DE CHAVES DIFERENTES: Pesquisa-" + totalPesq + " Referencia-" + totalRef);
 	}
 
 	private void selecionarRegistros(Referencia referencia, String[] argumentos, OrdenacaoModelo modelo) {
