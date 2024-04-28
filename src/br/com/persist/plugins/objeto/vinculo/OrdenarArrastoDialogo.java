@@ -10,10 +10,12 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -36,6 +38,7 @@ public class OrdenarArrastoDialogo extends AbstratoDialogo {
 
 	public static void criar(Component c, String titulo, OrdenarListener listener) {
 		OrdenarArrastoDialogo dialog = new OrdenarArrastoDialogo(titulo, listener);
+		dialog.setSize(Constantes.SIZE.width / 2, Constantes.SIZE.height / 2);
 		dialog.setLocationRelativeTo(Util.getViewParent(c));
 		dialog.setVisible(true);
 	}
@@ -79,11 +82,11 @@ class OrdenarArrastoPainelArea extends Panel {
 	private int ultY;
 
 	public OrdenarArrastoPainelArea(List<Pesquisa> pesquisas) {
+		Collections.sort(pesquisas, (Pesquisa o1, Pesquisa o2) -> o1.getOrdem() - o2.getOrdem());
 		itens = new OrdenarArrastoPesquisaItem[pesquisas.size()];
 		for (int i = 0; i < itens.length; i++) {
 			itens[i] = new OrdenarArrastoPesquisaItem(pesquisas.get(i));
 		}
-		Arrays.sort(itens, (o1, o2) -> o1.ordemOriginal - o2.ordemOriginal);
 		empilharItens();
 		addMouseMotionListener(mouseAdapterArrasto);
 		addMouseListener(mouseAdapterArrasto);
@@ -148,7 +151,6 @@ class OrdenarArrastoPainelArea extends Panel {
 class OrdenarArrastoPesquisaItem {
 	final Pesquisa pesquisa;
 	final String nome;
-	int ordemOriginal;
 	int alturaM = 19;
 	int altura = 30;
 	int largura;
@@ -157,7 +159,6 @@ class OrdenarArrastoPesquisaItem {
 
 	OrdenarArrastoPesquisaItem(Pesquisa pesquisa) {
 		nome = pesquisa.getNomeParaMenuItem();
-		ordemOriginal = pesquisa.getOrdem();
 		this.pesquisa = pesquisa;
 	}
 

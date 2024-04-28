@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -87,6 +88,7 @@ class OrdenarManualModelo extends AbstractTableModel {
 
 	public OrdenarManualModelo(List<Pesquisa> lista) {
 		this.lista = lista == null ? new ArrayList<>() : lista;
+		Collections.sort(this.lista, (Pesquisa o1, Pesquisa o2) -> o1.getOrdem() - o2.getOrdem());
 	}
 
 	@Override
