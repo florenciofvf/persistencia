@@ -46,7 +46,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
@@ -1303,9 +1302,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					});
-					ButtonGroup group = new ButtonGroup();
-					group.add(chkPesqEmMemoria);
-					group.add(chkTotalDetalhes);
 				}
 
 				private class MenuInfo extends Menu {
