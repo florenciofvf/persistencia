@@ -322,7 +322,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void focus() {
-			SwingUtilities.invokeLater(this::requestFocus);
+			SwingUtilities.invokeLater(this::processFocus);
+		}
+
+		private void processFocus() {
+			String string = getText();
+			if (string != null && string.endsWith("''")) {
+				setCaretPosition(string.length() - 1);
+			}
+			requestFocus();
 		}
 
 		@Override
