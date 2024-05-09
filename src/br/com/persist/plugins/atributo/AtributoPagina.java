@@ -336,7 +336,7 @@ public class AtributoPagina extends Panel {
 				separador(resp, atom);
 				resp.put(AtributoConstantes.BEAN, Util.capitalize(AtributoConstantes.BEAN));
 				separador(resp, atom);
-				resp.put(AtributoConstantes.DAO, criarMapa(AtributoConstantes.DAO.toUpperCase()));
+				resp.put(AtributoConstantes.DAO, criarMapaDAO(AtributoConstantes.DAO.toUpperCase()));
 				separador(resp, atom);
 				resp.put(AtributoConstantes.DAO_IMPL, AtributoConstantes.DAO_IMP2);
 				separador(resp, atom);
@@ -365,11 +365,20 @@ public class AtributoPagina extends Panel {
 				resp.put(AtributoConstantes.COMPONENTE, Util.capitalize(arquivo));
 				resp.put(AtributoConstantes.BUSCAR_TODOS, AtributoConstantes.BUSCAR_TODOS);
 				resp.put(AtributoConstantes.PESQUISAR, AtributoConstantes.PESQUISAR);
-				resp.put(AtributoConstantes.EXPORTAR, AtributoConstantes.EXPORTAR);
 				resp.put(AtributoConstantes.DETALHAR, AtributoConstantes.DETALHAR);
+				resp.put(AtributoConstantes.EXPORTAR, AtributoConstantes.EXPORTAR);
 				for (ChaveValor cv : cvs) {
 					resp.put(cv.getChave(), cv.getValor());
 				}
+				return resp;
+			}
+
+			private Mapa criarMapaDAO(String arquivo) {
+				Mapa resp = new Mapa();
+				resp.put(AtributoConstantes.COMPONENTE, Util.capitalize(arquivo));
+				resp.put(AtributoConstantes.BUSCAR_TODOS, AtributoConstantes.BUSCAR_TODOS);
+				resp.put(AtributoConstantes.PESQUISAR, AtributoConstantes.PESQUISAR);
+				resp.put(AtributoConstantes.DETALHAR, AtributoConstantes.DETALHAR);
 				return resp;
 			}
 		}
