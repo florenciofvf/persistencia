@@ -1332,7 +1332,7 @@ class PainelRest extends AbstratoPanel {
 		arquivo.addImport("javax.ws.rs.core.Response");
 		arquivo.addImport("javax.ws.rs.core.Response.ResponseBuilder").newLine();
 		arquivo.addComentario("br.com.empresa.framework.seguranca.RestSeguranca;").newLine();
-		arquivo.addAnotacaoPath(Util.citar2(mapaRest.getString(AtributoConstantes.END_POINT)));
+		arquivo.addAnotacaoPath(mapaRest.getString(AtributoConstantes.END_POINT));
 
 		ClassePublica classe = arquivo
 				.criarClassePublica(AtributoUtil.getComponente(mapaRest) + " extends ApplicationRest");
@@ -1361,7 +1361,7 @@ class PainelRest extends AbstratoPanel {
 		}
 		classe.newLine();
 		classe.addAnotacao("GET");
-		classe.addAnotacaoPath(Util.citar2(nome));
+		classe.addAnotacaoPath(nome);
 		classe.addAnotacao(CONSUMES + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao(PRODUCES + AtributoConstantes.APPLICATION_JSON + ")");
 		FuncaoPublica funcao = classe.criarFuncaoPublica(raiz.getListDTOTodos(), nome);
@@ -1375,7 +1375,7 @@ class PainelRest extends AbstratoPanel {
 		}
 		classe.newLine();
 		classe.addAnotacao("GET");
-		classe.addAnotacaoPath(Util.citar2(nome));
+		classe.addAnotacaoPath(nome);
 		classe.addAnotacao(CONSUMES + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao(PRODUCES + AtributoConstantes.APPLICATION_JSON + ")");
 
@@ -1392,7 +1392,7 @@ class PainelRest extends AbstratoPanel {
 
 		classe.newLine();
 		classe.addAnotacao("GET");
-		classe.addAnotacaoPath(Util.citar2(nome));
+		classe.addAnotacaoPath(nome);
 		classe.addAnotacao(CONSUMES + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao(PRODUCES + AtributoConstantes.APPLICATION_JSON + ")");
 
@@ -1409,7 +1409,7 @@ class PainelRest extends AbstratoPanel {
 
 		classe.newLine();
 		classe.addAnotacao("GET");
-		classe.addAnotacaoPath(Util.citar2(nome));
+		classe.addAnotacaoPath(nome);
 		classe.addAnotacao(CONSUMES + AtributoConstantes.APPLICATION_JSON + ")");
 		classe.addAnotacao(PRODUCES + "{MediaType.APPLICATION_OCTET_STREAM}" + ")");
 
