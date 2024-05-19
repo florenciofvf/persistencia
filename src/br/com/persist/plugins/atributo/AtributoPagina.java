@@ -484,7 +484,7 @@ abstract class AbstratoPanel extends Panel {
 			false);
 	private static final long serialVersionUID = 1L;
 	protected final JTextPane textArea = new JTextPane();
-	private final Toolbar toolbar = new Toolbar();
+	protected final Toolbar toolbar = new Toolbar();
 	private final AtributoPagina pagina;
 	protected int contador;
 
@@ -518,7 +518,7 @@ abstract class AbstratoPanel extends Panel {
 		return panel;
 	}
 
-	private class Toolbar extends BarraButton {
+	protected class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
 		private Toolbar() {
@@ -1790,10 +1790,42 @@ class PainelDAOImpl extends AbstratoPanel {
 }
 
 class PainelTest extends AbstratoPanel {
+	private TextField txtArquivo = new TextField(40);
 	private static final long serialVersionUID = 1L;
 
 	PainelTest(AtributoPagina pagina) {
 		super(pagina, false);
+		toolbar.add(txtArquivo);
+		Action arquivoAction = Action.acaoMenu(AtributoMensagens.getString("label.arquivo_java"), Icones.ABRIR);
+		toolbar.addButton(arquivoAction);
+		arquivoAction.setActionListener(e -> lerArquivo());
+	}
+
+	private void lerArquivo() {
+		JFileChooser fileChooser = new JFileChooser(AtributoPreferencia.getDirPadraoSelecaoArquivos());
+		int i = fileChooser.showOpenDialog(PainelTest.this);
+		if (i == JFileChooser.APPROVE_OPTION) {
+			File sel = fileChooser.getSelectedFile();
+			lerArquivo(sel);
+		}
+	}
+
+	private void lerArquivo(File file) {
+		String string = "package";
+		String strPackage = ArquivoUtil.primeiroIniciadoCom(string, file);
+		if (Util.isEmpty(strPackage)) {
+			return;
+		}
+		strPackage = strPackage.substring(string.length()).trim();
+		if (strPackage.endsWith(";")) {
+			strPackage = strPackage.substring(0, strPackage.length() - 1);
+		}
+		String nome = file.getName();
+		int pos = nome.lastIndexOf(".");
+		if (pos != -1) {
+			nome = nome.substring(0, pos);
+		}
+		txtArquivo.setText(strPackage + "." + nome);
 	}
 
 	@Override
