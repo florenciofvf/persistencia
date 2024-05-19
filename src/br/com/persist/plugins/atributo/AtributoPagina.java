@@ -1846,7 +1846,7 @@ class PainelTest extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		adicionarImports(arquivo);
+		adicionarImports(arquivo, null);
 
 		Mapa mapaService = raiz.getMapaService();
 		Mapa mapaTest = raiz.getMapaTest();
@@ -1896,13 +1896,17 @@ class PainelTest extends AbstratoPanel {
 		setText(pool.toString());
 	}
 
-	private void adicionarImports(Arquivo arquivo) {
+	private void adicionarImports(Arquivo arquivo, Class<?> classe) {
 		arquivo.addImport("org.junit.Test");
 		arquivo.addImport("org.junit.runner.RunWith");
 		arquivo.addImport("org.mockito.InjectMocks");
 		arquivo.addImport("org.mockito.Mock");
 		arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
-		arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class");
+		arquivo.addImport("static org.junit.Assert.*").newLine();
+		if (classe != null) {
+			arquivo.addImport(classe.getName()).newLine();
+		}
+		arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
 	}
 
 	private void gerarTeste() {
@@ -1934,7 +1938,7 @@ class PainelTest extends AbstratoPanel {
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		adicionarImports(arquivo);
+		adicionarImports(arquivo, classe);
 
 		String objeto = classe.getSimpleName();
 		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
@@ -1945,6 +1949,7 @@ class PainelTest extends AbstratoPanel {
 		funcao.addInstrucao(objeto + " objetoB = criar" + objeto + "()");
 		funcao.addInstrucao("converter(objetoA, objetoB)");
 		funcao.addInstrucao("assertTrue(objetoA.equals(objetoB))");
+		funcao.addInstrucao("assertEquals(objetoA, objetoB)");
 
 		classeTest.newLine();
 		funcao = classeTest.criarFuncaoPrivada(objeto, "criar" + objeto);
