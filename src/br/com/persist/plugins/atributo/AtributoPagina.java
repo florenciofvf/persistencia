@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -1845,12 +1846,7 @@ class PainelTest extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		arquivo.addImport("org.junit.Test");
-		arquivo.addImport("org.junit.runner.RunWith");
-		arquivo.addImport("org.mockito.InjectMocks");
-		arquivo.addImport("org.mockito.Mock");
-		arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
-		arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class");
+		adicionarImports(arquivo);
 
 		Mapa mapaService = raiz.getMapaService();
 		Mapa mapaTest = raiz.getMapaTest();
@@ -1900,10 +1896,91 @@ class PainelTest extends AbstratoPanel {
 		setText(pool.toString());
 	}
 
+	private void adicionarImports(Arquivo arquivo) {
+		arquivo.addImport("org.junit.Test");
+		arquivo.addImport("org.junit.runner.RunWith");
+		arquivo.addImport("org.mockito.InjectMocks");
+		arquivo.addImport("org.mockito.Mock");
+		arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
+		arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class");
+	}
+
 	private void gerarTeste() {
 		if (Util.isEmpty(txtArquivo.getText())) {
 			Util.mensagem(PainelTest.this, AtributoMensagens.getString("msg.classe_teste_nao_definida"));
 			return;
+		}
+		Class<?> classe = null;
+		try {
+			classe = Class.forName(txtArquivo.getText().trim());
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest.this);
+			return;
+		}
+		Method[] methods = classe.getDeclaredMethods();
+		List<Metodo> metodos = new ArrayList<>();
+		for (Method item : methods) {
+			if (item.getName().startsWith("get")) {
+				String nome = item.getName().substring("get".length());
+				if (Util.isEmpty(nome)) {
+					continue;
+				}
+				Metodo obj = new Metodo(nome);
+				if (contemSet(methods, obj)) {
+					metodos.add(obj);
+				}
+			}
+		}
+
+		StringPool pool = new StringPool();
+		Arquivo arquivo = new Arquivo();
+		adicionarImports(arquivo);
+
+		String objeto = classe.getSimpleName();
+		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
+
+		classeTest.addAnotacao("Test");
+		Funcao funcao = classeTest.criarFuncaoPublica("void", "equals" + objeto + "Test");
+		funcao.addInstrucao(objeto + " objetoA = criar" + objeto + "()");
+		funcao.addInstrucao(objeto + " objetoB = criar" + objeto + "()");
+		funcao.addInstrucao("converter(objetoA, objetoB)");
+		funcao.addInstrucao("assertTrue(objetoA.equals(objetoB))");
+
+		classeTest.newLine();
+		funcao = classeTest.criarFuncaoPrivada(objeto, "criar" + objeto);
+		funcao.addReturn("new " + objeto + "()");
+
+		classeTest.newLine();
+		Parametros params = new Parametros(objeto + " origem");
+		params.addString(", ");
+		params.addString(objeto + " destino");
+		funcao = classeTest.criarFuncaoPrivada("void", "converter", params);
+		for (Metodo item : metodos) {
+			funcao.addInstrucao(item.gerar());
+		}
+
+		arquivo.gerar(-1, pool);
+		setText(pool.toString());
+	}
+
+	private boolean contemSet(Method[] methods, Metodo obj) {
+		for (Method item : methods) {
+			if (item.getName().equals("set" + obj.nome)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private class Metodo {
+		final String nome;
+
+		public Metodo(String nome) {
+			this.nome = nome;
+		}
+
+		String gerar() {
+			return "destino.set" + nome + "(origem.get" + nome + "())";
 		}
 	}
 }

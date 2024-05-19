@@ -20,6 +20,7 @@ public class AtributoConstantes {
 	public static final String IMPORT_LIST = "java.util.List";
 	public static final String DTO_TODOS = "dtoRetornoTodos";
 	public static final String BUSCAR_TODOS = "buscarTodos";
+	public static final String PAINEL_TEST = "PAINEL TEST";
 	public static final String COMPONENTE = "componente";
 	public static final String SERVICE_JS = "serviceJS";
 	public static final String IGNORADOS = "ignorados";
