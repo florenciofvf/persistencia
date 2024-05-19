@@ -1796,9 +1796,12 @@ class PainelTest extends AbstratoPanel {
 	PainelTest(AtributoPagina pagina) {
 		super(pagina, false);
 		toolbar.add(txtArquivo);
+		Action gerarTestAcao = Action.acaoMenu(AtributoMensagens.getString("label.gerar_teste"), Icones.SINCRONIZAR);
 		Action arquivoAction = Action.acaoMenu(AtributoMensagens.getString("label.arquivo_java"), Icones.ABRIR);
-		toolbar.addButton(arquivoAction);
+		gerarTestAcao.setActionListener(e -> gerarTeste());
 		arquivoAction.setActionListener(e -> lerArquivo());
+		toolbar.addButton(arquivoAction);
+		toolbar.addButton(gerarTestAcao);
 	}
 
 	private void lerArquivo() {
@@ -1895,5 +1898,12 @@ class PainelTest extends AbstratoPanel {
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
+	}
+
+	private void gerarTeste() {
+		if (Util.isEmpty(txtArquivo.getText())) {
+			Util.mensagem(PainelTest.this, AtributoMensagens.getString("msg.classe_teste_nao_definida"));
+			return;
+		}
 	}
 }
