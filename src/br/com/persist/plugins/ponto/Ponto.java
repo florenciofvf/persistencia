@@ -133,16 +133,23 @@ public class Ponto {
 	class Processar implements Runnable {
 		@Override
 		public void run() {
+			int delay = 500;
+			repaint();
+			sleep(delay);
 			while (!Thread.currentThread().isInterrupted()) {
 				cursor.visivel = !cursor.visivel;
 				repaint();
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
+				sleep(delay);
 			}
 			focusOut();
+		}
+
+		private void sleep(final int delay) {
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
 		}
 	}
 }

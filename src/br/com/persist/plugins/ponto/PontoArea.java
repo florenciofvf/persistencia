@@ -98,6 +98,10 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		}
 		if (indice < pontos.length) {
 			pontos[indice].requestFocus();
+		} else if (pontos.length > 1) {
+			pontos[0].requestFocus();
+		} else {
+			p.focusOut();
 		}
 	}
 }
