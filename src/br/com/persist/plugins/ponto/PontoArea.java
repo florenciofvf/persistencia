@@ -80,4 +80,22 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	public void desenhar(Ponto p) {
 		repaint();
 	}
+
+	@Override
+	public void tabular(Ponto p) {
+		int indice = 0;
+		for (int i = 0; i < pontos.length; i++) {
+			if (pontos[i] == p) {
+				indice = i + 1;
+				break;
+			}
+		}
+		if (indice < pontos.length) {
+			if (selecionado != null) {
+				selecionado.setFocus(false);
+			}
+			selecionado = pontos[indice];
+			selecionado.setFocus(true);
+		}
+	}
 }

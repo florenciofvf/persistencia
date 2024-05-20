@@ -91,6 +91,7 @@ public class Ponto {
 	public synchronized void setFocus(boolean focus) {
 		this.focus = focus;
 		if (focus) {
+			focusSet = true;
 			iniciar();
 		} else {
 			parar();
@@ -104,6 +105,8 @@ public class Ponto {
 		} else if (c == '\b') {
 			s = null;
 			repaint();
+		} else if (c == '\t') {
+			tabular();
 		}
 	}
 
@@ -111,7 +114,6 @@ public class Ponto {
 		if (thread == null) {
 			thread = new Thread(new Processar());
 			thread.start();
-			repaint();
 		}
 	}
 
@@ -119,7 +121,6 @@ public class Ponto {
 		if (thread != null) {
 			thread.interrupt();
 			thread = null;
-			repaint();
 		}
 	}
 
@@ -129,18 +130,26 @@ public class Ponto {
 		}
 	}
 
+	private void tabular() {
+		if (listener != null) {
+			listener.tabular(this);
+		}
+	}
+
 	class Processar implements Runnable {
 		@Override
 		public void run() {
 			while (focus && listener != null && !Thread.currentThread().isInterrupted()) {
-				focusSet = !focusSet;
 				repaint();
+				focusSet = !focusSet;
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 				}
 			}
+			focus = false;
+			repaint();
 		}
 	}
 }
