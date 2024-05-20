@@ -64,10 +64,15 @@ public class Ponto {
 		g2.drawRect(x, y, largura, altura);
 		if (focus && focusSet) {
 			g2.setColor(Color.BLACK);
-			g2.drawLine(x + 3, y + 3, x + 3, y + altura - 3);
+			if (s == null) {
+				g2.drawLine(x + 3, y + 3, x + 3, y + altura - 3);
+			} else {
+				g2.drawLine(x + largura - 3, y + 3, x + largura - 3, y + altura - 3);
+			}
 		}
 		if (s != null) {
-			g2.drawString(s, x + 3, y + 10);
+			g2.setColor(Color.GRAY);
+			g2.drawString(s, x + 3, y + altura - 5);
 		}
 	}
 
@@ -95,6 +100,9 @@ public class Ponto {
 	public void setChar(char c) {
 		if (c >= '0' && c <= '9') {
 			s = "" + c;
+			repaint();
+		} else if (c == '\b') {
+			s = null;
 			repaint();
 		}
 	}

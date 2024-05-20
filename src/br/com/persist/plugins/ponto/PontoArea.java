@@ -59,7 +59,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 
 	private Ponto criarPonto(int x, int y) {
 		Ponto p = new Ponto(this);
-		p.setLargura(50);
+		p.setLargura(30);
 		p.setAltura(30);
 		p.setX(x);
 		p.setY(y);
@@ -70,6 +70,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setFont(PontoConstantes.FONT);
 		for (Ponto p : pontos) {
 			p.desenhar(g2);
 		}
