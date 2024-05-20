@@ -34,7 +34,10 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 			selecionado.focusOut();
 		}
 		selecionado = p;
-		selecionado.focusIn();
+		if (selecionado != null) {
+			selecionado.focusIn();
+		}
+		repaint();
 	}
 
 	private class MouseListener extends MouseAdapter {
@@ -42,12 +45,16 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		public void mouseClicked(MouseEvent evento) {
 			int x = evento.getX();
 			int y = evento.getY();
+			Ponto ponto = null;
 			for (Ponto p : pontos) {
 				if (p.contem(x, y)) {
-					p.requestFocus();
-				} else {
-					p.focusOut();
+					ponto = p;
 				}
+			}
+			if (ponto != null) {
+				ponto.requestFocus();
+			} else {
+				requestFocus(null);
 			}
 		}
 	}

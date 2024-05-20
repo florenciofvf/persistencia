@@ -73,7 +73,7 @@ public class Ponto {
 
 		void desenhar(Graphics2D g2) {
 			if (focus) {
-				g2.setColor(Color.CYAN);
+				g2.setColor(PontoConstantes.COR_FOCUS);
 				g2.drawRect(x, y, largura, altura);
 			}
 			if (visivel) {
@@ -101,12 +101,12 @@ public class Ponto {
 		listener.requestFocus(this);
 	}
 
-	public void focusIn() {
+	void focusIn() {
 		cursor.in();
 		iniciar();
 	}
 
-	public void focusOut() {
+	void focusOut() {
 		cursor.out();
 		parar();
 	}
