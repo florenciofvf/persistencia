@@ -71,6 +71,7 @@ public class Icones {
 	public static final Icon PRINT = criarImagem("print");
 	public static final Icon LABEL = criarImagem("label");
 	public static final Icon COLAR = criarImagem("paste");
+	public static final Icon TIMER = criarImagem("timer");
 	public static final Icon VAZIO = criarImagem("empty");
 	public static final Icon CLONAR = criarImagem("copy");
 	public static final Icon COPIA = criarImagem("copy");
