@@ -26,6 +26,7 @@ import br.com.persist.formulario.Formulario;
 public class PontoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private PontoArea area = new PontoArea();
 	private PontoFormulario pontoFormulario;
 	private PontoDialogo pontoDialogo;
 
@@ -59,6 +60,7 @@ public class PontoContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, area);
 	}
 
 	@Override
