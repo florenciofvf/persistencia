@@ -62,7 +62,7 @@ public class Ponto {
 		g2.fillRect(x, y, largura, altura);
 		g2.setColor(Color.GRAY);
 		g2.drawRect(x, y, largura, altura);
-		if (focusSet) {
+		if (focus && focusSet) {
 			g2.setColor(Color.BLACK);
 			g2.drawLine(x + 3, y + 3, x + 3, y + altura - 3);
 		}
@@ -79,11 +79,11 @@ public class Ponto {
 		this.listener = listener;
 	}
 
-	public boolean isFocus() {
+	public synchronized boolean isFocus() {
 		return focus;
 	}
 
-	public void setFocus(boolean focus) {
+	public synchronized void setFocus(boolean focus) {
 		this.focus = focus;
 		if (focus) {
 			iniciar();
@@ -93,21 +93,31 @@ public class Ponto {
 	}
 
 	public void setChar(char c) {
-		s = "" + c;
-	}
-
-	public synchronized void iniciar() {
-		if (thread == null) {
-			thread = new Thread(new Processar());
-			thread.start();
+		if (c >= '0' && c <= '9') {
+			s = "" + c;
+			repaint();
 		}
 	}
 
-	public synchronized void parar() {
+	private void iniciar() {
+		if (thread == null) {
+			thread = new Thread(new Processar());
+			thread.start();
+			repaint();
+		}
+	}
+
+	private void parar() {
 		if (thread != null) {
-			focus = false;
 			thread.interrupt();
 			thread = null;
+			repaint();
+		}
+	}
+
+	private void repaint() {
+		if (listener != null) {
+			listener.desenhar(this);
 		}
 	}
 
@@ -116,7 +126,7 @@ public class Ponto {
 		public void run() {
 			while (focus && listener != null && !Thread.currentThread().isInterrupted()) {
 				focusSet = !focusSet;
-				listener.desenhar(Ponto.this);
+				repaint();
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {

@@ -34,6 +34,7 @@ public class PontoContainer extends AbstratoContainer {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
+		area.init();
 	}
 
 	public PontoDialogo getPontoDialogo() {
