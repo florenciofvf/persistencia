@@ -69,8 +69,13 @@ public class Ponto {
 
 	class Cursor {
 		boolean visivel;
+		boolean focus;
 
 		void desenhar(Graphics2D g2) {
+			if (focus) {
+				g2.setColor(Color.CYAN);
+				g2.drawRect(x, y, largura, altura);
+			}
 			if (visivel) {
 				g2.setColor(Color.BLACK);
 				if (s == null) {
@@ -80,6 +85,16 @@ public class Ponto {
 				}
 			}
 		}
+
+		void in() {
+			visivel = true;
+			focus = true;
+		}
+
+		void out() {
+			visivel = false;
+			focus = false;
+		}
 	}
 
 	public void requestFocus() {
@@ -87,12 +102,12 @@ public class Ponto {
 	}
 
 	public void focusIn() {
-		cursor.visivel = true;
+		cursor.in();
 		iniciar();
 	}
 
 	public void focusOut() {
-		cursor.visivel = false;
+		cursor.out();
 		parar();
 	}
 
