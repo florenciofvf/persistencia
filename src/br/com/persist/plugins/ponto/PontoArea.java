@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.Panel;
 
 public class PontoArea extends Panel implements PontoListener, AWTEventListener {
@@ -27,22 +28,26 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		pontos[1] = criarPonto(400, 200);
 	}
 
+	@Override
+	public void requestFocus(Ponto p) {
+		if (selecionado != null) {
+			selecionado.focusOut();
+		}
+		selecionado = p;
+		selecionado.focusIn();
+	}
+
 	private class MouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent evento) {
 			int x = evento.getX();
 			int y = evento.getY();
-			selecionado = null;
 			for (Ponto p : pontos) {
 				if (p.contem(x, y)) {
-					p.setFocus(true);
-					selecionado = p;
+					p.requestFocus();
 				} else {
-					p.setFocus(false);
+					p.focusOut();
 				}
-			}
-			if (selecionado == null) {
-				repaint();
 			}
 		}
 	}
@@ -70,6 +75,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(Constantes.STROKE_PADRAO);
 		g2.setFont(PontoConstantes.FONT);
 		for (Ponto p : pontos) {
 			p.desenhar(g2);
@@ -91,11 +97,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 			}
 		}
 		if (indice < pontos.length) {
-			if (selecionado != null) {
-				selecionado.setFocus(false);
-			}
-			selecionado = pontos[indice];
-			selecionado.setFocus(true);
+			pontos[indice].requestFocus();
 		}
 	}
 }

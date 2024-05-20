@@ -2,13 +2,11 @@ package br.com.persist.plugins.ponto;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-
-import br.com.persist.assistencia.Constantes;
+import java.util.Objects;
 
 public class Ponto {
-	private PontoListener listener;
-	private boolean focusSet;
-	private boolean focus;
+	private final PontoListener listener;
+	private final Cursor cursor;
 	private Thread thread;
 	private int largura;
 	private int altura;
@@ -17,7 +15,8 @@ public class Ponto {
 	private int y;
 
 	public Ponto(PontoListener listener) {
-		this.listener = listener;
+		this.listener = Objects.requireNonNull(listener);
+		cursor = new Cursor();
 	}
 
 	public int getLargura() {
@@ -57,45 +56,44 @@ public class Ponto {
 	}
 
 	public void desenhar(Graphics2D g2) {
-		g2.setStroke(Constantes.STROKE_PADRAO);
 		g2.setColor(Color.WHITE);
 		g2.fillRect(x, y, largura, altura);
 		g2.setColor(Color.GRAY);
 		g2.drawRect(x, y, largura, altura);
-		if (focus && focusSet) {
-			g2.setColor(Color.BLACK);
-			if (s == null) {
-				g2.drawLine(x + 3, y + 3, x + 3, y + altura - 3);
-			} else {
-				g2.drawLine(x + largura - 3, y + 3, x + largura - 3, y + altura - 3);
-			}
-		}
 		if (s != null) {
 			g2.setColor(Color.GRAY);
 			g2.drawString(s, x + 3, y + altura - 5);
 		}
+		cursor.desenhar(g2);
 	}
 
-	public PontoListener getListener() {
-		return listener;
-	}
+	class Cursor {
+		boolean visivel;
 
-	public void setListener(PontoListener listener) {
-		this.listener = listener;
-	}
-
-	public synchronized boolean isFocus() {
-		return focus;
-	}
-
-	public synchronized void setFocus(boolean focus) {
-		this.focus = focus;
-		if (focus) {
-			focusSet = true;
-			iniciar();
-		} else {
-			parar();
+		void desenhar(Graphics2D g2) {
+			if (visivel) {
+				g2.setColor(Color.BLACK);
+				if (s == null) {
+					g2.drawLine(x + 3, y + 3, x + 3, y + altura - 3);
+				} else {
+					g2.drawLine(x + largura - 3, y + 3, x + largura - 3, y + altura - 3);
+				}
+			}
 		}
+	}
+
+	public void requestFocus() {
+		listener.requestFocus(this);
+	}
+
+	public void focusIn() {
+		cursor.visivel = true;
+		iniciar();
+	}
+
+	public void focusOut() {
+		cursor.visivel = false;
+		parar();
 	}
 
 	public void setChar(char c) {
@@ -110,14 +108,14 @@ public class Ponto {
 		}
 	}
 
-	private void iniciar() {
+	private synchronized void iniciar() {
 		if (thread == null) {
 			thread = new Thread(new Processar());
 			thread.start();
 		}
 	}
 
-	private void parar() {
+	private synchronized void parar() {
 		if (thread != null) {
 			thread.interrupt();
 			thread = null;
@@ -125,31 +123,26 @@ public class Ponto {
 	}
 
 	private void repaint() {
-		if (listener != null) {
-			listener.desenhar(this);
-		}
+		listener.desenhar(this);
 	}
 
 	private void tabular() {
-		if (listener != null) {
-			listener.tabular(this);
-		}
+		listener.tabular(this);
 	}
 
 	class Processar implements Runnable {
 		@Override
 		public void run() {
-			while (focus && listener != null && !Thread.currentThread().isInterrupted()) {
+			while (!Thread.currentThread().isInterrupted()) {
+				cursor.visivel = !cursor.visivel;
 				repaint();
-				focusSet = !focusSet;
 				try {
-					Thread.sleep(500);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 				}
 			}
-			focus = false;
-			repaint();
+			focusOut();
 		}
 	}
 }
