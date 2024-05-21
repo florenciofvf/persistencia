@@ -1,6 +1,5 @@
 package br.com.persist.arquivo;
 
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -14,6 +13,7 @@ import javax.swing.tree.TreePath;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
@@ -87,7 +87,7 @@ public class ArquivoTree extends Tree {
 		Arquivo raiz = getRaiz();
 		raiz.contemConteudo(set, string);
 		if (set.isEmpty()) {
-			Toolkit.getDefaultToolkit().beep();
+			Util.beep();
 		}
 	}
 

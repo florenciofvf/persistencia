@@ -1,7 +1,6 @@
 package br.com.persist.plugins.legado;
 
 import java.awt.Component;
-import java.awt.Toolkit;
 import java.util.Set;
 
 import javax.swing.JTabbedPane;
@@ -84,7 +83,7 @@ public class LegadoFichario extends JTabbedPane {
 			}
 		}
 		if (set.isEmpty()) {
-			Toolkit.getDefaultToolkit().beep();
+			Util.beep();
 		}
 	}
 }

@@ -1,16 +1,14 @@
 package br.com.persist.componente;
 
 import java.awt.Color;
-import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class Label extends JLabel {
 	private transient LabelLinkListener linkListener;
@@ -38,7 +36,7 @@ public class Label extends JLabel {
 	}
 
 	public void limpar() {
-		Toolkit.getDefaultToolkit().beep();
+		Util.beep();
 		setText(Constantes.VAZIO);
 	}
 

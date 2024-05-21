@@ -1426,4 +1426,8 @@ public class Util {
 			}
 		}
 	}
+
+	public static void beep() {
+		SwingUtilities.invokeLater(() -> Toolkit.getDefaultToolkit().beep());
+	}
 }
