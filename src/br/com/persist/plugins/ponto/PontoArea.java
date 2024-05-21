@@ -1,6 +1,7 @@
 package br.com.persist.plugins.ponto;
 
 import java.awt.AWTEvent;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -16,6 +17,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	private static final long serialVersionUID = 1L;
 	private transient Ponto[] pontos = new Ponto[2];
 	private transient Ponto selecionado;
+	private int larChar;
 
 	public PontoArea() {
 		super(null);
@@ -63,7 +65,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	public void eventDispatched(AWTEvent event) {
 		if (event instanceof KeyEvent) {
 			KeyEvent evento = (KeyEvent) event;
-			if (selecionado != null) {
+			if (selecionado != null && evento.getID() == KeyEvent.KEY_TYPED) {
 				selecionado.setChar(evento.getKeyChar());
 			}
 		}
@@ -71,7 +73,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 
 	private Ponto criarPonto(int x, int y) {
 		Ponto p = new Ponto(this);
-		p.setLargura(30);
+		p.setLargura(44);
 		p.setAltura(30);
 		p.setX(x);
 		p.setY(y);
@@ -84,8 +86,14 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(Constantes.STROKE_PADRAO);
 		g2.setFont(PontoConstantes.FONT);
+
+		if (larChar == 0) {
+			FontMetrics fm = getFontMetrics(PontoConstantes.FONT);
+			larChar = fm.charWidth(' ');
+		}
+
 		for (Ponto p : pontos) {
-			p.desenhar(g2);
+			p.desenhar(g2, larChar);
 		}
 	}
 

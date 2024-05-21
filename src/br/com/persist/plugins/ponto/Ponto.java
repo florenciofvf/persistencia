@@ -55,7 +55,7 @@ public class Ponto {
 		return (x >= this.x && x <= this.x + largura) && (y >= this.y && y <= this.y + altura);
 	}
 
-	public void desenhar(Graphics2D g2) {
+	public void desenhar(Graphics2D g2, int larChar) {
 		g2.setColor(Color.WHITE);
 		g2.fillRect(x, y, largura, altura);
 		g2.setColor(Color.GRAY);
@@ -64,14 +64,14 @@ public class Ponto {
 			g2.setColor(Color.GRAY);
 			g2.drawString(s, x + 3, y + altura - 5);
 		}
-		cursor.desenhar(g2);
+		cursor.desenhar(g2, larChar);
 	}
 
 	class Cursor {
 		boolean visivel;
 		boolean focus;
 
-		void desenhar(Graphics2D g2) {
+		void desenhar(Graphics2D g2, int larChar) {
 			if (focus) {
 				g2.setColor(PontoConstantes.COR_FOCUS);
 				g2.drawRect(x, y, largura, altura);
@@ -81,7 +81,8 @@ public class Ponto {
 				if (s == null) {
 					g2.drawLine(x + 3, y + 3, x + 3, y + altura - 3);
 				} else {
-					g2.drawLine(x + largura - 3, y + 3, x + largura - 3, y + altura - 3);
+					int pos = larChar * s.length() + 3;
+					g2.drawLine(x + pos, y + 3, x + pos, y + altura - 3);
 				}
 			}
 		}
@@ -113,11 +114,22 @@ public class Ponto {
 
 	public void setChar(char c) {
 		if (c >= '0' && c <= '9') {
-			s = "" + c;
+			if (s == null) {
+				s = "" + c;
+			} else if (s.length() < 2) {
+				s += c;
+			}
 			repaint();
 		} else if (c == '\b') {
-			s = null;
-			repaint();
+			if (s == null) {
+				repaint();
+			} else if (s.length() > 0) {
+				s = s.substring(0, s.length() - 1);
+				if (s.length() == 0) {
+					s = null;
+				}
+				repaint();
+			}
 		} else if (c == '\t') {
 			tabular();
 		}
