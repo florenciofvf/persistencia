@@ -16,8 +16,10 @@ class PropriedadeHandler extends XMLHandler {
 			selecionado = raiz;
 		} else {
 			Container novo = criar(qName, atts);
-			selecionado.adicionar(novo);
-			selecionado = novo;
+			if (novo != null) {
+				selecionado.adicionar(novo);
+				selecionado = novo;
+			}
 		}
 	}
 
@@ -35,20 +37,20 @@ class PropriedadeHandler extends XMLHandler {
 	}
 
 	private Container criar(String qName, Attributes atts) {
-		if ("objeto".equals(qName)) {
-			return new Objeto(get(atts, "id"));
+		if ("config".equals(qName)) {
+			return new Config(get(atts, "id"));
 		} else if ("campo".equals(qName)) {
 			return new Campo(get(atts, "nome"), get(atts, "valor"));
-		} else if ("bloco".equals(qName)) {
-			Bloco bloco = new Bloco(get(atts, "nome"));
+		} else if ("modulo".equals(qName)) {
+			Modulo modulo = new Modulo(get(atts, "nome"));
 			String string = get(atts, "invalido");
-			bloco.setInvalido("true".equalsIgnoreCase(string));
-			return bloco;
+			modulo.setInvalido("true".equalsIgnoreCase(string));
+			return modulo;
 		} else if ("map".equals(qName)) {
-			return new Map(get(atts, "chave"), get(atts, "idObjeto"));
+			return new Map(get(atts, "chave"), get(atts, "idConfig"));
 		} else if ("property".equals(qName)) {
 			return new Propriedade(get(atts, "name"), get(atts, "value"));
 		}
-		throw new IllegalStateException();
+		return null;
 	}
 }

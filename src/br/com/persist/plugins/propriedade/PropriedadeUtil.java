@@ -37,7 +37,7 @@ public class PropriedadeUtil {
 		StyleConstants.setForeground(attRed, Color.RED);
 	}
 
-	static void bloco(String tab, String nome, StyledDocument doc) throws BadLocationException {
+	static void modulo(String tab, String nome, StyledDocument doc) throws BadLocationException {
 		doc.insertString(doc.getLength(), Constantes.QL + tab + "<!-- " + nome + " -->" + Constantes.QL, attBlue);
 	}
 

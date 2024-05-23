@@ -33,8 +33,8 @@ public class Propriedade extends Container {
 	@Override
 	public void processar(StyledDocument doc) throws BadLocationException {
 		String string = value;
-		Bloco bloco = (Bloco) pai;
-		List<Map> maps = bloco.getCacheMaps();
+		Modulo modulo = (Modulo) pai;
+		List<Map> maps = modulo.getCacheMaps();
 		for (Map map : maps) {
 			string = map.substituir(string);
 		}

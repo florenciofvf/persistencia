@@ -9,11 +9,11 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.assistencia.Constantes;
 
 public class Raiz extends Container {
-	private List<Objeto> cacheObjetos;
+	private List<Config> cacheConfigs;
 
 	@Override
 	public void adicionar(Container c) {
-		if (c instanceof Objeto || c instanceof Bloco) {
+		if (c instanceof Config || c instanceof Modulo) {
 			super.adicionar(c);
 		} else {
 			throw new IllegalStateException();
@@ -22,8 +22,8 @@ public class Raiz extends Container {
 
 	@Override
 	public void processar(StyledDocument doc) throws BadLocationException {
-		for (Bloco bloco : getBlocos()) {
-			bloco.processar(doc);
+		for (Modulo modulo : getModulos()) {
+			modulo.processar(doc);
 		}
 	}
 
@@ -31,38 +31,38 @@ public class Raiz extends Container {
 	public void color(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta("", "system-properties", doc);
 		PropriedadeUtil.fimTagComposta(doc);
-		for (Objeto objeto : getCacheObjetos()) {
-			objeto.color(doc);
+		for (Config config : getCacheConfigs()) {
+			config.color(doc);
 			doc.insertString(doc.getLength(), Constantes.QL, null);
 		}
 		doc.insertString(doc.getLength(), Constantes.QL, null);
-		for (Bloco bloco : getBlocos()) {
+		for (Modulo modulo : getModulos()) {
 			doc.insertString(doc.getLength(), Constantes.QL, null);
-			bloco.color(doc);
+			modulo.color(doc);
 		}
 		PropriedadeUtil.fimTagComposta("", "system-properties", doc);
 	}
 
-	private List<Bloco> getBlocos() {
-		List<Bloco> resp = new ArrayList<>();
+	private List<Modulo> getModulos() {
+		List<Modulo> resp = new ArrayList<>();
 		for (Container c : getFilhos()) {
-			if (c instanceof Bloco) {
-				resp.add((Bloco) c);
+			if (c instanceof Modulo) {
+				resp.add((Modulo) c);
 			}
 		}
 		return resp;
 	}
 
-	List<Objeto> getCacheObjetos() {
-		if (cacheObjetos != null) {
-			return cacheObjetos;
+	List<Config> getCacheConfigs() {
+		if (cacheConfigs != null) {
+			return cacheConfigs;
 		}
-		cacheObjetos = new ArrayList<>();
+		cacheConfigs = new ArrayList<>();
 		for (Container c : getFilhos()) {
-			if (c instanceof Objeto) {
-				cacheObjetos.add((Objeto) c);
+			if (c instanceof Config) {
+				cacheConfigs.add((Config) c);
 			}
 		}
-		return cacheObjetos;
+		return cacheConfigs;
 	}
 }

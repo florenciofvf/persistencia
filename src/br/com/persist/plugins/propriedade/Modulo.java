@@ -9,12 +9,12 @@ import javax.swing.text.StyledDocument;
 
 import br.com.persist.assistencia.Constantes;
 
-public class Bloco extends Container {
+public class Modulo extends Container {
 	private List<Map> cacheMaps;
 	private final String nome;
 	private boolean invalido;
 
-	public Bloco(String nome) {
+	public Modulo(String nome) {
 		this.nome = Objects.requireNonNull(nome);
 	}
 
@@ -44,7 +44,7 @@ public class Bloco extends Container {
 		if (invalido) {
 			return;
 		}
-		PropriedadeUtil.bloco(Constantes.TAB2, getNome(), doc);
+		PropriedadeUtil.modulo(Constantes.TAB2, getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
 			prop.processar(doc);
 		}
@@ -52,7 +52,7 @@ public class Bloco extends Container {
 
 	@Override
 	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagComposta(Constantes.TAB, "bloco", doc);
+		PropriedadeUtil.iniTagComposta(Constantes.TAB, "modulo", doc);
 		PropriedadeUtil.atributo("nome", nome, doc);
 		if (invalido) {
 			PropriedadeUtil.atributo("invalido", "true", doc);
@@ -67,7 +67,7 @@ public class Bloco extends Container {
 		for (Propriedade prop : getPropriedades()) {
 			prop.color(doc);
 		}
-		PropriedadeUtil.fimTagComposta(Constantes.TAB, "bloco", doc);
+		PropriedadeUtil.fimTagComposta(Constantes.TAB, "modulo", doc);
 	}
 
 	private List<Propriedade> getPropriedades() {
@@ -93,9 +93,9 @@ public class Bloco extends Container {
 		return cacheMaps;
 	}
 
-	Objeto getObjeto(String id) {
+	Config getConfig(String id) {
 		Raiz raiz = (Raiz) pai;
-		for (Objeto obj : raiz.getCacheObjetos()) {
+		for (Config obj : raiz.getCacheConfigs()) {
 			if (id.equals(obj.getId())) {
 				return obj;
 			}
@@ -105,6 +105,6 @@ public class Bloco extends Container {
 
 	@Override
 	public String toString() {
-		return "Bloco [nome=" + nome + "]";
+		return "Modulo [nome=" + nome + "]";
 	}
 }

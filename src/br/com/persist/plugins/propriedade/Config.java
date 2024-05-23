@@ -10,11 +10,11 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
-public class Objeto extends Container {
+public class Config extends Container {
 	private List<Campo> cacheCampos;
 	private final String id;
 
-	public Objeto(String id) {
+	public Config(String id) {
 		this.id = Objects.requireNonNull(id);
 	}
 
@@ -33,13 +33,13 @@ public class Objeto extends Container {
 
 	@Override
 	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagComposta(Constantes.TAB, "objeto", doc);
+		PropriedadeUtil.iniTagComposta(Constantes.TAB, "config", doc);
 		PropriedadeUtil.atributo("id", id, doc);
 		PropriedadeUtil.fimTagComposta(doc);
 		for (Campo campo : getCacheCampos()) {
 			campo.color(doc);
 		}
-		PropriedadeUtil.fimTagComposta(Constantes.TAB, "objeto", doc);
+		PropriedadeUtil.fimTagComposta(Constantes.TAB, "config", doc);
 	}
 
 	List<Campo> getCacheCampos() {
@@ -64,6 +64,6 @@ public class Objeto extends Container {
 
 	@Override
 	public String toString() {
-		return "Objeto [id=" + id + "]";
+		return "Config [id=" + id + "]";
 	}
 }

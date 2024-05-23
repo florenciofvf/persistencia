@@ -9,19 +9,19 @@ import br.com.persist.assistencia.Constantes;
 
 public class Map extends Container {
 	private final String chave;
-	private final String idObjeto;
+	private final String idConfig;
 
-	public Map(String chave, String idObjeto) {
+	public Map(String chave, String idConfig) {
 		this.chave = Objects.requireNonNull(chave);
-		this.idObjeto = Objects.requireNonNull(idObjeto);
+		this.idConfig = Objects.requireNonNull(idConfig);
 	}
 
 	public String getChave() {
 		return chave;
 	}
 
-	public String getIdObjeto() {
-		return idObjeto;
+	public String getIdConfig() {
+		return idConfig;
 	}
 
 	@Override
@@ -33,18 +33,18 @@ public class Map extends Container {
 	public void color(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagSimples(Constantes.TAB2, "map", doc);
 		PropriedadeUtil.atributo("chave", chave, doc);
-		PropriedadeUtil.atributo("idObjeto", idObjeto, doc);
+		PropriedadeUtil.atributo("idConfig", idConfig, doc);
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 
 	public String substituir(String string) {
-		Bloco bloco = (Bloco) pai;
-		Objeto objeto = bloco.getObjeto(idObjeto);
-		return objeto.substituir(chave, string);
+		Modulo modulo = (Modulo) pai;
+		Config config = modulo.getConfig(idConfig);
+		return config.substituir(chave, string);
 	}
 
 	@Override
 	public String toString() {
-		return "Map [chave=" + chave + ", idObjeto=" + idObjeto + "]";
+		return "Map [chave=" + chave + ", idConfig=" + idConfig + "]";
 	}
 }
