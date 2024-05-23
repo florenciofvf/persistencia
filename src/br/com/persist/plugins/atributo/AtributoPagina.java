@@ -1902,8 +1902,8 @@ class PainelTest extends AbstratoPanel {
 
 	private void adicionarImports(Arquivo arquivo, Class<?> classe) {
 		arquivo.addImport("org.junit.Test");
-		arquivo.addImport("org.junit.runner.RunWith");
 		if (chkMockito.isSelected()) {
+			arquivo.addImport("org.junit.runner.RunWith");
 			arquivo.addImport("org.mockito.InjectMocks");
 			arquivo.addImport("org.mockito.Mock");
 			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
@@ -1957,6 +1957,14 @@ class PainelTest extends AbstratoPanel {
 		funcao.addInstrucao(objeto + " objetoB = criar" + objeto + "()");
 		funcao.addInstrucao("converter(objetoA, objetoB)");
 		funcao.addInstrucao("assertEquals(objetoA, objetoB)");
+
+		classeTest.newLine();
+		classeTest.addAnotacao("Test");
+		funcao = classeTest.criarFuncaoPublica("void", "hashCodeTest");
+		funcao.addInstrucao(objeto + " objetoA = criar" + objeto + "()");
+		funcao.addInstrucao(objeto + " objetoB = criar" + objeto + "()");
+		funcao.addInstrucao("converter(objetoA, objetoB)");
+		funcao.addInstrucao("assertEquals(objetoA.hashCode(), objetoB.hashCode())");
 
 		classeTest.newLine();
 		funcao = classeTest.criarFuncaoPrivada(objeto, "criar" + objeto);
