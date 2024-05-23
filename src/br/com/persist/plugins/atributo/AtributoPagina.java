@@ -1791,7 +1791,7 @@ class PainelDAOImpl extends AbstratoPanel {
 }
 
 class PainelTest extends AbstratoPanel {
-	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), true);
+	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
 	private TextField txtArquivo = new TextField(40);
 	private static final long serialVersionUID = 1L;
 
