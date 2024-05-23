@@ -43,27 +43,34 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.plugins.update.UpdateConstantes;
 
 public class PropriedadeContainer extends AbstratoContainer {
 	private final PainelResultado painelResultado = new PainelResultado();
+	private final FicharioInner ficharioInner = new FicharioInner();
+	private final TextPane textAreaDesenv = new TextPane();
+	private final TextPane textAreaPrehom = new TextPane();
 	private PropriedadeFormulario propriedadeFormulario;
 	private final TextPane textArea = new TextPane();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private PropriedadeDialogo propriedadeDialogo;
+	private final File fileDesenv;
+	private final File filePrehom;
 	private final File file;
 
 	public PropriedadeContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		file = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + PropriedadeConstantes.PROPRIEDADES
 				+ ".xml");
+		fileDesenv = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "desenvolvimento.txt");
+		filePrehom = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "pre_homologacao.txt");
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
@@ -100,11 +107,34 @@ public class PropriedadeContainer extends AbstratoContainer {
 	private Panel criarPanel() {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, toolbar);
-		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, textArea);
-		ScrollPane scrollPane = new ScrollPane(panelArea);
-		panel.add(BorderLayout.CENTER, scrollPane);
+		ficharioInner.init();
+		panel.add(BorderLayout.CENTER, ficharioInner);
 		return panel;
+	}
+
+	private class FicharioInner extends TabbedPane {
+		private static final long serialVersionUID = 1L;
+
+		void init() {
+			addTab("label.configuracoes", Icones.CONFIG, new Aba(textArea, file));
+			addTab("label.desenvolvimento", Icones.CONFIG2, new Aba(textAreaDesenv, fileDesenv));
+			addTab("label.pre_homologacao", Icones.CONFIG2, new Aba(textAreaPrehom, filePrehom));
+		}
+	}
+
+	private class Aba extends Panel {
+		private static final long serialVersionUID = 1L;
+		final TextPane textPane;
+		final File file;
+
+		Aba(TextPane textPane, File file) {
+			this.textPane = textPane;
+			this.file = file;
+			Panel panel = new Panel();
+			panel.add(BorderLayout.CENTER, textPane);
+			ScrollPane scrollPane = new ScrollPane(panel);
+			add(BorderLayout.CENTER, scrollPane);
+		}
 	}
 
 	private Panel criarPanelResultado() {
@@ -156,7 +186,12 @@ public class PropriedadeContainer extends AbstratoContainer {
 	}
 
 	private void abrir() {
-		abrirArquivo(file);
+		Aba aba = (Aba) ficharioInner.getSelectedComponent();
+		if (aba == null || aba.file == file) {
+			abrirArquivo(file);
+		} else {
+			abrirArquivo(aba);
+		}
 	}
 
 	private void abrirArquivo(File file) {
@@ -170,6 +205,22 @@ public class PropriedadeContainer extends AbstratoContainer {
 					linha = br.readLine();
 				}
 				toolbar.gerar();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
+			}
+		}
+	}
+
+	private void abrirArquivo(Aba aba) {
+		aba.textPane.limpar();
+		if (file.exists()) {
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					aba.textPane.append(linha + Constantes.QL);
+					linha = br.readLine();
+				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
@@ -254,7 +305,12 @@ public class PropriedadeContainer extends AbstratoContainer {
 			if (font != null) {
 				Font nova = new Font(nome, font.getStyle(), font.getSize());
 				painelResultado.setFontTextArea(nova);
-				textArea.setFont(nova);
+				Aba aba = (Aba) ficharioInner.getSelectedComponent();
+				if (aba == null || aba.file == file) {
+					textArea.setFont(nova);
+				} else {
+					aba.textPane.setFont(nova);
+				}
 			}
 		}
 
@@ -293,7 +349,12 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 		@Override
 		protected void limpar() {
-			textArea.setText(Constantes.VAZIO);
+			Aba aba = (Aba) ficharioInner.getSelectedComponent();
+			if (aba == null || aba.file == file) {
+				textArea.setText(Constantes.VAZIO);
+			} else {
+				aba.textPane.setText(Constantes.VAZIO);
+			}
 			selecao = null;
 			label.limpar();
 		}
@@ -308,7 +369,12 @@ public class PropriedadeContainer extends AbstratoContainer {
 		@Override
 		public void salvar() {
 			if (Util.confirmaSalvar(PropriedadeContainer.this, Constantes.TRES)) {
-				salvarArquivo(file);
+				Aba aba = (Aba) ficharioInner.getSelectedComponent();
+				if (aba == null || aba.file == file) {
+					salvarArquivo(file);
+				} else {
+					salvarArquivo(aba);
+				}
 			}
 		}
 
@@ -317,27 +383,54 @@ public class PropriedadeContainer extends AbstratoContainer {
 				pw.print(textArea.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, PropriedadeContainer.this);
+				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
+			}
+		}
+
+		private void salvarArquivo(Aba aba) {
+			try (PrintWriter pw = new PrintWriter(aba.file, StandardCharsets.UTF_8.name())) {
+				pw.print(aba.textPane.getText());
+				salvoMensagem();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
 		}
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
-			Util.setContentTransfered(string);
-			copiarMensagem(string);
-			textArea.requestFocus();
+			Aba aba = (Aba) ficharioInner.getSelectedComponent();
+			if (aba == null || aba.file == file) {
+				String string = Util.getString(textArea);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				textArea.requestFocus();
+			} else {
+				String string = Util.getString(aba.textPane);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				aba.textPane.requestFocus();
+			}
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Aba aba = (Aba) ficharioInner.getSelectedComponent();
+			if (aba == null || aba.file == file) {
+				Util.getContentTransfered(textArea, numeros, letras);
+			} else {
+				Util.getContentTransfered(aba.textPane, numeros, letras);
+			}
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				Aba aba = (Aba) ficharioInner.getSelectedComponent();
+				if (aba == null || aba.file == file) {
+					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				} else {
+					selecao = Util.getSelecao(aba.textPane, selecao, txtPesquisa.getText());
+				}
 				selecao.selecionar(label);
 			} else {
 				label.limpar();
