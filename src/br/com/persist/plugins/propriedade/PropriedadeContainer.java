@@ -213,9 +213,9 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	private void abrirArquivo(Aba aba) {
 		aba.textPane.limpar();
-		if (file.exists()) {
+		if (aba.file.exists()) {
 			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+					new InputStreamReader(new FileInputStream(aba.file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				while (linha != null) {
 					aba.textPane.append(linha + Constantes.QL);
