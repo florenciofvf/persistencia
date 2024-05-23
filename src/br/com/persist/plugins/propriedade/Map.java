@@ -5,8 +5,6 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
-import br.com.persist.assistencia.Constantes;
-
 public class Map extends Container {
 	private final String chave;
 	private final String idConfig;
@@ -31,7 +29,7 @@ public class Map extends Container {
 
 	@Override
 	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagSimples(Constantes.TAB2, "map", doc);
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, "map", doc);
 		PropriedadeUtil.atributo("chave", chave, doc);
 		PropriedadeUtil.atributo("idConfig", idConfig, doc);
 		PropriedadeUtil.fimTagSimples(doc);

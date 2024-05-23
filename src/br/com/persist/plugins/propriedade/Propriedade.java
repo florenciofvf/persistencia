@@ -6,8 +6,6 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
-import br.com.persist.assistencia.Constantes;
-
 public class Propriedade extends Container {
 	private final String name;
 	private final String value;
@@ -38,7 +36,7 @@ public class Propriedade extends Container {
 		for (Map map : maps) {
 			string = map.substituir(string);
 		}
-		PropriedadeUtil.iniTagSimples(Constantes.TAB2, "property", doc);
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, "property", doc);
 		PropriedadeUtil.atributo("name", name, doc);
 		PropriedadeUtil.atributo("value", string, doc);
 		PropriedadeUtil.fimTagSimples(doc);
@@ -46,7 +44,7 @@ public class Propriedade extends Container {
 
 	@Override
 	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagSimples(Constantes.TAB2, "property", doc);
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, "property", doc);
 		PropriedadeUtil.atributo("name", name, doc);
 		PropriedadeUtil.atributo("value", value, doc);
 		PropriedadeUtil.fimTagSimples(doc);

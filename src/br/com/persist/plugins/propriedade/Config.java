@@ -33,13 +33,13 @@ public class Config extends Container {
 
 	@Override
 	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagComposta(Constantes.TAB, "config", doc);
+		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, "config", doc);
 		PropriedadeUtil.atributo("id", id, doc);
 		PropriedadeUtil.fimTagComposta(doc);
 		for (Campo campo : getCacheCampos()) {
 			campo.color(doc);
 		}
-		PropriedadeUtil.fimTagComposta(Constantes.TAB, "config", doc);
+		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB2, "config", doc);
 	}
 
 	List<Campo> getCacheCampos() {

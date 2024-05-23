@@ -31,6 +31,9 @@ public class Raiz extends Container {
 	public void color(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta("", "system-properties", doc);
 		PropriedadeUtil.fimTagComposta(doc);
+		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB, "raizConfiguracao", doc);
+		PropriedadeUtil.fimTagComposta(doc);
+
 		for (Config config : getCacheConfigs()) {
 			config.color(doc);
 			doc.insertString(doc.getLength(), Constantes.QL, null);
@@ -40,6 +43,8 @@ public class Raiz extends Container {
 			doc.insertString(doc.getLength(), Constantes.QL, null);
 			modulo.color(doc);
 		}
+
+		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB, "raizConfiguracao", doc);
 		PropriedadeUtil.fimTagComposta("", "system-properties", doc);
 	}
 

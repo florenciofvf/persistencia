@@ -44,7 +44,7 @@ public class Modulo extends Container {
 		if (invalido) {
 			return;
 		}
-		PropriedadeUtil.modulo(Constantes.TAB2, getNome(), doc);
+		PropriedadeUtil.modulo(PropriedadeConstantes.TAB3, getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
 			prop.processar(doc);
 		}
@@ -52,7 +52,7 @@ public class Modulo extends Container {
 
 	@Override
 	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagComposta(Constantes.TAB, "modulo", doc);
+		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, "modulo", doc);
 		PropriedadeUtil.atributo("nome", nome, doc);
 		if (invalido) {
 			PropriedadeUtil.atributo("invalido", "true", doc);
@@ -67,7 +67,7 @@ public class Modulo extends Container {
 		for (Propriedade prop : getPropriedades()) {
 			prop.color(doc);
 		}
-		PropriedadeUtil.fimTagComposta(Constantes.TAB, "modulo", doc);
+		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB2, "modulo", doc);
 	}
 
 	private List<Propriedade> getPropriedades() {
