@@ -181,7 +181,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton implements ActionListener {
+	protected class Toolbar extends BarraButton implements ActionListener {
 		private JComboBox<String> comboFontes = new JComboBox<>(PropriedadeConstantes.FONTES);
 		private Action gerarAcao = acaoIcon("label.gerar_conteudo", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
@@ -215,14 +215,13 @@ public class PropriedadeContainer extends AbstratoContainer {
 				Raiz raiz = PropriedadeUtil.criarRaiz(string);
 				if (raiz != null) {
 					painelResultado.processar(raiz);
-					colorTextArea(raiz);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
 		}
 
-		private void colorTextArea(Raiz raiz) {
+		protected void colorTextArea(Raiz raiz) {
 			textArea.setText(Constantes.VAZIO);
 			try {
 				raiz.color(textArea.getStyledDocument());
