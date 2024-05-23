@@ -11,10 +11,10 @@ class PropriedadeHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-		if (raiz == null) {
+		if ("raizConfiguracao".equals(qName)) {
 			raiz = new Raiz();
 			selecionado = raiz;
-		} else {
+		} else if (raiz != null) {
 			Container novo = criar(qName, atts);
 			if (novo != null) {
 				selecionado.adicionar(novo);
@@ -25,7 +25,9 @@ class PropriedadeHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		selecionado = selecionado.pai;
+		if (selecionado != null) {
+			selecionado = selecionado.pai;
+		}
 	}
 
 	public Raiz getRaiz() {

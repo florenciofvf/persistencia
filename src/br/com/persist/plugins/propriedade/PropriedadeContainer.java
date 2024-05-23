@@ -213,8 +213,10 @@ public class PropriedadeContainer extends AbstratoContainer {
 			}
 			try {
 				Raiz raiz = PropriedadeUtil.criarRaiz(string);
-				painelResultado.processar(raiz);
-				colorTextArea(raiz);
+				if (raiz != null) {
+					painelResultado.processar(raiz);
+					colorTextArea(raiz);
+				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
