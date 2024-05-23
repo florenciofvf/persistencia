@@ -1858,7 +1858,9 @@ class PainelTest extends AbstratoPanel {
 
 		ClassePublica classe = arquivo.criarClassePublica(AtributoUtil.getComponente(mapaTest));
 
-		classe.addAnotacao("InjectMocks");
+		if (chkMockito.isSelected()) {
+			classe.addAnotacao("InjectMocks");
+		}
 		classe.addCampoPrivado(new Variavel(AtributoUtil.getComponente(mapaService), "service"));
 
 		Funcao funcao = null;
@@ -1906,7 +1908,7 @@ class PainelTest extends AbstratoPanel {
 			arquivo.addImport("org.mockito.Mock");
 			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
 		}
-		arquivo.addImport("static org.junit.Assert.*").newLine();
+		arquivo.addImport("static org.junit.Assert.assertEquals").newLine();
 		if (classe != null) {
 			arquivo.addImport(classe.getName()).newLine();
 		}
@@ -1950,11 +1952,10 @@ class PainelTest extends AbstratoPanel {
 		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
 
 		classeTest.addAnotacao("Test");
-		Funcao funcao = classeTest.criarFuncaoPublica("void", "equals" + objeto + "Test");
+		Funcao funcao = classeTest.criarFuncaoPublica("void", "equalsTest");
 		funcao.addInstrucao(objeto + " objetoA = criar" + objeto + "()");
 		funcao.addInstrucao(objeto + " objetoB = criar" + objeto + "()");
 		funcao.addInstrucao("converter(objetoA, objetoB)");
-		funcao.addInstrucao("assertTrue(objetoA.equals(objetoB))");
 		funcao.addInstrucao("assertEquals(objetoA, objetoB)");
 
 		classeTest.newLine();
