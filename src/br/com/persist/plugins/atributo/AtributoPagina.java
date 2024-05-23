@@ -1791,6 +1791,7 @@ class PainelDAOImpl extends AbstratoPanel {
 }
 
 class PainelTest extends AbstratoPanel {
+	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), true);
 	private TextField txtArquivo = new TextField(40);
 	private static final long serialVersionUID = 1L;
 
@@ -1802,6 +1803,7 @@ class PainelTest extends AbstratoPanel {
 		gerarTestAcao.setActionListener(e -> gerarTeste());
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
+		toolbar.add(chkMockito);
 		toolbar.addButton(gerarTestAcao);
 	}
 
@@ -1899,14 +1901,18 @@ class PainelTest extends AbstratoPanel {
 	private void adicionarImports(Arquivo arquivo, Class<?> classe) {
 		arquivo.addImport("org.junit.Test");
 		arquivo.addImport("org.junit.runner.RunWith");
-		arquivo.addImport("org.mockito.InjectMocks");
-		arquivo.addImport("org.mockito.Mock");
-		arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
+		if (chkMockito.isSelected()) {
+			arquivo.addImport("org.mockito.InjectMocks");
+			arquivo.addImport("org.mockito.Mock");
+			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
+		}
 		arquivo.addImport("static org.junit.Assert.*").newLine();
 		if (classe != null) {
 			arquivo.addImport(classe.getName()).newLine();
 		}
-		arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
+		if (chkMockito.isSelected()) {
+			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
+		}
 	}
 
 	private void gerarTeste() {
@@ -1924,7 +1930,7 @@ class PainelTest extends AbstratoPanel {
 		Method[] methods = classe.getDeclaredMethods();
 		List<Metodo> metodos = new ArrayList<>();
 		for (Method item : methods) {
-			if (item.getName().startsWith("get")) {
+			if (!item.isSynthetic() && item.getName().startsWith("get")) {
 				String nome = item.getName().substring("get".length());
 				if (Util.isEmpty(nome)) {
 					continue;
@@ -1970,6 +1976,9 @@ class PainelTest extends AbstratoPanel {
 
 	private boolean contemSet(Method[] methods, Metodo obj) {
 		for (Method item : methods) {
+			if (item.isSynthetic()) {
+				continue;
+			}
 			if (item.getName().equals("set" + obj.nome)) {
 				return true;
 			}
