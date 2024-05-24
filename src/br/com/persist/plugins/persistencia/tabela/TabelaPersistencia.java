@@ -338,6 +338,7 @@ public class TabelaPersistencia extends JTable {
 	private class PopupHeader extends Popup {
 		private JCheckBoxMenuItem inativoTempCheck = new JCheckBoxMenuItem(getString("label.inativo_temp"));
 		private Action pesquisaApartirColunaAcao = acaoMenu("label.pesquisa_a_partir_coluna");
+		private Action mapearApartirBiblioAcao = acaoMenu("label.mapear_a_partir_biblio");
 		private Action copiarNomeColunaAcao = acaoMenu("label.copiar_nome_coluna");
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
 		private Action larguraConteudoAcao = acaoMenu("label.largura_conteudo");
@@ -367,6 +368,7 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
 			addMenuItem(true, pesquisaApartirColunaAcao);
+			addMenuItem(true, mapearApartirBiblioAcao);
 			add(true, new MenuColocarNomeColuna());
 			addMenuItem(copiarNomeColunaAcao);
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
@@ -609,6 +611,14 @@ public class TabelaPersistencia extends JTable {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
 					listener.pesquisaApartirColuna(TabelaPersistencia.this, coluna);
+				}
+			});
+			mapearApartirBiblioAcao.setActionListener(e -> {
+				String coluna = getModel().getColumnName(indiceColuna);
+				if (!Util.isEmpty(classBiblio) && itemClassBiblio.isDisplayable()) {
+					itemClassBiblio.doClick();
+				} else if (listener != null) {
+					listener.mapearApartirBiblio(TabelaPersistencia.this, coluna);
 				}
 			});
 			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));

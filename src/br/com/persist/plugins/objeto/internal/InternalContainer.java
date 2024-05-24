@@ -3860,6 +3860,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
+		private Coletor getNomeBiblio() {
+			List<String> nomes = new ArrayList<>();
+			vinculoListener.listarNomeBiblio(nomes, InternalContainer.this);
+			Coletor coletor = new Coletor();
+			Config config = new SetLista.Config(true, true);
+			SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.biblio"), nomes, coletor,
+					InternalContainer.this, config);
+			return coletor;
+		}
+
+		@Override
+		public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, String coluna) {
+			if (vinculoListener == null) {
+				return;
+			}
+			Coletor coletor = getNomeBiblio();
+			if (coletor.size() != 1) {
+				return;
+			}
+			mapear(coluna, coletor.get(0));
+		}
+
+		private void mapear(String coluna, String nomeBiblio) {
+			// TODO
+		}
+
 		private Coletor getNomePesquisa() {
 			List<Pesquisa> pesquisas = objeto.getPesquisas(false);
 			List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
