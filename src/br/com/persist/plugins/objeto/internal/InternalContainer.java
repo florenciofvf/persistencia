@@ -3891,11 +3891,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (coletor.size() != 1) {
 					return;
 				}
-				objeto.setClassBiblio(coletor.get(0));
+				objeto.setClassBiblio(normalizar(coletor.get(0)));
 				tabelaPersistencia.configClasseBiblio(objeto.getClassBiblio(), coluna);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 			}
+		}
+
+		private String normalizar(String string) {
+			if (string.endsWith(".class")) {
+				string = string.substring(0, string.length() - 6);
+			}
+			string = Util.replaceAll(string, "/", ".");
+			string = Util.replaceAll(string, "\\", ".");
+			return string;
 		}
 
 		private Coletor getNomePesquisa() {
