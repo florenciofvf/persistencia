@@ -125,6 +125,7 @@ import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.OrdenarArrastoDialogo;
 import br.com.persist.plugins.objeto.vinculo.OrdenarListener;
 import br.com.persist.plugins.objeto.vinculo.OrdenarManualDialogo;
+import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Param;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -3891,8 +3892,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (coletor.size() != 1) {
 					return;
 				}
-				objeto.setClassBiblio(normalizar(coletor.get(0)));
-				tabelaPersistencia.configClasseBiblio(objeto.getClassBiblio(), coluna);
+				String classe = normalizar(coletor.get(0));
+				objeto.setClassBiblio(classe);
+				tabelaPersistencia.configClasseBiblio(classe, coluna);
+				checkSalvarVinculacao(classe);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 			}
@@ -3905,6 +3908,30 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			string = Util.replaceAll(string, "/", ".");
 			string = Util.replaceAll(string, "\\", ".");
 			return string;
+		}
+
+		private void checkSalvarVinculacao(String classe) {
+			String tabela = objeto.getTabela().trim();
+			if (vinculoListener == null || Util.isEmpty(tabela)) {
+				return;
+			}
+			if (!Util.confirmar(InternalContainer.this, ObjetoMensagens.getString("msg.salvar_classe_biblio_vinculo"),
+					false)) {
+				return;
+			}
+			Vinculacao vinculacao = new Vinculacao();
+			try {
+				vinculoListener.preencherVinculacao(vinculacao);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("CLASSE BIBLIO", ex, InternalContainer.this);
+				return;
+			}
+			ParaTabela para = vinculacao.getParaTabela(tabela);
+			if (para == null) {
+				return;
+			}
+			para.setClassBiblio(classe);
+			vinculoListener.salvarVinculacao(vinculacao);
 		}
 
 		private Coletor getNomePesquisa() {
