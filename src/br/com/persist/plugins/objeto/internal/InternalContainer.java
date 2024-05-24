@@ -3871,7 +3871,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		@Override
-		public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, String coluna) {
+		public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, Coluna coluna) {
 			if (vinculoListener == null) {
 				return;
 			}
@@ -3882,7 +3882,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			mapear(coluna, coletor.get(0));
 		}
 
-		private void mapear(String coluna, String nomeBiblio) {
+		private void mapear(Coluna coluna, String nomeBiblio) {
 			try {
 				Coletor coletor = new Coletor();
 				List<String> entradas = Util.listarEntradas(new File(nomeBiblio));

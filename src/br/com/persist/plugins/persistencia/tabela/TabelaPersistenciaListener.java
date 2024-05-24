@@ -32,7 +32,7 @@ public interface TabelaPersistenciaListener {
 
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome);
 
-	public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, String nome);
+	public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, Coluna coluna);
 
 	public void campoExportadoPara(String coluna);
 

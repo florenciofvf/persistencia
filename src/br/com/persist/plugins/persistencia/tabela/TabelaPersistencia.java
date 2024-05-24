@@ -614,11 +614,10 @@ public class TabelaPersistencia extends JTable {
 				}
 			});
 			mapearApartirBiblioAcao.setActionListener(e -> {
-				String coluna = getModel().getColumnName(indiceColuna);
 				if (!Util.isEmpty(classBiblio) && itemClassBiblio.isDisplayable()) {
 					itemClassBiblio.doClick();
-				} else if (listener != null) {
-					listener.mapearApartirBiblio(TabelaPersistencia.this, coluna);
+				} else if (listener != null && colunaTabela != null) {
+					listener.mapearApartirBiblio(TabelaPersistencia.this, colunaTabela);
 				}
 			});
 			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));
@@ -1026,11 +1025,9 @@ public class TabelaPersistencia extends JTable {
 		}
 	}
 
-	public void configClasseBiblio(String classe, String coluna) {
+	public void configClasseBiblio(String classe, Coluna coluna) {
 		setClassBiblio(classe);
-		popupHeader.preShow(coluna, null);
-		if (popupHeader.itemClassBiblio.isDisplayable()) {
-			popupHeader.itemClassBiblio.doClick();
-		}
+		popupHeader.preShow(coluna.getNome(), coluna);
+		popupHeader.itemClassBiblio.doClick();
 	}
 }
