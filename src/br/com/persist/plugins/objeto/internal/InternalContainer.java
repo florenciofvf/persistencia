@@ -3928,7 +3928,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			ParaTabela para = vinculacao.getParaTabela(tabela);
 			if (para == null) {
-				return;
+				para = new ParaTabela(tabela);
+				vinculacao.putParaTabela(para);
 			}
 			para.setClassBiblio(classe);
 			vinculoListener.salvarVinculacao(vinculacao);
