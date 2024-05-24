@@ -44,7 +44,7 @@ public class Modulo extends Container {
 		if (invalido) {
 			return;
 		}
-		PropriedadeUtil.modulo(PropriedadeConstantes.TAB3, getNome(), doc);
+		PropriedadeUtil.modulo(PropriedadeConstantes.TAB2, getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
 			prop.processar(doc);
 		}
