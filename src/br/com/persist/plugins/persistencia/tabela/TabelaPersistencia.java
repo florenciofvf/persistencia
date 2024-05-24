@@ -614,7 +614,7 @@ public class TabelaPersistencia extends JTable {
 				}
 			});
 			mapearApartirBiblioAcao.setActionListener(e -> {
-				if (!Util.isEmpty(classBiblio) && itemClassBiblio.isDisplayable()) {
+				if (!Util.isEmpty(classBiblio) && itemClassBiblio.isVisible()) {
 					itemClassBiblio.doClick();
 				} else if (listener != null && colunaTabela != null) {
 					listener.mapearApartirBiblio(TabelaPersistencia.this, colunaTabela);

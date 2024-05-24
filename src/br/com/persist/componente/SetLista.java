@@ -378,6 +378,7 @@ class SetListaDialogo extends AbstratoDialogo {
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
+			txtPesquisa.setText(config.selecionarItemIgual);
 			ordenarAcao.setActionListener(e -> ordenar());
 			chkTodos.setSelected(!config.somenteUm);
 			txtPesquisa.addActionListener(this);
