@@ -31,6 +31,20 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 		Util.criarDiretorio("libs");
 	}
 
+	public static List<String> listarNomeBiblio() {
+		List<String> lista = new ArrayList<>();
+		File file = new File("libs");
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			if (files != null) {
+				for (File item : files) {
+					lista.add(item.getAbsolutePath());
+				}
+			}
+		}
+		return lista;
+	}
+
 	@Override
 	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
 		return new FormularioConfiguracao(formulario);

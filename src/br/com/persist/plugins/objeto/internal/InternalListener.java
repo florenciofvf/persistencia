@@ -40,6 +40,8 @@ public interface InternalListener {
 
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
 
+		public void listarNomeBiblio(List<String> lista, Component c);
+
 		public void pesquisarApos(Objeto fonte, Pesquisa pesquisa);
 
 		public void salvarVinculacao(Vinculacao vinculacao);

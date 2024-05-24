@@ -347,4 +347,8 @@ public class Formulario extends JFrame {
 			Preferencias.setString(Constantes.GC_PREFERENCIAL, Constantes.VAZIO);
 		}
 	}
+
+	public void listarNomeBiblio(List<String> lista) {
+		lista.addAll(FormularioFabrica.listarNomeBiblio());
+	}
 }
