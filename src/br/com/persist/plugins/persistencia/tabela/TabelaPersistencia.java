@@ -1025,4 +1025,12 @@ public class TabelaPersistencia extends JTable {
 			}
 		}
 	}
+
+	public void configClasseBiblio(String classe, String coluna) {
+		setClassBiblio(classe);
+		popupHeader.preShow(coluna, null);
+		if (popupHeader.itemClassBiblio.isDisplayable()) {
+			popupHeader.itemClassBiblio.doClick();
+		}
+	}
 }

@@ -3883,7 +3883,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void mapear(String coluna, String nomeBiblio) {
-			// TODO
+			try {
+				Coletor coletor = new Coletor();
+				List<String> entradas = Util.listarEntradas(new File(nomeBiblio));
+				SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.nome_entrada_file"), entradas, coletor,
+						InternalContainer.this, new SetLista.Config(true, true, objeto.getId()));
+				if (coletor.size() != 1) {
+					return;
+				}
+				objeto.setClassBiblio(coletor.get(0));
+				tabelaPersistencia.configClasseBiblio(objeto.getClassBiblio(), coluna);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+			}
 		}
 
 		private Coletor getNomePesquisa() {

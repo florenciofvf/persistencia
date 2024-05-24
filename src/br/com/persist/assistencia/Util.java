@@ -39,6 +39,8 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.swing.Icon;
 import javax.swing.JDialog;
@@ -1429,5 +1431,19 @@ public class Util {
 
 	public static void beep() {
 		SwingUtilities.invokeLater(() -> Toolkit.getDefaultToolkit().beep());
+	}
+
+	public static List<String> listarEntradas(File file) throws IOException {
+		List<String> lista = new ArrayList<>();
+		if (file != null && file.isFile()) {
+			try (ZipInputStream zis = new ZipInputStream(new FileInputStream(file))) {
+				ZipEntry entry = zis.getNextEntry();
+				while (entry != null) {
+					lista.add(entry.getName());
+					entry = zis.getNextEntry();
+				}
+			}
+		}
+		return lista;
 	}
 }
