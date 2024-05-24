@@ -36,7 +36,7 @@ public class Propriedade extends Container {
 		for (Map map : maps) {
 			string = map.substituir(string);
 		}
-		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, "property", doc);
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB2, "property", doc);
 		PropriedadeUtil.atributo("name", name, doc);
 		PropriedadeUtil.atributo("value", string, doc);
 		PropriedadeUtil.fimTagSimples(doc);

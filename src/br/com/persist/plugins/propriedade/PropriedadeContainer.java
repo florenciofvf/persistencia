@@ -74,6 +74,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
+		abrirArquivo(new Aba(textAreaDesenv, fileDesenv));
+		abrirArquivo(new Aba(textAreaPrehom, filePrehom));
 	}
 
 	public PropriedadeDialogo getPropriedadeDialogo() {
