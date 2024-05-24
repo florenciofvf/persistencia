@@ -74,8 +74,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
-		abrirArquivo(new Aba(textAreaDesenv, fileDesenv));
-		abrirArquivo(new Aba(textAreaPrehom, filePrehom));
+		abrirArquivo(textAreaDesenv, fileDesenv);
+		abrirArquivo(textAreaPrehom, filePrehom);
 	}
 
 	public PropriedadeDialogo getPropriedadeDialogo() {
@@ -197,30 +197,22 @@ public class PropriedadeContainer extends AbstratoContainer {
 	}
 
 	private void abrirArquivo(File file) {
-		textArea.limpar();
+		abrirArquivo(textArea, file);
+		toolbar.gerar();
+	}
+
+	private void abrirArquivo(Aba aba) {
+		abrirArquivo(aba.textPane, aba.file);
+	}
+
+	private void abrirArquivo(TextPane textPane, File file) {
+		textPane.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				while (linha != null) {
-					textArea.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
-				toolbar.gerar();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
-			}
-		}
-	}
-
-	private void abrirArquivo(Aba aba) {
-		aba.textPane.limpar();
-		if (aba.file.exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(aba.file), StandardCharsets.UTF_8))) {
-				String linha = br.readLine();
-				while (linha != null) {
-					aba.textPane.append(linha + Constantes.QL);
+					textPane.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
