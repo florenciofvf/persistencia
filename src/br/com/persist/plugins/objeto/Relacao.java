@@ -8,9 +8,9 @@ import java.util.Objects;
 import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.plugins.objeto.config.HoraUtil;
 
 public class Relacao implements Runnable {
 	private static final Color COR_PADRAO_FONTE = Color.BLACK;

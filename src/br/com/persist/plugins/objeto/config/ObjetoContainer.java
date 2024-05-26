@@ -36,6 +36,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
