@@ -19,6 +19,11 @@ import br.com.persist.formulario.Formulario;
 
 public class PontoFabrica extends AbstratoFabricaContainer {
 	@Override
+	public void inicializar() {
+		br.com.persist.assistencia.Util.criarDiretorio(PontoConstantes.PONTO);
+	}
+
+	@Override
 	public PaginaServico getPaginaServico() {
 		return new PontoPaginaServico();
 	}

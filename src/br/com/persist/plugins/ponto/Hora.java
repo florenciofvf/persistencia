@@ -58,4 +58,15 @@ public class Hora {
 	public int getAltura() {
 		return horas.altura;
 	}
+
+	public String getString() {
+		StringBuilder sb = new StringBuilder();
+		if (horas.s != null) {
+			sb.append("h=" + horas.s);
+		}
+		if (minuto.s != null) {
+			sb.append("m=" + minuto.s);
+		}
+		return sb.toString();
+	}
 }

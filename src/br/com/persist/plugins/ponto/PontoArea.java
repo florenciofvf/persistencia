@@ -10,7 +10,11 @@ import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.List;
 
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.componente.Panel;
@@ -28,14 +32,14 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	public void init() {
 		Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.KEY_EVENT_MASK);
 		addMouseListener(new MouseListener());
-		periodos[0] = criarPeriodo(300, 10);
-		periodos[1] = criarPeriodo(300, 60);
-		periodos[2] = criarPeriodo(300, 110);
-		periodos[3] = criarPeriodo(300, 160);
+		periodos[0] = criarPeriodo(1, 300, 10);
+		periodos[1] = criarPeriodo(2, 300, 60);
+		periodos[2] = criarPeriodo(3, 300, 110);
+		periodos[3] = criarPeriodo(4, 300, 160);
 	}
 
-	private Periodo criarPeriodo(int x, int y) {
-		Periodo p = new Periodo(this);
+	private Periodo criarPeriodo(int id, int x, int y) {
+		Periodo p = new Periodo(id, this);
 		p.setX(x);
 		p.setY(y);
 		return p;
@@ -137,5 +141,24 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	@Override
 	public void desenhar(Ponto p) {
 		repaint();
+	}
+
+	void abrir(File file) {
+		List<String> lista = ArquivoUtil.lerArquivo(file);
+		for (Periodo p : periodos) {
+			p.abrir(lista);
+		}
+	}
+
+	void salvar(File file) {
+		try {
+			PrintWriter pw = new PrintWriter(file);
+			for (Periodo p : periodos) {
+				p.salvar(pw);
+			}
+			pw.close();
+		} catch (Exception ex) {
+			//
+		}
 	}
 }

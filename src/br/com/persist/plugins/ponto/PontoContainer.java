@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.io.File;
 
 import javax.swing.Icon;
 
@@ -29,12 +30,15 @@ public class PontoContainer extends AbstratoContainer {
 	private PontoArea area = new PontoArea();
 	private PontoFormulario pontoFormulario;
 	private PontoDialogo pontoDialogo;
+	private final File file;
 
 	public PontoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
+		file = new File(PontoConstantes.PONTO + Constantes.SEPARADOR + PontoConstantes.PONTO);
 		toolbar.ini(janela);
 		montarLayout();
 		area.init();
+		area.abrir(file);
 	}
 
 	public PontoDialogo getPontoDialogo() {
@@ -121,10 +125,12 @@ public class PontoContainer extends AbstratoContainer {
 
 		@Override
 		protected void baixar() {
+			area.abrir(file);
 		}
 
 		@Override
 		protected void salvar() {
+			area.salvar(file);
 		}
 	}
 

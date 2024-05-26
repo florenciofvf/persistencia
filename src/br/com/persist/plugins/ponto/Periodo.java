@@ -1,6 +1,8 @@
 package br.com.persist.plugins.ponto;
 
 import java.awt.Graphics2D;
+import java.io.PrintWriter;
+import java.util.List;
 
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.HoraUtilException;
@@ -8,10 +10,12 @@ import br.com.persist.assistencia.HoraUtilException;
 public class Periodo {
 	private final Hora esquerdo;
 	private final Hora direito;
+	private final int id;
 
-	public Periodo(PontoListener listener) {
+	public Periodo(int id, PontoListener listener) {
 		esquerdo = new Hora(listener);
 		direito = new Hora(listener);
+		this.id = id;
 	}
 
 	public Ponto get(int x, int y) {
@@ -59,5 +63,12 @@ public class Periodo {
 	public void setY(int y) {
 		esquerdo.setY(y);
 		direito.setY(y);
+	}
+
+	public void abrir(List<String> lista) {
+	}
+
+	public void salvar(PrintWriter pw) {
+		pw.println(id + ">>>E" + esquerdo.getString() + "D" + direito.getString());
 	}
 }
