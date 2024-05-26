@@ -8,15 +8,17 @@ public class Ponto {
 	private final PontoListener listener;
 	private final Cursor cursor;
 	private Thread thread;
-	private int largura;
-	private int altura;
-	private String s;
-	private int x;
-	private int y;
+	int largura;
+	int altura;
+	String s;
+	int x;
+	int y;
 
 	public Ponto(PontoListener listener) {
 		this.listener = Objects.requireNonNull(listener);
 		cursor = new Cursor();
+		largura = 44;
+		altura = 30;
 	}
 
 	public int getLargura() {
@@ -130,8 +132,6 @@ public class Ponto {
 				}
 				repaint();
 			}
-		} else if (c == '\t') {
-			tabular();
 		}
 	}
 
@@ -151,10 +151,6 @@ public class Ponto {
 
 	private void repaint() {
 		listener.desenhar(this);
-	}
-
-	private void tabular() {
-		listener.tabular(this);
 	}
 
 	class Processar implements Runnable {
