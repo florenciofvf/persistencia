@@ -66,6 +66,18 @@ public class Periodo {
 	}
 
 	public void abrir(List<String> lista) {
+		String prefixo = id + ">>>";
+		for (String string : lista) {
+			if (string.startsWith(prefixo)) {
+				abrir(string.substring(prefixo.length()));
+			}
+		}
+	}
+
+	private void abrir(String string) {
+		int pos = string.indexOf("D");
+		esquerdo.abrir(string.substring(0, pos));
+		direito.abrir(string.substring(pos + 1));
 	}
 
 	public void salvar(PrintWriter pw) {

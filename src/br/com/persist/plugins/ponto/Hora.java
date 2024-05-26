@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.HoraUtilException;
+import br.com.persist.assistencia.Util;
 
 public class Hora {
 	private final Ponto horas;
@@ -59,12 +60,27 @@ public class Hora {
 		return horas.altura;
 	}
 
+	public void abrir(String string) {
+		int posH = string.indexOf("h=");
+		int posM = string.indexOf("m=");
+		if (posH != -1) {
+			if (posM != -1) {
+				horas.s = string.substring(posH + 2, posM);
+			} else {
+				horas.s = string.substring(posH + 2);
+			}
+		}
+		if (posM != -1) {
+			minuto.s = string.substring(posM + 2);
+		}
+	}
+
 	public String getString() {
 		StringBuilder sb = new StringBuilder();
-		if (horas.s != null) {
+		if (!Util.isEmpty(horas.s)) {
 			sb.append("h=" + horas.s);
 		}
-		if (minuto.s != null) {
+		if (!Util.isEmpty(minuto.s)) {
 			sb.append("m=" + minuto.s);
 		}
 		return sb.toString();
