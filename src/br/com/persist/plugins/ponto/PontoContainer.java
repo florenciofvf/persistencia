@@ -19,6 +19,7 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
@@ -136,7 +137,10 @@ public class PontoContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			area.salvar(file);
+			if (Util.confirmaSalvar(PontoContainer.this, Constantes.TRES)) {
+				area.salvar(file);
+				salvoMensagem();
+			}
 		}
 	}
 
