@@ -150,6 +150,13 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		}
 	}
 
+	void limpar() {
+		for (Periodo p : periodos) {
+			p.limpar();
+		}
+		repaint();
+	}
+
 	void salvar(File file) {
 		try {
 			PrintWriter pw = new PrintWriter(file);

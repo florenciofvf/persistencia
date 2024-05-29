@@ -75,6 +75,11 @@ public class Hora {
 		}
 	}
 
+	public void limpar() {
+		horas.s = null;
+		minuto.s = null;
+	}
+
 	public String getString() {
 		StringBuilder sb = new StringBuilder();
 		if (!Util.isEmpty(horas.s)) {

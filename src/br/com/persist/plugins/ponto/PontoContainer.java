@@ -3,6 +3,7 @@ package br.com.persist.plugins.ponto;
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
+import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
@@ -77,7 +78,7 @@ public class PontoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, BAIXAR, SALVAR);
 		}
 
 		@Override
@@ -126,6 +127,11 @@ public class PontoContainer extends AbstratoContainer {
 		@Override
 		protected void baixar() {
 			area.abrir(file);
+		}
+
+		@Override
+		protected void limpar() {
+			area.limpar();
 		}
 
 		@Override

@@ -80,6 +80,11 @@ public class Periodo {
 		direito.abrir(string.substring(pos + 1));
 	}
 
+	public void limpar() {
+		esquerdo.limpar();
+		direito.limpar();
+	}
+
 	public void salvar(PrintWriter pw) {
 		pw.println(id + ">>>E" + esquerdo.getString() + "D" + direito.getString());
 	}
