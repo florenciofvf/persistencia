@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -1979,8 +1980,25 @@ class PainelTest extends AbstratoPanel {
 			funcao.addInstrucao(item.gerar());
 		}
 
+		testes(classeTest, methods);
+
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
+	}
+
+	private void testes(ClassePublica classe, Method[] methods) {
+		List<Teste> metodos = new ArrayList<>();
+		for (Method item : methods) {
+			String name = item.getName();
+			if (item.isSynthetic() || name.startsWith("get") || name.startsWith("set")) {
+				continue;
+			}
+			Teste obj = new Teste(item);
+			metodos.add(obj);
+		}
+		for (Teste teste : metodos) {
+			teste.gerar(classe);
+		}
 	}
 
 	private boolean contemSet(Method[] methods, Metodo obj) {
@@ -1998,12 +2016,31 @@ class PainelTest extends AbstratoPanel {
 	private class Metodo {
 		final String nome;
 
-		public Metodo(String nome) {
+		Metodo(String nome) {
 			this.nome = nome;
 		}
 
 		String gerar() {
 			return "destino.set" + nome + "(origem.get" + nome + "())";
+		}
+	}
+
+	private class Teste {
+		final Method method;
+
+		Teste(Method method) {
+			this.method = method;
+		}
+
+		void gerar(ClassePublica classe) {
+			if (Modifier.isPublic(method.getModifiers())) {
+				String name = method.getName();
+				classe.newLine();
+				classe.addAnotacao("Test");
+				Funcao funcao = classe.criarFuncaoPublica("void", name + "Test");
+				funcao.addComentario("injectMock." + name + "();");
+				funcao.addComentario("assertTrue(false);");
+			}
 		}
 	}
 }
