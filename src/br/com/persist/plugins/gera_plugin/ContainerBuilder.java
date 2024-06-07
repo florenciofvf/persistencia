@@ -53,7 +53,6 @@ public class ContainerBuilder extends Builder {
 		arquivo.addImport("java.io.File");
 		arquivo.addImport("java.io.IOException");
 		arquivo.addImport("java.util.ArrayList");
-		arquivo.addImport("java.util.Collections");
 		arquivo.addImport("java.util.List");
 		arquivo.addImport("java.util.concurrent.atomic.AtomicBoolean").newLine();
 		arquivo.addImport("javax.swing.Icon").newLine();
