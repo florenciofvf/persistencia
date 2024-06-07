@@ -17,7 +17,6 @@ import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -118,6 +117,7 @@ public class InstrucaoContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
+				files = ArquivoUtil.ordenar(files);
 				List<InstrucaoPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(InstrucaoConstantes.INSTRUCAO, f.getName())) {
@@ -125,7 +125,6 @@ public class InstrucaoContainer extends AbstratoContainer {
 					}
 					ordenados.add(new InstrucaoPagina(f));
 				}
-				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
 				for (InstrucaoPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}

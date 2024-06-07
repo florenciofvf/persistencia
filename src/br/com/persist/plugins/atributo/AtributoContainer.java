@@ -15,7 +15,6 @@ import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -107,6 +106,7 @@ public class AtributoContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
+				files = ArquivoUtil.ordenar(files);
 				List<AtributoPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if ((ehArquivoReservado(f.getName()) && !AtributoPreferencia.isExibirArqIgnorados())
@@ -115,7 +115,6 @@ public class AtributoContainer extends AbstratoContainer {
 					}
 					ordenados.add(new AtributoPagina(f));
 				}
-				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
 				for (AtributoPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}

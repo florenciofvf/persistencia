@@ -17,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -112,6 +111,7 @@ public class EntregaContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
+				files = ArquivoUtil.ordenar(files);
 				List<EntregaPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if ((ehArquivoReservado(f.getName()) && !EntregaPreferencia.isExibirArqIgnorados())
@@ -120,7 +120,6 @@ public class EntregaContainer extends AbstratoContainer {
 					}
 					ordenados.add(new EntregaPagina(f));
 				}
-				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
 				for (EntregaPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}

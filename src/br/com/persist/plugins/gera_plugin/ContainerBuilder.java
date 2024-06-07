@@ -188,6 +188,7 @@ public class ContainerBuilder extends Builder {
 		se1.addInstrucao("File[] files = file.listFiles()");
 
 		If se2 = se1.criarIf("files != null", null);
+		se2.addInstrucao("files = ArquivoUtil.ordenar(files)");
 		se2.addInstrucao("List<" + config.nameCapPagina() + "> ordenados = new ArrayList<>()");
 
 		For loop1 = se2.criarFor("File f : files");
@@ -197,8 +198,6 @@ public class ContainerBuilder extends Builder {
 				+ config.recurso + ", f.getName())", null);
 		se3.addInstrucao("continue");
 		loop1.addInstrucao("ordenados.add(new " + config.nameCapPagina() + "(f))");
-
-		se2.addInstrucao("Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()))");
 
 		For loop2 = se2.criarFor(config.nameCapPagina() + " pagina : ordenados");
 		loop2.addInstrucao("fichario.adicionarPagina(pagina)");

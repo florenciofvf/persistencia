@@ -14,13 +14,12 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
@@ -117,6 +116,7 @@ public class LegadoContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
+				files = ArquivoUtil.ordenar(files);
 				List<LegadoPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if ((ehArquivoReservado(f.getName()) && !LegadoPreferencia.isExibirArqIgnorados())
@@ -125,7 +125,6 @@ public class LegadoContainer extends AbstratoContainer {
 					}
 					ordenados.add(new LegadoPagina(f));
 				}
-				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
 				for (LegadoPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}

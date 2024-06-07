@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,50 @@ public class ArquivoUtil {
 				FileChannel co = fos.getChannel();
 				ci.transferTo(indice, quantidade, co);
 			}
+		}
+	}
+
+	public static File[] ordenar(File[] files) {
+		if (files == null) {
+			return files;
+		}
+		List<Ordem> lista = new ArrayList<>();
+		for (File f : files) {
+			lista.add(new Ordem(f));
+		}
+		Collections.sort(lista, (a1, a2) -> a1.numero - a2.numero);
+		File[] resp = new File[lista.size()];
+		for (int i = 0; i < lista.size(); i++) {
+			resp[i] = lista.get(i).file;
+		}
+		return resp;
+	}
+
+	static class Ordem {
+		final File file;
+		final int numero;
+
+		public Ordem(File file) {
+			this.file = file;
+			numero = extrair(file.getName());
+		}
+
+		int extrair(String s) {
+			StringBuilder sb = new StringBuilder();
+			int i = 0;
+			while (i < s.length()) {
+				char c = s.charAt(i);
+				if (c >= '0' && c <= '9') {
+					sb.append(c);
+				} else {
+					break;
+				}
+				i++;
+			}
+			if (sb.length() > 0) {
+				return Integer.parseInt(sb.toString());
+			}
+			return 0;
 		}
 	}
 }
