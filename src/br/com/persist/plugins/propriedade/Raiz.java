@@ -40,7 +40,10 @@ public class Raiz extends Container {
 			doc.insertString(doc.getLength(), Constantes.QL, null);
 		}
 
-		doc.insertString(doc.getLength(), Constantes.QL, null);
+		doc.insertString(doc.getLength(), Constantes.QL2, null);
+		doc.insertString(doc.getLength(), Constantes.QL2, null);
+		doc.insertString(doc.getLength(), Constantes.QL2, null);
+		doc.insertString(doc.getLength(), Constantes.QL2, null);
 
 		for (Modulo modulo : getModulos()) {
 			doc.insertString(doc.getLength(), Constantes.QL, null);
