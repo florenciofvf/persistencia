@@ -34,24 +34,17 @@ class PropriedadeHandler extends XMLHandler {
 		return raiz;
 	}
 
-	private String get(Attributes atts, String chave) {
-		return atts.getValue(chave);
-	}
-
 	private Container criar(String qName, Attributes atts) {
 		if (Config.TAG_CONFIG.equals(qName)) {
-			return new Config(get(atts, "id"));
+			return Config.criar(atts);
 		} else if (Campo.TAB_CAMPO.equals(qName)) {
-			return new Campo(get(atts, "nome"), get(atts, "valor"));
+			return Campo.criar(atts);
 		} else if (Modulo.TAG_MODULO.equals(qName)) {
-			Modulo modulo = new Modulo(get(atts, "nome"));
-			String string = get(atts, "invalido");
-			modulo.setInvalido("true".equalsIgnoreCase(string));
-			return modulo;
+			return Modulo.criar(atts);
 		} else if (Map.TAG_MAP.equals(qName)) {
-			return new Map(get(atts, "chave"), get(atts, "idConfig"));
+			return Map.criar(atts);
 		} else if (Property.TAG_PROPERTY.equals(qName)) {
-			return new Property(get(atts, "name"), get(atts, "value"));
+			return Property.criar(atts);
 		}
 		return null;
 	}

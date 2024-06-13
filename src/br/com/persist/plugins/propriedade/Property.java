@@ -6,16 +6,22 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import org.xml.sax.Attributes;
+
 public class Property extends Container {
 	public static final String TAG_PROPERTY = "property";
 	private static final String ATT_VALUE = "value";
 	private static final String ATT_NAME = "name";
-	private final String name;
 	private final String value;
+	private final String name;
 
 	public Property(String name, String value) {
 		this.name = Objects.requireNonNull(name);
 		this.value = Objects.requireNonNull(value);
+	}
+
+	public static Property criar(Attributes atts) {
+		return new Property(value(atts, ATT_NAME), value(atts, ATT_VALUE));
 	}
 
 	public String getName() {
@@ -54,6 +60,6 @@ public class Property extends Container {
 
 	@Override
 	public String toString() {
-		return "Property [" + ATT_NAME + "=" + name + ", " + ATT_VALUE + "=" + value + "]";
+		return simpleName() + " [" + ATT_NAME + "=" + name + ", " + ATT_VALUE + "=" + value + "]";
 	}
 }

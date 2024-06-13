@@ -7,16 +7,23 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import org.xml.sax.Attributes;
+
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
 public class Config extends Container {
 	public static final String TAG_CONFIG = "config";
+	private static final String ATT_ID = "id";
 	private List<Campo> cacheCampos;
 	private final String id;
 
 	public Config(String id) {
 		this.id = Objects.requireNonNull(id);
+	}
+
+	public static Config criar(Attributes atts) {
+		return new Config(value(atts, ATT_ID));
 	}
 
 	public String getId() {
@@ -35,7 +42,7 @@ public class Config extends Container {
 	@Override
 	public void print(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, TAG_CONFIG, doc);
-		PropriedadeUtil.atributo("id", id, doc);
+		PropriedadeUtil.atributo(ATT_ID, id, doc);
 		PropriedadeUtil.fimTagComposta(doc);
 		for (Campo campo : getCacheCampos()) {
 			campo.print(doc);
@@ -65,6 +72,6 @@ public class Config extends Container {
 
 	@Override
 	public String toString() {
-		return "Config [id=" + id + "]";
+		return simpleName() + " [" + ATT_ID + "=" + id + "]";
 	}
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import org.xml.sax.Attributes;
+
 public abstract class Container {
 	private final List<Container> filhos;
 	protected Container pai;
@@ -42,5 +44,13 @@ public abstract class Container {
 	}
 
 	public void print(StyledDocument doc) throws BadLocationException {
+	}
+
+	public static String value(Attributes atts, String chave) {
+		return atts.getValue(chave);
+	}
+
+	protected String simpleName() {
+		return getClass().getSimpleName();
 	}
 }

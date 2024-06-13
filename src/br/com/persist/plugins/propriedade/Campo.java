@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import org.xml.sax.Attributes;
+
 public class Campo extends Container {
 	private static final String ATT_VALOR = "valor";
 	public static final String TAB_CAMPO = "campo";
@@ -15,6 +17,10 @@ public class Campo extends Container {
 	public Campo(String nome, String valor) {
 		this.nome = Objects.requireNonNull(nome);
 		this.valor = Objects.requireNonNull(valor);
+	}
+
+	public static Campo criar(Attributes atts) {
+		return new Campo(value(atts, ATT_NOME), value(atts, ATT_VALOR));
 	}
 
 	public String getNome() {
@@ -40,6 +46,6 @@ public class Campo extends Container {
 
 	@Override
 	public String toString() {
-		return "Campo [" + ATT_NOME + "=" + nome + ", " + ATT_VALOR + "=" + valor + "]";
+		return simpleName() + " [" + ATT_NOME + "=" + nome + ", " + ATT_VALOR + "=" + valor + "]";
 	}
 }

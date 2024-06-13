@@ -7,16 +7,28 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import org.xml.sax.Attributes;
+
 import br.com.persist.assistencia.Constantes;
 
 public class Modulo extends Container {
+	private static final String ATT_INVALIDO = "invalido";
 	public static final String TAG_MODULO = "modulo";
+	private static final String ATT_NOME = "nome";
+	private static final String TRUE = "true";
 	private List<Map> cacheMaps;
 	private final String nome;
 	private boolean invalido;
 
 	public Modulo(String nome) {
 		this.nome = Objects.requireNonNull(nome);
+	}
+
+	public static Modulo criar(Attributes atts) {
+		Modulo modulo = new Modulo(value(atts, ATT_NOME));
+		String string = value(atts, ATT_INVALIDO);
+		modulo.setInvalido(TRUE.equalsIgnoreCase(string));
+		return modulo;
 	}
 
 	public String getNome() {
@@ -53,9 +65,9 @@ public class Modulo extends Container {
 	@Override
 	public void print(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, TAG_MODULO, doc);
-		PropriedadeUtil.atributo("nome", nome, doc);
+		PropriedadeUtil.atributo(ATT_NOME, nome, doc);
 		if (invalido) {
-			PropriedadeUtil.atributo("invalido", "true", doc);
+			PropriedadeUtil.atributo(ATT_INVALIDO, TRUE, doc);
 		}
 		PropriedadeUtil.fimTagComposta(doc);
 
@@ -109,6 +121,6 @@ public class Modulo extends Container {
 
 	@Override
 	public String toString() {
-		return "Modulo [nome=" + nome + "]";
+		return simpleName() + " [" + ATT_NOME + "=" + nome + "]";
 	}
 }

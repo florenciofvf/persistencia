@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
+import org.xml.sax.Attributes;
+
 public class Map extends Container {
 	private static final String ATT_ID_CONFIG = "idConfig";
 	private static final String ATT_CHAVE = "chave";
@@ -15,6 +17,10 @@ public class Map extends Container {
 	public Map(String chave, String idConfig) {
 		this.chave = Objects.requireNonNull(chave);
 		this.idConfig = Objects.requireNonNull(idConfig);
+	}
+
+	public static Map criar(Attributes atts) {
+		return new Map(value(atts, ATT_CHAVE), value(atts, ATT_ID_CONFIG));
 	}
 
 	public String getChave() {
@@ -46,6 +52,6 @@ public class Map extends Container {
 
 	@Override
 	public String toString() {
-		return "Map [" + ATT_CHAVE + "=" + chave + ", " + ATT_ID_CONFIG + "=" + idConfig + "]";
+		return simpleName() + " [" + ATT_CHAVE + "=" + chave + ", " + ATT_ID_CONFIG + "=" + idConfig + "]";
 	}
 }
