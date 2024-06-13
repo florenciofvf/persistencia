@@ -6,8 +6,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 public class Campo extends Container {
-	private final String nome;
+	private static final String ATT_VALOR = "valor";
+	public static final String TAB_CAMPO = "campo";
+	private static final String ATT_NOME = "nome";
 	private final String valor;
+	private final String nome;
 
 	public Campo(String nome, String valor) {
 		this.nome = Objects.requireNonNull(nome);
@@ -28,15 +31,15 @@ public class Campo extends Container {
 	}
 
 	@Override
-	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, "campo", doc);
-		PropriedadeUtil.atributo("nome", nome, doc);
-		PropriedadeUtil.atributo("valor", valor, doc);
+	public void print(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAB_CAMPO, doc);
+		PropriedadeUtil.atributo(ATT_NOME, nome, doc);
+		PropriedadeUtil.atributo(ATT_VALOR, valor, doc);
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 
 	@Override
 	public String toString() {
-		return "Campo [nome=" + nome + ", valor=" + valor + "]";
+		return "Campo [" + ATT_NOME + "=" + nome + ", " + ATT_VALOR + "=" + valor + "]";
 	}
 }

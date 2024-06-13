@@ -6,11 +6,14 @@ import java.util.Objects;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
-public class Propriedade extends Container {
+public class Property extends Container {
+	public static final String TAG_PROPERTY = "property";
+	private static final String ATT_VALUE = "value";
+	private static final String ATT_NAME = "name";
 	private final String name;
 	private final String value;
 
-	public Propriedade(String name, String value) {
+	public Property(String name, String value) {
 		this.name = Objects.requireNonNull(name);
 		this.value = Objects.requireNonNull(value);
 	}
@@ -35,22 +38,22 @@ public class Propriedade extends Container {
 		for (Map map : maps) {
 			string = map.substituir(string);
 		}
-		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB2, "property", doc);
-		PropriedadeUtil.atributo("name", name, doc);
-		PropriedadeUtil.atributo("value", string, doc);
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB2, TAG_PROPERTY, doc);
+		PropriedadeUtil.atributo(ATT_NAME, name, doc);
+		PropriedadeUtil.atributo(ATT_VALUE, string, doc);
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 
 	@Override
-	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, "property", doc);
-		PropriedadeUtil.atributo("name", name, doc);
-		PropriedadeUtil.atributo("value", value, doc);
+	public void print(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAG_PROPERTY, doc);
+		PropriedadeUtil.atributo(ATT_NAME, name, doc);
+		PropriedadeUtil.atributo(ATT_VALUE, value, doc);
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 
 	@Override
 	public String toString() {
-		return "Propriedade [name=" + name + ", value=" + value + "]";
+		return "Property [" + ATT_NAME + "=" + name + ", " + ATT_VALUE + "=" + value + "]";
 	}
 }

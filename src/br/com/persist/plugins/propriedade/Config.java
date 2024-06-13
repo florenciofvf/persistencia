@@ -11,6 +11,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
 public class Config extends Container {
+	public static final String TAG_CONFIG = "config";
 	private List<Campo> cacheCampos;
 	private final String id;
 
@@ -32,14 +33,14 @@ public class Config extends Container {
 	}
 
 	@Override
-	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, "config", doc);
+	public void print(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, TAG_CONFIG, doc);
 		PropriedadeUtil.atributo("id", id, doc);
 		PropriedadeUtil.fimTagComposta(doc);
 		for (Campo campo : getCacheCampos()) {
-			campo.color(doc);
+			campo.print(doc);
 		}
-		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB2, "config", doc);
+		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB2, TAG_CONFIG, doc);
 	}
 
 	List<Campo> getCacheCampos() {

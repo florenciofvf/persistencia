@@ -10,6 +10,7 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.assistencia.Constantes;
 
 public class Modulo extends Container {
+	public static final String TAG_MODULO = "modulo";
 	private List<Map> cacheMaps;
 	private final String nome;
 	private boolean invalido;
@@ -32,7 +33,7 @@ public class Modulo extends Container {
 
 	@Override
 	public void adicionar(Container c) {
-		if (c instanceof Map || c instanceof Propriedade) {
+		if (c instanceof Map || c instanceof Property) {
 			super.adicionar(c);
 		} else {
 			throw new IllegalStateException();
@@ -44,36 +45,40 @@ public class Modulo extends Container {
 			return;
 		}
 		PropriedadeUtil.modulo(PropriedadeConstantes.TAB2, getNome(), doc);
-		for (Propriedade prop : getPropriedades()) {
+		for (Property prop : getProperties()) {
 			prop.gerarProperty(doc);
 		}
 	}
 
 	@Override
-	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, "modulo", doc);
+	public void print(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, TAG_MODULO, doc);
 		PropriedadeUtil.atributo("nome", nome, doc);
 		if (invalido) {
 			PropriedadeUtil.atributo("invalido", "true", doc);
 		}
 		PropriedadeUtil.fimTagComposta(doc);
+
 		for (Map map : getCacheMaps()) {
-			map.color(doc);
+			map.print(doc);
 		}
+
 		if (!getCacheMaps().isEmpty()) {
 			doc.insertString(doc.getLength(), Constantes.QL, null);
 		}
-		for (Propriedade prop : getPropriedades()) {
-			prop.color(doc);
+
+		for (Property prop : getProperties()) {
+			prop.print(doc);
 		}
-		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB2, "modulo", doc);
+
+		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB2, TAG_MODULO, doc);
 	}
 
-	private List<Propriedade> getPropriedades() {
-		List<Propriedade> resp = new ArrayList<>();
+	private List<Property> getProperties() {
+		List<Property> resp = new ArrayList<>();
 		for (Container c : getFilhos()) {
-			if (c instanceof Propriedade) {
-				resp.add((Propriedade) c);
+			if (c instanceof Property) {
+				resp.add((Property) c);
 			}
 		}
 		return resp;

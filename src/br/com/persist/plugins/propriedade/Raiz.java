@@ -9,6 +9,8 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.assistencia.Constantes;
 
 public class Raiz extends Container {
+	private static final String SYSTEM_PROPERTIES = "system-properties";
+	public static final String RAIZ_CONFIGURACAO = "raizConfiguracao";
 	private List<Config> cacheConfigs;
 
 	@Override
@@ -27,24 +29,26 @@ public class Raiz extends Container {
 	}
 
 	@Override
-	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagComposta("", "system-properties", doc);
+	public void print(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagComposta("", SYSTEM_PROPERTIES, doc);
 		PropriedadeUtil.fimTagComposta(doc);
-		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB, "raizConfiguracao", doc);
+		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB, RAIZ_CONFIGURACAO, doc);
 		PropriedadeUtil.fimTagComposta(doc);
 
 		for (Config config : getCacheConfigs()) {
-			config.color(doc);
+			config.print(doc);
 			doc.insertString(doc.getLength(), Constantes.QL, null);
-		}
-		doc.insertString(doc.getLength(), Constantes.QL, null);
-		for (Modulo modulo : getModulos()) {
-			doc.insertString(doc.getLength(), Constantes.QL, null);
-			modulo.color(doc);
 		}
 
-		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB, "raizConfiguracao", doc);
-		PropriedadeUtil.fimTagComposta("", "system-properties", doc);
+		doc.insertString(doc.getLength(), Constantes.QL, null);
+
+		for (Modulo modulo : getModulos()) {
+			doc.insertString(doc.getLength(), Constantes.QL, null);
+			modulo.print(doc);
+		}
+
+		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB, RAIZ_CONFIGURACAO, doc);
+		PropriedadeUtil.fimTagComposta("", SYSTEM_PROPERTIES, doc);
 	}
 
 	private List<Modulo> getModulos() {

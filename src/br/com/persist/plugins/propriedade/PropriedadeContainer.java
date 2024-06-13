@@ -270,7 +270,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		private void colorTextArea(Raiz raiz) {
 			textArea.setText(Constantes.VAZIO);
 			try {
-				raiz.color(textArea.getStyledDocument());
+				raiz.print(textArea.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}

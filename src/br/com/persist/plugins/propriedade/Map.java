@@ -6,8 +6,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 public class Map extends Container {
-	private final String chave;
+	private static final String ATT_ID_CONFIG = "idConfig";
+	private static final String ATT_CHAVE = "chave";
+	public static final String TAG_MAP = "map";
 	private final String idConfig;
+	private final String chave;
 
 	public Map(String chave, String idConfig) {
 		this.chave = Objects.requireNonNull(chave);
@@ -28,10 +31,10 @@ public class Map extends Container {
 	}
 
 	@Override
-	public void color(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, "map", doc);
-		PropriedadeUtil.atributo("chave", chave, doc);
-		PropriedadeUtil.atributo("idConfig", idConfig, doc);
+	public void print(StyledDocument doc) throws BadLocationException {
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAG_MAP, doc);
+		PropriedadeUtil.atributo(ATT_CHAVE, chave, doc);
+		PropriedadeUtil.atributo(ATT_ID_CONFIG, idConfig, doc);
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 
@@ -43,6 +46,6 @@ public class Map extends Container {
 
 	@Override
 	public String toString() {
-		return "Map [chave=" + chave + ", idConfig=" + idConfig + "]";
+		return "Map [" + ATT_CHAVE + "=" + chave + ", " + ATT_ID_CONFIG + "=" + idConfig + "]";
 	}
 }
