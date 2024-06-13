@@ -20,10 +20,9 @@ public class Raiz extends Container {
 		}
 	}
 
-	@Override
-	public void processar(StyledDocument doc) throws BadLocationException {
+	void gerarProperty(StyledDocument doc) throws BadLocationException {
 		for (Modulo modulo : getModulos()) {
-			modulo.processar(doc);
+			modulo.gerarProperty(doc);
 		}
 	}
 

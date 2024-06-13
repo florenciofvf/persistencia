@@ -171,7 +171,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		private void processar(Raiz raiz) {
 			textPane.setText(Constantes.VAZIO);
 			try {
-				raiz.processar(textPane.getStyledDocument());
+				raiz.gerarProperty(textPane.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
@@ -260,13 +260,14 @@ public class PropriedadeContainer extends AbstratoContainer {
 				Raiz raiz = PropriedadeUtil.criarRaiz(string);
 				if (raiz != null) {
 					painelResultado.processar(raiz);
+					colorTextArea(raiz);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
 		}
 
-		protected void colorTextArea(Raiz raiz) {
+		private void colorTextArea(Raiz raiz) {
 			textArea.setText(Constantes.VAZIO);
 			try {
 				raiz.color(textArea.getStyledDocument());

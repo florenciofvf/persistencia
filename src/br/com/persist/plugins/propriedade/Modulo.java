@@ -39,14 +39,13 @@ public class Modulo extends Container {
 		}
 	}
 
-	@Override
-	public void processar(StyledDocument doc) throws BadLocationException {
+	void gerarProperty(StyledDocument doc) throws BadLocationException {
 		if (invalido) {
 			return;
 		}
 		PropriedadeUtil.modulo(PropriedadeConstantes.TAB2, getNome(), doc);
 		for (Propriedade prop : getPropriedades()) {
-			prop.processar(doc);
+			prop.gerarProperty(doc);
 		}
 	}
 

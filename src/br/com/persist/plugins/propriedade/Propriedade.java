@@ -28,8 +28,7 @@ public class Propriedade extends Container {
 		throw new IllegalStateException();
 	}
 
-	@Override
-	public void processar(StyledDocument doc) throws BadLocationException {
+	void gerarProperty(StyledDocument doc) throws BadLocationException {
 		String string = value;
 		Modulo modulo = (Modulo) pai;
 		List<Map> maps = modulo.getCacheMaps();

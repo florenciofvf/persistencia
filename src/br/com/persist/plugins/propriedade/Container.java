@@ -41,9 +41,6 @@ public abstract class Container {
 		c.pai = this;
 	}
 
-	public void processar(StyledDocument doc) throws BadLocationException {
-	}
-
 	public void color(StyledDocument doc) throws BadLocationException {
 	}
 }
