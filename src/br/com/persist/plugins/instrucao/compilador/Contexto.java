@@ -2,12 +2,12 @@ package br.com.persist.plugins.instrucao.compilador;
 
 public interface Contexto {
 	/*
-	 * "{", "{", "["
+	 * "(", "{", "["
 	 */
 	public void inicializador(Compilador compilador, Token token);
 
 	/*
-	 * "]", "}", ")", ";"
+	 * ")", "}", "]", ";"
 	 */
 	public void finalizador(Compilador compilador, Token token);
 

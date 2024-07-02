@@ -80,14 +80,71 @@ public class Compilador {
 	private void processarImpl() throws InstrucaoException {
 		char c = string.charAt(indice);
 		switch (c) {
+		case '(':
+		case '{':
+		case '[':
+			indice++;
+			contexto.inicializador(this, new Token("" + c, linha, coluna, Tipo.INICIALIZADOR));
+			break;
+		case ')':
+		case '}':
+		case ']':
+		case ';':
+			indice++;
+			contexto.finalizador(this, new Token("" + c, linha, coluna, Tipo.FINALIZADOR));
+			break;
+		case ',':
+			indice++;
+			contexto.separador(this, new Token(",", linha, coluna, Tipo.SEPARADOR));
+			break;
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case '%':
+		case '^':
+		case '&':
+		case '|':
+		case '=':
+			indice++;
+			contexto.operador(this, new Token(",", linha, coluna, Tipo.OPERADOR));
+			break;
+		case '!':
+		case '<':
+		case '>':
+			indice++;
+			contexto.operador(this, tokenOperador(c));
+			break;
 		case '\'':
 			indice++;
-			tokenString();
+			Token token = tokenString();
+			if (!token.string.startsWith(":coment")) {
+				contexto.string(this, token);
+			}
 			break;
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			contexto.numero(this, tokenNumero());
+			break;
+		default:
+			Token ident = tokenIdentity();
+			if (ident.isReservado()) {
+				contexto.reservado(this, ident);
+			} else {
+				contexto.identity(this, ident);
+			}
 		}
 	}
 
-	private void tokenString() throws InstrucaoException {
+	private Token tokenString() throws InstrucaoException {
 		AtomicBoolean encerrado = new AtomicBoolean(false);
 		AtomicBoolean escapar = new AtomicBoolean(false);
 		StringBuilder builder = new StringBuilder();
@@ -112,10 +169,7 @@ public class Compilador {
 			throwInstrucaoException();
 		}
 		indice++;
-		Token token = new Token(builder.toString(), coluna, linha, Tipo.STRING);
-		if (contexto != null) {
-			contexto.string(this, token);
-		}
+		return new Token(builder.toString(), linha, coluna, Tipo.STRING);
 	}
 
 	private void processarApost(StringBuilder builder, char c, AtomicBoolean escapar, AtomicBoolean encerrado) {
@@ -134,5 +188,100 @@ public class Compilador {
 		} else {
 			escapar.set(true);
 		}
+	}
+
+	private Token tokenNumero() throws InstrucaoException {
+		StringBuilder builder = new StringBuilder();
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if (valido2(c)) {
+				builder.append(c);
+			} else {
+				break;
+			}
+			indice++;
+		}
+		indice++;
+		int total = getTotal('.', builder);
+		if (total == 0) {
+			return new Token(builder.toString(), linha, coluna, Tipo.INTEIRO);
+		} else {
+			String str = builder.toString();
+			if (total > 1 || str.endsWith(".")) {
+				throwInstrucaoException();
+			}
+			return new Token(builder.toString(), linha, coluna, Tipo.FLUTUANTE);
+		}
+	}
+
+	private int getTotal(char c, StringBuilder sb) {
+		int total = 0;
+		for (int i = 0; i < sb.length(); i++) {
+			if (sb.charAt(i) == c) {
+				total++;
+			}
+		}
+		return total;
+	}
+
+	private Token tokenOperador(char c) throws InstrucaoException {
+		if (proximo('=')) {
+			return new Token(c + "=", linha, coluna, Tipo.OPERADOR);
+		} else {
+			if (c == '!') {
+				throwInstrucaoException();
+			}
+			return new Token(c + "", linha, coluna, Tipo.OPERADOR);
+		}
+	}
+
+	private boolean proximo(char c) {
+		if (indice >= string.length()) {
+			return false;
+		}
+		return string.charAt(indice) == c;
+	}
+
+	private Token tokenIdentity() throws InstrucaoException {
+		StringBuilder builder = new StringBuilder();
+		char c = string.charAt(indice);
+		if (valido1(c)) {
+			builder.append(c);
+			indice++;
+		} else {
+			throwInstrucaoException();
+		}
+		while (indice < string.length()) {
+			c = string.charAt(indice);
+			if (valido1(c) || valido2(c)) {
+				builder.append(c);
+			} else {
+				break;
+			}
+			indice++;
+		}
+		indice++;
+		int total = getTotal('.', builder);
+		String str = builder.toString();
+		if (total > 1 || str.endsWith(".")) {
+			throwInstrucaoException();
+		}
+		if (reservado(str)) {
+			return new Token(builder.toString(), linha, coluna, Tipo.RESERVADO);
+		}
+		return new Token(builder.toString(), linha, coluna, Tipo.IDENTITY);
+	}
+
+	private boolean valido1(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' || c == '$';
+	}
+
+	private boolean valido2(char c) {
+		return (c >= '0' && c <= '9') || c == '.';
+	}
+
+	private boolean reservado(String s) {
+		return "const".equals(s) || "function".equals(s) || "if".equals(s) || "elseif".equals(s) || "else".equals(s)
+				|| "return".equals(s);
 	}
 }
