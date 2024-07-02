@@ -22,6 +22,10 @@ public class Compilador {
 		linha = 1;
 	}
 
+	private void throwInstrucaoException(char c) throws InstrucaoException {
+		throw new InstrucaoException(string.substring(0, indice) + "<<<" + c + ">>>", false);
+	}
+
 	private void throwInstrucaoException() throws InstrucaoException {
 		throw new InstrucaoException(string.substring(0, indice), false);
 	}
@@ -83,19 +87,19 @@ public class Compilador {
 		case '(':
 		case '{':
 		case '[':
-			indice++;
 			contexto.inicializador(this, new Token("" + c, linha, coluna, Tipo.INICIALIZADOR));
+			indice++;
 			break;
 		case ')':
 		case '}':
 		case ']':
 		case ';':
-			indice++;
 			contexto.finalizador(this, new Token("" + c, linha, coluna, Tipo.FINALIZADOR));
+			indice++;
 			break;
 		case ',':
-			indice++;
 			contexto.separador(this, new Token(",", linha, coluna, Tipo.SEPARADOR));
+			indice++;
 			break;
 		case '+':
 		case '-':
@@ -106,17 +110,15 @@ public class Compilador {
 		case '&':
 		case '|':
 		case '=':
+			contexto.operador(this, new Token("" + c, linha, coluna, Tipo.OPERADOR));
 			indice++;
-			contexto.operador(this, new Token(",", linha, coluna, Tipo.OPERADOR));
 			break;
 		case '!':
 		case '<':
 		case '>':
-			indice++;
-			contexto.operador(this, tokenOperador(c));
+			contexto.operador(this, tokenOperador());
 			break;
 		case '\'':
-			indice++;
 			Token token = tokenString();
 			if (!token.string.startsWith(":coment")) {
 				contexto.string(this, token);
@@ -144,10 +146,33 @@ public class Compilador {
 		}
 	}
 
+	private Token tokenOperador() throws InstrucaoException {
+		char c = string.charAt(indice);
+		indice++;
+		if (indice < string.length()) {
+			char d = string.charAt(indice);
+			if (d == '=') {
+				indice++;
+				return new Token(c + "=", linha, coluna, Tipo.OPERADOR);
+			} else {
+				if (c == '!') {
+					throwInstrucaoException();
+				}
+				return new Token(c + "", linha, coluna, Tipo.OPERADOR);
+			}
+		} else {
+			if (c == '!') {
+				throwInstrucaoException();
+			}
+			return new Token(c + "", linha, coluna, Tipo.OPERADOR);
+		}
+	}
+
 	private Token tokenString() throws InstrucaoException {
 		AtomicBoolean encerrado = new AtomicBoolean(false);
 		AtomicBoolean escapar = new AtomicBoolean(false);
 		StringBuilder builder = new StringBuilder();
+		indice++;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c == '\'') {
@@ -162,10 +187,9 @@ public class Compilador {
 					throwInstrucaoException();
 				}
 				builder.append(c);
+				indice++;
 			}
-			indice++;
 		}
-		indice++;
 		if (!encerrado.get()) {
 			throwInstrucaoException();
 		}
@@ -179,6 +203,7 @@ public class Compilador {
 		} else {
 			encerrado.set(true);
 		}
+		indice++;
 	}
 
 	private void processarBarra(StringBuilder builder, char c, AtomicBoolean escapar) {
@@ -188,6 +213,7 @@ public class Compilador {
 		} else {
 			escapar.set(true);
 		}
+		indice++;
 	}
 
 	private Token tokenNumero() throws InstrucaoException {
@@ -201,7 +227,6 @@ public class Compilador {
 			}
 			indice++;
 		}
-		indice++;
 		int total = getTotal('.', builder);
 		if (total == 0) {
 			return new Token(builder.toString(), linha, coluna, Tipo.INTEIRO);
@@ -224,25 +249,6 @@ public class Compilador {
 		return total;
 	}
 
-	private Token tokenOperador(char c) throws InstrucaoException {
-		if (proximo('=')) {
-			indice++;
-			return new Token(c + "=", linha, coluna, Tipo.OPERADOR);
-		} else {
-			if (c == '!') {
-				throwInstrucaoException();
-			}
-			return new Token(c + "", linha, coluna, Tipo.OPERADOR);
-		}
-	}
-
-	private boolean proximo(char c) {
-		if (indice >= string.length()) {
-			return false;
-		}
-		return string.charAt(indice) == c;
-	}
-
 	private Token tokenIdentity() throws InstrucaoException {
 		StringBuilder builder = new StringBuilder();
 		char c = string.charAt(indice);
@@ -250,7 +256,7 @@ public class Compilador {
 			builder.append(c);
 			indice++;
 		} else {
-			throwInstrucaoException();
+			throwInstrucaoException(c);
 		}
 		while (indice < string.length()) {
 			c = string.charAt(indice);
@@ -261,7 +267,6 @@ public class Compilador {
 			}
 			indice++;
 		}
-		indice++;
 		int total = getTotal('.', builder);
 		String str = builder.toString();
 		if (total > 1 || str.endsWith(".")) {
