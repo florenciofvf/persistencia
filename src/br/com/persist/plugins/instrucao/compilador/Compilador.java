@@ -165,10 +165,10 @@ public class Compilador {
 			}
 			indice++;
 		}
+		indice++;
 		if (!encerrado.get()) {
 			throwInstrucaoException();
 		}
-		indice++;
 		return new Token(builder.toString(), linha, coluna, Tipo.STRING);
 	}
 
@@ -226,6 +226,7 @@ public class Compilador {
 
 	private Token tokenOperador(char c) throws InstrucaoException {
 		if (proximo('=')) {
+			indice++;
 			return new Token(c + "=", linha, coluna, Tipo.OPERADOR);
 		} else {
 			if (c == '!') {
