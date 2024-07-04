@@ -8,6 +8,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public abstract class Container implements Contexto {
 	private final List<Container> filhos;
 	protected Container pai;
+	protected char[] modo;
 
 	protected Container() {
 		filhos = new ArrayList<>();
@@ -36,7 +37,52 @@ public abstract class Container implements Contexto {
 		c.pai = this;
 	}
 
-	protected void throwInstrucaoException(Token token) throws InstrucaoException {
-		throw new InstrucaoException(token.string, false);
+	protected boolean isModo(char c) {
+		for (char ch : modo) {
+			if (ch == c) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
+	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
+	public void separador(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
+	public void operador(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
+	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
+	public void string(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
+	public void numero(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
+	public void identity(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
 	}
 }

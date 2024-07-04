@@ -22,6 +22,10 @@ public class Compilador {
 		linha = 1;
 	}
 
+	protected void invalidar(Token token) throws InstrucaoException {
+		throw new InstrucaoException(string.substring(0, indice) + "<<<" + token.string + ">>>", false);
+	}
+
 	private void throwInstrucaoException(char c) throws InstrucaoException {
 		throw new InstrucaoException(string.substring(0, indice) + "<<<" + c + ">>>", false);
 	}
