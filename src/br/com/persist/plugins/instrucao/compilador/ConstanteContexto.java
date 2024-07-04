@@ -8,7 +8,7 @@ public class ConstanteContexto extends Container {
 		if (token.string.indexOf(".") != -1) {
 			compilador.invalidar(token);
 		}
-		// compilador.contexto = new ExpressaoContexto();
+		compilador.contexto = new ExpressaoContexto();
 		adicionar((Container) compilador.contexto);
 	}
 }

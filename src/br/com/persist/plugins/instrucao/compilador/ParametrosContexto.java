@@ -57,7 +57,7 @@ public class ParametrosContexto extends Container {
 			if (token.string.indexOf(".") != -1) {
 				compilador.invalidar(token);
 			} else {
-				// armazenar...
+				adicionar(new ParamContexto(token.string));
 				modo = modo3;
 			}
 		} else {
