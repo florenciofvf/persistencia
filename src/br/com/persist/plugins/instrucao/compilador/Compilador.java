@@ -22,7 +22,15 @@ public class Compilador {
 		linha = 1;
 	}
 
-	protected void invalidar(Token token) throws InstrucaoException {
+	public Contexto getContexto() {
+		return contexto;
+	}
+
+	public void setContexto(Contexto contexto) {
+		this.contexto = contexto;
+	}
+
+	public void invalidar(Token token) throws InstrucaoException {
 		throw new InstrucaoException(string.substring(0, indice) + "<<<" + token.string + ">>>", false);
 	}
 
