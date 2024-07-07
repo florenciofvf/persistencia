@@ -1,18 +1,16 @@
-package br.com.persist.plugins.instrucao.compilador;
+package br.com.persist.plugins.instrucao.compilador.biblio;
 
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.Container;
 
-public class ArquivoContexto extends Container {
-	@Override
-	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
-		if ("function".equals(token.string)) {
-			compilador.contexto = new FuncaoContexto();
-			adicionar((Container) compilador.contexto);
-		} else if ("const".equals(token.string)) {
-			compilador.contexto = new ConstanteContexto();
-			adicionar((Container) compilador.contexto);
-		} else {
-			compilador.invalidar(token);
-		}
+public class BibliotecaContexto extends Container {
+	private final BibliotecaCorpoContexto corpo;
+
+	public BibliotecaContexto() {
+		corpo = new BibliotecaCorpoContexto();
+		adicionar(corpo);
+	}
+
+	public BibliotecaCorpoContexto getCorpo() {
+		return corpo;
 	}
 }
