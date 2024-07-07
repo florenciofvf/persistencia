@@ -13,6 +13,10 @@ public class Token {
 		this.tipo = tipo;
 	}
 
+	public String getString() {
+		return string;
+	}
+
 	enum Tipo {
 		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING,
 	}

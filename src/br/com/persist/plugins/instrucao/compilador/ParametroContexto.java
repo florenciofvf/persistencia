@@ -1,9 +1,9 @@
 package br.com.persist.plugins.instrucao.compilador;
 
-public class ParamContexto extends Container {
+public class ParametroContexto extends Container {
 	private final String nome;
 
-	public ParamContexto(String nome) {
+	public ParametroContexto(String nome) {
 		this.nome = nome;
 	}
 
