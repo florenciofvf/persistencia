@@ -8,7 +8,7 @@ import br.com.persist.plugins.instrucao.compilador.Token;
 public class FuncaoContexto extends Container {
 	private final FuncaoParametrosContexto parametros;
 	private final char[] modo1 = { 'Y' };
-	protected FuncaoCorpoContexto corpo;
+	private FuncaoCorpoContexto corpo;
 	private final char[] modoPai;
 
 	public FuncaoContexto(char[] modoPai) {
@@ -16,6 +16,18 @@ public class FuncaoContexto extends Container {
 		this.modoPai = modoPai;
 		adicionar(parametros);
 		modo = modo1;
+	}
+
+	public void setCorpo(FuncaoCorpoContexto corpo) {
+		if (this.corpo != null) {
+			throw new IllegalArgumentException();
+		}
+		this.corpo = corpo;
+		adicionar(corpo);
+	}
+
+	public FuncaoCorpoContexto getCorpo() {
+		return corpo;
 	}
 
 	@Override
