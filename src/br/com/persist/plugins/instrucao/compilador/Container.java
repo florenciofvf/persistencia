@@ -37,6 +37,14 @@ public abstract class Container implements Contexto {
 		c.pai = this;
 	}
 
+	public char[] getModo() {
+		return modo;
+	}
+
+	public void setModo(char[] modo) {
+		this.modo = modo;
+	}
+
 	protected boolean isModo(char c) {
 		for (char ch : modo) {
 			if (ch == c) {
