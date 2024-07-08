@@ -1,14 +1,48 @@
-package br.com.persist.plugins.instrucao.compilador;
+package br.com.persist.plugins.instrucao.compilador.funcao;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.Compilador;
+import br.com.persist.plugins.instrucao.compilador.Container;
+import br.com.persist.plugins.instrucao.compilador.Token;
 
 public class FuncaoContexto extends Container {
+	private final FuncaoParametrosContexto parametros;
+	private final char[] modo1 = { 'Y' };
+	protected FuncaoCorpoContexto corpo;
+	private final char[] modoPai;
+
+	public FuncaoContexto(char[] modoPai) {
+		parametros = new FuncaoParametrosContexto();
+		this.modoPai = modoPai;
+		adicionar(parametros);
+		modo = modo1;
+	}
+
 	@Override
-	public void identity(Compilador compilador, Token token) throws InstrucaoException {
-		if (token.string.indexOf(".") != -1) {
+	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
+		if (isModo('F')) {
+			if (";".equals(token.getString())) {
+				compilador.setContexto(getPai());
+				getPai().setModo(modoPai);
+				modo = null;
+			} else {
+				compilador.invalidar(token);
+			}
+		} else {
 			compilador.invalidar(token);
 		}
-		compilador.contexto = new ParametrosContexto();
-		adicionar((Container) compilador.contexto);
+	}
+
+	@Override
+	public void identity(Compilador compilador, Token token) throws InstrucaoException {
+		if (isModo('Y')) {
+			if (token.getString().indexOf(".") != -1) {
+				compilador.invalidar(token);
+			}
+			compilador.setContexto(parametros);
+			modo = null;
+		} else {
+			compilador.invalidar(token);
+		}
 	}
 }

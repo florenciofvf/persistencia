@@ -45,10 +45,10 @@ public class BibliotecaCorpoContexto extends Container {
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
 		if (isModo('R')) {
 			if ("function".equals(token.getString())) {
-				compilador.setContexto(new FuncaoContexto());
+				compilador.setContexto(new FuncaoContexto(modo2));
 				adicionar((Container) compilador.getContexto());
 			} else if ("const".equals(token.getString())) {
-				ConstanteContexto constante = new ConstanteContexto();
+				ConstanteContexto constante = new ConstanteContexto(modo2);
 				compilador.setContexto(constante.getExpressao());
 				adicionar(constante);
 			} else {

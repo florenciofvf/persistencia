@@ -7,9 +7,12 @@ import br.com.persist.plugins.instrucao.compilador.Token;
 
 public class ConstanteContexto extends Container {
 	private final ConstanteExpressaoContexto expressao;
+	private final char[] modoPai;
 
-	public ConstanteContexto() {
+	public ConstanteContexto(char[] modoPai) {
 		expressao = new ConstanteExpressaoContexto();
+		this.modoPai = modoPai;
+		adicionar(expressao);
 	}
 
 	public ConstanteExpressaoContexto getExpressao() {
@@ -18,12 +21,9 @@ public class ConstanteContexto extends Container {
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		if (isModo('F')) {
-			if (";".equals(token.getString())) {
-				compilador.setContexto(getPai());
-			} else {
-				compilador.invalidar(token);
-			}
+		if (";".equals(token.getString())) {
+			compilador.setContexto(getPai());
+			getPai().setModo(modoPai);
 		} else {
 			compilador.invalidar(token);
 		}
