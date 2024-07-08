@@ -48,8 +48,9 @@ public class BibliotecaCorpoContexto extends Container {
 				compilador.setContexto(new FuncaoContexto());
 				adicionar((Container) compilador.getContexto());
 			} else if ("const".equals(token.getString())) {
-				compilador.setContexto(new ConstanteContexto());
-				adicionar((Container) compilador.getContexto());
+				ConstanteContexto constante = new ConstanteContexto();
+				compilador.setContexto(constante.getExpressao());
+				adicionar(constante);
 			} else {
 				compilador.invalidar(token);
 			}

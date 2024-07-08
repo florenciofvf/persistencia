@@ -1,4 +1,6 @@
-package br.com.persist.plugins.instrucao.compilador;
+package br.com.persist.plugins.instrucao.compilador.constante;
 
-public class ExpressaoContexto extends Container {
+import br.com.persist.plugins.instrucao.compilador.Container;
+
+public class ConstanteExpressaoContexto extends Container {
 }
