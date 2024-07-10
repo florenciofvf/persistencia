@@ -7,6 +7,14 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.expressao.OperadorContexto;
 
 public abstract class Container implements Contexto {
+	protected static final char[] MODO_INI = { 'I' };
+	protected static final char[] MODO_FIN = { 'F' };
+	protected static final char[] MODO_SEP = { 'S' };
+	protected static final char[] MODO_OPE = { 'O' };
+	protected static final char[] MODO_RES = { 'R' };
+	protected static final char[] MODO_STR = { 'T' };
+	protected static final char[] MODO_NUM = { 'N' };
+	protected static final char[] MODO_IDE = { 'Y' };
 	private final List<Container> filhos;
 	protected boolean negativo;
 	protected Container pai;
