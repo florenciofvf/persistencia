@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador.expressao;
 
+import java.util.Iterator;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.compilador.Container;
@@ -65,7 +67,46 @@ public class ExpressaoContexto extends Container {
 	}
 
 	private void montar() {
-		// TODO Auto-generated method stub
+		Iterator<Container> it = getFilhos().iterator();
+		Container sel = it.next();
+		it.remove();
+
+		if (it.hasNext()) {
+			OperadorContexto operador = (OperadorContexto) it.next();
+			it.remove();
+			operador.adicionar(sel);
+			Container c = it.next();
+			it.remove();
+			operador.adicionar(c);
+			sel = operador;
+		}
+
+		while (it.hasNext()) {
+			OperadorContexto operador = (OperadorContexto) it.next();
+			it.remove();
+
+			OperadorContexto selecionado = (OperadorContexto) sel;
+			if (operador.possuoPrioridadeSobre(selecionado)) {
+				Container ultimo = selecionado.excluirUltimo();
+				operador.adicionar(ultimo);
+				selecionado.adicionar(operador);
+				Container c = it.next();
+				it.remove();
+				operador.adicionar(c);
+			} else {
+				operador.adicionar(selecionado);
+				Container c = it.next();
+				it.remove();
+				operador.adicionar(c);
+				sel = operador;
+			}
+		}
+
+		if (getSize() != 0 || sel == null) {
+			throw new IllegalStateException();
+		}
+
+		adicionar(sel);
 	}
 
 	private void validarSequencia(Compilador compilador) throws InstrucaoException {
@@ -109,6 +150,10 @@ public class ExpressaoContexto extends Container {
 	}
 
 	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
+		Container ult = getUltimo();
+		if (ult != null && !(ult instanceof OperadorContexto) && !(c instanceof OperadorContexto)) {
+			compilador.invalidar(token);
+		}
 		if (candidatoMergear()) {
 			if (validoMergear(c)) {
 				Container ultimo = excluirUltimo();
