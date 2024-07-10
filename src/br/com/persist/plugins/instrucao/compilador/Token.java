@@ -17,7 +17,7 @@ public class Token {
 		return string;
 	}
 
-	enum Tipo {
+	public enum Tipo {
 		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING,
 	}
 

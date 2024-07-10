@@ -4,14 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.expressao.OperadorContexto;
 
 public abstract class Container implements Contexto {
 	private final List<Container> filhos;
+	protected boolean negativo;
 	protected Container pai;
 	protected char[] modo;
+	protected Token token;
 
 	protected Container() {
 		filhos = new ArrayList<>();
+	}
+
+	public Token getToken() {
+		return token;
+	}
+
+	public void setToken(Token token) {
+		this.token = token;
 	}
 
 	public Container getPai() {
@@ -20,6 +31,32 @@ public abstract class Container implements Contexto {
 
 	public List<Container> getFilhos() {
 		return filhos;
+	}
+
+	public int getSize() {
+		return filhos.size();
+	}
+
+	public Container get(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			return filhos.get(indice);
+		}
+		return null;
+	}
+
+	public Container excluir(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			return filhos.remove(indice);
+		}
+		return null;
+	}
+
+	public Container excluirUltimo() {
+		return excluir(getSize() - 1);
+	}
+
+	public Container getUltimo() {
+		return get(getSize() - 1);
 	}
 
 	public void excluir(Container c) {
@@ -52,6 +89,13 @@ public abstract class Container implements Contexto {
 			}
 		}
 		return false;
+	}
+
+	public void negativar(Contexto c) {
+		if (c instanceof OperadorContexto) {
+			OperadorContexto operador = (OperadorContexto) c;
+			negativo = "-".equals(operador.getId());
+		}
 	}
 
 	@Override
