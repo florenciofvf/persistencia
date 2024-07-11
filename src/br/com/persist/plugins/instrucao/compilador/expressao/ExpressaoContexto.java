@@ -5,49 +5,57 @@ import java.util.Iterator;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.compilador.Container;
+import br.com.persist.plugins.instrucao.compilador.Contexto;
+import br.com.persist.plugins.instrucao.compilador.Contextos;
 import br.com.persist.plugins.instrucao.compilador.Token;
-import br.com.persist.plugins.instrucao.compilador.invocacao.InvocarContexto;
 
 public class ExpressaoContexto extends Container {
-	private final char[] modoPai;
-	private boolean inicializado;
+	private Contexto contexto;
 
-	public ExpressaoContexto(char[] modoPai) {
-		this.modoPai = modoPai;
+	public ExpressaoContexto() {
+		contexto = Contextos.PARENTESES;
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		if ("(".equals(token.getString())) {
-			if (inicializado) {
-				if (getUltimo() instanceof IdentityContexto) {
-					Container ultimo = excluirUltimo();
-					InvocarContexto invocar = new InvocarContexto(ultimo);
-					invocar.setInicializado(true);
-					compilador.setContexto(invocar);
-				} else {
-					ExpressaoContexto expressao = new ExpressaoContexto(null);
-					expressao.inicializado = true;
-					compilador.setContexto(expressao);
-				}
-				adicionarImpl(compilador, token, (Container) compilador.getContexto());
-			} else {
-				inicializado = true;
-			}
+		contexto.inicializador(compilador, token);
+		if (getUltimo() instanceof IdentityContexto) {
+			Container ultimo = excluirUltimo();
+			compilador.setContexto(new ArgumentoContexto(ultimo));
 		} else {
-			compilador.invalidar(token);
+			compilador.setContexto(new ExpressaoContexto());
 		}
+		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		if (")".equals(token.getString())) {
-			montarArvore(compilador);
-			compilador.setContexto(getPai());
-			getPai().setModo(modoPai);
-		} else {
+		contexto.finalizador(compilador, token);
+		compilador.setContexto(getPai());
+		montarArvore(compilador);
+	}
+
+	@Override
+	public void operador(Compilador compilador, Token token) throws InstrucaoException {
+		if (getSize() == 1 && get(0) instanceof OperadorContexto) {
 			compilador.invalidar(token);
 		}
+		adicionarImpl(compilador, token, new OperadorContexto(token));
+	}
+
+	@Override
+	public void string(Compilador compilador, Token token) throws InstrucaoException {
+		adicionarImpl(compilador, token, new StringContexto(token));
+	}
+
+	@Override
+	public void numero(Compilador compilador, Token token) throws InstrucaoException {
+		adicionarImpl(compilador, token, new NumeroContexto(token));
+	}
+
+	@Override
+	public void identity(Compilador compilador, Token token) throws InstrucaoException {
+		adicionarImpl(compilador, token, new IdentityContexto(token));
 	}
 
 	private void montarArvore(Compilador compilador) throws InstrucaoException {
@@ -63,10 +71,27 @@ public class ExpressaoContexto extends Container {
 			compilador.invalidar(operador.getToken());
 		}
 		validarSequencia(compilador);
-		montar();
+		montarArvore();
 	}
 
-	private void montar() {
+	private void validarSequencia(Compilador compilador) throws InstrucaoException {
+		for (int i = 0; i < getSize(); i++) {
+			Container c = get(i);
+			if (i % 2 == 0) {
+				if (c instanceof OperadorContexto) {
+					OperadorContexto operador = (OperadorContexto) c;
+					compilador.invalidar(operador.getToken());
+				}
+			} else {
+				if (!(c instanceof OperadorContexto)) {
+					OperadorContexto operador = (OperadorContexto) c;
+					compilador.invalidar(operador.getToken());
+				}
+			}
+		}
+	}
+
+	private void montarArvore() {
 		Iterator<Container> it = getFilhos().iterator();
 		Container sel = it.next();
 		it.remove();
@@ -107,46 +132,6 @@ public class ExpressaoContexto extends Container {
 		}
 
 		adicionar(sel);
-	}
-
-	private void validarSequencia(Compilador compilador) throws InstrucaoException {
-		for (int i = 0; i < getSize(); i++) {
-			Container c = get(i);
-			if (i % 2 == 0) {
-				if (c instanceof OperadorContexto) {
-					OperadorContexto operador = (OperadorContexto) c;
-					compilador.invalidar(operador.getToken());
-				}
-			} else {
-				if (!(c instanceof OperadorContexto)) {
-					OperadorContexto operador = (OperadorContexto) c;
-					compilador.invalidar(operador.getToken());
-				}
-			}
-		}
-	}
-
-	@Override
-	public void operador(Compilador compilador, Token token) throws InstrucaoException {
-		if (getSize() == 1 && get(0) instanceof OperadorContexto) {
-			compilador.invalidar(token);
-		}
-		adicionarImpl(compilador, token, new OperadorContexto(token));
-	}
-
-	@Override
-	public void string(Compilador compilador, Token token) throws InstrucaoException {
-		adicionarImpl(compilador, token, new StringContexto(token));
-	}
-
-	@Override
-	public void numero(Compilador compilador, Token token) throws InstrucaoException {
-		adicionarImpl(compilador, token, new NumeroContexto(token));
-	}
-
-	@Override
-	public void identity(Compilador compilador, Token token) throws InstrucaoException {
-		adicionarImpl(compilador, token, new IdentityContexto(token));
 	}
 
 	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {

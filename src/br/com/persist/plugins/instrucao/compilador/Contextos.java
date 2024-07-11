@@ -8,6 +8,7 @@ public class Contextos {
 	public static final PontoVirgula PONTO_VIRGULA = new PontoVirgula();
 	public static final FechaChaves FECHA_CHAVES = new FechaChaves();
 	public static final AbreChaves ABRE_CHAVES = new AbreChaves();
+	public static final Parenteses PARENTESES = new Parenteses();
 	public static final Invalido INVALIDO = new Invalido();
 	public static final Virgula VIRGULA = new Virgula();
 
@@ -18,6 +19,22 @@ public class Contextos {
 		@Override
 		public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 			if (!"(".equals(token.getString())) {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	public static class Parenteses extends AbstratoContexto {
+		@Override
+		public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
+			if (!"(".equals(token.getString())) {
+				compilador.invalidar(token);
+			}
+		}
+
+		@Override
+		public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
+			if (!")".equals(token.getString())) {
 				compilador.invalidar(token);
 			}
 		}
