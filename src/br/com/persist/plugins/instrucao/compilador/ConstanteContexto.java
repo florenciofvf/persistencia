@@ -5,12 +5,16 @@ import br.com.persist.plugins.instrucao.compilador.expressao.ExpressaoContexto;
 
 public class ConstanteContexto extends Container {
 	private final ConstanteIdentityContexto identity;
+	private final ExpressaoContexto expressao;
 	private boolean faseIdentity;
 	private Contexto contexto;
 
 	public ConstanteContexto() {
 		identity = new ConstanteIdentityContexto();
+		expressao = new ExpressaoContexto();
+		expressao.adicionar(new ExpressaoContexto());
 		contexto = Contextos.ABRE_PARENTESES;
+		adicionar(expressao);
 		faseIdentity = true;
 	}
 
@@ -20,8 +24,7 @@ public class ConstanteContexto extends Container {
 		if (faseIdentity) {
 			contexto = identity;
 		} else {
-			compilador.setContexto(new ExpressaoContexto());
-			adicionar((Container) compilador.getContexto());
+			compilador.setContexto(expressao.getUltimo());
 			contexto = Contextos.PONTO_VIRGULA;
 		}
 	}
