@@ -22,6 +22,9 @@ public class CorpoContexto extends Container {
 		if ("const".equals(token.getString())) {
 			compilador.setContexto(new ConstanteContexto());
 			adicionar((Container) compilador.getContexto());
+		} else if ("return".equals(token.getString())) {
+			compilador.setContexto(new RetornoContexto());
+			adicionar((Container) compilador.getContexto());
 		} else {
 			compilador.invalidar(token);
 		}
@@ -35,6 +38,7 @@ public class CorpoContexto extends Container {
 }
 
 class ReservadoOuIdentityOuFinalizar extends AbstratoContexto {
+	private final String[] strings = { "const", "return" };
 	Token token;
 
 	@Override
@@ -46,9 +50,18 @@ class ReservadoOuIdentityOuFinalizar extends AbstratoContexto {
 
 	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
-		if (!"const".equals(token.getString())) {
+		if (!igual(token.getString())) {
 			compilador.invalidar(token);
 		}
+	}
+
+	private boolean igual(String s) {
+		for (String string : strings) {
+			if (string.equals(s)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
