@@ -1,7 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.funcao.FuncaoContexto;
 
 public class BibliotecaContexto extends Container {
 	private final BibliotecaCorpoContexto corpo;

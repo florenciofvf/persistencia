@@ -1,7 +1,4 @@
-package br.com.persist.plugins.instrucao.compilador.funcao;
-
-import br.com.persist.plugins.instrucao.compilador.Container;
-import br.com.persist.plugins.instrucao.compilador.Token;
+package br.com.persist.plugins.instrucao.compilador;
 
 public class ParametroContexto extends Container {
 	private final String nome;
