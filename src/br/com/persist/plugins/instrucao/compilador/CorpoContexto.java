@@ -18,7 +18,7 @@ public class CorpoContexto extends Container {
 
 	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.finalizador(compilador, token);
+		contexto.reservado(compilador, token);
 		if ("const".equals(token.getString())) {
 			compilador.setContexto(new ConstanteContexto());
 			adicionar((Container) compilador.getContexto());
