@@ -3,10 +3,9 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.expressao.OperadorContexto;
 
-public abstract class Container implements Contexto {
+public abstract class Container extends AbstratoContexto {
 	protected static final char[] MODO_INI = { 'I' };
 	protected static final char[] MODO_FIN = { 'F' };
 	protected static final char[] MODO_SEP = { 'S' };
@@ -16,6 +15,7 @@ public abstract class Container implements Contexto {
 	protected static final char[] MODO_NUM = { 'N' };
 	protected static final char[] MODO_IDE = { 'Y' };
 	private final List<Container> filhos;
+	protected boolean finalizado;
 	protected boolean negativo;
 	protected Container pai;
 	protected char[] modo;
@@ -54,6 +54,7 @@ public abstract class Container implements Contexto {
 
 	public Container excluir(int indice) {
 		if (indice >= 0 && indice < getSize()) {
+			get(indice).pai = null;
 			return filhos.remove(indice);
 		}
 		return null;
@@ -106,43 +107,11 @@ public abstract class Container implements Contexto {
 		}
 	}
 
-	@Override
-	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
+	public boolean isFinalizado() {
+		return finalizado;
 	}
 
-	@Override
-	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
-	}
-
-	@Override
-	public void separador(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
-	}
-
-	@Override
-	public void operador(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
-	}
-
-	@Override
-	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
-	}
-
-	@Override
-	public void string(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
-	}
-
-	@Override
-	public void numero(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
-	}
-
-	@Override
-	public void identity(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.invalidar(token);
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
 	}
 }
