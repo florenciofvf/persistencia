@@ -6,19 +6,9 @@ import java.util.List;
 import br.com.persist.plugins.instrucao.compilador.expressao.OperadorContexto;
 
 public abstract class Container extends AbstratoContexto {
-	protected static final char[] MODO_INI = { 'I' };
-	protected static final char[] MODO_FIN = { 'F' };
-	protected static final char[] MODO_SEP = { 'S' };
-	protected static final char[] MODO_OPE = { 'O' };
-	protected static final char[] MODO_RES = { 'R' };
-	protected static final char[] MODO_STR = { 'T' };
-	protected static final char[] MODO_NUM = { 'N' };
-	protected static final char[] MODO_IDE = { 'Y' };
 	private final List<Container> filhos;
-	protected boolean finalizado;
 	protected boolean negativo;
 	protected Container pai;
-	protected char[] modo;
 	protected Token token;
 
 	protected Container() {
@@ -53,11 +43,11 @@ public abstract class Container extends AbstratoContexto {
 	}
 
 	public Container excluir(int indice) {
-		if (indice >= 0 && indice < getSize()) {
-			get(indice).pai = null;
-			return filhos.remove(indice);
+		Container c = get(indice);
+		if (c != null) {
+			excluir(c);
 		}
-		return null;
+		return c;
 	}
 
 	public Container excluirUltimo() {
@@ -83,35 +73,10 @@ public abstract class Container extends AbstratoContexto {
 		c.pai = this;
 	}
 
-	public char[] getModo() {
-		return modo;
-	}
-
-	public void setModo(char[] modo) {
-		this.modo = modo;
-	}
-
-	protected boolean isModo(char c) {
-		for (char ch : modo) {
-			if (ch == c) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public void negativar(Contexto c) {
 		if (c instanceof OperadorContexto) {
 			OperadorContexto operador = (OperadorContexto) c;
 			negativo = "-".equals(operador.getId());
 		}
-	}
-
-	public boolean isFinalizado() {
-		return finalizado;
-	}
-
-	public void setFinalizado(boolean finalizado) {
-		this.finalizado = finalizado;
 	}
 }
