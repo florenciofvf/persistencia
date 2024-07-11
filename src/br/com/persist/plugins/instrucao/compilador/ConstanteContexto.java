@@ -1,30 +1,25 @@
-package br.com.persist.plugins.instrucao.compilador.constante;
+package br.com.persist.plugins.instrucao.compilador;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.AbstratoContexto;
-import br.com.persist.plugins.instrucao.compilador.Compilador;
-import br.com.persist.plugins.instrucao.compilador.Container;
-import br.com.persist.plugins.instrucao.compilador.Contexto;
-import br.com.persist.plugins.instrucao.compilador.Contextos;
-import br.com.persist.plugins.instrucao.compilador.Token;
 import br.com.persist.plugins.instrucao.compilador.expressao.ExpressaoContexto;
 
 public class ConstanteContexto extends Container {
-	private final Identity identity = new Identity();
+	private final ConstanteIdentityContexto identity;
+	private boolean faseIdentity;
 	private Contexto contexto;
-	private byte fase;
 
 	public ConstanteContexto() {
+		identity = new ConstanteIdentityContexto();
 		contexto = Contextos.ABRE_PARENTESES;
+		faseIdentity = true;
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		if (fase == 0) {
-			contexto.inicializador(compilador, token);
+		contexto.inicializador(compilador, token);
+		if (faseIdentity) {
 			contexto = identity;
 		} else {
-			contexto.inicializador(compilador, token);
 			compilador.setContexto(new ExpressaoContexto());
 			adicionar((Container) compilador.getContexto());
 			contexto = Contextos.PONTO_VIRGULA;
@@ -34,6 +29,10 @@ public class ConstanteContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
+		Container ultimo = getUltimo();
+		if (ultimo.isEmpty()) {
+			throw new InstrucaoException("Valor indefinido: " + identity.token.string, false);
+		}
 		compilador.setContexto(getPai());
 	}
 
@@ -41,17 +40,17 @@ public class ConstanteContexto extends Container {
 	public void separador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.separador(compilador, token);
 		contexto = Contextos.ABRE_PARENTESES;
-		fase++;
+		faseIdentity = false;
 	}
 
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.identity(compilador, token);
-		contexto = Contextos.SEPARADOR;
+		contexto = Contextos.VIRGULA;
 	}
 }
 
-class Identity extends AbstratoContexto {
+class ConstanteIdentityContexto extends AbstratoContexto {
 	Token token;
 
 	@Override

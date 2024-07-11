@@ -35,6 +35,10 @@ public abstract class Container extends AbstratoContexto {
 		return filhos.size();
 	}
 
+	public boolean isEmpty() {
+		return filhos.isEmpty();
+	}
+
 	public Container get(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			return filhos.get(indice);
