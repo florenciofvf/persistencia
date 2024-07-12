@@ -5,7 +5,6 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public class CorpoContexto extends Container {
 	public static final ReservadoOuIdentityOuFinalizar RESERVADO_OU_IDENTITY_OU_FINALIZAR = new ReservadoOuIdentityOuFinalizar();
 	private boolean finalizadorPai;
-	private Contexto contexto;
 
 	public CorpoContexto() {
 		contexto = RESERVADO_OU_IDENTITY_OU_FINALIZAR;

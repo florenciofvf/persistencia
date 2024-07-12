@@ -3,24 +3,20 @@ package br.com.persist.plugins.instrucao.compilador;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ElseContexto extends Container {
-	private final CorpoContexto corpo;
-	private Contexto contexto;
-
 	public ElseContexto() {
 		contexto = Contextos.ABRE_CHAVES;
-		corpo = new CorpoContexto();
-		adicionar(corpo);
+		adicionar(new CorpoContexto());
 	}
 
 	public CorpoContexto getCorpo() {
-		return corpo;
+		return (CorpoContexto) get(0);
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		compilador.setContexto(corpo);
-		corpo.setFinalizadorPai(true);
+		compilador.setContexto(getCorpo());
+		getCorpo().setFinalizadorPai(true);
 	}
 
 	@Override
