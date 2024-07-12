@@ -50,9 +50,9 @@ public abstract class Container extends AbstratoContexto {
 	public Container excluir(int indice) {
 		Container c = get(indice);
 		if (c != null) {
-			excluir(c);
+			return excluir(c);
 		}
-		return c;
+		return null;
 	}
 
 	public void clear() {
@@ -73,11 +73,13 @@ public abstract class Container extends AbstratoContexto {
 		return get(getSize() - 1);
 	}
 
-	public void excluir(Container c) {
+	public Container excluir(Container c) {
+		boolean excluido = false;
 		if (c.pai == this) {
-			filhos.remove(c);
+			excluido = filhos.remove(c);
 			c.pai = null;
 		}
+		return excluido ? c : null;
 	}
 
 	public void adicionar(Container c) {

@@ -73,16 +73,14 @@ public class IFContexto extends Container {
 			return;
 		}
 		List<Container> lista = new ArrayList<>();
-		Iterator<Container> it = getFilhos().iterator();
-		it.next();
-		it.next();
-		while (it.hasNext()) {
-			Container c = it.next();
-			lista.add(c);
-			it.remove();
+		for (int i = 2; i < getSize(); i++) {
+			lista.add(get(i));
+		}
+		for (Container c : lista) {
+			excluir(c);
 		}
 		IFContexto sel = this;
-		it = lista.iterator();
+		Iterator<Container> it = lista.iterator();
 		while (it.hasNext()) {
 			Container c = it.next();
 			sel = sel.fragmentar(c, compilador, token);
@@ -94,8 +92,11 @@ public class IFContexto extends Container {
 		if (c instanceof ElseIFContexto) {
 			ElseIFContexto elseIFContexto = (ElseIFContexto) c;
 			resposta.clear();
-			resposta.adicionar(elseIFContexto.getExpressao());
-			resposta.adicionar(elseIFContexto.getCorpo());
+
+			ExpressaoContexto expressao = elseIFContexto.getExpressao();
+			CorpoContexto corpo = elseIFContexto.getCorpo();
+			resposta.adicionar(expressao);
+			resposta.adicionar(corpo);
 
 			ElseContexto elseContexto = new ElseContexto();
 			elseContexto.getCorpo().adicionar(resposta);
