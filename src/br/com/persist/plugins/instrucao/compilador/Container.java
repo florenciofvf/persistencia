@@ -54,6 +54,12 @@ public abstract class Container extends AbstratoContexto {
 		return c;
 	}
 
+	public void clear() {
+		while (getSize() > 0) {
+			excluir(0);
+		}
+	}
+
 	public Container excluirUltimo() {
 		return excluir(getSize() - 1);
 	}

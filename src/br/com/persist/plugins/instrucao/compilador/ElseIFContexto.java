@@ -18,6 +18,14 @@ public class ElseIFContexto extends Container {
 		adicionar(corpo);
 	}
 
+	public ExpressaoContexto getExpressao() {
+		return expressao;
+	}
+
+	public CorpoContexto getCorpo() {
+		return corpo;
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);

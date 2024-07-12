@@ -12,6 +12,10 @@ public class ElseContexto extends Container {
 		adicionar(corpo);
 	}
 
+	public CorpoContexto getCorpo() {
+		return corpo;
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
