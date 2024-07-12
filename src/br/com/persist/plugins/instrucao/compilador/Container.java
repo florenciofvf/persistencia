@@ -7,6 +7,7 @@ import br.com.persist.plugins.instrucao.compilador.expressao.OperadorContexto;
 
 public abstract class Container extends AbstratoContexto {
 	private final List<Container> filhos;
+	protected Contexto contexto;
 	protected boolean negativo;
 	protected Container pai;
 	protected Token token;
