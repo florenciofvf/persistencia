@@ -4,19 +4,14 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoContexto extends Container {
 	private final FuncaoIdentityContexto identity;
-	private final ParametrosContexto parametros;
-	private final CorpoContexto corpo;
 	private boolean faseParametros;
-	private Contexto contexto;
 
 	public FuncaoContexto() {
 		identity = new FuncaoIdentityContexto();
-		parametros = new ParametrosContexto();
-		corpo = new CorpoContexto();
+		adicionar(new ParametrosContexto());
+		adicionar(new CorpoContexto());
 		faseParametros = true;
-		adicionar(parametros);
 		contexto = identity;
-		adicionar(corpo);
 	}
 
 	public FuncaoIdentityContexto getIdentity() {
@@ -27,11 +22,11 @@ public class FuncaoContexto extends Container {
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (faseParametros) {
-			compilador.setContexto(parametros);
+			compilador.setContexto(get(0));
 			contexto = Contextos.ABRE_CHAVES;
 			faseParametros = false;
 		} else {
-			compilador.setContexto(corpo);
+			compilador.setContexto(get(1));
 			contexto = Contextos.PONTO_VIRGULA;
 		}
 	}
@@ -50,6 +45,6 @@ public class FuncaoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "function >>> " + parametros.toString();
+		return "function >>> " + getFilhos().toString();
 	}
 }
