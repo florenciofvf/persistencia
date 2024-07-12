@@ -48,16 +48,3 @@ public class FuncaoContexto extends Container {
 		contexto = Contextos.ABRE_PARENTESES;
 	}
 }
-
-class FuncaoIdentityContexto extends AbstratoContexto {
-	Token token;
-
-	@Override
-	public void identity(Compilador compilador, Token token) throws InstrucaoException {
-		if (token.getString().indexOf(".") != -1) {
-			compilador.invalidar(token);
-		} else {
-			this.token = token;
-		}
-	}
-}
