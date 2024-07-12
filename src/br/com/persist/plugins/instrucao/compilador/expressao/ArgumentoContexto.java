@@ -64,6 +64,14 @@ public class ArgumentoContexto extends Container {
 		adicionarImpl(compilador, token, new IdentityContexto(token));
 	}
 
+	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
+		Container ult = getUltimo();
+		if (ult != null && !(ult instanceof SeparadorContexto) && !(c instanceof SeparadorContexto)) {
+			compilador.invalidar(token);
+		}
+		adicionar(c);
+	}
+
 	private void normalizarArvore(Compilador compilador) throws InstrucaoException {
 		if (getSize() == 0) {
 			return;
@@ -105,13 +113,5 @@ public class ArgumentoContexto extends Container {
 				it.remove();
 			}
 		}
-	}
-
-	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
-		Container ult = getUltimo();
-		if (ult != null && !(ult instanceof SeparadorContexto) && !(c instanceof SeparadorContexto)) {
-			compilador.invalidar(token);
-		}
-		adicionar(c);
 	}
 }

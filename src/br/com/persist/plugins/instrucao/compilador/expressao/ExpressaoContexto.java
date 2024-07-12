@@ -58,6 +58,49 @@ public class ExpressaoContexto extends Container {
 		adicionarImpl(compilador, token, new IdentityContexto(token));
 	}
 
+	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
+		Container ult = getUltimo();
+		if (ult != null && !(ult instanceof OperadorContexto) && !(c instanceof OperadorContexto)) {
+			compilador.invalidar(token);
+		}
+		if (candidatoMergear()) {
+			if (validoMergear(c)) {
+				Container ultimo = excluirUltimo();
+				c.negativar(ultimo);
+				adicionar(c);
+			} else {
+				compilador.invalidar(token);
+			}
+		} else {
+			adicionar(c);
+		}
+	}
+
+	private boolean candidatoMergear() {
+		int size = getSize();
+		if (size == 1 && get(0) instanceof OperadorContexto) {
+			return true;
+		}
+		if (size > 1) {
+			return (get(size - 2) instanceof OperadorContexto) && (get(size - 1) instanceof OperadorContexto);
+		}
+		return false;
+	}
+
+	private boolean validoMergear(Container c) {
+		int size = getSize();
+		if (c instanceof StringContexto) {
+			return false;
+		}
+		if (get(size - 1) instanceof OperadorContexto) {
+			OperadorContexto operador = (OperadorContexto) get(size - 1);
+			if ("-".equals(operador.getId()) || "+".equals(operador.getId())) {
+				return !(c instanceof OperadorContexto);
+			}
+		}
+		return false;
+	}
+
 	private void montarArvore(Compilador compilador) throws InstrucaoException {
 		if (getSize() == 0) {
 			return;
@@ -132,48 +175,5 @@ public class ExpressaoContexto extends Container {
 		}
 
 		adicionar(sel);
-	}
-
-	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
-		Container ult = getUltimo();
-		if (ult != null && !(ult instanceof OperadorContexto) && !(c instanceof OperadorContexto)) {
-			compilador.invalidar(token);
-		}
-		if (candidatoMergear()) {
-			if (validoMergear(c)) {
-				Container ultimo = excluirUltimo();
-				c.negativar(ultimo);
-				adicionar(c);
-			} else {
-				compilador.invalidar(token);
-			}
-		} else {
-			adicionar(c);
-		}
-	}
-
-	private boolean candidatoMergear() {
-		int size = getSize();
-		if (size == 1 && get(0) instanceof OperadorContexto) {
-			return true;
-		}
-		if (size > 1) {
-			return (get(size - 2) instanceof OperadorContexto) && (get(size - 1) instanceof OperadorContexto);
-		}
-		return false;
-	}
-
-	private boolean validoMergear(Container c) {
-		int size = getSize();
-		if (c instanceof StringContexto) {
-			return false;
-		}
-		if (get(size - 1) instanceof OperadorContexto) {
-			OperadorContexto operador = (OperadorContexto) get(size - 1);
-			if ("-".equals(operador.getId()) || "+".equals(operador.getId())) {
-				return !(c instanceof OperadorContexto);
-			}
-		}
-		return false;
 	}
 }
