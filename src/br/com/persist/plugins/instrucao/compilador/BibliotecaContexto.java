@@ -38,6 +38,9 @@ class BibliotecaCorpoContexto extends Container {
 		if ("function".equals(token.getString())) {
 			compilador.setContexto(new FuncaoContexto());
 			adicionar((Container) compilador.getContexto());
+		} else if ("function_native".equals(token.getString())) {
+			compilador.setContexto(new FuncaoNativaContexto());
+			adicionar((Container) compilador.getContexto());
 		} else if ("const".equals(token.getString())) {
 			compilador.setContexto(new ConstanteContexto());
 			adicionar((Container) compilador.getContexto());
