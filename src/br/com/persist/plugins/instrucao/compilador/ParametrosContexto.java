@@ -5,7 +5,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public class ParametrosContexto extends Container {
 	public static final IdentityOuFinalizar IDENTITY_OU_FINALIZAR = new IdentityOuFinalizar();
 	public static final VirgulaOuFinalizar VIRGULA_OU_FINALIZAR = new VirgulaOuFinalizar();
-	public static final Identity IDENTIT = new Identity();
+	public static final ParametroIdentity PARAMETRO_IDENTITY = new ParametroIdentity();
 	private Contexto contexto;
 
 	public ParametrosContexto() {
@@ -21,7 +21,7 @@ public class ParametrosContexto extends Container {
 	@Override
 	public void separador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.separador(compilador, token);
-		contexto = IDENTIT;
+		contexto = PARAMETRO_IDENTITY;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ class VirgulaOuFinalizar extends AbstratoContexto {
 	}
 }
 
-class Identity extends AbstratoContexto {
+class ParametroIdentity extends AbstratoContexto {
 	Token token;
 
 	@Override
