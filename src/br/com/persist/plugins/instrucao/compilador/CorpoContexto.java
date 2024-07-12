@@ -50,6 +50,11 @@ public class CorpoContexto extends Container {
 		compilador.setContexto(new InvocacaoContexto(token));
 		adicionar((Container) compilador.getContexto());
 	}
+
+	@Override
+	public String toString() {
+		return "Corpo: " + getFilhos().toString();
+	}
 }
 
 class ReservadoOuIdentityOuFinalizar extends AbstratoContexto {
