@@ -16,13 +16,17 @@ public class ConstanteContexto extends Container {
 		faseIdentity = true;
 	}
 
+	public ExpressaoContexto getExpressao() {
+		return (ExpressaoContexto) get(0);
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (faseIdentity) {
 			contexto = identity;
 		} else {
-			compilador.setContexto(get(0).getUltimo());
+			compilador.setContexto(getExpressao().getUltimo());
 			contexto = Contextos.PONTO_VIRGULA;
 		}
 	}
@@ -30,7 +34,7 @@ public class ConstanteContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		Container valor = get(0).getUltimo();
+		Container valor = getExpressao().getUltimo();
 		if (valor.isEmpty()) {
 			throw new InstrucaoException("Valor indefinido para: " + identity.token.string, false);
 		}

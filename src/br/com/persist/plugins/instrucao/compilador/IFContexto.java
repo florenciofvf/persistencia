@@ -18,15 +18,23 @@ public class IFContexto extends Container {
 		faseExpressao = true;
 	}
 
+	public ExpressaoContexto getExpressao() {
+		return (ExpressaoContexto) get(0);
+	}
+
+	public CorpoContexto getCorpo() {
+		return (CorpoContexto) get(1);
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (faseExpressao) {
-			compilador.setContexto(get(0));
+			compilador.setContexto(getExpressao());
 			contexto = Contextos.ABRE_CHAVES;
 			faseExpressao = false;
 		} else {
-			compilador.setContexto(get(1));
+			compilador.setContexto(getCorpo());
 			contexto = RESERVADO_OU_FINALIZAR;
 		}
 	}
@@ -103,7 +111,7 @@ public class IFContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "if >>> " + get(0).toString();
+		return "if >>> " + getExpressao().toString();
 	}
 }
 

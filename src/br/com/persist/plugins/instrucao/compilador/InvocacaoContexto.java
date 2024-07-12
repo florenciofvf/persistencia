@@ -10,10 +10,14 @@ public class InvocacaoContexto extends Container {
 		this.token = token;
 	}
 
+	public ArgumentoContexto getArgumento() {
+		return (ArgumentoContexto) get(0);
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		compilador.setContexto(get(0));
+		compilador.setContexto(getArgumento());
 		contexto = Contextos.PONTO_VIRGULA;
 	}
 
@@ -25,6 +29,6 @@ public class InvocacaoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "invocacao >>> " + get(0).toString();
+		return "invocacao >>> " + getArgumento().toString();
 	}
 }

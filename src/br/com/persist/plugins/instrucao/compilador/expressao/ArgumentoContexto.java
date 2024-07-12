@@ -74,12 +74,11 @@ public class ArgumentoContexto extends Container {
 		if (getSize() == 0) {
 			return;
 		}
-		int size = getSize();
-		if (get(0) instanceof SeparadorContexto) {
-			SeparadorContexto separador = (SeparadorContexto) get(0);
+		if (getPrimeiro() instanceof SeparadorContexto) {
+			SeparadorContexto separador = (SeparadorContexto) getPrimeiro();
 			compilador.invalidar(separador.getToken());
-		} else if (get(size - 1) instanceof SeparadorContexto) {
-			SeparadorContexto separador = (SeparadorContexto) get(size - 1);
+		} else if (getUltimo() instanceof SeparadorContexto) {
+			SeparadorContexto separador = (SeparadorContexto) getUltimo();
 			compilador.invalidar(separador.getToken());
 		}
 		validarSequencia(compilador);

@@ -8,10 +8,14 @@ public class BibliotecaContexto extends Container {
 		contexto = Contextos.ABRE_CHAVES;
 	}
 
+	public BibliotecaCorpoContexto getCorpo() {
+		return (BibliotecaCorpoContexto) get(0);
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		compilador.setContexto(get(0));
+		compilador.setContexto(getCorpo());
 		contexto = Contextos.INVALIDO;
 	}
 }

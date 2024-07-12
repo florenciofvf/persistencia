@@ -23,11 +23,15 @@ public class FuncaoNativaContexto extends Container {
 		return identity;
 	}
 
+	public ParametrosContexto getParametros() {
+		return (ParametrosContexto) get(0);
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		contexto = Contextos.PONTO_VIRGULA;
-		compilador.setContexto(get(0));
+		compilador.setContexto(getParametros());
 	}
 
 	@Override
@@ -49,6 +53,6 @@ public class FuncaoNativaContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "function_native >>> " + get(0).toString();
+		return "function_native >>> " + getParametros().toString();
 	}
 }

@@ -14,6 +14,14 @@ public class FuncaoContexto extends Container {
 		contexto = identity;
 	}
 
+	public ParametrosContexto getParametros() {
+		return (ParametrosContexto) get(0);
+	}
+
+	public CorpoContexto getCorpo() {
+		return (CorpoContexto) get(1);
+	}
+
 	public FuncaoIdentityContexto getIdentity() {
 		return identity;
 	}
@@ -22,11 +30,11 @@ public class FuncaoContexto extends Container {
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (faseParametros) {
-			compilador.setContexto(get(0));
+			compilador.setContexto(getParametros());
 			contexto = Contextos.ABRE_CHAVES;
 			faseParametros = false;
 		} else {
-			compilador.setContexto(get(1));
+			compilador.setContexto(getCorpo());
 			contexto = Contextos.PONTO_VIRGULA;
 		}
 	}
@@ -45,6 +53,6 @@ public class FuncaoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "function >>> " + getFilhos().toString();
+		return "function >>> " + getParametros().toString();
 	}
 }

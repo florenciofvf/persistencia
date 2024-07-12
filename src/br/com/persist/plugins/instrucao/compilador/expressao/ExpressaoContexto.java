@@ -34,7 +34,7 @@ public class ExpressaoContexto extends Container {
 
 	@Override
 	public void operador(Compilador compilador, Token token) throws InstrucaoException {
-		if (getSize() == 1 && get(0) instanceof OperadorContexto) {
+		if (getSize() == 1 && getPrimeiro() instanceof OperadorContexto) {
 			compilador.invalidar(token);
 		}
 		adicionarImpl(compilador, token, new OperadorContexto(token));
@@ -75,22 +75,21 @@ public class ExpressaoContexto extends Container {
 
 	private boolean candidatoMergear() {
 		int size = getSize();
-		if (size == 1 && get(0) instanceof OperadorContexto) {
+		if (size == 1 && getPrimeiro() instanceof OperadorContexto) {
 			return true;
 		}
 		if (size > 1) {
-			return (get(size - 2) instanceof OperadorContexto) && (get(size - 1) instanceof OperadorContexto);
+			return (get(size - 2) instanceof OperadorContexto) && (getUltimo() instanceof OperadorContexto);
 		}
 		return false;
 	}
 
 	private boolean validoMergear(Container c) {
-		int size = getSize();
 		if (c instanceof StringContexto) {
 			return false;
 		}
-		if (get(size - 1) instanceof OperadorContexto) {
-			OperadorContexto operador = (OperadorContexto) get(size - 1);
+		if (getUltimo() instanceof OperadorContexto) {
+			OperadorContexto operador = (OperadorContexto) getUltimo();
 			if ("-".equals(operador.getId()) || "+".equals(operador.getId())) {
 				return !(c instanceof OperadorContexto);
 			}
@@ -102,12 +101,11 @@ public class ExpressaoContexto extends Container {
 		if (getSize() == 0) {
 			return;
 		}
-		int size = getSize();
-		if (get(0) instanceof OperadorContexto) {
-			OperadorContexto operador = (OperadorContexto) get(0);
+		if (getPrimeiro() instanceof OperadorContexto) {
+			OperadorContexto operador = (OperadorContexto) getPrimeiro();
 			compilador.invalidar(operador.getToken());
-		} else if (get(size - 1) instanceof OperadorContexto) {
-			OperadorContexto operador = (OperadorContexto) get(size - 1);
+		} else if (getUltimo() instanceof OperadorContexto) {
+			OperadorContexto operador = (OperadorContexto) getUltimo();
 			compilador.invalidar(operador.getToken());
 		}
 		validarSequencia(compilador);

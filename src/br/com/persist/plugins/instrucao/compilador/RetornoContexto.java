@@ -9,11 +9,15 @@ public class RetornoContexto extends Container {
 		adicionar(new ExpressaoContexto());
 	}
 
+	public ExpressaoContexto getExpressao() {
+		return (ExpressaoContexto) get(0);
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		contexto = Contextos.PONTO_VIRGULA;
-		compilador.setContexto(get(0));
+		compilador.setContexto(getExpressao());
 	}
 
 	@Override
@@ -24,6 +28,6 @@ public class RetornoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "return >>> " + get(0).toString();
+		return "return >>> " + getExpressao().toString();
 	}
 }
