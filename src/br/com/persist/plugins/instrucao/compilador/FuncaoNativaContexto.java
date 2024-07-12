@@ -5,16 +5,13 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public class FuncaoNativaContexto extends Container {
 	private final FuncaoIdentityContexto identityBiblio;
 	private final FuncaoIdentityContexto identity;
-	private final ParametrosContexto parametros;
 	private boolean faseBiblio;
-	private Contexto contexto;
 
 	public FuncaoNativaContexto() {
 		identityBiblio = new FuncaoIdentityContexto();
 		identity = new FuncaoIdentityContexto();
-		parametros = new ParametrosContexto();
+		adicionar(new ParametrosContexto());
 		contexto = identityBiblio;
-		adicionar(parametros);
 		faseBiblio = true;
 	}
 
@@ -29,8 +26,8 @@ public class FuncaoNativaContexto extends Container {
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		compilador.setContexto(parametros);
 		contexto = Contextos.PONTO_VIRGULA;
+		compilador.setContexto(get(0));
 	}
 
 	@Override
@@ -52,6 +49,6 @@ public class FuncaoNativaContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "function_native >>> " + parametros.toString();
+		return "function_native >>> " + get(0).toString();
 	}
 }

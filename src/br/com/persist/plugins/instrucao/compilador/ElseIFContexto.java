@@ -4,38 +4,33 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.expressao.ExpressaoContexto;
 
 public class ElseIFContexto extends Container {
-	private final ExpressaoContexto expressao;
-	private final CorpoContexto corpo;
 	private boolean faseExpressao;
-	private Contexto contexto;
 
 	public ElseIFContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
-		expressao = new ExpressaoContexto();
-		corpo = new CorpoContexto();
+		adicionar(new ExpressaoContexto());
+		adicionar(new CorpoContexto());
 		faseExpressao = true;
-		adicionar(expressao);
-		adicionar(corpo);
 	}
 
 	public ExpressaoContexto getExpressao() {
-		return expressao;
+		return (ExpressaoContexto) get(0);
 	}
 
 	public CorpoContexto getCorpo() {
-		return corpo;
+		return (CorpoContexto) get(1);
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (faseExpressao) {
-			compilador.setContexto(expressao);
+			compilador.setContexto(getExpressao());
 			contexto = Contextos.ABRE_CHAVES;
 			faseExpressao = false;
 		} else {
-			compilador.setContexto(corpo);
-			corpo.setFinalizadorPai(true);
+			compilador.setContexto(getCorpo());
+			getCorpo().setFinalizadorPai(true);
 		}
 	}
 
@@ -46,6 +41,6 @@ public class ElseIFContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "elseif >>> " + expressao.toString();
+		return "elseif >>> " + getExpressao().toString();
 	}
 }

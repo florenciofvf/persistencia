@@ -9,29 +9,24 @@ import br.com.persist.plugins.instrucao.compilador.expressao.ExpressaoContexto;
 
 public class IFContexto extends Container {
 	public static final ReservadoOuFinalizar RESERVADO_OU_FINALIZAR = new ReservadoOuFinalizar();
-	private final ExpressaoContexto expressao;
-	private final CorpoContexto corpo;
 	private boolean faseExpressao;
-	private Contexto contexto;
 
 	public IFContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
-		expressao = new ExpressaoContexto();
-		corpo = new CorpoContexto();
+		adicionar(new ExpressaoContexto());
+		adicionar(new CorpoContexto());
 		faseExpressao = true;
-		adicionar(expressao);
-		adicionar(corpo);
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (faseExpressao) {
-			compilador.setContexto(expressao);
+			compilador.setContexto(get(0));
 			contexto = Contextos.ABRE_CHAVES;
 			faseExpressao = false;
 		} else {
-			compilador.setContexto(corpo);
+			compilador.setContexto(get(1));
 			contexto = RESERVADO_OU_FINALIZAR;
 		}
 	}
@@ -108,7 +103,7 @@ public class IFContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "if >>> " + expressao.toString();
+		return "if >>> " + get(0).toString();
 	}
 }
 

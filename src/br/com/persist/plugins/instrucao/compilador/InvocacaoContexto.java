@@ -4,20 +4,16 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.expressao.ArgumentoContexto;
 
 public class InvocacaoContexto extends Container {
-	private final ArgumentoContexto argumento;
-	private Contexto contexto;
-
 	public InvocacaoContexto(Token token) {
+		adicionar(new ArgumentoContexto(null));
 		contexto = Contextos.ABRE_PARENTESES;
-		argumento = new ArgumentoContexto(null);
-		adicionar(argumento);
 		this.token = token;
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		compilador.setContexto(argumento);
+		compilador.setContexto(get(0));
 		contexto = Contextos.PONTO_VIRGULA;
 	}
 
@@ -29,6 +25,6 @@ public class InvocacaoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "invocacao >>> " + argumento.toString();
+		return "invocacao >>> " + get(0).toString();
 	}
 }

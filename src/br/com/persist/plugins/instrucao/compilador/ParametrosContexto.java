@@ -6,7 +6,6 @@ public class ParametrosContexto extends Container {
 	public static final IdentityOuFinalizar IDENTITY_OU_FINALIZAR = new IdentityOuFinalizar();
 	public static final VirgulaOuFinalizar VIRGULA_OU_FINALIZAR = new VirgulaOuFinalizar();
 	public static final ParametroIdentity PARAMETRO_IDENTITY = new ParametroIdentity();
-	private Contexto contexto;
 
 	public ParametrosContexto() {
 		contexto = IDENTITY_OU_FINALIZAR;

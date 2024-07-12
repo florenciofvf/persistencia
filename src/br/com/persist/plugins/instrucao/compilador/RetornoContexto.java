@@ -4,20 +4,16 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.expressao.ExpressaoContexto;
 
 public class RetornoContexto extends Container {
-	private final ExpressaoContexto expressao;
-	private Contexto contexto;
-
 	public RetornoContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
-		expressao = new ExpressaoContexto();
-		adicionar(expressao);
+		adicionar(new ExpressaoContexto());
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		contexto = Contextos.PONTO_VIRGULA;
-		compilador.setContexto(expressao);
+		compilador.setContexto(get(0));
 	}
 
 	@Override
@@ -28,6 +24,6 @@ public class RetornoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "return >>> " + expressao.toString();
+		return "return >>> " + get(0).toString();
 	}
 }
