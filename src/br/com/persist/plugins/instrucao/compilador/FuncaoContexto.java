@@ -47,4 +47,9 @@ public class FuncaoContexto extends Container {
 		contexto.identity(compilador, token);
 		contexto = Contextos.ABRE_PARENTESES;
 	}
+
+	@Override
+	public String toString() {
+		return "function >>> " + parametros.toString();
+	}
 }

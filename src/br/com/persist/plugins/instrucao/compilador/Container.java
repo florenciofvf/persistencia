@@ -89,4 +89,9 @@ public abstract class Container extends AbstratoContexto {
 			negativo = "-".equals(operador.getId());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 }

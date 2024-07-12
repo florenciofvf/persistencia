@@ -46,4 +46,9 @@ public class OperadorContexto extends Container {
 	public boolean possuoPrioridadeSobre(OperadorContexto operador) {
 		return getPrioridade() < operador.getPrioridade();
 	}
+
+	@Override
+	public String toString() {
+		return id;
+	}
 }

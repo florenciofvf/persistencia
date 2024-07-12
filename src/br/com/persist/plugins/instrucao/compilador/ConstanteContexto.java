@@ -51,6 +51,11 @@ public class ConstanteContexto extends Container {
 		contexto.identity(compilador, token);
 		contexto = Contextos.VIRGULA;
 	}
+
+	@Override
+	public String toString() {
+		return identity.toString();
+	}
 }
 
 class ConstanteIdentityContexto extends AbstratoContexto {
@@ -63,5 +68,10 @@ class ConstanteIdentityContexto extends AbstratoContexto {
 		} else {
 			this.token = token;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return token.getString();
 	}
 }

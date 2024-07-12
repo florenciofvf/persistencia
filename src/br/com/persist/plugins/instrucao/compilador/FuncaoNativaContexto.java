@@ -49,4 +49,9 @@ public class FuncaoNativaContexto extends Container {
 			contexto = Contextos.ABRE_PARENTESES;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "function_native >>> " + parametros.toString();
+	}
 }

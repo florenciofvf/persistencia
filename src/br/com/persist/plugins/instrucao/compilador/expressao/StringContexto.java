@@ -14,4 +14,9 @@ public class StringContexto extends Container {
 	public String getString() {
 		return string;
 	}
+
+	@Override
+	public String toString() {
+		return string;
+	}
 }

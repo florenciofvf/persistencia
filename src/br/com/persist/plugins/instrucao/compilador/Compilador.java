@@ -299,7 +299,7 @@ public class Compilador {
 	}
 
 	private boolean reservado(String s) {
-		return "const".equals(s) || "function".equals(s) || "if".equals(s) || "elseif".equals(s) || "else".equals(s)
-				|| "return".equals(s);
+		return "const".equals(s) || "function".equals(s) || "function_native".equals(s) || "if".equals(s)
+				|| "elseif".equals(s) || "else".equals(s) || "return".equals(s);
 	}
 }

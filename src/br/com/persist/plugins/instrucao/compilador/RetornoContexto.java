@@ -25,4 +25,9 @@ public class RetornoContexto extends Container {
 		contexto.finalizador(compilador, token);
 		compilador.setContexto(getPai());
 	}
+
+	@Override
+	public String toString() {
+		return "return >>> " + expressao.toString();
+	}
 }

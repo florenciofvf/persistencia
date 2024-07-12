@@ -176,4 +176,9 @@ public class ExpressaoContexto extends Container {
 
 		adicionar(sel);
 	}
+
+	@Override
+	public String toString() {
+		return "Expressao: " + getFilhos().toString();
+	}
 }

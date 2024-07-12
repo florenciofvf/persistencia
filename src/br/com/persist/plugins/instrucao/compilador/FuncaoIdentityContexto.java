@@ -13,4 +13,9 @@ public class FuncaoIdentityContexto extends AbstratoContexto {
 			this.token = token;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return token.getString();
+	}
 }

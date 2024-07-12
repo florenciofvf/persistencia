@@ -27,4 +27,9 @@ public class ElseContexto extends Container {
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.setContexto(getPai());
 	}
+
+	@Override
+	public String toString() {
+		return "else";
+	}
 }

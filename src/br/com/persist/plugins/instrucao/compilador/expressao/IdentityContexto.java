@@ -14,4 +14,9 @@ public class IdentityContexto extends Container {
 	public String getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return id;
+	}
 }

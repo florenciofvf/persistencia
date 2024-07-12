@@ -54,7 +54,7 @@ public class CorpoContexto extends Container {
 }
 
 class ReservadoOuIdentityOuFinalizar extends AbstratoContexto {
-	private final String[] strings = { "const", "return" };
+	private final String[] strings = { "const", "if", "return" };
 	Token token;
 
 	@Override

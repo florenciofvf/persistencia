@@ -26,4 +26,9 @@ public class InvocacaoContexto extends Container {
 		contexto.finalizador(compilador, token);
 		compilador.setContexto(getPai());
 	}
+
+	@Override
+	public String toString() {
+		return "invocacao >>> " + argumento.toString();
+	}
 }

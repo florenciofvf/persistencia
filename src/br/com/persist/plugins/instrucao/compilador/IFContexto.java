@@ -76,7 +76,7 @@ public class IFContexto extends Container {
 		while (it.hasNext()) {
 			Container c = it.next();
 			lista.add(c);
-			excluir(c);
+			it.remove();
 		}
 		IFContexto sel = this;
 		it = lista.iterator();
@@ -104,6 +104,11 @@ public class IFContexto extends Container {
 			compilador.invalidar(token);
 		}
 		return resposta;
+	}
+
+	@Override
+	public String toString() {
+		return "if >>> " + expressao.toString();
 	}
 }
 

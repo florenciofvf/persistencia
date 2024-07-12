@@ -11,4 +11,9 @@ public class ParametroContexto extends Container {
 	public String getNome() {
 		return nome;
 	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
 }

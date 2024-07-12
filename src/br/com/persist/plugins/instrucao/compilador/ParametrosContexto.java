@@ -30,6 +30,11 @@ public class ParametrosContexto extends Container {
 		adicionar(new ParametroContexto(token));
 		contexto = VIRGULA_OU_FINALIZAR;
 	}
+
+	@Override
+	public String toString() {
+		return "Parametro(s): " + getFilhos().toString();
+	}
 }
 
 class IdentityOuFinalizar extends AbstratoContexto {

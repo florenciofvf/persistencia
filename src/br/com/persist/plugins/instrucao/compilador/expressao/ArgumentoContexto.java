@@ -114,4 +114,9 @@ public class ArgumentoContexto extends Container {
 			}
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Argumento(s): " + getFilhos().toString();
+	}
 }
