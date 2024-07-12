@@ -5,14 +5,12 @@ import br.com.persist.plugins.instrucao.compilador.expressao.ExpressaoContexto;
 
 public class ConstanteContexto extends Container {
 	private final ConstanteIdentityContexto identity;
-	private final ExpressaoContexto expressao;
 	private boolean faseIdentity;
-	private Contexto contexto;
 
 	public ConstanteContexto() {
-		identity = new ConstanteIdentityContexto();
-		expressao = new ExpressaoContexto();
+		ExpressaoContexto expressao = new ExpressaoContexto();
 		expressao.adicionar(new ExpressaoContexto());
+		identity = new ConstanteIdentityContexto();
 		contexto = Contextos.ABRE_PARENTESES;
 		adicionar(expressao);
 		faseIdentity = true;
@@ -24,7 +22,7 @@ public class ConstanteContexto extends Container {
 		if (faseIdentity) {
 			contexto = identity;
 		} else {
-			compilador.setContexto(expressao.getUltimo());
+			compilador.setContexto(get(0).getUltimo());
 			contexto = Contextos.PONTO_VIRGULA;
 		}
 	}
@@ -32,9 +30,9 @@ public class ConstanteContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		Container ultimo = getUltimo();
-		if (ultimo.isEmpty()) {
-			throw new InstrucaoException("Valor indefinido: " + identity.token.string, false);
+		Container valor = get(0).getUltimo();
+		if (valor.isEmpty()) {
+			throw new InstrucaoException("Valor indefinido para: " + identity.token.string, false);
 		}
 		compilador.setContexto(getPai());
 	}
