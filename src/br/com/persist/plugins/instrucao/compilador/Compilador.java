@@ -42,16 +42,22 @@ public class Compilador {
 		throw new InstrucaoException(string.substring(0, indice), false);
 	}
 
-	public void compilar(String arquivo) throws IOException, InstrucaoException {
+	public BibliotecaContexto compilar(String arquivo) throws IOException, InstrucaoException {
 		if (!CacheBiblioteca.COMPILADOS.isDirectory() && !CacheBiblioteca.COMPILADOS.mkdir()) {
-			return;
+			throw new InstrucaoException(CacheBiblioteca.COMPILADOS.toString(), false);
 		}
 		File file = new File(CacheBiblioteca.ROOT, arquivo);
 		if (!file.isFile()) {
-			return;
+			throw new InstrucaoException(file.toString(), false);
 		}
 		string = getString(file);
+		BibliotecaContexto biblio = new BibliotecaContexto(file.getName());
+		contexto = biblio;
 		processar();
+		if (contexto != biblio) {
+			throwInstrucaoException();
+		}
+		return biblio;
 	}
 
 	private String getString(File file) throws IOException {

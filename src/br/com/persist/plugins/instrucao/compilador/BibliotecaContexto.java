@@ -3,32 +3,14 @@ package br.com.persist.plugins.instrucao.compilador;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class BibliotecaContexto extends Container {
-	public BibliotecaContexto() {
-		adicionar(new BibliotecaCorpoContexto());
-		contexto = Contextos.ABRE_CHAVES;
+	private final String nome;
+
+	public BibliotecaContexto(String nome) {
+		this.nome = nome;
 	}
 
-	public BibliotecaCorpoContexto getCorpo() {
-		return (BibliotecaCorpoContexto) get(0);
-	}
-
-	@Override
-	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.inicializador(compilador, token);
-		compilador.setContexto(getCorpo());
-		contexto = Contextos.INVALIDO;
-	}
-}
-
-class BibliotecaCorpoContexto extends Container {
-	BibliotecaCorpoContexto() {
-		contexto = Contextos.FECHA_CHAVES;
-	}
-
-	@Override
-	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.finalizador(compilador, token);
-		compilador.setContexto(getPai());
+	public String getNome() {
+		return nome;
 	}
 
 	@Override
@@ -45,5 +27,10 @@ class BibliotecaCorpoContexto extends Container {
 		} else {
 			compilador.invalidar(token);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return nome;
 	}
 }
