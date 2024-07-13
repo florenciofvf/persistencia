@@ -35,13 +35,12 @@ public class FuncaoContexto extends Container {
 			faseParametros = false;
 		} else {
 			compilador.setContexto(getCorpo());
-			contexto = Contextos.PONTO_VIRGULA;
+			getCorpo().setFinalizadorPai(true);
 		}
 	}
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.finalizador(compilador, token);
 		compilador.setContexto(getPai());
 	}
 
