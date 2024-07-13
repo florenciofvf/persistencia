@@ -30,11 +30,13 @@ public class ElseIFContexto extends Container {
 		} else {
 			compilador.setContexto(getCorpo());
 			getCorpo().setFinalizadorPai(true);
+			contexto = Contextos.FECHA_CHAVES;
 		}
 	}
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
+		contexto.finalizador(compilador, token);
 		compilador.setContexto(getPai());
 	}
 

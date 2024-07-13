@@ -35,7 +35,8 @@ public class FuncaoContexto extends Container {
 			faseParametros = false;
 		} else {
 			compilador.setContexto(getCorpo());
-			contexto = Contextos.PONTO_VIRGULA;
+			getCorpo().setFinalizadorPai(true);
+			contexto = Contextos.FECHA_CHAVES;
 		}
 	}
 
