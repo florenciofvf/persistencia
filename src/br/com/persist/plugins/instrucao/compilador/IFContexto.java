@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.expressao.ExpressaoContexto;
 
 public class IFContexto extends Container {
 	public static final ReservadoOuFinalizar RESERVADO_OU_FINALIZAR = new ReservadoOuFinalizar();

@@ -1,7 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.expressao.ArgumentoContexto;
 
 public class InvocacaoContexto extends Container {
 	public InvocacaoContexto(Token token) {

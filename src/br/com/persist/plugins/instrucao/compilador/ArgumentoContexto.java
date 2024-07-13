@@ -1,12 +1,8 @@
-package br.com.persist.plugins.instrucao.compilador.expressao;
+package br.com.persist.plugins.instrucao.compilador;
 
 import java.util.Iterator;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.Compilador;
-import br.com.persist.plugins.instrucao.compilador.Container;
-import br.com.persist.plugins.instrucao.compilador.Contextos;
-import br.com.persist.plugins.instrucao.compilador.Token;
 
 public class ArgumentoContexto extends Container {
 	private final Container container;

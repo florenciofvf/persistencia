@@ -3,8 +3,6 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.instrucao.compilador.expressao.OperadorContexto;
-
 public abstract class Container extends AbstratoContexto {
 	private final List<Container> filhos;
 	protected Contexto contexto;
