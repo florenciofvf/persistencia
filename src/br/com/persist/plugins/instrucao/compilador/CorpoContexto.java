@@ -33,13 +33,13 @@ public class CorpoContexto extends Container {
 		contexto.reservado(compilador, token);
 		if ("const".equals(token.getString())) {
 			compilador.setContexto(new ConstanteContexto());
-			adicionar((Container) compilador.getContexto());
+			adicionarImpl(compilador, token, (Container) compilador.getContexto());
 		} else if ("return".equals(token.getString())) {
 			compilador.setContexto(new RetornoContexto());
-			adicionar((Container) compilador.getContexto());
+			adicionarImpl(compilador, token, (Container) compilador.getContexto());
 		} else if ("if".equals(token.getString())) {
 			compilador.setContexto(new IFContexto());
-			adicionar((Container) compilador.getContexto());
+			adicionarImpl(compilador, token, (Container) compilador.getContexto());
 		} else {
 			compilador.invalidar(token);
 		}
@@ -49,6 +49,14 @@ public class CorpoContexto extends Container {
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.setContexto(new InvocacaoContexto(token));
 		adicionar((Container) compilador.getContexto());
+	}
+
+	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
+		Container ultimo = getUltimo();
+		if (ultimo instanceof RetornoContexto) {
+			compilador.invalidar(token);
+		}
+		adicionar(c);
 	}
 
 	@Override
