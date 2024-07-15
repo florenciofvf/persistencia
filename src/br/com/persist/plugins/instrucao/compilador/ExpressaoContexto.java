@@ -126,7 +126,7 @@ public class ExpressaoContexto extends Container {
 	}
 
 	private void montarArvore() {
-		Iterator<Container> it = getFilhos().iterator();
+		Iterator<Container> it = getComponentes().iterator();
 		Container sel = it.next();
 		it.remove();
 
@@ -170,6 +170,6 @@ public class ExpressaoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "Expressao: " + getFilhos().toString();
+		return "Expressao: " + getComponentes().toString();
 	}
 }

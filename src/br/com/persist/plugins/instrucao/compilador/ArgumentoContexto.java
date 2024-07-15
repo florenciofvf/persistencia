@@ -99,7 +99,7 @@ public class ArgumentoContexto extends Container {
 	}
 
 	private void normalizarArvore() {
-		Iterator<Container> it = getFilhos().iterator();
+		Iterator<Container> it = getComponentes().iterator();
 		while (it.hasNext()) {
 			Container c = it.next();
 			if (c instanceof SeparadorContexto) {
@@ -110,6 +110,6 @@ public class ArgumentoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "Argumento(s): " + getFilhos().toString();
+		return "Argumento(s): " + getComponentes().toString();
 	}
 }

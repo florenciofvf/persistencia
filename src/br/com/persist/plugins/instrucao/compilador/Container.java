@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Container extends AbstratoContexto {
-	private final List<Container> filhos;
+	private final List<Container> componentes;
 	protected Contexto contexto;
 	protected boolean negativo;
 	protected Container pai;
 	protected Token token;
 
 	protected Container() {
-		filhos = new ArrayList<>();
+		componentes = new ArrayList<>();
 	}
 
 	public Token getToken() {
@@ -26,21 +26,21 @@ public abstract class Container extends AbstratoContexto {
 		return pai;
 	}
 
-	public List<Container> getFilhos() {
-		return filhos;
+	public List<Container> getComponentes() {
+		return componentes;
 	}
 
 	public int getSize() {
-		return filhos.size();
+		return componentes.size();
 	}
 
 	public boolean isEmpty() {
-		return filhos.isEmpty();
+		return componentes.isEmpty();
 	}
 
 	public Container get(int indice) {
 		if (indice >= 0 && indice < getSize()) {
-			return filhos.get(indice);
+			return componentes.get(indice);
 		}
 		return null;
 	}
@@ -74,7 +74,7 @@ public abstract class Container extends AbstratoContexto {
 	public Container excluir(Container c) {
 		boolean excluido = false;
 		if (c.pai == this) {
-			excluido = filhos.remove(c);
+			excluido = componentes.remove(c);
 			c.pai = null;
 		}
 		return excluido ? c : null;
@@ -84,7 +84,7 @@ public abstract class Container extends AbstratoContexto {
 		if (c.pai != null) {
 			c.pai.excluir(c);
 		}
-		filhos.add(c);
+		componentes.add(c);
 		c.pai = this;
 	}
 

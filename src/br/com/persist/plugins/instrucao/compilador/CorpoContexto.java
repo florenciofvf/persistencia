@@ -61,7 +61,7 @@ public class CorpoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "Corpo: " + getFilhos().toString();
+		return "Corpo: " + getComponentes().toString();
 	}
 }
 

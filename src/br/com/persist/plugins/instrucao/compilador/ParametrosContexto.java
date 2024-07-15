@@ -32,7 +32,7 @@ public class ParametrosContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "Parametro(s): " + getFilhos().toString();
+		return "Parametro(s): " + getComponentes().toString();
 	}
 }
 
