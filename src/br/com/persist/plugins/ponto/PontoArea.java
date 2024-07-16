@@ -168,6 +168,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 	void abrir(File file) {
 		List<String> lista = ArquivoUtil.lerArquivo(file);
 		for (Periodo p : periodos) {
+			p.limpar();
 			p.abrir(lista);
 		}
 	}
