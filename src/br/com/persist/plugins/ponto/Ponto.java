@@ -8,6 +8,7 @@ public class Ponto {
 	private final PontoListener listener;
 	private final Cursor cursor;
 	private Thread thread;
+	private Ponto proximo;
 	int largura;
 	int altura;
 	String s;
@@ -19,6 +20,14 @@ public class Ponto {
 		cursor = new Cursor();
 		largura = 44;
 		altura = 30;
+	}
+
+	public Ponto getProximo() {
+		return proximo;
+	}
+
+	public void setProximo(Ponto proximo) {
+		this.proximo = proximo;
 	}
 
 	public int getLargura() {
@@ -120,6 +129,7 @@ public class Ponto {
 				s = "" + c;
 			} else if (s.length() < 2) {
 				s += c;
+				proximoFocus();
 			}
 			repaint();
 		} else if (c == '\b') {
@@ -132,6 +142,14 @@ public class Ponto {
 				}
 				repaint();
 			}
+		} else if (c == '\t' && proximo != null) {
+			proximo.requestFocus();
+		}
+	}
+
+	private void proximoFocus() {
+		if (s.length() == 2 && proximo != null) {
+			proximo.requestFocus();
 		}
 	}
 
