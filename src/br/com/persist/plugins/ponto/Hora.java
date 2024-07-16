@@ -1,6 +1,7 @@
 package br.com.persist.plugins.ponto;
 
 import java.awt.Graphics2D;
+import java.util.List;
 
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.HoraUtilException;
@@ -89,5 +90,10 @@ public class Hora {
 			sb.append("m=" + minuto.s);
 		}
 		return sb.toString();
+	}
+
+	public void addPontos(List<Ponto> pontos) {
+		pontos.add(horas);
+		pontos.add(minuto);
 	}
 }

@@ -88,4 +88,9 @@ public class Periodo {
 	public void salvar(PrintWriter pw) {
 		pw.println(id + ">>>E" + esquerdo.getString() + "D" + direito.getString());
 	}
+
+	public void addPontos(List<Ponto> pontos) {
+		esquerdo.addPontos(pontos);
+		direito.addPontos(pontos);
+	}
 }

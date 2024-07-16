@@ -12,6 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.persist.assistencia.ArquivoUtil;
@@ -36,6 +38,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		periodos[1] = criarPeriodo(2, 300, 60);
 		periodos[2] = criarPeriodo(3, 300, 110);
 		periodos[3] = criarPeriodo(4, 300, 160);
+		configProximo();
 	}
 
 	private Periodo criarPeriodo(int id, int x, int y) {
@@ -43,6 +46,25 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		p.setX(x);
 		p.setY(y);
 		return p;
+	}
+
+	private void configProximo() {
+		List<Ponto> pontos = new ArrayList<>();
+		for (Periodo p : periodos) {
+			p.addPontos(pontos);
+		}
+		Iterator<Ponto> it = pontos.iterator();
+		Ponto ult = null;
+		while (it.hasNext()) {
+			Ponto p = it.next();
+			if (ult != null) {
+				ult.setProximo(p);
+			}
+			ult = p;
+		}
+		if (ult != null) {
+			ult.setProximo(pontos.get(0));
+		}
 	}
 
 	@Override
