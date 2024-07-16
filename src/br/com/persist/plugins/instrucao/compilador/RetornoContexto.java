@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class RetornoContexto extends Container {
@@ -23,6 +25,12 @@ public class RetornoContexto extends Container {
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
 		compilador.setContexto(getPai());
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) {
+		super.indexar(atomic);
+		indice = atomic.getAndIncrement();
 	}
 
 	@Override

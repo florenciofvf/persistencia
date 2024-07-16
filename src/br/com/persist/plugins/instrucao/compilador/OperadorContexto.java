@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class OperadorContexto extends Container {
 	private final String id;
 
@@ -42,6 +44,12 @@ public class OperadorContexto extends Container {
 
 	public boolean possuoPrioridadeSobre(OperadorContexto operador) {
 		return getPrioridade() < operador.getPrioridade();
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) {
+		super.indexar(atomic);
+		indice = atomic.getAndIncrement();
 	}
 
 	@Override

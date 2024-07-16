@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class NumeroContexto extends Container {
 	private final String numero;
 
@@ -10,6 +12,11 @@ public class NumeroContexto extends Container {
 
 	public String getNumero() {
 		return numero;
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) {
+		indice = atomic.getAndIncrement();
 	}
 
 	@Override

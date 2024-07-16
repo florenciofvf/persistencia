@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Container extends AbstratoContexto {
 	private final List<Container> componentes;
@@ -9,6 +10,7 @@ public abstract class Container extends AbstratoContexto {
 	protected boolean negativo;
 	protected Container pai;
 	protected Token token;
+	protected int indice;
 
 	protected Container() {
 		componentes = new ArrayList<>();
@@ -92,6 +94,15 @@ public abstract class Container extends AbstratoContexto {
 		if (c instanceof OperadorContexto) {
 			OperadorContexto operador = (OperadorContexto) c;
 			negativo = "-".equals(operador.getId());
+		}
+	}
+
+	public void indexar(AtomicInteger atomic) {
+		for (Container c : componentes) {
+			c.indexar(atomic);
+		}
+		if(negativo) {
+			atomic.getAndIncrement();
 		}
 	}
 

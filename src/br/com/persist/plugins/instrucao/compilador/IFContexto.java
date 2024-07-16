@@ -43,6 +43,9 @@ public class IFContexto extends Container {
 		contexto.finalizador(compilador, token);
 		compilador.setContexto(getPai());
 		normalizarArvore(compilador, token);
+		if (!(getCorpo().getUltimo() instanceof RetornoContexto) && (getUltimo() instanceof ElseContexto)) {
+			getCorpo().adicionar(new GotoContexto());
+		}
 	}
 
 	@Override
