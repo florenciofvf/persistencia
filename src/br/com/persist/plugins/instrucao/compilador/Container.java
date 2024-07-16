@@ -101,7 +101,7 @@ public abstract class Container extends AbstratoContexto {
 		for (Container c : componentes) {
 			c.indexar(atomic);
 		}
-		if(negativo) {
+		if (negativo) {
 			atomic.getAndIncrement();
 		}
 	}
