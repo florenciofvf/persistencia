@@ -37,7 +37,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.plugins.instrucao.pro.Processador;
+import br.com.persist.plugins.instrucao.processador.Processador;
 
 public class InstrucaoContainer extends AbstratoContainer {
 	private static final File file = new File(InstrucaoConstantes.INSTRUCAO);

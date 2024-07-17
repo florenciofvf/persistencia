@@ -10,7 +10,7 @@ public class Processador {
 	private final PilhaOperando pilhaOperando = new PilhaOperando();
 	private final PilhaFuncao pilhaFuncao = new PilhaFuncao();
 
-	public List<Object> executar(String nomeBiblioteca, String nomeFuncao, Object... args) throws InstrucaoException {
+	public List<Object> processar(String nomeBiblioteca, String nomeFuncao, Object... args) throws InstrucaoException {
 		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioteca);
 		Funcao funcao = biblioteca.getFuncao(nomeFuncao);
 		for (Object obj : args) {

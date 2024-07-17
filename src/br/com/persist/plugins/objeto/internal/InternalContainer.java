@@ -103,9 +103,7 @@ import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.fragmento.Fragmento;
 import br.com.persist.plugins.fragmento.FragmentoDialogo;
 import br.com.persist.plugins.fragmento.FragmentoListener;
-import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.pro.Biblioteca;
-import br.com.persist.plugins.instrucao.pro.Processador;
+import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
@@ -2407,13 +2405,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private void checarRegistro() {
 				String nomeBiblio = objeto.getBiblioChecagem();
 				Processador processador = new Processador();
-				Biblioteca biblioteca = null;
-				try {
-					biblioteca = processador.getBiblioteca(nomeBiblio);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
-					return;
-				}
 				Conexao conexao = getConexao();
 				Connection conn = null;
 				if (conexao != null) {
@@ -2445,21 +2436,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 						InternalContainer.this, null);
 				Map<String, Object> map = modelo.getMap(linhas[0], coletor);
+				map.put("#conexao", conn);
 				try {
-					setVariaveis(biblioteca, map, conn);
-					List<Object> resp = processador.executar(nomeBiblio, "main");
+					List<Object> resp = processador.processar(nomeBiblio, "main", map);
 					Util.mensagem(InternalContainer.this, getStringResposta(resp));
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 				}
-			}
-
-			private void setVariaveis(Biblioteca biblioteca, Map<String, Object> map, Connection conn)
-					throws InstrucaoException {
-				for (Map.Entry<String, Object> entry : map.entrySet()) {
-					biblioteca.declararVariavel("#" + entry.getKey(), entry.getValue());
-				}
-				biblioteca.declararVariavel("#conexao", conn);
 			}
 
 			private String getStringResposta(List<Object> lista) {
