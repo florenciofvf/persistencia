@@ -1,11 +1,8 @@
 package br.com.persist.plugins.instrucao.processador;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.instrucoes.Add;
 import br.com.persist.plugins.instrucao.instrucoes.And;
 import br.com.persist.plugins.instrucao.instrucoes.DeclareVar;
@@ -33,44 +30,48 @@ import br.com.persist.plugins.instrucao.instrucoes.Return;
 import br.com.persist.plugins.instrucao.instrucoes.Sub;
 import br.com.persist.plugins.instrucao.instrucoes.Xor;
 
-public class Processador {
-	private final CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
-	private final PilhaOperando pilhaOperando = new PilhaOperando();
-	private final PilhaFuncao pilhaFuncao = new PilhaFuncao();
+public class Instrucoes {
+	static final Map<String, Instrucao> cache = new HashMap<>();
 
-	public List<Object> executar(String nomeBiblioteca, String nomeMetodo, Object... args) throws InstrucaoException {
-		Invocacao invocacao = new Invocacao();
-		invocacao.setParametros(nomeBiblioteca + "." + nomeMetodo);
-		for (Object obj : args) {
-			pilhaOperando.push(obj);
-		}
-		invocacao.processar(cacheBiblioteca, pilhaFuncao, pilhaOperando);
-
-		Funcao funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
-		while (funcao != null) {
-			Instrucao instrucao = funcao.getInstrucao();
-			instrucao.processar(cacheBiblioteca, pilhaFuncao, pilhaOperando);
-			funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
-		}
-
-		List<Object> resposta = new ArrayList<>();
-		while (!pilhaOperando.isEmpty()) {
-			resposta.add(pilhaOperando.pop());
-		}
-
-		return resposta;
+	private Instrucoes() {
 	}
 
-	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
-		return cacheBiblioteca.getBiblioteca(nome);
+	private static void add(Instrucao instrucao) {
+		if (instrucao != null) {
+			cache.put(instrucao.getNome(), instrucao);
+		}
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(cacheBiblioteca.toString() + "\n");
-		sb.append(pilhaFuncao.toString() + "\n");
-		sb.append(pilhaOperando.toString());
-		return sb.toString();
+	public static Instrucao get(String nome) {
+		return cache.get(nome);
+	}
+
+	static {
+		add(new Add());
+		add(new And());
+		add(new DeclareVar());
+		add(new Diff());
+		add(new Div());
+		add(new Goto());
+		add(new Ifeq());
+		add(new Igual());
+		add(new Invoke());
+		add(new InvokeDin());
+		add(new LoadPar());
+		add(new LoadVar());
+		add(new Maior());
+		add(new MaiorI());
+		add(new Menor());
+		add(new MenorI());
+		add(new Mul());
+		add(new Neg());
+		add(new Or());
+		add(new PushBD());
+		add(new PushBI());
+		add(new PushSTR());
+		add(new Rem());
+		add(new Return());
+		add(new Sub());
+		add(new Xor());
 	}
 }
