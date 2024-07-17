@@ -11,7 +11,7 @@ public class Processador {
 	private final PilhaFuncao pilhaFuncao = new PilhaFuncao();
 
 	public List<Object> executar(String nomeBiblioteca, String nomeMetodo, Object... args) throws InstrucaoException {
-		Invocacao invocacao = new Invocacao();
+		InvocacaoInstrucao invocacao = new InvocacaoInstrucao();
 		invocacao.setParametros(nomeBiblioteca + "." + nomeMetodo);
 		for (Object obj : args) {
 			pilhaOperando.push(obj);

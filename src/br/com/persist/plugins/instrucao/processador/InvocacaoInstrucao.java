@@ -1,76 +1,65 @@
-package br.com.persist.plugins.instrucao.inst;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.pro.Biblioteca;
-import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
-import br.com.persist.plugins.instrucao.pro.Instrucao;
-import br.com.persist.plugins.instrucao.pro.Metodo;
-import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
-import br.com.persist.plugins.instrucao.pro.PilhaOperando;
+import br.com.persist.plugins.instrucao.compilador.InvocacaoContexto;
 
-public class Invoke extends Instrucao {
-	private String nomeMetodo;
+public class InvocacaoInstrucao extends Instrucao {
+	private String nomeBiblio;
+	private String nomeFuncao;
 
-	public Invoke(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.INVOKE);
+	public InvocacaoInstrucao() {
+		super(InvocacaoContexto.INVOKE);
 	}
 
 	@Override
-	public Instrucao clonar(Metodo metodo) {
-		Invoke resp = new Invoke(metodo);
-		resp.nomeMetodo = nomeMetodo;
-		return resp;
+	public Instrucao clonar() {
+		return this;
 	}
 
 	@Override
-	public void setParam(String string) throws InstrucaoException {
-		if (string == null) {
-			throw new InstrucaoException("Invoke metodo null.");
-		}
-		this.nomeMetodo = string;
-	}
-
-	@Override
-	public String getParam() {
-		return nomeMetodo;
-	}
-
-	@Override
-	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
-			throws InstrucaoException {
-		String[] array = nomeMetodo.split("\\.");
-		Biblioteca biblioteca;
-		Metodo invocar;
+	public void setParametros(String string) {
+		String[] array = string.split("\\.");
 		if (array.length == 2) {
-			biblioteca = cacheBiblioteca.getBiblioteca(array[0]);
-			invocar = biblioteca.getMetodo(array[1]);
+			nomeBiblio = array[0];
+			nomeFuncao = array[1];
 		} else {
-			if (metodo == null) {
+			nomeFuncao = array[0];
+		}
+	}
+
+	@Override
+	public void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
+			throws InstrucaoException {
+		Biblioteca biblioteca;
+		Funcao invocar;
+		if (nomeBiblio != null) {
+			biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
+		} else {
+			if (funcao == null) {
 				throw new InstrucaoException("erro.metodo_inexistente", "null", "null");
 			}
-			biblioteca = metodo.getBiblioteca();
-			invocar = biblioteca.getMetodo(array[0]);
+			biblioteca = funcao.getBiblioteca();
 		}
-		Metodo clone = invocar.clonar();
+		invocar = biblioteca.getFuncao(nomeFuncao);
+		Funcao clone = invocar.clonar();
 		if (!clone.isNativo()) {
 			try {
 				setParametros(clone, pilhaOperando);
-				pilhaMetodo.push(clone);
+				pilhaFuncao.push(clone);
 			} catch (Exception ex) {
-				throw new InstrucaoException(stringPilhaMetodo(clone, pilhaMetodo), ex);
+				throw new InstrucaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
 			}
 		} else {
-			Object resp = invocarNativo(clone, pilhaMetodo, pilhaOperando);
+			Object resp = invocarNativo(clone, pilhaFuncao, pilhaOperando);
 			pilhaOperando.push(resp);
 		}
 	}
 
-	static void setParametros(Metodo metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
+	static void setParametros(Funcao metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
 		List<Integer> params = listaParam(metodo);
 		for (int i = params.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
@@ -78,7 +67,7 @@ public class Invoke extends Instrucao {
 		}
 	}
 
-	static List<Integer> listaParam(Metodo metodo) {
+	static List<Integer> listaParam(Funcao metodo) {
 		List<Integer> resp = new ArrayList<>();
 		for (int i = 0; i < metodo.getTotalParam(); i++) {
 			resp.add(i);
@@ -86,7 +75,7 @@ public class Invoke extends Instrucao {
 		return resp;
 	}
 
-	private Object invocarNativo(Metodo metodo, PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando)
+	private Object invocarNativo(Funcao metodo, PilhaFuncao pilhaMetodo, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
 		Class<?> klass = null;
 		try {
@@ -105,7 +94,7 @@ public class Invoke extends Instrucao {
 		}
 	}
 
-	static String stringPilhaMetodo(Metodo metodo, PilhaMetodo pilhaMetodo) throws InstrucaoException {
+	static String stringPilhaMetodo(Funcao metodo, PilhaFuncao pilhaMetodo) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder(metodo.toString() + "\n");
 		while (!pilhaMetodo.isEmpty()) {
 			sb.append(pilhaMetodo.pop() + "\n");

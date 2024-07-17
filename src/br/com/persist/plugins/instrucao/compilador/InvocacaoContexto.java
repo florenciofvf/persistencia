@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InvocacaoContexto extends Container {
+	public static final String INVOKE = "invoke";
+
 	public InvocacaoContexto(Token token) {
 		adicionar(new ArgumentoContexto(null));
 		contexto = Contextos.ABRE_PARENTESES;

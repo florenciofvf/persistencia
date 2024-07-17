@@ -36,8 +36,6 @@ public class InstrucaoConstantes {
 	public static final String LOAD_PAR = "load_par";
 	public static final String LOAD_VAR = "load_var";
 	public static final String LAMBDA = "lambda";
-	public static final String INVOKE = "invoke";
-	public static final String NEG = "neg";
 	public static final String VAR = "var";
 	public static final String VAL = "val";
 	public static final String CR = "\\r";
