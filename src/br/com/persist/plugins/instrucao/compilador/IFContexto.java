@@ -8,7 +8,6 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class IFContexto extends Container {
 	public static final ReservadoOuFinalizar RESERVADO_OU_FINALIZAR = new ReservadoOuFinalizar();
-	public static final String IF_EQ = "ifeq";
 	private boolean faseExpressao;
 
 	public IFContexto() {

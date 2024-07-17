@@ -1,13 +1,13 @@
 package br.com.persist.plugins.instrucao.processador;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.GotoContexto;
+import br.com.persist.plugins.instrucao.compilador.IfEqContexto;
 
-public class GotoInstrucao extends Instrucao {
+public class IfEqInstrucao extends Instrucao {
 	private int indice;
 
-	public GotoInstrucao() {
-		super(GotoContexto.GOTO);
+	public IfEqInstrucao() {
+		super(IfEqContexto.IF_EQ);
 	}
 
 	@Override
@@ -23,6 +23,11 @@ public class GotoInstrucao extends Instrucao {
 	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
-		funcao.setIndice(indice);
+		Object operando = pilhaOperando.pop();
+		InstrucaoUtil.checarNumber(operando);
+		int valor = ((Number) operando).intValue();
+		if (valor == 0) {
+			funcao.setIndice(indice);
+		}
 	}
 }
