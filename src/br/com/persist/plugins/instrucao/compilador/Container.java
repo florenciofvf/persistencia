@@ -121,16 +121,6 @@ public abstract class Container extends AbstratoContexto {
 		}
 	}
 
-	public void salvarNegativo(PrintWriter pw) {
-		if (negativo) {
-			print(pw, InstrucaoConstantes.NEG);
-		}
-	}
-
-	/**
-	 * public abstract void print(PrintWriter pw) throws InstrucaoException;
-	 **/
-
 	void print(PrintWriter pw, String... strings) {
 		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.ESPACO + indice + " -");
 		for (String string : strings) {

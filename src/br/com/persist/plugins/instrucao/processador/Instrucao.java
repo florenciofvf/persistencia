@@ -7,7 +7,6 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public abstract class Instrucao {
 	protected final String nome;
 	protected String parametros;
-	protected Funcao funcao;
 
 	protected Instrucao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -15,14 +14,6 @@ public abstract class Instrucao {
 
 	public String getNome() {
 		return nome;
-	}
-
-	public Funcao getFuncao() {
-		return funcao;
-	}
-
-	public void setFuncao(Funcao funcao) {
-		this.funcao = funcao;
 	}
 
 	public String getParametros() {
@@ -35,7 +26,8 @@ public abstract class Instrucao {
 
 	public abstract Instrucao clonar();
 
-	public abstract void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaMetodo, PilhaOperando pilhaOperando) throws InstrucaoException;
+	public abstract void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
+			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException;
 
 	@Override
 	public String toString() {

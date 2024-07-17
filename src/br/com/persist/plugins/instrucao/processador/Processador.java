@@ -10,18 +10,18 @@ public class Processador {
 	private final PilhaOperando pilhaOperando = new PilhaOperando();
 	private final PilhaFuncao pilhaFuncao = new PilhaFuncao();
 
-	public List<Object> executar(String nomeBiblioteca, String nomeMetodo, Object... args) throws InstrucaoException {
-		InvocacaoInstrucao invocacao = new InvocacaoInstrucao();
-		invocacao.setParametros(nomeBiblioteca + "." + nomeMetodo);
+	public List<Object> executar(String nomeBiblioteca, String nomeFuncao, Object... args) throws InstrucaoException {
+		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioteca);
+		Funcao funcao = biblioteca.getFuncao(nomeFuncao);
 		for (Object obj : args) {
 			pilhaOperando.push(obj);
 		}
-		invocacao.processar(cacheBiblioteca, pilhaFuncao, pilhaOperando);
+		pilhaFuncao.push(funcao);
 
-		Funcao funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
+		funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
 		while (funcao != null) {
 			Instrucao instrucao = funcao.getInstrucao();
-			instrucao.processar(cacheBiblioteca, pilhaFuncao, pilhaOperando);
+			instrucao.processar(cacheBiblioteca, funcao.getBiblioteca(), funcao, pilhaFuncao, pilhaOperando);
 			funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
 		}
 
@@ -31,10 +31,6 @@ public class Processador {
 		}
 
 		return resposta;
-	}
-
-	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
-		return cacheBiblioteca.getBiblioteca(nome);
 	}
 
 	@Override

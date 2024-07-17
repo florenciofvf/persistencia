@@ -32,19 +32,20 @@ public class InvocacaoInstrucao extends Instrucao {
 	}
 
 	@Override
-	public void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
+	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
+			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
-		Biblioteca biblioteca;
+		Biblioteca biblio;
 		Funcao invocar;
 		if (nomeBiblio != null) {
-			biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
+			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio);
 		} else {
 			if (funcao == null) {
 				throw new InstrucaoException("erro.metodo_inexistente", "null", "null");
 			}
-			biblioteca = funcao.getBiblioteca();
+			biblio = funcao.getBiblioteca();
 		}
-		invocar = biblioteca.getFuncao(nomeFuncao);
+		invocar = biblio.getFuncao(nomeFuncao);
 		Funcao clone = invocar.clonar();
 		if (!clone.isNativo()) {
 			try {
@@ -63,13 +64,13 @@ public class InvocacaoInstrucao extends Instrucao {
 		List<Integer> params = listaParam(metodo);
 		for (int i = params.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
-			metodo.setValorParam(params.get(i), valor);
+			metodo.setValorParametro(params.get(i), valor);
 		}
 	}
 
 	static List<Integer> listaParam(Funcao metodo) {
 		List<Integer> resp = new ArrayList<>();
-		for (int i = 0; i < metodo.getTotalParam(); i++) {
+		for (int i = 0; i < metodo.getTotalParametro(); i++) {
 			resp.add(i);
 		}
 		return resp;

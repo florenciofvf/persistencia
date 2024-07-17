@@ -1,41 +1,52 @@
-package br.com.persist.plugins.instrucao.pro;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.inst.InstrucaoUtil;
 
-public class Metodo {
+public class Funcao {
+	private final List<Parametro> parametros;
 	private final List<Instrucao> instrucoes;
-	private final List<Param> parametros;
-	private final Biblioteca biblioteca;
-	private final String biblioNativa;
-	private final boolean nativo;
+	private Biblioteca biblioteca;
+	private String biblioNativa;
 	private final String nome;
 	private int indice;
 
-	public Metodo(Biblioteca biblioteca, String nome, boolean nativo, String biblioNativa) {
-		this.biblioteca = Objects.requireNonNull(biblioteca);
+	public Funcao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
-		this.biblioNativa = biblioNativa;
 		parametros = new ArrayList<>();
 		instrucoes = new ArrayList<>();
-		this.nativo = nativo;
 	}
 
-	public Metodo clonar() throws InstrucaoException {
-		Metodo metodo = new Metodo(biblioteca, nome, nativo, biblioNativa);
-		for (Param p : parametros) {
-			metodo.addParam(p.nome);
+	public Funcao clonar() throws InstrucaoException {
+		Funcao funcao = new Funcao(nome);
+		funcao.biblioNativa = biblioNativa;
+		funcao.biblioteca = biblioteca;
+		for (Parametro p : parametros) {
+			funcao.addParametro(p.nome);
 		}
-		if (!nativo) {
-			for (Instrucao inst : instrucoes) {
-				metodo.addInstrucao(inst);
-			}
+		for (Instrucao inst : instrucoes) {
+			funcao.addInstrucao(inst);
 		}
-		return metodo;
+		return funcao;
+	}
+
+	public Biblioteca getBiblioteca() {
+		return biblioteca;
+	}
+
+	public void setBiblioteca(Biblioteca biblioteca) {
+		this.biblioteca = biblioteca;
+	}
+
+	public String getBiblioNativa() {
+		return biblioNativa;
+	}
+
+	public void setBiblioNativa(String biblioNativa) {
+		this.biblioNativa = biblioNativa;
 	}
 
 	public int getIndice() {
@@ -53,95 +64,84 @@ public class Metodo {
 		return nome;
 	}
 
-	public Biblioteca getBiblioteca() {
-		return biblioteca;
-	}
-
-	public String getBiblioNativa() {
-		return biblioNativa;
-	}
-
 	Instrucao getInstrucao() {
 		Instrucao resp = instrucoes.get(indice);
 		indice++;
 		return resp;
 	}
 
-	public void addParam(String nome) throws InstrucaoException {
+	public void addParametro(String nome) throws InstrucaoException {
 		InstrucaoUtil.checarParam(nome);
-		Param param = new Param(nome);
+		Parametro param = new Parametro(nome);
 		if (!parametros.contains(param)) {
 			param.indice = parametros.size();
 			parametros.add(param);
 		}
 	}
 
-	public void setValorParam(int indice, Object valor) throws InstrucaoException {
+	public void setValorParametro(int indice, Object valor) throws InstrucaoException {
 		InstrucaoUtil.checarOperando(valor);
 		parametros.get(indice).valor = valor;
 	}
 
-	public void setValorParam(String nome, Object valor) throws InstrucaoException {
-		int pos = getIndiceParam(nome);
-		setValorParam(pos, valor);
+	public void setValorParametro(String nome, Object valor) throws InstrucaoException {
+		int pos = getIndiceParametro(nome);
+		setValorParametro(pos, valor);
 	}
 
-	public Object getValorParam(int indice) {
+	public Object getValorParametro(int indice) {
 		return parametros.get(indice).valor;
 	}
 
-	public Object getValorParam(String nome) throws InstrucaoException {
-		int pos = getIndiceParam(nome);
-		return getValorParam(pos);
+	public Object getValorParametro(String nome) throws InstrucaoException {
+		int pos = getIndiceParametro(nome);
+		return getValorParametro(pos);
 	}
 
-	public int getTotalParam() {
+	public int getTotalParametro() {
 		return parametros.size();
 	}
 
-	private int getIndiceParam(String nome) throws InstrucaoException {
+	private int getIndiceParametro(String nome) throws InstrucaoException {
 		for (int i = 0; i < parametros.size(); i++) {
 			if (parametros.get(i).nome.equals(nome)) {
 				return i;
 			}
 		}
-		throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, biblioteca.getNome());
+		throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, this.nome);
 	}
 
 	public void addInstrucao(Instrucao instrucao) throws InstrucaoException {
 		if (instrucao != null) {
-			if (nativo) {
+			if (isNativo()) {
 				throw new InstrucaoException("erro.metodo_nativo_add_inst", nome);
 			}
-			instrucoes.add(instrucao.clonar(this));
+			instrucoes.add(instrucao);
 		}
 	}
 
 	public boolean isNativo() {
-		return nativo;
+		return biblioNativa != null;
 	}
 
 	@Override
 	public String toString() {
-		return (nativo ? "nativo " + biblioNativa + " " : "") + nome + "(" + parametros + ")";
+		return (isNativo() ? "nativo " + biblioNativa + " " : "") + nome + "(" + parametros + ")";
 	}
 }
 
-class Param {
+class Parametro {
 	final String nome;
 	Object valor;
 	int indice;
 
-	public Param(String nome) {
+	public Parametro(String nome) {
 		this.nome = nome;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		return result;
+		return Objects.hash(nome);
 	}
 
 	@Override
@@ -150,18 +150,10 @@ class Param {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
-		Param other = (Param) obj;
-		if (nome == null) {
-			if (other.nome != null) {
-				return false;
-			}
-		} else if (!nome.equals(other.nome)) {
-			return false;
-		}
-		return true;
+		Parametro other = (Parametro) obj;
+		return Objects.equals(nome, other.nome);
 	}
 
 	@Override

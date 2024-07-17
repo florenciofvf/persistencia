@@ -28,15 +28,16 @@ public class LoadConstanteInstrucao extends Instrucao {
 	}
 
 	@Override
-	public void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
+	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
+			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
-		Biblioteca biblioteca;
+		Biblioteca biblio;
 		if (nomeBiblio != null) {
-			biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
+			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio);
 		} else {
-			biblioteca = funcao.getBiblioteca();
+			biblio = funcao.getBiblioteca();
 		}
-		Object valor = biblioteca.getValorConstante(nomeConst);
+		Object valor = biblio.getValorConstante(nomeConst);
 		pilhaOperando.push(valor);
 	}
 }
