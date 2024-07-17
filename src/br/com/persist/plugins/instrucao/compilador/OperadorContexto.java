@@ -1,8 +1,26 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class OperadorContexto extends Container {
+	public static final String ADD = "add";
+	public static final String SUB = "sub";
+	public static final String MUL = "mul";
+	public static final String DIV = "div";
+	public static final String REM = "rem";
+
+	public static final String MENOR_IGUAL = "le";
+	public static final String MAIOR_IGUAL = "ge";
+	public static final String MENOR = "lt";
+	public static final String MAIOR = "gt";
+	public static final String IGUAL = "eq";
+	public static final String DIFF = "ne";
+
+	public static final String AND = "and";
+	public static final String XOR = "xor";
+	public static final String OR = "or";
+
 	private final String id;
 
 	public OperadorContexto(Token token) {
@@ -33,6 +51,52 @@ public class OperadorContexto extends Container {
 		throw new IllegalStateException(id);
 	}
 
+	public String getCodigo() {
+		if (igual("%")) {
+			return REM;
+		}
+		if (igual("*")) {
+			return MUL;
+		}
+		if (igual("/")) {
+			return DIV;
+		}
+		if (igual("+")) {
+			return ADD;
+		}
+		if (igual("-")) {
+			return SUB;
+		}
+		if (igual("=")) {
+			return IGUAL;
+		}
+		if (igual("!=")) {
+			return DIFF;
+		}
+		if (igual("<")) {
+			return MENOR;
+		}
+		if (igual(">")) {
+			return MAIOR;
+		}
+		if (igual("<=")) {
+			return MENOR_IGUAL;
+		}
+		if (igual(">=")) {
+			return MAIOR_IGUAL;
+		}
+		if (igual("&")) {
+			return AND;
+		}
+		if (igual("|")) {
+			return OR;
+		}
+		if (igual("^")) {
+			return XOR;
+		}
+		throw new IllegalStateException(id);
+	}
+
 	private boolean igual(String... strings) {
 		for (String string : strings) {
 			if (string.equals(id)) {
@@ -50,6 +114,12 @@ public class OperadorContexto extends Container {
 	public void indexar(AtomicInteger atomic) {
 		super.indexar(atomic);
 		indice = atomic.getAndIncrement();
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		super.salvar(pw);
+		print(pw, getCodigo());
 	}
 
 	@Override

@@ -1,8 +1,10 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StringContexto extends Container {
+	public static final String PUSH_STRING = "push_string";
 	private final String string;
 
 	public StringContexto(Token token) {
@@ -17,6 +19,12 @@ public class StringContexto extends Container {
 	@Override
 	public void indexar(AtomicInteger atomic) {
 		indice = atomic.getAndIncrement();
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		super.salvar(pw);
+		print(pw, PUSH_STRING, string);
 	}
 
 	@Override

@@ -1,10 +1,13 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class RetornoContexto extends Container {
+	public static final String RETURN = "return";
+
 	public RetornoContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
 		adicionar(new ExpressaoContexto());
@@ -31,6 +34,12 @@ public class RetornoContexto extends Container {
 	public void indexar(AtomicInteger atomic) {
 		super.indexar(atomic);
 		indice = atomic.getAndIncrement();
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		super.salvar(pw);
+		print(pw, RETURN);
 	}
 
 	@Override

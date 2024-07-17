@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.Iterator;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -166,6 +167,12 @@ public class ExpressaoContexto extends Container {
 		}
 
 		adicionar(sel);
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		super.salvar(pw);
+		salvarNegativo(pw);
 	}
 
 	@Override

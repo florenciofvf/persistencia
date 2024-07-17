@@ -4,11 +4,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
-import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
+import br.com.persist.plugins.instrucao.processador.Biblioteca;
+import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class Compilador {
 	private String string;
@@ -56,6 +58,10 @@ public class Compilador {
 		processar();
 		if (contexto != biblio) {
 			throwInstrucaoException();
+		}
+		File destino = new File(CacheBiblioteca.COMPILADOS, arquivo + Biblioteca.EXTENSAO);
+		try (PrintWriter pw = new PrintWriter(destino)) {
+			biblio.salvar(pw);
 		}
 		return biblio;
 	}

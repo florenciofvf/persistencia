@@ -1,8 +1,11 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 
 public abstract class Container extends AbstratoContexto {
 	private final List<Container> componentes;
@@ -104,6 +107,36 @@ public abstract class Container extends AbstratoContexto {
 		if (negativo) {
 			atomic.getAndIncrement();
 		}
+	}
+
+	public void configPontoDesvio() {
+		for (Container c : componentes) {
+			c.configPontoDesvio();
+		}
+	}
+
+	public void salvar(PrintWriter pw) {
+		for (Container c : componentes) {
+			c.salvar(pw);
+		}
+	}
+
+	public void salvarNegativo(PrintWriter pw) {
+		if (negativo) {
+			print(pw, InstrucaoConstantes.NEG);
+		}
+	}
+
+	/**
+	 * public abstract void print(PrintWriter pw) throws InstrucaoException;
+	 **/
+
+	void print(PrintWriter pw, String... strings) {
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.ESPACO + indice + " -");
+		for (String string : strings) {
+			pw.print(InstrucaoConstantes.ESPACO + string);
+		}
+		pw.println();
 	}
 
 	@Override
