@@ -6,7 +6,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Instrucao {
 	protected final String nome;
-	private String parametros;
+	protected String parametros;
 	protected Funcao funcao;
 
 	protected Instrucao(String nome) {

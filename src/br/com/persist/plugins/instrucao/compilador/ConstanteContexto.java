@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.compilador;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ConstanteContexto extends Container {
+	public static final String LOAD_CONST = "load_const";
 	private final ConstanteIdentityContexto identity;
 	private boolean faseIdentity;
 

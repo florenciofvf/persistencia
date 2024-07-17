@@ -25,22 +25,9 @@ public class InstrucaoConstantes {
 	public static final String BIG_DECIMAL = "big_decimal";
 	public static final String STRING = "string";
 
-	public static final String LOAD_LISTA_VAZIA = "load_lista_vazia";
-	public static final String LOAD_HEAD_LISTA = "load_head_lista";
-	public static final String LOAD_TAIL_LISTA = "load_tail_lista";
-	public static final String INVOKE_DIN = "invoke_dinamic";
 	public static final String DECLARE_VAR = "declare_var";
-	public static final String MODIFIC_VAR = "modific_var";
-	public static final String ADD_LISTA = "add_lista";
-	public static final String TAIL_CALL = "tailcall";
-	public static final String LOAD_PAR = "load_par";
-	public static final String LOAD_VAR = "load_var";
-	public static final String LAMBDA = "lambda";
-	public static final String VAR = "var";
-	public static final String VAL = "val";
 	public static final String CR = "\\r";
 	public static final String LF = "\\n";
-	public static final String IF = "if";
 
 	private InstrucaoConstantes() {
 	}
