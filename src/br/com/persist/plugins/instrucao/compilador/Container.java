@@ -9,8 +9,8 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 
 public abstract class Container extends AbstratoContexto {
 	private final List<Container> componentes;
+	protected NegativoContexto negativo;
 	protected Contexto contexto;
-	protected boolean negativo;
 	protected Container pai;
 	protected Token token;
 	protected int indice;
@@ -96,7 +96,9 @@ public abstract class Container extends AbstratoContexto {
 	public void negativar(Contexto c) {
 		if (c instanceof OperadorContexto) {
 			OperadorContexto operador = (OperadorContexto) c;
-			negativo = "-".equals(operador.getId());
+			if ("-".equals(operador.getId())) {
+				negativo = new NegativoContexto();
+			}
 		}
 	}
 
@@ -104,8 +106,8 @@ public abstract class Container extends AbstratoContexto {
 		for (Container c : componentes) {
 			c.indexar(atomic);
 		}
-		if (negativo) {
-			atomic.getAndIncrement();
+		if (negativo != null) {
+			negativo.indexar(atomic);
 		}
 	}
 
@@ -118,6 +120,12 @@ public abstract class Container extends AbstratoContexto {
 	public void salvar(PrintWriter pw) {
 		for (Container c : componentes) {
 			c.salvar(pw);
+		}
+	}
+
+	public void salvarNegativo(PrintWriter pw) {
+		if (negativo != null) {
+			negativo.salvar(pw);
 		}
 	}
 
