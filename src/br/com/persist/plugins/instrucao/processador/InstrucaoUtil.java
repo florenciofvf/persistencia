@@ -1,4 +1,4 @@
-package br.com.persist.plugins.instrucao.inst;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -22,7 +22,7 @@ public class InstrucaoUtil {
 		}
 	}
 
-	public static void checarMetodo(Object obj) throws InstrucaoException {
+	public static void checarFuncao(Object obj) throws InstrucaoException {
 		if (obj == null) {
 			throw new InstrucaoException("erro.valor_invalido_metodo_null");
 		}
