@@ -1,53 +1,53 @@
-package br.com.persist.plugins.instrucao.pro;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.geradores.Funcao;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.inst.InstrucaoUtil;
 
-public class PilhaMetodo {
-	private final List<Metodo> metodos;
+public class PilhaFuncao {
+	private final List<Funcao> funcoes;
 
-	public PilhaMetodo() {
-		metodos = new ArrayList<>();
+	public PilhaFuncao() {
+		funcoes = new ArrayList<>();
 	}
 
 	private void checar() throws InstrucaoException {
 		if (isEmpty()) {
-			throw new InstrucaoException("PilhaMetodo vazia >>> " + toString(), false);
+			throw new InstrucaoException("PilhaFuncao vazia >>> " + toString(), false);
 		}
 	}
 
-	public Metodo peek() throws InstrucaoException {
-		checar();
-		return metodos.get(metodos.size() - 1);
+	public void push(Funcao funcao) throws InstrucaoException {
+		InstrucaoUtil.checarFuncao(funcao);
+		funcoes.add(funcao);
 	}
 
-	public void push(Metodo metodo) throws InstrucaoException {
-		InstrucaoUtil.checarMetodo(metodo);
-		metodos.add(metodo);
+	public Funcao peek() throws InstrucaoException {
+		checar();
+		return funcoes.get(funcoes.size() - 1);
 	}
 
-	public Metodo pop() throws InstrucaoException {
+	public Funcao pop() throws InstrucaoException {
 		checar();
-		return metodos.remove(metodos.size() - 1);
+		return funcoes.remove(funcoes.size() - 1);
 	}
 
 	public int size() {
-		return metodos.size();
+		return funcoes.size();
 	}
 
 	public boolean isEmpty() {
-		return size() == 0;
+		return funcoes.isEmpty();
+	}
+
+	public void clear() {
+		funcoes.clear();
 	}
 
 	@Override
 	public String toString() {
-		return "PilhaMetodo=" + metodos.toString();
-	}
-
-	public void clear() {
-		metodos.clear();
+		return "PilhaFuncao=" + funcoes.toString();
 	}
 }

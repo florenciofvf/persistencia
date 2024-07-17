@@ -1,10 +1,9 @@
-package br.com.persist.plugins.instrucao.pro;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.inst.InstrucaoUtil;
 
 public class PilhaOperando {
 	private final List<Object> operandos;
@@ -19,14 +18,14 @@ public class PilhaOperando {
 		}
 	}
 
-	public Object peek() throws InstrucaoException {
-		checar();
-		return operandos.get(operandos.size() - 1);
-	}
-
 	public void push(Object valor) throws InstrucaoException {
 		InstrucaoUtil.checarOperando(valor);
 		operandos.add(valor);
+	}
+
+	public Object peek() throws InstrucaoException {
+		checar();
+		return operandos.get(operandos.size() - 1);
 	}
 
 	public Object pop() throws InstrucaoException {
@@ -39,15 +38,15 @@ public class PilhaOperando {
 	}
 
 	public boolean isEmpty() {
-		return size() == 0;
+		return operandos.isEmpty();
+	}
+
+	public void clear() {
+		operandos.clear();
 	}
 
 	@Override
 	public String toString() {
 		return "PilhaOperando=" + operandos.toString();
-	}
-
-	public void clear() {
-		operandos.clear();
 	}
 }
