@@ -1,4 +1,4 @@
-package br.com.persist.plugins.instrucao.nat;
+package br.com.persist.plugins.instrucao.biblio_nativo;
 
 import br.com.persist.assistencia.Lista;
 
