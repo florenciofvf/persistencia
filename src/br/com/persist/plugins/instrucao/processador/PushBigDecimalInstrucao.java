@@ -1,41 +1,29 @@
-package br.com.persist.plugins.instrucao.inst;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.math.BigDecimal;
 
-import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
-import br.com.persist.plugins.instrucao.pro.Instrucao;
-import br.com.persist.plugins.instrucao.pro.Metodo;
-import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
-import br.com.persist.plugins.instrucao.pro.PilhaOperando;
+import br.com.persist.plugins.instrucao.compilador.NumeroContexto;
 
-public class PushBD extends Instrucao {
+public class PushBigDecimalInstrucao extends Instrucao {
 	private BigDecimal bigDecimal;
 
-	public PushBD(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.PUSH_BIG_DECIMAL);
+	public PushBigDecimalInstrucao() {
+		super(NumeroContexto.PUSH_BIG_DECIMAL);
 	}
 
 	@Override
-	public Instrucao clonar(Metodo metodo) {
-		PushBD resp = new PushBD(metodo);
-		resp.bigDecimal = bigDecimal;
-		return resp;
+	public Instrucao clonar() {
+		return this;
 	}
 
 	@Override
-	public void setParam(String string) {
+	public void setParametros(String string) {
 		bigDecimal = new BigDecimal(string);
 	}
 
 	@Override
-	public String getParam() {
-		return bigDecimal.toString();
-	}
-
-	@Override
-	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
+	public void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
 		pilhaOperando.push(bigDecimal);
 	}

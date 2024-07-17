@@ -1,11 +1,11 @@
 package br.com.persist.plugins.instrucao.processador;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.StringContexto;
+import br.com.persist.plugins.instrucao.compilador.RetornoContexto;
 
-public class PushStringInstrucao extends Instrucao {
-	public PushStringInstrucao() {
-		super(StringContexto.PUSH_STRING);
+public class RetornoInstrucao extends Instrucao {
+	public RetornoInstrucao() {
+		super(RetornoContexto.RETURN);
 	}
 
 	@Override
@@ -16,6 +16,6 @@ public class PushStringInstrucao extends Instrucao {
 	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
-		pilhaOperando.push(getParametros());
+		pilhaFuncao.pop();
 	}
 }

@@ -3,7 +3,6 @@ package br.com.persist.plugins.instrucao.processador;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.geradores.Funcao;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class PilhaFuncao {

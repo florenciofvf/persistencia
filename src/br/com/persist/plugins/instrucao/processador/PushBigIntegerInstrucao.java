@@ -1,41 +1,29 @@
-package br.com.persist.plugins.instrucao.inst;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.math.BigInteger;
 
-import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.pro.CacheBiblioteca;
-import br.com.persist.plugins.instrucao.pro.Instrucao;
-import br.com.persist.plugins.instrucao.pro.Metodo;
-import br.com.persist.plugins.instrucao.pro.PilhaMetodo;
-import br.com.persist.plugins.instrucao.pro.PilhaOperando;
+import br.com.persist.plugins.instrucao.compilador.NumeroContexto;
 
-public class PushBI extends Instrucao {
+public class PushBigIntegerInstrucao extends Instrucao {
 	private BigInteger bigInteger;
 
-	public PushBI(Metodo metodo) {
-		super(metodo, InstrucaoConstantes.PUSH_BIG_INTEGER);
+	public PushBigIntegerInstrucao() {
+		super(NumeroContexto.PUSH_BIG_INTEGER);
 	}
 
 	@Override
-	public Instrucao clonar(Metodo metodo) {
-		PushBI resp = new PushBI(metodo);
-		resp.bigInteger = bigInteger;
-		return resp;
+	public Instrucao clonar() {
+		return this;
 	}
 
 	@Override
-	public void setParam(String string) {
+	public void setParametros(String string) {
 		bigInteger = new BigInteger(string);
 	}
 
 	@Override
-	public String getParam() {
-		return bigInteger.toString();
-	}
-
-	@Override
-	public void executar(PilhaMetodo pilhaMetodo, PilhaOperando pilhaOperando, CacheBiblioteca cacheBiblioteca)
+	public void processar(CacheBiblioteca cacheBiblioteca, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
 		pilhaOperando.push(bigInteger);
 	}

@@ -1,37 +1,9 @@
 package br.com.persist.plugins.instrucao.processador;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.instrucoes.Add;
-import br.com.persist.plugins.instrucao.instrucoes.And;
-import br.com.persist.plugins.instrucao.instrucoes.DeclareVar;
-import br.com.persist.plugins.instrucao.instrucoes.Diff;
-import br.com.persist.plugins.instrucao.instrucoes.Div;
-import br.com.persist.plugins.instrucao.instrucoes.Goto;
-import br.com.persist.plugins.instrucao.instrucoes.Ifeq;
-import br.com.persist.plugins.instrucao.instrucoes.Igual;
-import br.com.persist.plugins.instrucao.instrucoes.Invoke;
-import br.com.persist.plugins.instrucao.instrucoes.InvokeDin;
-import br.com.persist.plugins.instrucao.instrucoes.LoadPar;
-import br.com.persist.plugins.instrucao.instrucoes.LoadVar;
-import br.com.persist.plugins.instrucao.instrucoes.Maior;
-import br.com.persist.plugins.instrucao.instrucoes.MaiorI;
-import br.com.persist.plugins.instrucao.instrucoes.Menor;
-import br.com.persist.plugins.instrucao.instrucoes.MenorI;
-import br.com.persist.plugins.instrucao.instrucoes.Mul;
-import br.com.persist.plugins.instrucao.instrucoes.Neg;
-import br.com.persist.plugins.instrucao.instrucoes.Or;
-import br.com.persist.plugins.instrucao.instrucoes.PushBD;
-import br.com.persist.plugins.instrucao.instrucoes.PushBI;
-import br.com.persist.plugins.instrucao.instrucoes.PushSTR;
-import br.com.persist.plugins.instrucao.instrucoes.Rem;
-import br.com.persist.plugins.instrucao.instrucoes.Return;
-import br.com.persist.plugins.instrucao.instrucoes.Sub;
-import br.com.persist.plugins.instrucao.instrucoes.Xor;
 
 public class Processador {
 	private final CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
