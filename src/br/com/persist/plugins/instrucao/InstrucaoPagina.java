@@ -12,8 +12,11 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -21,7 +24,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
@@ -40,11 +42,11 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
-import br.com.persist.plugins.instrucao.cmpl.Atom;
-import br.com.persist.plugins.instrucao.cmpl.InstrucaoMontador;
+import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
+import br.com.persist.plugins.instrucao.compilador.Compilador;
+import br.com.persist.plugins.instrucao.processador.Processador;
 
 public class InstrucaoPagina extends Panel {
-	private final transient InstrucaoCor instrucaoCor = new InstrucaoCor();
 	private final PainelResultado painelResultado = new PainelResultado();
 	public final JTextPane textArea = new JTextPane();
 	private static final long serialVersionUID = 1L;
@@ -109,14 +111,12 @@ public class InstrucaoPagina extends Panel {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private Action limparCacheAcao = acaoIcon("label.limpar_cache_biblio", Icones.SINCRONIZAR);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
-			addButton(limparCacheAcao);
 			addButton(executarAcao);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
@@ -124,22 +124,17 @@ public class InstrucaoPagina extends Panel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
-			limparCacheAcao.setActionListener(e -> limparCacheBiblio());
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
 			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
 		}
 
-		private void limparCacheBiblio() {
-			InstrucaoContainer.PROCESSADOR.clear();
-		}
-
 		private void executar() {
 			String biblioteca = file.getName();
-			String metodo = "main";
 			try {
-				List<Object> resposta = InstrucaoContainer.PROCESSADOR.executar(biblioteca, metodo);
+				Processador processador = new Processador();
+				List<Object> resposta = processador.processar(biblioteca, "main");
 				painelResultado.setText(resposta.toString());
 			} catch (InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
@@ -150,14 +145,11 @@ public class InstrucaoPagina extends Panel {
 		protected void atualizar() {
 			String biblioteca = file.getName();
 			try {
-				InstrucaoContainer.PROCESSADOR.excluirBiblioteca(biblioteca);
-				AtomicReference<List<Atom>> ref = new AtomicReference<>();
-				boolean resp = InstrucaoMontador.compilar(biblioteca, ref);
+				Compilador compilador = new Compilador();
+				BibliotecaContexto biblio = compilador.compilar(biblioteca);
+				boolean resp = biblio != null;
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
-				if (resp) {
-					instrucaoCor.processar(textArea.getStyledDocument(), ref.get());
-				}
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
 			}
@@ -220,13 +212,27 @@ public class InstrucaoPagina extends Panel {
 		if (file.exists()) {
 			try {
 				int value = getValueScrollPane();
-				textArea.setText(InstrucaoMontador.conteudo(file));
+				textArea.setText(conteudo(file));
 				setValueScrollPane(value);
-				InstrucaoCor.clearAttr(textArea.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, this);
 			}
 		}
+	}
+
+	public static String conteudo(File file) throws IOException {
+		if (file != null && file.exists()) {
+			StringBuilder sb = new StringBuilder();
+			try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+				int i = reader.read();
+				while (i != -1) {
+					sb.append((char) i);
+					i = reader.read();
+				}
+			}
+			return sb.toString();
+		}
+		return "";
 	}
 
 	public void excluir() {
