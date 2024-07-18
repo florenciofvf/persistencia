@@ -29,7 +29,7 @@ public class NumeroContexto extends Container {
 	@Override
 	public void salvar(PrintWriter pw) {
 		super.salvar(pw);
-		if(token.tipo == Tipo.INTEIRO) {
+		if (token.tipo == Tipo.INTEIRO) {
 			print(pw, PUSH_BIG_INTEGER, numero);
 		} else {
 			print(pw, PUSH_BIG_DECIMAL, numero);

@@ -29,8 +29,7 @@ public class LoadConstanteInstrucao extends Instrucao {
 
 	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-			throws InstrucaoException {
+			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Biblioteca biblio;
 		if (nomeBiblio != null) {
 			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio);

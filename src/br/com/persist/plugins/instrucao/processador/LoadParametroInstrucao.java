@@ -15,8 +15,7 @@ public class LoadParametroInstrucao extends Instrucao {
 
 	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-			throws InstrucaoException {
+			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Object valor = funcao.getValorParametro(parametros);
 		pilhaOperando.push(valor);
 	}

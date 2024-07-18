@@ -98,8 +98,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarOperando(operandoE);
@@ -138,8 +137,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -172,8 +170,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -206,8 +203,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -240,8 +236,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -274,8 +269,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarNumber(operandoE);
@@ -306,8 +300,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarNumber(operandoE);
@@ -338,8 +331,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarNumber(operandoE);
@@ -366,8 +358,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarOperando(operandoE);
@@ -406,8 +397,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarOperando(operandoE);
@@ -446,8 +436,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -480,8 +469,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -514,8 +502,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -548,8 +535,7 @@ public class OperadorInstrucao {
 
 		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws InstrucaoException {
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);

@@ -24,8 +24,7 @@ public class PushBigIntegerInstrucao extends Instrucao {
 
 	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-			throws InstrucaoException {
+			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		pilhaOperando.push(bigInteger);
 	}
 }
