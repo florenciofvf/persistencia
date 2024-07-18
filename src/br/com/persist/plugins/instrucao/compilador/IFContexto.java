@@ -99,6 +99,7 @@ public class IFContexto extends Container {
 			ExpressaoContexto expressao = elseIFContexto.getExpressao();
 			CorpoContexto corpo = elseIFContexto.getCorpo();
 			resposta.adicionar(expressao);
+			resposta.adicionar(new IFEqContexto());
 			resposta.adicionar(corpo);
 
 			ElseContexto elseContexto = new ElseContexto();
