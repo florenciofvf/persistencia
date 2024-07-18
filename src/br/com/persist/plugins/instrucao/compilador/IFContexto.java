@@ -13,6 +13,7 @@ public class IFContexto extends Container {
 	public IFContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
 		adicionar(new ExpressaoContexto());
+		adicionar(new IFEqContexto());
 		adicionar(new CorpoContexto());
 		faseExpressao = true;
 	}
@@ -22,7 +23,7 @@ public class IFContexto extends Container {
 	}
 
 	public CorpoContexto getCorpo() {
-		return (CorpoContexto) get(1);
+		return (CorpoContexto) get(2);
 	}
 
 	@Override
@@ -71,11 +72,11 @@ public class IFContexto extends Container {
 	}
 
 	private void normalizarArvore(Compilador compilador, Token token) throws InstrucaoException {
-		if (getSize() == 2 || (getSize() == 3 && getUltimo() instanceof ElseContexto)) {
+		if (getSize() == 3 || (getSize() == 4 && getUltimo() instanceof ElseContexto)) {
 			return;
 		}
 		List<Container> lista = new ArrayList<>();
-		for (int i = 2; i < getSize(); i++) {
+		for (int i = 3; i < getSize(); i++) {
 			lista.add(get(i));
 		}
 		for (Container c : lista) {

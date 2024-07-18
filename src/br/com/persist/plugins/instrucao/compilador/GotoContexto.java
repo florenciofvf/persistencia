@@ -9,6 +9,7 @@ public class GotoContexto extends Container {
 
 	@Override
 	public void indexar(AtomicInteger atomic) {
+		super.indexar(atomic);
 		indice = atomic.getAndIncrement();
 	}
 

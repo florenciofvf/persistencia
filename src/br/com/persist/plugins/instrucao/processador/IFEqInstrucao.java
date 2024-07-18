@@ -1,13 +1,13 @@
 package br.com.persist.plugins.instrucao.processador;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.IfEqContexto;
+import br.com.persist.plugins.instrucao.compilador.IFEqContexto;
 
-public class IfEqInstrucao extends Instrucao {
+public class IFEqInstrucao extends Instrucao {
 	private int indice;
 
-	public IfEqInstrucao() {
-		super(IfEqContexto.IF_EQ);
+	public IFEqInstrucao() {
+		super(IFEqContexto.IF_EQ);
 	}
 
 	@Override

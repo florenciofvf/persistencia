@@ -40,7 +40,7 @@ public class Instrucoes {
 		add(new Diff());
 		add(new Div());
 		add(new GotoInstrucao());
-		add(new IfEqInstrucao());
+		add(new IFEqInstrucao());
 		add(new Igual());
 		add(new InvocacaoInstrucao());
 		add(new LoadParametroInstrucao());
