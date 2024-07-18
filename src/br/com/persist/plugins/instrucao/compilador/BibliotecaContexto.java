@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class BibliotecaContexto extends Container {
@@ -26,6 +28,22 @@ public class BibliotecaContexto extends Container {
 			adicionar((Container) compilador.getContexto());
 		} else {
 			compilador.invalidar(token);
+		}
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		for (Container c : componentes) {
+			if (c instanceof ConstanteContexto) {
+				pw.println();
+				c.salvar(pw);
+			}
+		}
+		for (Container c : componentes) {
+			if (c instanceof FuncaoContexto || c instanceof FuncaoNativaContexto) {
+				pw.println();
+				c.salvar(pw);
+			}
 		}
 	}
 

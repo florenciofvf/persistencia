@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 
 public abstract class Container extends AbstratoContexto {
-	private final List<Container> componentes;
+	protected final List<Container> componentes;
 	protected NegativoContexto negativo;
 	protected Contexto contexto;
 	protected Container pai;
