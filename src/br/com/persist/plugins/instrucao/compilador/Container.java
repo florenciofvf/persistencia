@@ -112,6 +112,9 @@ public abstract class Container extends AbstratoContexto {
 	}
 
 	public void indexar(Salto salto) {
+		if (salto.getPosicao() != 0) {
+			return;
+		}
 		for (Container c : componentes) {
 			c.indexar(salto);
 		}
