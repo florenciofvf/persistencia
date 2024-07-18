@@ -43,6 +43,10 @@ public class FuncaoContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
+		if (!(getUltimo() instanceof RetornoContexto)) {
+			compilador.invalidar(
+					new Token(token.string + "===>>>Funcao sem retorno", token.linha, token.coluna, token.tipo));
+		}
 		compilador.setContexto(getPai());
 	}
 
