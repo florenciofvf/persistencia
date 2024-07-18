@@ -1,9 +1,8 @@
-package br.com.persist.plugins.instrucao.pro;
+package br.com.persist.plugins.instrucao.processador;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,108 +13,99 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public class CacheBiblioteca {
 	public static final File ROOT = new File(InstrucaoConstantes.INSTRUCAO);
 	public static final File COMPILADOS = new File(ROOT, "compilados");
-	private final Map<String, Biblioteca> map;
+	private final Map<String, Biblioteca> bibliotecas;
 
 	public CacheBiblioteca() {
-		map = new HashMap<>();
-	}
-
-	public void excluir(String nome) {
-		Biblioteca resp = map.get(nome);
-		if (resp != null) {
-			resp.clear();
-		}
-		map.remove(nome);
-	}
-
-	public void clear() {
-		for (Biblioteca biblio : map.values()) {
-			biblio.clear();
-		}
-		map.clear();
+		bibliotecas = new HashMap<>();
 	}
 
 	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
-		Biblioteca resp = map.get(nome);
+		Biblioteca resp = bibliotecas.get(nome);
 		if (resp == null) {
 			resp = lerBiblioteca(nome);
 			if (resp == null) {
 				throw new InstrucaoException("erro.biblio_inexistente", nome);
 			}
-			map.put(nome, resp);
+			bibliotecas.put(nome, resp);
 		}
 		return resp;
 	}
 
 	private Biblioteca lerBiblioteca(String nome) throws InstrucaoException {
-		Biblioteca resp = null;
+		Biblioteca biblioteca = null;
 		List<String> arquivo = ArquivoUtil.lerArquivo(new File(COMPILADOS, nome + Biblioteca.EXTENSAO));
 		if (arquivo.isEmpty()) {
-			return resp;
+			return biblioteca;
 		}
-		resp = new Biblioteca(nome);
-		Metodo metodo = null;
-		for (String linha : arquivo) {
-			if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO_NATIVO)) {
-				String string = linha.substring(3);
-				int pos = string.indexOf(' ');
-				String biblioNativa = string.substring(0, pos);
-				String nomeMetodo = string.substring(pos + 1);
-				metodo = new Metodo(resp, nomeMetodo, true, biblioNativa);
-				resp.add(metodo);
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_METODO)) {
-				metodo = new Metodo(resp, linha.substring(2), false, null);
-				resp.add(metodo);
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAM)) {
-				if (metodo == null) {
-					throw new InstrucaoException("erro.parametro_sem_metodo", nome, linha.substring(2));
+		biblioteca = new Biblioteca(nome);
+		Iterator<String> it = arquivo.iterator();
+		Funcao funcao = null;
+		while (it.hasNext()) {
+			String linha = it.next();
+			if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO)) {
+				funcao = criarFuncao(biblioteca, linha);
+				biblioteca.addFuncao(funcao);
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA)) {
+				funcao = criarFuncaoNativa(biblioteca, linha);
+				biblioteca.addFuncao(funcao);
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAMETRO)) {
+				String nomeParametro = linha.substring(InstrucaoConstantes.PREFIXO_PARAMETRO.length());
+				if (funcao == null) {
+					throw new InstrucaoException("erro.parametro_sem_metodo", nome, nomeParametro);
 				}
-				metodo.addParam(linha.substring(2));
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_VAR)) {
-				String string = linha.substring(2);
-				int pos = string.indexOf(' ');
-				int pos2 = string.indexOf('&');
-				String nomeVar = string.substring(0, pos);
-				String tipoVar = string.substring(pos + 1, pos2);
-				String valor = string.substring(pos2 + 1);
-				resp.declararVariavel(nomeVar, getValor(tipoVar, valor, resp));
+				funcao.addParametro(nomeParametro);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_INSTRUCAO)) {
-				if (metodo == null) {
-					throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linha.substring(2));
+				String linhaInstrucao = linha.substring(InstrucaoConstantes.PREFIXO_INSTRUCAO.length());
+				if (funcao == null) {
+					throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linhaInstrucao);
 				}
-				int pos = linha.indexOf('-');
-				String stringInstrucao = linha.substring(pos + 2);
-				addInstrucao(metodo, stringInstrucao);
+				Instrucao instrucao = criarInstrucao(linhaInstrucao);
+				funcao.addInstrucao(instrucao);
 			}
 		}
-		return resp;
+		return biblioteca;
 	}
 
-	private Object getValor(String tipoVar, String valor, Biblioteca biblio) throws InstrucaoException {
-		if (InstrucaoConstantes.STRING.equals(tipoVar)) {
-			return valor;
-		} else if (InstrucaoConstantes.BIG_INTEGER.equals(tipoVar)) {
-			return new BigInteger(valor);
-		} else if (InstrucaoConstantes.BIG_DECIMAL.equals(tipoVar)) {
-			return new BigDecimal(valor);
-		}
-		throw new InstrucaoException("erro.variavel_tipo_invalido", tipoVar, biblio.getNome());
+	private Funcao criarFuncao(Biblioteca biblioteca, String linha) {
+		linha = linha.substring(InstrucaoConstantes.PREFIXO_FUNCAO.length());
+		Funcao funcao = new Funcao(linha);
+		funcao.setBiblioteca(biblioteca);
+		return funcao;
 	}
 
-	private void addInstrucao(Metodo metodo, String string) throws InstrucaoException {
+	private Funcao criarFuncaoNativa(Biblioteca biblioteca, String linha) {
+		linha = linha.substring(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA.length());
+		int pos = linha.indexOf(' ');
+		String biblioNativa = linha.substring(0, pos);
+		String nomeFuncao = linha.substring(pos + 1);
+		Funcao funcao = new Funcao(nomeFuncao);
+		funcao.setBiblioNativa(biblioNativa);
+		funcao.setBiblioteca(biblioteca);
+		return funcao;
+	}
+
+	private Instrucao criarInstrucao(String linha) {
+		int pos = linha.indexOf('-');
+		String stringInstrucao = linha.substring(pos + 2);
+		return getInstrucao(stringInstrucao);
+	}
+
+	private Instrucao getInstrucao(String string) {
 		int pos = string.indexOf(' ');
 		if (pos == -1) {
-			Instrucao instrucao = Instrucoes.get(string);
-			metodo.addInstrucao(instrucao);
+			return Instrucoes.get(string);
 		} else {
-			Instrucao instrucao = Instrucoes.get(string.substring(0, pos));
-			instrucao.setParam(string.substring(pos + 1));
-			metodo.addInstrucao(instrucao);
+			String nome = string.substring(0, pos);
+			String parametros = string.substring(pos + 1);
+			Instrucao instrucao = Instrucoes.get(nome);
+			Instrucao clone = instrucao.clonar();
+			clone.setParametros(parametros);
+			return clone;
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "CacheBiblioteca size=" + map.size() + "\n" + map.toString();
+		return "CacheBiblioteca size=" + bibliotecas.size() + "\n" + bibliotecas.toString();
 	}
 }

@@ -13,14 +13,10 @@ public class InstrucaoConstantes {
 	public static final String IGNORADOS = "ignorados";
 	public static final String ESPACO = " ";
 
-	public static final String PREFIXO_FUNCAO_NATIVA = "fun_nat";
-	public static final String PREFIXO_INSTRUCAO = "ins";
-	public static final String PREFIXO_PARAMETRO = "par";
-	public static final String PREFIXO_FUNCAO = "fun";
-
-	public static final String BIG_INTEGER = "big_integer";
-	public static final String BIG_DECIMAL = "big_decimal";
-	public static final String STRING = "string";
+	public static final String PREFIXO_FUNCAO_NATIVA = "funcao_nativa";
+	public static final String PREFIXO_INSTRUCAO = "instrucao";
+	public static final String PREFIXO_PARAMETRO = "param";
+	public static final String PREFIXO_FUNCAO = "funcao";
 
 	private InstrucaoConstantes() {
 	}
