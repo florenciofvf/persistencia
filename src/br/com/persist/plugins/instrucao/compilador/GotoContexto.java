@@ -3,6 +3,8 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+
 public class GotoContexto extends Container {
 	public static final String GOTO = "goto";
 	int posicao;
@@ -15,7 +17,9 @@ public class GotoContexto extends Container {
 
 	@Override
 	public void salvar(PrintWriter pw) {
-		super.salvar(pw);
-		print(pw, GOTO, "" + posicao);
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + "-");
+		pw.print(InstrucaoConstantes.ESPACO + GOTO);
+		pw.print(InstrucaoConstantes.ESPACO + posicao);
+		pw.println();
 	}
 }

@@ -59,43 +59,43 @@ public class InvocacaoInstrucao extends Instrucao {
 		}
 	}
 
-	static void setParametros(Funcao metodo, PilhaOperando pilhaOperando) throws InstrucaoException {
-		List<Integer> params = listaParam(metodo);
+	static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		List<Integer> params = listaParam(funcao);
 		for (int i = params.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
-			metodo.setValorParametro(params.get(i), valor);
+			funcao.setValorParametro(params.get(i), valor);
 		}
 	}
 
-	static List<Integer> listaParam(Funcao metodo) {
+	static List<Integer> listaParam(Funcao funcao) {
 		List<Integer> resp = new ArrayList<>();
-		for (int i = 0; i < metodo.getTotalParametro(); i++) {
+		for (int i = 0; i < funcao.getTotalParametro(); i++) {
 			resp.add(i);
 		}
 		return resp;
 	}
 
-	private Object invocarNativo(Funcao metodo, PilhaFuncao pilhaMetodo, PilhaOperando pilhaOperando)
+	private Object invocarNativo(Funcao funcao, PilhaFuncao pilhaMetodo, PilhaOperando pilhaOperando)
 			throws InstrucaoException {
 		Class<?> klass = null;
 		try {
-			klass = Class.forName(metodo.getBiblioNativa());
+			klass = Class.forName(funcao.getBiblioNativa());
 		} catch (Exception ex) {
-			throw new InstrucaoException("erro.biblio_inexistente", metodo.getBiblioNativa());
+			throw new InstrucaoException("erro.biblio_inexistente", funcao.getBiblioNativa());
 		}
-		List<Integer> params = listaParam(metodo);
+		List<Integer> params = listaParam(funcao);
 		Class<?>[] tipoParametros = getTipoParametros(params);
 		Object[] valorParametros = getValorParametros(pilhaOperando, params);
 		try {
-			Method method = klass.getDeclaredMethod(metodo.getNome(), tipoParametros);
+			Method method = klass.getDeclaredMethod(funcao.getNome(), tipoParametros);
 			return method.invoke(klass, valorParametros);
 		} catch (Exception ex) {
-			throw new InstrucaoException(stringPilhaMetodo(metodo, pilhaMetodo), ex);
+			throw new InstrucaoException(stringPilhaMetodo(funcao, pilhaMetodo), ex);
 		}
 	}
 
-	static String stringPilhaMetodo(Funcao metodo, PilhaFuncao pilhaMetodo) throws InstrucaoException {
-		StringBuilder sb = new StringBuilder(metodo.toString() + "\n");
+	static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
+		StringBuilder sb = new StringBuilder(funcao.toString() + "\n");
 		while (!pilhaMetodo.isEmpty()) {
 			sb.append(pilhaMetodo.pop() + "\n");
 		}
