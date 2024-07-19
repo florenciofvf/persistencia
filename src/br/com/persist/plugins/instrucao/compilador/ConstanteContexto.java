@@ -54,6 +54,10 @@ public class ConstanteContexto extends Container {
 		contexto = Contextos.VIRGULA;
 	}
 
+	public void indexar() {
+		// TODO
+	}
+
 	@Override
 	public String toString() {
 		return identity.toString();

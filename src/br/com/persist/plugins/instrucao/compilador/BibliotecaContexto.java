@@ -31,6 +31,24 @@ public class BibliotecaContexto extends Container {
 		}
 	}
 
+	public void indexar() {
+		for (Container c : componentes) {
+			if (c instanceof ConstanteContexto) {
+				ConstanteContexto constante = (ConstanteContexto) c;
+				constante.indexar();
+			}
+		}
+		for (Container c : componentes) {
+			if (c instanceof FuncaoContexto) {
+				FuncaoContexto funcao = (FuncaoContexto) c;
+				funcao.indexar();
+			} else if (c instanceof FuncaoNativaContexto) {
+				FuncaoNativaContexto funcao = (FuncaoNativaContexto) c;
+				funcao.indexar();
+			}
+		}
+	}
+
 	@Override
 	public void salvar(PrintWriter pw) {
 		for (Container c : componentes) {

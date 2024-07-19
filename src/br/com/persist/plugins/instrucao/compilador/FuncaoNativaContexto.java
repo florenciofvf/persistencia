@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoNativaContexto extends Container {
@@ -49,6 +51,11 @@ public class FuncaoNativaContexto extends Container {
 		} else {
 			contexto = Contextos.ABRE_PARENTESES;
 		}
+	}
+
+	public void indexar() {
+		AtomicInteger atomic = new AtomicInteger(0);
+		indexar(atomic);
 	}
 
 	@Override

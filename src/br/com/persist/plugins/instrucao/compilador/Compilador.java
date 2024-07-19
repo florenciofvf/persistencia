@@ -53,17 +53,18 @@ public class Compilador {
 			throw new InstrucaoException(file.toString(), false);
 		}
 		string = getString(file);
-		BibliotecaContexto biblio = new BibliotecaContexto(file.getName());
-		contexto = biblio;
+		BibliotecaContexto biblioteca = new BibliotecaContexto(file.getName());
+		contexto = biblioteca;
 		processar();
-		if (contexto != biblio) {
+		if (contexto != biblioteca) {
 			throwInstrucaoException();
 		}
+		biblioteca.indexar();
 		File destino = new File(CacheBiblioteca.COMPILADOS, arquivo + Biblioteca.EXTENSAO);
 		try (PrintWriter pw = new PrintWriter(destino)) {
-			biblio.salvar(pw);
+			biblioteca.salvar(pw);
 		}
-		return biblio;
+		return biblioteca;
 	}
 
 	private String getString(File file) throws IOException {
