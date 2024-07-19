@@ -1,26 +1,27 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.Iterator;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ArgumentoContexto extends Container {
-	private final Container container;
+	private final IdentityContexto identity;
 
-	public ArgumentoContexto(Container container) {
+	public ArgumentoContexto(IdentityContexto identity) {
 		contexto = Contextos.PARENTESES;
-		this.container = container;
+		this.identity = identity;
 	}
 
-	public Container getContainer() {
-		return container;
+	public IdentityContexto getIdentity() {
+		return identity;
 	}
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (getUltimo() instanceof IdentityContexto) {
-			Container ultimo = excluirUltimo();
+			IdentityContexto ultimo = (IdentityContexto) excluirUltimo();
 			compilador.setContexto(new ArgumentoContexto(ultimo));
 		} else {
 			compilador.setContexto(new ExpressaoContexto());
@@ -106,6 +107,15 @@ public class ArgumentoContexto extends Container {
 				it.remove();
 			}
 		}
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		super.salvar(pw);
+		if (identity != null) {
+			print(pw, InvocacaoContexto.INVOKE, identity.getId());
+		}
+		salvarNegativo(pw);
 	}
 
 	@Override
