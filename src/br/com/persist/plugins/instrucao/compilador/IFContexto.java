@@ -1,19 +1,22 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class IFContexto extends Container {
 	public static final ReservadoOuFinalizar RESERVADO_OU_FINALIZAR = new ReservadoOuFinalizar();
+	private IFEqContexto ifEqContexto = new IFEqContexto();
+	private GotoContexto gotoContexto = new GotoContexto();
 	private boolean faseExpressao;
 
 	public IFContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
 		adicionar(new ExpressaoContexto());
-		adicionar(new IFEqContexto());
 		adicionar(new CorpoContexto());
 		faseExpressao = true;
 	}
@@ -44,9 +47,6 @@ public class IFContexto extends Container {
 		contexto.finalizador(compilador, token);
 		compilador.setContexto(getPai());
 		normalizarArvore(compilador, token);
-		if (!(getCorpo().getUltimo() instanceof RetornoContexto) && (getUltimo() instanceof ElseContexto)) {
-			getCorpo().adicionar(new GotoContexto());
-		}
 	}
 
 	@Override
@@ -72,11 +72,11 @@ public class IFContexto extends Container {
 	}
 
 	private void normalizarArvore(Compilador compilador, Token token) throws InstrucaoException {
-		if (getSize() == 3 || (getSize() == 4 && getUltimo() instanceof ElseContexto)) {
+		if (getSize() == 2 || (getSize() == 3 && getUltimo() instanceof ElseContexto)) {
 			return;
 		}
 		List<Container> lista = new ArrayList<>();
-		for (int i = 3; i < getSize(); i++) {
+		for (int i = 2; i < getSize(); i++) {
 			lista.add(get(i));
 		}
 		for (Container c : lista) {
@@ -99,7 +99,6 @@ public class IFContexto extends Container {
 			ExpressaoContexto expressao = elseIFContexto.getExpressao();
 			CorpoContexto corpo = elseIFContexto.getCorpo();
 			resposta.adicionar(expressao);
-			resposta.adicionar(new IFEqContexto());
 			resposta.adicionar(corpo);
 
 			ElseContexto elseContexto = new ElseContexto();
@@ -112,6 +111,30 @@ public class IFContexto extends Container {
 			compilador.invalidar(token);
 		}
 		return resposta;
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) {
+		getExpressao().indexar(atomic);
+		getCorpo().indexar(atomic);
+		ifEqContexto.posicao = atomic.get() + 1;
+		if (getUltimo() instanceof ElseContexto) {
+			getUltimo().indexar(atomic);
+			gotoContexto.posicao = atomic.get() + 1;
+		}
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		getExpressao().salvar(pw);
+		ifEqContexto.salvar(pw);
+		getCorpo().salvar(pw);
+		if (getUltimo() instanceof ElseContexto) {
+			if (!(getCorpo().getUltimo() instanceof RetornoContexto)) {
+				gotoContexto.salvar(pw);
+			}
+			getUltimo().salvar(pw);
+		}
 	}
 
 	@Override

@@ -111,24 +111,6 @@ public abstract class Container extends AbstratoContexto {
 		}
 	}
 
-	public void indexar(Salto salto) {
-		if (salto.getPosicao() != 0) {
-			return;
-		}
-		for (Container c : componentes) {
-			c.indexar(salto);
-		}
-		if (indice != 0 && salto.getPosicao() == 0) {
-			salto.setPosicao(indice);
-		}
-	}
-
-	public void configPontoDesvio() {
-		for (Container c : componentes) {
-			c.configPontoDesvio();
-		}
-	}
-
 	public void salvar(PrintWriter pw) {
 		for (Container c : componentes) {
 			c.salvar(pw);

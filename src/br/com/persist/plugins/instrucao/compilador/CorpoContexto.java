@@ -21,7 +21,7 @@ public class CorpoContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		if(isEmpty()) {
+		if (isEmpty()) {
 			compilador.invalidar(token);
 		}
 		if (finalizadorPai) {
