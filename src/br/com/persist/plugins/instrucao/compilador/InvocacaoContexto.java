@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -34,6 +35,13 @@ public class InvocacaoContexto extends Container {
 	public void indexar(AtomicInteger atomic) {
 		super.indexar(atomic);
 		indice = atomic.getAndIncrement();
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		super.salvar(pw);
+		print(pw, INVOKE, token.string);
+		salvarNegativo(pw);
 	}
 
 	@Override

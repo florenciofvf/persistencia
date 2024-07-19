@@ -14,7 +14,7 @@ public class ExpressaoContexto extends Container {
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		if (getUltimo() instanceof IdentityContexto) {
-			Container ultimo = excluirUltimo();
+			IdentityContexto ultimo = (IdentityContexto) excluirUltimo();
 			compilador.setContexto(new ArgumentoContexto(ultimo));
 		} else {
 			compilador.setContexto(new ExpressaoContexto());
