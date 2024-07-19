@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 
 public class ParametroContexto extends Container {
-	public static final String LOAD_PAR = "load_param";
+	public static final String LOAD_PARAM = "load_param";
 	private final String nome;
 
 	public ParametroContexto(Token token) {

@@ -5,7 +5,7 @@ import br.com.persist.plugins.instrucao.compilador.ParametroContexto;
 
 public class LoadParametroInstrucao extends Instrucao {
 	public LoadParametroInstrucao() {
-		super(ParametroContexto.LOAD_PAR);
+		super(ParametroContexto.LOAD_PARAM);
 	}
 
 	@Override

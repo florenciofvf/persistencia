@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ConstanteContexto extends Container {
+	public static final String STORE_CONST = "store_const";
 	public static final String LOAD_CONST = "load_const";
 	private final ConstanteIdentityContexto identity;
 	private boolean faseIdentity;
@@ -65,7 +66,7 @@ public class ConstanteContexto extends Container {
 	@Override
 	public void salvar(PrintWriter pw) {
 		getExpressao().salvar(pw);
-		print(pw, LOAD_CONST, identity.token.string);
+		print(pw, STORE_CONST, identity.token.string);
 	}
 
 	@Override

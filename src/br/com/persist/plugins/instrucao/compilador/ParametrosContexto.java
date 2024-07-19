@@ -30,6 +30,16 @@ public class ParametrosContexto extends Container {
 		contexto = VIRGULA_OU_FINALIZAR;
 	}
 
+	public boolean contem(String string) {
+		for (Container c : componentes) {
+			ParametroContexto p = (ParametroContexto) c;
+			if (p.getNome().equals(string)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "Parametro(s): " + getComponentes().toString();
