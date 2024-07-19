@@ -1,5 +1,8 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ConstanteContexto extends Container {
@@ -55,7 +58,14 @@ public class ConstanteContexto extends Container {
 	}
 
 	public void indexar() {
-		// TODO
+		AtomicInteger atomic = new AtomicInteger(0);
+		indexar(atomic);
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		getExpressao().salvar(pw);
+		print(pw, LOAD_CONST, identity.token.string);
 	}
 
 	@Override
