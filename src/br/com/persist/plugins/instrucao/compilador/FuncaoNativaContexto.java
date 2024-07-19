@@ -62,7 +62,7 @@ public class FuncaoNativaContexto extends Container {
 
 	@Override
 	public void salvar(PrintWriter pw) {
-		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA + " " + identityBiblio + " " + identity);
+		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA + identityBiblio + " " + identity);
 		getParametros().salvar(pw);
 	}
 

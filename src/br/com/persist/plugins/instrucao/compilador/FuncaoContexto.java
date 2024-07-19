@@ -66,7 +66,7 @@ public class FuncaoContexto extends Container {
 
 	@Override
 	public void salvar(PrintWriter pw) {
-		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO + " " + identity);
+		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO + identity);
 		getParametros().salvar(pw);
 		getCorpo().salvar(pw);
 	}

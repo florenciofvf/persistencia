@@ -10,7 +10,7 @@ public class IFEqContexto extends Container {
 
 	@Override
 	public void salvar(PrintWriter pw) {
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + " -");
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + "-");
 		pw.print(InstrucaoConstantes.ESPACO + IF_EQ);
 		pw.print(InstrucaoConstantes.ESPACO + posicao);
 		pw.println();

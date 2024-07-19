@@ -124,7 +124,7 @@ public abstract class Container extends AbstratoContexto {
 	}
 
 	void print(PrintWriter pw, String... strings) {
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + InstrucaoConstantes.ESPACO + indice + " -");
+		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + indice + " -");
 		for (String string : strings) {
 			pw.print(InstrucaoConstantes.ESPACO + string);
 		}
