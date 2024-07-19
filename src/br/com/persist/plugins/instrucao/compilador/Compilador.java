@@ -63,6 +63,9 @@ public class Compilador {
 		if (contexto != biblioteca) {
 			throwInstrucaoException();
 		}
+		if (biblioteca.isEmpty()) {
+			return null;
+		}
 		biblioteca.indexar();
 		File destino = new File(CacheBiblioteca.COMPILADOS, arquivo + Biblioteca.EXTENSAO);
 		try (PrintWriter pw = new PrintWriter(destino)) {
