@@ -32,6 +32,10 @@ public class Compilador {
 		this.contexto = contexto;
 	}
 
+	public void invalidar(Token token, String erro) throws InstrucaoException {
+		throw new InstrucaoException(string.substring(0, indice) + "<<<" + token.string + ">>> " + erro, false);
+	}
+
 	public void invalidar(Token token) throws InstrucaoException {
 		throw new InstrucaoException(string.substring(0, indice) + "<<<" + token.string + ">>>", false);
 	}

@@ -22,7 +22,7 @@ public class CorpoContexto extends Container {
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
 		if (isEmpty()) {
-			compilador.invalidar(token);
+			compilador.invalidar(token, "Corpo vazio!");
 		}
 		if (finalizadorPai) {
 			getPai().finalizador(compilador, token);

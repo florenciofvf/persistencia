@@ -1,7 +1,9 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoContexto extends Container {
@@ -45,9 +47,8 @@ public class FuncaoContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		if (!(getUltimo() instanceof RetornoContexto)) {
-			compilador.invalidar(
-					new Token(token.string + "===>>>Funcao sem retorno", token.linha, token.coluna, token.tipo));
+		if (!(getCorpo().getUltimo() instanceof RetornoContexto)) {
+			compilador.invalidar(token, "Funcao sem retorno");
 		}
 		compilador.setContexto(getPai());
 	}
@@ -61,6 +62,13 @@ public class FuncaoContexto extends Container {
 	public void indexar() {
 		AtomicInteger atomic = new AtomicInteger(0);
 		indexar(atomic);
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO + " " + identity);
+		getParametros().salvar(pw);
+		getCorpo().salvar(pw);
 	}
 
 	@Override

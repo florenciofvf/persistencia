@@ -1,7 +1,9 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoNativaContexto extends Container {
@@ -56,6 +58,12 @@ public class FuncaoNativaContexto extends Container {
 	public void indexar() {
 		AtomicInteger atomic = new AtomicInteger(0);
 		indexar(atomic);
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA + " " + identityBiblio + " " + identity);
+		getParametros().salvar(pw);
 	}
 
 	@Override

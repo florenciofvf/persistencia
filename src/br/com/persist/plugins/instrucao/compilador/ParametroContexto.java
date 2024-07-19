@@ -1,5 +1,9 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
+
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+
 public class ParametroContexto extends Container {
 	public static final String LOAD_PAR = "load_param";
 	private final String nome;
@@ -11,6 +15,11 @@ public class ParametroContexto extends Container {
 
 	public String getNome() {
 		return nome;
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) {
+		pw.println(InstrucaoConstantes.PREFIXO_PARAMETRO + nome);
 	}
 
 	@Override
