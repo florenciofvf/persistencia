@@ -26,7 +26,7 @@ public class IFContexto extends Container {
 	}
 
 	public CorpoContexto getCorpo() {
-		return (CorpoContexto) get(2);
+		return (CorpoContexto) get(1);
 	}
 
 	@Override
