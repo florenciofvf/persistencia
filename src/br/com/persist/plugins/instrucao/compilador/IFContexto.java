@@ -117,10 +117,10 @@ public class IFContexto extends Container {
 	public void indexar(AtomicInteger atomic) {
 		getExpressao().indexar(atomic);
 		getCorpo().indexar(atomic);
-		ifEqContexto.posicao = atomic.get() + 1;
+		ifEqContexto.posicao = atomic.get();
 		if (getUltimo() instanceof ElseContexto) {
 			getUltimo().indexar(atomic);
-			gotoContexto.posicao = atomic.get() + 1;
+			gotoContexto.posicao = atomic.get();
 		}
 	}
 

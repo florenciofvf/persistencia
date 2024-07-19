@@ -54,7 +54,7 @@ public class Compilador {
 		}
 		File file = new File(CacheBiblioteca.ROOT, arquivo);
 		if (!file.isFile()) {
-			throw new InstrucaoException(file.toString(), false);
+			throw new InstrucaoException("Inexistente >>> " + file.toString(), false);
 		}
 		string = getString(file);
 		BibliotecaContexto biblioteca = new BibliotecaContexto(file.getName());
