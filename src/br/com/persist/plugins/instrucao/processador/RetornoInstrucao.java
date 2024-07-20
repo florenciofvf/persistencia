@@ -9,11 +9,6 @@ public class RetornoInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
-		return this;
-	}
-
-	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		pilhaFuncao.pop();

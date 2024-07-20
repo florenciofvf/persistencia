@@ -10,7 +10,7 @@ public class ConstInstrucao extends Instrucao {
 
 	@Override
 	public Instrucao clonar() {
-		return this;
+		return new ConstInstrucao();
 	}
 
 	@Override

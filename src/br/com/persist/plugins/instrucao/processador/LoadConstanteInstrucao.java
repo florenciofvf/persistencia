@@ -13,7 +13,7 @@ public class LoadConstanteInstrucao extends Instrucao {
 
 	@Override
 	public Instrucao clonar() {
-		return this;
+		return new LoadConstanteInstrucao();
 	}
 
 	@Override

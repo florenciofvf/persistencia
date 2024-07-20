@@ -24,7 +24,9 @@ public abstract class Instrucao {
 		this.parametros = parametros;
 	}
 
-	public abstract Instrucao clonar();
+	public Instrucao clonar() {
+		return this;
+	}
 
 	public abstract void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException;

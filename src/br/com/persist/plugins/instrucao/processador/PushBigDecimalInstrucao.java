@@ -14,7 +14,7 @@ public class PushBigDecimalInstrucao extends Instrucao {
 
 	@Override
 	public Instrucao clonar() {
-		return this;
+		return new PushBigDecimalInstrucao();
 	}
 
 	@Override

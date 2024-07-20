@@ -12,7 +12,7 @@ public class GotoInstrucao extends Instrucao {
 
 	@Override
 	public Instrucao clonar() {
-		return this;
+		return new GotoInstrucao();
 	}
 
 	@Override

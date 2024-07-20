@@ -12,7 +12,7 @@ public class IFEqInstrucao extends Instrucao {
 
 	@Override
 	public Instrucao clonar() {
-		return this;
+		return new IFEqInstrucao();
 	}
 
 	@Override

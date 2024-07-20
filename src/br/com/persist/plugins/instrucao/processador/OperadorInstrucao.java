@@ -92,11 +92,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -131,11 +126,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -161,11 +151,6 @@ public class OperadorInstrucao {
 	public static class Mul extends Instrucao {
 		public Mul() {
 			super(OperadorContexto.MUL);
-		}
-
-		@Override
-		public Instrucao clonar() {
-			return this;
 		}
 
 		@Override
@@ -197,11 +182,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -227,11 +207,6 @@ public class OperadorInstrucao {
 	public static class Rem extends Instrucao {
 		public Rem() {
 			super(OperadorContexto.REM);
-		}
-
-		@Override
-		public Instrucao clonar() {
-			return this;
 		}
 
 		@Override
@@ -263,11 +238,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -291,11 +261,6 @@ public class OperadorInstrucao {
 	public static class Or extends Instrucao {
 		public Or() {
 			super(OperadorContexto.OR);
-		}
-
-		@Override
-		public Instrucao clonar() {
-			return this;
 		}
 
 		@Override
@@ -325,11 +290,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -349,11 +309,6 @@ public class OperadorInstrucao {
 	public static class Igual extends Instrucao {
 		public Igual() {
 			super(OperadorContexto.IGUAL);
-		}
-
-		@Override
-		public Instrucao clonar() {
-			return this;
 		}
 
 		@Override
@@ -391,11 +346,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -430,11 +380,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -460,11 +405,6 @@ public class OperadorInstrucao {
 	public static class Maior extends Instrucao {
 		public Maior() {
 			super(OperadorContexto.MAIOR);
-		}
-
-		@Override
-		public Instrucao clonar() {
-			return this;
 		}
 
 		@Override
@@ -496,11 +436,6 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
-			return this;
-		}
-
-		@Override
 		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 			Object operandoD = pilhaOperando.pop();
@@ -526,11 +461,6 @@ public class OperadorInstrucao {
 	public static class MaiorIgual extends Instrucao {
 		public MaiorIgual() {
 			super(OperadorContexto.MAIOR_IGUAL);
-		}
-
-		@Override
-		public Instrucao clonar() {
-			return this;
 		}
 
 		@Override

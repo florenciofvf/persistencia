@@ -17,7 +17,7 @@ public class InvocacaoInstrucao extends Instrucao {
 
 	@Override
 	public Instrucao clonar() {
-		return this;
+		return new InvocacaoInstrucao();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class InvocacaoInstrucao extends Instrucao {
 		}
 	}
 
-	static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
+	private static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		List<Integer> params = listaParam(funcao);
 		for (int i = params.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
@@ -67,7 +67,7 @@ public class InvocacaoInstrucao extends Instrucao {
 		}
 	}
 
-	static List<Integer> listaParam(Funcao funcao) {
+	private static List<Integer> listaParam(Funcao funcao) {
 		List<Integer> resp = new ArrayList<>();
 		for (int i = 0; i < funcao.getTotalParametro(); i++) {
 			resp.add(i);
@@ -94,7 +94,7 @@ public class InvocacaoInstrucao extends Instrucao {
 		}
 	}
 
-	static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
+	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
 		StringBuilder sb = new StringBuilder(funcao.toString() + "\n");
 		while (!pilhaMetodo.isEmpty()) {
 			sb.append(pilhaMetodo.pop() + "\n");

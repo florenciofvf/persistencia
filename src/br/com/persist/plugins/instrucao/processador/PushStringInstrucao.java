@@ -10,7 +10,7 @@ public class PushStringInstrucao extends Instrucao {
 
 	@Override
 	public Instrucao clonar() {
-		return this;
+		return new PushStringInstrucao();
 	}
 
 	@Override
