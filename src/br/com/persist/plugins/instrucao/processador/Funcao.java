@@ -64,7 +64,10 @@ public class Funcao {
 		return nome;
 	}
 
-	Instrucao getInstrucao() {
+	Instrucao getInstrucao() throws InstrucaoException {
+		if (indice >= instrucoes.size()) {
+			throw new InstrucaoException("erro.funcao_sem_retorno", nome, biblioteca.getNome());
+		}
 		Instrucao resp = instrucoes.get(indice);
 		indice++;
 		return resp;

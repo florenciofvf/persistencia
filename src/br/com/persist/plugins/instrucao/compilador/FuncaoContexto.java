@@ -47,9 +47,6 @@ public class FuncaoContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		if (getCorpo().isEmpty()) {
-			compilador.invalidar(token, "Funcao sem retorno");
-		}
 		compilador.setContexto(getPai());
 	}
 
