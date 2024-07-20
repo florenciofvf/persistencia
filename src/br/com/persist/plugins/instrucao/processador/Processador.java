@@ -13,8 +13,8 @@ public class Processador {
 	public List<Object> processar(String nomeBiblioteca, String nomeFuncao, Object... args) throws InstrucaoException {
 		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioteca);
 		Funcao funcao = biblioteca.getFuncao(nomeFuncao);
-		for (Object obj : args) {
-			pilhaOperando.push(obj);
+		for (int i = 0; i < args.length; i++) {
+			funcao.setValorParametro(i, args[i]);
 		}
 		pilhaFuncao.push(funcao);
 
