@@ -62,6 +62,7 @@ public class ConstanteContexto extends Container {
 	public void indexar() {
 		AtomicInteger atomic = new AtomicInteger(0);
 		indexar(atomic);
+		indice = atomic.get();
 	}
 
 	@Override
