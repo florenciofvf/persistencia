@@ -39,15 +39,22 @@ public class CacheBiblioteca {
 		}
 		biblioteca = new Biblioteca(nome);
 		Iterator<String> it = arquivo.iterator();
+		Constante constante = null;
 		Funcao funcao = null;
 		while (it.hasNext()) {
 			String linha = it.next();
 			if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO)) {
 				funcao = criarFuncao(biblioteca, linha);
 				biblioteca.addFuncao(funcao);
+				constante = null;
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA)) {
 				funcao = criarFuncaoNativa(biblioteca, linha);
 				biblioteca.addFuncao(funcao);
+				constante = null;
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_CONSTANTE)) {
+				constante = criarConstante(biblioteca, linha);
+				biblioteca.addConstante(constante);
+				funcao = null;
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAMETRO)) {
 				String nomeParametro = linha.substring(InstrucaoConstantes.PREFIXO_PARAMETRO.length());
 				if (funcao == null) {
@@ -55,12 +62,7 @@ public class CacheBiblioteca {
 				}
 				funcao.addParametro(nomeParametro);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_INSTRUCAO)) {
-				String linhaInstrucao = linha.substring(InstrucaoConstantes.PREFIXO_INSTRUCAO.length());
-				if (funcao == null) {
-					throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linhaInstrucao);
-				}
-				Instrucao instrucao = criarInstrucao(linhaInstrucao);
-				funcao.addInstrucao(instrucao);
+				processarInstrucao(nome, constante, funcao, linha);
 			}
 		}
 		return biblioteca;
@@ -82,6 +84,27 @@ public class CacheBiblioteca {
 		funcao.setBiblioNativa(biblioNativa);
 		funcao.setBiblioteca(biblioteca);
 		return funcao;
+	}
+
+	private Constante criarConstante(Biblioteca biblioteca, String linha) {
+		linha = linha.substring(InstrucaoConstantes.PREFIXO_CONSTANTE.length());
+		Constante constante = new Constante(linha);
+		constante.setBiblioteca(biblioteca);
+		return constante;
+	}
+
+	private void processarInstrucao(String nome, Constante constante, Funcao funcao, String linha)
+			throws InstrucaoException {
+		String linhaInstrucao = linha.substring(InstrucaoConstantes.PREFIXO_INSTRUCAO.length());
+		if (funcao == null && constante == null) {
+			throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linhaInstrucao);
+		}
+		Instrucao instrucao = criarInstrucao(linhaInstrucao);
+		if (funcao != null) {
+			funcao.addInstrucao(instrucao);
+		} else {
+			constante.addInstrucao(instrucao);
+		}
 	}
 
 	private Instrucao criarInstrucao(String linha) {

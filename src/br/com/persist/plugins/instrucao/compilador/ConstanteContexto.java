@@ -3,12 +3,13 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ConstanteContexto extends Container {
-	public static final String STORE_CONST = "store_const";
 	public static final String LOAD_CONST = "load_const";
 	private final ConstanteIdentityContexto identity;
+	public static final String CONST = "const";
 	private boolean faseIdentity;
 
 	public ConstanteContexto() {
@@ -65,8 +66,11 @@ public class ConstanteContexto extends Container {
 
 	@Override
 	public void salvar(PrintWriter pw) {
+		if (getFuncao() == null) {
+			pw.println(InstrucaoConstantes.PREFIXO_CONSTANTE + identity);
+		}
 		getExpressao().salvar(pw);
-		print(pw, STORE_CONST, identity.token.string);
+		print(pw, CONST, identity.toString());
 	}
 
 	@Override

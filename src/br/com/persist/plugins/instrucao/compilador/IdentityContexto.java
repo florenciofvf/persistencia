@@ -40,17 +40,6 @@ public class IdentityContexto extends Container {
 		return parametros.contem(id);
 	}
 
-	private FuncaoContexto getFuncao() {
-		Container c = this;
-		while (c != null) {
-			if (c instanceof FuncaoContexto) {
-				break;
-			}
-			c = c.pai;
-		}
-		return (FuncaoContexto) c;
-	}
-
 	@Override
 	public String toString() {
 		return id;

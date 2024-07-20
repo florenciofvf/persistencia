@@ -5,7 +5,7 @@ import br.com.persist.plugins.instrucao.compilador.ConstanteContexto;
 
 public class LoadConstanteInstrucao extends Instrucao {
 	private String nomeBiblio;
-	private String nomeConst;
+	private String nomeConstante;
 
 	public LoadConstanteInstrucao() {
 		super(ConstanteContexto.LOAD_CONST);
@@ -21,9 +21,9 @@ public class LoadConstanteInstrucao extends Instrucao {
 		String[] array = string.split("\\.");
 		if (array.length == 2) {
 			nomeBiblio = array[0];
-			nomeConst = array[1];
+			nomeConstante = array[1];
 		} else {
-			nomeConst = array[0];
+			nomeConstante = array[0];
 		}
 	}
 
@@ -36,7 +36,7 @@ public class LoadConstanteInstrucao extends Instrucao {
 		} else {
 			biblio = funcao.getBiblioteca();
 		}
-		Object valor = biblio.getValorConstante(nomeConst);
-		pilhaOperando.push(valor);
+		Constante constante = biblio.getConstante(nomeConstante);
+		pilhaOperando.push(constante.getValor());
 	}
 }

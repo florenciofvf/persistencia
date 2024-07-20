@@ -31,6 +31,17 @@ public abstract class Container extends AbstratoContexto {
 		return pai;
 	}
 
+	protected FuncaoContexto getFuncao() {
+		Container c = this;
+		while (c != null) {
+			if (c instanceof FuncaoContexto) {
+				break;
+			}
+			c = c.pai;
+		}
+		return (FuncaoContexto) c;
+	}
+
 	public List<Container> getComponentes() {
 		return componentes;
 	}

@@ -7,7 +7,7 @@ import java.util.Objects;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Biblioteca {
-	private final Map<String, Object> constantes;
+	private final Map<String, Constante> constantes;
 	public static final String EXTENSAO = ".fvf";
 	private final Map<String, Funcao> funcoes;
 	private final String nome;
@@ -22,9 +22,9 @@ public class Biblioteca {
 		return nome;
 	}
 
-	public void addConstante(String nome, Object valor) {
-		if (nome != null) {
-			constantes.put(nome, valor);
+	public void addConstante(Constante constante) {
+		if (constante != null) {
+			constantes.put(constante.getNome(), constante);
 		}
 	}
 
@@ -34,8 +34,12 @@ public class Biblioteca {
 		}
 	}
 
-	public Object getValorConstante(String nome) {
-		return constantes.get(nome);
+	public Constante getConstante(String nome) throws InstrucaoException {
+		Constante constante = constantes.get(nome);
+		if (constante == null) {
+			throw new InstrucaoException("erro.constante_inexistente", nome, this.nome);
+		}
+		return constante;
 	}
 
 	public Funcao getFuncao(String nome) throws InstrucaoException {
