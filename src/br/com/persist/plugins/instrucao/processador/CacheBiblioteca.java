@@ -44,15 +44,15 @@ public class CacheBiblioteca {
 		while (it.hasNext()) {
 			String linha = it.next();
 			if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO)) {
-				funcao = criarFuncao(biblioteca, linha);
+				funcao = criarFuncao(linha);
 				biblioteca.addFuncao(funcao);
 				constante = null;
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA)) {
-				funcao = criarFuncaoNativa(biblioteca, linha);
+				funcao = criarFuncaoNativa(linha);
 				biblioteca.addFuncao(funcao);
 				constante = null;
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_CONSTANTE)) {
-				constante = criarConstante(biblioteca, linha);
+				constante = criarConstante(linha);
 				biblioteca.addConstante(constante);
 				funcao = null;
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAMETRO)) {
@@ -65,32 +65,28 @@ public class CacheBiblioteca {
 				processarInstrucao(nome, constante, funcao, linha);
 			}
 		}
+		biblioteca.initConstantes();
 		return biblioteca;
 	}
 
-	private Funcao criarFuncao(Biblioteca biblioteca, String linha) {
+	private Funcao criarFuncao(String linha) {
 		linha = linha.substring(InstrucaoConstantes.PREFIXO_FUNCAO.length());
-		Funcao funcao = new Funcao(linha);
-		funcao.setBiblioteca(biblioteca);
-		return funcao;
+		return new Funcao(linha);
 	}
 
-	private Funcao criarFuncaoNativa(Biblioteca biblioteca, String linha) {
+	private Funcao criarFuncaoNativa(String linha) {
 		linha = linha.substring(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA.length());
 		int pos = linha.indexOf(' ');
 		String biblioNativa = linha.substring(0, pos);
 		String nomeFuncao = linha.substring(pos + 1);
 		Funcao funcao = new Funcao(nomeFuncao);
 		funcao.setBiblioNativa(biblioNativa);
-		funcao.setBiblioteca(biblioteca);
 		return funcao;
 	}
 
-	private Constante criarConstante(Biblioteca biblioteca, String linha) {
+	private Constante criarConstante(String linha) {
 		linha = linha.substring(InstrucaoConstantes.PREFIXO_CONSTANTE.length());
-		Constante constante = new Constante(linha);
-		constante.setBiblioteca(biblioteca);
-		return constante;
+		return new Constante(linha);
 	}
 
 	private void processarInstrucao(String nome, Constante constante, Funcao funcao, String linha)

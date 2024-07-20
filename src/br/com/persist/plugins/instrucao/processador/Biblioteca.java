@@ -25,12 +25,14 @@ public class Biblioteca {
 	public void addConstante(Constante constante) {
 		if (constante != null) {
 			constantes.put(constante.getNome(), constante);
+			constante.setBiblioteca(this);
 		}
 	}
 
 	public void addFuncao(Funcao funcao) {
 		if (funcao != null) {
 			funcoes.put(funcao.getNome(), funcao);
+			funcao.setBiblioteca(this);
 		}
 	}
 
@@ -48,6 +50,12 @@ public class Biblioteca {
 			throw new InstrucaoException("erro.metodo_inexistente", nome, this.nome);
 		}
 		return funcao;
+	}
+
+	public void initConstantes() throws InstrucaoException {
+		for (Constante constante : constantes.values()) {
+			constante.init();
+		}
 	}
 
 	@Override

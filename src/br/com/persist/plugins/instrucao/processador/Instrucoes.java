@@ -35,29 +35,30 @@ public class Instrucoes {
 	}
 
 	static {
-		add(new Add());
-		add(new And());
-		add(new Diff());
-		add(new Div());
-		add(new GotoInstrucao());
-		add(new IFEqInstrucao());
-		add(new Igual());
-		add(new InvocacaoInstrucao());
-		add(new LoadParametroInstrucao());
-		add(new LoadConstanteInstrucao());
-		add(new Maior());
-		add(new MaiorIgual());
-		add(new Menor());
-		add(new MenorIgual());
-		add(new Mul());
-		add(new NegativoInstrucao());
-		add(new Or());
 		add(new PushBigDecimalInstrucao());
 		add(new PushBigIntegerInstrucao());
+		add(new LoadParametroInstrucao());
+		add(new LoadConstanteInstrucao());
 		add(new PushStringInstrucao());
-		add(new Rem());
+		add(new InvocacaoInstrucao());
+		add(new NegativoInstrucao());
 		add(new RetornoInstrucao());
+		add(new ConstInstrucao());
+		add(new GotoInstrucao());
+		add(new IFEqInstrucao());
+		add(new MaiorIgual());
+		add(new MenorIgual());
+		add(new Igual());
+		add(new Menor());
+		add(new Maior());
+		add(new Diff());
+		add(new Add());
+		add(new And());
+		add(new Div());
+		add(new Mul());
+		add(new Rem());
 		add(new Sub());
 		add(new Xor());
+		add(new Or());
 	}
 }

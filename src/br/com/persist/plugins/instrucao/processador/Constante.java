@@ -64,4 +64,11 @@ public class Constante {
 			instrucoes.add(instrucao);
 		}
 	}
+
+	public void init() throws InstrucaoException {
+		PilhaOperando pilhaOperando = new PilhaOperando();
+		for (Instrucao instrucao : instrucoes) {
+			instrucao.processar(null, biblioteca, null, null, pilhaOperando);
+		}
+	}
 }
