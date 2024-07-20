@@ -71,4 +71,9 @@ public class Constante {
 			instrucao.processar(null, biblioteca, null, null, pilhaOperando);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return nome + ": " + valor;
+	}
 }
