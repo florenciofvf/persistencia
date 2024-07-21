@@ -115,6 +115,7 @@ public class ArgumentoContexto extends Container {
 		super.indexar(atomic);
 		if (identity != null) {
 			indice = atomic.getAndIncrement();
+			indexarNegativo(atomic);
 		}
 	}
 

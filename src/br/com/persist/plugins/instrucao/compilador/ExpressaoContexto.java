@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
@@ -167,6 +168,12 @@ public class ExpressaoContexto extends Container {
 		}
 
 		adicionar(sel);
+	}
+
+	@Override
+	public void indexar(AtomicInteger atomic) {
+		super.indexar(atomic);
+		indexarNegativo(atomic);
 	}
 
 	@Override

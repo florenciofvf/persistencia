@@ -117,6 +117,9 @@ public abstract class Container extends AbstratoContexto {
 		for (Container c : componentes) {
 			c.indexar(atomic);
 		}
+	}
+
+	public void indexarNegativo(AtomicInteger atomic) {
 		if (negativo != null) {
 			negativo.indexar(atomic);
 		}

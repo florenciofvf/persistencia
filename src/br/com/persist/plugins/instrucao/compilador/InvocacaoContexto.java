@@ -35,6 +35,7 @@ public class InvocacaoContexto extends Container {
 	public void indexar(AtomicInteger atomic) {
 		super.indexar(atomic);
 		indice = atomic.getAndIncrement();
+		indexarNegativo(atomic);
 	}
 
 	@Override

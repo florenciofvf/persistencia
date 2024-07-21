@@ -22,8 +22,8 @@ public class NumeroContexto extends Container {
 
 	@Override
 	public void indexar(AtomicInteger atomic) {
-		super.indexar(atomic);
 		indice = atomic.getAndIncrement();
+		indexarNegativo(atomic);
 	}
 
 	@Override
