@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
@@ -62,7 +63,8 @@ public class FuncaoNativaContexto extends Container {
 
 	@Override
 	public void salvar(PrintWriter pw) {
-		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA + identityBiblio + " " + identity);
+		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA + Util.replaceAll(identityBiblio.toString(), "_", ".")
+				+ " " + identity);
 		getParametros().salvar(pw);
 	}
 
