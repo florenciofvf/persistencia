@@ -117,28 +117,46 @@ public class IFContexto extends Container {
 	public void indexar(AtomicInteger atomic) {
 		getExpressao().indexar(atomic);
 		ifEqContexto.indexar(atomic);
-		getCorpo().indexar(atomic);
-		ifEqContexto.posicao = atomic.get();
-		if (getUltimo() instanceof ElseContexto) {
-			getUltimo().indexar(atomic);
-			if (!(getCorpo().getUltimo() instanceof RetornoContexto)) {
-				gotoContexto.indexar(atomic);
-			}
-			gotoContexto.posicao = atomic.get();
+
+		if (getSize() == 2) {
+			getCorpo().indexar(atomic);
+			ifEqContexto.posicao = atomic.get();
+			return;
 		}
+
+		if (getCorpo().getUltimo() instanceof RetornoContexto) {
+			getCorpo().indexar(atomic);
+			ifEqContexto.posicao = atomic.get();
+			getUltimo().indexar(atomic);
+			return;
+		}
+
+		getCorpo().indexar(atomic);
+		gotoContexto.indexar(atomic);
+		ifEqContexto.posicao = atomic.get();
+		getUltimo().indexar(atomic);
+		gotoContexto.posicao = atomic.get();
 	}
 
 	@Override
 	public void salvar(PrintWriter pw) {
 		getExpressao().salvar(pw);
 		ifEqContexto.salvar(pw);
-		getCorpo().salvar(pw);
-		if (getUltimo() instanceof ElseContexto) {
-			if (!(getCorpo().getUltimo() instanceof RetornoContexto)) {
-				gotoContexto.salvar(pw);
-			}
-			getUltimo().salvar(pw);
+
+		if (getSize() == 2) {
+			getCorpo().salvar(pw);
+			return;
 		}
+
+		if (getCorpo().getUltimo() instanceof RetornoContexto) {
+			getCorpo().salvar(pw);
+			getUltimo().salvar(pw);
+			return;
+		}
+
+		getCorpo().salvar(pw);
+		gotoContexto.salvar(pw);
+		getUltimo().salvar(pw);
 	}
 
 	@Override
