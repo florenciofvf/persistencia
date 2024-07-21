@@ -65,15 +65,18 @@ public class ConstanteContexto extends Container {
 	}
 
 	@Override
+	public void indexar(AtomicInteger atomic) {
+		getExpressao().indexar(atomic);
+		indice = atomic.getAndIncrement();
+	}
+
+	@Override
 	public void salvar(PrintWriter pw) {
 		if (getFuncao() == null) {
 			pw.println(InstrucaoConstantes.PREFIXO_CONSTANTE + identity);
 		}
 		getExpressao().salvar(pw);
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + "-");
-		pw.print(InstrucaoConstantes.ESPACO + CONST);
-		pw.print(InstrucaoConstantes.ESPACO + identity);
-		pw.println();
+		print(pw, CONST, identity.toString());
 	}
 
 	@Override
