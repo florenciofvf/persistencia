@@ -8,7 +8,6 @@ public class NegativoContexto extends Container {
 
 	@Override
 	public void indexar(AtomicInteger atomic) {
-		super.indexar(atomic);
 		indice = atomic.getAndIncrement();
 	}
 
