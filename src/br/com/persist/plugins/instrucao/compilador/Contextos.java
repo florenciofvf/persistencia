@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.compilador;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Contextos {
+	public static final FechaParenteses FECHA_PARENTESES = new FechaParenteses();
 	public static final AbreParenteses ABRE_PARENTESES = new AbreParenteses();
 	public static final AbreColchetes ABRE_COLCHETES = new AbreColchetes();
 	public static final PontoVirgula PONTO_VIRGULA = new PontoVirgula();
@@ -19,6 +20,15 @@ public class Contextos {
 		@Override
 		public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 			if (!"(".equals(token.getString())) {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	public static class FechaParenteses extends AbstratoContexto {
+		@Override
+		public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
+			if (!")".equals(token.getString())) {
 				compilador.invalidar(token);
 			}
 		}

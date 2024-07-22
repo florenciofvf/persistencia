@@ -35,8 +35,9 @@ public class FuncaoNativaContexto extends Container {
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		contexto = Contextos.PONTO_VIRGULA;
 		compilador.setContexto(getParametros());
+		getParametros().setFinalizadorPai(true);
+		contexto = Contextos.FECHA_PARENTESES;
 	}
 
 	@Override

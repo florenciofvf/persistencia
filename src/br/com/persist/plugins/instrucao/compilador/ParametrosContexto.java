@@ -6,15 +6,28 @@ public class ParametrosContexto extends Container {
 	public static final IdentityOuFinalizar IDENTITY_OU_FINALIZAR = new IdentityOuFinalizar();
 	public static final VirgulaOuFinalizar VIRGULA_OU_FINALIZAR = new VirgulaOuFinalizar();
 	public static final ParametroIdentity PARAMETRO_IDENTITY = new ParametroIdentity();
+	private boolean finalizadorPai;
 
 	public ParametrosContexto() {
 		contexto = IDENTITY_OU_FINALIZAR;
 	}
 
+	public boolean isFinalizadorPai() {
+		return finalizadorPai;
+	}
+
+	public void setFinalizadorPai(boolean finalizadorPai) {
+		this.finalizadorPai = finalizadorPai;
+	}
+
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		compilador.setContexto(getPai());
+		if (finalizadorPai) {
+			getPai().finalizador(compilador, token);
+		} else {
+			compilador.setContexto(getPai());
+		}
 	}
 
 	@Override
