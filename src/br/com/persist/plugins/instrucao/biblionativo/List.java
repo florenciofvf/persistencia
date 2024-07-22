@@ -16,6 +16,13 @@ public class List {
 		return ((Lista) lista).contains(valor);
 	}
 
+	public static Lista addNew(Object lista, Object valor) {
+		Lista nova = create();
+		nova.addLista((Lista) lista);
+		nova.add(valor);
+		return nova;
+	}
+
 	public static void add(Object lista, Object valor) {
 		((Lista) lista).add(valor);
 	}
