@@ -12,10 +12,13 @@ public class Processador {
 
 	public List<Object> processar(String nomeBiblioteca, String nomeFuncao, Object... args) throws InstrucaoException {
 		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioteca);
-		Funcao funcao = biblioteca.getFuncao(nomeFuncao);
+		Funcao funcao = biblioteca.getFuncao(nomeFuncao).clonar();
 		for (int i = 0; i < args.length; i++) {
 			funcao.setValorParametro(i, args[i]);
 		}
+
+		pilhaFuncao.clear();
+		pilhaOperando.clear();
 		pilhaFuncao.push(funcao);
 
 		funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
