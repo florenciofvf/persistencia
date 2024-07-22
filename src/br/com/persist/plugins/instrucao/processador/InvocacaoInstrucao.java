@@ -64,14 +64,14 @@ public class InvocacaoInstrucao extends Instrucao {
 	}
 
 	private static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
-		List<Integer> params = listaParam(funcao);
-		for (int i = params.size() - 1; i >= 0; i--) {
+		List<Integer> indices = indiceParametros(funcao);
+		for (int i = indices.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
-			funcao.setValorParametro(params.get(i), valor);
+			funcao.setValorParametro(indices.get(i), valor);
 		}
 	}
 
-	private static List<Integer> listaParam(Funcao funcao) {
+	private static List<Integer> indiceParametros(Funcao funcao) {
 		List<Integer> resp = new ArrayList<>();
 		for (int i = 0; i < funcao.getTotalParametro(); i++) {
 			resp.add(i);
@@ -88,7 +88,7 @@ public class InvocacaoInstrucao extends Instrucao {
 		} catch (Exception ex) {
 			throw new InstrucaoException("erro.biblio_inexistente", funcao.getBiblioNativa());
 		}
-		List<Integer> params = listaParam(funcao);
+		List<Integer> params = indiceParametros(funcao);
 		Class<?>[] tipoParametros = getTipoParametros(params);
 		Object[] valorParametros = getValorParametros(pilhaOperando, params);
 		try {
@@ -108,14 +108,6 @@ public class InvocacaoInstrucao extends Instrucao {
 		return resposta;
 	}
 
-	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
-		StringBuilder sb = new StringBuilder(funcao.toString() + "\n");
-		while (!pilhaMetodo.isEmpty()) {
-			sb.append(pilhaMetodo.pop() + "\n");
-		}
-		return sb.toString();
-	}
-
 	private Class<?>[] getTipoParametros(List<Integer> params) {
 		Class<?>[] tipoParametros = new Class<?>[params.size()];
 		for (int i = 0; i < params.size(); i++) {
@@ -131,5 +123,13 @@ public class InvocacaoInstrucao extends Instrucao {
 			valorParametros[i] = valor;
 		}
 		return valorParametros;
+	}
+
+	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
+		StringBuilder sb = new StringBuilder(funcao.toString() + "\n");
+		while (!pilhaMetodo.isEmpty()) {
+			sb.append(pilhaMetodo.pop() + "\n");
+		}
+		return sb.toString();
 	}
 }
