@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.processador;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.InvocacaoContexto;
@@ -54,8 +55,11 @@ public class InvocacaoInstrucao extends Instrucao {
 				throw new InstrucaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
 			}
 		} else {
-			Object resp = invocarNativo(clone, pilhaFuncao, pilhaOperando);
-			pilhaOperando.push(resp);
+			AtomicBoolean atomic = new AtomicBoolean();
+			Object resp = invocarNativo(clone, pilhaFuncao, pilhaOperando, atomic);
+			if (atomic.get()) {
+				pilhaOperando.push(resp);
+			}
 		}
 	}
 
@@ -75,8 +79,9 @@ public class InvocacaoInstrucao extends Instrucao {
 		return resp;
 	}
 
-	private Object invocarNativo(Funcao funcao, PilhaFuncao pilhaMetodo, PilhaOperando pilhaOperando)
-			throws InstrucaoException {
+	private Object invocarNativo(Funcao funcao, PilhaFuncao pilhaMetodo, PilhaOperando pilhaOperando,
+			AtomicBoolean atomic) throws InstrucaoException {
+		Object resposta = null;
 		Class<?> klass = null;
 		try {
 			klass = Class.forName(funcao.getBiblioNativa());
@@ -88,10 +93,19 @@ public class InvocacaoInstrucao extends Instrucao {
 		Object[] valorParametros = getValorParametros(pilhaOperando, params);
 		try {
 			Method method = klass.getDeclaredMethod(funcao.getNome(), tipoParametros);
-			return method.invoke(klass, valorParametros);
+			Class<?> returnType = method.getReturnType();
+			String string = returnType.getCanonicalName();
+			if ("void".equals(string) || "java.lang.Void".equals(string)) {
+				method.invoke(klass, valorParametros);
+				atomic.set(false);
+			} else {
+				resposta = method.invoke(klass, valorParametros);
+				atomic.set(true);
+			}
 		} catch (Exception ex) {
 			throw new InstrucaoException(stringPilhaMetodo(funcao, pilhaMetodo), ex);
 		}
+		return resposta;
 	}
 
 	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
