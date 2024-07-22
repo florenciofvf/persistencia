@@ -2,6 +2,8 @@ package br.com.persist.assistencia;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.biblio_nativo.Lista;
+
 public class ArquivoString {
 	private final String absoluto;
 	private final Lista lista;

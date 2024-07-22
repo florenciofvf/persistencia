@@ -13,7 +13,6 @@ import java.nio.channels.FileChannel;
 
 import br.com.persist.assistencia.ArquivoString;
 import br.com.persist.assistencia.LinhaString;
-import br.com.persist.assistencia.Lista;
 
 public class Arquivo {
 	private static boolean selComTrim = false;

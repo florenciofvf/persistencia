@@ -1,7 +1,5 @@
 package br.com.persist.plugins.instrucao.biblio_nativo;
 
-import br.com.persist.assistencia.Lista;
-
 public class Colecao {
 	private Colecao() {
 	}

@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.persist.assistencia.Lista;
-
 public class Banco {
 	private Banco() {
 	}

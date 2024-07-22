@@ -3,8 +3,8 @@ package br.com.persist.plugins.instrucao.processador;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import br.com.persist.assistencia.Lista;
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.biblio_nativo.Lista;
 
 public class InstrucaoUtil {
 	private InstrucaoUtil() {
