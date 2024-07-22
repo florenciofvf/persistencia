@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.biblio_nativo.Lista;
+import br.com.persist.plugins.instrucao.biblionativo.Lista;
 
 public class InstrucaoUtil {
 	private InstrucaoUtil() {

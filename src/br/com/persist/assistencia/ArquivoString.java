@@ -2,7 +2,7 @@ package br.com.persist.assistencia;
 
 import java.io.PrintWriter;
 
-import br.com.persist.plugins.instrucao.biblio_nativo.Lista;
+import br.com.persist.plugins.instrucao.biblionativo.Lista;
 
 public class ArquivoString {
 	private final String absoluto;

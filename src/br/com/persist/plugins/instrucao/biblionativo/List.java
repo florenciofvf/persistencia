@@ -1,4 +1,4 @@
-package br.com.persist.plugins.instrucao.biblio_nativo;
+package br.com.persist.plugins.instrucao.biblionativo;
 
 public class List {
 	private List() {
