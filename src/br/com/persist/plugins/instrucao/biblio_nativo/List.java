@@ -1,10 +1,10 @@
 package br.com.persist.plugins.instrucao.biblio_nativo;
 
-public class Colecao {
-	private Colecao() {
+public class List {
+	private List() {
 	}
 
-	public static Lista list() {
+	public static Lista create() {
 		return new Lista();
 	}
 
