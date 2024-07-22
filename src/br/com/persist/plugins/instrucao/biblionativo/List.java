@@ -16,8 +16,8 @@ public class List {
 		return ((Lista) lista).contains(valor);
 	}
 
-	public static Object add(Object lista, Object valor) {
-		return ((Lista) lista).add(valor);
+	public static void add(Object lista, Object valor) {
+		((Lista) lista).add(valor);
 	}
 
 	public static Object size(Object lista) {
@@ -36,7 +36,7 @@ public class List {
 		return ((Lista) lista).tail();
 	}
 
-	public static Object clear(Object lista) {
-		return ((Lista) lista).clear();
+	public static void clear(Object lista) {
+		((Lista) lista).clear();
 	}
 }
