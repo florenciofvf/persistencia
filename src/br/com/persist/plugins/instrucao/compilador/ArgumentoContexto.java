@@ -115,7 +115,7 @@ public class ArgumentoContexto extends Container {
 		super.indexar(atomic);
 		if (identity != null) {
 			indice = atomic.getAndIncrement();
-			indexarNegativo(atomic);
+			identity.indexarNegativo(atomic);
 		}
 	}
 
@@ -124,8 +124,8 @@ public class ArgumentoContexto extends Container {
 		super.salvar(pw);
 		if (identity != null) {
 			print(pw, InvocacaoContexto.INVOKE, identity.getId());
+			identity.salvarNegativo(pw);
 		}
-		salvarNegativo(pw);
 	}
 
 	@Override
