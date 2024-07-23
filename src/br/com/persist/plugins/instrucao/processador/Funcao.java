@@ -74,7 +74,7 @@ public class Funcao {
 	}
 
 	public void addParametro(String nome) throws InstrucaoException {
-		InstrucaoUtil.checarParam(nome);
+		InstrucaoUtil.checarParametro(nome);
 		Parametro param = new Parametro(nome);
 		if (!parametros.contains(param)) {
 			param.indice = parametros.size();

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.biblionativo.Lista;
 import br.com.persist.plugins.instrucao.compilador.OperadorContexto;
 
 public class OperadorInstrucao {
@@ -116,6 +117,33 @@ public class OperadorInstrucao {
 				}
 			} else {
 				pilhaOperando.push(operandoE.toString() + operandoD.toString());
+			}
+		}
+	}
+
+	public static class AddLista extends Instrucao {
+		public AddLista() {
+			super(OperadorContexto.ADD_LISTA);
+		}
+
+		@Override
+		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+			Object operandoD = pilhaOperando.pop();
+			Object operandoE = pilhaOperando.pop();
+			InstrucaoUtil.checarOperando(operandoE);
+			InstrucaoUtil.checarOperando(operandoD);
+			Lista lista = new Lista();
+			add(lista, operandoE);
+			add(lista, operandoD);
+			pilhaOperando.push(lista);
+		}
+
+		private void add(Lista lista, Object obj) {
+			if (obj instanceof Lista) {
+				lista.addLista((Lista) obj);
+			} else {
+				lista.add(obj);
 			}
 		}
 	}

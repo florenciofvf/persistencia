@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.Add;
+import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.AddLista;
 import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.And;
 import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.Diff;
 import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.Div;
@@ -48,6 +49,7 @@ public class Instrucoes {
 		add(new IFEqInstrucao());
 		add(new MaiorIgual());
 		add(new MenorIgual());
+		add(new AddLista());
 		add(new Igual());
 		add(new Menor());
 		add(new Maior());

@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class OperadorContexto extends Container {
+	public static final String ADD_LISTA = "add_lista";
 	public static final String ADD = "add";
 	public static final String SUB = "sub";
 	public static final String MUL = "mul";
@@ -33,6 +34,9 @@ public class OperadorContexto extends Container {
 	}
 
 	public short getPrioridade() {
+		if (igual(":")) {
+			return 50;
+		}
 		if (igual("%")) {
 			return 100;
 		}
@@ -52,6 +56,9 @@ public class OperadorContexto extends Container {
 	}
 
 	public String getCodigo() {
+		if (igual(":")) {
+			return ADD_LISTA;
+		}
 		if (igual("%")) {
 			return REM;
 		}

@@ -142,6 +142,7 @@ public class Compilador {
 		case '&':
 		case '|':
 		case '=':
+		case ':':
 			contexto.operador(this, new Token("" + c, linha, coluna, Tipo.OPERADOR));
 			indice++;
 			break;
