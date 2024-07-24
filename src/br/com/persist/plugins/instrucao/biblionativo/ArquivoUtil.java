@@ -11,38 +11,33 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 
-import br.com.persist.assistencia.ArquivoString;
-import br.com.persist.assistencia.LinhaString;
-
-public class Arquivo {
-	private static boolean selComTrim = false;
-
-	private Arquivo() {
+public class ArquivoUtil {
+	private ArquivoUtil() {
 	}
 
-	public static ArquivoString criarArquivoString(Object absoluto) {
+	public static Arquivo criarArquivo(Object absoluto) {
 		try {
-			String arquivo = absoluto.toString();
-			checarArquivo(arquivo);
+			java.lang.String arquivo = absoluto.toString();
+			checarAbsoluto(arquivo);
 			try (InputStream is = new FileInputStream(arquivo)) {
 				Lista lista = new Lista();
 				long numero = 1;
-				LinhaString linhaString = criar(numero, is);
-				while (linhaString != null) {
-					lista.add(linhaString);
+				ArquivoLinha linha = criar(numero, is);
+				while (linha != null) {
+					lista.add(linha);
 					numero++;
-					linhaString = criar(numero, is);
+					linha = criar(numero, is);
 				}
-				return new ArquivoString(arquivo, lista);
+				return new Arquivo(arquivo, lista);
 			}
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
 	}
 
-	private static LinhaString criar(long numero, InputStream is) throws IOException {
+	private static ArquivoLinha criar(long numero, InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();
-		LinhaString resposta = null;
+		ArquivoLinha resposta = null;
 		int i = is.read();
 		char cr = 0;
 		char lf = 0;
@@ -53,7 +48,7 @@ public class Arquivo {
 					cr = c;
 				} else {
 					lf = c;
-					return new LinhaString(numero, sb.toString(), cr, lf);
+					return new ArquivoLinha(numero, sb.toString(), cr, lf);
 				}
 			} else {
 				sb.append(c);
@@ -61,159 +56,152 @@ public class Arquivo {
 			i = is.read();
 		}
 		if (cr != 0) {
-			resposta = new LinhaString(numero, sb.toString(), cr, lf);
+			resposta = new ArquivoLinha(numero, sb.toString(), cr, lf);
 		}
 		return resposta;
 	}
 
-	public static BigInteger selecionarComTrim() {
-		selComTrim = true;
-		return BigInteger.valueOf(1);
-	}
-
-	public static BigInteger selecionarSemTrim() {
-		selComTrim = false;
-		return BigInteger.valueOf(0);
-	}
-
-	public static Lista selecionarLinhaString(Object arquivo, Object objString) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
-		String string = (String) objString;
+	public static Lista selecionarLinhas(Object arquivo, Object objString, BigInteger trim) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
+		java.lang.String string = (java.lang.String) objString;
 		Lista resposta = new Lista();
-		Lista lista = arquivoString.getLista();
+		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
-			LinhaString linhaString = (LinhaString) lista.get(i);
-			if (linhaString.stringEqual(string, selComTrim)) {
-				resposta.add(linhaString);
+			ArquivoLinha linha = (ArquivoLinha) lista.get(i);
+			if (linha.stringEqual(string, Util.TRUE.equals(trim))) {
+				resposta.add(linha);
 			}
 		}
 		return resposta;
 	}
 
-	public static Lista selecionarLinhaStringIniFim(Object arquivo, Object objIni, Object objFim) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
-		String strInicio = (String) objIni;
-		String strFinal = (String) objFim;
+	public static Lista selecionarLinhasIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim,
+			BigInteger trim) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
+		java.lang.String strInicio = (java.lang.String) objIni;
+		java.lang.String strFinal = (java.lang.String) objFim;
 		Lista resposta = new Lista();
-		Lista lista = arquivoString.getLista();
+		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
-			LinhaString linhaString = (LinhaString) lista.get(i);
-			if (linhaString.iniciaEfinalizaCom(strInicio, strFinal, selComTrim)) {
-				resposta.add(linhaString);
+			ArquivoLinha linha = (ArquivoLinha) lista.get(i);
+			if (linha.iniciaEfinalizaCom(strInicio, strFinal, Util.TRUE.equals(trim))) {
+				resposta.add(linha);
 			}
 		}
 		return resposta;
 	}
 
-	public static Lista selecionarLinhaStringEntreIniFim(Object arquivo, Object objIni, Object objFim) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
-		String strInicio = (String) objIni;
-		String strFinal = (String) objFim;
+	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim,
+			BigInteger trim) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
+		java.lang.String strInicio = (java.lang.String) objIni;
+		java.lang.String strFinal = (java.lang.String) objFim;
 		Lista resposta = new Lista();
-		Lista lista = arquivoString.getLista();
+		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
-			LinhaString linhaString = (LinhaString) lista.get(i);
-			String stringEntre = linhaString.stringEntre(strInicio, strFinal, selComTrim);
+			ArquivoLinha linha = (ArquivoLinha) lista.get(i);
+			java.lang.String stringEntre = linha.stringEntre(strInicio, strFinal, Util.TRUE.equals(trim));
 			if (stringEntre != null) {
-				resposta.add(linhaString.clonar(stringEntre));
+				resposta.add(linha.clonar(stringEntre));
 			}
 		}
 		return resposta;
 	}
 
-	public static Lista selecionarLinhaStringEntreIniFimReplace(Object arquivo, Object objIni, Object objFim,
-			Object objNova) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
-		String strInicio = (String) objIni;
-		String strFinal = (String) objFim;
-		String strNova = (String) objNova;
+	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaComReplace(Object arquivo, Object objIni,
+			Object objFim, Object objNova, BigInteger trim) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
+		java.lang.String strInicio = (java.lang.String) objIni;
+		java.lang.String strFinal = (java.lang.String) objFim;
+		java.lang.String strNova = (java.lang.String) objNova;
 		Lista resposta = new Lista();
-		Lista lista = arquivoString.getLista();
+		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
-			LinhaString linhaString = (LinhaString) lista.get(i);
-			String stringEntreReplace = linhaString.stringEntreReplace(strInicio, strFinal, strNova, selComTrim);
+			ArquivoLinha linha = (ArquivoLinha) lista.get(i);
+			java.lang.String stringEntreReplace = linha.stringEntreReplace(strInicio, strFinal, strNova,
+					Util.TRUE.equals(trim));
 			if (stringEntreReplace != null) {
-				resposta.add(linhaString.clonar(stringEntreReplace));
+				resposta.add(linha.clonar(stringEntreReplace));
 			}
 		}
 		return resposta;
 	}
 
-	public static LinhaString getLinhaString(Object arquivo, Object numero) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
+	public static ArquivoLinha getLinha(Object arquivo, Object numero) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
 		long numeroLinha = ((Number) numero).longValue();
-		Lista lista = arquivoString.getLista();
+		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
-			LinhaString linhaString = (LinhaString) lista.get(i);
-			if (linhaString.numeroEqual(numeroLinha)) {
-				return linhaString;
+			ArquivoLinha linha = (ArquivoLinha) lista.get(i);
+			if (linha.numeroEqual(numeroLinha)) {
+				return linha;
 			}
 		}
 		return null;
 	}
 
-	public static LinhaString clonarLinhaString(Object linha, Object string) {
-		LinhaString linhaString = (LinhaString) linha;
-		return linhaString.clonar((String) string);
+	public static ArquivoLinha clonarLinha(Object linha, Object string) {
+		ArquivoLinha entityLinha = (ArquivoLinha) linha;
+		return entityLinha.clonar((java.lang.String) string);
 	}
 
-	public static LinhaString criarLinhaString(Object numero, Object string) {
-		return new LinhaString(((Number) numero).longValue(), (String) string, (char) 0, '\n');
+	public static ArquivoLinha criarLinha(Object numero, Object string) {
+		return new ArquivoLinha(((Number) numero).longValue(), (java.lang.String) string, (char) 0, '\n');
 	}
 
-	public static LinhaString substituirLinhaString(Object arquivo, Object linha, Object charset) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
-		LinhaString linhaString = (LinhaString) linha;
+	public static ArquivoLinha substituirLinha(Object arquivo, Object linha, Object charset) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
+		ArquivoLinha entityLinha = (ArquivoLinha) linha;
 		try {
-			PrintWriter pw = criarPrintWriter(arquivoString, (String) charset);
-			Lista lista = arquivoString.getLista();
+			PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
+			Lista lista = entityArquivo.getLista();
 			long size = lista.size().longValue();
 			for (long i = 0, num = 1; i < size; i++, num++) {
-				LinhaString ls = (LinhaString) lista.get(i);
-				linhaString.print(pw, ls, num);
+				ArquivoLinha entity = (ArquivoLinha) lista.get(i);
+				entityLinha.print(pw, entity, num);
 			}
 			pw.close();
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
-		return linhaString;
+		return entityLinha;
 	}
 
-	public static ArquivoString salvarArquivoString(Object arquivo, Object charset) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
+	public static Arquivo salvarArquivo(Object arquivo, Object charset) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
 		try {
-			PrintWriter pw = criarPrintWriter(arquivoString, (String) charset);
-			arquivoString.salvar(pw);
+			PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
+			entityArquivo.salvar(pw);
 			pw.close();
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
-		return arquivoString;
+		return entityArquivo;
 	}
 
-	public static LinhaString setLinhaString(Object arquivo, Object linha) {
-		ArquivoString arquivoString = (ArquivoString) arquivo;
-		LinhaString linhaString = (LinhaString) linha;
+	public static ArquivoLinha setLinha(Object arquivo, Object linha) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
+		ArquivoLinha entityLinha = (ArquivoLinha) linha;
 		try {
-			Lista lista = arquivoString.getLista();
-			lista.set(linhaString.getNumero() - 1, linhaString);
+			Lista lista = entityArquivo.getLista();
+			lista.set(entityLinha.getNumero() - 1, entityLinha);
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
-		return linhaString;
+		return entityLinha;
 	}
 
-	private static PrintWriter criarPrintWriter(ArquivoString arquivoString, String charset)
+	private static PrintWriter criarPrintWriter(Arquivo arquivo, java.lang.String charset)
 			throws FileNotFoundException, UnsupportedEncodingException {
-		return new PrintWriter(arquivoString.getAbsoluto(), charset);
+		return new PrintWriter(arquivo.getAbsoluto(), charset);
 	}
 
-	private static void checarArquivo(String absoluto) throws IOException {
+	private static void checarAbsoluto(java.lang.String absoluto) throws IOException {
 		File file = new File(absoluto);
 		if (!file.exists()) {
 			throw new IOException("Arquivo inexistente! >>> " + absoluto);
@@ -226,7 +214,7 @@ public class Arquivo {
 		}
 	}
 
-	public static String copiar(Object absolutoOrigem, Object absolutoDestino) throws IOException {
+	public static java.lang.String copiar(Object absolutoOrigem, Object absolutoDestino) throws IOException {
 		if (absolutoOrigem == null) {
 			return "ORIGEM NULL";
 		}
