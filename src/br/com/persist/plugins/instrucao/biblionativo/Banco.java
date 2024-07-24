@@ -1,6 +1,5 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,24 +15,23 @@ public class Banco {
 
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha) {
 		try {
-			Class.forName((String) driver);
-			return DriverManager.getConnection((String) url, (String) usuario, (String) senha);
+			Class.forName((java.lang.String) driver);
+			return DriverManager.getConnection((java.lang.String) url, (java.lang.String) usuario,
+					(java.lang.String) senha);
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
 	}
 
-	public static BigInteger closeConnection(Object conexao) {
+	public static void closeConnection(Object conexao) {
 		try {
 			Connection connection = (Connection) conexao;
 			if (valido(connection)) {
 				connection.close();
-				return BigInteger.valueOf(1);
 			}
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
-		return BigInteger.valueOf(0);
 	}
 
 	private static boolean valido(Connection connection) throws SQLException {
@@ -43,7 +41,7 @@ public class Banco {
 	public static Lista select(Object conexao, Object consulta) {
 		Lista lista = new Lista();
 		Connection connection = (Connection) conexao;
-		String instrucao = (String) consulta;
+		java.lang.String instrucao = (java.lang.String) consulta;
 		try (Statement st = connection.createStatement()) {
 			processar(instrucao, st, lista);
 		} catch (Exception ex) {
@@ -52,7 +50,7 @@ public class Banco {
 		return lista;
 	}
 
-	private static void processar(String instrucao, Statement st, Lista lista) throws SQLException {
+	private static void processar(java.lang.String instrucao, Statement st, Lista lista) throws SQLException {
 		try (ResultSet rs = st.executeQuery(instrucao)) {
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int qtdColunas = rsmd.getColumnCount();
@@ -62,9 +60,9 @@ public class Banco {
 				}
 			} else {
 				while (rs.next()) {
-					Map<String, Object> map = new HashMap<>();
+					Map<java.lang.String, Object> map = new HashMap<>();
 					for (int i = 1; i <= qtdColunas; i++) {
-						String nome = rsmd.getColumnName(i);
+						java.lang.String nome = rsmd.getColumnName(i);
 						Object valor = rs.getObject(i);
 						map.put(nome, valor);
 					}
