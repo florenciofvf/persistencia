@@ -1,6 +1,5 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,8 +10,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 
-public class ArquivoUtil {
-	private ArquivoUtil() {
+public class File {
+	private File() {
 	}
 
 	public static Arquivo criarArquivo(Object absoluto) {
@@ -202,7 +201,7 @@ public class ArquivoUtil {
 	}
 
 	private static void checarAbsoluto(java.lang.String absoluto) throws IOException {
-		File file = new File(absoluto);
+		java.io.File file = new java.io.File(absoluto);
 		if (!file.exists()) {
 			throw new IOException("Arquivo inexistente! >>> " + absoluto);
 		}
@@ -218,7 +217,7 @@ public class ArquivoUtil {
 		if (absolutoOrigem == null) {
 			return "ORIGEM NULL";
 		}
-		File origem = new File(absolutoOrigem.toString());
+		java.io.File origem = new java.io.File(absolutoOrigem.toString());
 		if (!origem.isFile()) {
 			return "ORIGEM NAO EH ARQUIVO";
 		}
@@ -228,7 +227,7 @@ public class ArquivoUtil {
 		if (absolutoDestino == null) {
 			return "DESTINO NULL";
 		}
-		File destino = new File(absolutoDestino.toString());
+		java.io.File destino = new java.io.File(absolutoDestino.toString());
 		try (FileInputStream fis = new FileInputStream(origem)) {
 			try (FileOutputStream fos = new FileOutputStream(destino)) {
 				FileChannel channelIn = fis.getChannel();
