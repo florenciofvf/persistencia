@@ -6,10 +6,10 @@ public class Reflection {
 	private Reflection() {
 	}
 
-	public static Object invokeGet(Object objeto, Object nomeMetodoGet) {
+	public static Object methodGet(Object objeto, Object nomeMetodoGet) {
 		try {
 			Class<?> klass = objeto.getClass();
-			Method method = klass.getMethod((String) nomeMetodoGet);
+			Method method = klass.getMethod((java.lang.String) nomeMetodoGet);
 			return method.invoke(objeto);
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);

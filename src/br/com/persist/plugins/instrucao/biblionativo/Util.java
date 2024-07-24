@@ -4,41 +4,26 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class Util {
+	public static final BigInteger FALSE = BigInteger.valueOf(0);
+	public static final BigInteger TRUE = BigInteger.valueOf(1);
+
 	private Util() {
 	}
 
-	private static BigInteger createFalse() {
-		return BigInteger.valueOf(0);
+	public static BigInteger getFalse() {
+		return FALSE;
 	}
 
-	private static BigInteger createTrue() {
-		return BigInteger.valueOf(1);
+	public static BigInteger getTrue() {
+		return TRUE;
 	}
 
 	public static BigInteger isNull(Object object) {
-		return object == null ? createTrue() : createFalse();
+		return object == null ? TRUE : FALSE;
 	}
 
 	public static BigInteger isNotNull(Object object) {
-		return object != null ? createTrue() : createFalse();
-	}
-
-	public static BigInteger stringNotEmpty(Object object) {
-		BigInteger respo = stringEmpty(object);
-		BigInteger falso = createFalse();
-		BigInteger verda = createTrue();
-		return respo.equals(verda) ? falso : verda;
-	}
-
-	public static BigInteger stringEmpty(Object object) {
-		if (object == null) {
-			return createTrue();
-		}
-		String string = object.toString();
-		if (string == null) {
-			return createTrue();
-		}
-		return string.trim().length() > 0 ? createFalse() : createTrue();
+		return object != null ? TRUE : FALSE;
 	}
 
 	public static BigInteger parseBigInteger(Object object) {
@@ -49,7 +34,7 @@ public class Util {
 		return new BigDecimal(object.toString());
 	}
 
-	public static String toString(Object object) {
-		return object.toString();
+	public static java.lang.String toString(Object object) {
+		return object == null ? "" : object.toString();
 	}
 }
