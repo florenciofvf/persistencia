@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Banco {
-	private Banco() {
+public class DB {
+	private DB() {
 	}
 
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha) {

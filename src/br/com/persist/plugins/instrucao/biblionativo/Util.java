@@ -1,6 +1,5 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class Util {
@@ -24,14 +23,6 @@ public class Util {
 
 	public static BigInteger isNotNull(Object object) {
 		return object != null ? TRUE : FALSE;
-	}
-
-	public static BigInteger parseBigInteger(Object object) {
-		return new BigInteger(object.toString());
-	}
-
-	public static BigDecimal parseBigDecimal(Object object) {
-		return new BigDecimal(object.toString());
 	}
 
 	public static java.lang.String toString(Object object) {
