@@ -43,6 +43,11 @@ public class InvocacaoInstrucao extends Instrucao {
 			if (funcao == null) {
 				throw new InstrucaoException("erro.metodo_inexistente", "null", "null");
 			}
+			if ("tailcall".equals(nomeFuncao)) {
+				setParametros(funcao, pilhaOperando);
+				funcao.setIndice(0);
+				return;
+			}
 			biblio = funcao.getBiblioteca();
 		}
 		invocar = biblio.getFuncao(nomeFuncao);
