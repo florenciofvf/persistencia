@@ -6,6 +6,7 @@ public class String {
 	private String() {
 	}
 
+	@Biblio
 	public static BigInteger empty(Object object) {
 		if (object == null) {
 			return Util.TRUE;
@@ -17,6 +18,7 @@ public class String {
 		return string.trim().isEmpty() ? Util.TRUE : Util.FALSE;
 	}
 
+	@Biblio
 	public static BigInteger notEmpty(Object object) {
 		return empty(object).equals(Util.FALSE) ? Util.TRUE : Util.FALSE;
 	}

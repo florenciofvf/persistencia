@@ -4,6 +4,7 @@ public class Method {
 	private Method() {
 	}
 
+	@Biblio
 	public static Object get(Object objeto, Object nomeMetodoGet) {
 		try {
 			Class<?> klass = objeto.getClass();

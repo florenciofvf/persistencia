@@ -9,22 +9,27 @@ public class Util {
 	private Util() {
 	}
 
+	@Biblio
 	public static BigInteger getFalse() {
 		return FALSE;
 	}
 
+	@Biblio
 	public static BigInteger getTrue() {
 		return TRUE;
 	}
 
+	@Biblio
 	public static BigInteger isNull(Object object) {
 		return object == null ? TRUE : FALSE;
 	}
 
+	@Biblio
 	public static BigInteger isNotNull(Object object) {
 		return object != null ? TRUE : FALSE;
 	}
 
+	@Biblio
 	public static java.lang.String toString(Object object) {
 		return object == null ? "" : object.toString();
 	}
