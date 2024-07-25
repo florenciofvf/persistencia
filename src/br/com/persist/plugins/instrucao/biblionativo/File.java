@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 
 public class File {
@@ -62,7 +61,7 @@ public class File {
 	}
 
 	@Biblio
-	public static Lista selecionarLinhas(Object arquivo, Object objString, BigInteger trim) {
+	public static Lista selecionarLinhas(Object arquivo, Object objString, Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String string = (java.lang.String) objString;
 		Lista resposta = new Lista();
@@ -78,8 +77,7 @@ public class File {
 	}
 
 	@Biblio
-	public static Lista selecionarLinhasIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim,
-			BigInteger trim) {
+	public static Lista selecionarLinhasIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim, Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String strInicio = (java.lang.String) objIni;
 		java.lang.String strFinal = (java.lang.String) objFim;
@@ -97,7 +95,7 @@ public class File {
 
 	@Biblio
 	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim,
-			BigInteger trim) {
+			Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String strInicio = (java.lang.String) objIni;
 		java.lang.String strFinal = (java.lang.String) objFim;
@@ -116,7 +114,7 @@ public class File {
 
 	@Biblio
 	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaComReplace(Object arquivo, Object objIni,
-			Object objFim, Object objNova, BigInteger trim) {
+			Object objFim, Object objNova, Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String strInicio = (java.lang.String) objIni;
 		java.lang.String strFinal = (java.lang.String) objFim;
