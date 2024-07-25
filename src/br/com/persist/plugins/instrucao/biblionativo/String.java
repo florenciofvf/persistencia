@@ -22,4 +22,8 @@ public class String {
 	public static BigInteger notEmpty(Object object) {
 		return empty(object).equals(Util.FALSE) ? Util.TRUE : Util.FALSE;
 	}
+
+	public static java.lang.String trim(Object object) {
+		return object == null ? "" : object.toString().trim();
+	}
 }
