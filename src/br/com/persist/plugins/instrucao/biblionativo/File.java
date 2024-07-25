@@ -14,6 +14,7 @@ public class File {
 	private File() {
 	}
 
+	@Biblio
 	public static Arquivo criarArquivo(Object absoluto) {
 		try {
 			java.lang.String arquivo = absoluto.toString();
@@ -60,6 +61,7 @@ public class File {
 		return resposta;
 	}
 
+	@Biblio
 	public static Lista selecionarLinhas(Object arquivo, Object objString, BigInteger trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String string = (java.lang.String) objString;
@@ -75,6 +77,7 @@ public class File {
 		return resposta;
 	}
 
+	@Biblio
 	public static Lista selecionarLinhasIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim,
 			BigInteger trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
@@ -92,6 +95,7 @@ public class File {
 		return resposta;
 	}
 
+	@Biblio
 	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim,
 			BigInteger trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
@@ -110,6 +114,7 @@ public class File {
 		return resposta;
 	}
 
+	@Biblio
 	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaComReplace(Object arquivo, Object objIni,
 			Object objFim, Object objNova, BigInteger trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
@@ -130,6 +135,7 @@ public class File {
 		return resposta;
 	}
 
+	@Biblio
 	public static ArquivoLinha getLinha(Object arquivo, Object numero) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		long numeroLinha = ((Number) numero).longValue();
@@ -144,18 +150,21 @@ public class File {
 		return null;
 	}
 
-	public static ArquivoLinha clonarLinha(Object linha, Object string) {
-		ArquivoLinha entityLinha = (ArquivoLinha) linha;
+	@Biblio
+	public static ArquivoLinha clonarLinha(Object objLinha, Object string) {
+		ArquivoLinha entityLinha = (ArquivoLinha) objLinha;
 		return entityLinha.clonar((java.lang.String) string);
 	}
 
+	@Biblio
 	public static ArquivoLinha criarLinha(Object numero, Object string) {
 		return new ArquivoLinha(((Number) numero).longValue(), (java.lang.String) string, (char) 0, '\n');
 	}
 
-	public static ArquivoLinha substituirLinha(Object arquivo, Object linha, Object charset) {
+	@Biblio
+	public static ArquivoLinha substituirLinha(Object arquivo, Object objLinha, Object charset) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
-		ArquivoLinha entityLinha = (ArquivoLinha) linha;
+		ArquivoLinha entityLinha = (ArquivoLinha) objLinha;
 		try {
 			PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
 			Lista lista = entityArquivo.getLista();
@@ -171,6 +180,7 @@ public class File {
 		return entityLinha;
 	}
 
+	@Biblio
 	public static Arquivo salvarArquivo(Object arquivo, Object charset) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		try {
@@ -183,6 +193,7 @@ public class File {
 		return entityArquivo;
 	}
 
+	@Biblio
 	public static ArquivoLinha setLinha(Object arquivo, Object linha) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		ArquivoLinha entityLinha = (ArquivoLinha) linha;
@@ -213,6 +224,7 @@ public class File {
 		}
 	}
 
+	@Biblio
 	public static java.lang.String copiar(Object absolutoOrigem, Object absolutoDestino) throws IOException {
 		if (absolutoOrigem == null) {
 			return "ORIGEM NULL";

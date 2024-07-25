@@ -13,6 +13,7 @@ public class DB {
 	private DB() {
 	}
 
+	@Biblio
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha) {
 		try {
 			Class.forName((java.lang.String) driver);
@@ -23,6 +24,7 @@ public class DB {
 		}
 	}
 
+	@Biblio
 	public static void closeConnection(Object conexao) {
 		try {
 			Connection connection = (Connection) conexao;
@@ -38,6 +40,7 @@ public class DB {
 		return connection != null && connection.isValid(1000) && !connection.isClosed();
 	}
 
+	@Biblio
 	public static Lista select(Object conexao, Object consulta) {
 		Lista lista = new Lista();
 		Connection connection = (Connection) conexao;
