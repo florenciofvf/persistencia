@@ -23,7 +23,23 @@ public class String {
 		return empty(object).equals(Util.FALSE) ? Util.TRUE : Util.FALSE;
 	}
 
+	@Biblio
 	public static java.lang.String trim(Object object) {
 		return object == null ? "" : object.toString().trim();
+	}
+
+	@Biblio
+	public static java.lang.String upper(Object object) {
+		return object == null ? "" : object.toString().toUpperCase();
+	}
+
+	@Biblio
+	public static java.lang.String lower(Object object) {
+		return object == null ? "" : object.toString().toLowerCase();
+	}
+
+	@Biblio
+	public static BigInteger size(Object object) {
+		return object == null ? BigInteger.ZERO : BigInteger.valueOf(object.toString().length());
 	}
 }
