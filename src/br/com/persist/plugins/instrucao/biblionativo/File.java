@@ -61,15 +61,15 @@ public class File {
 	}
 
 	@Biblio
-	public static Lista selecionarLinhas(Object arquivo, Object objString, Object trim) {
+	public static Lista selecionarLinhas(Object arquivo, Object string, Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
-		java.lang.String string = (java.lang.String) objString;
+		java.lang.String str = (java.lang.String) string;
 		Lista resposta = new Lista();
 		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
 			ArquivoLinha linha = (ArquivoLinha) lista.get(i);
-			if (linha.stringEqual(string, Util.TRUE.equals(trim))) {
+			if (linha.stringEqual(str, Util.TRUE.equals(trim))) {
 				resposta.add(linha);
 			}
 		}
@@ -77,10 +77,11 @@ public class File {
 	}
 
 	@Biblio
-	public static Lista selecionarLinhasIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim, Object trim) {
+	public static Lista selecionarLinhasIniciaEfinalizaCom(Object arquivo, Object stringInicio, Object stringFinal,
+			Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
-		java.lang.String strInicio = (java.lang.String) objIni;
-		java.lang.String strFinal = (java.lang.String) objFim;
+		java.lang.String strInicio = (java.lang.String) stringInicio;
+		java.lang.String strFinal = (java.lang.String) stringFinal;
 		Lista resposta = new Lista();
 		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
@@ -94,11 +95,11 @@ public class File {
 	}
 
 	@Biblio
-	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaCom(Object arquivo, Object objIni, Object objFim,
-			Object trim) {
+	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaCom(Object arquivo, Object stringInicio,
+			Object stringFinal, Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
-		java.lang.String strInicio = (java.lang.String) objIni;
-		java.lang.String strFinal = (java.lang.String) objFim;
+		java.lang.String strInicio = (java.lang.String) stringInicio;
+		java.lang.String strFinal = (java.lang.String) stringFinal;
 		Lista resposta = new Lista();
 		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
@@ -113,12 +114,12 @@ public class File {
 	}
 
 	@Biblio
-	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaComReplace(Object arquivo, Object objIni,
-			Object objFim, Object objNova, Object trim) {
+	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaComReplace(Object arquivo, Object stringInicio,
+			Object stringFinal, Object novaString, Object trim) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
-		java.lang.String strInicio = (java.lang.String) objIni;
-		java.lang.String strFinal = (java.lang.String) objFim;
-		java.lang.String strNova = (java.lang.String) objNova;
+		java.lang.String strInicio = (java.lang.String) stringInicio;
+		java.lang.String strFinal = (java.lang.String) stringFinal;
+		java.lang.String strNova = (java.lang.String) novaString;
 		Lista resposta = new Lista();
 		Lista lista = entityArquivo.getLista();
 		long size = lista.size().longValue();
@@ -149,8 +150,8 @@ public class File {
 	}
 
 	@Biblio
-	public static ArquivoLinha clonarLinha(Object objLinha, Object string) {
-		ArquivoLinha entityLinha = (ArquivoLinha) objLinha;
+	public static ArquivoLinha clonarLinha(Object linha, Object string) {
+		ArquivoLinha entityLinha = (ArquivoLinha) linha;
 		return entityLinha.clonar((java.lang.String) string);
 	}
 
@@ -160,9 +161,9 @@ public class File {
 	}
 
 	@Biblio
-	public static ArquivoLinha substituirLinha(Object arquivo, Object objLinha, Object charset) {
+	public static ArquivoLinha substituirLinha(Object arquivo, Object linha, Object charset) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
-		ArquivoLinha entityLinha = (ArquivoLinha) objLinha;
+		ArquivoLinha entityLinha = (ArquivoLinha) linha;
 		try {
 			PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
 			Lista lista = entityArquivo.getLista();
@@ -179,7 +180,7 @@ public class File {
 	}
 
 	@Biblio
-	public static Arquivo salvarArquivo(Object arquivo, Object charset) {
+	public static void salvarArquivo(Object arquivo, Object charset) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		try {
 			PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
@@ -188,11 +189,10 @@ public class File {
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
-		return entityArquivo;
 	}
 
 	@Biblio
-	public static ArquivoLinha setLinha(Object arquivo, Object linha) {
+	public static void setLinha(Object arquivo, Object linha) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		ArquivoLinha entityLinha = (ArquivoLinha) linha;
 		try {
@@ -201,7 +201,6 @@ public class File {
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex);
 		}
-		return entityLinha;
 	}
 
 	private static PrintWriter criarPrintWriter(Arquivo arquivo, java.lang.String charset)
