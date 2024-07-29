@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.processador;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.StringContexto;
 
@@ -11,6 +12,15 @@ public class PushStringInstrucao extends Instrucao {
 	@Override
 	public Instrucao clonar() {
 		return new PushStringInstrucao();
+	}
+
+	@Override
+	public void setParametros(String parametros) {
+		if (parametros == null) {
+			parametros = "";
+		}
+		this.parametros = Util.replaceAll(parametros, "\\R", "\r");
+		this.parametros = Util.replaceAll(this.parametros, "\\N", "\n");
 	}
 
 	@Override

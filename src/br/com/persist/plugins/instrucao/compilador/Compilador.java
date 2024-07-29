@@ -208,19 +208,22 @@ public class Compilador {
 		indice++;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
-			if (c == '\'') {
-				processarApost(builder, c, escapar, encerrado);
-				if (encerrado.get()) {
-					break;
-				}
-			} else if (c == '\\') {
-				processarBarra(builder, c, escapar);
-			} else {
-				if (escapar.get()) {
-					throwInstrucaoException();
-				}
-				builder.append(c);
-				indice++;
+			switch (c) {
+			case '\'':
+				apostrofe(builder, c, escapar, encerrado);
+				break;
+			case '\\':
+				barra(builder, c, escapar);
+				break;
+			case 'R':
+			case 'N':
+				outros(builder, c, escapar);
+				break;
+			default:
+				append(builder, c, escapar);
+			}
+			if (encerrado.get()) {
+				break;
 			}
 		}
 		if (!encerrado.get()) {
@@ -229,7 +232,7 @@ public class Compilador {
 		return new Token(builder.toString(), linha, coluna, Tipo.STRING);
 	}
 
-	private void processarApost(StringBuilder builder, char c, AtomicBoolean escapar, AtomicBoolean encerrado) {
+	private void apostrofe(StringBuilder builder, char c, AtomicBoolean escapar, AtomicBoolean encerrado) {
 		if (escapar.get()) {
 			builder.append(c);
 			escapar.set(false);
@@ -239,12 +242,35 @@ public class Compilador {
 		indice++;
 	}
 
-	private void processarBarra(StringBuilder builder, char c, AtomicBoolean escapar) {
+	private void barra(StringBuilder builder, char c, AtomicBoolean escapar) {
 		if (escapar.get()) {
 			builder.append(c);
 			escapar.set(false);
 		} else {
 			escapar.set(true);
+		}
+		indice++;
+	}
+
+	private void outros(StringBuilder builder, char c, AtomicBoolean escapar) {
+		if (escapar.get()) {
+			builder.append('\\');
+			escapar.set(false);
+		}
+		builder.append(c);
+		indice++;
+	}
+
+	private void append(StringBuilder builder, char c, AtomicBoolean escapar) throws InstrucaoException {
+		if (escapar.get()) {
+			throwInstrucaoException();
+		}
+		if (c == '\r') {
+			builder.append("\\R");
+		} else if (c == '\n') {
+			builder.append("\\N");
+		} else {
+			builder.append(c);
 		}
 		indice++;
 	}
