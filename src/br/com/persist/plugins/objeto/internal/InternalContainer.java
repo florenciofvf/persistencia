@@ -2444,7 +2444,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					CacheBiblioteca cacheBiblioteca = processador.getCacheBiblioteca();
 					Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
 					adicionarConstantes(biblioteca, map);
-					List<Object> resp = processador.processar(nomeBiblio, "main", map);
+					List<Object> resp = processador.processar(nomeBiblio, "main");
 					Util.mensagem(InternalContainer.this, getStringResposta(resp));
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
