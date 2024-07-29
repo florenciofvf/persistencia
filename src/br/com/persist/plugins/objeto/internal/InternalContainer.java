@@ -103,6 +103,9 @@ import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.fragmento.Fragmento;
 import br.com.persist.plugins.fragmento.FragmentoDialogo;
 import br.com.persist.plugins.fragmento.FragmentoListener;
+import br.com.persist.plugins.instrucao.processador.Biblioteca;
+import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
+import br.com.persist.plugins.instrucao.processador.Constante;
 import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.Desktop;
@@ -2436,12 +2439,24 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 						InternalContainer.this, null);
 				Map<String, Object> map = modelo.getMap(linhas[0], coletor);
-				map.put("#conexao", conn);
+				map.put("CONEXAO", conn);
 				try {
+					CacheBiblioteca cacheBiblioteca = processador.getCacheBiblioteca();
+					Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
+					adicionarConstantes(biblioteca, map);
 					List<Object> resp = processador.processar(nomeBiblio, "main", map);
 					Util.mensagem(InternalContainer.this, getStringResposta(resp));
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+				}
+			}
+
+			private void adicionarConstantes(Biblioteca biblioteca, Map<String, Object> map) {
+				for (Map.Entry<String, Object> entry : map.entrySet()) {
+					String nome = entry.getKey().toUpperCase();
+					Constante constante = new Constante(nome);
+					constante.setValor(entry.getValue());
+					biblioteca.addConstante(constante);
 				}
 			}
 

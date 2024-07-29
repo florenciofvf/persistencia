@@ -36,6 +36,10 @@ public class Processador {
 		return resposta;
 	}
 
+	public CacheBiblioteca getCacheBiblioteca() {
+		return cacheBiblioteca;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
