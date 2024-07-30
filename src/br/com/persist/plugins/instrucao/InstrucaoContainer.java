@@ -115,7 +115,7 @@ public class InstrucaoContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
-				files = ArquivoUtil.ordenar(files);
+				files = ArquivoUtil.ordenarPorNome(files);
 				List<InstrucaoPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(InstrucaoConstantes.INSTRUCAO, f.getName())) {
