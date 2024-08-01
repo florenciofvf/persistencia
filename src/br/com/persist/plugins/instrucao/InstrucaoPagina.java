@@ -301,7 +301,7 @@ class InstrucaoCor {
 	}
 
 	static {
-		StyleConstants.setForeground(BLUE, new Color(0, 0, 125));
+		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
 		StyleConstants.setBold(BLUE, true);
 		StyleConstants.setForeground(RED, new Color(125, 0, 0));
 		StyleConstants.setBold(RED, true);
