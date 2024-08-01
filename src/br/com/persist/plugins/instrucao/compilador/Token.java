@@ -25,7 +25,7 @@ public class Token {
 
 	public enum Tipo {
 		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, CONSTANTE,
-		PARAMETRO,
+		PARAMETRO, COMENTARIO
 	}
 
 	public Token novo(Tipo tipo) {
@@ -33,6 +33,10 @@ public class Token {
 		token.indice2 = indice2;
 		token.indice = indice;
 		return token;
+	}
+
+	public boolean isComentario() {
+		return tipo == Tipo.COMENTARIO;
 	}
 
 	public boolean isReservado() {

@@ -271,6 +271,7 @@ public class InstrucaoPagina extends Panel {
 }
 
 class InstrucaoCor {
+	private static final MutableAttributeSet GREEN = new SimpleAttributeSet();
 	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE = new SimpleAttributeSet();
 	private static final MutableAttributeSet RED = new SimpleAttributeSet();
@@ -284,6 +285,8 @@ class InstrucaoCor {
 				set(doc, token, RED);
 			} else if (token.isString()) {
 				set2(doc, token, BLUE);
+			} else if (token.isComentario()) {
+				set2(doc, token, GREEN);
 			}
 		}
 	}
@@ -305,5 +308,7 @@ class InstrucaoCor {
 		StyleConstants.setBold(BLUE, true);
 		StyleConstants.setForeground(RED, new Color(125, 0, 0));
 		StyleConstants.setBold(RED, true);
+		StyleConstants.setForeground(GREEN, Color.GREEN);
+		StyleConstants.setBold(GREEN, true);
 	}
 }

@@ -155,6 +155,8 @@ public class Compilador {
 			if (!token.string.startsWith(":coment")) {
 				contexto.string(this, token);
 				tokens.add(token);
+			} else {
+				tokens.add(token.novo(Tipo.COMENTARIO));
 			}
 			break;
 		case '0':
