@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -13,6 +15,7 @@ import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class Compilador {
+	private final List<Token> reservados;
 	private String string;
 	private int indice;
 	private int coluna;
@@ -20,8 +23,13 @@ public class Compilador {
 	private int linha;
 
 	public Compilador() {
+		reservados = new ArrayList<>();
 		coluna = 1;
 		linha = 1;
+	}
+
+	public List<Token> getReservados() {
+		return reservados;
 	}
 
 	public Contexto getContexto() {
@@ -173,6 +181,7 @@ public class Compilador {
 			Token ident = tokenIdentity();
 			if (ident.isReservado()) {
 				contexto.reservado(this, ident);
+				reservados.add(ident);
 			} else {
 				contexto.identity(this, ident);
 			}
