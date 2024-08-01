@@ -18,6 +18,10 @@ public class Token {
 		return string;
 	}
 
+	public int getIndice() {
+		return indice;
+	}
+
 	public enum Tipo {
 		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING,
 	}

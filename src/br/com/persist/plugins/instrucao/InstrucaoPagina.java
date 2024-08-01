@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -29,6 +30,10 @@ import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -44,6 +49,7 @@ import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
+import br.com.persist.plugins.instrucao.compilador.Token;
 import br.com.persist.plugins.instrucao.processador.Processador;
 
 public class InstrucaoPagina extends Panel {
@@ -150,6 +156,9 @@ public class InstrucaoPagina extends Panel {
 				boolean resp = biblio != null;
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
+				if (resp) {
+					InstrucaoCor.processar(textArea.getStyledDocument(), compilador.getReservados());
+				}
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
 			}
@@ -214,6 +223,7 @@ public class InstrucaoPagina extends Panel {
 				int value = getValueScrollPane();
 				textArea.setText(conteudo(file));
 				setValueScrollPane(value);
+				InstrucaoCor.clearAttr(textArea.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, this);
 			}
@@ -257,5 +267,34 @@ public class InstrucaoPagina extends Panel {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, this);
 		}
+	}
+}
+
+class InstrucaoCor {
+	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
+	private static final MutableAttributeSet RED = new SimpleAttributeSet();
+
+	private InstrucaoCor() {
+	}
+
+	static void processar(StyledDocument doc, List<Token> tokens) {
+		for (Token token : tokens) {
+			if (token.isReservado()) {
+				set(doc, token, RED);
+			}
+		}
+	}
+
+	static void set(StyledDocument doc, Token token, MutableAttributeSet att) {
+		doc.setCharacterAttributes(token.getIndice(), token.getString().length(), att, true);
+	}
+
+	static void clearAttr(StyledDocument doc) {
+		doc.setCharacterAttributes(0, doc.getLength(), PLAIN, true);
+	}
+
+	static {
+		StyleConstants.setForeground(RED, new Color(125, 0, 0));
+		StyleConstants.setBold(RED, true);
 	}
 }
