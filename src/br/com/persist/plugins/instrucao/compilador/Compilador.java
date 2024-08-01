@@ -18,14 +18,10 @@ public class Compilador {
 	private final List<Token> tokens;
 	private String string;
 	private int indice;
-	private int coluna;
 	Contexto contexto;
-	private int linha;
 
 	public Compilador() {
 		tokens = new ArrayList<>();
-		coluna = 1;
-		linha = 1;
 	}
 
 	public List<Token> getTokens() {
@@ -109,11 +105,6 @@ public class Compilador {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c <= ' ') {
-				if (c == '\n') {
-					coluna = 1;
-					linha++;
-				}
-				coluna++;
 				indice++;
 			} else {
 				break;
@@ -127,18 +118,18 @@ public class Compilador {
 		case '(':
 		case '{':
 		case '[':
-			contexto.inicializador(this, new Token("" + c, linha, coluna, Tipo.INICIALIZADOR));
+			contexto.inicializador(this, new Token("" + c, Tipo.INICIALIZADOR));
 			indice++;
 			break;
 		case ')':
 		case '}':
 		case ']':
 		case ';':
-			contexto.finalizador(this, new Token("" + c, linha, coluna, Tipo.FINALIZADOR));
+			contexto.finalizador(this, new Token("" + c, Tipo.FINALIZADOR));
 			indice++;
 			break;
 		case ',':
-			contexto.separador(this, new Token(",", linha, coluna, Tipo.SEPARADOR));
+			contexto.separador(this, new Token(",", Tipo.SEPARADOR));
 			indice++;
 			break;
 		case '+':
@@ -151,7 +142,7 @@ public class Compilador {
 		case '|':
 		case '=':
 		case ':':
-			contexto.operador(this, new Token("" + c, linha, coluna, Tipo.OPERADOR));
+			contexto.operador(this, new Token("" + c, Tipo.OPERADOR));
 			indice++;
 			break;
 		case '!':
@@ -196,18 +187,18 @@ public class Compilador {
 			char d = string.charAt(indice);
 			if (d == '=') {
 				indice++;
-				return new Token(c + "=", linha, coluna, Tipo.OPERADOR);
+				return new Token(c + "=", Tipo.OPERADOR);
 			} else {
 				if (c == '!') {
 					throwInstrucaoException();
 				}
-				return new Token(c + "", linha, coluna, Tipo.OPERADOR);
+				return new Token(c + "", Tipo.OPERADOR);
 			}
 		} else {
 			if (c == '!') {
 				throwInstrucaoException();
 			}
-			return new Token(c + "", linha, coluna, Tipo.OPERADOR);
+			return new Token(c + "", Tipo.OPERADOR);
 		}
 	}
 
@@ -240,7 +231,7 @@ public class Compilador {
 		if (!encerrado.get()) {
 			throwInstrucaoException();
 		}
-		Token token = new Token(builder.toString(), linha, coluna, Tipo.STRING);
+		Token token = new Token(builder.toString(), Tipo.STRING);
 		token.indice2 = indice - 1;
 		token.indice = indiceBkp;
 		return token;
@@ -302,13 +293,13 @@ public class Compilador {
 		}
 		int total = getTotal('.', builder);
 		if (total == 0) {
-			return new Token(builder.toString(), linha, coluna, Tipo.INTEIRO);
+			return new Token(builder.toString(), Tipo.INTEIRO);
 		} else {
 			String str = builder.toString();
 			if (total > 1 || str.endsWith(".")) {
 				throwInstrucaoException();
 			}
-			return new Token(builder.toString(), linha, coluna, Tipo.FLUTUANTE);
+			return new Token(builder.toString(), Tipo.FLUTUANTE);
 		}
 	}
 
@@ -347,11 +338,11 @@ public class Compilador {
 			throwInstrucaoException();
 		}
 		if (reservado(str)) {
-			Token token = new Token(builder.toString(), linha, coluna, Tipo.RESERVADO);
+			Token token = new Token(builder.toString(), Tipo.RESERVADO);
 			token.indice = indiceBkp;
 			return token;
 		}
-		return new Token(builder.toString(), linha, coluna, Tipo.IDENTITY);
+		return new Token(builder.toString(), Tipo.IDENTITY);
 	}
 
 	private boolean valido1(char c) {

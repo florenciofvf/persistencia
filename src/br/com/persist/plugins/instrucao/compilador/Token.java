@@ -2,16 +2,12 @@ package br.com.persist.plugins.instrucao.compilador;
 
 public class Token {
 	final String string;
-	final int coluna;
-	final int linha;
 	final Tipo tipo;
-	int indice;
 	int indice2;
+	int indice;
 
-	public Token(String string, int linha, int coluna, Tipo tipo) {
+	public Token(String string, Tipo tipo) {
 		this.string = string;
-		this.coluna = coluna;
-		this.linha = linha;
 		this.tipo = tipo;
 	}
 
@@ -28,7 +24,15 @@ public class Token {
 	}
 
 	public enum Tipo {
-		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING,
+		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, CONSTANTE,
+		PARAMETRO,
+	}
+
+	public Token novo(Tipo tipo) {
+		Token token = new Token(string, tipo);
+		token.indice2 = indice2;
+		token.indice = indice;
+		return token;
 	}
 
 	public boolean isReservado() {
@@ -41,6 +45,6 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return "Token [string=" + string + ", linha=" + linha + ", coluna=" + coluna + ", tipo=" + tipo + "]";
+		return "Token [string=" + string + ", tipo=" + tipo + "]";
 	}
 }
