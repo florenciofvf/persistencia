@@ -311,6 +311,7 @@ public class Compilador {
 	private Token tokenIdentity() throws InstrucaoException {
 		StringBuilder builder = new StringBuilder();
 		char c = string.charAt(indice);
+		int indiceBkp = indice;
 		if (valido1(c)) {
 			builder.append(c);
 			indice++;
@@ -332,7 +333,9 @@ public class Compilador {
 			throwInstrucaoException();
 		}
 		if (reservado(str)) {
-			return new Token(builder.toString(), linha, coluna, Tipo.RESERVADO);
+			Token token = new Token(builder.toString(), linha, coluna, Tipo.RESERVADO);
+			token.indice = indiceBkp;
+			return token;
 		}
 		return new Token(builder.toString(), linha, coluna, Tipo.IDENTITY);
 	}

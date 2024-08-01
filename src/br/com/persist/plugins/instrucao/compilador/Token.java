@@ -5,6 +5,7 @@ public class Token {
 	final int coluna;
 	final int linha;
 	final Tipo tipo;
+	int indice;
 
 	public Token(String string, int linha, int coluna, Tipo tipo) {
 		this.string = string;
