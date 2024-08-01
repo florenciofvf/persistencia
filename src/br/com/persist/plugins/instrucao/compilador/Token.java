@@ -35,6 +35,14 @@ public class Token {
 		return token;
 	}
 
+	public boolean isConstante() {
+		return tipo == Tipo.CONSTANTE;
+	}
+
+	public boolean isParametro() {
+		return tipo == Tipo.PARAMETRO;
+	}
+
 	public boolean isComentario() {
 		return tipo == Tipo.COMENTARIO;
 	}
