@@ -157,7 +157,7 @@ public class InstrucaoPagina extends Panel {
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
 				if (resp) {
-					InstrucaoCor.processar(textArea.getStyledDocument(), compilador.getReservados());
+					InstrucaoCor.processar(textArea.getStyledDocument(), compilador.getTokens());
 				}
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
@@ -272,6 +272,7 @@ public class InstrucaoPagina extends Panel {
 
 class InstrucaoCor {
 	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
+	private static final MutableAttributeSet BLUE = new SimpleAttributeSet();
 	private static final MutableAttributeSet RED = new SimpleAttributeSet();
 
 	private InstrucaoCor() {
@@ -281,6 +282,8 @@ class InstrucaoCor {
 		for (Token token : tokens) {
 			if (token.isReservado()) {
 				set(doc, token, RED);
+			} else if (token.isString()) {
+				set2(doc, token, BLUE);
 			}
 		}
 	}
@@ -289,11 +292,17 @@ class InstrucaoCor {
 		doc.setCharacterAttributes(token.getIndice(), token.getString().length(), att, true);
 	}
 
+	static void set2(StyledDocument doc, Token token, MutableAttributeSet att) {
+		doc.setCharacterAttributes(token.getIndice(), token.getIndice2() - token.getIndice(), att, true);
+	}
+
 	static void clearAttr(StyledDocument doc) {
 		doc.setCharacterAttributes(0, doc.getLength(), PLAIN, true);
 	}
 
 	static {
+		StyleConstants.setForeground(BLUE, new Color(0, 0, 125));
+		StyleConstants.setBold(BLUE, true);
 		StyleConstants.setForeground(RED, new Color(125, 0, 0));
 		StyleConstants.setBold(RED, true);
 	}

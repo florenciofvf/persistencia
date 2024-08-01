@@ -15,7 +15,7 @@ import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class Compilador {
-	private final List<Token> reservados;
+	private final List<Token> tokens;
 	private String string;
 	private int indice;
 	private int coluna;
@@ -23,13 +23,13 @@ public class Compilador {
 	private int linha;
 
 	public Compilador() {
-		reservados = new ArrayList<>();
+		tokens = new ArrayList<>();
 		coluna = 1;
 		linha = 1;
 	}
 
-	public List<Token> getReservados() {
-		return reservados;
+	public List<Token> getTokens() {
+		return tokens;
 	}
 
 	public Contexto getContexto() {
@@ -163,6 +163,7 @@ public class Compilador {
 			Token token = tokenString();
 			if (!token.string.startsWith(":coment")) {
 				contexto.string(this, token);
+				tokens.add(token);
 			}
 			break;
 		case '0':
@@ -181,7 +182,7 @@ public class Compilador {
 			Token ident = tokenIdentity();
 			if (ident.isReservado()) {
 				contexto.reservado(this, ident);
-				reservados.add(ident);
+				tokens.add(ident);
 			} else {
 				contexto.identity(this, ident);
 			}
@@ -214,6 +215,7 @@ public class Compilador {
 		AtomicBoolean encerrado = new AtomicBoolean(false);
 		AtomicBoolean escapar = new AtomicBoolean(false);
 		StringBuilder builder = new StringBuilder();
+		int indiceBkp = indice;
 		indice++;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
@@ -238,7 +240,10 @@ public class Compilador {
 		if (!encerrado.get()) {
 			throwInstrucaoException();
 		}
-		return new Token(builder.toString(), linha, coluna, Tipo.STRING);
+		Token token = new Token(builder.toString(), linha, coluna, Tipo.STRING);
+		token.indice2 = indice - 1;
+		token.indice = indiceBkp;
+		return token;
 	}
 
 	private void apostrofe(StringBuilder builder, char c, AtomicBoolean escapar, AtomicBoolean encerrado) {

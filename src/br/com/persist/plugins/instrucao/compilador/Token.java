@@ -6,6 +6,7 @@ public class Token {
 	final int linha;
 	final Tipo tipo;
 	int indice;
+	int indice2;
 
 	public Token(String string, int linha, int coluna, Tipo tipo) {
 		this.string = string;
@@ -18,6 +19,10 @@ public class Token {
 		return string;
 	}
 
+	public int getIndice2() {
+		return indice2;
+	}
+
 	public int getIndice() {
 		return indice;
 	}
@@ -28,6 +33,10 @@ public class Token {
 
 	public boolean isReservado() {
 		return tipo == Tipo.RESERVADO;
+	}
+
+	public boolean isString() {
+		return tipo == Tipo.STRING;
 	}
 
 	@Override
