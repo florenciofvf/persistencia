@@ -344,7 +344,9 @@ public class Compilador {
 			token.indice = indiceBkp;
 			return token;
 		}
-		return new Token(builder.toString(), Tipo.IDENTITY);
+		Token token = new Token(builder.toString(), Tipo.IDENTITY);
+		token.indice = indiceBkp;
+		return token;
 	}
 
 	private boolean valido1(char c) {

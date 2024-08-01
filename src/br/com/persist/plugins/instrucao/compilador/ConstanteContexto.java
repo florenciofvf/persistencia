@@ -1,6 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
@@ -62,6 +63,12 @@ public class ConstanteContexto extends Container {
 	public void indexar() {
 		AtomicInteger atomic = new AtomicInteger(0);
 		indexar(atomic);
+	}
+
+	@Override
+	public void filtroConstParam(List<Token> coletor) {
+		coletor.add(identity.token);
+		super.filtroConstParam(coletor);
 	}
 
 	@Override

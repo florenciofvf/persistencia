@@ -1,9 +1,13 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
+
 public class IdentityContexto extends Container {
+	private Token tokenIdentity;
 	private final String id;
 
 	public IdentityContexto(Token token) {
@@ -22,11 +26,18 @@ public class IdentityContexto extends Container {
 	}
 
 	@Override
+	public void filtroConstParam(List<Token> coletor) {
+		coletor.add(tokenIdentity);
+	}
+
+	@Override
 	public void salvar(PrintWriter pw) {
 		if (ehParametro()) {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
+			tokenIdentity = token.novo(Tipo.PARAMETRO);
 		} else {
 			print(pw, ConstanteContexto.LOAD_CONST, id);
+			tokenIdentity = token.novo(Tipo.CONSTANTE);
 		}
 		salvarNegativo(pw);
 	}
