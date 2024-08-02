@@ -119,7 +119,7 @@ public class Compilador {
 		case '(':
 		case '{':
 		case '[':
-			token = new Token("" + c, Tipo.INICIALIZADOR);
+			token = new Token("" + c, Tipo.INICIALIZADOR, indice);
 			contexto.inicializador(this, token);
 			if (c == '{') {
 				tokens.add(token);
@@ -130,7 +130,7 @@ public class Compilador {
 		case '}':
 		case ']':
 		case ';':
-			token = new Token("" + c, Tipo.FINALIZADOR);
+			token = new Token("" + c, Tipo.FINALIZADOR, indice);
 			contexto.finalizador(this, token);
 			if (c == '}') {
 				tokens.add(token);
@@ -244,9 +244,8 @@ public class Compilador {
 		if (!encerrado.get()) {
 			throwInstrucaoException();
 		}
-		Token token = new Token(builder.toString(), Tipo.STRING);
-		token.indice = indiceBkp;
-		token.indice2 = indice;
+		Token token = new Token(builder.toString(), Tipo.STRING, indiceBkp);
+		token.setIndice2(indice);
 		return token;
 	}
 
@@ -295,6 +294,7 @@ public class Compilador {
 
 	private Token tokenNumero() throws InstrucaoException {
 		StringBuilder builder = new StringBuilder();
+		int indiceBkp = indice;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (valido2(c)) {
@@ -306,13 +306,13 @@ public class Compilador {
 		}
 		int total = getTotal('.', builder);
 		if (total == 0) {
-			return new Token(builder.toString(), Tipo.INTEIRO);
+			return new Token(builder.toString(), Tipo.INTEIRO, indiceBkp);
 		} else {
 			String str = builder.toString();
 			if (total > 1 || str.endsWith(".")) {
 				throwInstrucaoException();
 			}
-			return new Token(builder.toString(), Tipo.FLUTUANTE);
+			return new Token(builder.toString(), Tipo.FLUTUANTE, indiceBkp);
 		}
 	}
 
@@ -351,13 +351,9 @@ public class Compilador {
 			throwInstrucaoException();
 		}
 		if (reservado(str)) {
-			Token token = new Token(builder.toString(), Tipo.RESERVADO);
-			token.indice = indiceBkp;
-			return token;
+			return new Token(builder.toString(), Tipo.RESERVADO, indiceBkp);
 		}
-		Token token = new Token(builder.toString(), Tipo.IDENTITY);
-		token.indice = indiceBkp;
-		return token;
+		return new Token(builder.toString(), Tipo.IDENTITY, indiceBkp);
 	}
 
 	private boolean valido1(char c) {

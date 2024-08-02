@@ -2,13 +2,22 @@ package br.com.persist.plugins.instrucao.compilador;
 
 public class Token {
 	final String string;
+	private int indice2;
+	private int indice;
 	final Tipo tipo;
-	int indice2;
-	int indice;
+
+	public Token(String string, Tipo tipo, int indice) {
+		this.string = string;
+		this.indice = indice;
+		this.tipo = tipo;
+	}
 
 	public Token(String string, Tipo tipo) {
-		this.string = string;
-		this.tipo = tipo;
+		this(string, tipo, 0);
+	}
+
+	public void setIndice2(int indice2) {
+		this.indice2 = indice2;
 	}
 
 	public String getString() {
