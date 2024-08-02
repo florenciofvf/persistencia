@@ -275,10 +275,12 @@ public class InstrucaoPagina extends Panel {
 
 class InstrucaoCor {
 	private static final MutableAttributeSet GREEN2 = new SimpleAttributeSet();
-	private static final MutableAttributeSet GREEN = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE2 = new SimpleAttributeSet();
+	private static final MutableAttributeSet GRAY = new SimpleAttributeSet();
 	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE = new SimpleAttributeSet();
+	private static final MutableAttributeSet BOLD = new SimpleAttributeSet();
+	private static final MutableAttributeSet RED2 = new SimpleAttributeSet();
 	private static final MutableAttributeSet RED = new SimpleAttributeSet();
 
 	private InstrucaoCor() {
@@ -295,7 +297,11 @@ class InstrucaoCor {
 			} else if (token.isString()) {
 				set2(doc, token, BLUE);
 			} else if (token.isComentario()) {
-				set2(doc, token, GREEN);
+				set2(doc, token, GRAY);
+			} else if (token.isEspecial()) {
+				set(doc, token, BOLD);
+			} else if (token.isNumero()) {
+				set(doc, token, RED2);
 			}
 		}
 	}
@@ -313,15 +319,18 @@ class InstrucaoCor {
 	}
 
 	static {
+		StyleConstants.setForeground(GRAY, new Color(192, 192, 192));
 		StyleConstants.setForeground(GREEN2, new Color(0, 125, 0));
-		StyleConstants.setForeground(GREEN, new Color(0, 255, 0));
 		StyleConstants.setForeground(BLUE2, new Color(0, 0, 125));
 		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
+		StyleConstants.setForeground(RED2, new Color(255, 0, 0));
 		StyleConstants.setForeground(RED, new Color(125, 0, 0));
 		StyleConstants.setBold(GREEN2, true);
-		StyleConstants.setBold(GREEN, true);
 		StyleConstants.setBold(BLUE2, true);
+		StyleConstants.setBold(GRAY, true);
 		StyleConstants.setBold(BLUE, true);
+		StyleConstants.setBold(BOLD, true);
+		StyleConstants.setBold(RED2, true);
 		StyleConstants.setBold(RED, true);
 	}
 }

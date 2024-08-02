@@ -114,18 +114,27 @@ public class Compilador {
 
 	private void processarImpl() throws InstrucaoException {
 		char c = string.charAt(indice);
+		Token token = null;
 		switch (c) {
 		case '(':
 		case '{':
 		case '[':
-			contexto.inicializador(this, new Token("" + c, Tipo.INICIALIZADOR));
+			token = new Token("" + c, Tipo.INICIALIZADOR);
+			contexto.inicializador(this, token);
+			if (c == '{') {
+				tokens.add(token);
+			}
 			indice++;
 			break;
 		case ')':
 		case '}':
 		case ']':
 		case ';':
-			contexto.finalizador(this, new Token("" + c, Tipo.FINALIZADOR));
+			token = new Token("" + c, Tipo.FINALIZADOR);
+			contexto.finalizador(this, token);
+			if (c == '}') {
+				tokens.add(token);
+			}
 			indice++;
 			break;
 		case ',':
@@ -151,7 +160,7 @@ public class Compilador {
 			contexto.operador(this, tokenOperador());
 			break;
 		case '\'':
-			Token token = tokenString();
+			token = tokenString();
 			if (!token.string.startsWith(":coment")) {
 				contexto.string(this, token);
 				tokens.add(token);
@@ -169,7 +178,9 @@ public class Compilador {
 		case '7':
 		case '8':
 		case '9':
-			contexto.numero(this, tokenNumero());
+			token = tokenNumero();
+			contexto.numero(this, token);
+			tokens.add(token);
 			break;
 		default:
 			Token ident = tokenIdentity();

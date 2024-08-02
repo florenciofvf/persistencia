@@ -55,6 +55,14 @@ public class Token {
 		return tipo == Tipo.STRING;
 	}
 
+	public boolean isEspecial() {
+		return tipo == Tipo.INICIALIZADOR || tipo == Tipo.FINALIZADOR;
+	}
+
+	public boolean isNumero() {
+		return tipo == Tipo.INTEIRO || tipo == Tipo.FLUTUANTE;
+	}
+
 	@Override
 	public String toString() {
 		return "Token [string=" + string + ", tipo=" + tipo + "]";
