@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class ConstanteContexto extends Container {
 	public static final String LOAD_CONST = "load_const";
@@ -67,7 +68,7 @@ public class ConstanteContexto extends Container {
 
 	@Override
 	public void filtroConstParam(List<Token> coletor) {
-		coletor.add(identity.token);
+		coletor.add(identity.token.novo(Tipo.CONSTANTE));
 		super.filtroConstParam(coletor);
 	}
 
