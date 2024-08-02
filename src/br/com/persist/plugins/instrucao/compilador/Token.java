@@ -38,9 +38,8 @@ public class Token {
 	}
 
 	public Token novo(Tipo tipo) {
-		Token token = new Token(string, tipo);
+		Token token = new Token(string, tipo, indice);
 		token.indice2 = indice2;
-		token.indice = indice;
 		return token;
 	}
 
