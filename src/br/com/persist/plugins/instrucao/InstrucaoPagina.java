@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -157,7 +158,9 @@ public class InstrucaoPagina extends Panel {
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
 				if (resp) {
-					InstrucaoCor.processar(textArea.getStyledDocument(), compilador.getTokens());
+					List<Token> tokens = new ArrayList<>(compilador.getTokens());
+					biblio.filtroConstParam(tokens);
+					InstrucaoCor.processar(textArea.getStyledDocument(), tokens);
 				}
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
