@@ -234,8 +234,8 @@ public class Compilador {
 			throwInstrucaoException();
 		}
 		Token token = new Token(builder.toString(), Tipo.STRING);
-		token.indice2 = indice - 1;
 		token.indice = indiceBkp;
+		token.indice2 = indice;
 		return token;
 	}
 
