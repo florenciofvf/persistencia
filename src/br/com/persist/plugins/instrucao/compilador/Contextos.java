@@ -5,7 +5,6 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public class Contextos {
 	public static final FechaParenteses FECHA_PARENTESES = new FechaParenteses();
 	public static final AbreParenteses ABRE_PARENTESES = new AbreParenteses();
-	public static final AbreColchetes ABRE_COLCHETES = new AbreColchetes();
 	public static final PontoVirgula PONTO_VIRGULA = new PontoVirgula();
 	public static final FechaChaves FECHA_CHAVES = new FechaChaves();
 	public static final AbreChaves ABRE_CHAVES = new AbreChaves();
@@ -63,15 +62,6 @@ public class Contextos {
 		@Override
 		public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 			if (!"}".equals(token.getString())) {
-				compilador.invalidar(token);
-			}
-		}
-	}
-
-	public static class AbreColchetes extends AbstratoContexto {
-		@Override
-		public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-			if (!"[".equals(token.getString())) {
 				compilador.invalidar(token);
 			}
 		}

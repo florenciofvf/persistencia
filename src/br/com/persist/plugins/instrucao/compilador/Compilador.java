@@ -118,7 +118,6 @@ public class Compilador {
 		switch (c) {
 		case '(':
 		case '{':
-		case '[':
 			token = new Token("" + c, Tipo.INICIALIZADOR, indice);
 			contexto.inicializador(this, token);
 			if (c == '{') {
@@ -128,7 +127,6 @@ public class Compilador {
 			break;
 		case ')':
 		case '}':
-		case ']':
 		case ';':
 			token = new Token("" + c, Tipo.FINALIZADOR, indice);
 			contexto.finalizador(this, token);
