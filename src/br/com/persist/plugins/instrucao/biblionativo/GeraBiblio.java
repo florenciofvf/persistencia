@@ -14,14 +14,14 @@ public class GeraBiblio {
 	private static final java.lang.String PREFIXO = "function_native";
 
 	public static void main(java.lang.String[] args) throws Exception {
-		Class<?> klass = List.class;
+		java.lang.Class<?> klass = List.class;
 		processar(klass);
 		Compilador compilador = new Compilador();
 		BibliotecaContexto biblio = compilador.compilar(klass.getSimpleName().toLowerCase());
 		Logger.getGlobal().info("Processado >>> " + biblio.getNome());
 	}
 
-	private static void processar(Class<?> classe) throws FileNotFoundException {
+	private static void processar(java.lang.Class<?> classe) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter("instrucao/" + classe.getSimpleName().toLowerCase());
 		Method[] methods = classe.getDeclaredMethods();
 		for (Method m : methods) {
@@ -37,7 +37,7 @@ public class GeraBiblio {
 		return m.getAnnotation(Biblio.class);
 	}
 
-	private static void imprimir(PrintWriter pw, Class<?> classe, Method m) {
+	private static void imprimir(PrintWriter pw, java.lang.Class<?> classe, Method m) {
 		pw.print(PREFIXO + " " + PACOTE + classe.getSimpleName());
 		pw.println(" " + m.getName() + "(" + getArgs(m) + ")");
 		pw.println();

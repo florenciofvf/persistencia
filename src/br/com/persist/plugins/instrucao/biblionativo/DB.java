@@ -16,7 +16,7 @@ public class DB {
 	@Biblio
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha) {
 		try {
-			Class.forName((java.lang.String) driver);
+			java.lang.Class.forName((java.lang.String) driver);
 			return DriverManager.getConnection((java.lang.String) url, (java.lang.String) usuario,
 					(java.lang.String) senha);
 		} catch (Exception ex) {

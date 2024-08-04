@@ -7,7 +7,7 @@ public class Method {
 	@Biblio
 	public static Object get(Object objeto, Object nomeMetodoGet) {
 		try {
-			Class<?> klass = objeto.getClass();
+			java.lang.Class<?> klass = objeto.getClass();
 			java.lang.reflect.Method method = klass.getMethod((java.lang.String) nomeMetodoGet);
 			return method.invoke(objeto);
 		} catch (Exception ex) {
