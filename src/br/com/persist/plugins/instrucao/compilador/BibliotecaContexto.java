@@ -3,8 +3,10 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class BibliotecaContexto extends Container {
+	protected CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
 	private final String nome;
 
 	public BibliotecaContexto(String nome) {
@@ -29,6 +31,23 @@ public class BibliotecaContexto extends Container {
 		} else {
 			compilador.invalidar(token);
 		}
+	}
+
+	public boolean contemFuncao(String string) {
+		for (Container c : componentes) {
+			if (c instanceof FuncaoContexto) {
+				FuncaoContexto funcao = (FuncaoContexto) c;
+				if (funcao.getNome().equals(string)) {
+					return true;
+				}
+			} else if (c instanceof FuncaoNativaContexto) {
+				FuncaoNativaContexto funcao = (FuncaoNativaContexto) c;
+				if (funcao.getNome().equals(string)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public void indexar() {

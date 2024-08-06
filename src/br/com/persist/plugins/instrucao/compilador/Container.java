@@ -31,6 +31,17 @@ public abstract class Container extends AbstratoContexto {
 		return pai;
 	}
 
+	protected BibliotecaContexto getBiblioteca() {
+		Container c = this;
+		while (c != null) {
+			if (c instanceof BibliotecaContexto) {
+				break;
+			}
+			c = c.pai;
+		}
+		return (BibliotecaContexto) c;
+	}
+
 	protected FuncaoContexto getFuncao() {
 		Container c = this;
 		while (c != null) {

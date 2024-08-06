@@ -28,6 +28,10 @@ public class FuncaoNativaContexto extends Container {
 		return identity;
 	}
 
+	public String getNome() {
+		return getIdentity().toString();
+	}
+
 	public ParametrosContexto getParametros() {
 		return (ParametrosContexto) get(0);
 	}

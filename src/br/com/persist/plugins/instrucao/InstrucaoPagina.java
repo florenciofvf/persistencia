@@ -290,6 +290,7 @@ public class InstrucaoPagina extends Panel {
 }
 
 class InstrucaoCor {
+	private static final MutableAttributeSet MAGENTA = new SimpleAttributeSet();
 	private static final MutableAttributeSet GREEN2 = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE2 = new SimpleAttributeSet();
 	private static final MutableAttributeSet GRAY = new SimpleAttributeSet();
@@ -310,6 +311,8 @@ class InstrucaoCor {
 				set(doc, token, BLUE2);
 			} else if (token.isParametro()) {
 				set(doc, token, GREEN2);
+			} else if (token.isFuncao()) {
+				set(doc, token, MAGENTA);
 			} else if (token.isString()) {
 				set2(doc, token, BLUE);
 			} else if (token.isComentario()) {
@@ -341,6 +344,8 @@ class InstrucaoCor {
 		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
 		StyleConstants.setForeground(RED2, new Color(255, 0, 0));
 		StyleConstants.setForeground(RED, new Color(125, 0, 0));
+		StyleConstants.setForeground(MAGENTA, Color.MAGENTA);
+		StyleConstants.setBold(MAGENTA, true);
 		StyleConstants.setBold(GREEN2, true);
 		StyleConstants.setBold(BLUE2, true);
 		StyleConstants.setBold(GRAY, true);

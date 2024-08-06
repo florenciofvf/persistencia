@@ -7,6 +7,7 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoContexto extends Container {
+	public static final String LOAD_FUNCTION = "load_function";
 	private final FuncaoIdentityContexto identity;
 	private boolean faseParametros;
 
@@ -28,6 +29,10 @@ public class FuncaoContexto extends Container {
 
 	public FuncaoIdentityContexto getIdentity() {
 		return identity;
+	}
+
+	public String getNome() {
+		return getIdentity().toString();
 	}
 
 	@Override

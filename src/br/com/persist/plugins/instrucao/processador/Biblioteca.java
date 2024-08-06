@@ -36,6 +36,10 @@ public class Biblioteca {
 		}
 	}
 
+	public boolean contemFuncao(String nome) {
+		return funcoes.containsKey(nome);
+	}
+
 	public Constante getConstante(String nome) throws InstrucaoException {
 		Constante constante = constantes.get(nome);
 		if (constante == null) {

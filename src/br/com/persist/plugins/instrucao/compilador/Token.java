@@ -34,7 +34,7 @@ public class Token {
 
 	public enum Tipo {
 		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, CONSTANTE,
-		PARAMETRO, COMENTARIO
+		PARAMETRO, COMENTARIO, FUNCAO
 	}
 
 	public Token novo(Tipo tipo) {
@@ -57,6 +57,10 @@ public class Token {
 
 	public boolean isReservado() {
 		return tipo == Tipo.RESERVADO;
+	}
+
+	public boolean isFuncao() {
+		return tipo == Tipo.FUNCAO;
 	}
 
 	public boolean isString() {

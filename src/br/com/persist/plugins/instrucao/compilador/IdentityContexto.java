@@ -4,7 +4,9 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
+import br.com.persist.plugins.instrucao.processador.Biblioteca;
 
 public class IdentityContexto extends Container {
 	private Token tokenIdentity;
@@ -35,6 +37,9 @@ public class IdentityContexto extends Container {
 		if (ehParametro()) {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
 			tokenIdentity = token.novo(Tipo.PARAMETRO);
+		} else if (ehFuncao()) {
+			print(pw, FuncaoContexto.LOAD_FUNCTION, id);
+			tokenIdentity = token.novo(Tipo.FUNCAO);
 		} else {
 			print(pw, ConstanteContexto.LOAD_CONST, id);
 			tokenIdentity = token.novo(Tipo.CONSTANTE);
@@ -49,6 +54,24 @@ public class IdentityContexto extends Container {
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(id);
+	}
+
+	private boolean ehFuncao() {
+		BibliotecaContexto biblio = getBiblioteca();
+		if (biblio == null) {
+			throw new IllegalStateException();
+		}
+		String[] strings = id.split(".");
+		if (strings.length == 1) {
+			return biblio.contemFuncao(id);
+		}
+		Biblioteca biblioteca = null;
+		try {
+			biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
+		} catch (InstrucaoException ex) {
+			throw new IllegalStateException(ex.getMessage());
+		}
+		return biblioteca.contemFuncao(strings[1]);
 	}
 
 	@Override
