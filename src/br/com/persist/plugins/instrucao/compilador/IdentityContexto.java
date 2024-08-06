@@ -61,7 +61,7 @@ public class IdentityContexto extends Container {
 		if (biblio == null) {
 			throw new IllegalStateException();
 		}
-		String[] strings = id.split(".");
+		String[] strings = id.split("\\.");
 		if (strings.length == 1) {
 			return biblio.contemFuncao(id);
 		}

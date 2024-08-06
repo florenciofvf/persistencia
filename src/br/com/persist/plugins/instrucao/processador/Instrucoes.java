@@ -40,6 +40,7 @@ public class Instrucoes {
 		add(new PushBigIntegerInstrucao());
 		add(new LoadParametroInstrucao());
 		add(new LoadConstanteInstrucao());
+		add(new LoadFuncaoInstrucao());
 		add(new PushStringInstrucao());
 		add(new InvocacaoInstrucao());
 		add(new NegativoInstrucao());
