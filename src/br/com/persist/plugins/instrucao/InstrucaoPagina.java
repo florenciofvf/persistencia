@@ -119,14 +119,17 @@ public class InstrucaoPagina extends Panel {
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
+		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
+			addButton(compiladoAcao);
 			addButton(executarAcao);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
@@ -135,6 +138,19 @@ public class InstrucaoPagina extends Panel {
 
 		Action acaoIcon(String chave, Icon icon) {
 			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
+		}
+
+		private void verCompilado() {
+			String biblioteca = file.getName();
+			try {
+				File arquivo = Compilador.getCompilado(biblioteca);
+				if (!arquivo.exists()) {
+					throw new IOException("Arquivo inexistente! " + arquivo);
+				}
+				Util.conteudo(InstrucaoPagina.this, arquivo);
+			} catch (IOException e) {
+				Util.mensagem(InstrucaoPagina.this, e.getMessage());
+			}
 		}
 
 		private void executar() {

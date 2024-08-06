@@ -71,11 +71,15 @@ public class Compilador {
 			return null;
 		}
 		biblioteca.indexar();
-		File destino = new File(CacheBiblioteca.COMPILADOS, arquivo + Biblioteca.EXTENSAO);
+		File destino = getCompilado(arquivo);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			biblioteca.salvar(pw);
 		}
 		return biblioteca;
+	}
+
+	public static File getCompilado(String arquivo) {
+		return new File(CacheBiblioteca.COMPILADOS, arquivo + Biblioteca.EXTENSAO);
 	}
 
 	private String getString(File file) throws IOException {
