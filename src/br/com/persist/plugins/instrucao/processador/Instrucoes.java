@@ -38,6 +38,7 @@ public class Instrucoes {
 	static {
 		add(new PushBigDecimalInstrucao());
 		add(new PushBigIntegerInstrucao());
+		add(new InvocacaoParamInstrucao());
 		add(new LoadParametroInstrucao());
 		add(new LoadConstanteInstrucao());
 		add(new LoadFuncaoInstrucao());
