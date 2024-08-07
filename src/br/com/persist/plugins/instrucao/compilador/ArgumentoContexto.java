@@ -123,9 +123,22 @@ public class ArgumentoContexto extends Container {
 	public void salvar(PrintWriter pw) {
 		super.salvar(pw);
 		if (identity != null) {
-			print(pw, InvocacaoContexto.INVOKE, identity.getId());
+			if (ehInvokeParam()) {
+				print(pw, InvocacaoContexto.INVOKE_PARAM, identity.getId());
+			} else {
+				print(pw, InvocacaoContexto.INVOKE, identity.getId());
+			}
 			identity.salvarNegativo(pw);
 		}
+	}
+
+	private boolean ehInvokeParam() {
+		FuncaoContexto funcao = getFuncao();
+		if (funcao == null) {
+			throw new IllegalStateException();
+		}
+		ParametrosContexto parametros = funcao.getParametros();
+		return parametros.contem(identity.getId());
 	}
 
 	@Override

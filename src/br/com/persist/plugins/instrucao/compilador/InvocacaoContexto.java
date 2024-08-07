@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InvocacaoContexto extends Container {
+	public static final String INVOKE_PARAM = "invoke_param";
 	public static final String INVOKE = "invoke";
 
 	public InvocacaoContexto(Token token) {
@@ -41,8 +42,21 @@ public class InvocacaoContexto extends Container {
 	@Override
 	public void salvar(PrintWriter pw) {
 		super.salvar(pw);
-		print(pw, INVOKE, token.string);
+		if (ehInvokeParam()) {
+			print(pw, INVOKE_PARAM, token.string);
+		} else {
+			print(pw, INVOKE, token.string);
+		}
 		salvarNegativo(pw);
+	}
+
+	private boolean ehInvokeParam() {
+		FuncaoContexto funcao = getFuncao();
+		if (funcao == null) {
+			throw new IllegalStateException();
+		}
+		ParametrosContexto parametros = funcao.getParametros();
+		return parametros.contem(token.string);
 	}
 
 	@Override
