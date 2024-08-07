@@ -7,6 +7,18 @@ public class String {
 	}
 
 	@Biblio
+	public static StringPool createStringPool() {
+		return new StringPool();
+	}
+
+	@Biblio
+	public static void append(StringPool stringPool, Object object) {
+		if (stringPool != null) {
+			stringPool.append(object);
+		}
+	}
+
+	@Biblio
 	public static BigInteger empty(Object object) {
 		if (object == null) {
 			return Util.TRUE;
