@@ -12,9 +12,9 @@ public class String {
 	}
 
 	@Biblio
-	public static void append(StringPool stringPool, Object object) {
-		if (stringPool != null) {
-			stringPool.append(object);
+	public static void append(Object stringPool, Object object) {
+		if (stringPool instanceof StringPool) {
+			((StringPool) stringPool).append(object);
 		}
 	}
 
