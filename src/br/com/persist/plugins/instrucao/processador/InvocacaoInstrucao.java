@@ -68,7 +68,7 @@ public class InvocacaoInstrucao extends Instrucao {
 		}
 	}
 
-	private static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
+	static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		List<Integer> indices = indiceParametros(funcao);
 		for (int i = indices.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
