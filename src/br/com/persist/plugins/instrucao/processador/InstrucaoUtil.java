@@ -24,7 +24,7 @@ public class InstrucaoUtil {
 
 	public static void checarFuncao(Object obj) throws InstrucaoException {
 		if (obj == null) {
-			throw new InstrucaoException("erro.valor_invalido_metodo_null");
+			throw new InstrucaoException("erro.valor_invalido_funcao_null");
 		}
 	}
 

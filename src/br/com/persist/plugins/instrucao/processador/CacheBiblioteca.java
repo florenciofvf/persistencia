@@ -58,7 +58,7 @@ public class CacheBiblioteca {
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAMETRO)) {
 				String nomeParametro = linha.substring(InstrucaoConstantes.PREFIXO_PARAMETRO.length());
 				if (funcao == null) {
-					throw new InstrucaoException("erro.parametro_sem_metodo", nome, nomeParametro);
+					throw new InstrucaoException("erro.parametro_sem_funcao", nome, nomeParametro);
 				}
 				funcao.addParametro(nomeParametro);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_INSTRUCAO)) {
@@ -93,7 +93,7 @@ public class CacheBiblioteca {
 			throws InstrucaoException {
 		String linhaInstrucao = linha.substring(InstrucaoConstantes.PREFIXO_INSTRUCAO.length());
 		if (funcao == null && constante == null) {
-			throw new InstrucaoException("erro.instrucao_sem_metodo", nome, linhaInstrucao);
+			throw new InstrucaoException("erro.instrucao_sem_funcao", nome, linhaInstrucao);
 		}
 		Instrucao instrucao = criarInstrucao(linhaInstrucao);
 		if (funcao != null) {

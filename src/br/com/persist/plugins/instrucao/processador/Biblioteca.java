@@ -51,7 +51,7 @@ public class Biblioteca {
 	public Funcao getFuncao(String nome) throws InstrucaoException {
 		Funcao funcao = funcoes.get(nome);
 		if (funcao == null) {
-			throw new InstrucaoException("erro.metodo_inexistente", nome, this.nome);
+			throw new InstrucaoException("erro.funcao_inexistente", nome, this.nome);
 		}
 		return funcao;
 	}

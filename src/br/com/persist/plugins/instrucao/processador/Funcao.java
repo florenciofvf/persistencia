@@ -55,7 +55,7 @@ public class Funcao {
 
 	public void setIndice(int indice) throws InstrucaoException {
 		if (indice < 0 || indice >= instrucoes.size()) {
-			throw new InstrucaoException("erro.metodo_set_indice", nome);
+			throw new InstrucaoException("erro.funcao_set_indice", nome);
 		}
 		this.indice = indice;
 	}
@@ -117,7 +117,7 @@ public class Funcao {
 	public void addInstrucao(Instrucao instrucao) throws InstrucaoException {
 		if (instrucao != null) {
 			if (isNativo()) {
-				throw new InstrucaoException("erro.metodo_nativo_add_inst", nome);
+				throw new InstrucaoException("erro.funcao_nativa_add_inst", nome);
 			}
 			instrucoes.add(instrucao);
 		}

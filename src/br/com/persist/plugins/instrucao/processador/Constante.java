@@ -30,13 +30,6 @@ public class Constante {
 		return indice;
 	}
 
-	public void setIndice(int indice) throws InstrucaoException {
-		if (indice < 0 || indice >= instrucoes.size()) {
-			throw new InstrucaoException("erro.constante_set_indice", nome);
-		}
-		this.indice = indice;
-	}
-
 	public String getNome() {
 		return nome;
 	}

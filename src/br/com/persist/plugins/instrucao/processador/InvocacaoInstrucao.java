@@ -41,7 +41,7 @@ public class InvocacaoInstrucao extends Instrucao {
 			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio);
 		} else {
 			if (funcao == null) {
-				throw new InstrucaoException("erro.metodo_inexistente", "null", "null");
+				throw new InstrucaoException("erro.funcao_inexistente", "null", "null");
 			}
 			if ("tailcall".equals(nomeFuncao)) {
 				setParametros(funcao, pilhaOperando);
