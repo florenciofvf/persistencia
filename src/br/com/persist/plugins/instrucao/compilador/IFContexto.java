@@ -124,7 +124,9 @@ public class IFContexto extends Container {
 			return;
 		}
 
-		if (getCorpo().getUltimo() instanceof RetornoContexto) {
+		AtomicInteger retornos = new AtomicInteger(0);
+		getCorpo().retornoIncondicional(retornos);
+		if (getCorpo().getUltimo() instanceof RetornoContexto || retornos.get() > 0) {
 			getCorpo().indexar(atomic);
 			ifEqContexto.posicao = atomic.get();
 			getUltimo().indexar(atomic);
@@ -148,7 +150,9 @@ public class IFContexto extends Container {
 			return;
 		}
 
-		if (getCorpo().getUltimo() instanceof RetornoContexto) {
+		AtomicInteger retornos = new AtomicInteger(0);
+		getCorpo().retornoIncondicional(retornos);
+		if (getCorpo().getUltimo() instanceof RetornoContexto || retornos.get() > 0) {
 			getCorpo().salvar(pw);
 			getUltimo().salvar(pw);
 			return;

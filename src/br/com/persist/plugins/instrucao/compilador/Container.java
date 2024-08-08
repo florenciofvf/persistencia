@@ -130,6 +130,12 @@ public abstract class Container extends AbstratoContexto {
 		}
 	}
 
+	public void retornoIncondicional(AtomicInteger atomic) {
+		for (Container c : componentes) {
+			c.retornoIncondicional(atomic);
+		}
+	}
+
 	public void indexar(AtomicInteger atomic) {
 		for (Container c : componentes) {
 			c.indexar(atomic);

@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class CorpoContexto extends Container {
@@ -60,6 +62,14 @@ public class CorpoContexto extends Container {
 			compilador.invalidar(token);
 		}
 		adicionar(c);
+	}
+
+	@Override
+	public void retornoIncondicional(AtomicInteger atomic) {
+		if (pai instanceof ElseContexto && getUltimo() instanceof RetornoContexto) {
+			atomic.incrementAndGet();
+		}
+		super.retornoIncondicional(atomic);
 	}
 
 	@Override
