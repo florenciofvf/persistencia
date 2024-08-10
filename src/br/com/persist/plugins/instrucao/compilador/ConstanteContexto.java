@@ -2,7 +2,6 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -62,8 +61,8 @@ public class ConstanteContexto extends Container {
 	}
 
 	public void indexar() {
-		AtomicInteger atomic = new AtomicInteger(0);
-		indexar(atomic);
+		Indexador indexador = new Indexador();
+		indexar(indexador);
 	}
 
 	@Override
@@ -73,9 +72,9 @@ public class ConstanteContexto extends Container {
 	}
 
 	@Override
-	public void indexar(AtomicInteger atomic) {
-		getExpressao().indexar(atomic);
-		indice = atomic.getAndIncrement();
+	public void indexar(Indexador indexador) {
+		getExpressao().indexar(indexador);
+		indice = indexador.get();
 	}
 
 	@Override

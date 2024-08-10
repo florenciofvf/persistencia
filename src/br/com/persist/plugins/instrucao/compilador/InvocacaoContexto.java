@@ -1,7 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
@@ -33,10 +32,10 @@ public class InvocacaoContexto extends Container {
 	}
 
 	@Override
-	public void indexar(AtomicInteger atomic) {
-		super.indexar(atomic);
-		indice = atomic.getAndIncrement();
-		indexarNegativo(atomic);
+	public void indexar(Indexador indexador) {
+		super.indexar(indexador);
+		indice = indexador.get3();
+		indexarNegativo(indexador);
 	}
 
 	@Override

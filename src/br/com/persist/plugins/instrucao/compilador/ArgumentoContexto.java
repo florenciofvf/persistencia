@@ -2,7 +2,6 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
@@ -111,11 +110,11 @@ public class ArgumentoContexto extends Container {
 	}
 
 	@Override
-	public void indexar(AtomicInteger atomic) {
-		super.indexar(atomic);
+	public void indexar(Indexador indexador) {
+		super.indexar(indexador);
 		if (identity != null) {
-			indice = atomic.getAndIncrement();
-			identity.indexarNegativo(atomic);
+			indice = indexador.get3();
+			identity.indexarNegativo(indexador);
 		}
 	}
 

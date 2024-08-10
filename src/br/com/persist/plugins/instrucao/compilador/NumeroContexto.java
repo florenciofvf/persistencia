@@ -1,7 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
@@ -21,9 +20,9 @@ public class NumeroContexto extends Container {
 	}
 
 	@Override
-	public void indexar(AtomicInteger atomic) {
-		indice = atomic.getAndIncrement();
-		indexarNegativo(atomic);
+	public void indexar(Indexador indexador) {
+		indice = indexador.get2();
+		indexarNegativo(indexador);
 	}
 
 	@Override

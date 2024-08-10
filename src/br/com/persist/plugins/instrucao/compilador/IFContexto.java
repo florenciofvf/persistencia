@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
@@ -114,30 +113,28 @@ public class IFContexto extends Container {
 	}
 
 	@Override
-	public void indexar(AtomicInteger atomic) {
-		getExpressao().indexar(atomic);
-		ifEqContexto.indexar(atomic);
+	public void indexar(Indexador indexador) {
+		getExpressao().indexar(indexador);
+		ifEqContexto.indexar(indexador);
 
 		if (getSize() == 2) {
-			getCorpo().indexar(atomic);
-			ifEqContexto.posicao = atomic.get();
+			getCorpo().indexar(indexador);
+			ifEqContexto.posicao = indexador.value();
 			return;
 		}
 
-		AtomicInteger retornos = new AtomicInteger(0);
-		getCorpo().retornoIncondicional(retornos);
-		if (getCorpo().getUltimo() instanceof RetornoContexto || retornos.get() > 0) {
-			getCorpo().indexar(atomic);
-			ifEqContexto.posicao = atomic.get();
-			getUltimo().indexar(atomic);
+		if (getCorpo().getUltimo() instanceof RetornoContexto) {
+			getCorpo().indexar(indexador);
+			ifEqContexto.posicao = indexador.value();
+			getUltimo().indexar(indexador);
 			return;
 		}
 
-		getCorpo().indexar(atomic);
-		gotoContexto.indexar(atomic);
-		ifEqContexto.posicao = atomic.get();
-		getUltimo().indexar(atomic);
-		gotoContexto.posicao = atomic.get();
+		getCorpo().indexar(indexador);
+		gotoContexto.indexar(indexador);
+		ifEqContexto.posicao = indexador.value();
+		getUltimo().indexar(indexador);
+		gotoContexto.posicao = indexador.value();
 	}
 
 	@Override
@@ -150,9 +147,7 @@ public class IFContexto extends Container {
 			return;
 		}
 
-		AtomicInteger retornos = new AtomicInteger(0);
-		getCorpo().retornoIncondicional(retornos);
-		if (getCorpo().getUltimo() instanceof RetornoContexto || retornos.get() > 0) {
+		if (getCorpo().getUltimo() instanceof RetornoContexto) {
 			getCorpo().salvar(pw);
 			getUltimo().salvar(pw);
 			return;

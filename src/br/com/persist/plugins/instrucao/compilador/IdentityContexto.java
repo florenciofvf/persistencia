@@ -2,7 +2,6 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
@@ -22,9 +21,9 @@ public class IdentityContexto extends Container {
 	}
 
 	@Override
-	public void indexar(AtomicInteger atomic) {
-		indice = atomic.getAndIncrement();
-		indexarNegativo(atomic);
+	public void indexar(Indexador indexador) {
+		indice = indexador.get();
+		indexarNegativo(indexador);
 	}
 
 	@Override

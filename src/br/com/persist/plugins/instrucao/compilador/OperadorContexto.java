@@ -1,7 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class OperadorContexto extends Container {
 	public static final String ADD_LISTA = "add_lista";
@@ -118,9 +117,9 @@ public class OperadorContexto extends Container {
 	}
 
 	@Override
-	public void indexar(AtomicInteger atomic) {
-		super.indexar(atomic);
-		indice = atomic.getAndIncrement();
+	public void indexar(Indexador indexador) {
+		super.indexar(indexador);
+		indice = indexador.get();
 	}
 
 	@Override

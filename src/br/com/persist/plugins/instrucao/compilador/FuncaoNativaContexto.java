@@ -1,7 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
@@ -62,8 +61,8 @@ public class FuncaoNativaContexto extends Container {
 	}
 
 	public void indexar() {
-		AtomicInteger atomic = new AtomicInteger(0);
-		indexar(atomic);
+		Indexador indexador = new Indexador();
+		indexar(indexador);
 	}
 
 	@Override
