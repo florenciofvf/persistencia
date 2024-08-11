@@ -7,6 +7,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public abstract class Instrucao {
 	protected final String nome;
 	protected String parametros;
+	protected int sequencia;
 
 	protected Instrucao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -22,6 +23,14 @@ public abstract class Instrucao {
 
 	public void setParametros(String parametros) {
 		this.parametros = parametros;
+	}
+
+	public int getSequencia() {
+		return sequencia;
+	}
+
+	public void setSequencia(int sequencia) {
+		this.sequencia = sequencia;
 	}
 
 	public Instrucao clonar() {

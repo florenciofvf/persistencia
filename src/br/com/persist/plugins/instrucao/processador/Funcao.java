@@ -1,23 +1,27 @@
 package br.com.persist.plugins.instrucao.processador;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Funcao {
+	private final Map<Integer, InstrucaoItem> instrucoes;
 	private final List<Parametro> parametros;
-	private final List<Instrucao> instrucoes;
+	private InstrucaoItem ponteiro;
 	private Biblioteca biblioteca;
+	private InstrucaoItem cabeca;
 	private String biblioNativa;
+	private InstrucaoItem cauda;
 	private final String nome;
-	private int indice;
 
 	public Funcao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
 		parametros = new ArrayList<>();
-		instrucoes = new ArrayList<>();
+		instrucoes = new HashMap<>();
 	}
 
 	public Funcao clonar() throws InstrucaoException {
@@ -27,8 +31,10 @@ public class Funcao {
 		for (Parametro p : parametros) {
 			funcao.addParametro(p.nome);
 		}
-		for (Instrucao inst : instrucoes) {
-			funcao.addInstrucao(inst);
+		InstrucaoItem no = cabeca;
+		while (no != null) {
+			funcao.addInstrucao(no.instrucao);
+			no = no.proximo;
 		}
 		return funcao;
 	}
@@ -49,15 +55,12 @@ public class Funcao {
 		this.biblioNativa = biblioNativa;
 	}
 
-	public int getIndice() {
-		return indice;
-	}
-
 	public void setIndice(int indice) throws InstrucaoException {
-		if (indice < 0 || indice >= instrucoes.size()) {
-			throw new InstrucaoException("erro.funcao_set_indice", nome);
+		InstrucaoItem item = instrucoes.get(indice);
+		if (item == null) {
+			throw new InstrucaoException("erro.funcao_set_indice", nome, indice);
 		}
-		this.indice = indice;
+		ponteiro = item;
 	}
 
 	public String getNome() {
@@ -65,11 +68,11 @@ public class Funcao {
 	}
 
 	Instrucao getInstrucao() throws InstrucaoException {
-		if (indice >= instrucoes.size()) {
+		if (ponteiro == null) {
 			throw new InstrucaoException("erro.funcao_sem_retorno", nome, biblioteca.getNome());
 		}
-		Instrucao resp = instrucoes.get(indice);
-		indice++;
+		Instrucao resp = ponteiro.instrucao;
+		ponteiro = ponteiro.proximo;
 		return resp;
 	}
 
@@ -115,12 +118,22 @@ public class Funcao {
 	}
 
 	public void addInstrucao(Instrucao instrucao) throws InstrucaoException {
-		if (instrucao != null) {
-			if (isNativo()) {
-				throw new InstrucaoException("erro.funcao_nativa_add_inst", nome);
-			}
-			instrucoes.add(instrucao);
+		if (instrucao == null) {
+			return;
 		}
+		if (isNativo()) {
+			throw new InstrucaoException("erro.funcao_nativa_add_inst", nome);
+		}
+		InstrucaoItem no = new InstrucaoItem(instrucao);
+		instrucoes.put(instrucao.sequencia, no);
+		if (cabeca == null) {
+			ponteiro = no;
+			cabeca = no;
+		}
+		if (cauda != null) {
+			cauda.proximo = no;
+		}
+		cauda = no;
 	}
 
 	public boolean isNativo() {

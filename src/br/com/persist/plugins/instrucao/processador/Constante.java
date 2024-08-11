@@ -1,21 +1,18 @@
 package br.com.persist.plugins.instrucao.processador;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Constante {
-	private final List<Instrucao> instrucoes;
 	private Biblioteca biblioteca;
+	private InstrucaoItem cabeca;
+	private InstrucaoItem cauda;
 	private final String nome;
 	private Object valor;
-	private int indice;
 
 	public Constante(String nome) {
 		this.nome = Objects.requireNonNull(nome);
-		instrucoes = new ArrayList<>();
 	}
 
 	public Biblioteca getBiblioteca() {
@@ -26,16 +23,8 @@ public class Constante {
 		this.biblioteca = biblioteca;
 	}
 
-	public int getIndice() {
-		return indice;
-	}
-
 	public String getNome() {
 		return nome;
-	}
-
-	public List<Instrucao> getInstrucoes() {
-		return instrucoes;
 	}
 
 	public Object getValor() {
@@ -46,22 +35,26 @@ public class Constante {
 		this.valor = valor;
 	}
 
-	Instrucao getInstrucao() {
-		Instrucao resp = instrucoes.get(indice);
-		indice++;
-		return resp;
-	}
-
 	public void addInstrucao(Instrucao instrucao) {
-		if (instrucao != null) {
-			instrucoes.add(instrucao);
+		if (instrucao == null) {
+			return;
 		}
+		InstrucaoItem no = new InstrucaoItem(instrucao);
+		if (cabeca == null) {
+			cabeca = no;
+		}
+		if (cauda != null) {
+			cauda.proximo = no;
+		}
+		cauda = no;
 	}
 
 	public void init() throws InstrucaoException {
 		PilhaOperando pilhaOperando = new PilhaOperando();
-		for (Instrucao instrucao : instrucoes) {
-			instrucao.processar(null, biblioteca, null, null, pilhaOperando);
+		InstrucaoItem no = cabeca;
+		while (no != null) {
+			no.instrucao.processar(null, biblioteca, null, null, pilhaOperando);
+			no = no.proximo;
 		}
 	}
 
