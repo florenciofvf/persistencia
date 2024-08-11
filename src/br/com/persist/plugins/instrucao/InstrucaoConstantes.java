@@ -14,7 +14,6 @@ public class InstrucaoConstantes {
 	public static final String ESPACO = " ";
 
 	public static final String PREFIXO_FUNCAO_NATIVA = "funcao_nativa ";
-	public static final String PREFIXO_INSTRUCAO = "instrucao ";
 	public static final String PREFIXO_PARAMETRO = "parametro ";
 	public static final String PREFIXO_CONSTANTE = "constante ";
 	public static final String PREFIXO_FUNCAO = "funcao ";

@@ -11,9 +11,9 @@ public abstract class Container extends AbstratoContexto {
 	protected final List<Container> componentes;
 	protected NegativoContexto negativo;
 	protected Contexto contexto;
+	protected int sequencia;
 	protected Container pai;
 	protected Token token;
-	protected int indice;
 
 	protected Container() {
 		componentes = new ArrayList<>();
@@ -161,7 +161,7 @@ public abstract class Container extends AbstratoContexto {
 	}
 
 	void print(PrintWriter pw, String... strings) {
-		pw.print(InstrucaoConstantes.PREFIXO_INSTRUCAO + indice + " -");
+		pw.print(sequencia + InstrucaoConstantes.ESPACO);
 		for (String string : strings) {
 			pw.print(InstrucaoConstantes.ESPACO + string);
 		}

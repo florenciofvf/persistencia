@@ -17,7 +17,7 @@ public class StringContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
-		indice = indexador.get2();
+		sequencia = indexador.get2();
 	}
 
 	@Override

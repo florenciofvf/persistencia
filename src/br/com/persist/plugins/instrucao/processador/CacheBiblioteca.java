@@ -61,12 +61,17 @@ public class CacheBiblioteca {
 					throw new InstrucaoException("erro.parametro_sem_funcao", nome, nomeParametro);
 				}
 				funcao.addParametro(nomeParametro);
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_INSTRUCAO)) {
+			} else if (linhaInstrucao(linha)) {
 				processarInstrucao(nome, constante, funcao, linha);
 			}
 		}
 		biblioteca.initConstantes();
 		return biblioteca;
+	}
+
+	private boolean linhaInstrucao(String s) {
+		char c = s.charAt(0);
+		return c >= '0' && c <= '9';
 	}
 
 	private Funcao criarFuncao(String linha) {
@@ -91,11 +96,10 @@ public class CacheBiblioteca {
 
 	private void processarInstrucao(String nome, Constante constante, Funcao funcao, String linha)
 			throws InstrucaoException {
-		String linhaInstrucao = linha.substring(InstrucaoConstantes.PREFIXO_INSTRUCAO.length());
 		if (funcao == null && constante == null) {
-			throw new InstrucaoException("erro.instrucao_sem_funcao", nome, linhaInstrucao);
+			throw new InstrucaoException("erro.instrucao_sem_funcao", nome, linha);
 		}
-		Instrucao instrucao = criarInstrucao(linhaInstrucao);
+		Instrucao instrucao = criarInstrucao(linha);
 		if (funcao != null) {
 			funcao.addInstrucao(instrucao);
 		} else {
@@ -104,21 +108,25 @@ public class CacheBiblioteca {
 	}
 
 	private Instrucao criarInstrucao(String linha) {
-		int pos = linha.indexOf('-');
-		String stringInstrucao = linha.substring(pos + 2);
-		return getInstrucao(stringInstrucao);
+		String espacos = InstrucaoConstantes.ESPACO + InstrucaoConstantes.ESPACO;
+		int pos = linha.indexOf(espacos);
+		int sequencia = Integer.parseInt(linha.substring(0, pos));
+		String stringInstrucao = linha.substring(pos + espacos.length());
+		return getInstrucao(sequencia, stringInstrucao);
 	}
 
-	private Instrucao getInstrucao(String string) {
+	private Instrucao getInstrucao(int sequencia, String string) {
 		int pos = string.indexOf(' ');
 		if (pos == -1) {
-			return Instrucoes.get(string);
+			Instrucao clone = Instrucoes.get(string).clonar();
+			clone.sequencia = sequencia;
+			return clone;
 		} else {
 			String nome = string.substring(0, pos);
 			String parametros = string.substring(pos + 1);
-			Instrucao instrucao = Instrucoes.get(nome);
-			Instrucao clone = instrucao.clonar();
+			Instrucao clone = Instrucoes.get(nome).clonar();
 			clone.setParametros(parametros);
+			clone.sequencia = sequencia;
 			return clone;
 		}
 	}

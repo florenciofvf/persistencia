@@ -34,7 +34,7 @@ public class InvocacaoContexto extends Container {
 	@Override
 	public void indexar(Indexador indexador) {
 		super.indexar(indexador);
-		indice = indexador.get3();
+		sequencia = indexador.get3();
 		indexarNegativo(indexador);
 	}
 

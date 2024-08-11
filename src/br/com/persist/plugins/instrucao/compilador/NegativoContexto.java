@@ -7,7 +7,7 @@ public class NegativoContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
-		indice = indexador.get();
+		sequencia = indexador.get();
 	}
 
 	@Override

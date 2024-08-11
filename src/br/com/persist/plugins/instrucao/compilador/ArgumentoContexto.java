@@ -113,7 +113,7 @@ public class ArgumentoContexto extends Container {
 	public void indexar(Indexador indexador) {
 		super.indexar(indexador);
 		if (identity != null) {
-			indice = indexador.get3();
+			sequencia = indexador.get3();
 			identity.indexarNegativo(indexador);
 		}
 	}

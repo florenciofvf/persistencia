@@ -8,7 +8,7 @@ public class GotoContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
-		indice = indexador.get3();
+		sequencia = indexador.get3();
 	}
 
 	@Override

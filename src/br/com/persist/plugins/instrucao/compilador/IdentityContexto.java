@@ -22,7 +22,7 @@ public class IdentityContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
-		indice = indexador.get();
+		sequencia = indexador.get();
 		indexarNegativo(indexador);
 	}
 

@@ -119,7 +119,7 @@ public class OperadorContexto extends Container {
 	@Override
 	public void indexar(Indexador indexador) {
 		super.indexar(indexador);
-		indice = indexador.get();
+		sequencia = indexador.get();
 	}
 
 	@Override

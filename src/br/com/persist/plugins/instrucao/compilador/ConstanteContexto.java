@@ -74,7 +74,7 @@ public class ConstanteContexto extends Container {
 	@Override
 	public void indexar(Indexador indexador) {
 		getExpressao().indexar(indexador);
-		indice = indexador.get();
+		sequencia = indexador.get();
 	}
 
 	@Override
