@@ -1,6 +1,5 @@
 package br.com.persist.plugins.instrucao.compilador;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,13 +8,12 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class IFContexto extends Container {
 	public static final ReservadoOuFinalizar RESERVADO_OU_FINALIZAR = new ReservadoOuFinalizar();
-	private IFEqContexto ifEqContexto = new IFEqContexto();
-	private GotoContexto gotoContexto = new GotoContexto();
 	private boolean faseExpressao;
 
 	public IFContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
 		adicionar(new ExpressaoContexto());
+		adicionar(new IFEqContexto());
 		adicionar(new CorpoContexto());
 		faseExpressao = true;
 	}
@@ -71,11 +69,12 @@ public class IFContexto extends Container {
 	}
 
 	private void normalizarArvore(Compilador compilador, Token token) throws InstrucaoException {
-		if (getSize() == 2 || (getSize() == 3 && getUltimo() instanceof ElseContexto)) {
+		int minimo = 3;
+		if (getSize() == minimo || (getSize() == 4 && getUltimo() instanceof ElseContexto)) {
 			return;
 		}
 		List<Container> lista = new ArrayList<>();
-		for (int i = 2; i < getSize(); i++) {
+		for (int i = minimo; i < getSize(); i++) {
 			lista.add(get(i));
 		}
 		for (Container c : lista) {
@@ -98,6 +97,7 @@ public class IFContexto extends Container {
 			ExpressaoContexto expressao = elseIFContexto.getExpressao();
 			CorpoContexto corpo = elseIFContexto.getCorpo();
 			resposta.adicionar(expressao);
+			resposta.adicionar(new IFEqContexto());
 			resposta.adicionar(corpo);
 
 			ElseContexto elseContexto = new ElseContexto();
@@ -110,52 +110,6 @@ public class IFContexto extends Container {
 			compilador.invalidar(token);
 		}
 		return resposta;
-	}
-
-	@Override
-	public void indexar(Indexador indexador) {
-		getExpressao().indexar(indexador);
-		ifEqContexto.indexar(indexador);
-
-		if (getSize() == 2) {
-			getCorpo().indexar(indexador);
-			ifEqContexto.posicao = indexador.value();
-			return;
-		}
-
-		if (getCorpo().getUltimo() instanceof RetornoContexto) {
-			getCorpo().indexar(indexador);
-			ifEqContexto.posicao = indexador.value();
-			getUltimo().indexar(indexador);
-			return;
-		}
-
-		getCorpo().indexar(indexador);
-		gotoContexto.indexar(indexador);
-		ifEqContexto.posicao = indexador.value();
-		getUltimo().indexar(indexador);
-		gotoContexto.posicao = indexador.value();
-	}
-
-	@Override
-	public void salvar(PrintWriter pw) {
-		getExpressao().salvar(pw);
-		ifEqContexto.salvar(pw);
-
-		if (getSize() == 2) {
-			getCorpo().salvar(pw);
-			return;
-		}
-
-		if (getCorpo().getUltimo() instanceof RetornoContexto) {
-			getCorpo().salvar(pw);
-			getUltimo().salvar(pw);
-			return;
-		}
-
-		getCorpo().salvar(pw);
-		gotoContexto.salvar(pw);
-		getUltimo().salvar(pw);
 	}
 
 	@Override
