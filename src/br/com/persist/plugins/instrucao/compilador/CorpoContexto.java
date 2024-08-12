@@ -4,6 +4,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class CorpoContexto extends Container {
 	public static final ReservadoOuIdentityOuFinalizar RESERVADO_OU_IDENTITY_OU_FINALIZAR = new ReservadoOuIdentityOuFinalizar();
+	private GotoContexto gotoContexto = new GotoContexto();
 	private boolean finalizadorPai;
 
 	public CorpoContexto() {
@@ -60,6 +61,18 @@ public class CorpoContexto extends Container {
 			compilador.invalidar(token);
 		}
 		adicionar(c);
+	}
+
+	@Override
+	public void estruturar() {
+		if (pai instanceof IFContexto && !especial()) {
+			adicionar(gotoContexto);
+		}
+	}
+
+	private boolean especial() {
+		Container c = getUltimo();
+		return c instanceof IFContexto || c instanceof RetornoContexto;
 	}
 
 	@Override
