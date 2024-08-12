@@ -27,6 +27,12 @@ public class ElseContexto extends Container {
 	}
 
 	@Override
+	public void indexar(Indexador indexador) {
+		sequencia = indexador.value();
+		super.indexar(indexador);
+	}
+
+	@Override
 	public String toString() {
 		return "else";
 	}

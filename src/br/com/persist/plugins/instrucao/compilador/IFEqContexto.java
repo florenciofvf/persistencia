@@ -17,6 +17,10 @@ public class IFEqContexto extends Container {
 		if (ifContexto == null) {
 			throw new IllegalStateException();
 		}
+		if (!ifContexto.isMinimo()) {
+			deslocamento = ifContexto.getElse().getSequencia();
+			return;
+		}
 		CorpoContexto corpoContexto = getCorpoContexto(ifContexto);
 		while (corpoContexto != null) {
 			Container comando = corpoContexto.getComandoApos(ifContexto);

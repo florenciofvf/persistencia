@@ -9,6 +9,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 public class IFContexto extends Container {
 	public static final ReservadoOuFinalizar RESERVADO_OU_FINALIZAR = new ReservadoOuFinalizar();
 	private boolean faseExpressao;
+	private int minimo = 3;
 
 	public IFContexto() {
 		contexto = Contextos.ABRE_PARENTESES;
@@ -26,9 +27,8 @@ public class IFContexto extends Container {
 		return (CorpoContexto) get(2);
 	}
 
-	@Override
-	public int getSequencia() {
-		return getExpressao().getSequencia();
+	public ElseContexto getElse() {
+		return isMinimo() ? null : (ElseContexto) get(3);
 	}
 
 	@Override
@@ -73,9 +73,12 @@ public class IFContexto extends Container {
 		adicionar(c);
 	}
 
+	public boolean isMinimo() {
+		return minimo == getSize();
+	}
+
 	private void normalizarArvore(Compilador compilador, Token token) throws InstrucaoException {
-		int minimo = 3;
-		if (getSize() == minimo || (getSize() == 4 && getUltimo() instanceof ElseContexto)) {
+		if (isMinimo() || (getSize() == 4 && getUltimo() instanceof ElseContexto)) {
 			return;
 		}
 		List<Container> lista = new ArrayList<>();
