@@ -18,14 +18,14 @@ public class IFEqContexto extends Container {
 			throw new IllegalStateException();
 		}
 		if (!ifContexto.isMinimo()) {
-			deslocamento = ifContexto.getElse().getSequencia();
+			deslocamento = ifContexto.getElse().getInicioInstrucao();
 			return;
 		}
 		CorpoContexto corpoContexto = getCorpoContexto(ifContexto);
 		while (corpoContexto != null) {
 			Container comando = corpoContexto.getComandoApos(ifContexto);
 			if (comando != null) {
-				deslocamento = comando.getSequencia();
+				deslocamento = comando.getInicioInstrucao();
 				break;
 			}
 			ifContexto = getIFContexto(corpoContexto);

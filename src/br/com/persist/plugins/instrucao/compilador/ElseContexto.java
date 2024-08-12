@@ -28,8 +28,13 @@ public class ElseContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
-		sequencia = indexador.value();
+		inicioInstrucao = indexador.value();
 		super.indexar(indexador);
+	}
+
+	@Override
+	public int getInicioInstrucao() {
+		return inicioInstrucao;
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class GotoContexto extends Container {
 		while (corpoContexto != null) {
 			Container comando = corpoContexto.getComandoApos(ifContexto);
 			if (comando != null) {
-				deslocamento = comando.getSequencia();
+				deslocamento = comando.getInicioInstrucao();
 				break;
 			}
 			ifContexto = getIFContexto(corpoContexto);
