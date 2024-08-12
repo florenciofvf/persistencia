@@ -121,6 +121,12 @@ public class IFContexto extends Container {
 	}
 
 	@Override
+	public void indexar(Indexador indexador) {
+		pontoDeslocamento = indexador.value();
+		super.indexar(indexador);
+	}
+
+	@Override
 	public String toString() {
 		return "if >>> " + getExpressao().toString();
 	}
