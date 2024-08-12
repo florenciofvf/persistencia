@@ -19,7 +19,7 @@ public class GotoContexto extends Container {
 		}
 		CorpoContexto corpoContexto = getCorpoContexto(ifContexto);
 		while (corpoContexto != null) {
-			Container comando = corpoContexto.getComandoApos(ifContexto);
+			Container comando = corpoContexto.getContainerApos(ifContexto);
 			if (comando != null) {
 				deslocamento = comando.getPontoDeslocamento();
 				break;

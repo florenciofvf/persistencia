@@ -81,7 +81,7 @@ public class CorpoContexto extends Container {
 		return c instanceof IFContexto || c instanceof RetornoContexto;
 	}
 
-	protected Container getComandoApos(Container c) {
+	protected Container getContainerApos(Container c) {
 		int indice = getIndice(c);
 		if (indice == getSize() - 1) {
 			return null;
