@@ -29,9 +29,6 @@ public class IFEqContexto extends Container {
 				break;
 			}
 			ifContexto = getIFContexto(corpoContexto);
-			if (ifContexto == null) {
-				throw new IllegalStateException();
-			}
 			corpoContexto = getCorpoContexto(ifContexto);
 		}
 		if (deslocamento == 0) {
