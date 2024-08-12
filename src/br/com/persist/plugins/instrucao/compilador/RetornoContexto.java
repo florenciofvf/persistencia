@@ -31,14 +31,9 @@ public class RetornoContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
-		inicioInstrucao = indexador.value();
+		pontoDeslocamento = indexador.value();
 		super.indexar(indexador);
 		sequencia = indexador.get();
-	}
-
-	@Override
-	public int getInicioInstrucao() {
-		return inicioInstrucao;
 	}
 
 	@Override

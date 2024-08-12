@@ -18,21 +18,21 @@ public class IFEqContexto extends Container {
 			throw new IllegalStateException();
 		}
 		if (!ifContexto.isMinimo()) {
-			deslocamento = ifContexto.getElse().getInicioInstrucao();
+			deslocamento = ifContexto.getElse().getPontoDeslocamento();
 			return;
 		}
 		CorpoContexto corpoContexto = getCorpoContexto(ifContexto);
 		while (corpoContexto != null) {
 			Container comando = corpoContexto.getComandoApos(ifContexto);
 			if (comando != null) {
-				deslocamento = comando.getInicioInstrucao();
+				deslocamento = comando.getPontoDeslocamento();
 				break;
 			}
 			ifContexto = getIFContexto(corpoContexto);
 			corpoContexto = getCorpoContexto(ifContexto);
 		}
 		if (deslocamento == 0) {
-			throw new IllegalStateException("Sem deslocamento");
+			throw new IllegalStateException("Sem ponto de deslocamento");
 		}
 	}
 

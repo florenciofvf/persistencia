@@ -65,8 +65,14 @@ public class CorpoContexto extends Container {
 
 	@Override
 	public void estruturarImpl() {
-		if (pai instanceof IFContexto && !especial()) {
-			adicionar(gotoContexto);
+		if (pai instanceof IFContexto) {
+			IFContexto ifContexto = (IFContexto) pai;
+			if (ifContexto.isMinimo()) {
+				return;
+			}
+			if (!especial()) {
+				adicionar(gotoContexto);
+			}
 		}
 	}
 

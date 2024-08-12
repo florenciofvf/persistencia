@@ -9,7 +9,7 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 public abstract class Container extends AbstratoContexto {
 	protected final List<Container> componentes;
 	protected NegativoContexto negativo;
-	protected int inicioInstrucao;
+	protected int pontoDeslocamento;
 	protected Contexto contexto;
 	protected int sequencia;
 	protected Container pai;
@@ -31,8 +31,8 @@ public abstract class Container extends AbstratoContexto {
 		return pai;
 	}
 
-	public int getInicioInstrucao() {
-		return sequencia;
+	public int getPontoDeslocamento() {
+		return pontoDeslocamento;
 	}
 
 	protected CorpoContexto getCorpoContexto(Container c) {
