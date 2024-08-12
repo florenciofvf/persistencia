@@ -64,7 +64,7 @@ public class CorpoContexto extends Container {
 	}
 
 	@Override
-	public void estruturar() {
+	public void estruturarImpl() {
 		if (pai instanceof IFContexto && !especial()) {
 			adicionar(gotoContexto);
 		}
@@ -73,6 +73,14 @@ public class CorpoContexto extends Container {
 	private boolean especial() {
 		Container c = getUltimo();
 		return c instanceof IFContexto || c instanceof RetornoContexto;
+	}
+
+	protected Container getComandoApos(Container c) {
+		int indice = getIndice(c);
+		if (indice == getSize() - 1) {
+			return null;
+		}
+		return get(indice + 1);
 	}
 
 	@Override

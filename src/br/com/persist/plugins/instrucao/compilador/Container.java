@@ -30,6 +30,30 @@ public abstract class Container extends AbstratoContexto {
 		return pai;
 	}
 
+	public int getSequencia() {
+		return sequencia;
+	}
+
+	protected CorpoContexto getCorpoContexto(Container c) {
+		while (c != null) {
+			if (c instanceof CorpoContexto) {
+				break;
+			}
+			c = c.pai;
+		}
+		return (CorpoContexto) c;
+	}
+
+	protected IFContexto getIFContexto(Container c) {
+		while (c != null) {
+			if (c instanceof IFContexto) {
+				break;
+			}
+			c = c.pai;
+		}
+		return (IFContexto) c;
+	}
+
 	protected BibliotecaContexto getBiblioteca() {
 		Container c = this;
 		while (c != null) {
@@ -62,6 +86,15 @@ public abstract class Container extends AbstratoContexto {
 
 	public boolean isEmpty() {
 		return componentes.isEmpty();
+	}
+
+	protected int getIndice(Container c) {
+		for (int i = 0; i < componentes.size(); i++) {
+			if (componentes.get(i) == c) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	public Container get(int indice) {

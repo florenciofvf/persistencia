@@ -22,6 +22,11 @@ public class IFContexto extends Container {
 		return (ExpressaoContexto) get(0);
 	}
 
+	@Override
+	public int getSequencia() {
+		return getExpressao().getSequencia();
+	}
+
 	public CorpoContexto getCorpo() {
 		return (CorpoContexto) get(1);
 	}

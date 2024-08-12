@@ -171,6 +171,7 @@ public class ExpressaoContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
+		sequencia = indexador.value();
 		super.indexar(indexador);
 		indexarNegativo(indexador);
 	}
