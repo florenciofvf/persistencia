@@ -70,7 +70,9 @@ public class Compilador {
 		if (biblioteca.isEmpty()) {
 			return null;
 		}
+		biblioteca.estruturar();
 		biblioteca.indexar();
+		biblioteca.desviar();
 		File destino = getCompilado(arquivo);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			biblioteca.salvar(pw);

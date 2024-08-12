@@ -3,7 +3,6 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 
@@ -130,10 +129,14 @@ public abstract class Container extends AbstratoContexto {
 		}
 	}
 
-	public void retornoIncondicional(AtomicInteger atomic) {
+	public void estruturar() {
+		estruturarImpl();
 		for (Container c : componentes) {
-			c.retornoIncondicional(atomic);
+			c.estruturar();
 		}
+	}
+
+	protected void estruturarImpl() {
 	}
 
 	public void indexar(Indexador indexador) {
@@ -146,6 +149,16 @@ public abstract class Container extends AbstratoContexto {
 		if (negativo != null) {
 			negativo.indexar(indexador);
 		}
+	}
+
+	public void desviar() {
+		desviarImpl();
+		for (Container c : componentes) {
+			c.desviar();
+		}
+	}
+
+	protected void desviarImpl() {
 	}
 
 	public void salvar(PrintWriter pw) {
