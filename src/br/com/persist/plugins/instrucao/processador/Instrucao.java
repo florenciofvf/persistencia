@@ -33,9 +33,7 @@ public abstract class Instrucao {
 		this.sequencia = sequencia;
 	}
 
-	public Instrucao clonar() {
-		return this;
-	}
+	public abstract Instrucao clonar();
 
 	public abstract void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException;

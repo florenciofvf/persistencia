@@ -11,6 +11,11 @@ public class NegativoInstrucao extends Instrucao {
 	}
 
 	@Override
+	public Instrucao clonar() {
+		return new NegativoInstrucao();
+	}
+
+	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Object operando = pilhaOperando.pop();
