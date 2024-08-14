@@ -73,7 +73,7 @@ public class FuncaoNativaContexto extends Container {
 			if (!"void".equals(token.getString())) {
 				compilador.invalidar(token);
 			} else {
-				compilador.setContexto(getPai());
+				contexto = Contextos.PONTO_VIRGULA;
 				retornoVoid = true;
 			}
 		} else if (faseBiblio) {
