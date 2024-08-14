@@ -100,10 +100,14 @@ public abstract class Invocacao extends Instrucao {
 			Method method = klass.getDeclaredMethod(funcao.getNome(), tipoParametros);
 			Class<?> returnType = method.getReturnType();
 			String string = returnType.getCanonicalName();
-			if ("void".equals(string) || "java.lang.Void".equals(string)) {
+			if (funcao.isTipoVoid()) {
 				method.invoke(klass, valorParametros);
 				atomic.set(false);
 			} else {
+				if ("void".equals(string) || "java.lang.Void".equals(string)) {
+					throw new InstrucaoException("erro.funcao_nativa_retorno_void", funcao.getNome(),
+							funcao.getBiblioteca().getNome());
+				}
 				resposta = method.invoke(klass, valorParametros);
 				atomic.set(true);
 			}
