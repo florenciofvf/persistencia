@@ -5,7 +5,9 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class InvocacaoContexto extends Container {
+	public static final String INVOKE_PARAM_EXP = "invoke_param_exp";
 	public static final String INVOKE_PARAM = "invoke_param";
+	public static final String INVOKE_EXP = "invoke_exp";
 	public static final String INVOKE = "invoke";
 
 	public InvocacaoContexto(Token token) {

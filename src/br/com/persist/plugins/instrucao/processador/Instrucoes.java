@@ -36,11 +36,13 @@ public class Instrucoes {
 	}
 
 	static {
+		add(new InvocacaoParamExpInstrucao());
 		add(new PushBigDecimalInstrucao());
 		add(new PushBigIntegerInstrucao());
 		add(new InvocacaoParamInstrucao());
 		add(new LoadParametroInstrucao());
 		add(new LoadConstanteInstrucao());
+		add(new InvocacaoExpInstrucao());
 		add(new LoadFuncaoInstrucao());
 		add(new PushStringInstrucao());
 		add(new InvocacaoInstrucao());

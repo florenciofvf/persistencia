@@ -123,9 +123,9 @@ public class ArgumentoContexto extends Container {
 		super.salvar(pw);
 		if (identity != null) {
 			if (ehInvokeParam()) {
-				print(pw, InvocacaoContexto.INVOKE_PARAM, identity.getId());
+				print(pw, InvocacaoContexto.INVOKE_PARAM_EXP, identity.getId());
 			} else {
-				print(pw, InvocacaoContexto.INVOKE, identity.getId());
+				print(pw, InvocacaoContexto.INVOKE_EXP, identity.getId());
 			}
 			identity.salvarNegativo(pw);
 		}

@@ -29,6 +29,7 @@ public class Funcao {
 		Funcao funcao = new Funcao(nome);
 		funcao.biblioNativa = biblioNativa;
 		funcao.biblioteca = biblioteca;
+		funcao.tipoVoid = tipoVoid;
 		for (Parametro p : parametros) {
 			funcao.addParametro(p.nome);
 		}
