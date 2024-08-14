@@ -5,11 +5,12 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class RetornoContexto extends Container {
+	public static final AbreParenteseOuFinalizar PARENTESE_OU_FINALIZAR = new AbreParenteseOuFinalizar();
 	public static final String RETURN = "return";
 
 	public RetornoContexto() {
-		contexto = Contextos.ABRE_PARENTESES;
 		adicionar(new ExpressaoContexto());
+		contexto = PARENTESE_OU_FINALIZAR;
 	}
 
 	public ExpressaoContexto getExpressao() {
@@ -19,8 +20,8 @@ public class RetornoContexto extends Container {
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		contexto = Contextos.PONTO_VIRGULA;
 		compilador.setContexto(getExpressao());
+		contexto = Contextos.PONTO_VIRGULA;
 	}
 
 	@Override
@@ -45,5 +46,21 @@ public class RetornoContexto extends Container {
 	@Override
 	public String toString() {
 		return "return >>> " + getExpressao().toString();
+	}
+}
+
+class AbreParenteseOuFinalizar extends AbstratoContexto {
+	@Override
+	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
+		if (!"(".equals(token.getString())) {
+			compilador.invalidar(token);
+		}
+	}
+
+	@Override
+	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
+		if (!";".equals(token.getString())) {
+			compilador.invalidar(token);
+		}
 	}
 }
