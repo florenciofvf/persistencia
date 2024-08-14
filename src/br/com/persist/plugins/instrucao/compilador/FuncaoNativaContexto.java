@@ -7,8 +7,11 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoNativaContexto extends Container {
+	public static final OperadorOuFinalizar OPERADOR_OU_FINALIZAR = new OperadorOuFinalizar();
 	private final FuncaoIdentityContexto identityBiblio;
 	private final FuncaoIdentityContexto identity;
+	private boolean identityVoid;
+	private boolean retornoVoid;
 	private boolean faseBiblio;
 
 	public FuncaoNativaContexto() {
@@ -19,14 +22,6 @@ public class FuncaoNativaContexto extends Container {
 		faseBiblio = true;
 	}
 
-	public FuncaoIdentityContexto getIdentityBiblio() {
-		return identityBiblio;
-	}
-
-	public FuncaoIdentityContexto getIdentity() {
-		return identity;
-	}
-
 	public String getNome() {
 		return getIdentity().toString();
 	}
@@ -35,12 +30,27 @@ public class FuncaoNativaContexto extends Container {
 		return (ParametrosContexto) get(0);
 	}
 
+	public FuncaoIdentityContexto getIdentityBiblio() {
+		return identityBiblio;
+	}
+
+	public FuncaoIdentityContexto getIdentity() {
+		return identity;
+	}
+
+	public boolean isRetornoVoid() {
+		return retornoVoid;
+	}
+
+	public void setRetornoVoid(boolean retornoVoid) {
+		this.retornoVoid = retornoVoid;
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
 		compilador.setContexto(getParametros());
-		getParametros().setFinalizadorPai(true);
-		contexto = Contextos.FECHA_PARENTESES;
+		contexto = OPERADOR_OU_FINALIZAR;
 	}
 
 	@Override
@@ -50,9 +60,23 @@ public class FuncaoNativaContexto extends Container {
 	}
 
 	@Override
+	public void operador(Compilador compilador, Token token) throws InstrucaoException {
+		contexto.operador(compilador, token);
+		contexto = Contextos.IDENTITY;
+		identityVoid = true;
+	}
+
+	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.identity(compilador, token);
-		if (faseBiblio) {
+		if (identityVoid) {
+			if (!"void".equals(token.getString())) {
+				compilador.invalidar(token);
+			} else {
+				compilador.setContexto(getPai());
+				retornoVoid = true;
+			}
+		} else if (faseBiblio) {
 			contexto = identity;
 			faseBiblio = false;
 		} else {
@@ -75,5 +99,21 @@ public class FuncaoNativaContexto extends Container {
 	@Override
 	public String toString() {
 		return "function_native >>> " + getParametros().toString();
+	}
+}
+
+class OperadorOuFinalizar extends AbstratoContexto {
+	@Override
+	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
+		if (!";".equals(token.getString())) {
+			compilador.invalidar(token);
+		}
+	}
+
+	@Override
+	public void operador(Compilador compilador, Token token) throws InstrucaoException {
+		if (!":".equals(token.getString())) {
+			compilador.invalidar(token);
+		}
 	}
 }

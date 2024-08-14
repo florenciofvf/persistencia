@@ -6,7 +6,7 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoContexto extends Container {
-	public static final AbreParenteseOuOperador PARENTESE_OU_OPERADOR = new AbreParenteseOuOperador();
+	public static final AbreChaveOuOperador CHAVE_OU_OPERADOR = new AbreChaveOuOperador();
 	public static final String LOAD_FUNCTION = "load_function";
 	private final FuncaoIdentityContexto identity;
 	private boolean faseParametros;
@@ -50,7 +50,7 @@ public class FuncaoContexto extends Container {
 		contexto.inicializador(compilador, token);
 		if (faseParametros) {
 			compilador.setContexto(getParametros());
-			contexto = PARENTESE_OU_OPERADOR;
+			contexto = CHAVE_OU_OPERADOR;
 			faseParametros = false;
 		} else {
 			compilador.setContexto(getCorpo());
@@ -105,10 +105,10 @@ public class FuncaoContexto extends Container {
 	}
 }
 
-class AbreParenteseOuOperador extends AbstratoContexto {
+class AbreChaveOuOperador extends AbstratoContexto {
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		if (!"(".equals(token.getString())) {
+		if (!"{".equals(token.getString())) {
 			compilador.invalidar(token);
 		}
 	}
