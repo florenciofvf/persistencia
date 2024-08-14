@@ -93,6 +93,9 @@ public class FuncaoNativaContexto extends Container {
 	public void salvar(PrintWriter pw) {
 		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA + Util.replaceAll(identityBiblio.toString(), "_", ".")
 				+ " " + identity);
+		if (retornoVoid) {
+			pw.println(InstrucaoConstantes.PREFIXO_TIPO_VOID);
+		}
 		getParametros().salvar(pw);
 	}
 

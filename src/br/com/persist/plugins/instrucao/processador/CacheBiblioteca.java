@@ -61,6 +61,11 @@ public class CacheBiblioteca {
 					throw new InstrucaoException("erro.parametro_sem_funcao", nome, nomeParametro);
 				}
 				funcao.addParametro(nomeParametro);
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_TIPO_VOID)) {
+				if (funcao == null) {
+					throw new InstrucaoException("erro.tipo_sem_funcao", nome);
+				}
+				funcao.setTipoVoid(true);
 			} else if (linhaInstrucao(linha)) {
 				processarInstrucao(nome, constante, funcao, linha);
 			}

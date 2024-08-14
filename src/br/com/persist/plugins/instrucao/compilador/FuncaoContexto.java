@@ -95,6 +95,9 @@ public class FuncaoContexto extends Container {
 	@Override
 	public void salvar(PrintWriter pw) {
 		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO + identity);
+		if (retornoVoid) {
+			pw.println(InstrucaoConstantes.PREFIXO_TIPO_VOID);
+		}
 		getParametros().salvar(pw);
 		getCorpo().salvar(pw);
 	}

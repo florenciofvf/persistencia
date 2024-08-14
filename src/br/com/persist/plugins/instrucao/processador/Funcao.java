@@ -17,6 +17,7 @@ public class Funcao {
 	private String biblioNativa;
 	private InstrucaoItem cauda;
 	private final String nome;
+	private boolean tipoVoid;
 
 	public Funcao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -138,6 +139,14 @@ public class Funcao {
 
 	public boolean isNativo() {
 		return biblioNativa != null;
+	}
+
+	public boolean isTipoVoid() {
+		return tipoVoid;
+	}
+
+	public void setTipoVoid(boolean tipoVoid) {
+		this.tipoVoid = tipoVoid;
 	}
 
 	@Override
