@@ -9,6 +9,7 @@ public class Contextos {
 	public static final FechaChaves FECHA_CHAVES = new FechaChaves();
 	public static final AbreChaves ABRE_CHAVES = new AbreChaves();
 	public static final Parenteses PARENTESES = new Parenteses();
+	public static final Identity IDENTITY = new Identity();
 	public static final Invalido INVALIDO = new Invalido();
 	public static final Virgula VIRGULA = new Virgula();
 
@@ -79,6 +80,13 @@ public class Contextos {
 	public static class Virgula extends AbstratoContexto {
 		@Override
 		public void separador(Compilador compilador, Token token) throws InstrucaoException {
+			//
+		}
+	}
+
+	public static class Identity extends AbstratoContexto {
+		@Override
+		public void identity(Compilador compilador, Token token) throws InstrucaoException {
 			//
 		}
 	}

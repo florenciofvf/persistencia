@@ -6,9 +6,12 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoContexto extends Container {
+	public static final AbreParenteseOuOperador PARENTESE_OU_OPERADOR = new AbreParenteseOuOperador();
 	public static final String LOAD_FUNCTION = "load_function";
 	private final FuncaoIdentityContexto identity;
 	private boolean faseParametros;
+	private boolean identityVoid;
+	private boolean retornoVoid;
 
 	public FuncaoContexto() {
 		identity = new FuncaoIdentityContexto();
@@ -16,6 +19,10 @@ public class FuncaoContexto extends Container {
 		adicionar(new CorpoContexto());
 		faseParametros = true;
 		contexto = identity;
+	}
+
+	public String getNome() {
+		return getIdentity().toString();
 	}
 
 	public ParametrosContexto getParametros() {
@@ -30,8 +37,12 @@ public class FuncaoContexto extends Container {
 		return identity;
 	}
 
-	public String getNome() {
-		return getIdentity().toString();
+	public boolean isRetornoVoid() {
+		return retornoVoid;
+	}
+
+	public void setRetornoVoid(boolean retornoVoid) {
+		this.retornoVoid = retornoVoid;
 	}
 
 	@Override
@@ -39,7 +50,7 @@ public class FuncaoContexto extends Container {
 		contexto.inicializador(compilador, token);
 		if (faseParametros) {
 			compilador.setContexto(getParametros());
-			contexto = Contextos.ABRE_CHAVES;
+			contexto = PARENTESE_OU_OPERADOR;
 			faseParametros = false;
 		} else {
 			compilador.setContexto(getCorpo());
@@ -55,9 +66,25 @@ public class FuncaoContexto extends Container {
 	}
 
 	@Override
+	public void operador(Compilador compilador, Token token) throws InstrucaoException {
+		contexto.operador(compilador, token);
+		contexto = Contextos.IDENTITY;
+		identityVoid = true;
+	}
+
+	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.identity(compilador, token);
-		contexto = Contextos.ABRE_PARENTESES;
+		if (identityVoid) {
+			if (!"void".equals(token.getString())) {
+				compilador.invalidar(token);
+			} else {
+				contexto = Contextos.ABRE_CHAVES;
+				retornoVoid = true;
+			}
+		} else {
+			contexto = Contextos.ABRE_PARENTESES;
+		}
 	}
 
 	public void indexar() {
@@ -75,5 +102,21 @@ public class FuncaoContexto extends Container {
 	@Override
 	public String toString() {
 		return "function >>> " + getParametros().toString();
+	}
+}
+
+class AbreParenteseOuOperador extends AbstratoContexto {
+	@Override
+	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
+		if (!"(".equals(token.getString())) {
+			compilador.invalidar(token);
+		}
+	}
+
+	@Override
+	public void operador(Compilador compilador, Token token) throws InstrucaoException {
+		if (!":".equals(token.getString())) {
+			compilador.invalidar(token);
+		}
 	}
 }

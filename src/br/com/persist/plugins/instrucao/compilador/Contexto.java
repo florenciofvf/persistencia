@@ -20,7 +20,7 @@ public interface Contexto {
 
 	/*
 	 * Matematicos: "+", "-", "*", "/", "%" Logicos: "^", "&", "|" Comparativos:
-	 * "=", "!=", "<", ">", "<=", ">=", ":"
+	 * "=", "!=", "<", ">", "<=", ">=", Lista/Tipo ":"
 	 */
 	public void operador(Compilador compilador, Token token) throws InstrucaoException;
 
