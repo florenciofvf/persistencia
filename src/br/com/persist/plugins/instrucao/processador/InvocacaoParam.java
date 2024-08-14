@@ -18,7 +18,7 @@ public abstract class InvocacaoParam extends Instrucao {
 			throw new InstrucaoException("erro.funcao_sem_retorno", funcaoParam.getNome(),
 					funcaoParam.getBiblioteca().getNome());
 		}
-		InvocacaoInstrucao.setParametros(funcaoParam, pilhaOperando);
+		Invocacao.setParametros(funcaoParam, pilhaOperando);
 		pilhaFuncao.push(funcaoParam);
 	}
 }

@@ -2,13 +2,13 @@ package br.com.persist.plugins.instrucao.processador;
 
 import br.com.persist.plugins.instrucao.compilador.InvocacaoContexto;
 
-public class InvocacaoInstrucao extends Invocacao {
-	public InvocacaoInstrucao() {
-		super(InvocacaoContexto.INVOKE, false);
+public class InvocacaoExpInstrucao extends Invocacao {
+	public InvocacaoExpInstrucao() {
+		super(InvocacaoContexto.INVOKE_EXP, true);
 	}
 
 	@Override
 	public Instrucao clonar() {
-		return new InvocacaoInstrucao();
+		return new InvocacaoExpInstrucao();
 	}
 }
