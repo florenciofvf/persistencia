@@ -14,25 +14,18 @@ public class DB {
 	}
 
 	@Biblio
-	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha) {
-		try {
-			java.lang.Class.forName((java.lang.String) driver);
-			return DriverManager.getConnection((java.lang.String) url, (java.lang.String) usuario,
-					(java.lang.String) senha);
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
+	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha)
+			throws ClassNotFoundException, SQLException {
+		java.lang.Class.forName((java.lang.String) driver);
+		return DriverManager.getConnection((java.lang.String) url, (java.lang.String) usuario,
+				(java.lang.String) senha);
 	}
 
 	@Biblio
-	public static void closeConnection(Object conexao) {
-		try {
-			Connection connection = (Connection) conexao;
-			if (valido(connection)) {
-				connection.close();
-			}
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
+	public static void closeConnection(Object conexao) throws SQLException {
+		Connection connection = (Connection) conexao;
+		if (valido(connection)) {
+			connection.close();
 		}
 	}
 
@@ -41,14 +34,12 @@ public class DB {
 	}
 
 	@Biblio
-	public static Lista select(Object conexao, Object consulta) {
+	public static Lista select(Object conexao, Object consulta) throws SQLException {
 		Lista lista = new Lista();
 		Connection connection = (Connection) conexao;
 		java.lang.String instrucao = (java.lang.String) consulta;
 		try (Statement st = connection.createStatement()) {
 			processar(instrucao, st, lista);
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
 		}
 		return lista;
 	}

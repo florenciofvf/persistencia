@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Container extends AbstratoContexto {
 	protected final List<Container> componentes;
@@ -185,17 +186,17 @@ public abstract class Container extends AbstratoContexto {
 		}
 	}
 
-	public void desviar() {
+	public void desviar() throws InstrucaoException {
 		desviarImpl();
 		for (Container c : componentes) {
 			c.desviar();
 		}
 	}
 
-	protected void desviarImpl() {
+	protected void desviarImpl() throws InstrucaoException {
 	}
 
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		for (Container c : componentes) {
 			c.salvar(pw);
 		}

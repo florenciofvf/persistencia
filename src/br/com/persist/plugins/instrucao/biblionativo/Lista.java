@@ -12,18 +12,18 @@ public class Lista {
 		clear();
 	}
 
-	public Object head() {
+	public Object head() throws IllegalAccessException {
 		check();
 		return cabeca.valor;
 	}
 
-	private void check() {
+	private void check() throws IllegalAccessException {
 		if (comprimento.intValue() == 0) {
-			throw new IllegalStateException("Lista Vazia.");
+			throw new IllegalAccessException("Lista Vazia.");
 		}
 	}
 
-	public Lista tail() {
+	public Lista tail() throws IllegalAccessException {
 		check();
 		Lista resposta = new Lista();
 		if (comprimento.intValue() == 1) {
@@ -83,7 +83,7 @@ public class Lista {
 		return createFalse();
 	}
 
-	public void addLista(Lista lista) {
+	public void addLista(Lista lista) throws IllegalAccessException {
 		if (lista != null) {
 			long size = lista.size().longValue();
 			for (long i = 0; i < size; i++) {
@@ -106,7 +106,7 @@ public class Lista {
 		return o;
 	}
 
-	private No getNo(long indice) {
+	private No getNo(long indice) throws IllegalAccessException {
 		check(indice);
 		long c = 0;
 		No no = cabeca;
@@ -117,11 +117,11 @@ public class Lista {
 		return no;
 	}
 
-	public Object get(long indice) {
+	public Object get(long indice) throws IllegalAccessException {
 		return getNo(indice).valor;
 	}
 
-	public Object set(long indice, Object valor) {
+	public Object set(long indice, Object valor) throws IllegalAccessException {
 		getNo(indice).valor = valor;
 		return valor;
 	}
@@ -149,9 +149,9 @@ public class Lista {
 		return sb.toString();
 	}
 
-	private void check(long indice) {
+	private void check(long indice) throws IllegalAccessException {
 		if (indice < 0 || indice >= comprimento.longValue()) {
-			throw new IndexOutOfBoundsException("indice=" + indice + ", size=" + comprimento);
+			throw new IllegalAccessException("indice=" + indice + ", size=" + comprimento);
 		}
 	}
 

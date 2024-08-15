@@ -8,19 +8,11 @@ public class System {
 
 	@Biblio
 	public static BigInteger timeMillis() {
-		try {
-			return BigInteger.valueOf(java.lang.System.currentTimeMillis());
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
+		return BigInteger.valueOf(java.lang.System.currentTimeMillis());
 	}
 
 	@Biblio
 	public static BigInteger nanoTime() {
-		try {
-			return BigInteger.valueOf(java.lang.System.nanoTime());
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
+		return BigInteger.valueOf(java.lang.System.nanoTime());
 	}
 }

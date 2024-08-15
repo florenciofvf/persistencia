@@ -93,7 +93,7 @@ public class FuncaoContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO + identity);
 		if (retornoVoid) {
 			pw.println(InstrucaoConstantes.PREFIXO_TIPO_VOID);

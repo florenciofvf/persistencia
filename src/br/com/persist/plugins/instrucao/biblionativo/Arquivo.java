@@ -19,7 +19,7 @@ public class Arquivo {
 		return lista;
 	}
 
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws IllegalAccessException {
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
 			ArquivoLinha linha = (ArquivoLinha) lista.get(i);

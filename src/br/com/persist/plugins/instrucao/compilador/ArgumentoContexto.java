@@ -119,7 +119,7 @@ public class ArgumentoContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		super.salvar(pw);
 		if (identity != null) {
 			if (ehInvokeParam()) {
@@ -131,10 +131,10 @@ public class ArgumentoContexto extends Container {
 		}
 	}
 
-	private boolean ehInvokeParam() {
+	private boolean ehInvokeParam() throws InstrucaoException {
 		FuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
-			throw new IllegalStateException();
+			throw new InstrucaoException("erro.funcao_parent");
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(identity.getId());

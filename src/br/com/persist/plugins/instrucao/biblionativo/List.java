@@ -20,7 +20,7 @@ public class List {
 	}
 
 	@Biblio
-	public static Lista addNew(Object lista, Object valor) {
+	public static Lista addNew(Object lista, Object valor) throws IllegalAccessException {
 		Lista nova = create();
 		nova.addLista((Lista) lista);
 		nova.add(valor);
@@ -43,12 +43,12 @@ public class List {
 	}
 
 	@Biblio
-	public static Object head(Object lista) {
+	public static Object head(Object lista) throws IllegalAccessException {
 		return ((Lista) lista).head();
 	}
 
 	@Biblio
-	public static Object tail(Object lista) {
+	public static Object tail(Object lista) throws IllegalAccessException {
 		return ((Lista) lista).tail();
 	}
 

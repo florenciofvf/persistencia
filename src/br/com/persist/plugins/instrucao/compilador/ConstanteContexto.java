@@ -78,7 +78,7 @@ public class ConstanteContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		if (getFuncao() == null) {
 			pw.println(InstrucaoConstantes.PREFIXO_CONSTANTE + identity);
 		}

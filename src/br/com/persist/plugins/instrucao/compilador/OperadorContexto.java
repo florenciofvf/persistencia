@@ -2,6 +2,8 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
+
 public class OperadorContexto extends Container {
 	public static final String ADD_LISTA = "add_lista";
 	public static final String ADD = "add";
@@ -32,7 +34,7 @@ public class OperadorContexto extends Container {
 		return id;
 	}
 
-	public short getPrioridade() {
+	public short getPrioridade() throws InstrucaoException {
 		if (igual(":")) {
 			return 50;
 		}
@@ -51,10 +53,10 @@ public class OperadorContexto extends Container {
 		if (igual("&", "|", "^")) {
 			return 300;
 		}
-		throw new IllegalStateException(id);
+		throw new InstrucaoException("Operador >>> " + id, false);
 	}
 
-	public String getCodigo() {
+	public String getCodigo() throws InstrucaoException {
 		if (igual(":")) {
 			return ADD_LISTA;
 		}
@@ -100,7 +102,7 @@ public class OperadorContexto extends Container {
 		if (igual("^")) {
 			return XOR;
 		}
-		throw new IllegalStateException(id);
+		throw new InstrucaoException("Operador >>> " + id, false);
 	}
 
 	private boolean igual(String... strings) {
@@ -112,7 +114,7 @@ public class OperadorContexto extends Container {
 		return false;
 	}
 
-	public boolean possuoPrioridadeSobre(OperadorContexto operador) {
+	public boolean possuoPrioridadeSobre(OperadorContexto operador) throws InstrucaoException {
 		return getPrioridade() < operador.getPrioridade();
 	}
 
@@ -123,7 +125,7 @@ public class OperadorContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		super.salvar(pw);
 		print(pw, getCodigo());
 	}

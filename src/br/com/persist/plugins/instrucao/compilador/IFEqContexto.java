@@ -2,6 +2,8 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
+
 public class IFEqContexto extends Container {
 	public static final String IF_EQ = "ifeq";
 	int deslocamento;
@@ -12,10 +14,10 @@ public class IFEqContexto extends Container {
 	}
 
 	@Override
-	public void desviarImpl() {
+	public void desviarImpl() throws InstrucaoException {
 		IFContexto ifContexto = getIFContexto(this);
 		if (ifContexto == null) {
-			throw new IllegalStateException();
+			throw new InstrucaoException("erro.if_estrutura_invalida");
 		}
 		if (!ifContexto.isMinimo()) {
 			deslocamento = ifContexto.getElse().getPontoDeslocamento();
@@ -32,7 +34,7 @@ public class IFEqContexto extends Container {
 			corpoContexto = getCorpoContexto(ifContexto);
 		}
 		if (deslocamento == 0) {
-			throw new IllegalStateException("Sem ponto de deslocamento");
+			throw new InstrucaoException("Sem ponto de deslocamento", false);
 		}
 	}
 

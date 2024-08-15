@@ -32,7 +32,7 @@ public class IdentityContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		if (ehParametro()) {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
 			tokenIdentity = token.novo(Tipo.PARAMETRO);
@@ -46,19 +46,19 @@ public class IdentityContexto extends Container {
 		salvarNegativo(pw);
 	}
 
-	private boolean ehParametro() {
+	private boolean ehParametro() throws InstrucaoException {
 		FuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
-			throw new IllegalStateException();
+			throw new InstrucaoException("erro.funcao_parent");
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(id);
 	}
 
-	private boolean ehFuncao() {
+	private boolean ehFuncao() throws InstrucaoException {
 		BibliotecaContexto biblio = getBiblioteca();
 		if (biblio == null) {
-			throw new IllegalStateException();
+			throw new InstrucaoException("erro.funcao_parent");
 		}
 		String[] strings = id.split("\\.");
 		if (strings.length == 1) {
@@ -68,7 +68,7 @@ public class IdentityContexto extends Container {
 		try {
 			biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
 		} catch (InstrucaoException ex) {
-			throw new IllegalStateException(ex.getMessage());
+			throw new InstrucaoException(ex.getMessage(), false);
 		}
 		return biblioteca.contemFuncao(strings[1]);
 	}

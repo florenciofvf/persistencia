@@ -149,9 +149,13 @@ public class OperadorInstrucao {
 			pilhaOperando.push(lista);
 		}
 
-		private void add(Lista lista, Object obj) {
+		private void add(Lista lista, Object obj) throws InstrucaoException {
 			if (obj instanceof Lista) {
-				lista.addLista((Lista) obj);
+				try {
+					lista.addLista((Lista) obj);
+				} catch (IllegalAccessException e) {
+					throw new InstrucaoException(e);
+				}
 			} else {
 				lista.add(obj);
 			}

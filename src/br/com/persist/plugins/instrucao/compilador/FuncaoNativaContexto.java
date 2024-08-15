@@ -90,7 +90,7 @@ public class FuncaoNativaContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA + Util.replaceAll(identityBiblio.toString(), "_", ".")
 				+ " " + identity);
 		if (retornoVoid) {

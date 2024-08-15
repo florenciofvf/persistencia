@@ -126,7 +126,7 @@ public class ExpressaoContexto extends Container {
 		}
 	}
 
-	private void montarArvore() {
+	private void montarArvore() throws InstrucaoException {
 		Iterator<Container> it = getComponentes().iterator();
 		Container sel = it.next();
 		it.remove();
@@ -163,7 +163,7 @@ public class ExpressaoContexto extends Container {
 		}
 
 		if (getSize() != 0 || sel == null) {
-			throw new IllegalStateException();
+			throw new InstrucaoException("erro.expressao_invalida");
 		}
 
 		adicionar(sel);
@@ -177,7 +177,7 @@ public class ExpressaoContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		super.salvar(pw);
 		salvarNegativo(pw);
 	}

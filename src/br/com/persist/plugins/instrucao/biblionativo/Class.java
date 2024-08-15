@@ -5,11 +5,7 @@ public class Class {
 	}
 
 	@Biblio
-	public static Object get(Object absoluto) {
-		try {
-			return java.lang.Class.forName((java.lang.String) absoluto);
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
+	public static Object get(Object absoluto) throws ClassNotFoundException {
+		return java.lang.Class.forName((java.lang.String) absoluto);
 	}
 }

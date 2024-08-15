@@ -2,6 +2,8 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
+
 public class StringContexto extends Container {
 	public static final String PUSH_STRING = "push_string";
 	private final String string;
@@ -21,7 +23,7 @@ public class StringContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(PrintWriter pw) throws InstrucaoException {
 		super.salvar(pw);
 		print(pw, PUSH_STRING, string);
 	}

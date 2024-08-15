@@ -14,23 +14,19 @@ public class File {
 	}
 
 	@Biblio
-	public static Arquivo criarArquivo(Object absoluto) {
-		try {
-			java.lang.String arquivo = absoluto.toString();
-			checarAbsoluto(arquivo);
-			try (InputStream is = new FileInputStream(arquivo)) {
-				Lista lista = new Lista();
-				long numero = 1;
-				ArquivoLinha linha = criar(numero, is);
-				while (linha != null) {
-					lista.add(linha);
-					numero++;
-					linha = criar(numero, is);
-				}
-				return new Arquivo(arquivo, lista);
+	public static Arquivo criarArquivo(Object absoluto) throws IOException {
+		java.lang.String arquivo = absoluto.toString();
+		checarAbsoluto(arquivo);
+		try (InputStream is = new FileInputStream(arquivo)) {
+			Lista lista = new Lista();
+			long numero = 1;
+			ArquivoLinha linha = criar(numero, is);
+			while (linha != null) {
+				lista.add(linha);
+				numero++;
+				linha = criar(numero, is);
 			}
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
+			return new Arquivo(arquivo, lista);
 		}
 	}
 
@@ -61,7 +57,7 @@ public class File {
 	}
 
 	@Biblio
-	public static Lista selecionarLinhas(Object arquivo, Object string, Object trim) {
+	public static Lista selecionarLinhas(Object arquivo, Object string, Object trim) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String str = (java.lang.String) string;
 		Lista resposta = new Lista();
@@ -78,7 +74,7 @@ public class File {
 
 	@Biblio
 	public static Lista selecionarLinhasIniciaEfinalizaCom(Object arquivo, Object stringInicio, Object stringFinal,
-			Object trim) {
+			Object trim) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String strInicio = (java.lang.String) stringInicio;
 		java.lang.String strFinal = (java.lang.String) stringFinal;
@@ -96,7 +92,7 @@ public class File {
 
 	@Biblio
 	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaCom(Object arquivo, Object stringInicio,
-			Object stringFinal, Object trim) {
+			Object stringFinal, Object trim) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String strInicio = (java.lang.String) stringInicio;
 		java.lang.String strFinal = (java.lang.String) stringFinal;
@@ -115,7 +111,7 @@ public class File {
 
 	@Biblio
 	public static Lista selecionarLinhasConteudoEntreIniciaEfinalizaComReplace(Object arquivo, Object stringInicio,
-			Object stringFinal, Object novaString, Object trim) {
+			Object stringFinal, Object novaString, Object trim) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		java.lang.String strInicio = (java.lang.String) stringInicio;
 		java.lang.String strFinal = (java.lang.String) stringFinal;
@@ -135,7 +131,7 @@ public class File {
 	}
 
 	@Biblio
-	public static ArquivoLinha getLinha(Object arquivo, Object numero) {
+	public static ArquivoLinha getLinha(Object arquivo, Object numero) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		long numeroLinha = ((Number) numero).longValue();
 		Lista lista = entityArquivo.getLista();
@@ -161,46 +157,36 @@ public class File {
 	}
 
 	@Biblio
-	public static ArquivoLinha substituirLinha(Object arquivo, Object linha, Object charset) {
+	public static ArquivoLinha substituirLinha(Object arquivo, Object linha, Object charset)
+			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		ArquivoLinha entityLinha = (ArquivoLinha) linha;
-		try {
-			PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
-			Lista lista = entityArquivo.getLista();
-			long size = lista.size().longValue();
-			for (long i = 0, num = 1; i < size; i++, num++) {
-				ArquivoLinha entity = (ArquivoLinha) lista.get(i);
-				entityLinha.print(pw, entity, num);
-			}
-			pw.close();
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
+		PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
+		Lista lista = entityArquivo.getLista();
+		long size = lista.size().longValue();
+		for (long i = 0, num = 1; i < size; i++, num++) {
+			ArquivoLinha entity = (ArquivoLinha) lista.get(i);
+			entityLinha.print(pw, entity, num);
 		}
+		pw.close();
 		return entityLinha;
 	}
 
 	@Biblio
-	public static void salvarArquivo(Object arquivo, Object charset) {
+	public static void salvarArquivo(Object arquivo, Object charset)
+			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
-		try {
-			PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
-			entityArquivo.salvar(pw);
-			pw.close();
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
+		PrintWriter pw = criarPrintWriter(entityArquivo, (java.lang.String) charset);
+		entityArquivo.salvar(pw);
+		pw.close();
 	}
 
 	@Biblio
-	public static void setLinha(Object arquivo, Object linha) {
+	public static void setLinha(Object arquivo, Object linha) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		ArquivoLinha entityLinha = (ArquivoLinha) linha;
-		try {
-			Lista lista = entityArquivo.getLista();
-			lista.set(entityLinha.getNumero() - 1, entityLinha);
-		} catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
+		Lista lista = entityArquivo.getLista();
+		lista.set(entityLinha.getNumero() - 1, entityLinha);
 	}
 
 	private static PrintWriter criarPrintWriter(Arquivo arquivo, java.lang.String charset)
