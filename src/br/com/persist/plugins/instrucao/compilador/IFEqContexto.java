@@ -34,7 +34,7 @@ public class IFEqContexto extends Container {
 			corpoContexto = getCorpoContexto(ifContexto);
 		}
 		if (deslocamento == 0) {
-			throw new InstrucaoException("Sem ponto de deslocamento", false);
+			throw new InstrucaoException("erro.ponto_deslocamento");
 		}
 	}
 
