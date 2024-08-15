@@ -134,7 +134,7 @@ public class ArgumentoContexto extends Container {
 	private boolean ehInvokeParam() throws InstrucaoException {
 		FuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_parent");
+			throw new InstrucaoException("erro.funcao_parent", identity.getId());
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(identity.getId());

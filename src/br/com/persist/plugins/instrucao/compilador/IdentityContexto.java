@@ -49,7 +49,7 @@ public class IdentityContexto extends Container {
 	private boolean ehParametro() throws InstrucaoException {
 		FuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_parent");
+			throw new InstrucaoException("erro.funcao_parent", id);
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(id);
@@ -58,7 +58,7 @@ public class IdentityContexto extends Container {
 	private boolean ehFuncao() throws InstrucaoException {
 		BibliotecaContexto biblio = getBiblioteca();
 		if (biblio == null) {
-			throw new InstrucaoException("erro.funcao_parent");
+			throw new InstrucaoException("erro.funcao_parent", id);
 		}
 		String[] strings = id.split("\\.");
 		if (strings.length == 1) {

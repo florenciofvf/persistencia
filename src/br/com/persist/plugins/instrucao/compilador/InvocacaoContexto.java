@@ -55,7 +55,7 @@ public class InvocacaoContexto extends Container {
 	private boolean ehInvokeParam() throws InstrucaoException {
 		FuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_parent");
+			throw new InstrucaoException("erro.funcao_parent", token.string);
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(token.string);
