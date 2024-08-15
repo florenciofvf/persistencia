@@ -38,8 +38,11 @@ public class GeraBiblio {
 	}
 
 	private static void imprimir(PrintWriter pw, java.lang.Class<?> classe, Method m) {
+		java.lang.Class<?> returnType = m.getReturnType();
+		java.lang.String string = returnType.getCanonicalName();
+		java.lang.String sufixo = "void".equals(string) || "java.lang.Void".equals(string) ? " : void" : "";
 		pw.print(PREFIXO + " " + PACOTE + classe.getSimpleName());
-		pw.println(" " + m.getName() + "(" + getArgs(m) + ")");
+		pw.println(" " + m.getName() + "(" + getArgs(m) + ")" + sufixo + ";");
 		pw.println();
 	}
 
