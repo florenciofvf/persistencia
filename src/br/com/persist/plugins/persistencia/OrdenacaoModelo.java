@@ -137,20 +137,22 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getMap(linhas[rowIndex].indice, coletor);
 	}
 
-	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere,
-			Conexao conexao) {
+	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao)
+			throws PersistenciaException {
 		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela, coletor, comWhere, conexao);
 	}
 
-	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao) {
+	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao)
+			throws PersistenciaException {
 		return model.getUpdate(prefixoNomeTabela, coletor, comWhere, conexao);
 	}
 
-	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
+	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao)
+			throws PersistenciaException {
 		return model.getDelete(linhas[rowIndex].indice, prefixoNomeTabela, comWhere, conexao);
 	}
 
-	public String getDelete(String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
+	public String getDelete(String prefixoNomeTabela, boolean comWhere, Conexao conexao) throws PersistenciaException {
 		return model.getDelete(prefixoNomeTabela, comWhere, conexao);
 	}
 

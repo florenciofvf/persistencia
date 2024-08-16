@@ -6,4 +6,8 @@ public class PersistenciaException extends Exception {
 	public PersistenciaException(Throwable cause) {
 		super(cause);
 	}
+
+	public PersistenciaException(String message) {
+		super(message);
+	}
 }

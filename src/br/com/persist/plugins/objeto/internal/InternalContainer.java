@@ -2011,11 +2011,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
 								InternalContainer.this, new SetLista.Config(true, false));
 						if (!coletor.estaVazio()) {
-							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
-									false, conexao);
-							instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
-							if (!Util.isEmpty(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
+							try {
+								String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
+										false, conexao);
+								instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
+								if (!Util.isEmpty(instrucao)) {
+									updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
+								}
+							} catch (PersistenciaException ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
 						}
 					}
@@ -2052,10 +2056,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
 								new SetLista.Config(true, false));
 						if (!coletor.estaVazio()) {
-							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor, true,
-									conexao);
-							if (!Util.isEmpty(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+							try {
+								String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
+										true, conexao);
+								if (!Util.isEmpty(instrucao)) {
+									updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+								}
+							} catch (PersistenciaException ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
 						}
 					}
@@ -2092,10 +2100,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (chaves.isEmpty()) {
 							return;
 						}
-						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false, conexao);
-						instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
-						if (!Util.isEmpty(instrucao)) {
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
+						try {
+							String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false,
+									conexao);
+							instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
+							if (!Util.isEmpty(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
+							}
+						} catch (PersistenciaException ex) {
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 						}
 					}
 				}
@@ -2126,9 +2139,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (chaves.isEmpty()) {
 							return;
 						}
-						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true, conexao);
-						if (!Util.isEmpty(instrucao)) {
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
+						try {
+							String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true,
+									conexao);
+							if (!Util.isEmpty(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
+							}
+						} catch (PersistenciaException ex) {
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 						}
 					}
 				}
@@ -2848,10 +2866,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
 									InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
-								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor, true,
-										conexao);
-								if (!Util.isEmpty(instrucao)) {
-									updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+								try {
+									String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor, true,
+											conexao);
+									if (!Util.isEmpty(instrucao)) {
+										updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+									}
+								} catch (PersistenciaException ex) {
+									Util.mensagem(InternalContainer.this, ex.getMessage());
 								}
 							}
 						}
@@ -2871,9 +2893,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela(), true, conexao);
-							if (!Util.isEmpty(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
+							try {
+								String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela(), true, conexao);
+								if (!Util.isEmpty(instrucao)) {
+									updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
+								}
+							} catch (PersistenciaException ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
 						}
 					}
