@@ -24,7 +24,7 @@ public class AtributoProcessador {
 		}
 	}
 
-	private Token proximoToken() {
+	private Token proximoToken() throws AtributoException {
 		if (indice >= string.length()) {
 			return null;
 		}
@@ -35,7 +35,7 @@ public class AtributoProcessador {
 		return proximoTokenImpl();
 	}
 
-	private Token proximoTokenImpl() {
+	private Token proximoTokenImpl() throws AtributoException {
 		char c = string.charAt(indice);
 		switch (c) {
 		case '"':
@@ -47,11 +47,11 @@ public class AtributoProcessador {
 			indice++;
 			return new Token(c);
 		default:
-			throw new IllegalStateException(c + " >>> " + indice);
+			throw new AtributoException(c + " >>> " + indice, false);
 		}
 	}
 
-	private Token tokenString() {
+	private Token tokenString() throws AtributoException {
 		StringBuilder sb = new StringBuilder();
 		boolean encerrado = false;
 		while (indice < string.length()) {
@@ -65,17 +65,17 @@ public class AtributoProcessador {
 			indice++;
 		}
 		if (!encerrado) {
-			throw new IllegalStateException(indice + " <<< String nao encerrada >>> " + sb.toString());
+			throw new AtributoException(indice + " <<< String nao encerrada >>> " + sb.toString(), false);
 		}
 		indice++;
 		String str = sb.toString();
 		if (Util.isEmpty(str)) {
-			throw new IllegalStateException("String vazia >>> " + indice);
+			throw new AtributoException("String vazia >>> " + indice, false);
 		}
 		return new Token(str);
 	}
 
-	public void processar() {
+	public void processar() throws AtributoException {
 		Token token = proximoToken();
 		while (token != null) {
 			if (":".equals(token.string)) {

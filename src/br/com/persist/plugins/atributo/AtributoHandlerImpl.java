@@ -7,17 +7,17 @@ public class AtributoHandlerImpl implements AtributoHandler {
 	private Mapa sel;
 
 	@Override
-	public void setString(String string) {
+	public void setString(String string) throws AtributoException {
 		if (sep) {
 			if (ultima == null) {
-				throw new IllegalStateException(string);
+				throw new AtributoException(string, false);
 			}
 			sel.put(ultima, string);
 			ultima = null;
 			sep = false;
 		} else {
 			if (ultima != null) {
-				throw new IllegalStateException(string);
+				throw new AtributoException(string, false);
 			}
 			ultima = string;
 		}
@@ -29,20 +29,20 @@ public class AtributoHandlerImpl implements AtributoHandler {
 	}
 
 	@Override
-	public void iniMapa() {
+	public void iniMapa() throws AtributoException {
 		Mapa mapa = new Mapa();
 		if (raiz == null) {
 			raiz = mapa;
 		} else {
 			if (sep) {
 				if (ultima == null) {
-					throw new IllegalStateException();
+					throw new AtributoException("iniMapa(): ultima == null", false);
 				}
 				sel.put(ultima, mapa);
 				ultima = null;
 				sep = false;
 			} else {
-				throw new IllegalStateException();
+				throw new AtributoException("iniMapa(): sep == false", false);
 			}
 		}
 		sel = mapa;
