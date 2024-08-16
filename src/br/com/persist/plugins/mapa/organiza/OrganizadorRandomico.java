@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.plugins.mapa.MapaException;
 import br.com.persist.plugins.mapa.Objeto;
 
 public class OrganizadorRandomico extends Organizador {
@@ -16,8 +17,8 @@ public class OrganizadorRandomico extends Organizador {
 	}
 
 	@Override
-	public void parametros(String string) {
-		throw new IllegalStateException();
+	public void parametros(String string) throws MapaException {
+		throw new MapaException("erro.nao_aceita_param");
 	}
 
 	@Override

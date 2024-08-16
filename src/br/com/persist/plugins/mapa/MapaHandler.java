@@ -20,12 +20,12 @@ public class MapaHandler extends XMLHandler {
 			raiz.lerAtributos(attributes);
 		} else if ("add".equals(qName)) {
 			if (selecionado == null) {
-				throw new IllegalStateException("add deve possuir um parent.");
+				throw new SAXException("add deve possuir um parent.");
 			}
 			selecionado.adicionar(criarAdd(attributes));
 		} else if ("ref".equals(qName)) {
 			if (selecionado == null) {
-				throw new IllegalStateException("ref deve possuir um parent.");
+				throw new SAXException("ref deve possuir um parent.");
 			}
 			selecionado.adicionar(criarRef(attributes));
 		} else {

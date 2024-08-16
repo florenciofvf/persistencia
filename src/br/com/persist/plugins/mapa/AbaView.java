@@ -439,7 +439,11 @@ public class AbaView extends Panel {
 				if (organizador != null) {
 					atributo = objeto.getAtributo("organizadorParametros");
 					if (atributo != null) {
-						organizador.parametros(atributo.getValor());
+						try {
+							organizador.parametros(atributo.getValor());
+						} catch (MapaException ex) {
+							Util.mensagem(AbaView.this, ex.getMessage());
+						}
 					}
 				}
 			}
