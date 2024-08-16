@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.abstrato.DesktopAlinhamento;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
@@ -22,20 +23,20 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 public interface InternalListener {
 	public interface Vinculo {
 		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
-				throws ObjetoException;
+				throws ObjetoException, AssistenciaException;
 
 		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem);
 
 		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
-				throws MetadadoException, ObjetoException;
+				throws MetadadoException, ObjetoException, AssistenciaException;
 
 		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto);
 
 		public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto);
 
-		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto);
+		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) throws AssistenciaException;
 
-		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto);
+		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) throws AssistenciaException;
 
 		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException;
 

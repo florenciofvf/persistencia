@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.macro;
 
 import java.awt.Color;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor.Instrucao;
@@ -245,7 +246,7 @@ public class Macro {
 		}
 
 		@Override
-		public void executar(Objeto objeto) {
+		public void executar(Objeto objeto) throws AssistenciaException {
 			if (valor != null) {
 				objeto.setIcone(valor.toString());
 			} else {

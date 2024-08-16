@@ -1,5 +1,7 @@
 package br.com.persist.plugins.metadado;
 
+import br.com.persist.assistencia.AssistenciaException;
+
 public interface MetadadoTreeListener {
 	public void abrirExportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular);
 
@@ -15,5 +17,5 @@ public interface MetadadoTreeListener {
 
 	public void constraintInfo(MetadadoTree metadadoTree);
 
-	public void registros(MetadadoTree metadadoTree);
+	public void registros(MetadadoTree metadadoTree) throws AssistenciaException;
 }

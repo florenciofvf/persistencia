@@ -22,6 +22,7 @@ import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
@@ -115,23 +116,23 @@ public class Objeto implements Runnable {
 	protected int y;
 	Color corTemp;
 
-	public Objeto() {
+	public Objeto() throws AssistenciaException {
 		this(0, 0, null, null);
 	}
 
-	public Objeto(int x, int y) {
+	public Objeto(int x, int y) throws AssistenciaException {
 		this(x, y, null, null);
 	}
 
-	public Objeto(int x, int y, Color cor) {
+	public Objeto(int x, int y, Color cor) throws AssistenciaException {
 		this(x, y, cor, null);
 	}
 
-	public Objeto(int x, int y, String icone) {
+	public Objeto(int x, int y, String icone) throws AssistenciaException {
 		this(x, y, COR_PADRAO, icone);
 	}
 
-	public Objeto(int x, int y, Color cor, String icone) {
+	public Objeto(int x, int y, Color cor, String icone) throws AssistenciaException {
 		id = Constantes.VAZIO + (++sequencia);
 		referencias = new ArrayList<>();
 		complementos = new HashSet<>();
@@ -144,7 +145,7 @@ public class Objeto implements Runnable {
 		this.y = y;
 	}
 
-	public Objeto clonar() {
+	public Objeto clonar() throws AssistenciaException {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.referenciaPesquisa = referenciaPesquisa;
 		o.esquemaAlternativo = esquemaAlternativo;
@@ -189,7 +190,7 @@ public class Objeto implements Runnable {
 		return o;
 	}
 
-	public void aplicar(Attributes attr) {
+	public void aplicar(Attributes attr) throws AssistenciaException {
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
 		ajustarLargura = Boolean.parseBoolean(attr.getValue("ajustarLargura"));
 		clonarAoDestacar = Boolean.parseBoolean(attr.getValue("copiarDestac"));
@@ -500,7 +501,7 @@ public class Objeto implements Runnable {
 		this.chaves = chaves;
 	}
 
-	public void setIcone(String icone) {
+	public void setIcone(String icone) throws AssistenciaException {
 		this.icone = icone;
 		if (Util.isEmpty(this.icone)) {
 			this.icone = Constantes.VAZIO;

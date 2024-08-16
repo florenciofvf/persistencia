@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 import br.com.persist.marca.XMLException;
@@ -650,7 +651,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void pesquisarReferencia(ObjetoSuperficie superficie, Conexao conexao, Pesquisa pesquisa,
-			Referencia referencia, Argumento argumento, Objeto objeto) {
+			Referencia referencia, Argumento argumento, Objeto objeto) throws AssistenciaException {
 		String string = null;
 		if (argumento instanceof ArgumentoString) {
 			string = objeto.comApelido("AND", referencia.getCampo()) + " IN ("

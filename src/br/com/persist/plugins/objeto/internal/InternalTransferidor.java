@@ -7,6 +7,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.Objects;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
@@ -23,7 +24,7 @@ public class InternalTransferidor implements Transferable {
 	public static final byte ARRAY_INDICE_CON = 1;
 	public static final byte ARRAY_INDICE_DIM = 2;
 
-	public InternalTransferidor(Objeto objeto, Conexao conexao, Dimension dimension) {
+	public InternalTransferidor(Objeto objeto, Conexao conexao, Dimension dimension) throws AssistenciaException {
 		Objects.requireNonNull(objeto);
 		this.dimension = Objects.requireNonNull(dimension);
 		this.conexao = Objects.requireNonNull(conexao);

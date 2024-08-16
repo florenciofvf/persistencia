@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -83,7 +84,7 @@ public class Vinculacao {
 		return pesquisas.remove(pesquisa);
 	}
 
-	public void processar(Objeto objeto) throws ObjetoException {
+	public void processar(Objeto objeto) throws ObjetoException, AssistenciaException {
 		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela());
 		if (paraTabela != null) {
 			objeto.addInstrucoes(paraTabela.getInstrucoes());

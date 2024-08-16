@@ -20,6 +20,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Imagens;
 
@@ -72,7 +73,7 @@ public class AnexoModelo implements TreeModel {
 		ArquivoUtil.lerArquivo(AnexoConstantes.ANEXOS, new File(anexosRaiz, AnexoConstantes.IGNORADOS));
 	}
 
-	private void configurar(Anexo selecionado, String linha) {
+	private void configurar(Anexo selecionado, String linha) throws AssistenciaException {
 		if (selecionado == null || linha == null) {
 			return;
 		}

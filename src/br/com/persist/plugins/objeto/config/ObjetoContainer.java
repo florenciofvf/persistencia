@@ -35,6 +35,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
@@ -433,12 +434,16 @@ public class ObjetoContainer extends Panel {
 			if (txtId == e.getSource()) {
 				String id = txtId.getText();
 				if (!Util.isEmpty(id)) {
-					Objeto obj = new Objeto();
-					obj.setId(id);
+					try {
+						Objeto obj = new Objeto();
+						obj.setId(id);
 
-					if (!ObjetoSuperficieUtil.contem(objetoSuperficie, obj)) {
-						objeto.setId(id);
-						configLarguraFonte();
+						if (!ObjetoSuperficieUtil.contem(objetoSuperficie, obj)) {
+							objeto.setId(id);
+							configLarguraFonte();
+						}
+					} catch (AssistenciaException ex) {
+						Util.mensagem(ObjetoContainer.this, ex.getMessage());
 					}
 				}
 			} else if (txtArquivo == e.getSource()) {

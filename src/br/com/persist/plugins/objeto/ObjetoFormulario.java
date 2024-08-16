@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
@@ -50,7 +51,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular) throws MetadadoException, ObjetoException {
+			boolean circular) throws MetadadoException, ObjetoException, AssistenciaException {
 		AtomicReference<String> tituloTemp = new AtomicReference<>();
 		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, tituloTemp);
 		if (!Util.isEmpty(tituloTemp.get())) {
@@ -59,11 +60,11 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	}
 
 	public void abrirArquivo(File file, ObjetoColetor coletor, InternalConfig config)
-			throws XMLException, ObjetoException {
+			throws XMLException, ObjetoException, AssistenciaException {
 		container.abrir(file, coletor, config);
 	}
 
-	public void exportarMetadadoRaiz(Metadado metadado) {
+	public void exportarMetadadoRaiz(Metadado metadado) throws AssistenciaException {
 		container.exportarMetadadoRaiz(metadado);
 	}
 

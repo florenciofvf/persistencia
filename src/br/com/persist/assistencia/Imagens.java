@@ -19,16 +19,17 @@ public class Imagens {
 	private Imagens() {
 	}
 
-	private static ImageIcon criarImagem(String nome) {
+	private static ImageIcon criarImagem(String nome) throws AssistenciaException {
 		try {
 			return new ImageIcon(file.getAbsolutePath() + File.separator + nome + ".png");
 		} catch (Exception e) {
-			throw new IllegalStateException("Erro imagem! " + nome);
+			throw new AssistenciaException("Erro imagem! " + nome);
 		}
 	}
 
-	public static Icon getIcon(String nome) {
-		return MAPA_ICONES.computeIfAbsent(nome, Imagens::criarImagem);
+	public static Icon getIcon(String nome) throws AssistenciaException {
+		ImageIcon icone = criarImagem(nome);
+		return MAPA_ICONES.computeIfAbsent(nome, t -> icone);
 	}
 
 	public static List<Map.Entry<String, Icon>> getIcones() {
@@ -37,7 +38,7 @@ public class Imagens {
 		return lista;
 	}
 
-	public static void ini() {
+	public static void ini() throws AssistenciaException {
 		File[] files = file.listFiles();
 		MAPA_ICONES.clear();
 		if (files != null) {

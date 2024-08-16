@@ -34,6 +34,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
@@ -66,7 +67,8 @@ public class RelacaoContainer extends Panel {
 	private final transient Relacao relacao;
 	private String ultimoCampoSelecionado;
 
-	public RelacaoContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Relacao relacao) {
+	public RelacaoContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Relacao relacao)
+			throws AssistenciaException {
 		this.objetoSuperficie = Objects.requireNonNull(objetoSuperficie);
 		this.relacao = Objects.requireNonNull(relacao);
 		MacroProvedor.limpar();
@@ -74,7 +76,7 @@ public class RelacaoContainer extends Panel {
 		montarLayout();
 	}
 
-	private void montarLayout() {
+	private void montarLayout() throws AssistenciaException {
 		add(BorderLayout.CENTER, new Fichario());
 		add(BorderLayout.NORTH, toolbar);
 	}
@@ -188,8 +190,12 @@ public class RelacaoContainer extends Panel {
 			}
 
 			private void reiniciar() {
-				relacao.reiniciarHoras(false, objetoSuperficie);
-				diferenca();
+				try {
+					relacao.reiniciarHoras(false, objetoSuperficie);
+					diferenca();
+				} catch (AssistenciaException ex) {
+					Util.mensagem(RelacaoContainer.this, ex.getMessage());
+				}
 			}
 
 			private void diferenca() {
@@ -354,7 +360,7 @@ public class RelacaoContainer extends Panel {
 		private CheckBox chkQuebrado = new CheckBox("label.quebrado");
 		private static final long serialVersionUID = 1L;
 
-		private PanelGeral() {
+		private PanelGeral() throws AssistenciaException {
 			chkQuebrado.addActionListener(this);
 			add(BorderLayout.NORTH, chkQuebrado);
 			chkQuebrado.setSelected(relacao.isQuebrado());
@@ -376,7 +382,7 @@ public class RelacaoContainer extends Panel {
 	private class PanelLados extends Panel {
 		private static final long serialVersionUID = 1L;
 
-		private PanelLados() {
+		private PanelLados() throws AssistenciaException {
 			super(new GridLayout(1, 2));
 			add(new PanelLado(true));
 			add(new PanelLado(false));
@@ -389,7 +395,7 @@ public class RelacaoContainer extends Panel {
 		private TextField txtChave = new TextField(30);
 		private final boolean origem;
 
-		private PanelLado(boolean origem) {
+		private PanelLado(boolean origem) throws AssistenciaException {
 			super(new GridLayout(6, 1));
 			this.origem = origem;
 			chkPonto.setSelected(origem ? relacao.isPontoOrigem() : relacao.isPontoDestino());
@@ -477,7 +483,7 @@ public class RelacaoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final transient Objeto objeto;
 
-		private PanelObjeto(Objeto objeto) {
+		private PanelObjeto(Objeto objeto) throws AssistenciaException {
 			super(null);
 			final int lado = Objeto.DIAMETRO + 10;
 			this.objeto = new Objeto(5, 5, objeto.getCor(), objeto.getIcone());
@@ -498,7 +504,7 @@ public class RelacaoContainer extends Panel {
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 
-		private Fichario() {
+		private Fichario() throws AssistenciaException {
 			addTab("label.geral", new PanelGeral());
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", new PanelCor());

@@ -14,6 +14,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
@@ -65,6 +66,7 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.abstrato.WindowInternalHandler;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -229,20 +231,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void configurar() {
 		DragSource dragSource = DragSource.getDefaultDragSource();
-		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
-			Conexao conexao = getConexao();
-			if (conexao == null) {
-				return;
-			}
-			Dimension dimension = null;
-			if (dimensaoListener != null) {
-				dimension = dimensaoListener.getDimensoes();
-			}
-			if (dimension == null) {
-				dimension = Constantes.SIZE;
-			}
-			dge.startDrag(null, new InternalTransferidor(objeto, conexao, dimension), listenerArrasto);
-		});
+		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY,
+				InternalContainer.this::preStartDrag);
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
 		txtComplemento.addKeyListener(new KeyAdapter() {
@@ -268,6 +258,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 		});
+	}
+
+	private void preStartDrag(DragGestureEvent dge) {
+		Conexao conexao = getConexao();
+		if (conexao == null) {
+			return;
+		}
+		Dimension dimension = null;
+		if (dimensaoListener != null) {
+			dimension = dimensaoListener.getDimensoes();
+		}
+		if (dimension == null) {
+			dimension = Constantes.SIZE;
+		}
+		try {
+			dge.startDrag(null, new InternalTransferidor(objeto, conexao, dimension), listenerArrasto);
+		} catch (AssistenciaException ex) {
+			Util.mensagem(InternalContainer.this, ex.getMessage());
+		}
 	}
 
 	private class TxtComplemento extends JTextArea {
@@ -1306,7 +1315,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
-					nomeIconeReferAcao.setActionListener(e -> nomeIconeRefer());
+					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
 					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
@@ -1326,6 +1335,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					});
+				}
+
+				private void preNomeIconeRefer() {
+					try {
+						nomeIconeRefer();
+					} catch (AssistenciaException ex) {
+						Util.mensagem(InternalContainer.this, ex.getMessage());
+					}
 				}
 
 				private class MenuInfo extends Menu {
@@ -1401,8 +1418,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						addLimparRestoAcao.setActionListener(e -> processar(true));
 						vazioInvisivelAcao.setActionListener(e -> vazio(true));
 						vazioVisivelAcao.setActionListener(e -> vazio(false));
-						iconeColarAcao.setActionListener(e -> iconeColar());
-						iconeRefAcao.setActionListener(e -> iconeRefer());
+						iconeColarAcao.setActionListener(e -> preIconeColar());
+						iconeRefAcao.setActionListener(e -> preIconeRefer());
 						iconeAcao.setActionListener(e -> icone());
 					}
 
@@ -1410,7 +1427,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						iconeRefAcao.setEnabled(b);
 					}
 
-					public void iconeRefer() {
+					private void preIconeColar() {
+						try {
+							iconeColar();
+						} catch (AssistenciaException ex) {
+							Util.mensagem(InternalContainer.this, ex.getMessage());
+						}
+					}
+
+					private void preIconeRefer() {
+						try {
+							iconeRefer();
+						} catch (AssistenciaException ex) {
+							Util.mensagem(InternalContainer.this, ex.getMessage());
+						}
+					}
+
+					public void iconeRefer() throws AssistenciaException {
 						Referencia ref = pesquisa.get();
 						if (vinculoListener == null || ref == null) {
 							return;
@@ -1433,14 +1466,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 					}
 
-					private void configurarIcone(String nomeIcone, Vinculacao vinculacao, Pesquisa pesq) {
+					private void configurarIcone(String nomeIcone, Vinculacao vinculacao, Pesquisa pesq)
+							throws AssistenciaException {
 						MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
 						pesquisa.setIconeGrupo(nomeIcone);
 						pesq.setIconeGrupo(nomeIcone);
 						vinculoListener.salvarVinculacao(vinculacao);
 					}
 
-					public void iconeColar() {
+					public void iconeColar() throws AssistenciaException {
 						if (vinculoListener == null || Util.isEmpty(IconeContainer.getNomeIconeCopiado())) {
 							return;
 						}
@@ -1465,7 +1499,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 					private class ListenerIcone implements IconeListener {
 						@Override
-						public void setIcone(String nome) {
+						public void setIcone(String nome) throws AssistenciaException {
 							if (vinculoListener == null) {
 								return;
 							}
@@ -1580,7 +1614,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void nomeIconeRefer() {
+				private void nomeIconeRefer() throws AssistenciaException {
 					Referencia ref = pesquisa.get();
 					if (vinculoListener == null || ref == null) {
 						return;
@@ -1620,7 +1654,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void checarConfigurarIcone(Objeto objetoRef, Vinculacao vinculacao, Pesquisa pesq) {
+				private void checarConfigurarIcone(Objeto objetoRef, Vinculacao vinculacao, Pesquisa pesq)
+						throws AssistenciaException {
 					String nomeIcone = objetoRef.getIcone();
 					if (!Util.isEmpty(nomeIcone)) {
 						configurarIcone(pesq, nomeIcone);
@@ -1628,7 +1663,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void configurarIcone(Pesquisa pesq, String nomeIcone) {
+				private void configurarIcone(Pesquisa pesq, String nomeIcone) throws AssistenciaException {
 					setIcon(Imagens.getIcon(nomeIcone));
 					pesquisa.setIconeGrupo(nomeIcone);
 					pesq.setIconeGrupo(nomeIcone);
@@ -1787,7 +1822,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								animar.iniciar();
 							}
 						}
-					} catch (ObjetoException ex) {
+					} catch (ObjetoException | AssistenciaException ex) {
 						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 					}
 				}
@@ -1820,7 +1855,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void processar(boolean apostrofes) throws ObjetoException {
+				private void processar(boolean apostrofes) throws ObjetoException, AssistenciaException {
 					if (vinculoListener == null) {
 						return;
 					}
@@ -1858,7 +1893,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void pesquisar(List<String> lista, Argumento argumento, int coluna) throws ObjetoException {
+				private void pesquisar(List<String> lista, Argumento argumento, int coluna)
+						throws ObjetoException, AssistenciaException {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
 					if (!chkTotalDetalhes.isSelected() && !chkPesqEmMemoria.isSelected()) {
@@ -1873,7 +1909,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void pesquisaArray(Argumento argumento) throws ObjetoException {
+				private void pesquisaArray(Argumento argumento) throws ObjetoException, AssistenciaException {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
 					if (!chkTotalDetalhes.isSelected()) {
@@ -3221,7 +3257,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (vinculoListener != null) {
-							vinculoListener.adicionarHierarquicoAvulsoAcima(getConexao(), objeto);
+							try {
+								vinculoListener.adicionarHierarquicoAvulsoAcima(getConexao(), objeto);
+							} catch (AssistenciaException ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
+							}
 						}
 					}
 				}
@@ -3236,7 +3276,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (vinculoListener != null) {
-							vinculoListener.adicionarHierarquicoAvulsoAbaixo(getConexao(), objeto);
+							try {
+								vinculoListener.adicionarHierarquicoAvulsoAbaixo(getConexao(), objeto);
+							} catch (AssistenciaException ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
+							}
 						}
 					}
 				}
@@ -3256,7 +3300,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							try {
 								vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
 								processarMapaReferencia(mapaRef);
-							} catch (MetadadoException | ObjetoException ex) {
+							} catch (MetadadoException | ObjetoException | AssistenciaException ex) {
 								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
 						}
@@ -4680,8 +4724,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	static Icon iconePesquisa(Pesquisa pesquisa) {
-		String iconeGrupo = pesquisa.getIconeGrupo();
-		return Util.isEmpty(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
+		try {
+			String iconeGrupo = pesquisa.getIconeGrupo();
+			return Util.isEmpty(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
+		} catch (AssistenciaException ex) {
+			Util.mensagem(null, ex.getMessage());
+			return null;
+		}
 	}
 
 	public InternalConfig getInternalConfig() {

@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Util;
@@ -260,7 +261,7 @@ public class Relacao implements Runnable {
 		return (posX >= x && posX <= x + l) && (posY >= y && posY <= y + a);
 	}
 
-	public Objeto criarObjetoMeio() {
+	public Objeto criarObjetoMeio() throws AssistenciaException {
 		Objeto objeto = new Objeto();
 		int difX = (destino.x - origem.x) / 2;
 		int difY = (destino.y - origem.y) / 2;
@@ -439,7 +440,7 @@ public class Relacao implements Runnable {
 		}
 	}
 
-	public void reiniciarHoras(boolean checar, ObjetoSuperficie superficie) {
+	public void reiniciarHoras(boolean checar, ObjetoSuperficie superficie) throws AssistenciaException {
 		if (checar) {
 			if (HoraUtil.formatoValido(getOrigem().getId()) || HoraUtil.formatoValido(getDestino().getId())) {
 				reiniciarHora(getOrigem(), superficie);
@@ -454,7 +455,7 @@ public class Relacao implements Runnable {
 		}
 	}
 
-	private void reiniciarHora(Objeto objeto, ObjetoSuperficie superficie) {
+	private void reiniciarHora(Objeto objeto, ObjetoSuperficie superficie) throws AssistenciaException {
 		final String id = "00:00:";
 		Objeto obj = new Objeto();
 		int cont = 0;

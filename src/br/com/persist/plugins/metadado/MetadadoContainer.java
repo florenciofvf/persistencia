@@ -30,6 +30,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -531,7 +532,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
-	public void registros(MetadadoTree metadadoTree) {
+	public void registros(MetadadoTree metadadoTree) throws AssistenciaException {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		Conexao conexao = getConexao();
 		if (conexao != null && metadado != null) {

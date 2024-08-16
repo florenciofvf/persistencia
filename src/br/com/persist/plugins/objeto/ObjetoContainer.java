@@ -46,6 +46,7 @@ import javax.swing.JFileChooser;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -259,7 +260,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			chkAjusteAutoLarguraForm.addActionListener(e -> setAjusteAutoLarguraForm());
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
-			criarObjetoAcao.setActionListener(e -> criarObjeto());
+			criarObjetoAcao.setActionListener(e -> preCriarObjeto());
 			txtArquivoVinculo.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -282,6 +283,14 @@ public class ObjetoContainer extends AbstratoContainer {
 					}
 				}
 			});
+		}
+
+		private void preCriarObjeto() {
+			try {
+				criarObjeto();
+			} catch (AssistenciaException ex) {
+				Util.mensagem(ObjetoContainer.this, ex.getMessage());
+			}
 		}
 
 		private void destacarObjetos() {
@@ -496,14 +505,22 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		@Override
 		protected void copiar() {
-			if (CopiarColar.copiar(objetoSuperficie)) {
-				copiarMensagem(".");
+			try {
+				if (CopiarColar.copiar(objetoSuperficie)) {
+					copiarMensagem(".");
+				}
+			} catch (AssistenciaException ex) {
+				Util.mensagem(ObjetoContainer.this, ex.getMessage());
 			}
 		}
 
 		@Override
 		protected void colar0() {
-			CopiarColar.colar(objetoSuperficie, false, 0, 0);
+			try {
+				CopiarColar.colar(objetoSuperficie, false, 0, 0);
+			} catch (AssistenciaException ex) {
+				Util.mensagem(ObjetoContainer.this, ex.getMessage());
+			}
 		}
 
 		private class ButtonStatus extends ButtonPopup {
@@ -564,10 +581,18 @@ public class ObjetoContainer extends AbstratoContainer {
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				somarHorasAcao.addActionListener(
 						e -> objetoSuperficie.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				reiniciarAction.setActionListener(e -> objetoSuperficie.reiniciarHoras());
+				reiniciarAction.setActionListener(e -> reiniciarHoras());
 				gradeAction.setActionListener(e -> objetoSuperficie.setTotalArrastado(1));
 				ignorarAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorar(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+			}
+
+			private void reiniciarHoras() {
+				try {
+					objetoSuperficie.reiniciarHoras();
+				} catch (AssistenciaException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				}
 			}
 
 			private void todosIconesParaArquivoVinculado() {
@@ -615,7 +640,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			}
 		}
 
-		private void criarObjeto() {
+		private void criarObjeto() throws AssistenciaException {
 			objetoSuperficie.criarNovoObjeto(40, 40);
 			btnSelecao.setSelected(true);
 			btnSelecao.click();
@@ -704,7 +729,8 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular, AtomicReference<String> tituloTemp) throws MetadadoException, ObjetoException {
+			boolean circular, AtomicReference<String> tituloTemp)
+			throws MetadadoException, ObjetoException, AssistenciaException {
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 		}
@@ -722,12 +748,13 @@ public class ObjetoContainer extends AbstratoContainer {
 		btnSelecao.click();
 	}
 
-	public void exportarMetadadoRaiz(Metadado metadado) {
+	public void exportarMetadadoRaiz(Metadado metadado) throws AssistenciaException {
 		objetoSuperficie.exportarMetadadoRaiz(metadado);
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, ObjetoColetor coletor, InternalConfig config) throws XMLException, ObjetoException {
+	public void abrir(File file, ObjetoColetor coletor, InternalConfig config)
+			throws XMLException, ObjetoException, AssistenciaException {
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
 		objetoSuperficie.setProcessar(coletor.getProcessar().get());
 		objetoSuperficie.abrir(coletor);

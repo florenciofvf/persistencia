@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
@@ -29,7 +30,11 @@ public class ObjetoHandler extends XMLHandler {
 		if ("fvf".equals(qName)) {
 			processarRaiz(attributes);
 		} else if ("objeto".equals(qName)) {
-			processarObjeto(attributes);
+			try {
+				processarObjeto(attributes);
+			} catch (AssistenciaException ex) {
+				throw new SAXException(ex);
+			}
 		} else if ("relacao".equals(qName)) {
 			try {
 				processarRelacao(attributes);
@@ -60,7 +65,7 @@ public class ObjetoHandler extends XMLHandler {
 		coletor.getRelacoes().add(relacao);
 	}
 
-	private void processarObjeto(Attributes attributes) {
+	private void processarObjeto(Attributes attributes) throws AssistenciaException {
 		Objeto objeto = new Objeto();
 		objeto.aplicar(attributes);
 		selecionado = objeto;

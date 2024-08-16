@@ -19,8 +19,10 @@ import java.util.logging.Logger;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao1;
@@ -198,7 +200,13 @@ public class MetadadoTree extends Tree {
 		private void abrirObjeto() {
 			Metadado metadado = getObjetoSelecionado();
 			if (metadado.isTabela()) {
-				ouvintes.forEach(o -> o.registros(MetadadoTree.this));
+				for (MetadadoTreeListener item : ouvintes) {
+					try {
+						item.registros(MetadadoTree.this);
+					} catch (AssistenciaException ex) {
+						Util.mensagem(MetadadoTree.this, ex.getMessage());
+					}
+				}
 			}
 		}
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
@@ -132,7 +133,7 @@ public class ParaTabela {
 		}
 	}
 
-	public void config(Objeto objeto) {
+	public void config(Objeto objeto) throws AssistenciaException {
 		if (!Util.isEmpty(clonarAoDestacar)) {
 			objeto.setClonarAoDestacar(Boolean.parseBoolean(clonarAoDestacar));
 		}
@@ -178,7 +179,7 @@ public class ParaTabela {
 		config2(objeto);
 	}
 
-	private void config2(Objeto objeto) {
+	private void config2(Objeto objeto) throws AssistenciaException {
 		if (!Util.isEmpty(esquemaAlternativo)) {
 			objeto.setEsquemaAlternativo(esquemaAlternativo);
 		}
@@ -227,7 +228,7 @@ public class ParaTabela {
 		config3(objeto);
 	}
 
-	private void config3(Objeto objeto) {
+	private void config3(Objeto objeto) throws AssistenciaException {
 		if (!Util.isEmpty(chaves)) {
 			objeto.setChaves(chaves);
 		}

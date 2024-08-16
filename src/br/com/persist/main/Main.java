@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Preferencias;
@@ -27,7 +28,11 @@ public class Main {
 		Preferencias.inicializar();
 		installLookAndFeel();
 		Preferencias.abrir();
-		Imagens.ini();
+		try {
+			Imagens.ini();
+		} catch (AssistenciaException ex) {
+			Util.mensagem(null, ex.getMessage());
+		}
 		abrirForm();
 	}
 

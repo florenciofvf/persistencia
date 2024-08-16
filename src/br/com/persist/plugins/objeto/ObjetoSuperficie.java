@@ -46,6 +46,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoMensagens;
 import br.com.persist.abstrato.DesktopLargura;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
@@ -193,7 +194,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		repaint();
 	}
 
-	public void reiniciarHoras() {
+	public void reiniciarHoras() throws AssistenciaException {
 		for (Relacao relacao : relacoes) {
 			relacao.reiniciarHoras(true, this);
 		}
@@ -273,12 +274,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			if (instrucoes.isEmpty()) {
 				return;
 			}
-			macroObjetos(instrucoes);
-			macroRelacoes(instrucoes);
-			repaint();
+			try {
+				macroObjetos(instrucoes);
+				macroRelacoes(instrucoes);
+				repaint();
+			} catch (AssistenciaException ex) {
+				Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
+			}
 		}
 
-		private void macroObjetos(List<MacroProvedor.Instrucao> instrucoes) {
+		private void macroObjetos(List<MacroProvedor.Instrucao> instrucoes) throws AssistenciaException {
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
@@ -570,7 +575,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				if (!ctrl) {
 					RelacaoDialogo.criar(container.getFrame(), ObjetoSuperficie.this, relacao);
 				}
-			} catch (ObjetoException ex) {
+			} catch (ObjetoException | AssistenciaException ex) {
 				Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
 			}
 		}
@@ -931,7 +936,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
-	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear) {
+	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear)
+			throws AssistenciaException {
 		if (metadado == null) {
 			return false;
 		}
@@ -965,7 +971,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return acaoMenu(chave, null);
 	}
 
-	public void criarNovoObjeto(int x, int y) {
+	public void criarNovoObjeto(int x, int y) throws AssistenciaException {
 		Objeto novo = new Objeto(x, y);
 		ObjetoSuperficieUtil.checagemId(this, novo, Constantes.VAZIO, Constantes.VAZIO);
 		addObjeto(novo);
@@ -985,7 +991,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.META_MASK);
 	}
 
-	public void abrir(ObjetoColetor coletor) throws XMLException, ObjetoException {
+	public void abrir(ObjetoColetor coletor) throws XMLException, ObjetoException, AssistenciaException {
 		limpar();
 		for (Objeto objeto : coletor.getObjetos()) {
 			addObjeto(objeto);
@@ -1075,7 +1081,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	@Override
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
-			throws ObjetoException {
+			throws ObjetoException, AssistenciaException {
 		if (conexao == null) {
 			conexao = container.getConexaoPadrao();
 		}
@@ -1090,7 +1096,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private void processarReferencias(Conexao conexao, Pesquisa pesquisa, Argumento argumento) {
+	private void processarReferencias(Conexao conexao, Pesquisa pesquisa, Argumento argumento)
+			throws AssistenciaException {
 		for (Referencia referencia : pesquisa.getReferencias()) {
 			if (!referencia.isProcessado()) {
 				pesquisarReferencia(conexao, pesquisa, referencia, argumento);
@@ -1098,7 +1105,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private void pesquisarReferencia(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento) {
+	private void pesquisarReferencia(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento)
+			throws AssistenciaException {
 		Objeto objeto = null;
 		for (Objeto obj : objetos) {
 			if (referencia.igual(obj)) {
@@ -1112,7 +1120,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private void pesquisarReferencia(Conexao conexao, Pesquisa pesquisa, Referencia referencia, Argumento argumento,
-			Objeto objeto) {
+			Objeto objeto) throws AssistenciaException {
 		ObjetoSuperficieUtil.pesquisarReferencia(this, conexao, pesquisa, referencia, argumento, objeto);
 	}
 
@@ -1153,7 +1161,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void exportarMetadadoRaiz(Metadado metadado) {
+	public void exportarMetadadoRaiz(Metadado metadado) throws AssistenciaException {
 		int y = 20;
 		for (int i = 0; i < metadado.getTotal(); i++) {
 			Metadado filho = metadado.getMetadado(i);
@@ -1171,7 +1179,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
-			throws MetadadoException, ObjetoException {
+			throws MetadadoException, ObjetoException, AssistenciaException {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
 		formulario.processar(args);
@@ -1188,7 +1196,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef, Metadado tabela)
-			throws MetadadoException, ObjetoException {
+			throws MetadadoException, ObjetoException, AssistenciaException {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, mapaRef, tabela.getPai());
 		exportacao.criarPesquisa();
 		exportacao.processarDetalhes(tabela);
@@ -1237,7 +1245,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		ObjetoSuperficieUtil.tornarVisivel(this, grupoTabela, point);
 	}
 
-	public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) {
+	public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) throws AssistenciaException {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
 		formulario.processar(args);
@@ -1252,7 +1260,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) {
+	public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) throws AssistenciaException {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
 		formulario.processar(args);
@@ -1267,7 +1275,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private void criarObjetoHierarquicoAvulsoAcima(Conexao conexao, Objeto principal, Metadado tabela) {
+	private void criarObjetoHierarquicoAvulsoAcima(Conexao conexao, Objeto principal, Metadado tabela)
+			throws AssistenciaException {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
 		Metadado tabelaAvulsa = exportacao.getTabelaAvulsa();
 		if (tabelaAvulsa != null) {
@@ -1277,7 +1286,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private void criarObjetoHierarquicoAvulsoAbaixo(Conexao conexao, Objeto principal, Metadado tabela) {
+	private void criarObjetoHierarquicoAvulsoAbaixo(Conexao conexao, Objeto principal, Metadado tabela)
+			throws AssistenciaException {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
 		Metadado tabelaAvulsa = exportacao.getTabelaAvulsa();
 		if (tabelaAvulsa != null) {
@@ -1300,7 +1310,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
-			boolean circular, AtomicReference<String> ref) throws MetadadoException, ObjetoException {
+			boolean circular, AtomicReference<String> ref)
+			throws MetadadoException, ObjetoException, AssistenciaException {
 		ExportacaoImportacao expImp = criarExportacaoImportacao(exportacao, circular);
 		expImp.processarPrincipal(tabela);
 		expImp.checarCriarPesquisa();
@@ -1316,7 +1327,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		Util.mensagemFormulario(formulario, expImp.getString());
 	}
 
-	private ExportacaoImportacao criarExportacaoImportacao(boolean exportacao, boolean circular) {
+	private ExportacaoImportacao criarExportacaoImportacao(boolean exportacao, boolean circular)
+			throws AssistenciaException {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		ExportacaoImportacao expImp = new ExportacaoImportacao(ObjetoSuperficie.this, exportacao, circular);
 		expImp.definirCentros(d);
@@ -1349,15 +1361,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
-		List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(this);
-		if (ObjetoSuperficieUtil.getContinua(lista)) {
-			List<Objeto> selecionados = montarSelecionados(lista,
-					tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO);
-			destacar(conexao, tipoContainer, config, selecionados);
+		try {
+			List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(this);
+			if (ObjetoSuperficieUtil.getContinua(lista)) {
+				List<Objeto> selecionados = montarSelecionados(lista,
+						tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO);
+				destacar(conexao, tipoContainer, config, selecionados);
+			}
+		} catch (AssistenciaException ex) {
+			Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
 		}
 	}
 
-	private List<Objeto> montarSelecionados(List<Objeto> lista, boolean proprioContainer) {
+	private List<Objeto> montarSelecionados(List<Objeto> lista, boolean proprioContainer) throws AssistenciaException {
 		List<Objeto> selecionados = new ArrayList<>();
 		for (Objeto objeto : lista) {
 			montarSelecionado(proprioContainer, selecionados, objeto);
@@ -1365,7 +1381,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return selecionados;
 	}
 
-	private void montarSelecionado(boolean proprioContainer, List<Objeto> selecionados, Objeto objeto) {
+	private void montarSelecionado(boolean proprioContainer, List<Objeto> selecionados, Objeto objeto)
+			throws AssistenciaException {
 		if (objeto.isClonarAoDestacar()) {
 			if (proprioContainer) {
 				montarSelecionadoProprio(selecionados, objeto);
@@ -1378,7 +1395,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private void montarSelecionadoProprio(List<Objeto> selecionados, Objeto objeto) {
+	private void montarSelecionadoProprio(List<Objeto> selecionados, Objeto objeto) throws AssistenciaException {
 		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(this, objeto);
 		if (interno == null) {
 			selecionados.add(objeto);
@@ -1624,7 +1641,8 @@ class ThreadRecente extends ThreadComparacao {
 		setItensEnabled(true);
 	}
 
-	private void processarRecente(Objeto objeto, int totalRegistros, FontMetrics fm, List<Objeto> novos) {
+	private void processarRecente(Objeto objeto, int totalRegistros, FontMetrics fm, List<Objeto> novos)
+			throws AssistenciaException {
 		objeto.setCorFonte(ObjetoPreferencia.getCorComparaRec());
 		long diff = totalRegistros - objeto.getTotalRegistros();
 		if (diff == 0) {
@@ -1664,7 +1682,7 @@ class CopiarColar {
 	private CopiarColar() {
 	}
 
-	public static boolean copiar(ObjetoSuperficie superficie) {
+	public static boolean copiar(ObjetoSuperficie superficie) throws AssistenciaException {
 		copiados.clear();
 		for (Objeto objeto : ObjetoSuperficieUtil.getSelecionados(superficie)) {
 			copiados.add(objeto.clonar());
@@ -1672,7 +1690,7 @@ class CopiarColar {
 		return !copiados.isEmpty();
 	}
 
-	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {
+	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) throws AssistenciaException {
 		ObjetoSuperficieUtil.limparSelecao(superficie);
 		for (Objeto objeto : copiados) {
 			Objeto clone = get(objeto, superficie);
@@ -1690,7 +1708,7 @@ class CopiarColar {
 		return copiados.isEmpty();
 	}
 
-	private static Objeto get(Objeto objeto, ObjetoSuperficie superficie) {
+	private static Objeto get(Objeto objeto, ObjetoSuperficie superficie) throws AssistenciaException {
 		Objeto o = objeto.clonar();
 		o.deltaX(Objeto.DIAMETRO);
 		o.deltaY(Objeto.DIAMETRO);
@@ -1739,16 +1757,30 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void eventos() {
-		criarObjetoAcao
-				.setActionListener(e -> superficie.criarNovoObjeto(superficie.popup2.xLocal, superficie.popup2.yLocal));
-		colarAcao.setActionListener(
-				e -> CopiarColar.colar(superficie, true, superficie.popup2.xLocal, superficie.popup2.yLocal));
+		criarObjetoAcao.setActionListener(e -> criarNovoObjeto());
+		colarAcao.setActionListener(e -> colar());
 		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
 		formulariosComExcecaoAcao.setActionListener(e -> formulariosComExcecao());
 		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
 		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
 		propriedadesAcao.setActionListener(e -> propriedades());
+	}
+
+	private void colar() {
+		try {
+			CopiarColar.colar(superficie, true, superficie.popup2.xLocal, superficie.popup2.yLocal);
+		} catch (AssistenciaException ex) {
+			Util.mensagem(superficie, ex.getMessage());
+		}
+	}
+
+	private void criarNovoObjeto() {
+		try {
+			superficie.criarNovoObjeto(superficie.popup2.xLocal, superficie.popup2.yLocal);
+		} catch (AssistenciaException ex) {
+			Util.mensagem(superficie, ex.getMessage());
+		}
 	}
 
 	void preShow(boolean contemFrames) {
@@ -2254,12 +2286,24 @@ class SuperficiePopup extends Popup {
 			if (superficie.selecionadoObjeto != null) {
 				ObjetoDialogo.criar(frame, superficie, superficie.selecionadoObjeto);
 			} else if (superficie.selecionadoRelacao != null) {
-				RelacaoDialogo.criar(frame, superficie, superficie.selecionadoRelacao);
+				try {
+					RelacaoDialogo.criar(frame, superficie, superficie.selecionadoRelacao);
+				} catch (AssistenciaException ex) {
+					Util.mensagem(SuperficiePopup.this, ex.getMessage());
+				}
 			}
 		});
 		copiarIconeAcao.setActionListener(e -> copiarIcone(copiarIconeAcao));
 		colarIconeAcao.setActionListener(e -> colarIcone(colarIconeAcao));
-		copiarAcao.setActionListener(e -> CopiarColar.copiar(superficie));
+		copiarAcao.setActionListener(e -> copiar());
+	}
+
+	private void copiar() {
+		try {
+			CopiarColar.copiar(superficie);
+		} catch (AssistenciaException ex) {
+			Util.mensagem(SuperficiePopup.this, ex.getMessage());
+		}
 	}
 
 	private void copiarIcone(Action action) {
@@ -2271,11 +2315,15 @@ class SuperficiePopup extends Popup {
 
 	private void colarIcone(Action action) {
 		if (action.getObject() instanceof Objeto && !Util.isEmpty(IconeContainer.getNomeIconeCopiado())) {
-			String nome = IconeContainer.getNomeIconeCopiado();
-			Objeto objeto = (Objeto) action.getObject();
-			objeto.setIcone(nome);
-			MacroProvedor.imagem(objeto.getIcone());
-			superficie.repaint();
+			try {
+				String nome = IconeContainer.getNomeIconeCopiado();
+				Objeto objeto = (Objeto) action.getObject();
+				objeto.setIcone(nome);
+				MacroProvedor.imagem(objeto.getIcone());
+				superficie.repaint();
+			} catch (AssistenciaException ex) {
+				Util.mensagem(SuperficiePopup.this, ex.getMessage());
+			}
 		}
 	}
 
@@ -2371,7 +2419,7 @@ class SuperficiePopup extends Popup {
 					superficie.addRelacao(new Relacao(origem, false, novo, false));
 					superficie.addRelacao(new Relacao(novo, false, destino, false));
 					superficie.repaint();
-				} catch (ObjetoException ex) {
+				} catch (ObjetoException | AssistenciaException ex) {
 					Util.mensagem(SuperficiePopup.this, ex.getMessage());
 				}
 			}
@@ -2638,7 +2686,7 @@ class Exportacao {
 		return null;
 	}
 
-	void processarDetalhes(Metadado tabela) throws MetadadoException, ObjetoException {
+	void processarDetalhes(Metadado tabela) throws MetadadoException, ObjetoException, AssistenciaException {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
 		Coletor coletor = new Coletor();
 		SetLista.view(principal.getId() + ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos),
@@ -2671,13 +2719,13 @@ class Exportacao {
 		return null;
 	}
 
-	void adicionarObjetoAvulso(Metadado tabela) {
+	void adicionarObjetoAvulso(Metadado tabela) throws AssistenciaException {
 		criarEAdicionarObjeto();
 		processarIdTabelaGrupoAvulso(tabela);
 		processarChavesAvulso(tabela);
 	}
 
-	private void processarCampoFK(Metadado campo) throws MetadadoException, ObjetoException {
+	private void processarCampoFK(Metadado campo) throws MetadadoException, ObjetoException, AssistenciaException {
 		campoFK = campo;
 		criarEAdicionarObjeto();
 		criarEAdicionarRelacao();
@@ -2685,7 +2733,7 @@ class Exportacao {
 		processarChaves();
 	}
 
-	private void criarEAdicionarObjeto() {
+	private void criarEAdicionarObjeto() throws AssistenciaException {
 		Objeto obj = new Objeto(0, 0);
 		ObjetoSuperficieUtil.checagemId(superficie, obj, obj.getId(), Constantes.SEP2);
 		this.objeto = obj;
@@ -2794,13 +2842,13 @@ class Exportacao {
 
 class ExportacaoImportacao {
 	final List<Objeto> objetos = new ArrayList<>();
-	final Objeto principal = new Objeto(0, 0);
 	private final Map<String, Object> mapaRef;
 	private final List<Pesquisa> listaRef;
 	final ObjetoSuperficie superficie;
 	final boolean exportacao;
 	Metadado campoProcessado;
 	final boolean circular;
+	final Objeto principal;
 	Metadado raiz;
 	Vetor vetor;
 	int centroX;
@@ -2808,11 +2856,13 @@ class ExportacaoImportacao {
 	int graus;
 	int y;
 
-	ExportacaoImportacao(ObjetoSuperficie superficie, boolean exportacao, boolean circular) {
+	ExportacaoImportacao(ObjetoSuperficie superficie, boolean exportacao, boolean circular)
+			throws AssistenciaException {
 		mapaRef = new LinkedHashMap<>();
 		this.superficie = superficie;
 		this.exportacao = exportacao;
 		listaRef = new ArrayList<>();
+		principal = new Objeto(0, 0);
 		this.circular = circular;
 	}
 
@@ -2851,12 +2901,12 @@ class ExportacaoImportacao {
 		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref, iconeGrupo));
 	}
 
-	void processarDetalhes(Metadado tabela) throws MetadadoException, ObjetoException {
+	void processarDetalhes(Metadado tabela) throws MetadadoException, ObjetoException, AssistenciaException {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(exportacao);
 		processarLista(campos);
 	}
 
-	private void processarLista(List<Metadado> campos) throws MetadadoException, ObjetoException {
+	private void processarLista(List<Metadado> campos) throws MetadadoException, ObjetoException, AssistenciaException {
 		for (Metadado campo : campos) {
 			campoProcessado = campo;
 			Objeto objeto = criarEAdicionarObjeto();
@@ -2866,7 +2916,7 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private Objeto criarEAdicionarObjeto() {
+	private Objeto criarEAdicionarObjeto() throws AssistenciaException {
 		Objeto objeto = new Objeto(0, 0);
 		objetos.add(objeto);
 		superficie.addObjeto(objeto);

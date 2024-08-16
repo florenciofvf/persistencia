@@ -11,8 +11,10 @@ import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.CheckBoxItem;
 import br.com.persist.componente.Menu;
@@ -173,13 +175,23 @@ public class AnexoTree extends Tree {
 			addMenuItem(true, copiarAcao);
 			addMenuItem(colarAcao);
 			copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarAtributosAnexo(AnexoTree.this)));
-			colarAcao.setActionListener(e -> ouvintes.forEach(o -> o.colarAtributosAnexo(AnexoTree.this)));
+			colarAcao.setActionListener(e -> colarAtributosAnexo());
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearAnexo(AnexoTree.this)));
 			corFonteAcao.setActionListener(e -> ouvintes.forEach(o -> o.corFonteAnexo(AnexoTree.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirAnexo(AnexoTree.this)));
 			iconeAcao.setActionListener(e -> ouvintes.forEach(o -> o.iconeAnexo(AnexoTree.this)));
 			chkAbrirVisivel.addActionListener(e -> abrirVisivel(chkAbrirVisivel.isSelected()));
 			chkPadraoAbrir.addActionListener(e -> padraoAbrir(chkPadraoAbrir.isSelected()));
+		}
+
+		private void colarAtributosAnexo() {
+			for (AnexoTreeListener item : ouvintes) {
+				try {
+					item.colarAtributosAnexo(AnexoTree.this);
+				} catch (AssistenciaException ex) {
+					Util.mensagem(AnexoTree.this, ex.getMessage());
+				}
+			}
 		}
 
 		private void preShow(Anexo anexo) {

@@ -18,6 +18,7 @@ import java.util.Objects;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -83,8 +84,12 @@ public class IconeContainer extends Panel {
 		private transient MouseListener mouseListenerInner = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				listener.setIcone(nome);
-				toolbar.fechar();
+				try {
+					listener.setIcone(nome);
+					toolbar.fechar();
+				} catch (AssistenciaException ex) {
+					Util.mensagem(IconeContainer.this, ex.getMessage());
+				}
 			}
 		};
 	}

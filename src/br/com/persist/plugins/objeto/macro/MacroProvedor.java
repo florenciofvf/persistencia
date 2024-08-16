@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.Macro.AbrirAuto;
@@ -124,7 +125,7 @@ public class MacroProvedor {
 
 		public abstract void executar(Relacao relacao);
 
-		public abstract void executar(Objeto objeto);
+		public abstract void executar(Objeto objeto) throws AssistenciaException;
 
 		public void setValor(Object valor) {
 			this.valor = valor;

@@ -29,6 +29,7 @@ import javax.swing.JInternalFrame;
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopLargura;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -358,7 +359,8 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		return false;
 	}
 
-	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear) {
+	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear)
+			throws AssistenciaException {
 		if (metadado == null) {
 			LOG.finest("processadoMetadado(): metadado null.");
 		}
@@ -420,7 +422,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	}
 
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
-			throws ObjetoException {
+			throws ObjetoException, AssistenciaException {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;

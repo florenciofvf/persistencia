@@ -29,6 +29,7 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.arquivo.ArquivoUtil;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
@@ -366,7 +367,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	@Override
-	public void colarAtributosAnexo(AnexoTree anexoTree) {
+	public void colarAtributosAnexo(AnexoTree anexoTree) throws AssistenciaException {
 		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo == null) {
 			return;

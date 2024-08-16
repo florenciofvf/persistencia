@@ -23,6 +23,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
+import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
@@ -257,7 +258,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {
 		@Override
 		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
-				throws ObjetoException {
+				throws ObjetoException, AssistenciaException {
 			checarDesktop();
 			if (desktop != null) {
 				desktop.pesquisar(conexao, pesquisa, argumento, soTotal, emForms);
@@ -326,7 +327,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
-				throws MetadadoException, ObjetoException {
+				throws MetadadoException, ObjetoException, AssistenciaException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto, mapaRef);
@@ -347,14 +348,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
-		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) {
+		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) throws AssistenciaException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulsoAbaixo(conexao, objeto);
 			}
 		}
 
-		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) {
+		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) throws AssistenciaException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulsoAcima(conexao, objeto);
