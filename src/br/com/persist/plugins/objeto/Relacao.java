@@ -36,25 +36,25 @@ public class Relacao implements Runnable {
 	private String descricao;
 	private Thread thread;
 
-	public Relacao(Objeto origem, Objeto destino) {
+	public Relacao(Objeto origem, Objeto destino) throws ObjetoException {
 		this(origem, false, destino, false);
 	}
 
-	public Relacao(Objeto origem, boolean pontoOrigem, Objeto destino) {
+	public Relacao(Objeto origem, boolean pontoOrigem, Objeto destino) throws ObjetoException {
 		this(origem, pontoOrigem, destino, false);
 	}
 
-	public Relacao(Objeto origem, Objeto destino, boolean pontoDestino) {
+	public Relacao(Objeto origem, Objeto destino, boolean pontoDestino) throws ObjetoException {
 		this(origem, false, destino, pontoDestino);
 	}
 
-	public Relacao(Objeto origem, boolean pontoOrigem, Objeto destino, boolean pontoDestino) {
+	public Relacao(Objeto origem, boolean pontoOrigem, Objeto destino, boolean pontoDestino) throws ObjetoException {
 		this.pontoDestino = pontoDestino;
 		this.pontoOrigem = pontoOrigem;
 		this.destino = Objects.requireNonNull(destino);
 		this.origem = Objects.requireNonNull(origem);
 		if (origem.equals(destino)) {
-			throw new IllegalStateException();
+			throw new ObjetoException("origem e destino iguais");
 		}
 	}
 

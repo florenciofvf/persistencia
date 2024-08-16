@@ -58,6 +58,7 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
@@ -135,10 +136,18 @@ public class ObjetoContainer extends Panel {
 
 		private VinculadoPopup() {
 			add(action);
-			action.setActionListener(e -> processar());
+			action.setActionListener(e -> preProcessar());
 		}
 
-		void processar() {
+		void preProcessar() {
+			try {
+				processar();
+			} catch (ObjetoException ex) {
+				Util.mensagem(ObjetoContainer.this, ex.getMessage());
+			}
+		}
+
+		void processar() throws ObjetoException {
 			if (compChave == null) {
 				return;
 			}
@@ -229,7 +238,7 @@ public class ObjetoContainer extends Panel {
 			}
 		}
 
-		void processar3(ParaTabela para) {
+		void processar3(ParaTabela para) throws ObjetoException {
 			if ("AJUSTE_AUTO".equals(compChave.chave)) {
 				para.setAjustarAltura(compChave.getBool());
 			} else if ("AJUSTE_LARG".equals(compChave.chave)) {
@@ -1088,10 +1097,18 @@ public class ObjetoContainer extends Panel {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 				addButton(actionCorFonteVinculo);
-				actionCorFonteVinculo.setActionListener(e -> corFonteVinculo());
+				actionCorFonteVinculo.setActionListener(e -> preCorFonteVinculo());
 			}
 
-			private void corFonteVinculo() {
+			private void preCorFonteVinculo() {
+				try {
+					corFonteVinculo();
+				} catch (ObjetoException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				}
+			}
+
+			private void corFonteVinculo() throws ObjetoException {
 				if (Util.isEmpty(txtTabela.getText())) {
 					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 					return;
@@ -1161,10 +1178,18 @@ public class ObjetoContainer extends Panel {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 				addButton(actionCorVinculo);
-				actionCorVinculo.setActionListener(e -> corVinculo());
+				actionCorVinculo.setActionListener(e -> preCorVinculo());
 			}
 
-			private void corVinculo() {
+			private void preCorVinculo() {
+				try {
+					corVinculo();
+				} catch (ObjetoException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				}
+			}
+
+			private void corVinculo() throws ObjetoException {
 				if (Util.isEmpty(txtTabela.getText())) {
 					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 					return;
@@ -1217,7 +1242,15 @@ public class ObjetoContainer extends Panel {
 			this.objeto = objeto;
 			this.label = label;
 			popup.add(action);
-			action.setActionListener(e -> configIconeVinculo());
+			action.setActionListener(e -> preConfigIconeVinculo());
+		}
+
+		private void preConfigIconeVinculo() {
+			try {
+				configIconeVinculo();
+			} catch (ObjetoException ex) {
+				Util.mensagem(ObjetoContainer.this, ex.getMessage());
+			}
 		}
 
 		@Override
@@ -1248,7 +1281,7 @@ public class ObjetoContainer extends Panel {
 			}
 		}
 
-		private void configIconeVinculo() {
+		private void configIconeVinculo() throws ObjetoException {
 			if (Util.isEmpty(txtTabela.getText())) {
 				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
 				return;

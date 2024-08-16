@@ -31,7 +31,11 @@ public class ObjetoHandler extends XMLHandler {
 		} else if ("objeto".equals(qName)) {
 			processarObjeto(attributes);
 		} else if ("relacao".equals(qName)) {
-			processarRelacao(attributes);
+			try {
+				processarRelacao(attributes);
+			} catch (ObjetoException ex) {
+				throw new SAXException(ex);
+			}
 		} else if ("form".equals(qName)) {
 			processarForm(attributes);
 		} else if ("desc".equals(qName) || Constantes.VALOR.equals(qName) || "buscaAutomatica".equals(qName)) {
@@ -45,7 +49,7 @@ public class ObjetoHandler extends XMLHandler {
 		coletor.getForms().add(f);
 	}
 
-	private void processarRelacao(Attributes attributes) {
+	private void processarRelacao(Attributes attributes) throws ObjetoException {
 		boolean pontoDestino = Boolean.parseBoolean(attributes.getValue("pontoDestino"));
 		boolean pontoOrigem = Boolean.parseBoolean(attributes.getValue("pontoOrigem"));
 		Objeto destino = getObjeto(attributes.getValue("destino"));
@@ -76,13 +80,13 @@ public class ObjetoHandler extends XMLHandler {
 		}
 	}
 
-	private Objeto getObjeto(String nome) {
+	private Objeto getObjeto(String nome) throws ObjetoException {
 		for (Objeto objeto : coletor.getObjetos()) {
 			if (nome.equals(objeto.getId())) {
 				return objeto;
 			}
 		}
-		throw new IllegalStateException();
+		throw new ObjetoException("getObjeto(String nome)");
 	}
 
 	@Override

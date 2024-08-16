@@ -50,7 +50,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular) throws MetadadoException {
+			boolean circular) throws MetadadoException, ObjetoException {
 		AtomicReference<String> tituloTemp = new AtomicReference<>();
 		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, tituloTemp);
 		if (!Util.isEmpty(tituloTemp.get())) {
@@ -58,7 +58,8 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		}
 	}
 
-	public void abrirArquivo(File file, ObjetoColetor coletor, InternalConfig config) throws XMLException {
+	public void abrirArquivo(File file, ObjetoColetor coletor, InternalConfig config)
+			throws XMLException, ObjetoException {
 		container.abrir(file, coletor, config);
 	}
 

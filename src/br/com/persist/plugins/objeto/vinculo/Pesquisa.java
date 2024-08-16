@@ -10,6 +10,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class Pesquisa {
 	private final List<Referencia> referenciasApos;
@@ -22,10 +23,10 @@ public class Pesquisa {
 	private String nome;
 	private int ordem;
 
-	public Pesquisa(String nome, Referencia ref, String iconeGrupo) {
+	public Pesquisa(String nome, Referencia ref, String iconeGrupo) throws ObjetoException {
 		this.referencia = Objects.requireNonNull(ref);
 		if (Util.isEmpty(nome)) {
-			throw new IllegalStateException("Nome da pesquisa vazia.");
+			throw new ObjetoException("Nome da pesquisa vazia.");
 		}
 		referenciasApos = new ArrayList<>();
 		referencias = new ArrayList<>();
@@ -77,7 +78,7 @@ public class Pesquisa {
 		return referencias.get(0);
 	}
 
-	public void processar(Objeto objeto) {
+	public void processar(Objeto objeto) throws ObjetoException {
 		if (referencia.igual(objeto)) {
 			objeto.addPesquisa(this);
 			objeto.addReferencias(referencias);
@@ -164,7 +165,7 @@ public class Pesquisa {
 		return referencia.getCampo();
 	}
 
-	public void modelo(XMLUtil util) {
+	public void modelo(XMLUtil util) throws ObjetoException {
 		util.ql();
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, "Nome da pesquisa")
 				.atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA).atributo(VinculoHandler.CAMPO, "PK")
@@ -233,7 +234,7 @@ public class Pesquisa {
 		}
 	}
 
-	public void clonarParams() {
+	public void clonarParams() throws ObjetoException {
 		cloneParams.clear();
 		for (Param param : getParams()) {
 			cloneParams.add(param.clonar());
@@ -248,7 +249,7 @@ public class Pesquisa {
 		return cloneParams;
 	}
 
-	public boolean add(Referencia ref) {
+	public boolean add(Referencia ref) throws ObjetoException {
 		if (ref != null) {
 			if (!ref.isLimparApos() && !ReferenciaUtil.contem(ref, referencias)) {
 				referencias.add(ref);
@@ -271,7 +272,7 @@ public class Pesquisa {
 		return false;
 	}
 
-	public boolean addLimparResto() {
+	public boolean addLimparResto() throws ObjetoException {
 		Referencia ref = new Referencia(null, "*", null);
 		ref.setLimparApos(true);
 		return add(ref);
@@ -287,11 +288,11 @@ public class Pesquisa {
 		}
 	}
 
-	public void addRef(Map<String, String> map) {
+	public void addRef(Map<String, String> map) throws ObjetoException {
 		add(VinculoHandler.criar(map));
 	}
 
-	public void add(List<Referencia> referencias) {
+	public void add(List<Referencia> referencias) throws ObjetoException {
 		for (Referencia ref : referencias) {
 			add(ref);
 		}

@@ -12,6 +12,7 @@ import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class Vinculacao {
 	private final Map<String, ParaTabela> mapaParaTabela;
@@ -23,7 +24,7 @@ public class Vinculacao {
 		pesquisas = new ArrayList<>();
 	}
 
-	public boolean adicionarPesquisa(Pesquisa pesquisa) {
+	public boolean adicionarPesquisa(Pesquisa pesquisa) throws ObjetoException {
 		if (pesquisa != null && !PesquisaUtil.contem(pesquisa, pesquisas)) {
 			pesquisas.add(pesquisa);
 			return true;
@@ -82,7 +83,7 @@ public class Vinculacao {
 		return pesquisas.remove(pesquisa);
 	}
 
-	public void processar(Objeto objeto) {
+	public void processar(Objeto objeto) throws ObjetoException {
 		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela());
 		if (paraTabela != null) {
 			objeto.addInstrucoes(paraTabela.getInstrucoes());
@@ -121,7 +122,7 @@ public class Vinculacao {
 		}
 	}
 
-	public static void criarArquivoVinculado(ArquivoVinculo av) throws XMLException {
+	public static void criarArquivoVinculado(ArquivoVinculo av) throws XMLException, ObjetoException {
 		av.checarDiretorio();
 		XMLUtil util = new XMLUtil(av.getFile());
 		util.prologo();

@@ -8,6 +8,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class Referencia {
 	private final List<Coletor> coletores;
@@ -21,17 +22,17 @@ public class Referencia {
 	private String concatenar;
 	Pesquisa pesquisa;
 
-	public Referencia(String grupo, String tabela, String campo) {
+	public Referencia(String grupo, String tabela, String campo) throws ObjetoException {
 		this.grupo = grupo == null ? "" : grupo.trim();
 		this.campo = campo == null ? "" : campo.trim();
 		coletores = new ArrayList<>();
 		if (Util.isEmpty(tabela)) {
-			throw new IllegalStateException("Tabela vazia.");
+			throw new ObjetoException("Tabela vazia.");
 		}
 		this.tabela = tabela;
 	}
 
-	public Pesquisa rotuloDe(Objeto objeto) {
+	public Pesquisa rotuloDe(Objeto objeto) throws ObjetoException {
 		if (objeto == null || pesquisa == null) {
 			return null;
 		}
@@ -136,7 +137,7 @@ public class Referencia {
 		return "*".equals(tabela);
 	}
 
-	public Referencia clonar() {
+	public Referencia clonar() throws ObjetoException {
 		return new Referencia(grupo, tabela, campo);
 	}
 

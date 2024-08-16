@@ -1156,7 +1156,7 @@ public class Objeto implements Runnable {
 		return referencias;
 	}
 
-	public void addReferencia(Referencia ref) {
+	public void addReferencia(Referencia ref) throws ObjetoException {
 		if (ref != null && !ReferenciaUtil.contem(ref, referencias)) {
 			referencias.add(ref);
 		}
@@ -1209,13 +1209,13 @@ public class Objeto implements Runnable {
 		return "[" + ref.getGrupo() + "][" + ref.getTabela() + "]";
 	}
 
-	public void addReferencias(List<Referencia> referencias) {
+	public void addReferencias(List<Referencia> referencias) throws ObjetoException {
 		for (Referencia ref : referencias) {
 			addReferencia(ref);
 		}
 	}
 
-	public boolean addPesquisa(Pesquisa pesq) {
+	public boolean addPesquisa(Pesquisa pesq) throws ObjetoException {
 		if (pesq != null && !PesquisaUtil.contem(pesq, pesquisas)) {
 			pesquisas.add(pesq);
 			return true;

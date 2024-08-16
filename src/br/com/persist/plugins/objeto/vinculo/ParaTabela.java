@@ -10,6 +10,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class ParaTabela {
 	private static final String ESQUEMA_ALTERNATIVO = "esquemaAlternativo";
@@ -80,9 +81,9 @@ public class ParaTabela {
 	private String bpnt;
 	final String tabela;
 
-	public ParaTabela(String tabela) {
+	public ParaTabela(String tabela) throws ObjetoException {
 		if (Util.isEmpty(tabela)) {
-			throw new IllegalStateException("Tabela vazia.");
+			throw new ObjetoException("Tabela vazia.");
 		}
 		instrucoes = new ArrayList<>();
 		filtros = new ArrayList<>();
@@ -97,7 +98,7 @@ public class ParaTabela {
 		return filtros;
 	}
 
-	public void addInstrucao(String instrucao) {
+	public void addInstrucao(String instrucao) throws ObjetoException {
 		if (Util.isEmpty(instrucao)) {
 			instrucao = "ALTERE PARA SUA INSTRUCAO";
 		}
@@ -115,7 +116,7 @@ public class ParaTabela {
 		}
 	}
 
-	public void addFiltro(String filtro) {
+	public void addFiltro(String filtro) throws ObjetoException {
 		if (Util.isEmpty(filtro)) {
 			filtro = "ALTERE PARA SEU FILTRO";
 		}
@@ -333,7 +334,7 @@ public class ParaTabela {
 		util.finalizarTag(VinculoHandler.PARA);
 	}
 
-	public void modelo(XMLUtil util) {
+	public void modelo(XMLUtil util) throws ObjetoException {
 		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
 				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(COR_FONTE, "#AABBCC")
 				.atributo(COR_FUNDO, "#CAFEBB").ql();

@@ -547,8 +547,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			}
 
 			private void eventos() {
-				todosIconesParaTabelaAcao
-						.setActionListener(e -> ObjetoSuperficieUtil.todosIconesParaArquivoVinculado(objetoSuperficie));
+				todosIconesParaTabelaAcao.setActionListener(e -> todosIconesParaArquivoVinculado());
 				compararRegistroAcao.setActionListener(e -> ObjetoSuperficieUtil.compararRegistro(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				selecaoGeralAcao.setActionListener(e -> ObjetoSuperficieUtil.selecaoGeral(objetoSuperficie,
@@ -569,6 +568,14 @@ public class ObjetoContainer extends AbstratoContainer {
 				gradeAction.setActionListener(e -> objetoSuperficie.setTotalArrastado(1));
 				ignorarAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorar(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+			}
+
+			private void todosIconesParaArquivoVinculado() {
+				try {
+					ObjetoSuperficieUtil.todosIconesParaArquivoVinculado(objetoSuperficie);
+				} catch (ObjetoException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				}
 			}
 
 			@Override
@@ -697,7 +704,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular, AtomicReference<String> tituloTemp) throws MetadadoException {
+			boolean circular, AtomicReference<String> tituloTemp) throws MetadadoException, ObjetoException {
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 		}
@@ -720,7 +727,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, ObjetoColetor coletor, InternalConfig config) throws XMLException {
+	public void abrir(File file, ObjetoColetor coletor, InternalConfig config) throws XMLException, ObjetoException {
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
 		objetoSuperficie.setProcessar(coletor.getProcessar().get());
 		objetoSuperficie.abrir(coletor);

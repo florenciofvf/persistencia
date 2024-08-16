@@ -560,14 +560,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				repaint();
 				return;
 			}
-			Relacao relacao = ObjetoSuperficieUtil.getRelacao(ObjetoSuperficie.this, origem, destino);
-			if (relacao == null) {
-				relacao = new Relacao(origem, false, destino, !ctrl);
-				addRelacao(relacao);
-			}
-			repaint();
-			if (!ctrl) {
-				RelacaoDialogo.criar(container.getFrame(), ObjetoSuperficie.this, relacao);
+			try {
+				Relacao relacao = ObjetoSuperficieUtil.getRelacao(ObjetoSuperficie.this, origem, destino);
+				if (relacao == null) {
+					relacao = new Relacao(origem, false, destino, !ctrl);
+					addRelacao(relacao);
+				}
+				repaint();
+				if (!ctrl) {
+					RelacaoDialogo.criar(container.getFrame(), ObjetoSuperficie.this, relacao);
+				}
+			} catch (ObjetoException ex) {
+				Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
 			}
 		}
 
@@ -981,7 +985,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.META_MASK);
 	}
 
-	public void abrir(ObjetoColetor coletor) throws XMLException {
+	public void abrir(ObjetoColetor coletor) throws XMLException, ObjetoException {
 		limpar();
 		for (Objeto objeto : coletor.getObjetos()) {
 			addObjeto(objeto);
@@ -1061,7 +1065,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
-	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) {
+	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) throws ObjetoException {
 		Relacao relacao = ObjetoSuperficieUtil.getRelacao(this, pesquisador, pesquisado);
 		if (relacao != null) {
 			relacao.setObjetoTemp(pesquisado);
@@ -1070,7 +1074,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
-	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms) {
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
+			throws ObjetoException {
 		if (conexao == null) {
 			conexao = container.getConexaoPadrao();
 		}
@@ -1166,7 +1171,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
-			throws MetadadoException {
+			throws MetadadoException, ObjetoException {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
 		formulario.processar(args);
@@ -1183,7 +1188,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef, Metadado tabela)
-			throws MetadadoException {
+			throws MetadadoException, ObjetoException {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, mapaRef, tabela.getPai());
 		exportacao.criarPesquisa();
 		exportacao.processarDetalhes(tabela);
@@ -1295,7 +1300,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
-			boolean circular, AtomicReference<String> ref) throws MetadadoException {
+			boolean circular, AtomicReference<String> ref) throws MetadadoException, ObjetoException {
 		ExportacaoImportacao expImp = criarExportacaoImportacao(exportacao, circular);
 		expImp.processarPrincipal(tabela);
 		expImp.checarCriarPesquisa();
@@ -2237,7 +2242,11 @@ class SuperficiePopup extends Popup {
 		excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(superficie));
 		relacoesAcao.setActionListener(e -> {
 			if (superficie.selecionadoObjeto != null) {
-				selecionarRelacao(superficie.selecionadoObjeto);
+				try {
+					selecionarRelacao(superficie.selecionadoObjeto);
+				} catch (ObjetoException ex) {
+					Util.mensagem(SuperficiePopup.this, ex.getMessage());
+				}
 			}
 		});
 		configuracaoAcao.setActionListener(e -> {
@@ -2275,7 +2284,7 @@ class SuperficiePopup extends Popup {
 		superficie.criarExternalFormulario(conexao, objeto);
 	}
 
-	private void selecionarRelacao(Objeto objeto) {
+	private void selecionarRelacao(Objeto objeto) throws ObjetoException {
 		List<Relacao> lista = ObjetoSuperficieUtil.getRelacoes(superficie, objeto);
 		List<String> ids = montarIds(lista, objeto);
 		if (!ids.isEmpty()) {
@@ -2350,17 +2359,21 @@ class SuperficiePopup extends Popup {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (superficie.selecionadoRelacao != null) {
-				Objeto novo = superficie.selecionadoRelacao.criarObjetoMeio();
-				Objeto destino = superficie.selecionadoRelacao.getDestino();
-				Objeto origem = superficie.selecionadoRelacao.getOrigem();
-				ObjetoSuperficieUtil.checagemId(superficie, novo, Constantes.VAZIO, Constantes.VAZIO);
-				superficie.addObjeto(novo);
-				superficie.selecionadoRelacao.setSelecionado(false);
-				superficie.excluir(superficie.selecionadoRelacao);
-				superficie.selecionadoRelacao = null;
-				superficie.addRelacao(new Relacao(origem, false, novo, false));
-				superficie.addRelacao(new Relacao(novo, false, destino, false));
-				superficie.repaint();
+				try {
+					Objeto novo = superficie.selecionadoRelacao.criarObjetoMeio();
+					Objeto destino = superficie.selecionadoRelacao.getDestino();
+					Objeto origem = superficie.selecionadoRelacao.getOrigem();
+					ObjetoSuperficieUtil.checagemId(superficie, novo, Constantes.VAZIO, Constantes.VAZIO);
+					superficie.addObjeto(novo);
+					superficie.selecionadoRelacao.setSelecionado(false);
+					superficie.excluir(superficie.selecionadoRelacao);
+					superficie.selecionadoRelacao = null;
+					superficie.addRelacao(new Relacao(origem, false, novo, false));
+					superficie.addRelacao(new Relacao(novo, false, destino, false));
+					superficie.repaint();
+				} catch (ObjetoException ex) {
+					Util.mensagem(SuperficiePopup.this, ex.getMessage());
+				}
 			}
 		}
 	}
@@ -2601,12 +2614,13 @@ class Exportacao {
 		this.raiz = raiz;
 	}
 
-	void criarPesquisa() {
+	void criarPesquisa() throws ObjetoException {
 		criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
 				principal.getChaves(), "executar");
 	}
 
-	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {
+	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo)
+			throws ObjetoException {
 		Referencia ref = new Referencia(grupo, tabela, campo);
 		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref, iconeGrupo));
 	}
@@ -2624,7 +2638,7 @@ class Exportacao {
 		return null;
 	}
 
-	void processarDetalhes(Metadado tabela) throws MetadadoException {
+	void processarDetalhes(Metadado tabela) throws MetadadoException, ObjetoException {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
 		Coletor coletor = new Coletor();
 		SetLista.view(principal.getId() + ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos),
@@ -2663,7 +2677,7 @@ class Exportacao {
 		processarChavesAvulso(tabela);
 	}
 
-	private void processarCampoFK(Metadado campo) throws MetadadoException {
+	private void processarCampoFK(Metadado campo) throws MetadadoException, ObjetoException {
 		campoFK = campo;
 		criarEAdicionarObjeto();
 		criarEAdicionarRelacao();
@@ -2678,7 +2692,7 @@ class Exportacao {
 		superficie.addObjeto(obj);
 	}
 
-	private void criarEAdicionarRelacao() {
+	private void criarEAdicionarRelacao() throws ObjetoException {
 		Relacao rel = new Relacao(principal, false, objeto, true);
 		rel.setPontoDestino(false);
 		rel.setPontoOrigem(false);
@@ -2698,7 +2712,7 @@ class Exportacao {
 		objeto.setTabela(tabela.getDescricao());
 	}
 
-	private void processarChaves() throws MetadadoException {
+	private void processarChaves() throws MetadadoException, ObjetoException {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
 		if (tabela != null) {
@@ -2706,7 +2720,7 @@ class Exportacao {
 		}
 	}
 
-	private void processarChaves(Metadado tabela) throws MetadadoException {
+	private void processarChaves(Metadado tabela) throws MetadadoException, ObjetoException {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		relacao.setChaveDestino(tabelaRef.getNomeCampo());
 		relacao.setChaveOrigem(principal.getChaves());
@@ -2718,12 +2732,12 @@ class Exportacao {
 		objeto.setChaves(tabela.getChaves());
 	}
 
-	private void referenciaNaPesquisa() throws MetadadoException {
+	private void referenciaNaPesquisa() throws MetadadoException, ObjetoException {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
 	}
 
-	private void ref(String tabela, String campo, String grupo) {
+	private void ref(String tabela, String campo, String grupo) throws ObjetoException {
 		Referencia ref = new Referencia(grupo, tabela, campo);
 		ref.setVazioInvisivel(true);
 		mapaRef.put("ref", ref);
@@ -2760,7 +2774,7 @@ class Exportacao {
 		}
 	}
 
-	void setScriptAdicaoHierarquico() {
+	void setScriptAdicaoHierarquico() throws ObjetoException {
 		Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 		objeto.setPesquisaAdicaoHierarquico(pesquisa);
 		Referencia ref = pesquisa.get();
@@ -2824,24 +2838,25 @@ class ExportacaoImportacao {
 		raiz = metadado.getPai();
 	}
 
-	void checarCriarPesquisa() {
+	void checarCriarPesquisa() throws ObjetoException {
 		if (exportacao) {
 			criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
 					principal.getChaves(), "executar");
 		}
 	}
 
-	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo) {
+	private void criarPesquisa(String nome, String grupo, String tabela, String campo, String iconeGrupo)
+			throws ObjetoException {
 		Referencia ref = new Referencia(grupo, tabela, campo);
 		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref, iconeGrupo));
 	}
 
-	void processarDetalhes(Metadado tabela) throws MetadadoException {
+	void processarDetalhes(Metadado tabela) throws MetadadoException, ObjetoException {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(exportacao);
 		processarLista(campos);
 	}
 
-	private void processarLista(List<Metadado> campos) throws MetadadoException {
+	private void processarLista(List<Metadado> campos) throws MetadadoException, ObjetoException {
 		for (Metadado campo : campos) {
 			campoProcessado = campo;
 			Objeto objeto = criarEAdicionarObjeto();
@@ -2858,7 +2873,7 @@ class ExportacaoImportacao {
 		return objeto;
 	}
 
-	private Relacao criarEAdicionarRelacao(Objeto objeto) {
+	private Relacao criarEAdicionarRelacao(Objeto objeto) throws ObjetoException {
 		Relacao relacao = new Relacao(principal, !exportacao, objeto, exportacao);
 		relacao.setQuebrado(!circular);
 		if (!circular) {
@@ -2891,7 +2906,7 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private void processarChaves(Objeto objeto, Relacao relacao) throws MetadadoException {
+	private void processarChaves(Objeto objeto, Relacao relacao) throws MetadadoException, ObjetoException {
 		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
 		Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
 		if (tabela != null) {
@@ -2899,7 +2914,8 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private void processarChaves(Objeto objeto, Metadado tabela, Relacao relacao) throws MetadadoException {
+	private void processarChaves(Objeto objeto, Metadado tabela, Relacao relacao)
+			throws MetadadoException, ObjetoException {
 		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
 		relacao.setChaveDestino(tabelaRef.getNomeCampo());
 		objeto.setChaves(tabela.getChaves());
@@ -2910,13 +2926,13 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private void referenciaNaPesquisa(Objeto objeto, Relacao relacao) throws MetadadoException {
+	private void referenciaNaPesquisa(Objeto objeto, Relacao relacao) throws MetadadoException, ObjetoException {
 		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
 		ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
 		relacao.setChaveOrigem(principal.getChaves());
 	}
 
-	private void ref(String tabela, String campo, String grupo) {
+	private void ref(String tabela, String campo, String grupo) throws ObjetoException {
 		Referencia ref = new Referencia(grupo, tabela, campo);
 		ref.setVazioInvisivel(true);
 		mapaRef.put("ref", ref);
@@ -2924,7 +2940,7 @@ class ExportacaoImportacao {
 		pesquisa.add(ref);
 	}
 
-	private void pesquisaIndividualDetalhe(Objeto objeto, Relacao relacao) throws MetadadoException {
+	private void pesquisaIndividualDetalhe(Objeto objeto, Relacao relacao) throws MetadadoException, ObjetoException {
 		Metadado campoDetalhe = campoProcessado;
 		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
 		pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(), principal.getGrupo(),
@@ -2933,7 +2949,7 @@ class ExportacaoImportacao {
 	}
 
 	private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
-			String grupoDetalhe, String tabelaDetalhe, String campoDetalhe) {
+			String grupoDetalhe, String tabelaDetalhe, String campoDetalhe) throws ObjetoException {
 		Pesquisa pesquisa = new Pesquisa(tabelaPrincipal, new Referencia(grupoDetalhe, tabelaDetalhe, campoDetalhe),
 				null);
 		Referencia ref = new Referencia(grupoPrincipal, tabelaPrincipal, campoPrincipal);
@@ -3065,7 +3081,7 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private void salvar(Pesquisa pesquisa) {
+	private void salvar(Pesquisa pesquisa) throws ObjetoException {
 		try {
 			superficie.vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
 		} catch (Exception ex) {
@@ -3080,7 +3096,7 @@ class ExportacaoImportacao {
 		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
 	}
 
-	private void salvar(List<Pesquisa> listaRef) {
+	private void salvar(List<Pesquisa> listaRef) throws ObjetoException {
 		try {
 			superficie.vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
 		} catch (Exception ex) {

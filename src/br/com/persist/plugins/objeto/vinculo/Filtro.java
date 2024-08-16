@@ -3,15 +3,16 @@ package br.com.persist.plugins.objeto.vinculo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class Filtro implements Comparable<Filtro> {
 	private final String nome;
 	private String valor;
 	private int ordem;
 
-	public Filtro(String nome) {
+	public Filtro(String nome) throws ObjetoException {
 		if (Util.isEmpty(nome)) {
-			throw new IllegalStateException();
+			throw new ObjetoException("nome nulo.");
 		}
 		this.nome = nome;
 	}
@@ -39,7 +40,7 @@ public class Filtro implements Comparable<Filtro> {
 		this.ordem = ordem;
 	}
 
-	public Filtro clonar() {
+	public Filtro clonar() throws ObjetoException {
 		Filtro i = new Filtro(nome);
 		i.setValor(valor);
 		return i;

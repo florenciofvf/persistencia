@@ -39,6 +39,7 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
+import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
@@ -610,7 +611,11 @@ public class TabelaPersistencia extends JTable {
 			pesquisaApartirColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
-					listener.pesquisaApartirColuna(TabelaPersistencia.this, coluna);
+					try {
+						listener.pesquisaApartirColuna(TabelaPersistencia.this, coluna);
+					} catch (ObjetoException ex) {
+						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
+					}
 				}
 			});
 			mapearApartirBiblioAcao.setActionListener(e -> {

@@ -339,7 +339,10 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		}
 	};
 
-	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) {
+	protected void internoPesquisarAntes(Objeto pesquisador, Objeto pesquisado) throws ObjetoException {
+		if (pesquisador == null && pesquisado == null) {
+			throw new ObjetoException("pesquisador == null && pesquisado == null");
+		}
 		if (pesquisador != null) {
 			LOG.log(Level.FINEST, pesquisador.getId());
 		}
@@ -416,7 +419,8 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		}
 	}
 
-	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms) {
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
+			throws ObjetoException {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
@@ -428,7 +432,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	}
 
 	private void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, InternalFormulario interno,
-			List<Referencia> referencias, boolean soTotal, boolean emForms) {
+			List<Referencia> referencias, boolean soTotal, boolean emForms) throws ObjetoException {
 		for (Referencia referencia : referencias) {
 			if (interno.ehReferencia(referencia)) {
 				interno.setReferenciaPesquisa(referencia);

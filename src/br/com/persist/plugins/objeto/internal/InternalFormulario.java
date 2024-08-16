@@ -35,6 +35,7 @@ import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
+import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
@@ -255,8 +256,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {
 		@Override
-		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal,
-				boolean emForms) {
+		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
+				throws ObjetoException {
 			checarDesktop();
 			if (desktop != null) {
 				desktop.pesquisar(conexao, pesquisa, argumento, soTotal, emForms);
@@ -325,7 +326,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
-				throws MetadadoException {
+				throws MetadadoException, ObjetoException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto, mapaRef);

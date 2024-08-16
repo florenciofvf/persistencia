@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
@@ -60,48 +61,54 @@ public class VinculoHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if (PESQUISA.equals(qName)) {
-			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes), attributes.getValue(ICONE_GRUPO));
-			String ordem = attributes.getValue(ORDEM);
-			if (!Util.isEmpty(ordem)) {
-				selecionado.setOrdem(Integer.parseInt(ordem));
+		try {
+			if (PESQUISA.equals(qName)) {
+				selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes),
+						attributes.getValue(ICONE_GRUPO));
+				String ordem = attributes.getValue(ORDEM);
+				if (!Util.isEmpty(ordem)) {
+					selecionado.setOrdem(Integer.parseInt(ordem));
+				}
+				if (!PesquisaUtil.contem(selecionado, pesquisas)) {
+					pesquisas.add(selecionado);
+				}
+			} else if (PARA.equals(qName)) {
+				tabelaSelecionada = attributes.getValue(TABELA);
+				if (!Util.isEmpty(tabelaSelecionada)) {
+					ParaTabela paraTabela = criarParaTabela(tabelaSelecionada, attributes);
+					mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> paraTabela);
+				}
+			} else if (INSTRUCAO.equals(qName)) {
+				processarInstrucao(attributes);
+				limpar();
+			} else if (FILTRO.equals(qName)) {
+				processarFiltro(attributes);
+				limpar();
+			} else if (REF.equals(qName) && selecionado != null) {
+				selecionado.add(criar(attributes));
+			} else if (PARAM.equals(qName) && selecionado != null) {
+				selecionado.add(criarParam(attributes));
 			}
-			if (!PesquisaUtil.contem(selecionado, pesquisas)) {
-				pesquisas.add(selecionado);
-			}
-		} else if (PARA.equals(qName)) {
-			tabelaSelecionada = attributes.getValue(TABELA);
-			if (!Util.isEmpty(tabelaSelecionada)) {
-				mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> criarParaTabela(tabelaSelecionada, attributes));
-			}
-		} else if (INSTRUCAO.equals(qName)) {
-			processarInstrucao(attributes);
-			limpar();
-		} else if (FILTRO.equals(qName)) {
-			processarFiltro(attributes);
-			limpar();
-		} else if (REF.equals(qName) && selecionado != null) {
-			selecionado.add(criar(attributes));
-		} else if (PARAM.equals(qName) && selecionado != null) {
-			selecionado.add(criarParam(attributes));
+		} catch (ObjetoException ex) {
+			throw new SAXException(ex);
 		}
 	}
 
-	private void processarInstrucao(Attributes attributes) {
+	private void processarInstrucao(Attributes attributes) throws ObjetoException {
 		ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
 		if (paraTabela != null) {
 			addInstrucao(attributes, paraTabela.getInstrucoes());
 		}
 	}
 
-	private void processarFiltro(Attributes attributes) {
+	private void processarFiltro(Attributes attributes) throws ObjetoException {
 		ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
 		if (paraTabela != null) {
 			addFiltro(attributes, paraTabela.getFiltros());
 		}
 	}
 
-	private void addInstrucao(Attributes attributes, List<Instrucao> lista) {
+	private void addInstrucao(Attributes attributes, List<Instrucao> lista) throws ObjetoException {
 		Instrucao i = new Instrucao(attributes.getValue(NOME));
 		boolean sm = Boolean.parseBoolean(attributes.getValue("selecaoMultipla"));
 		i.setSelecaoMultipla(sm);
@@ -114,7 +121,7 @@ public class VinculoHandler extends XMLHandler {
 		lista.add(i);
 	}
 
-	private void addFiltro(Attributes attributes, List<Filtro> lista) {
+	private void addFiltro(Attributes attributes, List<Filtro> lista) throws ObjetoException {
 		Filtro f = new Filtro(attributes.getValue(NOME));
 		String ordem = attributes.getValue(ORDEM);
 		if (!Util.isEmpty(ordem)) {
@@ -123,17 +130,17 @@ public class VinculoHandler extends XMLHandler {
 		lista.add(f);
 	}
 
-	private static ParaTabela criarParaTabela(String tabela, Attributes attributes) {
+	private static ParaTabela criarParaTabela(String tabela, Attributes attributes) throws ObjetoException {
 		ParaTabela paraTabela = new ParaTabela(tabela);
 		paraTabela.aplicar(attributes);
 		return paraTabela;
 	}
 
-	public static Param criarParam(Attributes attributes) {
+	public static Param criarParam(Attributes attributes) throws ObjetoException {
 		return new Param(attributes.getValue(CHAVE), attributes.getValue(ROTULO), attributes.getValue(VALOR));
 	}
 
-	public static Referencia criar(Attributes attributes) {
+	public static Referencia criar(Attributes attributes) throws ObjetoException {
 		Referencia ref = new Referencia(attributes.getValue(GRUPO), attributes.getValue(TABELA),
 				attributes.getValue(CAMPO));
 		ref.setVazioInvisivel(INVISIVEL.equalsIgnoreCase(attributes.getValue(VAZIO)));
@@ -143,7 +150,7 @@ public class VinculoHandler extends XMLHandler {
 		return ref;
 	}
 
-	public static Referencia criar(Map<String, String> attributes) {
+	public static Referencia criar(Map<String, String> attributes) throws ObjetoException {
 		Referencia ref = new Referencia(attributes.get(GRUPO), attributes.get(TABELA), attributes.get(CAMPO));
 		ref.setVazioInvisivel(INVISIVEL.equalsIgnoreCase(attributes.get(VAZIO)));
 		String limparApos = attributes.get(LIMPAR_APOS);

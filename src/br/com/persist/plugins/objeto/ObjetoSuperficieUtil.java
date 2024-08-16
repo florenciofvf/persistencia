@@ -37,12 +37,12 @@ public class ObjetoSuperficieUtil {
 		vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
 	}
 
-	public static Vinculacao getVinculacao(ObjetoSuperficie superficie) throws XMLException {
+	public static Vinculacao getVinculacao(ObjetoSuperficie superficie) throws XMLException, ObjetoException {
 		return getVinculacao(superficie, ObjetoSuperficieUtil.criarArquivoVinculo(superficie), false);
 	}
 
 	public static Vinculacao getVinculacao(ObjetoSuperficie superficie, ArquivoVinculo av, boolean criarSeInexistente)
-			throws XMLException {
+			throws XMLException, ObjetoException {
 		return ObjetoUtil.getVinculacao(superficie, av, criarSeInexistente);
 	}
 
@@ -170,7 +170,7 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
-	public static void todosIconesParaArquivoVinculado(ObjetoSuperficie superficie) {
+	public static void todosIconesParaArquivoVinculado(ObjetoSuperficie superficie) throws ObjetoException {
 		if (Util.isEmpty(superficie.arquivoVinculo)) {
 			Util.mensagem(superficie, ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_inexistente"));
 			return;
@@ -469,7 +469,7 @@ public class ObjetoSuperficieUtil {
 		return lista;
 	}
 
-	public static Relacao getRelacao(ObjetoSuperficie superficie, Objeto obj1, Objeto obj2) {
+	public static Relacao getRelacao(ObjetoSuperficie superficie, Objeto obj1, Objeto obj2) throws ObjetoException {
 		if (obj1 != null && obj2 != null) {
 			Relacao temp = new Relacao(obj1, obj2);
 			for (Relacao relacao : superficie.relacoes) {

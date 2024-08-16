@@ -99,7 +99,8 @@ public class ObjetoUtil {
 		return sb.toString();
 	}
 
-	public static void abrirArquivoVinculado(Component componente, ArquivoVinculo av) throws XMLException {
+	public static void abrirArquivoVinculado(Component componente, ArquivoVinculo av)
+			throws XMLException, ObjetoException {
 		if (av == null || !av.valido()) {
 			return;
 		}
@@ -123,7 +124,7 @@ public class ObjetoUtil {
 	}
 
 	public static Vinculacao getVinculacao(Component componente, ArquivoVinculo av, boolean criarSeInexistente)
-			throws XMLException {
+			throws XMLException, ObjetoException {
 		if (av != null && av.valido()) {
 			File file = av.getFile();
 			if (!file.exists()) {

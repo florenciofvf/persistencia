@@ -2,25 +2,26 @@ package br.com.persist.plugins.objeto.vinculo;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class Param {
 	private final String chave;
 	private final String rotulo;
 	private String valor;
 
-	public Param(String chave, String rotulo, String valor) {
+	public Param(String chave, String rotulo, String valor) throws ObjetoException {
 		if (Util.isEmpty(chave)) {
-			throw new IllegalStateException("Chave vazia.");
+			throw new ObjetoException("Chave vazia.");
 		}
 		if (Util.isEmpty(rotulo)) {
-			throw new IllegalStateException("Rotulo vazio.");
+			throw new ObjetoException("Rotulo vazio.");
 		}
 		this.chave = chave;
 		this.rotulo = rotulo;
 		this.valor = valor;
 	}
 
-	public Param clonar() {
+	public Param clonar() throws ObjetoException {
 		return new Param(chave, rotulo, valor);
 	}
 

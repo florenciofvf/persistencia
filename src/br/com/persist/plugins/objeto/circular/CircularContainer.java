@@ -18,6 +18,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
@@ -84,11 +85,15 @@ public class CircularContainer extends Panel {
 			Objeto pivo = (Objeto) comboObjeto.getSelectedItem();
 			Tipo tipo = (Tipo) comboTipo.getSelectedItem();
 			if (pivo != null && tipo != null) {
-				atualizar(pivo, tipo);
+				try {
+					atualizar(pivo, tipo);
+				} catch (ObjetoException ex) {
+					Util.mensagem(CircularContainer.this, ex.getMessage());
+				}
 			}
 		}
 
-		private void atualizar(Objeto pivo, Tipo tipo) {
+		private void atualizar(Objeto pivo, Tipo tipo) throws ObjetoException {
 			List<Objeto> selecionados = getSelecionados(pivo);
 			if (!selecionados.isEmpty()) {
 				atualizar(pivo, tipo, selecionados);
@@ -96,7 +101,7 @@ public class CircularContainer extends Panel {
 			}
 		}
 
-		private void atualizar(Objeto pivo, Tipo tipo, List<Objeto> selecionados) {
+		private void atualizar(Objeto pivo, Tipo tipo, List<Objeto> selecionados) throws ObjetoException {
 			int graus = definirGrauUnidade(selecionados);
 			Vetor vetor = criarVetor();
 			for (Objeto objeto : selecionados) {
@@ -121,7 +126,7 @@ public class CircularContainer extends Panel {
 			objeto.setY(pivo.getY() + (int) vetor.getY());
 		}
 
-		private void processarRelacao(Objeto objeto, Objeto pivo, Tipo tipo) {
+		private void processarRelacao(Objeto objeto, Objeto pivo, Tipo tipo) throws ObjetoException {
 			Relacao relacao = ObjetoSuperficieUtil.getRelacao(objetoSuperficie, pivo, objeto);
 			if (relacao != null && tipo == Tipo.NORMAL) {
 				pontoNormal(relacao);

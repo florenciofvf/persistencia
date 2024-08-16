@@ -1,5 +1,6 @@
 package br.com.persist.plugins.persistencia.tabela;
 
+import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.persistencia.Coluna;
 
 public interface TabelaPersistenciaListener {
@@ -30,7 +31,7 @@ public interface TabelaPersistenciaListener {
 
 	public void tabelaMouseClick(TabelaPersistencia tabelaPersistencia, int colunaClicada);
 
-	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome);
+	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) throws ObjetoException;
 
 	public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, Coluna coluna);
 

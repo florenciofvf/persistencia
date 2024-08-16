@@ -85,7 +85,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			checarArquivo(formulario, args);
 			try {
 				checarMetadado(formulario, args);
-			} catch (MetadadoException ex) {
+			} catch (MetadadoException | ObjetoException ex) {
 				Util.mensagemFormulario(formulario, ex.getMessage());
 			}
 		}
@@ -104,7 +104,8 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			}
 		}
 
-		private void checarMetadado(Formulario formulario, Map<String, Object> args) throws MetadadoException {
+		private void checarMetadado(Formulario formulario, Map<String, Object> args)
+				throws MetadadoException, ObjetoException {
 			Metadado metadado = (Metadado) args.get(MetadadoEvento.ABRIR_METADADO);
 			if (metadado != null) {
 				String metodo = (String) args.get(MetadadoEvento.METODO);
@@ -130,14 +131,14 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		}
 
 		private void abrirExportacaoMetadadoFormulario(Formulario formulario, Conexao conexao, Metadado metadado,
-				boolean circular) throws MetadadoException {
+				boolean circular) throws MetadadoException, ObjetoException {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 					new File(ObjetoMensagens.getString("label.abrir_exportacao")));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
 		}
 
 		private void abrirExportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
-				boolean circular) throws MetadadoException {
+				boolean circular) throws MetadadoException, ObjetoException {
 			ObjetoContainer container = criarObjetoContainer(formulario);
 			AtomicReference<String> tituloTemp = new AtomicReference<>();
 			container.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular, tituloTemp);
@@ -148,14 +149,14 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		}
 
 		private void abrirImportacaoMetadadoFormulario(Formulario formulario, Conexao conexao, Metadado metadado,
-				boolean circular) throws MetadadoException {
+				boolean circular) throws MetadadoException, ObjetoException {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 					new File(ObjetoMensagens.getString("label.abrir_importacao")));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
 		}
 
 		private void abrirImportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
-				boolean circular) throws MetadadoException {
+				boolean circular) throws MetadadoException, ObjetoException {
 			ObjetoContainer container = criarObjetoContainer(formulario);
 			AtomicReference<String> tituloTemp = new AtomicReference<>();
 			container.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular, tituloTemp);
@@ -264,7 +265,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private static void abrirNoFormulario(Formulario formulario, File file, ObjetoColetor coletor,
-			InternalConfig config) throws XMLException {
+			InternalConfig config) throws XMLException, ObjetoException {
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file, coletor, config);
 	}

@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto.vinculo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class Instrucao implements Comparable<Instrucao> {
 	private boolean selecaoMultipla;
@@ -11,9 +12,9 @@ public class Instrucao implements Comparable<Instrucao> {
 	private String valor;
 	private int ordem;
 
-	public Instrucao(String nome) {
+	public Instrucao(String nome) throws ObjetoException {
 		if (Util.isEmpty(nome)) {
-			throw new IllegalStateException();
+			throw new ObjetoException("nome nulo.");
 		}
 		this.nome = nome;
 	}
@@ -61,7 +62,7 @@ public class Instrucao implements Comparable<Instrucao> {
 		this.comoFiltro = comoFiltro;
 	}
 
-	public Instrucao clonar() {
+	public Instrucao clonar() throws ObjetoException {
 		Instrucao i = new Instrucao(nome);
 		i.setValor(valor);
 		return i;

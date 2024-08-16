@@ -1517,14 +1517,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 						if (pesq != null) {
-							if (adicionar && !pesq.contemLimparResto()) {
-								pesquisa.addLimparResto();
-								pesq.addLimparResto();
-								vinculoListener.salvarVinculacao(vinculacao);
-							} else if (!adicionar && pesq.contemLimparResto()) {
-								pesquisa.excluirLimparResto();
-								pesq.excluirLimparResto();
-								vinculoListener.salvarVinculacao(vinculacao);
+							try {
+								if (adicionar && !pesq.contemLimparResto()) {
+									pesquisa.addLimparResto();
+									pesq.addLimparResto();
+									vinculoListener.salvarVinculacao(vinculacao);
+								} else if (!adicionar && pesq.contemLimparResto()) {
+									pesquisa.excluirLimparResto();
+									pesq.excluirLimparResto();
+									vinculoListener.salvarVinculacao(vinculacao);
+								}
+							} catch (ObjetoException ex) {
+								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							}
 						}
 					}
@@ -1772,15 +1776,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Desktop desktop = getDesktop();
 					JViewport viewPort = getViewPort(desktop);
 					Point last = getViewPosition(viewPort);
-					processar(apostrofes);
-					if (ObjetoPreferencia.isMoverTopoFormOrigemPesquisa() && desktop != null && viewPort != null
-							&& last != null && componenteListener != null) {
-						final Point point = componenteListener.getComponente().getLocation();
-						if (point != null) {
-							Animar animar = new Animar(last.y, point.y,
-									y -> setViewPosition(viewPort, new Point(last.x, y)), 5, 50);
-							animar.iniciar();
+					try {
+						processar(apostrofes);
+						if (ObjetoPreferencia.isMoverTopoFormOrigemPesquisa() && desktop != null && viewPort != null
+								&& last != null && componenteListener != null) {
+							final Point point = componenteListener.getComponente().getLocation();
+							if (point != null) {
+								Animar animar = new Animar(last.y, point.y,
+										y -> setViewPosition(viewPort, new Point(last.x, y)), 5, 50);
+								animar.iniciar();
+							}
 						}
+					} catch (ObjetoException ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 					}
 				}
 
@@ -1812,7 +1820,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void processar(boolean apostrofes) {
+				private void processar(boolean apostrofes) throws ObjetoException {
 					if (vinculoListener == null) {
 						return;
 					}
@@ -1850,7 +1858,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void pesquisar(List<String> lista, Argumento argumento, int coluna) {
+				private void pesquisar(List<String> lista, Argumento argumento, int coluna) throws ObjetoException {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
 					if (!chkTotalDetalhes.isSelected() && !chkPesqEmMemoria.isSelected()) {
@@ -1865,7 +1873,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void pesquisaArray(Argumento argumento) {
+				private void pesquisaArray(Argumento argumento) throws ObjetoException {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
 					if (!chkTotalDetalhes.isSelected()) {
@@ -1879,7 +1887,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void processarParams(Pesquisa pesquisa) {
+				private void processarParams(Pesquisa pesquisa) throws ObjetoException {
 					pesquisa.clonarParams();
 					for (Param param : pesquisa.getCloneParams()) {
 						if (Util.isEmpty(param.getValor())) {
@@ -3248,13 +3256,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							try {
 								vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
 								processarMapaReferencia(mapaRef);
-							} catch (MetadadoException ex) {
+							} catch (MetadadoException | ObjetoException ex) {
 								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
 						}
 					}
 
-					private void processarMapaReferencia(Map<String, Object> mapaRef) {
+					private void processarMapaReferencia(Map<String, Object> mapaRef) throws ObjetoException {
 						Boolean erro = (Boolean) mapaRef.get(ObjetoConstantes.ERROR);
 						if (erro.booleanValue() || mapaRef.get(VinculoHandler.PESQUISA) == null
 								|| mapaRef.get("ref") == null) {
@@ -3274,7 +3282,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 					}
 
-					private void processarPesquisaVazio(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+					private void processarPesquisaVazio(Map<String, Object> mapaRef, Vinculacao vinculacao)
+							throws ObjetoException {
 						Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
 						Coletor coletor = new Coletor();
 						Config config = new SetLista.Config(true, true);
@@ -3287,7 +3296,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 					}
 
-					private void processarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+					private void processarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao)
+							throws ObjetoException {
 						List<Pesquisa> pesquisas = objeto.getPesquisas(false);
 						List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 						Coletor coletor = new Coletor();
@@ -3304,7 +3314,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 
 					private void atualizarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao,
-							List<Pesquisa> pesquisas, Coletor coletor) {
+							List<Pesquisa> pesquisas, Coletor coletor) throws ObjetoException {
 						AtomicBoolean atom = new AtomicBoolean(false);
 						for (Pesquisa pesquisa : pesquisas) {
 							if (selecionado(pesquisa, coletor.getLista())) {
@@ -3324,7 +3334,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 
 					private void atualizarPesquisa(Vinculacao vinculacao, AtomicBoolean atom, Pesquisa pesquisa,
-							Referencia ref) {
+							Referencia ref) throws ObjetoException {
 						List<Pesquisa> lista = vinculacao.getPesquisas(objeto);
 						for (Pesquisa pesq : lista) {
 							if (pesq.ehEquivalente(pesquisa, objeto) && pesq.add(ref)) {
@@ -3333,7 +3343,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						}
 					}
 
-					private void adicionar(Map<String, Object> mapaRef, Vinculacao vinculacao, String nome) {
+					private void adicionar(Map<String, Object> mapaRef, Vinculacao vinculacao, String nome)
+							throws ObjetoException {
 						Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
 						if (!Util.isEmpty(nome)) {
 							pesquisa.setNome(nome);
@@ -3346,7 +3357,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						buscaAuto = true;
 					}
 
-					private boolean addInvertido(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+					private boolean addInvertido(Map<String, Object> mapaRef, Vinculacao vinculacao)
+							throws ObjetoException {
 						Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA_INVERTIDO);
 						return vinculacao.adicionarPesquisa(pesquisa);
 					}
@@ -3952,7 +3964,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			return string;
 		}
 
-		private void checkSalvarVinculacao(String classe) {
+		private void checkSalvarVinculacao(String classe) throws ObjetoException {
 			String tabela = objeto.getTabela().trim();
 			if (vinculoListener == null || Util.isEmpty(tabela)) {
 				return;
@@ -3989,7 +4001,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		@Override
-		public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String coluna) {
+		public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String coluna) throws ObjetoException {
 			if (vinculoListener == null) {
 				return;
 			}
@@ -4004,7 +4016,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			prepararPesquisa(coluna, coletor.get(0), objetos);
 		}
 
-		private void prepararPesquisa(String coluna, String nomePesquisa, List<Objeto> objetos) {
+		private void prepararPesquisa(String coluna, String nomePesquisa, List<Objeto> objetos) throws ObjetoException {
 			List<String> ids = objetos.stream().map(Objeto::getId).collect(Collectors.toList());
 			Coletor coletor = new Coletor();
 			SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.nome_outra_tabela"), ids, coletor,
@@ -4029,7 +4041,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			return null;
 		}
 
-		private void criarAtualizarPesquisa(String coluna, String nomePesquisa, Objeto objDetalhe) {
+		private void criarAtualizarPesquisa(String coluna, String nomePesquisa, Objeto objDetalhe)
+				throws ObjetoException {
 			Coletor coletor = new Coletor();
 			vinculoListener.selecionarCampo(objDetalhe, coletor, InternalContainer.this, coluna);
 			if (coletor.size() != 1) {
@@ -4058,7 +4071,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
-		private void atualizar(Vinculacao vinculacao, Pesquisa pesquisa, Referencia referencia, Objeto objDetalhe) {
+		private void atualizar(Vinculacao vinculacao, Pesquisa pesquisa, Referencia referencia, Objeto objDetalhe)
+				throws ObjetoException {
 			Pesquisa existente = vinculacao.getPesquisa(pesquisa);
 			if (existente != null) {
 				existente.add(referencia);
@@ -4069,7 +4083,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
-		private void adicionar(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) {
+		private void adicionar(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) throws ObjetoException {
 			if (objeto.addPesquisa(pesquisa)) {
 				objeto.addReferencias(pesquisa.getReferencias());
 				if (vinculacao.adicionarPesquisa(pesquisa)) {
@@ -4081,7 +4095,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
-		private void processarInvertido(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) {
+		private void processarInvertido(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe)
+				throws ObjetoException {
 			Referencia ref = pesquisa.get(objDetalhe);
 			if (ref == null) {
 				return;

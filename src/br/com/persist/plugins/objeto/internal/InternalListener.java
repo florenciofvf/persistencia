@@ -13,6 +13,7 @@ import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -20,13 +21,13 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public interface InternalListener {
 	public interface Vinculo {
-		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal,
-				boolean emForms);
+		public void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, boolean soTotal, boolean emForms)
+				throws ObjetoException;
 
 		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem);
 
 		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
-				throws MetadadoException;
+				throws MetadadoException, ObjetoException;
 
 		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto);
 
