@@ -3,15 +3,23 @@ package ###package###;
 public class ###nameCap###Exception extends Exception {
 	private static final long serialVersionUID = 1L;
 
+	public ###nameCap###Exception(String chave, Object... argumentos) {
+		super(###nameCap###Mensagens.getString(chave, argumentos));
+	}
+
+	public ###nameCap###Exception(String string, boolean ehChave) {
+		super(ehChave ? ###nameCap###Mensagens.getString(string) : string);
+	}
+
+	public ###nameCap###Exception(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 	public ###nameCap###Exception(Throwable cause) {
 		super(cause);
 	}
 
 	public ###nameCap###Exception(String chave) {
-		super(###nameCap###Mensagens.getString(chave));
-	}
-
-	public ###nameCap###Exception(String chave, Object... argumentos) {
-		super(###nameCap###Mensagens.getString(chave, argumentos));
+		this(chave, true);
 	}
 }

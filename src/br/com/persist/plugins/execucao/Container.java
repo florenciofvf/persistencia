@@ -30,14 +30,14 @@ public class Container {
 		return pai;
 	}
 
-	public void lerAtributos(String tag, Attributes attributes) {
+	public void lerAtributos(String tag, Attributes attributes) throws ExecucaoException {
 		for (int i = 0; i < attributes.getLength(); i++) {
 			Atributo at = new Atributo(attributes.getQName(i), attributes.getValue(i));
 			string = attributes.getValue(i);
 			atributos.add(at);
 		}
 		if (string == null) {
-			throw new IllegalStateException("Nenhum atributo em: " + tag);
+			throw new ExecucaoException("Nenhum atributo em: " + tag, false);
 		}
 	}
 

@@ -102,7 +102,7 @@ class AnotacaoSplit extends SplitPane {
 		}
 	}
 
-	void abrir(Arquivo arquivo) {
+	void abrir(Arquivo arquivo) throws AnotacaoException {
 		if (arquivo == null) {
 			return;
 		}
@@ -168,7 +168,11 @@ class AnotacaoSplit extends SplitPane {
 			if (arquivo != null && Util.confirmar(AnotacaoSplit.this, "msg.confirma_exclusao")) {
 				arquivo.excluir();
 				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
-				panel.excluir(arquivo);
+				try {
+					panel.excluir(arquivo);
+				} catch (AnotacaoException ex) {
+					Util.mensagem(AnotacaoSplit.this, ex.getMessage());
+				}
 			}
 		}
 
@@ -207,7 +211,11 @@ class AnotacaoSplit extends SplitPane {
 
 		@Override
 		public void abrirArquivo(ArquivoTree arquivoTree) {
-			abrir(arquivoTree.getObjetoSelecionado());
+			try {
+				abrir(arquivoTree.getObjetoSelecionado());
+			} catch (AnotacaoException ex) {
+				Util.mensagem(AnotacaoSplit.this, ex.getMessage());
+			}
 		}
 
 		@Override
@@ -477,9 +485,9 @@ class PanelRoot extends Panel {
 		}
 	}
 
-	void setRoot(Component c) {
+	void setRoot(Component c) throws AnotacaoException {
 		if (getComponentCount() > 0) {
-			throw new IllegalStateException();
+			throw new AnotacaoException("getComponentCount() > 0", false);
 		}
 		add(c);
 	}
@@ -497,18 +505,18 @@ class PanelRoot extends Panel {
 		((Separador) getComponent(0)).processar(map);
 	}
 
-	void excluir(Arquivo arquivo) {
+	void excluir(Arquivo arquivo) throws AnotacaoException {
 		Transferivel objeto = getTransferivel(arquivo.getFile());
 		while (objeto != null) {
 			Fichario fichario = getFichario(objeto);
 			if (fichario != null) {
 				if (!fichario.contem(objeto)) {
-					throw new IllegalStateException();
+					throw new AnotacaoException("!fichario.contem(objeto)", false);
 				} else {
 					fichario.excluir(objeto);
 				}
 			} else {
-				throw new IllegalStateException();
+				throw new AnotacaoException("fichario == null", false);
 			}
 			objeto = getTransferivel(arquivo.getFile());
 		}

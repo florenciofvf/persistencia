@@ -99,14 +99,22 @@ class Handler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (raiz == null) {
-			raiz = new Container();
-			raiz.lerAtributos(qName, attributes);
-			selecionado = raiz;
+			try {
+				raiz = new Container();
+				raiz.lerAtributos(qName, attributes);
+				selecionado = raiz;
+			} catch (ExecucaoException ex) {
+				throw new SAXException(ex);
+			}
 		} else {
-			Container container = new Container();
-			container.lerAtributos(qName, attributes);
-			selecionado.adicionar(container);
-			selecionado = container;
+			try {
+				Container container = new Container();
+				container.lerAtributos(qName, attributes);
+				selecionado.adicionar(container);
+				selecionado = container;
+			} catch (ExecucaoException ex) {
+				throw new SAXException(ex);
+			}
 		}
 	}
 

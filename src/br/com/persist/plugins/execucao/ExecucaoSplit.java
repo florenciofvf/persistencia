@@ -89,7 +89,7 @@ class ExecucaoSplit extends SplitPane {
 		}
 	}
 
-	void abrir(Arquivo arquivo, Formulario formulario) {
+	void abrir(Arquivo arquivo, Formulario formulario) throws ExecucaoException {
 		if (arquivo == null) {
 			return;
 		}
@@ -155,7 +155,11 @@ class ExecucaoSplit extends SplitPane {
 			if (arquivo != null && Util.confirmar(ExecucaoSplit.this, "msg.confirma_exclusao")) {
 				arquivo.excluir();
 				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
-				panel.excluir(arquivo);
+				try {
+					panel.excluir(arquivo);
+				} catch (ExecucaoException ex) {
+					Util.mensagem(ExecucaoSplit.this, ex.getMessage());
+				}
 			}
 		}
 
@@ -194,7 +198,11 @@ class ExecucaoSplit extends SplitPane {
 
 		@Override
 		public void abrirArquivo(ArquivoTree arquivoTree) {
-			abrir(arquivoTree.getObjetoSelecionado(), formulario);
+			try {
+				abrir(arquivoTree.getObjetoSelecionado(), formulario);
+			} catch (ExecucaoException ex) {
+				Util.mensagem(ExecucaoSplit.this, ex.getMessage());
+			}
 		}
 
 		@Override
@@ -397,9 +405,9 @@ class PanelRoot extends Panel {
 		}
 	}
 
-	void setRoot(Component c) {
+	void setRoot(Component c) throws ExecucaoException {
 		if (getComponentCount() > 0) {
-			throw new IllegalStateException();
+			throw new ExecucaoException("getComponentCount() > 0", false);
 		}
 		add(c);
 	}
@@ -417,18 +425,18 @@ class PanelRoot extends Panel {
 		((Separador) getComponent(0)).processar(map);
 	}
 
-	void excluir(Arquivo arquivo) {
+	void excluir(Arquivo arquivo) throws ExecucaoException {
 		Transferivel objeto = getTransferivel(arquivo.getFile());
 		while (objeto != null) {
 			Fichario fichario = getFichario(objeto);
 			if (fichario != null) {
 				if (!fichario.contem(objeto)) {
-					throw new IllegalStateException();
+					throw new ExecucaoException("!fichario.contem(objeto)", false);
 				} else {
 					fichario.excluir(objeto);
 				}
 			} else {
-				throw new IllegalStateException();
+				throw new ExecucaoException("fichario == null", false);
 			}
 			objeto = getTransferivel(arquivo.getFile());
 		}
