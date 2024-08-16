@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoException;
 
 public class InternalConfig {
 	private final String conexao;
@@ -12,11 +13,11 @@ public class InternalConfig {
 	private String complemento;
 	private Graphics graphics;
 
-	public InternalConfig(String conexao, String grupo, String tabela) {
+	public InternalConfig(String conexao, String grupo, String tabela) throws ObjetoException {
 		this.grupo = grupo == null ? "" : grupo;
 		this.conexao = conexao;
 		if (Util.isEmpty(tabela)) {
-			throw new IllegalStateException("Tabela vazia.");
+			throw new ObjetoException("Tabela vazia.");
 		}
 		this.tabela = tabela;
 	}

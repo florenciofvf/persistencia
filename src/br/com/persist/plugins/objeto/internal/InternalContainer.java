@@ -111,6 +111,7 @@ import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
+import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoUtil;
@@ -1004,30 +1005,42 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (conexao == null) {
 					return;
 				}
-				int[] linhas = tabelaPersistencia.getSelectedRows();
-				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(InternalContainer.this, false)) {
-					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-					List<List<IndiceValor>> listaValores = new ArrayList<>();
-					AtomicBoolean atom = null;
-					if (linhas.length > 1) {
-						atom = new AtomicBoolean(true);
-					}
-					for (int linha : linhas) {
-						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true, conexao,
-								atom);
-						if (excluido == 0 || excluido == 1) {
-							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
-							if (chaves.isEmpty()) {
-								throw new IllegalStateException();
-							}
-							listaValores.add(chaves);
+				try {
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(InternalContainer.this, false)) {
+						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+						List<List<IndiceValor>> listaValores = new ArrayList<>();
+						AtomicBoolean atom = null;
+						if (linhas.length > 1) {
+							atom = new AtomicBoolean(true);
 						}
+						for (int linha : linhas) {
+							int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true, conexao,
+									atom);
+							if (excluido == 0 || excluido == 1) {
+								List<IndiceValor> chaves = modelo.getValoresChaves(linha);
+								checarListaIndiceValor(chaves);
+								listaValores.add(chaves);
+							}
+						}
+						excluirRegistros(modelo, listaValores);
 					}
-					modelo.excluirValoresChaves(listaValores);
-					modelo.iniArray();
-					modelo.fireTableDataChanged();
-					tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
+				} catch (ObjetoException ex) {
+					Util.mensagem(InternalContainer.this, ex.getMessage());
 				}
+			}
+
+			private void checarListaIndiceValor(List<IndiceValor> chaves) throws ObjetoException {
+				if (chaves.isEmpty()) {
+					throw new ObjetoException("chaves.isEmpty()");
+				}
+			}
+
+			private void excluirRegistros(OrdenacaoModelo modelo, List<List<IndiceValor>> listaValores) {
+				modelo.excluirValoresChaves(listaValores);
+				modelo.iniArray();
+				modelo.fireTableDataChanged();
+				tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 			}
 		}
 

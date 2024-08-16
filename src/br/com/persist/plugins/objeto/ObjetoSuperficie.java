@@ -760,14 +760,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			repaint();
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (selecionadoObjeto != null) {
-					abrirObjeto(selecionadoObjeto);
+					try {
+						abrirObjeto(selecionadoObjeto);
+					} catch (ObjetoException ex) {
+						Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
+					}
 				} else if (selecionadoRelacao != null) {
 					popup.configuracaoAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		private void abrirObjeto(Objeto objeto) {
+		private void abrirObjeto(Objeto objeto) throws ObjetoException {
 			if (Util.isEmpty(objeto.getTabela())) {
 				popup.configuracaoAcao.actionPerformed(null);
 			} else {
@@ -787,7 +791,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			}
 		}
 
-		private void abrirArquivo(Conexao conexao, Objeto objeto, InternalFormulario interno) {
+		private void abrirArquivo(Conexao conexao, Objeto objeto, InternalFormulario interno) throws ObjetoException {
 			setComplemento(conexao, objeto);
 			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela());
 			config.setGraphics(getGraphics());
