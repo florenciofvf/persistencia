@@ -31,6 +31,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
@@ -323,7 +324,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			return true;
 		}
 
-		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef) {
+		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
+				throws MetadadoException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto, mapaRef);

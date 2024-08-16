@@ -108,6 +108,7 @@ import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.processador.Constante;
 import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.metadado.Metadado;
+import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
@@ -3244,8 +3245,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (vinculoListener != null) {
 							Map<String, Object> mapaRef = new HashMap<>();
 							mapaRef.put(ObjetoConstantes.ERROR, Boolean.FALSE);
-							vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
-							processarMapaReferencia(mapaRef);
+							try {
+								vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
+								processarMapaReferencia(mapaRef);
+							} catch (MetadadoException ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
+							}
 						}
 					}
 
@@ -4253,9 +4258,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void campoExportadoPara(Metadado metadado, String coluna) {
-			List<String> lista = metadado.getListaCampoExportadoPara(coluna);
-			String string = InternalUtil.campoExportadoPara(objeto.getTabela(), coluna, lista);
-			Util.mensagem(InternalContainer.this, string);
+			try {
+				List<String> lista = metadado.getListaCampoExportadoPara(coluna);
+				String string = InternalUtil.campoExportadoPara(objeto.getTabela(), coluna, lista);
+				Util.mensagem(InternalContainer.this, string);
+			} catch (MetadadoException ex) {
+				Util.mensagem(InternalContainer.this, ex.getMessage());
+			}
 		}
 
 		@Override
@@ -4277,9 +4286,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void campoImportadoDe(Metadado metadado, String coluna) {
-			List<String> lista = metadado.getListaCampoImportadoDe(coluna);
-			String string = InternalUtil.campoImportadoDe(objeto.getTabela(), coluna, lista);
-			Util.mensagem(InternalContainer.this, string);
+			try {
+				List<String> lista = metadado.getListaCampoImportadoDe(coluna);
+				String string = InternalUtil.campoImportadoDe(objeto.getTabela(), coluna, lista);
+				Util.mensagem(InternalContainer.this, string);
+			} catch (MetadadoException ex) {
+				Util.mensagem(InternalContainer.this, ex.getMessage());
+			}
 		}
 	}
 

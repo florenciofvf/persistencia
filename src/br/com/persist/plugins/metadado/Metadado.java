@@ -371,7 +371,7 @@ public class Metadado implements Transferable {
 		}
 	}
 
-	public List<String> getListaCampoExportadoPara(String campo) {
+	public List<String> getListaCampoExportadoPara(String campo) throws MetadadoException {
 		List<String> lista = new ArrayList<>();
 		List<Metadado> campos = getListaCampoExportacaoImportacao(true);
 		for (Metadado metadado : campos) {
@@ -382,7 +382,7 @@ public class Metadado implements Transferable {
 		return lista;
 	}
 
-	public List<String> getListaCampoImportadoDe(String campo) {
+	public List<String> getListaCampoImportadoDe(String campo) throws MetadadoException {
 		List<String> lista = new ArrayList<>();
 		List<Metadado> campos = getListaCampoExportacaoImportacao(false);
 		for (Metadado metadado : campos) {
@@ -501,14 +501,14 @@ public class Metadado implements Transferable {
 		return descricao.substring(pos + 1, pos2);
 	}
 
-	public Metadado getTabelaReferencia() {
+	public Metadado getTabelaReferencia() throws MetadadoException {
 		if (filhos.size() != 1) {
-			throw new IllegalStateException();
+			throw new MetadadoException("getTabelaReferencia(): filhos.size() != 1", false);
 		}
 		return filhos.get(0);
 	}
 
-	public String getChaveTabelaReferencia() {
+	public String getChaveTabelaReferencia() throws MetadadoException {
 		return descricao + " > " + getTabelaReferencia().descricao;
 	}
 

@@ -75,6 +75,7 @@ import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoConstantes;
 import br.com.persist.plugins.metadado.MetadadoEvento;
+import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.circular.CircularContainer.Tipo;
 import br.com.persist.plugins.objeto.circular.CircularDialogo;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
@@ -1164,7 +1165,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		Util.mensagem(ObjetoSuperficie.this, ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
 	}
 
-	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef) {
+	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
+			throws MetadadoException {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
 		formulario.processar(args);
@@ -1180,8 +1182,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef,
-			Metadado tabela) {
+	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef, Metadado tabela)
+			throws MetadadoException {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, mapaRef, tabela.getPai());
 		exportacao.criarPesquisa();
 		exportacao.processarDetalhes(tabela);
@@ -1293,7 +1295,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
-			boolean circular, AtomicReference<String> ref) {
+			boolean circular, AtomicReference<String> ref) throws MetadadoException {
 		ExportacaoImportacao expImp = criarExportacaoImportacao(exportacao, circular);
 		expImp.processarPrincipal(tabela);
 		expImp.checarCriarPesquisa();
@@ -2622,7 +2624,7 @@ class Exportacao {
 		return null;
 	}
 
-	void processarDetalhes(Metadado tabela) {
+	void processarDetalhes(Metadado tabela) throws MetadadoException {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
 		Coletor coletor = new Coletor();
 		SetLista.view(principal.getId() + ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos),
@@ -2634,15 +2636,19 @@ class Exportacao {
 		}
 	}
 
-	private List<String> nomeCampos(List<Metadado> campos) {
-		return campos.stream().map(Metadado::getChaveTabelaReferencia).collect(Collectors.toList());
+	private List<String> nomeCampos(List<Metadado> campos) throws MetadadoException {
+		List<String> resp = new ArrayList<>();
+		for (Metadado metadado : campos) {
+			resp.add(metadado.getChaveTabelaReferencia());
+		}
+		return resp;
 	}
 
 	private List<String> nomeTabelas(List<Metadado> tabelas) {
 		return tabelas.stream().map(Metadado::getDescricao).collect(Collectors.toList());
 	}
 
-	private Metadado getCampo(List<Metadado> campos, String nomeCampo) {
+	private Metadado getCampo(List<Metadado> campos, String nomeCampo) throws MetadadoException {
 		for (Metadado metadado : campos) {
 			if (metadado.getChaveTabelaReferencia().equals(nomeCampo)) {
 				return metadado;
@@ -2657,7 +2663,7 @@ class Exportacao {
 		processarChavesAvulso(tabela);
 	}
 
-	private void processarCampoFK(Metadado campo) {
+	private void processarCampoFK(Metadado campo) throws MetadadoException {
 		campoFK = campo;
 		criarEAdicionarObjeto();
 		criarEAdicionarRelacao();
@@ -2681,7 +2687,7 @@ class Exportacao {
 		superficie.addRelacao(rel);
 	}
 
-	private void processarIdTabelaGrupo() {
+	private void processarIdTabelaGrupo() throws MetadadoException {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		superficie.processarIdTabelaGrupoExportacao(objeto, tabelaRef);
 		objeto.setTabela(tabelaRef.getNomeTabela());
@@ -2692,7 +2698,7 @@ class Exportacao {
 		objeto.setTabela(tabela.getDescricao());
 	}
 
-	private void processarChaves() {
+	private void processarChaves() throws MetadadoException {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
 		if (tabela != null) {
@@ -2700,7 +2706,7 @@ class Exportacao {
 		}
 	}
 
-	private void processarChaves(Metadado tabela) {
+	private void processarChaves(Metadado tabela) throws MetadadoException {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		relacao.setChaveDestino(tabelaRef.getNomeCampo());
 		relacao.setChaveOrigem(principal.getChaves());
@@ -2712,7 +2718,7 @@ class Exportacao {
 		objeto.setChaves(tabela.getChaves());
 	}
 
-	private void referenciaNaPesquisa() {
+	private void referenciaNaPesquisa() throws MetadadoException {
 		Metadado tabelaRef = campoFK.getTabelaReferencia();
 		ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
 	}
@@ -2830,12 +2836,12 @@ class ExportacaoImportacao {
 		mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, ref, iconeGrupo));
 	}
 
-	void processarDetalhes(Metadado tabela) {
+	void processarDetalhes(Metadado tabela) throws MetadadoException {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(exportacao);
 		processarLista(campos);
 	}
 
-	private void processarLista(List<Metadado> campos) {
+	private void processarLista(List<Metadado> campos) throws MetadadoException {
 		for (Metadado campo : campos) {
 			campoProcessado = campo;
 			Objeto objeto = criarEAdicionarObjeto();
@@ -2863,7 +2869,7 @@ class ExportacaoImportacao {
 		return relacao;
 	}
 
-	private void processarIdTabelaGrupo(Objeto objeto) {
+	private void processarIdTabelaGrupo(Objeto objeto) throws MetadadoException {
 		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
 		if (exportacao) {
 			superficie.processarIdTabelaGrupoExportacao(objeto, tabelaRef);
@@ -2885,7 +2891,7 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private void processarChaves(Objeto objeto, Relacao relacao) {
+	private void processarChaves(Objeto objeto, Relacao relacao) throws MetadadoException {
 		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
 		Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
 		if (tabela != null) {
@@ -2893,7 +2899,7 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private void processarChaves(Objeto objeto, Metadado tabela, Relacao relacao) {
+	private void processarChaves(Objeto objeto, Metadado tabela, Relacao relacao) throws MetadadoException {
 		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
 		relacao.setChaveDestino(tabelaRef.getNomeCampo());
 		objeto.setChaves(tabela.getChaves());
@@ -2904,7 +2910,7 @@ class ExportacaoImportacao {
 		}
 	}
 
-	private void referenciaNaPesquisa(Objeto objeto, Relacao relacao) {
+	private void referenciaNaPesquisa(Objeto objeto, Relacao relacao) throws MetadadoException {
 		Metadado tabelaRef = campoProcessado.getTabelaReferencia();
 		ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
 		relacao.setChaveOrigem(principal.getChaves());
@@ -2918,7 +2924,7 @@ class ExportacaoImportacao {
 		pesquisa.add(ref);
 	}
 
-	private void pesquisaIndividualDetalhe(Objeto objeto, Relacao relacao) {
+	private void pesquisaIndividualDetalhe(Objeto objeto, Relacao relacao) throws MetadadoException {
 		Metadado campoDetalhe = campoProcessado;
 		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
 		pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(), principal.getGrupo(),

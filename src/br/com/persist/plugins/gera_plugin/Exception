@@ -7,12 +7,12 @@ public class ###nameCap###Exception extends Exception {
 		super(###nameCap###Mensagens.getString(chave, argumentos));
 	}
 
-	public ###nameCap###Exception(String string, boolean ehChave) {
-		super(ehChave ? ###nameCap###Mensagens.getString(string) : string);
-	}
-
 	public ###nameCap###Exception(String message, Throwable cause) {
 		super(message, cause);
+	}
+
+	public ###nameCap###Exception(String string, boolean ehChave) {
+		super(ehChave ? ###nameCap###Mensagens.getString(string) : string);
 	}
 
 	public ###nameCap###Exception(Throwable cause) {

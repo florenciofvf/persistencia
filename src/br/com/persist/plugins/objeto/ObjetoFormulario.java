@@ -11,6 +11,7 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
+import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 
 public class ObjetoFormulario extends AbstratoFormulario {
@@ -49,7 +50,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular) {
+			boolean circular) throws MetadadoException {
 		AtomicReference<String> tituloTemp = new AtomicReference<>();
 		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, tituloTemp);
 		if (!Util.isEmpty(tituloTemp.get())) {

@@ -11,6 +11,7 @@ import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -24,7 +25,8 @@ public interface InternalListener {
 
 		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem);
 
-		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef);
+		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef)
+				throws MetadadoException;
 
 		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto);
 

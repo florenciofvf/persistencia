@@ -73,6 +73,7 @@ import br.com.persist.plugins.conexao.ConexaoEvento;
 import br.com.persist.plugins.conexao.ConexaoInfo;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
+import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
@@ -696,7 +697,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular, AtomicReference<String> tituloTemp) {
+			boolean circular, AtomicReference<String> tituloTemp) throws MetadadoException {
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 		}
