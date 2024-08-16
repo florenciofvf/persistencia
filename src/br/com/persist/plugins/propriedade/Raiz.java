@@ -14,11 +14,11 @@ public class Raiz extends Container {
 	private List<Config> cacheConfigs;
 
 	@Override
-	public void adicionar(Container c) {
+	public void adicionar(Container c) throws PropriedadeException {
 		if (c instanceof Config || c instanceof Modulo) {
 			super.adicionar(c);
 		} else {
-			throw new IllegalStateException();
+			throw new PropriedadeException("erro.componente_invalido");
 		}
 	}
 

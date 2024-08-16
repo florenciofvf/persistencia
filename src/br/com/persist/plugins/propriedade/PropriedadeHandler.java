@@ -17,7 +17,11 @@ class PropriedadeHandler extends XMLHandler {
 		} else if (raiz != null) {
 			Container novo = criar(qName, atts);
 			if (novo != null) {
-				selecionado.adicionar(novo);
+				try {
+					selecionado.adicionar(novo);
+				} catch (PropriedadeException e) {
+					throw new SAXException(e);
+				}
 				selecionado = novo;
 			}
 		}

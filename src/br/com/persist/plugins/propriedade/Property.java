@@ -33,8 +33,8 @@ public class Property extends Container {
 	}
 
 	@Override
-	public void adicionar(Container c) {
-		throw new IllegalStateException();
+	public void adicionar(Container c) throws PropriedadeException {
+		throw new PropriedadeException("erro.container_vazio");
 	}
 
 	void gerarProperty(StyledDocument doc) throws BadLocationException {

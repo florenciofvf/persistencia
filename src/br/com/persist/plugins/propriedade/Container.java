@@ -35,7 +35,10 @@ public abstract class Container {
 		}
 	}
 
-	public void adicionar(Container c) {
+	public void adicionar(Container c) throws PropriedadeException {
+		if (c == null) {
+			throw new PropriedadeException("componente nulo.", false);
+		}
 		if (c.pai != null) {
 			c.pai.excluir(c);
 		}

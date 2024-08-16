@@ -32,8 +32,8 @@ public class Campo extends Container {
 	}
 
 	@Override
-	public void adicionar(Container c) {
-		throw new IllegalStateException();
+	public void adicionar(Container c) throws PropriedadeException {
+		throw new PropriedadeException("erro.container_vazio");
 	}
 
 	@Override
