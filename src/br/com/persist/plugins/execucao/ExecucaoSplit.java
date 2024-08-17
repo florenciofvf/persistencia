@@ -40,6 +40,7 @@ import br.com.persist.marca.XMLHandler;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.painel.Fichario;
 import br.com.persist.painel.Separador;
+import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
 
 class ExecucaoSplit extends SplitPane {
@@ -157,7 +158,7 @@ class ExecucaoSplit extends SplitPane {
 				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
 				try {
 					panel.excluir(arquivo);
-				} catch (ExecucaoException ex) {
+				} catch (ExecucaoException | SeparadorException ex) {
 					Util.mensagem(ExecucaoSplit.this, ex.getMessage());
 				}
 			}
@@ -425,7 +426,7 @@ class PanelRoot extends Panel {
 		((Separador) getComponent(0)).processar(map);
 	}
 
-	void excluir(Arquivo arquivo) throws ExecucaoException {
+	void excluir(Arquivo arquivo) throws ExecucaoException, SeparadorException {
 		Transferivel objeto = getTransferivel(arquivo.getFile());
 		while (objeto != null) {
 			Fichario fichario = getFichario(objeto);

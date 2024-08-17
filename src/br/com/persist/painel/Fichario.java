@@ -222,7 +222,7 @@ public class Fichario extends JTabbedPane {
 		util.finalizarTag("fichario");
 	}
 
-	public void excluir(Transferivel objeto) {
+	public void excluir(Transferivel objeto) throws SeparadorException {
 		for (int i = 0; i < getTabCount(); i++) {
 			if (getComponentAt(i) == objeto) {
 				removeTabAt(i);
@@ -270,17 +270,21 @@ public class Fichario extends JTabbedPane {
 				Setor setor = objeto.getSetor();
 				objeto.setSetor(null);
 				if (setor != null) {
-					if (Setor.DESLOCAR != setor.local) {
-						remove(objeto);
-						checarVazio();
+					try {
+						if (Setor.DESLOCAR != setor.local) {
+							remove(objeto);
+							checarVazio();
+						}
+						setor.processar(objeto);
+					} catch (SeparadorException ex) {
+						Util.mensagem(Fichario.this, ex.getMessage());
 					}
-					setor.processar(objeto);
 				}
 			}
 		}
 	};
 
-	public void checarVazio() {
+	public void checarVazio() throws SeparadorException {
 		if (getTabCount() == 0 && ficharioListener != null) {
 			ficharioListener.ficharioVazio(this);
 		}
@@ -336,10 +340,14 @@ public class Fichario extends JTabbedPane {
 		}
 
 		private void fechar() {
-			int indice = getSelectedIndex();
-			if (indice != -1) {
-				removeTabAt(indice);
-				checarVazio();
+			try {
+				int indice = getSelectedIndex();
+				if (indice != -1) {
+					removeTabAt(indice);
+					checarVazio();
+				}
+			} catch (SeparadorException ex) {
+				Util.mensagem(Fichario.this, ex.getMessage());
 			}
 		}
 	}

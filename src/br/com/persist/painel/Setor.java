@@ -97,7 +97,7 @@ class Setor {
 		return null;
 	}
 
-	void processar(Transferivel objeto) {
+	void processar(Transferivel objeto) throws SeparadorException {
 		if (dropTarget.getParent() == null) {
 			dropTarget = ((Separador) dropTarget).substituto;
 		}
@@ -116,11 +116,11 @@ class Setor {
 		SwingUtilities.updateComponentTreeUI(parent);
 	}
 
-	void preParent(Container parent, Component dropTarget) {
+	void preParent(Container parent, Component dropTarget) throws SeparadorException {
 		if (parent instanceof Separador) {
 			Separador separador = (Separador) parent;
 			if (separador.getLeftComponent() != dropTarget && separador.getRightComponent() != dropTarget) {
-				throw new IllegalStateException();
+				throw new SeparadorException();
 			}
 			if (separador.getLeftComponent() == dropTarget) {
 				separador.setLeftComponent(null);
@@ -132,11 +132,11 @@ class Setor {
 		}
 	}
 
-	void posParent(Container parent, Separador novoSeparador) {
+	void posParent(Container parent, Separador novoSeparador) throws SeparadorException {
 		if (parent instanceof Separador) {
 			Separador separador = (Separador) parent;
 			if (separador.getLeftComponent() != null && separador.getRightComponent() != null) {
-				throw new IllegalStateException();
+				throw new SeparadorException();
 			}
 			if (separador.getLeftComponent() == null) {
 				separador.setLeftComponent(novoSeparador);

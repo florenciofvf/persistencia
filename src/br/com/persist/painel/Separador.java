@@ -158,7 +158,7 @@ public class Separador extends JSplitPane implements FicharioListener {
 	};
 
 	@Override
-	public void ficharioVazio(Fichario fichario) {
+	public void ficharioVazio(Fichario fichario) throws SeparadorException {
 		if (leftComponent == fichario) {
 			setLeftComponent(null);
 			substituirPor(rightComponent);
@@ -166,7 +166,7 @@ public class Separador extends JSplitPane implements FicharioListener {
 			setRightComponent(null);
 			substituirPor(leftComponent);
 		} else {
-			throw new IllegalStateException();
+			throw new SeparadorException();
 		}
 	}
 
