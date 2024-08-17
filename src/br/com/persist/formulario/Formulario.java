@@ -33,6 +33,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.Servico;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -95,7 +96,11 @@ public class Formulario extends JFrame {
 	}
 
 	public void adicionarPagina(Pagina pagina) {
-		fichario.adicionarPagina(pagina);
+		try {
+			fichario.adicionarPagina(pagina);
+		} catch (ArgumentoException ex) {
+			Util.mensagem(this, ex.getMessage());
+		}
 	}
 
 	public int getIndicePagina(Pagina pagina) {

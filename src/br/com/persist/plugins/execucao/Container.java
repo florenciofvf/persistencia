@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.variaveis.Variavel;
@@ -30,7 +31,7 @@ public class Container {
 		return pai;
 	}
 
-	public void lerAtributos(String tag, Attributes attributes) throws ExecucaoException {
+	public void lerAtributos(String tag, Attributes attributes) throws ExecucaoException, ArgumentoException {
 		for (int i = 0; i < attributes.getLength(); i++) {
 			Atributo at = new Atributo(attributes.getQName(i), attributes.getValue(i));
 			string = attributes.getValue(i);

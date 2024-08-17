@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
@@ -25,9 +26,9 @@ public class Conexao {
 	private String grupo;
 	private String limit;
 
-	public Conexao(String nome) {
+	public Conexao(String nome) throws ArgumentoException {
 		if (Util.isEmpty(nome)) {
-			throw new IllegalArgumentException("Nome nulo.");
+			throw new ArgumentoException("Nome nulo.");
 		}
 		this.nome = nome;
 	}
@@ -81,7 +82,7 @@ public class Conexao {
 		return !Util.isEmpty(nome);
 	}
 
-	public Conexao clonar(String novoNome) {
+	public Conexao clonar(String novoNome) throws ArgumentoException {
 		Conexao c = new Conexao(novoNome);
 		c.tiposFuncoes = tiposFuncoes;
 		c.constraint = constraint;

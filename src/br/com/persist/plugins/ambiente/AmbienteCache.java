@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+import br.com.persist.assistencia.ArgumentoException;
+
 public class AmbienteCache {
 	private final List<Ambiente> ambientes;
 
@@ -36,12 +38,12 @@ public class AmbienteCache {
 		return ambientes;
 	}
 
-	public Ambiente get(String nome) {
+	public Ambiente get(String nome) throws ArgumentoException {
 		for (Ambiente a : ambientes) {
 			if (a.chave.equals(nome)) {
 				return a;
 			}
 		}
-		throw new IllegalArgumentException();
+		throw new ArgumentoException(nome);
 	}
 }

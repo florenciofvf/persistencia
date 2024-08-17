@@ -30,6 +30,7 @@ import javax.swing.table.JTableHeader;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -224,7 +225,11 @@ public class ConexaoContainer extends AbstratoContainer {
 		protected void novo() {
 			String nome = getValor(Constantes.VAZIO);
 			if (nome != null) {
-				adicionar(new Conexao(nome));
+				try {
+					adicionar(new Conexao(nome));
+				} catch (ArgumentoException ex) {
+					Util.mensagem(ConexaoContainer.this, ex.getMessage());
+				}
 			}
 		}
 
@@ -273,7 +278,11 @@ public class ConexaoContainer extends AbstratoContainer {
 					Conexao c = ConexaoProvedor.getConexao(i);
 					String nome = getValor(c.getNome());
 					if (nome != null) {
-						adicionar(c.clonar(nome));
+						try {
+							adicionar(c.clonar(nome));
+						} catch (ArgumentoException ex) {
+							Util.mensagem(ConexaoContainer.this, ex.getMessage());
+						}
 					}
 				}
 			}

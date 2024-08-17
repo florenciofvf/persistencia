@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
@@ -103,7 +104,7 @@ class Handler extends XMLHandler {
 				raiz = new Container();
 				raiz.lerAtributos(qName, attributes);
 				selecionado = raiz;
-			} catch (ExecucaoException ex) {
+			} catch (ExecucaoException | ArgumentoException ex) {
 				throw new SAXException(ex);
 			}
 		} else {
@@ -112,7 +113,7 @@ class Handler extends XMLHandler {
 				container.lerAtributos(qName, attributes);
 				selecionado.adicionar(container);
 				selecionado = container;
-			} catch (ExecucaoException ex) {
+			} catch (ExecucaoException | ArgumentoException ex) {
 				throw new SAXException(ex);
 			}
 		}
@@ -164,12 +165,16 @@ class PanelLog extends Panel {
 		if (container == null) {
 			return;
 		}
-		StringBuilder sb = new StringBuilder();
-		List<Variavel> lista = new ArrayList<>();
-		Variavel var = new Variavel("tmp", Util.getContentTransfered());
-		lista.add(var);
-		container.processar(sb, false, comp, lista);
-		text(container, sb);
+		try {
+			StringBuilder sb = new StringBuilder();
+			List<Variavel> lista = new ArrayList<>();
+			Variavel var = new Variavel("tmp", Util.getContentTransfered());
+			lista.add(var);
+			container.processar(sb, false, comp, lista);
+			text(container, sb);
+		} catch (ArgumentoException ex) {
+			Util.mensagem(PanelLog.this, ex.getMessage());
+		}
 	}
 
 	private void text(Container container, StringBuilder sb) {

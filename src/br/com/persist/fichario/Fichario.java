@@ -45,6 +45,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.WindowHandler;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
@@ -376,9 +377,9 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		}
 	}
 
-	public synchronized void adicionarPagina(Pagina pagina) {
+	public synchronized void adicionarPagina(Pagina pagina) throws ArgumentoException {
 		if (pagina == null) {
-			throw new IllegalArgumentException("pagina nula.");
+			throw new ArgumentoException("pagina nula.");
 		}
 		Titulo titulo = pagina.getTitulo();
 		String title = Preferencias.isTituloAbaMin() ? titulo.getTituloMin() : titulo.getTitulo();
@@ -452,12 +453,16 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 				Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);
 			}
 			for (String s : linhas) {
-				restaurarPagina((Formulario) window, s);
+				try {
+					restaurarPagina((Formulario) window, s);
+				} catch (ArgumentoException ex) {
+					Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);
+				}
 			}
 		}
 	}
 
-	private synchronized void restaurarPagina(Formulario formulario, String linha) {
+	private synchronized void restaurarPagina(Formulario formulario, String linha) throws ArgumentoException {
 		int pos = linha.indexOf(Constantes.III);
 		String classeFabrica = linha.substring(0, pos);
 		String stringPersistencia = linha.substring(pos + Constantes.III.length());

@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
@@ -55,8 +56,13 @@ public class AmbienteFabrica extends AbstratoFabricaContainer {
 	private class AmbientePaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			Ambiente ambiente = cache.get(stringPersistencia);
-			return new AmbienteContainer(null, formulario, null, ambiente);
+			try {
+				Ambiente ambiente = cache.get(stringPersistencia);
+				return new AmbienteContainer(null, formulario, null, ambiente);
+			} catch (ArgumentoException ex) {
+				Util.mensagem(formulario, ex.getMessage());
+				return null;
+			}
 		}
 	}
 

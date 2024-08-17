@@ -24,6 +24,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -165,7 +166,11 @@ public class FragmentoContainer extends AbstratoContainer {
 			if (grupo == null) {
 				return;
 			}
-			adicionar(new Fragmento(resumo, grupo));
+			try {
+				adicionar(new Fragmento(resumo, grupo));
+			} catch (ArgumentoException ex) {
+				Util.mensagem(FragmentoContainer.this, ex.getMessage());
+			}
 		}
 
 		private void adicionar(Fragmento frag) {
@@ -215,7 +220,11 @@ public class FragmentoContainer extends AbstratoContainer {
 					Fragmento f = FragmentoProvedor.getFragmento(i);
 					String resumo = getValor(FragmentoMensagens.getString("label.nome_fragmento"), f.getResumo());
 					if (resumo != null) {
-						adicionar(f.clonar(resumo));
+						try {
+							adicionar(f.clonar(resumo));
+						} catch (ArgumentoException ex) {
+							Util.mensagem(FragmentoContainer.this, ex.getMessage());
+						}
 					}
 				}
 			}
@@ -260,7 +269,11 @@ public class FragmentoContainer extends AbstratoContainer {
 			for (int i : linhas) {
 				Fragmento fragmento = FragmentoProvedor.getFragmento(i);
 				if (concatenar && !and) {
-					frags.add(fragmento.cloneOr());
+					try {
+						frags.add(fragmento.cloneOr());
+					} catch (ArgumentoException ex) {
+						Util.mensagem(FragmentoContainer.this, ex.getMessage());
+					}
 				} else {
 					frags.add(fragmento);
 				}
