@@ -936,7 +936,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
-	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear)
+	public boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear)
 			throws AssistenciaException {
 		if (metadado == null) {
 			return false;

@@ -53,7 +53,7 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler {
+public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, FicharioHandler {
 	private final DesktopPopup popup = new DesktopPopup();
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
@@ -359,7 +359,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		return false;
 	}
 
-	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear)
+	public boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear)
 			throws AssistenciaException {
 		if (metadado == null) {
 			LOG.finest("processadoMetadado(): metadado null.");
