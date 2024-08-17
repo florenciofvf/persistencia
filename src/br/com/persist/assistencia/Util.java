@@ -98,15 +98,11 @@ public class Util {
 		return s == null || s.trim().isEmpty();
 	}
 
-	public static synchronized int getRandomInt(int bound) {
-		try {
-			if (random == null) {
-				random = SecureRandom.getInstanceStrong();
-			}
-			return random.nextInt(bound);
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalStateException();
+	public static synchronized int getRandomInt(int bound) throws NoSuchAlgorithmException {
+		if (random == null) {
+			random = SecureRandom.getInstanceStrong();
 		}
+		return random.nextInt(bound);
 	}
 
 	public static String soNumeros(String s) {

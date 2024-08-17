@@ -70,10 +70,9 @@ public class TabelaPersistencia extends JTable {
 
 	@Override
 	public void setModel(TableModel dataModel) {
-		if (!(dataModel instanceof OrdenacaoModelo)) {
-			throw new IllegalStateException("PersistenciaOrdenacaoModelo inconsistente.");
+		if (dataModel instanceof OrdenacaoModelo) {
+			super.setModel(dataModel);
 		}
-		super.setModel(dataModel);
 	}
 
 	public OrdenacaoModelo getModeloBackup() {

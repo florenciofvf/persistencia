@@ -30,9 +30,6 @@ public class Action extends Acao {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (actionListener == null) {
-			throw new IllegalStateException();
-		}
 		actionListener.actionPerformed(e);
 	}
 

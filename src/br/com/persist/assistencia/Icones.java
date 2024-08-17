@@ -111,21 +111,13 @@ public class Icones {
 	}
 
 	private static ImageIcon criarImagem(String nome) {
-		try {
-			URL url = getURL(nome, "png");
-			return new ImageIcon(url, nome);
-		} catch (Exception e) {
-			throw new IllegalStateException("Erro imagem! " + nome);
-		}
+		URL url = getURL(nome, "png");
+		return new ImageIcon(url, nome);
 	}
 
 	private static ImageIcon criarImagemGIF(String nome) {
-		try {
-			URL url = getURL(nome, "gif");
-			return new ImageIcon(url, nome);
-		} catch (Exception e) {
-			throw new IllegalStateException("Erro imagem! " + nome);
-		}
+		URL url = getURL(nome, "gif");
+		return new ImageIcon(url, nome);
 	}
 
 	public static Icon getIcon(String nome) {
