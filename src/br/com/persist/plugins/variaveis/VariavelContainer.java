@@ -24,6 +24,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -153,7 +154,11 @@ public class VariavelContainer extends AbstratoContainer {
 		protected void novo() {
 			String nome = getValor(Constantes.VAZIO);
 			if (nome != null) {
-				adicionar(new Variavel(nome));
+				try {
+					adicionar(new Variavel(nome));
+				} catch (ArgumentoException ex) {
+					Util.mensagem(VariavelContainer.this, ex.getMessage());
+				}
 			}
 		}
 
@@ -202,7 +207,11 @@ public class VariavelContainer extends AbstratoContainer {
 					Variavel v = VariavelProvedor.getVariavel(i);
 					String nome = getValor(v.getNome());
 					if (nome != null) {
-						adicionar(v.clonar(nome));
+						try {
+							adicionar(v.clonar(nome));
+						} catch (ArgumentoException ex) {
+							Util.mensagem(VariavelContainer.this, ex.getMessage());
+						}
 					}
 				}
 			}

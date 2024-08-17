@@ -66,6 +66,7 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.abstrato.WindowInternalHandler;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
@@ -425,8 +426,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			String consultaAlter) {
 		if (objeto.isIgnorar()) {
 			Variavel vl2 = toolbar.buttonBaixar.getVariavelLimpar2();
-			txtComplemento.setText(vl2.getValor());
-			consultaAlter = null;
+			if (vl2 != null) {
+				txtComplemento.setText(vl2.getValor());
+				consultaAlter = null;
+			}
 		}
 		StringBuilder consulta = !Util.isEmpty(consultaAlter) ? new StringBuilder(consultaAlter)
 				: getConsulta(conexao, complemento);
@@ -968,17 +971,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void limpar2() {
 				Variavel vl2 = getVariavelLimpar2();
-				txtComplemento.setText(vl2.getValor());
-				actionListenerInner.actionPerformed(null);
+				if (vl2 != null) {
+					txtComplemento.setText(vl2.getValor());
+					actionListenerInner.actionPerformed(null);
+				}
 			}
 
 			private Variavel getVariavelLimpar2() {
 				boolean salvar = false;
 				Variavel vl2 = VariavelProvedor.getVariavel("LIMPAR2");
 				if (vl2 == null) {
-					vl2 = new Variavel("LIMPAR2", "AND 1 > 2");
-					VariavelProvedor.adicionar(vl2);
-					salvar = true;
+					try {
+						vl2 = new Variavel("LIMPAR2", "AND 1 > 2");
+						VariavelProvedor.adicionar(vl2);
+						salvar = true;
+					} catch (ArgumentoException ex) {
+						Util.mensagem(InternalContainer.this, ex.getMessage());
+					}
 				}
 				checarSalvarVariavelProvedor(salvar);
 				return vl2;

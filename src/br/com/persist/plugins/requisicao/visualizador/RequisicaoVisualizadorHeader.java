@@ -1,5 +1,6 @@
 package br.com.persist.plugins.requisicao.visualizador;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Util;
 import br.com.persist.data.Objeto;
 import br.com.persist.data.Texto;
@@ -18,7 +19,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		return null;
 	}
 
-	public static void setAccesToken(String accessToken) {
+	public static void setAccesToken(String accessToken) throws ArgumentoException {
 		if (!Util.isEmpty(accessToken)) {
 			Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
 			if (vAccessToken == null) {
@@ -29,7 +30,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		}
 	}
 
-	protected void setVarAuthToken(String varAuthToken, String string) {
+	protected void setVarAuthToken(String varAuthToken, String string) throws ArgumentoException {
 		if (Util.isEmpty(varAuthToken) || Util.isEmpty(string)) {
 			return;
 		}
@@ -48,7 +49,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		}
 	}
 
-	public static void setVarCookie(String varCookie, String cookie) {
+	public static void setVarCookie(String varCookie, String cookie) throws ArgumentoException {
 		if (Util.isEmpty(varCookie) || Util.isEmpty(cookie)) {
 			return;
 		}

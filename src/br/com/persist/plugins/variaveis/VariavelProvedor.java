@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
@@ -91,7 +92,7 @@ public class VariavelProvedor {
 		}
 	}
 
-	public static void adicionar(String nome, String valor) {
+	public static void adicionar(String nome, String valor) throws ArgumentoException {
 		adicionar(new Variavel(nome, valor));
 	}
 

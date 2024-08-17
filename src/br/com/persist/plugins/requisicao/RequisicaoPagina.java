@@ -42,6 +42,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
@@ -461,7 +462,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		private void atualizarVar() {
 			String string = Util.getContentTransfered();
 			if (!Util.isEmpty(string)) {
-				RequisicaoVisualizadorHeader.setAccesToken(string);
+				try {
+					RequisicaoVisualizadorHeader.setAccesToken(string);
+				} catch (ArgumentoException ex) {
+					Util.mensagem(RequisicaoPagina.this, ex.getMessage());
+				}
 			}
 		}
 

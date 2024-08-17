@@ -23,6 +23,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -196,19 +197,24 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		boolean salvar = false;
 		Variavel varMaximoRegistro = VariavelProvedor
 				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
-		if (varMaximoRegistro == null) {
-			varMaximoRegistro = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
-					Constantes.VAZIO + Constantes.DEZ);
-			VariavelProvedor.adicionar(varMaximoRegistro);
-			salvar = true;
-		}
-		Variavel varMinimoAltura = VariavelProvedor
-				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
-		if (varMinimoAltura == null) {
-			varMinimoAltura = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
-					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(varMinimoAltura);
-			salvar = true;
+		try {
+			if (varMaximoRegistro == null) {
+				varMaximoRegistro = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
+						Constantes.VAZIO + Constantes.DEZ);
+				VariavelProvedor.adicionar(varMaximoRegistro);
+				salvar = true;
+			}
+			Variavel varMinimoAltura = VariavelProvedor
+					.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
+			if (varMinimoAltura == null) {
+				varMinimoAltura = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
+						Constantes.VAZIO + Constantes.TRINTA);
+				VariavelProvedor.adicionar(varMinimoAltura);
+				salvar = true;
+			}
+		} catch (ArgumentoException ex) {
+			Util.mensagem(InternalFormulario.this, ex.getMessage());
+			return;
 		}
 		checarAtualizarVariavelProvedor(salvar);
 
