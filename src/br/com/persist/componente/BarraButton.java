@@ -396,63 +396,63 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected void destacarEmFormulario() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void clonarEmFormulario() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void retornarAoFichario() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void abrirEmFormulario() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void baixar2() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void limpar2() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void copiar2() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void copiar() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void colar2() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void aplicar() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void aplicar2() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void aplicar3() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void salvar() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void salvarComo() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void atualizar() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	public Action getAtualizarAcao() {
