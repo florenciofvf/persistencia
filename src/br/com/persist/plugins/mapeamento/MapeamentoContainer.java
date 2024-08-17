@@ -21,6 +21,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -143,7 +144,11 @@ public class MapeamentoContainer extends AbstratoContainer {
 		protected void novo() {
 			String nome = getValor(Constantes.VAZIO);
 			if (nome != null) {
-				adicionar(new Mapeamento(nome));
+				try {
+					adicionar(new Mapeamento(nome));
+				} catch (ArgumentoException ex) {
+					Util.mensagem(MapeamentoContainer.this, ex.getMessage());
+				}
 			}
 		}
 
@@ -192,7 +197,11 @@ public class MapeamentoContainer extends AbstratoContainer {
 					Mapeamento m = MapeamentoProvedor.getMapeamento(i);
 					String nome = getValor(m.getNome());
 					if (nome != null) {
-						adicionar(m.clonar(nome));
+						try {
+							adicionar(m.clonar(nome));
+						} catch (ArgumentoException ex) {
+							Util.mensagem(MapeamentoContainer.this, ex.getMessage());
+						}
 					}
 				}
 			}

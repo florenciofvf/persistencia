@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -38,7 +39,7 @@ public class MetadadoTree extends Tree {
 	private static final long serialVersionUID = 1L;
 	private boolean padraoClickExportacao = true;
 
-	public MetadadoTree() {
+	public MetadadoTree() throws ArgumentoException {
 		this(new MetadadoModelo());
 	}
 

@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
@@ -36,7 +37,12 @@ public class MetadadoFabrica extends AbstratoFabricaContainer {
 	private class MetadadoPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new MetadadoContainer(null, formulario, null);
+			try {
+				return new MetadadoContainer(null, formulario, null);
+			} catch (ArgumentoException ex) {
+				Util.mensagem(formulario, ex.getMessage());
+				return null;
+			}
 		}
 	}
 
@@ -52,9 +58,24 @@ public class MetadadoFabrica extends AbstratoFabricaContainer {
 
 		private MenuMetadado(Formulario formulario) {
 			super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
-			ficharioAcao
-					.setActionListener(e -> formulario.adicionarPagina(new MetadadoContainer(null, formulario, null)));
-			formularioAcao.setActionListener(e -> MetadadoFormulario.criar(formulario, (Conexao) null));
+			ficharioAcao.setActionListener(e -> adicionarPagina(formulario));
+			formularioAcao.setActionListener(e -> criar(formulario));
+		}
+
+		private void adicionarPagina(Formulario formulario) {
+			try {
+				formulario.adicionarPagina(new MetadadoContainer(null, formulario, null));
+			} catch (ArgumentoException ex) {
+				Util.mensagem(formulario, ex.getMessage());
+			}
+		}
+
+		private void criar(Formulario formulario) {
+			try {
+				MetadadoFormulario.criar(formulario, (Conexao) null);
+			} catch (ArgumentoException ex) {
+				Util.mensagem(formulario, ex.getMessage());
+			}
 		}
 	}
 }

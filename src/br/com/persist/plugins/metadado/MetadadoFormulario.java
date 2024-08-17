@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Window;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
@@ -13,7 +14,7 @@ public class MetadadoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final MetadadoContainer container;
 
-	private MetadadoFormulario(Formulario formulario, Conexao conexao) {
+	private MetadadoFormulario(Formulario formulario, Conexao conexao) throws ArgumentoException {
 		super(formulario, Mensagens.getString(Constantes.LABEL_METADADOS));
 		container = new MetadadoContainer(this, formulario, conexao);
 		container.setMetadadoFormulario(this);
@@ -37,7 +38,7 @@ public class MetadadoFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
-	public static void criar(Formulario formulario, Conexao conexao) {
+	public static void criar(Formulario formulario, Conexao conexao) throws ArgumentoException {
 		MetadadoFormulario form = new MetadadoFormulario(formulario, conexao);
 		Formulario.posicionarJanela(formulario, form);
 	}

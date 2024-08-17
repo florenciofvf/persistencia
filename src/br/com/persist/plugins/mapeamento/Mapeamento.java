@@ -1,5 +1,6 @@
 package br.com.persist.plugins.mapeamento;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
@@ -8,19 +9,19 @@ public class Mapeamento {
 	private final String nome;
 	private String valor;
 
-	public Mapeamento(String nome) {
+	public Mapeamento(String nome) throws ArgumentoException {
 		this(nome, null);
 	}
 
-	public Mapeamento(String nome, String valor) {
+	public Mapeamento(String nome, String valor) throws ArgumentoException {
 		if (Util.isEmpty(nome)) {
-			throw new IllegalArgumentException("Nome nulo.");
+			throw new ArgumentoException("Nome nulo.");
 		}
 		this.valor = valor;
 		this.nome = nome;
 	}
 
-	public Mapeamento clonar(String novoNome) {
+	public Mapeamento clonar(String novoNome) throws ArgumentoException {
 		return new Mapeamento(novoNome, valor);
 	}
 

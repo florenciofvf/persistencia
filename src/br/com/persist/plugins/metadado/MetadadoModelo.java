@@ -10,12 +10,14 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import br.com.persist.assistencia.ArgumentoException;
+
 public class MetadadoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Logger LOG = Logger.getGlobal();
 	private final Metadado raiz;
 
-	public MetadadoModelo() {
+	public MetadadoModelo() throws ArgumentoException {
 		this(new Metadado("Raiz", false));
 	}
 

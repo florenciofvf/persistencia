@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
@@ -39,9 +40,9 @@ public class Metadado implements Transferable {
 	private Metadado pai;
 	private String tag;
 
-	public Metadado(String descricao, boolean contabilizavel) {
+	public Metadado(String descricao, boolean contabilizavel) throws ArgumentoException {
 		if (Util.isEmpty(descricao)) {
-			throw new IllegalArgumentException();
+			throw new ArgumentoException("descricao vazia.");
 		}
 		this.contabilizavel = contabilizavel;
 		this.descricao = descricao;

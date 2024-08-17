@@ -30,6 +30,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.Constantes;
@@ -61,15 +62,16 @@ import br.com.persist.plugins.persistencia.PersistenciaException;
 
 public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener {
 	private static final File file = new File(MetadadoConstantes.METADADOS);
-	private final MetadadoTree metadadoTree = new MetadadoTree();
 	private static final long serialVersionUID = 1L;
 	private MetadadoFormulario metadadoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
+	private final MetadadoTree metadadoTree;
 
-	public MetadadoContainer(Janela janela, Formulario formulario, Conexao conexao) {
+	public MetadadoContainer(Janela janela, Formulario formulario, Conexao conexao) throws ArgumentoException {
 		super(formulario);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
+		metadadoTree = new MetadadoTree();
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -188,7 +190,11 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		@Override
 		protected void abrirEmFormulario() {
-			MetadadoFormulario.criar(formulario, (Conexao) null);
+			try {
+				MetadadoFormulario.criar(formulario, (Conexao) null);
+			} catch (ArgumentoException ex) {
+				Util.mensagem(formulario, ex.getMessage());
+			}
 		}
 
 		@Override
@@ -364,7 +370,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 
 		private void atualizar(Metadado raiz, List<Metadado> tabelas, Conexao conexao, Connection conn)
-				throws PersistenciaException {
+				throws PersistenciaException, ArgumentoException {
 			int contador = 0;
 			for (Metadado tabela : tabelas) {
 				tabela.setTabela(true);
@@ -392,7 +398,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			}
 		}
 
-		public List<Metadado> converterImportados(List<Importado> lista) {
+		public List<Metadado> converterImportados(List<Importado> lista) throws ArgumentoException {
 			List<Metadado> resposta = new ArrayList<>();
 			for (Importado imp : lista) {
 				Metadado campo = new Metadado(imp.getCampo(), false);
@@ -403,7 +409,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		public List<Metadado> converterExportados(List<Exportado> lista) {
+		public List<Metadado> converterExportados(List<Exportado> lista) throws ArgumentoException {
 			List<Metadado> resposta = new ArrayList<>();
 			for (Exportado imp : lista) {
 				Metadado campo = new Metadado(imp.getCampo(), false);
@@ -414,7 +420,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		private List<Metadado> converterLista(List<String> lista) {
+		private List<Metadado> converterLista(List<String> lista) throws ArgumentoException {
 			List<Metadado> resposta = new ArrayList<>();
 			for (String string : lista) {
 				resposta.add(new Metadado(string, false));
@@ -422,7 +428,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		private List<Metadado> converterConstraint(List<List<String>> lista) {
+		private List<Metadado> converterConstraint(List<List<String>> lista) throws ArgumentoException {
 			List<Metadado> resposta = new ArrayList<>();
 			for (List<String> listaString : lista) {
 				Metadado m = new Metadado(listaString.get(0), false);
@@ -444,7 +450,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return sb.toString();
 		}
 
-		private void preencher(Metadado tabela, List<Metadado> campos, String tipoPlural, String tipoSingular) {
+		private void preencher(Metadado tabela, List<Metadado> campos, String tipoPlural, String tipoSingular)
+				throws ArgumentoException {
 			if (!campos.isEmpty()) {
 				String descricao = campos.size() > 1 ? tipoPlural : tipoSingular;
 				Metadado tipo = new Metadado(descricao, true);
