@@ -460,35 +460,35 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected void excluir() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void baixar() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void limpar() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void colar(boolean numeros, boolean letras) {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void colar0() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void novo() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void criarBackup() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected void abrirBackup() {
-		throw new UnsupportedOperationException();
+		//
 	}
 
 	protected Component add(boolean separador, Component comp) {
