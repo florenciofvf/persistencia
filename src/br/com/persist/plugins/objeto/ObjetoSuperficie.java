@@ -87,6 +87,7 @@ import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroDialogo;
+import br.com.persist.plugins.objeto.macro.MacroException;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -287,7 +288,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
-						instrucao.executar(objeto);
+						try {
+							instrucao.executar(objeto);
+						} catch (MacroException ex) {
+							Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
+						}
 					}
 				}
 			}
@@ -297,7 +302,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			for (Relacao relacao : relacoes) {
 				if (relacao.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
-						instrucao.executar(relacao);
+						try {
+							instrucao.executar(relacao);
+						} catch (MacroException ex) {
+							Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
+						}
 					}
 				}
 			}

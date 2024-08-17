@@ -54,15 +54,15 @@ public class Macro {
 		}
 
 		@Override
-		public void executar(Objeto objeto) {
-			throw new UnsupportedOperationException();
+		public void executar(Objeto objeto) throws MacroException {
+			throw new MacroException();
 		}
 	}
 
 	static class ColunaInfo extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -73,8 +73,8 @@ public class Macro {
 
 	static class AbrirAuto extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -85,8 +85,8 @@ public class Macro {
 
 	static class LinkAuto extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -97,8 +97,8 @@ public class Macro {
 
 	static class LarguraRotulos extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -109,8 +109,8 @@ public class Macro {
 
 	static class Ignorar extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -121,8 +121,8 @@ public class Macro {
 
 	static class Ccsc extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -133,8 +133,8 @@ public class Macro {
 
 	static class Sane extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -145,8 +145,8 @@ public class Macro {
 
 	static class Bpnt extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -157,8 +157,8 @@ public class Macro {
 
 	static class Transparente extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -169,8 +169,8 @@ public class Macro {
 
 	static class CopiarDestacado extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -181,8 +181,8 @@ public class Macro {
 
 	static class AjusteAutoForm extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -193,8 +193,8 @@ public class Macro {
 
 	static class AjusteLargForm extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -210,8 +210,8 @@ public class Macro {
 		}
 
 		@Override
-		public void executar(Objeto objeto) {
-			throw new UnsupportedOperationException();
+		public void executar(Objeto objeto) throws MacroException {
+			throw new MacroException();
 		}
 	}
 
@@ -222,8 +222,8 @@ public class Macro {
 		}
 
 		@Override
-		public void executar(Objeto objeto) {
-			throw new UnsupportedOperationException();
+		public void executar(Objeto objeto) throws MacroException {
+			throw new MacroException();
 		}
 	}
 
@@ -241,8 +241,8 @@ public class Macro {
 
 	static class Icone extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -269,8 +269,8 @@ public class Macro {
 
 	static class XPos extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override
@@ -281,8 +281,8 @@ public class Macro {
 
 	static class YPos extends Instrucao {
 		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
 		}
 
 		@Override

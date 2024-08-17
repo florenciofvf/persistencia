@@ -123,9 +123,9 @@ public class MacroProvedor {
 	public abstract static class Instrucao {
 		Object valor;
 
-		public abstract void executar(Relacao relacao);
+		public abstract void executar(Relacao relacao) throws MacroException;
 
-		public abstract void executar(Objeto objeto) throws AssistenciaException;
+		public abstract void executar(Objeto objeto) throws AssistenciaException, MacroException;
 
 		public void setValor(Object valor) {
 			this.valor = valor;
