@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto.alter;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
@@ -9,18 +10,18 @@ public class Alternativo {
 	private final String grupo;
 	private String valor;
 
-	public Alternativo(String resumo, String grupo) {
+	public Alternativo(String resumo, String grupo) throws ArgumentoException {
 		if (Util.isEmpty(resumo)) {
-			throw new IllegalArgumentException("Resumo nulo.");
+			throw new ArgumentoException("Resumo nulo.");
 		}
 		if (Util.isEmpty(grupo)) {
-			throw new IllegalArgumentException("Grupo nulo.");
+			throw new ArgumentoException("Grupo nulo.");
 		}
 		this.resumo = resumo;
 		this.grupo = grupo;
 	}
 
-	public Alternativo clonar(String novoResumo) {
+	public Alternativo clonar(String novoResumo) throws ArgumentoException {
 		Alternativo c = new Alternativo(novoResumo, grupo);
 		c.valor = valor;
 		return c;

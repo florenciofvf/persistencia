@@ -23,6 +23,7 @@ import javax.swing.ListSelectionModel;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -163,7 +164,11 @@ public class AlternativoContainer extends AbstratoContainer {
 			if (grupo == null) {
 				return;
 			}
-			adicionar(new Alternativo(resumo, grupo));
+			try {
+				adicionar(new Alternativo(resumo, grupo));
+			} catch (ArgumentoException ex) {
+				Util.mensagem(AlternativoContainer.this, ex.getMessage());
+			}
 		}
 
 		private void adicionar(Alternativo frag) {
@@ -213,7 +218,11 @@ public class AlternativoContainer extends AbstratoContainer {
 					Alternativo f = AlternativoProvedor.getAlternativo(i);
 					String resumo = getValor(AlternativoMensagens.getString("label.nome_alternativo"), f.getResumo());
 					if (resumo != null) {
-						adicionar(f.clonar(resumo));
+						try {
+							adicionar(f.clonar(resumo));
+						} catch (ArgumentoException ex) {
+							Util.mensagem(AlternativoContainer.this, ex.getMessage());
+						}
 					}
 				}
 			}

@@ -29,6 +29,7 @@ import javax.swing.JInternalFrame;
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopLargura;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -128,10 +129,15 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 			Variavel variavelDeltaY = VariavelProvedor
 					.getVariavel(ObjetoConstantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
 			if (variavelDeltaY == null) {
-				variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
-						Constantes.VAZIO + Constantes.QUARENTA);
-				VariavelProvedor.adicionar(variavelDeltaY);
-				salvar = true;
+				try {
+					variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
+							Constantes.VAZIO + Constantes.QUARENTA);
+					VariavelProvedor.adicionar(variavelDeltaY);
+					salvar = true;
+				} catch (ArgumentoException ex) {
+					Util.mensagem(Desktop.this, ex.getMessage());
+					return;
+				}
 			}
 			checarAtualizarVariavelProvedor(salvar);
 			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
@@ -167,17 +173,21 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 		boolean salvar = false;
 		Variavel variavelDeltaX = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO);
 		Variavel variavelDeltaY = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-		if (variavelDeltaX == null) {
-			variavelDeltaX = new Variavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO,
-					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(variavelDeltaX);
-			salvar = true;
-		}
-		if (variavelDeltaY == null) {
-			variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO,
-					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(variavelDeltaY);
-			salvar = true;
+		try {
+			if (variavelDeltaX == null) {
+				variavelDeltaX = new Variavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO,
+						Constantes.VAZIO + Constantes.TRINTA);
+				VariavelProvedor.adicionar(variavelDeltaX);
+				salvar = true;
+			}
+			if (variavelDeltaY == null) {
+				variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO,
+						Constantes.VAZIO + Constantes.TRINTA);
+				VariavelProvedor.adicionar(variavelDeltaY);
+				salvar = true;
+			}
+		} catch (ArgumentoException ex) {
+			Util.mensagem(Desktop.this, ex.getMessage());
 		}
 		checarAtualizarVariavelProvedor(salvar);
 		aproximar(objetoAoFormulario, variavelDeltaX, variavelDeltaY, frame);

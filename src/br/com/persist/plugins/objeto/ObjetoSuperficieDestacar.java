@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
@@ -75,17 +76,22 @@ public class ObjetoSuperficieDestacar {
 		Variavel variavelDeltaX = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO);
 		Variavel variavelDeltaY = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO);
 		boolean salvar = false;
-		if (variavelDeltaX == null) {
-			variavelDeltaX = new Variavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO,
-					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(variavelDeltaX);
-			salvar = true;
-		}
-		if (variavelDeltaY == null) {
-			variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO,
-					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(variavelDeltaY);
-			salvar = true;
+		try {
+			if (variavelDeltaX == null) {
+				variavelDeltaX = new Variavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO,
+						Constantes.VAZIO + Constantes.TRINTA);
+				VariavelProvedor.adicionar(variavelDeltaX);
+				salvar = true;
+			}
+			if (variavelDeltaY == null) {
+				variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO,
+						Constantes.VAZIO + Constantes.TRINTA);
+				VariavelProvedor.adicionar(variavelDeltaY);
+				salvar = true;
+			}
+		} catch (ArgumentoException ex) {
+			Util.mensagem(superficie, ex.getMessage());
+			return;
 		}
 		checarAtualizarVariavelProvedorSuperficie(salvar);
 		int x = variavelDeltaX.getInteiro(Constantes.TRINTA);
@@ -99,17 +105,22 @@ public class ObjetoSuperficieDestacar {
 		Variavel variavelLargura = VariavelProvedor.getVariavel(ObjetoConstantes.DESTACAR_PROPRIO_LARGURA_INTERNAL);
 		Variavel variavelAltura = VariavelProvedor.getVariavel(ObjetoConstantes.DESTACAR_PROPRIO_ALTURA_INTERNAL);
 		boolean salvar = false;
-		if (variavelLargura == null) {
-			variavelLargura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_LARGURA_INTERNAL,
-					Constantes.VAZIO + Constantes.QUATROCENTOS);
-			VariavelProvedor.adicionar(variavelLargura);
-			salvar = true;
-		}
-		if (variavelAltura == null) {
-			variavelAltura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_ALTURA_INTERNAL,
-					Constantes.VAZIO + Constantes.DUZENTOS);
-			VariavelProvedor.adicionar(variavelAltura);
-			salvar = true;
+		try {
+			if (variavelLargura == null) {
+				variavelLargura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_LARGURA_INTERNAL,
+						Constantes.VAZIO + Constantes.QUATROCENTOS);
+				VariavelProvedor.adicionar(variavelLargura);
+				salvar = true;
+			}
+			if (variavelAltura == null) {
+				variavelAltura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_ALTURA_INTERNAL,
+						Constantes.VAZIO + Constantes.DUZENTOS);
+				VariavelProvedor.adicionar(variavelAltura);
+				salvar = true;
+			}
+		} catch (ArgumentoException ex) {
+			Util.mensagem(superficie, ex.getMessage());
+			return;
 		}
 		checarAtualizarVariavelProvedorSuperficie(salvar);
 		int largura = variavelLargura.getInteiro(Constantes.QUATROCENTOS);
