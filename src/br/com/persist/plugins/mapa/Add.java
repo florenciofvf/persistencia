@@ -1,13 +1,14 @@
 package br.com.persist.plugins.mapa;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Util;
 
 public class Add {
 	private final String nome;
 
-	public Add(String nome) {
+	public Add(String nome) throws ArgumentoException {
 		if (Util.isEmpty(nome)) {
-			throw new IllegalArgumentException("Nome do objeto vazio.");
+			throw new ArgumentoException("Nome do objeto vazio.");
 		}
 		this.nome = nome;
 	}

@@ -1,13 +1,14 @@
 package br.com.persist.plugins.mapa;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Util;
 
 public class Ref {
 	private final String nome;
 
-	public Ref(String nome) {
+	public Ref(String nome) throws ArgumentoException {
 		if (Util.isEmpty(nome)) {
-			throw new IllegalArgumentException("Nome da referencia vazia.");
+			throw new ArgumentoException("Nome da referencia vazia.");
 		}
 		this.nome = nome;
 	}

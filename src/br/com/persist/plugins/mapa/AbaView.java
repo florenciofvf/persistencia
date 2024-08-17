@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
@@ -441,7 +442,7 @@ public class AbaView extends Panel {
 					if (atributo != null) {
 						try {
 							organizador.parametros(atributo.getValor());
-						} catch (MapaException ex) {
+						} catch (MapaException | ArgumentoException ex) {
 							Util.mensagem(AbaView.this, ex.getMessage());
 						}
 					}

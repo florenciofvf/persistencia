@@ -3,6 +3,7 @@ package br.com.persist.plugins.mapa.organiza;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.plugins.mapa.MapaException;
 import br.com.persist.plugins.mapa.Objeto;
 
@@ -13,7 +14,7 @@ public abstract class Organizador {
 		this.id = id;
 	}
 
-	public abstract void parametros(String string) throws MapaException;
+	public abstract void parametros(String string) throws MapaException, ArgumentoException;
 
 	public abstract void organizar(Objeto objeto);
 

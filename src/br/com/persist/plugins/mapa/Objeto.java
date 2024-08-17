@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.mapa.organiza.Organizador;
 
@@ -34,9 +35,9 @@ public class Objeto {
 	int xOrigem;
 	int yOrigem;
 
-	public Objeto(String nome) {
+	public Objeto(String nome) throws ArgumentoException {
 		if (Util.isEmpty(nome)) {
-			throw new IllegalArgumentException("Nome do objeto vazio.");
+			throw new ArgumentoException("Nome do objeto vazio.");
 		}
 		referencias = new ArrayList<>();
 		atributos = new ArrayList<>();
@@ -122,7 +123,7 @@ public class Objeto {
 		this.menu = menu;
 	}
 
-	public void lerAtributos(Attributes attributes) {
+	public void lerAtributos(Attributes attributes) throws ArgumentoException {
 		for (int i = 0; i < attributes.getLength(); i++) {
 			Atributo atributo = new Atributo(attributes.getQName(i), attributes.getValue(i));
 			atributos.add(atributo);

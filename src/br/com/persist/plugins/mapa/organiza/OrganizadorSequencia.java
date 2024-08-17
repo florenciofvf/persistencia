@@ -1,5 +1,6 @@
 package br.com.persist.plugins.mapa.organiza;
 
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.plugins.mapa.Objeto;
 
 /*
@@ -16,7 +17,7 @@ public class OrganizadorSequencia extends Organizador {
 	}
 
 	@Override
-	public void parametros(String string) {
+	public void parametros(String string) throws ArgumentoException {
 		try {
 			String[] strings = string.split(" ");
 			total = Integer.parseInt(strings[0]);
@@ -24,7 +25,7 @@ public class OrganizadorSequencia extends Organizador {
 			distancia = Integer.parseInt(strings[1]);
 			posicaoX = total * distancia;
 		} catch (Exception e) {
-			throw new IllegalArgumentException("O organizador sequencial necessita do parametro total e distancia.");
+			throw new ArgumentoException("O organizador sequencial necessita do parametro total e distancia.");
 		}
 	}
 
