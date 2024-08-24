@@ -696,5 +696,4 @@ public class ParaTabela {
 		}
 		return null;
 	}
-
 }
