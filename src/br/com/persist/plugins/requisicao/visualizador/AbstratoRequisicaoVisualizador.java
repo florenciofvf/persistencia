@@ -12,7 +12,7 @@ public abstract class AbstratoRequisicaoVisualizador implements RequisicaoVisual
 	private RequisicaoRota requisicaoRota;
 	private final Set<String> mimes;
 
-	public AbstratoRequisicaoVisualizador() {
+	protected AbstratoRequisicaoVisualizador() {
 		mimes = new HashSet<>();
 	}
 
