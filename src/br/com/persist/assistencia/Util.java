@@ -650,12 +650,12 @@ public class Util {
 		return botoes[i];
 	}
 
-	public static void stackTraceAndMessage(String tipo, Exception ex, Component componente) {
+	public static void stackTraceAndMessage(String tipo, Throwable ex, Component componente) {
 		String msg = getStackTrace(tipo, ex);
 		mensagem(componente, msg);
 	}
 
-	public static String getStackTrace(String info, Exception ex) {
+	public static String getStackTrace(String info, Throwable ex) {
 		StringWriter sw = new StringWriter();
 		sw.append(info + "\r\n\r\n");
 		if (ex != null) {

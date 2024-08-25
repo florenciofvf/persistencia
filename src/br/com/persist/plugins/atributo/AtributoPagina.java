@@ -1930,19 +1930,25 @@ class PainelTest extends AbstratoPanel {
 			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest.this);
 			return;
 		}
-		Method[] methods = classe.getDeclaredMethods();
 		List<Metodo> metodos = new ArrayList<>();
-		for (Method item : methods) {
-			if (!item.isSynthetic() && item.getName().startsWith("get")) {
-				String nome = item.getName().substring("get".length());
-				if (Util.isEmpty(nome)) {
-					continue;
-				}
-				Metodo obj = new Metodo(nome);
-				if (contemSet(methods, obj)) {
-					metodos.add(obj);
+		Method[] methods = null;
+		try {
+			methods = classe.getDeclaredMethods();
+			for (Method item : methods) {
+				if (!item.isSynthetic() && item.getName().startsWith("get")) {
+					String nome = item.getName().substring("get".length());
+					if (Util.isEmpty(nome)) {
+						continue;
+					}
+					Metodo obj = new Metodo(nome);
+					if (contemSet(methods, obj)) {
+						metodos.add(obj);
+					}
 				}
 			}
+		} catch (Throwable ex) {
+			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest.this);
+			return;
 		}
 
 		StringPool pool = new StringPool();
