@@ -1939,17 +1939,17 @@ class PainelTest extends AbstratoPanel {
 
 		ClassePublica classe = arquivo.criarClassePublica("Temp");
 
-		Funcao funcao = classe.criarFuncaoPublicaEstatica(nomeClasse, "new" + nomeClasse);
-		funcao.addInstrucao(nomeClasse + " obj = new " + nomeClasse + "()");
-		funcao.addInstrucao("obj.setId(1L)");
-		funcao.addReturn("obj");
-
-		classe.newLine();
-
-		funcao = classe.criarFuncaoPublicaEstatica("List<" + nomeClasse + ">", "newList" + nomeClasse);
+		Funcao funcao = classe.criarFuncaoPublicaEstatica("List<" + nomeClasse + ">", "newList" + nomeClasse);
 		funcao.addInstrucao("List<" + nomeClasse + "> resp = new ArrayList<>()");
 		funcao.addInstrucao("resp.add(new" + nomeClasse + "())");
 		funcao.addReturn("resp");
+
+		classe.newLine();
+
+		funcao = classe.criarFuncaoPublicaEstatica(nomeClasse, "new" + nomeClasse);
+		funcao.addInstrucao(nomeClasse + " obj = new " + nomeClasse + "()");
+		funcao.addInstrucao("obj.setId(1L)");
+		funcao.addReturn("obj");
 
 		arquivo.gerar(-1, pool);
 		appendText(pool.toString());
