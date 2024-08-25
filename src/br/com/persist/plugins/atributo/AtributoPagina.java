@@ -556,6 +556,10 @@ abstract class AbstratoPanel extends Panel {
 		textArea.setText(string);
 	}
 
+	protected void appendText(String string) {
+		textArea.setText(textArea.getText() + Constantes.QL2 + string);
+	}
+
 	abstract void gerar(Raiz raiz, List<Atributo> atributos);
 
 	abstract String getChaveTooltip();
@@ -1801,11 +1805,14 @@ class PainelTest extends AbstratoPanel {
 		toolbar.add(txtArquivo);
 		Action gerarTestAcao = Action.acaoMenu(AtributoMensagens.getString("label.gerar_teste"), Icones.SINCRONIZAR);
 		Action arquivoAction = Action.acaoMenu(AtributoMensagens.getString("label.arquivo_java"), Icones.ABRIR);
+		Action newObjetoAcao = Action.acaoMenu(AtributoMensagens.getString("label.novo_objeto"), Icones.CRIAR);
 		gerarTestAcao.setActionListener(e -> gerarTeste());
+		newObjetoAcao.setActionListener(e -> novoObjeto());
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
 		toolbar.add(chkMockito);
 		toolbar.addButton(gerarTestAcao);
+		toolbar.addButton(newObjetoAcao);
 	}
 
 	private void lerArquivo() {
@@ -1916,6 +1923,36 @@ class PainelTest extends AbstratoPanel {
 		if (chkMockito.isSelected()) {
 			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
 		}
+	}
+
+	private void novoObjeto() {
+		Object resp = Util.showInputDialog(PainelTest.this, AtributoMensagens.getString("label.nome_classe_detalhe"),
+				AtributoMensagens.getString("label.nome_classe"), null);
+		if (resp != null && !Util.isEmpty(resp.toString())) {
+			gerarFragmento(resp.toString().trim());
+		}
+	}
+
+	private void gerarFragmento(String nomeClasse) {
+		StringPool pool = new StringPool();
+		Arquivo arquivo = new Arquivo();
+
+		ClassePublica classe = arquivo.criarClassePublica("Temp");
+
+		Funcao funcao = classe.criarFuncaoPublicaEstatica(nomeClasse, "new" + nomeClasse);
+		funcao.addInstrucao(nomeClasse + " obj = new " + nomeClasse + "()");
+		funcao.addInstrucao("obj.setId(1L)");
+		funcao.addReturn("obj");
+
+		classe.newLine();
+
+		funcao = classe.criarFuncaoPublicaEstatica("List<" + nomeClasse + ">", "newList" + nomeClasse);
+		funcao.addInstrucao("List<" + nomeClasse + "> resp = new ArrayList<>()");
+		funcao.addInstrucao("resp.add(new" + nomeClasse + "())");
+		funcao.addReturn("resp");
+
+		arquivo.gerar(-1, pool);
+		appendText(pool.toString());
 	}
 
 	private void gerarTeste() {

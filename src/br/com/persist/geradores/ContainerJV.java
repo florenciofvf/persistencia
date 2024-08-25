@@ -51,6 +51,16 @@ public class ContainerJV extends Container {
 		return criarFuncaoPublica(retorno, nome, new Parametros());
 	}
 
+	public FuncaoPublicaEstatica criarFuncaoPublicaEstatica(String retorno, String nome, Parametros param) {
+		FuncaoPublicaEstatica funcao = new FuncaoPublicaEstatica(retorno, nome, param);
+		add(funcao);
+		return funcao;
+	}
+
+	public FuncaoPublicaEstatica criarFuncaoPublicaEstatica(String retorno, String nome) {
+		return criarFuncaoPublicaEstatica(retorno, nome, new Parametros());
+	}
+
 	public FuncaoProtegida criarFuncaoProtegida(String retorno, String nome, Parametros param) {
 		FuncaoProtegida funcao = new FuncaoProtegida(retorno, nome, param);
 		add(funcao);
