@@ -1,0 +1,112 @@
+package br.com.persist.plugins.instrucao.biblionativo;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.channels.FileChannel;
+
+public class Arquivo {
+	private Arquivo() {
+	}
+
+	@Biblio
+	public static IArquivo ler(Object absoluto) throws IOException {
+		String arquivo = absoluto.toString();
+		checarAbsoluto(arquivo);
+		try (InputStream is = new FileInputStream(arquivo)) {
+			Lista lista = new Lista();
+			long numero = 1;
+			ILinha linha = criar(numero, is);
+			while (linha != null) {
+				lista.add(linha);
+				numero++;
+				linha = criar(numero, is);
+			}
+			return new IArquivo(arquivo, lista);
+		}
+	}
+
+	private static ILinha criar(long numero, InputStream is) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		ILinha resposta = null;
+		int i = is.read();
+		char cr = 0;
+		char lf = 0;
+		while (i != -1) {
+			char c = (char) i;
+			if (c == '\r' || c == '\n') {
+				if (c == '\r') {
+					cr = c;
+				} else {
+					lf = c;
+					return new ILinha(numero, sb.toString(), cr, lf);
+				}
+			} else {
+				sb.append(c);
+			}
+			i = is.read();
+		}
+		if (cr != 0) {
+			resposta = new ILinha(numero, sb.toString(), cr, lf);
+		}
+		return resposta;
+	}
+
+	@Biblio
+	public static void salvar(Object arquivo, Object charset)
+			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
+		IArquivo entityArquivo = (IArquivo) arquivo;
+		PrintWriter pw = criarPrintWriter(entityArquivo, (String) charset);
+		entityArquivo.salvar(pw);
+		pw.close();
+	}
+
+	static PrintWriter criarPrintWriter(IArquivo arquivo, String charset)
+			throws FileNotFoundException, UnsupportedEncodingException {
+		return new PrintWriter(arquivo.getAbsoluto(), charset);
+	}
+
+	private static void checarAbsoluto(String absoluto) throws IOException {
+		File file = new File(absoluto);
+		if (!file.exists()) {
+			throw new IOException("Arquivo inexistente! >>> " + absoluto);
+		}
+		if (!file.canRead()) {
+			throw new IOException("O arquivo n\u00e3o pode ser lido! >>> " + absoluto);
+		}
+		if (file.isDirectory()) {
+			throw new IOException("O arquivo n\u00e3o pode ser um diret\u00F3rio! >>> " + absoluto);
+		}
+	}
+
+	@Biblio
+	public static String copiar(Object absolutoOrigem, Object absolutoDestino) throws IOException {
+		if (absolutoOrigem == null) {
+			return "ORIGEM NULL";
+		}
+		File origem = new File(absolutoOrigem.toString());
+		if (!origem.isFile()) {
+			return "ORIGEM NAO EH ARQUIVO";
+		}
+		if (!origem.canRead()) {
+			return "ORIGEM NAO PODE SER LIDO";
+		}
+		if (absolutoDestino == null) {
+			return "DESTINO NULL";
+		}
+		File destino = new File(absolutoDestino.toString());
+		try (FileInputStream fis = new FileInputStream(origem)) {
+			try (FileOutputStream fos = new FileOutputStream(destino)) {
+				FileChannel channelIn = fis.getChannel();
+				FileChannel channelOut = fos.getChannel();
+				return destino.getAbsolutePath() + "\nTOTAL COPIADO(s): "
+						+ channelIn.transferTo(0, origem.length(), channelOut);
+			}
+		}
+	}
+}
