@@ -43,7 +43,7 @@ public class Linha {
 	}
 
 	@Biblio
-	public static Lista entreIniciaEfinaliza(Object arquivo, Object stringInicio, Object stringFinal, Object trim)
+	public static Lista iniciaEfinalizaEntre(Object arquivo, Object stringInicio, Object stringFinal, Object trim)
 			throws IllegalAccessException {
 		IArquivo entityArquivo = (IArquivo) arquivo;
 		String strInicio = (String) stringInicio;
@@ -62,7 +62,7 @@ public class Linha {
 	}
 
 	@Biblio
-	public static Lista entreIniciaEfinalizaReplace(Object arquivo, Object stringInicio, Object stringFinal,
+	public static Lista iniciaEfinalizaEntreReplace(Object arquivo, Object stringInicio, Object stringFinal,
 			Object novaString, Object trim) throws IllegalAccessException {
 		IArquivo entityArquivo = (IArquivo) arquivo;
 		String strInicio = (String) stringInicio;
