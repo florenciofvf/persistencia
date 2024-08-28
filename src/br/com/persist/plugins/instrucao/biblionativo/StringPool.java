@@ -12,7 +12,7 @@ public class StringPool {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return sb.toString();
 	}
 }

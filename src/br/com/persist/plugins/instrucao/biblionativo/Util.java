@@ -30,7 +30,7 @@ public class Util {
 	}
 
 	@Biblio
-	public static java.lang.String toString(Object object) {
+	public static String toString(Object object) {
 		return object == null ? "" : object.toString();
 	}
 }

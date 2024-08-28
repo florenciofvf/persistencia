@@ -16,9 +16,9 @@ public class DB {
 	@Biblio
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha)
 			throws ClassNotFoundException, SQLException {
-		java.lang.Class.forName((java.lang.String) driver);
-		return DriverManager.getConnection((java.lang.String) url, (java.lang.String) usuario,
-				(java.lang.String) senha);
+		java.lang.Class.forName((String) driver);
+		return DriverManager.getConnection((String) url, (String) usuario,
+				(String) senha);
 	}
 
 	@Biblio
@@ -37,14 +37,14 @@ public class DB {
 	public static Lista select(Object conexao, Object consulta) throws SQLException {
 		Lista lista = new Lista();
 		Connection connection = (Connection) conexao;
-		java.lang.String instrucao = (java.lang.String) consulta;
+		String instrucao = (String) consulta;
 		try (Statement st = connection.createStatement()) {
 			processar(instrucao, st, lista);
 		}
 		return lista;
 	}
 
-	private static void processar(java.lang.String instrucao, Statement st, Lista lista) throws SQLException {
+	private static void processar(String instrucao, Statement st, Lista lista) throws SQLException {
 		try (ResultSet rs = st.executeQuery(instrucao)) {
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int qtdColunas = rsmd.getColumnCount();
@@ -54,9 +54,9 @@ public class DB {
 				}
 			} else {
 				while (rs.next()) {
-					Map<java.lang.String, Object> map = new HashMap<>();
+					Map<String, Object> map = new HashMap<>();
 					for (int i = 1; i <= qtdColunas; i++) {
-						java.lang.String nome = rsmd.getColumnName(i);
+						String nome = rsmd.getColumnName(i);
 						Object valor = rs.getObject(i);
 						map.put(nome, valor);
 					}

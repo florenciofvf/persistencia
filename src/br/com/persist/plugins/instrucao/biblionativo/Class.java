@@ -6,6 +6,6 @@ public class Class {
 
 	@Biblio
 	public static Object get(Object absoluto) throws ClassNotFoundException {
-		return java.lang.Class.forName((java.lang.String) absoluto);
+		return java.lang.Class.forName((String) absoluto);
 	}
 }

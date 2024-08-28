@@ -2,8 +2,8 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.math.BigInteger;
 
-public class String {
-	private String() {
+public class IString {
+	private IString() {
 	}
 
 	@Biblio
@@ -23,7 +23,7 @@ public class String {
 		if (object == null) {
 			return Util.TRUE;
 		}
-		java.lang.String string = object.toString();
+		String string = object.toString();
 		if (string == null) {
 			return Util.TRUE;
 		}
@@ -36,17 +36,17 @@ public class String {
 	}
 
 	@Biblio
-	public static java.lang.String trim(Object object) {
+	public static String trim(Object object) {
 		return object == null ? "" : object.toString().trim();
 	}
 
 	@Biblio
-	public static java.lang.String upper(Object object) {
+	public static String upper(Object object) {
 		return object == null ? "" : object.toString().toUpperCase();
 	}
 
 	@Biblio
-	public static java.lang.String lower(Object object) {
+	public static String lower(Object object) {
 		return object == null ? "" : object.toString().toLowerCase();
 	}
 

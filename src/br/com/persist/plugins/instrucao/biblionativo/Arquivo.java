@@ -3,15 +3,15 @@ package br.com.persist.plugins.instrucao.biblionativo;
 import java.io.PrintWriter;
 
 public class Arquivo {
-	private final java.lang.String absoluto;
+	private final String absoluto;
 	private final Lista lista;
 
-	public Arquivo(java.lang.String absoluto, Lista lista) {
+	public Arquivo(String absoluto, Lista lista) {
 		this.absoluto = absoluto;
 		this.lista = lista;
 	}
 
-	public java.lang.String getAbsoluto() {
+	public String getAbsoluto() {
 		return absoluto;
 	}
 
@@ -28,7 +28,7 @@ public class Arquivo {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return absoluto + "\n" + lista;
 	}
 }

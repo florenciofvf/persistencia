@@ -10,7 +10,7 @@ public class Method {
 	public static Object get(Object objeto, Object nomeMetodoGet) throws NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		java.lang.Class<?> klass = objeto.getClass();
-		java.lang.reflect.Method method = klass.getMethod((java.lang.String) nomeMetodoGet);
+		java.lang.reflect.Method method = klass.getMethod((String) nomeMetodoGet);
 		return method.invoke(objeto);
 	}
 }

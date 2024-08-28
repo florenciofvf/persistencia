@@ -134,7 +134,7 @@ public class Lista {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		No no = cabeca;
 		while (no != null) {

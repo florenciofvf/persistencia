@@ -10,10 +10,10 @@ import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 
 public class GeraBiblio {
-	private static final java.lang.String PACOTE = "br_com_persist_plugins_instrucao_biblionativo_";
-	private static final java.lang.String PREFIXO = "function_native";
+	private static final String PACOTE = "br_com_persist_plugins_instrucao_biblionativo_";
+	private static final String PREFIXO = "function_native";
 
-	public static void main(java.lang.String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		java.lang.Class<?> klass = List.class;
 		processar(klass);
 		Compilador compilador = new Compilador();
@@ -39,14 +39,14 @@ public class GeraBiblio {
 
 	private static void imprimir(PrintWriter pw, java.lang.Class<?> classe, Method m) {
 		java.lang.Class<?> returnType = m.getReturnType();
-		java.lang.String string = returnType.getCanonicalName();
-		java.lang.String sufixo = "void".equals(string) || "java.lang.Void".equals(string) ? " : void" : "";
+		String string = returnType.getCanonicalName();
+		String sufixo = "void".equals(string) || "java.lang.Void".equals(string) ? " : void" : "";
 		pw.print(PREFIXO + " " + PACOTE + classe.getSimpleName());
 		pw.println(" " + m.getName() + "(" + getArgs(m) + ")" + sufixo + ";");
 		pw.println();
 	}
 
-	private static java.lang.String getArgs(Method m) {
+	private static String getArgs(Method m) {
 		StringBuilder sb = new StringBuilder();
 		Parameter[] parametros = m.getParameters();
 		for (Parameter p : parametros) {

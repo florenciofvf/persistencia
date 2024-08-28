@@ -3,12 +3,12 @@ package br.com.persist.plugins.instrucao.biblionativo;
 import java.io.PrintWriter;
 
 public class ArquivoLinha {
-	final java.lang.String string;
+	final String string;
 	final long numero;
 	final char cr;
 	final char lf;
 
-	public ArquivoLinha(long numero, java.lang.String string, char cr, char lf) {
+	public ArquivoLinha(long numero, String string, char cr, char lf) {
 		this.numero = numero;
 		this.string = string;
 		this.cr = cr;
@@ -19,11 +19,11 @@ public class ArquivoLinha {
 		return numero;
 	}
 
-	public java.lang.String getString() {
+	public String getString() {
 		return string;
 	}
 
-	public boolean stringEqual(java.lang.String str, boolean trim) {
+	public boolean stringEqual(String str, boolean trim) {
 		if (string != null) {
 			return trim ? string.trim().equals(str) : string.equals(str);
 		}
@@ -34,15 +34,15 @@ public class ArquivoLinha {
 		return numero == num;
 	}
 
-	public boolean iniciaEfinalizaCom(java.lang.String ini, java.lang.String fim, boolean trim) {
+	public boolean iniciaEfinalizaCom(String ini, String fim, boolean trim) {
 		if (string != null) {
-			java.lang.String str = trim ? string.trim() : string;
+			String str = trim ? string.trim() : string;
 			return str.startsWith(ini) && str.endsWith(fim);
 		}
 		return false;
 	}
 
-	public java.lang.String stringEntre(java.lang.String ini, java.lang.String fim, boolean trim) {
+	public String stringEntre(String ini, String fim, boolean trim) {
 		if (iniciaEfinalizaCom(ini, fim, trim)) {
 			int posI = string.indexOf(ini) + ini.length();
 			int posF = string.indexOf(fim);
@@ -51,19 +51,19 @@ public class ArquivoLinha {
 		return null;
 	}
 
-	public java.lang.String stringEntreReplace(java.lang.String ini, java.lang.String fim, java.lang.String nova,
+	public String stringEntreReplace(String ini, String fim, String nova,
 			boolean trim) {
 		if (iniciaEfinalizaCom(ini, fim, trim)) {
 			int posI = string.indexOf(ini) + ini.length();
 			int posF = string.indexOf(fim);
-			java.lang.String inicio = string.substring(0, posI);
-			java.lang.String termino = string.substring(posF);
+			String inicio = string.substring(0, posI);
+			String termino = string.substring(posF);
 			return inicio + nova + termino;
 		}
 		return null;
 	}
 
-	public ArquivoLinha clonar(java.lang.String string) {
+	public ArquivoLinha clonar(String string) {
 		return new ArquivoLinha(numero, string, cr, lf);
 	}
 
@@ -86,7 +86,7 @@ public class ArquivoLinha {
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		StringBuilder sb = new StringBuilder(numero + ": " + string);
 		if (cr != 0) {
 			sb.append(cr);
