@@ -51,8 +51,7 @@ public class ArquivoLinha {
 		return null;
 	}
 
-	public String stringEntreReplace(String ini, String fim, String nova,
-			boolean trim) {
+	public String stringEntreReplace(String ini, String fim, String nova, boolean trim) {
 		if (iniciaEfinalizaCom(ini, fim, trim)) {
 			int posI = string.indexOf(ini) + ini.length();
 			int posF = string.indexOf(fim);

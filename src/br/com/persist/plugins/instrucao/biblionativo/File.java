@@ -121,8 +121,7 @@ public class File {
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
 			ArquivoLinha linha = (ArquivoLinha) lista.get(i);
-			String stringEntreReplace = linha.stringEntreReplace(strInicio, strFinal, strNova,
-					Util.TRUE.equals(trim));
+			String stringEntreReplace = linha.stringEntreReplace(strInicio, strFinal, strNova, Util.TRUE.equals(trim));
 			if (stringEntreReplace != null) {
 				resposta.add(linha.clonar(stringEntreReplace));
 			}

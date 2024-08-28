@@ -17,8 +17,7 @@ public class DB {
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha)
 			throws ClassNotFoundException, SQLException {
 		java.lang.Class.forName((String) driver);
-		return DriverManager.getConnection((String) url, (String) usuario,
-				(String) senha);
+		return DriverManager.getConnection((String) url, (String) usuario, (String) senha);
 	}
 
 	@Biblio
