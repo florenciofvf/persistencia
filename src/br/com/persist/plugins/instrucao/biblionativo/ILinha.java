@@ -2,13 +2,13 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.io.PrintWriter;
 
-public class ArquivoLinha {
+public class ILinha {
 	final String string;
 	final long numero;
 	final char cr;
 	final char lf;
 
-	public ArquivoLinha(long numero, String string, char cr, char lf) {
+	public ILinha(long numero, String string, char cr, char lf) {
 		this.numero = numero;
 		this.string = string;
 		this.cr = cr;
@@ -62,15 +62,15 @@ public class ArquivoLinha {
 		return null;
 	}
 
-	public ArquivoLinha clonar(String string) {
-		return new ArquivoLinha(numero, string, cr, lf);
+	public ILinha clonar(String string) {
+		return new ILinha(numero, string, cr, lf);
 	}
 
-	public void print(PrintWriter pw, ArquivoLinha arquivo, long num) {
+	public void print(PrintWriter pw, ILinha linha, long num) {
 		if (numero == num) {
 			print(pw);
 		} else {
-			arquivo.print(pw);
+			linha.print(pw);
 		}
 	}
 
