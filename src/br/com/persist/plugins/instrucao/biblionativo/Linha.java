@@ -104,7 +104,7 @@ public class Linha {
 
 	@Biblio
 	public static ILinha criar(Object numero, Object string) {
-		return new ILinha(((Number) numero).longValue(), (String) string, (char) 0, '\n');
+		return new ILinha(((Number) numero).longValue(), (String) string);
 	}
 
 	@Biblio

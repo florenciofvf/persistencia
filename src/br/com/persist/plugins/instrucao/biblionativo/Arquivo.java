@@ -33,28 +33,19 @@ public class Arquivo {
 
 	private static ILinha criar(long numero, InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();
-		ILinha resposta = null;
 		int i = is.read();
-		char cr = 0;
-		char lf = 0;
 		while (i != -1) {
 			char c = (char) i;
-			if (c == '\r' || c == '\n') {
-				if (c == '\r') {
-					cr = c;
-				} else {
-					lf = c;
-					return new ILinha(numero, sb.toString(), cr, lf);
-				}
-			} else {
-				sb.append(c);
+			sb.append(c);
+			if (c == '\n') {
+				return new ILinha(numero, sb.toString());
 			}
 			i = is.read();
 		}
-		if (cr != 0) {
-			resposta = new ILinha(numero, sb.toString(), cr, lf);
+		if (sb.length() > 0) {
+			return new ILinha(numero, sb.toString());
 		}
-		return resposta;
+		return null;
 	}
 
 	@Biblio

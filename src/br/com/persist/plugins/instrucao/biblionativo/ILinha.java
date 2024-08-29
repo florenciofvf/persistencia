@@ -5,14 +5,10 @@ import java.io.PrintWriter;
 public class ILinha {
 	final String string;
 	final long numero;
-	final char cr;
-	final char lf;
 
-	public ILinha(long numero, String string, char cr, char lf) {
+	public ILinha(long numero, String string) {
 		this.numero = numero;
 		this.string = string;
-		this.cr = cr;
-		this.lf = lf;
 	}
 
 	public long getNumero() {
@@ -63,7 +59,7 @@ public class ILinha {
 	}
 
 	public ILinha clonar(String string) {
-		return new ILinha(numero, string, cr, lf);
+		return new ILinha(numero, string);
 	}
 
 	public void print(PrintWriter pw, ILinha linha, long num) {
@@ -76,23 +72,10 @@ public class ILinha {
 
 	public void print(PrintWriter pw) {
 		pw.print(string);
-		if (cr != 0) {
-			pw.print(cr);
-		}
-		if (lf != 0) {
-			pw.print(lf);
-		}
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(numero + ": " + string);
-		if (cr != 0) {
-			sb.append(cr);
-		}
-		if (lf != 0) {
-			sb.append(lf);
-		}
-		return sb.toString();
+		return numero + ": " + string;
 	}
 }
