@@ -3,8 +3,8 @@ package br.com.persist.plugins.instrucao.biblionativo;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class Parse {
-	private Parse() {
+public class IParse {
+	private IParse() {
 	}
 
 	@Biblio

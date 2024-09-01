@@ -2,13 +2,13 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.io.IOException;
 
-public class Runtime {
-	private Runtime() {
+public class IRuntime {
+	private IRuntime() {
 	}
 
 	@Biblio
 	public static void exec(Object comando) throws IOException {
-		java.lang.Runtime runtime = java.lang.Runtime.getRuntime();
+		Runtime runtime = Runtime.getRuntime();
 		runtime.exec(comando.toString());
 	}
 }

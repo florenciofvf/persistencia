@@ -21,18 +21,18 @@ public class IString {
 	@Biblio
 	public static BigInteger empty(Object object) {
 		if (object == null) {
-			return Util.TRUE;
+			return IUtil.TRUE;
 		}
 		String string = object.toString();
 		if (string == null) {
-			return Util.TRUE;
+			return IUtil.TRUE;
 		}
-		return string.trim().isEmpty() ? Util.TRUE : Util.FALSE;
+		return string.trim().isEmpty() ? IUtil.TRUE : IUtil.FALSE;
 	}
 
 	@Biblio
 	public static BigInteger notEmpty(Object object) {
-		return empty(object).equals(Util.FALSE) ? Util.TRUE : Util.FALSE;
+		return empty(object).equals(IUtil.FALSE) ? IUtil.TRUE : IUtil.FALSE;
 	}
 
 	@Biblio

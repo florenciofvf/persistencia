@@ -2,11 +2,11 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.math.BigInteger;
 
-public class Util {
+public class IUtil {
 	public static final BigInteger FALSE = BigInteger.valueOf(0);
 	public static final BigInteger TRUE = BigInteger.valueOf(1);
 
-	private Util() {
+	private IUtil() {
 	}
 
 	@Biblio

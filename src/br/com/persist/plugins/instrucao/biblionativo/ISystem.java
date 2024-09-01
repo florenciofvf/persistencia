@@ -2,17 +2,17 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.math.BigInteger;
 
-public class System {
-	private System() {
+public class ISystem {
+	private ISystem() {
 	}
 
 	@Biblio
 	public static BigInteger timeMillis() {
-		return BigInteger.valueOf(java.lang.System.currentTimeMillis());
+		return BigInteger.valueOf(System.currentTimeMillis());
 	}
 
 	@Biblio
 	public static BigInteger nanoTime() {
-		return BigInteger.valueOf(java.lang.System.nanoTime());
+		return BigInteger.valueOf(System.nanoTime());
 	}
 }
