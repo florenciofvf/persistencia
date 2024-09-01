@@ -1,11 +1,13 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.logging.Logger;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 
@@ -14,7 +16,16 @@ public class GeraBiblio {
 	private static final String PREFIXO = "function_native";
 
 	public static void main(String[] args) throws Exception {
-		java.lang.Class<?> klass = IList.class;
+		Class<?>[] classes = { IArquivo.class, IClass.class, IDB.class, ILinha.class, ILinhas.class, IList.class,
+				IMap.class, IMethod.class, IParse.class, IRuntime.class, IString.class, ISwing.class, ISystem.class,
+				IUtil.class };
+
+		for (Class<?> item : classes) {
+			processarObjeto(item);
+		}
+	}
+
+	private static void processarObjeto(Class<?> klass) throws IOException, InstrucaoException {
 		processar(klass);
 		Compilador compilador = new Compilador();
 		BibliotecaContexto biblio = compilador.compilar(klass.getSimpleName().toLowerCase());
