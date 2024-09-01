@@ -14,7 +14,7 @@ public class GeraBiblio {
 	private static final String PREFIXO = "function_native";
 
 	public static void main(String[] args) throws Exception {
-		java.lang.Class<?> klass = List.class;
+		java.lang.Class<?> klass = IList.class;
 		processar(klass);
 		Compilador compilador = new Compilador();
 		BibliotecaContexto biblio = compilador.compilar(klass.getSimpleName().toLowerCase());

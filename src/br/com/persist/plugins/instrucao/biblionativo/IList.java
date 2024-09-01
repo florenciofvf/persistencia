@@ -1,7 +1,7 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
-public class List {
-	private List() {
+public class IList {
+	private IList() {
 	}
 
 	@Biblio
