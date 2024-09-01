@@ -2,11 +2,11 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.io.PrintWriter;
 
-public class IArquivo {
+public class Arquivo {
 	private final String absoluto;
 	private final Lista lista;
 
-	public IArquivo(String absoluto, Lista lista) {
+	public Arquivo(String absoluto, Lista lista) {
 		this.absoluto = absoluto;
 		this.lista = lista;
 	}
@@ -22,7 +22,7 @@ public class IArquivo {
 	public void salvar(PrintWriter pw) throws IllegalAccessException {
 		long size = lista.size().longValue();
 		for (long i = 0; i < size; i++) {
-			ILinha linha = (ILinha) lista.get(i);
+			Linha linha = (Linha) lista.get(i);
 			linha.print(pw);
 		}
 	}

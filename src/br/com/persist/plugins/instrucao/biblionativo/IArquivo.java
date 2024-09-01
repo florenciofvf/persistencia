@@ -10,40 +10,40 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.FileChannel;
 
-public class Arquivo {
-	private Arquivo() {
+public class IArquivo {
+	private IArquivo() {
 	}
 
 	@Biblio
-	public static IArquivo ler(Object absoluto) throws IOException {
+	public static Arquivo ler(Object absoluto) throws IOException {
 		String arquivo = absoluto.toString();
 		checarAbsoluto(arquivo);
 		try (InputStream is = new FileInputStream(arquivo)) {
 			Lista lista = new Lista();
 			long numero = 1;
-			ILinha linha = criar(numero, is);
+			Linha linha = criar(numero, is);
 			while (linha != null) {
 				lista.add(linha);
 				numero++;
 				linha = criar(numero, is);
 			}
-			return new IArquivo(arquivo, lista);
+			return new Arquivo(arquivo, lista);
 		}
 	}
 
-	private static ILinha criar(long numero, InputStream is) throws IOException {
+	private static Linha criar(long numero, InputStream is) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		int i = is.read();
 		while (i != -1) {
 			char c = (char) i;
 			sb.append(c);
 			if (c == '\n') {
-				return new ILinha(numero, sb.toString());
+				return new Linha(numero, sb.toString());
 			}
 			i = is.read();
 		}
 		if (sb.length() > 0) {
-			return new ILinha(numero, sb.toString());
+			return new Linha(numero, sb.toString());
 		}
 		return null;
 	}
@@ -51,13 +51,13 @@ public class Arquivo {
 	@Biblio
 	public static void salvar(Object arquivo, Object charset)
 			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
-		IArquivo entityArquivo = (IArquivo) arquivo;
+		Arquivo entityArquivo = (Arquivo) arquivo;
 		PrintWriter pw = criarPrintWriter(entityArquivo, (String) charset);
 		entityArquivo.salvar(pw);
 		pw.close();
 	}
 
-	static PrintWriter criarPrintWriter(IArquivo arquivo, String charset)
+	private static PrintWriter criarPrintWriter(Arquivo arquivo, String charset)
 			throws FileNotFoundException, UnsupportedEncodingException {
 		return new PrintWriter(arquivo.getAbsoluto(), charset);
 	}
