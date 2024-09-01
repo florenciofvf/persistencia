@@ -9,14 +9,14 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DB {
-	private DB() {
+public class IDB {
+	private IDB() {
 	}
 
 	@Biblio
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha)
 			throws ClassNotFoundException, SQLException {
-		java.lang.Class.forName((String) driver);
+		Class.forName((String) driver);
 		return DriverManager.getConnection((String) url, (String) usuario, (String) senha);
 	}
 
