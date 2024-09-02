@@ -58,6 +58,13 @@ public class IArquivo {
 		pw.close();
 	}
 
+	@Biblio
+	public static void salvarLinhas(Object absoluto, Lista lista, Object charset)
+			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
+		Arquivo arquivo = new Arquivo(absoluto.toString(), lista);
+		salvar(arquivo, charset);
+	}
+
 	private static PrintWriter criarPrintWriter(Arquivo arquivo, String charset)
 			throws FileNotFoundException, UnsupportedEncodingException {
 		return new PrintWriter(arquivo.getAbsoluto(), charset);
