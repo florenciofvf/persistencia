@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 
 public class IArquivo {
@@ -99,5 +100,19 @@ public class IArquivo {
 						+ channelIn.transferTo(0, origem.length(), channelOut);
 			}
 		}
+	}
+
+	@Biblio
+	public static BigInteger existe(Object absoluto) {
+		if (absoluto == null) {
+			return IUtil.FALSE;
+		}
+		File file = new File(absoluto.toString());
+		return file.exists() ? IUtil.TRUE : IUtil.FALSE;
+	}
+
+	@Biblio
+	public static String separador() {
+		return File.separator;
 	}
 }

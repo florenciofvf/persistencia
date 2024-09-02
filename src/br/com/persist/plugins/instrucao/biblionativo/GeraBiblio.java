@@ -18,7 +18,7 @@ public class GeraBiblio {
 	public static void main(String[] args) throws Exception {
 		Class<?>[] classes = { IArquivo.class, IClass.class, IDB.class, ILinha.class, ILinhas.class, IList.class,
 				IMap.class, IMethod.class, IParse.class, IRuntime.class, IString.class, ISwing.class, ISystem.class,
-				IUtil.class };
+				IUtil.class, IVar.class };
 
 		for (Class<?> item : classes) {
 			processarObjeto(item);
