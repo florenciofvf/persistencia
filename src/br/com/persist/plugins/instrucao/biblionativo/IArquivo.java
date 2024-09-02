@@ -59,9 +59,9 @@ public class IArquivo {
 	}
 
 	@Biblio
-	public static void salvarLinhas(Object absoluto, Lista lista, Object charset)
+	public static void salvarLinhas(Object absoluto, Object lista, Object charset)
 			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
-		Arquivo arquivo = new Arquivo(absoluto.toString(), lista);
+		Arquivo arquivo = new Arquivo(absoluto.toString(), (Lista) lista);
 		salvar(arquivo, charset);
 	}
 
