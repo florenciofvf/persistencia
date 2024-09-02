@@ -50,6 +50,12 @@ public class IArquivo {
 	}
 
 	@Biblio
+	public static Lista getLista(Object arquivo) {
+		Arquivo entityArquivo = (Arquivo) arquivo;
+		return entityArquivo.getLista();
+	}
+
+	@Biblio
 	public static void salvar(Object arquivo, Object charset)
 			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
