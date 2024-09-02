@@ -32,7 +32,7 @@ public class GeraBiblio {
 		Logger.getGlobal().info("Processado >>> " + biblio.getNome());
 	}
 
-	private static void processar(java.lang.Class<?> classe) throws FileNotFoundException {
+	private static void processar(Class<?> classe) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter("instrucao/" + classe.getSimpleName().toLowerCase());
 		Method[] methods = classe.getDeclaredMethods();
 		for (Method m : methods) {
@@ -48,13 +48,23 @@ public class GeraBiblio {
 		return m.getAnnotation(Biblio.class);
 	}
 
-	private static void imprimir(PrintWriter pw, java.lang.Class<?> classe, Method m) {
-		java.lang.Class<?> returnType = m.getReturnType();
+	private static void imprimir(PrintWriter pw, Class<?> classe, Method m) {
+		checarTipo(m.getParameters(), m);
+		Class<?> returnType = m.getReturnType();
 		String string = returnType.getCanonicalName();
 		String sufixo = "void".equals(string) || "java.lang.Void".equals(string) ? " : void" : "";
 		pw.print(PREFIXO + " " + PACOTE + classe.getSimpleName());
 		pw.println(" " + m.getName() + "(" + getArgs(m) + ")" + sufixo + ";");
 		pw.println();
+	}
+
+	private static void checarTipo(Parameter[] parameters, Method m) {
+		for (Parameter p : parameters) {
+			Class<?> type = p.getType();
+			if (!"java.lang.Object".equals(type.getCanonicalName())) {
+				throw new IllegalStateException("Param >>> " + type.getSimpleName() + " Function >>> " + m);
+			}
+		}
 	}
 
 	private static String getArgs(Method m) {
