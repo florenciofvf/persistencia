@@ -4,12 +4,12 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public interface Contexto {
 	/*
-	 * "(", "{"
+	 * "(", "{", "["
 	 */
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException;
 
 	/*
-	 * ")", "}", ";"
+	 * ")", "}", "]", ";"
 	 */
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException;
 
