@@ -341,9 +341,9 @@ class InstrucaoCor {
 		StyleConstants.setForeground(GRAY, new Color(192, 192, 192));
 		StyleConstants.setForeground(GREEN2, new Color(0, 125, 0));
 		StyleConstants.setForeground(BLUE2, new Color(0, 0, 125));
+		StyleConstants.setForeground(RED, new Color(100, 25, 51));
 		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
 		StyleConstants.setForeground(RED2, new Color(255, 0, 0));
-		StyleConstants.setForeground(RED, new Color(132, 6, 87));
 		StyleConstants.setForeground(MAGENTA, Color.MAGENTA);
 		StyleConstants.setBold(MAGENTA, true);
 		StyleConstants.setBold(GREEN2, true);
