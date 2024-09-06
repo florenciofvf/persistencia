@@ -8,13 +8,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Invocacao extends Instrucao {
-	private final boolean checarTipo;
+	private final boolean exp;
 	private String nomeBiblio;
 	private String nomeFuncao;
 
-	protected Invocacao(String nome, boolean checarTipo) {
+	protected Invocacao(String nome, boolean exp) {
 		super(nome);
-		this.checarTipo = checarTipo;
+		this.exp = exp;
 	}
 
 	@Override
@@ -47,10 +47,7 @@ public abstract class Invocacao extends Instrucao {
 			biblio = funcao.getBiblioteca();
 		}
 		invocar = biblio.getFuncao(nomeFuncao);
-		if (checarTipo && invocar.isTipoVoid()) {
-			throw new InstrucaoException("erro.funcao_sem_retorno", invocar.getNome(),
-					invocar.getBiblioteca().getNome());
-		}
+		validar(invocar, exp);
 		Funcao clone = invocar.clonar();
 		if (!clone.isNativo()) {
 			try {
@@ -65,6 +62,17 @@ public abstract class Invocacao extends Instrucao {
 			if (atomic.get()) {
 				pilhaOperando.push(resp);
 			}
+		}
+	}
+
+	static void validar(Funcao funcao, boolean exp) throws InstrucaoException {
+		if (funcao == null) {
+			throw new InstrucaoException("Funcao nula.", false);
+		}
+		if (exp && funcao.isTipoVoid()) {
+			throw new InstrucaoException("erro.funcao_sem_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
+		} else if (!exp && !funcao.isTipoVoid()) {
+			throw new InstrucaoException("erro.funcao_com_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
 		}
 	}
 
