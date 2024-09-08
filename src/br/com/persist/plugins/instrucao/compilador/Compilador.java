@@ -108,13 +108,20 @@ public class Compilador {
 	}
 
 	private void normal() {
+		StringBuilder sb = new StringBuilder();
+		int indiceBkp = indice;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c <= ' ') {
+				sb.append(c);
 				indice++;
 			} else {
 				break;
 			}
+		}
+		if (sb.length() > 0) {
+			Token token = new Token(sb.toString(), Tipo.TAG, indiceBkp);
+			tokens.add(token);
 		}
 	}
 

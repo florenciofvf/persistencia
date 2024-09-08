@@ -299,6 +299,7 @@ class InstrucaoCor {
 	private static final MutableAttributeSet BOLD = new SimpleAttributeSet();
 	private static final MutableAttributeSet RED2 = new SimpleAttributeSet();
 	private static final MutableAttributeSet RED = new SimpleAttributeSet();
+	private static final MutableAttributeSet TAG = new SimpleAttributeSet();
 
 	private InstrucaoCor() {
 	}
@@ -321,6 +322,8 @@ class InstrucaoCor {
 				set(doc, token, BOLD);
 			} else if (token.isNumero()) {
 				set(doc, token, RED2);
+			} else if (token.isTag()) {
+				set(doc, token, TAG);
 			}
 		}
 	}
@@ -345,6 +348,7 @@ class InstrucaoCor {
 		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
 		StyleConstants.setForeground(RED2, new Color(255, 0, 0));
 		StyleConstants.setForeground(MAGENTA, Color.MAGENTA);
+		StyleConstants.setUnderline(TAG, true);
 		StyleConstants.setBold(MAGENTA, true);
 		StyleConstants.setBold(GREEN2, true);
 		StyleConstants.setBold(BLUE2, true);

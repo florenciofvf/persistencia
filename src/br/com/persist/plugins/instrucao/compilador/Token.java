@@ -34,7 +34,7 @@ public class Token {
 
 	public enum Tipo {
 		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, CONSTANTE,
-		PARAMETRO, COMENTARIO, FUNCAO
+		PARAMETRO, COMENTARIO, FUNCAO, TAG
 	}
 
 	public Token novo(Tipo tipo) {
@@ -73,6 +73,10 @@ public class Token {
 
 	public boolean isNumero() {
 		return tipo == Tipo.INTEIRO || tipo == Tipo.FLUTUANTE;
+	}
+
+	public boolean isTag() {
+		return tipo == Tipo.TAG;
 	}
 
 	@Override
