@@ -342,13 +342,13 @@ class InstrucaoCor {
 
 	static {
 		StyleConstants.setForeground(GRAY, new Color(192, 192, 192));
+		StyleConstants.setBackground(TAG, new Color(225, 225, 225));
 		StyleConstants.setForeground(GREEN2, new Color(0, 125, 0));
 		StyleConstants.setForeground(BLUE2, new Color(0, 0, 125));
 		StyleConstants.setForeground(RED, new Color(100, 25, 51));
 		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
 		StyleConstants.setForeground(RED2, new Color(255, 0, 0));
 		StyleConstants.setForeground(MAGENTA, Color.MAGENTA);
-		StyleConstants.setUnderline(TAG, true);
 		StyleConstants.setBold(MAGENTA, true);
 		StyleConstants.setBold(GREEN2, true);
 		StyleConstants.setBold(BLUE2, true);
