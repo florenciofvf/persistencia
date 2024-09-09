@@ -9,6 +9,7 @@ import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +32,8 @@ import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.TextUI;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -55,7 +58,7 @@ import br.com.persist.plugins.instrucao.processador.Processador;
 
 public class InstrucaoPagina extends Panel {
 	private final PainelResultado painelResultado = new PainelResultado();
-	public final JTextPane textArea = new JTextPane();
+	public final TextArea textArea = new TextArea();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ScrollPane scrollPane;
@@ -322,8 +325,6 @@ class InstrucaoCor {
 				set(doc, token, BOLD);
 			} else if (token.isNumero()) {
 				set(doc, token, RED2);
-			} else if (token.isTag()) {
-				set(doc, token, TAG);
 			}
 		}
 	}
@@ -357,5 +358,50 @@ class InstrucaoCor {
 		StyleConstants.setBold(BOLD, true);
 		StyleConstants.setBold(RED2, true);
 		StyleConstants.setBold(RED, true);
+	}
+}
+
+class TextArea extends JTextPane {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		TextUI textUI = getUI();
+		String text = getText();
+		paintE(g, textUI, text);
+		paintR(g, textUI, text);
+	}
+
+	private void paintE(Graphics g, TextUI textUI, String text) {
+		int pos = text.indexOf(' ');
+		while (pos != -1) {
+			try {
+				Rectangle r = textUI.modelToView(this, pos);
+				if (r != null) {
+					g.setColor(Color.LIGHT_GRAY);
+					g.fillRect(r.x + 1, r.y + r.height / 3, 3, 3);
+				}
+				pos = text.indexOf(' ', pos + 1);
+			} catch (BadLocationException e) {
+				break;
+			}
+		}
+	}
+
+	private void paintR(Graphics g, TextUI textUI, String text) {
+		int pos = text.indexOf('\n');
+		while (pos != -1) {
+			try {
+				Rectangle r = textUI.modelToView(this, pos);
+				if (r != null) {
+					g.setColor(Color.LIGHT_GRAY);
+					g.drawRect(r.x, r.y, 4, r.height);
+				}
+				pos = text.indexOf('\n', pos + 1);
+			} catch (BadLocationException e) {
+				break;
+			}
+		}
 	}
 }
