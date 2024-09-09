@@ -380,7 +380,7 @@ class TextArea extends JTextPane {
 				Rectangle r = textUI.modelToView(this, pos);
 				if (r != null) {
 					g.setColor(Color.LIGHT_GRAY);
-					g.fillRect(r.x + 1, r.y + r.height / 3, 3, 3);
+					g.fillOval(r.x + 1, r.y + r.height / 3, 3, 3);
 				}
 				pos = text.indexOf(' ', pos + 1);
 			} catch (BadLocationException e) {
@@ -396,7 +396,9 @@ class TextArea extends JTextPane {
 				Rectangle r = textUI.modelToView(this, pos);
 				if (r != null) {
 					g.setColor(Color.LIGHT_GRAY);
-					g.drawRect(r.x, r.y, 4, r.height);
+					g.fillRect(r.x, r.y, 5, 5);
+					g.drawLine(r.x + 2, r.y, r.x + 2, r.y + r.height);
+					g.drawLine(r.x + 4, r.y, r.x + 4, r.y + r.height);
 				}
 				pos = text.indexOf('\n', pos + 1);
 			} catch (BadLocationException e) {
