@@ -123,6 +123,7 @@ public class InstrucaoPagina extends Panel {
 		private static final long serialVersionUID = 1L;
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
+		private Action paintERAcao = acaoIcon("label.paint_er", Icones.VERTICAL);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
@@ -130,10 +131,12 @@ public class InstrucaoPagina extends Panel {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
 			addButton(compiladoAcao);
 			addButton(executarAcao);
+			addButton(paintERAcao);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
+			paintERAcao.setActionListener(e -> paintER());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
@@ -141,6 +144,11 @@ public class InstrucaoPagina extends Panel {
 
 		Action acaoIcon(String chave, Icon icon) {
 			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
+		}
+
+		private void paintER() {
+			textArea.paintER = !textArea.paintER;
+			textArea.repaint();
 		}
 
 		private void verCompilado() {
@@ -363,14 +371,17 @@ class InstrucaoCor {
 
 class TextArea extends JTextPane {
 	private static final long serialVersionUID = 1L;
+	boolean paintER;
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		TextUI textUI = getUI();
-		String text = getText();
-		paintE(g, textUI, text);
-		paintR(g, textUI, text);
+		if (paintER) {
+			TextUI textUI = getUI();
+			String text = getText();
+			paintE(g, textUI, text);
+			paintR(g, textUI, text);
+		}
 	}
 
 	private void paintE(Graphics g, TextUI textUI, String text) {
