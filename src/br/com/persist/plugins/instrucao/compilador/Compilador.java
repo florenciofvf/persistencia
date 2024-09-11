@@ -52,11 +52,10 @@ public class Compilador {
 		throw new InstrucaoException(string.substring(0, indice), false);
 	}
 
-	public BibliotecaContexto compilar(String arquivo) throws IOException, InstrucaoException {
+	public BibliotecaContexto compilar(File file) throws IOException, InstrucaoException {
 		if (!CacheBiblioteca.COMPILADOS.isDirectory() && !CacheBiblioteca.COMPILADOS.mkdir()) {
 			throw new InstrucaoException(CacheBiblioteca.COMPILADOS.toString(), false);
 		}
-		File file = new File(CacheBiblioteca.ROOT, arquivo);
 		if (!file.isFile()) {
 			throw new InstrucaoException("Inexistente >>> " + file.toString(), false);
 		}
@@ -73,15 +72,15 @@ public class Compilador {
 		biblioteca.estruturar();
 		biblioteca.indexar();
 		biblioteca.desviar();
-		File destino = getCompilado(arquivo);
+		File destino = getCompilado(file);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			biblioteca.salvar(pw);
 		}
 		return biblioteca;
 	}
 
-	public static File getCompilado(String arquivo) {
-		return new File(CacheBiblioteca.COMPILADOS, arquivo + Biblioteca.EXTENSAO);
+	public static File getCompilado(File arquivo) {
+		return new File(CacheBiblioteca.COMPILADOS, arquivo.getName() + Biblioteca.EXTENSAO);
 	}
 
 	private String getString(File file) throws IOException {

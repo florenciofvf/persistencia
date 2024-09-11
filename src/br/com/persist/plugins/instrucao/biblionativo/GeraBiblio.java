@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,7 +29,7 @@ public class GeraBiblio {
 	private static void processarObjeto(Class<?> klass) throws IOException, InstrucaoException {
 		processar(klass);
 		Compilador compilador = new Compilador();
-		BibliotecaContexto biblio = compilador.compilar(klass.getSimpleName().toLowerCase());
+		BibliotecaContexto biblio = compilador.compilar(new File(klass.getSimpleName().toLowerCase()));
 		Logger.getGlobal().info("Processado >>> " + biblio.getNome());
 	}
 

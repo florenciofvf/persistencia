@@ -526,9 +526,8 @@ class Aba extends Transferivel {
 		}
 
 		private void verCompilado() {
-			String biblioteca = arquivo.getFile().getName();
 			try {
-				File file = Compilador.getCompilado(biblioteca);
+				File file = Compilador.getCompilado(arquivo.getFile());
 				if (!file.exists()) {
 					throw new IOException("Arquivo inexistente! " + file);
 				}
@@ -551,10 +550,9 @@ class Aba extends Transferivel {
 
 		@Override
 		protected void atualizar() {
-			String biblioteca = arquivo.getFile().getName();
 			try {
 				Compilador compilador = new Compilador();
-				BibliotecaContexto biblio = compilador.compilar(biblioteca);
+				BibliotecaContexto biblio = compilador.compilar(arquivo.getFile());
 				boolean resp = biblio != null;
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
