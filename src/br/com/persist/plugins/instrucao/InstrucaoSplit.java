@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao;
 
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
@@ -24,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +34,17 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Icon;
 import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -48,15 +56,19 @@ import br.com.persist.arquivo.ArquivoTreeListener;
 import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
+import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -65,6 +77,10 @@ import br.com.persist.painel.Fichario;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
+import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
+import br.com.persist.plugins.instrucao.compilador.Compilador;
+import br.com.persist.plugins.instrucao.compilador.Token;
+import br.com.persist.plugins.instrucao.processador.Processador;
 
 class InstrucaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
@@ -333,10 +349,12 @@ class TextArea extends TextPane {
 }
 
 class Aba extends Transferivel {
+	private final PainelResultado painelResultado = new PainelResultado();
 	private final TextArea textArea = new TextArea();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	final transient Arquivo arquivo;
+	private ScrollPane scrollPane;
 
 	Aba(Arquivo arquivo) {
 		this.arquivo = Objects.requireNonNull(arquivo);
@@ -379,14 +397,57 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new JScrollPane(textArea));
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
+		add(BorderLayout.CENTER, split);
+	}
+
+	private Panel criarPanel() {
+		Panel panel = new Panel();
+		Panel panelArea = new Panel();
+		panelArea.add(BorderLayout.CENTER, textArea);
+		scrollPane = new ScrollPane(panelArea);
+		panel.add(BorderLayout.CENTER, scrollPane);
+		return panel;
+	}
+
+	private Panel criarPanelResultado() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.CENTER, painelResultado);
+		return panel;
+	}
+
+	private int getValueScrollPane() {
+		return scrollPane.getVerticalScrollBar().getValue();
+	}
+
+	private void setValueScrollPane(int value) {
+		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+	}
+
+	private class PainelResultado extends Panel {
+		private static final long serialVersionUID = 1L;
+		private JTextPane textPane = new JTextPane();
+
+		private PainelResultado() {
+			add(BorderLayout.NORTH, new ToolbarPesquisa(textPane));
+			add(BorderLayout.CENTER, new ScrollPane(textPane));
+		}
+
+		private void setText(String string) {
+			textPane.setText(string);
+			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+		}
 	}
 
 	private void abrir() {
 		textArea.limpar();
 		if (arquivo.getFile().exists()) {
 			try {
+				int value = getValueScrollPane();
 				textArea.setText(conteudo(arquivo.getFile()));
+				setValueScrollPane(value);
+				InstrucaoCor.clearAttr(textArea.getStyledDocument());
 				SwingUtilities.invokeLater(Aba.this::aplicarFontePreferencia);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
@@ -426,15 +487,25 @@ class Aba extends Transferivel {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private JComboBox<String> comboFontes = new JComboBox<>(InstrucaoConstantes.FONTES);
+		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
+		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
+		private Action paintERAcao = acaoIcon("label.paint_er", Icones.VERTICAL);
 		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini() {
-			super.ini(new Nil(), BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
+			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
+			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			comboFontes.addItemListener(Toolbar.this::alterarFonte);
+			compiladoAcao.setActionListener(e -> verCompilado());
+			executarAcao.setActionListener(e -> executar());
+			paintERAcao.setActionListener(e -> paintER());
 			txtPesquisa.addActionListener(this);
+			addButton(compiladoAcao);
+			addButton(executarAcao);
+			addButton(paintERAcao);
 			add(txtPesquisa);
 			add(label);
 			add(comboFontes);
@@ -443,6 +514,58 @@ class Aba extends Transferivel {
 		public void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
+		}
+
+		private void paintER() {
+			textArea.paintER = !textArea.paintER;
+			textArea.repaint();
+		}
+
+		private void verCompilado() {
+			String biblioteca = arquivo.getFile().getName();
+			try {
+				File file = Compilador.getCompilado(biblioteca);
+				if (!file.exists()) {
+					throw new IOException("Arquivo inexistente! " + file);
+				}
+				Util.conteudo(Aba.this, file);
+			} catch (IOException e) {
+				Util.mensagem(Aba.this, e.getMessage());
+			}
+		}
+
+		private void executar() {
+			String biblioteca = arquivo.getFile().getName();
+			try {
+				Processador processador = new Processador();
+				List<Object> resposta = processador.processar(biblioteca, "main");
+				painelResultado.setText(resposta.toString());
+			} catch (InstrucaoException ex) {
+				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
+			}
+		}
+
+		@Override
+		protected void atualizar() {
+			String biblioteca = arquivo.getFile().getName();
+			try {
+				Compilador compilador = new Compilador();
+				BibliotecaContexto biblio = compilador.compilar(biblioteca);
+				boolean resp = biblio != null;
+				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
+						: InstrucaoMensagens.getString("msg.nao_compilado"));
+				if (resp) {
+					List<Token> tokens = new ArrayList<>(compilador.getTokens());
+					biblio.filtroConstParam(tokens);
+					InstrucaoCor.processar(textArea.getStyledDocument(), tokens);
+				}
+			} catch (IOException | InstrucaoException ex) {
+				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
+			}
 		}
 
 		private void alterarFonte(ItemEvent e) {
@@ -682,5 +805,74 @@ class AnotacaoHandler extends XMLHandler {
 			}
 			fichario = null;
 		}
+	}
+}
+
+class InstrucaoCor {
+	private static final MutableAttributeSet MAGENTA = new SimpleAttributeSet();
+	private static final MutableAttributeSet GREEN2 = new SimpleAttributeSet();
+	private static final MutableAttributeSet BLUE2 = new SimpleAttributeSet();
+	private static final MutableAttributeSet GRAY = new SimpleAttributeSet();
+	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
+	private static final MutableAttributeSet BLUE = new SimpleAttributeSet();
+	private static final MutableAttributeSet BOLD = new SimpleAttributeSet();
+	private static final MutableAttributeSet RED2 = new SimpleAttributeSet();
+	private static final MutableAttributeSet RED = new SimpleAttributeSet();
+	private static final MutableAttributeSet TAG = new SimpleAttributeSet();
+
+	private InstrucaoCor() {
+	}
+
+	static void processar(StyledDocument doc, List<Token> tokens) {
+		for (Token token : tokens) {
+			if (token.isReservado()) {
+				set(doc, token, RED);
+			} else if (token.isConstante()) {
+				set(doc, token, BLUE2);
+			} else if (token.isParametro()) {
+				set(doc, token, GREEN2);
+			} else if (token.isFuncao()) {
+				set(doc, token, MAGENTA);
+			} else if (token.isString()) {
+				set2(doc, token, BLUE);
+			} else if (token.isComentario()) {
+				set2(doc, token, GRAY);
+			} else if (token.isEspecial()) {
+				set(doc, token, BOLD);
+			} else if (token.isNumero()) {
+				set(doc, token, RED2);
+			}
+		}
+	}
+
+	static void set(StyledDocument doc, Token token, MutableAttributeSet att) {
+		doc.setCharacterAttributes(token.getIndice(), token.getString().length(), att, true);
+	}
+
+	static void set2(StyledDocument doc, Token token, MutableAttributeSet att) {
+		doc.setCharacterAttributes(token.getIndice(), token.getIndice2() - token.getIndice(), att, true);
+	}
+
+	static void clearAttr(StyledDocument doc) {
+		doc.setCharacterAttributes(0, doc.getLength(), PLAIN, true);
+	}
+
+	static {
+		StyleConstants.setForeground(GRAY, new Color(192, 192, 192));
+		StyleConstants.setBackground(TAG, new Color(225, 225, 225));
+		StyleConstants.setForeground(GREEN2, new Color(0, 125, 0));
+		StyleConstants.setForeground(BLUE2, new Color(0, 0, 125));
+		StyleConstants.setForeground(RED, new Color(100, 25, 51));
+		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
+		StyleConstants.setForeground(RED2, new Color(255, 0, 0));
+		StyleConstants.setForeground(MAGENTA, Color.MAGENTA);
+		StyleConstants.setBold(MAGENTA, true);
+		StyleConstants.setBold(GREEN2, true);
+		StyleConstants.setBold(BLUE2, true);
+		StyleConstants.setBold(GRAY, true);
+		StyleConstants.setBold(BLUE, true);
+		StyleConstants.setBold(BOLD, true);
+		StyleConstants.setBold(RED2, true);
+		StyleConstants.setBold(RED, true);
 	}
 }
