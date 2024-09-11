@@ -2,55 +2,50 @@ package br.com.persist.plugins.instrucao;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
-import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
-import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
-import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
-import java.awt.Font;
 import java.awt.Window;
-import java.awt.event.ItemEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JComboBox;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
-import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XMLException;
 
 public class InstrucaoContainer extends AbstratoContainer {
-	private static final File file = new File(InstrucaoConstantes.INSTRUCAO);
-	private final InstrucaoFichario fichario = new InstrucaoFichario();
-	private InstrucaoFormulario instrucaoFormulario;
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+	private InstrucaoFormulario instrucaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private InstrucaoDialogo instrucaoDialogo;
+	private final InstrucaoSplit split;
 
-	public InstrucaoContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
+	public InstrucaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
+		split = new InstrucaoSplit();
+		split.inicializar();
 		toolbar.ini(janela);
 		montarLayout();
-		abrir(conteudo, idPagina);
 	}
 
 	public InstrucaoDialogo getInstrucaoDialogo() {
@@ -77,67 +72,7 @@ public class InstrucaoContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, fichario);
-	}
-
-	public String getConteudo() {
-		InstrucaoPagina ativa = fichario.getPaginaAtiva();
-		if (ativa != null) {
-			return ativa.getConteudo();
-		}
-		return null;
-	}
-
-	public String getIdPagina() {
-		InstrucaoPagina ativa = fichario.getPaginaAtiva();
-		if (ativa != null) {
-			return ativa.getNome();
-		}
-		return null;
-	}
-
-	public int getIndice() {
-		return fichario.getIndiceAtivo();
-	}
-
-	static boolean ehArquivoReservadoIgnorados(String nome) {
-		return InstrucaoConstantes.IGNORADOS.equalsIgnoreCase(nome);
-	}
-
-	private boolean vetarAdicionarPagina(File file) {
-		return file.isDirectory()
-				|| (ehArquivoReservadoIgnorados(file.getName()) && !InstrucaoPreferencia.isExibirArqIgnorados());
-	}
-
-	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(InstrucaoConstantes.INSTRUCAO, new File(file, InstrucaoConstantes.IGNORADOS));
-		fichario.excluirPaginas();
-		if (file.isDirectory()) {
-			File[] files = file.listFiles();
-			if (files != null) {
-				files = ArquivoUtil.ordenarPorNome(files);
-				List<InstrucaoPagina> ordenados = new ArrayList<>();
-				for (File f : files) {
-					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(InstrucaoConstantes.INSTRUCAO, f.getName())) {
-						continue;
-					}
-					ordenados.add(new InstrucaoPagina(f));
-				}
-				for (InstrucaoPagina pagina : ordenados) {
-					fichario.adicionarPagina(pagina);
-				}
-			}
-		}
-		fichario.setConteudo(conteudo, idPagina);
-		SwingUtilities.invokeLater(InstrucaoContainer.this::aplicarFontePreferencia);
-	}
-
-	private void aplicarFontePreferencia() {
-		Font font = InstrucaoPreferencia.getFontPreferencia();
-		if (font != null) {
-			fichario.setFontTextArea(font);
-			toolbar.selecionarFont(font);
-		}
+		add(BorderLayout.CENTER, split);
 	}
 
 	@Override
@@ -145,18 +80,35 @@ public class InstrucaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
-		private JComboBox<String> comboFontes = new JComboBox<>(InstrucaoConstantes.FONTES);
-		private Action excluirAtivoAcao = actionIconExcluir();
+	private class Toolbar extends BarraButton implements ActionListener {
+		private final TextField txtArquivo = new TextField(35);
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					NOVO, BAIXAR, SALVAR);
-			addButton(excluirAtivoAcao);
-			add(comboFontes);
-			comboFontes.addItemListener(Toolbar.this::alterarFonte);
-			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
+			super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
+			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtArquivo.addActionListener(this);
+			add(txtArquivo);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtArquivo.getText())) {
+				Set<String> set = new LinkedHashSet<>();
+				split.contemConteudo(set, txtArquivo.getText());
+				Util.mensagem(InstrucaoContainer.this, getString(set));
+			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
 		}
 
 		@Override
@@ -167,28 +119,6 @@ public class InstrucaoContainer extends AbstratoContainer {
 				instrucaoDialogo.excluirContainer();
 				InstrucaoFormulario.criar(formulario, InstrucaoContainer.this);
 			}
-		}
-
-		private void alterarFonte(ItemEvent e) {
-			if (ItemEvent.SELECTED == e.getStateChange()) {
-				Object object = comboFontes.getSelectedItem();
-				if (object instanceof String) {
-					Font font = getFont();
-					alterar(font, (String) object);
-				}
-			}
-		}
-
-		private void alterar(Font font, String nome) {
-			if (font != null) {
-				Font nova = new Font(nome, font.getStyle(), font.getSize());
-				fichario.setFontTextArea(nova);
-				InstrucaoPreferencia.setFontPreferencia(nova);
-			}
-		}
-
-		private void selecionarFont(Font font) {
-			comboFontes.setSelectedItem(font.getName());
 		}
 
 		@Override
@@ -203,19 +133,11 @@ public class InstrucaoContainer extends AbstratoContainer {
 		}
 
 		@Override
-		protected void clonarEmFormulario() {
-			if (instrucaoDialogo != null) {
-				instrucaoDialogo.excluirContainer();
-			}
-			InstrucaoFormulario.criar(formulario, getConteudo(), getIdPagina());
-		}
-
-		@Override
 		protected void abrirEmFormulario() {
 			if (instrucaoDialogo != null) {
 				instrucaoDialogo.excluirContainer();
 			}
-			InstrucaoFormulario.criar(formulario, null, null);
+			InstrucaoFormulario.criar(formulario);
 		}
 
 		@Override
@@ -233,61 +155,8 @@ public class InstrucaoContainer extends AbstratoContainer {
 		}
 
 		@Override
-		protected void novo() {
-			Object resp = Util.getValorInputDialog(InstrucaoContainer.this, "label.id",
-					Mensagens.getString("label.nome_arquivo"), Constantes.VAZIO);
-			if (resp == null || Util.isEmpty(resp.toString())) {
-				return;
-			}
-			String nome = resp.toString();
-			File f = new File(file, nome);
-			if (f.exists()) {
-				Util.mensagem(InstrucaoContainer.this, Mensagens.getString("label.indentificador_ja_existente"));
-				return;
-			}
-			try {
-				if (f.createNewFile()) {
-					InstrucaoPagina pagina = new InstrucaoPagina(f);
-					fichario.adicionarPagina(pagina);
-				}
-			} catch (IOException ex) {
-				Util.stackTraceAndMessage(InstrucaoConstantes.PAINEL_INSTRUCAO, ex, InstrucaoContainer.this);
-			}
-		}
-
-		@Override
 		protected void baixar() {
-			abrir(null, getIdPagina());
-		}
-
-		@Override
-		protected void salvar() {
-			InstrucaoPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				salvar(ativa);
-			}
-		}
-
-		private void salvar(InstrucaoPagina ativa) {
-			AtomicBoolean atomic = new AtomicBoolean(false);
-			ativa.salvar(atomic);
-			if (atomic.get()) {
-				salvoMensagem();
-			}
-		}
-
-		private void excluirAtivo() {
-			InstrucaoPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null && Util.confirmar(InstrucaoContainer.this,
-					InstrucaoMensagens.getString("msg.confirmar_excluir_ativa"), false)) {
-				if (ativa.ehArquivoReservadoIgnorados()) {
-					ativa.mensagemReservado();
-				} else {
-					int indice = fichario.getSelectedIndex();
-					ativa.excluir();
-					fichario.remove(indice);
-				}
-			}
+			split.inicializar();
 		}
 	}
 
@@ -308,9 +177,10 @@ public class InstrucaoContainer extends AbstratoContainer {
 
 	@Override
 	public String getStringPersistencia() {
-		InstrucaoPagina ativa = fichario.getPaginaAtiva();
-		if (ativa != null) {
-			return ativa.getNome();
+		try {
+			split.salvar();
+		} catch (XMLException e) {
+			LOG.log(Level.SEVERE, e.getMessage());
 		}
 		return Constantes.VAZIO;
 	}
