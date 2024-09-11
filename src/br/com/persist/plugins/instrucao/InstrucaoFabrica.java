@@ -1,18 +1,15 @@
 package br.com.persist.plugins.instrucao;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
-import br.com.persist.abstrato.AbstratoServico;
-import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -21,13 +18,7 @@ import br.com.persist.formulario.Formulario;
 public class InstrucaoFabrica extends AbstratoFabricaContainer {
 	@Override
 	public void inicializar() {
-		br.com.persist.assistencia.Preferencias.addOutraPreferencia(InstrucaoPreferencia.class);
-		br.com.persist.assistencia.Util.criarDiretorio(InstrucaoConstantes.INSTRUCAO);
-	}
-
-	@Override
-	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
-		return new InstrucaoConfiguracao(formulario);
+		Util.criarDiretorio(InstrucaoConstantes.INSTRUCAO);
 	}
 
 	@Override
@@ -38,16 +29,8 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 	private class InstrucaoPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new InstrucaoContainer(null, formulario, null, stringPersistencia);
+			return new InstrucaoContainer(null, formulario);
 		}
-	}
-
-	@Override
-	public List<Servico> getServicos(Formulario formulario) {
-		return Arrays.asList(new InstrucaoServico());
-	}
-
-	private class InstrucaoServico extends AbstratoServico {
 	}
 
 	@Override
@@ -63,9 +46,8 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 		private MenuInstrucao(Formulario formulario) {
 			super(Constantes.LABEL_VAZIO, Icones.FRAGMENTO);
 			setText(InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
-			ficharioAcao.setActionListener(
-					e -> formulario.adicionarPagina(new InstrucaoContainer(null, formulario, null, null)));
-			formularioAcao.setActionListener(e -> InstrucaoFormulario.criar(formulario, null, null));
+			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new InstrucaoContainer(null, formulario)));
+			formularioAcao.setActionListener(e -> InstrucaoFormulario.criar(formulario));
 			dialogoAcao.setActionListener(e -> InstrucaoDialogo.criar(formulario));
 		}
 	}

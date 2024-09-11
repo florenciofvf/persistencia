@@ -14,7 +14,7 @@ public class InstrucaoDialogo extends AbstratoDialogo {
 
 	private InstrucaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, InstrucaoMensagens.getString(InstrucaoConstantes.LABEL_INSTRUCAO));
-		container = new InstrucaoContainer(this, formulario, null, null);
+		container = new InstrucaoContainer(this, formulario);
 		container.setInstrucaoDialogo(this);
 		montarLayout();
 	}
