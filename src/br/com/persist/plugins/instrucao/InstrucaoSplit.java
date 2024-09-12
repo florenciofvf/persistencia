@@ -458,7 +458,6 @@ class Aba extends Transferivel {
 	private void aplicarFontePreferencia() {
 		Font font = InstrucaoPreferencia.getFontPreferencia();
 		if (font != null) {
-			textArea.setFont(font);
 			toolbar.selecionarFont(font);
 		}
 	}
@@ -579,13 +578,14 @@ class Aba extends Transferivel {
 		private void alterar(Font font, String nome) {
 			if (font != null) {
 				Font nova = new Font(nome, font.getStyle(), font.getSize());
-				textArea.setFont(font);
-				InstrucaoPreferencia.setFontPreferencia(nova);
+				selecionarFont(nova);
 			}
 		}
 
 		private void selecionarFont(Font font) {
+			InstrucaoPreferencia.setFontPreferencia(font);
 			comboFontes.setSelectedItem(font.getName());
+			textArea.setFont(font);
 		}
 
 		@Override
