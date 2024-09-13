@@ -55,6 +55,10 @@ public class GeraPluginUtil {
 		transferir(config, "Handler");
 	}
 
+	static void split(Config config) throws IOException {
+		transferir(config, "Split");
+	}
+
 	static void util(Config config) throws IOException {
 		transferir(config, "Util");
 	}

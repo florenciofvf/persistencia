@@ -30,6 +30,7 @@ class Config {
 		string = Util.replaceAll(string, tag("nameDecap"), nameDecap);
 		string = Util.replaceAll(string, tag("nameCap"), nameCap);
 		string = Util.replaceAll(string, tag("nameMin"), nameMin);
+		string = Util.replaceAll(string, tag("recurso"), recurso);
 		string = Util.replaceAll(string, tag("package"), pacote);
 		string = Util.replaceAll(string, tag("icone"), icone);
 		return string;

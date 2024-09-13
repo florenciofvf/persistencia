@@ -167,7 +167,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 		grupo.add(chkArvore);
 
 		Muro muro = new Muro();
-		muro.camada(Muro.panelGrid(chkSimples, chkFichario, chkArvore));
+		muro.camada(chkSimples, chkFichario, chkArvore);
 
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino, criarButtonDir())));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
@@ -358,6 +358,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 				new ContainerSFBuilder(config).gerar();
 			} else if (chkArvore.isSelected()) {
 				new ContainerABuilder(config).gerar();
+				GeraPluginUtil.split(config);
 			}
 
 			GeraPluginUtil.mensagensProp(config);

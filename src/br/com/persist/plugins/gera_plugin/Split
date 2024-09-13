@@ -67,7 +67,7 @@ class ###nameCap###Split extends SplitPane {
 
 	###nameCap###Split() {
 		super(HORIZONTAL_SPLIT);
-		fileRoot = new File(###nameCap###Constantes.RECURSO);
+		fileRoot = new File(###nameCap###Constantes.###recurso###);
 	}
 
 	void inicializar() {
@@ -315,7 +315,7 @@ class Aba extends Transferivel {
 
 	@Override
 	public String getStringFile() {
-		return getStringRelativo(new File(###nameCap###Constantes.RECURSO), arquivo.getFile());
+		return getStringRelativo(new File(###nameCap###Constantes.###recurso###), arquivo.getFile());
 	}
 
 	@Override
@@ -550,7 +550,7 @@ class ###nameCap###Handler extends XMLHandler {
 		} else if ("transferivel".equals(qName)) {
 			String nome = attributes.getValue("file");
 			nome = Util.replaceAll(nome, Constantes.SEP, Constantes.SEPARADOR);
-			File fileRoot = new File(###nameCap###Constantes.RECURSO);
+			File fileRoot = new File(###nameCap###Constantes.###recurso###);
 			File file = new File(fileRoot, nome);
 			Arquivo arquivo = modelo.getArquivo(file);
 			if (arquivo != null) {
