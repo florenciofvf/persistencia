@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Window;
 import java.io.File;
 import java.lang.reflect.Field;
@@ -36,6 +37,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
@@ -166,8 +168,13 @@ public class GeraPluginContainer extends AbstratoContainer {
 		grupo.add(chkFichario);
 		grupo.add(chkArvore);
 
+		Panel panel = new Panel(new GridLayout(1, 3));
+		panel.add(new PanelCenter(chkSimples));
+		panel.add(new PanelCenter(chkFichario));
+		panel.add(new PanelCenter(chkArvore));
+
 		Muro muro = new Muro();
-		muro.camada(chkSimples, chkFichario, chkArvore);
+		muro.camada(panel);
 
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino, criarButtonDir())));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
