@@ -244,18 +244,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 		validarModeloPlugin(resp);
 		validarDiretorio(resp);
 		validarNome(resp);
-
-		if (Util.isEmpty(txtMinimPlugin.getText())) {
-			resp.add(mensagemObrigatoria("label.nome_min_plugin"));
-		} else if (caracterInvalido(txtMinimPlugin.getText())) {
-			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
-		}
-
-		if (Util.isEmpty(txtPacotePlugin.getText())) {
-			resp.add(mensagemObrigatoria("label.pacote_plugin"));
-		} else if (caracterInvalidoPacote(txtPacotePlugin.getText())) {
-			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
-		}
+		validarMin(resp);
+		validarPct(resp);
 
 		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComException.isSelected()) {
 			resp.add(GeraPluginMensagens.getString("erro.excecao_devido_fichario_arvore"));
@@ -278,6 +268,22 @@ public class GeraPluginContainer extends AbstratoContainer {
 		}
 
 		return resp;
+	}
+
+	private void validarPct(List<String> resp) {
+		if (Util.isEmpty(txtPacotePlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.pacote_plugin"));
+		} else if (caracterInvalidoPacote(txtPacotePlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
+		}
+	}
+
+	private void validarMin(List<String> resp) {
+		if (Util.isEmpty(txtMinimPlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.nome_min_plugin"));
+		} else if (caracterInvalido(txtMinimPlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
+		}
 	}
 
 	private void validarModeloPlugin(List<String> resp) {
