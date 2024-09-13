@@ -108,6 +108,10 @@ class Config {
 		return nameCap + "Pagina";
 	}
 
+	String nameCapSplit() {
+		return nameCap + "Split";
+	}
+
 	String nameDecapFormulario() {
 		return nameDecap + "Formulario";
 	}

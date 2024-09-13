@@ -75,13 +75,13 @@ public class ContainerABuilder extends Builder {
 		if (config.comDialogo) {
 			classe.addInstrucao("private " + config.nameCapDialogo() + " " + config.nameDecapDialogo());
 		}
-		classe.addInstrucao("private final AnotacaoSplit split");
+		classe.addInstrucao("private final " + config.nameCapSplit() + " split");
 		classe.newLine();
 		Container construtor = classe.criarConstrutorPublico(config.nameCapContainer(),
 				new Parametros("Janela janela, Formulario formulario"));
 
 		construtor.addInstrucao("super(formulario)");
-		construtor.addInstrucao("split = new AnotacaoSplit()");
+		construtor.addInstrucao("split = new " + config.nameCapSplit() + "()");
 		construtor.addInstrucao("split.inicializar()");
 		construtor.addInstrucao("toolbar.ini(janela)");
 		construtor.addInstrucao("montarLayout()");
