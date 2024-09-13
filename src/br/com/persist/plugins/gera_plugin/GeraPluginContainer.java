@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
@@ -48,10 +49,12 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private CheckBox chkComException = criarCheckBox("label.com_exception");
 	private CheckBox chkComProvedor = criarCheckBox("label.com_provedor");
 	private CheckBox chkComListener = criarCheckBox("label.com_listener");
-	private CheckBox chkComFichario = criarCheckBox("label.com_fichario");
 	private CheckBox chkComDialogo = criarCheckBox("label.com_dialogo");
 	private CheckBox chkComHandler = criarCheckBox("label.com_handler");
 	private CheckBox chkComModelo = criarCheckBox("label.com_modelo");
+	private CheckBox chkFichario = criarCheckBox("label.fichario");
+	private CheckBox chkSimples = criarCheckBox("label.simples");
+	private CheckBox chkArvore = criarCheckBox("label.arvore");
 	private TextField txtDiretorioRecursos = new TextField();
 	private TextField txtDiretorioDestino = new TextField();
 	private Button buttonGerar = new Button("label.gerar");
@@ -158,7 +161,14 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 
+		ButtonGroup grupo = new ButtonGroup();
+		grupo.add(chkSimples);
+		grupo.add(chkFichario);
+		grupo.add(chkArvore);
+
 		Muro muro = new Muro();
+		muro.camada(Muro.panelGrid(chkSimples, chkFichario, chkArvore));
+
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino, criarButtonDir())));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_min_plugin", txtMinimPlugin)));
@@ -170,7 +180,6 @@ public class GeraPluginContainer extends AbstratoContainer {
 		muro.camada(Muro.panelGrid(chkComException));
 		muro.camada(Muro.panelGrid(chkComProvedor));
 		muro.camada(Muro.panelGrid(chkComListener));
-		muro.camada(Muro.panelGrid(chkComFichario));
 		muro.camada(Muro.panelGrid(chkComDialogo));
 		muro.camada(Muro.panelGrid(chkComHandler));
 		muro.camada(Muro.panelGrid(chkComModelo));
@@ -232,19 +241,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private List<String> validar() {
 		List<String> resp = new ArrayList<>();
 
-		if (Util.isEmpty(txtDiretorioDestino.getText())) {
-			resp.add(mensagemObrigatoria("label.diretorio_destino"));
-		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
-			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
-		}
-
-		if (Util.isEmpty(txtNomePlugin.getText())) {
-			resp.add(mensagemObrigatoria("label.nome_plugin"));
-		} else if (caracterInvalido(txtNomePlugin.getText())) {
-			resp.add(GeraPluginMensagens.getString("erro.nome_plugin"));
-		} else if (txtNomePlugin.getText().length() < 2) {
-			resp.add(GeraPluginMensagens.getString("erro.nome_plugin_curto"));
-		}
+		validarModeloPlugin(resp);
+		validarDiretorio(resp);
+		validarNome(resp);
 
 		if (Util.isEmpty(txtMinimPlugin.getText())) {
 			resp.add(mensagemObrigatoria("label.nome_min_plugin"));
@@ -258,11 +257,19 @@ public class GeraPluginContainer extends AbstratoContainer {
 			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
 		}
 
-		if (chkComFichario.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
+		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComException.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.excecao_devido_fichario_arvore"));
+		}
+
+		if (chkFichario.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_fichario"));
 		}
 
-		if (chkComFichario.isSelected() && !chkComConfiguracao.isSelected()) {
+		if (chkArvore.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_arvore"));
+		}
+
+		if (chkFichario.isSelected() && !chkComConfiguracao.isSelected()) {
 			resp.add(GeraPluginMensagens.getString("erro.preferencia_devido_fichario"));
 		}
 
@@ -271,6 +278,30 @@ public class GeraPluginContainer extends AbstratoContainer {
 		}
 
 		return resp;
+	}
+
+	private void validarModeloPlugin(List<String> resp) {
+		if (!chkSimples.isSelected() && !chkFichario.isSelected() && !chkArvore.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.modelo_plugin_vazio"));
+		}
+	}
+
+	private void validarNome(List<String> resp) {
+		if (Util.isEmpty(txtNomePlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.nome_plugin"));
+		} else if (caracterInvalido(txtNomePlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.nome_plugin"));
+		} else if (txtNomePlugin.getText().length() < 2) {
+			resp.add(GeraPluginMensagens.getString("erro.nome_plugin_curto"));
+		}
+	}
+
+	private void validarDiretorio(List<String> resp) {
+		if (Util.isEmpty(txtDiretorioDestino.getText())) {
+			resp.add(mensagemObrigatoria("label.diretorio_destino"));
+		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
+		}
 	}
 
 	private boolean caracterInvalido(String string) {
@@ -316,7 +347,13 @@ public class GeraPluginContainer extends AbstratoContainer {
 		try {
 			new FormularioBuilder(config).gerar();
 			new ConstantesBuilder(config).gerar();
-			new ContainerBuilder(config).gerar();
+
+			if (chkSimples.isSelected() || chkFichario.isSelected()) {
+				new ContainerSFBuilder(config).gerar();
+			} else if (chkArvore.isSelected()) {
+				new ContainerABuilder(config).gerar();
+			}
+
 			GeraPluginUtil.mensagensProp(config);
 			new FabricaBuilder(config).gerar();
 			GeraPluginUtil.mensagens(config);
@@ -324,7 +361,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 			if (chkComDialogo.isSelected()) {
 				new DialogoBuilder(config).gerar();
 			}
-			if (chkComFichario.isSelected()) {
+			if (chkFichario.isSelected()) {
 				GeraPluginUtil.fichario(config);
 			}
 			if (config.comConfiguracao) {
@@ -366,8 +403,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.comConfiguracao = chkComConfiguracao.isSelected();
-		config.comFichario = chkComFichario.isSelected();
 		config.comDialogo = chkComDialogo.isSelected();
+		config.comFichario = chkFichario.isSelected();
 	}
 
 	private static String trimP(String string) {
