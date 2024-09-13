@@ -160,7 +160,7 @@ public class ContainerABuilder extends Builder {
 
 		If se = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", null);
 		se.addInstrucao("Set<String> set = new LinkedHashSet<>()");
-		se.addInstrucao("fichario.contemConteudo(set, txtArquivo.getText())");
+		se.addInstrucao("split.contemConteudo(set, txtArquivo.getText())");
 		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();
