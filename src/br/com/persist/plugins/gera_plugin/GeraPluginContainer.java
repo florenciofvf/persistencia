@@ -5,6 +5,7 @@ import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -15,6 +16,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
@@ -168,36 +170,36 @@ public class GeraPluginContainer extends AbstratoContainer {
 		grupo.add(chkFichario);
 		grupo.add(chkArvore);
 
-		Panel panel = new Panel(new GridLayout(1, 3));
-		panel.add(new PanelCenter(chkSimples));
-		panel.add(new PanelCenter(chkFichario));
-		panel.add(new PanelCenter(chkArvore));
+		Panel panel = criarCamada(chkSimples, chkFichario, chkArvore);
+		panel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.MAGENTA));
 
 		Muro muro = new Muro();
 		muro.camada(panel);
-
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_destino", txtDiretorioDestino, criarButtonDir())));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_plugin", txtNomePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_min_plugin", txtMinimPlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.pacote_plugin", txtPacotePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_recursos", txtDiretorioRecursos)));
 		muro.camada(Muro.panelGrid(labelComboBox("label.icone_plugin", cmbIconePlugin)));
-		muro.camada(Muro.panelGrid(chkComConfiguracao));
-		muro.camada(Muro.panelGrid(chkComClasseUtil));
-		muro.camada(Muro.panelGrid(chkComException));
-		muro.camada(Muro.panelGrid(chkComProvedor));
-		muro.camada(Muro.panelGrid(chkComListener));
-		muro.camada(Muro.panelGrid(chkComDialogo));
-		muro.camada(Muro.panelGrid(chkComHandler));
-		muro.camada(Muro.panelGrid(chkComModelo));
+		muro.camada(criarCamada(chkComConfiguracao, chkComClasseUtil, chkComException));
+		muro.camada(criarCamada(chkComProvedor, chkComListener, chkComDialogo));
+		muro.camada(criarCamada(chkComHandler, chkComModelo));
 		muro.camada(buttonGerar);
 
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, muro, textArea);
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.77));
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 
 		buttonGerar.setIcon(Icones.EXECUTAR);
 		buttonGerar.addActionListener(e -> gerarArquivos());
+	}
+
+	private Panel criarCamada(Component... comps) {
+		Panel panel = new Panel(new GridLayout(1, comps.length));
+		for (Component component : comps) {
+			panel.add(new PanelCenter(component));
+		}
+		return panel;
 	}
 
 	private void configurar() {
