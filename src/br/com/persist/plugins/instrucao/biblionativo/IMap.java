@@ -13,6 +13,12 @@ public class IMap {
 	}
 
 	@Biblio
+	public static Object getOr(Object mapa, Object chave, Object padrao) {
+		Object resp = ((Map<?, ?>) mapa).get(chave);
+		return resp == null ? padrao : resp;
+	}
+
+	@Biblio
 	public static Object get(Object mapa, Object chave) {
 		return ((Map<?, ?>) mapa).get(chave);
 	}
