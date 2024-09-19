@@ -73,6 +73,7 @@ public class ConstanteContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
+		pontoDeslocamento = indexador.value();
 		getExpressao().indexar(indexador);
 		sequencia = indexador.get();
 	}
