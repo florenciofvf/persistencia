@@ -282,10 +282,22 @@ class InstrucaoSplit extends SplitPane {
 
 class TextArea extends TextPane {
 	private static final long serialVersionUID = 1L;
-	boolean paintER;
+	private static boolean paintER;
 
 	TextArea() {
 		addFocusListener(focusListenerInner);
+	}
+
+	public static boolean isPaintER() {
+		return paintER;
+	}
+
+	public static void setPaintER(boolean paintER) {
+		TextArea.paintER = paintER;
+	}
+
+	public static void inverterPaintER() {
+		setPaintER(!TextArea.paintER);
 	}
 
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -520,7 +532,7 @@ class Aba extends Transferivel {
 		}
 
 		private void paintER() {
-			textArea.paintER = !textArea.paintER;
+			TextArea.inverterPaintER();
 			textArea.repaint();
 		}
 
