@@ -76,6 +76,15 @@ public abstract class Invocacao extends Instrucao {
 		}
 	}
 
+	static void validarDeclInvocDiverg(Funcao funcao, int totalParam) throws InstrucaoException {
+		if (funcao == null) {
+			throw new InstrucaoException("Funcao nula.", false);
+		}
+		if (funcao.getTotalParametro() != totalParam) {
+			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome());
+		}
+	}
+
 	static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		List<Integer> indices = indiceParametros(funcao);
 		for (int i = indices.size() - 1; i >= 0; i--) {

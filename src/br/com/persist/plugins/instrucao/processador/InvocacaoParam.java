@@ -1,9 +1,12 @@
 package br.com.persist.plugins.instrucao.processador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class InvocacaoParam extends Instrucao {
 	private final boolean exp;
+	private String nomeParam;
+	private int totalParam;
 
 	protected InvocacaoParam(String nome, boolean exp) {
 		super(nome);
@@ -11,9 +14,17 @@ public abstract class InvocacaoParam extends Instrucao {
 	}
 
 	@Override
+	public void setParametros(String parametros) {
+		String[] array = parametros.split(InstrucaoConstantes.ESPACO);
+		totalParam = Integer.parseInt(array[1]);
+		nomeParam = array[0];
+	}
+
+	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
-		Funcao funcaoParam = (Funcao) funcao.getValorParametro(parametros);
+		Funcao funcaoParam = (Funcao) funcao.getValorParametro(nomeParam);
+		Invocacao.validarDeclInvocDiverg(funcaoParam, totalParam);
 		Invocacao.validar(funcaoParam, exp);
 		Invocacao.setParametros(funcaoParam, pilhaOperando);
 		pilhaFuncao.push(funcaoParam);

@@ -98,7 +98,7 @@ public class InvocacaoContexto extends Container {
 	public void salvar(PrintWriter pw) throws InstrucaoException {
 		super.salvar(pw);
 		if (ehInvokeParam()) {
-			print(pw, INVOKE_PARAM, token.string);
+			print(pw, INVOKE_PARAM, token.string, "" + getArgumento().getSize());
 		} else {
 			print(pw, INVOKE, token.string);
 		}

@@ -158,7 +158,7 @@ public class ArgumentoContexto extends Container {
 		super.salvar(pw);
 		if (identity != null) {
 			if (ehInvokeParam()) {
-				print(pw, InvocacaoContexto.INVOKE_PARAM_EXP, identity.getId());
+				print(pw, InvocacaoContexto.INVOKE_PARAM_EXP, identity.getId(), "" + getSize());
 			} else {
 				print(pw, InvocacaoContexto.INVOKE_EXP, identity.getId());
 			}
