@@ -6,7 +6,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
-public class FuncaoNativaContexto extends Container {
+public class FuncaoNativaContexto extends Container implements IFuncaoContexto {
 	public static final OperadorOuFinalizar OPERADOR_OU_FINALIZAR = new OperadorOuFinalizar();
 	private final FuncaoIdentityContexto identityBiblio;
 	private final FuncaoIdentityContexto identity;

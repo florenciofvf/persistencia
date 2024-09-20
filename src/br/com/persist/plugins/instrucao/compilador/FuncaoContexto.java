@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
-public class FuncaoContexto extends Container {
+public class FuncaoContexto extends Container implements IFuncaoContexto {
 	public static final AbreChaveOuOperador CHAVE_OU_OPERADOR = new AbreChaveOuOperador();
 	public static final String LOAD_FUNCTION = "load_function";
 	private final FuncaoIdentityContexto identity;

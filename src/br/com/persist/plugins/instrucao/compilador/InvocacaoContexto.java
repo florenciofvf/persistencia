@@ -56,39 +56,49 @@ public class InvocacaoContexto extends Container {
 		String[] strings = id.split("\\.");
 		if (strings.length == 1) {
 			Container funcao = biblio.getFuncao(id);
-			validarFuncaoContextoDivergencia(funcao, id, getArgumento());
+			validarImpl(funcao, id, getArgumento(), false);
 		} else {
 			try {
 				Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
 				Funcao funcao = biblioteca.getFuncao(strings[1]);
-				validarFuncaoInstrucaoDivergencia(funcao, getArgumento());
+				validarImpl(funcao, getArgumento(), false);
 			} catch (InstrucaoException ex) {
 				throw new InstrucaoException(ex.getMessage(), false);
 			}
 		}
 	}
 
-	static void validarFuncaoContextoDivergencia(Container funcao, String identity, ArgumentoContexto argumento)
+	static void validarImpl(Container funcao, String identity, ArgumentoContexto argumento, boolean exp)
 			throws InstrucaoException {
 		if (funcao == null) {
 			throw new InstrucaoException("Funcao inexistente >>> " + identity, false);
 		}
-		ParametrosContexto parametros = null;
-		if (funcao instanceof FuncaoContexto) {
-			parametros = ((FuncaoContexto) funcao).getParametros();
-		} else if (funcao instanceof FuncaoNativaContexto) {
-			parametros = ((FuncaoNativaContexto) funcao).getParametros();
+		if (!(funcao instanceof IFuncaoContexto)) {
+			throw new InstrucaoException("N\u00E3 \u00E9 fun\u00E7\u00E3o >>> " + identity, false);
 		}
+		IFuncaoContexto funcaoContexto = (IFuncaoContexto) funcao;
+		ParametrosContexto parametros = funcaoContexto.getParametros();
 		if (parametros == null) {
-			throw new InstrucaoException("Parametros inexistente >>> " + identity, false);
+			throw new InstrucaoException("Parametros nulo. >>> " + identity, false);
+		}
+		if (exp && funcaoContexto.isRetornoVoid()) {
+			throw new InstrucaoException("erro.funcao_sem_retorno", funcaoContexto.getNome(),
+					funcaoContexto.getBiblioteca().getNome());
+		} else if (!exp && !funcaoContexto.isRetornoVoid()) {
+			throw new InstrucaoException("erro.funcao_com_retorno", funcaoContexto.getNome(),
+					funcaoContexto.getBiblioteca().getNome());
 		}
 		if (parametros.getSize() != argumento.getSize()) {
 			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", identity);
 		}
 	}
 
-	static void validarFuncaoInstrucaoDivergencia(Funcao funcao, ArgumentoContexto argumento)
-			throws InstrucaoException {
+	static void validarImpl(Funcao funcao, ArgumentoContexto argumento, boolean exp) throws InstrucaoException {
+		if (exp && funcao.isTipoVoid()) {
+			throw new InstrucaoException("erro.funcao_sem_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
+		} else if (!exp && !funcao.isTipoVoid()) {
+			throw new InstrucaoException("erro.funcao_com_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
+		}
 		if (funcao.getTotalParametro() != argumento.getSize()) {
 			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome());
 		}

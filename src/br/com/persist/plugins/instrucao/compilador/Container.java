@@ -56,7 +56,7 @@ public abstract class Container extends AbstratoContexto {
 		return (IFContexto) c;
 	}
 
-	protected BibliotecaContexto getBiblioteca() {
+	public BibliotecaContexto getBiblioteca() {
 		Container c = this;
 		while (c != null) {
 			if (c instanceof BibliotecaContexto) {

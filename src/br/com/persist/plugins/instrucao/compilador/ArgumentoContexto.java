@@ -141,12 +141,12 @@ public class ArgumentoContexto extends Container {
 		String[] strings = id.split("\\.");
 		if (strings.length == 1) {
 			Container funcao = biblio.getFuncao(id);
-			InvocacaoContexto.validarFuncaoContextoDivergencia(funcao, id, this);
+			InvocacaoContexto.validarImpl(funcao, id, this, true);
 		} else {
 			try {
 				Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
 				Funcao funcao = biblioteca.getFuncao(strings[1]);
-				InvocacaoContexto.validarFuncaoInstrucaoDivergencia(funcao, this);
+				InvocacaoContexto.validarImpl(funcao, this, true);
 			} catch (InstrucaoException ex) {
 				throw new InstrucaoException(ex.getMessage(), false);
 			}
