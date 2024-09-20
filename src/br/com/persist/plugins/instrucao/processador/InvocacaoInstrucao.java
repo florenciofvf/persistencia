@@ -4,7 +4,7 @@ import br.com.persist.plugins.instrucao.compilador.InvocacaoContexto;
 
 public class InvocacaoInstrucao extends Invocacao {
 	public InvocacaoInstrucao() {
-		super(InvocacaoContexto.INVOKE, false);
+		super(InvocacaoContexto.INVOKE);
 	}
 
 	@Override

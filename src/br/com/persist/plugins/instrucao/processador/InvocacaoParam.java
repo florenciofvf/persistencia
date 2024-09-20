@@ -24,8 +24,7 @@ public abstract class InvocacaoParam extends Instrucao {
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Funcao funcaoParam = (Funcao) funcao.getValorParametro(nomeParam);
-		Invocacao.validarDeclInvocDiverg(funcaoParam, totalParam);
-		Invocacao.validar(funcaoParam, exp);
+		Invocacao.validar(funcaoParam, exp, totalParam);
 		Invocacao.setParametros(funcaoParam, pilhaOperando);
 		pilhaFuncao.push(funcaoParam);
 	}

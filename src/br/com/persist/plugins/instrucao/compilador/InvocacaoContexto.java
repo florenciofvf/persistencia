@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
+import br.com.persist.plugins.instrucao.processador.Invocacao;
 
 public class InvocacaoContexto extends Container {
 	public static final String INVOKE_PARAM_EXP = "invoke_param_exp";
@@ -94,14 +95,7 @@ public class InvocacaoContexto extends Container {
 	}
 
 	static void validarImpl(Funcao funcao, ArgumentoContexto argumento, boolean exp) throws InstrucaoException {
-		if (exp && funcao.isTipoVoid()) {
-			throw new InstrucaoException("erro.funcao_sem_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
-		} else if (!exp && !funcao.isTipoVoid()) {
-			throw new InstrucaoException("erro.funcao_com_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
-		}
-		if (funcao.getTotalParametro() != argumento.getSize()) {
-			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome());
-		}
+		Invocacao.validar(funcao, exp, argumento.getSize());
 	}
 
 	@Override

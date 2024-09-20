@@ -8,13 +8,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Invocacao extends Instrucao {
-	private final boolean exp;
 	private String nomeBiblio;
 	private String nomeFuncao;
 
-	protected Invocacao(String nome, boolean exp) {
+	protected Invocacao(String nome) {
 		super(nome);
-		this.exp = exp;
 	}
 
 	@Override
@@ -47,7 +45,6 @@ public abstract class Invocacao extends Instrucao {
 			biblio = funcao.getBiblioteca();
 		}
 		invocar = biblio.getFuncao(nomeFuncao);
-		validar(invocar, exp);
 		Funcao clone = invocar.clonar();
 		if (!clone.isNativo()) {
 			try {
@@ -65,7 +62,7 @@ public abstract class Invocacao extends Instrucao {
 		}
 	}
 
-	static void validar(Funcao funcao, boolean exp) throws InstrucaoException {
+	public static void validar(Funcao funcao, boolean exp, int totalParam) throws InstrucaoException {
 		if (funcao == null) {
 			throw new InstrucaoException("Funcao nula.", false);
 		}
@@ -73,12 +70,6 @@ public abstract class Invocacao extends Instrucao {
 			throw new InstrucaoException("erro.funcao_sem_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
 		} else if (!exp && !funcao.isTipoVoid()) {
 			throw new InstrucaoException("erro.funcao_com_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
-		}
-	}
-
-	static void validarDeclInvocDiverg(Funcao funcao, int totalParam) throws InstrucaoException {
-		if (funcao == null) {
-			throw new InstrucaoException("Funcao nula.", false);
 		}
 		if (funcao.getTotalParametro() != totalParam) {
 			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome());
