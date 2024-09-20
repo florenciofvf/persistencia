@@ -44,7 +44,7 @@ public class InvocacaoContexto extends Container {
 	}
 
 	@Override
-	protected void declInvocDiverImpl() throws InstrucaoException {
+	protected void validarImpl() throws InstrucaoException {
 		if (ehInvokeParam()) {
 			return;
 		}

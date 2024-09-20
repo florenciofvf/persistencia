@@ -126,7 +126,7 @@ public class ArgumentoContexto extends Container {
 	}
 
 	@Override
-	protected void declInvocDiverImpl() throws InstrucaoException {
+	protected void validarImpl() throws InstrucaoException {
 		if (identity == null) {
 			return;
 		}
