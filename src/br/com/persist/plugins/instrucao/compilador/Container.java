@@ -196,6 +196,16 @@ public abstract class Container extends AbstratoContexto {
 	protected void desviarImpl() throws InstrucaoException {
 	}
 
+	public void declInvocDiver() throws InstrucaoException {
+		declInvocDiverImpl();
+		for (Container c : componentes) {
+			c.declInvocDiver();
+		}
+	}
+
+	protected void declInvocDiverImpl() throws InstrucaoException {
+	}
+
 	public void salvar(PrintWriter pw) throws InstrucaoException {
 		for (Container c : componentes) {
 			c.salvar(pw);

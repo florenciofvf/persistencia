@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.processador.Biblioteca;
+import br.com.persist.plugins.instrucao.processador.Funcao;
 
 public class ArgumentoContexto extends Container {
 	private final IdentityContexto identity;
@@ -120,6 +122,34 @@ public class ArgumentoContexto extends Container {
 		if (identity != null) {
 			sequencia = indexador.get3();
 			identity.indexarNegativo(indexador);
+		}
+	}
+
+	@Override
+	protected void declInvocDiverImpl() throws InstrucaoException {
+		if (identity == null) {
+			return;
+		}
+		if (ehInvokeParam()) {
+			return;
+		}
+		BibliotecaContexto biblio = getBiblioteca();
+		String id = identity.getId();
+		if (biblio == null) {
+			throw new InstrucaoException("erro.funcao_parent", id);
+		}
+		String[] strings = id.split("\\.");
+		if (strings.length == 1) {
+			Container funcao = biblio.getFuncao(id);
+			InvocacaoContexto.validarFuncaoContextoDivergencia(funcao, id, this);
+		} else {
+			try {
+				Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
+				Funcao funcao = biblioteca.getFuncao(strings[1]);
+				InvocacaoContexto.validarFuncaoInstrucaoDivergencia(funcao, this);
+			} catch (InstrucaoException ex) {
+				throw new InstrucaoException(ex.getMessage(), false);
+			}
 		}
 	}
 

@@ -72,6 +72,7 @@ public class Compilador {
 		biblioteca.estruturar();
 		biblioteca.indexar();
 		biblioteca.desviar();
+		biblioteca.declInvocDiver();
 		File destino = getCompilado(file);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			biblioteca.salvar(pw);
