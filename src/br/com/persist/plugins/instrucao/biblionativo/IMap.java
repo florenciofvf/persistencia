@@ -1,9 +1,15 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class IMap {
 	private IMap() {
+	}
+
+	@Biblio
+	public static Map<Object, Object> create() {
+		return new HashMap<>();
 	}
 
 	@Biblio

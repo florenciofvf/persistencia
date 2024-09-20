@@ -15,6 +15,7 @@ import br.com.persist.plugins.instrucao.compilador.Compilador;
 public class GeraBiblio {
 	private static final String PACOTE = "br_com_persist_plugins_instrucao_biblionativo_";
 	private static final String PREFIXO = "function_native";
+	private static final String ROOT = "instrucao/";
 
 	public static void main(String[] args) throws Exception {
 		Class<?>[] classes = { IArquivo.class, IClass.class, IDB.class, ILinha.class, ILinhas.class, IList.class,
@@ -29,12 +30,12 @@ public class GeraBiblio {
 	private static void processarObjeto(Class<?> klass) throws IOException, InstrucaoException {
 		processar(klass);
 		Compilador compilador = new Compilador();
-		BibliotecaContexto biblio = compilador.compilar(new File(klass.getSimpleName().toLowerCase()));
+		BibliotecaContexto biblio = compilador.compilar(new File(ROOT + klass.getSimpleName().toLowerCase()));
 		Logger.getGlobal().info("Processado >>> " + biblio.getNome());
 	}
 
 	private static void processar(Class<?> classe) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter("instrucao/" + classe.getSimpleName().toLowerCase());
+		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName().toLowerCase());
 		Method[] methods = classe.getDeclaredMethods();
 		for (Method m : methods) {
 			Biblio biblio = getBiblio(m);
