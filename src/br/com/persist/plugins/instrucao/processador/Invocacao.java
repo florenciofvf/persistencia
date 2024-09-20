@@ -72,7 +72,8 @@ public abstract class Invocacao extends Instrucao {
 			throw new InstrucaoException("erro.funcao_com_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
 		}
 		if (funcao.getTotalParametro() != totalParam) {
-			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome());
+			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome(),
+					"" + funcao.getTotalParametro(), "" + totalParam);
 		}
 	}
 
