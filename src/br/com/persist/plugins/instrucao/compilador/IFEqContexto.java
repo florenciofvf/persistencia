@@ -10,6 +10,7 @@ public class IFEqContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
+		pontoDeslocamento = indexador.value();
 		sequencia = indexador.get3();
 	}
 
@@ -22,6 +23,9 @@ public class IFEqContexto extends Container {
 		}
 		if (ifContexto != null && !ifContexto.isMinimo()) {
 			deslocamento = ifContexto.getElse().getPontoDeslocamento();
+			if (deslocamento == 0) {
+				throw new InstrucaoException("erro.ponto_deslocamento");
+			}
 			return;
 		}
 		Container parent = ifContexto != null ? ifContexto : whileContexto;

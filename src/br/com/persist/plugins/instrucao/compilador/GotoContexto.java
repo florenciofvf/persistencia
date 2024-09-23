@@ -10,6 +10,7 @@ public class GotoContexto extends Container {
 
 	@Override
 	public void indexar(Indexador indexador) {
+		pontoDeslocamento = indexador.value();
 		sequencia = indexador.get3();
 	}
 
