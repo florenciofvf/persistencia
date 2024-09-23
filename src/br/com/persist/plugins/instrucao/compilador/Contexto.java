@@ -25,7 +25,8 @@ public interface Contexto {
 	public void operador(Compilador compilador, Token token) throws InstrucaoException;
 
 	/*
-	 * "const", "function", "function_native", "if", "elseif", "else", "return"
+	 * "const", "function", "function_native", "if", "while", "elseif", "else",
+	 * "return"
 	 */
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException;
 
