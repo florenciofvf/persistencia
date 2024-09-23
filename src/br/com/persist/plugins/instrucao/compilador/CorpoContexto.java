@@ -54,6 +54,9 @@ public class CorpoContexto extends Container {
 		} else if ("if".equals(token.getString())) {
 			compilador.setContexto(new IFContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());
+		} else if ("while".equals(token.getString())) {
+			compilador.setContexto(new WhileContexto());
+			adicionarImpl(compilador, token, (Container) compilador.getContexto());
 		} else {
 			compilador.invalidar(token);
 		}
