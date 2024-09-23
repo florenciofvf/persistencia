@@ -104,7 +104,7 @@ public class FuncaoContexto extends Container implements IFuncaoContexto {
 
 	@Override
 	public String toString() {
-		return "function >>> " + getParametros().toString();
+		return "function " + identity + " >>> " + getParametros().toString();
 	}
 }
 

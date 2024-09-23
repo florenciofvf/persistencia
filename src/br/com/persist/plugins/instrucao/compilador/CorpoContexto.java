@@ -86,12 +86,19 @@ public class CorpoContexto extends Container {
 			if (!especial()) {
 				adicionar(gotoContexto);
 			}
+		} else if (pai instanceof WhileContexto && !especial2()) {
+			adicionar(gotoContexto);
 		}
 	}
 
 	private boolean especial() {
 		Container c = getUltimo();
 		return c instanceof IFContexto || c instanceof RetornoContexto;
+	}
+
+	private boolean especial2() {
+		Container c = getUltimo();
+		return c instanceof RetornoContexto;
 	}
 
 	protected Container getContainerApos(Container c) {
@@ -109,7 +116,7 @@ public class CorpoContexto extends Container {
 }
 
 class ReservadoOuIdentityOuFinalizar extends AbstratoContexto {
-	private final String[] strings = { "const", "if", "return" };
+	private final String[] strings = { "const", "return", "if", "while" };
 	Token token;
 
 	@Override

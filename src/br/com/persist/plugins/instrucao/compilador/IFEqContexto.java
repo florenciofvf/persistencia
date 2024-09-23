@@ -15,23 +15,25 @@ public class IFEqContexto extends Container {
 
 	@Override
 	public void desviarImpl() throws InstrucaoException {
-		IFContexto ifContexto = getIFContexto(this);
-		if (ifContexto == null) {
-			throw new InstrucaoException("erro.if_estrutura_invalida");
+		IFContexto ifContexto = getIFContextoIFEq();
+		WhileContexto whileContexto = getWhileContextoIFEq();
+		if ((whileContexto == null && ifContexto == null) || (whileContexto != null && ifContexto != null)) {
+			throw new InstrucaoException("erro.while_if_estrutura_invalida");
 		}
-		if (!ifContexto.isMinimo()) {
+		if (ifContexto != null && !ifContexto.isMinimo()) {
 			deslocamento = ifContexto.getElse().getPontoDeslocamento();
 			return;
 		}
-		CorpoContexto corpoContexto = getCorpoContexto(ifContexto);
-		while (corpoContexto != null) {
-			Container comando = corpoContexto.getContainerApos(ifContexto);
+		Container parent = ifContexto != null ? ifContexto : whileContexto;
+		CorpoContexto corpoParent = getCorpoContexto(parent);
+		while (corpoParent != null) {
+			Container comando = corpoParent.getContainerApos(parent);
 			if (comando != null) {
 				deslocamento = comando.getPontoDeslocamento();
 				break;
 			}
-			ifContexto = getIFContexto(corpoContexto);
-			corpoContexto = getCorpoContexto(ifContexto);
+			parent = corpoParent.pai;
+			corpoParent = getCorpoContexto(parent);
 		}
 		if (deslocamento == 0) {
 			throw new InstrucaoException("erro.ponto_deslocamento");

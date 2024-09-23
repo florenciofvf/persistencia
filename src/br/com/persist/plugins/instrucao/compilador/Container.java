@@ -46,14 +46,38 @@ public abstract class Container extends AbstratoContexto {
 		return (CorpoContexto) c;
 	}
 
-	protected IFContexto getIFContexto(Container c) {
-		while (c != null) {
-			if (c instanceof IFContexto) {
-				break;
+	protected WhileContexto getWhileContextoGoto() {
+		if (pai instanceof CorpoContexto) {
+			CorpoContexto corpo = (CorpoContexto) pai;
+			if (corpo.pai instanceof WhileContexto) {
+				return (WhileContexto) corpo.pai;
 			}
-			c = c.pai;
 		}
-		return (IFContexto) c;
+		return null;
+	}
+
+	protected IFContexto getIFContextoGoto() {
+		if (pai instanceof CorpoContexto) {
+			CorpoContexto corpo = (CorpoContexto) pai;
+			if (corpo.pai instanceof IFContexto) {
+				return (IFContexto) corpo.pai;
+			}
+		}
+		return null;
+	}
+
+	protected WhileContexto getWhileContextoIFEq() {
+		if (pai instanceof WhileContexto) {
+			return (WhileContexto) pai;
+		}
+		return null;
+	}
+
+	protected IFContexto getIFContextoIFEq() {
+		if (pai instanceof IFContexto) {
+			return (IFContexto) pai;
+		}
+		return null;
 	}
 
 	public BibliotecaContexto getBiblioteca() {
