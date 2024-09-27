@@ -298,6 +298,7 @@ class TextArea extends TextPane {
 
 	public static void inverterPaintER() {
 		setPaintER(!TextArea.paintER);
+		InstrucaoPreferencia.setPaintER(paintER);
 	}
 
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -468,6 +469,7 @@ class Aba extends Transferivel {
 	}
 
 	private void aplicarFontePreferencia() {
+		TextArea.setPaintER(InstrucaoPreferencia.getPaintER());
 		Font font = InstrucaoPreferencia.getFontPreferencia();
 		if (font != null) {
 			toolbar.selecionarFont(font);
