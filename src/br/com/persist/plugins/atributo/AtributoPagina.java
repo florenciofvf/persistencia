@@ -23,6 +23,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1799,6 +1801,7 @@ class PainelTest extends AbstratoPanel {
 	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
 	private TextField txtArquivo = new TextField(40);
 	private static final long serialVersionUID = 1L;
+	private List<String> linhasArquivo;
 
 	PainelTest(AtributoPagina pagina) {
 		super(pagina, false);
@@ -1839,6 +1842,7 @@ class PainelTest extends AbstratoPanel {
 		if (pos != -1) {
 			nome = nome.substring(0, pos);
 		}
+		linhasArquivo = ArquivoUtil.lerArquivo(file);
 		txtArquivo.setText(strPackage + "." + nome);
 	}
 
@@ -1971,6 +1975,8 @@ class PainelTest extends AbstratoPanel {
 		Method[] methods = null;
 		try {
 			methods = classe.getDeclaredMethods();
+			List<String> nomeMetodosPublicos = Util.getNomeMetodosPublicos(linhasArquivo);
+			methods = ordenar(nomeMetodosPublicos, methods);
 			for (Method item : methods) {
 				if (!item.isSynthetic() && item.getName().startsWith("get")) {
 					String nome = item.getName().substring("get".length());
@@ -2027,6 +2033,33 @@ class PainelTest extends AbstratoPanel {
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
+	}
+
+	private Method[] ordenar(List<String> nomeMetodosPublicos, Method[] methods) {
+		List<Method> aux = new ArrayList<>(Arrays.asList(methods));
+		List<Method> resposta = new ArrayList<>();
+		for (String nome : nomeMetodosPublicos) {
+			Method method = get(aux, nome);
+			if (method != null) {
+				resposta.add(method);
+			}
+		}
+		for (Method method : aux) {
+			resposta.add(method);
+		}
+		return resposta.toArray(new Method[0]);
+	}
+
+	private Method get(List<Method> lista, String nome) {
+		Iterator<Method> it = lista.iterator();
+		while (it.hasNext()) {
+			Method method = it.next();
+			if (method.getName().equals(nome)) {
+				it.remove();
+				return method;
+			}
+		}
+		return null;
 	}
 
 	private void testes(ClassePublica classe, Method[] methods) {
