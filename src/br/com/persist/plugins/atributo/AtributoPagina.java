@@ -1963,7 +1963,7 @@ class PainelTest extends AbstratoPanel {
 		Class<?> classe = null;
 		try {
 			classe = Class.forName(txtArquivo.getText().trim());
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest.this);
 			return;
 		}
