@@ -1454,7 +1454,7 @@ public class Util {
 		if (!string.startsWith("public ") || !string.endsWith("{")) {
 			return null;
 		}
-		string = string.substring(0, string.length() - 1);
+		string = string.substring(0, string.length() - 1).trim();
 		if (!string.endsWith(")")) {
 			return null;
 		}
