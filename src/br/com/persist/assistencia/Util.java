@@ -989,7 +989,7 @@ public class Util {
 		StringBuilder sb = new StringBuilder();
 		for (int i = pos; i < string.length(); i++) {
 			char c = string.charAt(i);
-			if (valido(c)) {
+			if (valido2(c)) {
 				sb.append(c);
 			} else if (c == '\"') {
 				break;
@@ -1001,8 +1001,11 @@ public class Util {
 	}
 
 	private static boolean valido(char c) {
-		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '.'
-				|| c == '$';
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '$';
+	}
+
+	private static boolean valido2(char c) {
+		return valido(c) || c == '.';
 	}
 
 	public static void destacar(StyledDocument doc, String pesquisado) {
@@ -1441,5 +1444,49 @@ public class Util {
 			}
 		}
 		return lista;
+	}
+
+	public static String getNomeMetodoPublico(String string) {
+		if (string == null) {
+			return null;
+		}
+		string = string.trim();
+		if (!string.startsWith("public ") || !string.endsWith("{")) {
+			return null;
+		}
+		string = string.substring(0, string.length() - 1);
+		if (!string.endsWith(")")) {
+			return null;
+		}
+		int pos = string.lastIndexOf("(");
+		if (pos == -1) {
+			return null;
+		}
+		return getNome(string.substring(0, pos));
+	}
+
+	private static String getNome(String string) {
+		string = string.trim();
+		StringBuilder sb = new StringBuilder();
+		for (int i = string.length() - 1; i >= 0; i--) {
+			char c = string.charAt(i);
+			if (valido(c)) {
+				sb.insert(0, c);
+			} else {
+				break;
+			}
+		}
+		return sb.toString();
+	}
+
+	public static List<String> getNomeMetodosPublicos(List<String> lista) {
+		List<String> resposta = new ArrayList<>();
+		for (String string : lista) {
+			String nome = getNomeMetodoPublico(string);
+			if (nome != null) {
+				resposta.add(nome);
+			}
+		}
+		return resposta;
 	}
 }
