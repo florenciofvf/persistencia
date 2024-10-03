@@ -2114,6 +2114,7 @@ class PainelTest extends AbstratoPanel {
 				classe.newLine();
 				classe.addAnotacao("Test");
 				Funcao funcao = classe.criarFuncaoPublica("void", name + "Test");
+				funcao.addComentario("when(dao." + name + "(any())).thenReturn(newObjeto());");
 				funcao.addComentario("injectMock." + name + "();");
 				funcao.addComentario("assertTrue(false);");
 			}
