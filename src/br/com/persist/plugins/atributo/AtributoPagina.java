@@ -1875,6 +1875,7 @@ class PainelTest extends AbstratoPanel {
 		}
 		classe.addCampoPrivado(new Variavel(AtributoUtil.getComponente(mapaService), "service"));
 
+		classe.newLine();
 		criarPreTest(classe);
 
 		Funcao funcao = null;
@@ -1935,11 +1936,9 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	private void criarPreTest(ClassePublica classe) {
-		classe.newLine();
 		classe.addAnotacao("Before");
 		Funcao funcao = classe.criarFuncaoPublica("void", "preTest");
 		funcao.addComentario("when(dao.metodo(any())).thenReturn(newObjeto());");
-		classe.newLine();
 	}
 
 	private void novoObjeto() {
@@ -2022,6 +2021,7 @@ class PainelTest extends AbstratoPanel {
 		}
 
 		criarPreTest(classeTest);
+		classeTest.newLine();
 
 		classeTest.addAnotacao("Test");
 		Funcao funcao = classeTest.criarFuncaoPublica("void", "equalsTest");
