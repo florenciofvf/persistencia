@@ -1913,8 +1913,10 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	private void adicionarImports(Arquivo arquivo, Class<?> classe) {
-		arquivo.addImport("org.junit.Test");
+		arquivo.addImport("org.junit.Test").newLine();
 		if (chkMockito.isSelected()) {
+			arquivo.addImport("static org.mockito.ArgumentMatchers.any");
+			arquivo.addImport("static org.mockito.Mockito.when").newLine();
 			arquivo.addImport("org.junit.runner.RunWith");
 			arquivo.addImport("org.mockito.InjectMocks");
 			arquivo.addImport("org.mockito.Mock");
@@ -2000,6 +2002,13 @@ class PainelTest extends AbstratoPanel {
 
 		String objeto = classe.getSimpleName();
 		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
+		if (chkMockito.isSelected()) {
+			classeTest.addAnotacao("InjectMocks");
+			classeTest.addCampoPrivado(new Variavel("Bean", "bean")).newLine();
+
+			classeTest.addAnotacao("Mock");
+			classeTest.addCampoPrivado(new Variavel("DAO", "dao")).newLine();
+		}
 
 		classeTest.addAnotacao("Test");
 		Funcao funcao = classeTest.criarFuncaoPublica("void", "equalsTest");
@@ -2115,7 +2124,7 @@ class PainelTest extends AbstratoPanel {
 				classe.addAnotacao("Test");
 				Funcao funcao = classe.criarFuncaoPublica("void", name + "Test");
 				funcao.addComentario("when(dao." + name + "(any())).thenReturn(newObjeto());");
-				funcao.addComentario("injectMock." + name + "();");
+				funcao.addComentario("bean." + name + "();");
 				funcao.addComentario("assertTrue(false);");
 			}
 		}
