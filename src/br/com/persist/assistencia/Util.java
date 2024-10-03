@@ -1456,7 +1456,14 @@ public class Util {
 		}
 		string = string.substring(0, string.length() - 1).trim();
 		if (!string.endsWith(")")) {
-			return null;
+			int pos = string.lastIndexOf("throws");
+			if (pos == -1) {
+				return null;
+			}
+			string = string.substring(0, pos).trim();
+			if (!string.endsWith(")")) {
+				return null;
+			}
 		}
 		int pos = string.lastIndexOf("(");
 		if (pos == -1) {
