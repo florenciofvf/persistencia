@@ -1875,6 +1875,8 @@ class PainelTest extends AbstratoPanel {
 		}
 		classe.addCampoPrivado(new Variavel(AtributoUtil.getComponente(mapaService), "service"));
 
+		criarPreTest(classe);
+
 		Funcao funcao = null;
 		String nome = AtributoUtil.getBuscarTodos(mapaTest);
 		if (!Util.isEmpty(nome)) {
@@ -1913,6 +1915,7 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	private void adicionarImports(Arquivo arquivo, Class<?> classe) {
+		arquivo.addImport("org.junit.Before");
 		arquivo.addImport("org.junit.Test").newLine();
 		if (chkMockito.isSelected()) {
 			arquivo.addImport("static org.mockito.ArgumentMatchers.any");
@@ -1929,6 +1932,14 @@ class PainelTest extends AbstratoPanel {
 		if (chkMockito.isSelected()) {
 			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
 		}
+	}
+
+	private void criarPreTest(ClassePublica classe) {
+		classe.newLine();
+		classe.addAnotacao("Before");
+		Funcao funcao = classe.criarFuncaoPublica("void", "preTest");
+		funcao.addComentario("when(dao.metodo(any())).thenReturn(newObjeto());");
+		classe.newLine();
 	}
 
 	private void novoObjeto() {
@@ -2009,6 +2020,8 @@ class PainelTest extends AbstratoPanel {
 			classeTest.addAnotacao("Mock");
 			classeTest.addCampoPrivado(new Variavel("DAO", "dao")).newLine();
 		}
+
+		criarPreTest(classeTest);
 
 		classeTest.addAnotacao("Test");
 		Funcao funcao = classeTest.criarFuncaoPublica("void", "equalsTest");
