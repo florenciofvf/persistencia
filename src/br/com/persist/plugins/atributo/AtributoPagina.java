@@ -1984,12 +1984,14 @@ class PainelTest extends AbstratoPanel {
 			return;
 		}
 		List<Metodo> metodos = new ArrayList<>();
-		Method[] methods = null;
+		List<IMetodo> imetodos;
 		try {
-			methods = classe.getDeclaredMethods();
-			List<String> nomeMetodosPublicos = Util.getNomeMetodosPublicos(linhasArquivo);
-			methods = ordenar(nomeMetodosPublicos, methods);
-			for (Method item : methods) {
+			Method[] methods = classe.getDeclaredMethods();
+			MetodoHandle metodoHandle = new MetodoHandle(linhasArquivo);
+			metodoHandle.processar();
+			imetodos = ordenar(metodoHandle.getMetodos(), methods);
+			for (IMetodo metodo : imetodos) {
+				Method item = metodo.getMethod();
 				if (!item.isSynthetic() && item.getName().startsWith("get")) {
 					String nome = item.getName().substring("get".length());
 					if (Util.isEmpty(nome)) {
@@ -2051,32 +2053,35 @@ class PainelTest extends AbstratoPanel {
 			funcao.addInstrucao(item.gerar());
 		}
 
-		testes(classeTest, methods);
+		testes(classeTest, imetodos);
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
 
-	private Method[] ordenar(List<String> nomeMetodosPublicos, Method[] methods) {
-		List<Method> aux = new ArrayList<>(Arrays.asList(methods));
-		List<Method> resposta = new ArrayList<>();
-		for (String nome : nomeMetodosPublicos) {
-			Method method = get(aux, nome);
+	private List<IMetodo> ordenar(List<IMetodo> metodos, Method[] methods) {
+		List<Method> temp = new ArrayList<>(Arrays.asList(methods));
+		List<IMetodo> resposta = new ArrayList<>();
+		for (IMetodo metodo : metodos) {
+			Method method = get(temp, metodo);
 			if (method != null) {
-				resposta.add(method);
+				metodo.setMethod(method);
+				resposta.add(metodo);
 			}
 		}
-		for (Method method : aux) {
-			resposta.add(method);
+		for (Method method : temp) {
+			IMetodo metodo = new IMetodo(method.getName());
+			metodo.setMethod(method);
+			resposta.add(metodo);
 		}
-		return resposta.toArray(new Method[0]);
+		return resposta;
 	}
 
-	private Method get(List<Method> lista, String nome) {
-		Iterator<Method> it = lista.iterator();
+	private Method get(List<Method> metodos, IMetodo metodo) {
+		Iterator<Method> it = metodos.iterator();
 		while (it.hasNext()) {
 			Method method = it.next();
-			if (method.getName().equals(nome)) {
+			if (method.getName().equals(metodo.getNome())) {
 				it.remove();
 				return method;
 			}
@@ -2084,14 +2089,15 @@ class PainelTest extends AbstratoPanel {
 		return null;
 	}
 
-	private void testes(ClassePublica classe, Method[] methods) {
+	private void testes(ClassePublica classe, List<IMetodo> imetodos) {
 		List<Teste> metodos = new ArrayList<>();
-		for (Method item : methods) {
+		for (IMetodo metodo : imetodos) {
+			Method item = metodo.getMethod();
 			String name = item.getName();
 			if (item.isSynthetic() || name.startsWith("get") || name.startsWith("set")) {
 				continue;
 			}
-			Teste obj = new Teste(item);
+			Teste obj = new Teste(metodo);
 			metodos.add(obj);
 		}
 		for (Teste teste : metodos) {
@@ -2124,22 +2130,56 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	private class Teste {
-		final Method method;
+		final IMetodo metodo;
 
-		Teste(Method method) {
-			this.method = method;
+		Teste(IMetodo metodo) {
+			this.metodo = metodo;
 		}
 
 		void gerar(ClassePublica classe) {
+			Method method = metodo.getMethod();
 			if (Modifier.isPublic(method.getModifiers())) {
 				String name = method.getName();
 				classe.newLine();
 				classe.addAnotacao("Test");
 				Funcao funcao = classe.criarFuncaoPublica("void", name + "Test");
-				funcao.addComentario("when(dao." + name + "(any())).thenReturn(newObjeto());");
+				for (String invocacao : metodo.getInvocacoes()) {
+					funcao.addComentario("when(" + invocacao + "(any())).thenReturn(newObjeto());");
+				}
 				funcao.addComentario("bean." + name + "();");
 				funcao.addComentario("assertTrue(false);");
 			}
 		}
+	}
+}
+
+class MetodoHandle {
+	private final List<String> linhasArquivo;
+	private final List<IMetodo> metodos;
+	private IMetodo selecionado;
+
+	public MetodoHandle(List<String> linhasArquivo) {
+		this.linhasArquivo = linhasArquivo;
+		metodos = new ArrayList<>();
+	}
+
+	void processar() {
+		List<String> invocacoes = new ArrayList<>();
+		for (String string : linhasArquivo) {
+			String metodo = Util.getNomeMetodo(string);
+			if (metodo != null) {
+				selecionado = new IMetodo(metodo);
+				metodos.add(selecionado);
+			} else {
+				Util.invocacoes(string, invocacoes);
+				if (selecionado != null) {
+					selecionado.addInvocacoes(invocacoes);
+				}
+			}
+		}
+	}
+
+	public List<IMetodo> getMetodos() {
+		return metodos;
 	}
 }

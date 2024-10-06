@@ -1491,6 +1491,7 @@ public class Util {
 	}
 
 	public static void invocacoes(String string, List<String> resposta) {
+		resposta.clear();
 		if (string == null) {
 			return;
 		}
