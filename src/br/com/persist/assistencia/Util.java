@@ -1446,17 +1446,17 @@ public class Util {
 		return lista;
 	}
 
-	public static String getNomeMetodoPublico(String string) {
+	public static String getNomeMetodo(String string) {
 		if (string == null) {
 			return null;
 		}
 		string = string.trim();
-		if (!string.startsWith("public ") || !string.endsWith("{")) {
+		if (!inicioValido(string) || !string.endsWith("{")) {
 			return null;
 		}
 		string = string.substring(0, string.length() - 1).trim();
 		if (!string.endsWith(")")) {
-			int pos = string.lastIndexOf("throws");
+			int pos = string.lastIndexOf("throws ");
 			if (pos == -1) {
 				return null;
 			}
@@ -1470,6 +1470,10 @@ public class Util {
 			return null;
 		}
 		return getNome(string.substring(0, pos));
+	}
+
+	private static boolean inicioValido(String string) {
+		return string.startsWith("public ") || string.startsWith("protected ") || string.startsWith("private ");
 	}
 
 	private static String getNome(String string) {
@@ -1486,14 +1490,38 @@ public class Util {
 		return sb.toString();
 	}
 
-	public static List<String> getNomeMetodosPublicos(List<String> lista) {
-		List<String> resposta = new ArrayList<>();
-		for (String string : lista) {
-			String nome = getNomeMetodoPublico(string);
-			if (nome != null) {
-				resposta.add(nome);
-			}
+	public static void invocacoes(String string, List<String> resposta) {
+		if (string == null) {
+			return;
 		}
-		return resposta;
+		string = string.trim();
+		int pos = string.indexOf('.');
+		while (pos != -1) {
+			string = invocacoes(string, resposta, pos);
+			pos = string.indexOf('.');
+		}
+	}
+
+	private static String invocacoes(String string, List<String> resposta, int pos) {
+		if (pos > 0) {
+			String ref = getNome(string.substring(0, pos));
+			if (!ref.isEmpty()) {
+				int posP = string.indexOf('(', pos + 1);
+				if (posP > 0) {
+					String nome = getNome(string.substring(pos + 1, posP));
+					if (!nome.isEmpty()) {
+						resposta.add(ref + '.' + nome);
+					}
+					string = string.substring(posP);
+				} else {
+					string = string.substring(pos + 1);
+				}
+			} else {
+				string = string.substring(pos + 1);
+			}
+		} else {
+			string = string.substring(pos + 1);
+		}
+		return string.trim();
 	}
 }
