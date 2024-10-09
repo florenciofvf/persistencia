@@ -31,6 +31,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextPane;
 import br.com.persist.formulario.Formulario;
@@ -62,9 +63,9 @@ class ExecucaoSplit extends SplitPane {
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
+		setLeftComponent(new ScrollPane(tree));
 		tree.adicionarOuvinte(treeListener);
 		panel = new PanelRoot();
-		setLeftComponent(tree);
 		setRightComponent(panel);
 		abrir();
 	}
