@@ -6,13 +6,13 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Util;
 
 public class Arquivo {
@@ -129,7 +129,7 @@ public class Arquivo {
 	}
 
 	public void ordenar() {
-		Collections.sort(filhos, (a1, a2) -> a1.getName().compareTo(a2.getName()));
+		ArquivoUtil.ordenar(filhos);
 	}
 
 	public boolean excluir(Arquivo arquivo) {

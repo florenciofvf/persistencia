@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.arquivo.Arquivo;
+
 public class ArquivoUtil {
 	private static final Map<String, List<String>> map = new HashMap<>();
 	private static final Logger LOG = Logger.getGlobal();
@@ -100,6 +102,10 @@ public class ArquivoUtil {
 		return files;
 	}
 
+	public static void ordenar(List<Arquivo> arquivos) {
+		arquivos.sort((a1, a2) -> extrairNumero(a1.getName()) - extrairNumero(a2.getName()));
+	}
+
 	public static File[] ordenar(File[] files) {
 		if (files == null) {
 			return files;
@@ -122,26 +128,29 @@ public class ArquivoUtil {
 
 		public Ordem(File file) {
 			this.file = file;
-			numero = extrair(file.getName());
+			numero = extrairNumero(file.getName());
 		}
+	}
 
-		int extrair(String s) {
-			StringBuilder sb = new StringBuilder();
-			int i = 0;
-			while (i < s.length()) {
-				char c = s.charAt(i);
-				if (c >= '0' && c <= '9') {
-					sb.append(c);
-				} else {
-					break;
-				}
-				i++;
-			}
-			if (sb.length() > 0) {
-				return Integer.parseInt(sb.toString());
-			}
+	private static int extrairNumero(String s) {
+		if (s == null) {
 			return 0;
 		}
+		StringBuilder sb = new StringBuilder();
+		int i = 0;
+		while (i < s.length()) {
+			char c = s.charAt(i);
+			if (c >= '0' && c <= '9') {
+				sb.append(c);
+			} else {
+				break;
+			}
+			i++;
+		}
+		if (sb.length() > 0) {
+			return Integer.parseInt(sb.toString());
+		}
+		return 0;
 	}
 
 	public static void diretorio(File file) throws IOException {
