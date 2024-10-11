@@ -323,6 +323,7 @@ class TextArea extends TextPane {
 			String text = getText();
 			paintE(g, textUI, text);
 			paintR(g, textUI, text);
+			paintT(g, textUI, text);
 		}
 	}
 
@@ -358,6 +359,29 @@ class TextArea extends TextPane {
 				break;
 			}
 		}
+	}
+
+	private void paintT(Graphics g, TextUI textUI, String text) {
+		int pos = text.indexOf('\t');
+		while (pos != -1) {
+			try {
+				Rectangle r = textUI.modelToView(this, pos);
+				if (r != null) {
+					g.setColor(Color.LIGHT_GRAY);
+					desenhar(g, r, 0);
+					desenhar(g, r, 2);
+				}
+				pos = text.indexOf('\t', pos + 1);
+			} catch (BadLocationException e) {
+				break;
+			}
+		}
+	}
+
+	private void desenhar(Graphics g, Rectangle r, int offset) {
+		r.x += offset;
+		g.drawLine(r.x, r.y, r.x + 3, r.y + r.height / 2);
+		g.drawLine(r.x + 3, r.y + r.height / 2, r.x, r.y + r.height);
 	}
 }
 
