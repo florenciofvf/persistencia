@@ -73,11 +73,11 @@ import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
-	private transient List<CompChave> vinculados = new ArrayList<>();
 	private String chaveMensagemVinculoInexitente = "msg.arquivo_vinculo_inexistente";
+	private transient List<CompChave> vinculados = new ArrayList<>();
 	private String chaveMensagem = "msg.config_tabela_aba_banco";
-	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
+	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
