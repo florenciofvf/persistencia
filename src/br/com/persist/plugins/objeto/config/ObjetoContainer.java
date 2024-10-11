@@ -6,7 +6,6 @@ import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -28,13 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -69,15 +66,16 @@ import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
+import br.com.persist.plugins.objeto.vinculo.Marcador;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
-	private String chaveMensagemVinculoInexitente = "msg.arquivo_vinculo_inexistente";
+	private static final String CHAVE_MENSAGEM_VI = "msg.arquivo_vinculo_inexistente";
+	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
+	private static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
 	private transient List<CompChave> vinculados = new ArrayList<>();
-	private String chaveMensagem = "msg.config_tabela_aba_banco";
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
-	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
@@ -146,9 +144,10 @@ public class ObjetoContainer extends Panel {
 	};
 
 	private class VinculadoPopup extends Popup {
-		private Action action = acaoMenu(labelVinculo);
+		private Action action = acaoMenu(LABEL_VINCULO);
 		private static final long serialVersionUID = 1L;
 		private transient CompChave compChave;
+		private transient Marcador marcador;
 
 		private VinculadoPopup() {
 			add(action);
@@ -167,6 +166,7 @@ public class ObjetoContainer extends Panel {
 			if (compChave == null) {
 				return;
 			}
+			marcador = new Marcador(compChave.comp);
 			Vinculacao vinculacao = null;
 			try {
 				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
@@ -175,7 +175,7 @@ public class ObjetoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
 				return;
 			}
 			String tabela = txtTabela.getText().trim();
@@ -184,82 +184,86 @@ public class ObjetoContainer extends Panel {
 				para = new ParaTabela(tabela);
 				vinculacao.putParaTabela(para);
 			}
-			if ("APELIDO".equals(compChave.chave)) {
-				para.setApelido(compChave.getText());
-			} else if ("GRUPO".equals(compChave.chave)) {
-				para.setGrupo(compChave.getText());
-			} else if ("CHAVES".equals(compChave.chave)) {
-				para.setChaves(compChave.getText());
-			} else if ("JOINS".equals(compChave.chave)) {
-				para.setJoins(compChave.getText());
-			} else if ("TABELAS".equals(compChave.chave)) {
-				para.setTabelas(compChave.getText());
-			} else if ("ESQUEMA_ALTER".equals(compChave.chave)) {
-				para.setEsquemaAlternativo(compChave.getText());
-			} else if ("TABELA_ALTER".equals(compChave.chave)) {
-				para.setTabelaAlternativo(compChave.getText());
-			} else if ("SELECT_ALTER".equals(compChave.chave)) {
-				para.setSelectAlternativo(compChave.getText());
-			} else if ("PREFIXO_NT".equals(compChave.chave)) {
-				para.setPrefixoNomeTabela(compChave.getText());
-			}
+			processar(para);
 			processar1(para);
 			processar2(para);
 			processar3(para);
 			salvarVinculacao(vinculacao);
 		}
 
-		void processar1(ParaTabela para) {
+		private void processar(ParaTabela para) {
+			if ("APELIDO".equals(compChave.chave)) {
+				para.setApelido(compChave.getText(), marcador);
+			} else if ("GRUPO".equals(compChave.chave)) {
+				para.setGrupo(compChave.getText(), marcador);
+			} else if ("CHAVES".equals(compChave.chave)) {
+				para.setChaves(compChave.getText(), marcador);
+			} else if ("JOINS".equals(compChave.chave)) {
+				para.setJoins(compChave.getText(), marcador);
+			} else if ("TABELAS".equals(compChave.chave)) {
+				para.setTabelas(compChave.getText(), marcador);
+			} else if ("ESQUEMA_ALTER".equals(compChave.chave)) {
+				para.setEsquemaAlternativo(compChave.getText(), marcador);
+			} else if ("TABELA_ALTER".equals(compChave.chave)) {
+				para.setTabelaAlternativo(compChave.getText(), marcador);
+			} else if ("SELECT_ALTER".equals(compChave.chave)) {
+				para.setSelectAlternativo(compChave.getText(), marcador);
+			} else if ("PREFIXO_NT".equals(compChave.chave)) {
+				para.setPrefixoNomeTabela(compChave.getText(), marcador);
+			}
+		}
+
+		private void processar1(ParaTabela para) {
 			if ("SEQUENCIA".equals(compChave.chave)) {
-				para.setSequencias(compChave.getText());
+				para.setSequencias(compChave.getText(), marcador);
 			} else if ("CHAVEAMENTO".equals(compChave.chave)) {
-				para.setCampoNomes(compChave.getText());
+				para.setCampoNomes(compChave.getText(), marcador);
 			} else if ("MAPEAMENTO".equals(compChave.chave)) {
-				para.setMapeamento(compChave.getText());
+				para.setMapeamento(compChave.getText(), marcador);
 			} else if ("COMPLEMENTO".equals(compChave.chave)) {
-				para.setComplemento(compChave.getText());
+				para.setComplemento(compChave.getText(), marcador);
 			} else if ("DESTACAVEIS".equals(compChave.chave)) {
-				para.setDestacaveis(compChave.getText());
+				para.setDestacaveis(compChave.getText(), marcador);
 			} else if ("CHECAR_REGISTRO".equals(compChave.chave)) {
-				para.setBiblioChecagem(compChave.getText());
+				para.setBiblioChecagem(compChave.getText(), marcador);
 			}
 		}
 
-		void processar2(ParaTabela para) {
+		private void processar2(ParaTabela para) {
 			if ("ORDER_BY".equals(compChave.chave)) {
-				para.setOrderBy(compChave.getText());
+				para.setOrderBy(compChave.getText(), marcador);
 			} else if ("CLASSBIBLIO".equals(compChave.chave)) {
-				para.setClassBiblio(compChave.getText());
+				para.setClassBiblio(compChave.getText(), marcador);
 			} else if ("FINAL_CONSULTA".equals(compChave.chave)) {
-				para.setFinalConsulta(compChave.getText());
+				para.setFinalConsulta(compChave.getText(), marcador);
 			} else if ("COLUNA_INFO".equals(compChave.chave)) {
-				para.setColunaInfo(compChave.getBool());
+				para.setColunaInfo(compChave.getBool(), marcador);
 			} else if ("ABRIR_AUTO".equals(compChave.chave)) {
-				para.setDestacavel(compChave.getBool());
+				para.setDestacavel(compChave.getBool(), marcador);
 			} else if ("LINK_AUTO".equals(compChave.chave)) {
-				para.setLinkAuto(compChave.getBool());
+				para.setLinkAuto(compChave.getBool(), marcador);
 			} else if ("LARGURA_ROTULOS".equals(compChave.chave)) {
-				para.setLarguraRotulos(compChave.getBool());
+				para.setLarguraRotulos(compChave.getBool(), marcador);
 			} else if ("TRANSPARENTE".equals(compChave.chave)) {
-				para.setTransparente(compChave.getBool());
+				para.setTransparente(compChave.getBool(), marcador);
 			} else if ("CLONAR_DESTA".equals(compChave.chave)) {
-				para.setClonarAoDestacar(compChave.getBool());
+				para.setClonarAoDestacar(compChave.getBool(), marcador);
 			} else if ("IGNORAR".equals(compChave.chave)) {
-				para.setIgnorar(compChave.getBool());
+				para.setIgnorar(compChave.getBool(), marcador);
 			} else if ("SANE".equals(compChave.chave)) {
-				para.setSane(compChave.getBool());
+				para.setSane(compChave.getBool(), marcador);
 			} else if ("CCSC".equals(compChave.chave)) {
-				para.setCcsc(compChave.getBool());
+				para.setCcsc(compChave.getBool(), marcador);
 			} else if ("BPNT".equals(compChave.chave)) {
-				para.setBpnt(compChave.getBool());
+				para.setBpnt(compChave.getBool(), marcador);
 			}
 		}
 
-		void processar3(ParaTabela para) throws ObjetoException {
+		private void processar3(ParaTabela para) throws ObjetoException {
 			if ("AJUSTE_AUTO".equals(compChave.chave)) {
-				para.setAjustarAltura(compChave.getBool());
+				para.setAjustarAltura(compChave.getBool(), marcador);
 			} else if ("AJUSTE_LARG".equals(compChave.chave)) {
-				para.setAjustarLargura(compChave.getBool());
+				para.setAjustarLargura(compChave.getBool(), marcador);
 			} else if ("INSTRUCAO".equals(compChave.chave)) {
 				para.addInstrucao(compChave.getText());
 			} else if ("FILTRO".equals(compChave.chave)) {
@@ -267,7 +271,7 @@ public class ObjetoContainer extends Panel {
 			}
 		}
 
-		boolean showValido() {
+		private boolean showValido() {
 			if (compChave == null) {
 				return false;
 			}
@@ -309,6 +313,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
 		private Label labelIcone = new Label();
+		private final PanelLeft panelIcone;
 
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
@@ -346,7 +351,7 @@ public class ObjetoContainer extends Panel {
 				labelIcone.setToolTipText(objeto.getIcone());
 				labelIcone.setIcon(objeto.getIcon());
 			}
-			PanelLeft panelIcone = new PanelLeft(labelIcone);
+			panelIcone = new PanelLeft(labelIcone);
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
@@ -494,7 +499,10 @@ public class ObjetoContainer extends Panel {
 		}
 
 		public void checarVinculados(ParaTabela para) {
-			// TODO Auto-generated method stub
+			if (!Util.isEmpty(para.getIcone())) {
+				panelIcone.setBorder(Marcador.criarBorda());
+			}
+			// ---
 		}
 	}
 
@@ -1119,7 +1127,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
-			private Action actionCorFonteVinculo = acaoIcon(labelVinculo, Icones.SUCESSO);
+			private Action actionCorFonteVinculo = acaoIcon(LABEL_VINCULO, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
@@ -1139,7 +1147,7 @@ public class ObjetoContainer extends Panel {
 
 			private void corFonteVinculo() throws ObjetoException {
 				if (Util.isEmpty(txtTabela.getText())) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
 					return;
 				}
 				Vinculacao vinculacao = null;
@@ -1150,7 +1158,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();
@@ -1185,7 +1193,7 @@ public class ObjetoContainer extends Panel {
 
 		public void checarVinculados(ParaTabela para) {
 			if (para.getCorFonte() != null) {
-				colorChooser.setBorder(criarBordarVinculado());
+				colorChooser.setBorder(Marcador.criarBorda());
 			}
 		}
 	}
@@ -1210,7 +1218,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
-			private Action actionCorVinculo = acaoIcon(labelVinculo, Icones.SUCESSO);
+			private Action actionCorVinculo = acaoIcon(LABEL_VINCULO, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
@@ -1230,7 +1238,7 @@ public class ObjetoContainer extends Panel {
 
 			private void corVinculo() throws ObjetoException {
 				if (Util.isEmpty(txtTabela.getText())) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
 					return;
 				}
 				Vinculacao vinculacao = null;
@@ -1241,7 +1249,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();
@@ -1276,13 +1284,13 @@ public class ObjetoContainer extends Panel {
 
 		public void checarVinculados(ParaTabela para) {
 			if (para.getCorFundo() != null) {
-				colorChooser.setBorder(criarBordarVinculado());
+				colorChooser.setBorder(Marcador.criarBorda());
 			}
 		}
 	}
 
 	private class IconeListener extends MouseAdapter {
-		private Action action = acaoMenu(labelVinculo);
+		private Action action = acaoMenu(LABEL_VINCULO);
 		private Popup popup = new Popup();
 		private final Objeto objeto;
 		private final Label label;
@@ -1332,7 +1340,7 @@ public class ObjetoContainer extends Panel {
 
 		private void configIconeVinculo() throws ObjetoException {
 			if (Util.isEmpty(txtTabela.getText())) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
 				return;
 			}
 			Vinculacao vinculacao = null;
@@ -1343,7 +1351,7 @@ public class ObjetoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
 				return;
 			}
 			String tabela = txtTabela.getText().trim();
@@ -1394,7 +1402,7 @@ public class ObjetoContainer extends Panel {
 
 		public void checarVinculados() {
 			if (Util.isEmpty(txtTabela.getText())) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
 				return;
 			}
 			Vinculacao vinculacao = null;
@@ -1405,7 +1413,7 @@ public class ObjetoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
 				return;
 			}
 			String tabela = txtTabela.getText().trim();
@@ -1420,9 +1428,5 @@ public class ObjetoContainer extends Panel {
 			cor.checarVinculados(para);
 			corFonte.checarVinculados(para);
 		}
-	}
-
-	private Border criarBordarVinculado() {
-		return BorderFactory.createEtchedBorder(Color.RED, Color.BLUE);
 	}
 }
