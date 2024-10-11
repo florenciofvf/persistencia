@@ -6,6 +6,7 @@ import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -27,11 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -1181,7 +1184,9 @@ public class ObjetoContainer extends Panel {
 		}
 
 		public void checarVinculados(ParaTabela para) {
-			// TODO Auto-generated method stub
+			if (para.getCorFonte() != null) {
+				colorChooser.setBorder(criarBordarVinculado());
+			}
 		}
 	}
 
@@ -1270,7 +1275,9 @@ public class ObjetoContainer extends Panel {
 		}
 
 		public void checarVinculados(ParaTabela para) {
-			// TODO Auto-generated method stub
+			if (para.getCorFundo() != null) {
+				colorChooser.setBorder(criarBordarVinculado());
+			}
 		}
 	}
 
@@ -1413,5 +1420,9 @@ public class ObjetoContainer extends Panel {
 			cor.checarVinculados(para);
 			corFonte.checarVinculados(para);
 		}
+	}
+
+	private Border criarBordarVinculado() {
+		return BorderFactory.createEtchedBorder(Color.RED, Color.BLUE);
 	}
 }
