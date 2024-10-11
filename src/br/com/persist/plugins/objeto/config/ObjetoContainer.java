@@ -97,6 +97,17 @@ public class ObjetoContainer extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action vinculadosAcao = acaoIcon("label.checar_vinculados", Icones.SUCESSO);
+
+		public void ini(Janela janela) {
+			super.ini(janela);
+			add(vinculadosAcao);
+			vinculadosAcao.setActionListener(e -> checarVinculados());
+		}
+
+		private void checarVinculados() {
+			fichario.checarVinculados();
+		}
 	}
 
 	private transient MouseListener listenerVinculado = new MouseAdapter() {
@@ -1331,13 +1342,31 @@ public class ObjetoContainer extends Panel {
 
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
+		private final PanelGeral geral = new PanelGeral();
+		private final PanelBanco banco = new PanelBanco();
+		private final PanelCor cor = new PanelCor();
+		private final PanelCorFonte corFonte = new PanelCorFonte();
 
 		private Fichario() {
-			addTab("label.geral", new PanelGeral());
-			addTab("label.banco", new PanelBanco());
+			addTab("label.geral", geral);
+			addTab("label.banco", banco);
 			addTab("label.descricao", new PanelDescricao());
-			addTab("label.cor", new PanelCor());
-			addTab("label.cor_fonte", new PanelCorFonte());
+			addTab("label.cor", cor);
+			addTab("label.cor_fonte", corFonte);
+		}
+
+		public void checarVinculados() {
+			if (Util.isEmpty(txtTabela.getText())) {
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagem));
+				return;
+			}
+			Vinculacao vinculacao = null;
+			try {
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("CHECAR OBJETOS VINCULADOS", ex, ObjetoContainer.this);
+				return;
+			}
 		}
 	}
 }
