@@ -244,37 +244,37 @@ public class ParaTabela {
 	}
 
 	public void aplicar(Attributes attributes) {
-		setEsquemaAlternativo(attributes.getValue(ESQUEMA_ALTERNATIVO));
-		setPrefixoNomeTabela(attributes.getValue(PREFIXO_NOME_TABELA));
-		setTabelaAlternativo(attributes.getValue(TABELA_ALTERNATIVO));
-		setSelectAlternativo(attributes.getValue(SELECT_ALTERNATIVO));
-		setClonarAoDestacar(attributes.getValue(CLONAR_AO_DESTACAR));
-		setLarguraRotulos(attributes.getValue(LARGURA_ROTULOS));
-		setBiblioChecagem(attributes.getValue(BIBLIO_CHECAGEM));
-		setAjustarLargura(attributes.getValue(AJUSTAR_LARGURA));
-		setTransparente(attributes.getValue(STR_TRANSPARENTE));
-		setFinalConsulta(attributes.getValue(FINAL_CONSULTA));
-		setAjustarAltura(attributes.getValue(AJUSTAR_ALTURA));
-		setComplemento(attributes.getValue(STR_COMPLEMENTO));
-		setDestacaveis(attributes.getValue(STR_DESTACAVEIS));
+		setEsquemaAlternativo(attributes.getValue(ESQUEMA_ALTERNATIVO), null);
+		setPrefixoNomeTabela(attributes.getValue(PREFIXO_NOME_TABELA), null);
+		setTabelaAlternativo(attributes.getValue(TABELA_ALTERNATIVO), null);
+		setSelectAlternativo(attributes.getValue(SELECT_ALTERNATIVO), null);
+		setClonarAoDestacar(attributes.getValue(CLONAR_AO_DESTACAR), null);
+		setLarguraRotulos(attributes.getValue(LARGURA_ROTULOS), null);
+		setBiblioChecagem(attributes.getValue(BIBLIO_CHECAGEM), null);
+		setAjustarLargura(attributes.getValue(AJUSTAR_LARGURA), null);
+		setTransparente(attributes.getValue(STR_TRANSPARENTE), null);
+		setFinalConsulta(attributes.getValue(FINAL_CONSULTA), null);
+		setAjustarAltura(attributes.getValue(AJUSTAR_ALTURA), null);
+		setComplemento(attributes.getValue(STR_COMPLEMENTO), null);
+		setDestacaveis(attributes.getValue(STR_DESTACAVEIS), null);
 		setIcone(attributes.getValue(VinculoHandler.ICONE));
-		setGrupo(attributes.getValue(VinculoHandler.GRUPO));
-		setMapeamento(attributes.getValue(STR_MAPEAMENTO));
-		setSequencias(attributes.getValue(STR_SEQUENCIAS));
-		setDestacavel(attributes.getValue(STR_DESTACAVEL));
-		setClassBiblio(attributes.getValue(CLASS_BIBLIO));
-		setCampoNomes(attributes.getValue(CAMPO_NOMES));
-		setColunaInfo(attributes.getValue(COLUNA_INFO));
-		setApelido(attributes.getValue(STR_APELIDO));
-		setTabelas(attributes.getValue(STR_TABELAS));
-		setIgnorar(attributes.getValue(STR_IGNORAR));
-		setLinkAuto(attributes.getValue(LINK_AUTO));
-		setChaves(attributes.getValue(STR_CHAVES));
-		setOrderBy(attributes.getValue(ORDER_BY));
-		setJoins(attributes.getValue(STR_JOINS));
-		setSane(attributes.getValue(STR_SANE));
-		setCcsc(attributes.getValue(STR_CCSC));
-		setBpnt(attributes.getValue(STR_BPNT));
+		setGrupo(attributes.getValue(VinculoHandler.GRUPO), null);
+		setMapeamento(attributes.getValue(STR_MAPEAMENTO), null);
+		setSequencias(attributes.getValue(STR_SEQUENCIAS), null);
+		setDestacavel(attributes.getValue(STR_DESTACAVEL), null);
+		setClassBiblio(attributes.getValue(CLASS_BIBLIO), null);
+		setCampoNomes(attributes.getValue(CAMPO_NOMES), null);
+		setColunaInfo(attributes.getValue(COLUNA_INFO), null);
+		setApelido(attributes.getValue(STR_APELIDO), null);
+		setTabelas(attributes.getValue(STR_TABELAS), null);
+		setIgnorar(attributes.getValue(STR_IGNORAR), null);
+		setLinkAuto(attributes.getValue(LINK_AUTO), null);
+		setChaves(attributes.getValue(STR_CHAVES), null);
+		setOrderBy(attributes.getValue(ORDER_BY), null);
+		setJoins(attributes.getValue(STR_JOINS), null);
+		setSane(attributes.getValue(STR_SANE), null);
+		setCcsc(attributes.getValue(STR_CCSC), null);
+		setBpnt(attributes.getValue(STR_BPNT), null);
 		setCorFonte(getCorFonte(attributes));
 		setCorFundo(getCorFundo(attributes));
 	}
@@ -425,7 +425,11 @@ public class ParaTabela {
 		return apelido;
 	}
 
-	public void setApelido(String apelido) {
+	public void setApelido(String apelido, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.apelido);
+			return;
+		}
 		this.apelido = apelido;
 	}
 
@@ -433,7 +437,11 @@ public class ParaTabela {
 		return sequencias;
 	}
 
-	public void setSequencias(String sequencias) {
+	public void setSequencias(String sequencias, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.sequencias);
+			return;
+		}
 		this.sequencias = sequencias;
 	}
 
@@ -441,7 +449,11 @@ public class ParaTabela {
 		return orderBy;
 	}
 
-	public void setOrderBy(String orderBy) {
+	public void setOrderBy(String orderBy, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.orderBy);
+			return;
+		}
 		this.orderBy = orderBy;
 	}
 
@@ -449,7 +461,11 @@ public class ParaTabela {
 		return prefixoNomeTabela;
 	}
 
-	public void setPrefixoNomeTabela(String prefixoNomeTabela) {
+	public void setPrefixoNomeTabela(String prefixoNomeTabela, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.prefixoNomeTabela);
+			return;
+		}
 		this.prefixoNomeTabela = prefixoNomeTabela;
 	}
 
@@ -457,7 +473,11 @@ public class ParaTabela {
 		return selectAlternativo;
 	}
 
-	public void setSelectAlternativo(String selectAlternativo) {
+	public void setSelectAlternativo(String selectAlternativo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.selectAlternativo);
+			return;
+		}
 		this.selectAlternativo = selectAlternativo;
 	}
 
@@ -465,7 +485,11 @@ public class ParaTabela {
 		return finalConsulta;
 	}
 
-	public void setFinalConsulta(String finalConsulta) {
+	public void setFinalConsulta(String finalConsulta, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.finalConsulta);
+			return;
+		}
 		this.finalConsulta = finalConsulta;
 	}
 
@@ -473,7 +497,11 @@ public class ParaTabela {
 		return complemento;
 	}
 
-	public void setComplemento(String complemento) {
+	public void setComplemento(String complemento, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.complemento);
+			return;
+		}
 		this.complemento = complemento;
 	}
 
@@ -481,7 +509,11 @@ public class ParaTabela {
 		return classBiblio;
 	}
 
-	public void setClassBiblio(String classBiblio) {
+	public void setClassBiblio(String classBiblio, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.classBiblio);
+			return;
+		}
 		this.classBiblio = classBiblio;
 	}
 
@@ -489,7 +521,11 @@ public class ParaTabela {
 		return destacaveis;
 	}
 
-	public void setDestacaveis(String destacaveis) {
+	public void setDestacaveis(String destacaveis, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.destacaveis);
+			return;
+		}
 		this.destacaveis = destacaveis;
 	}
 
@@ -497,7 +533,11 @@ public class ParaTabela {
 		return campoNomes;
 	}
 
-	public void setCampoNomes(String campoNomes) {
+	public void setCampoNomes(String campoNomes, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.campoNomes);
+			return;
+		}
 		this.campoNomes = campoNomes;
 	}
 
@@ -505,7 +545,11 @@ public class ParaTabela {
 		return mapeamento;
 	}
 
-	public void setMapeamento(String mapeamento) {
+	public void setMapeamento(String mapeamento, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.mapeamento);
+			return;
+		}
 		this.mapeamento = mapeamento;
 	}
 
@@ -513,7 +557,11 @@ public class ParaTabela {
 		return chaves;
 	}
 
-	public void setChaves(String chaves) {
+	public void setChaves(String chaves, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.chaves);
+			return;
+		}
 		this.chaves = chaves;
 	}
 
@@ -521,7 +569,11 @@ public class ParaTabela {
 		return grupo;
 	}
 
-	public void setGrupo(String grupo) {
+	public void setGrupo(String grupo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.grupo);
+			return;
+		}
 		this.grupo = grupo;
 	}
 
@@ -537,7 +589,11 @@ public class ParaTabela {
 		return ajustarAltura;
 	}
 
-	public void setAjustarAltura(String ajustarAltura) {
+	public void setAjustarAltura(String ajustarAltura, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.ajustarAltura);
+			return;
+		}
 		this.ajustarAltura = ajustarAltura;
 	}
 
@@ -545,7 +601,11 @@ public class ParaTabela {
 		return ajustarLargura;
 	}
 
-	public void setAjustarLargura(String ajustarLargura) {
+	public void setAjustarLargura(String ajustarLargura, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.ajustarLargura);
+			return;
+		}
 		this.ajustarLargura = ajustarLargura;
 	}
 
@@ -553,7 +613,11 @@ public class ParaTabela {
 		return colunaInfo;
 	}
 
-	public void setColunaInfo(String colunaInfo) {
+	public void setColunaInfo(String colunaInfo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.colunaInfo);
+			return;
+		}
 		this.colunaInfo = colunaInfo;
 	}
 
@@ -561,7 +625,11 @@ public class ParaTabela {
 		return destacavel;
 	}
 
-	public void setDestacavel(String destacavel) {
+	public void setDestacavel(String destacavel, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.destacavel);
+			return;
+		}
 		this.destacavel = destacavel;
 	}
 
@@ -569,7 +637,11 @@ public class ParaTabela {
 		return linkAuto;
 	}
 
-	public void setLinkAuto(String linkAuto) {
+	public void setLinkAuto(String linkAuto, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.linkAuto);
+			return;
+		}
 		this.linkAuto = linkAuto;
 	}
 
@@ -577,7 +649,11 @@ public class ParaTabela {
 		return larguraRotulos;
 	}
 
-	public void setLarguraRotulos(String larguraRotulos) {
+	public void setLarguraRotulos(String larguraRotulos, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.larguraRotulos);
+			return;
+		}
 		this.larguraRotulos = larguraRotulos;
 	}
 
@@ -585,7 +661,11 @@ public class ParaTabela {
 		return sane;
 	}
 
-	public void setSane(String sane) {
+	public void setSane(String sane, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.sane);
+			return;
+		}
 		this.sane = sane;
 	}
 
@@ -593,7 +673,11 @@ public class ParaTabela {
 		return ignorar;
 	}
 
-	public void setIgnorar(String ignorar) {
+	public void setIgnorar(String ignorar, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.ignorar);
+			return;
+		}
 		this.ignorar = ignorar;
 	}
 
@@ -601,7 +685,11 @@ public class ParaTabela {
 		return ccsc;
 	}
 
-	public void setCcsc(String ccsc) {
+	public void setCcsc(String ccsc, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.ccsc);
+			return;
+		}
 		this.ccsc = ccsc;
 	}
 
@@ -609,7 +697,11 @@ public class ParaTabela {
 		return bpnt;
 	}
 
-	public void setBpnt(String bpnt) {
+	public void setBpnt(String bpnt, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.bpnt);
+			return;
+		}
 		this.bpnt = bpnt;
 	}
 
@@ -629,7 +721,11 @@ public class ParaTabela {
 		return tabelas;
 	}
 
-	public void setTabelas(String tabelas) {
+	public void setTabelas(String tabelas, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.tabelas);
+			return;
+		}
 		this.tabelas = tabelas;
 	}
 
@@ -637,7 +733,11 @@ public class ParaTabela {
 		return esquemaAlternativo;
 	}
 
-	public void setEsquemaAlternativo(String esquemaAlternativo) {
+	public void setEsquemaAlternativo(String esquemaAlternativo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.esquemaAlternativo);
+			return;
+		}
 		this.esquemaAlternativo = esquemaAlternativo;
 	}
 
@@ -645,7 +745,11 @@ public class ParaTabela {
 		return tabelaAlternativo;
 	}
 
-	public void setTabelaAlternativo(String tabelaAlternativo) {
+	public void setTabelaAlternativo(String tabelaAlternativo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.tabelaAlternativo);
+			return;
+		}
 		this.tabelaAlternativo = tabelaAlternativo;
 	}
 
@@ -653,7 +757,11 @@ public class ParaTabela {
 		return joins;
 	}
 
-	public void setJoins(String joins) {
+	public void setJoins(String joins, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.joins);
+			return;
+		}
 		this.joins = joins;
 	}
 
@@ -665,11 +773,19 @@ public class ParaTabela {
 		return biblioChecagem;
 	}
 
-	public void setTransparente(String transparente) {
+	public void setTransparente(String transparente, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.transparente);
+			return;
+		}
 		this.transparente = transparente;
 	}
 
-	public void setBiblioChecagem(String biblioChecagem) {
+	public void setBiblioChecagem(String biblioChecagem, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.biblioChecagem);
+			return;
+		}
 		this.biblioChecagem = biblioChecagem;
 	}
 
@@ -677,7 +793,11 @@ public class ParaTabela {
 		return clonarAoDestacar;
 	}
 
-	public void setClonarAoDestacar(String clonarAoDestacar) {
+	public void setClonarAoDestacar(String clonarAoDestacar, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.clonarAoDestacar);
+			return;
+		}
 		this.clonarAoDestacar = clonarAoDestacar;
 	}
 

@@ -132,16 +132,35 @@ public class ObjetoContainer extends Panel {
 				}
 			}
 		}
+	};
 
-		private CompChave getCompChave(JComponent comp) {
-			for (CompChave cc : vinculados) {
-				if (cc.comp == comp) {
-					return cc;
+	private CompChave getCompChave(JComponent comp) {
+		for (CompChave cc : vinculados) {
+			if (cc.comp == comp) {
+				return cc;
+			}
+		}
+		return null;
+	}
+
+	private void marcarVinculados(ParaTabela para, JComponent... components) {
+		if (para == null) {
+			return;
+		}
+		popupVinculo.marcador = new Marcador();
+		for (JComponent comp : components) {
+			CompChave cc = getCompChave(comp);
+			if (cc != null) {
+				popupVinculo.marcador.setComp(cc.comp);
+				try {
+					popupVinculo.processar(para);
+				} catch (ObjetoException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
 			}
-			return null;
 		}
-	};
+		popupVinculo.marcador = null;
+	}
 
 	private class VinculadoPopup extends Popup {
 		private Action action = acaoMenu(LABEL_VINCULO);
@@ -166,7 +185,6 @@ public class ObjetoContainer extends Panel {
 			if (compChave == null) {
 				return;
 			}
-			marcador = new Marcador(compChave.comp);
 			Vinculacao vinculacao = null;
 			try {
 				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
@@ -185,13 +203,17 @@ public class ObjetoContainer extends Panel {
 				vinculacao.putParaTabela(para);
 			}
 			processar(para);
-			processar1(para);
-			processar2(para);
-			processar3(para);
 			salvarVinculacao(vinculacao);
 		}
 
-		private void processar(ParaTabela para) {
+		private void processar(ParaTabela para) throws ObjetoException {
+			processar0(para);
+			processar1(para);
+			processar2(para);
+			processar3(para);
+		}
+
+		private void processar0(ParaTabela para) {
 			if ("APELIDO".equals(compChave.chave)) {
 				para.setApelido(compChave.getText(), marcador);
 			} else if ("GRUPO".equals(compChave.chave)) {
@@ -502,7 +524,7 @@ public class ObjetoContainer extends Panel {
 			if (!Util.isEmpty(para.getIcone())) {
 				panelIcone.setBorder(Marcador.criarBorda());
 			}
-			// ---
+			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, txtInstrucao, txtFiltro);
 		}
 	}
 
@@ -914,7 +936,11 @@ public class ObjetoContainer extends Panel {
 		}
 
 		public void checarVinculados(ParaTabela para) {
-			// TODO Auto-generated method stub
+			marcarVinculados(para, chkLarguraRotulos, txtFinalConsulta, chkAjusteAutoForm, chkAjusteLargForm,
+					txtEsquemaAlter, txtTabelaAlter, txtSelectAlter, txtChaveamento, txtComplemento, txtClassBiblio,
+					txtDestacaveis, chkColunaInfo, txtMapeamento, txtPrefixoNT, chkAbrirAuto, txtSequencias,
+					chkLinkAuto, txtOrderBy, txtApelido, txtTabelas, chkIgnorar, txtChaves, txtJoins, txtGrupo, chkSANE,
+					chkCCSC, chkBPNT);
 		}
 	}
 
