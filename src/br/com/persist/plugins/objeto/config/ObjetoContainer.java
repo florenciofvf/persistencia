@@ -71,6 +71,7 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
 	private transient List<CompChave> vinculados = new ArrayList<>();
+	private String chaveMensagemVinculoInexitente = "msg.arquivo_vinculo_inexistente";
 	private String chaveMensagem = "msg.config_tabela_aba_banco";
 	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
@@ -171,6 +172,7 @@ public class ObjetoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
 				return;
 			}
 			String tabela = txtTabela.getText().trim();
@@ -486,6 +488,10 @@ public class ObjetoContainer extends Panel {
 			Panel panel = criarLinhaComLink(chaveRotulo, true, textField, hint, linkListener);
 			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
 			return panel;
+		}
+
+		public void checarVinculados(ParaTabela para) {
+			// TODO Auto-generated method stub
 		}
 	}
 
@@ -895,6 +901,10 @@ public class ObjetoContainer extends Panel {
 				objeto.setJoins(txtJoins.getText());
 			}
 		}
+
+		public void checarVinculados(ParaTabela para) {
+			// TODO Auto-generated method stub
+		}
 	}
 
 	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
@@ -1136,6 +1146,10 @@ public class ObjetoContainer extends Panel {
 					Util.stackTraceAndMessage("VINCULAR EM COR FONTE", ex, ObjetoContainer.this);
 					return;
 				}
+				if (vinculacao == null) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+					return;
+				}
 				String tabela = txtTabela.getText().trim();
 				ParaTabela para = vinculacao.getParaTabela(tabela);
 				if (para == null) {
@@ -1164,6 +1178,10 @@ public class ObjetoContainer extends Panel {
 			protected void aplicar() {
 				stateChanged(null);
 			}
+		}
+
+		public void checarVinculados(ParaTabela para) {
+			// TODO Auto-generated method stub
 		}
 	}
 
@@ -1217,6 +1235,10 @@ public class ObjetoContainer extends Panel {
 					Util.stackTraceAndMessage("VINCULAR EM COR FUNDO", ex, ObjetoContainer.this);
 					return;
 				}
+				if (vinculacao == null) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+					return;
+				}
 				String tabela = txtTabela.getText().trim();
 				ParaTabela para = vinculacao.getParaTabela(tabela);
 				if (para == null) {
@@ -1245,6 +1267,10 @@ public class ObjetoContainer extends Panel {
 			protected void aplicar() {
 				stateChanged(null);
 			}
+		}
+
+		public void checarVinculados(ParaTabela para) {
+			// TODO Auto-generated method stub
 		}
 	}
 
@@ -1309,6 +1335,10 @@ public class ObjetoContainer extends Panel {
 				Util.stackTraceAndMessage("VINCULAR EM ICONE", ex, ObjetoContainer.this);
 				return;
 			}
+			if (vinculacao == null) {
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+				return;
+			}
 			String tabela = txtTabela.getText().trim();
 			ParaTabela para = vinculacao.getParaTabela(tabela);
 			if (para == null) {
@@ -1367,6 +1397,21 @@ public class ObjetoContainer extends Panel {
 				Util.stackTraceAndMessage("CHECAR OBJETOS VINCULADOS", ex, ObjetoContainer.this);
 				return;
 			}
+			if (vinculacao == null) {
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(chaveMensagemVinculoInexitente));
+				return;
+			}
+			String tabela = txtTabela.getText().trim();
+			ParaTabela para = vinculacao.getParaTabela(tabela);
+			if (para == null) {
+				Util.mensagem(ObjetoContainer.this,
+						ObjetoMensagens.getString("msg.tabela_inexistente_no_arquivo_vinculo", tabela));
+				return;
+			}
+			geral.checarVinculados(para);
+			banco.checarVinculados(para);
+			cor.checarVinculados(para);
+			corFonte.checarVinculados(para);
 		}
 	}
 }
