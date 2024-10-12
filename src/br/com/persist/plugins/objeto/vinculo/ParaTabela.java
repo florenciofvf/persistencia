@@ -99,7 +99,11 @@ public class ParaTabela {
 		return filtros;
 	}
 
-	public void addInstrucao(String instrucao) throws ObjetoException {
+	public void addInstrucao(String instrucao, Marcador marcador) throws ObjetoException {
+		if (marcador != null) {
+			marcador.aplicarIf(instrucoes.isEmpty() ? "" : ".");
+			return;
+		}
 		if (Util.isEmpty(instrucao)) {
 			instrucao = "ALTERE PARA SUA INSTRUCAO";
 		}
@@ -117,7 +121,11 @@ public class ParaTabela {
 		}
 	}
 
-	public void addFiltro(String filtro) throws ObjetoException {
+	public void addFiltro(String filtro, Marcador marcador) throws ObjetoException {
+		if (marcador != null) {
+			marcador.aplicarIf(filtros.isEmpty() ? "" : ".");
+			return;
+		}
 		if (Util.isEmpty(filtro)) {
 			filtro = "ALTERE PARA SEU FILTRO";
 		}

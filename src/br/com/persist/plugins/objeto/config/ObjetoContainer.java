@@ -287,9 +287,9 @@ public class ObjetoContainer extends Panel {
 			} else if ("AJUSTE_LARG".equals(compChave.chave)) {
 				para.setAjustarLargura(compChave.getBool(), marcador);
 			} else if ("INSTRUCAO".equals(compChave.chave)) {
-				para.addInstrucao(compChave.getText());
+				para.addInstrucao(compChave.getText(), marcador);
 			} else if ("FILTRO".equals(compChave.chave)) {
-				para.addFiltro(compChave.getText());
+				para.addFiltro(compChave.getText(), marcador);
 			}
 		}
 
