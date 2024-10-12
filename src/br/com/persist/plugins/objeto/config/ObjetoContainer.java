@@ -448,6 +448,7 @@ public class ObjetoContainer extends Panel {
 			if (txtX == e.getSource()) {
 				objeto.setX(Util.getInt(txtX.getText(), objeto.getX()));
 				MacroProvedor.xLocal(objeto.getX());
+				objetoSuperficie.localizarXInternalFormulario(objeto);
 			} else if (txtY == e.getSource()) {
 				objeto.setY(Util.getInt(txtY.getText(), objeto.getY()));
 				MacroProvedor.yLocal(objeto.getY());

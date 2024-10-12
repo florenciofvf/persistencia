@@ -732,11 +732,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					objeto.y += (Constantes.GRADE - restoY);
 				}
 			}
-			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
-			if (interno != null) {
-				aproximarObjetoFormularioImpl(false, false, interno);
-				larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
-			}
+			localizarXInternalFormulario(objeto);
 		}
 
 		@Override
@@ -822,6 +818,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo().trim(), config);
 		}
 	};
+
+	public void localizarXInternalFormulario(Objeto objeto) {
+		if (objeto == null) {
+			return;
+		}
+		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
+		if (interno != null) {
+			aproximarObjetoFormularioImpl(false, false, interno);
+			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
+		}
+	}
 
 	@Override
 	public void paint(Graphics g) {
