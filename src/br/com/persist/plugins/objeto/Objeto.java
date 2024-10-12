@@ -79,6 +79,7 @@ public class Objeto implements Runnable {
 	private boolean buscaAutoTemp;
 	private String finalConsulta;
 	private boolean transparente;
+	private String internalFormX;
 	private boolean selecionado;
 	private boolean ccsc = true;
 	private boolean sane = true;
@@ -589,6 +590,14 @@ public class Objeto implements Runnable {
 			sequencias = Constantes.VAZIO;
 		}
 		return sequencias;
+	}
+
+	public String getInternalFormX() {
+		return internalFormX;
+	}
+
+	public void setInternalFormX(String internalFormX) {
+		this.internalFormX = internalFormX;
 	}
 
 	public String[] getChavesArray() {

@@ -811,8 +811,9 @@ public class ObjetoContainer extends AbstratoContainer {
 			if (instancia != null) {
 				Object[] array = InternalTransferidor.criarArray(conexao, instancia,
 						new Dimension(form.getLargura(), form.getAltura()));
-				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(form.getX(), form.getY()), true,
-						config);
+				int x = Util.isEmpty(instancia.getInternalFormX()) ? form.getX()
+						: Integer.parseInt(instancia.getInternalFormX());
+				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(x, form.getY()), true, config);
 			}
 		}
 	}
