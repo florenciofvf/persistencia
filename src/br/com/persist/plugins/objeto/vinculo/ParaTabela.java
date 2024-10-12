@@ -347,44 +347,46 @@ public class ParaTabela {
 		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
 				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(COR_FONTE, "#AABBCC")
 				.atributo(COR_FUNDO, "#CAFEBB").ql();
-		util.tab().atributo(PREFIXO_NOME_TABELA, "H_").ql();
-		util.tab().atributo(CLONAR_AO_DESTACAR, true).ql();
-		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
 		util.tab().atributo(ESQUEMA_ALTERNATIVO, "").ql();
-		util.tab().atributo(STR_TRANSPARENTE, false).ql();
-		util.tab().atributo(SELECT_ALTERNATIVO, "").ql();
+		util.tab().atributo(PREFIXO_NOME_TABELA, "H_").ql();
 		util.tab().atributo(TABELA_ALTERNATIVO, "").ql();
+		util.tab().atributo(SELECT_ALTERNATIVO, "").ql();
+		util.tab().atributo(CLONAR_AO_DESTACAR, true).ql();
 		util.tab().atributo(LARGURA_ROTULOS, false).ql();
-		util.tab().atributo(AJUSTAR_LARGURA, true).ql();
-		util.tab().atributo(AJUSTAR_ALTURA, true).ql();
-		util.tab().atributo(STR_DESTACAVEL, true).ql();
 		util.tab().atributo(BIBLIO_CHECAGEM, "").ql();
+		util.tab().atributo(AJUSTAR_LARGURA, true).ql();
+		util.tab().atributo(STR_TRANSPARENTE, false).ql();
+		util.tab().atributo(FINAL_CONSULTA, "").ql();
+		util.tab().atributo(AJUSTAR_ALTURA, true).ql();
 		util.tab().atributo(STR_COMPLEMENTO, "").ql();
 		util.tab().atributo(STR_DESTACAVEIS, "").ql();
-		util.tab().atributo(COLUNA_INFO, false).ql();
-		util.tab().atributo(FINAL_CONSULTA, "").ql();
+		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
 		util.tab().atributo(STR_MAPEAMENTO, "").ql();
 		util.tab().atributo(STR_SEQUENCIAS, "").ql();
-		util.tab().atributo(STR_APELIDO, "ape").ql();
-		util.tab().atributo(STR_IGNORAR, false).ql();
+		util.tab().atributo(STR_DESTACAVEL, true).ql();
 		util.tab().atributo(CLASS_BIBLIO, "").ql();
 		util.tab().atributo(CAMPO_NOMES, "").ql();
-		util.tab().atributo(LINK_AUTO, true).ql();
+		util.tab().atributo(COLUNA_INFO, false).ql();
+		util.tab().atributo(STR_APELIDO, "ape").ql();
 		util.tab().atributo(STR_TABELAS, "").ql();
+		util.tab().atributo(STR_IGNORAR, false).ql();
+		util.tab().atributo(LINK_AUTO, true).ql();
 		util.tab().atributo(STR_CHAVES, "").ql();
+		util.tab().atributo(ORDER_BY, "").ql();
+		util.tab().atributo(STR_JOINS, "").ql();
 		util.tab().atributo(STR_SANE, true).ql();
 		util.tab().atributo(STR_CCSC, true).ql();
-		util.tab().atributo(STR_JOINS, "").ql();
-		util.tab().atributo(ORDER_BY, "").ql();
 		util.tab().atributo(STR_BPNT, false).fecharTag();
 
+		boolean ql = false;
 		Instrucao i = new Instrucao("Resumo da instrucao");
 		i.setValor("UPDATE candidato SET votos = 0 WHERE id = " + Constantes.SEP + "id" + Constantes.SEP);
-		i.salvar(util, false);
+		i.salvar(util, ql);
+		ql = true;
 
 		Filtro f = new Filtro("Resumo do filtro");
 		f.setValor("AND id = 1 AND descricao LIKE '%Descricao%'");
-		f.salvar(util, false);
+		f.salvar(util, ql);
 
 		util.finalizarTag(VinculoHandler.PARA);
 	}
