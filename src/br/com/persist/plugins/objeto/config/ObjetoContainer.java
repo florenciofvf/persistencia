@@ -52,6 +52,7 @@ import br.com.persist.componente.LabelLinkListener;
 import br.com.persist.componente.LabelTextTemp;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
@@ -65,6 +66,7 @@ import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
+import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Marcador;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
@@ -336,6 +338,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
 		private Label labelIcone = new Label();
+		private final PanelCenter panelFormX;
 		private final PanelLeft panelIcone;
 
 		private PanelGeral() {
@@ -374,10 +377,12 @@ public class ObjetoContainer extends Panel {
 				labelIcone.setToolTipText(objeto.getIcone());
 				labelIcone.setIcon(objeto.getIcon());
 			}
+			panelFormX = new PanelCenter(new LabelFormX());
 			panelIcone = new PanelLeft(labelIcone);
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
+			container.add(criarLinha("label.formx", panelFormX));
 			Panel panel = criarLinhaCopiarRotulo("label.id", txtId);
 			configHora(panel);
 			container.add(panel);
@@ -525,6 +530,9 @@ public class ObjetoContainer extends Panel {
 		public void checarVinculados(ParaTabela para) {
 			if (!Util.isEmpty(para.getIcone())) {
 				panelIcone.setBorder(Marcador.criarBorda());
+			}
+			if (!Util.isEmpty(para.getInternalFormX())) {
+				panelFormX.setBorder(Marcador.criarBorda());
 			}
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, txtInstrucao, txtFiltro);
 		}
@@ -1390,6 +1398,62 @@ public class ObjetoContainer extends Panel {
 			}
 			para.setIcone(objeto.getIcone());
 			salvarVinculacao(vinculacao);
+		}
+	}
+
+	private class LabelFormX extends Label {
+		private static final long serialVersionUID = 1L;
+
+		private LabelFormX() {
+			super(ObjetoMensagens.getString("msg.associar_form_x"), false);
+			addMouseListener(new FormXListener());
+		}
+
+		private class FormXListener extends MouseAdapter {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				preFormX();
+			}
+
+			private void preFormX() {
+				try {
+					formX();
+				} catch (ObjetoException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				}
+			}
+
+			private void formX() throws ObjetoException {
+				if (Util.isEmpty(txtTabela.getText())) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
+					return;
+				}
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("VINCULAR EM FORM_X", ex, ObjetoContainer.this);
+					return;
+				}
+				if (vinculacao == null) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					return;
+				}
+				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
+				if (interno == null) {
+					Util.mensagem(objetoSuperficie,
+							ObjetoMensagens.getString("msg.sem_form_associado_objeto", objeto.getId()));
+					return;
+				}
+				String tabela = txtTabela.getText().trim();
+				ParaTabela para = vinculacao.getParaTabela(tabela);
+				if (para == null) {
+					para = new ParaTabela(tabela);
+					vinculacao.putParaTabela(para);
+				}
+				para.setInternalFormX("" + interno.getX(), null);
+				salvarVinculacao(vinculacao);
+			}
 		}
 	}
 
