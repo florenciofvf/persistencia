@@ -53,7 +53,6 @@ import br.com.persist.componente.LabelTextTemp;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
-import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
@@ -339,7 +338,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtY = new TextField();
 		private Label labelIcone = new Label();
 		private final PanelCenter panelFormX;
-		private final PanelLeft panelIcone;
+		private final PanelCenter panelIcone;
 
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
@@ -378,7 +377,9 @@ public class ObjetoContainer extends Panel {
 				labelIcone.setIcon(objeto.getIcon());
 			}
 			panelFormX = new PanelCenter(new LabelFormX());
-			panelIcone = new PanelLeft(labelIcone);
+			panelIcone = new PanelCenter(labelIcone);
+			panelFormX.borda();
+			panelIcone.borda();
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
@@ -1407,19 +1408,25 @@ public class ObjetoContainer extends Panel {
 		private LabelFormX() {
 			super(ObjetoMensagens.getString("msg.associar_form_x"), false);
 			addMouseListener(new FormXListener());
+			modoLink(null);
 		}
 
 		private class FormXListener extends MouseAdapter {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() < Constantes.DOIS) {
+					return;
+				}
 				preFormX();
 			}
 
 			private void preFormX() {
-				try {
-					formX();
-				} catch (ObjetoException ex) {
-					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				if (Util.confirmar(LabelFormX.this, Constantes.LABEL_CONFIRMA_SALVAR)) {
+					try {
+						formX();
+					} catch (ObjetoException ex) {
+						Util.mensagem(ObjetoContainer.this, ex.getMessage());
+					}
 				}
 			}
 
@@ -1441,7 +1448,7 @@ public class ObjetoContainer extends Panel {
 				}
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
 				if (interno == null) {
-					Util.mensagem(objetoSuperficie,
+					Util.mensagem(ObjetoContainer.this,
 							ObjetoMensagens.getString("msg.sem_form_associado_objeto", objeto.getId()));
 					return;
 				}

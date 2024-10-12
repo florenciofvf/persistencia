@@ -3,6 +3,7 @@ package br.com.persist.componente;
 import java.awt.Component;
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class PanelCenter extends JPanel {
@@ -22,5 +23,9 @@ public class PanelCenter extends JPanel {
 			add(comp);
 		}
 		return this;
+	}
+
+	public void borda() {
+		setBorder(BorderFactory.createEtchedBorder());
 	}
 }
