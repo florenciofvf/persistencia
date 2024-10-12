@@ -2,9 +2,13 @@ package br.com.persist.plugins.objeto.macro;
 
 import java.awt.Color;
 
+import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
+import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroProvedor.Instrucao;
 
 public class Macro {
@@ -276,6 +280,17 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setX((Integer) valor);
+		}
+
+		@Override
+		public void posExecutar(ObjetoSuperficie superficie, Objeto objeto, Relacao relacao) {
+			if (superficie != null && objeto != null) {
+				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(superficie, objeto);
+				if (interno != null) {
+					superficie.aproximarObjetoFormularioImpl(false, false, interno);
+					superficie.getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
+				}
+			}
 		}
 	}
 

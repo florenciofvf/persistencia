@@ -290,6 +290,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
 						try {
 							instrucao.executar(objeto);
+							instrucao.posExecutar(ObjetoSuperficie.this, objeto, null);
 						} catch (MacroException ex) {
 							Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
 						}
@@ -304,6 +305,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
 						try {
 							instrucao.executar(relacao);
+							instrucao.posExecutar(ObjetoSuperficie.this, null, relacao);
 						} catch (MacroException ex) {
 							Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
 						}

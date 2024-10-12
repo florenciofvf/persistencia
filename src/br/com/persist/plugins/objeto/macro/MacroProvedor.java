@@ -7,6 +7,7 @@ import java.util.Map;
 
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.Macro.AbrirAuto;
 import br.com.persist.plugins.objeto.macro.Macro.AjusteAutoForm;
@@ -123,9 +124,12 @@ public class MacroProvedor {
 	public abstract static class Instrucao {
 		Object valor;
 
+		public abstract void executar(Objeto objeto) throws AssistenciaException, MacroException;
+
 		public abstract void executar(Relacao relacao) throws MacroException;
 
-		public abstract void executar(Objeto objeto) throws AssistenciaException, MacroException;
+		public void posExecutar(ObjetoSuperficie superficie, Objeto objeto, Relacao relacao) {
+		}
 
 		public void setValor(Object valor) {
 			this.valor = valor;
