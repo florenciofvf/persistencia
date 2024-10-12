@@ -152,6 +152,7 @@ public class ObjetoContainer extends Panel {
 			CompChave cc = getCompChave(comp);
 			if (cc != null) {
 				popupVinculo.marcador.setComp(cc.comp);
+				popupVinculo.compChave = cc;
 				try {
 					popupVinculo.processar(para);
 				} catch (ObjetoException ex) {
