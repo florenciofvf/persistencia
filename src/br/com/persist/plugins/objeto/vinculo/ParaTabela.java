@@ -53,6 +53,8 @@ public class ParaTabela {
 	private static final String STR_BPNT = "bpnt";
 	private static final String STR_ID = "id";
 	private final List<Instrucao> instrucoes;
+	private static final String STR_X = "x";
+	private static final String STR_Y = "y";
 	private final List<Filtro> filtros;
 	private String esquemaAlternativo;
 	private String tabelaAlternativo;
@@ -95,6 +97,8 @@ public class ParaTabela {
 	private String bpnt;
 	final String tabela;
 	private String id;
+	private String x;
+	private String y;
 
 	public ParaTabela(String tabela) throws ObjetoException {
 		if (Util.isEmpty(tabela)) {
@@ -284,6 +288,12 @@ public class ParaTabela {
 		if (!Util.isEmpty(deslocYId)) {
 			objeto.setDeslocamentoYId(Integer.parseInt(deslocYId));
 		}
+		if (!Util.isEmpty(x)) {
+			objeto.setX(Integer.parseInt(x));
+		}
+		if (!Util.isEmpty(y)) {
+			objeto.setY(Integer.parseInt(y));
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -325,6 +335,8 @@ public class ParaTabela {
 		setCcsc(attributes.getValue(STR_CCSC), null);
 		setBpnt(attributes.getValue(STR_BPNT), null);
 		setId(attributes.getValue(STR_ID), null);
+		setX(attributes.getValue(STR_X), null);
+		setY(attributes.getValue(STR_Y), null);
 		setCorFonte(getCorFonte(attributes));
 		setCorFundo(getCorFundo(attributes));
 	}
@@ -379,6 +391,8 @@ public class ParaTabela {
 		atributoValor(util, STR_CCSC, ccsc);
 		atributoValor(util, STR_BPNT, bpnt);
 		atributoValor(util, STR_ID, id);
+		atributoValor(util, STR_X, x);
+		atributoValor(util, STR_Y, y);
 		util.fecharTag();
 		ql = false;
 		for (Instrucao i : instrucoes) {
@@ -432,7 +446,9 @@ public class ParaTabela {
 		util.tab().atributo(STR_SANE, true).ql();
 		util.tab().atributo(STR_CCSC, true).ql();
 		util.tab().atributo(STR_BPNT, false).ql();
-		util.tab().atributo(STR_ID, "").fecharTag();
+		util.tab().atributo(STR_ID, "").ql();
+		util.tab().atributo(STR_X, "").ql();
+		util.tab().atributo(STR_Y, "").fecharTag();
 
 		boolean ql = false;
 		Instrucao i = new Instrucao("Resumo da instrucao");
@@ -793,6 +809,30 @@ public class ParaTabela {
 			return;
 		}
 		this.id = id;
+	}
+
+	public String getX() {
+		return x;
+	}
+
+	public void setX(String x, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.x);
+			return;
+		}
+		this.x = x;
+	}
+
+	public String getY() {
+		return y;
+	}
+
+	public void setY(String y, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.y);
+			return;
+		}
+		this.y = y;
 	}
 
 	public void setCorFonte(Color corFonte) {

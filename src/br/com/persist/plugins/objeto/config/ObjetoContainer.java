@@ -304,6 +304,10 @@ public class ObjetoContainer extends Panel {
 				para.setDeslocXId(compChave.getText(), marcador);
 			} else if ("DESLOC_Y_ID".equals(compChave.chave)) {
 				para.setDeslocYId(compChave.getText(), marcador);
+			} else if ("X".equals(compChave.chave)) {
+				para.setX(compChave.getText(), marcador);
+			} else if ("Y".equals(compChave.chave)) {
+				para.setY(compChave.getText(), marcador);
 			}
 		}
 
@@ -441,6 +445,8 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtArquivo, "ARQUIVO"));
 			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
 			vinculados.add(new CompChave(txtId, "ID"));
+			vinculados.add(new CompChave(txtX, "X"));
+			vinculados.add(new CompChave(txtY, "Y"));
 
 			txtBiblioChecagem.addMouseListener(listenerVinculado);
 			chkTransparente.addMouseListener(listenerVinculado);
@@ -453,6 +459,8 @@ public class ObjetoContainer extends Panel {
 			txtArquivo.addMouseListener(listenerVinculado);
 			txtFiltro.addMouseListener(listenerVinculado);
 			txtId.addMouseListener(listenerVinculado);
+			txtX.addMouseListener(listenerVinculado);
+			txtY.addMouseListener(listenerVinculado);
 		}
 
 		private void mensagemPropriedadeIntervalo(Label label) {
@@ -566,7 +574,7 @@ public class ObjetoContainer extends Panel {
 				panelFormX.setBorder(Marcador.criarBorda());
 			}
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
-					txtDeslocYId, txtInstrucao, txtIntervalo, txtArquivo, txtFiltro, txtId);
+					txtDeslocYId, txtInstrucao, txtIntervalo, txtArquivo, txtFiltro, txtId, txtX, txtY);
 		}
 	}
 
