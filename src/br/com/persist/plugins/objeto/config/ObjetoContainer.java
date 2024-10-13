@@ -380,7 +380,7 @@ public class ObjetoContainer extends Panel {
 			panelIcone = new PanelCenter(labelIcone);
 			panelFormX.borda();
 			panelIcone.borda();
-			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
+			panelIcone.addMouseListener(new IconeListener(objeto, panelIcone, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
 			container.add(criarLinha("label.formx", panelFormX));
@@ -1329,12 +1329,14 @@ public class ObjetoContainer extends Panel {
 	private class IconeListener extends MouseAdapter {
 		private Action action = acaoMenu(LABEL_VINCULO);
 		private Popup popup = new Popup();
+		private final PanelCenter panel;
 		private final Objeto objeto;
 		private final Label label;
 
-		private IconeListener(Objeto objeto, Label label) {
+		private IconeListener(Objeto objeto, PanelCenter panel, Label label) {
 			this.objeto = objeto;
 			this.label = label;
+			this.panel = panel;
 			popup.add(action);
 			action.setActionListener(e -> preConfigIconeVinculo());
 		}
@@ -1371,7 +1373,7 @@ public class ObjetoContainer extends Panel {
 
 		private void processar(MouseEvent e) {
 			if (e.isPopupTrigger() && !Util.isEmpty(objeto.getIcone())) {
-				popup.show(label, e.getX(), e.getY());
+				popup.show(panel, e.getX(), e.getY());
 			}
 		}
 
