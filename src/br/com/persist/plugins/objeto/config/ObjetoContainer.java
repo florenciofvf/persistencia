@@ -294,6 +294,8 @@ public class ObjetoContainer extends Panel {
 				para.addFiltro(compChave.getText(), marcador);
 			} else if ("ID".equals(compChave.chave)) {
 				para.setId(compChave.getText(), marcador);
+			} else if ("ARQUIVO".equals(compChave.chave)) {
+				para.setArquivo(compChave.getText(), marcador);
 			}
 		}
 
@@ -423,6 +425,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
 			vinculados.add(new CompChave(txtInstrucao, "INSTRUCAO"));
+			vinculados.add(new CompChave(txtArquivo, "ARQUIVO"));
 			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
 			vinculados.add(new CompChave(txtId, "ID"));
 
@@ -430,6 +433,7 @@ public class ObjetoContainer extends Panel {
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
 			txtInstrucao.addMouseListener(listenerVinculado);
+			txtArquivo.addMouseListener(listenerVinculado);
 			txtFiltro.addMouseListener(listenerVinculado);
 			txtId.addMouseListener(listenerVinculado);
 		}
@@ -539,7 +543,8 @@ public class ObjetoContainer extends Panel {
 			if (!Util.isEmpty(para.getInternalFormX())) {
 				panelFormX.setBorder(Marcador.criarBorda());
 			}
-			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, txtInstrucao, txtFiltro, txtId);
+			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, txtInstrucao, txtArquivo,
+					txtFiltro, txtId);
 		}
 	}
 

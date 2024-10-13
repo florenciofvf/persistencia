@@ -36,6 +36,7 @@ public class ParaTabela {
 	private static final String COLUNA_INFO = "colunaInfo";
 	private static final String STR_TABELAS = "tabelas";
 	private static final String STR_APELIDO = "apelido";
+	private static final String STR_ARQUIVO = "arquivo";
 	private static final String STR_IGNORAR = "ignorar";
 	private static final String LINK_AUTO = "linkAuto";
 	private static final String STR_CHAVES = "chaves";
@@ -72,6 +73,7 @@ public class ParaTabela {
 	private String linkAuto;
 	private String tabelas;
 	private String apelido;
+	private String arquivo;
 	private String orderBy;
 	private Color corFonte;
 	private Color corFundo;
@@ -259,6 +261,9 @@ public class ParaTabela {
 		if (icone != null) {
 			objeto.setIcone(icone);
 		}
+		if (!Util.isEmpty(arquivo)) {
+			objeto.setArquivo(arquivo);
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -285,6 +290,7 @@ public class ParaTabela {
 		setCampoNomes(attributes.getValue(CAMPO_NOMES), null);
 		setColunaInfo(attributes.getValue(COLUNA_INFO), null);
 		setApelido(attributes.getValue(STR_APELIDO), null);
+		setArquivo(attributes.getValue(STR_ARQUIVO), null);
 		setTabelas(attributes.getValue(STR_TABELAS), null);
 		setIgnorar(attributes.getValue(STR_IGNORAR), null);
 		setLinkAuto(attributes.getValue(LINK_AUTO), null);
@@ -334,6 +340,7 @@ public class ParaTabela {
 		atributoValor(util, CAMPO_NOMES, campoNomes);
 		atributoValor(util, COLUNA_INFO, colunaInfo);
 		atributoValor(util, STR_APELIDO, apelido);
+		atributoValor(util, STR_ARQUIVO, arquivo);
 		atributoValor(util, STR_TABELAS, tabelas);
 		atributoValor(util, STR_IGNORAR, ignorar);
 		atributoValor(util, LINK_AUTO, linkAuto);
@@ -383,6 +390,7 @@ public class ParaTabela {
 		util.tab().atributo(CAMPO_NOMES, "").ql();
 		util.tab().atributo(COLUNA_INFO, false).ql();
 		util.tab().atributo(STR_APELIDO, "ape").ql();
+		util.tab().atributo(STR_ARQUIVO, "").ql();
 		util.tab().atributo(STR_TABELAS, "").ql();
 		util.tab().atributo(STR_IGNORAR, false).ql();
 		util.tab().atributo(LINK_AUTO, true).ql();
@@ -457,6 +465,18 @@ public class ParaTabela {
 			return;
 		}
 		this.apelido = apelido;
+	}
+
+	public String getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(String arquivo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.arquivo);
+			return;
+		}
+		this.arquivo = arquivo;
 	}
 
 	public String getSequencias() {
