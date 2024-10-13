@@ -282,7 +282,7 @@ public class Macro {
 		@Override
 		public void posExecutar(ObjetoSuperficie superficie, Objeto objeto, Relacao relacao) {
 			if (superficie != null && objeto != null) {
-				superficie.localizarXInternalFormulario(objeto);
+				superficie.localizarInternalFormulario(objeto);
 			}
 		}
 	}

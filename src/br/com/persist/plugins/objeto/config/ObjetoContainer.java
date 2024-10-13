@@ -503,10 +503,11 @@ public class ObjetoContainer extends Panel {
 			if (txtX == e.getSource()) {
 				objeto.setX(Util.getInt(txtX.getText(), objeto.getX()));
 				MacroProvedor.xLocal(objeto.getX());
-				objetoSuperficie.localizarXInternalFormulario(objeto);
+				objetoSuperficie.localizarInternalFormulario(objeto);
 			} else if (txtY == e.getSource()) {
 				objeto.setY(Util.getInt(txtY.getText(), objeto.getY()));
 				MacroProvedor.yLocal(objeto.getY());
+				objetoSuperficie.localizarInternalFormulario(objeto);
 			} else if (txtDeslocXId == e.getSource()) {
 				objeto.setDeslocamentoXId(Util.getInt(txtDeslocXId.getText(), objeto.getDeslocamentoXId()));
 				MacroProvedor.deslocarXIdDescricao(objeto.getDeslocamentoXId());

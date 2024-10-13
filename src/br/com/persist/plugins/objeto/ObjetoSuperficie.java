@@ -732,7 +732,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					objeto.y += (Constantes.GRADE - restoY);
 				}
 			}
-			localizarXInternalFormulario(objeto);
+			localizarInternalFormulario(objeto);
 		}
 
 		@Override
@@ -819,7 +819,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	};
 
-	public void localizarXInternalFormulario(Objeto objeto) {
+	public void localizarInternalFormulario(Objeto objeto) {
 		if (objeto == null) {
 			return;
 		}
