@@ -296,6 +296,10 @@ public class ObjetoContainer extends Panel {
 				para.setId(compChave.getText(), marcador);
 			} else if ("ARQUIVO".equals(compChave.chave)) {
 				para.setArquivo(compChave.getText(), marcador);
+			} else if ("DESENHAR_ID".equals(compChave.chave)) {
+				para.setDesenharId(compChave.getBool(), marcador);
+			} else if ("INTERVALO".equals(compChave.chave)) {
+				para.setIntervalo(compChave.getText(), marcador);
 			}
 		}
 
@@ -424,7 +428,9 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtBiblioChecagem, "CHECAR_REGISTRO"));
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
+			vinculados.add(new CompChave(chkDesenharId, "DESENHAR_ID"));
 			vinculados.add(new CompChave(txtInstrucao, "INSTRUCAO"));
+			vinculados.add(new CompChave(txtIntervalo, "INTERVALO"));
 			vinculados.add(new CompChave(txtArquivo, "ARQUIVO"));
 			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
 			vinculados.add(new CompChave(txtId, "ID"));
@@ -432,7 +438,9 @@ public class ObjetoContainer extends Panel {
 			txtBiblioChecagem.addMouseListener(listenerVinculado);
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
+			chkDesenharId.addMouseListener(listenerVinculado);
 			txtInstrucao.addMouseListener(listenerVinculado);
+			txtIntervalo.addMouseListener(listenerVinculado);
 			txtArquivo.addMouseListener(listenerVinculado);
 			txtFiltro.addMouseListener(listenerVinculado);
 			txtId.addMouseListener(listenerVinculado);
@@ -543,8 +551,8 @@ public class ObjetoContainer extends Panel {
 			if (!Util.isEmpty(para.getInternalFormX())) {
 				panelFormX.setBorder(Marcador.criarBorda());
 			}
-			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, txtInstrucao, txtArquivo,
-					txtFiltro, txtId);
+			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtInstrucao,
+					txtIntervalo, txtArquivo, txtFiltro, txtId);
 		}
 	}
 

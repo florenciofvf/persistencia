@@ -28,10 +28,12 @@ public class ParaTabela {
 	private static final String AJUSTAR_ALTURA = "ajustarAltura";
 	private static final String STR_COMPLEMENTO = "complemento";
 	private static final String STR_DESTACAVEIS = "destacaveis";
+	private static final String STR_DESENHAR_ID = "desenharId";
 	private static final String STR_SEQUENCIAS = "sequencias";
 	private static final String STR_MAPEAMENTO = "mapeamento";
 	private static final String STR_DESTACAVEL = "destacavel";
 	private static final String CLASS_BIBLIO = "classBiblio";
+	private static final String STR_INTERVALO = "intervalo";
 	private static final String CAMPO_NOMES = "campoNomes";
 	private static final String COLUNA_INFO = "colunaInfo";
 	private static final String STR_TABELAS = "tabelas";
@@ -65,11 +67,13 @@ public class ParaTabela {
 	private String complemento;
 	private String classBiblio;
 	private String destacaveis;
+	private String desenharId;
 	private String colunaInfo;
 	private String destacavel;
 	private String sequencias;
 	private String campoNomes;
 	private String mapeamento;
+	private String intervalo;
 	private String linkAuto;
 	private String tabelas;
 	private String apelido;
@@ -264,6 +268,12 @@ public class ParaTabela {
 		if (!Util.isEmpty(arquivo)) {
 			objeto.setArquivo(arquivo);
 		}
+		if (!Util.isEmpty(desenharId)) {
+			objeto.setDesenharId(Boolean.parseBoolean(desenharId));
+		}
+		if (!Util.isEmpty(intervalo)) {
+			objeto.setIntervalo(Integer.parseInt(intervalo));
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -281,12 +291,14 @@ public class ParaTabela {
 		setAjustarAltura(attributes.getValue(AJUSTAR_ALTURA), null);
 		setComplemento(attributes.getValue(STR_COMPLEMENTO), null);
 		setDestacaveis(attributes.getValue(STR_DESTACAVEIS), null);
+		setDesenharId(attributes.getValue(STR_DESENHAR_ID), null);
 		setIcone(attributes.getValue(VinculoHandler.ICONE));
 		setGrupo(attributes.getValue(VinculoHandler.GRUPO), null);
 		setMapeamento(attributes.getValue(STR_MAPEAMENTO), null);
 		setSequencias(attributes.getValue(STR_SEQUENCIAS), null);
 		setDestacavel(attributes.getValue(STR_DESTACAVEL), null);
 		setClassBiblio(attributes.getValue(CLASS_BIBLIO), null);
+		setIntervalo(attributes.getValue(STR_INTERVALO), null);
 		setCampoNomes(attributes.getValue(CAMPO_NOMES), null);
 		setColunaInfo(attributes.getValue(COLUNA_INFO), null);
 		setApelido(attributes.getValue(STR_APELIDO), null);
@@ -333,10 +345,12 @@ public class ParaTabela {
 		atributoValor(util, STR_COMPLEMENTO, complemento);
 		atributoValor(util, STR_DESTACAVEIS, destacaveis);
 		atributoValor(util, VinculoHandler.GRUPO, grupo);
+		atributoValor(util, STR_DESENHAR_ID, desenharId);
 		atributoValor(util, STR_MAPEAMENTO, mapeamento);
 		atributoValor(util, STR_SEQUENCIAS, sequencias);
 		atributoValor(util, STR_DESTACAVEL, destacavel);
 		atributoValor(util, CLASS_BIBLIO, classBiblio);
+		atributoValor(util, STR_INTERVALO, intervalo);
 		atributoValor(util, CAMPO_NOMES, campoNomes);
 		atributoValor(util, COLUNA_INFO, colunaInfo);
 		atributoValor(util, STR_APELIDO, apelido);
@@ -383,10 +397,12 @@ public class ParaTabela {
 		util.tab().atributo(STR_COMPLEMENTO, "").ql();
 		util.tab().atributo(STR_DESTACAVEIS, "").ql();
 		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
+		util.tab().atributo(STR_DESENHAR_ID, true).ql();
 		util.tab().atributo(STR_MAPEAMENTO, "").ql();
 		util.tab().atributo(STR_SEQUENCIAS, "").ql();
 		util.tab().atributo(STR_DESTACAVEL, true).ql();
 		util.tab().atributo(CLASS_BIBLIO, "").ql();
+		util.tab().atributo(STR_INTERVALO, "").ql();
 		util.tab().atributo(CAMPO_NOMES, "").ql();
 		util.tab().atributo(COLUNA_INFO, false).ql();
 		util.tab().atributo(STR_APELIDO, "ape").ql();
@@ -857,6 +873,30 @@ public class ParaTabela {
 			return;
 		}
 		this.biblioChecagem = biblioChecagem;
+	}
+
+	public String getDesenharId() {
+		return desenharId;
+	}
+
+	public void setDesenharId(String desenharId, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.desenharId);
+			return;
+		}
+		this.desenharId = desenharId;
+	}
+
+	public String getIntervalo() {
+		return intervalo;
+	}
+
+	public void setIntervalo(String intervalo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.intervalo);
+			return;
+		}
+		this.intervalo = intervalo;
 	}
 
 	public String getClonarAoDestacar() {
