@@ -94,6 +94,7 @@ public class Objeto implements Runnable {
 	private String mapeamento;
 	private boolean processar;
 	private Metadado metadado;
+	private String idTempForm;
 	private String descricao;
 	private boolean ignorar;
 	private Memento memento;
@@ -1384,6 +1385,14 @@ public class Objeto implements Runnable {
 
 	public void setCompararRegistro(boolean compararRegistro) {
 		this.compararRegistro = compararRegistro;
+	}
+
+	public String getIdTempForm() {
+		return idTempForm;
+	}
+
+	public void setIdTempForm(String idTempForm) {
+		this.idTempForm = idTempForm;
 	}
 }
 

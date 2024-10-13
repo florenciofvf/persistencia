@@ -308,6 +308,8 @@ public class ObjetoContainer extends Panel {
 				para.setX(compChave.getText(), marcador);
 			} else if ("Y".equals(compChave.chave)) {
 				para.setY(compChave.getText(), marcador);
+			} else if ("ID_TEMP_FORM".equals(compChave.chave)) {
+				para.setIdTempForm(compChave.getText(), marcador);
 			}
 		}
 
@@ -341,6 +343,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtBiblioChecagem = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
+		private TextField txtIdTempForm = new TextField();
 		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
@@ -403,6 +406,8 @@ public class ObjetoContainer extends Panel {
 			Panel panel = criarLinhaCopiarRotulo("label.id", txtId);
 			configHora(panel);
 			container.add(panel);
+			container.add(criarLinhaComLinkCopiar("label.id_temp_form", txtIdTempForm,
+					ObjetoMensagens.getString("hint.id_temp_form"), PanelGeral.this::mensagemIdFormTemp));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
@@ -437,6 +442,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtBiblioChecagem, "CHECAR_REGISTRO"));
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
+			vinculados.add(new CompChave(txtIdTempForm, "ID_TEMP_FORM"));
 			vinculados.add(new CompChave(chkDesenharId, "DESENHAR_ID"));
 			vinculados.add(new CompChave(txtDeslocXId, "DESLOC_X_ID"));
 			vinculados.add(new CompChave(txtDeslocYId, "DESLOC_Y_ID"));
@@ -452,6 +458,7 @@ public class ObjetoContainer extends Panel {
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
 			chkDesenharId.addMouseListener(listenerVinculado);
+			txtIdTempForm.addMouseListener(listenerVinculado);
 			txtDeslocXId.addMouseListener(listenerVinculado);
 			txtDeslocYId.addMouseListener(listenerVinculado);
 			txtInstrucao.addMouseListener(listenerVinculado);
@@ -478,6 +485,10 @@ public class ObjetoContainer extends Panel {
 
 		private void mensagemAddFiltro(Label label) {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.add_filtro"));
+		}
+
+		private void mensagemIdFormTemp(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.id_temp_form"));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -574,7 +585,7 @@ public class ObjetoContainer extends Panel {
 				panelFormX.setBorder(Marcador.criarBorda());
 			}
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
-					txtDeslocYId, txtInstrucao, txtIntervalo, txtArquivo, txtFiltro, txtId, txtX, txtY);
+					txtDeslocYId, txtInstrucao, txtIntervalo, txtArquivo, txtFiltro, txtId, txtIdTempForm, txtX, txtY);
 		}
 	}
 

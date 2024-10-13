@@ -34,6 +34,7 @@ public class ParaTabela {
 	private static final String STR_DESTACAVEL = "destacavel";
 	private static final String CLASS_BIBLIO = "classBiblio";
 	private static final String STR_INTERVALO = "intervalo";
+	private static final String ID_TEMP_FORM = "idTempForm";
 	private static final String CAMPO_NOMES = "campoNomes";
 	private static final String COLUNA_INFO = "colunaInfo";
 	private static final String DESLOC_X_ID = "deslocXId";
@@ -71,6 +72,7 @@ public class ParaTabela {
 	private String complemento;
 	private String classBiblio;
 	private String destacaveis;
+	private String idTempForm;
 	private String desenharId;
 	private String colunaInfo;
 	private String destacavel;
@@ -294,6 +296,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(y)) {
 			objeto.setY(Integer.parseInt(y));
 		}
+		if (!Util.isEmpty(idTempForm)) {
+			objeto.setIdTempForm(idTempForm);
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -318,6 +323,7 @@ public class ParaTabela {
 		setSequencias(attributes.getValue(STR_SEQUENCIAS), null);
 		setDestacavel(attributes.getValue(STR_DESTACAVEL), null);
 		setClassBiblio(attributes.getValue(CLASS_BIBLIO), null);
+		setIdTempForm(attributes.getValue(ID_TEMP_FORM), null);
 		setIntervalo(attributes.getValue(STR_INTERVALO), null);
 		setCampoNomes(attributes.getValue(CAMPO_NOMES), null);
 		setColunaInfo(attributes.getValue(COLUNA_INFO), null);
@@ -374,6 +380,7 @@ public class ParaTabela {
 		atributoValor(util, STR_SEQUENCIAS, sequencias);
 		atributoValor(util, STR_DESTACAVEL, destacavel);
 		atributoValor(util, CLASS_BIBLIO, classBiblio);
+		atributoValor(util, ID_TEMP_FORM, idTempForm);
 		atributoValor(util, STR_INTERVALO, intervalo);
 		atributoValor(util, CAMPO_NOMES, campoNomes);
 		atributoValor(util, COLUNA_INFO, colunaInfo);
@@ -430,6 +437,7 @@ public class ParaTabela {
 		util.tab().atributo(STR_SEQUENCIAS, "").ql();
 		util.tab().atributo(STR_DESTACAVEL, true).ql();
 		util.tab().atributo(CLASS_BIBLIO, "").ql();
+		util.tab().atributo(ID_TEMP_FORM, "").ql();
 		util.tab().atributo(STR_INTERVALO, "").ql();
 		util.tab().atributo(CAMPO_NOMES, "").ql();
 		util.tab().atributo(COLUNA_INFO, false).ql();
@@ -989,6 +997,18 @@ public class ParaTabela {
 			return;
 		}
 		this.clonarAoDestacar = clonarAoDestacar;
+	}
+
+	public String getIdTempForm() {
+		return idTempForm;
+	}
+
+	public void setIdTempForm(String idTempForm, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.idTempForm);
+			return;
+		}
+		this.idTempForm = idTempForm;
 	}
 
 	private static Color getCorFonte(Attributes attributes) {

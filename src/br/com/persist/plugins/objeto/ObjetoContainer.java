@@ -804,7 +804,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		for (InternalForm form : coletor.getForms()) {
 			Objeto instancia = null;
 			for (Objeto objeto : coletor.getObjetos()) {
-				if (form.getObjeto().equals(objeto.getId())) {
+				if (form.getObjeto().equals(objeto.getId()) || form.getObjeto().equals(objeto.getIdTempForm())) {
 					instancia = objeto;
 				}
 			}
