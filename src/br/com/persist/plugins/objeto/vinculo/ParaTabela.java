@@ -36,6 +36,8 @@ public class ParaTabela {
 	private static final String STR_INTERVALO = "intervalo";
 	private static final String CAMPO_NOMES = "campoNomes";
 	private static final String COLUNA_INFO = "colunaInfo";
+	private static final String DESLOC_X_ID = "deslocXId";
+	private static final String DESLOC_Y_ID = "deslocYId";
 	private static final String STR_TABELAS = "tabelas";
 	private static final String STR_APELIDO = "apelido";
 	private static final String STR_ARQUIVO = "arquivo";
@@ -74,6 +76,8 @@ public class ParaTabela {
 	private String campoNomes;
 	private String mapeamento;
 	private String intervalo;
+	private String deslocXId;
+	private String deslocYId;
 	private String linkAuto;
 	private String tabelas;
 	private String apelido;
@@ -274,6 +278,12 @@ public class ParaTabela {
 		if (!Util.isEmpty(intervalo)) {
 			objeto.setIntervalo(Integer.parseInt(intervalo));
 		}
+		if (!Util.isEmpty(deslocXId)) {
+			objeto.setDeslocamentoXId(Integer.parseInt(deslocXId));
+		}
+		if (!Util.isEmpty(deslocYId)) {
+			objeto.setDeslocamentoYId(Integer.parseInt(deslocYId));
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -301,6 +311,8 @@ public class ParaTabela {
 		setIntervalo(attributes.getValue(STR_INTERVALO), null);
 		setCampoNomes(attributes.getValue(CAMPO_NOMES), null);
 		setColunaInfo(attributes.getValue(COLUNA_INFO), null);
+		setDeslocXId(attributes.getValue(DESLOC_X_ID), null);
+		setDeslocYId(attributes.getValue(DESLOC_Y_ID), null);
 		setApelido(attributes.getValue(STR_APELIDO), null);
 		setArquivo(attributes.getValue(STR_ARQUIVO), null);
 		setTabelas(attributes.getValue(STR_TABELAS), null);
@@ -353,6 +365,8 @@ public class ParaTabela {
 		atributoValor(util, STR_INTERVALO, intervalo);
 		atributoValor(util, CAMPO_NOMES, campoNomes);
 		atributoValor(util, COLUNA_INFO, colunaInfo);
+		atributoValor(util, DESLOC_X_ID, deslocXId);
+		atributoValor(util, DESLOC_Y_ID, deslocYId);
 		atributoValor(util, STR_APELIDO, apelido);
 		atributoValor(util, STR_ARQUIVO, arquivo);
 		atributoValor(util, STR_TABELAS, tabelas);
@@ -405,6 +419,8 @@ public class ParaTabela {
 		util.tab().atributo(STR_INTERVALO, "").ql();
 		util.tab().atributo(CAMPO_NOMES, "").ql();
 		util.tab().atributo(COLUNA_INFO, false).ql();
+		util.tab().atributo(DESLOC_X_ID, "").ql();
+		util.tab().atributo(DESLOC_Y_ID, "").ql();
 		util.tab().atributo(STR_APELIDO, "ape").ql();
 		util.tab().atributo(STR_ARQUIVO, "").ql();
 		util.tab().atributo(STR_TABELAS, "").ql();
@@ -897,6 +913,30 @@ public class ParaTabela {
 			return;
 		}
 		this.intervalo = intervalo;
+	}
+
+	public String getDeslocXId() {
+		return deslocXId;
+	}
+
+	public void setDeslocXId(String deslocXId, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.deslocXId);
+			return;
+		}
+		this.deslocXId = deslocXId;
+	}
+
+	public String getDeslocYId() {
+		return deslocYId;
+	}
+
+	public void setDeslocYId(String deslocYId, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.deslocYId);
+			return;
+		}
+		this.deslocYId = deslocYId;
 	}
 
 	public String getClonarAoDestacar() {

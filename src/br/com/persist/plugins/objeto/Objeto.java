@@ -956,8 +956,8 @@ public class Objeto implements Runnable {
 	}
 
 	public int getIntervalo() {
-		if (intervalo < 500) {
-			intervalo = 500;
+		if (intervalo < Constantes.QUATROCENTOS) {
+			intervalo = Constantes.QUATROCENTOS;
 		}
 		return intervalo;
 	}

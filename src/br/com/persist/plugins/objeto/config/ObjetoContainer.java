@@ -300,6 +300,10 @@ public class ObjetoContainer extends Panel {
 				para.setDesenharId(compChave.getBool(), marcador);
 			} else if ("INTERVALO".equals(compChave.chave)) {
 				para.setIntervalo(compChave.getText(), marcador);
+			} else if ("DESLOC_X_ID".equals(compChave.chave)) {
+				para.setDeslocXId(compChave.getText(), marcador);
+			} else if ("DESLOC_Y_ID".equals(compChave.chave)) {
+				para.setDeslocYId(compChave.getText(), marcador);
 			}
 		}
 
@@ -399,7 +403,8 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinhaRotulo("label.desloc_y_id", txtDeslocYId));
-			container.add(criarLinhaCopiar("label.intervalo", txtIntervalo));
+			container.add(criarLinhaComLinkCopiar("label.intervalo", txtIntervalo,
+					ObjetoMensagens.getString("hint.intervalo"), PanelGeral.this::mensagemPropriedadeIntervalo));
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
 					ObjetoMensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
@@ -429,6 +434,8 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
 			vinculados.add(new CompChave(chkDesenharId, "DESENHAR_ID"));
+			vinculados.add(new CompChave(txtDeslocXId, "DESLOC_X_ID"));
+			vinculados.add(new CompChave(txtDeslocYId, "DESLOC_Y_ID"));
 			vinculados.add(new CompChave(txtInstrucao, "INSTRUCAO"));
 			vinculados.add(new CompChave(txtIntervalo, "INTERVALO"));
 			vinculados.add(new CompChave(txtArquivo, "ARQUIVO"));
@@ -439,11 +446,18 @@ public class ObjetoContainer extends Panel {
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
 			chkDesenharId.addMouseListener(listenerVinculado);
+			txtDeslocXId.addMouseListener(listenerVinculado);
+			txtDeslocYId.addMouseListener(listenerVinculado);
 			txtInstrucao.addMouseListener(listenerVinculado);
 			txtIntervalo.addMouseListener(listenerVinculado);
 			txtArquivo.addMouseListener(listenerVinculado);
 			txtFiltro.addMouseListener(listenerVinculado);
 			txtId.addMouseListener(listenerVinculado);
+		}
+
+		private void mensagemPropriedadeIntervalo(Label label) {
+			Util.mensagem(ObjetoContainer.this,
+					ObjetoMensagens.getString("msg.propriedade_intervalo", Constantes.QUATROCENTOS));
 		}
 
 		private void mensagemPropriedadeArquivo(Label label) {
@@ -551,8 +565,8 @@ public class ObjetoContainer extends Panel {
 			if (!Util.isEmpty(para.getInternalFormX())) {
 				panelFormX.setBorder(Marcador.criarBorda());
 			}
-			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtInstrucao,
-					txtIntervalo, txtArquivo, txtFiltro, txtId);
+			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
+					txtDeslocYId, txtInstrucao, txtIntervalo, txtArquivo, txtFiltro, txtId);
 		}
 	}
 
@@ -970,20 +984,20 @@ public class ObjetoContainer extends Panel {
 					chkLinkAuto, txtOrderBy, txtApelido, txtTabelas, chkIgnorar, txtChaves, txtJoins, txtGrupo, chkSANE,
 					chkCCSC, chkBPNT);
 		}
-	}
 
-	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
-		return criarLinhaCopiar(chaveRotulo, textField, null);
+		private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
+			return criarLinhaCopiar(chaveRotulo, textField, null);
+		}
+
+		private Panel criarLinhaCopiar(String chaveRotulo, TextField textField, String hint) {
+			Panel panel = criarLinha(chaveRotulo, textField, hint);
+			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
+			return panel;
+		}
 	}
 
 	private Panel criarLinhaCopiarRotulo(String chaveRotulo, TextField textField) {
 		return criarLinhaCopiarRotulo(chaveRotulo, textField, null);
-	}
-
-	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField, String hint) {
-		Panel panel = criarLinha(chaveRotulo, textField, hint);
-		panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
-		return panel;
 	}
 
 	private Panel criarLinhaCopiarRotulo(String chaveRotulo, TextField textField, String hint) {
