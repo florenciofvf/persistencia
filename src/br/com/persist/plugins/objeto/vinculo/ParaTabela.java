@@ -46,6 +46,7 @@ public class ParaTabela {
 	private static final String STR_CCSC = "ccsc";
 	private static final String STR_SANE = "sane";
 	private static final String STR_BPNT = "bpnt";
+	private static final String STR_ID = "id";
 	private final List<Instrucao> instrucoes;
 	private final List<Filtro> filtros;
 	private String esquemaAlternativo;
@@ -83,6 +84,7 @@ public class ParaTabela {
 	private String ccsc;
 	private String bpnt;
 	final String tabela;
+	private String id;
 
 	public ParaTabela(String tabela) throws ObjetoException {
 		if (Util.isEmpty(tabela)) {
@@ -251,6 +253,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(grupo)) {
 			objeto.setGrupo(grupo);
 		}
+		if (!Util.isEmpty(id)) {
+			objeto.setId(id);
+		}
 		if (icone != null) {
 			objeto.setIcone(icone);
 		}
@@ -289,6 +294,7 @@ public class ParaTabela {
 		setSane(attributes.getValue(STR_SANE), null);
 		setCcsc(attributes.getValue(STR_CCSC), null);
 		setBpnt(attributes.getValue(STR_BPNT), null);
+		setId(attributes.getValue(STR_ID), null);
 		setCorFonte(getCorFonte(attributes));
 		setCorFundo(getCorFundo(attributes));
 	}
@@ -337,6 +343,7 @@ public class ParaTabela {
 		atributoValor(util, STR_SANE, sane);
 		atributoValor(util, STR_CCSC, ccsc);
 		atributoValor(util, STR_BPNT, bpnt);
+		atributoValor(util, STR_ID, id);
 		util.fecharTag();
 		ql = false;
 		for (Instrucao i : instrucoes) {
@@ -384,7 +391,8 @@ public class ParaTabela {
 		util.tab().atributo(STR_JOINS, "").ql();
 		util.tab().atributo(STR_SANE, true).ql();
 		util.tab().atributo(STR_CCSC, true).ql();
-		util.tab().atributo(STR_BPNT, false).fecharTag();
+		util.tab().atributo(STR_BPNT, false).ql();
+		util.tab().atributo(STR_ID, "").fecharTag();
 
 		boolean ql = false;
 		Instrucao i = new Instrucao("Resumo da instrucao");
@@ -721,6 +729,18 @@ public class ParaTabela {
 			return;
 		}
 		this.bpnt = bpnt;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.id);
+			return;
+		}
+		this.id = id;
 	}
 
 	public void setCorFonte(Color corFonte) {

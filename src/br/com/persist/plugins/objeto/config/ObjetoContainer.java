@@ -292,6 +292,8 @@ public class ObjetoContainer extends Panel {
 				para.addInstrucao(compChave.getText(), marcador);
 			} else if ("FILTRO".equals(compChave.chave)) {
 				para.addFiltro(compChave.getText(), marcador);
+			} else if ("ID".equals(compChave.chave)) {
+				para.setId(compChave.getText(), marcador);
 			}
 		}
 
@@ -422,12 +424,14 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
 			vinculados.add(new CompChave(txtInstrucao, "INSTRUCAO"));
 			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
+			vinculados.add(new CompChave(txtId, "ID"));
 
 			txtBiblioChecagem.addMouseListener(listenerVinculado);
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
 			txtInstrucao.addMouseListener(listenerVinculado);
 			txtFiltro.addMouseListener(listenerVinculado);
+			txtId.addMouseListener(listenerVinculado);
 		}
 
 		private void mensagemPropriedadeArquivo(Label label) {
@@ -535,7 +539,7 @@ public class ObjetoContainer extends Panel {
 			if (!Util.isEmpty(para.getInternalFormX())) {
 				panelFormX.setBorder(Marcador.criarBorda());
 			}
-			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, txtInstrucao, txtFiltro);
+			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, txtInstrucao, txtFiltro, txtId);
 		}
 	}
 
