@@ -921,6 +921,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	public void paraFrente(Relacao obj) {
+		if (excluir(obj)) {
+			addRelacao(obj);
+		}
+	}
+
 	public void addRelacao(Relacao obj) {
 		if (obj == null || ObjetoSuperficieUtil.contem(this, obj)) {
 			return;
@@ -932,7 +938,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		obj.setListener(this);
 	}
 
-	public void excluir(Relacao obj) {
+	public boolean excluir(Relacao obj) {
 		int indice = ObjetoSuperficieUtil.getIndice(this, obj);
 		if (indice >= 0) {
 			relacoes[indice].setListener(null);
@@ -944,7 +950,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					addRelacao(bkp[i]);
 				}
 			}
+			return true;
 		}
+		return false;
 	}
 
 	public void limpar() {

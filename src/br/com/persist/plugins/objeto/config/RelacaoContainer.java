@@ -357,12 +357,14 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class PanelGeral extends Panel implements ActionListener {
+		private Button btnParaFrente = new Button("label.para_frente");
 		private CheckBox chkQuebrado = new CheckBox("label.quebrado");
 		private static final long serialVersionUID = 1L;
 
 		private PanelGeral() throws AssistenciaException {
+			btnParaFrente.addActionListener(this);
 			chkQuebrado.addActionListener(this);
-			add(BorderLayout.NORTH, chkQuebrado);
+			add(BorderLayout.NORTH, new PanelCenter(chkQuebrado, btnParaFrente));
 			chkQuebrado.setSelected(relacao.isQuebrado());
 			add(BorderLayout.CENTER, new ScrollPane(new PanelLados()));
 			chkQuebrado.setMargin(new Insets(5, 10, 5, 5));
@@ -374,6 +376,8 @@ public class RelacaoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setQuebrado(chk.isSelected());
 				MacroProvedor.linhaQuebrada(chk.isSelected());
+			} else if (btnParaFrente == e.getSource()) {
+				objetoSuperficie.paraFrente(relacao);
 			}
 			objetoSuperficie.repaint();
 		}
