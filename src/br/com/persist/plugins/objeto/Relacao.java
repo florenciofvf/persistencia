@@ -348,18 +348,27 @@ public class Relacao implements Runnable {
 		} else {
 			int[] x1x2Aux = x1x2(x1, x2);
 			int[] y1y2Aux = y1y2(y1, y2);
-			g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1]);
+			int offset = 10;
+			int lado = offset + offset;
 			if (x1 < x2) {
 				if (y1 < y2) {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1] - offset);
+					g2.drawArc(x1x2Aux[0], y1y2Aux[1] - lado, lado, lado, 180, 90);
+					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
 				} else {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0] + offset, x1x2Aux[0], y1y2Aux[1]);
+					g2.drawArc(x1x2Aux[0], y1y2Aux[0], lado, lado, 90, 90);
+					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
 				}
 			} else {
 				if (y1 < y2) {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0] + offset, x1x2Aux[0], y1y2Aux[1]);
+					g2.drawArc(x1x2Aux[0], y1y2Aux[0], lado, lado, 90, 90);
+					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
 				} else {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1] - offset);
+					g2.drawArc(x1x2Aux[0], y1y2Aux[1] - lado, lado, lado, 180, 90);
+					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
 				}
 			}
 		}
