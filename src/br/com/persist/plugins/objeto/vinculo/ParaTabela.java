@@ -24,6 +24,7 @@ public class ParaTabela {
 	private static final String AJUSTAR_LARGURA = "ajustarLargura";
 	private static final String STR_TRANSPARENTE = "transparente";
 	private static final String INTERNAL_FORM_X = "internalFormX";
+	private static final String INTERNAL_FORM_L = "internalFormL";
 	private static final String FINAL_CONSULTA = "finalConsulta";
 	private static final String AJUSTAR_ALTURA = "ajustarAltura";
 	private static final String STR_COMPLEMENTO = "complemento";
@@ -68,6 +69,7 @@ public class ParaTabela {
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String internalFormX;
+	private String internalFormL;
 	private String transparente;
 	private String complemento;
 	private String classBiblio;
@@ -260,6 +262,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(internalFormX)) {
 			objeto.setInternalFormX(internalFormX);
 		}
+		if (!Util.isEmpty(internalFormL)) {
+			objeto.setInternalFormL(internalFormL);
+		}
 		if (!Util.isEmpty(chaves)) {
 			objeto.setChaves(chaves);
 		}
@@ -312,6 +317,7 @@ public class ParaTabela {
 		setAjustarLargura(attributes.getValue(AJUSTAR_LARGURA), null);
 		setTransparente(attributes.getValue(STR_TRANSPARENTE), null);
 		setInternalFormX(attributes.getValue(INTERNAL_FORM_X), null);
+		setInternalFormL(attributes.getValue(INTERNAL_FORM_L), null);
 		setFinalConsulta(attributes.getValue(FINAL_CONSULTA), null);
 		setAjustarAltura(attributes.getValue(AJUSTAR_ALTURA), null);
 		setComplemento(attributes.getValue(STR_COMPLEMENTO), null);
@@ -369,6 +375,7 @@ public class ParaTabela {
 		atributoValor(util, BIBLIO_CHECAGEM, biblioChecagem);
 		atributoValor(util, AJUSTAR_LARGURA, ajustarLargura);
 		atributoValor(util, INTERNAL_FORM_X, internalFormX);
+		atributoValor(util, INTERNAL_FORM_L, internalFormL);
 		atributoValor(util, STR_TRANSPARENTE, transparente);
 		atributoValor(util, FINAL_CONSULTA, finalConsulta);
 		atributoValor(util, AJUSTAR_ALTURA, ajustarAltura);
@@ -426,6 +433,7 @@ public class ParaTabela {
 		util.tab().atributo(BIBLIO_CHECAGEM, "").ql();
 		util.tab().atributo(AJUSTAR_LARGURA, true).ql();
 		util.tab().atributo(INTERNAL_FORM_X, "").ql();
+		util.tab().atributo(INTERNAL_FORM_L, "").ql();
 		util.tab().atributo(STR_TRANSPARENTE, false).ql();
 		util.tab().atributo(FINAL_CONSULTA, "").ql();
 		util.tab().atributo(AJUSTAR_ALTURA, true).ql();
@@ -913,6 +921,18 @@ public class ParaTabela {
 			return;
 		}
 		this.internalFormX = internalFormX;
+	}
+
+	public String getInternalFormL() {
+		return internalFormL;
+	}
+
+	public void setInternalFormL(String internalFormL, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.internalFormL);
+			return;
+		}
+		this.internalFormL = internalFormL;
 	}
 
 	public String getTransparente() {

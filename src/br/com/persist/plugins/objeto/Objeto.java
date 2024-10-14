@@ -80,6 +80,7 @@ public class Objeto implements Runnable {
 	private String finalConsulta;
 	private boolean transparente;
 	private String internalFormX;
+	private String internalFormL;
 	private boolean selecionado;
 	private boolean ccsc = true;
 	private boolean sane = true;
@@ -599,6 +600,14 @@ public class Objeto implements Runnable {
 
 	public void setInternalFormX(String internalFormX) {
 		this.internalFormX = internalFormX;
+	}
+
+	public String getInternalFormL() {
+		return internalFormL;
+	}
+
+	public void setInternalFormL(String internalFormL) {
+		this.internalFormL = internalFormL;
 	}
 
 	public String[] getChavesArray() {

@@ -357,6 +357,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtY = new TextField();
 		private Label labelIcone = new Label();
 		private final PanelCenter panelFormX;
+		private final PanelCenter panelFormL;
 		private final PanelCenter panelIcone;
 
 		private PanelGeral() {
@@ -396,13 +397,16 @@ public class ObjetoContainer extends Panel {
 				labelIcone.setIcon(objeto.getIcon());
 			}
 			panelFormX = new PanelCenter(new LabelFormX());
+			panelFormL = new PanelCenter(new LabelFormL());
 			panelIcone = new PanelCenter(labelIcone);
 			panelFormX.borda();
+			panelFormL.borda();
 			panelIcone.borda();
 			panelIcone.addMouseListener(new IconeListener(objeto, panelIcone, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
 			container.add(criarLinha("label.formx", panelFormX));
+			container.add(criarLinha("label.forml", panelFormL));
 			Panel panel = criarLinhaCopiarRotulo("label.id", txtId);
 			configHora(panel);
 			container.add(panel);
@@ -584,6 +588,9 @@ public class ObjetoContainer extends Panel {
 			}
 			if (!Util.isEmpty(para.getInternalFormX())) {
 				panelFormX.setBorder(Marcador.criarBorda());
+			}
+			if (!Util.isEmpty(para.getInternalFormL())) {
+				panelFormL.setBorder(Marcador.criarBorda());
 			}
 			if (!Util.isEmpty(para.getIdTempForm())) {
 				txtIdTempForm.setText(para.getIdTempForm());
@@ -1515,6 +1522,68 @@ public class ObjetoContainer extends Panel {
 					vinculacao.putParaTabela(para);
 				}
 				para.setInternalFormX("" + interno.getX(), null);
+				salvarVinculacao(vinculacao);
+			}
+		}
+	}
+
+	private class LabelFormL extends Label {
+		private static final long serialVersionUID = 1L;
+
+		private LabelFormL() {
+			super(ObjetoMensagens.getString("msg.associar_form_x"), false);
+			addMouseListener(new FormXListener());
+			modoLink(null);
+		}
+
+		private class FormXListener extends MouseAdapter {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() < Constantes.DOIS) {
+					return;
+				}
+				preFormX();
+			}
+
+			private void preFormX() {
+				if (Util.confirmar(LabelFormL.this, Constantes.LABEL_CONFIRMA_SALVAR)) {
+					try {
+						formX();
+					} catch (ObjetoException ex) {
+						Util.mensagem(ObjetoContainer.this, ex.getMessage());
+					}
+				}
+			}
+
+			private void formX() throws ObjetoException {
+				if (Util.isEmpty(txtTabela.getText())) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
+					return;
+				}
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("VINCULAR EM FORM_L", ex, ObjetoContainer.this);
+					return;
+				}
+				if (vinculacao == null) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					return;
+				}
+				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
+				if (interno == null) {
+					Util.mensagem(ObjetoContainer.this,
+							ObjetoMensagens.getString("msg.sem_form_associado_objeto", objeto.getId()));
+					return;
+				}
+				String tabela = txtTabela.getText().trim();
+				ParaTabela para = vinculacao.getParaTabela(tabela);
+				if (para == null) {
+					para = new ParaTabela(tabela);
+					vinculacao.putParaTabela(para);
+				}
+				para.setInternalFormL("" + interno.getWidth(), null);
 				salvarVinculacao(vinculacao);
 			}
 		}
