@@ -1531,31 +1531,31 @@ public class ObjetoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private LabelFormL() {
-			super(ObjetoMensagens.getString("msg.associar_form_x"), false);
-			addMouseListener(new FormXListener());
+			super(ObjetoMensagens.getString("msg.associar_form_l"), false);
+			addMouseListener(new FormLListener());
 			modoLink(null);
 		}
 
-		private class FormXListener extends MouseAdapter {
+		private class FormLListener extends MouseAdapter {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() < Constantes.DOIS) {
 					return;
 				}
-				preFormX();
+				preFormL();
 			}
 
-			private void preFormX() {
+			private void preFormL() {
 				if (Util.confirmar(LabelFormL.this, Constantes.LABEL_CONFIRMA_SALVAR)) {
 					try {
-						formX();
+						formL();
 					} catch (ObjetoException ex) {
 						Util.mensagem(ObjetoContainer.this, ex.getMessage());
 					}
 				}
 			}
 
-			private void formX() throws ObjetoException {
+			private void formL() throws ObjetoException {
 				if (Util.isEmpty(txtTabela.getText())) {
 					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
 					return;
