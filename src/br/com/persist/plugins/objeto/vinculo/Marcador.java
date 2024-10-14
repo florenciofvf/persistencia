@@ -17,6 +17,7 @@ public class Marcador {
 		if (comp != null && !Util.isEmpty(string)) {
 			if (comp instanceof AbstractButton) {
 				((AbstractButton) comp).setIcon(Icones.SUCESSO);
+				((AbstractButton) comp).setToolTipText("valor=" + string);
 			} else {
 				comp.setBorder(criarBorda());
 			}
