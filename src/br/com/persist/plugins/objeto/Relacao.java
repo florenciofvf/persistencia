@@ -346,32 +346,35 @@ public class Relacao implements Runnable {
 		if (x1 == x2 || y1 == y2) {
 			g2.drawLine(x1, y1, x2, y2);
 		} else {
-			int[] x1x2Aux = x1x2(x1, x2);
-			int[] y1y2Aux = y1y2(y1, y2);
 			int offset = 10;
-			int lado = offset + offset;
 			if (x1 < x2) {
 				if (y1 < y2) {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1] - offset);
-					g2.drawArc(x1x2Aux[0], y1y2Aux[1] - lado, lado, lado, 180, 90);
-					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+					desenharCurvaAsc(g2, x1, y1, x2, y2, offset);
 				} else {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0] + offset, x1x2Aux[0], y1y2Aux[1]);
-					g2.drawArc(x1x2Aux[0], y1y2Aux[0], lado, lado, 90, 90);
-					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+					desenharCurvaDes(g2, x1, y1, x2, y2, offset);
 				}
 			} else {
 				if (y1 < y2) {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0] + offset, x1x2Aux[0], y1y2Aux[1]);
-					g2.drawArc(x1x2Aux[0], y1y2Aux[0], lado, lado, 90, 90);
-					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+					desenharCurvaDes(g2, x2, y2, x1, y1, offset);
 				} else {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1] - offset);
-					g2.drawArc(x1x2Aux[0], y1y2Aux[1] - lado, lado, lado, 180, 90);
-					g2.drawLine(x1x2Aux[0] + offset, y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+					desenharCurvaAsc(g2, x2, y2, x1, y1, offset);
 				}
 			}
 		}
+	}
+
+	private void desenharCurvaAsc(Graphics2D g2, int x1, int y1, int x2, int y2, int offset) {
+		int lado = offset + offset;
+		g2.drawLine(x1, y1, x1, y2 - offset);
+		g2.drawLine(x1 + offset, y2, x2, y2);
+		g2.drawArc(x1, y2 - lado, lado, lado, 180, 90);
+	}
+
+	private void desenharCurvaDes(Graphics2D g2, int x1, int y1, int x2, int y2, int offset) {
+		int lado = offset + offset;
+		g2.drawLine(x1, y1, x1, y2 + offset);
+		g2.drawLine(x1 + offset, y2, x2, y2);
+		g2.drawArc(x1, y2, lado, lado, 90, 90);
 	}
 
 	private void desenharPontos(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
