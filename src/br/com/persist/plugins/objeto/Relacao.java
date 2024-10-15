@@ -363,18 +363,20 @@ public class Relacao implements Runnable {
 		}
 	}
 
-	private void desenharCurvaAsc(Graphics2D g2, int x1, int y1, int x2, int y2, int offset) {
+	private void desenharCurvaAsc(Graphics2D g2, int superiorX, int superiorY, int inferiorX, int inferiorY,
+			int offset) {
 		int lado = offset + offset;
-		g2.drawLine(x1, y1, x1, y2 - offset);
-		g2.drawLine(x1 + offset, y2, x2, y2);
-		g2.drawArc(x1, y2 - lado, lado, lado, 180, 90);
+		g2.drawLine(superiorX, superiorY, superiorX, inferiorY - offset);
+		g2.drawLine(superiorX + offset, inferiorY, inferiorX, inferiorY);
+		g2.drawArc(superiorX, inferiorY - lado, lado, lado, 180, 90);
 	}
 
-	private void desenharCurvaDes(Graphics2D g2, int x1, int y1, int x2, int y2, int offset) {
+	private void desenharCurvaDes(Graphics2D g2, int inferiorX, int inferiorY, int superiorX, int superiorY,
+			int offset) {
 		int lado = offset + offset;
-		g2.drawLine(x1, y1, x1, y2 + offset);
-		g2.drawLine(x1 + offset, y2, x2, y2);
-		g2.drawArc(x1, y2, lado, lado, 90, 90);
+		g2.drawLine(inferiorX, inferiorY, inferiorX, superiorY + offset);
+		g2.drawLine(inferiorX + offset, superiorY, superiorX, superiorY);
+		g2.drawArc(inferiorX, superiorY, lado, lado, 90, 90);
 	}
 
 	private void desenharPontos(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
