@@ -192,26 +192,7 @@ public class Relacao implements Runnable {
 		if (x1 == x2 || y1 == y2) {
 			return contemVetor(posX, posY, x1, y1, x2, y2);
 		}
-		int[] x1x2Aux = x1x2(x1, x2);
-		int[] y1y2Aux = y1y2(y1, y2);
-		if (contemV(posX, posY, y1y2Aux[0], y1y2Aux[1], x1x2Aux[0])) {
-			return true;
-		}
-		int y = 0;
-		if (x1 < x2) {
-			if (y1 < y2) {
-				y = y1y2Aux[1];
-			} else {
-				y = y1y2Aux[0];
-			}
-		} else {
-			if (y1 < y2) {
-				y = y1y2Aux[0];
-			} else {
-				y = y1y2Aux[1];
-			}
-		}
-		return contemH(posX, posY, x1x2Aux[0], x1x2Aux[1], y);
+		return contemV(posX, posY, x1, y1, x2, y2) || contemH(posX, posY, x1, y1, x2, y2);
 	}
 
 	private boolean contemVetor(int posX, int posY, int x1, int y1, int x2, int y2) {
@@ -237,24 +218,50 @@ public class Relacao implements Runnable {
 		return (int) Math.sqrt((x * x + y * y));
 	}
 
-	private int[] x1x2(int x1, int x2) {
-		return x1 < x2 ? new int[] { x1, x2 } : new int[] { x2, x1 };
-	}
-
-	private int[] y1y2(int y1, int y2) {
-		return y1 < y2 ? new int[] { y1, y2 } : new int[] { y2, y1 };
-	}
-
-	private boolean contemH(int posX, int posY, int x1, int x2, int y) {
-		int l = x2 - x1;
-		y -= 8;
-		return contem(posX, posY, x1, y, l, 16);
-	}
-
-	private boolean contemV(int posX, int posY, int y1, int y2, int x) {
-		int a = y2 - y1;
+	private boolean contemV(int posX, int posY, int x1, int y1, int x2, int y2) {
+		int x = 0;
+		int menorY = 0;
+		int maiorY = 0;
+		if (x1 < x2) {
+			x = x1;
+			if (y1 < y2) {
+				menorY = y1;
+				maiorY = y2;
+			} else {
+				menorY = y2;
+				maiorY = y1;
+			}
+		} else {
+			x = x2;
+			if (y1 < y2) {
+				menorY = y1;
+				maiorY = y2;
+			} else {
+				menorY = y2;
+				maiorY = y1;
+			}
+		}
+		int a = maiorY - menorY;
 		x -= 8;
-		return contem(posX, posY, x, y1, 16, a);
+		return contem(posX, posY, x, menorY, 16, a);
+	}
+
+	private boolean contemH(int posX, int posY, int x1, int y1, int x2, int y2) {
+		int y = 0;
+		int menorX = 0;
+		int maiorX = 0;
+		if (x1 < x2) {
+			menorX = x1;
+			maiorX = x2;
+			y = y2;
+		} else {
+			menorX = x2;
+			maiorX = x1;
+			y = y1;
+		}
+		int l = maiorX - menorX;
+		y -= 8;
+		return contem(posX, posY, menorX, y, l, 16);
 	}
 
 	private boolean contem(int posX, int posY, int x, int y, int l, int a) {
