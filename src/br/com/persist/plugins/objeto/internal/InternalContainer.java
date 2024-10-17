@@ -125,7 +125,9 @@ import br.com.persist.plugins.objeto.alter.AlternativoDialogo;
 import br.com.persist.plugins.objeto.alter.AlternativoListener;
 import br.com.persist.plugins.objeto.complem.ComplementoDialogo;
 import br.com.persist.plugins.objeto.complem.ComplementoListener;
+import br.com.persist.plugins.objeto.internal.InternalListener.Alinhamento;
 import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
+import br.com.persist.plugins.objeto.internal.InternalListener.Dimensao;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.OrdenarArrastoDialogo;
@@ -2247,11 +2249,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void checarColunaInsertAlternativo(OrdenacaoModelo modelo, Coletor coletor) {
 					for (String col : coletor.getLista()) {
-						Variavel var = VariavelProvedor.getVariavel("INSERT_" + objeto.getTabela() + "_" + col);
-						if (var != null) {
+						Variavel varCol = VariavelProvedor.getVariavel("INSERT_" + objeto.getTabela() + "_" + col);
+						if (varCol != null) {
 							Coluna coluna = modelo.getColuna(col);
 							if (coluna != null) {
-								coluna.setValorAlternativoInsert(var.getValor());
+								coluna.setValorAlternativoInsert(varCol.getValor());
 							}
 						}
 					}
@@ -2571,6 +2573,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action colunasComplAcao = acaoMenu("label.colunas_complemento");
 				private Action destacarColunaAcao = acaoMenu("label.destacar_coluna");
 				private Action corAcao = actionMenu("label.cor", Icones.COR);
+				private Action largAltAcao = acaoMenu("label.lar_alt");
+				private Action xyAcao = acaoMenu("label.x_y");
 				private static final long serialVersionUID = 1L;
 
 				private MenuTemp() {
@@ -2582,6 +2586,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(true, selIntervaloColunaAcao);
 					addMenuItem(true, tabelasRepetidasAcao);
 					addMenuItem(true, destacarColunaAcao);
+					addMenuItem(true, largAltAcao);
+					addMenuItem(true, xyAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
 					tabelasRepetidasAcao.hint(ObjetoMensagens.getString("hint.incon_link_auto"));
 					selIntervaloColunaAcao.setActionListener(e -> selIntervaloRegistro());
@@ -2589,7 +2595,58 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					complFinalBarraAcao.setActionListener(e -> complFinalBarra());
 					colunasComplAcao.setActionListener(e -> totalColunasCompl());
 					destacarColunaAcao.setActionListener(e -> destacarColuna());
+					largAltAcao.setActionListener(e -> larguraAltura());
 					corAcao.setActionListener(e -> configCor());
+					xyAcao.setActionListener(e -> xy());
+				}
+
+				private void larguraAltura() {
+					if (dimensaoListener != null) {
+						Dimension dimension = dimensaoListener.getDimensoes();
+						String string = dimension.width + "," + dimension.height;
+						Object resp = Util.getValorInputDialog(InternalContainer.this, "label.largura_altura", string,
+								string);
+						if (resp != null && !Util.isEmpty(resp.toString())) {
+							ajustarLarguraManual(resp, dimensaoListener);
+						}
+					}
+				}
+
+				private void ajustarLarguraManual(Object resp, Dimensao dimensaoListener) {
+					String[] strings = resp.toString().split(",");
+					if (strings != null && strings.length == 2) {
+						try {
+							int largura = Integer.parseInt(strings[0].trim());
+							int altura = Integer.parseInt(strings[1].trim());
+							dimensaoListener.setLargAltura(largura, altura);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("LARGURA-ALTURA", ex, InternalContainer.this);
+						}
+					}
+				}
+
+				private void xy() {
+					if (alinhamentoListener != null) {
+						Point posicao = alinhamentoListener.getPosicao();
+						String string = posicao.x + "," + posicao.y;
+						Object resp = Util.getValorInputDialog(InternalContainer.this, "label.x_y", string, string);
+						if (resp != null && !Util.isEmpty(resp.toString())) {
+							ajustarPosicaoManual(resp, alinhamentoListener);
+						}
+					}
+				}
+
+				private void ajustarPosicaoManual(Object resp, Alinhamento alinhamentoListener) {
+					String[] strings = resp.toString().split(",");
+					if (strings != null && strings.length == 2) {
+						try {
+							int x = Integer.parseInt(strings[0].trim());
+							int y = Integer.parseInt(strings[1].trim());
+							alinhamentoListener.setXY(x, y);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("X-Y", ex, InternalContainer.this);
+						}
+					}
 				}
 
 				private void totalColunasCompl() {

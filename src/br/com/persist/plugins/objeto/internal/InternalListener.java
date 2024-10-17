@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -71,6 +72,10 @@ public interface InternalListener {
 
 	public interface Alinhamento {
 		public void alinhar(DesktopAlinhamento opcao);
+
+		public void setXY(int x, int y);
+
+		public Point getPosicao();
 	}
 
 	public interface RelacaoObjeto {
@@ -104,6 +109,8 @@ public interface InternalListener {
 	}
 
 	public interface Dimensao {
+		public void setLargAltura(int l, int a);
+
 		public Dimension getDimensoes();
 	}
 

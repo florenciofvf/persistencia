@@ -8,6 +8,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
@@ -66,13 +67,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		super(formulario, objeto.getId());
 		container = new InternalContainer(this, padrao, objeto, buscaAuto);
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
-		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
-		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
 		container.setVisibilidadeListener(visibilidadeListener);
+		container.setAlinhamentoListener(alinhamentoListener);
 		container.setConfiguraAlturaListener(alturaListener);
 		container.setComponenteListener(componenteListener);
+		container.setDimensaoListener(dimensaoListener);
 		container.setVinculoListener(vinculoListener);
 		container.setSelecaoListener(selecaoListener);
 		setFrameIcon(Icones.VAZIO);
@@ -260,6 +261,38 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 	}
+
+	private transient InternalListener.Alinhamento alinhamentoListener = new InternalListener.Alinhamento() {
+		@Override
+		public void alinhar(DesktopAlinhamento opcao) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.getAlinhamento().alinhar(InternalFormulario.this, opcao);
+			}
+		}
+
+		@Override
+		public void setXY(int x, int y) {
+			setLocation(x, y);
+		}
+
+		@Override
+		public Point getPosicao() {
+			return getLocation();
+		}
+	};
+
+	private transient InternalListener.Dimensao dimensaoListener = new InternalListener.Dimensao() {
+		@Override
+		public void setLargAltura(int l, int a) {
+			setSize(l, a);
+		}
+
+		@Override
+		public Dimension getDimensoes() {
+			return getSize();
+		}
+	};
 
 	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {
 		@Override
@@ -459,13 +492,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 	};
-
-	public void alinhar(DesktopAlinhamento opcao) {
-		checarDesktop();
-		if (desktop != null) {
-			desktop.getAlinhamento().alinhar(this, opcao);
-		}
-	}
 
 	public void mesma() {
 		checarDesktop();
