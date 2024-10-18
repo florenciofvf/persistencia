@@ -298,7 +298,9 @@ public class ObjetoContainer extends Panel {
 				para.addFiltro(compChave.getText(), marcador);
 			} else if ("ID".equals(compChave.chave)) {
 				para.setId(compChave.getText(), marcador);
-				toolbar.idParaTabelaAlterado();
+				if (marcador == null) {
+					toolbar.idParaTabelaAlterado();
+				}
 			} else if ("ARQUIVO".equals(compChave.chave)) {
 				para.setArquivo(compChave.getText(), marcador);
 			} else if ("DESENHAR_ID".equals(compChave.chave)) {
