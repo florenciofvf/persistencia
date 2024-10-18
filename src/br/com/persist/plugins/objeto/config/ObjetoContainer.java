@@ -111,6 +111,10 @@ public class ObjetoContainer extends Panel {
 		private void checarVinculados() {
 			fichario.checarVinculados();
 		}
+
+		void idParaTabelaAlterado() {
+			fichario.idParaTabelaAlterado();
+		}
 	}
 
 	private transient MouseListener listenerVinculado = new MouseAdapter() {
@@ -294,6 +298,7 @@ public class ObjetoContainer extends Panel {
 				para.addFiltro(compChave.getText(), marcador);
 			} else if ("ID".equals(compChave.chave)) {
 				para.setId(compChave.getText(), marcador);
+				toolbar.idParaTabelaAlterado();
 			} else if ("ARQUIVO".equals(compChave.chave)) {
 				para.setArquivo(compChave.getText(), marcador);
 			} else if ("DESENHAR_ID".equals(compChave.chave)) {
@@ -597,6 +602,10 @@ public class ObjetoContainer extends Panel {
 			}
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
 					txtDeslocYId, txtInstrucao, txtIntervalo, txtArquivo, txtFiltro, txtId, txtIdTempForm, txtX, txtY);
+		}
+
+		public void idParaTabelaAlterado() {
+			txtIdTempForm.setText(txtTabela.getText());
 		}
 	}
 
@@ -1622,6 +1631,10 @@ public class ObjetoContainer extends Panel {
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", cor);
 			addTab("label.cor_fonte", corFonte);
+		}
+
+		public void idParaTabelaAlterado() {
+			geral.idParaTabelaAlterado();
 		}
 
 		public void checarVinculados() {
