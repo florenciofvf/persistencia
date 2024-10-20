@@ -153,8 +153,8 @@ public class AnexoTree extends Tree {
 	};
 
 	private class AnexoPopup extends Popup {
+		private CheckBoxItem chkPadraoAbrir = new CheckBoxItem("label.padrao_desktop_open", Icones.EXECUTAR);
 		private CheckBoxItem chkAbrirVisivel = new CheckBoxItem("label.abrir_visivel", Icones.HIERARQUIA);
-		private CheckBoxItem chkPadraoAbrir = new CheckBoxItem("label.padrao_abrir", Icones.EXECUTAR);
 		private Action copiarAcao = actionMenu("label.copiar_atributos", Icones.COPIA);
 		private Action colarAcao = actionMenu("label.colar_atributos", Icones.COLAR);
 		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);
@@ -182,6 +182,8 @@ public class AnexoTree extends Tree {
 			iconeAcao.setActionListener(e -> ouvintes.forEach(o -> o.iconeAnexo(AnexoTree.this)));
 			chkAbrirVisivel.addActionListener(e -> abrirVisivel(chkAbrirVisivel.isSelected()));
 			chkPadraoAbrir.addActionListener(e -> padraoAbrir(chkPadraoAbrir.isSelected()));
+			chkAbrirVisivel.setToolTipText(AnexoMensagens.getString("hint.abrir_visivel"));
+			chkPadraoAbrir.setToolTipText(AnexoMensagens.getString("hint.padrao_abrir"));
 		}
 
 		private void colarAtributosAnexo() {
