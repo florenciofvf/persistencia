@@ -14,6 +14,12 @@ public class Popup extends JPopupMenu {
 		return add(menuItem);
 	}
 
+	public MenuItem addMenuItem(boolean separador, Action action, String hint) {
+		MenuItem item = addMenuItem(separador, action);
+		item.setToolTipText(hint);
+		return item;
+	}
+
 	public MenuItem addMenuItem(boolean separador, Action action) {
 		return addMenuItem(separador, new MenuItem(action));
 	}
@@ -23,6 +29,12 @@ public class Popup extends JPopupMenu {
 			addSeparator();
 		}
 		add(item);
+		return item;
+	}
+
+	public MenuItem addMenuItem(Action action, String hint) {
+		MenuItem item = addMenuItem(action);
+		item.setToolTipText(hint);
 		return item;
 	}
 

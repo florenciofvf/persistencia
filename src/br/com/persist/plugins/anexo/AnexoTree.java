@@ -172,8 +172,8 @@ public class AnexoTree extends Tree {
 			addMenuItem(true, excluirAcao);
 			addMenuItem(true, corFonteAcao);
 			addMenuItem(true, iconeAcao);
-			addMenuItem(true, copiarAcao);
-			addMenuItem(colarAcao);
+			addMenuItem(true, copiarAcao, AnexoMensagens.getString("hint.copiar_atributos"));
+			addMenuItem(colarAcao, AnexoMensagens.getString("hint.colar_atributos"));
 			copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarAtributosAnexo(AnexoTree.this)));
 			colarAcao.setActionListener(e -> colarAtributosAnexo());
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearAnexo(AnexoTree.this)));
