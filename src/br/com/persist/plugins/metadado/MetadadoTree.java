@@ -161,6 +161,11 @@ public class MetadadoTree extends Tree {
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {
+				Metadado m = getObjetoSelecionado();
+				if (m != null && m.isConstraint()) {
+					constraintInfo();
+					return;
+				}
 				if (padraoClickExportacao) {
 					ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, true));
 				} else {
