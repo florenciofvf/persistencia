@@ -615,6 +615,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		void compararRegistros(boolean b) {
 			buttonStatus.checkBoxComparaRegistro.setSelected(b);
+			ObjetoSuperficieUtil.compararRegistro(objetoSuperficie, b);
 		}
 
 		boolean isCompararRegistros() {
