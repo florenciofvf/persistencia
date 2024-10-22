@@ -609,9 +609,16 @@ public class ObjetoContainer extends AbstratoContainer {
 			}
 
 			private void reiniciar() {
-				checkBoxComparaRegistro.setSelected(false);
 				checkBoxSelecaoGeral.setSelected(false);
 			}
+		}
+
+		void compararRegistros(boolean b) {
+			buttonStatus.checkBoxComparaRegistro.setSelected(b);
+		}
+
+		boolean isCompararRegistros() {
+			return buttonStatus.checkBoxComparaRegistro.isSelected();
 		}
 
 		private class ButtonInfo extends ButtonPopup {
@@ -769,7 +776,12 @@ public class ObjetoContainer extends AbstratoContainer {
 		objetoSuperficie.setAjusteAutoEmpilhaForm(coletor.getAjusteAutoForm().get());
 		objetoSuperficie.setAjusteAutoLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutoEmpilhaForm.setSelected(coletor.getAjusteAutoForm().get());
+		toolbar.compararRegistros(coletor.getCompararRegistros().get());
 		objetoSuperficie.configurarLargura(getSize());
+	}
+
+	boolean isCompararRegistros() {
+		return toolbar.isCompararRegistros();
 	}
 
 	private Conexao selecionarConexao(ObjetoColetor coletor, InternalConfig config) {

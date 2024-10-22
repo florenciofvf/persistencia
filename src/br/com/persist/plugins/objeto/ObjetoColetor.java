@@ -9,6 +9,7 @@ import br.com.persist.plugins.objeto.internal.InternalForm;
 
 public class ObjetoColetor {
 	private final AtomicBoolean ajusteLarguraForm;
+	private final AtomicBoolean compararRegistros;
 	private final AtomicBoolean ajusteAutoForm;
 	private final List<InternalForm> forms;
 	private final StringBuilder sbConexao;
@@ -20,6 +21,7 @@ public class ObjetoColetor {
 
 	public ObjetoColetor() {
 		ajusteLarguraForm = new AtomicBoolean();
+		compararRegistros = new AtomicBoolean();
 		ajusteAutoForm = new AtomicBoolean();
 		processar = new AtomicBoolean();
 		sbConexao = new StringBuilder();
@@ -34,6 +36,7 @@ public class ObjetoColetor {
 			sbConexao.delete(0, sbConexao.length());
 		}
 		ajusteLarguraForm.set(false);
+		compararRegistros.set(false);
 		ajusteAutoForm.set(false);
 		dimension.setSize(0, 0);
 		arquivoVinculo = null;
@@ -53,6 +56,10 @@ public class ObjetoColetor {
 
 	public AtomicBoolean getAjusteLarguraForm() {
 		return ajusteLarguraForm;
+	}
+
+	public AtomicBoolean getCompararRegistros() {
+		return compararRegistros;
 	}
 
 	public List<InternalForm> getForms() {
