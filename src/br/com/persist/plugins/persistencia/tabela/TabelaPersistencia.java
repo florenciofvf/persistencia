@@ -348,6 +348,7 @@ public class TabelaPersistencia extends JTable {
 		private MenuAbrirArquivo menuAbrirArquivo = new MenuAbrirArquivo();
 		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();
 		private MenuExibirLinhas menuExibirLinhas = new MenuExibirLinhas();
+		private Action destacarColunaAcao = actionMenu("label.destacar");
 		private ItemClassBiblio itemClassBiblio = new ItemClassBiblio();
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private MenuMetadados menuMetadados = new MenuMetadados();
@@ -367,6 +368,7 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(larguraTituloAcao);
 			addMenuItem(larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
+			addMenuItem(destacarColunaAcao);
 			addMenuItem(true, pesquisaApartirColunaAcao);
 			addMenuItem(true, mapearApartirBiblioAcao);
 			add(true, new MenuColocarNomeColuna());
@@ -626,6 +628,7 @@ public class TabelaPersistencia extends JTable {
 			});
 			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));
 			larguraConteudoAcao.setActionListener(e -> larguraConteudo(indiceColuna));
+			destacarColunaAcao.setActionListener(e -> destacarColuna(indiceColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
 		}
