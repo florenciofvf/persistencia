@@ -260,14 +260,27 @@ public class TabelaPersistencia extends JTable {
 		}
 	}
 
-	public void destacarColuna(int coluna) {
+	public void destacarColuna(int coluna, boolean inverter) {
 		TableColumn tableColumn = getTableColumn(coluna);
 		CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
 		if (cabecalho != null) {
-			cabecalho.setForeground(Color.WHITE);
-			cabecalho.setBackground(Color.BLUE);
+			destacar(cabecalho, inverter);
 			SwingUtilities.updateComponentTreeUI(this);
 			tornarVisivel(0, coluna);
+		}
+	}
+
+	private void destacar(CabecalhoColuna cabecalho, boolean inverter) {
+		if (!inverter) {
+			cabecalho.setForeground(Color.WHITE);
+			cabecalho.setBackground(Color.BLUE);
+			return;
+		}
+		if (cabecalho.getBackground() == Color.BLUE) {
+			cabecalho.setForeground(null);
+			cabecalho.setBackground(null);
+		} else {
+			destacar(cabecalho, false);
 		}
 	}
 
@@ -368,7 +381,7 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(larguraTituloAcao);
 			addMenuItem(larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
-			addMenuItem(destacarColunaAcao);
+			addMenuItem(destacarColunaAcao, getString("hint.destacar"));
 			addMenuItem(true, pesquisaApartirColunaAcao);
 			addMenuItem(true, mapearApartirBiblioAcao);
 			add(true, new MenuColocarNomeColuna());
@@ -627,8 +640,8 @@ public class TabelaPersistencia extends JTable {
 				}
 			});
 			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));
+			destacarColunaAcao.setActionListener(e -> destacarColuna(indiceColuna, true));
 			larguraConteudoAcao.setActionListener(e -> larguraConteudo(indiceColuna));
-			destacarColunaAcao.setActionListener(e -> destacarColuna(indiceColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
 		}

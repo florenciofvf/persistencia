@@ -2698,7 +2698,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					if (!Util.isEmpty(nome)) {
 						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome.trim(), like);
 						if (coluna != -1) {
-							tabelaPersistencia.destacarColuna(coluna);
+							tabelaPersistencia.destacarColuna(coluna, false);
 						}
 					}
 				}
