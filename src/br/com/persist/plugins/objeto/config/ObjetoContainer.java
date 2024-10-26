@@ -817,6 +817,10 @@ public class ObjetoContainer extends Panel {
 		private void mensagemSequencia(Label label) {
 			StringBuilder sb = new StringBuilder(ObjetoMensagens.getString("msg.sequencia_nextval") + Constantes.QL2);
 			String seq = Util.isEmpty(txtSequencias.getText()) ? "NOME_SEQUENCIA" : txtSequencias.getText().trim();
+			int pos = seq.lastIndexOf('=');
+			if (pos != -1) {
+				seq = seq.substring(pos + 1);
+			}
 			sb.append("SELECT " + seq + " FROM DUAL;");
 			Util.mensagem(ObjetoContainer.this, sb.toString());
 		}
