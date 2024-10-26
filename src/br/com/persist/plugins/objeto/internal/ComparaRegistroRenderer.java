@@ -34,7 +34,7 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		Coluna colunaBackup = backup.getColuna(colunaModelo.getNome());
 
 		if (colunaBackup == null) {
-			toolbar.exceptionEnable("NOVA COLUNA ADICIONADA");
+			toolbar.exceptionEnable("NOVA COLUNA ADICIONADA: " + colunaModelo.getNome());
 			setBackground(Color.BLACK);
 			setForeground(Color.WHITE);
 		} else {
@@ -45,11 +45,11 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 				setBackground(Color.GREEN);
 				setForeground(Color.BLACK);
 			} else if (Util.isEmpty(strModelo) && !Util.isEmpty(strBackup)) {
-				toolbar.exceptionEnable("REMOVIDO VALOR EM: " + nomeColuna);
+				toolbar.exceptionEnable("REMOVIDO VALOR EM: " + nomeColuna + "\nVALOR ANTERIOR: " + strBackup);
 				setBackground(Color.RED);
 				setForeground(Color.BLACK);
 			} else if (!Util.isEmpty(strModelo) && !Util.isEmpty(strBackup) && !strModelo.equals(strBackup)) {
-				toolbar.exceptionEnable("ALTERADO VALOR EM: " + nomeColuna);
+				toolbar.exceptionEnable("ALTERADO VALOR EM: " + nomeColuna + "\nVALOR ANTERIOR: " + strBackup);
 				setBackground(Color.ORANGE);
 				setForeground(Color.BLACK);
 			}
