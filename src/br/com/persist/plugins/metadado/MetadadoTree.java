@@ -186,6 +186,7 @@ public class MetadadoTree extends Tree {
 		private MenuAbrirImportacaoC menuAbrirImportacaoC = new MenuAbrirImportacaoC();
 		private Action dadosAcao = actionMenu("label.dados", Icones.TABELA);
 		private MenuExportacao menuExportacao = new MenuExportacao();
+		private Action destacarAcao = actionMenu("label.destacar");
 		private MenuItem itemDados = new MenuItem(dadosAcao);
 		private static final long serialVersionUID = 1L;
 
@@ -197,9 +198,11 @@ public class MetadadoTree extends Tree {
 			add(menuAbrirImportacaoC);
 			add(true, itemDados);
 			addMenuItem(true, copiarDescricaoAcao);
+			addMenuItem(destacarAcao, getString("hint.destacar"));
 			addMenuItem(true, constraintInfoAction);
 			constraintInfoAction.setActionListener(e -> constraintInfo());
 			copiarDescricaoAcao.setActionListener(e -> copiarDescricao());
+			destacarAcao.setActionListener(e -> destacarItem());
 			dadosAcao.setActionListener(e -> abrirObjeto());
 		}
 
@@ -216,10 +219,22 @@ public class MetadadoTree extends Tree {
 			}
 		}
 
+		String getString(String chave) {
+			return MetadadoMensagens.getString(chave);
+		}
+
 		private void copiarDescricao() {
 			Metadado metadado = getObjetoSelecionado();
 			if (metadado != null) {
 				metadado.copiarDescricao();
+			}
+		}
+
+		private void destacarItem() {
+			Metadado metadado = getObjetoSelecionado();
+			if (metadado != null) {
+				metadado.destacar();
+				MetadadoTreeUtil.selecionarObjeto(MetadadoTree.this, metadado);
 			}
 		}
 

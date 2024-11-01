@@ -34,6 +34,7 @@ public class Metadado implements Transferable {
 	private int totalExportados;
 	private boolean selecionado;
 	private boolean constraint;
+	private boolean destacado;
 	private int totalCampos;
 	private boolean ehRaiz;
 	private boolean tabela;
@@ -146,9 +147,13 @@ public class Metadado implements Transferable {
 	public String toString() {
 		if (contabilizavel) {
 			int total = getTotal();
-			return descricao + (total > 1 ? " - " + total : "");
+			return getDesc() + (total > 1 ? " - " + total : "");
 		}
-		return descricao;
+		return getDesc();
+	}
+
+	private String getDesc() {
+		return destacado ? "<<<" + descricao + ">>>" : descricao;
 	}
 
 	@Override
@@ -542,5 +547,9 @@ public class Metadado implements Transferable {
 
 	public void copiarDescricao() {
 		Util.setContentTransfered(toString());
+	}
+
+	public void destacar() {
+		destacado = !destacado;
 	}
 }
