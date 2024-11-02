@@ -567,7 +567,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
-		if (backup != null && modelo.getRowCount() != backup.getRowCount()) {
+
+		if (backup == null) {
+			toolbar.exceptionEnable("MODELO DE DADOS ANTERIOR NULO");
+		} else if (modelo.getRowCount() != backup.getRowCount()) {
 			toolbar.exceptionEnable("TOTAL DE REGISTROS ATUAL: [" + modelo.getRowCount()
 					+ "] TOTAL DE REGISTROS ANTERIOR: [" + backup.getRowCount() + "]");
 		}

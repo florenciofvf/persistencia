@@ -34,9 +34,7 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		if (backup == null) {
 			toolbar.exceptionEnable("MODELO DE DADOS ANTERIOR NULO");
 			return this;
-		}
-
-		if (modelo.getRowCount() != backup.getRowCount()) {
+		} else if (modelo.getRowCount() != backup.getRowCount()) {
 			toolbar.exceptionEnable("TOTAL DE REGISTROS ATUAL: [" + modelo.getRowCount()
 					+ "] TOTAL DE REGISTROS ANTERIOR: [" + backup.getRowCount() + "]");
 			return this;
