@@ -635,7 +635,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			tableColumn.setCellRenderer(new ChaveRenderer());
 		}
 		if (coluna.isColunaInfo()) {
-			tableColumn.setCellRenderer(new INFORenderer());
+			tableColumn.setCellRenderer(new InforRenderer());
 		}
 	}
 

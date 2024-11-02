@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import br.com.persist.assistencia.Util;
 
-public class INFORenderer extends DefaultTableCellRenderer {
+public class InforRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	@Override
