@@ -68,7 +68,6 @@ import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.abstrato.WindowInternalHandler;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
-import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
@@ -633,7 +632,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			return;
 		}
 		if (coluna.isChave()) {
-			tableColumn.setCellRenderer(new CellRenderer());
+			tableColumn.setCellRenderer(new ChaveRenderer());
 		}
 		if (coluna.isColunaInfo()) {
 			tableColumn.setCellRenderer(new InternalRenderer());
