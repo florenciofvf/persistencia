@@ -30,6 +30,18 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		TabelaPersistencia tabelaPersistencia = (TabelaPersistencia) table;
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
+
+		if (backup == null) {
+			toolbar.exceptionEnable("MODELO DE DADOS ANTERIOR NULO");
+			return this;
+		}
+
+		if (modelo.getRowCount() != backup.getRowCount()) {
+			toolbar.exceptionEnable("TOTAL DE REGISTRO ATUAL: " + modelo.getRowCount()
+					+ "\nTOTAL DE REGISTRO ANTERIOR: " + backup.getRowCount());
+			return this;
+		}
+
 		Coluna colunaModelo = modelo.getColuna(nomeColuna);
 		Coluna colunaBackup = backup.getColuna(colunaModelo.getNome());
 

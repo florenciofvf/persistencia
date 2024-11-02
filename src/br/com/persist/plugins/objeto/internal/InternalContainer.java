@@ -477,7 +477,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void configurarCompararRegistroAntes() {
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-		if (objeto.isCompararRegistro() && modelo.getRowCount() == 1) {
+		if (objeto.isCompararRegistro()) {
 			tabelaPersistencia.setModeloBackup(modelo);
 		} else {
 			tabelaPersistencia.setModeloBackup(null);
@@ -551,14 +551,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private void configurarCabecalhoTabela(OrdenacaoModelo modeloOrdenacao, CabecalhoColuna cabecalho) {
-		boolean cellRendererComparacao = objeto.isCompararRegistro() && tabelaPersistencia.getModeloBackup() != null
-				&& modeloOrdenacao.getRowCount() == 1;
 		TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
 		List<Coluna> colunas = modeloOrdenacao.getModelo().getColunas();
 		for (int i = 0; i < colunas.size(); i++) {
 			TableColumn tableColumn = columnModel.getColumn(i);
 			Coluna coluna = colunas.get(i);
-			configTableColumn(cellRendererComparacao, tableColumn, coluna);
+			configTableColumn(objeto.isCompararRegistro(), tableColumn, coluna);
 			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
 					!coluna.isColunaInfo());
 			if (cabecalhoColuna.equals(cabecalho)) {
