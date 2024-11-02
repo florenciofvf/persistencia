@@ -47,6 +47,8 @@ public interface InternalListener {
 
 		public void listarNomeBiblio(List<String> lista, Component c);
 
+		public void pesquisarDestacar(Pesquisa pesquisa, boolean b);
+
 		public void pesquisarApos(Objeto fonte, Pesquisa pesquisa);
 
 		public void salvarVinculacao(Vinculacao vinculacao);

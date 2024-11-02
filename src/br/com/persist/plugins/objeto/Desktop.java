@@ -443,6 +443,16 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 		}
 	}
 
+	public void pesquisarDestacar(Pesquisa pesquisa, boolean b) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				pesquisarDestacar(interno, pesquisa.getReferencias(), b);
+			}
+		}
+		repaint();
+	}
+
 	private void pesquisar(Conexao conexao, Pesquisa pesquisa, Argumento argumento, InternalFormulario interno,
 			List<Referencia> referencias, boolean soTotal, boolean emForms) throws ObjetoException {
 		for (Referencia referencia : referencias) {
@@ -452,6 +462,14 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 				interno.pesquisar(conexao, pesquisa, referencia, argumento, soTotal, emForms);
 				interno.setProcessadoPesquisa(true);
 				referencia.setProcessado(true);
+			}
+		}
+	}
+
+	private void pesquisarDestacar(InternalFormulario interno, List<Referencia> referencias, boolean b) {
+		for (Referencia referencia : referencias) {
+			if (interno.ehReferencia(referencia)) {
+				interno.destacarObjeto(b);
 			}
 		}
 	}

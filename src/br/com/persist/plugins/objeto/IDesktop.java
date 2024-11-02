@@ -14,4 +14,6 @@ public interface IDesktop {
 
 	public boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear)
 			throws AssistenciaException;
+
+	public void pesquisarDestacar(Pesquisa pesquisa, boolean b);
 }

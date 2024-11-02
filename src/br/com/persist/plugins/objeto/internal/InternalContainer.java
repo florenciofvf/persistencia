@@ -1309,6 +1309,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
 				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.total_detalhes"));
+				private Action destParticAcao = acaoMenu("label.dest_particp");
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
 				private Action renomearAcao = actionMenu("label.renomear");
 				private Action excluirAcao = actionMenu("label.excluir");
@@ -1316,11 +1317,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private MenuInfo menuInfo = new MenuInfo();
 				private MenuUtil menuUtil = new MenuUtil();
 				private final transient Pesquisa pesquisa;
+				private boolean destacarObjeto;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addItem(chkPesqEmMemoria);
 					addItem(chkTotalDetalhes);
+					addMenuItem(destParticAcao);
 					addMenuItem(true, nomeIconeReferAcao);
 					addMenuItem(nomeReferAcao);
 					addMenuItem(renomearAcao);
@@ -1335,6 +1338,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
 					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
+					destParticAcao.setActionListener(e -> destacarParticps());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					nomeReferAcao.setActionListener(e -> nomeRefer());
@@ -1907,6 +1911,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Argumento argumento = new ArgumentoArray(valoresChaves, chavesReferencia.length);
 							pesquisaArray(argumento);
 						}
+					}
+				}
+
+				private void destacarParticps() {
+					if (vinculoListener != null) {
+						destacarObjeto = !destacarObjeto;
+						vinculoListener.pesquisarDestacar(pesquisa, destacarObjeto);
 					}
 				}
 
@@ -3784,6 +3795,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public void pesquisarApos() {
 		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
+	}
+
+	public void destacarObjeto(boolean b) {
+		if (b) {
+			objeto.setProcessar(true);
+			objeto.ativar();
+		} else {
+			objeto.desativar();
+		}
 	}
 
 	public String getTituloAtualizado() {

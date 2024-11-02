@@ -313,6 +313,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		@Override
+		public void pesquisarDestacar(Pesquisa pesquisa, boolean b) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.pesquisarDestacar(pesquisa, b);
+			}
+		}
+
+		@Override
 		public void pesquisarLink(List<Referencia> refs, String argumentos) {
 			checarDesktop();
 			if (desktop != null) {
@@ -562,6 +570,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void pesquisarApos() {
 		container.pesquisarApos();
+	}
+
+	public void destacarObjeto(boolean b) {
+		container.destacarObjeto(b);
 	}
 
 	public void atualizarFormulario() {
