@@ -565,6 +565,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			tableColumn.setHeaderRenderer(cabecalhoColuna);
 		}
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
+		if (backup != null && modelo.getRowCount() != backup.getRowCount()) {
+			toolbar.exceptionEnable("TOTAL DE REGISTROS ATUAL: [" + modelo.getRowCount()
+					+ "] TOTAL DE REGISTROS ANTERIOR: [" + backup.getRowCount() + "]");
+		}
 	}
 
 	private void processarReferencia() {
