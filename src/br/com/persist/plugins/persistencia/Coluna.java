@@ -8,6 +8,7 @@ import br.com.persist.plugins.conexao.Conexao;
 
 public class Coluna {
 	private String valorAlternativoInsert;
+	private String stringComparaRegistro;
 	private final boolean colunaInfo;
 	private final String tipoBanco;
 	private final boolean autoInc;
@@ -210,5 +211,13 @@ public class Coluna {
 
 	public void setInativoTemp(boolean inativoTemp) {
 		this.inativoTemp = inativoTemp;
+	}
+
+	public String getStringComparaRegistro() {
+		return stringComparaRegistro;
+	}
+
+	public void setStringComparaRegistro(String stringComparaRegistro) {
+		this.stringComparaRegistro = stringComparaRegistro;
 	}
 }

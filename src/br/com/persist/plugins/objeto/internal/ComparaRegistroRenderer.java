@@ -34,22 +34,28 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		Coluna colunaBackup = backup.getColuna(colunaModelo.getNome());
 
 		if (colunaBackup == null) {
-			toolbar.exceptionEnable("NOVA COLUNA ADICIONADA: " + colunaModelo.getNome());
+			colunaModelo.setStringComparaRegistro("NOVA COLUNA ADICIONADA: " + colunaModelo.getNome());
+			toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 			setForeground(Color.WHITE);
 			setBackground(Color.BLUE);
 		} else {
 			String strModelo = modelo.getValueAt(0, colunaModelo.getIndice()).toString();
 			String strBackup = backup.getValueAt(0, colunaBackup.getIndice()).toString();
 			if (!Util.isEmpty(strModelo) && Util.isEmpty(strBackup)) {
-				toolbar.exceptionEnable("NOVO VALOR EM: " + nomeColuna);
+				colunaModelo.setStringComparaRegistro("NOVO VALOR EM: " + nomeColuna);
+				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.GREEN);
 			} else if (Util.isEmpty(strModelo) && !Util.isEmpty(strBackup)) {
-				toolbar.exceptionEnable("REMOVIDO VALOR EM: " + nomeColuna + "\nVALOR ANTERIOR: " + strBackup);
+				colunaModelo.setStringComparaRegistro(
+						"REMOVIDO VALOR EM: " + nomeColuna + "\nVALOR ANTERIOR: " + strBackup);
+				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.RED);
 			} else if (!Util.isEmpty(strModelo) && !Util.isEmpty(strBackup) && !strModelo.equals(strBackup)) {
-				toolbar.exceptionEnable("ALTERADO VALOR EM: " + nomeColuna + "\nVALOR ANTERIOR: " + strBackup);
+				colunaModelo.setStringComparaRegistro(
+						"ALTERADO VALOR EM: " + nomeColuna + "\nVALOR ANTERIOR: " + strBackup);
+				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.ORANGE);
 			}
