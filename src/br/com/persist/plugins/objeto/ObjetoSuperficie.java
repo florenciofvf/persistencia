@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -121,10 +122,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public ObjetoSuperficie(Formulario formulario, ObjetoContainer container) {
 		super(formulario, true);
+		this.container = Objects.requireNonNull(container);
 		configEstado(ObjetoConstantes.SELECAO);
 		popup2 = new SuperficiePopup2(this);
 		popup = new SuperficiePopup(this);
-		this.container = container;
 		configurar();
 		limpar();
 	}
@@ -892,6 +893,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (obj == null || ObjetoSuperficieUtil.contem(this, obj)) {
 			return;
 		}
+		obj.setCompararRegistro(container.isCompararRegistros());
 		Objeto[] bkp = objetos;
 		objetos = new Objeto[bkp.length + 1];
 		System.arraycopy(bkp, 0, objetos, 0, bkp.length);
