@@ -103,6 +103,10 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getColunas(nomes);
 	}
 
+	public String detalhesExcecao() {
+		return model.detalhesExcecao();
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return model.getColumnClass(columnIndex);

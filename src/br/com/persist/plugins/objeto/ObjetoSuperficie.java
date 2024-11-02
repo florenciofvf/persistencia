@@ -1890,7 +1890,10 @@ class SuperficiePopup2 extends Popup {
 					if (builder.length() > 0) {
 						builder.append(Constantes.QL);
 					}
-					builder.append(objeto.getId() + " - " + interno.getTitle());
+					String string = objeto.getId() + " - " + interno.getTitle();
+					builder.append(string + Constantes.QL);
+					builder.append(Util.completar("", string.length(), '-') + Constantes.QL);
+					builder.append(interno.detalhesExcecao() + Constantes.QL2);
 				}
 			}
 		}

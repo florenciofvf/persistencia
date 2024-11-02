@@ -168,6 +168,19 @@ public class PersistenciaModelo implements TableModel {
 		return lista;
 	}
 
+	public String detalhesExcecao() {
+		StringBuilder sb = new StringBuilder();
+		for (Coluna c : colunas) {
+			if (c.getStringComparaRegistro() != null) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(c.getStringComparaRegistro());
+			}
+		}
+		return sb.toString();
+	}
+
 	public List<Coluna> listarColunasTabela() {
 		List<Coluna> lista = new ArrayList<>();
 		for (Coluna c : colunas) {

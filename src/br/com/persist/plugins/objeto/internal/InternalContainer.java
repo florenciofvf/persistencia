@@ -3910,6 +3910,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		return toolbar.contemExcecao();
 	}
 
+	public String detalhesExcecao() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(tabelaPersistencia.detalhesExcecao());
+		if (sb.length() == 0) {
+			sb.append(toolbar.msgException);
+		}
+		return sb.toString();
+	}
+
 	public void limparOutros(InternalContainer invocador) {
 		if (invocador != this) {
 			limpar2();
