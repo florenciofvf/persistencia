@@ -47,6 +47,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
@@ -1307,8 +1308,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
-				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
-						ObjetoMensagens.getString("label.total_detalhes"));
+				private JCheckBoxMenuItem chkSomenteTotal = new JCheckBoxMenuItem(
+						ObjetoMensagens.getString("label.somente_total_reg"));
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
 				private Action renomearAcao = actionMenu("label.renomear");
 				private Action excluirAcao = actionMenu("label.excluir");
@@ -1321,7 +1322,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addItem(chkPesqEmMemoria);
-					addItem(chkTotalDetalhes);
+					addItem(chkSomenteTotal);
 					addMenuItem(true, nomeIconeReferAcao);
 					addMenuItem(nomeReferAcao);
 					addMenuItem(renomearAcao);
@@ -1353,6 +1354,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					});
+					ButtonGroup grupo = new ButtonGroup();
+					grupo.add(chkPesqEmMemoria);
+					grupo.add(chkSomenteTotal);
 				}
 
 				private void preNomeIconeRefer() {
@@ -1925,14 +1929,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						throws ObjetoException, AssistenciaException {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
-					if (!chkTotalDetalhes.isSelected() && !chkPesqEmMemoria.isSelected()) {
+					if (!chkSomenteTotal.isSelected() && !chkPesqEmMemoria.isSelected()) {
 						pesquisa.setProcessado(false);
 						pesquisa.inicializarColetores(lista);
 						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
 					}
-					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected(),
+					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkSomenteTotal.isSelected(),
 							chkPesqEmMemoria.isSelected());
-					if (!chkTotalDetalhes.isSelected() && !chkPesqEmMemoria.isSelected()) {
+					if (!chkSomenteTotal.isSelected() && !chkPesqEmMemoria.isSelected()) {
 						pesquisarFinal(coluna);
 					}
 				}
@@ -1940,13 +1944,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void pesquisaArray(Argumento argumento) throws ObjetoException, AssistenciaException {
 					pesquisa.setObjeto(objeto);
 					processarParams(pesquisa);
-					if (!chkTotalDetalhes.isSelected()) {
+					if (!chkSomenteTotal.isSelected()) {
 						pesquisa.setProcessado(false);
 						pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
 					}
-					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkTotalDetalhes.isSelected(),
+					vinculoListener.pesquisar(getConexao(), pesquisa, argumento, chkSomenteTotal.isSelected(),
 							chkPesqEmMemoria.isSelected());
-					if (!chkTotalDetalhes.isSelected()) {
+					if (!chkSomenteTotal.isSelected()) {
 						pesquisarFinalArray();
 					}
 				}
