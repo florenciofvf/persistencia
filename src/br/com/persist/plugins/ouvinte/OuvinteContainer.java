@@ -1,7 +1,6 @@
 package br.com.persist.plugins.ouvinte;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
-import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
@@ -9,15 +8,20 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
+import java.io.File;
+import java.io.PrintWriter;
 
 import javax.swing.Icon;
+import javax.swing.JFileChooser;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -26,6 +30,8 @@ public class OuvinteContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private OuvinteFormulario ouvinteFormulario;
+	private TextArea textArea = new TextArea();
+	private File arquivo;
 
 	public OuvinteContainer(Janela janela, Formulario formulario) {
 		super(formulario);
@@ -43,6 +49,7 @@ public class OuvinteContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, textArea);
 	}
 
 	@Override
@@ -54,7 +61,7 @@ public class OuvinteContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, SALVAR);
 		}
 
 		@Override
@@ -87,11 +94,37 @@ public class OuvinteContainer extends AbstratoContainer {
 		}
 
 		@Override
-		protected void baixar() {
+		protected void salvar() {
+			JFileChooser fileChooser = Util.criarFileChooser(arquivo, false);
+			int opcao = fileChooser.showSaveDialog(formulario);
+			if (opcao == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				if (file != null) {
+					salvar(file);
+					arquivo = file;
+					setTitulo();
+				}
+			}
 		}
 
-		@Override
-		protected void salvar() {
+		private void salvar(File file) {
+			try (PrintWriter pw = new PrintWriter(file)) {
+				pw.print(textArea.getText());
+				salvoMensagem();
+			} catch (Exception e) {
+				Util.mensagem(OuvinteContainer.this, e.getMessage());
+			}
+		}
+
+		private void setTitulo() {
+			if (ouvinteFormulario == null) {
+				int indice = formulario.getIndicePagina(OuvinteContainer.this);
+				if (indice != -1) {
+					formulario.setHintTitlePagina(indice, arquivo.getAbsolutePath(), arquivo.getName());
+				}
+			} else {
+				ouvinteFormulario.setTitle(arquivo.getName());
+			}
 		}
 	}
 
