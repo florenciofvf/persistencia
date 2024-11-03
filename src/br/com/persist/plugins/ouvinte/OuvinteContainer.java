@@ -3,6 +3,7 @@ package br.com.persist.plugins.ouvinte;
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
+import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
@@ -71,7 +72,7 @@ public class OuvinteContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, SALVAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, SALVAR);
 		}
 
 		@Override
@@ -101,6 +102,11 @@ public class OuvinteContainer extends AbstratoContainer {
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
 		}
 
 		@Override
