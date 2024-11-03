@@ -93,6 +93,7 @@ import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
+import br.com.persist.plugins.ouvinte.OuvinteEvento;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
@@ -1755,7 +1756,8 @@ class SuperficiePopup2 extends Popup {
 			Icones.NOVO);
 	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
-	private Action formulariosComExcecaoAcao = ObjetoSuperficie.acaoMenu("label.forms_com_excecao");
+	private Action formulariosComExcecaoAcaoMsg = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_msg");
+	private Action formulariosComExcecaoAcaoOuv = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_ouv");
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
 	private Action propriedadesAcao = actionMenu("label.propriedades");
@@ -1771,8 +1773,9 @@ class SuperficiePopup2 extends Popup {
 		addMenuItem(criarObjetoAcao);
 		addMenuItem(true, colarAcao);
 		add(true, superficie.getMenuAjustar());
-		addMenuItem(true, formulariosComExcecaoAcao);
-		addMenuItem(formulariosInvisiveisAcao);
+		addMenuItem(true, formulariosComExcecaoAcaoMsg);
+		addMenuItem(formulariosComExcecaoAcaoOuv);
+		addMenuItem(true, formulariosInvisiveisAcao);
 		addMenuItem(atualizarFormulariosAcao);
 		addMenuItem(limparFormulariosAcao);
 		MenuItem item = addMenuItem(limparFormulariosFiltroAcao);
@@ -1788,7 +1791,8 @@ class SuperficiePopup2 extends Popup {
 		criarObjetoAcao.setActionListener(e -> criarNovoObjeto());
 		colarAcao.setActionListener(e -> colar());
 		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
-		formulariosComExcecaoAcao.setActionListener(e -> formulariosComExcecao());
+		formulariosComExcecaoAcaoMsg.setActionListener(e -> formulariosComExcecaoMsg());
+		formulariosComExcecaoAcaoOuv.setActionListener(e -> formulariosComExcecaoOuv());
 		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
 		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
@@ -1812,20 +1816,23 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	void preShow(boolean contemFrames) {
+		formulariosComExcecaoAcaoMsg.setEnabled(contemFrames);
+		formulariosComExcecaoAcaoOuv.setEnabled(contemFrames);
 		colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
 		limparFormulariosFiltroAcao.setEnabled(contemFrames);
 		superficie.getMenuLargura().habilitar(contemFrames);
 		superficie.getMenuAjustar().habilitar(contemFrames);
 		superficie.getMenuAjuste().habilitar(contemFrames);
-		formulariosComExcecaoAcao.setEnabled(contemFrames);
 		formulariosInvisiveisAcao.setEnabled(contemFrames);
 		atualizarFormulariosAcao.setEnabled(contemFrames);
 		limparFormulariosAcao.setEnabled(contemFrames);
 		menuIgnorados.preShow();
 		if (contemFrames && contemExcecao()) {
-			formulariosComExcecaoAcao.icon(Icones.GLOBO_GIF);
+			formulariosComExcecaoAcaoMsg.icon(Icones.GLOBO_GIF);
+			formulariosComExcecaoAcaoOuv.icon(Icones.GLOBO_GIF);
 		} else {
-			formulariosComExcecaoAcao.icon(null);
+			formulariosComExcecaoAcaoMsg.icon(null);
+			formulariosComExcecaoAcaoOuv.icon(null);
 		}
 	}
 
@@ -1882,8 +1889,33 @@ class SuperficiePopup2 extends Popup {
 		return false;
 	}
 
-	private void formulariosComExcecao() {
+	private void formulariosComExcecaoMsg() {
 		StringBuilder builder = new StringBuilder();
+		getStringExcecao(builder);
+		if (builder.length() == 0) {
+			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_com_excecao"));
+		} else {
+			Util.mensagem(superficie.getFormulario(), builder.toString());
+		}
+	}
+
+	private void formulariosComExcecaoOuv() {
+		StringBuilder builder = new StringBuilder();
+		getStringExcecao(builder);
+		Map<String, Object> args = new HashMap<>();
+		if (builder.length() == 0) {
+			args.put(OuvinteEvento.GET_STRING, ObjetoMensagens.getString("msg.nenhum_form_com_excecao"));
+		} else {
+			args.put(OuvinteEvento.GET_STRING, builder.toString());
+		}
+		superficie.getFormulario().processar(args);
+		String string = (String) args.get(OuvinteEvento.GET_RESULT);
+		if (string == null) {
+			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_com_excecao_result"));
+		}
+	}
+
+	private void getStringExcecao(StringBuilder builder) {
 		for (JInternalFrame frame : superficie.getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
@@ -1898,11 +1930,6 @@ class SuperficiePopup2 extends Popup {
 					builder.append(interno.detalhesExcecao() + Constantes.QL2);
 				}
 			}
-		}
-		if (builder.length() == 0) {
-			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_com_excecao"));
-		} else {
-			Util.mensagem(superficie.getFormulario(), builder.toString());
 		}
 	}
 

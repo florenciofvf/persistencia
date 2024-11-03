@@ -63,6 +63,7 @@ public class OuvinteContainer extends AbstratoContainer {
 		String string = (String) args.get(OuvinteEvento.GET_STRING);
 		if (!Util.isEmpty(string)) {
 			textArea.setText(string);
+			args.put(OuvinteEvento.GET_RESULT, OuvinteEvento.GET_RESULT);
 		}
 	}
 
