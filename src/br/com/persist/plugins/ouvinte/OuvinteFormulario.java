@@ -2,6 +2,7 @@ package br.com.persist.plugins.ouvinte;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
+import java.util.Map;
 
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.formulario.Formulario;
@@ -39,6 +40,10 @@ public class OuvinteFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		container.processar(formulario, args);
+	}
+
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
@@ -47,7 +52,18 @@ public class OuvinteFormulario extends AbstratoFormulario {
 	}
 
 	@Override
+	public void windowActivatedHandler(Window window) {
+		formulario.setOuvinteFormulario(this);
+	}
+
+	@Override
 	public void windowOpenedHandler(Window window) {
+		formulario.setOuvinteFormulario(this);
 		container.windowOpenedHandler(window);
+	}
+
+	@Override
+	public void windowClosingHandler(Window window) {
+		formulario.setOuvinteFormulario(null);
 	}
 }

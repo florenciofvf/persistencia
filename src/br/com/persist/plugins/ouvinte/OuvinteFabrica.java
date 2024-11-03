@@ -3,6 +3,7 @@ package br.com.persist.plugins.ouvinte;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -36,6 +37,13 @@ public class OuvinteFabrica extends AbstratoFabricaContainer {
 	}
 
 	private class OuvinteServico extends AbstratoServico {
+		@Override
+		public void processar(Formulario formulario, Map<String, Object> args) {
+			OuvinteFormulario form = formulario.getOuvinteFormulario();
+			if (form != null) {
+				form.processar(formulario, args);
+			}
+		}
 	}
 
 	@Override

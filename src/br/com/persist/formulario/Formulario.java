@@ -41,6 +41,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.marca.XML;
+import br.com.persist.plugins.ouvinte.OuvinteFormulario;
 
 public class Formulario extends JFrame {
 	private final transient Map<String, FabricaContainer> fabricas = new HashMap<>();
@@ -49,6 +50,7 @@ public class Formulario extends JFrame {
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 	private static final long serialVersionUID = 1L;
+	private OuvinteFormulario ouvinteFormulario;
 
 	public Formulario(GraphicsConfiguration gc) {
 		super(Mensagens.getTituloAplicacao(), gc);
@@ -355,5 +357,13 @@ public class Formulario extends JFrame {
 
 	public void listarNomeBiblio(List<String> lista) {
 		lista.addAll(FormularioFabrica.listarNomeBiblio());
+	}
+
+	public OuvinteFormulario getOuvinteFormulario() {
+		return ouvinteFormulario;
+	}
+
+	public void setOuvinteFormulario(OuvinteFormulario ouvinteFormulario) {
+		this.ouvinteFormulario = ouvinteFormulario;
 	}
 }
