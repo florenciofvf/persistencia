@@ -1310,10 +1310,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
 				private JCheckBoxMenuItem chkSomenteTotal = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.somente_total_reg"));
+				private Action limparItensAcao = acaoMenu("label.limpar_itens");
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
 				private Action renomearAcao = actionMenu("label.renomear");
 				private Action excluirAcao = actionMenu("label.excluir");
 				private static final long serialVersionUID = 1L;
+				private ButtonGroup grupo = new ButtonGroup();
 				private MenuInfo menuInfo = new MenuInfo();
 				private MenuUtil menuUtil = new MenuUtil();
 				private final transient Pesquisa pesquisa;
@@ -1321,6 +1323,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
+					addMenuItem(limparItensAcao);
 					addItem(chkPesqEmMemoria);
 					addItem(chkSomenteTotal);
 					addMenuItem(true, nomeIconeReferAcao);
@@ -1334,6 +1337,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
+					limparItensAcao.setActionListener(e -> grupo.clearSelection());
 					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
 					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
@@ -1354,7 +1358,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					});
-					ButtonGroup grupo = new ButtonGroup();
 					grupo.add(chkPesqEmMemoria);
 					grupo.add(chkSomenteTotal);
 				}
