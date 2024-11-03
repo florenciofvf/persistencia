@@ -14,6 +14,7 @@ import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 
 public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
+	static final String MODELO_DE_DADOS_ANTERIOR_NULO = "MODELO DE DADOS ANTERIOR NULO";
 	private static final long serialVersionUID = 1L;
 	private final String nomeColuna;
 	private final Toolbar toolbar;
@@ -32,11 +33,10 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
 
 		if (backup == null) {
-			toolbar.exceptionEnable("MODELO DE DADOS ANTERIOR NULO");
+			toolbar.exceptionEnable(MODELO_DE_DADOS_ANTERIOR_NULO);
 			return this;
 		} else if (modelo.getRowCount() != backup.getRowCount()) {
-			toolbar.exceptionEnable("TOTAL DE REGISTROS ATUAL: [" + modelo.getRowCount()
-					+ "] TOTAL DE REGISTROS ANTERIOR: [" + backup.getRowCount() + "]");
+			toolbar.exceptionEnable(getStringTotaisDiff(modelo, backup));
 			return this;
 		}
 
@@ -72,5 +72,9 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		}
 
 		return this;
+	}
+
+	static String getStringTotaisDiff(OrdenacaoModelo modelo, OrdenacaoModelo backup) {
+		return "TOTAL ATUAL: [" + modelo.getRowCount() + "] TOTAL ANTERIOR: [" + backup.getRowCount() + "]";
 	}
 }
