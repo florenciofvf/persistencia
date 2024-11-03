@@ -1309,7 +1309,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
 				private JCheckBoxMenuItem chkTotalDetalhes = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.total_detalhes"));
-				private Action destParticAcao = acaoMenu("label.dest_particp");
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
 				private Action renomearAcao = actionMenu("label.renomear");
 				private Action excluirAcao = actionMenu("label.excluir");
@@ -1323,7 +1322,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addItem(chkPesqEmMemoria);
 					addItem(chkTotalDetalhes);
-					addMenuItem(destParticAcao);
 					addMenuItem(true, nomeIconeReferAcao);
 					addMenuItem(nomeReferAcao);
 					addMenuItem(renomearAcao);
@@ -1338,7 +1336,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
 					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
-					destParticAcao.setActionListener(e -> destacarParticps());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					nomeReferAcao.setActionListener(e -> nomeRefer());
@@ -1367,6 +1364,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private class MenuInfo extends Menu {
+					private Action destParticAcao = acaoMenu("label.dest_particp");
 					private Action elementosAcao = actionMenu("label.elementos");
 					private Action descricaoAcao = actionMenu("label.descricao");
 					private Action consultaAcao = actionMenu("label.consulta");
@@ -1374,12 +1372,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 					private MenuInfo() {
 						super("label.info");
-						addMenuItem(elementosAcao);
+						addMenuItem(destParticAcao);
+						addMenuItem(true, elementosAcao);
 						addMenuItem(true, descricaoAcao);
 						addMenuItem(true, consultaAcao);
+						destParticAcao.setActionListener(e -> destacarParticps());
 						elementosAcao.setActionListener(e -> elementos());
 						descricaoAcao.setActionListener(e -> descricao());
 						consultaAcao.setActionListener(e -> consulta());
+					}
+
+					private void destacarParticps() {
+						if (vinculoListener != null) {
+							destacarObjeto = !destacarObjeto;
+							vinculoListener.pesquisarDestacar(pesquisa, destacarObjeto);
+						}
 					}
 
 					private void elementos() {
@@ -1911,13 +1918,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Argumento argumento = new ArgumentoArray(valoresChaves, chavesReferencia.length);
 							pesquisaArray(argumento);
 						}
-					}
-				}
-
-				private void destacarParticps() {
-					if (vinculoListener != null) {
-						destacarObjeto = !destacarObjeto;
-						vinculoListener.pesquisarDestacar(pesquisa, destacarObjeto);
 					}
 				}
 
