@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
@@ -55,6 +56,14 @@ public class OuvinteContainer extends AbstratoContainer {
 	@Override
 	public void setJanela(Janela janela) {
 		toolbar.setJanela(janela);
+	}
+
+	@Override
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		String string = (String) args.get(OuvinteEvento.GET_STRING);
+		if (!Util.isEmpty(string)) {
+			textArea.setText(string);
+		}
 	}
 
 	private class Toolbar extends BarraButton {
