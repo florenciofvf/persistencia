@@ -1833,9 +1833,11 @@ class SuperficiePopup2 extends Popup {
 		if (contemFrames && contemExcecao()) {
 			formulariosComExcecaoAcaoMsg.icon(Icones.GLOBO_GIF);
 			formulariosComExcecaoAcaoOuv.icon(Icones.GLOBO_GIF);
+			atualizarFormulariosAndOuvir.icon(Icones.GLOBO_GIF);
 		} else {
 			formulariosComExcecaoAcaoMsg.icon(null);
 			formulariosComExcecaoAcaoOuv.icon(null);
+			atualizarFormulariosAndOuvir.icon(null);
 		}
 	}
 
