@@ -12,10 +12,10 @@ import org.xml.sax.Attributes;
 import br.com.persist.assistencia.Constantes;
 
 public class Modulo extends Container {
-	private static final String ATT_INVALIDO = "invalido";
+	public static final String ATT_INVALIDO = "invalido";
 	public static final String TAG_MODULO = "modulo";
 	private static final String ATT_NOME = "nome";
-	private static final String TRUE = "true";
+	public static final String TRUE = "true";
 	private List<Map> cacheMaps;
 	private final String nome;
 	private boolean invalido;

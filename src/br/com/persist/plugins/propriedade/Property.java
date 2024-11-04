@@ -14,6 +14,7 @@ public class Property extends Container {
 	private static final String ATT_NAME = "name";
 	private final String value;
 	private final String name;
+	private boolean invalido;
 
 	public Property(String name, String value) {
 		this.name = Objects.requireNonNull(name);
@@ -21,7 +22,10 @@ public class Property extends Container {
 	}
 
 	public static Property criar(Attributes atts) {
-		return new Property(value(atts, ATT_NAME), value(atts, ATT_VALUE));
+		Property property = new Property(value(atts, ATT_NAME), value(atts, ATT_VALUE));
+		String string = value(atts, Modulo.ATT_INVALIDO);
+		property.setInvalido(Modulo.TRUE.equalsIgnoreCase(string));
+		return property;
 	}
 
 	public String getName() {
@@ -32,12 +36,23 @@ public class Property extends Container {
 		return value;
 	}
 
+	public boolean isInvalido() {
+		return invalido;
+	}
+
+	public void setInvalido(boolean invalido) {
+		this.invalido = invalido;
+	}
+
 	@Override
 	public void adicionar(Container c) throws PropriedadeException {
 		throw new PropriedadeException("erro.container_vazio");
 	}
 
 	void gerarProperty(StyledDocument doc) throws BadLocationException {
+		if (invalido) {
+			return;
+		}
 		String string = value;
 		Modulo modulo = (Modulo) pai;
 		List<Map> maps = modulo.getCacheMaps();
@@ -55,6 +70,9 @@ public class Property extends Container {
 		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAG_PROPERTY, doc);
 		PropriedadeUtil.atributo(ATT_NAME, name, doc);
 		PropriedadeUtil.atributo(ATT_VALUE, value, doc);
+		if (invalido) {
+			PropriedadeUtil.atributo(Modulo.ATT_INVALIDO, Modulo.TRUE, doc);
+		}
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 
