@@ -1758,6 +1758,7 @@ class SuperficiePopup2 extends Popup {
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
 	private Action formulariosComExcecaoAcaoMsg = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_msg");
 	private Action formulariosComExcecaoAcaoOuv = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_ouv");
+	private Action atualizarFormulariosAndOuvir = ObjetoSuperficie.acaoMenu("label.forms_atualizar_e_ouv");
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
 	private Action propriedadesAcao = actionMenu("label.propriedades");
@@ -1775,6 +1776,7 @@ class SuperficiePopup2 extends Popup {
 		add(true, superficie.getMenuAjustar());
 		addMenuItem(true, formulariosComExcecaoAcaoMsg);
 		addMenuItem(formulariosComExcecaoAcaoOuv);
+		addMenuItem(atualizarFormulariosAndOuvir);
 		addMenuItem(true, formulariosInvisiveisAcao);
 		addMenuItem(atualizarFormulariosAcao);
 		addMenuItem(limparFormulariosAcao);
@@ -1793,6 +1795,7 @@ class SuperficiePopup2 extends Popup {
 		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
 		formulariosComExcecaoAcaoMsg.setActionListener(e -> formulariosComExcecaoMsg());
 		formulariosComExcecaoAcaoOuv.setActionListener(e -> formulariosComExcecaoOuv());
+		atualizarFormulariosAndOuvir.setActionListener(e -> atualizarFormsAndOuvir());
 		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
 		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
@@ -1913,6 +1916,11 @@ class SuperficiePopup2 extends Popup {
 		if (string == null) {
 			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_com_excecao_result"));
 		}
+	}
+
+	private void atualizarFormsAndOuvir() {
+		superficie.atualizarFormularios();
+		SwingUtilities.invokeLater(this::formulariosComExcecaoOuv);
 	}
 
 	private void getStringExcecao(StringBuilder builder) {
