@@ -180,13 +180,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private transient InternalListener.Largura larguraListener;
 	private transient InternalListener.Selecao selecaoListener;
 	private transient InternalListener.Titulo tituloListener;
+	private final transient Toolbar toolbar = new Toolbar();
 	private static final Logger LOG = Logger.getGlobal();
 	private static final String DESCRICAO = "DESCRICAO";
 	private ScrollPane scrollPane = new ScrollPane();
 	private static final long serialVersionUID = 1L;
 	private transient InternalConfig internalConfig;
 	private final JComboBox<Conexao> comboConexao;
-	private final Toolbar toolbar = new Toolbar();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
 	static final String WHERE = " WHERE ";
@@ -569,9 +569,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		OrdenacaoModelo backup = tabelaPersistencia.getModeloBackup();
 
-		if (backup == null) {
+		if (objeto.isCompararRegistro() && backup == null) {
 			toolbar.exceptionEnable(ComparaRegistroRenderer.MODELO_DE_DADOS_ANTERIOR_NULO);
-		} else if (modelo.getRowCount() != backup.getRowCount()) {
+		} else if (objeto.isCompararRegistro() && modelo.getRowCount() != backup.getRowCount()) {
 			toolbar.exceptionEnable(ComparaRegistroRenderer.getStringTotaisDiff(modelo, backup));
 		}
 	}
