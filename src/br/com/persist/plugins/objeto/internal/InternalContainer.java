@@ -1305,6 +1305,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action ordenarArrastoAcao = actionMenu("label.ordenar_arrasto", Icones.ASC_TEXTO);
 				private Action ordenarManualAcao = actionMenu("label.ordenar_manual", Icones.ASC_TEXTO);
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
+				private Action excluirElementoAcao = actionMenu("label.excluir_elemento");
 				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
 				private JCheckBoxMenuItem chkSomenteTotal = new JCheckBoxMenuItem(
@@ -1330,7 +1331,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(renomearAcao);
 					addMenuItem(true, ordenarManualAcao);
 					addMenuItem(ordenarArrastoAcao);
-					addMenuItem(true, excluirAcao);
+					addMenuItem(true, excluirElementoAcao);
+					addMenuItem(excluirAcao);
 					addSeparator();
 					add(menuInfo);
 					addSeparator();
@@ -1338,6 +1340,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					this.pesquisa = pesquisa;
 					limparItensAcao.setActionListener(e -> grupo.clearSelection());
 					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
+					excluirElementoAcao.setActionListener(e -> excluirElemento());
 					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
@@ -1646,6 +1649,46 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						vinculoListener.salvarVinculacao(vinculacao);
 						toolbar.buttonPesquisa.complemento(objeto);
 					}
+				}
+
+				private void excluirElemento() {
+					if (vinculoListener == null) {
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
+					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+					if (pesq != null) {
+						try {
+							Referencia ref = selecionarRef(pesq);
+							if (ref != null
+									&& Util.confirmar(InternalContainer.this,
+											ObjetoMensagens.getString("msg.confirmar_exclusao_elemento",
+													ref.toString()),
+											false)
+									&& pesq.remove(ref) && pesquisa.remove(ref)) {
+								vinculoListener.salvarVinculacao(vinculacao);
+							}
+						} catch (ObjetoException ex) {
+							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						}
+					}
+				}
+
+				private Referencia selecionarRef(Pesquisa pesquisa) {
+					Coletor coletor = new Coletor();
+					Config config = new SetLista.Config(true, true);
+					SetLista.view(objeto.getId(), pesquisa.getListRefToString(), coletor, InternalContainer.this,
+							config);
+					if (coletor.size() == 1) {
+						return pesquisa.get(coletor.get(0));
+					}
+					return null;
 				}
 
 				private void nomeIconeRefer() throws AssistenciaException {

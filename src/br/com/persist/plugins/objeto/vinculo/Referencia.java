@@ -223,7 +223,7 @@ public class Referencia {
 
 	@Override
 	public String toString() {
-		return "grupo=" + grupo + ", tabela=" + tabela + ", campo=" + campo;
+		return "grupo=" + grupo + ", tabela=" + tabela + ", campo=" + campo + (limparApos ? ", limparApos=true" : "");
 	}
 
 	public String toString2() {

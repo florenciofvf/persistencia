@@ -71,6 +71,31 @@ public class Pesquisa {
 		return null;
 	}
 
+	public Referencia get(String toString) {
+		for (Referencia ref : referencias) {
+			if (ref.toString().equals(toString)) {
+				return ref;
+			}
+		}
+		for (Referencia ref : referenciasApos) {
+			if (ref.toString().equals(toString)) {
+				return ref;
+			}
+		}
+		return null;
+	}
+
+	public List<String> getListRefToString() {
+		List<String> lista = new ArrayList<>();
+		for (Referencia ref : referencias) {
+			lista.add(ref.toString());
+		}
+		for (Referencia ref : referenciasApos) {
+			lista.add(ref.toString());
+		}
+		return lista;
+	}
+
 	public Referencia get() {
 		if (referencias.size() != 1) {
 			return null;
@@ -257,6 +282,20 @@ public class Pesquisa {
 				return true;
 			} else if (ref.isLimparApos() && !ReferenciaUtil.contem(ref, referenciasApos)) {
 				referenciasApos.add(ref);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean remove(Referencia ref) throws ObjetoException {
+		if (ref != null) {
+			if (!ref.isLimparApos() && ReferenciaUtil.contem(ref, referencias)) {
+				referencias.remove(ref);
+				ref.pesquisa = null;
+				return true;
+			} else if (ref.isLimparApos() && ReferenciaUtil.contem(ref, referenciasApos)) {
+				referenciasApos.remove(ref);
 				return true;
 			}
 		}
