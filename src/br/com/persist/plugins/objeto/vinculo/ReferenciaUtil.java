@@ -19,4 +19,17 @@ public class ReferenciaUtil {
 		}
 		return false;
 	}
+
+	public static int getIndice(Referencia ref, List<Referencia> referencias) throws ObjetoException {
+		if (ref == null || referencias == null) {
+			throw new ObjetoException("int getIndice(): ref == null || referencias == null");
+		}
+		for (int i = 0; i < referencias.size(); i++) {
+			Referencia r = referencias.get(i);
+			if (r.igual(ref)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }

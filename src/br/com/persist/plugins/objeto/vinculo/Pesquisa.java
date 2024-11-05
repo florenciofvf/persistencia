@@ -291,12 +291,18 @@ public class Pesquisa {
 	public boolean remove(Referencia ref) throws ObjetoException {
 		if (ref != null) {
 			if (!ref.isLimparApos() && ReferenciaUtil.contem(ref, referencias)) {
-				referencias.remove(ref);
-				ref.pesquisa = null;
-				return true;
+				int i = ReferenciaUtil.getIndice(ref, referencias);
+				if (i != -1) {
+					referencias.remove(i);
+					ref.pesquisa = null;
+					return true;
+				}
 			} else if (ref.isLimparApos() && ReferenciaUtil.contem(ref, referenciasApos)) {
-				referenciasApos.remove(ref);
-				return true;
+				int i = ReferenciaUtil.getIndice(ref, referenciasApos);
+				if (i != -1) {
+					referenciasApos.remove(i);
+					return true;
+				}
 			}
 		}
 		return false;
