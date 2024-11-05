@@ -1316,12 +1316,12 @@ public class ObjetoContainer extends Panel {
 		}
 	}
 
-	private class PanelCor extends Panel implements ChangeListener {
+	private class PanelCorFundo extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
 		private final JColorChooser colorChooser;
 
-		private PanelCor() {
+		private PanelCorFundo() {
 			colorChooser = new JColorChooser(objeto.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
@@ -1633,14 +1633,14 @@ public class ObjetoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final PanelGeral geral = new PanelGeral();
 		private final PanelBanco banco = new PanelBanco();
-		private final PanelCor cor = new PanelCor();
+		private final PanelCorFundo corFundo = new PanelCorFundo();
 		private final PanelCorFonte corFonte = new PanelCorFonte();
 
 		private Fichario() {
 			addTab("label.geral", geral);
 			addTab("label.banco", banco);
 			addTab("label.descricao", new PanelDescricao());
-			addTab("label.cor", cor);
+			addTab("label.cor_fundo", corFundo);
 			addTab("label.cor_fonte", corFonte);
 		}
 
@@ -1673,7 +1673,7 @@ public class ObjetoContainer extends Panel {
 			}
 			geral.checarVinculados(para);
 			banco.checarVinculados(para);
-			cor.checarVinculados(para);
+			corFundo.checarVinculados(para);
 			corFonte.checarVinculados(para);
 		}
 	}

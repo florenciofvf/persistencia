@@ -308,12 +308,12 @@ public class RelacaoContainer extends Panel {
 		}
 	}
 
-	private class PanelCor extends Panel implements ChangeListener {
+	private class PanelCorFundo extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
 		private final JColorChooser colorChooser;
 
-		private PanelCor() {
+		private PanelCorFundo() {
 			colorChooser = new JColorChooser(relacao.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
@@ -511,7 +511,7 @@ public class RelacaoContainer extends Panel {
 		private Fichario() throws AssistenciaException {
 			addTab("label.geral", new PanelGeral());
 			addTab("label.descricao", new PanelDescricao());
-			addTab("label.cor", new PanelCor());
+			addTab("label.cor_fundo", new PanelCorFundo());
 			addTab("label.cor_fonte", new PanelCorFonte());
 		}
 	}
