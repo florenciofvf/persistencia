@@ -852,7 +852,7 @@ public class Objeto implements Runnable {
 
 	public void setId(String id) {
 		if (!Util.isEmpty(id)) {
-			if (listener != null && listener.contemId(id)) {
+			if (listener != null && listener.contemId(this, id)) {
 				this.id = id + " (OUTRO OBJETO J\u00C1 POSSUI ESTE ID " + id + ")";
 			} else {
 				this.id = id;

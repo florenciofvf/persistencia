@@ -891,9 +891,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	@Override
-	public boolean contemId(String id) {
+	public boolean contemId(Objeto objeto, String id) {
 		if (id != null) {
-			return ObjetoSuperficieUtil.contemId(this, id);
+			return ObjetoSuperficieUtil.contemId(this, objeto, id);
 		}
 		return false;
 	}

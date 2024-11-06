@@ -483,10 +483,10 @@ public class ObjetoSuperficieUtil {
 		return null;
 	}
 
-	public static boolean contemId(ObjetoSuperficie superficie, String id) {
+	public static boolean contemId(ObjetoSuperficie superficie, Objeto obj, String id) {
 		for (int i = 0; i < superficie.objetos.length; i++) {
 			Objeto objeto = superficie.objetos[i];
-			if (objeto.idEquals(id)) {
+			if (objeto != obj && objeto.idEquals(id)) {
 				return true;
 			}
 		}
