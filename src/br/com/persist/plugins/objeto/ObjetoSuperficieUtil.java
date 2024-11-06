@@ -483,6 +483,16 @@ public class ObjetoSuperficieUtil {
 		return null;
 	}
 
+	public static boolean contemId(ObjetoSuperficie superficie, String id) {
+		for (int i = 0; i < superficie.objetos.length; i++) {
+			Objeto objeto = superficie.objetos[i];
+			if (objeto.idEquals(id)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static boolean contemId(ObjetoSuperficie superficie, Objeto obj) {
 		for (int i = 0; i < superficie.objetos.length; i++) {
 			Objeto objeto = superficie.objetos[i];
@@ -542,6 +552,17 @@ public class ObjetoSuperficieUtil {
 			objeto.setIgnorar(b);
 		}
 		superficie.repaint();
+	}
+
+	public static int getIndiceId(ObjetoSuperficie superficie, Objeto obj) {
+		if (obj != null) {
+			for (int i = 0; i < superficie.objetos.length; i++) {
+				if (superficie.objetos[i].equalsId(obj)) {
+					return i;
+				}
+			}
+		}
+		return -1;
 	}
 
 	public static int getIndice(ObjetoSuperficie superficie, Objeto obj) {
