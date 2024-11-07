@@ -22,6 +22,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.TextArea;
 import br.com.persist.fichario.Fichario;
@@ -64,15 +65,21 @@ public class OuvinteContainer extends AbstratoContainer {
 		String string = (String) args.get(OuvinteEvento.GET_STRING);
 		if (!Util.isEmpty(string)) {
 			textArea.setText(string);
+			if (toolbar.chkFormTop.isSelected() && ouvinteFormulario != null) {
+				ouvinteFormulario.setAlwaysOnTop(true);
+			}
 			args.put(OuvinteEvento.GET_RESULT, OuvinteEvento.GET_RESULT);
 		}
 	}
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private final CheckBox chkFormTop = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, SALVAR);
+			chkFormTop.setToolTipText(OuvinteMensagens.getString("hint.formulario_top_mensagem"));
+			add(chkFormTop);
 		}
 
 		@Override
@@ -98,10 +105,12 @@ public class OuvinteContainer extends AbstratoContainer {
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+			chkFormTop.setEnabled(ouvinteFormulario != null);
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
+			chkFormTop.setEnabled(ouvinteFormulario != null);
 		}
 
 		@Override
