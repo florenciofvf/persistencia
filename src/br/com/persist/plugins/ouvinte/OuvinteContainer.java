@@ -65,8 +65,12 @@ public class OuvinteContainer extends AbstratoContainer {
 		String string = (String) args.get(OuvinteEvento.GET_STRING);
 		if (!Util.isEmpty(string)) {
 			textArea.setText(string);
-			if (toolbar.chkFormTop.isEnabled() && toolbar.chkFormTop.isSelected() && ouvinteFormulario != null) {
-				ouvinteFormulario.setAlwaysOnTop(true);
+			if (toolbar.chkAtivar.isSelected() && ouvinteFormulario != null) {
+				ouvinteFormulario.toFront();
+				ouvinteFormulario.requestFocus();
+			} else if (toolbar.chkAtivar.isSelected()) {
+				int indice = formulario.getIndicePagina(this);
+				formulario.selecionarPagina(indice);
 			}
 			args.put(OuvinteEvento.GET_RESULT, OuvinteEvento.GET_RESULT);
 		}
@@ -74,12 +78,12 @@ public class OuvinteContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private final CheckBox chkFormTop = new CheckBox();
+		private final CheckBox chkAtivar = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, SALVAR);
-			chkFormTop.setToolTipText(OuvinteMensagens.getString("hint.formulario_top_mensagem"));
-			add(chkFormTop);
+			chkAtivar.setToolTipText(OuvinteMensagens.getString("hint.formulario_top_mensagem"));
+			add(chkAtivar);
 		}
 
 		@Override
@@ -105,12 +109,10 @@ public class OuvinteContainer extends AbstratoContainer {
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
-			chkFormTop.setEnabled(ouvinteFormulario != null);
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
-			chkFormTop.setEnabled(ouvinteFormulario != null);
 		}
 
 		@Override

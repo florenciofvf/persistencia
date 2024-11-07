@@ -113,6 +113,10 @@ public class Formulario extends JFrame {
 		fichario.selecionarPagina(file);
 	}
 
+	public void selecionarPagina(int indice) {
+		fichario.selecionarPagina(indice);
+	}
+
 	public void fecharArquivo(File file) {
 		fichario.fecharArquivo(file);
 	}

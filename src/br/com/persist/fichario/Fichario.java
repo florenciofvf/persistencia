@@ -485,6 +485,10 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 
 	public void selecionarPagina(File file) {
 		int indice = getIndice(file);
+		selecionarPagina(indice);
+	}
+
+	public void selecionarPagina(int indice) {
 		if (indice >= 0) {
 			setSelectedIndex(indice);
 		}
