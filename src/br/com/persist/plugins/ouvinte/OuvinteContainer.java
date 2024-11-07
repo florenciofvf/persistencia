@@ -65,7 +65,7 @@ public class OuvinteContainer extends AbstratoContainer {
 		String string = (String) args.get(OuvinteEvento.GET_STRING);
 		if (!Util.isEmpty(string)) {
 			textArea.setText(string);
-			if (toolbar.chkFormTop.isSelected() && ouvinteFormulario != null) {
+			if (toolbar.chkFormTop.isEnabled() && toolbar.chkFormTop.isSelected() && ouvinteFormulario != null) {
 				ouvinteFormulario.setAlwaysOnTop(true);
 			}
 			args.put(OuvinteEvento.GET_RESULT, OuvinteEvento.GET_RESULT);
