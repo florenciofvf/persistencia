@@ -1995,6 +1995,7 @@ class SuperficiePopup2 extends Popup {
 
 class SuperficiePopup extends Popup {
 	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
+	private Action criarRelacaoAcao = ObjetoSuperficie.acaoMenu("label.criar_relacao", Icones.SETA);
 	private Action copiarIconeAcao = ObjetoSuperficie.acaoMenu("label.copiar_icone", Icones.COPIA);
 	private Action colarIconeAcao = ObjetoSuperficie.acaoMenu("label.colar_icone", Icones.COLAR);
 	Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
@@ -2027,6 +2028,7 @@ class SuperficiePopup extends Popup {
 		add(true, itemPartir);
 		add(true, itemDados);
 		addMenuItem(true, relacoesAcao);
+		addMenuItem(criarRelacaoAcao);
 		addMenuItem(true, configuracaoAcao);
 		eventos();
 	}
@@ -2348,6 +2350,7 @@ class SuperficiePopup extends Popup {
 			}
 		});
 		excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(superficie));
+		criarRelacaoAcao.setActionListener(e -> criarRelacao());
 		relacoesAcao.setActionListener(e -> {
 			if (superficie.selecionadoObjeto != null) {
 				try {
@@ -2372,6 +2375,25 @@ class SuperficiePopup extends Popup {
 		copiarIconeAcao.setActionListener(e -> copiarIcone(copiarIconeAcao));
 		colarIconeAcao.setActionListener(e -> colarIcone(colarIconeAcao));
 		copiarAcao.setActionListener(e -> copiar());
+	}
+
+	private void criarRelacao() {
+		List<Objeto> selecionados = ObjetoSuperficieUtil.getSelecionados(superficie);
+		if (selecionados.size() == Constantes.DOIS) {
+			Objeto objeto1 = selecionados.get(0);
+			Objeto objeto2 = selecionados.get(1);
+			try {
+				Relacao relacao = ObjetoSuperficieUtil.getRelacao(superficie, objeto1, objeto2);
+				if (relacao == null) {
+					relacao = new Relacao(objeto1, true, objeto2, true);
+					superficie.addRelacao(relacao);
+				}
+				superficie.repaint();
+				RelacaoDialogo.criar(superficie.container.getFrame(), superficie, relacao);
+			} catch (ObjetoException | AssistenciaException ex) {
+				Util.mensagem(superficie, ex.getMessage());
+			}
+		}
 	}
 
 	private void copiar() {
@@ -2447,6 +2469,7 @@ class SuperficiePopup extends Popup {
 		copiarIconeAcao.setObject(copiarIconeAcao.isEnabled() ? objeto : null);
 		colarIconeAcao.setEnabled(checarCopiarColarIcone(false, selecionados));
 		colarIconeAcao.setObject(colarIconeAcao.isEnabled() ? objeto : null);
+		criarRelacaoAcao.setEnabled(selecionados.size() == Constantes.DOIS);
 		itemDados.setObject(itemDados.isEnabled() ? objeto : null);
 		menuDistribuicao.setEnabled(objetoSelecionado);
 		itemPartir.setEnabled(!objetoSelecionado);
