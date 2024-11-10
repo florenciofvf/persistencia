@@ -1106,7 +1106,16 @@ public class ObjetoContainer extends Panel {
 		private void copiar() {
 			String string = Util.getString(textField);
 			if (!Util.isEmpty(string)) {
-				Util.setContentTransfered(string);
+				String str = string.toLowerCase();
+				int pos = str.indexOf("http");
+				if (pos == -1) {
+					Util.setContentTransfered(string);
+				} else if (Util.confirmar(ObjetoContainer.this, ObjetoMensagens.getString("msg.copiar_apartir_http"),
+						false)) {
+					Util.setContentTransfered(string.substring(pos));
+				} else {
+					Util.setContentTransfered(string);
+				}
 				lblMsg.mensagemChave("msg.copiado");
 			}
 		}
