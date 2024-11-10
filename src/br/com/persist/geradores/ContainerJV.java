@@ -127,8 +127,8 @@ public class ContainerJV extends Container {
 		return addCampoConstante(new Variavel("String", nome), Util.citar2(valor));
 	}
 
-	public Container addCampoConstante(Variavel var, String valor) {
-		add(new CampoConstante(var, valor));
+	public Container addCampoConstante(Variavel variavel, String valor) {
+		add(new CampoConstante(variavel, valor));
 		return this;
 	}
 
