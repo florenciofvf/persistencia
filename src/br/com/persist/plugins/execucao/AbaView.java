@@ -168,8 +168,8 @@ class PanelLog extends Panel {
 		try {
 			StringBuilder sb = new StringBuilder();
 			List<Variavel> lista = new ArrayList<>();
-			Variavel var = new Variavel("tmp", Util.getContentTransfered());
-			lista.add(var);
+			Variavel v = new Variavel("tmp", Util.getContentTransfered());
+			lista.add(v);
 			container.processar(sb, false, comp, lista);
 			text(container, sb);
 		} catch (ArgumentoException ex) {

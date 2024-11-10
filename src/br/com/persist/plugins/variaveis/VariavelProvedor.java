@@ -41,8 +41,8 @@ public class VariavelProvedor {
 				lista.add(v);
 			}
 		}
-		for (Variavel var : lista) {
-			int indice = getIndice(var.getNome());
+		for (Variavel v : lista) {
+			int indice = getIndice(v.getNome());
 			if (indice != -1) {
 				excluir(indice);
 			}

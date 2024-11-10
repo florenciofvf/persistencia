@@ -125,8 +125,8 @@ public class Container {
 			container = container.pai;
 		}
 		if (variaveis != null) {
-			for (Variavel var : variaveis) {
-				sb.append(" " + var.getValor());
+			for (Variavel v : variaveis) {
+				sb.append(" " + v.getValor());
 			}
 		}
 		return VariavelProvedor.substituir(sb.toString());

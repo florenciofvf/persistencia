@@ -41,11 +41,11 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		}
 		int pos2 = string.indexOf('"', pos + str.length() + 1);
 		String valor = string.substring(pos + str.length(), pos2);
-		Variavel var = VariavelProvedor.getVariavel(varAuthToken);
-		if (var == null) {
+		Variavel v = VariavelProvedor.getVariavel(varAuthToken);
+		if (v == null) {
 			VariavelProvedor.adicionar(varAuthToken, valor);
 		} else {
-			var.setValor(valor);
+			v.setValor(valor);
 		}
 	}
 
@@ -53,11 +53,11 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		if (Util.isEmpty(varCookie) || Util.isEmpty(cookie)) {
 			return;
 		}
-		Variavel var = VariavelProvedor.getVariavel(varCookie);
-		if (var == null) {
+		Variavel v = VariavelProvedor.getVariavel(varCookie);
+		if (v == null) {
 			VariavelProvedor.adicionar(varCookie, cookie);
 		} else {
-			var.setValor(cookie);
+			v.setValor(cookie);
 		}
 	}
 }
