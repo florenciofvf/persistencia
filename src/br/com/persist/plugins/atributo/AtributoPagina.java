@@ -1451,8 +1451,8 @@ class PainelRest extends AbstratoPanel {
 	private Parametros beanParam(Raiz raiz) {
 		Parametros params = new Parametros("@BeanParam");
 		params.addEspaco();
-		Variavel var = raiz.getTipoFilterJVPesquisarExportar();
-		params.addString(var.getTipo() + " " + var.getNome());
+		Variavel varParam = raiz.getTipoFilterJVPesquisarExportar();
+		params.addString(varParam.getTipo() + " " + varParam.getNome());
 		return params;
 	}
 }
@@ -1950,6 +1950,7 @@ class PainelTest extends AbstratoPanel {
 	}
 
 	private void gerarFragmento(String nomeClasse) {
+		nomeClasse = Util.semEspacos(nomeClasse);
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 

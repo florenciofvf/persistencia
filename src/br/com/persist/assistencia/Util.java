@@ -135,6 +135,19 @@ public class Util {
 		return sb.toString();
 	}
 
+	public static String semEspacos(String s) {
+		if (isEmpty(s)) {
+			return Constantes.VAZIO;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			if (c != ' ') {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
+
 	public static List<Integer> getIndicesLinha(JTable table) {
 		List<Integer> resposta = new ArrayList<>();
 		int[] linhas = table.getSelectedRows();
