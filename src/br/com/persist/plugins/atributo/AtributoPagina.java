@@ -528,7 +528,7 @@ abstract class AbstratoPanel extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private Toolbar() {
-			super.ini(new Nil(), ATUALIZAR, COPIAR);
+			super.ini(new Nil(), LIMPAR, ATUALIZAR, COPIAR);
 		}
 
 		@Override
@@ -545,6 +545,12 @@ abstract class AbstratoPanel extends Panel {
 			} else {
 				Util.mensagem(AbstratoPanel.this, AtributoMensagens.getString("msg.hierarquia_nao_definida"));
 			}
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.setText(Constantes.VAZIO);
+			textArea.requestFocus();
 		}
 
 		@Override
