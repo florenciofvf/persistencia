@@ -464,7 +464,9 @@ class PainelFichario extends JTabbedPane {
 		addAba(new PainelBean(pagina));
 		addAba(new PainelDAO(pagina));
 		addAba(new PainelDAOImpl(pagina));
-		addAba(new PainelTest(pagina));
+		addAba(new PainelTest1(pagina));
+		addAba(new PainelTest2(pagina));
+		addAba(new PainelTest3(pagina));
 	}
 
 	private void addAba(AbstratoPanel panel) {
@@ -1797,53 +1799,47 @@ class PainelDAOImpl extends AbstratoPanel {
 	}
 }
 
-class PainelTest extends AbstratoPanel {
-	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
-	private TextField txtArquivo = new TextField(40);
+abstract class AbstratoTest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
-	private List<String> linhasArquivo;
 
-	PainelTest(AtributoPagina pagina) {
+	AbstratoTest(AtributoPagina pagina) {
 		super(pagina, false);
-		toolbar.add(txtArquivo);
-		Action gerarTestAcao = Action.acaoMenu(AtributoMensagens.getString("label.gerar_teste"), Icones.SINCRONIZAR);
-		Action arquivoAction = Action.acaoMenu(AtributoMensagens.getString("label.arquivo_java"), Icones.ABRIR);
-		Action newObjetoAcao = Action.acaoMenu(AtributoMensagens.getString("label.novo_objeto"), Icones.CRIAR);
-		gerarTestAcao.setActionListener(e -> gerarTeste());
-		newObjetoAcao.setActionListener(e -> novoObjeto());
-		arquivoAction.setActionListener(e -> lerArquivo());
-		toolbar.addButton(arquivoAction);
+	}
+
+	protected void adicionarImports(Arquivo arquivo, Class<?> classe, boolean comMockito) {
+		arquivo.addImport("org.junit.Before");
+		arquivo.addImport("org.junit.Test").newLine();
+		if (comMockito) {
+			arquivo.addImport("static org.mockito.ArgumentMatchers.any");
+			arquivo.addImport("static org.mockito.Mockito.when").newLine();
+			arquivo.addImport("org.junit.runner.RunWith");
+			arquivo.addImport("org.mockito.InjectMocks");
+			arquivo.addImport("org.mockito.Mock");
+			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
+		}
+		arquivo.addImport("static org.junit.Assert.assertEquals").newLine();
+		if (classe != null) {
+			arquivo.addImport(classe.getName()).newLine();
+		}
+		if (comMockito) {
+			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
+		}
+	}
+
+	protected void criarPreTest(ClassePublica classe) {
+		classe.addAnotacao("Before");
+		Funcao funcao = classe.criarFuncaoPublica("void", "preTest");
+		funcao.addComentario("when(dao.metodo(any())).thenReturn(newObjeto());");
+	}
+}
+
+class PainelTest1 extends AbstratoTest {
+	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
+	private static final long serialVersionUID = 1L;
+
+	PainelTest1(AtributoPagina pagina) {
+		super(pagina);
 		toolbar.add(chkMockito);
-		toolbar.addButton(gerarTestAcao);
-		toolbar.addButton(newObjetoAcao);
-	}
-
-	private void lerArquivo() {
-		JFileChooser fileChooser = new JFileChooser(AtributoPreferencia.getDirPadraoSelecaoArquivos());
-		int i = fileChooser.showOpenDialog(PainelTest.this);
-		if (i == JFileChooser.APPROVE_OPTION) {
-			File sel = fileChooser.getSelectedFile();
-			lerArquivo(sel);
-		}
-	}
-
-	private void lerArquivo(File file) {
-		String string = "package";
-		String strPackage = ArquivoUtil.primeiroIniciadoCom(string, file);
-		if (Util.isEmpty(strPackage)) {
-			return;
-		}
-		strPackage = strPackage.substring(string.length()).trim();
-		if (strPackage.endsWith(";")) {
-			strPackage = strPackage.substring(0, strPackage.length() - 1);
-		}
-		String nome = file.getName();
-		int pos = nome.lastIndexOf(".");
-		if (pos != -1) {
-			nome = nome.substring(0, pos);
-		}
-		linhasArquivo = ArquivoUtil.lerArquivo(file);
-		txtArquivo.setText(strPackage + "." + nome);
 	}
 
 	@Override
@@ -1860,7 +1856,7 @@ class PainelTest extends AbstratoPanel {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		adicionarImports(arquivo, null);
+		adicionarImports(arquivo, null, chkMockito.isSelected());
 
 		Mapa mapaService = raiz.getMapaService();
 		Mapa mapaTest = raiz.getMapaTest();
@@ -1914,74 +1910,69 @@ class PainelTest extends AbstratoPanel {
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
 	}
+}
 
-	private void adicionarImports(Arquivo arquivo, Class<?> classe) {
-		arquivo.addImport("org.junit.Before");
-		arquivo.addImport("org.junit.Test").newLine();
-		if (chkMockito.isSelected()) {
-			arquivo.addImport("static org.mockito.ArgumentMatchers.any");
-			arquivo.addImport("static org.mockito.Mockito.when").newLine();
-			arquivo.addImport("org.junit.runner.RunWith");
-			arquivo.addImport("org.mockito.InjectMocks");
-			arquivo.addImport("org.mockito.Mock");
-			arquivo.addImport("org.mockito.junit.MockitoJUnitRunner").newLine();
-		}
-		arquivo.addImport("static org.junit.Assert.assertEquals").newLine();
-		if (classe != null) {
-			arquivo.addImport(classe.getName()).newLine();
-		}
-		if (chkMockito.isSelected()) {
-			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
+class PainelTest2 extends AbstratoTest {
+	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
+	private TextField txtArquivo = new TextField(40);
+	private static final long serialVersionUID = 1L;
+	private List<String> linhasArquivo;
+
+	PainelTest2(AtributoPagina pagina) {
+		super(pagina);
+		toolbar.add(txtArquivo);
+		Action gerarTestAcao = Action.acaoMenu(AtributoMensagens.getString("label.gerar_teste"), Icones.SINCRONIZAR);
+		Action arquivoAction = Action.acaoMenu(AtributoMensagens.getString("label.arquivo_java"), Icones.ABRIR);
+		gerarTestAcao.setActionListener(e -> gerarTeste());
+		arquivoAction.setActionListener(e -> lerArquivo());
+		toolbar.addButton(arquivoAction);
+		toolbar.add(chkMockito);
+		toolbar.addButton(gerarTestAcao);
+	}
+
+	private void lerArquivo() {
+		JFileChooser fileChooser = new JFileChooser(AtributoPreferencia.getDirPadraoSelecaoArquivos());
+		int i = fileChooser.showOpenDialog(PainelTest2.this);
+		if (i == JFileChooser.APPROVE_OPTION) {
+			File sel = fileChooser.getSelectedFile();
+			lerArquivo(sel);
 		}
 	}
 
-	private void criarPreTest(ClassePublica classe) {
-		classe.addAnotacao("Before");
-		Funcao funcao = classe.criarFuncaoPublica("void", "preTest");
-		funcao.addComentario("when(dao.metodo(any())).thenReturn(newObjeto());");
-	}
-
-	private void novoObjeto() {
-		Object resp = Util.showInputDialog(PainelTest.this, AtributoMensagens.getString("label.nome_classe_detalhe"),
-				AtributoMensagens.getString("label.nome_classe"), null);
-		if (resp != null && !Util.isEmpty(resp.toString())) {
-			gerarFragmento(resp.toString().trim());
+	private void lerArquivo(File file) {
+		String string = "package";
+		String strPackage = ArquivoUtil.primeiroIniciadoCom(string, file);
+		if (Util.isEmpty(strPackage)) {
+			return;
 		}
+		strPackage = strPackage.substring(string.length()).trim();
+		if (strPackage.endsWith(";")) {
+			strPackage = strPackage.substring(0, strPackage.length() - 1);
+		}
+		String nome = file.getName();
+		int pos = nome.lastIndexOf(".");
+		if (pos != -1) {
+			nome = nome.substring(0, pos);
+		}
+		linhasArquivo = ArquivoUtil.lerArquivo(file);
+		txtArquivo.setText(strPackage + "." + nome);
 	}
 
-	private void gerarFragmento(String nomeClasse) {
-		nomeClasse = Util.semEspacos(nomeClasse);
-		StringPool pool = new StringPool();
-		Arquivo arquivo = new Arquivo();
-
-		ClassePublica classe = arquivo.criarClassePublica("Temp");
-
-		Funcao funcao = classe.criarFuncaoPublicaEstatica("List<" + nomeClasse + ">", "newList" + nomeClasse);
-		funcao.addInstrucao("List<" + nomeClasse + "> resp = new ArrayList<>()");
-		funcao.addInstrucao("resp.add(new" + nomeClasse + "())");
-		funcao.addReturn("resp");
-
-		classe.newLine();
-
-		funcao = classe.criarFuncaoPublicaEstatica(nomeClasse, "new" + nomeClasse);
-		funcao.addInstrucao(nomeClasse + " obj = new " + nomeClasse + "()");
-		funcao.addInstrucao("obj.setId(1L)");
-		funcao.addReturn("obj");
-
-		arquivo.gerar(-1, pool);
-		appendText(pool.toString());
+	@Override
+	void gerar(Raiz raiz, List<Atributo> atributos) {
+		//
 	}
 
 	private void gerarTeste() {
 		if (Util.isEmpty(txtArquivo.getText())) {
-			Util.mensagem(PainelTest.this, AtributoMensagens.getString("msg.classe_teste_nao_definida"));
+			Util.mensagem(PainelTest2.this, AtributoMensagens.getString("msg.classe_teste_nao_definida"));
 			return;
 		}
 		Class<?> classe = null;
 		try {
 			classe = Class.forName(txtArquivo.getText().trim());
 		} catch (Throwable ex) {
-			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest.this);
+			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest2.this);
 			return;
 		}
 		List<Metodo> metodos = new ArrayList<>();
@@ -2005,13 +1996,13 @@ class PainelTest extends AbstratoPanel {
 				}
 			}
 		} catch (Throwable ex) {
-			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest.this);
+			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest2.this);
 			return;
 		}
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		adicionarImports(arquivo, classe);
+		adicionarImports(arquivo, classe, chkMockito.isSelected());
 
 		String objeto = classe.getSimpleName();
 		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
@@ -2058,6 +2049,28 @@ class PainelTest extends AbstratoPanel {
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.test2_tooltip";
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.test2";
+	}
+
+	private class Metodo {
+		final String nome;
+
+		Metodo(String nome) {
+			this.nome = nome;
+		}
+
+		String gerar() {
+			return "destino.set" + nome + "(origem.get" + nome + "())";
+		}
 	}
 
 	private List<IMetodo> ordenar(List<IMetodo> metodos, Method[] methods) {
@@ -2118,18 +2131,6 @@ class PainelTest extends AbstratoPanel {
 		return false;
 	}
 
-	private class Metodo {
-		final String nome;
-
-		Metodo(String nome) {
-			this.nome = nome;
-		}
-
-		String gerar() {
-			return "destino.set" + nome + "(origem.get" + nome + "())";
-		}
-	}
-
 	private class Teste {
 		final IMetodo metodo;
 
@@ -2151,6 +2152,63 @@ class PainelTest extends AbstratoPanel {
 				funcao.addComentario("assertTrue(false);");
 			}
 		}
+	}
+}
+
+class PainelTest3 extends AbstratoPanel {
+	private static final long serialVersionUID = 1L;
+
+	PainelTest3(AtributoPagina pagina) {
+		super(pagina, false);
+		Action newObjetoAcao = Action.acaoMenu(AtributoMensagens.getString("label.novo_objeto"), Icones.CRIAR);
+		newObjetoAcao.setActionListener(e -> novoObjeto());
+		toolbar.addButton(newObjetoAcao);
+	}
+
+	@Override
+	void gerar(Raiz raiz, List<Atributo> atributos) {
+		//
+	}
+
+	private void novoObjeto() {
+		Object resp = Util.showInputDialog(PainelTest3.this, AtributoMensagens.getString("label.nome_classe_detalhe"),
+				AtributoMensagens.getString("label.nome_classe"), null);
+		if (resp != null && !Util.isEmpty(resp.toString())) {
+			gerarFragmento(resp.toString().trim());
+		}
+	}
+
+	private void gerarFragmento(String nomeClasse) {
+		nomeClasse = Util.semEspacos(nomeClasse);
+		StringPool pool = new StringPool();
+		Arquivo arquivo = new Arquivo();
+
+		ClassePublica classe = arquivo.criarClassePublica("Temp");
+
+		Funcao funcao = classe.criarFuncaoPublicaEstatica("List<" + nomeClasse + ">", "newList" + nomeClasse);
+		funcao.addInstrucao("List<" + nomeClasse + "> resp = new ArrayList<>()");
+		funcao.addInstrucao("resp.add(new" + nomeClasse + "())");
+		funcao.addReturn("resp");
+
+		classe.newLine();
+
+		funcao = classe.criarFuncaoPublicaEstatica(nomeClasse, "new" + nomeClasse);
+		funcao.addInstrucao(nomeClasse + " obj = new " + nomeClasse + "()");
+		funcao.addInstrucao("obj.setId(1L)");
+		funcao.addReturn("obj");
+
+		arquivo.gerar(-1, pool);
+		appendText(pool.toString());
+	}
+
+	@Override
+	String getChaveTooltip() {
+		return "label.test3_tooltip";
+	}
+
+	@Override
+	String getChaveTitulo() {
+		return "label.test3";
 	}
 }
 
