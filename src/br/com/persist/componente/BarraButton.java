@@ -520,6 +520,26 @@ public abstract class BarraButton extends JToolBar
 		}
 	}
 
+	public void removeAction(Action action) {
+		Button button = null;
+		int total = getComponentCount();
+		Component[] components = getComponents();
+		for (int i = 0; i < total; i++) {
+			Component comp = components[i];
+			if (comp instanceof Button) {
+				Button b = (Button) comp;
+				if (b.getAction() != null && b.getAction() == action) {
+					button = b;
+					break;
+				}
+			}
+		}
+		if (button != null) {
+			button.removeActionListener(action.getActionListener());
+			remove(button);
+		}
+	}
+
 	@Override
 	public void windowInternalActivatedHandler(JInternalFrame internal) {
 	}

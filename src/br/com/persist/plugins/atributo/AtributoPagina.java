@@ -554,6 +554,10 @@ abstract class AbstratoPanel extends Panel {
 			copiarMensagem(string);
 			textArea.requestFocus();
 		}
+
+		protected void excluirAtualizar() {
+			removeAction(atualizarAcao);
+		}
 	}
 
 	protected void setText(String string) {
@@ -1802,8 +1806,16 @@ class PainelDAOImpl extends AbstratoPanel {
 abstract class AbstratoTest extends AbstratoPanel {
 	private static final long serialVersionUID = 1L;
 
-	AbstratoTest(AtributoPagina pagina) {
+	AbstratoTest(AtributoPagina pagina, boolean semAtualizar) {
 		super(pagina, false);
+		if (semAtualizar) {
+			toolbar.excluirAtualizar();
+		}
+	}
+
+	@Override
+	void gerar(Raiz raiz, List<Atributo> atributos) {
+		//
 	}
 
 	protected void adicionarImports(Arquivo arquivo, Class<?> classe, boolean comMockito) {
@@ -1838,7 +1850,7 @@ class PainelTest1 extends AbstratoTest {
 	private static final long serialVersionUID = 1L;
 
 	PainelTest1(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, false);
 		toolbar.add(chkMockito);
 	}
 
@@ -1919,7 +1931,7 @@ class PainelTest2 extends AbstratoTest {
 	private List<String> linhasArquivo;
 
 	PainelTest2(AtributoPagina pagina) {
-		super(pagina);
+		super(pagina, true);
 		toolbar.add(txtArquivo);
 		Action gerarTestAcao = Action.acaoMenu(AtributoMensagens.getString("label.gerar_teste"), Icones.SINCRONIZAR);
 		Action arquivoAction = Action.acaoMenu(AtributoMensagens.getString("label.arquivo_java"), Icones.ABRIR);
@@ -1956,11 +1968,6 @@ class PainelTest2 extends AbstratoTest {
 		}
 		linhasArquivo = ArquivoUtil.lerArquivo(file);
 		txtArquivo.setText(strPackage + "." + nome);
-	}
-
-	@Override
-	void gerar(Raiz raiz, List<Atributo> atributos) {
-		//
 	}
 
 	private void gerarTeste() {
@@ -2155,19 +2162,14 @@ class PainelTest2 extends AbstratoTest {
 	}
 }
 
-class PainelTest3 extends AbstratoPanel {
+class PainelTest3 extends AbstratoTest {
 	private static final long serialVersionUID = 1L;
 
 	PainelTest3(AtributoPagina pagina) {
-		super(pagina, false);
+		super(pagina, true);
 		Action newObjetoAcao = Action.acaoMenu(AtributoMensagens.getString("label.novo_objeto"), Icones.CRIAR);
 		newObjetoAcao.setActionListener(e -> novoObjeto());
 		toolbar.addButton(newObjetoAcao);
-	}
-
-	@Override
-	void gerar(Raiz raiz, List<Atributo> atributos) {
-		//
 	}
 
 	private void novoObjeto() {
