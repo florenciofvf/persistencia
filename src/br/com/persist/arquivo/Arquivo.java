@@ -23,6 +23,7 @@ public class Arquivo {
 	private boolean processado;
 	private Arquivo pai;
 	private File file;
+	private int tag;
 
 	public Arquivo(File file, List<String> ignorados) {
 		this.ignorados = Objects.requireNonNull(ignorados);
@@ -256,6 +257,14 @@ public class Arquivo {
 
 	public void setArquivoAberto(boolean arquivoAberto) {
 		this.arquivoAberto = arquivoAberto;
+	}
+
+	public int getTag() {
+		return tag;
+	}
+
+	public void setTag(int tag) {
+		this.tag = tag;
 	}
 
 	@Override

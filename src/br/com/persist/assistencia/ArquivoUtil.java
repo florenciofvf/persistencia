@@ -103,38 +103,44 @@ public class ArquivoUtil {
 	}
 
 	public static void ordenar(List<Arquivo> arquivos) {
-		arquivos.sort((a1, a2) -> extrairNumero(a1.getName()) - extrairNumero(a2.getName()));
+		for (Arquivo item : arquivos) {
+			item.setTag(extrairNumero(item.getName()));
+		}
+		if (porTag(arquivos)) {
+			Collections.sort(arquivos, (a1, a2) -> a1.getTag() - a2.getTag());
+		} else {
+			Collections.sort(arquivos, (a1, a2) -> a1.getName().compareTo(a2.getName()));
+		}
+	}
+
+	private static boolean porTag(List<Arquivo> arquivos) {
+		for (Arquivo item : arquivos) {
+			if (item.getTag() == -1) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static File[] ordenar(File[] files) {
 		if (files == null) {
 			return files;
 		}
-		List<Ordem> lista = new ArrayList<>();
+		List<Arquivo> arquivos = new ArrayList<>();
 		for (File f : files) {
-			lista.add(new Ordem(f));
+			arquivos.add(new Arquivo(f, Collections.emptyList()));
 		}
-		Collections.sort(lista, (a1, a2) -> a1.numero - a2.numero);
-		File[] resp = new File[lista.size()];
-		for (int i = 0; i < lista.size(); i++) {
-			resp[i] = lista.get(i).file;
+		ordenar(arquivos);
+		File[] resp = new File[arquivos.size()];
+		for (int i = 0; i < arquivos.size(); i++) {
+			resp[i] = arquivos.get(i).getFile();
 		}
 		return resp;
 	}
 
-	static class Ordem {
-		final File file;
-		final int numero;
-
-		public Ordem(File file) {
-			this.file = file;
-			numero = extrairNumero(file.getName());
-		}
-	}
-
 	private static int extrairNumero(String s) {
 		if (s == null) {
-			return 0;
+			return -1;
 		}
 		StringBuilder sb = new StringBuilder();
 		int i = 0;
@@ -150,7 +156,7 @@ public class ArquivoUtil {
 		if (sb.length() > 0) {
 			return Integer.parseInt(sb.toString());
 		}
-		return 0;
+		return -1;
 	}
 
 	public static void diretorio(File file) throws IOException {
