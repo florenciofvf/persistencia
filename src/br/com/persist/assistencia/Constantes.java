@@ -66,6 +66,7 @@ public class Constantes {
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TREZENTOS_QUARENTA_UM = 341;
 	public static final String CONECTADO = "CONECTADO";
+	public static final String IGNORADOS = "ignorados";
 	public static final String SERVICE = "Service";
 	public static final String IMAGENS = "imagens";
 	public static final String SELECT = "SELECT ";

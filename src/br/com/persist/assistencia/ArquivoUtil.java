@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -94,14 +93,6 @@ public class ArquivoUtil {
 		}
 	}
 
-	public static File[] ordenarPorNome(File[] files) {
-		if (files == null) {
-			return files;
-		}
-		Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
-		return files;
-	}
-
 	public static void ordenar(List<Arquivo> arquivos) {
 		for (Arquivo item : arquivos) {
 			item.setTag(extrairNumero(item.getName()));
@@ -141,6 +132,9 @@ public class ArquivoUtil {
 	private static int extrairNumero(String s) {
 		if (s == null) {
 			return -1;
+		}
+		if (Constantes.IGNORADOS.equals(s)) {
+			return 0;
 		}
 		StringBuilder sb = new StringBuilder();
 		int i = 0;
