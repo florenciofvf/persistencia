@@ -571,7 +571,11 @@ abstract class AbstratoPanel extends Panel {
 	}
 
 	protected void appendText(String string) {
-		textArea.setText(textArea.getText() + Constantes.QL2 + string);
+		if (Util.isEmpty(textArea.getText())) {
+			textArea.setText(string);
+		} else {
+			textArea.setText(textArea.getText() + Constantes.QL2 + string);
+		}
 	}
 
 	abstract void gerar(Raiz raiz, List<Atributo> atributos);
@@ -2169,21 +2173,25 @@ class PainelTest2 extends AbstratoTest {
 }
 
 class PainelTest3 extends AbstratoTest {
+	private final CheckBox chkSetText = new CheckBox(AtributoMensagens.getString("label.setText"), false);
+	private TextField txtNomeClasse = new TextField(40);
 	private static final long serialVersionUID = 1L;
 
 	PainelTest3(AtributoPagina pagina) {
 		super(pagina, true);
+		toolbar.add(txtNomeClasse);
 		Action newObjetoAcao = Action.acaoMenu(AtributoMensagens.getString("label.novo_objeto"), Icones.CRIAR);
 		newObjetoAcao.setActionListener(e -> novoObjeto());
+		toolbar.add(chkSetText);
 		toolbar.addButton(newObjetoAcao);
 	}
 
 	private void novoObjeto() {
-		Object resp = Util.showInputDialog(PainelTest3.this, AtributoMensagens.getString("label.nome_classe_detalhe"),
-				AtributoMensagens.getString("label.nome_classe"), null);
-		if (resp != null && !Util.isEmpty(resp.toString())) {
-			gerarFragmento(resp.toString().trim());
+		if (Util.isEmpty(txtNomeClasse.getText())) {
+			Util.mensagem(PainelTest3.this, AtributoMensagens.getString("label.nome_classe"));
+			return;
 		}
+		gerarFragmento(txtNomeClasse.getText().trim());
 	}
 
 	private void gerarFragmento(String nomeClasse) {
@@ -2206,7 +2214,11 @@ class PainelTest3 extends AbstratoTest {
 		funcao.addReturn("obj");
 
 		arquivo.gerar(-1, pool);
-		appendText(pool.toString());
+		if (chkSetText.isSelected()) {
+			setText(pool.toString());
+		} else {
+			appendText(pool.toString());
+		}
 	}
 
 	@Override
