@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Caret;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -318,6 +320,14 @@ class TextArea extends TextPane {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		Caret caret = getCaret();
+		if (caret != null) {
+			Point point = caret.getMagicCaretPosition();
+			if (point != null) {
+				g.setColor(Color.CYAN);
+				g.drawRect(0, point.y, getWidth(), 20);
+			}
+		}
 		if (paintER) {
 			TextUI textUI = getUI();
 			String text = getText();

@@ -207,7 +207,7 @@ public class ObjetoContainer extends Panel {
 			StringBuilder sb = new StringBuilder(txtChaves.getText().trim());
 			sb.append("=");
 			String tabela = txtTabela.getText().trim();
-			sb.append("SQ_");
+			sb.append("SQ");
 			sb.append(tabela.length() > 2 ? tabela.substring(2) : tabela);
 			sb.append(".NEXTVAL");
 			txtSequencias.setText(sb.toString());
