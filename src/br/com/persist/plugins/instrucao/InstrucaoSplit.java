@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,11 +19,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -46,9 +40,9 @@ import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.CaretEvent;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Caret;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -290,13 +284,13 @@ class InstrucaoSplit extends SplitPane {
 
 class TextArea extends TextPane {
 	private static final long serialVersionUID = 1L;
+	private final Rectangle rectangle;
 	private static boolean paintER;
-	private int largura;
 
 	TextArea() {
 		addFocusListener(focusListenerInner);
-		addMouseListener(mouseListenerInner);
-		addKeyListener(keyListenerInner);
+		addCaretListener(this::processar);
+		rectangle = new Rectangle();
 	}
 
 	public static boolean isPaintER() {
@@ -323,56 +317,28 @@ class TextArea extends TextPane {
 				}
 				c = c.getParent();
 			}
-			processar();
 		}
 	};
 
-	private transient MouseListener mouseListenerInner = new MouseAdapter() {
-		@Override
-		public void mouseClicked(java.awt.event.MouseEvent e) {
-			processar();
-		}
-	};
-
-	private transient KeyListener keyListenerInner = new KeyAdapter() {
-		@Override
-		public void keyTyped(KeyEvent e) {
-			process(e);
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			process(e);
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			process(e);
-		}
-
-		public void process(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
-				processar();
+	private void processar(CaretEvent e) {
+		TextUI textUI = getUI();
+		try {
+			Rectangle r = textUI.modelToView(this, e.getDot());
+			if (r != null) {
+				rectangle.width = getWidth();
+				rectangle.y = r.y;
+				repaint();
 			}
+		} catch (BadLocationException ex) {
+			//
 		}
-	};
-
-	private void processar() {
-		largura = getWidth();
-		repaint();
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		Caret caret = getCaret();
-		if (caret != null) {
-			Point point = caret.getMagicCaretPosition();
-			if (point != null) {
-				g.setColor(Color.CYAN);
-				g.drawRect(0, point.y, largura, 20);
-			}
-		}
+		g.setColor(Color.CYAN);
+		g.drawRect(0, rectangle.y, rectangle.width, 20);
 		if (paintER) {
 			TextUI textUI = getUI();
 			String text = getText();
