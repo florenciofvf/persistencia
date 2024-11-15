@@ -340,10 +340,6 @@ class TextArea extends TextPane {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .3f));
-		g.setColor(InstrucaoConstantes.COLOR_SEL);
-		g.fillRect(0, rectangle.y, rectangle.width, rectangle.height);
 		if (paintER) {
 			TextUI textUI = getUI();
 			String text = getText();
@@ -351,6 +347,10 @@ class TextArea extends TextPane {
 			paintR(g, textUI, text);
 			paintT(g, textUI, text);
 		}
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .3f));
+		g.setColor(InstrucaoConstantes.COLOR_SEL);
+		g.fillRect(0, rectangle.y, rectangle.width, rectangle.height);
 	}
 
 	private void paintE(Graphics g, TextUI textUI, String text) {
