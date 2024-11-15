@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao;
 
+import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 
 public class InstrucaoConstantes {
@@ -14,6 +15,7 @@ public class InstrucaoConstantes {
 	public static final String ESPACO = " ";
 
 	public static final String PREFIXO_FUNCAO_NATIVA = "funcao_nativa ";
+	public static final Color COLOR_SEL = new Color(155, 255, 255);
 	public static final String PREFIXO_CONSTANTE = "constante ";
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
 	public static final String PREFIXO_PARAMETRO = "param ";

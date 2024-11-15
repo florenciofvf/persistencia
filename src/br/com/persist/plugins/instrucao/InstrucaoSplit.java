@@ -326,6 +326,7 @@ class TextArea extends TextPane {
 			Rectangle r = textUI.modelToView(this, e.getDot());
 			if (r != null) {
 				rectangle.width = getWidth();
+				rectangle.height = r.height;
 				rectangle.y = r.y;
 				repaint();
 			}
@@ -337,8 +338,8 @@ class TextArea extends TextPane {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.setColor(Color.CYAN);
-		g.drawRect(0, rectangle.y, rectangle.width, 20);
+		g.setColor(InstrucaoConstantes.COLOR_SEL);
+		g.fillRect(0, rectangle.y, rectangle.width, rectangle.height);
 		if (paintER) {
 			TextUI textUI = getUI();
 			String text = getText();
