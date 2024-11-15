@@ -77,6 +77,7 @@ public class ObjetoContainer extends Panel {
 	private static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
 	private transient List<CompChave> vinculados = new ArrayList<>();
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
+	private TabelaPopup tabelaPopup = new TabelaPopup();
 	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
@@ -148,6 +149,24 @@ public class ObjetoContainer extends Panel {
 		return null;
 	}
 
+	private transient MouseListener tabelaListener = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			processar(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			processar(e);
+		}
+
+		private void processar(MouseEvent e) {
+			if (e.isPopupTrigger() && !Util.isEmpty(txtTabela.getText())) {
+				tabelaPopup.show(txtTabela, e.getX(), e.getY());
+			}
+		}
+	};
+
 	private void marcarVinculados(ParaTabela para, JComponent... components) {
 		if (para == null) {
 			return;
@@ -166,6 +185,11 @@ public class ObjetoContainer extends Panel {
 			}
 		}
 		popupVinculo.marcador = null;
+	}
+
+	private class TabelaPopup extends Popup {
+		private static final long serialVersionUID = 1L;
+
 	}
 
 	private class VinculadoPopup extends Popup {
@@ -813,6 +837,7 @@ public class ObjetoContainer extends Panel {
 			chkSANE.addMouseListener(listenerVinculado);
 			chkCCSC.addMouseListener(listenerVinculado);
 			chkBPNT.addMouseListener(listenerVinculado);
+			txtTabela.addMouseListener(tabelaListener);
 		}
 
 		private void mensagemSequencia(Label label) {
