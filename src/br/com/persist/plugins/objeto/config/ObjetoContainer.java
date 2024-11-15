@@ -78,10 +78,12 @@ public class ObjetoContainer extends Panel {
 	private transient List<CompChave> vinculados = new ArrayList<>();
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
 	private TabelaPopup tabelaPopup = new TabelaPopup();
+	private TextField txtSequencias = new TextField();
 	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private TextField txtTabela = new TextField();
+	private TextField txtChaves = new TextField();
 	private final transient Objeto objeto;
 	private final Fichario fichario;
 
@@ -189,7 +191,27 @@ public class ObjetoContainer extends Panel {
 
 	private class TabelaPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action sequenciaAction = acaoMenu("label.config_sequencia");
 
+		private TabelaPopup() {
+			add(sequenciaAction);
+			sequenciaAction.setActionListener(e -> configSequencia());
+		}
+
+		private void configSequencia() {
+			if (Util.isEmpty(txtChaves.getText())) {
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg_vazio_chaves.config_sequencia"));
+				txtChaves.requestFocus();
+				return;
+			}
+			StringBuilder sb = new StringBuilder(txtChaves.getText().trim());
+			sb.append("=");
+			String tabela = txtTabela.getText().trim();
+			sb.append("SQ_");
+			sb.append(tabela.length() > 2 ? tabela.substring(2) : tabela);
+			sb.append(".NEXTVAL");
+			txtSequencias.setText(sb.toString());
+		}
 	}
 
 	private class VinculadoPopup extends Popup {
@@ -639,7 +661,6 @@ public class ObjetoContainer extends Panel {
 		private TextField txtClassBiblio = new TextField();
 		private TextField txtDestacaveis = new TextField();
 		private TextField txtTabelaAlter = new TextField();
-		private TextField txtSequencias = new TextField();
 		private TextField txtMapeamento = new TextField();
 		private TextField txtPrefixoNT = new TextField();
 		private static final long serialVersionUID = 1L;
@@ -649,7 +670,6 @@ public class ObjetoContainer extends Panel {
 		private TextField txtTabelas = new TextField();
 		private TextField txtApelido = new TextField();
 		private CheckBox chkLinkAuto = new CheckBox();
-		private TextField txtChaves = new TextField();
 		private TextField txtGrupo = new TextField();
 		private TextField txtJoins = new TextField();
 		private CheckBox chkIgnorar = new CheckBox();
