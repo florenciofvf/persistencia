@@ -17,8 +17,14 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -285,9 +291,12 @@ class InstrucaoSplit extends SplitPane {
 class TextArea extends TextPane {
 	private static final long serialVersionUID = 1L;
 	private static boolean paintER;
+	private int largura;
 
 	TextArea() {
 		addFocusListener(focusListenerInner);
+		addMouseListener(mouseListenerInner);
+		addKeyListener(keyListenerInner);
 	}
 
 	public static boolean isPaintER() {
@@ -305,7 +314,7 @@ class TextArea extends TextPane {
 
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
 		@Override
-		public void focusGained(java.awt.event.FocusEvent e) {
+		public void focusGained(FocusEvent e) {
 			Component c = getParent();
 			while (c != null) {
 				if (c instanceof Fichario) {
@@ -314,8 +323,44 @@ class TextArea extends TextPane {
 				}
 				c = c.getParent();
 			}
+			processar();
 		}
 	};
+
+	private transient MouseListener mouseListenerInner = new MouseAdapter() {
+		@Override
+		public void mouseClicked(java.awt.event.MouseEvent e) {
+			processar();
+		}
+	};
+
+	private transient KeyListener keyListenerInner = new KeyAdapter() {
+		@Override
+		public void keyTyped(KeyEvent e) {
+			process(e);
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			process(e);
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			process(e);
+		}
+
+		public void process(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+				processar();
+			}
+		}
+	};
+
+	private void processar() {
+		largura = getWidth();
+		repaint();
+	}
 
 	@Override
 	public void paint(Graphics g) {
@@ -325,7 +370,7 @@ class TextArea extends TextPane {
 			Point point = caret.getMagicCaretPosition();
 			if (point != null) {
 				g.setColor(Color.CYAN);
-				g.drawRect(0, point.y, getWidth(), 20);
+				g.drawRect(0, point.y, largura, 20);
 			}
 		}
 		if (paintER) {
