@@ -341,7 +341,7 @@ class TextArea extends TextPane {
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .8f));
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .3f));
 		g.setColor(InstrucaoConstantes.COLOR_SEL);
 		g.fillRect(0, rectangle.y, rectangle.width, rectangle.height);
 		if (paintER) {
