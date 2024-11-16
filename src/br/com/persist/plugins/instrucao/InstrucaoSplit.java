@@ -417,6 +417,7 @@ class TextArea extends TextPane implements MetaDialogoListener {
 			try {
 				Rectangle r = textUI.modelToView(this, pos);
 				if (r != null) {
+					r.height -= 3;
 					g.setColor(Color.LIGHT_GRAY);
 					g.fillRect(r.x, r.y, 5, 5);
 					g.drawLine(r.x + 2, r.y, r.x + 2, r.y + r.height);
@@ -966,7 +967,7 @@ class InstrucaoCor {
 		StyleConstants.setBackground(TAG, new Color(225, 225, 225));
 		StyleConstants.setForeground(GREEN2, new Color(0, 125, 0));
 		StyleConstants.setForeground(BLUE2, new Color(0, 0, 125));
-		StyleConstants.setForeground(RED, new Color(100, 25, 51));
+		StyleConstants.setForeground(RED, new Color(130, 0, 83));
 		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
 		StyleConstants.setForeground(RED2, new Color(255, 0, 0));
 		StyleConstants.setForeground(MAGENTA, Color.MAGENTA);
