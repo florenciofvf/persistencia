@@ -296,6 +296,7 @@ class TextArea extends TextPane implements MetaDialogoListener {
 
 	TextArea() {
 		addFocusListener(focusListenerInner);
+		setEditorKit(new InstrucaoEditor());
 		addCaretListener(this::processar);
 		addKeyListener(keyListenerInner);
 		rectangle = new Rectangle();
