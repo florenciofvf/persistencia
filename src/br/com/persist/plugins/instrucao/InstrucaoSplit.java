@@ -21,6 +21,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -292,6 +295,7 @@ class TextArea extends TextPane {
 	TextArea() {
 		addFocusListener(focusListenerInner);
 		addCaretListener(this::processar);
+		addKeyListener(keyListenerInner);
 		rectangle = new Rectangle();
 	}
 
@@ -319,6 +323,23 @@ class TextArea extends TextPane {
 				}
 				c = c.getParent();
 			}
+		}
+	};
+
+	private transient KeyListener keyListenerInner = new KeyAdapter() {
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_SPACE) {
+				processar();
+			}
+		}
+
+		private void processar() {
+			String string = getSelectedText();
+			if(Util.isEmpty(string)) {
+				return;
+			}
+			InstrucaoMetadados.abrir(TextArea.this, string);
 		}
 	};
 
