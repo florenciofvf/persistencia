@@ -6,6 +6,8 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +19,7 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
@@ -62,15 +65,27 @@ class MetaContainer extends Panel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					int indice = lista.getSelectedIndex();
-					if (indice != -1) {
-						String fragmento = lista.getSelectedValue();
-						metaListener.setFragmento(fragmento);
-						metaListener.dispose();
-					}
+					processar();
 				}
 			}
 		});
+		lista.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					processar();
+				}
+			}
+		});
+	}
+
+	private void processar() {
+		int indice = lista.getSelectedIndex();
+		if (indice != -1) {
+			String fragmento = lista.getSelectedValue();
+			metaListener.setFragmento(fragmento);
+			metaListener.dispose();
+		}
 	}
 
 	public void selecionar(int indice) {
