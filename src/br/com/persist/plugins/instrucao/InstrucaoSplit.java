@@ -419,15 +419,21 @@ class TextArea extends TextPane implements MetaDialogoListener {
 				if (r != null) {
 					r.height -= 3;
 					g.setColor(Color.LIGHT_GRAY);
-					g.fillRect(r.x, r.y, 5, 5);
-					g.drawLine(r.x + 2, r.y, r.x + 2, r.y + r.height);
-					g.drawLine(r.x + 4, r.y, r.x + 4, r.y + r.height);
+					g.fillArc(r.x, r.y, 7, 7, 90, 180);
+					g.fillRect(r.x + 4, r.y, 2, 1);
+					desenharR(g, r, 0);
+					desenharR(g, r, 2);
 				}
 				pos = text.indexOf('\n', pos + 1);
 			} catch (BadLocationException e) {
 				break;
 			}
 		}
+	}
+
+	private void desenharR(Graphics g, Rectangle r, int offset) {
+		r.x += offset;
+		g.drawLine(r.x + 4, r.y, r.x + 4, r.y + r.height);
 	}
 
 	private void paintT(Graphics g, TextUI textUI, String text) {
@@ -437,8 +443,8 @@ class TextArea extends TextPane implements MetaDialogoListener {
 				Rectangle r = textUI.modelToView(this, pos);
 				if (r != null) {
 					g.setColor(Color.LIGHT_GRAY);
-					desenhar(g, r, 0);
-					desenhar(g, r, 2);
+					desenharT(g, r, 0);
+					desenharT(g, r, 2);
 				}
 				pos = text.indexOf('\t', pos + 1);
 			} catch (BadLocationException e) {
@@ -447,7 +453,7 @@ class TextArea extends TextPane implements MetaDialogoListener {
 		}
 	}
 
-	private void desenhar(Graphics g, Rectangle r, int offset) {
+	private void desenharT(Graphics g, Rectangle r, int offset) {
 		r.x += offset;
 		g.drawLine(r.x, r.y, r.x + 3, r.y + r.height / 2);
 		g.drawLine(r.x + 3, r.y + r.height / 2, r.x, r.y + r.height);
