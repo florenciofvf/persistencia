@@ -154,6 +154,21 @@ public class Funcao {
 	public String toString() {
 		return (isNativo() ? "nativo " + biblioNativa + " " : "") + nome + "(" + parametros + ")";
 	}
+
+	public String getInterface() {
+		return nome + "(" + param(parametros) + ")";
+	}
+
+	private String param(List<Parametro> parametros) {
+		StringBuilder sb = new StringBuilder();
+		for (Parametro item : parametros) {
+			if (sb.length() > 0) {
+				sb.append(", ");
+			}
+			sb.append(item.nome);
+		}
+		return sb.toString();
+	}
 }
 
 class Parametro {

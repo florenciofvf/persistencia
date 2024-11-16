@@ -48,6 +48,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -287,7 +288,8 @@ class InstrucaoSplit extends SplitPane {
 	};
 }
 
-class TextArea extends TextPane {
+class TextArea extends TextPane implements MetaDialogoListener {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Rectangle rectangle;
 	private static boolean paintER;
@@ -336,12 +338,31 @@ class TextArea extends TextPane {
 
 		private void processar() {
 			String string = getSelectedText();
-			if(Util.isEmpty(string)) {
+			if (Util.isEmpty(string)) {
 				return;
 			}
-			InstrucaoMetadados.abrir(TextArea.this, string);
+			string = Util.trim(string, '.', false);
+			string = Util.trim(string, '.', true);
+			try {
+				InstrucaoMetadados.abrir(TextArea.this, string, TextArea.this);
+			} catch (InstrucaoException ex) {
+				LOG.warning(ex.getMessage());
+			}
 		}
 	};
+
+	@Override
+	public void setFragmento(String string) {
+		Document doc = getDocument();
+		if (doc != null) {
+			try {
+				int selectionEnd = getSelectionEnd();
+				doc.insertString(selectionEnd, string, null);
+			} catch (BadLocationException e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
+	}
 
 	private void processar(CaretEvent e) {
 		TextUI textUI = getUI();
@@ -354,7 +375,7 @@ class TextArea extends TextPane {
 				repaint();
 			}
 		} catch (BadLocationException ex) {
-			//
+			LOG.warning(ex.getMessage());
 		}
 	}
 

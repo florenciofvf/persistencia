@@ -1,6 +1,8 @@
 package br.com.persist.plugins.instrucao.processador;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -60,6 +62,18 @@ public class Biblioteca {
 		for (Constante constante : constantes.values()) {
 			constante.init();
 		}
+	}
+
+	public List<String> getNomeConstantes() {
+		return new ArrayList<>(constantes.keySet());
+	}
+
+	public List<String> getNomeFuncoes() {
+		List<String> lista = new ArrayList<>();
+		for (Funcao item : funcoes.values()) {
+			lista.add(item.getInterface());
+		}
+		return lista;
 	}
 
 	@Override

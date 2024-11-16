@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,22 +19,35 @@ import javax.swing.event.ListDataListener;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
+import br.com.persist.plugins.instrucao.processador.Biblioteca;
+import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class InstrucaoMetadados {
 	private InstrucaoMetadados() {
 	}
 
-	public static void abrir(Component comp, String biblioteca) {
-		MetaProvedor.init(biblioteca);
-		MetaDialogo.criar(Util.getViewParentFrame(comp));
+	public static void abrir(Component comp, String biblioteca, MetaDialogoListener listener)
+			throws InstrucaoException {
+		CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
+		Biblioteca biblio = cacheBiblioteca.getBiblioteca(biblioteca);
+		MetaProvedor.init(biblio);
+		MetaDialogo.criar(Util.getViewParentFrame(comp), listener);
 	}
 }
 
+interface MetaListener {
+	void setFragmento(String string);
+
+	void dispose();
+}
+
 class MetaContainer extends Panel {
+	private final transient MetaListener metaListener;
 	private static final long serialVersionUID = 1L;
 	private JList<String> lista;
 
-	public MetaContainer() {
+	public MetaContainer(MetaListener metaListener) {
+		this.metaListener = Objects.requireNonNull(metaListener);
 		lista = new JList<>(new MetaModelo());
 		montarLayout();
 		configurar();
@@ -50,7 +64,9 @@ class MetaContainer extends Panel {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					int indice = lista.getSelectedIndex();
 					if (indice != -1) {
-						//
+						String fragmento = lista.getSelectedValue();
+						metaListener.setFragmento(fragmento);
+						metaListener.dispose();
 					}
 				}
 			}
@@ -58,17 +74,25 @@ class MetaContainer extends Panel {
 	}
 
 	public void selecionar(int indice) {
-		lista.setSelectedIndex(indice);
+		if (indice >= 0 && indice < lista.getModel().getSize()) {
+			lista.setSelectedIndex(indice);
+		}
 	}
 }
 
-class MetaDialogo extends AbstratoDialogo {
+interface MetaDialogoListener {
+	void setFragmento(String string);
+}
+
+class MetaDialogo extends AbstratoDialogo implements MetaListener {
+	private final transient MetaDialogoListener listener;
 	private static final long serialVersionUID = 1L;
 	private final MetaContainer container;
 
-	private MetaDialogo(Frame frame) {
+	private MetaDialogo(Frame frame, MetaDialogoListener listener) {
 		super(frame, "Metadados");
-		container = new MetaContainer();
+		this.listener = Objects.requireNonNull(listener);
+		container = new MetaContainer(this);
 		montarLayout();
 		pack();
 	}
@@ -77,8 +101,8 @@ class MetaDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static MetaDialogo criar(Frame frame) {
-		MetaDialogo form = new MetaDialogo(frame);
+	public static MetaDialogo criar(Frame frame, MetaDialogoListener listener) {
+		MetaDialogo form = new MetaDialogo(frame, listener);
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
 		return form;
@@ -87,6 +111,11 @@ class MetaDialogo extends AbstratoDialogo {
 	@Override
 	public void dialogOpenedHandler(Dialog dialog) {
 		container.selecionar(0);
+	}
+
+	@Override
+	public void setFragmento(String string) {
+		listener.setFragmento(string);
 	}
 }
 
@@ -120,8 +149,12 @@ class MetaProvedor {
 	private MetaProvedor() {
 	}
 
-	public static void init(String biblioteca) {
+	public static void init(Biblioteca biblioteca) {
+		List<String> list = new ArrayList<>();
+		list.addAll(biblioteca.getNomeConstantes());
+		list.addAll(biblioteca.getNomeFuncoes());
 		lista.clear();
+		lista.addAll(list);
 	}
 
 	public static List<String> getLista() {
