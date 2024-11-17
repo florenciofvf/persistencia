@@ -459,8 +459,8 @@ class TextArea extends TextPane implements MetaDialogoListener {
 		int umTerco = r.height / 3;
 		int metade = r.height / 2;
 		r.x += offset;
-		g.drawLine(r.x, r.y + umQuarto, r.x + 3, r.y + metade - 1);
-		g.drawLine(r.x + 3, r.y + metade, r.x, r.y + r.height - umTerco);
+		g.drawLine(r.x + 1, r.y + umQuarto + 1, r.x + 3, r.y + metade - 1);
+		g.drawLine(r.x + 3, r.y + metade, r.x + 1, r.y + r.height - umTerco - 1);
 	}
 }
 
