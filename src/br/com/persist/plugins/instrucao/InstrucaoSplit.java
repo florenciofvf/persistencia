@@ -402,7 +402,7 @@ class TextArea extends TextPane implements MetaDialogoListener {
 			try {
 				Rectangle r = textUI.modelToView(this, pos);
 				if (r != null) {
-					g.setColor(Color.LIGHT_GRAY);
+					g.setColor(InstrucaoConstantes.COLOR_RET);
 					g.fillOval(r.x + 1, r.y + r.height / 3, 3, 3);
 				}
 				pos = text.indexOf(' ', pos + 1);
@@ -419,7 +419,7 @@ class TextArea extends TextPane implements MetaDialogoListener {
 				Rectangle r = textUI.modelToView(this, pos);
 				if (r != null) {
 					r.height -= 3;
-					g.setColor(Color.LIGHT_GRAY);
+					g.setColor(InstrucaoConstantes.COLOR_RET);
 					g.fillArc(r.x, r.y, 7, 7, 90, 180);
 					g.fillRect(r.x + 4, r.y, 2, 1);
 					desenharR(g, r, 0);
@@ -443,7 +443,7 @@ class TextArea extends TextPane implements MetaDialogoListener {
 			try {
 				Rectangle r = textUI.modelToView(this, pos);
 				if (r != null) {
-					g.setColor(Color.LIGHT_GRAY);
+					g.setColor(InstrucaoConstantes.COLOR_TAB);
 					desenharT(g, r, 0);
 					desenharT(g, r, 2);
 				}
