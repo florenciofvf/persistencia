@@ -81,6 +81,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonPopup;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Menu;
@@ -92,6 +93,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.SetLista.Config;
+import br.com.persist.componente.SetListaCheck;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
@@ -2944,6 +2946,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private class MenuDML extends Menu {
 				private Action descreverColunaAcao = acaoMenu("label.descrever_coluna", Icones.TABELA);
 				private Action resumirColunaAcao = acaoMenu("label.resumir_coluna", Icones.TABELA);
+				private Action filtroColunaAcao = acaoMenu("label.filtrar_coluna", Icones.TABELA);
 				private Action ultimaConsAcao = acaoMenu("label.ultima_consulta", Icones.TABELA);
 				private static final long serialVersionUID = 1L;
 
@@ -2951,6 +2954,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					super("label.dml", Icones.EXECUTAR);
 					add(descreverColunaAcao);
 					add(resumirColunaAcao);
+					add(filtroColunaAcao);
 					add(ultimaConsAcao);
 					add(true, new MenuInsert(true));
 					add(false, new MenuInsert(false));
@@ -2961,6 +2965,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					add(true, new MenuInnerJoin());
 					descreverColunaAcao.setActionListener(e -> descreverColuna());
 					resumirColunaAcao.setActionListener(e -> resumirColuna());
+					filtroColunaAcao.setActionListener(e -> filtrarColuna());
 					ultimaConsAcao.setActionListener(e -> ultimaCons());
 				}
 
@@ -2979,6 +2984,33 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						sb.append(string);
 					}
 					Util.mensagem(InternalContainer.this, sb.toString());
+				}
+
+				private void filtrarColuna() {
+					StringBuilder sb = new StringBuilder(objeto.getTabela() + Constantes.QL);
+					sb.append(Util.completar(Constantes.VAZIO, objeto.getTabela().length(), '-'));
+
+					CheckBox checkNulavel = new CheckBox("NULAVEL", false);
+					CheckBox checkChave = new CheckBox("CHAVE", false);
+					List<CheckBox> list = new ArrayList<>();
+					list.add(checkNulavel);
+					list.add(checkChave);
+
+					SetListaCheck.view(objeto.getId(), list, InternalContainer.this);
+
+					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+					List<Coluna> colunas = modelo.getModelo().getColunas();
+					for (Coluna item : colunas) {
+						if (sel(item, checkNulavel.isSelected(), checkChave.isSelected())) {
+							sb.append(Constantes.QL);
+							sb.append(item.getDetalhe());
+						}
+					}
+					Util.mensagem(InternalContainer.this, sb.toString());
+				}
+
+				private boolean sel(Coluna coluna, boolean chave, boolean nulavel) {
+					return (chave && coluna.isChave()) || (nulavel && coluna.isNulavel());
 				}
 
 				private void descreverColuna() {

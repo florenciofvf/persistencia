@@ -55,6 +55,11 @@ class ItemCheck {
 	public void setSelecionado(boolean selecionado) {
 		check.setSelected(selecionado);
 	}
+
+	@Override
+	public String toString() {
+		return check.getText();
+	}
 }
 
 class ItemCheckRenderer extends JCheckBox implements ListCellRenderer<ItemCheck> {
