@@ -43,7 +43,7 @@ public class InstrucaoEditor extends StyledEditorKit {
 	}
 
 	static class InstrucaoParagraphView extends ParagraphView {
-		public static final int TAB_SIZE = 26;
+		public static final int TAB_SIZE = 20;
 
 		public InstrucaoParagraphView(Element elem) {
 			super(elem);

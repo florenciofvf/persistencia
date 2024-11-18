@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 
 public class InstrucaoConstantes {
+	protected static final String[] TAMANHOS = { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "18",
+			"20", "22" };
 	protected static final String[] FONTES = GraphicsEnvironment.getLocalGraphicsEnvironment()
 			.getAvailableFontFamilyNames();
 	public static final String LABEL_INSTRUCAO_MIN = "label.instrucao_min";

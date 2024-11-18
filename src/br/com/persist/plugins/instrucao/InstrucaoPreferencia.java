@@ -7,8 +7,10 @@ import br.com.persist.formulario.Formulario;
 
 public class InstrucaoPreferencia {
 	private static final String DESENHAR_ESPACO_RETORNO = "desenhar_espaco_retorno";
+	private static final String INSTRUCAO_FONT_SIZE = "instrucao_font_size";
 	private static boolean desenharEspacoRetorno;
 	private static boolean exibirArqIgnorados;
+	private static int instrucaoFonteSize;
 
 	private InstrucaoPreferencia() {
 	}
@@ -17,12 +19,22 @@ public class InstrucaoPreferencia {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		exibirArqIgnorados = pref.getBoolean("instrucao_exibir_arq_ignorados", false);
 		desenharEspacoRetorno = pref.getBoolean(DESENHAR_ESPACO_RETORNO, false);
+		instrucaoFonteSize = pref.getInt(INSTRUCAO_FONT_SIZE, 12);
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("instrucao_exibir_arq_ignorados", exibirArqIgnorados);
 		pref.putBoolean(DESENHAR_ESPACO_RETORNO, desenharEspacoRetorno);
+		pref.putInt(INSTRUCAO_FONT_SIZE, instrucaoFonteSize);
+	}
+
+	public static int getInstrucaoFonteSize() {
+		return instrucaoFonteSize;
+	}
+
+	public static void setInstrucaoFonteSize(int instrucaoFonteSize) {
+		InstrucaoPreferencia.instrucaoFonteSize = instrucaoFonteSize;
 	}
 
 	public static boolean isExibirArqIgnorados() {
@@ -39,7 +51,7 @@ public class InstrucaoPreferencia {
 		}
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putInt("instrucao_font_style", font.getStyle());
-		pref.putInt("instrucao_font_size", font.getSize());
+		pref.putInt(INSTRUCAO_FONT_SIZE, font.getSize());
 		pref.put("instrucao_font_name", font.getName());
 	}
 
@@ -49,7 +61,7 @@ public class InstrucaoPreferencia {
 		if (name == null) {
 			return null;
 		}
-		return new Font(name, pref.getInt("instrucao_font_style", 0), pref.getInt("instrucao_font_size", 0));
+		return new Font(name, pref.getInt("instrucao_font_style", 0), pref.getInt(INSTRUCAO_FONT_SIZE, 12));
 	}
 
 	public static boolean isDesenharEspacoRetorno() {

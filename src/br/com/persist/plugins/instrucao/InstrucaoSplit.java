@@ -598,6 +598,7 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private JComboBox<String> comboSize = new JComboBox<>(InstrucaoConstantes.TAMANHOS);
 		private JComboBox<String> comboFontes = new JComboBox<>(InstrucaoConstantes.FONTES);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
@@ -610,6 +611,7 @@ class Aba extends Transferivel {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			comboSize.addItemListener(Toolbar.this::alterarFonteSize);
 			comboFontes.addItemListener(Toolbar.this::alterarFonte);
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
@@ -621,6 +623,7 @@ class Aba extends Transferivel {
 			add(txtPesquisa);
 			add(label);
 			add(comboFontes);
+			add(comboSize);
 		}
 
 		public void ini(String arqAbsoluto) {
@@ -678,6 +681,16 @@ class Aba extends Transferivel {
 			}
 		}
 
+		private void alterarFonteSize(ItemEvent e) {
+			if (ItemEvent.SELECTED == e.getStateChange()) {
+				Object object = comboSize.getSelectedItem();
+				if (object instanceof String) {
+					Font font = getFont();
+					alterarSize(font, Integer.parseInt((String) object));
+				}
+			}
+		}
+
 		private void alterarFonte(ItemEvent e) {
 			if (ItemEvent.SELECTED == e.getStateChange()) {
 				Object object = comboFontes.getSelectedItem();
@@ -685,6 +698,13 @@ class Aba extends Transferivel {
 					Font font = getFont();
 					alterar(font, (String) object);
 				}
+			}
+		}
+
+		private void alterarSize(Font font, int size) {
+			if (font != null) {
+				Font nova = new Font(font.getName(), font.getStyle(), size);
+				selecionarFont(nova);
 			}
 		}
 
@@ -697,6 +717,7 @@ class Aba extends Transferivel {
 
 		private void selecionarFont(Font font) {
 			InstrucaoPreferencia.setFontPreferencia(font);
+			comboSize.setSelectedItem("" + font.getSize());
 			comboFontes.setSelectedItem(font.getName());
 			textArea.setFont(font);
 		}
