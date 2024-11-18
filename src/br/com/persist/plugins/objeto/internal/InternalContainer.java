@@ -2990,9 +2990,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					StringBuilder sb = new StringBuilder(objeto.getTabela() + Constantes.QL);
 					sb.append(Util.completar(Constantes.VAZIO, objeto.getTabela().length(), '-'));
 
+					CheckBox checkObrigatorio = new CheckBox("OBRIGATORIO", false);
 					CheckBox checkNulavel = new CheckBox("NULAVEL", false);
 					CheckBox checkChave = new CheckBox("CHAVE", false);
 					List<CheckBox> list = new ArrayList<>();
+					list.add(checkObrigatorio);
 					list.add(checkNulavel);
 					list.add(checkChave);
 
@@ -3001,7 +3003,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					List<Coluna> colunas = modelo.getModelo().getColunas();
 					for (Coluna item : colunas) {
-						if (sel(item, checkChave.isSelected(), checkNulavel.isSelected())) {
+						if (sel(item, checkChave.isSelected(), checkNulavel.isSelected(),
+								checkObrigatorio.isSelected())) {
 							sb.append(Constantes.QL);
 							sb.append(item.getNome());
 						}
@@ -3009,8 +3012,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Util.mensagem(InternalContainer.this, sb.toString());
 				}
 
-				private boolean sel(Coluna coluna, boolean chave, boolean nulavel) {
-					return (chave && chave == coluna.isChave()) || (nulavel && nulavel == coluna.isNulavel());
+				private boolean sel(Coluna coluna, boolean chave, boolean nulavel, boolean obrigatorio) {
+					return (chave && chave == coluna.isChave()) || (nulavel && nulavel == coluna.isNulavel())
+							|| (obrigatorio && !coluna.isNulavel());
 				}
 
 				private void descreverColuna() {
