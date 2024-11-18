@@ -2954,8 +2954,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					super("label.dml", Icones.EXECUTAR);
 					add(descreverColunaAcao);
 					add(resumirColunaAcao);
-					add(filtroColunaAcao);
 					add(ultimaConsAcao);
+					add(filtroColunaAcao);
 					add(true, new MenuInsert(true));
 					add(false, new MenuInsert(false));
 					add(true, new MenuUpdate());
@@ -3001,16 +3001,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					List<Coluna> colunas = modelo.getModelo().getColunas();
 					for (Coluna item : colunas) {
-						if (sel(item, checkNulavel.isSelected(), checkChave.isSelected())) {
+						if (sel(item, checkChave.isSelected(), checkNulavel.isSelected())) {
 							sb.append(Constantes.QL);
-							sb.append(item.getDetalhe());
+							sb.append(item.getNome());
 						}
 					}
 					Util.mensagem(InternalContainer.this, sb.toString());
 				}
 
 				private boolean sel(Coluna coluna, boolean chave, boolean nulavel) {
-					return (chave && coluna.isChave()) || (nulavel && coluna.isNulavel());
+					return (chave && chave == coluna.isChave()) || (nulavel && nulavel == coluna.isNulavel());
 				}
 
 				private void descreverColuna() {

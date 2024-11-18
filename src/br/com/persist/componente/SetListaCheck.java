@@ -76,9 +76,9 @@ class ItemCheckRenderer extends JCheckBox implements ListCellRenderer<ItemCheck>
 			setForeground(listaItem.getForeground());
 		}
 		setSelected(itemCheck.isSelecionado());
-		setOpaque(itemCheck.isSelecionado());
 		setText(itemCheck.toString());
 		setFont(listaItem.getFont());
+		setOpaque(true);
 		return this;
 	}
 }
@@ -120,8 +120,8 @@ class SetListaCheckDialogo extends AbstratoDialogo {
 	}
 
 	private void init(List<CheckBox> listaCheck) {
-		listaItem.setModel(criarModel(listaCheck));
 		listaItem.setCellRenderer(new ItemCheckRenderer());
+		listaItem.setModel(criarModel(listaCheck));
 		setSize(Constantes.SIZE3);
 		toolbar.ini(this);
 		montarLayout();
