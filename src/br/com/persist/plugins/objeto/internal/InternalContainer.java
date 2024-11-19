@@ -2993,18 +2993,24 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					CheckBox checkObrigatorio = new CheckBox("OBRIGATORIO", false);
 					CheckBox checkNulavel = new CheckBox("NULAVEL", false);
 					CheckBox checkChave = new CheckBox("CHAVE", false);
+					CheckBox checkBlob = new CheckBox("BLOB", false);
+					CheckBox checkAuto = new CheckBox("AUTO", false);
+					CheckBox checkNum = new CheckBox("NUM", false);
 					List<CheckBox> list = new ArrayList<>();
 					list.add(checkObrigatorio);
 					list.add(checkNulavel);
 					list.add(checkChave);
+					list.add(checkBlob);
+					list.add(checkAuto);
+					list.add(checkNum);
 
 					SetListaCheck.view(objeto.getId(), list, InternalContainer.this);
 
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					List<Coluna> colunas = modelo.getModelo().getColunas();
 					for (Coluna item : colunas) {
-						if (sel(item, checkChave.isSelected(), checkNulavel.isSelected(),
-								checkObrigatorio.isSelected())) {
+						if (sel(item, checkChave.isSelected(), checkNulavel.isSelected(), checkObrigatorio.isSelected(),
+								checkBlob.isSelected(), checkAuto.isSelected(), checkNum.isSelected())) {
 							sb.append(Constantes.QL);
 							sb.append(item.getNome());
 						}
@@ -3012,9 +3018,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Util.mensagem(InternalContainer.this, sb.toString());
 				}
 
-				private boolean sel(Coluna coluna, boolean chave, boolean nulavel, boolean obrigatorio) {
+				private boolean sel(Coluna coluna, boolean chave, boolean nulavel, boolean obrigatorio, boolean blob,
+						boolean auto, boolean numero) {
+					if (coluna.isColunaInfo()) {
+						return false;
+					}
 					return (chave && chave == coluna.isChave()) || (nulavel && nulavel == coluna.isNulavel())
-							|| (obrigatorio && !coluna.isNulavel());
+							|| (obrigatorio && !coluna.isNulavel()) || (blob && blob == coluna.isBlob())
+							|| (auto && auto == coluna.isAutoInc()) || (numero && numero == coluna.isNumero());
 				}
 
 				private void descreverColuna() {
