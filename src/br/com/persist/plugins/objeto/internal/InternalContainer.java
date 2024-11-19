@@ -2974,8 +2974,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void resumirColuna() {
-					StringBuilder sb = new StringBuilder(objeto.getTabela() + Constantes.QL);
-					sb.append(Util.completar(Constantes.VAZIO, objeto.getTabela().length(), '-'));
+					StringBuilder sb = criarSBTitulo();
 					Coletor coletor = new Coletor();
 					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 							InternalContainer.this, null);
@@ -2986,10 +2985,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Util.mensagem(InternalContainer.this, sb.toString());
 				}
 
-				private void filtrarColuna() {
-					StringBuilder sb = new StringBuilder(objeto.getTabela() + Constantes.QL);
-					sb.append(Util.completar(Constantes.VAZIO, objeto.getTabela().length(), '-'));
+				private String nomeTabela() {
+					return PersistenciaModelo.prefixarEsquema(null, objeto.getPrefixoNomeTabela(), objeto.getTabela(),
+							null);
+				}
 
+				private StringBuilder criarSBTitulo() {
+					String string = nomeTabela();
+					StringBuilder sb = new StringBuilder(string + Constantes.QL);
+					sb.append(Util.completar(Constantes.VAZIO, string.length(), '-'));
+					return sb;
+				}
+
+				private void filtrarColuna() {
+					StringBuilder sb = criarSBTitulo();
 					CheckBox checkObrigatorio = new CheckBox("OBRIGATORIO", false);
 					CheckBox checkNulavel = new CheckBox("NULAVEL", false);
 					CheckBox checkChave = new CheckBox("CHAVE", false);
