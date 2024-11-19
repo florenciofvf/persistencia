@@ -245,6 +245,7 @@ public class Compilador {
 				break;
 			case 'R':
 			case 'N':
+			case 'T':
 				outros(builder, c, escapar);
 				break;
 			default:
@@ -299,6 +300,8 @@ public class Compilador {
 			builder.append("\\R");
 		} else if (c == '\n') {
 			builder.append("\\N");
+		} else if (c == '\t') {
+			builder.append("\\T");
 		} else {
 			builder.append(c);
 		}

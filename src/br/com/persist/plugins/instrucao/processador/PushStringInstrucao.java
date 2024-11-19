@@ -21,6 +21,7 @@ public class PushStringInstrucao extends Instrucao {
 		}
 		this.parametros = Util.replaceAll(parametros, "\\R", "\r");
 		this.parametros = Util.replaceAll(this.parametros, "\\N", "\n");
+		this.parametros = Util.replaceAll(this.parametros, "\\T", "\t");
 	}
 
 	@Override
