@@ -11,7 +11,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,8 +42,6 @@ import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
-import javax.swing.event.CaretEvent;
-import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.MutableAttributeSet;
@@ -72,8 +69,8 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextField;
-import br.com.persist.componente.TextPane;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -286,31 +283,18 @@ class InstrucaoSplit extends SplitPane {
 	};
 }
 
-class TextArea extends TextPane implements MetaDialogoListener {
+class TextArea extends TextEditor implements MetaDialogoListener {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
-	private final Rectangle rectangle;
-	private static boolean paintER;
 
 	TextArea() {
 		addFocusListener(focusListenerInner);
-		setEditorKit(new InstrucaoEditor());
-		addCaretListener(this::processar);
 		addKeyListener(keyListenerInner);
-		rectangle = new Rectangle();
-	}
-
-	public static boolean isPaintER() {
-		return paintER;
-	}
-
-	public static void setPaintER(boolean paintER) {
-		TextArea.paintER = paintER;
 	}
 
 	public static void inverterPaintER() {
-		setPaintER(!TextArea.paintER);
-		InstrucaoPreferencia.setPaintER(paintER);
+		TextEditor.setPaintERT(!TextEditor.isPaintERT());
+		InstrucaoPreferencia.setPaintER(TextEditor.isPaintERT());
 	}
 
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -361,102 +345,6 @@ class TextArea extends TextPane implements MetaDialogoListener {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
-	}
-
-	private void processar(CaretEvent e) {
-		TextUI textUI = getUI();
-		try {
-			Rectangle r = textUI.modelToView(this, e.getDot());
-			if (r != null) {
-				rectangle.width = getWidth();
-				rectangle.height = r.height;
-				rectangle.y = r.y;
-				repaint();
-			}
-		} catch (BadLocationException ex) {
-			LOG.warning(ex.getMessage());
-		}
-	}
-
-	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-		if (paintER) {
-			TextUI textUI = getUI();
-			String text = getText();
-			paintE(g, textUI, text);
-			paintR(g, textUI, text);
-			paintT(g, textUI, text);
-		}
-		g.setColor(InstrucaoConstantes.COLOR_SEL);
-		g.drawRect(0, rectangle.y, rectangle.width, rectangle.height);
-	}
-
-	private void paintE(Graphics g, TextUI textUI, String text) {
-		int pos = text.indexOf(' ');
-		while (pos != -1) {
-			try {
-				Rectangle r = textUI.modelToView(this, pos);
-				if (r != null) {
-					g.setColor(InstrucaoConstantes.COLOR_RET);
-					g.fillOval(r.x + 1, r.y + r.height / 3, 3, 3);
-				}
-				pos = text.indexOf(' ', pos + 1);
-			} catch (BadLocationException e) {
-				break;
-			}
-		}
-	}
-
-	private void paintR(Graphics g, TextUI textUI, String text) {
-		int pos = text.indexOf('\n');
-		while (pos != -1) {
-			try {
-				Rectangle r = textUI.modelToView(this, pos);
-				if (r != null) {
-					r.height -= 3;
-					g.setColor(InstrucaoConstantes.COLOR_RET);
-					g.fillArc(r.x, r.y, 7, 7, 90, 180);
-					g.fillRect(r.x + 4, r.y, 2, 1);
-					desenharR(g, r, 0);
-					desenharR(g, r, 2);
-				}
-				pos = text.indexOf('\n', pos + 1);
-			} catch (BadLocationException e) {
-				break;
-			}
-		}
-	}
-
-	private void desenharR(Graphics g, Rectangle r, int offset) {
-		r.x += offset;
-		g.drawLine(r.x + 4, r.y, r.x + 4, r.y + r.height);
-	}
-
-	private void paintT(Graphics g, TextUI textUI, String text) {
-		int pos = text.indexOf('\t');
-		while (pos != -1) {
-			try {
-				Rectangle r = textUI.modelToView(this, pos);
-				if (r != null) {
-					g.setColor(InstrucaoConstantes.COLOR_TAB);
-					desenharT(g, r, 0);
-					desenharT(g, r, 2);
-				}
-				pos = text.indexOf('\t', pos + 1);
-			} catch (BadLocationException e) {
-				break;
-			}
-		}
-	}
-
-	private void desenharT(Graphics g, Rectangle r, int offset) {
-		int umQuarto = r.height / 4;
-		int umTerco = r.height / 3;
-		int metade = r.height / 2;
-		r.x += offset;
-		g.drawLine(r.x + 1, r.y + umQuarto + 1, r.x + 3, r.y + metade - 1);
-		g.drawLine(r.x + 3, r.y + metade, r.x + 1, r.y + r.height - umTerco - 1);
 	}
 }
 
@@ -568,7 +456,7 @@ class Aba extends Transferivel {
 	}
 
 	private void aplicarFontePreferencia() {
-		TextArea.setPaintER(InstrucaoPreferencia.getPaintER());
+		TextEditor.setPaintERT(InstrucaoPreferencia.getPaintER());
 		Font font = InstrucaoPreferencia.getFontPreferencia();
 		if (font != null) {
 			toolbar.selecionarFont(font);
