@@ -1,4 +1,4 @@
-package ###package###;
+package br.com.persist.plugins.projeto;
 
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
@@ -59,20 +59,20 @@ import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
 
-class ###nameCap###Split extends SplitPane {
+class ProjetoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final File fileRoot;
 	private ArquivoTree tree;
 	private PanelRoot panel;
 
-	###nameCap###Split() {
+	ProjetoSplit() {
 		super(HORIZONTAL_SPLIT);
-		fileRoot = new File(###nameCap###Constantes.###recurso###);
+		fileRoot = new File(ProjetoConstantes.PROJETOS);
 	}
 
 	void inicializar() {
-		File file = new File(fileRoot, ###nameCap###Constantes.IGNORADOS);
+		File file = new File(fileRoot, ProjetoConstantes.IGNORADOS);
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
@@ -87,9 +87,9 @@ class ###nameCap###Split extends SplitPane {
 		File file = new File(fileRoot, "hierarquia.xml");
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2("###nameLower###");
+		util.abrirTag2("projeto");
 		panel.salvar(util);
-		util.finalizarTag("###nameLower###");
+		util.finalizarTag("projeto");
 		util.close();
 	}
 
@@ -97,14 +97,14 @@ class ###nameCap###Split extends SplitPane {
 		File file = new File(fileRoot, "hierarquia.xml");
 		try {
 			if (file.exists() && file.canRead()) {
-				XML.processar(file, new ###nameCap###Handler(panel, tree.getModelo()));
+				XML.processar(file, new ProjetoHandler(panel, tree.getModelo()));
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 
-	void abrir(Arquivo arquivo) throws ###nameCap###Exception {
+	void abrir(Arquivo arquivo) throws ProjetoException {
 		if (arquivo == null) {
 			return;
 		}
@@ -156,7 +156,7 @@ class ###nameCap###Split extends SplitPane {
 		public void renomearArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null) {
-				String nome = ArquivoUtil.getNome(###nameCap###Split.this, arquivo.getName());
+				String nome = ArquivoUtil.getNome(ProjetoSplit.this, arquivo.getName());
 				if (nome != null && arquivo.renomear(nome)) {
 					ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
 					panel.renomear();
@@ -167,13 +167,13 @@ class ###nameCap###Split extends SplitPane {
 		@Override
 		public void excluirArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-			if (arquivo != null && Util.confirmar(###nameCap###Split.this, "msg.confirma_exclusao")) {
+			if (arquivo != null && Util.confirmar(ProjetoSplit.this, "msg.confirma_exclusao")) {
 				arquivo.excluir();
 				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
 				try {
 					panel.excluir(arquivo);
-				} catch (###nameCap###Exception | SeparadorException ex) {
-					Util.mensagem(###nameCap###Split.this, ex.getMessage());
+				} catch (ProjetoException | SeparadorException ex) {
+					Util.mensagem(ProjetoSplit.this, ex.getMessage());
 				}
 			}
 		}
@@ -189,9 +189,9 @@ class ###nameCap###Split extends SplitPane {
 		private void clonar(Arquivo arquivo) {
 			try {
 				String resp = Util.clonar(arquivo.getFile());
-				Util.mensagem(###nameCap###Split.this, resp);
+				Util.mensagem(ProjetoSplit.this, resp);
 			} catch (IOException e) {
-				Util.mensagem(###nameCap###Split.this, e.getMessage());
+				Util.mensagem(ProjetoSplit.this, e.getMessage());
 			}
 		}
 
@@ -207,7 +207,7 @@ class ###nameCap###Split extends SplitPane {
 			try {
 				ArquivoUtil.diretorio(arquivo.getFile());
 			} catch (IOException e) {
-				Util.mensagem(###nameCap###Split.this, e.getMessage());
+				Util.mensagem(ProjetoSplit.this, e.getMessage());
 			}
 		}
 
@@ -215,8 +215,8 @@ class ###nameCap###Split extends SplitPane {
 		public void abrirArquivo(ArquivoTree arquivoTree) {
 			try {
 				abrir(arquivoTree.getObjetoSelecionado());
-			} catch (###nameCap###Exception ex) {
-				Util.mensagem(###nameCap###Split.this, ex.getMessage());
+			} catch (ProjetoException ex) {
+				Util.mensagem(ProjetoSplit.this, ex.getMessage());
 			}
 		}
 
@@ -224,7 +224,7 @@ class ###nameCap###Split extends SplitPane {
 		public void novoDiretorio(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (valido(arquivo)) {
-				File file = ArquivoUtil.novoDiretorio(###nameCap###Split.this, arquivo.getFile());
+				File file = ArquivoUtil.novoDiretorio(ProjetoSplit.this, arquivo.getFile());
 				adicionar(arquivoTree, arquivo, file);
 			}
 		}
@@ -233,7 +233,7 @@ class ###nameCap###Split extends SplitPane {
 		public void novoArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (valido(arquivo)) {
-				File file = ArquivoUtil.novoArquivo(###nameCap###Split.this, arquivo.getFile());
+				File file = ArquivoUtil.novoArquivo(ProjetoSplit.this, arquivo.getFile());
 				adicionar(arquivoTree, arquivo, file);
 			}
 		}
@@ -316,7 +316,7 @@ class Aba extends Transferivel {
 
 	@Override
 	public String getStringFile() {
-		return getStringRelativo(new File(###nameCap###Constantes.###recurso###), arquivo.getFile());
+		return getStringRelativo(new File(ProjetoConstantes.PROJETOS), arquivo.getFile());
 	}
 
 	@Override
@@ -487,9 +487,9 @@ class PanelRoot extends Panel {
 		}
 	}
 
-	void setRoot(Component c) throws ###nameCap###Exception {
+	void setRoot(Component c) throws ProjetoException {
 		if (getComponentCount() > 0) {
-			throw new ###nameCap###Exception("getComponentCount() > 0", false);
+			throw new ProjetoException("getComponentCount() > 0", false);
 		}
 		add(c);
 	}
@@ -507,31 +507,31 @@ class PanelRoot extends Panel {
 		((Separador) getComponent(0)).processar(map);
 	}
 
-	void excluir(Arquivo arquivo) throws ###nameCap###Exception, SeparadorException {
+	void excluir(Arquivo arquivo) throws ProjetoException, SeparadorException {
 		Transferivel objeto = getTransferivel(arquivo.getFile());
 		while (objeto != null) {
 			Fichario fichario = getFichario(objeto);
 			if (fichario != null) {
 				if (!fichario.contem(objeto)) {
-					throw new ###nameCap###Exception("!fichario.contem(objeto)", false);
+					throw new ProjetoException("!fichario.contem(objeto)", false);
 				} else {
 					fichario.excluir(objeto);
 				}
 			} else {
-				throw new ###nameCap###Exception("fichario == null", false);
+				throw new ProjetoException("fichario == null", false);
 			}
 			objeto = getTransferivel(arquivo.getFile());
 		}
 	}
 }
 
-class ###nameCap###Handler extends XMLHandler {
+class ProjetoHandler extends XMLHandler {
 	private final ArquivoModelo modelo;
 	private final PanelRoot root;
 	Separador separador;
 	Fichario fichario;
 
-	###nameCap###Handler(PanelRoot root, ArquivoModelo modelo) {
+	ProjetoHandler(PanelRoot root, ArquivoModelo modelo) {
 		this.modelo = modelo;
 		this.root = root;
 	}
@@ -551,13 +551,13 @@ class ###nameCap###Handler extends XMLHandler {
 		} else if ("transferivel".equals(qName)) {
 			String nome = attributes.getValue("file");
 			nome = Util.replaceAll(nome, Constantes.SEP, Constantes.SEPARADOR);
-			File fileRoot = new File(###nameCap###Constantes.###recurso###);
+			File fileRoot = new File(ProjetoConstantes.PROJETOS);
 			File file = new File(fileRoot, nome);
 			Arquivo arquivo = modelo.getArquivo(file);
 			if (arquivo != null) {
-				###nameCap###Split.novaAba(fichario, arquivo);
+				ProjetoSplit.novaAba(fichario, arquivo);
 			} else {
-				###nameCap###Split.novaAba(fichario, file);
+				ProjetoSplit.novaAba(fichario, file);
 			}
 		}
 	}
