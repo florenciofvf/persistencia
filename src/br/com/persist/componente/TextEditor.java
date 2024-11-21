@@ -157,7 +157,7 @@ class TextEditorKit extends StyledEditorKit {
 				if (kind.equals(AbstractDocument.ContentElementName)) {
 					return new LabelView(elem);
 				} else if (kind.equals(AbstractDocument.ParagraphElementName)) {
-					return new InstrucaoParagraphView(elem);
+					return new TextEditorParagraphView(elem);
 				} else if (kind.equals(AbstractDocument.SectionElementName)) {
 					return new BoxView(elem, View.Y_AXIS);
 				} else if (kind.equals(StyleConstants.ComponentElementName)) {
@@ -170,10 +170,10 @@ class TextEditorKit extends StyledEditorKit {
 		}
 	}
 
-	static class InstrucaoParagraphView extends ParagraphView {
+	static class TextEditorParagraphView extends ParagraphView {
 		public static final int TAB_SIZE = 20;
 
-		public InstrucaoParagraphView(Element elem) {
+		public TextEditorParagraphView(Element elem) {
 			super(elem);
 		}
 
