@@ -19,6 +19,8 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			Arquivo obj = (Arquivo) value;
 			if (obj.isFile()) {
 				setIcon(Icones.EXECUTAR);
+			} else if (obj.getNivel() == 0) {
+				setIcon(Icones.INFO);
 			} else if (obj.getNivel() == 1) {
 				setIcon(Icones.CRIAR);
 			} else if (obj.getNivel() == 2) {
