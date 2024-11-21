@@ -23,6 +23,8 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			if (obj.getNivel() == 2) {
 				setIcon(Icones.ATUALIZAR);
 			} else if (obj.getNivel() == 3) {
+				setIcon(Icones.INFO);
+			} else if (obj.getNivel() == 4) {
 				setIcon(Icones.URL);
 			}
 		}
