@@ -76,6 +76,7 @@ class ProjetoSplit extends SplitPane {
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
+		tree.setCellRenderer(new ProjetoRenderer());
 		setLeftComponent(new ScrollPane(tree));
 		tree.adicionarOuvinte(treeListener);
 		panel = new PanelRoot();
