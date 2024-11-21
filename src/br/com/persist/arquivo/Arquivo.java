@@ -129,6 +129,16 @@ public class Arquivo {
 		return null;
 	}
 
+	public int getNivel() {
+		int total = 0;
+		Arquivo a = pai;
+		while (a != null) {
+			total++;
+			a = a.pai;
+		}
+		return total;
+	}
+
 	public void ordenar() {
 		ArquivoUtil.ordenar(filhos);
 	}

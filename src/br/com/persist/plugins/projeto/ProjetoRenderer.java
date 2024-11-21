@@ -20,6 +20,11 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			if (obj.isFile()) {
 				setIcon(Icones.EXECUTAR);
 			}
+			if (obj.getNivel() == 2) {
+				setIcon(Icones.ATUALIZAR);
+			} else if (obj.getNivel() == 3) {
+				setIcon(Icones.URL);
+			}
 		}
 		return this;
 	}
