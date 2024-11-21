@@ -131,12 +131,22 @@ public class Arquivo {
 
 	public int getNivel() {
 		int total = 0;
+		if (isPai(getName())) {
+			return total;
+		}
 		Arquivo a = pai;
 		while (a != null) {
 			total++;
+			if (isPai(a.getName())) {
+				return total;
+			}
 			a = a.pai;
 		}
 		return total;
+	}
+
+	private static boolean isPai(String s) {
+		return s != null && s.endsWith("___");
 	}
 
 	public void ordenar() {
