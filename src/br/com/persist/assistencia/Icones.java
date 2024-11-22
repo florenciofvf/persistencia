@@ -29,6 +29,7 @@ public class Icones {
 	public static final Icon EXECUTAR = criarImagem("executar");
 	public static final Icon EXPANDIR = criarImagem("expandir");
 	public static final Icon VERTICAL = criarImagem("vertical");
+	public static final Icon FAVORITO = criarImagem("favorito");
 	public static final Icon ATUALIZAR = criarImagem("refresh");
 	public static final Icon UM_PIXEL = criarImagem("um_pixel");
 	public static final Icon FRAGMENTO = criarImagem("feature");
@@ -60,6 +61,7 @@ public class Icones {
 	public static final Icon PANEL2 = criarImagem("panel2");
 	public static final Icon REGION = criarImagem("region");
 	public static final Icon BACKUP = criarImagem("backup");
+	public static final Icon PESSOA = criarImagem("pessoa");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon FECHAR = criarImagem("close");

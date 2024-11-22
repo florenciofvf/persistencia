@@ -152,6 +152,14 @@ public class Arquivo {
 		return total;
 	}
 
+	public boolean isAuto() {
+		return getName().endsWith("_auto");
+	}
+
+	public boolean isPai() {
+		return getName().endsWith("___");
+	}
+
 	private static boolean isPai(String s) {
 		return s != null && s.endsWith("___");
 	}
