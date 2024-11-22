@@ -22,7 +22,7 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			} else if (obj.getNivel() == 0) {
 				setIcon(Icones.INFO);
 			} else if (obj.getNivel() == 1) {
-				setIcon(Icones.CRIAR);
+				setIcon(Icones.RULE);
 			} else if (obj.getNivel() == 2) {
 				setIcon(Icones.INFO);
 			} else if (obj.getNivel() == 3) {
