@@ -53,12 +53,16 @@ public class Arquivo {
 			a.excluir();
 		}
 		if (isFile() || isDirectory()) {
-			Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
-			try {
-				Files.delete(path);
-			} catch (IOException e) {
-				LOG.log(Level.FINEST, "EXCLUIR ARQUIVO");
-			}
+			excluir(file);
+		}
+	}
+
+	private void excluir(File file) {
+		Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
+		try {
+			Files.delete(path);
+		} catch (IOException e) {
+			LOG.log(Level.FINEST, "EXCLUIR ARQUIVO");
 		}
 	}
 
@@ -95,8 +99,11 @@ public class Arquivo {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
-				for (File f : files) {
-					if (!ignorar(f.getName())) {
+				for (int i = 0; i < files.length; i++) {
+					File f = files[i];
+					if (".DS_Store".equalsIgnoreCase(f.getName())) {
+						excluir(f);
+					} else if (!ignorar(f.getName())) {
 						adicionar(f);
 					}
 				}
