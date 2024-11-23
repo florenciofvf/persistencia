@@ -1,25 +1,21 @@
 package br.com.persist.plugins.objeto.vinculo;
 
-import java.awt.Color;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.border.Border;
 
-import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.TextEditor;
 
 public class Marcador {
 	private JComponent comp;
 
 	public void aplicarIf(String string) {
 		if (comp != null && !Util.isEmpty(string)) {
+			comp.setBorder(criarBorda());
 			if (comp instanceof AbstractButton) {
-				((AbstractButton) comp).setIcon(Icones.SUCESSO);
-				((AbstractButton) comp).setToolTipText("valor=" + string);
-			} else {
-				comp.setBorder(criarBorda());
+				((AbstractButton) comp).setBorderPainted(true);
 			}
 		}
 	}
@@ -33,6 +29,6 @@ public class Marcador {
 	}
 
 	public static Border criarBorda() {
-		return BorderFactory.createLineBorder(Color.GREEN);
+		return BorderFactory.createLineBorder(TextEditor.COLOR_SEL, 3);
 	}
 }
