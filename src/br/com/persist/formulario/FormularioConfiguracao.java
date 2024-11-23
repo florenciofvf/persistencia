@@ -36,6 +36,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkMonitorPreferencial = criarCheckBox("label.monitor_preferencial");
 	private final Button buttonAplicarLA = criarButton("label.aplicar_largura_altura");
 	private final CheckBox chkFicharioScroll = criarCheckBox("label.fichario_scroll");
+	private final CheckBox chkDesenharERTEditor = criarCheckBox("label.desenhar_ERT");
 	private final CheckBox chkTituloAbaMin = criarCheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
@@ -71,6 +72,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		chkAbrirFormularioDireita.setSelected(Preferencias.isAbrirFormularioDireita());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkAbrirFormularioAbaixo.setSelected(Preferencias.isAbrirFormularioAbaixo());
+		chkDesenharERTEditor.setSelected(Preferencias.isDesenharEspacoRetornoTab());
 		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
@@ -96,8 +98,9 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				new PanelCenter(buttonAplicarLA)));
 		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(buttonConectaDesconecta)));
 		muro.camada(Muro.panelGrid(chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
-				chkMonitorPreferencial, chkAbrirFormularioDireita, chkAbrirFormularioAbaixo, chkFecharComESCFormulario,
-				chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin, chkFicharioScroll));
+				chkDesenharERTEditor, chkMonitorPreferencial, chkAbrirFormularioDireita, chkAbrirFormularioAbaixo,
+				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
+				chkFicharioScroll));
 		if (Preferencias.isMonitorPreferencial()) {
 			muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.monitor_preferencial"),
 					new PainelMonitorPreferencial()));
@@ -111,6 +114,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			formulario.setTabLayoutPolicy(
 					Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
 		});
+		chkDesenharERTEditor
+				.addActionListener(e -> Preferencias.setDesenharEspacoRetornoTab(chkDesenharERTEditor.isSelected()));
 		chkFecharComESCFormulario
 				.addActionListener(e -> Preferencias.setFecharComESCFormulario(chkFecharComESCFormulario.isSelected()));
 		chkFecharComESCInternal

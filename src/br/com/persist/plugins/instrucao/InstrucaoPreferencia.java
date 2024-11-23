@@ -6,9 +6,7 @@ import java.util.prefs.Preferences;
 import br.com.persist.formulario.Formulario;
 
 public class InstrucaoPreferencia {
-	private static final String DESENHAR_ESPACO_RETORNO = "desenhar_espaco_retorno";
 	private static final String INSTRUCAO_FONT_SIZE = "instrucao_font_size";
-	private static boolean desenharEspacoRetorno;
 	private static boolean exibirArqIgnorados;
 	private static int instrucaoFonteSize;
 
@@ -18,14 +16,12 @@ public class InstrucaoPreferencia {
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		exibirArqIgnorados = pref.getBoolean("instrucao_exibir_arq_ignorados", false);
-		desenharEspacoRetorno = pref.getBoolean(DESENHAR_ESPACO_RETORNO, false);
 		instrucaoFonteSize = pref.getInt(INSTRUCAO_FONT_SIZE, 12);
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("instrucao_exibir_arq_ignorados", exibirArqIgnorados);
-		pref.putBoolean(DESENHAR_ESPACO_RETORNO, desenharEspacoRetorno);
 		pref.putInt(INSTRUCAO_FONT_SIZE, instrucaoFonteSize);
 	}
 
@@ -62,23 +58,5 @@ public class InstrucaoPreferencia {
 			return null;
 		}
 		return new Font(name, pref.getInt("instrucao_font_style", 0), pref.getInt(INSTRUCAO_FONT_SIZE, 12));
-	}
-
-	public static boolean isDesenharEspacoRetorno() {
-		return desenharEspacoRetorno;
-	}
-
-	public static void setDesenharEspacoRetorno(boolean desenharEspacoRetorno) {
-		InstrucaoPreferencia.desenharEspacoRetorno = desenharEspacoRetorno;
-	}
-
-	public static void setPaintER(boolean paintER) {
-		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		pref.putBoolean(DESENHAR_ESPACO_RETORNO, paintER);
-	}
-
-	public static boolean getPaintER() {
-		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		return pref.getBoolean(DESENHAR_ESPACO_RETORNO, false);
 	}
 }

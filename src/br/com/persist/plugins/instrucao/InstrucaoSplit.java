@@ -292,11 +292,6 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 		addKeyListener(keyListenerInner);
 	}
 
-	public static void inverterPaintER() {
-		TextEditor.setPaintERT(!TextEditor.isPaintERT());
-		InstrucaoPreferencia.setPaintER(TextEditor.isPaintERT());
-	}
-
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
 		@Override
 		public void focusGained(FocusEvent e) {
@@ -456,7 +451,6 @@ class Aba extends Transferivel {
 	}
 
 	private void aplicarFontePreferencia() {
-		TextEditor.setPaintERT(InstrucaoPreferencia.getPaintER());
 		Font font = InstrucaoPreferencia.getFontPreferencia();
 		if (font != null) {
 			toolbar.selecionarFont(font);
@@ -490,7 +484,6 @@ class Aba extends Transferivel {
 		private JComboBox<String> comboFontes = new JComboBox<>(InstrucaoConstantes.FONTES);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
-		private Action paintERAcao = acaoIcon("label.paint_er", Icones.VERTICAL);
 		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
@@ -503,11 +496,9 @@ class Aba extends Transferivel {
 			comboFontes.addItemListener(Toolbar.this::alterarFonte);
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
-			paintERAcao.setActionListener(e -> paintER());
 			txtPesquisa.addActionListener(this);
 			addButton(compiladoAcao);
 			addButton(executarAcao);
-			addButton(paintERAcao);
 			add(txtPesquisa);
 			add(label);
 			add(comboFontes);
@@ -521,11 +512,6 @@ class Aba extends Transferivel {
 
 		Action acaoIcon(String chave, Icon icon) {
 			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
-		}
-
-		private void paintER() {
-			TextArea.inverterPaintER();
-			textArea.repaint();
 		}
 
 		private void verCompilado() {
