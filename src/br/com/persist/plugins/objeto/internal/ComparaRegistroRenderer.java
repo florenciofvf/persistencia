@@ -52,7 +52,7 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 			String strModelo = modelo.getValueAt(0, colunaModelo.getIndice()).toString();
 			String strBackup = backup.getValueAt(0, colunaBackup.getIndice()).toString();
 			if (!Util.isEmpty(strModelo) && Util.isEmpty(strBackup)) {
-				colunaModelo.setStringComparaRegistro("NOVO VALOR EM: [" + nomeColuna + "]");
+				colunaModelo.setStringComparaRegistro("NOVO VALOR EM: [" + nomeColuna + valor(strModelo) + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.GREEN);
@@ -63,8 +63,8 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 				setForeground(Color.BLACK);
 				setBackground(Color.RED);
 			} else if (!Util.isEmpty(strModelo) && !Util.isEmpty(strBackup) && !strModelo.equals(strBackup)) {
-				colunaModelo.setStringComparaRegistro(
-						"ALTERADO VALOR EM: [" + nomeColuna + "] VALOR ANTERIOR: [" + strBackup + "]");
+				colunaModelo.setStringComparaRegistro("ALTERADO VALOR EM: [" + nomeColuna + valor(strModelo)
+						+ "] VALOR ANTERIOR: [" + strBackup + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.ORANGE);
@@ -72,6 +72,10 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		}
 
 		return this;
+	}
+
+	private String valor(String s) {
+		return s.length() < 51 ? " >>> " + s : "";
 	}
 
 	static String getStringTotaisDiff(OrdenacaoModelo modelo, OrdenacaoModelo backup) {
