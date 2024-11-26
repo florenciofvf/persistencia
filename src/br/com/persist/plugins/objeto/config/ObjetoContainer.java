@@ -450,8 +450,8 @@ public class ObjetoContainer extends Panel {
 				labelIcone.setToolTipText(objeto.getIcone());
 				labelIcone.setIcon(objeto.getIcon());
 			}
-			panelFormX = new PanelBloco(new LabelFormX(true), new LabelFormX(false));
-			panelFormL = new PanelBloco(new LabelFormL(true), new LabelFormL(false));
+			panelFormX = new PanelBloco(new PanelCenter(new LabelFormX(true)), new PanelCenter(new LabelFormX(false)));
+			panelFormL = new PanelBloco(new PanelCenter(new LabelFormL(true)), new PanelCenter(new LabelFormL(false)));
 			panelIcone = new PanelCenter(labelIcone);
 			panelFormX.borda();
 			panelFormL.borda();
