@@ -53,6 +53,7 @@ import br.com.persist.componente.LabelTextTemp;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
+import br.com.persist.componente.PanelBloco;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
@@ -409,9 +410,9 @@ public class ObjetoContainer extends Panel {
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
 		private Label labelIcone = new Label();
-		private final PanelCenter panelFormX;
-		private final PanelCenter panelFormL;
 		private final PanelCenter panelIcone;
+		private final PanelBloco panelFormX;
+		private final PanelBloco panelFormL;
 
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
@@ -449,8 +450,8 @@ public class ObjetoContainer extends Panel {
 				labelIcone.setToolTipText(objeto.getIcone());
 				labelIcone.setIcon(objeto.getIcon());
 			}
-			panelFormX = new PanelCenter(new LabelFormX());
-			panelFormL = new PanelCenter(new LabelFormL());
+			panelFormX = new PanelBloco(new LabelFormX(true), new LabelFormX(false));
+			panelFormL = new PanelBloco(new LabelFormL(true), new LabelFormL(false));
 			panelIcone = new PanelCenter(labelIcone);
 			panelFormX.borda();
 			panelFormL.borda();
@@ -1545,13 +1546,19 @@ public class ObjetoContainer extends Panel {
 	private class LabelFormX extends Label {
 		private static final long serialVersionUID = 1L;
 
-		private LabelFormX() {
-			super(ObjetoMensagens.getString("msg.associar_form_x"), false);
-			addMouseListener(new FormXListener());
+		private LabelFormX(boolean incluir) {
+			super(ObjetoMensagens.getString(incluir ? "msg.associar_form_x" : "msg.associar_form_x_x"), false);
+			addMouseListener(new FormXListener(incluir));
 			modoLink(null);
 		}
 
 		private class FormXListener extends MouseAdapter {
+			private final boolean incluir;
+
+			private FormXListener(boolean incluir) {
+				this.incluir = incluir;
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() < Constantes.DOIS) {
@@ -1587,7 +1594,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
-				if (interno == null) {
+				if (interno == null && incluir) {
 					Util.mensagem(ObjetoContainer.this,
 							ObjetoMensagens.getString("msg.sem_form_associado_objeto", objeto.getId()));
 					return;
@@ -1598,7 +1605,11 @@ public class ObjetoContainer extends Panel {
 					para = new ParaTabela(tabela);
 					vinculacao.putParaTabela(para);
 				}
-				para.setInternalFormX("" + interno.getX(), null);
+				if (incluir) {
+					para.setInternalFormX("" + interno.getX(), null);
+				} else {
+					para.setInternalFormX("", null);
+				}
 				salvarVinculacao(vinculacao);
 			}
 		}
@@ -1607,13 +1618,19 @@ public class ObjetoContainer extends Panel {
 	private class LabelFormL extends Label {
 		private static final long serialVersionUID = 1L;
 
-		private LabelFormL() {
-			super(ObjetoMensagens.getString("msg.associar_form_l"), false);
-			addMouseListener(new FormLListener());
+		private LabelFormL(boolean incluir) {
+			super(ObjetoMensagens.getString(incluir ? "msg.associar_form_l" : "msg.associar_form_l_x"), false);
+			addMouseListener(new FormLListener(incluir));
 			modoLink(null);
 		}
 
 		private class FormLListener extends MouseAdapter {
+			private final boolean incluir;
+
+			private FormLListener(boolean incluir) {
+				this.incluir = incluir;
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() < Constantes.DOIS) {
@@ -1649,7 +1666,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
-				if (interno == null) {
+				if (interno == null && incluir) {
 					Util.mensagem(ObjetoContainer.this,
 							ObjetoMensagens.getString("msg.sem_form_associado_objeto", objeto.getId()));
 					return;
@@ -1660,7 +1677,11 @@ public class ObjetoContainer extends Panel {
 					para = new ParaTabela(tabela);
 					vinculacao.putParaTabela(para);
 				}
-				para.setInternalFormL("" + interno.getWidth(), null);
+				if (incluir) {
+					para.setInternalFormL("" + interno.getWidth(), null);
+				} else {
+					para.setInternalFormL("", null);
+				}
 				salvarVinculacao(vinculacao);
 			}
 		}
