@@ -15,6 +15,7 @@ import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 
 public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	static final String MODELO_DE_DADOS_ANTERIOR_NULO = "MODELO DE DADOS ANTERIOR NULO";
+	private static final String ANTERIOR = "] ANTERIOR: [";
 	private static final long serialVersionUID = 1L;
 	private final String nomeColuna;
 	private final Toolbar toolbar;
@@ -57,14 +58,13 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 				setForeground(Color.BLACK);
 				setBackground(Color.GREEN);
 			} else if (Util.isEmpty(strModelo) && !Util.isEmpty(strBackup)) {
-				colunaModelo.setStringComparaRegistro(
-						"REMOVIDO VALOR EM: [" + nomeColuna + "] VALOR ANTERIOR: [" + strBackup + "]");
+				colunaModelo.setStringComparaRegistro("EXCLUIDO EM: [" + nomeColuna + ANTERIOR + strBackup + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.RED);
 			} else if (!Util.isEmpty(strModelo) && !Util.isEmpty(strBackup) && !strModelo.equals(strBackup)) {
-				colunaModelo.setStringComparaRegistro("ALTERADO VALOR EM: [" + nomeColuna + valor(strModelo)
-						+ "] VALOR ANTERIOR: [" + strBackup + "]");
+				colunaModelo.setStringComparaRegistro(
+						"ALTERADO EM: [" + nomeColuna + valor(strModelo) + ANTERIOR + strBackup + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.ORANGE);
@@ -79,6 +79,6 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	}
 
 	static String getStringTotaisDiff(OrdenacaoModelo modelo, OrdenacaoModelo backup) {
-		return "TOTAL ATUAL: [" + modelo.getRowCount() + "] TOTAL ANTERIOR: [" + backup.getRowCount() + "]";
+		return "TOTAL : [" + modelo.getRowCount() + ANTERIOR + backup.getRowCount() + "]";
 	}
 }
