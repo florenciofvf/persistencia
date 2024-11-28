@@ -75,7 +75,7 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	}
 
 	private String valor(String s) {
-		return s.length() < 51 ? " >>> " + s : "";
+		return " >>> " + s;
 	}
 
 	static String getStringTotaisDiff(OrdenacaoModelo modelo, OrdenacaoModelo backup) {
