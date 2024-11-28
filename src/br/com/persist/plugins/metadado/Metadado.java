@@ -6,6 +6,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -551,5 +552,38 @@ public class Metadado implements Transferable {
 
 	public void destacar() {
 		destacado = !destacado;
+	}
+
+	public List<Metadado> getFilhos() {
+		return filhos;
+	}
+
+	public void excluirTodos(List<Metadado> metadados) {
+		Iterator<Metadado> it = filhos.iterator();
+		while (it.hasNext()) {
+			Metadado m = it.next();
+			if (contem(m, metadados)) {
+				it.remove();
+			}
+		}
+	}
+
+	public void manterTodos(List<Metadado> metadados) {
+		Iterator<Metadado> it = filhos.iterator();
+		while (it.hasNext()) {
+			Metadado m = it.next();
+			if (!contem(m, metadados)) {
+				it.remove();
+			}
+		}
+	}
+
+	private static boolean contem(Metadado m, List<Metadado> metadados) {
+		for (Metadado item : metadados) {
+			if (m.descricao.equals(item.descricao)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

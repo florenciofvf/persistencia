@@ -48,6 +48,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
@@ -62,6 +63,7 @@ import br.com.persist.plugins.persistencia.PersistenciaException;
 
 public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener {
 	private static final File file = new File(MetadadoConstantes.METADADOS);
+	private final JComboBox<Conexao> comboConexaoDireita;
 	private static final long serialVersionUID = 1L;
 	private MetadadoFormulario metadadoFormulario;
 	private final Toolbar toolbar = new Toolbar();
@@ -70,6 +72,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	public MetadadoContainer(Janela janela, Formulario formulario, Conexao conexao) throws ArgumentoException {
 		super(formulario);
+		comboConexaoDireita = ConexaoProvedor.criarComboConexao(conexao);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
 		metadadoTree = new MetadadoTree();
 		toolbar.ini(janela);
@@ -83,10 +86,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	public void setMetadadoFormulario(MetadadoFormulario metadadoFormulario) {
 		this.metadadoFormulario = metadadoFormulario;
-	}
-
-	public Conexao getConexaoPadrao() {
-		return (Conexao) comboConexao.getSelectedItem();
 	}
 
 	private void montarLayout() {
@@ -131,6 +130,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private ButtonInfoDiff buttonInfoDiff = new ButtonInfoDiff();
 		private final JProgressBar progresso = new JProgressBar();
 		private final TextField txtMetadado = new TextField(35);
 		private final CheckBox chkPorParte = new CheckBox(true);
@@ -147,6 +147,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			add(chkPorParte);
 			add(label);
 			add(progresso);
+			add(true, comboConexaoDireita);
+			add(buttonInfoDiff);
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtMetadado.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtMetadado.addActionListener(this);
@@ -206,6 +208,109 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			buttonDestacar.estadoFichario();
 		}
 
+		private class ButtonInfoDiff extends ButtonPopup {
+			private static final String ARQUIVO_ESQUERDO_INEXISTENTE = "ARQUIVO_ESQUERDO_INEXISTENTE";
+			private static final String ARQUIVO_DIREITO_INEXISTENTE = "ARQUIVO_DIREITO_INEXISTENTE";
+			private Action somenteEsquerdaAcao = acaoMenu("label.existe_somente_esquerda");
+			private Action somenteDireitaAcao = acaoMenu("label.existe_somente_direita");
+			private static final String CONEXAO_ESQUERDA_NULA = "CONEXAO_ESQUERDA_NULA";
+			private static final String CONEXAO_DIREITA_NULA = "CONEXAO_DIREITA_NULA";
+			private static final long serialVersionUID = 1L;
+
+			private ButtonInfoDiff() {
+				super("label.comparar", Icones.INFO);
+				addMenuItem(somenteEsquerdaAcao);
+				addMenuItem(somenteDireitaAcao);
+				somenteEsquerdaAcao.setActionListener(e -> somenteEsquerda());
+				somenteDireitaAcao.setActionListener(e -> somenteDireita());
+			}
+
+			private Conexao getConexaoDireita() {
+				return (Conexao) comboConexaoDireita.getSelectedItem();
+			}
+
+			private void somenteEsquerda() {
+				Conexao conexao = getConexao();
+				if (conexao == null) {
+					Util.mensagem(MetadadoContainer.this, CONEXAO_ESQUERDA_NULA);
+					return;
+				}
+				Conexao conexaoDireita = getConexaoDireita();
+				if (conexaoDireita == null) {
+					Util.mensagem(MetadadoContainer.this, CONEXAO_DIREITA_NULA);
+					return;
+				}
+				File fileE = new File(file, criarNomeArquivo(conexao));
+				if (!fileE.isFile()) {
+					Util.mensagem(MetadadoContainer.this, ARQUIVO_ESQUERDO_INEXISTENTE);
+					return;
+				}
+				File fileD = new File(file, criarNomeArquivo(conexaoDireita));
+				if (!fileD.isFile()) {
+					Util.mensagem(MetadadoContainer.this, ARQUIVO_DIREITO_INEXISTENTE);
+					return;
+				}
+				try {
+					Metadado metadadoE = getMetadado(fileE);
+					Metadado metadadoD = getMetadado(fileD);
+					metadadoE.excluirTodos(metadadoD.getFilhos());
+					Util.mensagemFormulario(MetadadoContainer.this, montarString(metadadoE.getFilhos()));
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("getMetadado: ", ex, MetadadoContainer.this);
+				}
+			}
+
+			private Metadado getMetadado(File file) throws XMLException {
+				MetadadoHandler handler = new MetadadoHandler();
+				XML.processar(file, handler);
+				return handler.getRaiz();
+			}
+
+			private String montarString(List<Metadado> metadados) {
+				StringBuilder sb = new StringBuilder("TOTAL = " + metadados.size() + Constantes.QL);
+				for (Metadado item : metadados) {
+					sb.append(Constantes.QL);
+					sb.append(item.getDescricao());
+				}
+				return sb.toString();
+			}
+
+			private void somenteDireita() {
+				Conexao conexao = getConexao();
+				if (conexao == null) {
+					Util.mensagem(MetadadoContainer.this, CONEXAO_ESQUERDA_NULA);
+					return;
+				}
+				Conexao conexaoDireita = getConexaoDireita();
+				if (conexaoDireita == null) {
+					Util.mensagem(MetadadoContainer.this, CONEXAO_DIREITA_NULA);
+					return;
+				}
+				File fileE = new File(file, criarNomeArquivo(conexao));
+				if (!fileE.isFile()) {
+					Util.mensagem(MetadadoContainer.this, ARQUIVO_ESQUERDO_INEXISTENTE);
+					return;
+				}
+				File fileD = new File(file, criarNomeArquivo(conexaoDireita));
+				if (!fileD.isFile()) {
+					Util.mensagem(MetadadoContainer.this, ARQUIVO_DIREITO_INEXISTENTE);
+					return;
+				}
+				try {
+					Metadado metadadoE = getMetadado(fileE);
+					Metadado metadadoD = getMetadado(fileD);
+					metadadoD.excluirTodos(metadadoE.getFilhos());
+					Util.mensagemFormulario(MetadadoContainer.this, montarString(metadadoD.getFilhos()));
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("getMetadado: ", ex, MetadadoContainer.this);
+				}
+			}
+		}
+
+		Action acaoMenu(String chave) {
+			return Action.acaoMenu(MetadadoMensagens.getString(chave), null);
+		}
+
 		private class ButtonInfo extends ButtonPopup {
 			private Action pksMultiplaAcaoExport = acaoMenu("label.pks_multiplas_export");
 			private Action queExportamAcao = acaoMenu("label.tabelas_que_exportam");
@@ -246,10 +351,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				ordemExportAcao.setActionListener(e -> Util.mensagemFormulario(MetadadoContainer.this,
 						metadadoTree.getOrdenadosExportacaoImportacao(true)));
 				localizarCampoAcao.setActionListener(e -> localizarCampo());
-			}
-
-			Action acaoMenu(String chave) {
-				return Action.acaoMenu(MetadadoMensagens.getString(chave), null);
 			}
 
 			private void localizarCampo() {
