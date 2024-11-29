@@ -15,7 +15,7 @@ import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 
 public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	static final String MODELO_DE_DADOS_ANTERIOR_NULO = "MODELO DE DADOS ANTERIOR NULO";
-	private static final String ANTERIOR = "] ANTERIOR: [";
+	private static final String ANTERIOR = "]   ANTERIOR: [";
 	private static final long serialVersionUID = 1L;
 	private final String nomeColuna;
 	private final Toolbar toolbar;
@@ -79,6 +79,6 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	}
 
 	static String getStringTotaisDiff(OrdenacaoModelo modelo, OrdenacaoModelo backup) {
-		return "TOTAL : [" + modelo.getRowCount() + ANTERIOR + backup.getRowCount() + "]";
+		return "TOTAL: [" + modelo.getRowCount() + ANTERIOR + backup.getRowCount() + "]";
 	}
 }
