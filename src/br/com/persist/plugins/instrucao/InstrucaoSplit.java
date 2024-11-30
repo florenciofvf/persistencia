@@ -312,7 +312,7 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 	private transient KeyListener keyListenerInner = new KeyAdapter() {
 		@Override
 		public void keyReleased(KeyEvent e) {
-			if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
 				processar();
 			}
 		}
@@ -322,7 +322,7 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 			if (caret == null) {
 				return;
 			}
-			int dot = caret.getDot();
+			int dot = caret.getDot() - 1;
 			if (dot < 0) {
 				return;
 			}
