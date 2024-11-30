@@ -342,6 +342,9 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 			}
 			string = Util.trim(string, '.', false);
 			string = Util.trim(string, '.', true);
+			if (Util.isEmpty(string)) {
+				return;
+			}
 			try {
 				InstrucaoMetadados.abrir(TextArea.this, string, TextArea.this, point);
 			} catch (InstrucaoException ex) {
