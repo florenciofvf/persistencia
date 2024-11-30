@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -29,12 +30,12 @@ public class InstrucaoMetadados {
 	private InstrucaoMetadados() {
 	}
 
-	public static void abrir(Component comp, String biblioteca, MetaDialogoListener listener)
+	public static void abrir(Component comp, String biblioteca, MetaDialogoListener listener, Point location)
 			throws InstrucaoException {
 		CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
 		Biblioteca biblio = cacheBiblioteca.getBiblioteca(biblioteca);
 		MetaProvedor.init(biblio);
-		MetaDialogo.criar(Util.getViewParentFrame(comp), listener);
+		MetaDialogo.criar(Util.getViewParentFrame(comp), listener, location);
 	}
 }
 
@@ -116,9 +117,9 @@ class MetaDialogo extends AbstratoDialogo implements MetaListener {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static MetaDialogo criar(Frame frame, MetaDialogoListener listener) {
+	public static MetaDialogo criar(Frame frame, MetaDialogoListener listener, Point location) {
 		MetaDialogo form = new MetaDialogo(frame, listener);
-		form.setLocationRelativeTo(frame);
+		form.setLocation(location);
 		form.setVisible(true);
 		return form;
 	}

@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +43,9 @@ import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Caret;
 import javax.swing.text.Document;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
@@ -315,17 +318,51 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 		}
 
 		private void processar() {
-			String string = getSelectedText();
+			Caret caret = getCaret();
+			if (caret == null) {
+				return;
+			}
+			int dot = caret.getDot();
+			if (dot < 0) {
+				return;
+			}
+			TextUI textUI = getUI();
+			Rectangle r = null;
+			try {
+				r = textUI.modelToView(TextArea.this, dot);
+			} catch (BadLocationException ex) {
+				return;
+			}
+			Point point = getLocationOnScreen();
+			point.x += r.x;
+			point.y += r.y;
+			String string = getString(dot);
 			if (Util.isEmpty(string)) {
 				return;
 			}
 			string = Util.trim(string, '.', false);
 			string = Util.trim(string, '.', true);
 			try {
-				InstrucaoMetadados.abrir(TextArea.this, string, TextArea.this);
+				InstrucaoMetadados.abrir(TextArea.this, string, TextArea.this, point);
 			} catch (InstrucaoException ex) {
 				LOG.warning(ex.getMessage());
 			}
+		}
+
+		private String getString(int dot) {
+			StringBuilder sb = new StringBuilder();
+			String string = getText();
+			char c = string.charAt(dot);
+			while (c > ' ') {
+				sb.insert(0, c);
+				dot--;
+				if (dot >= 0) {
+					c = string.charAt(dot);
+				} else {
+					break;
+				}
+			}
+			return sb.toString();
 		}
 	};
 
