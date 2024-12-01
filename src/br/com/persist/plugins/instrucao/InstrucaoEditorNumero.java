@@ -85,18 +85,17 @@ public class InstrucaoEditorNumero extends JPanel implements CaretListener, Docu
 
 		while (menor <= maior) {
 			try {
-				if (ehLinhaAtual(menor)) {
-					g.setColor(TextEditor.COLOR_SEL);
-				} else {
-					g.setColor(getForeground());
-				}
-
 				String numero = stringNumero(menor);
 				int largura = fontMetrics.stringWidth(numero);
 				int x = calgularX(larguraTotal, largura) + insets.left;
 				int y = calcularY(menor, fontMetrics);
+				if (ehLinhaAtual(menor)) {
+					g.setColor(TextEditor.COLOR_SEL);
+					Rectangle r = component.modelToView(menor);
+					g.fillRect(0, r.y, getWidth(), r.height);
+				}
+				g.setColor(getForeground());
 				g.drawString(numero, x, y);
-
 				menor = Utilities.getRowEnd(component, menor) + 1;
 			} catch (Exception e) {
 				break;

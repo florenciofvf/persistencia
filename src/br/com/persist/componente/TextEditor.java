@@ -24,7 +24,7 @@ import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
 public class TextEditor extends TextPane {
-	public static final Color COLOR_SEL = new Color(231, 242, 253);
+	public static final Color COLOR_SEL = new Color(220, 230, 250);
 	public static final Color COLOR_TAB = new Color(185, 185, 185);
 	public static final Color COLOR_RET = new Color(175, 175, 175);
 	private static final Logger LOG = Logger.getGlobal();
