@@ -11,8 +11,10 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.BoxView;
 import javax.swing.text.ComponentView;
+import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Element;
 import javax.swing.text.IconView;
+import javax.swing.text.JTextComponent;
 import javax.swing.text.LabelView;
 import javax.swing.text.ParagraphView;
 import javax.swing.text.StyleConstants;
@@ -22,18 +24,19 @@ import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
 public class TextEditor extends TextPane {
-	public static final Color COLOR_SEL = new Color(155, 100, 255);
+	public static final Color COLOR_SEL = new Color(231, 242, 253);
 	public static final Color COLOR_TAB = new Color(185, 185, 185);
 	public static final Color COLOR_RET = new Color(175, 175, 175);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
-	private final Rectangle rectangle;
 	private static boolean paintERT;
+	final Rectangle caretRect;
 
 	public TextEditor() {
+		setHighlighter(new TextEditorHighlighter());
 		setEditorKit(new TextEditorKit());
 		addCaretListener(this::processar);
-		rectangle = new Rectangle();
+		caretRect = new Rectangle();
 	}
 
 	public static boolean isPaintERT() {
@@ -49,9 +52,9 @@ public class TextEditor extends TextPane {
 		try {
 			Rectangle r = textUI.modelToView(this, e.getDot());
 			if (r != null) {
-				rectangle.width = getWidth();
-				rectangle.height = r.height;
-				rectangle.y = r.y;
+				caretRect.width = getWidth();
+				caretRect.height = r.height;
+				caretRect.y = r.y;
 				repaint();
 			}
 		} catch (BadLocationException ex) {
@@ -69,8 +72,6 @@ public class TextEditor extends TextPane {
 			paintR(g, textUI, text);
 			paintT(g, textUI, text);
 		}
-		g.setColor(COLOR_SEL);
-		g.drawRect(0, rectangle.y, rectangle.width, rectangle.height);
 	}
 
 	private void paintE(Graphics g, TextUI textUI, String text) {
@@ -184,6 +185,32 @@ class TextEditorKit extends StyledEditorKit {
 				return getTabBase() + ((x / TAB_SIZE + 1) * TAB_SIZE);
 			}
 			return super.nextTabStop(x, tabOffset);
+		}
+	}
+}
+
+class TextEditorHighlighter extends DefaultHighlighter {
+	private JTextComponent component;
+
+	@Override
+	public final void install(final JTextComponent c) {
+		this.component = c;
+		super.install(c);
+	}
+
+	@Override
+	public final void deinstall(final JTextComponent c) {
+		this.component = null;
+		super.deinstall(c);
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		if (component instanceof TextEditor) {
+			TextEditor editor = (TextEditor) component;
+			g.setColor(TextEditor.COLOR_SEL);
+			g.fillRect(0, editor.caretRect.y, editor.caretRect.width, editor.caretRect.height);
 		}
 	}
 }
