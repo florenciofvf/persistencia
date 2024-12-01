@@ -372,12 +372,16 @@ public class Compilador {
 		return new Token(builder.toString(), Tipo.IDENTITY, indiceBkp);
 	}
 
-	private boolean valido1(char c) {
+	private static boolean valido1(char c) {
 		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' || c == '$';
 	}
 
-	private boolean valido2(char c) {
+	private static boolean valido2(char c) {
 		return (c >= '0' && c <= '9') || c == '.';
+	}
+
+	public static boolean valido3(char c) {
+		return valido1(c) || valido2(c);
 	}
 
 	private boolean reservado(String s) {

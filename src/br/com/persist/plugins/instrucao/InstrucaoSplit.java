@@ -334,7 +334,7 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 				return;
 			}
 			Point point = getLocationOnScreen();
-			point.x += r.x;
+			point.x += r.x + 5;
 			point.y += r.y;
 			String string = getString(dot);
 			if (Util.isEmpty(string)) {
@@ -356,7 +356,7 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 			StringBuilder sb = new StringBuilder();
 			String string = getText();
 			char c = string.charAt(dot);
-			while (c > ' ') {
+			while (Compilador.valido3(c)) {
 				sb.insert(0, c);
 				dot--;
 				if (dot >= 0) {
