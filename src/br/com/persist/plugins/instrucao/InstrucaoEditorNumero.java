@@ -37,6 +37,7 @@ public class InstrucaoEditorNumero extends JPanel implements CaretListener, Docu
 
 	public InstrucaoEditorNumero(JTextComponent component) {
 		setFont(component.getFont());
+		setBackground(Color.WHITE);
 		this.component = component;
 		configLargura();
 		configBorda();
