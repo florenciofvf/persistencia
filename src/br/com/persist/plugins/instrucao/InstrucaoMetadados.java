@@ -2,24 +2,32 @@ package br.com.persist.plugins.instrucao;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JList;
+import javax.swing.JWindow;
+import javax.swing.KeyStroke;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
@@ -100,16 +108,18 @@ interface MetaDialogoListener {
 	void setFragmento(String string);
 }
 
-class MetaDialogo extends AbstratoDialogo implements MetaListener {
+class MetaDialogo extends JWindow implements MetaListener {
 	private final transient MetaDialogoListener listener;
 	private static final long serialVersionUID = 1L;
 	private final MetaContainer container;
 
 	private MetaDialogo(Frame frame, MetaDialogoListener listener) {
-		super(frame, "Metadados");
+		super(frame);
 		this.listener = Objects.requireNonNull(listener);
 		container = new MetaContainer(this);
 		montarLayout();
+		setActionESC();
+		config();
 		pack();
 	}
 
@@ -117,16 +127,39 @@ class MetaDialogo extends AbstratoDialogo implements MetaListener {
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void setActionESC() {
+		JComponent component = (JComponent) getContentPane();
+		InputMap inputMap = component.getInputMap(JComponent.WHEN_FOCUSED);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), Constantes.ESC);
+		ActionMap actionMap = component.getActionMap();
+		actionMap.put(Constantes.ESC, actionEsc());
+	}
+
+	private Action actionEsc() {
+		return new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		};
+	}
+
+	private void config() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.selecionar(0);
+			}
+		});
+	}
+
 	public static MetaDialogo criar(Frame frame, MetaDialogoListener listener, Point location) {
 		MetaDialogo form = new MetaDialogo(frame, listener);
 		form.setLocation(location);
 		form.setVisible(true);
 		return form;
-	}
-
-	@Override
-	public void dialogOpenedHandler(Dialog dialog) {
-		container.selecionar(0);
 	}
 
 	@Override
