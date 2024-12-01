@@ -443,6 +443,7 @@ class Aba extends Transferivel {
 		panelArea.add(BorderLayout.CENTER, textArea);
 		scrollPane = new ScrollPane(panelArea);
 		panel.add(BorderLayout.CENTER, scrollPane);
+		scrollPane.setRowHeaderView(new InstrucaoEditorNumero(textArea));
 		return panel;
 	}
 

@@ -28,14 +28,14 @@ import javax.swing.text.Utilities;
 
 import br.com.persist.componente.TextEditor;
 
-public class InstrucaoEditor extends JPanel implements CaretListener, DocumentListener, PropertyChangeListener {
+public class InstrucaoEditorNumero extends JPanel implements CaretListener, DocumentListener, PropertyChangeListener {
 	private static final long serialVersionUID = 8960786613762153802L;
 	private JTextComponent component;
 	private int ultimaLargura;
 	private int ultimaAltura;
 	private int ultimaLinha;
 
-	public InstrucaoEditor(JTextComponent component) {
+	public InstrucaoEditorNumero(JTextComponent component) {
 		setFont(component.getFont());
 		this.component = component;
 		configLargura();
