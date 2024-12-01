@@ -129,7 +129,7 @@ class MetaDialogo extends JWindow implements MetaListener {
 
 	private void setActionESC() {
 		JComponent component = (JComponent) getContentPane();
-		InputMap inputMap = component.getInputMap(JComponent.WHEN_FOCUSED);
+		InputMap inputMap = component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), Constantes.ESC);
 		ActionMap actionMap = component.getActionMap();
 		actionMap.put(Constantes.ESC, actionEsc());
