@@ -52,7 +52,7 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 		if (ultimaLargura != largura) {
 			ultimaLargura = largura;
 			FontMetrics fontMetrics = getFontMetrics(getFont());
-			int width = fontMetrics.charWidth('0') * largura;
+			int width = fontMetrics.charWidth('F') * largura;
 			Insets insets = getInsets();
 			int preferredWidth = insets.left + insets.right + width;
 
@@ -168,11 +168,11 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getNewValue() instanceof Font) {
-			Font newFont = (Font) evt.getNewValue();
-			setFont(newFont);
+	public void propertyChange(PropertyChangeEvent e) {
+		if (e.getNewValue() instanceof Font) {
+			Font newFont = (Font) e.getNewValue();
 			ultimaLargura = 0;
+			setFont(newFont);
 			configLargura();
 		}
 	}
