@@ -48,8 +48,9 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
-import br.com.persist.componente.TextPane;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -257,7 +258,7 @@ class AnotacaoSplit extends SplitPane {
 	};
 }
 
-class TextArea extends TextPane {
+class TextArea extends TextEditor {
 	private static final long serialVersionUID = 1L;
 
 	TextArea() {
@@ -326,7 +327,9 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new JScrollPane(textArea));
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	private void abrir() {

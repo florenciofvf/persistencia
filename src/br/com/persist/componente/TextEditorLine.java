@@ -52,7 +52,7 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 		if (ultimaLargura != largura) {
 			ultimaLargura = largura;
 			FontMetrics fontMetrics = getFontMetrics(getFont());
-			int width = fontMetrics.charWidth('F') * largura;
+			int width = fontMetrics.charWidth('O') * largura;
 			Insets insets = getInsets();
 			int preferredWidth = insets.left + insets.right + width;
 
