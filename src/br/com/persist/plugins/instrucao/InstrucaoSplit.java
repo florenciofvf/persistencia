@@ -73,6 +73,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XML;
@@ -443,7 +444,7 @@ class Aba extends Transferivel {
 		panelArea.add(BorderLayout.CENTER, textArea);
 		scrollPane = new ScrollPane(panelArea);
 		panel.add(BorderLayout.CENTER, scrollPane);
-		scrollPane.setRowHeaderView(new InstrucaoEditorNumero(textArea));
+		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
 		return panel;
 	}
 

@@ -1,4 +1,4 @@
-package br.com.persist.plugins.instrucao;
+package br.com.persist.componente;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,16 +26,14 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.Utilities;
 
-import br.com.persist.componente.TextEditor;
-
-public class InstrucaoEditorNumero extends JPanel implements CaretListener, DocumentListener, PropertyChangeListener {
+public class TextEditorLine extends JPanel implements CaretListener, DocumentListener, PropertyChangeListener {
 	private static final long serialVersionUID = 8960786613762153802L;
 	private JTextComponent component;
 	private int ultimaLargura;
 	private int ultimaAltura;
 	private int ultimaLinha;
 
-	public InstrucaoEditorNumero(JTextComponent component) {
+	public TextEditorLine(JTextComponent component) {
 		setFont(component.getFont());
 		setBackground(Color.WHITE);
 		this.component = component;
