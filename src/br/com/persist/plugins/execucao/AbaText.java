@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -22,6 +23,7 @@ import javax.swing.SwingUtilities;
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -75,9 +77,17 @@ public class AbaText extends Panel {
 				}
 				textArea.setText(sb.toString());
 				setValueScrollPane(value);
+				SwingUtilities.invokeLater(AbaText.this::aplicarFontePreferencia);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ExecucaoConstantes.PAINEL_EXECUCAO, ex, this);
 			}
+		}
+	}
+
+	private void aplicarFontePreferencia() {
+		Font font = Preferencias.getFontPreferencia();
+		if (font != null) {
+			textArea.setFont(font);
 		}
 	}
 
