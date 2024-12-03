@@ -1,6 +1,7 @@
 package br.com.persist.assistencia;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,6 +22,9 @@ import br.com.persist.formulario.Formulario;
 
 public class Preferencias {
 	private static final List<Class<?>> outrasPreferencias = new ArrayList<>();
+	private static final String EDITOR_FONT_STYLE = "editor_font_style";
+	private static final String EDITOR_FONT_NAME = "editor_font_name";
+	private static final String EDITOR_FONT_SIZE = "editor_font_size";
 	private static boolean aplicarLarguraAoAbrirArquivoObjeto;
 	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
 	private static final String ARQ_PREF = "preferencias";
@@ -372,5 +376,24 @@ public class Preferencias {
 	public static void setDesenharEspacoRetornoTab(boolean desenharEspacoRetornoTab) {
 		Preferencias.desenharEspacoRetornoTab = desenharEspacoRetornoTab;
 		TextEditor.setPaintERT(desenharEspacoRetornoTab);
+	}
+
+	public static void setFontPreferencia(Font font) {
+		if (font == null) {
+			return;
+		}
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		pref.putInt(EDITOR_FONT_STYLE, font.getStyle());
+		pref.putInt(EDITOR_FONT_SIZE, font.getSize());
+		pref.put(EDITOR_FONT_NAME, font.getName());
+	}
+
+	public static Font getFontPreferencia() {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		String name = pref.get(EDITOR_FONT_NAME, null);
+		if (name == null) {
+			return null;
+		}
+		return new Font(name, pref.getInt(EDITOR_FONT_STYLE, 0), pref.getInt(EDITOR_FONT_SIZE, 12));
 	}
 }

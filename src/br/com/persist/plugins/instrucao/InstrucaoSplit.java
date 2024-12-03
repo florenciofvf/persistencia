@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -39,7 +38,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -64,6 +62,7 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -493,7 +492,7 @@ class Aba extends Transferivel {
 	}
 
 	private void aplicarFontePreferencia() {
-		Font font = InstrucaoPreferencia.getFontPreferencia();
+		Font font = Preferencias.getFontPreferencia();
 		if (font != null) {
 			toolbar.selecionarFont(font);
 		}
@@ -522,8 +521,6 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private JComboBox<String> comboSize = new JComboBox<>(InstrucaoConstantes.TAMANHOS);
-		private JComboBox<String> comboFontes = new JComboBox<>(InstrucaoConstantes.FONTES);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private final TextField txtPesquisa = new TextField(35);
@@ -534,8 +531,6 @@ class Aba extends Transferivel {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			comboSize.addItemListener(Toolbar.this::alterarFonteSize);
-			comboFontes.addItemListener(Toolbar.this::alterarFonte);
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
@@ -543,8 +538,6 @@ class Aba extends Transferivel {
 			addButton(executarAcao);
 			add(txtPesquisa);
 			add(label);
-			add(comboFontes);
-			add(comboSize);
 		}
 
 		public void ini(String arqAbsoluto) {
@@ -597,44 +590,7 @@ class Aba extends Transferivel {
 			}
 		}
 
-		private void alterarFonteSize(ItemEvent e) {
-			if (ItemEvent.SELECTED == e.getStateChange()) {
-				Object object = comboSize.getSelectedItem();
-				if (object instanceof String) {
-					Font font = getFont();
-					alterarSize(font, Integer.parseInt((String) object));
-				}
-			}
-		}
-
-		private void alterarFonte(ItemEvent e) {
-			if (ItemEvent.SELECTED == e.getStateChange()) {
-				Object object = comboFontes.getSelectedItem();
-				if (object instanceof String) {
-					Font font = getFont();
-					alterar(font, (String) object);
-				}
-			}
-		}
-
-		private void alterarSize(Font font, int size) {
-			if (font != null) {
-				Font nova = new Font(font.getName(), font.getStyle(), size);
-				selecionarFont(nova);
-			}
-		}
-
-		private void alterar(Font font, String nome) {
-			if (font != null) {
-				Font nova = new Font(nome, font.getStyle(), font.getSize());
-				selecionarFont(nova);
-			}
-		}
-
 		private void selecionarFont(Font font) {
-			InstrucaoPreferencia.setFontPreferencia(font);
-			comboSize.setSelectedItem("" + font.getSize());
-			comboFontes.setSelectedItem(font.getName());
 			textArea.setFont(font);
 		}
 

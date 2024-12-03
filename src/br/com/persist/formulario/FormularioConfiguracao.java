@@ -2,12 +2,16 @@ package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -26,6 +30,10 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.TextField;
 
 public class FormularioConfiguracao extends AbstratoConfiguracao {
+	protected static final String[] TAMANHOS = { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "18",
+			"20", "22" };
+	protected static final String[] FONTES = GraphicsEnvironment.getLocalGraphicsEnvironment()
+			.getAvailableFontFamilyNames();
 	private final CheckBox chkAplicarLarguraAoAbrirArquivo = criarCheckBox("label.aplicar_largura_ao_abrir_arq_objeto");
 	private final CheckBox chkAplicarAlturaAoAbrirArquivo = criarCheckBox("label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkFecharComESCFormulario = criarCheckBox("label.fechar_com_esc_formulario");
@@ -38,6 +46,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkFicharioScroll = criarCheckBox("label.fichario_scroll");
 	private final CheckBox chkDesenharERTEditor = criarCheckBox("label.desenhar_ERT");
 	private final CheckBox chkTituloAbaMin = criarCheckBox("label.titulo_aba_min");
+	private JComboBox<String> comboSize = new JComboBox<>(TAMANHOS);
+	private JComboBox<String> comboFontes = new JComboBox<>(FONTES);
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
 	private final Button buttonConectaDesconecta = new Button();
@@ -84,6 +94,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
 
+		Font font = Preferencias.getFontPreferencia();
+		if (font != null) {
+			comboFontes.setSelectedItem(font.getName());
+			comboSize.setSelectedItem("" + font.getSize());
+		}
+
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		Label email = criarLabelTitulo("contato");
@@ -105,10 +121,14 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.monitor_preferencial"),
 					new PainelMonitorPreferencial()));
 		}
+		muro.camada(Muro.panelGridBorderTop(
+				new PanelCenter(criarLabel("label.fonte"), comboFontes, criarLabel("label.tamanho"), comboSize)));
 		add(BorderLayout.CENTER, muro);
 	}
 
 	private void configurar() {
+		comboFontes.addItemListener(FormularioConfiguracao.this::alterarFonteNome);
+		comboSize.addItemListener(FormularioConfiguracao.this::alterarFonteSize);
 		chkFicharioScroll.addActionListener(e -> {
 			Preferencias.setFicharioComRolagem(chkFicharioScroll.isSelected());
 			formulario.setTabLayoutPolicy(
@@ -174,6 +194,38 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			}
 		});
 		buttonConectaDesconectaText();
+	}
+
+	private void alterarFonteNome(ItemEvent e) {
+		if (ItemEvent.SELECTED == e.getStateChange()) {
+			Object object = comboFontes.getSelectedItem();
+			if (object instanceof String) {
+				alterarNomeFonte((String) object);
+			}
+		}
+	}
+
+	private void alterarFonteSize(ItemEvent e) {
+		if (ItemEvent.SELECTED == e.getStateChange()) {
+			Object object = comboSize.getSelectedItem();
+			if (object instanceof String) {
+				alterarSizeFonte(Integer.parseInt((String) object));
+			}
+		}
+	}
+
+	private void alterarNomeFonte(String nome) {
+		Font font = Preferencias.getFontPreferencia();
+		int style = font != null ? font.getStyle() : 0;
+		int size = font != null ? font.getSize() : 12;
+		Preferencias.setFontPreferencia(new Font(nome, style, size));
+	}
+
+	private void alterarSizeFonte(int size) {
+		Font font = Preferencias.getFontPreferencia();
+		int style = font != null ? font.getStyle() : 0;
+		String nome = font != null ? font.getName() : "Arial";
+		Preferencias.setFontPreferencia(new Font(nome, style, size));
 	}
 
 	private void buttonConectaDesconectaHandler() {
