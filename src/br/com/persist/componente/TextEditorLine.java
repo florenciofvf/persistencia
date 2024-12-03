@@ -64,7 +64,7 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 	}
 
 	public void configBorda() {
-		Border outside = new MatteBorder(0, 0, 0, 2, Color.LIGHT_GRAY);
+		Border outside = new MatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY);
 		Border inside = new EmptyBorder(0, 5, 0, 5);
 		setBorder(new CompoundBorder(outside, inside));
 	}
@@ -92,7 +92,7 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 					Rectangle r = component.modelToView(menor);
 					g.fillRect(0, r.y, getWidth(), r.height);
 				}
-				g.setColor(getForeground());
+				g.setColor(Color.LIGHT_GRAY);
 				g.drawString(numero, x, y);
 				menor = Utilities.getRowEnd(component, menor) + 1;
 			} catch (Exception e) {
