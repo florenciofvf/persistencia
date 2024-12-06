@@ -321,6 +321,20 @@ public class TabelaPersistencia extends JTable {
 		return null;
 	}
 
+	public List<String> getListaNomeColunasDestacadas() {
+		List<String> lista = new ArrayList<>();
+		TableColumnModel columnModel = getColumnModel();
+		Enumeration<TableColumn> columns = columnModel.getColumns();
+		while (columns.hasMoreElements()) {
+			TableColumn element = columns.nextElement();
+			CabecalhoColuna cabecalho = (CabecalhoColuna) element.getHeaderRenderer();
+			if (cabecalho != null && cabecalho.getBackground() == Color.BLUE) {
+				lista.add(cabecalho.getColuna().getNome());
+			}
+		}
+		return lista;
+	}
+
 	public void larguraColuna(int coluna) {
 		TableColumn tableColumn = getTableColumn(coluna);
 		int atual = tableColumn.getWidth();

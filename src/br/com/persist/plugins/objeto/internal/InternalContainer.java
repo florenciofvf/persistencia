@@ -2887,6 +2887,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuCopiar extends Menu {
+				private Action nomeColunasDestacAcao = actionMenu("label.nome_colunas_destac");
 				private Action umaColunaSemAcao = actionMenu("label.uma_coluna_sem_aspas");
 				private Action umaColunaComAcao = actionMenu("label.uma_coluna_com_aspas");
 				private Action transferidorAcao = actionMenu("label.transferidor");
@@ -2901,15 +2902,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(htmlAcao);
 					addMenuItem(true, tabularAcao);
 					addMenuItem(true, transferidorAcao);
-					addMenuItem(true, nomeColunasAcao);
+					addMenuItem(true, nomeColunasDestacAcao);
+					addMenuItem(nomeColunasAcao);
 					addMenuItem(true, umaColunaSemAcao);
 					addMenuItem(umaColunaComAcao);
+					nomeColunasDestacAcao.setActionListener(e -> nomeColunasDestac());
 					umaColunaSemAcao.setActionListener(e -> umaColuna(false));
 					umaColunaComAcao.setActionListener(e -> umaColuna(true));
 					transferidorAcao.setActionListener(e -> processar(0));
 					nomeColunasAcao.setActionListener(e -> nomeColunas());
 					tabularAcao.setActionListener(e -> processar(1));
 					htmlAcao.setActionListener(e -> processar(2));
+				}
+
+				private List<String> getNomeColunasDestacadas() {
+					return tabelaPersistencia.getListaNomeColunasDestacadas();
 				}
 
 				private List<String> getNomeColunas() {
@@ -2920,6 +2927,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					String titulo = comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
 							: Mensagens.getString("label.uma_coluna_sem_aspas");
 					Util.copiarColunaUnicaString(titulo, tabelaPersistencia, comAspas, getNomeColunas());
+				}
+
+				private void nomeColunasDestac() {
+					Util.copiarNomeColunas(Mensagens.getString("label.nome_colunas_destac"), tabelaPersistencia,
+							getNomeColunasDestacadas());
 				}
 
 				private void nomeColunas() {
