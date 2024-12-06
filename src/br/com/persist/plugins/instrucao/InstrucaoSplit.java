@@ -10,7 +10,6 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -62,7 +61,6 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -484,17 +482,9 @@ class Aba extends Transferivel {
 				textArea.setText(conteudo(arquivo.getFile()));
 				setValueScrollPane(value);
 				InstrucaoCor.clearAttr(textArea.getStyledDocument());
-				SwingUtilities.invokeLater(Aba.this::aplicarFontePreferencia);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
-		}
-	}
-
-	private void aplicarFontePreferencia() {
-		Font font = Preferencias.getFontPreferencia();
-		if (font != null) {
-			toolbar.selecionarFont(font);
 		}
 	}
 
@@ -588,10 +578,6 @@ class Aba extends Transferivel {
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
 			}
-		}
-
-		private void selecionarFont(Font font) {
-			textArea.setFont(font);
 		}
 
 		@Override

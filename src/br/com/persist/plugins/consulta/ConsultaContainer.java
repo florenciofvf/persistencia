@@ -58,8 +58,9 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
-import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -73,7 +74,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	private final transient ConsultaCor consultaCor = new ConsultaCor();
 	private final ToolbarTabela toolbarTabela = new ToolbarTabela();
 	private final JTable tabela = new JTable(new VazioModelo());
-	private final TextPane textArea = new TextPane();
+	private final TextEditor textArea = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
@@ -120,7 +121,9 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(textArea), criarPanelTabela());
+		ScrollPane scrollPane = new ScrollPane(textArea);
+		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, criarPanelTabela());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);

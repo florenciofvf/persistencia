@@ -28,7 +28,6 @@ import java.nio.charset.StandardCharsets;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -44,6 +43,8 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
 import br.com.persist.componente.ToolbarPesquisa;
@@ -54,10 +55,10 @@ import br.com.persist.formulario.Formulario;
 public class PropriedadeContainer extends AbstratoContainer {
 	private final PainelResultado painelResultado = new PainelResultado();
 	private final FicharioInner ficharioInner = new FicharioInner();
-	private final TextPane textAreaDesenv = new TextPane();
-	private final TextPane textAreaPrehom = new TextPane();
+	private final TextEditor textAreaDesenv = new TextEditor();
+	private final TextEditor textAreaPrehom = new TextEditor();
+	private final TextEditor textArea = new TextEditor();
 	private PropriedadeFormulario propriedadeFormulario;
-	private final TextPane textArea = new TextPane();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private PropriedadeDialogo propriedadeDialogo;
@@ -132,9 +133,10 @@ public class PropriedadeContainer extends AbstratoContainer {
 		Aba(TextPane textPane, File file) {
 			this.textPane = textPane;
 			this.file = file;
-			Panel panel = new Panel();
-			panel.add(BorderLayout.CENTER, textPane);
-			ScrollPane scrollPane = new ScrollPane(panel);
+			Panel panelArea = new Panel();
+			panelArea.add(BorderLayout.CENTER, textPane);
+			ScrollPane scrollPane = new ScrollPane(panelArea);
+			scrollPane.setRowHeaderView(new TextEditorLine(textArea));
 			add(BorderLayout.CENTER, scrollPane);
 		}
 	}
@@ -147,13 +149,15 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	private class PainelResultado extends Panel {
 		private static final long serialVersionUID = 1L;
+		private TextEditor textPane = new TextEditor();
 		private final ToolbarPesquisa toolbarPesquisa;
-		private JTextPane textPane = new JTextPane();
 
 		private PainelResultado() {
 			toolbarPesquisa = new ToolbarPesquisa(textPane);
 			add(BorderLayout.NORTH, toolbarPesquisa);
-			add(BorderLayout.CENTER, new ScrollPane(textPane));
+			ScrollPane scrollPane = new ScrollPane(textPane);
+			scrollPane.setRowHeaderView(new TextEditorLine(textPane));
+			add(BorderLayout.CENTER, scrollPane);
 			Action copiar2Action = toolbarPesquisa.addCopiar2();
 			copiar2Action.hint(PropriedadeMensagens.getString("label.copiar_tudo"));
 			copiar2Action.setActionListener(e -> copiar2());

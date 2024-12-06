@@ -50,8 +50,9 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
-import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -63,7 +64,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 
 public class UpdateContainer extends AbstratoContainer {
 	private final transient ConsultaCor consultaCor = new ConsultaCor();
-	private final TextPane textArea = new TextPane();
+	private final TextEditor textArea = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Label labelStatus = new Label();
@@ -110,7 +111,9 @@ public class UpdateContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(textArea));
+		ScrollPane scrollPane = new ScrollPane(textArea);
+		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
 	}

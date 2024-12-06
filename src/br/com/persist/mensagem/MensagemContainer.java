@@ -17,11 +17,12 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
-import br.com.persist.componente.TextPane;
 
 public class MensagemContainer extends Panel {
-	private final TextPane textArea = new TextPane();
+	private final TextEditor textArea = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final File file;
@@ -40,7 +41,9 @@ public class MensagemContainer extends Panel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(textArea));
+		ScrollPane scrollPane = new ScrollPane(textArea);
+		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	public void setSel(String string) {
