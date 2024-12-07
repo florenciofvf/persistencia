@@ -49,7 +49,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class AmbienteContainer extends AbstratoContainer {
-	private final TextEditor textArea = new TextEditor();
+	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private AmbienteFormulario ambienteFormulario;
@@ -97,18 +97,18 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		ScrollPane scrollPane = new ScrollPane(textArea);
-		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	public String getConteudo() {
-		return textArea.getText();
+		return textEditor.getText();
 	}
 
 	private void abrir(String conteudo) {
 		if (!Util.isEmpty(conteudo)) {
-			textArea.setText(conteudo);
+			textEditor.setText(conteudo);
 			return;
 		}
 		abrirArquivo(file);
@@ -117,13 +117,13 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	private void abrirArquivo(File file) {
 		toolbar.limparNomeBackup();
-		textArea.limpar();
+		textEditor.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				while (linha != null) {
-					textArea.append(linha + Constantes.QL);
+					textEditor.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
@@ -226,7 +226,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			textEditor.limpar();
 		}
 
 		@Override
@@ -238,7 +238,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textArea.getText());
+				pw.print(textEditor.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(AmbienteConstantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
@@ -247,15 +247,15 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(textEditor, numeros, letras);
 		}
 
 		@Override
@@ -289,7 +289,7 @@ public class AmbienteContainer extends AbstratoContainer {
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPesquisaLocal.isSelected()) {
-					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+					selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
 					selecao.selecionar(label);
 					return;
 				}
@@ -305,7 +305,7 @@ public class AmbienteContainer extends AbstratoContainer {
 						sb.append(resultado);
 					}
 				}
-				textArea.setText(sb.toString());
+				textEditor.setText(sb.toString());
 				selecao = null;
 			} else {
 				label.limpar();
@@ -328,7 +328,7 @@ public class AmbienteContainer extends AbstratoContainer {
 					sb.append(resultado);
 				}
 			}
-			textArea.setText(sb.toString());
+			textEditor.setText(sb.toString());
 			selecao = null;
 		}
 	}

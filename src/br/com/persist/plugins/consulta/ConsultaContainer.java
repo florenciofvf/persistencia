@@ -74,7 +74,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	private final transient ConsultaCor consultaCor = new ConsultaCor();
 	private final ToolbarTabela toolbarTabela = new ToolbarTabela();
 	private final JTable tabela = new JTable(new VazioModelo());
-	private final TextEditor textArea = new TextEditor();
+	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
@@ -88,7 +88,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	public ConsultaContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
 		super(formulario);
 		file = new File(ConsultaConstantes.CONSULTAS + Constantes.SEPARADOR + ConsultaConstantes.CONSULTAS);
-		textArea.setText(conteudo == null ? Constantes.VAZIO : conteudo);
+		textEditor.setText(conteudo == null ? Constantes.VAZIO : conteudo);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
 		fileParent = new File(ConsultaConstantes.CONSULTAS);
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -121,8 +121,8 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
-		ScrollPane scrollPane = new ScrollPane(textArea);
-		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, criarPanelTabela());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.NORTH, toolbar);
@@ -199,24 +199,24 @@ public class ConsultaContainer extends AbstratoContainer {
 	private void configurar() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.getAtualizarAcao());
-		textArea.addKeyListener(keyListenerInner);
+		textEditor.addKeyListener(keyListenerInner);
 	}
 
 	private transient KeyListener keyListenerInner = new KeyAdapter() {
 		@Override
 		public void keyReleased(KeyEvent e) {
-			consultaCor.processar(textArea.getStyledDocument());
+			consultaCor.processar(textEditor.getStyledDocument());
 		}
 	};
 
 	public String getConteudo() {
-		return textArea.getText();
+		return textEditor.getText();
 	}
 
 	private void abrir(String conteudo) {
 		if (!Util.isEmpty(conteudo)) {
-			textArea.setText(conteudo);
-			consultaCor.processar(textArea.getStyledDocument());
+			textEditor.setText(conteudo);
+			consultaCor.processar(textEditor.getStyledDocument());
 			return;
 		}
 		abrirArquivo(file);
@@ -225,16 +225,16 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	private void abrirArquivo(File file) {
 		toolbar.limparNomeBackup();
-		textArea.limpar();
+		textEditor.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				while (linha != null) {
-					textArea.append(linha + Constantes.QL);
+					textEditor.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
-				consultaCor.processar(textArea.getStyledDocument());
+				consultaCor.processar(textEditor.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
@@ -345,7 +345,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			textEditor.limpar();
 		}
 
 		@Override
@@ -357,7 +357,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textArea.getText());
+				pw.print(textEditor.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, ConsultaContainer.this);
@@ -366,16 +366,16 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
-			consultaCor.processar(textArea.getStyledDocument());
+			Util.getContentTransfered(textEditor, numeros, letras);
+			consultaCor.processar(textEditor.getStyledDocument());
 		}
 
 		@Override
@@ -408,7 +408,7 @@ public class ConsultaContainer extends AbstratoContainer {
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPesquisaLocal.isSelected()) {
-					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+					selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
 					selecao.selecionar(label);
 					return;
 				}
@@ -424,7 +424,7 @@ public class ConsultaContainer extends AbstratoContainer {
 						sb.append(resultado);
 					}
 				}
-				textArea.setText(sb.toString());
+				textEditor.setText(sb.toString());
 			} else {
 				label.limpar();
 			}
@@ -441,8 +441,8 @@ public class ConsultaContainer extends AbstratoContainer {
 				try {
 					int total = Util.getInt(resp.toString().trim(), 1);
 					string = getStringApartir(string, total);
-					Util.insertStringArea(textArea, string);
-					consultaCor.processar(textArea.getStyledDocument());
+					Util.insertStringArea(textEditor, string);
+					consultaCor.processar(textEditor.getStyledDocument());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, this);
 				}
@@ -475,8 +475,8 @@ public class ConsultaContainer extends AbstratoContainer {
 				return;
 			}
 			string = getString(string);
-			Util.insertStringArea(textArea, string);
-			consultaCor.processar(textArea.getStyledDocument());
+			Util.insertStringArea(textEditor, string);
+			consultaCor.processar(textEditor.getStyledDocument());
 		}
 
 		private String getString(String string) {
@@ -503,10 +503,10 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void atualizar() {
-			if (!Util.isEmpty(textArea.getText())) {
+			if (!Util.isEmpty(textEditor.getText())) {
 				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 				if (conexao != null) {
-					String consulta = Util.getString(textArea);
+					String consulta = Util.getString(textEditor);
 					atualizar(conexao, consulta);
 				} else {
 					Util.mensagem(ConsultaContainer.this, Constantes.CONEXAO_NULA);
@@ -522,7 +522,7 @@ public class ConsultaContainer extends AbstratoContainer {
 				Util.ajustar(tabela, getGraphics());
 				labelStatus.setText(
 						"[" + Util.getDataHora() + "] TOTAL DE REGISTROS SELECIONADOS [" + modelo.getRowCount() + "]");
-				textArea.requestFocus();
+				textEditor.requestFocus();
 			} catch (Exception ex) {
 				labelStatus.limpar();
 				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, this);

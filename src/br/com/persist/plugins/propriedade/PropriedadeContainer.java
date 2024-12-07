@@ -55,9 +55,9 @@ import br.com.persist.formulario.Formulario;
 public class PropriedadeContainer extends AbstratoContainer {
 	private final PainelResultado painelResultado = new PainelResultado();
 	private final FicharioInner ficharioInner = new FicharioInner();
-	private final TextEditor textAreaDesenv = new TextEditor();
-	private final TextEditor textAreaPrehom = new TextEditor();
-	private final TextEditor textArea = new TextEditor();
+	private final TextEditor textEditorDesenv = new TextEditor();
+	private final TextEditor textEditorPrehom = new TextEditor();
+	private final TextEditor textEditor = new TextEditor();
 	private PropriedadeFormulario propriedadeFormulario;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -75,8 +75,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
-		abrirArquivo(textAreaDesenv, fileDesenv);
-		abrirArquivo(textAreaPrehom, filePrehom);
+		abrirArquivo(textEditorDesenv, fileDesenv);
+		abrirArquivo(textEditorPrehom, filePrehom);
 	}
 
 	public PropriedadeDialogo getPropriedadeDialogo() {
@@ -119,9 +119,9 @@ public class PropriedadeContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		void init() {
-			addTab("label.configuracoes", Icones.CONFIG, new Aba(textArea, file));
-			addTab("label.desenvolvimento", Icones.CONFIG2, new Aba(textAreaDesenv, fileDesenv));
-			addTab("label.pre_homologacao", Icones.CONFIG2, new Aba(textAreaPrehom, filePrehom));
+			addTab("label.configuracoes", Icones.CONFIG, new Aba(textEditor, file));
+			addTab("label.desenvolvimento", Icones.CONFIG2, new Aba(textEditorDesenv, fileDesenv));
+			addTab("label.pre_homologacao", Icones.CONFIG2, new Aba(textEditorPrehom, filePrehom));
 		}
 	}
 
@@ -136,7 +136,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 			Panel panelArea = new Panel();
 			panelArea.add(BorderLayout.CENTER, textPane);
 			ScrollPane scrollPane = new ScrollPane(panelArea);
-			scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 			add(BorderLayout.CENTER, scrollPane);
 		}
 	}
@@ -201,7 +201,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 	}
 
 	private void abrirArquivo(File file) {
-		abrirArquivo(textArea, file);
+		abrirArquivo(textEditor, file);
 		toolbar.gerar();
 	}
 
@@ -255,7 +255,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		}
 
 		private void gerar() {
-			String string = textArea.getText();
+			String string = textEditor.getText();
 			if (Util.isEmpty(string)) {
 				painelResultado.setText("Editor vazio.");
 				return;
@@ -272,9 +272,9 @@ public class PropriedadeContainer extends AbstratoContainer {
 		}
 
 		private void colorTextArea(Raiz raiz) {
-			textArea.setText(Constantes.VAZIO);
+			textEditor.setText(Constantes.VAZIO);
 			try {
-				raiz.print(textArea.getStyledDocument());
+				raiz.print(textEditor.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
@@ -306,7 +306,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 				painelResultado.setFontTextArea(nova);
 				Aba aba = (Aba) ficharioInner.getSelectedComponent();
 				if (aba == null || aba.file == file) {
-					textArea.setFont(nova);
+					textEditor.setFont(nova);
 				} else {
 					aba.textPane.setFont(nova);
 				}
@@ -350,7 +350,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		protected void limpar() {
 			Aba aba = (Aba) ficharioInner.getSelectedComponent();
 			if (aba == null || aba.file == file) {
-				textArea.setText(Constantes.VAZIO);
+				textEditor.setText(Constantes.VAZIO);
 			} else {
 				aba.textPane.setText(Constantes.VAZIO);
 			}
@@ -379,7 +379,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textArea.getText());
+				pw.print(textEditor.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
@@ -399,10 +399,10 @@ public class PropriedadeContainer extends AbstratoContainer {
 		protected void copiar() {
 			Aba aba = (Aba) ficharioInner.getSelectedComponent();
 			if (aba == null || aba.file == file) {
-				String string = Util.getString(textArea);
+				String string = Util.getString(textEditor);
 				Util.setContentTransfered(string);
 				copiarMensagem(string);
-				textArea.requestFocus();
+				textEditor.requestFocus();
 			} else {
 				String string = Util.getString(aba.textPane);
 				Util.setContentTransfered(string);
@@ -415,7 +415,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		protected void colar(boolean numeros, boolean letras) {
 			Aba aba = (Aba) ficharioInner.getSelectedComponent();
 			if (aba == null || aba.file == file) {
-				Util.getContentTransfered(textArea, numeros, letras);
+				Util.getContentTransfered(textEditor, numeros, letras);
 			} else {
 				Util.getContentTransfered(aba.textPane, numeros, letras);
 			}
@@ -426,7 +426,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				Aba aba = (Aba) ficharioInner.getSelectedComponent();
 				if (aba == null || aba.file == file) {
-					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+					selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
 				} else {
 					selecao = Util.getSelecao(aba.textPane, selecao, txtPesquisa.getText());
 				}

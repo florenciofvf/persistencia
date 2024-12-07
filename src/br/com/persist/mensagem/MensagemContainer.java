@@ -22,7 +22,7 @@ import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 
 public class MensagemContainer extends Panel {
-	private final TextEditor textArea = new TextEditor();
+	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final File file;
@@ -30,19 +30,19 @@ public class MensagemContainer extends Panel {
 	public MensagemContainer(Janela janela, String string, File file) {
 		this.file = file;
 		if (Util.isMensagemHtml()) {
-			textArea.setContentType("text/html");
-			textArea.setEditable(false);
+			textEditor.setContentType("text/html");
+			textEditor.setEditable(false);
 			Util.setMensagemHtml(false);
 		}
-		textArea.setText(string);
+		textEditor.setText(string);
 		toolbar.ini(janela);
 		montarLayout();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		ScrollPane scrollPane = new ScrollPane(textArea);
-		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		add(BorderLayout.CENTER, scrollPane);
 	}
 
@@ -71,21 +71,21 @@ public class MensagemContainer extends Panel {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(textEditor, numeros, letras);
 		}
 
 		@Override
 		protected void salvar() {
 			try (PrintWriter pw = new PrintWriter(file)) {
-				pw.print(textArea.getText());
+				pw.print(textEditor.getText());
 				salvoMensagem();
 			} catch (Exception e) {
 				Util.mensagem(MensagemContainer.this, e.getMessage());
@@ -95,7 +95,7 @@ public class MensagemContainer extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();
@@ -104,6 +104,6 @@ public class MensagemContainer extends Panel {
 	}
 
 	public void dialogOpenedHandler() {
-		textArea.requestFocus();
+		textEditor.requestFocus();
 	}
 }
