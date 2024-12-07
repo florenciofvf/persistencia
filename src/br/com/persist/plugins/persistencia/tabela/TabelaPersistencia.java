@@ -37,6 +37,7 @@ import br.com.persist.componente.MenuPadrao2;
 import br.com.persist.componente.MenuPadrao3;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.SeparadorDialogo;
+import br.com.persist.componente.TextEditor;
 import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
 import br.com.persist.plugins.objeto.ObjetoException;
@@ -838,6 +839,7 @@ public class TabelaPersistencia extends JTable {
 			private void exibirValores(boolean option) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String string = Util.getStringLista(lista, Constantes.QL2, true, false);
+				boolean paintERT = TextEditor.isPaintERT();
 				if (option) {
 					StringBuilder sb = new StringBuilder("<html>");
 					sb.append("<head>");
@@ -848,8 +850,10 @@ public class TabelaPersistencia extends JTable {
 					sb.append("</html>");
 					Util.setMensagemHtml(true);
 					string = sb.toString();
+					TextEditor.setPaintERT(false);
 				}
 				Util.mensagem(TabelaPersistencia.this, string);
+				TextEditor.setPaintERT(paintERT);
 			}
 		}
 
