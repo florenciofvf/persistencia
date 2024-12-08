@@ -244,10 +244,10 @@ class ExecucaoSplit extends SplitPane {
 	};
 }
 
-class TextArea extends TextEditor {
+class Editor extends TextEditor {
 	private static final long serialVersionUID = 1L;
 
-	TextArea() {
+	Editor() {
 		addFocusListener(focusListenerInner);
 	}
 

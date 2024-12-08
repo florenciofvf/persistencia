@@ -31,8 +31,8 @@ import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 
 public class AbaText extends Panel {
-	private final TextArea textArea = new TextArea();
 	private static final long serialVersionUID = 1L;
+	private final Editor editor = new Editor();
 	private final transient Arquivo arquivo;
 	final Toolbar toolbar = new Toolbar();
 	private JScrollPane scrollPane;
@@ -44,8 +44,8 @@ public class AbaText extends Panel {
 
 	void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		scrollPane = new JScrollPane(textArea);
-		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		scrollPane = new JScrollPane(editor);
+		scrollPane.setRowHeaderView(new TextEditorLine(editor));
 		add(BorderLayout.CENTER, scrollPane);
 	}
 
@@ -58,11 +58,11 @@ public class AbaText extends Panel {
 	}
 
 	String getConteudo() {
-		return textArea.getText();
+		return editor.getText();
 	}
 
 	void abrir() {
-		textArea.setText(Constantes.VAZIO);
+		editor.setText(Constantes.VAZIO);
 		if (arquivo.getFile().exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(arquivo.getFile()), StandardCharsets.UTF_8))) {
@@ -73,7 +73,7 @@ public class AbaText extends Panel {
 					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
-				textArea.setText(sb.toString());
+				editor.setText(sb.toString());
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ExecucaoConstantes.PAINEL_EXECUCAO, ex, this);
@@ -109,7 +109,7 @@ public class AbaText extends Panel {
 
 		@Override
 		protected void limpar() {
-			textArea.setText(Constantes.VAZIO);
+			editor.setText(Constantes.VAZIO);
 		}
 
 		@Override
@@ -121,15 +121,15 @@ public class AbaText extends Panel {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(editor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			editor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(editor, numeros, letras);
 		}
 
 		@Override
@@ -141,7 +141,7 @@ public class AbaText extends Panel {
 
 		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textArea.getText());
+				pw.print(editor.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, this);
@@ -151,7 +151,7 @@ public class AbaText extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(editor, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();

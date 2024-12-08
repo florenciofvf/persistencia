@@ -130,12 +130,12 @@ class Handler extends XMLHandler {
 }
 
 class PanelLog extends Panel {
-	private final TextArea textArea = new TextArea();
 	private static final long serialVersionUID = 1L;
+	private final Editor editor = new Editor();
 
 	PanelLog() {
-		add(BorderLayout.NORTH, new ToolbarPesquisa(textArea));
-		add(BorderLayout.CENTER, new JScrollPane(textArea));
+		add(BorderLayout.NORTH, new ToolbarPesquisa(editor));
+		add(BorderLayout.CENTER, new JScrollPane(editor));
 	}
 
 	void processar(Container container, boolean confirmar, Component comp) {
@@ -178,12 +178,12 @@ class PanelLog extends Panel {
 	}
 
 	private void text(Container container, StringBuilder sb) {
-		String editor = container.getChaveEditor();
-		EditorCor editorCor = ExecucaoContainer.getEditorCor(editor);
+		String chaveEditor = container.getChaveEditor();
+		EditorCor editorCor = ExecucaoContainer.getEditorCor(chaveEditor);
 		if (editorCor != null) {
-			editorCor.processar(textArea, sb);
+			editorCor.processar(editor, sb);
 		} else {
-			textArea.setText(sb.toString());
+			editor.setText(sb.toString());
 		}
 	}
 }

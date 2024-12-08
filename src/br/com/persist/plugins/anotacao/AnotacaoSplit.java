@@ -258,10 +258,10 @@ class AnotacaoSplit extends SplitPane {
 	};
 }
 
-class TextArea extends TextEditor {
+class Editor extends TextEditor {
 	private static final long serialVersionUID = 1L;
 
-	TextArea() {
+	Editor() {
 		addFocusListener(focusListenerInner);
 	}
 
@@ -281,9 +281,9 @@ class TextArea extends TextEditor {
 }
 
 class Aba extends Transferivel {
-	private final TextArea textArea = new TextArea();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private final Editor editor = new Editor();
 	final transient Arquivo arquivo;
 
 	Aba(Arquivo arquivo) {
@@ -327,19 +327,19 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		JScrollPane scrollPane = new JScrollPane(textArea);
-		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		JScrollPane scrollPane = new JScrollPane(editor);
+		scrollPane.setRowHeaderView(new TextEditorLine(editor));
 		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	private void abrir() {
-		textArea.limpar();
+		editor.limpar();
 		if (arquivo.getFile().exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(arquivo.getFile()), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				while (linha != null) {
-					textArea.append(linha + Constantes.QL);
+					editor.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
@@ -382,20 +382,20 @@ class Aba extends Transferivel {
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			editor.limpar();
 		}
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(editor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			editor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(editor, numeros, letras);
 		}
 
 		@Override
@@ -407,7 +407,7 @@ class Aba extends Transferivel {
 
 		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textArea.getText());
+				pw.print(editor.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
@@ -417,7 +417,7 @@ class Aba extends Transferivel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(editor, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();

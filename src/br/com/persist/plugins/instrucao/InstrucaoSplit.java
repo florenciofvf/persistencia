@@ -284,11 +284,11 @@ class InstrucaoSplit extends SplitPane {
 	};
 }
 
-class TextArea extends TextEditor implements MetaDialogoListener {
+class Editor extends TextEditor implements MetaDialogoListener {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 
-	TextArea() {
+	Editor() {
 		addFocusListener(focusListenerInner);
 		addKeyListener(keyListenerInner);
 	}
@@ -327,7 +327,7 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 			TextUI textUI = getUI();
 			Rectangle r = null;
 			try {
-				r = textUI.modelToView(TextArea.this, dot);
+				r = textUI.modelToView(Editor.this, dot);
 			} catch (BadLocationException ex) {
 				return;
 			}
@@ -344,7 +344,7 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 				return;
 			}
 			try {
-				InstrucaoMetadados.abrir(TextArea.this, string, TextArea.this, point);
+				InstrucaoMetadados.abrir(Editor.this, string, Editor.this, point);
 			} catch (InstrucaoException ex) {
 				LOG.warning(ex.getMessage());
 			}
@@ -383,9 +383,9 @@ class TextArea extends TextEditor implements MetaDialogoListener {
 
 class Aba extends Transferivel {
 	private final PainelResultado painelResultado = new PainelResultado();
-	private final TextArea textArea = new TextArea();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private final Editor editor = new Editor();
 	final transient Arquivo arquivo;
 	private ScrollPane scrollPane;
 
@@ -438,10 +438,10 @@ class Aba extends Transferivel {
 	private Panel criarPanel() {
 		Panel panel = new Panel();
 		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, textArea);
+		panelArea.add(BorderLayout.CENTER, editor);
 		scrollPane = new ScrollPane(panelArea);
 		panel.add(BorderLayout.CENTER, scrollPane);
-		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
+		scrollPane.setRowHeaderView(new TextEditorLine(editor));
 		return panel;
 	}
 
@@ -475,13 +475,13 @@ class Aba extends Transferivel {
 	}
 
 	private void abrir() {
-		textArea.limpar();
+		editor.limpar();
 		if (arquivo.getFile().exists()) {
 			try {
 				int value = getValueScrollPane();
-				textArea.setText(conteudo(arquivo.getFile()));
+				editor.setText(conteudo(arquivo.getFile()));
 				setValueScrollPane(value);
-				InstrucaoCor.clearAttr(textArea.getStyledDocument());
+				InstrucaoCor.clearAttr(editor.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
@@ -573,7 +573,7 @@ class Aba extends Transferivel {
 				if (resp) {
 					List<Token> tokens = new ArrayList<>(compilador.getTokens());
 					biblio.filtroConstParam(tokens);
-					InstrucaoCor.processar(textArea.getStyledDocument(), tokens);
+					InstrucaoCor.processar(editor.getStyledDocument(), tokens);
 				}
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
@@ -589,20 +589,20 @@ class Aba extends Transferivel {
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			editor.limpar();
 		}
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(editor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			editor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(editor, numeros, letras);
 		}
 
 		@Override
@@ -614,7 +614,7 @@ class Aba extends Transferivel {
 
 		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textArea.getText());
+				pw.print(editor.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
@@ -624,7 +624,7 @@ class Aba extends Transferivel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(editor, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();
