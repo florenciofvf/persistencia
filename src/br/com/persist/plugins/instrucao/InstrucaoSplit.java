@@ -38,7 +38,6 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
@@ -460,17 +459,19 @@ class Aba extends Transferivel {
 	}
 
 	private class PainelResultado extends Panel {
+		private TextEditor textEditor = new TextEditor();
 		private static final long serialVersionUID = 1L;
-		private JTextPane textPane = new JTextPane();
 
 		private PainelResultado() {
-			add(BorderLayout.NORTH, new ToolbarPesquisa(textPane));
-			add(BorderLayout.CENTER, new ScrollPane(textPane));
+			add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
+			ScrollPane scrollPane2 = new ScrollPane(textEditor);
+			scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
+			add(BorderLayout.CENTER, scrollPane2);
 		}
 
 		private void setText(String string) {
-			textPane.setText(string);
-			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+			textEditor.setText(string);
+			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 		}
 	}
 

@@ -17,10 +17,11 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TabbedPane;
+import br.com.persist.componente.TextEditor;
 
 public class DataContainer extends Panel {
-	private final JTextPane areaModelo = new JTextPane();
-	private final JTextPane areaEdicao = new JTextPane();
+	private final TextEditor areaModelo = new TextEditor();
+	private final TextEditor areaEdicao = new TextEditor();
 	private final TabbedPane fichario = new TabbedPane();
 	private static final long serialVersionUID = 1L;
 	private final transient DataListener listener;
