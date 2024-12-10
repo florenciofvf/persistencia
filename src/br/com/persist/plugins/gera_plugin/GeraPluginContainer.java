@@ -40,7 +40,9 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -66,10 +68,10 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private TextField txtMinimPlugin = new TextField();
 	private GeraPluginFormulario geraPluginFormulario;
 	private TextField txtNomePlugin = new TextField();
+	private TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private GeraPluginDialogo geraPluginDialogo;
-	private TextArea textArea = new TextArea();
 	private transient Config config;
 
 	public GeraPluginContainer(Janela janela, Formulario formulario) {
@@ -186,7 +188,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 		muro.camada(criarCamada(chkComHandler, chkComModelo));
 		muro.camada(buttonGerar);
 
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, muro, textArea);
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, muro, scrollPane);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 
@@ -347,12 +351,12 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 	private void gerarArquivos() {
 		List<String> erros = validar();
-		textArea.limpar();
+		textEditor.limpar();
 		if (erros.isEmpty()) {
 			gerar();
 		} else {
 			for (String string : erros) {
-				textArea.append(string + Constantes.QL);
+				textEditor.append(string + Constantes.QL);
 			}
 		}
 	}
