@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Constantes;
@@ -34,11 +33,13 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 
 public class EntregaPagina extends Panel {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
-	public final JTextPane textArea = new JTextPane();
+	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ScrollPane scrollPane;
@@ -61,8 +62,9 @@ public class EntregaPagina extends Panel {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, toolbar);
 		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, textArea);
+		panelArea.add(BorderLayout.CENTER, textEditor);
 		scrollPane = new ScrollPane(panelArea);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		panel.add(BorderLayout.CENTER, scrollPane);
 		return panel;
 	}
@@ -96,7 +98,7 @@ public class EntregaPagina extends Panel {
 
 		@Override
 		protected void limpar() {
-			textArea.setText(Constantes.VAZIO);
+			textEditor.setText(Constantes.VAZIO);
 		}
 
 		@Override
@@ -108,21 +110,21 @@ public class EntregaPagina extends Panel {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(textEditor, numeros, letras);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();
@@ -131,7 +133,7 @@ public class EntregaPagina extends Panel {
 	}
 
 	public String getConteudo() {
-		return textArea.getText();
+		return textEditor.getText();
 	}
 
 	public String getNome() {
@@ -139,7 +141,7 @@ public class EntregaPagina extends Panel {
 	}
 
 	private void abrir() {
-		textArea.setText(Constantes.VAZIO);
+		textEditor.setText(Constantes.VAZIO);
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -150,7 +152,7 @@ public class EntregaPagina extends Panel {
 					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
-				textArea.setText(sb.toString());
+				textEditor.setText(sb.toString());
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(EntregaConstantes.PAINEL_ENTREGA, ex, this);
@@ -174,7 +176,7 @@ public class EntregaPagina extends Panel {
 			return;
 		}
 		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-			pw.print(textArea.getText());
+			pw.print(textEditor.getText());
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(EntregaConstantes.PAINEL_ENTREGA, ex, this);

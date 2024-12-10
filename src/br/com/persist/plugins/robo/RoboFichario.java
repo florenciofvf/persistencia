@@ -68,7 +68,7 @@ public class RoboFichario extends JTabbedPane {
 		RoboPagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.isEmpty(conteudo)) {
-				pagina.textArea.setText(conteudo);
+				pagina.textEditor.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}

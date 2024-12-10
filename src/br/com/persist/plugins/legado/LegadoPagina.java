@@ -25,7 +25,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Constantes;
@@ -45,7 +44,7 @@ import br.com.persist.marca.XML;
 
 public class LegadoPagina extends Panel {
 	private final TextEditor textEditorResult = new TextEditor();
-	public final JTextPane textArea = new JTextPane();
+	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ScrollPane scrollPane;
@@ -67,9 +66,10 @@ public class LegadoPagina extends Panel {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, toolbar);
 		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, textArea);
+		panelArea.add(BorderLayout.CENTER, textEditor);
 		scrollPane = new ScrollPane(panelArea);
 		panel.add(BorderLayout.CENTER, scrollPane);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		return panel;
 	}
 
@@ -110,7 +110,7 @@ public class LegadoPagina extends Panel {
 		}
 
 		private void executar() {
-			String string = textArea.getText();
+			String string = textEditor.getText();
 			if (Util.isEmpty(string)) {
 				textEditorResult.setText("Editor vazio.");
 				return;
@@ -131,7 +131,7 @@ public class LegadoPagina extends Panel {
 
 		@Override
 		protected void limpar() {
-			textArea.setText(Constantes.VAZIO);
+			textEditor.setText(Constantes.VAZIO);
 		}
 
 		@Override
@@ -143,21 +143,21 @@ public class LegadoPagina extends Panel {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(textEditor, numeros, letras);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();
@@ -166,7 +166,7 @@ public class LegadoPagina extends Panel {
 	}
 
 	public String getConteudo() {
-		return textArea.getText();
+		return textEditor.getText();
 	}
 
 	public String getNome() {
@@ -174,7 +174,7 @@ public class LegadoPagina extends Panel {
 	}
 
 	private void abrir() {
-		textArea.setText(Constantes.VAZIO);
+		textEditor.setText(Constantes.VAZIO);
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -185,7 +185,7 @@ public class LegadoPagina extends Panel {
 					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
-				textArea.setText(sb.toString());
+				textEditor.setText(sb.toString());
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(LegadoConstantes.PAINEL_LEGADO, ex, this);
@@ -209,7 +209,7 @@ public class LegadoPagina extends Panel {
 			return;
 		}
 		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-			pw.print(textArea.getText());
+			pw.print(textEditor.getText());
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(LegadoConstantes.PAINEL_LEGADO, ex, this);

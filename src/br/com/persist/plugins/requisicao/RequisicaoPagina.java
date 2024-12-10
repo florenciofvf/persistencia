@@ -39,7 +39,6 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.ArgumentoException;
@@ -62,6 +61,8 @@ import br.com.persist.componente.OrdemTable;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.data.Array;
 import br.com.persist.data.DataParser;
@@ -225,7 +226,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 	};
 
-	class TextArea extends JTextPane {
+	class TextArea extends TextEditor {
 		private static final long serialVersionUID = 1L;
 		private boolean validoSel;
 
@@ -321,6 +322,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		Panel panelArea = new Panel();
 		panelArea.add(BorderLayout.CENTER, textArea);
 		scrollPane = new ScrollPane(panelArea);
+		scrollPane.setRowHeaderView(new TextEditorLine(textArea));
 		panel.add(BorderLayout.CENTER, scrollPane);
 		return panel;
 	}
