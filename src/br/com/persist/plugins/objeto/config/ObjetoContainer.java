@@ -52,12 +52,13 @@ import br.com.persist.componente.LabelLinkListener;
 import br.com.persist.componente.LabelTextTemp;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.PanelBloco;
+import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoException;
@@ -1241,21 +1242,23 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class PanelDescricao extends Panel {
-		private final TextArea textArea = new TextArea();
+		private final TextEditor textEditor = new TextEditor();
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
 
 		private PanelDescricao() {
-			textArea.setText(objeto.getDescricao());
-			textArea.addKeyListener(keyListenerInner);
-			add(BorderLayout.CENTER, textArea);
+			textEditor.setText(objeto.getDescricao());
+			textEditor.addKeyListener(keyListenerInner);
+			ScrollPane scrollPane = new ScrollPane(textEditor);
+			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+			add(BorderLayout.CENTER, scrollPane);
 			add(BorderLayout.NORTH, toolbar);
 		}
 
 		private transient KeyListener keyListenerInner = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				objeto.setDescricao(textArea.getText());
+				objeto.setDescricao(textEditor.getText());
 			}
 		};
 
@@ -1268,15 +1271,15 @@ public class ObjetoContainer extends Panel {
 
 			@Override
 			protected void copiar() {
-				String string = Util.getString(textArea.getTextAreaInner());
+				String string = Util.getString(textEditor);
 				Util.setContentTransfered(string);
 				copiarMensagem(string);
-				textArea.requestFocus();
+				textEditor.requestFocus();
 			}
 
 			@Override
 			protected void colar(boolean numeros, boolean letras) {
-				Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+				Util.getContentTransfered(textEditor, numeros, letras);
 			}
 		}
 	}

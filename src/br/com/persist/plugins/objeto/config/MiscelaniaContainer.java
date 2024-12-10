@@ -14,13 +14,15 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 
 public class MiscelaniaContainer extends Panel {
-	private final TextArea textArea = new TextArea();
+	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Objeto objeto;
@@ -34,8 +36,10 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	private void montarLayout(Tipo tipo) {
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, textArea);
+		add(BorderLayout.CENTER, scrollPane);
 		StringBuilder builder = new StringBuilder();
 		if (Tipo.CHAVEAMENTO.equals(tipo)) {
 			chave(builder);
@@ -50,7 +54,7 @@ public class MiscelaniaContainer extends Panel {
 		} else if (Tipo.DESTACAVEIS.equals(tipo)) {
 			destac(builder);
 		}
-		textArea.setText(builder.toString().trim());
+		textEditor.setText(builder.toString().trim());
 	}
 
 	private void chave(StringBuilder builder) {
@@ -141,17 +145,17 @@ public class MiscelaniaContainer extends Panel {
 		protected void aplicar() {
 			try {
 				if (Tipo.CHAVEAMENTO.equals(tipo)) {
-					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
+					objeto.setChaveamento(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.MAPEAMENTO.equals(tipo)) {
-					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
+					objeto.setMapeamento(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.SEQUENCIA.equals(tipo)) {
-					objeto.setSequencias(Util.normalizar(textArea.getText(), false));
+					objeto.setSequencias(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.COMPLEMENTO.equals(tipo)) {
-					objeto.setComplemento(Util.normalizar(textArea.getText(), false));
+					objeto.setComplemento(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.CLASSBIBLIO.equals(tipo)) {
-					objeto.setClassBiblio(Util.normalizar(textArea.getText(), false));
+					objeto.setClassBiblio(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.DESTACAVEIS.equals(tipo)) {
-					objeto.setDestacaveis(Util.normalizar(textArea.getText(), false));
+					objeto.setDestacaveis(Util.normalizar(textEditor.getText(), false));
 				}
 				fechar();
 			} catch (Exception ex) {
@@ -161,20 +165,20 @@ public class MiscelaniaContainer extends Panel {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea.getTextAreaInner());
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+			Util.getContentTransfered(textEditor, numeros, letras);
 		}
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			textEditor.limpar();
 		}
 	}
 }

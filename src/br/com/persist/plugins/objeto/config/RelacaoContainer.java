@@ -52,7 +52,8 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TabbedPane;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
@@ -86,10 +87,10 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class PanelDescricao extends Panel implements ActionListener {
+		private final TextEditor textEditor = new TextEditor();
 		private TextField txtDeslocXDesc = new TextField();
 		private TextField txtDeslocYDesc = new TextField();
 		private CheckBox chkDesenharDesc = new CheckBox();
-		private final TextArea textArea = new TextArea();
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
 
@@ -102,10 +103,12 @@ public class RelacaoContainer extends Panel {
 			chkDesenharDesc.addActionListener(this);
 			txtDeslocXDesc.addActionListener(this);
 			txtDeslocYDesc.addActionListener(this);
-			textArea.setText(relacao.getDescricao());
-			textArea.addFocusListener(focusListenerDesc);
-			textArea.addKeyListener(keyListenerInner);
-			add(BorderLayout.CENTER, textArea);
+			textEditor.setText(relacao.getDescricao());
+			textEditor.addFocusListener(focusListenerDesc);
+			textEditor.addKeyListener(keyListenerInner);
+			ScrollPane scrollPane = new ScrollPane(textEditor);
+			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+			add(BorderLayout.CENTER, scrollPane);
 			Box container = Box.createVerticalBox();
 			container.add(criarLinhaRotulo("label.desloc_x_desc", txtDeslocXDesc));
 			container.add(criarLinhaRotulo("label.desloc_y_desc", txtDeslocYDesc));
@@ -148,7 +151,7 @@ public class RelacaoContainer extends Panel {
 		private transient KeyListener keyListenerInner = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				relacao.setDescricao(textArea.getText());
+				relacao.setDescricao(textEditor.getText());
 			}
 		};
 
@@ -214,7 +217,7 @@ public class RelacaoContainer extends Panel {
 					return;
 				}
 				int diff = HoraUtil.getDiff(origem, destino);
-				textArea.setText(HoraUtil.formatar(diff));
+				textEditor.setText(HoraUtil.formatar(diff));
 				focusListenerDesc.focusLost(null);
 				chkDesenharDesc.setSelected(true);
 				actionPerformed(new ActionEvent(chkDesenharDesc, 0, null));
@@ -235,7 +238,7 @@ public class RelacaoContainer extends Panel {
 					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "DESTINO"));
 					return;
 				}
-				textArea.setText(HoraUtil.formatar(origem + destino));
+				textEditor.setText(HoraUtil.formatar(origem + destino));
 				focusListenerDesc.focusLost(null);
 				chkDesenharDesc.setSelected(true);
 				actionPerformed(new ActionEvent(chkDesenharDesc, 0, null));
@@ -243,15 +246,15 @@ public class RelacaoContainer extends Panel {
 
 			@Override
 			protected void copiar() {
-				String string = Util.getString(textArea.getTextAreaInner());
+				String string = Util.getString(textEditor);
 				Util.setContentTransfered(string);
 				copiarMensagem(string);
-				textArea.requestFocus();
+				textEditor.requestFocus();
 			}
 
 			@Override
 			protected void colar(boolean numeros, boolean letras) {
-				Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+				Util.getContentTransfered(textEditor, numeros, letras);
 			}
 		}
 
