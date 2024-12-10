@@ -9,16 +9,16 @@ import javax.swing.JTextArea;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
-public class TextArea extends JScrollPane {
+public abstract class TextArea extends JScrollPane {
 	private static final long serialVersionUID = 1L;
 	private final JTextArea textAreaInner;
 
-	public TextArea(String string) {
+	protected TextArea(String string) {
 		textAreaInner = new JTextArea(string);
 		setViewportView(textAreaInner);
 	}
 
-	public TextArea() {
+	protected TextArea() {
 		textAreaInner = new JTextArea();
 		setViewportView(textAreaInner);
 	}

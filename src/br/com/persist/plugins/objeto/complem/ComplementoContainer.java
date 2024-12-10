@@ -12,7 +12,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JList;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
 import br.com.persist.assistencia.ColecaoStringModelo;
@@ -25,12 +24,14 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 
 public class ComplementoContainer extends Panel {
 	private final ToolbarLista toolbarLista = new ToolbarLista();
 	private final ToolbarArea toolbarArea = new ToolbarArea();
+	private final TextEditor textEditor = new TextEditor();
 	private final transient ComplementoListener listener;
-	private final JTextArea textArea = new JTextArea();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final JList<String> listaComplementos;
@@ -38,7 +39,7 @@ public class ComplementoContainer extends Panel {
 	public ComplementoContainer(Janela janela, ComplementoListener listener) {
 		listaComplementos = new JList<>(new ColecaoStringModelo(listener.getColecaoComplemento()));
 		listaComplementos.addMouseListener(mouseListenerInner);
-		textArea.setText(listener.getComplemento());
+		textEditor.setText(listener.getComplemento());
 		this.listener = listener;
 		toolbar.ini(janela);
 		montarLayout();
@@ -55,8 +56,9 @@ public class ComplementoContainer extends Panel {
 	private Panel criarPanelTextArea() {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, toolbarArea);
-		panel.add(BorderLayout.CENTER, new ScrollPane(textArea));
-		textArea.setLineWrap(true);
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+		panel.add(BorderLayout.CENTER, scrollPane);
 		return panel;
 	}
 
@@ -72,8 +74,8 @@ public class ComplementoContainer extends Panel {
 		public void mouseClicked(MouseEvent e) {
 			String sel = listaComplementos.getSelectedValue();
 			if (!Util.isEmpty(sel)) {
-				String string = textArea.getText();
-				textArea.setText(string + " " + sel);
+				String string = textEditor.getText();
+				textEditor.setText(string + " " + sel);
 			}
 		}
 	};
@@ -87,7 +89,7 @@ public class ComplementoContainer extends Panel {
 
 		@Override
 		protected void aplicar() {
-			listener.processarComplemento(textArea.getText());
+			listener.processarComplemento(textEditor.getText());
 			fechar();
 		}
 	}
@@ -101,20 +103,20 @@ public class ComplementoContainer extends Panel {
 
 		@Override
 		protected void limpar() {
-			textArea.setText(Constantes.VAZIO);
+			textEditor.setText(Constantes.VAZIO);
 		}
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
+			Util.getContentTransfered(textEditor, numeros, letras);
 		}
 	}
 

@@ -65,7 +65,7 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextEditor;
 import br.com.persist.mensagem.MensagemDialogo;
 import br.com.persist.mensagem.MensagemFormulario;
 
@@ -399,9 +399,10 @@ public class Util {
 	}
 
 	private static void messageDialog(Component componente, String string) {
-		TextArea textArea = new TextArea(string);
-		textArea.setPreferredSize(new Dimension(500, 300));
-		JOptionPane.showMessageDialog(componente, textArea, Mensagens.getString(Constantes.LABEL_ATENCAO),
+		TextEditor textEditor = new TextEditor();
+		textEditor.setText(string);
+		textEditor.setPreferredSize(new Dimension(500, 300));
+		JOptionPane.showMessageDialog(componente, textEditor, Mensagens.getString(Constantes.LABEL_ATENCAO),
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
