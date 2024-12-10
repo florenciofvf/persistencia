@@ -44,21 +44,21 @@ public class SetValor {
 }
 
 class SetValorDialogo extends AbstratoDialogo {
+	private TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
-	private TextArea textArea = new TextArea();
 	private final transient Valor valor;
 
 	SetValorDialogo(Frame frame, Valor valor) {
 		super(frame, valor.getTitle());
-		textArea.setText(valor.get());
+		textEditor.setText(valor.get());
 		this.valor = valor;
 		init();
 	}
 
 	SetValorDialogo(Dialog dialog, Valor valor) {
 		super(dialog, valor.getTitle());
-		textArea.setText(valor.get());
+		textEditor.setText(valor.get());
 		this.valor = valor;
 		init();
 	}
@@ -70,7 +70,9 @@ class SetValorDialogo extends AbstratoDialogo {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, textArea);
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -82,31 +84,31 @@ class SetValorDialogo extends AbstratoDialogo {
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			textEditor.limpar();
 		}
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea.getTextAreaInner());
+			String string = Util.getString(textEditor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			textArea.requestFocus();
+			textEditor.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+			Util.getContentTransfered(textEditor, numeros, letras);
 		}
 	}
 
 	@Override
 	public void dialogClosingHandler(Dialog dialog) {
-		valor.set(textArea.getText());
+		valor.set(textEditor.getText());
 	}
 
 	@Override
 	public void dispose() {
-		valor.set(textArea.getText());
+		valor.set(textEditor.getText());
 		super.dispose();
 	}
 }

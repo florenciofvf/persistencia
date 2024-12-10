@@ -2,8 +2,8 @@ package br.com.persist.plugins.ouvinte;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
-import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
+import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
@@ -24,16 +24,18 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class OuvinteContainer extends AbstratoContainer {
+	private TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private OuvinteFormulario ouvinteFormulario;
-	private TextArea textArea = new TextArea();
 	private File arquivo;
 
 	public OuvinteContainer(Janela janela, Formulario formulario) {
@@ -52,7 +54,9 @@ public class OuvinteContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, textArea);
+		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	@Override
@@ -64,7 +68,7 @@ public class OuvinteContainer extends AbstratoContainer {
 	public void processar(Formulario formulario, Map<String, Object> args) {
 		String string = (String) args.get(OuvinteEvento.GET_STRING);
 		if (!Util.isEmpty(string)) {
-			textArea.setText(string);
+			textEditor.setText(string);
 			if (toolbar.chkAtivar.isSelected() && ouvinteFormulario != null) {
 				ouvinteFormulario.toFront();
 				ouvinteFormulario.requestFocus();
@@ -117,7 +121,7 @@ public class OuvinteContainer extends AbstratoContainer {
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			textEditor.limpar();
 		}
 
 		@Override
@@ -136,7 +140,7 @@ public class OuvinteContainer extends AbstratoContainer {
 
 		private void salvar(File file) {
 			try (PrintWriter pw = new PrintWriter(file)) {
-				pw.print(textArea.getText());
+				pw.print(textEditor.getText());
 				salvoMensagem();
 			} catch (Exception e) {
 				Util.mensagem(OuvinteContainer.this, e.getMessage());

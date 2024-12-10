@@ -38,12 +38,13 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.marca.XML;
 
 public class LegadoPagina extends Panel {
-	private final TextArea textAreaResult = new TextArea();
+	private final TextEditor textEditorResult = new TextEditor();
 	public final JTextPane textArea = new JTextPane();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -74,7 +75,9 @@ public class LegadoPagina extends Panel {
 
 	private Panel criarPanelResultado() {
 		Panel panel = new Panel();
-		panel.add(BorderLayout.CENTER, textAreaResult);
+		ScrollPane scrollPaneResult = new ScrollPane(textEditorResult);
+		scrollPaneResult.setRowHeaderView(new TextEditorLine(textEditorResult));
+		panel.add(BorderLayout.CENTER, scrollPaneResult);
 		return panel;
 	}
 
@@ -109,7 +112,7 @@ public class LegadoPagina extends Panel {
 		private void executar() {
 			String string = textArea.getText();
 			if (Util.isEmpty(string)) {
-				textAreaResult.setText("Editor vazio.");
+				textEditorResult.setText("Editor vazio.");
 				return;
 			}
 			try {
@@ -120,7 +123,7 @@ public class LegadoPagina extends Panel {
 				for (Legado obj : handler.getLista()) {
 					obj.gerar(pw);
 				}
-				textAreaResult.setText(sw.toString());
+				textEditorResult.setText(sw.toString());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(LegadoConstantes.PAINEL_LEGADO, ex, LegadoPagina.this);
 			}
