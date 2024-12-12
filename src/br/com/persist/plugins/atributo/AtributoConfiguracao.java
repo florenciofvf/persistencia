@@ -65,7 +65,7 @@ public class AtributoConfiguracao extends AbstratoConfiguracao {
 			}
 		});
 		btnDirPadraoSelArquivos.addActionListener(e -> {
-			JFileChooser fileChooser = new JFileChooser();
+			JFileChooser fileChooser = new JFileChooser(txtDirPadraoSelArquivos.getText());
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int i = fileChooser.showOpenDialog(AtributoConfiguracao.this);
 			if (i == JFileChooser.APPROVE_OPTION) {
