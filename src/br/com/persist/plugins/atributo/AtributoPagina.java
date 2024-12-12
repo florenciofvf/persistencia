@@ -527,11 +527,17 @@ abstract class AbstratoPanel extends Panel {
 		return panel;
 	}
 
-	protected class Toolbar extends BarraButton {
+	protected class Toolbar extends BarraButton implements ActionListener {
+		private final TextField txtPesquisa = new TextField(15);
 		private static final long serialVersionUID = 1L;
+		private transient Selecao selecao;
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, ATUALIZAR, COPIAR);
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
+			add(txtPesquisa);
+			add(label);
 		}
 
 		@Override
@@ -566,6 +572,16 @@ abstract class AbstratoPanel extends Panel {
 
 		protected void excluirAtualizar() {
 			removeAction(atualizarAcao);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
+				selecao.selecionar(label);
+			} else {
+				label.limpar();
+			}
 		}
 	}
 
@@ -1939,7 +1955,7 @@ class PainelTest1 extends AbstratoTest {
 
 class PainelTest2 extends AbstratoTest {
 	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
-	private TextField txtArquivo = new TextField(40);
+	private TextField txtArquivo = new TextField(25);
 	private static final long serialVersionUID = 1L;
 	private List<String> linhasArquivo;
 
@@ -2177,7 +2193,7 @@ class PainelTest2 extends AbstratoTest {
 
 class PainelTest3 extends AbstratoTest {
 	private final CheckBox chkSetText = new CheckBox(AtributoMensagens.getString("label.setText"), false);
-	private TextField txtNomeClasse = new TextField(40);
+	private TextField txtNomeClasse = new TextField(25);
 	private static final long serialVersionUID = 1L;
 
 	PainelTest3(AtributoPagina pagina) {
