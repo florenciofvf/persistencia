@@ -2894,12 +2894,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action nomeColunasAcao = actionMenu("label.nome_colunas");
 				private Action tabularAcao = actionMenu("label.tabular");
 				private Action htmlAcao = actionMenu("label.html");
+				private Action pipeAcao = actionMenu("label.pipe");
 				private static final long serialVersionUID = 1L;
 
 				private MenuCopiar() {
 					super("label.copiar", Icones.TABLE2);
 					setToolTipText(Mensagens.getString("label.copiar_tabela"));
-					addMenuItem(htmlAcao);
+					addMenuItem(pipeAcao);
+					addMenuItem(true, htmlAcao);
 					addMenuItem(true, tabularAcao);
 					addMenuItem(true, transferidorAcao);
 					addMenuItem(true, nomeColunasDestacAcao);
@@ -2913,6 +2915,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					nomeColunasAcao.setActionListener(e -> nomeColunas());
 					tabularAcao.setActionListener(e -> processar(1));
 					htmlAcao.setActionListener(e -> processar(2));
+					pipeAcao.setActionListener(e -> processar(3));
 				}
 
 				private List<String> getNomeColunasDestacadas() {
@@ -2950,6 +2953,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.setContentTransfered(transferidor.getTabular());
 						} else if (tipo == 2) {
 							Util.setContentTransfered(transferidor.getHtml());
+						} else if (tipo == 3) {
+							Util.setContentTransfered(transferidor.getPipe());
 						}
 					}
 				}
