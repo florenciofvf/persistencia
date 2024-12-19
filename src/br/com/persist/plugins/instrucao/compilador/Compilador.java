@@ -154,10 +154,17 @@ public class Compilador {
 			contexto.separador(this, new Token(",", Tipo.SEPARADOR));
 			indice++;
 			break;
+		case '/':
+			token = operadorOuComentario();
+			if (!token.string.startsWith("/*")) {
+				contexto.operador(this, token);
+			} else {
+				tokens.add(token.novo(Tipo.COMENTARIO));
+			}
+			break;
 		case '+':
 		case '-':
 		case '*':
-		case '/':
 		case '%':
 		case '^':
 		case '&':
@@ -204,6 +211,44 @@ public class Compilador {
 				contexto.identity(this, ident);
 			}
 		}
+	}
+
+	private Token operadorOuComentario() throws InstrucaoException {
+		char c = string.charAt(indice);
+		int indiceBkp = indice;
+		indice++;
+		if (indice < string.length()) {
+			char d = string.charAt(indice);
+			if (d == '*') {
+				indice++;
+				return tokenComentario(indiceBkp);
+			} else {
+				return new Token(c + "", Tipo.OPERADOR);
+			}
+		} else {
+			return new Token(c + "", Tipo.OPERADOR);
+		}
+	}
+
+	private Token tokenComentario(int indiceBkp) throws InstrucaoException {
+		StringBuilder builder = new StringBuilder("/*");
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			builder.append(c);
+			indice++;
+			int len = builder.length() - 1;
+			int ant = len - 1;
+			if (builder.charAt(ant) == '*' && builder.charAt(len) == '/') {
+				break;
+			}
+		}
+		String str = builder.toString();
+		if (str.startsWith("/*/") || !str.endsWith("*/")) {
+			throwInstrucaoException();
+		}
+		Token token = new Token(str, Tipo.STRING, indiceBkp);
+		token.setIndice2(indice);
+		return token;
 	}
 
 	private Token tokenOperador() throws InstrucaoException {
