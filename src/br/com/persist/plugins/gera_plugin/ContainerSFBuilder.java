@@ -24,18 +24,24 @@ public class ContainerSFBuilder extends Builder {
 	private static final String DOT_THIS = ".this)";
 	private static final String STRING = "String";
 	private static final String LABEL = "LABEL_";
+	private final boolean fichario;
 
-	protected ContainerSFBuilder(Config config) {
+	protected ContainerSFBuilder(Config config, boolean fichario) {
 		super("Container", "extends AbstratoContainer", config);
+		this.fichario = fichario;
 	}
 
 	@Override
 	void templateImport(Arquivo arquivo) {
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.BAIXAR");
-		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO");
+		if (fichario) {
+			arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO");
+		}
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO");
-		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.NOVO");
+		if (fichario) {
+			arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.NOVO");
+		}
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.SALVAR").newLine();
 		arquivo.addImport("java.awt.BorderLayout");
@@ -45,28 +51,36 @@ public class ContainerSFBuilder extends Builder {
 		}
 		arquivo.addImport("java.awt.Window");
 
-		arquivo.addImport("java.awt.event.ActionEvent");
-		arquivo.addImport("java.awt.event.ActionListener");
-		arquivo.addImport("java.util.LinkedHashSet");
-		arquivo.addImport("java.util.Set");
+		if (fichario) {
+			arquivo.addImport("java.awt.event.ActionEvent");
+			arquivo.addImport("java.awt.event.ActionListener");
+			arquivo.addImport("java.util.LinkedHashSet");
+			arquivo.addImport("java.util.Set");
 
-		arquivo.addImport("java.io.File");
-		arquivo.addImport("java.io.IOException");
-		arquivo.addImport("java.util.ArrayList");
-		arquivo.addImport("java.util.List");
-		arquivo.addImport("java.util.concurrent.atomic.AtomicBoolean").newLine();
+			arquivo.addImport("java.io.File");
+			arquivo.addImport("java.io.IOException");
+			arquivo.addImport("java.util.ArrayList");
+			arquivo.addImport("java.util.List");
+			arquivo.addImport("java.util.concurrent.atomic.AtomicBoolean").newLine();
+		}
 		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
-		arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
+		if (fichario) {
+			arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
+		}
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
-		arquivo.addImport("br.com.persist.assistencia.Mensagens");
-		arquivo.addImport("br.com.persist.assistencia.Util");
-		arquivo.addImport("br.com.persist.componente.Action");
+		if (fichario) {
+			arquivo.addImport("br.com.persist.assistencia.Mensagens");
+			arquivo.addImport("br.com.persist.assistencia.Util");
+			arquivo.addImport("br.com.persist.componente.Action");
+		}
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
-		arquivo.addImport("br.com.persist.componente.TextField");
+		if (fichario) {
+			arquivo.addImport("br.com.persist.componente.TextField");
+		}
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
 		arquivo.addImport("br.com.persist.formulario.Formulario").newLine();

@@ -387,7 +387,7 @@ class Aba extends Transferivel {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea);
+			String string = Util.getString(editor);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
 			editor.requestFocus();

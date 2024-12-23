@@ -1,7 +1,6 @@
 package ###package###;
 
 import java.awt.Component;
-import java.awt.Toolkit;
 import java.util.Set;
 
 import javax.swing.JTabbedPane;
@@ -69,7 +68,7 @@ public class ###nameCap###Fichario extends JTabbedPane {
 		###nameCap###Pagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.isEmpty(conteudo)) {
-				pagina.textArea.setText(conteudo);
+				pagina.textEditor.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}
@@ -84,7 +83,7 @@ public class ###nameCap###Fichario extends JTabbedPane {
 			}
 		}
 		if (set.isEmpty()) {
-			Toolkit.getDefaultToolkit().beep();
+			Util.beep();
 		}
 	}
 }
