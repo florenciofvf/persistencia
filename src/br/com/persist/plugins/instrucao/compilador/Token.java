@@ -33,8 +33,8 @@ public class Token {
 	}
 
 	public enum Tipo {
-		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, CONSTANTE,
-		PARAMETRO, COMENTARIO, FUNCAO, TAG
+		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, LISTA,
+		CONSTANTE, PARAMETRO, COMENTARIO, FUNCAO, TAG
 	}
 
 	public Token novo(Tipo tipo) {
@@ -65,6 +65,10 @@ public class Token {
 
 	public boolean isString() {
 		return tipo == Tipo.STRING;
+	}
+
+	public boolean isLista() {
+		return tipo == Tipo.LISTA;
 	}
 
 	public boolean isEspecial() {

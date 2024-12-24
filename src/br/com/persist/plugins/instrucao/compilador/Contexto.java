@@ -4,12 +4,12 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public interface Contexto {
 	/*
-	 * "(", "{", "["
+	 * "(", "{"
 	 */
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException;
 
 	/*
-	 * ")", "}", "]", ";"
+	 * ")", "}", ";"
 	 */
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException;
 
@@ -34,6 +34,11 @@ public interface Contexto {
 	 * Exemplo: 'texto'
 	 */
 	public void string(Compilador compilador, Token token) throws InstrucaoException;
+
+	/*
+	 * Exemplo: [], [cab:cauda]
+	 */
+	public void lista(Compilador compilador, Token token) throws InstrucaoException;
 
 	/*
 	 * Exemplo: 1, 46.9, -7, +7

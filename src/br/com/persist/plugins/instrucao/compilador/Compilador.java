@@ -107,6 +107,17 @@ public class Compilador {
 		}
 	}
 
+	private void avancar() {
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if (c <= ' ') {
+				indice++;
+			} else {
+				break;
+			}
+		}
+	}
+
 	private void normal() {
 		StringBuilder sb = new StringBuilder();
 		int indiceBkp = indice;
@@ -131,7 +142,6 @@ public class Compilador {
 		switch (c) {
 		case '(':
 		case '{':
-		case '[':
 			token = new Token("" + c, Tipo.INICIALIZADOR, indice);
 			contexto.inicializador(this, token);
 			if (c == '{') {
@@ -141,7 +151,6 @@ public class Compilador {
 			break;
 		case ')':
 		case '}':
-		case ']':
 		case ';':
 			token = new Token("" + c, Tipo.FINALIZADOR, indice);
 			contexto.finalizador(this, token);
@@ -187,6 +196,11 @@ public class Compilador {
 			} else {
 				tokens.add(token.novo(Tipo.COMENTARIO));
 			}
+			break;
+		case '[':
+			token = tokenLista();
+			contexto.lista(this, token);
+			tokens.add(token);
 			break;
 		case '0':
 		case '1':
@@ -249,6 +263,73 @@ public class Compilador {
 		Token token = new Token(str, Tipo.STRING, indiceBkp);
 		token.setIndice2(indice);
 		return token;
+	}
+
+	private Token tokenLista() throws InstrucaoException {
+		StringBuilder builder = new StringBuilder();
+		char c = string.charAt(indice);
+		int indiceBkp = indice;
+		builder.append(c);
+		char d = proximoChar();
+		if (d == ']') {
+			builder.append(d);
+			indice++;
+		} else {
+			String antes = getElementoLista(d);
+			builder.append(antes);
+			char e = proximoChar();
+			if (e != ':') {
+				throwInstrucaoException();
+			}
+			char f = proximoChar();
+			String depois = getElementoLista(f);
+			builder.append(depois);
+			char g = proximoChar();
+			if (g != ']') {
+				throwInstrucaoException();
+			}
+			builder.append(g);
+			indice++;
+		}
+		String str = builder.toString();
+		Token token = new Token(str, Tipo.LISTA, indiceBkp);
+		token.setIndice2(indice);
+		return token;
+	}
+
+	private char proximoChar() throws InstrucaoException {
+		indice++;
+		avancar();
+		checarIndice();
+		return string.charAt(indice);
+	}
+
+	private void checarIndice() throws InstrucaoException {
+		if (indice >= string.length()) {
+			throwInstrucaoException();
+		}
+	}
+
+	private void checarChar(char c) throws InstrucaoException {
+		if (!valido1(c)) {
+			throwInstrucaoException();
+		}
+	}
+
+	private String getElementoLista(char c) throws InstrucaoException {
+		checarChar(c);
+		StringBuilder sb = new StringBuilder();
+		sb.append(c);
+		while (indice < string.length()) {
+			c = string.charAt(indice);
+			if (valido1(c)) {
+				sb.append(c);
+			} else {
+				break;
+			}
+			indice++;
+		}
+		return sb.toString();
 	}
 
 	private Token tokenOperador() throws InstrucaoException {
