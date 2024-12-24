@@ -34,6 +34,11 @@ public abstract class AbstratoContexto implements Contexto {
 	}
 
 	@Override
+	public void lista(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.invalidar(token);
+	}
+
+	@Override
 	public void numero(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.invalidar(token);
 	}
