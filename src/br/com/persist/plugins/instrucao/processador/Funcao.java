@@ -112,7 +112,8 @@ public class Funcao {
 
 	private int getIndiceParametro(String nome) throws InstrucaoException {
 		for (int i = 0; i < parametros.size(); i++) {
-			if (parametros.get(i).nome.equals(nome)) {
+			Parametro item = parametros.get(i);
+			if (item.contem(nome)) {
 				return i;
 			}
 		}
@@ -172,12 +173,32 @@ public class Funcao {
 }
 
 class Parametro {
+	final String depois;
+	final String antes;
 	final String nome;
 	Object valor;
 	int indice;
 
 	public Parametro(String nome) {
 		this.nome = nome;
+		int pos = nome.indexOf(':');
+		if (pos != -1) {
+			antes = nome.substring(1, pos);
+			depois = nome.substring(pos + 1, nome.length() - 1);
+		} else {
+			depois = null;
+			antes = null;
+		}
+	}
+
+	public boolean contem(String string) {
+		if (nome.equals(string)) {
+			return true;
+		}
+		if (antes != null && depois != null) {
+			return antes.equals(string) || depois.equals(string);
+		}
+		return false;
 	}
 
 	@Override
