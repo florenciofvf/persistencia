@@ -12,11 +12,6 @@ public class ExpressaoContexto extends Container {
 
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		if ("[".equals(token.getString())) {
-			compilador.setContexto(new ColcheteContexto(true));
-			adicionarImpl(compilador, token, (Container) compilador.getContexto());
-			return;
-		}
 		contexto.inicializador(compilador, token);
 		if (getUltimo() instanceof IdentityContexto) {
 			IdentityContexto ultimo = (IdentityContexto) excluirUltimo();
@@ -45,6 +40,11 @@ public class ExpressaoContexto extends Container {
 	@Override
 	public void string(Compilador compilador, Token token) throws InstrucaoException {
 		adicionarImpl(compilador, token, new StringContexto(token));
+	}
+
+	@Override
+	public void lista(Compilador compilador, Token token) throws InstrucaoException {
+		adicionarImpl(compilador, token, new ListaContexto(token));
 	}
 
 	@Override

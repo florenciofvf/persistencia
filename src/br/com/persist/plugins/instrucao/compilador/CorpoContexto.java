@@ -20,16 +20,6 @@ public class CorpoContexto extends Container {
 	}
 
 	@Override
-	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		if ("[".equals(token.getString())) {
-			compilador.setContexto(new ColcheteContexto(false));
-			adicionarImpl(compilador, token, (Container) compilador.getContexto());
-		} else {
-			compilador.invalidar(token);
-		}
-	}
-
-	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
 		if (isEmpty()) {
