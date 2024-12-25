@@ -8,20 +8,20 @@ import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class ParametroContexto extends Container {
 	public static final String LOAD_PARAM = "load_param";
-	private final String depois;
-	private final String antes;
 	private final String nome;
+	private final String head;
+	private final String tail;
 
 	public ParametroContexto(Token token) {
 		this.nome = token.getString();
 		this.token = token;
 		if (token.isLista()) {
 			int pos = nome.indexOf(':');
-			antes = nome.substring(1, pos);
-			depois = nome.substring(pos + 1, nome.length() - 1);
+			head = nome.substring(1, pos);
+			tail = nome.substring(pos + 1, nome.length() - 1);
 		} else {
-			depois = null;
-			antes = null;
+			head = null;
+			tail = null;
 		}
 	}
 
@@ -33,8 +33,8 @@ public class ParametroContexto extends Container {
 		if (nome.equals(string)) {
 			return true;
 		}
-		if (antes != null && depois != null) {
-			return antes.equals(string) || depois.equals(string);
+		if (head != null && tail != null) {
+			return head.equals(string) || tail.equals(string);
 		}
 		return false;
 	}
