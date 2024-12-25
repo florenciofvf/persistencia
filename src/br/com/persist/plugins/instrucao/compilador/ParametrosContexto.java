@@ -51,13 +51,17 @@ public class ParametrosContexto extends Container {
 	}
 
 	public boolean contem(String string) {
-		for (Container c : componentes) {
-			ParametroContexto p = (ParametroContexto) c;
-			if (p.contem(string)) {
-				return true;
+		return getParametro(string) != null;
+	}
+
+	public ParametroContexto getParametro(String string) {
+		for (Container item : componentes) {
+			ParametroContexto param = (ParametroContexto) item;
+			if (param.contem(string)) {
+				return param;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override

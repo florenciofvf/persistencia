@@ -39,6 +39,14 @@ public class ParametroContexto extends Container {
 		return false;
 	}
 
+	public boolean isHead(String string) {
+		return head != null && head.equals(string);
+	}
+
+	public boolean isTail(String string) {
+		return tail != null && tail.equals(string);
+	}
+
 	@Override
 	public void filtroConstParam(List<Token> coletor) {
 		coletor.add(token.novo(Tipo.PARAMETRO));

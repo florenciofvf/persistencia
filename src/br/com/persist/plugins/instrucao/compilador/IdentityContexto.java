@@ -33,7 +33,7 @@ public class IdentityContexto extends Container {
 
 	@Override
 	public void salvar(PrintWriter pw) throws InstrucaoException {
-		if (ehParametro()) {
+		if (ehParametro(id)) {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
 			tokenIdentity = token.novo(Tipo.PARAMETRO);
 		} else if (ehFuncao()) {
@@ -44,15 +44,6 @@ public class IdentityContexto extends Container {
 			tokenIdentity = token.novo(Tipo.CONSTANTE);
 		}
 		salvarNegativo(pw);
-	}
-
-	private boolean ehParametro() throws InstrucaoException {
-		FuncaoContexto funcao = getFuncao();
-		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_parent", id);
-		}
-		ParametrosContexto parametros = funcao.getParametros();
-		return parametros.contem(id);
 	}
 
 	private boolean ehFuncao() throws InstrucaoException {

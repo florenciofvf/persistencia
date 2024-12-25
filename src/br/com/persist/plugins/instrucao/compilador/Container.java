@@ -102,6 +102,19 @@ public abstract class Container extends AbstratoContexto {
 		return (FuncaoContexto) c;
 	}
 
+	protected boolean ehParametro(String id) throws InstrucaoException {
+		return getParametroContexto(id) != null;
+	}
+
+	protected ParametroContexto getParametroContexto(String id) throws InstrucaoException {
+		FuncaoContexto funcao = getFuncao();
+		if (funcao == null) {
+			throw new InstrucaoException("erro.funcao_parent", id);
+		}
+		ParametrosContexto parametros = funcao.getParametros();
+		return parametros.getParametro(id);
+	}
+
 	public List<Container> getComponentes() {
 		return componentes;
 	}
