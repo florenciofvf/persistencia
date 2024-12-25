@@ -821,7 +821,11 @@ class InstrucaoCor {
 			} else if (token.isConstante()) {
 				set(doc, token, BLUE2);
 			} else if (token.isParametro()) {
-				set(doc, token, GREEN2);
+				if (token.getIndice2() > token.getIndice()) {
+					set2(doc, token, GREEN2);
+				} else {
+					set(doc, token, GREEN2);
+				}
 			} else if (token.isFuncao()) {
 				set(doc, token, MAGENTA);
 			} else if (token.isString()) {
