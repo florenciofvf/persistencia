@@ -270,21 +270,23 @@ public class Compilador {
 		char c = string.charAt(indice);
 		int indiceBkp = indice;
 		builder.append(c);
-		char d = proximoChar();
+		char d = proximoChar(true);
+		indice++;
 		if (d == ']') {
 			builder.append(d);
-			indice++;
 		} else {
 			String antes = getElementoLista(d);
 			builder.append(antes);
-			char e = proximoChar();
+			char e = proximoChar(false);
 			if (e != ':') {
 				throwInstrucaoException();
 			}
-			char f = proximoChar();
+			builder.append(e);
+			char f = proximoChar(true);
+			indice++;
 			String depois = getElementoLista(f);
 			builder.append(depois);
-			char g = proximoChar();
+			char g = proximoChar(false);
 			if (g != ']') {
 				throwInstrucaoException();
 			}
@@ -297,8 +299,10 @@ public class Compilador {
 		return token;
 	}
 
-	private char proximoChar() throws InstrucaoException {
-		indice++;
+	private char proximoChar(boolean inc) throws InstrucaoException {
+		if (inc) {
+			indice++;
+		}
 		avancar();
 		checarIndice();
 		return string.charAt(indice);
