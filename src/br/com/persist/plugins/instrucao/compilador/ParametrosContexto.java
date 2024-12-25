@@ -3,13 +3,13 @@ package br.com.persist.plugins.instrucao.compilador;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ParametrosContexto extends Container {
-	public static final IdentityOuFinalizar IDENTITY_OU_FINALIZAR = new IdentityOuFinalizar();
+	public static final IdentityOuListaOuFinalizar IDENTITY_OU_LISTA_OU_FINALIZAR = new IdentityOuListaOuFinalizar();
 	public static final VirgulaOuFinalizar VIRGULA_OU_FINALIZAR = new VirgulaOuFinalizar();
-	public static final ParametroIdentity PARAMETRO_IDENTITY = new ParametroIdentity();
+	public static final Parametro PARAMETRO = new Parametro();
 	private boolean finalizadorPai;
 
 	public ParametrosContexto() {
-		contexto = IDENTITY_OU_FINALIZAR;
+		contexto = IDENTITY_OU_LISTA_OU_FINALIZAR;
 	}
 
 	public boolean isFinalizadorPai() {
@@ -33,7 +33,7 @@ public class ParametrosContexto extends Container {
 	@Override
 	public void separador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.separador(compilador, token);
-		contexto = PARAMETRO_IDENTITY;
+		contexto = PARAMETRO;
 	}
 
 	@Override
@@ -43,10 +43,17 @@ public class ParametrosContexto extends Container {
 		contexto = VIRGULA_OU_FINALIZAR;
 	}
 
+	@Override
+	public void lista(Compilador compilador, Token token) throws InstrucaoException {
+		contexto.lista(compilador, token);
+		adicionar(new ParametroContexto(token));
+		contexto = VIRGULA_OU_FINALIZAR;
+	}
+
 	public boolean contem(String string) {
 		for (Container c : componentes) {
 			ParametroContexto p = (ParametroContexto) c;
-			if (p.getNome().equals(string)) {
+			if (p.contem(string)) {
 				return true;
 			}
 		}
@@ -59,7 +66,7 @@ public class ParametrosContexto extends Container {
 	}
 }
 
-class IdentityOuFinalizar extends AbstratoContexto {
+class IdentityOuListaOuFinalizar extends AbstratoContexto {
 	Token token;
 
 	@Override
@@ -72,6 +79,15 @@ class IdentityOuFinalizar extends AbstratoContexto {
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		if (token.getString().indexOf(".") != -1) {
+			compilador.invalidar(token);
+		} else {
+			this.token = token;
+		}
+	}
+
+	@Override
+	public void lista(Compilador compilador, Token token) throws InstrucaoException {
+		if (token.getString().indexOf(":") == -1) {
 			compilador.invalidar(token);
 		} else {
 			this.token = token;
@@ -93,12 +109,21 @@ class VirgulaOuFinalizar extends AbstratoContexto {
 	}
 }
 
-class ParametroIdentity extends AbstratoContexto {
+class Parametro extends AbstratoContexto {
 	Token token;
 
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		if (token.getString().indexOf(".") != -1) {
+			compilador.invalidar(token);
+		} else {
+			this.token = token;
+		}
+	}
+
+	@Override
+	public void lista(Compilador compilador, Token token) throws InstrucaoException {
+		if (token.getString().indexOf(":") == -1) {
 			compilador.invalidar(token);
 		} else {
 			this.token = token;
