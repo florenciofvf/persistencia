@@ -31,8 +31,16 @@ public class ListaContexto extends Container {
 		coletor.add(tokenIdentity);
 	}
 
+	public static boolean ehListaVazia(String string) {
+		return string != null && string.length() < 3;
+	}
+
 	@Override
 	public void salvar(PrintWriter pw) throws InstrucaoException {
+		if (ehListaVazia(id)) {
+			print(pw, InvocacaoContexto.INVOKE_EXP, "ilist.create");
+			return;
+		}
 		if (ehParametro()) {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
 			tokenIdentity = token.novo(Tipo.PARAMETRO);
