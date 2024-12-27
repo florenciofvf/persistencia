@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
@@ -515,7 +516,9 @@ public class Compilador {
 	}
 
 	private boolean reservado(String s) {
-		return "const".equals(s) || "function".equals(s) || "function_native".equals(s) || "if".equals(s)
-				|| "while".equals(s) || "elseif".equals(s) || "else".equals(s) || "return".equals(s);
+		return InstrucaoConstantes.CONST.equals(s) || InstrucaoConstantes.FUNCTION.equals(s)
+				|| InstrucaoConstantes.FUNCTION_NATIVE.equals(s) || InstrucaoConstantes.IF.equals(s)
+				|| InstrucaoConstantes.WHILE.equals(s) || InstrucaoConstantes.ELSEIF.equals(s)
+				|| InstrucaoConstantes.ELSE.equals(s) || InstrucaoConstantes.RETURN.equals(s);
 	}
 }
