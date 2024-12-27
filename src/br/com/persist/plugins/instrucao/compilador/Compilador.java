@@ -16,7 +16,7 @@ import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class Compilador {
-	private final List<Token> tokens;
+	final List<Token> tokens;
 	private String string;
 	private int indice;
 	Contexto contexto;

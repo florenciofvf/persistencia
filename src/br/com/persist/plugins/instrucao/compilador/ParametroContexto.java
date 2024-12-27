@@ -1,10 +1,8 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
-import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class ParametroContexto extends Container {
 	public static final String LOAD_PARAM = "load_param";
@@ -45,11 +43,6 @@ public class ParametroContexto extends Container {
 
 	public boolean isTail(String string) {
 		return tail != null && tail.equals(string);
-	}
-
-	@Override
-	public void filtroConstParam(List<Token> coletor) {
-		coletor.add(token.novo(Tipo.PARAMETRO));
 	}
 
 	@Override

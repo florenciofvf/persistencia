@@ -1,6 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class ParametrosContexto extends Container {
 	public static final IdentityOuListaOuFinalizar IDENTITY_OU_LISTA_OU_FINALIZAR = new IdentityOuListaOuFinalizar();
@@ -40,6 +41,7 @@ public class ParametrosContexto extends Container {
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.identity(compilador, token);
 		adicionar(new ParametroContexto(token));
+		compilador.tokens.add(token.novo(Tipo.PARAMETRO));
 		contexto = VIRGULA_OU_FINALIZAR;
 	}
 
