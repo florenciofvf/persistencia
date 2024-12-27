@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class CorpoContexto extends Container {
@@ -35,16 +36,16 @@ public class CorpoContexto extends Container {
 	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.reservado(compilador, token);
-		if ("const".equals(token.getString())) {
+		if (InstrucaoConstantes.CONST.equals(token.getString())) {
 			compilador.setContexto(new ConstanteContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());
-		} else if ("return".equals(token.getString())) {
+		} else if (InstrucaoConstantes.RETURN.equals(token.getString())) {
 			compilador.setContexto(new RetornoContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());
-		} else if ("if".equals(token.getString())) {
+		} else if (InstrucaoConstantes.IF.equals(token.getString())) {
 			compilador.setContexto(new IFContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());
-		} else if ("while".equals(token.getString())) {
+		} else if (InstrucaoConstantes.WHILE.equals(token.getString())) {
 			compilador.setContexto(new WhileContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());
 		} else {
@@ -106,7 +107,8 @@ public class CorpoContexto extends Container {
 }
 
 class ReservadoOuIdentityOuFinalizar extends AbstratoContexto {
-	private final String[] strings = { "const", "return", "if", "while" };
+	private final String[] strings = { InstrucaoConstantes.CONST, InstrucaoConstantes.RETURN, InstrucaoConstantes.IF,
+			InstrucaoConstantes.WHILE };
 	Token token;
 
 	@Override
