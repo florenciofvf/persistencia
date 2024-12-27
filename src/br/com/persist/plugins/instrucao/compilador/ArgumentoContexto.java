@@ -4,11 +4,10 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
 
-public class ArgumentoContexto extends Container {
+public class ArgumentoContexto extends ListaMapaContexto {
 	private final IdentityContexto identity;
 
 	public ArgumentoContexto(IdentityContexto identity) {
@@ -48,52 +47,7 @@ public class ArgumentoContexto extends Container {
 	}
 
 	@Override
-	public void string(Compilador compilador, Token token) throws InstrucaoException {
-		adicionarImpl(compilador, token, new StringContexto(token));
-	}
-
-	@Override
-	public void lista(Compilador compilador, Token token) throws InstrucaoException {
-		adicionarImpl(compilador, token, new ListaContexto(token));
-	}
-
-	@Override
-	public void numero(Compilador compilador, Token token) throws InstrucaoException {
-		adicionarImpl(compilador, token, new NumeroContexto(token));
-	}
-
-	@Override
-	public void identity(Compilador compilador, Token token) throws InstrucaoException {
-		ParametroContexto param = getParametroContexto(token.getString());
-		if (param == null) {
-			adicionarImpl(compilador, token, new IdentityContexto(token));
-		} else {
-			processar(compilador, param, token);
-		}
-	}
-
-	private void processar(Compilador compilador, ParametroContexto param, Token token) throws InstrucaoException {
-		IdentityContexto id = new IdentityContexto(param.getToken());
-		if (param.isHead(token.getString())) {
-			ArgumentoContexto invocar = criarInvocacao("ilist.head");
-			invocar.adicionar(id);
-			adicionarImpl(compilador, token, invocar);
-		} else if (param.isTail(token.getString())) {
-			ArgumentoContexto invocar = criarInvocacao("ilist.tail");
-			invocar.adicionar(id);
-			adicionarImpl(compilador, token, invocar);
-		} else {
-			adicionarImpl(compilador, token, id);
-		}
-	}
-
-	private ArgumentoContexto criarInvocacao(String string) {
-		Token token = new Token(string, Tipo.IDENTITY, -1);
-		IdentityContexto identit = new IdentityContexto(token);
-		return new ArgumentoContexto(identit);
-	}
-
-	public void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
+	protected void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
 		Container ult = getUltimo();
 		if (ult != null && !(ult instanceof SeparadorContexto) && !(c instanceof SeparadorContexto)) {
 			compilador.invalidar(token);
