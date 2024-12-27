@@ -16,7 +16,12 @@ public abstract class ListaMapaContexto extends Container {
 
 	@Override
 	public void lista(Compilador compilador, Token token) throws InstrucaoException {
-		adicionarImpl(compilador, token, new ListaContexto(token));
+		ParametroContexto param = getParametroContexto(token.getString());
+		if (param != null || ListaContexto.ehListaVazia(token.getString())) {
+			adicionarImpl(compilador, token, new ListaContexto(token));
+		} else {
+			compilador.invalidar(token);
+		}
 	}
 
 	@Override
