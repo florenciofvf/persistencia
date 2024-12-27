@@ -10,7 +10,6 @@ import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 public class ConstanteContexto extends Container {
 	public static final String LOAD_CONST = "load_const";
 	private final ConstanteIdentityContexto identity;
-	public static final String CONST = "const";
 	private boolean faseIdentity;
 
 	public ConstanteContexto() {
@@ -84,7 +83,7 @@ public class ConstanteContexto extends Container {
 			pw.println(InstrucaoConstantes.PREFIXO_CONSTANTE + identity);
 		}
 		getExpressao().salvar(pw);
-		print(pw, CONST, identity.toString());
+		print(pw, InstrucaoConstantes.CONST, identity.toString());
 	}
 
 	@Override

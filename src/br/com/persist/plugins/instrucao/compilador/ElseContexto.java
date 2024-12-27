@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ElseContexto extends Container {
@@ -34,6 +35,6 @@ public class ElseContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "else";
+		return InstrucaoConstantes.ELSE;
 	}
 }

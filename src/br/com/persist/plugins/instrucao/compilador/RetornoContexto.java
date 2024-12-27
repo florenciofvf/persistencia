@@ -2,11 +2,11 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class RetornoContexto extends Container {
 	public static final AbreParenteseOuFinalizar PARENTESE_OU_FINALIZAR = new AbreParenteseOuFinalizar();
-	public static final String RETURN = "return";
 
 	public RetornoContexto() {
 		adicionar(new ExpressaoContexto());
@@ -48,7 +48,7 @@ public class RetornoContexto extends Container {
 	@Override
 	public void salvar(PrintWriter pw) throws InstrucaoException {
 		super.salvar(pw);
-		print(pw, RETURN);
+		print(pw, InstrucaoConstantes.RETURN);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class IFContexto extends Container {
@@ -54,10 +55,10 @@ public class IFContexto extends Container {
 	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.reservado(compilador, token);
-		if ("elseif".equals(token.getString())) {
+		if (InstrucaoConstantes.ELSEIF.equals(token.getString())) {
 			compilador.setContexto(new ElseIFContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());
-		} else if ("else".equals(token.getString())) {
+		} else if (InstrucaoConstantes.ELSE.equals(token.getString())) {
 			compilador.setContexto(new ElseContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());
 		} else {
@@ -133,7 +134,7 @@ public class IFContexto extends Container {
 }
 
 class ReservadoOuFinalizar extends AbstratoContexto {
-	private final String[] strings = { "elseif", "else" };
+	private final String[] strings = { InstrucaoConstantes.ELSEIF, InstrucaoConstantes.ELSE };
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {

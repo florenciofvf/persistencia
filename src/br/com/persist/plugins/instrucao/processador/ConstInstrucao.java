@@ -1,11 +1,11 @@
 package br.com.persist.plugins.instrucao.processador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.ConstanteContexto;
 
 public class ConstInstrucao extends Instrucao {
 	public ConstInstrucao() {
-		super(ConstanteContexto.CONST);
+		super(InstrucaoConstantes.CONST);
 	}
 
 	@Override

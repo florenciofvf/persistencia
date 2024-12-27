@@ -1,11 +1,11 @@
 package br.com.persist.plugins.instrucao.processador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.RetornoContexto;
 
 public class RetornoInstrucao extends Instrucao {
 	public RetornoInstrucao() {
-		super(RetornoContexto.RETURN);
+		super(InstrucaoConstantes.RETURN);
 	}
 
 	@Override

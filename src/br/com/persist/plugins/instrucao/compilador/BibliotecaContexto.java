@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
@@ -19,13 +20,13 @@ public class BibliotecaContexto extends Container {
 
 	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
-		if ("function".equals(token.getString())) {
+		if (InstrucaoConstantes.FUNCTION.equals(token.getString())) {
 			compilador.setContexto(new FuncaoContexto());
 			adicionar((Container) compilador.getContexto());
-		} else if ("function_native".equals(token.getString())) {
+		} else if (InstrucaoConstantes.FUNCTION_NATIVE.equals(token.getString())) {
 			compilador.setContexto(new FuncaoNativaContexto());
 			adicionar((Container) compilador.getContexto());
-		} else if ("const".equals(token.getString())) {
+		} else if (InstrucaoConstantes.CONST.equals(token.getString())) {
 			compilador.setContexto(new ConstanteContexto());
 			adicionar((Container) compilador.getContexto());
 		} else {

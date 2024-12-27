@@ -8,13 +8,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.logging.Logger;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 
 public class GeraBiblio {
 	private static final String PACOTE = "br_com_persist_plugins_instrucao_biblionativo_";
-	private static final String PREFIXO = "function_native";
+	private static final String PREFIXO = InstrucaoConstantes.FUNCTION_NATIVE;
 	private static final String ROOT = "instrucao/";
 
 	public static void main(String[] args) throws Exception {
