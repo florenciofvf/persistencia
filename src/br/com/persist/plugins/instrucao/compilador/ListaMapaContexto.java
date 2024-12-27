@@ -25,6 +25,52 @@ public abstract class ListaMapaContexto extends Container {
 	}
 
 	@Override
+	public void mapa(Compilador compilador, Token token) throws InstrucaoException {
+		String string = token.getString();
+		int pos = string.indexOf('.');
+		String head = string.substring(1, pos);
+		String tail = string.substring(pos + 1, string.length() - 1);
+		ParametroContexto param = getParametroContexto(head);
+		if (param != null) {
+			if (param.isTail(head)) {
+				compilador.invalidar(token);
+			} else if (param.isHead(head)) {
+				adicionarListMap(compilador, token, param, tail);
+			} else {
+				adicionarMap(compilador, token, param, tail);
+			}
+		} else {
+			adicionarMap(compilador, token, param, tail);
+		}
+	}
+
+	private void adicionarListMap(Compilador compilador, Token token, ParametroContexto param, String chave)
+			throws InstrucaoException {
+		ArgumentoContexto listHead = criarInvocacao("ilist.head");
+		listHead.adicionar(criarIdentity(param));
+		ArgumentoContexto mapGet = criarInvocacao("imap.get");
+		mapGet.adicionar(listHead);
+		mapGet.adicionar(new StringContexto(tokenString(chave)));
+		adicionarImpl(compilador, token, mapGet);
+	}
+
+	private void adicionarMap(Compilador compilador, Token token, ParametroContexto param, String chave)
+			throws InstrucaoException {
+		ArgumentoContexto mapGet = criarInvocacao("imap.get");
+		mapGet.adicionar(criarIdentity(param));
+		mapGet.adicionar(new StringContexto(tokenString(chave)));
+		adicionarImpl(compilador, token, mapGet);
+	}
+
+	private Token tokenString(String string) {
+		return new Token(string, Tipo.STRING, -1);
+	}
+
+	private IdentityContexto criarIdentity(ParametroContexto param) {
+		return new IdentityContexto(param.getToken());
+	}
+
+	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		ParametroContexto param = getParametroContexto(token.getString());
 		if (param == null) {
