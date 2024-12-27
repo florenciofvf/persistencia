@@ -4,6 +4,10 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public abstract class ListaMapaContexto extends Container {
+	private static final String ILIST_HEAD = "ilist.head";
+	private static final String ILIST_TAIL = "ilist.tail";
+	private static final String IMAP_GET = "imap.get";
+
 	@Override
 	public void string(Compilador compilador, Token token) throws InstrucaoException {
 		adicionarImpl(compilador, token, new StringContexto(token));
@@ -40,15 +44,15 @@ public abstract class ListaMapaContexto extends Container {
 				adicionarMap(compilador, token, param, tail);
 			}
 		} else {
-			adicionarMap(compilador, token, param, tail);
+			adicionarConst(compilador, token, head, tail);
 		}
 	}
 
 	private void adicionarListMap(Compilador compilador, Token token, ParametroContexto param, String chave)
 			throws InstrucaoException {
-		ArgumentoContexto listHead = criarInvocacao("ilist.head");
+		ArgumentoContexto listHead = criarInvocacao(ILIST_HEAD);
 		listHead.adicionar(criarIdentity(param));
-		ArgumentoContexto mapGet = criarInvocacao("imap.get");
+		ArgumentoContexto mapGet = criarInvocacao(IMAP_GET);
 		mapGet.adicionar(listHead);
 		mapGet.adicionar(new StringContexto(tokenString(chave)));
 		adicionarImpl(compilador, token, mapGet);
@@ -56,8 +60,16 @@ public abstract class ListaMapaContexto extends Container {
 
 	private void adicionarMap(Compilador compilador, Token token, ParametroContexto param, String chave)
 			throws InstrucaoException {
-		ArgumentoContexto mapGet = criarInvocacao("imap.get");
+		ArgumentoContexto mapGet = criarInvocacao(IMAP_GET);
 		mapGet.adicionar(criarIdentity(param));
+		mapGet.adicionar(new StringContexto(tokenString(chave)));
+		adicionarImpl(compilador, token, mapGet);
+	}
+
+	private void adicionarConst(Compilador compilador, Token token, String head, String chave)
+			throws InstrucaoException {
+		ArgumentoContexto mapGet = criarInvocacao(IMAP_GET);
+		mapGet.adicionar(criarIdentity(tokenString(head)));
 		mapGet.adicionar(new StringContexto(tokenString(chave)));
 		adicionarImpl(compilador, token, mapGet);
 	}
@@ -68,6 +80,10 @@ public abstract class ListaMapaContexto extends Container {
 
 	private IdentityContexto criarIdentity(ParametroContexto param) {
 		return new IdentityContexto(param.getToken());
+	}
+
+	private IdentityContexto criarIdentity(Token token) {
+		return new IdentityContexto(token);
 	}
 
 	@Override
@@ -83,11 +99,11 @@ public abstract class ListaMapaContexto extends Container {
 	private void processar(Compilador compilador, ParametroContexto param, Token token) throws InstrucaoException {
 		IdentityContexto id = new IdentityContexto(param.getToken());
 		if (param.isHead(token.getString())) {
-			ArgumentoContexto invocar = criarInvocacao("ilist.head");
+			ArgumentoContexto invocar = criarInvocacao(ILIST_HEAD);
 			invocar.adicionar(id);
 			adicionarImpl(compilador, token, invocar);
 		} else if (param.isTail(token.getString())) {
-			ArgumentoContexto invocar = criarInvocacao("ilist.tail");
+			ArgumentoContexto invocar = criarInvocacao(ILIST_TAIL);
 			invocar.adicionar(id);
 			adicionarImpl(compilador, token, invocar);
 		} else {
