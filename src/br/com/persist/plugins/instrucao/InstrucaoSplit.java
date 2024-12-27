@@ -801,6 +801,7 @@ class AnotacaoHandler extends XMLHandler {
 class InstrucaoCor {
 	private static final MutableAttributeSet MAGENTA = new SimpleAttributeSet();
 	private static final MutableAttributeSet GREEN2 = new SimpleAttributeSet();
+	private static final MutableAttributeSet GREEN3 = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE2 = new SimpleAttributeSet();
 	private static final MutableAttributeSet GRAY = new SimpleAttributeSet();
 	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
@@ -819,8 +820,10 @@ class InstrucaoCor {
 				set(doc, token, RED);
 			} else if (token.isConstante()) {
 				set(doc, token, BLUE2);
-			} else if (token.isParametro()) {
+			} else if (token.isParametro() || token.isLista()) {
 				set(doc, token, GREEN2);
+			} else if (token.isMapa()) {
+				set(doc, token, GREEN3);
 			} else if (token.isFuncao()) {
 				set(doc, token, MAGENTA);
 			} else if (token.isString()) {
@@ -851,6 +854,7 @@ class InstrucaoCor {
 		StyleConstants.setForeground(GRAY, new Color(192, 192, 192));
 		StyleConstants.setBackground(TAG, new Color(225, 225, 225));
 		StyleConstants.setForeground(GREEN2, new Color(0, 125, 0));
+		StyleConstants.setForeground(GREEN3, new Color(0, 165, 0));
 		StyleConstants.setForeground(BLUE2, new Color(0, 0, 125));
 		StyleConstants.setForeground(RED, new Color(130, 0, 83));
 		StyleConstants.setForeground(BLUE, new Color(0, 0, 255));
@@ -858,6 +862,7 @@ class InstrucaoCor {
 		StyleConstants.setForeground(MAGENTA, Color.MAGENTA);
 		StyleConstants.setBold(MAGENTA, true);
 		StyleConstants.setBold(GREEN2, true);
+		StyleConstants.setBold(GREEN3, true);
 		StyleConstants.setBold(BLUE2, true);
 		StyleConstants.setBold(GRAY, true);
 		StyleConstants.setBold(BLUE, true);
