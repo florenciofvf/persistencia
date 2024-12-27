@@ -1,13 +1,10 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class ListaContexto extends Container {
-	private Token tokenIdentity;
 	private final String id;
 
 	public ListaContexto(Token token) {
@@ -25,11 +22,6 @@ public class ListaContexto extends Container {
 		indexarNegativo(indexador);
 	}
 
-	@Override
-	public void filtroConstParam(List<Token> coletor) {
-		coletor.add(tokenIdentity);
-	}
-
 	public static boolean ehListaVazia(String string) {
 		return string != null && string.length() < 3;
 	}
@@ -41,7 +33,6 @@ public class ListaContexto extends Container {
 		} else {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
 		}
-		tokenIdentity = token.novo(Tipo.PARAMETRO);
 	}
 
 	@Override

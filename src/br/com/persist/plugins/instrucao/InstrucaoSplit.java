@@ -573,7 +573,6 @@ class Aba extends Transferivel {
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
 				if (resp) {
 					List<Token> tokens = new ArrayList<>(compilador.getTokens());
-					biblio.filtroConstParam(tokens);
 					InstrucaoCor.processar(editor.getStyledDocument(), tokens);
 				}
 			} catch (IOException | InstrucaoException ex) {
@@ -821,17 +820,13 @@ class InstrucaoCor {
 			} else if (token.isConstante()) {
 				set(doc, token, BLUE2);
 			} else if (token.isParametro()) {
-				if (token.getIndice2() > token.getIndice()) {
-					set2(doc, token, GREEN2);
-				} else {
-					set(doc, token, GREEN2);
-				}
+				set(doc, token, GREEN2);
 			} else if (token.isFuncao()) {
 				set(doc, token, MAGENTA);
 			} else if (token.isString()) {
-				set2(doc, token, BLUE);
+				set(doc, token, BLUE);
 			} else if (token.isComentario()) {
-				set2(doc, token, GRAY);
+				set(doc, token, GRAY);
 			} else if (token.isEspecial()) {
 				set(doc, token, BOLD);
 			} else if (token.isNumero()) {
@@ -841,11 +836,11 @@ class InstrucaoCor {
 	}
 
 	static void set(StyledDocument doc, Token token, MutableAttributeSet att) {
-		doc.setCharacterAttributes(token.getIndice(), token.getString().length(), att, true);
-	}
-
-	static void set2(StyledDocument doc, Token token, MutableAttributeSet att) {
-		doc.setCharacterAttributes(token.getIndice(), token.getIndice2() - token.getIndice(), att, true);
+		if (token.getIndice2() > token.getIndice()) {
+			doc.setCharacterAttributes(token.getIndice(), token.getIndice2() - token.getIndice(), att, true);
+		} else {
+			doc.setCharacterAttributes(token.getIndice(), token.getString().length(), att, true);
+		}
 	}
 
 	static void clearAttr(StyledDocument doc) {

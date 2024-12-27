@@ -195,12 +195,6 @@ public abstract class Container extends AbstratoContexto {
 		}
 	}
 
-	public void filtroConstParam(List<Token> coletor) {
-		for (Container c : componentes) {
-			c.filtroConstParam(coletor);
-		}
-	}
-
 	public void estruturar() {
 		estruturarImpl();
 		for (Container c : componentes) {
