@@ -33,7 +33,7 @@ public class Token {
 	}
 
 	public enum Tipo {
-		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, LISTA,
+		INICIALIZADOR, FINALIZADOR, SEPARADOR, RESERVADO, FLUTUANTE, OPERADOR, IDENTITY, INTEIRO, STRING, LISTA, MAPA,
 		CONSTANTE, PARAMETRO, COMENTARIO, FUNCAO, TAG
 	}
 
@@ -69,6 +69,10 @@ public class Token {
 
 	public boolean isLista() {
 		return tipo == Tipo.LISTA;
+	}
+
+	public boolean isMapa() {
+		return tipo == Tipo.MAPA;
 	}
 
 	public boolean isEspecial() {

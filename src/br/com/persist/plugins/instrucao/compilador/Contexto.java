@@ -41,6 +41,11 @@ public interface Contexto {
 	public void lista(Compilador compilador, Token token) throws InstrucaoException;
 
 	/*
+	 * Exemplo: [map.chave], [obj.atributo]
+	 */
+	public void mapa(Compilador compilador, Token token) throws InstrucaoException;
+
+	/*
 	 * Exemplo: 1, 46.9, -7, +7
 	 */
 	public void numero(Compilador compilador, Token token) throws InstrucaoException;

@@ -166,11 +166,7 @@ public class Compilador {
 			break;
 		case '/':
 			token = operadorOuComentario();
-			if (!token.string.startsWith("/*")) {
-				contexto.operador(this, token);
-			} else {
-				tokens.add(token.novo(Tipo.COMENTARIO));
-			}
+			processarOperadorOuComentario(token);
 			break;
 		case '+':
 		case '-':
@@ -191,17 +187,11 @@ public class Compilador {
 			break;
 		case '\'':
 			token = tokenString();
-			if (!token.string.startsWith(":coment")) {
-				contexto.string(this, token);
-				tokens.add(token);
-			} else {
-				tokens.add(token.novo(Tipo.COMENTARIO));
-			}
+			processarStringOuComentario(token);
 			break;
 		case '[':
-			token = tokenLista();
-			contexto.lista(this, token);
-			tokens.add(token);
+			token = tokenListaOuMapa();
+			processarListaOuMapa(token);
 			break;
 		case '0':
 		case '1':
@@ -219,13 +209,43 @@ public class Compilador {
 			break;
 		default:
 			Token ident = tokenIdentity();
-			if (ident.isReservado()) {
-				contexto.reservado(this, ident);
-				tokens.add(ident);
-			} else {
-				contexto.identity(this, ident);
-			}
+			processarReservadoOuIdentity(ident);
 		}
+	}
+
+	private void processarOperadorOuComentario(Token token) throws InstrucaoException {
+		if (!token.string.startsWith("/*")) {
+			contexto.operador(this, token);
+		} else {
+			tokens.add(token.novo(Tipo.COMENTARIO));
+		}
+	}
+
+	private void processarStringOuComentario(Token token) throws InstrucaoException {
+		if (!token.string.startsWith(":coment")) {
+			contexto.string(this, token);
+			tokens.add(token);
+		} else {
+			tokens.add(token.novo(Tipo.COMENTARIO));
+		}
+	}
+
+	private void processarReservadoOuIdentity(Token ident) throws InstrucaoException {
+		if (ident.isReservado()) {
+			contexto.reservado(this, ident);
+			tokens.add(ident);
+		} else {
+			contexto.identity(this, ident);
+		}
+	}
+
+	private void processarListaOuMapa(Token token) throws InstrucaoException {
+		if (token.isLista()) {
+			contexto.lista(this, token);
+		} else {
+			contexto.mapa(this, token);
+		}
+		tokens.add(token);
 	}
 
 	private Token operadorOuComentario() throws InstrucaoException {
@@ -266,22 +286,25 @@ public class Compilador {
 		return token;
 	}
 
-	private Token tokenLista() throws InstrucaoException {
+	private Token tokenListaOuMapa() throws InstrucaoException {
 		StringBuilder builder = new StringBuilder();
 		char c = string.charAt(indice);
 		int indiceBkp = indice;
 		builder.append(c);
 		char d = proximoChar(true);
 		indice++;
+		Tipo tipo = null;
 		if (d == ']') {
 			builder.append(d);
+			tipo = Tipo.LISTA;
 		} else {
 			String antes = getElementoLista(d);
 			builder.append(antes);
 			char e = proximoChar(false);
-			if (e != ':') {
+			if (e != ':' && e != '.') {
 				throwInstrucaoException();
 			}
+			tipo = e == ':' ? Tipo.LISTA : Tipo.MAPA;
 			builder.append(e);
 			char f = proximoChar(true);
 			indice++;
@@ -295,7 +318,7 @@ public class Compilador {
 			indice++;
 		}
 		String str = builder.toString();
-		Token token = new Token(str, Tipo.LISTA, indiceBkp);
+		Token token = new Token(str, tipo, indiceBkp);
 		token.setIndice2(indice);
 		return token;
 	}
