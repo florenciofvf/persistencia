@@ -13,14 +13,14 @@ public class IDB {
 	private IDB() {
 	}
 
-	@Biblio
+	@Biblio(1)
 	public static Connection getConnection(Object driver, Object url, Object usuario, Object senha)
 			throws ClassNotFoundException, SQLException {
 		Class.forName((String) driver);
 		return DriverManager.getConnection((String) url, (String) usuario, (String) senha);
 	}
 
-	@Biblio
+	@Biblio(2)
 	public static void closeConnection(Object conexao) throws SQLException {
 		Connection connection = (Connection) conexao;
 		if (valido(connection)) {
@@ -32,7 +32,7 @@ public class IDB {
 		return connection != null && connection.isValid(1000) && !connection.isClosed();
 	}
 
-	@Biblio
+	@Biblio(0)
 	public static Lista select(Object conexao, Object consulta) throws SQLException {
 		Lista lista = new Lista();
 		Connection connection = (Connection) conexao;
