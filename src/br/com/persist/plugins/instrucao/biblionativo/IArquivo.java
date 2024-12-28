@@ -15,7 +15,7 @@ public class IArquivo {
 	private IArquivo() {
 	}
 
-	@Biblio
+	@Biblio(3)
 	public static Arquivo ler(Object absoluto) throws IOException {
 		String arquivo = absoluto.toString();
 		checarAbsoluto(arquivo);
@@ -49,13 +49,13 @@ public class IArquivo {
 		return null;
 	}
 
-	@Biblio
+	@Biblio(1)
 	public static Lista getLista(Object arquivo) {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		return entityArquivo.getLista();
 	}
 
-	@Biblio
+	@Biblio(2)
 	public static void salvar(Object arquivo, Object charset)
 			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
@@ -64,7 +64,7 @@ public class IArquivo {
 		pw.close();
 	}
 
-	@Biblio
+	@Biblio(4)
 	public static void salvarLinhas(Object absoluto, Object lista, Object charset)
 			throws FileNotFoundException, UnsupportedEncodingException, IllegalAccessException {
 		Arquivo arquivo = new Arquivo(absoluto.toString(), (Lista) lista);
@@ -89,7 +89,7 @@ public class IArquivo {
 		}
 	}
 
-	@Biblio
+	@Biblio(0)
 	public static String copiar(Object absolutoOrigem, Object absolutoDestino) throws IOException {
 		if (absolutoOrigem == null) {
 			return "ORIGEM NULL";
@@ -115,7 +115,7 @@ public class IArquivo {
 		}
 	}
 
-	@Biblio
+	@Biblio(5)
 	public static BigInteger existe(Object absoluto) {
 		if (absoluto == null) {
 			return IUtil.FALSE;
@@ -124,7 +124,7 @@ public class IArquivo {
 		return file.exists() ? IUtil.TRUE : IUtil.FALSE;
 	}
 
-	@Biblio
+	@Biblio(6)
 	public static String separador() {
 		return File.separator;
 	}

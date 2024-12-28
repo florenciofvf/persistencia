@@ -43,7 +43,7 @@ public class GeraBiblio {
 		for (Method m : methods) {
 			Biblio biblio = getBiblio(m);
 			if (biblio != null) {
-				itens.add(new Item(biblio.ordem(), m));
+				itens.add(new Item(biblio.value(), m));
 			}
 		}
 		itens.sort((o1, o2) -> o1.ordem - o2.ordem);
