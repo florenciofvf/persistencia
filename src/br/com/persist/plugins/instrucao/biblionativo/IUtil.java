@@ -9,27 +9,27 @@ public class IUtil {
 	private IUtil() {
 	}
 
-	@Biblio
+	@Biblio(1)
 	public static BigInteger getFalse() {
 		return FALSE;
 	}
 
-	@Biblio
+	@Biblio(2)
 	public static BigInteger getTrue() {
 		return TRUE;
 	}
 
-	@Biblio
+	@Biblio(5)
 	public static BigInteger isNull(Object object) {
 		return object == null ? TRUE : FALSE;
 	}
 
-	@Biblio
+	@Biblio(3)
 	public static BigInteger isNotNull(Object object) {
 		return object != null ? TRUE : FALSE;
 	}
 
-	@Biblio
+	@Biblio(4)
 	public static String toString(Object object) {
 		return object == null ? "" : object.toString();
 	}

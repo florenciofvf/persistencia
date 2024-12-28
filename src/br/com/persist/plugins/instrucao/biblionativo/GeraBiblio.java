@@ -18,7 +18,7 @@ import br.com.persist.plugins.instrucao.compilador.Compilador;
 public class GeraBiblio {
 	private static final String PACOTE = "br_com_persist_plugins_instrucao_biblionativo_";
 	private static final String PREFIXO = InstrucaoConstantes.DEFUN_NATIVE;
-	private static final String ROOT = "instrucao" + File.pathSeparator;
+	private static final String ROOT = "instrucao" + File.separator;
 
 	public static void main(String[] args) throws Exception {
 		Class<?>[] classes = { IArquivo.class, IClass.class, IDB.class, ILinha.class, ILinhas.class, IList.class,

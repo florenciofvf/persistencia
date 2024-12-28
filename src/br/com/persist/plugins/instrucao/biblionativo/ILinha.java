@@ -4,19 +4,19 @@ public class ILinha {
 	private ILinha() {
 	}
 
-	@Biblio
+	@Biblio(4)
 	public static String getString(Object linha) {
 		Linha entityLinha = (Linha) linha;
 		return entityLinha.getString();
 	}
 
-	@Biblio
+	@Biblio(1)
 	public static void setString(Object linha, Object string) {
 		Linha entityLinha = (Linha) linha;
 		entityLinha.setString((String) string);
 	}
 
-	@Biblio
+	@Biblio(2)
 	public static String getStringEntre(Object objLinha, Object stringInicio, Object stringFinal) {
 		Linha linha = (Linha) objLinha;
 		String strInicio = (String) stringInicio;
@@ -24,7 +24,7 @@ public class ILinha {
 		return linha.getStringEntre(strInicio, strFinal);
 	}
 
-	@Biblio
+	@Biblio(3)
 	public static void setStringEntre(Object objLinha, Object stringInicio, Object stringFinal, Object stringNova) {
 		Linha linha = (Linha) objLinha;
 		String strInicio = (String) stringInicio;

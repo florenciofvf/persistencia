@@ -4,7 +4,7 @@ public class ILinhas {
 	private ILinhas() {
 	}
 
-	@Biblio
+	@Biblio(0)
 	public static Lista contem(Object arquivo, Object string) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		String str = (String) string;
@@ -20,7 +20,7 @@ public class ILinhas {
 		return resposta;
 	}
 
-	@Biblio
+	@Biblio(1)
 	public static Lista contemExtremos(Object arquivo, Object stringInicio, Object stringFinal)
 			throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;

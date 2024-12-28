@@ -7,12 +7,12 @@ public class IParse {
 	private IParse() {
 	}
 
-	@Biblio
+	@Biblio(0)
 	public static BigInteger bigInteger(Object object) {
 		return new BigInteger(object.toString());
 	}
 
-	@Biblio
+	@Biblio(1)
 	public static BigDecimal bigDecimal(Object object) {
 		return new BigDecimal(object.toString());
 	}

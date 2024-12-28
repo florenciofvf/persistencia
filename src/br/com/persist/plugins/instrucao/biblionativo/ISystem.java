@@ -6,12 +6,12 @@ public class ISystem {
 	private ISystem() {
 	}
 
-	@Biblio
+	@Biblio(0)
 	public static BigInteger timeMillis() {
 		return BigInteger.valueOf(System.currentTimeMillis());
 	}
 
-	@Biblio
+	@Biblio(1)
 	public static BigInteger nanoTime() {
 		return BigInteger.valueOf(System.nanoTime());
 	}
