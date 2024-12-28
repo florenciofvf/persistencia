@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
@@ -16,7 +18,7 @@ import br.com.persist.plugins.instrucao.compilador.Compilador;
 public class GeraBiblio {
 	private static final String PACOTE = "br_com_persist_plugins_instrucao_biblionativo_";
 	private static final String PREFIXO = InstrucaoConstantes.DEFUN_NATIVE;
-	private static final String ROOT = "instrucao/";
+	private static final String ROOT = "instrucao" + File.pathSeparator;
 
 	public static void main(String[] args) throws Exception {
 		Class<?>[] classes = { IArquivo.class, IClass.class, IDB.class, ILinha.class, ILinhas.class, IList.class,
@@ -36,19 +38,34 @@ public class GeraBiblio {
 	}
 
 	private static void processar(Class<?> classe) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName().toLowerCase());
 		Method[] methods = classe.getDeclaredMethods();
+		List<Item> itens = new ArrayList<>();
 		for (Method m : methods) {
 			Biblio biblio = getBiblio(m);
 			if (biblio != null) {
-				imprimir(pw, classe, m);
+				itens.add(new Item(biblio.ordem(), m));
 			}
+		}
+		itens.sort((o1, o2) -> o1.ordem - o2.ordem);
+		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName().toLowerCase());
+		for (Item item : itens) {
+			imprimir(pw, classe, item.m);
 		}
 		pw.close();
 	}
 
 	private static Biblio getBiblio(Method m) {
 		return m.getAnnotation(Biblio.class);
+	}
+
+	static class Item {
+		final int ordem;
+		final Method m;
+
+		Item(int ordem, Method m) {
+			this.ordem = ordem;
+			this.m = m;
+		}
 	}
 
 	private static void imprimir(PrintWriter pw, Class<?> classe, Method m) {
