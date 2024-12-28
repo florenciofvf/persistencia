@@ -237,15 +237,16 @@ public abstract class Container extends AbstratoContexto {
 	protected void validarImpl() throws InstrucaoException {
 	}
 
-	public void salvar(PrintWriter pw) throws InstrucaoException {
+	@Override
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		for (Container c : componentes) {
-			c.salvar(pw);
+			c.salvar(compilador, pw);
 		}
 	}
 
-	public void salvarNegativo(PrintWriter pw) {
+	public void salvarNegativo(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		if (negativo != null) {
-			negativo.salvar(pw);
+			negativo.salvar(compilador, pw);
 		}
 	}
 

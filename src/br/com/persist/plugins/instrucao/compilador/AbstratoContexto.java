@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class AbstratoContexto implements Contexto {
@@ -51,5 +53,8 @@ public abstract class AbstratoContexto implements Contexto {
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.invalidar(token);
+	}
+
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 	}
 }

@@ -27,7 +27,7 @@ public class ListaContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		if (ehListaVazia(id)) {
 			print(pw, InvocacaoContexto.INVOKE_EXP, "ilist.create");
 		} else {

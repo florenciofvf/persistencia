@@ -76,7 +76,7 @@ public class Compilador {
 		biblioteca.validar();
 		File destino = getCompilado(file);
 		try (PrintWriter pw = new PrintWriter(destino)) {
-			biblioteca.salvar(pw);
+			biblioteca.salvar(this, pw);
 		}
 		return biblioteca;
 	}

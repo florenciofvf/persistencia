@@ -93,13 +93,13 @@ public class FuncaoContexto extends Container implements IFuncaoContexto {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		pw.println(InstrucaoConstantes.PREFIXO_FUNCAO + identity);
 		if (retornoVoid) {
 			pw.println(InstrucaoConstantes.PREFIXO_TIPO_VOID);
 		}
-		getParametros().salvar(pw);
-		getCorpo().salvar(pw);
+		getParametros().salvar(compilador, pw);
+		getCorpo().salvar(compilador, pw);
 	}
 
 	@Override

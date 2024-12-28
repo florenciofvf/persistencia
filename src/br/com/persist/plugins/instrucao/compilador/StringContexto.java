@@ -23,8 +23,8 @@ public class StringContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
-		super.salvar(pw);
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		super.salvar(compilador, pw);
 		print(pw, PUSH_STRING, string);
 	}
 

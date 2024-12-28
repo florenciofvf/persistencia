@@ -2,6 +2,8 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
+
 public class NegativoContexto extends Container {
 	public static final String NEG = "neg";
 
@@ -11,7 +13,7 @@ public class NegativoContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		print(pw, NEG);
 	}
 }

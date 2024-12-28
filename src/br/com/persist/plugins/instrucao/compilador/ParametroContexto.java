@@ -46,7 +46,7 @@ public class ParametroContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(Compilador compilador, PrintWriter pw) {
 		pw.println(InstrucaoConstantes.PREFIXO_PARAMETRO + nome);
 	}
 

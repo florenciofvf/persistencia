@@ -125,8 +125,8 @@ public class OperadorContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
-		super.salvar(pw);
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		super.salvar(compilador, pw);
 		print(pw, getCodigo());
 	}
 

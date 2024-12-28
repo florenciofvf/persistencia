@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class NumeroContexto extends Container {
@@ -26,13 +27,13 @@ public class NumeroContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		if (token.tipo == Tipo.INTEIRO) {
 			print(pw, PUSH_BIG_INTEGER, numero);
 		} else {
 			print(pw, PUSH_BIG_DECIMAL, numero);
 		}
-		salvarNegativo(pw);
+		salvarNegativo(compilador, pw);
 	}
 
 	@Override

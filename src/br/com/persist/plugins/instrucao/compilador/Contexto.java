@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.PrintWriter;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public interface Contexto {
@@ -54,4 +56,6 @@ public interface Contexto {
 	 * Exemplo: somar1, param, file.open
 	 */
 	public void identity(Compilador compilador, Token token) throws InstrucaoException;
+
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException;
 }

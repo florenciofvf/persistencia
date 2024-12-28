@@ -135,15 +135,15 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
-		super.salvar(pw);
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		super.salvar(compilador, pw);
 		if (identity != null) {
 			if (ehInvokeParam()) {
 				print(pw, InvocacaoContexto.INVOKE_PARAM_EXP, identity.getId(), "" + getSize());
 			} else {
 				print(pw, InvocacaoContexto.INVOKE_EXP, identity.getId());
 			}
-			identity.salvarNegativo(pw);
+			identity.salvarNegativo(compilador, pw);
 		}
 	}
 

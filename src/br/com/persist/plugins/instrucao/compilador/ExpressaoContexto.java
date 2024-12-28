@@ -163,9 +163,9 @@ public class ExpressaoContexto extends ListaMapaContexto {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
-		super.salvar(pw);
-		salvarNegativo(pw);
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		super.salvar(compilador, pw);
+		salvarNegativo(compilador, pw);
 	}
 
 	@Override

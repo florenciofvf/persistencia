@@ -74,16 +74,16 @@ public class BibliotecaContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		for (Container c : componentes) {
 			if (c instanceof ConstanteContexto) {
-				c.salvar(pw);
+				c.salvar(compilador, pw);
 				pw.println();
 			}
 		}
 		for (Container c : componentes) {
 			if (c instanceof FuncaoContexto || c instanceof FuncaoNativaContexto) {
-				c.salvar(pw);
+				c.salvar(compilador, pw);
 				pw.println();
 			}
 		}

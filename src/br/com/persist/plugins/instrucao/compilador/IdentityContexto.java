@@ -1,14 +1,12 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
 
 public class IdentityContexto extends Container {
-	private Token tokenIdentity;
 	private final String id;
 
 	public IdentityContexto(Token token) {
@@ -27,23 +25,18 @@ public class IdentityContexto extends Container {
 	}
 
 	@Override
-	public void filtroConstParam(List<Token> coletor) {
-		coletor.add(tokenIdentity);
-	}
-
-	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		if (ehParametro(id)) {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
-			tokenIdentity = token.novo(Tipo.PARAMETRO);
+			compilador.tokens.add(token.novo(Tipo.PARAMETRO));
 		} else if (ehFuncao()) {
 			print(pw, FuncaoContexto.LOAD_FUNCTION, id);
-			tokenIdentity = token.novo(Tipo.FUNCAO);
+			compilador.tokens.add(token.novo(Tipo.FUNCAO));
 		} else {
 			print(pw, ConstanteContexto.LOAD_CONST, id);
-			tokenIdentity = token.novo(Tipo.CONSTANTE);
+			compilador.tokens.add(token.novo(Tipo.CONSTANTE));
 		}
-		salvarNegativo(pw);
+		salvarNegativo(compilador, pw);
 	}
 
 	private boolean ehFuncao() throws InstrucaoException {

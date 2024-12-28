@@ -45,7 +45,7 @@ public class IFEqContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(Compilador compilador, PrintWriter pw) {
 		print(pw, IF_EQ, "" + deslocamento);
 	}
 }

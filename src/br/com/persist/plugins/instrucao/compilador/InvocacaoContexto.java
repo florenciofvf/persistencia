@@ -100,14 +100,14 @@ public class InvocacaoContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
-		super.salvar(pw);
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		super.salvar(compilador, pw);
 		if (ehInvokeParam()) {
 			print(pw, INVOKE_PARAM, token.string, "" + getArgumento().getSize());
 		} else {
 			print(pw, INVOKE, token.string);
 		}
-		salvarNegativo(pw);
+		salvarNegativo(compilador, pw);
 	}
 
 	private boolean ehInvokeParam() throws InstrucaoException {

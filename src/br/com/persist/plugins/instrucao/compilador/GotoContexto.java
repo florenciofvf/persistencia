@@ -42,7 +42,7 @@ public class GotoContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) {
+	public void salvar(Compilador compilador, PrintWriter pw) {
 		print(pw, GOTO, "" + deslocamento);
 	}
 }

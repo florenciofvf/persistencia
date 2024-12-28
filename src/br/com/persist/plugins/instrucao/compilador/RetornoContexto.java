@@ -46,8 +46,8 @@ public class RetornoContexto extends Container {
 	}
 
 	@Override
-	public void salvar(PrintWriter pw) throws InstrucaoException {
-		super.salvar(pw);
+	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		super.salvar(compilador, pw);
 		print(pw, InstrucaoConstantes.RETURN);
 	}
 
