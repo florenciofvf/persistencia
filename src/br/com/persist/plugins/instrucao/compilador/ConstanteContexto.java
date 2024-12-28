@@ -1,7 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -65,12 +64,6 @@ public class ConstanteContexto extends Container {
 	}
 
 	@Override
-	public void filtroConstParam(List<Token> coletor) {
-		coletor.add(identity.token.novo(Tipo.CONSTANTE));
-		super.filtroConstParam(coletor);
-	}
-
-	@Override
 	public void indexar(Indexador indexador) {
 		pontoDeslocamento = indexador.value();
 		getExpressao().indexar(indexador);
@@ -101,6 +94,7 @@ class ConstanteIdentityContexto extends AbstratoContexto {
 			compilador.invalidar(token);
 		} else {
 			this.token = token;
+			compilador.tokens.add(token.novo(Tipo.CONSTANTE));
 		}
 	}
 
