@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public abstract class Invocacao extends Instrucao {
@@ -37,7 +38,7 @@ public abstract class Invocacao extends Instrucao {
 			if (funcao == null) {
 				throw new InstrucaoException("erro.funcao_inexistente", "null", "null");
 			}
-			if ("tailcall".equals(nomeFuncao)) {
+			if (InstrucaoConstantes.TAILCALL.equals(nomeFuncao)) {
 				setParametros(funcao, pilhaOperando);
 				funcao.setIndice(0);
 				return;

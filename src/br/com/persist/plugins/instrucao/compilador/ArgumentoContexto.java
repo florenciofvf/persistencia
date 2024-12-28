@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 import java.util.Iterator;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
@@ -114,8 +115,11 @@ public class ArgumentoContexto extends ListaMapaContexto {
 		if (ehInvokeParam()) {
 			return;
 		}
-		BibliotecaContexto biblio = getBiblioteca();
 		String id = identity.getId();
+		if (InstrucaoConstantes.TAILCALL.equals(id)) {
+			return;
+		}
+		BibliotecaContexto biblio = getBiblioteca();
 		if (biblio == null) {
 			throw new InstrucaoException("erro.funcao_parent", id);
 		}
