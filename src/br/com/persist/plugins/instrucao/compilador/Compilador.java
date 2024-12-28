@@ -539,8 +539,8 @@ public class Compilador {
 	}
 
 	private boolean reservado(String s) {
-		return InstrucaoConstantes.CONST.equals(s) || InstrucaoConstantes.FUNCTION.equals(s)
-				|| InstrucaoConstantes.FUNCTION_NATIVE.equals(s) || InstrucaoConstantes.IF.equals(s)
+		return InstrucaoConstantes.CONST.equals(s) || InstrucaoConstantes.DEFUN.equals(s)
+				|| InstrucaoConstantes.DEFUN_NATIVE.equals(s) || InstrucaoConstantes.IF.equals(s)
 				|| InstrucaoConstantes.WHILE.equals(s) || InstrucaoConstantes.ELSEIF.equals(s)
 				|| InstrucaoConstantes.ELSE.equals(s) || InstrucaoConstantes.RETURN.equals(s);
 	}

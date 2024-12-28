@@ -14,12 +14,12 @@ public class InstrucaoConstantes {
 	public static final String PREFIXO_PARAMETRO = "param ";
 	public static final String PREFIXO_FUNCAO = "funcao ";
 
-	public static final String FUNCTION_NATIVE = "function_native";
-	public static final String FUNCTION = "function";
+	public static final String DEFUN_NATIVE = "defun_native";
 	public static final String RETURN = "return";
 	public static final String ELSEIF = "elseif";
 	public static final String WHILE = "while";
 	public static final String CONST = "const";
+	public static final String DEFUN = "defun";
 	public static final String ELSE = "else";
 	public static final String IF = "if";
 

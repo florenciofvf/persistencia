@@ -20,10 +20,10 @@ public class BibliotecaContexto extends Container {
 
 	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
-		if (InstrucaoConstantes.FUNCTION.equals(token.getString())) {
+		if (InstrucaoConstantes.DEFUN.equals(token.getString())) {
 			compilador.setContexto(new FuncaoContexto());
 			adicionar((Container) compilador.getContexto());
-		} else if (InstrucaoConstantes.FUNCTION_NATIVE.equals(token.getString())) {
+		} else if (InstrucaoConstantes.DEFUN_NATIVE.equals(token.getString())) {
 			compilador.setContexto(new FuncaoNativaContexto());
 			adicionar((Container) compilador.getContexto());
 		} else if (InstrucaoConstantes.CONST.equals(token.getString())) {
