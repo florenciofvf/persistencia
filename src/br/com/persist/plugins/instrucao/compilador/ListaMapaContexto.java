@@ -98,15 +98,14 @@ public abstract class ListaMapaContexto extends Container {
 
 	private void processar(Compilador compilador, ParametroContexto param, Token token) throws InstrucaoException {
 		IdentityContexto id = new IdentityContexto(param.getToken());
+		id.tokenCor = token.novo(Tipo.PARAMETRO);
 		if (param.isHead(token.getString())) {
 			ArgumentoContexto invocar = criarInvocacao(ILIST_HEAD);
 			invocar.adicionar(id);
-			id.tokenCor = token;
 			adicionarImpl(compilador, token, invocar);
 		} else if (param.isTail(token.getString())) {
 			ArgumentoContexto invocar = criarInvocacao(ILIST_TAIL);
 			invocar.adicionar(id);
-			id.tokenCor = token;
 			adicionarImpl(compilador, token, invocar);
 		} else {
 			adicionarImpl(compilador, token, new IdentityContexto(token));
