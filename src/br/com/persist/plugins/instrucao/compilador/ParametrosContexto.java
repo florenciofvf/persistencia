@@ -84,6 +84,7 @@ class IdentityOuListaOuFinalizar extends AbstratoContexto {
 
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.checarTailCall(token);
 		if (token.getString().indexOf(".") != -1) {
 			compilador.invalidar(token);
 		} else {

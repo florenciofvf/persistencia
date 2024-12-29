@@ -55,6 +55,7 @@ public class CorpoContexto extends Container {
 
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.checarTailCall(token);
 		compilador.setContexto(new InvocacaoContexto(token));
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}

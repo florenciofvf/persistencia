@@ -544,4 +544,10 @@ public class Compilador {
 				|| InstrucaoConstantes.WHILE.equals(s) || InstrucaoConstantes.ELSEIF.equals(s)
 				|| InstrucaoConstantes.ELSE.equals(s) || InstrucaoConstantes.RETURN.equals(s);
 	}
+
+	void checarTailCall(Token token) throws InstrucaoException {
+		if (InstrucaoConstantes.TAILCALL.equals(token.getString())) {
+			invalidar(token);
+		}
+	}
 }
