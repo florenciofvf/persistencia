@@ -97,7 +97,7 @@ public abstract class ListaMapaContexto extends Container {
 	}
 
 	private void processar(Compilador compilador, ParametroContexto param, Token token) throws InstrucaoException {
-		IdentityContexto id = new IdentityContexto(param.getToken());
+		IdentityContexto id = new IdentityContexto(token);
 		if (param.isHead(token.getString())) {
 			ArgumentoContexto invocar = criarInvocacao(ILIST_HEAD);
 			invocar.adicionar(id);
@@ -107,7 +107,7 @@ public abstract class ListaMapaContexto extends Container {
 			invocar.adicionar(id);
 			adicionarImpl(compilador, token, invocar);
 		} else {
-			adicionarImpl(compilador, token, new IdentityContexto(token));
+			adicionarImpl(compilador, token, id);
 		}
 	}
 
