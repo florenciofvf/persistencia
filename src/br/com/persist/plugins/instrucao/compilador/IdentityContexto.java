@@ -8,6 +8,7 @@ import br.com.persist.plugins.instrucao.processador.Biblioteca;
 
 public class IdentityContexto extends Container {
 	private final String id;
+	Token tokenCor;
 
 	public IdentityContexto(Token token) {
 		this.id = token.getString();
@@ -26,15 +27,24 @@ public class IdentityContexto extends Container {
 
 	@Override
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		if (tokenCor != null) {
+			compilador.tokens.add(tokenCor);
+		}
 		if (ehParametro(id)) {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
-			compilador.tokens.add(token.novo(Tipo.PARAMETRO));
+			if (tokenCor == null) {
+				compilador.tokens.add(token.novo(Tipo.PARAMETRO));
+			}
 		} else if (ehFuncao()) {
 			print(pw, FuncaoContexto.LOAD_FUNCTION, id);
-			compilador.tokens.add(token.novo(Tipo.FUNCAO));
+			if (tokenCor == null) {
+				compilador.tokens.add(token.novo(Tipo.FUNCAO));
+			}
 		} else {
 			print(pw, ConstanteContexto.LOAD_CONST, id);
-			compilador.tokens.add(token.novo(Tipo.CONSTANTE));
+			if (tokenCor == null) {
+				compilador.tokens.add(token.novo(Tipo.CONSTANTE));
+			}
 		}
 		salvarNegativo(compilador, pw);
 	}
