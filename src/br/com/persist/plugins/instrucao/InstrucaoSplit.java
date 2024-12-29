@@ -27,7 +27,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -572,8 +571,7 @@ class Aba extends Transferivel {
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
 				if (resp) {
-					List<Token> tokens = new ArrayList<>(compilador.getTokens());
-					InstrucaoCor.processar(editor.getStyledDocument(), tokens);
+					InstrucaoCor.processar(editor.getStyledDocument(), compilador.getTokens());
 				}
 			} catch (IOException | InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));

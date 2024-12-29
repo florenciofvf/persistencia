@@ -89,6 +89,6 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return "Token [string=" + string + ", tipo=" + tipo + "]";
+		return "Token [string=" + string + ", tipo=" + tipo + ", indice=" + indice + "]";
 	}
 }

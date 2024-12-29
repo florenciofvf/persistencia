@@ -107,7 +107,7 @@ public abstract class ListaMapaContexto extends Container {
 			invocar.adicionar(id);
 			adicionarImpl(compilador, token, invocar);
 		} else {
-			adicionarImpl(compilador, token, id);
+			adicionarImpl(compilador, token, new IdentityContexto(token));
 		}
 	}
 
