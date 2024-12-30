@@ -16,6 +16,7 @@ public class InstrucaoConstantes {
 	public static final String TAILCALL = "tailcall";
 
 	public static final String DEFUN_NATIVE = "defun_native";
+	public static final String DEF_CONST = "def_const";
 	public static final String RETURN = "return";
 	public static final String ELSEIF = "elseif";
 	public static final String WHILE = "while";

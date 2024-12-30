@@ -3,14 +3,14 @@ package br.com.persist.plugins.instrucao.processador;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
-public class ConstInstrucao extends Instrucao {
-	public ConstInstrucao() {
-		super(InstrucaoConstantes.CONST);
+public class DefineConstInstrucao extends Instrucao {
+	public DefineConstInstrucao() {
+		super(InstrucaoConstantes.DEF_CONST);
 	}
 
 	@Override
 	public Instrucao clonar() {
-		return new ConstInstrucao();
+		return new DefineConstInstrucao();
 	}
 
 	@Override

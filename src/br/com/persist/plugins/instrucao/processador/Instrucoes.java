@@ -43,12 +43,12 @@ public class Instrucoes {
 		add(new LoadParametroInstrucao());
 		add(new LoadConstanteInstrucao());
 		add(new InvocacaoExpInstrucao());
+		add(new DefineConstInstrucao());
 		add(new LoadFuncaoInstrucao());
 		add(new PushStringInstrucao());
 		add(new InvocacaoInstrucao());
 		add(new NegativoInstrucao());
 		add(new RetornoInstrucao());
-		add(new ConstInstrucao());
 		add(new GotoInstrucao());
 		add(new IFEqInstrucao());
 		add(new MaiorIgual());

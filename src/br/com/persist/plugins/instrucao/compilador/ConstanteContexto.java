@@ -76,7 +76,7 @@ public class ConstanteContexto extends Container {
 			pw.println(InstrucaoConstantes.PREFIXO_CONSTANTE + identity);
 		}
 		getExpressao().salvar(compilador, pw);
-		print(pw, InstrucaoConstantes.CONST, identity.toString());
+		print(pw, InstrucaoConstantes.DEF_CONST, identity.toString());
 	}
 
 	@Override
