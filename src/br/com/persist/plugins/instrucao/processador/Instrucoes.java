@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.processador;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.Add;
 import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.AddLista;
 import br.com.persist.plugins.instrucao.processador.OperadorInstrucao.And;
@@ -31,8 +32,12 @@ public class Instrucoes {
 		}
 	}
 
-	public static Instrucao get(String nome) {
-		return cache.get(nome);
+	public static Instrucao get(String nome, String biblio) throws InstrucaoException {
+		Instrucao obj = cache.get(nome);
+		if (obj == null) {
+			throw new InstrucaoException("erro.instrucao_invalida", nome, biblio);
+		}
+		return obj;
 	}
 
 	static {

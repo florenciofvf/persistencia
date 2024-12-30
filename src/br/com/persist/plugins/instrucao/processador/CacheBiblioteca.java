@@ -104,7 +104,7 @@ public class CacheBiblioteca {
 		if (funcao == null && constante == null) {
 			throw new InstrucaoException("erro.instrucao_sem_funcao", nome, linha);
 		}
-		Instrucao instrucao = criarInstrucao(linha);
+		Instrucao instrucao = criarInstrucao(linha, nome);
 		if (funcao != null) {
 			funcao.addInstrucao(instrucao);
 		} else {
@@ -112,24 +112,24 @@ public class CacheBiblioteca {
 		}
 	}
 
-	private Instrucao criarInstrucao(String linha) {
+	private Instrucao criarInstrucao(String linha, String biblio) throws InstrucaoException {
 		String espacos = InstrucaoConstantes.ESPACO + InstrucaoConstantes.ESPACO;
 		int pos = linha.indexOf(espacos);
 		int sequencia = Integer.parseInt(linha.substring(0, pos));
 		String stringInstrucao = linha.substring(pos + espacos.length());
-		return getInstrucao(sequencia, stringInstrucao);
+		return getInstrucao(sequencia, stringInstrucao, biblio);
 	}
 
-	private Instrucao getInstrucao(int sequencia, String string) {
+	private Instrucao getInstrucao(int sequencia, String string, String biblio) throws InstrucaoException {
 		int pos = string.indexOf(' ');
 		if (pos == -1) {
-			Instrucao clone = Instrucoes.get(string).clonar();
+			Instrucao clone = Instrucoes.get(string, biblio).clonar();
 			clone.sequencia = sequencia;
 			return clone;
 		} else {
 			String nome = string.substring(0, pos);
 			String parametros = string.substring(pos + 1);
-			Instrucao clone = Instrucoes.get(nome).clonar();
+			Instrucao clone = Instrucoes.get(nome, biblio).clonar();
 			clone.setParametros(parametros);
 			clone.sequencia = sequencia;
 			return clone;
