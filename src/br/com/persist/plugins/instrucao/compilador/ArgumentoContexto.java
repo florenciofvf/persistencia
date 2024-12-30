@@ -142,6 +142,9 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		super.salvar(compilador, pw);
 		if (identity != null) {
+			if (identity.tokenCor != null) {
+				compilador.tokens.add(identity.tokenCor);
+			}
 			if (ehInvokeParam()) {
 				print(pw, InvocacaoContexto.INVOKE_PARAM_EXP, identity.getId(), "" + getSize());
 			} else {
