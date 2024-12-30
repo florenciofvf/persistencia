@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.Token;
+import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class Funcao {
 	private final Map<Integer, InstrucaoItem> instrucoes;
@@ -31,7 +33,7 @@ public class Funcao {
 		funcao.biblioteca = biblioteca;
 		funcao.tipoVoid = tipoVoid;
 		for (Parametro p : parametros) {
-			funcao.addParametro(p.nome);
+			funcao.addParametro(p.getNome());
 		}
 		InstrucaoItem no = cabeca;
 		while (no != null) {
@@ -80,11 +82,14 @@ public class Funcao {
 
 	public void addParametro(String nome) throws InstrucaoException {
 		InstrucaoUtil.checarParametro(nome);
-		Parametro param = new Parametro(nome);
-		if (!parametros.contains(param)) {
-			param.indice = parametros.size();
-			parametros.add(param);
+		if (contem(nome)) {
+			throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, biblioteca.getNome());
 		}
+		int pos = nome.indexOf(':');
+		Token token = new Token(nome, pos != -1 ? Tipo.LISTA : Tipo.IDENTITY);
+		Parametro param = new Parametro(token);
+		param.indice = parametros.size();
+		parametros.add(param);
 	}
 
 	public void setValorParametro(int indice, Object valor) throws InstrucaoException {
@@ -110,6 +115,19 @@ public class Funcao {
 		return parametros.size();
 	}
 
+	public boolean contem(String string) {
+		return getParametro(string) != null;
+	}
+
+	public Parametro getParametro(String string) {
+		for (Parametro item : parametros) {
+			if (item.contem(string)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
 	private int getIndiceParametro(String nome) throws InstrucaoException {
 		for (int i = 0; i < parametros.size(); i++) {
 			Parametro item = parametros.get(i);
@@ -117,7 +135,7 @@ public class Funcao {
 				return i;
 			}
 		}
-		throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, this.nome);
+		throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, biblioteca.getNome());
 	}
 
 	public void addInstrucao(Instrucao instrucao) throws InstrucaoException {
@@ -166,7 +184,7 @@ public class Funcao {
 			if (sb.length() > 0) {
 				sb.append(", ");
 			}
-			sb.append(item.nome);
+			sb.append(item.getNome());
 		}
 		return sb.toString();
 	}

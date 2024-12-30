@@ -6,9 +6,9 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 
 public class ParametroContexto extends Container {
 	public static final String LOAD_PARAM = "load_param";
-	private final String nome;
-	private final String head;
-	private final String tail;
+	protected final String nome;
+	protected final String head;
+	protected final String tail;
 
 	public ParametroContexto(Token token) {
 		this.nome = token.getString();
