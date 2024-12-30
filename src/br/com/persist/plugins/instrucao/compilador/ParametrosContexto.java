@@ -40,6 +40,7 @@ public class ParametrosContexto extends Container {
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.identity(compilador, token);
+		checar(compilador, token);
 		adicionar(new ParametroContexto(token));
 		compilador.tokens.add(token.novo(Tipo.PARAMETRO));
 		contexto = VIRGULA_OU_FINALIZAR;
@@ -48,8 +49,15 @@ public class ParametrosContexto extends Container {
 	@Override
 	public void lista(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.lista(compilador, token);
+		checar(compilador, token);
 		adicionar(new ParametroContexto(token));
 		contexto = VIRGULA_OU_FINALIZAR;
+	}
+
+	private void checar(Compilador compilador, Token token) throws InstrucaoException {
+		if (contem(token.getString())) {
+			compilador.invalidar(token);
+		}
 	}
 
 	public boolean contem(String string) {
