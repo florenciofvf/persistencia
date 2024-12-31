@@ -14,6 +14,7 @@ public class InstrucaoConstantes {
 	public static final String PREFIXO_PARAMETRO = "param ";
 	public static final String PREFIXO_FUNCAO = "funcao ";
 	public static final String TAILCALL = "tailcall";
+	public static final String VOID = "void";
 
 	public static final String DEFUN_NATIVE = "defun_native";
 	public static final String DEF_CONST = "def_const";

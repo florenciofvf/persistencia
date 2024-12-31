@@ -201,7 +201,7 @@ class MetaProvedor {
 	public static void init(Biblioteca biblioteca) {
 		List<String> list = new ArrayList<>();
 		list.addAll(biblioteca.getNomeConstantes());
-		list.addAll(biblioteca.getNomeFuncoes());
+		list.addAll(biblioteca.getNomeFuncoesHuman());
 		lista.clear();
 		lista.addAll(list);
 	}

@@ -68,10 +68,10 @@ public class Biblioteca {
 		return new ArrayList<>(constantes.keySet());
 	}
 
-	public List<String> getNomeFuncoes() {
+	public List<String> getNomeFuncoesHuman() {
 		List<String> lista = new ArrayList<>();
 		for (Funcao item : funcoes.values()) {
-			lista.add(item.getInterface());
+			lista.add(item.getInterfaceHuman());
 		}
 		return lista;
 	}

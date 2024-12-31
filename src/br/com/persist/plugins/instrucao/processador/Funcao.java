@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
@@ -174,8 +175,15 @@ public class Funcao {
 		return (isNativo() ? "nativo " + biblioNativa + " " : "") + nome + "(" + parametros + ")";
 	}
 
-	public String getInterface() {
-		return nome + "(" + param(parametros) + ")";
+	public String getInterfaceHuman() {
+		StringBuilder sb = new StringBuilder(nome + "(" + param(parametros) + ")");
+		if (tipoVoid) {
+			sb.append(" : " + InstrucaoConstantes.VOID);
+		}
+		if (isNativo()) {
+			sb.append(" [nativo]");
+		}
+		return sb.toString();
 	}
 
 	private String param(List<Parametro> parametros) {

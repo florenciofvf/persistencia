@@ -70,7 +70,7 @@ public class FuncaoNativaContexto extends Container implements IFuncaoContexto {
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.identity(compilador, token);
 		if (identityVoid) {
-			if (!"void".equals(token.getString())) {
+			if (!InstrucaoConstantes.VOID.equals(token.getString())) {
 				compilador.invalidar(token);
 			} else {
 				contexto = Contextos.PONTO_VIRGULA;
