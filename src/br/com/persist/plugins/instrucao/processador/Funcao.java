@@ -175,15 +175,8 @@ public class Funcao {
 		return (isNativo() ? "nativo " + biblioNativa + " " : "") + nome + "(" + parametros + ")";
 	}
 
-	public String getInterfaceHuman() {
-		StringBuilder sb = new StringBuilder(nome + "(" + param(parametros) + ")");
-		if (tipoVoid) {
-			sb.append(" : " + InstrucaoConstantes.VOID);
-		}
-		if (isNativo()) {
-			sb.append(" [nativo]");
-		}
-		return sb.toString();
+	public String getInterface() {
+		return nome + "(" + param(parametros) + ")";
 	}
 
 	private String param(List<Parametro> parametros) {
@@ -193,6 +186,17 @@ public class Funcao {
 				sb.append(", ");
 			}
 			sb.append(item.getNome());
+		}
+		return sb.toString();
+	}
+
+	public String getInterfaceHuman() {
+		StringBuilder sb = new StringBuilder(getInterface());
+		if (tipoVoid) {
+			sb.append(" : " + InstrucaoConstantes.VOID);
+		}
+		if (isNativo()) {
+			sb.append(" [nativo]");
 		}
 		return sb.toString();
 	}

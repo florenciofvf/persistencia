@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.persist.assistencia.MetaInfo;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Biblioteca {
@@ -64,14 +65,18 @@ public class Biblioteca {
 		}
 	}
 
-	public List<String> getNomeConstantes() {
-		return new ArrayList<>(constantes.keySet());
+	public List<MetaInfo> getNomeConstantes() {
+		List<MetaInfo> lista = new ArrayList<>();
+		for (String item : constantes.keySet()) {
+			lista.add(new MetaInfo(item, item));
+		}
+		return lista;
 	}
 
-	public List<String> getNomeFuncoesHuman() {
-		List<String> lista = new ArrayList<>();
+	public List<MetaInfo> getNomeFuncoes() {
+		List<MetaInfo> lista = new ArrayList<>();
 		for (Funcao item : funcoes.values()) {
-			lista.add(item.getInterfaceHuman());
+			lista.add(new MetaInfo(item.getInterface(), item.getInterfaceHuman()));
 		}
 		return lista;
 	}

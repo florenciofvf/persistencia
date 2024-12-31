@@ -29,6 +29,7 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.MetaInfo;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
@@ -56,7 +57,7 @@ interface MetaListener {
 class MetaContainer extends Panel {
 	private final transient MetaListener metaListener;
 	private static final long serialVersionUID = 1L;
-	private JList<String> lista;
+	private JList<MetaInfo> lista;
 
 	public MetaContainer(MetaListener metaListener) {
 		this.metaListener = Objects.requireNonNull(metaListener);
@@ -91,8 +92,8 @@ class MetaContainer extends Panel {
 	private void processar() {
 		int indice = lista.getSelectedIndex();
 		if (indice != -1) {
-			String fragmento = lista.getSelectedValue();
-			metaListener.setFragmento(fragmento);
+			MetaInfo fragmento = lista.getSelectedValue();
+			metaListener.setFragmento(fragmento.getMeta());
 			metaListener.dispose();
 		}
 	}
@@ -168,7 +169,7 @@ class MetaDialogo extends JWindow implements MetaListener {
 	}
 }
 
-class MetaModelo implements ListModel<String> {
+class MetaModelo implements ListModel<MetaInfo> {
 	private static final Logger LOG = Logger.getGlobal();
 
 	@Override
@@ -177,7 +178,7 @@ class MetaModelo implements ListModel<String> {
 	}
 
 	@Override
-	public String getElementAt(int index) {
+	public MetaInfo getElementAt(int index) {
 		return MetaProvedor.get(index);
 	}
 
@@ -193,24 +194,22 @@ class MetaModelo implements ListModel<String> {
 }
 
 class MetaProvedor {
-	private static final List<String> lista = new ArrayList<>();
+	private static final List<MetaInfo> lista = new ArrayList<>();
 
 	private MetaProvedor() {
 	}
 
 	public static void init(Biblioteca biblioteca) {
-		List<String> list = new ArrayList<>();
-		list.addAll(biblioteca.getNomeConstantes());
-		list.addAll(biblioteca.getNomeFuncoesHuman());
 		lista.clear();
-		lista.addAll(list);
+		lista.addAll(biblioteca.getNomeConstantes());
+		lista.addAll(biblioteca.getNomeFuncoes());
 	}
 
-	public static List<String> getLista() {
+	public static List<MetaInfo> getLista() {
 		return lista;
 	}
 
-	public static String get(int i) {
+	public static MetaInfo get(int i) {
 		return lista.get(i);
 	}
 
