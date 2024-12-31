@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ElseIFContexto extends Container {
@@ -42,6 +43,6 @@ public class ElseIFContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "elseif >>> " + getExpressao().toString();
+		return InstrucaoConstantes.ELSEIF + " >>> " + getExpressao().toString();
 	}
 }

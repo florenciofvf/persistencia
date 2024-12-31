@@ -101,7 +101,7 @@ public class FuncaoNativaContexto extends Container implements IFuncaoContexto {
 
 	@Override
 	public String toString() {
-		return "function_native " + identity + " >>> " + getParametros().toString();
+		return InstrucaoConstantes.DEFUN_NATIVE + " " + identity + " >>> " + getParametros().toString();
 	}
 }
 

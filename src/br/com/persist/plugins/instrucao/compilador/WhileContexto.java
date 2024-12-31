@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class WhileContexto extends Container {
@@ -48,6 +49,6 @@ public class WhileContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "while >>> " + getExpressao().toString();
+		return InstrucaoConstantes.WHILE + " >>> " + getExpressao().toString();
 	}
 }

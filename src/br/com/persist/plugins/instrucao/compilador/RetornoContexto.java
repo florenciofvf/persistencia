@@ -53,7 +53,7 @@ public class RetornoContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "return >>> " + getExpressao().toString();
+		return InstrucaoConstantes.RETURN + " >>> " + getExpressao().toString();
 	}
 }
 

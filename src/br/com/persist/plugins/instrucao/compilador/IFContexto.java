@@ -129,7 +129,7 @@ public class IFContexto extends Container {
 
 	@Override
 	public String toString() {
-		return "if >>> " + getExpressao().toString();
+		return InstrucaoConstantes.IF + " >>> " + getExpressao().toString();
 	}
 }
 
