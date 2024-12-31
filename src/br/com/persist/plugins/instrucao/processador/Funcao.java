@@ -190,7 +190,7 @@ public class Funcao {
 		return sb.toString();
 	}
 
-	public String getInterfaceHuman() {
+	public String getInterfaceInfo() {
 		StringBuilder sb = new StringBuilder(getInterface());
 		if (tipoVoid) {
 			sb.append(" : " + InstrucaoConstantes.VOID);

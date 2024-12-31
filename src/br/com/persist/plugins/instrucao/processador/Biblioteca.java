@@ -76,7 +76,7 @@ public class Biblioteca {
 	public List<MetaInfo> getNomeFuncoes() {
 		List<MetaInfo> lista = new ArrayList<>();
 		for (Funcao item : funcoes.values()) {
-			lista.add(new MetaInfo(item.getInterface(), item.getInterfaceHuman()));
+			lista.add(new MetaInfo(item.getInterface(), item.getInterfaceInfo()));
 		}
 		return lista;
 	}
