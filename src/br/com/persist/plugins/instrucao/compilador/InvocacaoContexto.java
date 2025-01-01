@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
 import br.com.persist.plugins.instrucao.processador.Invocacao;
@@ -103,6 +104,7 @@ public class InvocacaoContexto extends Container {
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		super.salvar(compilador, pw);
 		if (ehInvokeParam()) {
+			compilador.tokens.add(token.novo(Tipo.PARAMETRO));
 			print(pw, INVOKE_PARAM, token.string, "" + getArgumento().getSize());
 		} else {
 			print(pw, INVOKE, token.string);
