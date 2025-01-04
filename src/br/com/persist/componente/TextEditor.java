@@ -182,7 +182,7 @@ class TextEditorKit extends StyledEditorKit {
 		public float nextTabStop(float x, int tabOffset) {
 			TabSet tabs = getTabSet();
 			if (tabs == null) {
-				return getTabBase() + ((x / TAB_SIZE + 1) * TAB_SIZE);
+				return (float) (getTabBase() + (((int) x / TAB_SIZE + 1) * TAB_SIZE));
 			}
 			return super.nextTabStop(x, tabOffset);
 		}
