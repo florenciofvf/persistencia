@@ -98,7 +98,7 @@ public class TextEditor extends TextPane {
 				if (r != null) {
 					r.height -= 3;
 					g.setColor(COLOR_RET);
-					g.fillArc(r.x, r.y, 7, 7, 90, 180);
+					g.fillArc(r.x, r.y - 1, 7, 7, 90, 180);
 					g.fillRect(r.x + 4, r.y, 2, 1);
 					desenharR(g, r, 0);
 					desenharR(g, r, 2);
