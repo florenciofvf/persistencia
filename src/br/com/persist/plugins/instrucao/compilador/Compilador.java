@@ -237,6 +237,7 @@ public class Compilador {
 
 	private void processarString(Token token) throws InstrucaoException {
 		List<Atom> lista = gerarAtoms(token);
+		System.out.println(lista);
 	}
 
 	private List<Atom> gerarAtoms(Token token) throws InstrucaoException {
@@ -253,7 +254,6 @@ public class Compilador {
 	class GeraAtom {
 		final Token token;
 		String string;
-		int indice;
 		Atom apos;
 
 		GeraAtom(Token token) {
@@ -268,13 +268,13 @@ public class Compilador {
 				apos = null;
 				return resp;
 			}
-			if (indice >= string.length()) {
+			if (string.isEmpty()) {
 				return null;
 			}
 			int pos = string.indexOf("${");
 			if (pos == -1) {
 				Atom atom = new Atom(string, false);
-				indice = string.length();
+				string = "";
 				return atom;
 			} else {
 				Atom atom = null;
@@ -299,11 +299,10 @@ public class Compilador {
 				invalidar(token);
 			}
 			apos = new Atom(str, true);
-			indice = pos2 + 1;
-			if (indice >= string.length()) {
+			if (pos2 + 1 >= string.length()) {
 				string = "";
 			} else {
-				string = string.substring(indice);
+				string = string.substring(pos2 + 1);
 			}
 		}
 	}
@@ -313,9 +312,13 @@ public class Compilador {
 		final boolean id;
 
 		Atom(String str, boolean id) {
-			super();
 			this.str = str;
 			this.id = id;
+		}
+
+		@Override
+		public String toString() {
+			return str;
 		}
 	}
 
