@@ -340,13 +340,7 @@ public class Compilador {
 			if (str.isEmpty()) {
 				return new Token("", Tipo.STRING);
 			}
-			StringBuilder sb = new StringBuilder();
-			for (char c : str.toCharArray()) {
-				if (c <= ' ') {
-					continue;
-				}
-				sb.append(c);
-			}
+			StringBuilder sb = getSring();
 			String s = sb.toString();
 			if (s.startsWith("[")) {
 				if (!s.endsWith("]")) {
@@ -367,6 +361,21 @@ public class Compilador {
 				}
 				return new Token(s, Tipo.IDENTITY);
 			}
+		}
+
+		private StringBuilder getSring() {
+			StringBuilder sb = new StringBuilder();
+			if (id) {
+				for (char c : str.toCharArray()) {
+					if (c <= ' ') {
+						continue;
+					}
+					sb.append(c);
+				}
+			} else {
+				sb.append(str);
+			}
+			return sb;
 		}
 
 		@Override
