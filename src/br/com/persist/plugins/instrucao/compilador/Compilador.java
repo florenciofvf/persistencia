@@ -223,10 +223,57 @@ public class Compilador {
 
 	private void processarStringOuComentario(Token token) throws InstrucaoException {
 		if (!token.string.startsWith(":coment")) {
-			contexto.string(this, token);
+			int pos = token.string.indexOf("${");
+			if (pos == -1) {
+				contexto.string(this, token);
+			} else {
+				processarString(token);
+			}
 			tokens.add(token);
 		} else {
 			tokens.add(token.novo(Tipo.COMENTARIO));
+		}
+	}
+
+	private void processarString(Token token) throws InstrucaoException {
+		List<Atom> lista = gerarAtoms(token);
+	}
+
+	private List<Atom> gerarAtoms(Token token) throws InstrucaoException {
+		GeraAtom gerador = new GeraAtom(token);
+		List<Atom> resp = new ArrayList<>();
+		Atom atom = gerador.proximo();
+		while (atom != null) {
+			resp.add(atom);
+			atom = gerador.proximo();
+		}
+		return resp;
+	}
+
+	class GeraAtom {
+		final String string;
+		final Token token;
+		int indice;
+
+		GeraAtom(Token token) {
+			this.string = token.string;
+			this.token = token;
+			indice = 0;
+		}
+
+		Atom proximo() throws InstrucaoException {
+			return null;
+		}
+	}
+
+	class Atom {
+		final String str;
+		final boolean id;
+
+		Atom(String str, boolean id) {
+			super();
+			this.str = str;
+			this.id = id;
 		}
 	}
 
