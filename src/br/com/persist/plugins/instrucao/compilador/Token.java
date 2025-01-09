@@ -59,6 +59,10 @@ public class Token {
 		return tipo == Tipo.RESERVADO;
 	}
 
+	public boolean isIdentity() {
+		return tipo == Tipo.IDENTITY;
+	}
+
 	public boolean isFuncao() {
 		return tipo == Tipo.FUNCAO;
 	}

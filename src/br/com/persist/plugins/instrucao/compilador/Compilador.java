@@ -238,8 +238,22 @@ public class Compilador {
 	private void processarString(Token token) throws InstrucaoException {
 		List<Atom> lista = gerarAtoms(token);
 		contexto.inicializador(this, new Token("(", Tipo.INICIALIZADOR));
+		boolean contem = false;
 		for (Atom atom : lista) {
-
+			if (contem) {
+				contexto.operador(this, new Token("+", Tipo.OPERADOR));
+			}
+			Token tok = atom.criar(token);
+			contem = true;
+			if (tok.isLista()) {
+				contexto.lista(this, tok);
+			} else if (tok.isMapa()) {
+				contexto.mapa(this, tok);
+			} else if (tok.isIdentity()) {
+				contexto.identity(this, tok);
+			} else {
+				invalidar(token);
+			}
 		}
 		contexto.finalizador(this, new Token(")", Tipo.FINALIZADOR));
 	}
