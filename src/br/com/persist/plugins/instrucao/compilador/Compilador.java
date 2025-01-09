@@ -279,7 +279,6 @@ public class Compilador {
 		GeraAtom(Token token) {
 			this.string = token.string;
 			this.token = token;
-			indice = 0;
 		}
 
 		Atom proximo() throws InstrucaoException {
