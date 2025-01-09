@@ -251,6 +251,8 @@ public class Compilador {
 				contexto.mapa(this, tok);
 			} else if (tok.isIdentity()) {
 				contexto.identity(this, tok);
+			} else if (tok.isString()) {
+				contexto.string(this, tok);
 			} else {
 				invalidar(token);
 			}
@@ -336,6 +338,9 @@ public class Compilador {
 		}
 
 		Token criar(Token token) throws InstrucaoException {
+			if (str.isEmpty()) {
+				return new Token("", Tipo.STRING);
+			}
 			StringBuilder sb = new StringBuilder();
 			for (char c : str.toCharArray()) {
 				if (c <= ' ') {
