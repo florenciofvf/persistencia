@@ -9,15 +9,11 @@ import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 public class ConstanteContexto extends Container {
 	public static final String LOAD_CONST = "load_const";
 	private final ConstanteIdentityContexto identity;
-	private boolean faseIdentity;
 
 	public ConstanteContexto() {
-		ExpressaoContexto expressao = new ExpressaoContexto();
-		expressao.adicionar(new ExpressaoContexto());
 		identity = new ConstanteIdentityContexto();
+		adicionar(new ExpressaoContexto(null));
 		contexto = Contextos.ABRE_PARENTESES;
-		adicionar(expressao);
-		faseIdentity = true;
 	}
 
 	public ExpressaoContexto getExpressao() {
@@ -27,19 +23,13 @@ public class ConstanteContexto extends Container {
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
-		if (faseIdentity) {
-			contexto = identity;
-		} else {
-			compilador.setContexto(getExpressao().getUltimo());
-			contexto = Contextos.PONTO_VIRGULA;
-		}
+		contexto = identity;
 	}
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		Container valor = getExpressao().getUltimo();
-		if (valor.isEmpty()) {
+		if (getExpressao().isEmpty()) {
 			throw new InstrucaoException("Valor indefinido para: " + identity.token.string, false);
 		}
 		compilador.setContexto(getPai());
@@ -48,8 +38,8 @@ public class ConstanteContexto extends Container {
 	@Override
 	public void separador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.separador(compilador, token);
-		contexto = Contextos.ABRE_PARENTESES;
-		faseIdentity = false;
+		compilador.setContexto(getExpressao());
+		contexto = Contextos.PONTO_VIRGULA;
 	}
 
 	@Override
