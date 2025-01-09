@@ -251,9 +251,10 @@ public class Compilador {
 	}
 
 	class GeraAtom {
-		final String string;
 		final Token token;
+		String string;
 		int indice;
+		Atom apos;
 
 		GeraAtom(Token token) {
 			this.string = token.string;
@@ -262,7 +263,48 @@ public class Compilador {
 		}
 
 		Atom proximo() throws InstrucaoException {
-			return null;
+			if (apos != null) {
+				Atom resp = apos;
+				apos = null;
+				return resp;
+			}
+			if (indice >= string.length()) {
+				return null;
+			}
+			int pos = string.indexOf("${");
+			if (pos == -1) {
+				Atom atom = new Atom(string, false);
+				indice = string.length();
+				return atom;
+			} else {
+				Atom atom = null;
+				if (pos > 0) {
+					String str = string.substring(0, pos);
+					atom = new Atom(str, false);
+				} else {
+					atom = new Atom("", false);
+				}
+				processarApos(pos + 2);
+				return atom;
+			}
+		}
+
+		void processarApos(int pos) throws InstrucaoException {
+			int pos2 = string.indexOf('}', pos);
+			if (pos2 == -1) {
+				invalidar(token);
+			}
+			String str = string.substring(pos, pos2).trim();
+			if (str.isEmpty()) {
+				invalidar(token);
+			}
+			apos = new Atom(str, true);
+			indice = pos2 + 1;
+			if (indice >= string.length()) {
+				string = "";
+			} else {
+				string = string.substring(indice);
+			}
 		}
 	}
 
