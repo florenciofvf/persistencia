@@ -237,7 +237,11 @@ public class Compilador {
 
 	private void processarString(Token token) throws InstrucaoException {
 		List<Atom> lista = gerarAtoms(token);
-		System.out.println(lista);
+		contexto.inicializador(this, new Token("(", Tipo.INICIALIZADOR));
+		for (Atom atom : lista) {
+
+		}
+		contexto.finalizador(this, new Token(")", Tipo.FINALIZADOR));
 	}
 
 	private List<Atom> gerarAtoms(Token token) throws InstrucaoException {
@@ -299,10 +303,11 @@ public class Compilador {
 				invalidar(token);
 			}
 			apos = new Atom(str, true);
-			if (pos2 + 1 >= string.length()) {
+			pos2++;
+			if (pos2 >= string.length()) {
 				string = "";
 			} else {
-				string = string.substring(pos2 + 1);
+				string = string.substring(pos2);
 			}
 		}
 	}
@@ -314,6 +319,36 @@ public class Compilador {
 		Atom(String str, boolean id) {
 			this.str = str;
 			this.id = id;
+		}
+
+		Token criar(Token token) throws InstrucaoException {
+			StringBuilder sb = new StringBuilder();
+			for (char c : str.toCharArray()) {
+				if (c <= ' ') {
+					continue;
+				}
+				sb.append(c);
+			}
+			String s = sb.toString();
+			if (s.startsWith("[")) {
+				if (!s.endsWith("]")) {
+					invalidar(token);
+				}
+				if (s.indexOf(':') != -1) {
+					return new Token(s, Tipo.LISTA);
+				} else if (s.indexOf('.') != -1) {
+					return new Token(s, Tipo.MAPA);
+				} else {
+					invalidar(token);
+					return null;
+				}
+			} else {
+				char c = s.charAt(0);
+				if (c >= '0' && c <= '9') {
+					invalidar(token);
+				}
+				return new Token(s, Tipo.IDENTITY);
+			}
 		}
 
 		@Override
