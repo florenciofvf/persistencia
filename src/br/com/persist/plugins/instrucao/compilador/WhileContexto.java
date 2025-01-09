@@ -7,8 +7,8 @@ public class WhileContexto extends Container {
 	private boolean faseExpressao;
 
 	public WhileContexto() {
+		adicionar(new ExpressaoContexto(null));
 		contexto = Contextos.ABRE_PARENTESES;
-		adicionar(new ExpressaoContexto());
 		adicionar(new IFEqContexto());
 		adicionar(new CorpoContexto());
 		faseExpressao = true;

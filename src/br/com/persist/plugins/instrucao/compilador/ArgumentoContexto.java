@@ -27,7 +27,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 			IdentityContexto ultimo = (IdentityContexto) excluirUltimo();
 			compilador.setContexto(new ArgumentoContexto(ultimo));
 		} else {
-			compilador.setContexto(new ExpressaoContexto());
+			compilador.setContexto(new ExpressaoContexto(null));
 		}
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}

@@ -13,8 +13,8 @@ public class IFContexto extends Container {
 	private int minimo = 3;
 
 	public IFContexto() {
+		adicionar(new ExpressaoContexto(null));
 		contexto = Contextos.ABRE_PARENTESES;
-		adicionar(new ExpressaoContexto());
 		adicionar(new IFEqContexto());
 		adicionar(new CorpoContexto());
 		faseExpressao = true;

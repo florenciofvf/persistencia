@@ -6,8 +6,11 @@ import java.util.Iterator;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ExpressaoContexto extends ListaMapaContexto {
-	public ExpressaoContexto() {
+	private Contexto finalizador;
+
+	public ExpressaoContexto(Contexto finalizador) {
 		contexto = Contextos.PARENTESES;
+		this.finalizador = finalizador;
 	}
 
 	@Override
@@ -17,15 +20,19 @@ public class ExpressaoContexto extends ListaMapaContexto {
 			IdentityContexto ultimo = (IdentityContexto) excluirUltimo();
 			compilador.setContexto(new ArgumentoContexto(ultimo));
 		} else {
-			compilador.setContexto(new ExpressaoContexto());
+			compilador.setContexto(new ExpressaoContexto(null));
 		}
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.finalizador(compilador, token);
-		compilador.setContexto(getPai());
+		if (finalizador == null) {
+			contexto.finalizador(compilador, token);
+			compilador.setContexto(getPai());
+		} else {
+			finalizador.finalizador(compilador, token);
+		}
 		montarArvore(compilador);
 	}
 
