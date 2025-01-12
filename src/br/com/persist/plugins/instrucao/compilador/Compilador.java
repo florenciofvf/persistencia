@@ -342,6 +342,9 @@ public class Compilador {
 			}
 			StringBuilder sb = getSring();
 			String s = sb.toString();
+			if (!id) {
+				return new Token(s, Tipo.STRING);
+			}
 			if (s.startsWith("[")) {
 				if (!s.endsWith("]")) {
 					invalidar(token);
