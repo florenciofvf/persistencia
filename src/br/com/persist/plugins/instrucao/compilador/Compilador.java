@@ -237,13 +237,14 @@ public class Compilador {
 
 	private void processarString(Token token) throws InstrucaoException {
 		List<Atom> lista = gerarAtoms(token);
-		contexto.inicializador(this, new Token("(", Tipo.INICIALIZADOR));
+		contexto.inicializador(this, new Token("(", Tipo.INICIALIZADOR, true));
 		boolean contem = false;
 		for (Atom atom : lista) {
 			if (contem) {
-				contexto.operador(this, new Token("+", Tipo.OPERADOR));
+				contexto.operador(this, new Token("+", Tipo.OPERADOR, true));
 			}
 			Token tok = atom.criar(token);
+			tok.ignorarCor = true;
 			contem = true;
 			if (tok.isLista()) {
 				contexto.lista(this, tok);
@@ -257,7 +258,7 @@ public class Compilador {
 				invalidar(token);
 			}
 		}
-		contexto.finalizador(this, new Token(")", Tipo.FINALIZADOR));
+		contexto.finalizador(this, new Token(")", Tipo.FINALIZADOR, true));
 	}
 
 	private List<Atom> gerarAtoms(Token token) throws InstrucaoException {

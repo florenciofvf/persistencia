@@ -4,12 +4,18 @@ public class Token {
 	final String string;
 	private int indice2;
 	private int indice;
+	boolean ignorarCor;
 	final Tipo tipo;
 
 	public Token(String string, Tipo tipo, int indice) {
 		this.string = string;
 		this.indice = indice;
 		this.tipo = tipo;
+	}
+
+	public Token(String string, Tipo tipo, boolean ignorarCor) {
+		this(string, tipo, 0);
+		this.ignorarCor = ignorarCor;
 	}
 
 	public Token(String string, Tipo tipo) {
@@ -39,6 +45,7 @@ public class Token {
 
 	public Token novo(Tipo tipo) {
 		Token token = new Token(string, tipo, indice);
+		token.ignorarCor = ignorarCor;
 		token.indice2 = indice2;
 		return token;
 	}
@@ -89,6 +96,14 @@ public class Token {
 
 	public boolean isTag() {
 		return tipo == Tipo.TAG;
+	}
+
+	public boolean isIgnorarCor() {
+		return ignorarCor;
+	}
+
+	public void setIgnorarCor(boolean ignorarCor) {
+		this.ignorarCor = ignorarCor;
 	}
 
 	@Override

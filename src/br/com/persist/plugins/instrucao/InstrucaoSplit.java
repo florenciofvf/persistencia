@@ -814,6 +814,9 @@ class InstrucaoCor {
 
 	static void processar(StyledDocument doc, List<Token> tokens) {
 		for (Token token : tokens) {
+			if (token.isIgnorarCor()) {
+				continue;
+			}
 			if (token.isReservado()) {
 				set(doc, token, RED);
 			} else if (token.isConstante()) {
