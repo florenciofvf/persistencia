@@ -170,6 +170,11 @@ public class Separador extends JSplitPane implements FicharioListener {
 		}
 	}
 
+	@Override
+	public void abaSelecionada(Fichario fichario, Transferivel transferivel) {
+		//
+	}
+
 	private void substituirPor(Component novo) {
 		setFicharioListener(novo, null);
 		Container parent = getParent();

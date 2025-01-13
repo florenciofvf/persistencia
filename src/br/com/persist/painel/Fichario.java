@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Util;
@@ -35,7 +36,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.Popup;
 import br.com.persist.marca.XMLUtil;
 
-public class Fichario extends JTabbedPane {
+public class Fichario extends JTabbedPane implements ChangeListener {
 	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_3);
 	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_3);
 	private transient Setor oes = new Setor(Setor.OESTE, Setor.ALPHA_3);
@@ -53,6 +54,7 @@ public class Fichario extends JTabbedPane {
 		new DropTarget(this, dropTargetListener);
 		addMouseListener(mouseListenerFichario);
 		addChangeListener(changeListenerInner);
+		addChangeListener(this);
 		popupFichario = new PopupFichario();
 		DragSource dragSource = DragSource.getDefaultDragSource();
 		dragSource.createDefaultDragGestureRecognizer(this, Transferivel.ACAO_VALIDA, dge -> {
@@ -65,6 +67,23 @@ public class Fichario extends JTabbedPane {
 				dge.startDrag(null, aba, dragSourceListener);
 			}
 		});
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		tabSelected(getSelectedIndex());
+	}
+
+	public void tabSelected(int i) {
+		if (ficharioListener == null) {
+			return;
+		}
+		if (i >= 0 && i < getTabCount()) {
+			Component comp = getComponentAt(i);
+			if (comp instanceof Transferivel) {
+				ficharioListener.abaSelecionada(this, (Transferivel) comp);
+			}
+		}
 	}
 
 	@Override
