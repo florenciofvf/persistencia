@@ -76,6 +76,7 @@ import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.painel.Fichario;
+import br.com.persist.painel.FicharioListener;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
@@ -105,6 +106,7 @@ class InstrucaoSplit extends SplitPane {
 		tree.adicionarOuvinte(treeListener);
 		panel = new PanelRoot();
 		setRightComponent(panel);
+		panel.tree = tree;
 		abrir();
 	}
 
@@ -154,6 +156,7 @@ class InstrucaoSplit extends SplitPane {
 
 	private Fichario novoFichario(Arquivo arquivo) {
 		Fichario fichario = new Fichario();
+		fichario.setFicharioListener(panel);
 		novaAba(fichario, arquivo);
 		return fichario;
 	}
@@ -631,8 +634,9 @@ class Aba extends Transferivel {
 	}
 }
 
-class PanelRoot extends Panel {
+class PanelRoot extends Panel implements FicharioListener {
 	private static final long serialVersionUID = 1L;
+	ArquivoTree tree;
 
 	void salvar(XMLUtil util) {
 		if (getComponentCount() == 0) {
@@ -731,6 +735,21 @@ class PanelRoot extends Panel {
 			objeto = getTransferivel(arquivo.getFile());
 		}
 	}
+
+	@Override
+	public void abaSelecionada(Fichario fichario, Transferivel transferivel) {
+		if (transferivel instanceof Aba) {
+			Aba aba = (Aba) transferivel;
+			if (aba.arquivo != null) {
+				ArquivoTreeUtil.selecionarObjeto(tree, aba.arquivo);
+			}
+		}
+	}
+
+	@Override
+	public void ficharioVazio(Fichario fichario) throws SeparadorException {
+		//
+	}
 }
 
 class AnotacaoHandler extends XMLHandler {
@@ -748,6 +767,7 @@ class AnotacaoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("fichario".equals(qName)) {
 			fichario = new Fichario();
+			fichario.setFicharioListener(root);
 			root.setRootIf(fichario);
 			setComponent(separador, fichario);
 		} else if ("separador".equals(qName)) {
