@@ -124,7 +124,7 @@ class InstrucaoSplit extends SplitPane {
 		File file = new File(fileRoot, "hierarquia.xml");
 		try {
 			if (file.exists() && file.canRead()) {
-				XML.processar(file, new AnotacaoHandler(panel, tree.getModelo()));
+				XML.processar(file, new InstrucaoHandler(panel, tree.getModelo()));
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
@@ -752,13 +752,13 @@ class PanelRoot extends Panel implements FicharioListener {
 	}
 }
 
-class AnotacaoHandler extends XMLHandler {
+class InstrucaoHandler extends XMLHandler {
 	private final ArquivoModelo modelo;
 	private final PanelRoot root;
 	Separador separador;
 	Fichario fichario;
 
-	AnotacaoHandler(PanelRoot root, ArquivoModelo modelo) {
+	InstrucaoHandler(PanelRoot root, ArquivoModelo modelo) {
 		this.modelo = modelo;
 		this.root = root;
 	}
