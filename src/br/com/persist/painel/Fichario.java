@@ -358,6 +358,9 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 
 	public static void setSelecionado(Fichario selecionado) {
 		Fichario.selecionado = selecionado;
+		if (selecionado != null) {
+			selecionado.stateChanged(null);
+		}
 	}
 
 	private class PopupFichario extends Popup {
