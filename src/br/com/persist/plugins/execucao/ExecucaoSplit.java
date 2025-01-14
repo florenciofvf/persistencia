@@ -40,6 +40,7 @@ import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.painel.Fichario;
+import br.com.persist.painel.Root;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
@@ -67,6 +68,7 @@ class ExecucaoSplit extends SplitPane {
 		tree.adicionarOuvinte(treeListener);
 		panel = new PanelRoot();
 		setRightComponent(panel);
+		panel.tree = tree;
 		abrir();
 	}
 
@@ -343,8 +345,9 @@ class Aba extends Transferivel {
 	}
 }
 
-class PanelRoot extends Panel {
+class PanelRoot extends Panel implements Root {
 	private static final long serialVersionUID = 1L;
+	ArquivoTree tree;
 
 	void salvar(XMLUtil util) {
 		if (getComponentCount() == 0) {
@@ -441,6 +444,16 @@ class PanelRoot extends Panel {
 				throw new ExecucaoException("fichario == null", false);
 			}
 			objeto = getTransferivel(arquivo.getFile());
+		}
+	}
+
+	@Override
+	public void abaSelecionada(Fichario fichario, Transferivel transferivel) {
+		if (transferivel instanceof Aba) {
+			Aba aba = (Aba) transferivel;
+			if (aba.arquivo != null) {
+				ArquivoTreeUtil.selecionarObjeto(tree, aba.arquivo);
+			}
 		}
 	}
 }
