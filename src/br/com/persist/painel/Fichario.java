@@ -75,15 +75,26 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 	}
 
 	public void tabSelected(int i) {
-		if (ficharioListener == null) {
-			return;
-		}
 		if (i >= 0 && i < getTabCount()) {
 			Component comp = getComponentAt(i);
 			if (comp instanceof Transferivel) {
-				ficharioListener.abaSelecionada(this, (Transferivel) comp);
+				Root root = getRoot();
+				if (root != null) {
+					root.abaSelecionada(this, (Transferivel) comp);
+				}
 			}
 		}
+	}
+
+	private Root getRoot() {
+		Component c = this;
+		while (c != null) {
+			if (c instanceof Root) {
+				return (Root) c;
+			}
+			c = c.getParent();
+		}
+		return null;
 	}
 
 	@Override

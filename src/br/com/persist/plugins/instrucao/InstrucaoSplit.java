@@ -76,7 +76,7 @@ import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.painel.Fichario;
-import br.com.persist.painel.FicharioListener;
+import br.com.persist.painel.Root;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
@@ -156,7 +156,6 @@ class InstrucaoSplit extends SplitPane {
 
 	private Fichario novoFichario(Arquivo arquivo) {
 		Fichario fichario = new Fichario();
-		fichario.setFicharioListener(panel);
 		novaAba(fichario, arquivo);
 		return fichario;
 	}
@@ -634,7 +633,7 @@ class Aba extends Transferivel {
 	}
 }
 
-class PanelRoot extends Panel implements FicharioListener {
+class PanelRoot extends Panel implements Root {
 	private static final long serialVersionUID = 1L;
 	ArquivoTree tree;
 
@@ -745,11 +744,6 @@ class PanelRoot extends Panel implements FicharioListener {
 			}
 		}
 	}
-
-	@Override
-	public void ficharioVazio(Fichario fichario) throws SeparadorException {
-		//
-	}
 }
 
 class InstrucaoHandler extends XMLHandler {
@@ -767,7 +761,6 @@ class InstrucaoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("fichario".equals(qName)) {
 			fichario = new Fichario();
-			fichario.setFicharioListener(root);
 			root.setRootIf(fichario);
 			setComponent(separador, fichario);
 		} else if ("separador".equals(qName)) {
