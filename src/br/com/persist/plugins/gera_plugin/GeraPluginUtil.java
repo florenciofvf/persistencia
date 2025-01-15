@@ -52,7 +52,7 @@ public class GeraPluginUtil {
 	}
 
 	static void handler(Config config) throws IOException {
-		transferir(config, "Handler");
+		transferir(config, "XMLHandler");
 	}
 
 	static void split(Config config) throws IOException {

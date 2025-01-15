@@ -5,7 +5,7 @@ import org.xml.sax.SAXException;
 
 import br.com.persist.marca.XMLHandler;
 
-class ###nameCap###Handler extends XMLHandler {
+class ###nameCap###XMLHandler extends XMLHandler {
 	//private ###nameCap### selecionado;
 
 	@Override
