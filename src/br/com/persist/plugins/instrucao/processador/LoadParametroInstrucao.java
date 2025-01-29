@@ -17,6 +17,9 @@ public class LoadParametroInstrucao extends Instrucao {
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Object valor = funcao.getValorParametro(parametros);
+		if (valor instanceof Funcao) {
+			valor = ((Funcao) valor).clonar();
+		}
 		pilhaOperando.push(valor);
 	}
 }
