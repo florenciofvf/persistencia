@@ -74,7 +74,7 @@ public class Funcao {
 
 	Instrucao getInstrucao() throws InstrucaoException {
 		if (ponteiro == null) {
-			throw new InstrucaoException("erro.funcao_sem_retorno", nome, biblioteca.getNome());
+			throw new InstrucaoException("erro.funcao_sem_instrucao", nome, biblioteca.getNome());
 		}
 		Instrucao resp = ponteiro.instrucao;
 		ponteiro = ponteiro.proximo;
