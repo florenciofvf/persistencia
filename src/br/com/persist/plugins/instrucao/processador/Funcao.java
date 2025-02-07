@@ -21,6 +21,7 @@ public class Funcao {
 	private InstrucaoItem cauda;
 	private final String nome;
 	private boolean tipoVoid;
+	private Funcao parent;
 
 	public Funcao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -33,6 +34,7 @@ public class Funcao {
 		funcao.biblioNativa = biblioNativa;
 		funcao.biblioteca = biblioteca;
 		funcao.tipoVoid = tipoVoid;
+		funcao.parent = parent;
 		for (Parametro p : parametros) {
 			funcao.addParametro(p.getNome());
 		}
@@ -42,6 +44,14 @@ public class Funcao {
 			no = no.proximo;
 		}
 		return funcao;
+	}
+
+	public Funcao getParent() {
+		return parent;
+	}
+
+	public void setParent(Funcao parent) {
+		this.parent = parent;
 	}
 
 	public Biblioteca getBiblioteca() {
