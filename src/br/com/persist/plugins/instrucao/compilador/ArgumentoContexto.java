@@ -48,6 +48,12 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	}
 
 	@Override
+	public void lambda(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.setContexto(new LambdaContexto());
+		adicionarImpl(compilador, token, (Container) compilador.getContexto());
+	}
+
+	@Override
 	protected void adicionarImpl(Compilador compilador, Token token, Container c) throws InstrucaoException {
 		Container ult = getUltimo();
 		if (ult != null && !(ult instanceof SeparadorContexto) && !(c instanceof SeparadorContexto)) {

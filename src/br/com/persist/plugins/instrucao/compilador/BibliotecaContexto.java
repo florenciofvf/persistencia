@@ -9,6 +9,7 @@ import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 public class BibliotecaContexto extends Container {
 	protected CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
 	private final String nome;
+	private int idDinamico;
 
 	public BibliotecaContexto(String nome) {
 		this.nome = nome;
@@ -16,6 +17,10 @@ public class BibliotecaContexto extends Container {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public int getIdDinamico() {
+		return idDinamico++;
 	}
 
 	@Override
