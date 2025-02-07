@@ -70,6 +70,7 @@ public class Compilador {
 		if (biblioteca.isEmpty()) {
 			return null;
 		}
+		biblioteca.fragmentar();
 		biblioteca.estruturar();
 		biblioteca.indexar();
 		biblioteca.desviar();

@@ -91,15 +91,15 @@ public abstract class Container extends AbstratoContexto {
 		return (BibliotecaContexto) c;
 	}
 
-	protected FuncaoContexto getFuncao() {
+	protected IFuncaoContexto getFuncao() {
 		Container c = this;
 		while (c != null) {
-			if (c instanceof FuncaoContexto) {
+			if (c instanceof IFuncaoContexto) {
 				break;
 			}
 			c = c.pai;
 		}
-		return (FuncaoContexto) c;
+		return (IFuncaoContexto) c;
 	}
 
 	protected boolean ehParametro(String id) throws InstrucaoException {
@@ -107,7 +107,7 @@ public abstract class Container extends AbstratoContexto {
 	}
 
 	protected ParametroContexto getParametroContexto(String id) throws InstrucaoException {
-		FuncaoContexto funcao = getFuncao();
+		IFuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
 			throw new InstrucaoException("erro.funcao_parent", id);
 		}
@@ -193,6 +193,17 @@ public abstract class Container extends AbstratoContexto {
 				negativo = new NegativoContexto();
 			}
 		}
+	}
+
+	public void fragmentar() throws InstrucaoException {
+		fragmentarImpl();
+		for (int i = 0; i < componentes.size(); i++) {
+			Container item = componentes.get(i);
+			item.fragmentar();
+		}
+	}
+
+	protected void fragmentarImpl() throws InstrucaoException {
 	}
 
 	public void estruturar() {

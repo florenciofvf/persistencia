@@ -74,6 +74,9 @@ public class BibliotecaContexto extends Container {
 			} else if (c instanceof FuncaoNativaContexto) {
 				FuncaoNativaContexto funcao = (FuncaoNativaContexto) c;
 				funcao.indexar();
+			} else if (c instanceof LambdaContexto) {
+				LambdaContexto funcao = (LambdaContexto) c;
+				funcao.indexar();
 			}
 		}
 	}
@@ -87,7 +90,7 @@ public class BibliotecaContexto extends Container {
 			}
 		}
 		for (Container c : componentes) {
-			if (c instanceof FuncaoContexto || c instanceof FuncaoNativaContexto) {
+			if (c instanceof FuncaoContexto || c instanceof FuncaoNativaContexto || c instanceof LambdaContexto) {
 				c.salvar(compilador, pw);
 				pw.println();
 			}

@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
 
@@ -51,6 +52,22 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	public void lambda(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.setContexto(new LambdaContexto());
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
+	}
+
+	@Override
+	protected void fragmentarImpl() throws InstrucaoException {
+		for (int i = 0; i < componentes.size(); i++) {
+			Container item = componentes.get(i);
+			if (item instanceof LambdaContexto) {
+				LambdaContexto lamb = (LambdaContexto) item;
+				Token token = new Token(lamb.getNome(), Tipo.IDENTITY, -1);
+				IdentityContexto id = new IdentityContexto(token);
+				id.pai = this;
+				componentes.set(i, id);
+				BibliotecaContexto biblio = getBiblioteca();
+				biblio.adicionar(lamb);
+			}
+		}
 	}
 
 	@Override
@@ -161,7 +178,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	}
 
 	private boolean ehInvokeParam() throws InstrucaoException {
-		FuncaoContexto funcao = getFuncao();
+		IFuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
 			throw new InstrucaoException("erro.funcao_parent", identity.getId());
 		}

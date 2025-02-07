@@ -18,7 +18,7 @@ public class RetornoContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
-		FuncaoContexto funcao = getFuncao();
+		IFuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
 			compilador.invalidar(token);
 		} else if (funcao.isRetornoVoid() && getExpressao().getSize() > 0) {

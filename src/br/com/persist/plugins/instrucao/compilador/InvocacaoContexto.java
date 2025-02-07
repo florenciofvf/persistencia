@@ -113,7 +113,7 @@ public class InvocacaoContexto extends Container {
 	}
 
 	private boolean ehInvokeParam() throws InstrucaoException {
-		FuncaoContexto funcao = getFuncao();
+		IFuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
 			throw new InstrucaoException("erro.funcao_parent", token.string);
 		}
