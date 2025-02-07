@@ -390,7 +390,11 @@ public class Compilador {
 
 	private void processarReservadoOuIdentity(Token ident) throws InstrucaoException {
 		if (ident.isReservado()) {
-			contexto.reservado(this, ident);
+			if (ident.isLamb()) {
+				contexto.lambda(this, ident);
+			} else {
+				contexto.reservado(this, ident);
+			}
 			tokens.add(ident);
 		} else {
 			contexto.identity(this, ident);
@@ -700,7 +704,8 @@ public class Compilador {
 		return InstrucaoConstantes.CONST.equals(s) || InstrucaoConstantes.DEFUN.equals(s)
 				|| InstrucaoConstantes.DEFUN_NATIVE.equals(s) || InstrucaoConstantes.IF.equals(s)
 				|| InstrucaoConstantes.WHILE.equals(s) || InstrucaoConstantes.ELSEIF.equals(s)
-				|| InstrucaoConstantes.ELSE.equals(s) || InstrucaoConstantes.RETURN.equals(s);
+				|| InstrucaoConstantes.ELSE.equals(s) || InstrucaoConstantes.RETURN.equals(s)
+				|| InstrucaoConstantes.LAMB.equals(s);
 	}
 
 	void checarTailCall(Token token) throws InstrucaoException {

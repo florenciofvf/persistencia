@@ -32,6 +32,11 @@ public interface Contexto {
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException;
 
 	/*
+	 * Exemplo: 'lamb(e){return e;}'
+	 */
+	public void lambda(Compilador compilador, Token token) throws InstrucaoException;
+
+	/*
 	 * Exemplo: 'texto'
 	 */
 	public void string(Compilador compilador, Token token) throws InstrucaoException;

@@ -24,6 +24,7 @@ public class InstrucaoConstantes {
 	public static final String CONST = "const";
 	public static final String DEFUN = "defun";
 	public static final String ELSE = "else";
+	public static final String LAMB = "lamb";
 	public static final String IF = "if";
 
 	private InstrucaoConstantes() {

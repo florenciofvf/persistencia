@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
+
 public class Token {
 	final String string;
 	private int indice2;
@@ -84,6 +86,10 @@ public class Token {
 
 	public boolean isMapa() {
 		return tipo == Tipo.MAPA;
+	}
+
+	public boolean isLamb() {
+		return InstrucaoConstantes.LAMB.equals(string);
 	}
 
 	public boolean isEspecial() {
