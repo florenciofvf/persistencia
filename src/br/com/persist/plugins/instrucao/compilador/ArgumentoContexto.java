@@ -179,7 +179,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	}
 
 	private boolean ehInvokeParam() throws InstrucaoException {
-		IFuncaoContexto funcao = getFuncao();
+		IFuncaoContexto funcao = getIFuncaoContexto();
 		if (funcao == null) {
 			throw new InstrucaoException(ERRO_FUNCAO_PARENT, identity.getId());
 		}
@@ -188,7 +188,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	}
 
 	private FuncaoContexto getFuncaoContexto() throws InstrucaoException {
-		IFuncaoContexto funcao = getFuncao();
+		IFuncaoContexto funcao = getIFuncaoContexto();
 		if (!(funcao instanceof FuncaoContexto)) {
 			throw new InstrucaoException(ERRO_FUNCAO_PARENT, identity.getId());
 		}

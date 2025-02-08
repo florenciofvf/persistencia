@@ -62,7 +62,7 @@ public class ConstanteContexto extends Container {
 
 	@Override
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
-		if (getFuncao() == null) {
+		if (getIFuncaoContexto() == null) {
 			pw.println(InstrucaoConstantes.PREFIXO_CONSTANTE + identity);
 		}
 		getExpressao().salvar(compilador, pw);

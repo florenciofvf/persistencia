@@ -92,7 +92,7 @@ public abstract class Container extends AbstratoContexto {
 		return (BibliotecaContexto) c;
 	}
 
-	protected IFuncaoContexto getFuncao() {
+	protected IFuncaoContexto getIFuncaoContexto() {
 		Container c = this;
 		while (c != null) {
 			if (c instanceof IFuncaoContexto) {
@@ -108,7 +108,7 @@ public abstract class Container extends AbstratoContexto {
 	}
 
 	protected ParametroContexto getParametroContexto(String id, AtomicBoolean paramSuper) throws InstrucaoException {
-		IFuncaoContexto funcao = getFuncao();
+		IFuncaoContexto funcao = getIFuncaoContexto();
 		if (funcao == null) {
 			throw new InstrucaoException("erro.funcao_parent", id);
 		}
