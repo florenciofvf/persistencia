@@ -24,6 +24,10 @@ public class LoadFuncaoLambInstrucao extends Instrucao {
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Funcao clone = biblioteca.getFuncao(nomeFuncao).clonar();
+		if (funcao == null) {
+			throw new InstrucaoException(LoadParametroSuperInstrucao.ERRO_FUNCAO_PARENT_INEXISTENTE, nomeFuncao,
+					biblioteca.getNome());
+		}
 		clone.setParent(funcao);
 		pilhaOperando.push(clone);
 	}
