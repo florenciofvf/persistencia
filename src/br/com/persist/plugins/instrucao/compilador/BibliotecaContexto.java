@@ -55,8 +55,8 @@ public class BibliotecaContexto extends Container {
 				if (funcao.getNome().equals(nome)) {
 					return funcao;
 				}
-			} else if (c instanceof LambdaContexto) {
-				LambdaContexto funcao = (LambdaContexto) c;
+			} else if (c instanceof LambContexto) {
+				LambContexto funcao = (LambContexto) c;
 				if (funcao.getNome().equals(nome)) {
 					return funcao;
 				}
@@ -79,8 +79,8 @@ public class BibliotecaContexto extends Container {
 			} else if (c instanceof FuncaoNativaContexto) {
 				FuncaoNativaContexto funcao = (FuncaoNativaContexto) c;
 				funcao.indexar();
-			} else if (c instanceof LambdaContexto) {
-				LambdaContexto funcao = (LambdaContexto) c;
+			} else if (c instanceof LambContexto) {
+				LambContexto funcao = (LambContexto) c;
 				funcao.indexar();
 			}
 		}
@@ -95,7 +95,7 @@ public class BibliotecaContexto extends Container {
 			}
 		}
 		for (Container c : componentes) {
-			if (c instanceof FuncaoContexto || c instanceof FuncaoNativaContexto || c instanceof LambdaContexto) {
+			if (c instanceof FuncaoContexto || c instanceof FuncaoNativaContexto || c instanceof LambContexto) {
 				c.salvar(compilador, pw);
 				pw.println();
 			}

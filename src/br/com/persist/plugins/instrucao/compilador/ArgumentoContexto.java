@@ -51,7 +51,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 
 	@Override
 	public void lambda(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.setContexto(new LambdaContexto(getFuncaoContexto()));
+		compilador.setContexto(new LambContexto(getFuncaoContexto()));
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}
 
@@ -59,8 +59,8 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	protected void fragmentarImpl() throws InstrucaoException {
 		for (int i = 0; i < componentes.size(); i++) {
 			Container item = componentes.get(i);
-			if (item instanceof LambdaContexto) {
-				LambdaContexto lamb = (LambdaContexto) item;
+			if (item instanceof LambContexto) {
+				LambContexto lamb = (LambContexto) item;
 				Token token = new Token(lamb.getNome(), Tipo.IDENTITY, -1);
 				IdentityContexto id = new IdentityContexto(token);
 				id.pai = this;

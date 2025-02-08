@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
-public class LambdaContexto extends Container implements IFuncaoContexto {
+public class LambContexto extends Container implements IFuncaoContexto {
 	public static final AbreChaveOuOperadorLamb CHAVE_OU_OPERADOR = new AbreChaveOuOperadorLamb();
 	protected final FuncaoContexto funcaoContexto;
 	private boolean faseParametros;
@@ -13,7 +13,7 @@ public class LambdaContexto extends Container implements IFuncaoContexto {
 	private boolean retornoVoid;
 	private String nomeDinamico;
 
-	public LambdaContexto(FuncaoContexto funcaoContexto) {
+	public LambContexto(FuncaoContexto funcaoContexto) {
 		this.funcaoContexto = funcaoContexto;
 		adicionar(new ParametrosContexto());
 		adicionar(new CorpoContexto());
