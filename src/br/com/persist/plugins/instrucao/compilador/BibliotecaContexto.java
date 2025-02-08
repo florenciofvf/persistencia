@@ -39,11 +39,11 @@ public class BibliotecaContexto extends Container {
 		}
 	}
 
-	public boolean contemFuncao(String nome) {
+	public boolean contemFuncao(String nome) throws InstrucaoException {
 		return getFuncao(nome) != null;
 	}
 
-	public Container getFuncao(String nome) {
+	public Container getFuncao(String nome) throws InstrucaoException {
 		for (Container c : componentes) {
 			if (c instanceof FuncaoContexto) {
 				FuncaoContexto funcao = (FuncaoContexto) c;
@@ -52,6 +52,11 @@ public class BibliotecaContexto extends Container {
 				}
 			} else if (c instanceof FuncaoNativaContexto) {
 				FuncaoNativaContexto funcao = (FuncaoNativaContexto) c;
+				if (funcao.getNome().equals(nome)) {
+					return funcao;
+				}
+			} else if (c instanceof LambdaContexto) {
+				LambdaContexto funcao = (LambdaContexto) c;
 				if (funcao.getNome().equals(nome)) {
 					return funcao;
 				}

@@ -1,6 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
@@ -30,16 +31,11 @@ public class IdentityContexto extends Container {
 		if (tokenCor != null) {
 			compilador.tokens.add(tokenCor);
 		}
-		if (ehParametro(id)) {
-			print(pw, ParametroContexto.LOAD_PARAM, id);
-			if (tokenCor == null) {
-				compilador.tokens.add(token.novo(Tipo.PARAMETRO));
-			}
+		AtomicBoolean paramSuper = new AtomicBoolean(false);
+		if (ehParametro(id, paramSuper)) {
+			salvarParametro(compilador, pw, paramSuper);
 		} else if (ehFuncao()) {
-			print(pw, FuncaoContexto.LOAD_FUNCTION, id);
-			if (tokenCor == null) {
-				compilador.tokens.add(token.novo(Tipo.FUNCAO));
-			}
+			salvarFuncao(compilador, pw);
 		} else {
 			print(pw, ConstanteContexto.LOAD_CONST, id);
 			if (tokenCor == null) {
@@ -47,6 +43,29 @@ public class IdentityContexto extends Container {
 			}
 		}
 		salvarNegativo(compilador, pw);
+	}
+
+	private void salvarParametro(Compilador compilador, PrintWriter pw, AtomicBoolean paramSuper) {
+		if (paramSuper.get()) {
+			print(pw, ParametroContexto.LOAD_PARAM_SUPER, id);
+		} else {
+			print(pw, ParametroContexto.LOAD_PARAM, id);
+		}
+		if (tokenCor == null) {
+			compilador.tokens.add(token.novo(Tipo.PARAMETRO));
+		}
+	}
+
+	private void salvarFuncao(Compilador compilador, PrintWriter pw) {
+		char c = id.charAt(0);
+		if (c >= '0' && c <= '9') {
+			print(pw, FuncaoContexto.LOAD_FUNCTION_LAMBDA, id);
+		} else {
+			print(pw, FuncaoContexto.LOAD_FUNCTION, id);
+		}
+		if (tokenCor == null) {
+			compilador.tokens.add(token.novo(Tipo.FUNCAO));
+		}
 	}
 
 	private boolean ehFuncao() throws InstrucaoException {

@@ -25,6 +25,11 @@ public class LambdaContexto extends Container implements IFuncaoContexto {
 		return funcaoContexto;
 	}
 
+	@Override
+	public IFuncaoContexto getFuncaoParent() {
+		return funcaoContexto;
+	}
+
 	public String getNome() throws InstrucaoException {
 		if (nomeDinamico == null) {
 			BibliotecaContexto biblio = getBiblioteca();

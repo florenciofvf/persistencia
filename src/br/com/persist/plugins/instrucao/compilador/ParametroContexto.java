@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 
 public class ParametroContexto extends Container {
+	public static final String LOAD_PARAM_SUPER = "load_param_super";
 	public static final String LOAD_PARAM = "load_param";
 	protected final String nome;
 	protected final String head;

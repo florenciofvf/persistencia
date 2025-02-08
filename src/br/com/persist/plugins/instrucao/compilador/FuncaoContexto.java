@@ -7,6 +7,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoContexto extends Container implements IFuncaoContexto {
 	public static final AbreChaveOuOperador CHAVE_OU_OPERADOR = new AbreChaveOuOperador();
+	public static final String LOAD_FUNCTION_LAMBDA = "load_function_lamb";
 	public static final String LOAD_FUNCTION = "load_function";
 	private final FuncaoIdentityContexto identity;
 	private boolean faseParametros;
@@ -19,6 +20,11 @@ public class FuncaoContexto extends Container implements IFuncaoContexto {
 		adicionar(new CorpoContexto());
 		faseParametros = true;
 		contexto = identity;
+	}
+
+	@Override
+	public IFuncaoContexto getFuncaoParent() {
+		return null;
 	}
 
 	public String getNome() {

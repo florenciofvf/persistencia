@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -102,17 +103,25 @@ public abstract class Container extends AbstratoContexto {
 		return (IFuncaoContexto) c;
 	}
 
-	protected boolean ehParametro(String id) throws InstrucaoException {
-		return getParametroContexto(id) != null;
+	protected boolean ehParametro(String id, AtomicBoolean paramSuper) throws InstrucaoException {
+		return getParametroContexto(id, paramSuper) != null;
 	}
 
-	protected ParametroContexto getParametroContexto(String id) throws InstrucaoException {
+	protected ParametroContexto getParametroContexto(String id, AtomicBoolean paramSuper) throws InstrucaoException {
 		IFuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
 			throw new InstrucaoException("erro.funcao_parent", id);
 		}
 		ParametrosContexto parametros = funcao.getParametros();
-		return parametros.getParametro(id);
+		ParametroContexto resp = parametros.getParametro(id);
+		if (resp == null && funcao.getFuncaoParent() != null) {
+			parametros = funcao.getFuncaoParent().getParametros();
+			resp = parametros.getParametro(id);
+			if (resp != null) {
+				paramSuper.set(true);
+			}
+		}
+		return resp;
 	}
 
 	public List<Container> getComponentes() {

@@ -22,6 +22,11 @@ public class FuncaoNativaContexto extends Container implements IFuncaoContexto {
 		faseBiblio = true;
 	}
 
+	@Override
+	public IFuncaoContexto getFuncaoParent() {
+		return null;
+	}
+
 	public String getNome() {
 		return getIdentity().toString();
 	}

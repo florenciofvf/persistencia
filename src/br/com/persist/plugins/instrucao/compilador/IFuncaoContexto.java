@@ -9,5 +9,7 @@ public interface IFuncaoContexto {
 
 	ParametrosContexto getParametros();
 
+	IFuncaoContexto getFuncaoParent();
+
 	boolean isRetornoVoid();
 }
