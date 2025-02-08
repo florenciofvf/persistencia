@@ -7,7 +7,7 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class FuncaoContexto extends Container implements IFuncaoContexto {
 	public static final AbreChaveOuOperador CHAVE_OU_OPERADOR = new AbreChaveOuOperador();
-	public static final String LOAD_FUNCTION_LAMBDA = "load_function_lamb";
+	public static final String LOAD_FUNCTION_LAMB = "load_function_lamb";
 	public static final String LOAD_FUNCTION = "load_function";
 	private final FuncaoIdentityContexto identity;
 	private boolean faseParametros;

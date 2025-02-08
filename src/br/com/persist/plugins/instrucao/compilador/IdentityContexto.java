@@ -59,7 +59,7 @@ public class IdentityContexto extends Container {
 	private void salvarFuncao(Compilador compilador, PrintWriter pw) {
 		char c = id.charAt(0);
 		if (c >= '0' && c <= '9') {
-			print(pw, FuncaoContexto.LOAD_FUNCTION_LAMBDA, id);
+			print(pw, FuncaoContexto.LOAD_FUNCTION_LAMB, id);
 		} else {
 			print(pw, FuncaoContexto.LOAD_FUNCTION, id);
 		}
