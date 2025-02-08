@@ -34,7 +34,7 @@ public class LambContexto extends Container implements IFuncaoContexto {
 		if (nomeDinamico == null) {
 			BibliotecaContexto biblio = getBiblioteca();
 			if (biblio == null) {
-				throw new InstrucaoException("erro.funcao_parent", "lambda");
+				throw new InstrucaoException(ArgumentoContexto.ERRO_FUNCAO_PARENT, "lambda");
 			}
 			nomeDinamico = biblio.getIdDinamico() + "_lambda";
 		}

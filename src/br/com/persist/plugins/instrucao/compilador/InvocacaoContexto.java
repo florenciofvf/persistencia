@@ -53,7 +53,7 @@ public class InvocacaoContexto extends Container {
 		BibliotecaContexto biblio = getBiblioteca();
 		String id = token.string;
 		if (biblio == null) {
-			throw new InstrucaoException("erro.funcao_parent", id);
+			throw new InstrucaoException(ArgumentoContexto.ERRO_FUNCAO_PARENT, id);
 		}
 		String[] strings = id.split("\\.");
 		if (strings.length == 1) {
@@ -115,7 +115,7 @@ public class InvocacaoContexto extends Container {
 	private boolean ehInvokeParam() throws InstrucaoException {
 		IFuncaoContexto funcao = getIFuncaoContexto();
 		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_parent", token.string);
+			throw new InstrucaoException(ArgumentoContexto.ERRO_FUNCAO_PARENT, token.string);
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(token.string);

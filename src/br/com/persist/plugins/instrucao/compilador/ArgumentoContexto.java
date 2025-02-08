@@ -10,7 +10,7 @@ import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
 
 public class ArgumentoContexto extends ListaMapaContexto {
-	private static final String ERRO_FUNCAO_PARENT = "erro.funcao_parent";
+	public static final String ERRO_FUNCAO_PARENT = "erro.funcao_parent";
 	private final IdentityContexto identity;
 
 	public ArgumentoContexto(IdentityContexto identity) {

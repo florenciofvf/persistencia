@@ -110,7 +110,7 @@ public abstract class Container extends AbstratoContexto {
 	protected ParametroContexto getParametroContexto(String id, AtomicBoolean paramSuper) throws InstrucaoException {
 		IFuncaoContexto funcao = getIFuncaoContexto();
 		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_parent", id);
+			throw new InstrucaoException(ArgumentoContexto.ERRO_FUNCAO_PARENT, id);
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		ParametroContexto resp = parametros.getParametro(id);

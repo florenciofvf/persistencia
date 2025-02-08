@@ -71,7 +71,7 @@ public class IdentityContexto extends Container {
 	private boolean ehFuncao() throws InstrucaoException {
 		BibliotecaContexto biblio = getBiblioteca();
 		if (biblio == null) {
-			throw new InstrucaoException("erro.funcao_parent", id);
+			throw new InstrucaoException(ArgumentoContexto.ERRO_FUNCAO_PARENT, id);
 		}
 		String[] strings = id.split("\\.");
 		if (strings.length == 1) {
