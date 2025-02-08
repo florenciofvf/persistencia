@@ -3,6 +3,7 @@ package br.com.persist.plugins.instrucao.compilador;
 import java.io.PrintWriter;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.processador.Biblioteca;
 
 public class ListaContexto extends Container {
 	private final String id;
@@ -32,6 +33,18 @@ public class ListaContexto extends Container {
 			print(pw, InvocacaoContexto.INVOKE_EXP, "ilist.create");
 		} else {
 			print(pw, ParametroContexto.LOAD_PARAM, id);
+		}
+	}
+
+	@Override
+	protected void validarImpl() throws InstrucaoException {
+		if (ehListaVazia(id)) {
+			BibliotecaContexto biblio = getBiblioteca();
+			if (biblio == null) {
+				throw new InstrucaoException(ArgumentoContexto.ERRO_FUNCAO_PARENT, id);
+			}
+			Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca("ilist");
+			biblioteca.getFuncao("create");
 		}
 	}
 
