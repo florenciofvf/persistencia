@@ -10,6 +10,7 @@ import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
 
 public class ArgumentoContexto extends ListaMapaContexto {
+	private static final String ERRO_FUNCAO_PARENT = "erro.funcao_parent";
 	private final IdentityContexto identity;
 
 	public ArgumentoContexto(IdentityContexto identity) {
@@ -50,7 +51,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 
 	@Override
 	public void lambda(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.setContexto(new LambdaContexto());
+		compilador.setContexto(new LambdaContexto(getFuncaoContexto()));
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}
 
@@ -144,7 +145,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 		}
 		BibliotecaContexto biblio = getBiblioteca();
 		if (biblio == null) {
-			throw new InstrucaoException("erro.funcao_parent", id);
+			throw new InstrucaoException(ERRO_FUNCAO_PARENT, id);
 		}
 		String[] strings = id.split("\\.");
 		if (strings.length == 1) {
@@ -180,10 +181,18 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	private boolean ehInvokeParam() throws InstrucaoException {
 		IFuncaoContexto funcao = getFuncao();
 		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_parent", identity.getId());
+			throw new InstrucaoException(ERRO_FUNCAO_PARENT, identity.getId());
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		return parametros.contem(identity.getId());
+	}
+
+	private FuncaoContexto getFuncaoContexto() throws InstrucaoException {
+		IFuncaoContexto funcao = getFuncao();
+		if (!(funcao instanceof FuncaoContexto)) {
+			throw new InstrucaoException(ERRO_FUNCAO_PARENT, identity.getId());
+		}
+		return (FuncaoContexto) funcao;
 	}
 
 	@Override

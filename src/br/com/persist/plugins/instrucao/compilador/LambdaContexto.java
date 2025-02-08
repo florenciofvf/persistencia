@@ -7,16 +7,22 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class LambdaContexto extends Container implements IFuncaoContexto {
 	public static final AbreChaveOuOperadorLamb CHAVE_OU_OPERADOR = new AbreChaveOuOperadorLamb();
+	protected final FuncaoContexto funcaoContexto;
 	private boolean faseParametros;
 	private boolean identityVoid;
 	private boolean retornoVoid;
 	private String nomeDinamico;
 
-	public LambdaContexto() {
+	public LambdaContexto(FuncaoContexto funcaoContexto) {
+		this.funcaoContexto = funcaoContexto;
 		adicionar(new ParametrosContexto());
 		adicionar(new CorpoContexto());
 		faseParametros = true;
 		contexto = Contextos.ABRE_PARENTESES;
+	}
+
+	public FuncaoContexto getFuncaoContexto() {
+		return funcaoContexto;
 	}
 
 	public String getNome() throws InstrucaoException {
