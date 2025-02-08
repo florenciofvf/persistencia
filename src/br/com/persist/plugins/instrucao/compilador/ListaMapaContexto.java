@@ -1,5 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
@@ -20,7 +22,7 @@ public abstract class ListaMapaContexto extends Container {
 
 	@Override
 	public void lista(Compilador compilador, Token token) throws InstrucaoException {
-		ParametroContexto param = getParametroContexto(token.getString());
+		ParametroContexto param = getParametroContexto(token.getString(), new AtomicBoolean());
 		if (param != null || ListaContexto.ehListaVazia(token.getString())) {
 			adicionarImpl(compilador, token, new ListaContexto(token));
 		} else {
@@ -34,7 +36,7 @@ public abstract class ListaMapaContexto extends Container {
 		int pos = string.indexOf('.');
 		String head = string.substring(1, pos);
 		String tail = string.substring(pos + 1, string.length() - 1);
-		ParametroContexto param = getParametroContexto(head);
+		ParametroContexto param = getParametroContexto(head, new AtomicBoolean());
 		if (param != null) {
 			if (param.isTail(head)) {
 				compilador.invalidar(token);
@@ -88,7 +90,7 @@ public abstract class ListaMapaContexto extends Container {
 
 	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
-		ParametroContexto param = getParametroContexto(token.getString());
+		ParametroContexto param = getParametroContexto(token.getString(), new AtomicBoolean());
 		if (param == null) {
 			adicionarImpl(compilador, token, new IdentityContexto(token));
 		} else {
