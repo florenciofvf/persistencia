@@ -1,7 +1,7 @@
 package br.com.persist.plugins.instrucao.processador;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17,8 +17,8 @@ public class Biblioteca {
 
 	public Biblioteca(String nome) {
 		this.nome = Objects.requireNonNull(nome);
-		constantes = new HashMap<>();
-		funcoes = new HashMap<>();
+		constantes = new LinkedHashMap<>();
+		funcoes = new LinkedHashMap<>();
 	}
 
 	public String getNome() {
