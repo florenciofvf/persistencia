@@ -23,7 +23,14 @@ public abstract class InvocacaoParam extends Instrucao {
 	@Override
 	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
-		Funcao funcaoParam = (Funcao) funcao.getValorParametro(nomeParam);
+		Object valor = funcao.getValorParametro(nomeParam);
+		if (valor == null) {
+			throw new InstrucaoException("erro.valor_param", nomeParam);
+		}
+		if (!(valor instanceof Funcao)) {
+			throw new InstrucaoException("erro.valor_param_nao_funcao", nomeParam, valor.toString());
+		}
+		Funcao funcaoParam = (Funcao) valor;
 		Invocacao.validar(funcaoParam, exp, totalParam);
 		Invocacao.setParametros(funcaoParam, pilhaOperando);
 		pilhaFuncao.push(funcaoParam);
