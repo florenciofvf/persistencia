@@ -11,11 +11,15 @@ public class HoraUtil {
 	}
 
 	public static String getHoraAtual() {
+		return formatar(getHoraAtualInt());
+	}
+
+	public static int getHoraAtualInt() {
 		Calendar c = Calendar.getInstance();
 		int hora = c.get(Calendar.HOUR_OF_DAY) * HORA;
 		int minuto = c.get(Calendar.MINUTE) * MINUTO;
 		int segundo = c.get(Calendar.SECOND);
-		return formatar(hora + minuto + segundo);
+		return hora + minuto + segundo;
 	}
 
 	public static String formatar(int segundos) {

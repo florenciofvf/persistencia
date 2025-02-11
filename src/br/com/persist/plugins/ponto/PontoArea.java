@@ -143,7 +143,8 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		g2.drawString("<<< TRABALHANDO", x2, y);
 		y += 120;
 
-		g2.drawString(HoraUtil.getHoraAtual(), x, y);
+		int horaAtual = HoraUtil.getHoraAtualInt();
+		g2.drawString(HoraUtil.formatar(horaAtual), x, y);
 		g2.drawString("<<< HORA ATUAL", x2, y);
 		y += 120;
 
@@ -151,6 +152,10 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 		if (faltando > 0) {
 			g2.drawString(HoraUtil.formatar(faltando), x, y);
 			g2.drawString("<<< FALTANDO", x2, y);
+			y += 120;
+
+			g2.drawString(HoraUtil.formatar(horaAtual + faltando), x, y);
+			g2.drawString("<<< FINAL", x2, y);
 		} else if (faltando < 0) {
 			g2.drawString(HoraUtil.formatar(faltando * -1), x, y);
 			g2.drawString("<<< SALDO POSITIVO", x2, y);
