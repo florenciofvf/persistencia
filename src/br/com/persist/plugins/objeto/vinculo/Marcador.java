@@ -1,12 +1,13 @@
 package br.com.persist.plugins.objeto.vinculo;
 
+import java.awt.Color;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.border.Border;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.TextEditor;
 
 public class Marcador {
 	private JComponent comp;
@@ -29,6 +30,6 @@ public class Marcador {
 	}
 
 	public static Border criarBorda() {
-		return BorderFactory.createLineBorder(TextEditor.COLOR_SEL, 3);
+		return BorderFactory.createLineBorder(Color.MAGENTA, 3);
 	}
 }
