@@ -25,7 +25,7 @@ public class ImportaContexto extends Container {
 		if (string == null) {
 			string = token.getString();
 		} else if (alias == null) {
-			alias = token.toString();
+			alias = token.getString();
 			contexto = Contextos.PONTO_VIRGULA;
 		}
 	}
