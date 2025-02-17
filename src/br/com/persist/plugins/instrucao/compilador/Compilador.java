@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
-import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class Compilador {
@@ -75,15 +74,15 @@ public class Compilador {
 		biblioteca.indexar();
 		biblioteca.desviar();
 		biblioteca.validar();
-		File destino = getCompilado(file);
+		File destino = getCompilado(biblioteca);
 		try (PrintWriter pw = new PrintWriter(destino)) {
 			biblioteca.salvar(this, pw);
 		}
 		return biblioteca;
 	}
 
-	public static File getCompilado(File arquivo) {
-		return new File(CacheBiblioteca.COMPILADOS, arquivo.getName() + Biblioteca.EXTENSAO);
+	public static File getCompilado(BibliotecaContexto biblio) throws InstrucaoException {
+		return CacheBiblioteca.getArquivo(biblio);
 	}
 
 	private String getString(File file) throws IOException {

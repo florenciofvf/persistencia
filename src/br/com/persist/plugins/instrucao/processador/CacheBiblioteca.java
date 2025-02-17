@@ -12,6 +12,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 
 public class CacheBiblioteca {
 	public static final File ROOT = new File(InstrucaoConstantes.INSTRUCAO);
@@ -60,6 +61,22 @@ public class CacheBiblioteca {
 			return Util.replaceAll(nome, ".", Constantes.SEPARADOR);
 		}
 		return nome;
+	}
+
+	public static File getArquivo(BibliotecaContexto biblioteca) throws InstrucaoException {
+		String nome = biblioteca.getNome();
+		int pos = nome.lastIndexOf('.');
+		if (pos != -1) {
+			String name = nome.substring(pos + 1);
+			nome = nome.substring(0, pos);
+			String pack = Util.replaceAll(nome, ".", Constantes.SEPARADOR);
+			File path = new File(COMPILADOS, pack);
+			if (!path.isDirectory() && !path.mkdirs()) {
+				throw new InstrucaoException("erro.criar_diretorios", path.getPath());
+			}
+			return new File(path, name + Biblioteca.EXTENSAO);
+		}
+		return new File(COMPILADOS, nome + Biblioteca.EXTENSAO);
 	}
 
 	private void processar(String nome, Biblioteca biblioteca, AtomicReference<Constante> atomicConstante,
