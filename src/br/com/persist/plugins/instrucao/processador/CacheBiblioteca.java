@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
@@ -20,7 +22,10 @@ public class CacheBiblioteca {
 		bibliotecas = new HashMap<>();
 	}
 
-	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
+	public Biblioteca getBiblioteca(String nome, Biblioteca biblio) throws InstrucaoException {
+		if (biblio != null) {
+			nome = biblio.getNomeImport(nome);
+		}
 		Biblioteca resp = bibliotecas.get(nome);
 		if (resp == null) {
 			resp = lerBiblioteca(nome);
@@ -34,7 +39,7 @@ public class CacheBiblioteca {
 
 	private Biblioteca lerBiblioteca(String nome) throws InstrucaoException {
 		Biblioteca biblioteca = null;
-		List<String> arquivo = ArquivoUtil.lerArquivo(new File(COMPILADOS, nome + Biblioteca.EXTENSAO));
+		List<String> arquivo = ArquivoUtil.lerArquivo(new File(COMPILADOS, get(nome) + Biblioteca.EXTENSAO));
 		if (arquivo.isEmpty()) {
 			return biblioteca;
 		}
@@ -48,6 +53,13 @@ public class CacheBiblioteca {
 		}
 		biblioteca.initConstantes();
 		return biblioteca;
+	}
+
+	private static String get(String nome) {
+		if (nome.indexOf('.') != -1) {
+			return Util.replaceAll(nome, ".", Constantes.SEPARADOR);
+		}
+		return nome;
 	}
 
 	private void processar(String nome, Biblioteca biblioteca, AtomicReference<Constante> atomicConstante,

@@ -40,6 +40,14 @@ public class Biblioteca {
 		imports.put(obj.alias, obj);
 	}
 
+	public String getNomeImport(String nome) {
+		Importa obj = imports.get(nome);
+		if (obj == null) {
+			return nome;
+		}
+		return obj.biblio;
+	}
+
 	public String getNome() {
 		return nome;
 	}
