@@ -12,12 +12,16 @@ public class InstrucaoConstantes {
 	public static final String PREFIXO_CONSTANTE = "constante ";
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
 	public static final String PREFIXO_PARAMETRO = "param ";
+	public static final String PREFIXO_PACKAGE = "package ";
+	public static final String PREFIXO_IMPORT = "import ";
 	public static final String PREFIXO_FUNCAO = "funcao ";
 	public static final String TAILCALL = "tailcall";
 	public static final String VOID = "void";
 
 	public static final String DEFUN_NATIVE = "defun_native";
 	public static final String DEF_CONST = "def_const";
+	public static final String PACKAGE = "package";
+	public static final String IMPORT = "import";
 	public static final String RETURN = "return";
 	public static final String ELSEIF = "elseif";
 	public static final String WHILE = "while";

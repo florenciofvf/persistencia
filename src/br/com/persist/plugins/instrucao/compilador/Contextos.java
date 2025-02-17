@@ -12,6 +12,7 @@ public class Contextos {
 	public static final Identity IDENTITY = new Identity();
 	public static final Invalido INVALIDO = new Invalido();
 	public static final Virgula VIRGULA = new Virgula();
+	public static final Texto TEXTO = new Texto();
 
 	private Contextos() {
 	}
@@ -87,6 +88,13 @@ public class Contextos {
 	public static class Identity extends AbstratoContexto {
 		@Override
 		public void identity(Compilador compilador, Token token) throws InstrucaoException {
+			//
+		}
+	}
+
+	public static class Texto extends AbstratoContexto {
+		@Override
+		public void string(Compilador compilador, Token token) throws InstrucaoException {
 			//
 		}
 	}

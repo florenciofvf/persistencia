@@ -31,6 +31,12 @@ public class BibliotecaContexto extends Container {
 		} else if (InstrucaoConstantes.DEFUN_NATIVE.equals(token.getString())) {
 			compilador.setContexto(new FuncaoNativaContexto());
 			adicionar((Container) compilador.getContexto());
+		} else if (InstrucaoConstantes.PACKAGE.equals(token.getString())) {
+			compilador.setContexto(new PacoteContexto());
+			adicionar((Container) compilador.getContexto());
+		} else if (InstrucaoConstantes.IMPORT.equals(token.getString())) {
+			compilador.setContexto(new ImportaContexto());
+			adicionar((Container) compilador.getContexto());
 		} else if (InstrucaoConstantes.CONST.equals(token.getString())) {
 			compilador.setContexto(new ConstanteContexto());
 			adicionar((Container) compilador.getContexto());
