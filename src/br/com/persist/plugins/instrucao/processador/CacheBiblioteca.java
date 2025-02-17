@@ -68,11 +68,12 @@ public class CacheBiblioteca {
 
 	private Biblioteca lerBiblioteca(String nome) throws InstrucaoException {
 		Biblioteca biblioteca = null;
-		List<String> arquivo = ArquivoUtil.lerArquivo(new File(COMPILADOS, get(nome) + Biblioteca.EXTENSAO));
+		File file = new File(COMPILADOS, get(nome) + Biblioteca.EXTENSAO);
+		List<String> arquivo = ArquivoUtil.lerArquivo(file);
 		if (arquivo.isEmpty()) {
 			return biblioteca;
 		}
-		biblioteca = new Biblioteca(nome);
+		biblioteca = new Biblioteca(file);
 		Iterator<String> it = arquivo.iterator();
 		AtomicReference<Constante> atomicConstante = new AtomicReference<>();
 		AtomicReference<Funcao> atomicFuncao = new AtomicReference<>();

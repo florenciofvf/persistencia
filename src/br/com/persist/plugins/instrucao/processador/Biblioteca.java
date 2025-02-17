@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.processador;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,10 +20,10 @@ public class Biblioteca {
 	private String nomePackage;
 	private final String nome;
 
-	public Biblioteca(String nome) {
-		this.nome = Objects.requireNonNull(nome);
+	public Biblioteca(File file) {
 		constantes = new LinkedHashMap<>();
 		funcoes = new LinkedHashMap<>();
+		this.nome = file.getName();
 		imports = new HashMap<>();
 	}
 

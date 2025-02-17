@@ -1,5 +1,6 @@
 package br.com.persist.plugins.instrucao.compilador;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +14,8 @@ public class BibliotecaContexto extends Container {
 	private final String nome;
 	private int idDinamico;
 
-	public BibliotecaContexto(String nome) {
-		this.nome = nome;
+	public BibliotecaContexto(File file) {
+		this.nome = file.getName();
 	}
 
 	public String getNome() {

@@ -60,7 +60,7 @@ public class Compilador {
 			throw new InstrucaoException("Inexistente >>> " + file.toString(), false);
 		}
 		string = getString(file);
-		BibliotecaContexto biblioteca = new BibliotecaContexto(file.getName());
+		BibliotecaContexto biblioteca = new BibliotecaContexto(file);
 		contexto = biblioteca;
 		processar();
 		if (contexto != biblioteca) {
