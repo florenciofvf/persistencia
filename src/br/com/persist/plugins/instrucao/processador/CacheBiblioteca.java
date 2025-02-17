@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
@@ -39,45 +40,53 @@ public class CacheBiblioteca {
 		}
 		biblioteca = new Biblioteca(nome);
 		Iterator<String> it = arquivo.iterator();
-		Constante constante = null;
-		Funcao funcao = null;
+		AtomicReference<Constante> atomicConstante = new AtomicReference<>();
+		AtomicReference<Funcao> atomicFuncao = new AtomicReference<>();
 		while (it.hasNext()) {
 			String linha = it.next();
-			if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO)) {
-				funcao = criarFuncao(linha);
-				biblioteca.addFuncao(funcao);
-				constante = null;
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA)) {
-				funcao = criarFuncaoNativa(linha);
-				biblioteca.addFuncao(funcao);
-				constante = null;
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_CONSTANTE)) {
-				constante = criarConstante(linha);
-				biblioteca.addConstante(constante);
-				funcao = null;
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PACKAGE)) {
-				String string = linha.substring(InstrucaoConstantes.PREFIXO_PACKAGE.length());
-				biblioteca.setPacote(string);
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_IMPORT)) {
-				String string = linha.substring(InstrucaoConstantes.PREFIXO_IMPORT.length());
-				biblioteca.addImport(string);
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAMETRO)) {
-				String nomeParametro = linha.substring(InstrucaoConstantes.PREFIXO_PARAMETRO.length());
-				if (funcao == null) {
-					throw new InstrucaoException("erro.parametro_sem_funcao", nome, nomeParametro);
-				}
-				funcao.addParametro(nomeParametro);
-			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_TIPO_VOID)) {
-				if (funcao == null) {
-					throw new InstrucaoException("erro.tipo_sem_funcao", nome);
-				}
-				funcao.setTipoVoid(true);
-			} else if (linhaInstrucao(linha)) {
-				processarInstrucao(nome, constante, funcao, linha);
-			}
+			processar(nome, biblioteca, atomicConstante, atomicFuncao, linha);
 		}
 		biblioteca.initConstantes();
 		return biblioteca;
+	}
+
+	private void processar(String nome, Biblioteca biblioteca, AtomicReference<Constante> atomicConstante,
+			AtomicReference<Funcao> atomicFuncao, String linha) throws InstrucaoException {
+		if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO)) {
+			Funcao funcao = criarFuncao(linha);
+			biblioteca.addFuncao(funcao);
+			atomicFuncao.set(funcao);
+			atomicConstante.set(null);
+		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO_NATIVA)) {
+			Funcao funcao = criarFuncaoNativa(linha);
+			biblioteca.addFuncao(funcao);
+			atomicFuncao.set(funcao);
+			atomicConstante.set(null);
+		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_CONSTANTE)) {
+			Constante constante = criarConstante(linha);
+			biblioteca.addConstante(constante);
+			atomicFuncao.set(null);
+			atomicConstante.set(constante);
+		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PACKAGE)) {
+			String string = linha.substring(InstrucaoConstantes.PREFIXO_PACKAGE.length());
+			biblioteca.setPacote(string);
+		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_IMPORT)) {
+			String string = linha.substring(InstrucaoConstantes.PREFIXO_IMPORT.length());
+			biblioteca.addImport(string);
+		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAMETRO)) {
+			String nomeParametro = linha.substring(InstrucaoConstantes.PREFIXO_PARAMETRO.length());
+			if (atomicFuncao.get() == null) {
+				throw new InstrucaoException("erro.parametro_sem_funcao", nome, nomeParametro);
+			}
+			atomicFuncao.get().addParametro(nomeParametro);
+		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_TIPO_VOID)) {
+			if (atomicFuncao.get() == null) {
+				throw new InstrucaoException("erro.tipo_sem_funcao", nome);
+			}
+			atomicFuncao.get().setTipoVoid(true);
+		} else if (linhaInstrucao(linha)) {
+			processarInstrucao(nome, atomicConstante.get(), atomicFuncao.get(), linha);
+		}
 	}
 
 	private boolean linhaInstrucao(String s) {
