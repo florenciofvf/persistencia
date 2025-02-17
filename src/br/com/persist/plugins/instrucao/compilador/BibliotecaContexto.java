@@ -17,6 +17,35 @@ public class BibliotecaContexto extends Container {
 		this.nome = nome;
 	}
 
+	public String getNome() {
+		String nomePackage = getNomePackage();
+		return nomePackage != null ? nomePackage + "." + nome : nome;
+	}
+
+	public String getNomePackage() {
+		for (Container c : componentes) {
+			if (c instanceof PacoteContexto) {
+				return ((PacoteContexto) c).getString();
+			}
+		}
+		return null;
+	}
+
+	public String getNomeImport(String nome) {
+		Map<String, String> map = new HashMap<>();
+		for (Container c : componentes) {
+			if (c instanceof ImportaContexto) {
+				ImportaContexto ic = (ImportaContexto) c;
+				map.put(ic.getAlias(), ic.getString());
+			}
+		}
+		String obj = map.get(nome);
+		if (obj == null) {
+			return nome;
+		}
+		return obj;
+	}
+
 	public int getIdDinamico() {
 		return idDinamico++;
 	}
@@ -88,35 +117,6 @@ public class BibliotecaContexto extends Container {
 				funcao.indexar();
 			}
 		}
-	}
-
-	public String getNome() {
-		String nomePack = getNomePackage();
-		return nomePack != null ? nomePack : nome;
-	}
-
-	public String getNomePackage() {
-		for (Container c : componentes) {
-			if (c instanceof PacoteContexto) {
-				return ((PacoteContexto) c).getString();
-			}
-		}
-		return null;
-	}
-
-	public String getNomeImport(String nome) {
-		Map<String, String> map = new HashMap<>();
-		for (Container c : componentes) {
-			if (c instanceof ImportaContexto) {
-				ImportaContexto ic = (ImportaContexto) c;
-				map.put(ic.getAlias(), ic.getString());
-			}
-		}
-		String obj = map.get(nome);
-		if (obj == null) {
-			return nome;
-		}
-		return obj;
 	}
 
 	@Override

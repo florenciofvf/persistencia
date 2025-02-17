@@ -16,8 +16,8 @@ public class Biblioteca {
 	public static final String EXTENSAO = ".fvf";
 	private final Map<String, Importa> imports;
 	private final Map<String, Funcao> funcoes;
+	private String nomePackage;
 	private final String nome;
-	private String pacote;
 
 	public Biblioteca(String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -26,18 +26,12 @@ public class Biblioteca {
 		imports = new HashMap<>();
 	}
 
-	public String getPacote() {
-		return pacote;
+	public String getNome() {
+		return nomePackage != null ? nomePackage + "." + nome : nome;
 	}
 
-	public void setPacote(String pacote) {
-		this.pacote = pacote;
-	}
-
-	public void addImport(String string) {
-		String[] strings = string.split(InstrucaoConstantes.ESPACO);
-		Importa obj = new Importa(strings[0], strings[1]);
-		imports.put(obj.alias, obj);
+	public String getNomePackage() {
+		return nomePackage;
 	}
 
 	public String getNomeImport(String nome) {
@@ -48,8 +42,14 @@ public class Biblioteca {
 		return obj.biblio;
 	}
 
-	public String getNome() {
-		return nome;
+	public void setNomePackage(String pacote) {
+		this.nomePackage = pacote;
+	}
+
+	public void addImport(String string) {
+		String[] strings = string.split(InstrucaoConstantes.ESPACO);
+		Importa obj = new Importa(strings[0], strings[1]);
+		imports.put(obj.alias, obj);
 	}
 
 	public void addConstante(Constante constante) {

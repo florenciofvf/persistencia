@@ -129,7 +129,7 @@ public class CacheBiblioteca {
 			atomicConstante.set(constante);
 		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PACKAGE)) {
 			String string = linha.substring(InstrucaoConstantes.PREFIXO_PACKAGE.length());
-			biblioteca.setPacote(string);
+			biblioteca.setNomePackage(string);
 		} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_IMPORT)) {
 			String string = linha.substring(InstrucaoConstantes.PREFIXO_IMPORT.length());
 			biblioteca.addImport(string);
