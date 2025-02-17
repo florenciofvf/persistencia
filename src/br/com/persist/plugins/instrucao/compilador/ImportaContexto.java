@@ -23,7 +23,7 @@ public class ImportaContexto extends Container {
 	public void string(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.string(compilador, token);
 		if (string == null) {
-			string = token.toString();
+			string = token.getString();
 		} else if (alias == null) {
 			alias = token.toString();
 			contexto = Contextos.PONTO_VIRGULA;

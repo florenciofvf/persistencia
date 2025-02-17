@@ -21,7 +21,7 @@ public class PacoteContexto extends Container {
 	@Override
 	public void string(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.string(compilador, token);
-		string = token.toString();
+		string = token.getString();
 		contexto = Contextos.PONTO_VIRGULA;
 	}
 
