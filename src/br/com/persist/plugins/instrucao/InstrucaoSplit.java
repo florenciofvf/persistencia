@@ -558,10 +558,13 @@ class Aba extends Transferivel {
 		}
 
 		private void executar() {
-			String biblioteca = arquivo.getFile().getName();
+			if (biblio == null) {
+				painelResultado.setText(InstrucaoMensagens.getString("msg.nao_compilado"));
+				return;
+			}
 			try {
 				Processador processador = new Processador();
-				List<Object> resposta = processador.processar(biblioteca, "main");
+				List<Object> resposta = processador.processar(biblio.getNome(), "main");
 				painelResultado.setText(resposta.toString());
 			} catch (InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(InstrucaoConstantes.PAINEL_INSTRUCAO, ex));
