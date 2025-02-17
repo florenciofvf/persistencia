@@ -55,6 +55,12 @@ public class CacheBiblioteca {
 				constante = criarConstante(linha);
 				biblioteca.addConstante(constante);
 				funcao = null;
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PACKAGE)) {
+				linha = linha.substring(InstrucaoConstantes.PREFIXO_PACKAGE.length());
+				biblioteca.setPacote(linha);
+			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_IMPORT)) {
+				linha = linha.substring(InstrucaoConstantes.PREFIXO_IMPORT.length());
+				biblioteca.addImport(linha);
 			} else if (linha.startsWith(InstrucaoConstantes.PREFIXO_PARAMETRO)) {
 				String nomeParametro = linha.substring(InstrucaoConstantes.PREFIXO_PARAMETRO.length());
 				if (funcao == null) {

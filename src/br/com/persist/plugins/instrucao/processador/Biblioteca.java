@@ -1,24 +1,43 @@
 package br.com.persist.plugins.instrucao.processador;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.assistencia.MetaInfo;
+import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Biblioteca {
 	private final Map<String, Constante> constantes;
 	public static final String EXTENSAO = ".fvf";
+	private final Map<String, Importa> imports;
 	private final Map<String, Funcao> funcoes;
 	private final String nome;
+	private String pacote;
 
 	public Biblioteca(String nome) {
 		this.nome = Objects.requireNonNull(nome);
 		constantes = new LinkedHashMap<>();
 		funcoes = new LinkedHashMap<>();
+		imports = new HashMap<>();
+	}
+
+	public String getPacote() {
+		return pacote;
+	}
+
+	public void setPacote(String pacote) {
+		this.pacote = pacote;
+	}
+
+	public void addImport(String string) {
+		String[] strings = string.split(InstrucaoConstantes.ESPACO);
+		Importa obj = new Importa(strings[0], strings[1]);
+		imports.put(obj.alias, obj);
 	}
 
 	public String getNome() {
@@ -84,5 +103,15 @@ public class Biblioteca {
 	@Override
 	public String toString() {
 		return nome + " constantes:" + constantes;
+	}
+}
+
+class Importa {
+	final String biblio;
+	final String alias;
+
+	public Importa(String biblio, String alias) {
+		this.biblio = Objects.requireNonNull(biblio);
+		this.alias = Objects.requireNonNull(alias);
 	}
 }
