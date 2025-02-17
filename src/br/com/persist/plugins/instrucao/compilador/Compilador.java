@@ -706,6 +706,7 @@ public class Compilador {
 				|| InstrucaoConstantes.DEFUN_NATIVE.equals(s) || InstrucaoConstantes.IF.equals(s)
 				|| InstrucaoConstantes.WHILE.equals(s) || InstrucaoConstantes.ELSEIF.equals(s)
 				|| InstrucaoConstantes.ELSE.equals(s) || InstrucaoConstantes.RETURN.equals(s)
+				|| InstrucaoConstantes.PACKAGE.equals(s) || InstrucaoConstantes.IMPORT.equals(s)
 				|| InstrucaoConstantes.LAMB.equals(s);
 	}
 
