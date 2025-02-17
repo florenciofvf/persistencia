@@ -79,7 +79,7 @@ public class IdentityContexto extends Container {
 		}
 		Biblioteca biblioteca = null;
 		try {
-			biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
+			biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0], biblio);
 		} catch (InstrucaoException ex) {
 			throw new InstrucaoException(ex.getMessage(), false);
 		}

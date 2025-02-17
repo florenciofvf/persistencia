@@ -61,7 +61,7 @@ public class InvocacaoContexto extends Container {
 			validarImpl(funcao, id, getArgumento(), false);
 		} else {
 			try {
-				Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
+				Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0], biblio);
 				Funcao funcao = biblioteca.getFuncao(strings[1]);
 				validarImpl(funcao, getArgumento(), false);
 			} catch (InstrucaoException ex) {

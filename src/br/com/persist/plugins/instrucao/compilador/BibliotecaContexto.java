@@ -1,6 +1,8 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -100,6 +102,21 @@ public class BibliotecaContexto extends Container {
 			}
 		}
 		return null;
+	}
+
+	public String getNomeImport(String nome) {
+		Map<String, String> map = new HashMap<>();
+		for (Container c : componentes) {
+			if (c instanceof ImportaContexto) {
+				ImportaContexto ic = (ImportaContexto) c;
+				map.put(ic.getAlias(), ic.getString());
+			}
+		}
+		String obj = map.get(nome);
+		if (obj == null) {
+			return nome;
+		}
+		return obj;
 	}
 
 	@Override

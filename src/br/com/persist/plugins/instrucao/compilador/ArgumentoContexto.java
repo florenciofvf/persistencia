@@ -153,7 +153,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 			InvocacaoContexto.validarImpl(funcao, id, this, true);
 		} else {
 			try {
-				Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0]);
+				Biblioteca biblioteca = biblio.cacheBiblioteca.getBiblioteca(strings[0], biblio);
 				Funcao funcao = biblioteca.getFuncao(strings[1]);
 				InvocacaoContexto.validarImpl(funcao, this, true);
 			} catch (InstrucaoException ex) {
