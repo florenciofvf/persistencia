@@ -15,12 +15,28 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 
 public class CacheBiblioteca {
+	private static final String ERRO_BIBLIO_INEXISTENTE = "erro.biblio_inexistente";
 	public static final File ROOT = new File(InstrucaoConstantes.INSTRUCAO);
 	public static final File COMPILADOS = new File(ROOT, "compilados");
 	private final Map<String, Biblioteca> bibliotecas;
 
 	public CacheBiblioteca() {
 		bibliotecas = new HashMap<>();
+	}
+
+	public Biblioteca getBiblioteca(String nome, BibliotecaContexto biblio) throws InstrucaoException {
+		if (biblio != null) {
+			nome = biblio.getNomeImport(nome);
+		}
+		Biblioteca resp = bibliotecas.get(nome);
+		if (resp == null) {
+			resp = lerBiblioteca(nome);
+			if (resp == null) {
+				throw new InstrucaoException(ERRO_BIBLIO_INEXISTENTE, nome);
+			}
+			bibliotecas.put(nome, resp);
+		}
+		return resp;
 	}
 
 	public Biblioteca getBiblioteca(String nome, Biblioteca biblio) throws InstrucaoException {
@@ -31,7 +47,19 @@ public class CacheBiblioteca {
 		if (resp == null) {
 			resp = lerBiblioteca(nome);
 			if (resp == null) {
-				throw new InstrucaoException("erro.biblio_inexistente", nome);
+				throw new InstrucaoException(ERRO_BIBLIO_INEXISTENTE, nome);
+			}
+			bibliotecas.put(nome, resp);
+		}
+		return resp;
+	}
+
+	public Biblioteca getBiblioteca(String nome) throws InstrucaoException {
+		Biblioteca resp = bibliotecas.get(nome);
+		if (resp == null) {
+			resp = lerBiblioteca(nome);
+			if (resp == null) {
+				throw new InstrucaoException(ERRO_BIBLIO_INEXISTENTE, nome);
 			}
 			bibliotecas.put(nome, resp);
 		}
@@ -64,6 +92,9 @@ public class CacheBiblioteca {
 	}
 
 	public static File getArquivo(BibliotecaContexto biblioteca) throws InstrucaoException {
+		if (biblioteca == null) {
+			throw new InstrucaoException("Biblioteca nula.", false);
+		}
 		String nome = biblioteca.getNome();
 		int pos = nome.lastIndexOf('.');
 		if (pos != -1) {

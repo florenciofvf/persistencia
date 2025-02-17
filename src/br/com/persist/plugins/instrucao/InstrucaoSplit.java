@@ -385,6 +385,7 @@ class Aba extends Transferivel {
 	private final PainelResultado painelResultado = new PainelResultado();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private transient BibliotecaContexto biblio;
 	private final Editor editor = new Editor();
 	final transient Arquivo arquivo;
 	private ScrollPane scrollPane;
@@ -546,12 +547,12 @@ class Aba extends Transferivel {
 
 		private void verCompilado() {
 			try {
-				File file = Compilador.getCompilado(arquivo.getFile());
+				File file = Compilador.getCompilado(biblio);
 				if (!file.exists()) {
 					throw new IOException("Arquivo inexistente! " + file);
 				}
 				Util.conteudo(Aba.this, file);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				Util.mensagem(Aba.this, e.getMessage());
 			}
 		}
@@ -571,7 +572,7 @@ class Aba extends Transferivel {
 		protected void atualizar() {
 			try {
 				Compilador compilador = new Compilador();
-				BibliotecaContexto biblio = compilador.compilar(arquivo.getFile());
+				biblio = compilador.compilar(arquivo.getFile());
 				boolean resp = biblio != null;
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));

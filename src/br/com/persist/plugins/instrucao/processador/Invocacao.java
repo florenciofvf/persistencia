@@ -33,7 +33,7 @@ public abstract class Invocacao extends Instrucao {
 		Biblioteca biblio;
 		Funcao invocar;
 		if (nomeBiblio != null) {
-			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio);
+			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio, biblioteca);
 		} else {
 			if (funcao == null) {
 				throw new InstrucaoException("erro.funcao_inexistente", "null", "null");

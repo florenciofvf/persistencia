@@ -32,7 +32,7 @@ public class LoadFuncaoInstrucao extends Instrucao {
 			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
 		Biblioteca biblio;
 		if (nomeBiblio != null) {
-			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio);
+			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio, biblioteca);
 		} else {
 			biblio = funcao.getBiblioteca();
 		}
