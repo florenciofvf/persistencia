@@ -15,10 +15,6 @@ public class BibliotecaContexto extends Container {
 		this.nome = nome;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
 	public int getIdDinamico() {
 		return idDinamico++;
 	}
@@ -92,6 +88,20 @@ public class BibliotecaContexto extends Container {
 		}
 	}
 
+	public String getNome() {
+		String nomePack = getNomePackage();
+		return nomePack != null ? nomePack : nome;
+	}
+
+	public String getNomePackage() {
+		for (Container c : componentes) {
+			if (c instanceof PacoteContexto) {
+				return ((PacoteContexto) c).getString();
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		for (Container c : componentes) {
@@ -116,6 +126,6 @@ public class BibliotecaContexto extends Container {
 
 	@Override
 	public String toString() {
-		return nome;
+		return getNome();
 	}
 }

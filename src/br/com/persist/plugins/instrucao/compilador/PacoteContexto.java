@@ -12,6 +12,10 @@ public class PacoteContexto extends Container {
 		contexto = Contextos.TEXTO;
 	}
 
+	public String getString() {
+		return string;
+	}
+
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
