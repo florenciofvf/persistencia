@@ -123,7 +123,13 @@ public class BibliotecaContexto extends Container {
 	@Override
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		for (Container c : componentes) {
-			if (c instanceof PacoteContexto || c instanceof ImportaContexto) {
+			if (c instanceof PacoteContexto) {
+				c.salvar(compilador, pw);
+				pw.println();
+			}
+		}
+		for (Container c : componentes) {
+			if (c instanceof ImportaContexto) {
 				c.salvar(compilador, pw);
 				pw.println();
 			}
