@@ -12,18 +12,12 @@ public class ConstanteContexto extends Container {
 
 	public ConstanteContexto() {
 		identity = new ConstanteIdentityContexto();
-		adicionar(new ExpressaoContexto(null));
-		contexto = Contextos.ABRE_PARENTESES;
+		adicionar(new ExpressaoContexto(this));
+		contexto = identity;
 	}
 
 	public ExpressaoContexto getExpressao() {
 		return (ExpressaoContexto) get(0);
-	}
-
-	@Override
-	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.inicializador(compilador, token);
-		contexto = identity;
 	}
 
 	@Override
@@ -36,16 +30,10 @@ public class ConstanteContexto extends Container {
 	}
 
 	@Override
-	public void separador(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.separador(compilador, token);
-		compilador.setContexto(getExpressao());
-		contexto = Contextos.PONTO_VIRGULA;
-	}
-
-	@Override
 	public void identity(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.identity(compilador, token);
-		contexto = Contextos.VIRGULA;
+		compilador.setContexto(getExpressao());
+		contexto = Contextos.PONTO_VIRGULA;
 	}
 
 	public void indexar() {
