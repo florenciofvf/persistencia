@@ -117,13 +117,13 @@ public class CacheBiblioteca {
 			String name = nome.substring(pos + 1);
 			nome = nome.substring(0, pos);
 			String pack = Util.replaceAll(nome, ".", Constantes.SEPARADOR);
-			File path = new File(COMPILADOS, pack);
+			File path = new File(ROOT, pack);
 			if (!path.isDirectory() && !path.mkdirs()) {
 				throw new InstrucaoException("erro.criar_diretorios", path.getPath());
 			}
 			return new File(path, name);
 		}
-		return new File(COMPILADOS, nome);
+		return new File(ROOT, nome);
 	}
 
 	private void processar(String nome, Biblioteca biblioteca, AtomicReference<Constante> atomicConstante,
