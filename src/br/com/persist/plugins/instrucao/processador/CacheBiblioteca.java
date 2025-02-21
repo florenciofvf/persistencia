@@ -111,6 +111,21 @@ public class CacheBiblioteca {
 		return new File(COMPILADOS, nome + Biblioteca.EXTENSAO);
 	}
 
+	public static File arquivoParaCompilar(String nome) throws InstrucaoException {
+		int pos = nome.lastIndexOf('.');
+		if (pos != -1) {
+			String name = nome.substring(pos + 1);
+			nome = nome.substring(0, pos);
+			String pack = Util.replaceAll(nome, ".", Constantes.SEPARADOR);
+			File path = new File(COMPILADOS, pack);
+			if (!path.isDirectory() && !path.mkdirs()) {
+				throw new InstrucaoException("erro.criar_diretorios", path.getPath());
+			}
+			return new File(path, name);
+		}
+		return new File(COMPILADOS, nome);
+	}
+
 	private void processar(String nome, Biblioteca biblioteca, AtomicReference<Constante> atomicConstante,
 			AtomicReference<Funcao> atomicFuncao, String linha) throws InstrucaoException {
 		if (linha.startsWith(InstrucaoConstantes.PREFIXO_FUNCAO)) {

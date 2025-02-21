@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,7 @@ import br.com.persist.painel.Transferivel;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.compilador.Token;
+import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.processador.Processador;
 
 class InstrucaoSplit extends SplitPane {
@@ -575,11 +577,17 @@ class Aba extends Transferivel {
 		protected void atualizar() {
 			try {
 				Compilador compilador = new Compilador();
-				biblio = compilador.compilar(arquivo.getFile());
+				boolean colorir = false;
+				if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
+					biblio = compilador.compilar(criarArquivo(editor.getText()));
+				} else {
+					biblio = compilador.compilar(arquivo.getFile());
+					colorir = true;
+				}
 				boolean resp = biblio != null;
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
 						: InstrucaoMensagens.getString("msg.nao_compilado"));
-				if (resp) {
+				if (resp && colorir) {
 					InstrucaoCor.processar(editor.getStyledDocument(), compilador.getTokens());
 				}
 			} catch (IOException | InstrucaoException ex) {
@@ -636,6 +644,39 @@ class Aba extends Transferivel {
 			} else {
 				label.limpar();
 			}
+		}
+
+		private File criarArquivo(String string) throws IOException, InstrucaoException {
+			List<String> nomes = listar(string, "arquivo{", "}");
+			if (nomes.size() != 1) {
+				throw new InstrucaoException("Erro no param arquivo{}. Total -> " + nomes.size(), false);
+			}
+			File file = CacheBiblioteca.arquivoParaCompilar(nomes.get(0));
+			try (PrintWriter pw = new PrintWriter(file)) {
+				List<String> arquivosIncluir = listar(string, "incluir{", "}");
+				for (String strIncluir : arquivosIncluir) {
+					File fileIncluir = CacheBiblioteca.arquivoParaCompilar(strIncluir);
+					String fragmento = conteudo(fileIncluir);
+					pw.write(fragmento);
+				}
+			}
+			return file;
+		}
+
+		private List<String> listar(String string, String prefixo, String sufixo) {
+			List<String> resp = new ArrayList<>();
+			int pos = string.indexOf(prefixo);
+			while (pos != -1) {
+				int pos2 = string.indexOf(sufixo, pos + prefixo.length());
+				if (pos2 != -1) {
+					String fragmento = string.substring(pos + prefixo.length(), pos2);
+					resp.add(fragmento.trim());
+					pos = string.indexOf(prefixo, pos2 + sufixo.length());
+				} else {
+					break;
+				}
+			}
+			return resp;
 		}
 	}
 }
