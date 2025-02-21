@@ -1769,6 +1769,7 @@ class SuperficiePopup2 extends Popup {
 	private Action atualizarFormulariosAndOuvir = ObjetoSuperficie.acaoMenu("label.forms_atualizar_e_ouv");
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
+	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu("label.objetos_com_tabela");
 	private Action propriedadesAcao = actionMenu("label.propriedades");
 	private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
 	private MenuIgnorados menuIgnorados = new MenuIgnorados();
@@ -1779,7 +1780,8 @@ class SuperficiePopup2 extends Popup {
 
 	SuperficiePopup2(ObjetoSuperficie superficie) {
 		this.superficie = superficie;
-		addMenuItem(criarObjetoAcao);
+		addMenuItem(objetosComTabelaAcao);
+		addMenuItem(true, criarObjetoAcao);
 		addMenuItem(true, colarAcao);
 		add(true, superficie.getMenuAjustar());
 		addMenuItem(true, formulariosComExcecaoAcaoMsg);
@@ -1798,6 +1800,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void eventos() {
+		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
 		criarObjetoAcao.setActionListener(e -> criarNovoObjeto());
 		colarAcao.setActionListener(e -> colar());
 		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
@@ -1824,6 +1827,18 @@ class SuperficiePopup2 extends Popup {
 		} catch (AssistenciaException ex) {
 			Util.mensagem(superficie, ex.getMessage());
 		}
+	}
+
+	private void objetosComTabela() {
+		List<Objeto> objetos = ObjetoSuperficieUtil.objetosComTabela(superficie);
+		StringBuilder sb = new StringBuilder();
+		for (Objeto objeto : objetos) {
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(objeto.getTabela());
+		}
+		Util.mensagem(superficie, sb.toString());
 	}
 
 	void preShow(boolean contemFrames) {
