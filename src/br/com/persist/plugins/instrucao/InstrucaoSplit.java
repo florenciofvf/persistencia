@@ -478,6 +478,22 @@ class Aba extends Transferivel {
 		private void setText(String string) {
 			textEditor.setText(string);
 			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+			checkSplitPane();
+		}
+
+		private void checkSplitPane() {
+			JSplitPane split = null;
+			Component c = this;
+			while (c != null) {
+				if (c instanceof JSplitPane) {
+					split = (JSplitPane) c;
+					break;
+				}
+				c = c.getParent();
+			}
+			if (split != null && split.getLastDividerLocation() == -1) {
+				split.setDividerLocation(0.9);
+			}
 		}
 	}
 
