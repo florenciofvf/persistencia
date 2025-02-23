@@ -1266,6 +1266,21 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	public Coletor getObjetosComTabela() {
+		List<Objeto> listaObjeto = ObjetoSuperficieUtil.objetosComTabela(this);
+		Coletor coletor = new Coletor();
+		if (listaObjeto.isEmpty()) {
+			Util.mensagem(getFormulario(), ObjetoMensagens.getString("msg.nenhum_objeto_com_tabela"));
+			return coletor;
+		}
+		List<String> lista = new ArrayList<>();
+		for (Objeto objeto : listaObjeto) {
+			lista.add(objeto.getTabela());
+		}
+		SetLista.view(ObjetoMensagens.getString("label.objetos_com_tabela"), lista, coletor, this, null);
+		return coletor;
+	}
+
 	public Coletor getColetorFormsInvisiveis() {
 		Coletor coletor = new Coletor();
 		List<String> lista = ObjetoSuperficieUtil.getListaFormulariosInvisiveis(this);
@@ -1800,9 +1815,6 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void eventos() {
-		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
-		criarObjetoAcao.setActionListener(e -> criarNovoObjeto());
-		colarAcao.setActionListener(e -> colar());
 		atualizarFormulariosAcao.setActionListener(e -> superficie.atualizarFormularios());
 		formulariosComExcecaoAcaoMsg.setActionListener(e -> formulariosComExcecaoMsg());
 		formulariosComExcecaoAcaoOuv.setActionListener(e -> formulariosComExcecaoOuv());
@@ -1810,7 +1822,10 @@ class SuperficiePopup2 extends Popup {
 		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
 		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
+		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
+		criarObjetoAcao.setActionListener(e -> criarNovoObjeto());
 		propriedadesAcao.setActionListener(e -> propriedades());
+		colarAcao.setActionListener(e -> colar());
 	}
 
 	private void colar() {
@@ -1827,18 +1842,6 @@ class SuperficiePopup2 extends Popup {
 		} catch (AssistenciaException ex) {
 			Util.mensagem(superficie, ex.getMessage());
 		}
-	}
-
-	private void objetosComTabela() {
-		List<Objeto> objetos = ObjetoSuperficieUtil.objetosComTabela(superficie);
-		StringBuilder sb = new StringBuilder();
-		for (Objeto objeto : objetos) {
-			if (sb.length() > 0) {
-				sb.append(Constantes.QL);
-			}
-			sb.append(objeto.getTabela());
-		}
-		Util.mensagem(superficie, sb.toString());
 	}
 
 	void preShow(boolean contemFrames) {
@@ -1964,6 +1967,21 @@ class SuperficiePopup2 extends Popup {
 				}
 			}
 		}
+	}
+
+	private void objetosComTabela() {
+		Coletor coletor = superficie.getObjetosComTabela();
+		if (coletor.size() == 0) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (String tabela : coletor.getLista()) {
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(tabela);
+		}
+		Util.mensagem(superficie, sb.toString());
 	}
 
 	private void formulariosInvisiveis() {
