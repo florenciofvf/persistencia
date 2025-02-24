@@ -1,6 +1,7 @@
 package br.com.persist.assistencia;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,6 +23,7 @@ import br.com.persist.formulario.Formulario;
 
 public class Preferencias {
 	private static final List<Class<?>> outrasPreferencias = new ArrayList<>();
+	private static final String DIMENSAO_MENSAGEM = "dimensao_mensagem";
 	private static final String EDITOR_FONT_STYLE = "editor_font_style";
 	private static final String EDITOR_FONT_NAME = "editor_font_name";
 	private static final String EDITOR_FONT_SIZE = "editor_font_size";
@@ -29,6 +31,7 @@ public class Preferencias {
 	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
 	private static final String ARQ_PREF = "preferencias";
 	private static final Logger LOG = Logger.getGlobal();
+	private static final String LA_500_300 = "500,300";
 	private static boolean exibiuMensagemConnection;
 	private static boolean desenharEspacoRetornoTab;
 	private static boolean fecharComESCFormulario;
@@ -42,6 +45,7 @@ public class Preferencias {
 	private static boolean ficharioComRolagem;
 	private static int porcVerticalLocalForm;
 	private static String formFichaDialogo;
+	private static String dimensaoMensagem;
 	private static String getObjetosBanco;
 	private static int posicaoAbaFichario;
 	private static Color corFonteCopiado;
@@ -77,12 +81,16 @@ public class Preferencias {
 		monitorPreferencial = pref.getBoolean("monitor_preferencial", false);
 		porcVerticalLocalForm = pref.getInt("porc_vertical_local_form", 70);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
+		dimensaoMensagem = pref.get(DIMENSAO_MENSAGEM, LA_500_300);
 		getObjetosBanco = pref.get("get_objetos_banco", "TABLE");
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
 		if (Util.isEmpty(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
+		}
+		if (Util.isEmpty(dimensaoMensagem)) {
+			dimensaoMensagem = LA_500_300;
 		}
 		if (Util.isEmpty(getObjetosBanco)) {
 			getObjetosBanco = "TABLE";
@@ -125,6 +133,7 @@ public class Preferencias {
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
 		pref.put("get_objetos_banco", getObjetosBanco);
+		pref.put(DIMENSAO_MENSAGEM, dimensaoMensagem);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
 		salvarOutras();
@@ -395,5 +404,39 @@ public class Preferencias {
 			return null;
 		}
 		return new Font(name, pref.getInt(EDITOR_FONT_STYLE, 0), pref.getInt(EDITOR_FONT_SIZE, 12));
+	}
+
+	public static String getDimensaoMensagem() {
+		return dimensaoMensagem;
+	}
+
+	public static void setDimensaoMensagem(String dimensaoMensagem) {
+		Preferencias.dimensaoMensagem = dimensaoMensagem;
+	}
+
+	public static Dimension getDimensionMensagem() {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		String dm = pref.get(DIMENSAO_MENSAGEM, LA_500_300);
+		int largura = 500;
+		int altura = 300;
+		Dimension d = new Dimension(largura, altura);
+		if (Util.isEmpty(dm)) {
+			return d;
+		}
+		String[] array = dm.split(",");
+		if (array.length != 2) {
+			return d;
+		}
+		try {
+			largura = Integer.parseInt(array[0].trim());
+		} catch (Exception e) {
+			//
+		}
+		try {
+			altura = Integer.parseInt(array[1].trim());
+		} catch (Exception e) {
+			//
+		}
+		return new Dimension(largura, altura);
 	}
 }

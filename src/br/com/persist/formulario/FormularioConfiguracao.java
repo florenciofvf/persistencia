@@ -49,6 +49,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private JComboBox<String> comboSize = new JComboBox<>(TAMANHOS);
 	private JComboBox<String> comboFontes = new JComboBox<>(FONTES);
 	private final TextField txtFormFichaDialogo = new TextField();
+	private final TextField txtDimensaoMensagem = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
 	private final Button buttonConectaDesconecta = new Button();
 	private final TextField txtDefinirAltura = new TextField();
@@ -90,6 +91,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
+		txtDimensaoMensagem.setText(Preferencias.getDimensaoMensagem());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
@@ -108,7 +110,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		muro.camada(
 				Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
 						new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
-						new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha)));
+						new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha),
+						new PanelCenter(criarLabel("label.dimensao_mensagem"), txtDimensaoMensagem)));
 		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(buttonAplicarLA)));
@@ -141,6 +144,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		chkFecharComESCInternal
 				.addActionListener(e -> Preferencias.setFecharComESCInternal(chkFecharComESCInternal.isSelected()));
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
+		txtDimensaoMensagem.addActionListener(e -> Preferencias.setDimensaoMensagem(txtDimensaoMensagem.getText()));
 		chkFecharComESCDialogo
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
 		chkMonitorPreferencial
@@ -163,6 +167,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			@Override
 			public void focusLost(FocusEvent e) {
 				Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText());
+			}
+		});
+		txtDimensaoMensagem.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Preferencias.setDimensaoMensagem(txtDimensaoMensagem.getText());
 			}
 		});
 		txtFormDialogo.addFocusListener(new FocusAdapter() {

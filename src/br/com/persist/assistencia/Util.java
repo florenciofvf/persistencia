@@ -401,7 +401,7 @@ public class Util {
 	private static void messageDialog(Component componente, String string) {
 		TextEditor textEditor = new TextEditor();
 		textEditor.setText(string);
-		textEditor.setPreferredSize(new Dimension(500, 300));
+		textEditor.setPreferredSize(Preferencias.getDimensionMensagem());
 		JOptionPane.showMessageDialog(componente, textEditor, Mensagens.getString(Constantes.LABEL_ATENCAO),
 				JOptionPane.PLAIN_MESSAGE);
 	}
@@ -411,7 +411,7 @@ public class Util {
 		MensagemDialogo mensagem = MensagemDialogo.criar(dialog, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
 		mensagem.setSel(sel);
-		mensagem.setSize(new Dimension(500, 300));
+		mensagem.setSize(Preferencias.getDimensionMensagem());
 		mensagem.setLocationRelativeTo(dialog);
 		mensagem.setVisible(true);
 	}
@@ -421,7 +421,7 @@ public class Util {
 		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
 		mensagem.setSel(sel);
-		mensagem.setSize(new Dimension(500, 300));
+		mensagem.setSize(Preferencias.getDimensionMensagem());
 		mensagem.setLocationRelativeTo(frame);
 		mensagem.setVisible(true);
 	}
@@ -482,7 +482,7 @@ public class Util {
 		Component view = getViewParent(componente);
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
 		MensagemFormulario mensagem = MensagemFormulario.criar(titulo, string, file);
-		mensagem.setSize(new Dimension(500, 300));
+		mensagem.setSize(Preferencias.getDimensionMensagem());
 		mensagem.setLocationRelativeTo(view);
 		mensagem.setVisible(true);
 	}
