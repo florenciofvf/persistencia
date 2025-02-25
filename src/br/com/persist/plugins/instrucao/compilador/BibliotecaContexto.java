@@ -128,6 +128,7 @@ public class BibliotecaContexto extends Container {
 				pw.println();
 			}
 		}
+		checarImportacoes();
 		for (Container c : componentes) {
 			if (c instanceof ImportaContexto) {
 				c.salvar(compilador, pw);
@@ -146,6 +147,26 @@ public class BibliotecaContexto extends Container {
 				pw.println();
 			}
 		}
+	}
+
+	private void checarImportacoes() throws InstrucaoException {
+		Map<String, String> map = new HashMap<>();
+		for (Container c : componentes) {
+			if (c instanceof ImportaContexto) {
+				ImportaContexto ic = (ImportaContexto) c;
+				String pack = ic.getString();
+				String alias = ic.getAlias();
+				if (map.get(pack) != null) {
+					throw new InstrucaoException(
+							getImport(pack, alias) + " DEFINIDO COMO: " + getImport(pack, map.get(pack)));
+				}
+				map.put(pack, alias);
+			}
+		}
+	}
+
+	private String getImport(String pack, String alias) {
+		return InstrucaoConstantes.PREFIXO_IMPORT + pack + InstrucaoConstantes.ESPACO + alias + ";";
 	}
 
 	@Override
