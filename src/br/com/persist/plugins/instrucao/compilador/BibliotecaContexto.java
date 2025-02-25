@@ -158,7 +158,7 @@ public class BibliotecaContexto extends Container {
 				String alias = ic.getAlias();
 				if (map.get(pack) != null) {
 					throw new InstrucaoException(
-							getImport(pack, alias) + " DEFINIDO COMO: " + getImport(pack, map.get(pack)));
+							getImport(pack, alias) + " DEFINIDO COMO: " + getImport(pack, map.get(pack)), false);
 				}
 				map.put(pack, alias);
 			}
