@@ -2,7 +2,9 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
@@ -122,6 +124,7 @@ public class BibliotecaContexto extends Container {
 
 	@Override
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
+		checarPackage();
 		for (Container c : componentes) {
 			if (c instanceof PacoteContexto) {
 				c.salvar(compilador, pw);
@@ -146,6 +149,20 @@ public class BibliotecaContexto extends Container {
 				c.salvar(compilador, pw);
 				pw.println();
 			}
+		}
+	}
+
+	private void checarPackage() throws InstrucaoException {
+		List<String> lista = new ArrayList<>();
+		for (Container c : componentes) {
+			if (c instanceof PacoteContexto) {
+				lista.add(((PacoteContexto) c).getString());
+			}
+		}
+		if (lista.size() > 1) {
+			throw new InstrucaoException(
+					"DEFINA SOMENTE UM " + InstrucaoConstantes.PREFIXO_PACKAGE + "ENCONTRADOS:" + lista.toString(),
+					false);
 		}
 	}
 
