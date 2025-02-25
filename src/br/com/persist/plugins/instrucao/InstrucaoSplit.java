@@ -665,7 +665,7 @@ class Aba extends Transferivel {
 		}
 
 		private File criarArquivo(String string) throws IOException, InstrucaoException {
-			List<String> nomes = listar(string, "arquivo{", "}");
+			List<String> nomes = listar(string, "gerar_arquivo{", "}");
 			if (nomes.size() != 1) {
 				throw new InstrucaoException("Erro no param arquivo{}. Total -> " + nomes.size(), false);
 			}
