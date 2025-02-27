@@ -26,7 +26,7 @@ public class IMap {
 
 	@Biblio(2)
 	public static Object get(Object mapa, Object chave) {
-		return ((Map<?, ?>) mapa).get(chave);
+		return getOr(mapa, chave, "");
 	}
 
 	@Biblio(4)
