@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -204,15 +205,15 @@ public abstract class Container extends AbstratoContexto {
 		}
 	}
 
-	public void fragmentar() throws InstrucaoException {
-		fragmentarImpl();
+	public void fragmentar(AtomicInteger atomic) throws InstrucaoException {
+		fragmentarImpl(atomic);
 		for (int i = 0; i < componentes.size(); i++) {
 			Container item = componentes.get(i);
-			item.fragmentar();
+			item.fragmentar(atomic);
 		}
 	}
 
-	protected void fragmentarImpl() throws InstrucaoException {
+	protected void fragmentarImpl(AtomicInteger atomic) throws InstrucaoException {
 	}
 
 	public void estruturar() {

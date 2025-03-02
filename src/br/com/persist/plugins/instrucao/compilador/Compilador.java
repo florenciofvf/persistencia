@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -69,7 +70,12 @@ public class Compilador {
 		if (biblioteca.isEmpty()) {
 			return null;
 		}
-		biblioteca.fragmentar();
+		AtomicInteger atomic = new AtomicInteger(0);
+		biblioteca.fragmentar(atomic);
+		while (atomic.get() > 0) {
+			atomic.set(0);
+			biblioteca.fragmentar(atomic);
+		}
 		biblioteca.estruturar();
 		biblioteca.indexar();
 		biblioteca.desviar();

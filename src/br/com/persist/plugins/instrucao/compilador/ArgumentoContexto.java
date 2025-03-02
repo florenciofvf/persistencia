@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
@@ -56,7 +57,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 	}
 
 	@Override
-	protected void fragmentarImpl() throws InstrucaoException {
+	protected void fragmentarImpl(AtomicInteger atomic) throws InstrucaoException {
 		for (int i = 0; i < componentes.size(); i++) {
 			Container item = componentes.get(i);
 			if (item instanceof LambContexto) {
@@ -67,6 +68,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 				componentes.set(i, id);
 				BibliotecaContexto biblio = getBiblioteca();
 				biblio.adicionar(lamb);
+				atomic.incrementAndGet();
 			}
 		}
 	}
