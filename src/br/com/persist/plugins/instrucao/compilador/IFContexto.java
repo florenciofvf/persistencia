@@ -48,6 +48,18 @@ public class IFContexto extends Container {
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.finalizador(compilador, token);
+		finalizarIFContexto(compilador, token);
+	}
+
+	@Override
+	public void antesReservado(Compilador compilador, Token token) throws InstrucaoException {
+		String string = token.getString();
+		if (!InstrucaoConstantes.ELSEIF.equals(string) && !InstrucaoConstantes.ELSE.equals(string)) {
+			finalizarIFContexto(compilador, token);
+		}
+	}
+
+	private void finalizarIFContexto(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.setContexto(getPai());
 		normalizarArvore(compilador, token);
 	}
@@ -72,6 +84,11 @@ public class IFContexto extends Container {
 			compilador.invalidar(token);
 		}
 		adicionar(c);
+	}
+
+	@Override
+	public void antesIdentity(Compilador compilador, Token token) throws InstrucaoException {
+		finalizarIFContexto(compilador, token);
 	}
 
 	public boolean isMinimo() {
