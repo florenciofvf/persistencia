@@ -1,33 +1,30 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
+import java.util.Objects;
 
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class LambContexto extends Container implements IFuncaoContexto {
 	public static final AbreChaveOuOperadorLamb CHAVE_OU_OPERADOR = new AbreChaveOuOperadorLamb();
-	protected final FuncaoContexto funcaoContexto;
+	protected final IFuncaoContexto funcaoParent;
 	private boolean faseParametros;
 	private boolean identityVoid;
 	private boolean retornoVoid;
 	private String nomeDinamico;
 
-	public LambContexto(FuncaoContexto funcaoContexto) {
-		this.funcaoContexto = funcaoContexto;
+	public LambContexto(IFuncaoContexto funcaoParent) {
+		this.funcaoParent = Objects.requireNonNull(funcaoParent);
 		adicionar(new ParametrosContexto());
 		adicionar(new CorpoContexto());
 		faseParametros = true;
 		contexto = Contextos.ABRE_PARENTESES;
 	}
 
-	public FuncaoContexto getFuncaoContexto() {
-		return funcaoContexto;
-	}
-
 	@Override
 	public IFuncaoContexto getFuncaoParent() {
-		return funcaoContexto;
+		return funcaoParent;
 	}
 
 	public String getNome() throws InstrucaoException {

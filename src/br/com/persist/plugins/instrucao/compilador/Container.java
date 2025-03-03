@@ -104,6 +104,17 @@ public abstract class Container extends AbstratoContexto {
 		return (IFuncaoContexto) c;
 	}
 
+	protected FuncaoContexto getFuncaoPrincipal(IFuncaoContexto ini) {
+		IFuncaoContexto funcao = ini;
+		while (funcao != null) {
+			if (funcao instanceof FuncaoContexto) {
+				return (FuncaoContexto) funcao;
+			}
+			funcao = funcao.getFuncaoParent();
+		}
+		return null;
+	}
+
 	protected boolean ehParametro(String id, AtomicBoolean paramSuper) throws InstrucaoException {
 		return getParametroContexto(id, paramSuper) != null;
 	}
@@ -115,11 +126,14 @@ public abstract class Container extends AbstratoContexto {
 		}
 		ParametrosContexto parametros = funcao.getParametros();
 		ParametroContexto resp = parametros.getParametro(id);
-		if (resp == null && funcao.getFuncaoParent() != null) {
-			parametros = funcao.getFuncaoParent().getParametros();
-			resp = parametros.getParametro(id);
-			if (resp != null) {
-				paramSuper.set(true);
+		if (resp == null) {
+			funcao = getFuncaoPrincipal(funcao.getFuncaoParent());
+			if (funcao != null) {
+				parametros = funcao.getParametros();
+				resp = parametros.getParametro(id);
+				if (resp != null) {
+					paramSuper.set(true);
+				}
 			}
 		}
 		return resp;

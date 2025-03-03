@@ -57,8 +57,7 @@ public class IdentityContexto extends Container {
 	}
 
 	private void salvarFuncao(Compilador compilador, PrintWriter pw) {
-		char c = id.charAt(0);
-		if (c >= '0' && c <= '9') {
+		if (isLamb(id)) {
 			print(pw, FuncaoContexto.LOAD_FUNCTION_LAMB, id);
 		} else {
 			print(pw, FuncaoContexto.LOAD_FUNCTION, id);
@@ -66,6 +65,11 @@ public class IdentityContexto extends Container {
 		if (tokenCor == null) {
 			compilador.tokens.add(token.novo(Tipo.FUNCAO));
 		}
+	}
+
+	public static boolean isLamb(String string) {
+		char c = string.charAt(0);
+		return c >= '0' && c <= '9';
 	}
 
 	private boolean ehFuncao() throws InstrucaoException {

@@ -52,7 +52,7 @@ public class ArgumentoContexto extends ListaMapaContexto {
 
 	@Override
 	public void lambda(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.setContexto(new LambContexto(getFuncaoContexto(token)));
+		compilador.setContexto(new LambContexto(getFuncaoParent()));
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}
 
@@ -189,15 +189,12 @@ public class ArgumentoContexto extends ListaMapaContexto {
 		return parametros.contem(identity.getId());
 	}
 
-	private FuncaoContexto getFuncaoContexto(Token token) throws InstrucaoException {
+	private IFuncaoContexto getFuncaoParent() throws InstrucaoException {
 		IFuncaoContexto funcao = getIFuncaoContexto();
 		if (funcao == null) {
 			throw new InstrucaoException(ERRO_FUNCAO_PARENT, identity.getId());
 		}
-		if (funcao instanceof LambContexto) {
-			throw new InstrucaoException("erro.lamb_interna", identity.getId(), token.toString());
-		}
-		return (FuncaoContexto) funcao;
+		return funcao;
 	}
 
 	@Override
