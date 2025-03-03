@@ -8,7 +8,7 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class IFContexto extends Container {
-	public static final ReservadoOuFinalizar RESERVADO_OU_FINALIZAR = new ReservadoOuFinalizar();
+	public static final Reservado RESERVADO_IF = new Reservado();
 	private boolean faseExpressao;
 	private int minimo = 3;
 
@@ -41,14 +41,8 @@ public class IFContexto extends Container {
 			faseExpressao = false;
 		} else {
 			compilador.setContexto(getCorpo());
-			contexto = RESERVADO_OU_FINALIZAR;
+			contexto = RESERVADO_IF;
 		}
-	}
-
-	@Override
-	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		contexto.finalizador(compilador, token);
-		finalizarIFContexto(compilador, token);
 	}
 
 	@Override
@@ -57,11 +51,6 @@ public class IFContexto extends Container {
 		if (!InstrucaoConstantes.ELSEIF.equals(string) && !InstrucaoConstantes.ELSE.equals(string)) {
 			finalizarIFContexto(compilador, token);
 		}
-	}
-
-	private void finalizarIFContexto(Compilador compilador, Token token) throws InstrucaoException {
-		compilador.setContexto(getPai());
-		normalizarArvore(compilador, token);
 	}
 
 	@Override
@@ -89,6 +78,11 @@ public class IFContexto extends Container {
 	@Override
 	public void antesIdentity(Compilador compilador, Token token) throws InstrucaoException {
 		finalizarIFContexto(compilador, token);
+	}
+
+	private void finalizarIFContexto(Compilador compilador, Token token) throws InstrucaoException {
+		compilador.setContexto(getPai());
+		normalizarArvore(compilador, token);
 	}
 
 	public boolean isMinimo() {
@@ -150,15 +144,8 @@ public class IFContexto extends Container {
 	}
 }
 
-class ReservadoOuFinalizar extends AbstratoContexto {
+class Reservado extends AbstratoContexto {
 	private final String[] strings = { InstrucaoConstantes.ELSEIF, InstrucaoConstantes.ELSE };
-
-	@Override
-	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		if (!";".equals(token.getString())) {
-			compilador.invalidar(token);
-		}
-	}
 
 	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
