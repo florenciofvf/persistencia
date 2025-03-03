@@ -46,6 +46,11 @@ public class IFContexto extends Container {
 	}
 
 	@Override
+	public void antesFinalizador(Compilador compilador, Token token) throws InstrucaoException {
+		finalizarIFContexto(compilador, token);
+	}
+
+	@Override
 	public void antesReservado(Compilador compilador, Token token) throws InstrucaoException {
 		String string = token.getString();
 		if (!InstrucaoConstantes.ELSEIF.equals(string) && !InstrucaoConstantes.ELSE.equals(string)) {

@@ -10,6 +10,8 @@ public interface Contexto {
 	 */
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException;
 
+	public void antesFinalizador(Compilador compilador, Token token) throws InstrucaoException;
+
 	/*
 	 * ")", "}", ";"
 	 */

@@ -11,6 +11,10 @@ public abstract class AbstratoContexto implements Contexto {
 	}
 
 	@Override
+	public void antesFinalizador(Compilador compilador, Token token) throws InstrucaoException {
+	}
+
+	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.invalidar(token);
 	}

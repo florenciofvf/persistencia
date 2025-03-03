@@ -160,6 +160,7 @@ public class Compilador {
 		case '}':
 		case ';':
 			token = new Token("" + c, Tipo.FINALIZADOR, indice);
+			contexto.antesFinalizador(this, token);
 			contexto.finalizador(this, token);
 			if (c == '}') {
 				tokens.add(token);
