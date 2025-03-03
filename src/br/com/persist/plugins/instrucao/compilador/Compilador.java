@@ -399,10 +399,12 @@ public class Compilador {
 			if (ident.isLamb()) {
 				contexto.lambda(this, ident);
 			} else {
+				contexto.antesReservado(this, ident);
 				contexto.reservado(this, ident);
 			}
 			tokens.add(ident);
 		} else {
+			contexto.antesIdentity(this, ident);
 			contexto.identity(this, ident);
 		}
 	}

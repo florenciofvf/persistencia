@@ -26,6 +26,10 @@ public abstract class AbstratoContexto implements Contexto {
 	}
 
 	@Override
+	public void antesReservado(Compilador compilador, Token token) throws InstrucaoException {
+	}
+
+	@Override
 	public void reservado(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.invalidar(token);
 	}
@@ -53,6 +57,10 @@ public abstract class AbstratoContexto implements Contexto {
 	@Override
 	public void numero(Compilador compilador, Token token) throws InstrucaoException {
 		compilador.invalidar(token);
+	}
+
+	@Override
+	public void antesIdentity(Compilador compilador, Token token) throws InstrucaoException {
 	}
 
 	@Override

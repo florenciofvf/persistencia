@@ -26,6 +26,8 @@ public interface Contexto {
 	 */
 	public void operador(Compilador compilador, Token token) throws InstrucaoException;
 
+	public void antesReservado(Compilador compilador, Token token) throws InstrucaoException;
+
 	/*
 	 * "const", "defun", "defun_native", "if", "while", "elseif", "else", "return"
 	 */
@@ -55,6 +57,8 @@ public interface Contexto {
 	 * Exemplo: 1, 46.9, -7, +7
 	 */
 	public void numero(Compilador compilador, Token token) throws InstrucaoException;
+
+	public void antesIdentity(Compilador compilador, Token token) throws InstrucaoException;
 
 	/*
 	 * Exemplo: somar1, param, file.open
