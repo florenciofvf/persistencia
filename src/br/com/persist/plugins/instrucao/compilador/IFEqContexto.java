@@ -28,16 +28,19 @@ public class IFEqContexto extends Container {
 			}
 			return;
 		}
-		Container parent = ifContexto != null ? ifContexto : whileContexto;
-		CorpoContexto corpoParent = getCorpoContexto(parent);
+		Container container = ifContexto != null ? ifContexto : whileContexto;
+		CorpoContexto corpoParent = getCorpoContexto(container);
 		while (corpoParent != null) {
-			Container comando = corpoParent.getContainerApos(parent);
+			Container comando = corpoParent.getContainerApos(container);
 			if (comando != null) {
 				deslocamento = comando.getPontoDeslocamento();
 				break;
 			}
-			parent = corpoParent.pai;
-			corpoParent = getCorpoContexto(parent);
+			container = corpoParent.pai;
+			if (container instanceof ElseContexto) {
+				container = container.pai;
+			}
+			corpoParent = getCorpoContexto(container);
 		}
 		if (deslocamento == 0) {
 			throw new InstrucaoException("erro.ponto_deslocamento");

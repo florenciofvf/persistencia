@@ -96,6 +96,9 @@ public class CorpoContexto extends Container {
 
 	protected Container getContainerApos(Container c) {
 		int indice = getIndice(c);
+		if (indice == -1) {
+			return null;
+		}
 		if (indice == getSize() - 1) {
 			return null;
 		}
