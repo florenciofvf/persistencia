@@ -31,7 +31,8 @@ public class WhileContexto extends Container {
 			faseExpressao = false;
 		} else {
 			compilador.setContexto(getCorpo());
-			contexto = Contextos.PONTO_VIRGULA;
+			getCorpo().setFinalizadorPai(true);
+			contexto = Contextos.FECHA_CHAVES;
 		}
 	}
 
