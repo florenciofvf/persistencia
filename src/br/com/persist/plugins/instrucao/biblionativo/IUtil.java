@@ -34,7 +34,7 @@ public class IUtil {
 		return object == null ? "" : object.toString();
 	}
 
-	@Biblio(5)
+	@Biblio(6)
 	public static Object log(Object desc, Object object) {
 		System.out.println(desc + " " + object);
 		return object;
