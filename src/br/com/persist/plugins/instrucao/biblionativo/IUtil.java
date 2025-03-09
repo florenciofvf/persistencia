@@ -33,4 +33,10 @@ public class IUtil {
 	public static String toString(Object object) {
 		return object == null ? "" : object.toString();
 	}
+
+	@Biblio(5)
+	public static Object log(Object desc, Object object) {
+		System.out.println(desc + " " + object);
+		return object;
+	}
 }
