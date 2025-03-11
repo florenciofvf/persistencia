@@ -7,8 +7,8 @@ public class ElseIFContexto extends Container {
 	private boolean faseExpressao;
 
 	public ElseIFContexto() {
-		adicionar(new ExpressaoContexto(null));
 		contexto = Contextos.ABRE_PARENTESES;
+		adicionar(new ExpressaoContexto());
 		adicionar(new CorpoContexto());
 		faseExpressao = true;
 	}

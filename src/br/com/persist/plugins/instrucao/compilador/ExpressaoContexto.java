@@ -13,6 +13,10 @@ public class ExpressaoContexto extends ListaMapaContexto {
 		this.finalizador = finalizador;
 	}
 
+	public ExpressaoContexto() {
+		this(null);
+	}
+
 	@Override
 	public void inicializador(Compilador compilador, Token token) throws InstrucaoException {
 		contexto.inicializador(compilador, token);
@@ -20,7 +24,7 @@ public class ExpressaoContexto extends ListaMapaContexto {
 			IdentityContexto ultimo = (IdentityContexto) excluirUltimo();
 			compilador.setContexto(new ArgumentoContexto(ultimo));
 		} else {
-			compilador.setContexto(new ExpressaoContexto(null));
+			compilador.setContexto(new ExpressaoContexto());
 		}
 		adicionarImpl(compilador, token, (Container) compilador.getContexto());
 	}
