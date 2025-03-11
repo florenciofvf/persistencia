@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -81,7 +82,7 @@ public class Compilador {
 		biblioteca.desviar();
 		biblioteca.validar();
 		File destino = getCompilado(biblioteca);
-		try (PrintWriter pw = new PrintWriter(destino)) {
+		try (PrintWriter pw = new PrintWriter(destino, StandardCharsets.UTF_8.name())) {
 			biblioteca.salvar(this, pw);
 		}
 		return biblioteca;
