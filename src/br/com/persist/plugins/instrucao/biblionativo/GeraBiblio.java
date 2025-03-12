@@ -1,11 +1,11 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -37,7 +37,7 @@ public class GeraBiblio {
 		Logger.getGlobal().info("Processado >>> " + biblio.getNome());
 	}
 
-	private static void processar(Class<?> classe) throws FileNotFoundException {
+	private static void processar(Class<?> classe) throws IOException {
 		Method[] methods = classe.getDeclaredMethods();
 		List<Item> itens = new ArrayList<>();
 		for (Method m : methods) {
@@ -47,7 +47,7 @@ public class GeraBiblio {
 			}
 		}
 		itens.sort((o1, o2) -> o1.ordem - o2.ordem);
-		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName().toLowerCase());
+		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName().toLowerCase(), StandardCharsets.UTF_8.name());
 		for (Item item : itens) {
 			imprimir(pw, classe, item.m);
 		}
