@@ -670,7 +670,7 @@ class Aba extends Transferivel {
 				throw new InstrucaoException("Erro no param arquivo{}. Total -> " + nomes.size(), false);
 			}
 			File file = CacheBiblioteca.arquivoParaCompilar(nomes.get(0));
-			try (PrintWriter pw = new PrintWriter(file)) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				List<String> arquivosIncluir = listar(string, "incluir{", "}");
 				for (String strIncluir : arquivosIncluir) {
 					File fileIncluir = CacheBiblioteca.arquivoParaCompilar(strIncluir);
