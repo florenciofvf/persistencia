@@ -34,7 +34,8 @@ public class ICamunda {
 		}
 		String file = absoluto.toString();
 		AtomicBoolean atomico = new AtomicBoolean(false);
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+		try (BufferedReader br = new BufferedReader(
+				new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 			String linha = br.readLine();
 			while (linha != null) {
 				if (linha.trim().length() > 0) {
