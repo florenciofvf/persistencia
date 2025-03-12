@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
@@ -84,7 +85,7 @@ public class MensagemContainer extends Panel {
 
 		@Override
 		protected void salvar() {
-			try (PrintWriter pw = new PrintWriter(file)) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textEditor.getText());
 				salvoMensagem();
 			} catch (Exception e) {

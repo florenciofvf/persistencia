@@ -4,10 +4,10 @@ import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
@@ -75,12 +75,12 @@ public class RequisicaoPoolVisualizador {
 	}
 
 	private void salvar(Component parent) {
-		try (PrintWriter pw = new PrintWriter(file)) {
+		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 			for (int i = 1; i < visualizadores.length; i++) {
 				visualizadores[i].salvar(pw);
 				pw.println();
 			}
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			Util.mensagem(parent, e.getMessage());
 		}
 	}

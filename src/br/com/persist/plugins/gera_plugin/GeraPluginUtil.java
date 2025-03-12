@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 public class GeraPluginUtil {
 	private GeraPluginUtil() {
@@ -69,7 +70,7 @@ public class GeraPluginUtil {
 	}
 
 	private static void gerar(Config config, String template, File file) throws IOException {
-		try (PrintWriter pw = new PrintWriter(file)) {
+		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 			BufferedReader br = criarBufferedReader(template);
 			String linha = br.readLine();
 			while (linha != null) {

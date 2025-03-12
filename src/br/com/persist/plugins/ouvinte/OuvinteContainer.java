@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import javax.swing.Icon;
@@ -139,7 +140,7 @@ public class OuvinteContainer extends AbstratoContainer {
 		}
 
 		private void salvar(File file) {
-			try (PrintWriter pw = new PrintWriter(file)) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textEditor.getText());
 				salvoMensagem();
 			} catch (Exception e) {

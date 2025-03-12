@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -187,7 +188,7 @@ public class PontoArea extends Panel implements PontoListener, AWTEventListener 
 
 	void salvar(File file) {
 		try {
-			PrintWriter pw = new PrintWriter(file);
+			PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name());
 			for (Periodo p : periodos) {
 				p.salvar(pw);
 			}

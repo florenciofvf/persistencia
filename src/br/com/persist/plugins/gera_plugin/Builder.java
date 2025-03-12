@@ -3,6 +3,7 @@ package br.com.persist.plugins.gera_plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import br.com.persist.assistencia.StringPool;
@@ -26,7 +27,7 @@ public abstract class Builder {
 
 	public void gerar() throws IOException {
 		File file = new File(config.diretorioDestino, config.nameCap + objeto + ".java");
-		try (PrintWriter pw = new PrintWriter(file)) {
+		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 			StringPool pool = new StringPool();
 
 			Arquivo arquivo = new Arquivo();
