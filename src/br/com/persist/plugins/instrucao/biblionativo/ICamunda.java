@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,7 +34,7 @@ public class ICamunda {
 		}
 		String file = absoluto.toString();
 		AtomicBoolean atomico = new AtomicBoolean(false);
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 			String linha = br.readLine();
 			while (linha != null) {
 				if (linha.trim().length() > 0) {
