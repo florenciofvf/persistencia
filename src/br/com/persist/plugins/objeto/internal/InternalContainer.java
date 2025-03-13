@@ -32,6 +32,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2624,7 +2625,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 					String string = obj.toString();
 					if (string != null && !string.isEmpty()) {
-						sb.append(string + "\n");
+						sb.append(new String(string.getBytes(), StandardCharsets.UTF_8) + "\n");
 					}
 				}
 				if (sb.length() > 0) {
