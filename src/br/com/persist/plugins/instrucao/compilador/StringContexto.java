@@ -1,6 +1,7 @@
 package br.com.persist.plugins.instrucao.compilador;
 
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
@@ -25,7 +26,7 @@ public class StringContexto extends Container {
 	@Override
 	public void salvar(Compilador compilador, PrintWriter pw) throws InstrucaoException {
 		super.salvar(compilador, pw);
-		print(pw, PUSH_STRING, string);
+		print(pw, PUSH_STRING, new String(string.getBytes(), StandardCharsets.UTF_8));
 	}
 
 	@Override

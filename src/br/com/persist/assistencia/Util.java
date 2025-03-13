@@ -28,6 +28,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -1099,10 +1100,31 @@ public class Util {
 		}
 	}
 
+	public static void conteudo(Component componente, File file, Charset charset) throws IOException {
+		if (file != null && file.exists()) {
+			mensagem(componente, conteudo(file, charset), file);
+		}
+	}
+
 	public static String conteudo(File file) throws IOException {
 		if (file != null && file.exists()) {
 			StringBuilder sb = new StringBuilder();
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					sb.append(linha + Constantes.QL);
+					linha = br.readLine();
+				}
+			}
+			return sb.toString();
+		}
+		return Constantes.VAZIO;
+	}
+
+	public static String conteudo(File file, Charset charset) throws IOException {
+		if (file != null && file.exists()) {
+			StringBuilder sb = new StringBuilder();
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset))) {
 				String linha = br.readLine();
 				while (linha != null) {
 					sb.append(linha + Constantes.QL);

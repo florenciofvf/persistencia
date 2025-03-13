@@ -571,7 +571,7 @@ class Aba extends Transferivel {
 				if (!file.exists()) {
 					throw new IOException("Arquivo inexistente! " + file);
 				}
-				Util.conteudo(Aba.this, file);
+				Util.conteudo(Aba.this, file, StandardCharsets.UTF_8);
 			} catch (Exception e) {
 				Util.mensagem(Aba.this, e.getMessage());
 			}
