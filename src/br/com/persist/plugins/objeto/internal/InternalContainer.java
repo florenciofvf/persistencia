@@ -2624,7 +2624,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						continue;
 					}
 					String string = obj.toString();
-					if (string != null && !string.isEmpty()) {
+					if (string != null) {
 						sb.append(new String(string.getBytes(), StandardCharsets.UTF_8) + "\n");
 					}
 				}
