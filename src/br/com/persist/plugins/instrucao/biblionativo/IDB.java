@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.conexao.ConexaoException;
+import br.com.persist.plugins.conexao.ConexaoProvedor;
+
 public class IDB {
 	private IDB() {
 	}
@@ -63,5 +67,21 @@ public class IDB {
 				}
 			}
 		}
+	}
+
+	@Biblio(3)
+	public static Conexao getConexao(Object nome) {
+		if (nome == null) {
+			return null;
+		}
+		return ConexaoProvedor.getConexao(nome.toString());
+	}
+
+	@Biblio(4)
+	public static Connection getConnectionProvedor(Object conexao) throws ConexaoException {
+		if (conexao instanceof Conexao) {
+			return ConexaoProvedor.getConnection((Conexao) conexao);
+		}
+		return null;
 	}
 }
