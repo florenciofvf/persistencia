@@ -665,6 +665,11 @@ public class Util {
 		return botoes[i];
 	}
 
+	public static Object getValorInputDialogSelect(Component parent, Object[] valores) {
+		return JOptionPane.showInputDialog(parent, Mensagens.getString("label.selecione_opcao"),
+				Mensagens.getString("label.atencao"), JOptionPane.QUESTION_MESSAGE, null, valores, valores[0]);
+	}
+
 	public static void stackTraceAndMessage(String tipo, Throwable ex, Component componente) {
 		String msg = getStackTrace(tipo, ex);
 		mensagem(componente, msg);

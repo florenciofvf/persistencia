@@ -2561,8 +2561,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
+			private String getSelBiblio(String string) {
+				String[] strings = string.split(",");
+				if (strings.length == 1) {
+					return string;
+				}
+				Object resp = Util.getValorInputDialogSelect(InternalContainer.this, strings);
+				return resp == null ? null : resp.toString();
+			}
+
 			private void checarRegistro() {
-				String nomeBiblio = objeto.getBiblioChecagem();
+				String nomeBiblio = getSelBiblio(objeto.getBiblioChecagem());
+				if (nomeBiblio == null) {
+					return;
+				}
+				nomeBiblio = nomeBiblio.trim();
 				Processador processador = new Processador();
 				Conexao conexao = getConexao();
 				Connection conn = null;
