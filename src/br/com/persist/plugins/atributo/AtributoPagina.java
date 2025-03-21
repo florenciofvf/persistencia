@@ -91,6 +91,8 @@ public class AtributoPagina extends Panel {
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, painelFichario);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.33));
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 	}
 
@@ -139,6 +141,8 @@ public class AtributoPagina extends Panel {
 		private void montarLayout() {
 			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelTextArea(), criarPanelTabela());
 			SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+			split.setOneTouchExpandable(true);
+			split.setContinuousLayout(true);
 			add(BorderLayout.NORTH, toolbar);
 			add(BorderLayout.CENTER, split);
 		}

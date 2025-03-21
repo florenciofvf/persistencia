@@ -49,6 +49,8 @@ public class ComplementoContainer extends Panel {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelTextArea(), criarPanelLista());
 		listaComplementos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		split.setDividerLocation(Constantes.SIZE.height / 2);
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
 	}

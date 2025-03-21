@@ -55,6 +55,8 @@ public class EntregaPagina extends Panel {
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 	}
 

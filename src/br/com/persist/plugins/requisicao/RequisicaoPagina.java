@@ -313,6 +313,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private void montarLayout() {
 		split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 	}
 

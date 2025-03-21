@@ -192,6 +192,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, muro, scrollPane);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 
 		buttonGerar.setIcon(Icones.EXECUTAR);

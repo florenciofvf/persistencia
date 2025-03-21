@@ -48,6 +48,8 @@ public class AbaView extends Panel implements ContainerTreeListener {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tree), log);
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 	}
 

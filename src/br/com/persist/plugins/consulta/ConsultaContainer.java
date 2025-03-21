@@ -125,6 +125,8 @@ public class ConsultaContainer extends AbstratoContainer {
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, criarPanelTabela());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
 		add(BorderLayout.SOUTH, labelStatus);
