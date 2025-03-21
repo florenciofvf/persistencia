@@ -104,6 +104,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 	}
 
