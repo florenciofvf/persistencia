@@ -156,8 +156,24 @@ public class Arquivo {
 		return getName().endsWith("_exec");
 	}
 
+	public boolean isTimer() {
+		return getName().endsWith("_timer");
+	}
+
+	public boolean isAnexo() {
+		return getName().endsWith("_anexo");
+	}
+
 	public boolean isDescricao() {
 		return getName().endsWith("_desc");
+	}
+
+	public boolean isException() {
+		return getName().endsWith("_exception");
+	}
+
+	public boolean isService() {
+		return getName().endsWith("_service");
 	}
 
 	public void ordenar() {
