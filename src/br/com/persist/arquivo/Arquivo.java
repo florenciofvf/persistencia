@@ -136,32 +136,28 @@ public class Arquivo {
 		return null;
 	}
 
-	public int getNivel() {
-		int total = 0;
-		if (isPai(getName())) {
-			return total;
-		}
-		Arquivo a = pai;
-		while (a != null) {
-			total++;
-			if (isPai(a.getName())) {
-				return total;
-			}
-			a = a.pai;
-		}
-		return total;
+	public boolean isPai() {
+		return getName().endsWith("_parent");
 	}
 
 	public boolean isAuto() {
 		return getName().endsWith("_auto");
 	}
 
-	public boolean isPai() {
-		return getName().endsWith("___");
+	public boolean isPessoa() {
+		return getName().endsWith("_pessoa");
 	}
 
-	private static boolean isPai(String s) {
-		return s != null && s.endsWith("___");
+	public boolean isURL() {
+		return getName().endsWith("_url");
+	}
+
+	public boolean isExec() {
+		return getName().endsWith("_exec");
+	}
+
+	public boolean isDescricao() {
+		return getName().endsWith("_desc");
 	}
 
 	public void ordenar() {

@@ -17,18 +17,20 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 		if (value instanceof Arquivo) {
 			Arquivo obj = (Arquivo) value;
-			if (obj.isFile()) {
-				setIcon(Icones.EXECUTAR);
+			if (obj.isDescricao()) {
+				setIcon(Icones.RULE);
 			} else if (obj.isPai()) {
 				setIcon(Icones.FAVORITO);
+			} else if (obj.isExec()) {
+				setIcon(Icones.EXECUTAR);
 			} else if (obj.isAuto()) {
 				setIcon(Icones.CONFIG2);
-			} else if (obj.getNivel() == 1) {
-				setIcon(Icones.RULE);
-			} else if (obj.getNivel() == 2) {
+			} else if (obj.isPessoa()) {
 				setIcon(Icones.PESSOA);
-			} else if (obj.getNivel() == 3) {
+			} else if (obj.isURL()) {
 				setIcon(Icones.URL);
+			} else if (obj.isFile()) {
+				setIcon(Icones.TEXTO);
 			}
 		}
 		return this;
