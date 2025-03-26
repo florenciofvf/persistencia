@@ -4139,6 +4139,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		@Override
+		public void selectTotalMenorLengthString(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
+				String instrucao = instrucaoCampo.totalDoMenorLengthString();
+				if (!Util.isEmpty(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		@Override
 		public void selectValorRepetidoComSuaQtd(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
@@ -4986,6 +4998,7 @@ class InstrucaoCampo {
 	private static final String GROUP_BY = "\n    GROUP BY ";
 	private static final String FROM = "\n    FROM ";
 	private static final String COUNT = ", COUNT(";
+	private static final String FROM2 = "\nFROM ";
 	final Conexao conexao;
 	final Objeto objeto;
 	final String campo;
@@ -4997,7 +5010,7 @@ class InstrucaoCampo {
 	}
 
 	String fromTabela() {
-		return "\nFROM " + objeto.getTabelaEsquema(conexao);
+		return FROM2 + objeto.getTabelaEsquema(conexao);
 	}
 
 	String groupBy() {
@@ -5056,7 +5069,13 @@ class InstrucaoCampo {
 
 	String totalDoMaiorLengthString() {
 		StringBuilder sb = new StringBuilder("SELECT MAX(LENGTH(" + objeto.comApelido(campo) + "))");
-		sb.append("\nFROM " + objeto.getTabelaEsquema(conexao));
+		sb.append(FROM2 + objeto.getTabelaEsquema(conexao));
+		return sb.toString();
+	}
+
+	String totalDoMenorLengthString() {
+		StringBuilder sb = new StringBuilder("SELECT MIN(LENGTH(" + objeto.comApelido(campo) + "))");
+		sb.append(FROM2 + objeto.getTabelaEsquema(conexao));
 		return sb.toString();
 	}
 }
