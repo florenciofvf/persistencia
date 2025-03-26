@@ -164,6 +164,18 @@ public class Arquivo {
 		return getName().endsWith("_anexo");
 	}
 
+	public boolean isInfo() {
+		return getName().endsWith("_info");
+	}
+
+	public boolean isSeta() {
+		return getName().endsWith("_seta");
+	}
+
+	public boolean isCheck() {
+		return getName().endsWith("_check");
+	}
+
 	public boolean isDescricao() {
 		return getName().endsWith("_desc");
 	}
