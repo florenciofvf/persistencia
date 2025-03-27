@@ -30,6 +30,10 @@ public class ArquivoTree extends Tree {
 		ouvintes = new ArrayList<>();
 	}
 
+	public ArquivoPopup getArquivoPopup() {
+		return arquivoPopup;
+	}
+
 	public void adicionarOuvinte(ArquivoTreeListener listener) {
 		if (listener != null) {
 			ouvintes.add(listener);
@@ -171,7 +175,7 @@ public class ArquivoTree extends Tree {
 		}
 	};
 
-	private class ArquivoPopup extends Popup {
+	public class ArquivoPopup extends Popup {
 		private Action novoDiretorioAcao = actionMenu("label.novo_diretorio", Icones.ABRIR);
 		private Action novoArquivoAcao = actionMenu("label.novo_arquivo", Icones.PANEL4);
 		private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);

@@ -43,6 +43,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -62,6 +63,7 @@ import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
 
 class ProjetoSplit extends SplitPane {
+	private Action sufixosAct = Action.acaoMenu(ProjetoMensagens.getString("label.sufixos"), null);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final File fileRoot;
@@ -78,6 +80,8 @@ class ProjetoSplit extends SplitPane {
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
+		tree.getArquivoPopup().addMenuItem(sufixosAct);
+		sufixosAct.setActionListener(this::sufixos);
 		tree.setCellRenderer(new ProjetoRenderer());
 		setLeftComponent(new ScrollPane(tree));
 		tree.adicionarOuvinte(treeListener);
@@ -85,6 +89,24 @@ class ProjetoSplit extends SplitPane {
 		setRightComponent(panel);
 		panel.tree = tree;
 		abrir();
+	}
+
+	private void sufixos(ActionEvent e) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("_parent");
+		sb.append(Constantes.QL + "_auto");
+		sb.append(Constantes.QL + "_pessoa");
+		sb.append(Constantes.QL + "_url");
+		sb.append(Constantes.QL + "_exec");
+		sb.append(Constantes.QL + "_timer");
+		sb.append(Constantes.QL + "_anexo");
+		sb.append(Constantes.QL + "_info");
+		sb.append(Constantes.QL + "_seta");
+		sb.append(Constantes.QL + "_check");
+		sb.append(Constantes.QL + "_desc");
+		sb.append(Constantes.QL + "_exception");
+		sb.append(Constantes.QL + "_service");
+		Util.mensagem(ProjetoSplit.this, sb.toString());
 	}
 
 	void salvar() throws XMLException {
