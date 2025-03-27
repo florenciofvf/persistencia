@@ -13,6 +13,7 @@ public class Campo extends Container {
 	private static final String ATT_NOME = "nome";
 	private final String valor;
 	private final String nome;
+	private boolean invalido;
 
 	public Campo(String nome, String valor) {
 		this.nome = Objects.requireNonNull(nome);
@@ -20,7 +21,10 @@ public class Campo extends Container {
 	}
 
 	public static Campo criar(Attributes atts) {
-		return new Campo(value(atts, ATT_NOME), value(atts, ATT_VALOR));
+		Campo campo = new Campo(value(atts, ATT_NOME), value(atts, ATT_VALOR));
+		String string = value(atts, Modulo.ATT_INVALIDO);
+		campo.setInvalido(Modulo.TRUE.equalsIgnoreCase(string));
+		return campo;
 	}
 
 	public String getNome() {
@@ -29,6 +33,14 @@ public class Campo extends Container {
 
 	public String getValor() {
 		return valor;
+	}
+
+	public boolean isInvalido() {
+		return invalido;
+	}
+
+	public void setInvalido(boolean invalido) {
+		this.invalido = invalido;
 	}
 
 	@Override
@@ -41,6 +53,9 @@ public class Campo extends Container {
 		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAB_CAMPO, doc);
 		PropriedadeUtil.atributo(ATT_NOME, nome, doc);
 		PropriedadeUtil.atributo(ATT_VALOR, valor, doc);
+		if (invalido) {
+			PropriedadeUtil.atributo(Modulo.ATT_INVALIDO, Modulo.TRUE, doc);
+		}
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 

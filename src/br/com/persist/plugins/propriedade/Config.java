@@ -65,6 +65,9 @@ public class Config extends Container {
 
 	public String substituir(String chave, String string) {
 		for (Campo c : getCacheCampos()) {
+			if (c.isInvalido()) {
+				continue;
+			}
 			string = Util.replaceAll(string, Constantes.SEP + chave + "." + c.getNome() + Constantes.SEP, c.getValor());
 		}
 		return string;
