@@ -139,7 +139,9 @@ public class PropriedadeContainer extends AbstratoContainer {
 			panelArea.add(BorderLayout.CENTER, textPane);
 			ScrollPane scrollPane = new ScrollPane(panelArea);
 			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-			add(BorderLayout.CENTER, scrollPane);
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane);
+			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		}
 	}
 
@@ -159,7 +161,9 @@ public class PropriedadeContainer extends AbstratoContainer {
 			add(BorderLayout.NORTH, toolbarPesquisa);
 			ScrollPane scrollPane = new ScrollPane(textPane);
 			scrollPane.setRowHeaderView(new TextEditorLine(textPane));
-			add(BorderLayout.CENTER, scrollPane);
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane);
+			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 			Action copiar2Action = toolbarPesquisa.addCopiar2();
 			copiar2Action.hint(PropriedadeMensagens.getString("label.copiar_tudo"));
 			copiar2Action.setActionListener(e -> copiar2());

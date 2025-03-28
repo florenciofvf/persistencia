@@ -25,6 +25,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
@@ -57,7 +58,9 @@ public class OuvinteContainer extends AbstratoContainer {
 		add(BorderLayout.NORTH, toolbar);
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		add(BorderLayout.CENTER, scrollPane);
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 	}
 
 	@Override

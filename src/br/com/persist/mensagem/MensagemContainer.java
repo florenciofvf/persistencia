@@ -44,7 +44,9 @@ public class MensagemContainer extends Panel {
 		add(BorderLayout.NORTH, toolbar);
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		add(BorderLayout.CENTER, scrollPane);
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 	}
 
 	public void setSel(String string) {

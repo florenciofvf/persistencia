@@ -358,7 +358,9 @@ class Aba extends Transferivel {
 		add(BorderLayout.NORTH, toolbar);
 		JScrollPane scrollPane = new JScrollPane(editor);
 		scrollPane.setRowHeaderView(new TextEditorLine(editor));
-		add(BorderLayout.CENTER, scrollPane);
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 	}
 
 	private void abrir() {

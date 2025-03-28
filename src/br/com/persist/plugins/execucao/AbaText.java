@@ -27,6 +27,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 
@@ -46,7 +47,9 @@ public class AbaText extends Panel {
 		add(BorderLayout.NORTH, toolbar);
 		scrollPane = new JScrollPane(editor);
 		scrollPane.setRowHeaderView(new TextEditorLine(editor));
-		add(BorderLayout.CENTER, scrollPane);
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 	}
 
 	int getValueScrollPane() {

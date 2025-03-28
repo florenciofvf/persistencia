@@ -472,7 +472,9 @@ class Aba extends Transferivel {
 			add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
 			ScrollPane scrollPane2 = new ScrollPane(textEditor);
 			scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
-			add(BorderLayout.CENTER, scrollPane2);
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane2);
+			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		}
 
 		private void setText(String string) {
