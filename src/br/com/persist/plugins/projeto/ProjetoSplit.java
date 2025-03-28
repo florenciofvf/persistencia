@@ -106,6 +106,10 @@ class ProjetoSplit extends SplitPane {
 		sb.append(Constantes.QL + "_desc");
 		sb.append(Constantes.QL + "_exception");
 		sb.append(Constantes.QL + "_service");
+		sb.append(Constantes.QL + "_refresh");
+		sb.append(Constantes.QL + "_sinc");
+		sb.append(Constantes.QL + "_down");
+		sb.append(Constantes.QL + "_up");
 		Util.mensagem(ProjetoSplit.this, sb.toString());
 	}
 

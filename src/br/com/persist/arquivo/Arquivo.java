@@ -184,8 +184,24 @@ public class Arquivo {
 		return getName().endsWith("_exception");
 	}
 
+	public boolean isRefresh() {
+		return getName().endsWith("_refresh");
+	}
+
 	public boolean isService() {
 		return getName().endsWith("_service");
+	}
+
+	public boolean isSinc() {
+		return getName().endsWith("_sinc");
+	}
+
+	public boolean isDown() {
+		return getName().endsWith("_down");
+	}
+
+	public boolean isUp() {
+		return getName().endsWith("_up");
 	}
 
 	public void ordenar() {

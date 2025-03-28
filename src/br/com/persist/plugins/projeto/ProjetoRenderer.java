@@ -52,5 +52,18 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 		} else if (obj.isFile()) {
 			setIcon(Icones.TEXTO);
 		}
+		configIcon2(obj);
+	}
+
+	private void configIcon2(Arquivo obj) {
+		if (obj.isRefresh()) {
+			setIcon(Icones.ATUALIZAR);
+		} else if (obj.isSinc()) {
+			setIcon(Icones.SINCRONIZAR);
+		} else if (obj.isDown()) {
+			setIcon(Icones.BAIXAR);
+		} else if (obj.isUp()) {
+			setIcon(Icones.UPDATE);
+		}
 	}
 }
