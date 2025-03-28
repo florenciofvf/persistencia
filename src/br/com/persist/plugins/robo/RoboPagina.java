@@ -73,7 +73,9 @@ public class RoboPagina extends Panel {
 		panelArea.add(BorderLayout.CENTER, textEditor);
 		scrollPane = new ScrollPane(panelArea);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		panel.add(BorderLayout.CENTER, scrollPane);
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane);
+		panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		return panel;
 	}
 

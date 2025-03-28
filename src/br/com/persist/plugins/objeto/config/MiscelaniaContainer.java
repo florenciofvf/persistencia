@@ -39,7 +39,9 @@ public class MiscelaniaContainer extends Panel {
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, scrollPane);
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		StringBuilder builder = new StringBuilder();
 		if (Tipo.CHAVEAMENTO.equals(tipo)) {
 			chave(builder);

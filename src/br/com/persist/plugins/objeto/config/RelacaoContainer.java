@@ -108,7 +108,9 @@ public class RelacaoContainer extends Panel {
 			textEditor.addKeyListener(keyListenerInner);
 			ScrollPane scrollPane = new ScrollPane(textEditor);
 			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-			add(BorderLayout.CENTER, scrollPane);
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane);
+			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinhaRotulo("label.desloc_x_desc", txtDeslocXDesc));
 			container.add(criarLinhaRotulo("label.desloc_y_desc", txtDeslocYDesc));
