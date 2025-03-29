@@ -1170,7 +1170,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (conexao != null) {
 			int total = preTotalRecente(label);
 			if (total > 0) {
-				new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total).start();
+				new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total, true).start();
 			}
 		} else {
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
@@ -1591,8 +1591,12 @@ abstract class ThreadComparacao extends Thread {
 }
 
 class ThreadTotal extends ThreadComparacao {
-	ThreadTotal(ObjetoSuperficie superficie, MenuItem[] menuItens, Conexao conexao, Label label, int total) {
+	private boolean exibirTotal;
+
+	ThreadTotal(ObjetoSuperficie superficie, MenuItem[] menuItens, Conexao conexao, Label label, int total,
+			boolean exibirTotal) {
 		super(superficie, menuItens, conexao, label, total, null);
+		this.exibirTotal = exibirTotal;
 	}
 
 	@Override
@@ -1607,6 +1611,7 @@ class ThreadTotal extends ThreadComparacao {
 		boolean processado = false;
 		setItensEnabled(false);
 		int atual = 0;
+		List<Objeto> novos = new ArrayList<>();
 		for (Objeto objeto : superficie.objetos) {
 			if (!Util.isEmpty(objeto.getTabela())) {
 				try {
@@ -1621,6 +1626,9 @@ class ThreadTotal extends ThreadComparacao {
 					}
 					objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 					objeto.setTotalRegistros(Long.parseLong(array[1]));
+					if (exibirTotal) {
+						processarTotal(objeto, fm, novos);
+					}
 					setText(getString("label.totalizado_id", objeto.getId()) + suf);
 					processado = true;
 					repaint();
@@ -1631,12 +1639,42 @@ class ThreadTotal extends ThreadComparacao {
 				}
 			}
 		}
+		processarFinal(processado, novos);
+		setItensEnabled(true);
+	}
+
+	private void processarTotal(Objeto objeto, FontMetrics fm, List<Objeto> novos) throws AssistenciaException {
+		objeto.setCorFonte(ObjetoPreferencia.getCorComparaRec());
+		objeto.larguraId = fm.stringWidth(objeto.getId());
+		Objeto info = new Objeto(0, 0, "create2");
+		info.setDeslocamentoXId(objeto.getDeslocamentoXId());
+		info.setDeslocamentoYId(objeto.getDeslocamentoYId());
+		info.setId("" + objeto.getTotalRegistros());
+		info.setCorFonte(objeto.getCorFonte());
+		info.setTransparente(true);
+		info.associado = objeto;
+		novos.add(info);
+	}
+
+	private void processarFinal(boolean processado, List<Objeto> novos) {
 		if (processado) {
 			label.setText(getString("label.threadTotalAtual"));
+			for (Objeto objeto : novos) {
+				incluir(objeto);
+			}
 			restaurarMemento();
 			repaint();
 		}
-		setItensEnabled(true);
+	}
+
+	private void incluir(Objeto info) {
+		String id = info.getId();
+		ObjetoSuperficieUtil.checagemId(superficie, info, id, Constantes.SEP2);
+		Objeto origem = info.associado;
+		superficie.excluir(origem.associado);
+		superficie.addObjeto(info);
+		origem.associado = info;
+		origem.configLocalAssociado();
 	}
 }
 

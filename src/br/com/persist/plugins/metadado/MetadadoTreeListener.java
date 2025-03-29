@@ -11,11 +11,11 @@ public interface MetadadoTreeListener {
 
 	public void abrirImportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular);
 
+	public void registros(MetadadoTree metadadoTree) throws AssistenciaException;
+
 	public void exportarFormArquivo(MetadadoTree metadadoTree);
 
 	public void exportarFichArquivo(MetadadoTree metadadoTree);
 
 	public void constraintInfo(MetadadoTree metadadoTree);
-
-	public void registros(MetadadoTree metadadoTree) throws AssistenciaException;
 }
