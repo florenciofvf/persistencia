@@ -1170,7 +1170,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (conexao != null) {
 			int total = preTotalRecente(label);
 			if (total > 0) {
-				new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total, true).start();
+				String[] opcoes = new String[] { ObjetoMensagens.getString("label.total_sem_exibicao"),
+						ObjetoMensagens.getString("label.total_com_exibicao") };
+				String opcao = Util.getValorInputDialog(ObjetoSuperficie.this, opcoes);
+				if (opcao == null) {
+					Util.mensagem(ObjetoSuperficie.this, "ABORTADO");
+					return;
+				}
+				boolean exibirTotal = opcoes[opcoes.length - 1].equals(opcao);
+				new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total, exibirTotal).start();
 			}
 		} else {
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
