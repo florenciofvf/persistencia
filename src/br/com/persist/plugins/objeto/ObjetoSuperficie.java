@@ -1178,7 +1178,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					return;
 				}
 				boolean exibirTotal = opcoes[opcoes.length - 1].equals(opcao);
-				new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total, exibirTotal).start();
+				Font font = getFont();
+				if (font != null) {
+					FontMetrics fm = getFontMetrics(font);
+					if (fm != null) {
+						new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total, exibirTotal, fm)
+								.start();
+					}
+				}
 			}
 		} else {
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
@@ -1602,8 +1609,8 @@ class ThreadTotal extends ThreadComparacao {
 	private boolean exibirTotal;
 
 	ThreadTotal(ObjetoSuperficie superficie, MenuItem[] menuItens, Conexao conexao, Label label, int total,
-			boolean exibirTotal) {
-		super(superficie, menuItens, conexao, label, total, null);
+			boolean exibirTotal, FontMetrics fm) {
+		super(superficie, menuItens, conexao, label, total, fm);
 		this.exibirTotal = exibirTotal;
 	}
 
