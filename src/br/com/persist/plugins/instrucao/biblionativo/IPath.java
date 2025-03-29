@@ -14,9 +14,9 @@ public class IPath {
 			return "";
 		}
 		String string = object.toString();
-		if (File.pathSeparatorChar == '/') {
+		if (File.separatorChar == '/') {
 			string = Util.replaceAll(string, "\\", "/");
-		} else if (File.pathSeparatorChar == '\\') {
+		} else if (File.separatorChar == '\\') {
 			string = Util.replaceAll(string, "/", "\\");
 		}
 		return string;
