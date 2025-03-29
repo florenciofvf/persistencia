@@ -49,6 +49,8 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			setIcon(Icones.SUCESSO);
 		} else if (obj.isURL()) {
 			setIcon(Icones.URL);
+		} else if (obj.isFile2()) {
+			setIcon(Icones.NOVO);
 		} else if (obj.isFile()) {
 			setIcon(Icones.TEXTO);
 		}
@@ -60,6 +62,8 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			setIcon(Icones.ATUALIZAR);
 		} else if (obj.isSinc()) {
 			setIcon(Icones.SINCRONIZAR);
+		} else if (obj.isEmpty()) {
+			setIcon(Icones.VAZIO);
 		} else if (obj.isDown()) {
 			setIcon(Icones.BAIXAR);
 		} else if (obj.isUp()) {

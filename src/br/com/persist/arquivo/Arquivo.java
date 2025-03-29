@@ -148,6 +148,10 @@ public class Arquivo {
 		return getName().endsWith("_pessoa");
 	}
 
+	public boolean isFile2() {
+		return getName().endsWith("_file");
+	}
+
 	public boolean isURL() {
 		return getName().endsWith("_url");
 	}
@@ -158,6 +162,10 @@ public class Arquivo {
 
 	public boolean isTimer() {
 		return getName().endsWith("_timer");
+	}
+
+	public boolean isEmpty() {
+		return getName().endsWith("_empty");
 	}
 
 	public boolean isAnexo() {

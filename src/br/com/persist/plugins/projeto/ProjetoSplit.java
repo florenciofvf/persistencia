@@ -98,6 +98,7 @@ class ProjetoSplit extends SplitPane {
 		sb.append(Constantes.QL + "_service");
 		sb.append(Constantes.QL + "_refresh");
 		sb.append(Constantes.QL + "_pessoa");
+		sb.append(Constantes.QL + "_empty");
 		sb.append(Constantes.QL + "_timer");
 		sb.append(Constantes.QL + "_anexo");
 		sb.append(Constantes.QL + "_check");
@@ -107,6 +108,7 @@ class ProjetoSplit extends SplitPane {
 		sb.append(Constantes.QL + "_seta");
 		sb.append(Constantes.QL + "_desc");
 		sb.append(Constantes.QL + "_sinc");
+		sb.append(Constantes.QL + "_file");
 		sb.append(Constantes.QL + "_down");
 		sb.append(Constantes.QL + "_url");
 		sb.append(Constantes.QL + "_up");
