@@ -343,8 +343,85 @@ public class ObjetoSuperficieUtil {
 		return null;
 	}
 
-	private static interface FiltroTotalRegistro {
-		public boolean valido(Objeto obj, int total);
+	private abstract static class FiltroTotalRegistro {
+		private final String descricao;
+
+		FiltroTotalRegistro(String descricao) {
+			this.descricao = descricao;
+		}
+
+		abstract boolean valido(Objeto obj, int total);
+
+		@Override
+		public String toString() {
+			return descricao;
+		}
+	}
+
+	private static class Menor extends FiltroTotalRegistro {
+		Menor() {
+			super("<");
+		}
+
+		@Override
+		public boolean valido(Objeto obj, int total) {
+			return obj.getTotalRegistros() < total;
+		}
+	}
+
+	private static class MenorIgual extends FiltroTotalRegistro {
+		MenorIgual() {
+			super("<=");
+		}
+
+		@Override
+		public boolean valido(Objeto obj, int total) {
+			return obj.getTotalRegistros() <= total;
+		}
+	}
+
+	private static class Maior extends FiltroTotalRegistro {
+		Maior() {
+			super(">");
+		}
+
+		@Override
+		public boolean valido(Objeto obj, int total) {
+			return obj.getTotalRegistros() > total;
+		}
+	}
+
+	private static class MaiorIgual extends FiltroTotalRegistro {
+		MaiorIgual() {
+			super(">=");
+		}
+
+		@Override
+		public boolean valido(Objeto obj, int total) {
+			return obj.getTotalRegistros() >= total;
+		}
+	}
+
+	private static class Igual extends FiltroTotalRegistro {
+		Igual() {
+			super("==");
+		}
+
+		@Override
+		public boolean valido(Objeto obj, int total) {
+			return obj.getTotalRegistros() == total;
+		}
+	}
+
+	private static class Diff extends FiltroTotalRegistro {
+		Diff() {
+			super("!=");
+		}
+
+		@Override
+		public boolean valido(Objeto obj, int total) {
+			return obj.getTotalRegistros() != total;
+		}
 	}
 
 	private static int getTotal(ObjetoSuperficie superficie) throws ObjetoException {
