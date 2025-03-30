@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -309,6 +310,72 @@ public class ObjetoSuperficieUtil {
 			}
 		}
 		superficie.repaint();
+	}
+
+	public static void excluirTabelaCriterioTR(ObjetoSuperficie superficie, Label lblStatus1, Label lblStatus2) {
+		List<Objeto> lista = new ArrayList<>();
+		for (Objeto item : superficie.objetos) {
+			if (!Util.isEmpty(item.getTabela())) {
+				lista.add(item);
+			}
+		}
+		if (lista.isEmpty()) {
+			Util.mensagem(superficie, ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
+			return;
+		}
+		FiltroTotalRegistro filtro = getFiltro(superficie);
+		if (filtro == null) {
+			return;
+		}
+		int total = 0;
+		try {
+			total = getTotal(superficie);
+		} catch (ObjetoException ex) {
+			return;
+		}
+		filtrar(lista, filtro, total);
+		excluir(superficie, lista);
+		lblStatus1.limpar();
+		lblStatus2.limpar();
+	}
+
+	private static FiltroTotalRegistro getFiltro(ObjetoSuperficie superficie) {
+		return null;
+	}
+
+	private static interface FiltroTotalRegistro {
+		public boolean valido(Objeto obj, int total);
+	}
+
+	private static int getTotal(ObjetoSuperficie superficie) throws ObjetoException {
+		Object resp = Util.getValorInputDialog(superficie, "label.total", "Total", "0");
+		if (resp != null && !Util.isEmpty(resp.toString())) {
+			try {
+				return Integer.parseInt(resp.toString().trim());
+			} catch (Exception ex) {
+				throw new ObjetoException("INVALIDO");
+			}
+		} else {
+			throw new ObjetoException("ABORTADO");
+		}
+	}
+
+	private static void filtrar(List<Objeto> objetos, FiltroTotalRegistro filtro, int total) {
+		Iterator<Objeto> it = objetos.iterator();
+		while (it.hasNext()) {
+			if (!filtro.valido(it.next(), total)) {
+				it.remove();
+			}
+		}
+	}
+
+	private static void excluir(ObjetoSuperficie superficie, List<Objeto> objetos) {
+		for (Objeto item : objetos) {
+			superficie.excluir(item.associado);
+		}
+		for (Objeto item : objetos) {
+			superficie.excluir(item);
+		}
 	}
 
 	public static int preTotalRecente(ObjetoSuperficie superficie, Label label) {

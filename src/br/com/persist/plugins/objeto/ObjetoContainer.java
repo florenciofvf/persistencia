@@ -623,7 +623,9 @@ public class ObjetoContainer extends AbstratoContainer {
 		}
 
 		private class ButtonInfo extends ButtonPopup {
+			private Action excluirCriRegistAcao = acaoMenu("label.excluir_com_registros");
 			private Action excluirSemTabelaAcao = acaoMenu("label.excluir_sem_tabela");
+			private MenuItem itemExcluirCR = new MenuItem(excluirCriRegistAcao);
 			private MenuItem itemExcluirST = new MenuItem(excluirSemTabelaAcao);
 			private Action totalAtualAcao = acaoMenu("label.total_atual");
 			private Action comparaRecAcao = acaoMenu("label.compararRec");
@@ -636,15 +638,18 @@ public class ObjetoContainer extends AbstratoContainer {
 				addMenuItem(itemTotalAtual);
 				addMenuItem(true, itemComparaRec);
 				addMenuItem(true, itemExcluirST);
+				addMenuItem(true, itemExcluirCR);
 				totalAtualAcao.setActionListener(e -> objetoSuperficie.atualizarTotal(getConexaoPadrao(),
-						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST }, labelStatus));
+						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST, itemExcluirCR }, labelStatus));
 				comparaRecAcao.setActionListener(e -> objetoSuperficie.compararRecent(getConexaoPadrao(),
-						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST }, labelStatus));
+						new MenuItem[] { itemTotalAtual, itemComparaRec, itemExcluirST, itemExcluirCR }, labelStatus));
 				excluirSemTabelaAcao.setActionListener(e -> {
 					ObjetoSuperficieUtil.excluirSemTabela(objetoSuperficie);
 					labelStatus2.limpar();
 					labelStatus.limpar();
 				});
+				excluirCriRegistAcao.setActionListener(
+						e -> ObjetoSuperficieUtil.excluirTabelaCriterioTR(objetoSuperficie, labelStatus2, labelStatus));
 			}
 		}
 
