@@ -340,7 +340,14 @@ public class ObjetoSuperficieUtil {
 	}
 
 	private static FiltroTotalRegistro getFiltro(ObjetoSuperficie superficie) {
-		return null;
+		FiltroTotalRegistro[] array = new FiltroTotalRegistro[6];
+		array[0] = new Menor();
+		array[1] = new MenorIgual();
+		array[2] = new Maior();
+		array[3] = new MaiorIgual();
+		array[4] = new Igual();
+		array[5] = new Diff();
+		return (FiltroTotalRegistro) Util.getValorInputDialogSelect(superficie, array);
 	}
 
 	private static int getTotal(ObjetoSuperficie superficie) throws ObjetoException {
