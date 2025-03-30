@@ -335,6 +335,7 @@ public class ObjetoSuperficieUtil {
 		}
 		filtrar(lista, filtro, total);
 		excluir(superficie, lista);
+		superficie.repaint();
 		lblStatus1.limpar();
 		lblStatus2.limpar();
 	}
