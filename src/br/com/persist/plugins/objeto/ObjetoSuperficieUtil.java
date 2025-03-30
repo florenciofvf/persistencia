@@ -343,6 +343,37 @@ public class ObjetoSuperficieUtil {
 		return null;
 	}
 
+	private static int getTotal(ObjetoSuperficie superficie) throws ObjetoException {
+		Object resp = Util.getValorInputDialog(superficie, "label.total", "Total", "0");
+		if (resp != null && !Util.isEmpty(resp.toString())) {
+			try {
+				return Integer.parseInt(resp.toString().trim());
+			} catch (Exception ex) {
+				throw new ObjetoException("INVALIDO");
+			}
+		} else {
+			throw new ObjetoException("ABORTADO");
+		}
+	}
+
+	private static void filtrar(List<Objeto> objetos, FiltroTotalRegistro filtro, int total) {
+		Iterator<Objeto> it = objetos.iterator();
+		while (it.hasNext()) {
+			if (!filtro.valido(it.next(), total)) {
+				it.remove();
+			}
+		}
+	}
+
+	private static void excluir(ObjetoSuperficie superficie, List<Objeto> objetos) {
+		for (Objeto item : objetos) {
+			superficie.excluir(item.associado);
+		}
+		for (Objeto item : objetos) {
+			superficie.excluir(item);
+		}
+	}
+
 	private abstract static class FiltroTotalRegistro {
 		private final String descricao;
 
@@ -421,37 +452,6 @@ public class ObjetoSuperficieUtil {
 		@Override
 		public boolean valido(Objeto obj, int total) {
 			return obj.getTotalRegistros() != total;
-		}
-	}
-
-	private static int getTotal(ObjetoSuperficie superficie) throws ObjetoException {
-		Object resp = Util.getValorInputDialog(superficie, "label.total", "Total", "0");
-		if (resp != null && !Util.isEmpty(resp.toString())) {
-			try {
-				return Integer.parseInt(resp.toString().trim());
-			} catch (Exception ex) {
-				throw new ObjetoException("INVALIDO");
-			}
-		} else {
-			throw new ObjetoException("ABORTADO");
-		}
-	}
-
-	private static void filtrar(List<Objeto> objetos, FiltroTotalRegistro filtro, int total) {
-		Iterator<Objeto> it = objetos.iterator();
-		while (it.hasNext()) {
-			if (!filtro.valido(it.next(), total)) {
-				it.remove();
-			}
-		}
-	}
-
-	private static void excluir(ObjetoSuperficie superficie, List<Objeto> objetos) {
-		for (Objeto item : objetos) {
-			superficie.excluir(item.associado);
-		}
-		for (Objeto item : objetos) {
-			superficie.excluir(item);
 		}
 	}
 
