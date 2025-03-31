@@ -12,7 +12,7 @@ import br.com.persist.assistencia.Constantes;
 
 public class Arvore extends Container {
 	private static final String SYSTEM_PROPERTIES = "system-properties";
-	public static final String CONFIGURACAO = "configuracao";
+	public static final String TAG_CONFIGURACAO = "configuracao";
 	private List<Config> cacheConfigs;
 
 	public Arvore(String invalido) {
@@ -45,7 +45,7 @@ public class Arvore extends Container {
 	public void print(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta("", SYSTEM_PROPERTIES, doc);
 		PropriedadeUtil.fimTagComposta(doc);
-		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB, CONFIGURACAO, doc);
+		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB, TAG_CONFIGURACAO, doc);
 		printAttInvalido(doc);
 		PropriedadeUtil.fimTagComposta(doc);
 
@@ -64,7 +64,7 @@ public class Arvore extends Container {
 			modulo.print(doc);
 		}
 
-		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB, CONFIGURACAO, doc);
+		PropriedadeUtil.fimTagComposta(PropriedadeConstantes.TAB, TAG_CONFIGURACAO, doc);
 		PropriedadeUtil.fimTagComposta("", SYSTEM_PROPERTIES, doc);
 	}
 

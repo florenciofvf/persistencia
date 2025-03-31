@@ -9,7 +9,7 @@ import org.xml.sax.Attributes;
 
 public class Campo extends Container {
 	private static final String ATT_VALOR = "valor";
-	public static final String TAB_CAMPO = "campo";
+	public static final String TAG_CAMPO = "campo";
 	private static final String ATT_NOME = "nome";
 	private final String valor;
 	private final String nome;
@@ -39,7 +39,7 @@ public class Campo extends Container {
 
 	@Override
 	public void print(StyledDocument doc) throws BadLocationException {
-		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAB_CAMPO, doc);
+		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAG_CAMPO, doc);
 		PropriedadeUtil.atributo(ATT_NOME, nome, doc);
 		PropriedadeUtil.atributo(ATT_VALOR, valor, doc);
 		printAttInvalido(doc);

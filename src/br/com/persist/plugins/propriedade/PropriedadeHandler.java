@@ -11,7 +11,7 @@ class PropriedadeHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-		if (Arvore.CONFIGURACAO.equals(qName)) {
+		if (Arvore.TAG_CONFIGURACAO.equals(qName)) {
 			raiz = (Arvore) criar(qName, atts);
 			selecionado = raiz;
 		} else if (raiz != null) {
@@ -39,11 +39,11 @@ class PropriedadeHandler extends XMLHandler {
 	}
 
 	private Container criar(String qName, Attributes atts) {
-		if (Arvore.CONFIGURACAO.equals(qName)) {
+		if (Arvore.TAG_CONFIGURACAO.equals(qName)) {
 			return Arvore.criar(atts);
 		} else if (Config.TAG_CONFIG.equals(qName)) {
 			return Config.criar(atts);
-		} else if (Campo.TAB_CAMPO.equals(qName)) {
+		} else if (Campo.TAG_CAMPO.equals(qName)) {
 			return Campo.criar(atts);
 		} else if (Modulo.TAG_MODULO.equals(qName)) {
 			return Modulo.criar(atts);
