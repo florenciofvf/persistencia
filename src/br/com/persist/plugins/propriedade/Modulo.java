@@ -12,35 +12,22 @@ import org.xml.sax.Attributes;
 import br.com.persist.assistencia.Constantes;
 
 public class Modulo extends Container {
-	public static final String ATT_INVALIDO = "invalido";
 	public static final String TAG_MODULO = "modulo";
 	private static final String ATT_NOME = "nome";
-	public static final String TRUE = "true";
 	private List<Map> cacheMaps;
 	private final String nome;
-	private boolean invalido;
 
-	public Modulo(String nome) {
+	public Modulo(String nome, String invalido) {
+		super(invalido);
 		this.nome = Objects.requireNonNull(nome);
 	}
 
 	public static Modulo criar(Attributes atts) {
-		Modulo modulo = new Modulo(value(atts, ATT_NOME));
-		String string = value(atts, ATT_INVALIDO);
-		modulo.setInvalido(TRUE.equalsIgnoreCase(string));
-		return modulo;
+		return new Modulo(value(atts, ATT_NOME), value(atts, ATT_INVALIDO));
 	}
 
 	public String getNome() {
 		return nome;
-	}
-
-	public boolean isInvalido() {
-		return invalido;
-	}
-
-	public void setInvalido(boolean invalido) {
-		this.invalido = invalido;
 	}
 
 	@Override
@@ -66,9 +53,7 @@ public class Modulo extends Container {
 	public void print(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, TAG_MODULO, doc);
 		PropriedadeUtil.atributo(ATT_NOME, nome, doc);
-		if (invalido) {
-			PropriedadeUtil.atributo(ATT_INVALIDO, TRUE, doc);
-		}
+		printAttInvalido(doc);
 		PropriedadeUtil.fimTagComposta(doc);
 
 		for (Map map : getCacheMaps()) {
@@ -110,7 +95,7 @@ public class Modulo extends Container {
 	}
 
 	Config getConfig(String id) {
-		Raiz raiz = (Raiz) pai;
+		Arvore raiz = (Arvore) pai;
 		for (Config obj : raiz.getCacheConfigs()) {
 			if (id.equals(obj.getId())) {
 				return obj;

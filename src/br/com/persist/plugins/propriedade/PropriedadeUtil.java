@@ -22,7 +22,7 @@ public class PropriedadeUtil {
 	private PropriedadeUtil() {
 	}
 
-	public static Raiz criarRaiz(String string) throws XMLException {
+	public static Arvore criarRaiz(String string) throws XMLException {
 		PropriedadeHandler handler = new PropriedadeHandler();
 		XML.processar(new ByteArrayInputStream(string.getBytes()), handler);
 		return handler.getRaiz();

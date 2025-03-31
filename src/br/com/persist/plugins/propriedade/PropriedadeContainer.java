@@ -178,7 +178,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 			textPane.setFont(font);
 		}
 
-		private void processar(Raiz raiz) {
+		private void processar(Arvore raiz) {
 			textPane.setText(Constantes.VAZIO);
 			try {
 				raiz.gerarProperty(textPane.getStyledDocument());
@@ -267,7 +267,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 				return;
 			}
 			try {
-				Raiz raiz = PropriedadeUtil.criarRaiz(string);
+				Arvore raiz = PropriedadeUtil.criarRaiz(string);
 				if (raiz != null) {
 					painelResultado.processar(raiz);
 					colorTextArea(raiz);
@@ -277,7 +277,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 			}
 		}
 
-		private void colorTextArea(Raiz raiz) {
+		private void colorTextArea(Arvore raiz) {
 			textEditor.setText(Constantes.VAZIO);
 			try {
 				raiz.print(textEditor.getStyledDocument());

@@ -9,11 +9,23 @@ import javax.swing.text.StyledDocument;
 import org.xml.sax.Attributes;
 
 public abstract class Container {
+	public static final String ATT_INVALIDO = "invalido";
+	public static final String TRUE = "true";
 	private final List<Container> filhos;
+	protected boolean invalido;
 	protected Container pai;
 
-	protected Container() {
+	protected Container(String invalido) {
+		this.invalido = TRUE.equalsIgnoreCase(invalido);
 		filhos = new ArrayList<>();
+	}
+
+	public final boolean isInvalido() {
+		return invalido;
+	}
+
+	public final void setInvalido(boolean invalido) {
+		this.invalido = invalido;
 	}
 
 	public Container getPai() {
@@ -47,6 +59,12 @@ public abstract class Container {
 	}
 
 	public void print(StyledDocument doc) throws BadLocationException {
+	}
+
+	protected void printAttInvalido(StyledDocument doc) throws BadLocationException {
+		if (invalido) {
+			PropriedadeUtil.atributo(ATT_INVALIDO, TRUE, doc);
+		}
 	}
 
 	public static String value(Attributes atts, String chave) {

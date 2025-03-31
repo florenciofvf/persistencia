@@ -7,12 +7,12 @@ import br.com.persist.marca.XMLHandler;
 
 class PropriedadeHandler extends XMLHandler {
 	private Container selecionado;
-	private Raiz raiz;
+	private Arvore raiz;
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-		if (Raiz.RAIZ_CONFIGURACAO.equals(qName)) {
-			raiz = new Raiz();
+		if (Arvore.CONFIGURACAO.equals(qName)) {
+			raiz = (Arvore) criar(qName, atts);
 			selecionado = raiz;
 		} else if (raiz != null) {
 			Container novo = criar(qName, atts);
@@ -34,12 +34,14 @@ class PropriedadeHandler extends XMLHandler {
 		}
 	}
 
-	public Raiz getRaiz() {
+	public Arvore getRaiz() {
 		return raiz;
 	}
 
 	private Container criar(String qName, Attributes atts) {
-		if (Config.TAG_CONFIG.equals(qName)) {
+		if (Arvore.CONFIGURACAO.equals(qName)) {
+			return Arvore.criar(atts);
+		} else if (Config.TAG_CONFIG.equals(qName)) {
 			return Config.criar(atts);
 		} else if (Campo.TAB_CAMPO.equals(qName)) {
 			return Campo.criar(atts);

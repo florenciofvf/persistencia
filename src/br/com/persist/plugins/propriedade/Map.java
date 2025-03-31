@@ -14,13 +14,14 @@ public class Map extends Container {
 	private final String idConfig;
 	private final String chave;
 
-	public Map(String chave, String idConfig) {
+	public Map(String chave, String idConfig, String invalido) {
+		super(invalido);
 		this.chave = Objects.requireNonNull(chave);
 		this.idConfig = Objects.requireNonNull(idConfig);
 	}
 
 	public static Map criar(Attributes atts) {
-		return new Map(value(atts, ATT_CHAVE), value(atts, ATT_ID_CONFIG));
+		return new Map(value(atts, ATT_CHAVE), value(atts, ATT_ID_CONFIG), value(atts, ATT_INVALIDO));
 	}
 
 	public String getChave() {
@@ -41,10 +42,14 @@ public class Map extends Container {
 		PropriedadeUtil.iniTagSimples(PropriedadeConstantes.TAB3, TAG_MAP, doc);
 		PropriedadeUtil.atributo(ATT_CHAVE, chave, doc);
 		PropriedadeUtil.atributo(ATT_ID_CONFIG, idConfig, doc);
+		printAttInvalido(doc);
 		PropriedadeUtil.fimTagSimples(doc);
 	}
 
 	public String substituir(String string) {
+		if (invalido) {
+			return string;
+		}
 		Modulo modulo = (Modulo) pai;
 		Config config = modulo.getConfig(idConfig);
 		if (config == null) {

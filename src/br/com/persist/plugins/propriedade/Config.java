@@ -18,12 +18,13 @@ public class Config extends Container {
 	private List<Campo> cacheCampos;
 	private final String id;
 
-	public Config(String id) {
+	public Config(String id, String invalido) {
+		super(invalido);
 		this.id = Objects.requireNonNull(id);
 	}
 
 	public static Config criar(Attributes atts) {
-		return new Config(value(atts, ATT_ID));
+		return new Config(value(atts, ATT_ID), value(atts, ATT_INVALIDO));
 	}
 
 	public String getId() {
@@ -43,6 +44,7 @@ public class Config extends Container {
 	public void print(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, TAG_CONFIG, doc);
 		PropriedadeUtil.atributo(ATT_ID, id, doc);
+		printAttInvalido(doc);
 		PropriedadeUtil.fimTagComposta(doc);
 		for (Campo campo : getCacheCampos()) {
 			campo.print(doc);
@@ -64,6 +66,9 @@ public class Config extends Container {
 	}
 
 	public String substituir(String chave, String string) {
+		if (invalido) {
+			return string;
+		}
 		for (Campo c : getCacheCampos()) {
 			if (c.isInvalido()) {
 				continue;
