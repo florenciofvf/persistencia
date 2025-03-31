@@ -56,7 +56,7 @@ public class Modulo extends Container {
 		if (invalido) {
 			return;
 		}
-		PropriedadeUtil.modulo(PropriedadeConstantes.TAB2, getNome(), doc);
+		PropriedadeUtil.modulo(PropriedadeConstantes.TABULAR, getNome(), doc);
 		for (Property prop : getProperties()) {
 			prop.gerarProperty(doc);
 		}

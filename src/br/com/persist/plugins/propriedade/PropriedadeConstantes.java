@@ -11,7 +11,8 @@ public class PropriedadeConstantes {
 	public static final String PROPRIEDADES = "propriedades";
 	public static final String PROPRIEDADE = "propriedade";
 	public static final String IGNORADOS = "ignorados";
-	public static final String TAB = "    ";
+	public static final String TABULAR = "        ";
+	public static final String TAB = "\t";
 	public static final String TAB2 = TAB + TAB;
 	public static final String TAB3 = TAB2 + TAB;
 
