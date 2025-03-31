@@ -47,6 +47,9 @@ public class Map extends Container {
 	public String substituir(String string) {
 		Modulo modulo = (Modulo) pai;
 		Config config = modulo.getConfig(idConfig);
+		if (config == null) {
+			return string;
+		}
 		return config.substituir(chave, string);
 	}
 
