@@ -10,8 +10,8 @@ import org.xml.sax.Attributes;
 
 public class Property extends Container {
 	public static final String TAG_PROPERTY = "property";
-	private static final String ATT_VALUE = "value";
-	private static final String ATT_NAME = "name";
+	public static final String ATT_VALUE = "value";
+	public static final String ATT_NAME = "name";
 	private final String value;
 	private final String name;
 

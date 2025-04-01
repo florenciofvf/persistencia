@@ -37,8 +37,14 @@ public class PropriedadeUtil {
 		StyleConstants.setForeground(attRed, Color.RED);
 	}
 
-	static void modulo(String tab, String nome, StyledDocument doc) throws BadLocationException {
+	static void modulo(String tab, String nome, StyledDocument doc, boolean separador) throws BadLocationException {
 		doc.insertString(doc.getLength(), Constantes.QL + tab + "<!-- " + nome + " -->" + Constantes.QL, attBlue);
+		if (separador) {
+			PropriedadeUtil.iniTagSimples(tab, Property.TAG_PROPERTY, doc);
+			PropriedadeUtil.atributo(Property.ATT_NAME, nome, doc);
+			PropriedadeUtil.atributo(Property.ATT_VALUE, "---------------------------------------------------", doc);
+			PropriedadeUtil.fimTagSimples(doc);
+		}
 	}
 
 	static void iniTagSimples(String tab, String nome, StyledDocument doc) throws BadLocationException {

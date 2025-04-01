@@ -12,18 +12,21 @@ import org.xml.sax.Attributes;
 import br.com.persist.assistencia.Constantes;
 
 public class Modulo extends Container {
+	public static final String ATT_SEPARADOR = "separador";
 	public static final String TAG_MODULO = "modulo";
 	private static final String ATT_NOME = "nome";
+	private final boolean separador;
 	private List<Map> cacheMaps;
 	private final String nome;
 
-	public Modulo(String nome, String invalido) {
+	public Modulo(String nome, String invalido, String separador) {
 		super(invalido);
+		this.separador = TRUE.equalsIgnoreCase(separador);
 		this.nome = Objects.requireNonNull(nome);
 	}
 
 	public static Modulo criar(Attributes atts) {
-		return new Modulo(value(atts, ATT_NOME), value(atts, ATT_INVALIDO));
+		return new Modulo(value(atts, ATT_NOME), value(atts, ATT_INVALIDO), value(atts, ATT_SEPARADOR));
 	}
 
 	public String getNome() {
@@ -43,7 +46,7 @@ public class Modulo extends Container {
 		if (invalido) {
 			return;
 		}
-		PropriedadeUtil.modulo(PropriedadeConstantes.TABULAR, getNome(), doc);
+		PropriedadeUtil.modulo(PropriedadeConstantes.TABULAR, getNome(), doc, separador);
 		for (Property prop : getProperties()) {
 			prop.gerarProperty(doc);
 		}
@@ -53,6 +56,9 @@ public class Modulo extends Container {
 	public void print(StyledDocument doc) throws BadLocationException {
 		PropriedadeUtil.iniTagComposta(PropriedadeConstantes.TAB2, TAG_MODULO, doc);
 		PropriedadeUtil.atributo(ATT_NOME, nome, doc);
+		if (separador) {
+			PropriedadeUtil.atributo(ATT_SEPARADOR, TRUE, doc);
+		}
 		printAttInvalido(doc);
 		PropriedadeUtil.fimTagComposta(doc);
 
