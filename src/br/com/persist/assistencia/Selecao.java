@@ -1,8 +1,13 @@
 package br.com.persist.assistencia;
 
+import java.awt.Component;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JScrollPane;
+import javax.swing.plaf.TextUI;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
 
 import br.com.persist.componente.Label;
@@ -69,11 +74,35 @@ public class Selecao implements Busca {
 			component.getCaret().setSelectionVisible(true);
 			indice++;
 			label.setText(indice + "/" + getTotal());
+			JScrollPane scroll = getScroll(component);
+			if (scroll != null) {
+				TextUI textUI = component.getUI();
+				try {
+					int dot = component.getCaret().getDot();
+					if (dot >= 0) {
+						Rectangle r = textUI.modelToView(component, dot);
+						scroll.scrollRectToVisible(r);
+					}
+				} catch (BadLocationException ex) {
+					//
+				}
+			}
 		} else {
 			component.getCaret().setSelectionVisible(false);
 			label.limpar();
 			indice = 0;
 		}
+	}
+
+	private static JScrollPane getScroll(JTextComponent comp) {
+		Component c = comp;
+		while (c != null) {
+			if (c instanceof JScrollPane) {
+				return (JScrollPane) c;
+			}
+			c = c.getParent();
+		}
+		return null;
 	}
 }
 
