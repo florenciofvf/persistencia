@@ -57,6 +57,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 	private final FicharioInner ficharioInner = new FicharioInner();
 	private final TextEditor textEditorDesenv = new TextEditor();
 	private final TextEditor textEditorPrehom = new TextEditor();
+	private final TextEditor textEditorHomolo = new TextEditor();
 	private final TextEditor textEditor = new TextEditor();
 	private PropriedadeFormulario propriedadeFormulario;
 	private static final long serialVersionUID = 1L;
@@ -64,6 +65,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 	private PropriedadeDialogo propriedadeDialogo;
 	private final File fileDesenv;
 	private final File filePrehom;
+	private final File fileHomolo;
 	private final File file;
 
 	public PropriedadeContainer(Janela janela, Formulario formulario) {
@@ -72,11 +74,13 @@ public class PropriedadeContainer extends AbstratoContainer {
 				+ ".xml");
 		fileDesenv = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "desenvolvimento.txt");
 		filePrehom = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "pre_homologacao.txt");
+		fileHomolo = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "homologacao.txt");
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
 		abrirArquivo(textEditorDesenv, fileDesenv);
 		abrirArquivo(textEditorPrehom, filePrehom);
+		abrirArquivo(textEditorHomolo, fileHomolo);
 	}
 
 	public PropriedadeDialogo getPropriedadeDialogo() {
@@ -124,6 +128,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 			addTab("label.configuracoes", Icones.CONFIG, new Aba(textEditor, file));
 			addTab("label.desenvolvimento", Icones.CONFIG2, new Aba(textEditorDesenv, fileDesenv));
 			addTab("label.pre_homologacao", Icones.CONFIG2, new Aba(textEditorPrehom, filePrehom));
+			addTab("label.homologacao", Icones.CONFIG2, new Aba(textEditorHomolo, fileHomolo));
 		}
 	}
 
