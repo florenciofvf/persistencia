@@ -213,7 +213,6 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	private void abrirArquivo(File file) {
 		abrirArquivo(textEditor, file);
-		toolbar.gerar();
 	}
 
 	private void abrirArquivo(Aba aba) {
@@ -275,14 +274,13 @@ public class PropriedadeContainer extends AbstratoContainer {
 				Arvore raiz = PropriedadeUtil.criarRaiz(string);
 				if (raiz != null) {
 					painelResultado.processar(raiz);
-					colorTextArea(raiz);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
 		}
 
-		private void colorTextArea(Arvore raiz) {
+		void colorTextArea(Arvore raiz) {
 			textEditor.setText(Constantes.VAZIO);
 			try {
 				raiz.print(textEditor.getStyledDocument());
