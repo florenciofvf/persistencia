@@ -55,29 +55,29 @@ import br.com.persist.formulario.Formulario;
 public class PropriedadeContainer extends AbstratoContainer {
 	private final PainelResultado painelResultado = new PainelResultado();
 	private final FicharioInner ficharioInner = new FicharioInner();
+	private final TextEditor textEditorProper = new TextEditor();
 	private final TextEditor textEditorDesenv = new TextEditor();
 	private final TextEditor textEditorPrehom = new TextEditor();
 	private final TextEditor textEditorHomolo = new TextEditor();
-	private final TextEditor textEditor = new TextEditor();
 	private PropriedadeFormulario propriedadeFormulario;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private PropriedadeDialogo propriedadeDialogo;
+	private final File fileProper;
 	private final File fileDesenv;
 	private final File filePrehom;
 	private final File fileHomolo;
-	private final File file;
 
 	public PropriedadeContainer(Janela janela, Formulario formulario) {
 		super(formulario);
-		file = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + PropriedadeConstantes.PROPRIEDADES
-				+ ".xml");
+		fileProper = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR
+				+ PropriedadeConstantes.PROPRIEDADES + ".xml");
 		fileDesenv = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "desenvolvimento.txt");
 		filePrehom = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "pre_homologacao.txt");
 		fileHomolo = new File(PropriedadeConstantes.PROPRIEDADES + Constantes.SEPARADOR + "homologacao.txt");
 		toolbar.ini(janela);
 		montarLayout();
-		abrir();
+		abrirArquivo(textEditorProper, fileProper);
 		abrirArquivo(textEditorDesenv, fileDesenv);
 		abrirArquivo(textEditorPrehom, filePrehom);
 		abrirArquivo(textEditorHomolo, fileHomolo);
@@ -125,7 +125,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		void init() {
-			addTab("label.configuracoes", Icones.CONFIG, new Aba(textEditor, file));
+			addTab("label.configuracoes", Icones.CONFIG, new Aba(textEditorProper, fileProper));
 			addTab("label.desenvolvimento", Icones.CONFIG2, new Aba(textEditorDesenv, fileDesenv));
 			addTab("label.pre_homologacao", Icones.CONFIG2, new Aba(textEditorPrehom, filePrehom));
 			addTab("label.homologacao", Icones.CONFIG2, new Aba(textEditorHomolo, fileHomolo));
@@ -202,34 +202,17 @@ public class PropriedadeContainer extends AbstratoContainer {
 		}
 	}
 
-	private void abrir() {
-		Aba aba = (Aba) ficharioInner.getSelectedComponent();
-		if (aba == null || aba.file == file) {
-			abrirArquivo(file);
-		} else {
-			abrirArquivo(aba);
-		}
-	}
-
-	private void abrirArquivo(File file) {
-		abrirArquivo(textEditor, file);
-		toolbar.gerar();
-	}
-
-	private void abrirArquivo(Aba aba) {
-		abrirArquivo(aba.textPane, aba.file);
-	}
-
 	private void abrirArquivo(TextPane textPane, File file) {
-		textPane.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
+				StringBuilder sb = new StringBuilder();
 				while (linha != null) {
-					textPane.append(linha + Constantes.QL);
+					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
+				textPane.setText(sb.toString());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
@@ -266,7 +249,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 		}
 
 		private void gerar() {
-			String string = textEditor.getText();
+			String string = textEditorProper.getText();
 			if (Util.isEmpty(string)) {
 				painelResultado.setText("Editor vazio.");
 				return;
@@ -283,9 +266,9 @@ public class PropriedadeContainer extends AbstratoContainer {
 		}
 
 		private void colorTextArea(Arvore raiz) {
-			textEditor.setText(Constantes.VAZIO);
+			textEditorProper.setText(Constantes.VAZIO);
 			try {
-				raiz.print(textEditor.getStyledDocument());
+				raiz.print(textEditorProper.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
@@ -316,8 +299,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 				Font nova = new Font(nome, font.getStyle(), font.getSize());
 				painelResultado.setFontTextArea(nova);
 				Aba aba = (Aba) ficharioInner.getSelectedComponent();
-				if (aba == null || aba.file == file) {
-					textEditor.setFont(nova);
+				if (aba == null || aba.file == fileProper) {
+					textEditorProper.setFont(nova);
 				} else {
 					aba.textPane.setFont(nova);
 				}
@@ -360,8 +343,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 		@Override
 		protected void limpar() {
 			Aba aba = (Aba) ficharioInner.getSelectedComponent();
-			if (aba == null || aba.file == file) {
-				textEditor.setText(Constantes.VAZIO);
+			if (aba == null || aba.file == fileProper) {
+				textEditorProper.setText(Constantes.VAZIO);
 			} else {
 				aba.textPane.setText(Constantes.VAZIO);
 			}
@@ -376,12 +359,26 @@ public class PropriedadeContainer extends AbstratoContainer {
 			label.limpar();
 		}
 
+		private void abrir() {
+			Aba aba = (Aba) ficharioInner.getSelectedComponent();
+			if (aba != null) {
+				abrirArquivo(aba);
+			}
+		}
+
+		private void abrirArquivo(Aba aba) {
+			PropriedadeContainer.this.abrirArquivo(aba.textPane, aba.file);
+			if (aba.textPane == textEditorProper) {
+				toolbar.gerar();
+			}
+		}
+
 		@Override
 		public void salvar() {
 			if (Util.confirmaSalvar(PropriedadeContainer.this, Constantes.TRES)) {
 				Aba aba = (Aba) ficharioInner.getSelectedComponent();
-				if (aba == null || aba.file == file) {
-					salvarArquivo(file);
+				if (aba == null || aba.file == fileProper) {
+					salvarArquivo(fileProper);
 				} else {
 					salvarArquivo(aba);
 				}
@@ -390,7 +387,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textEditor.getText());
+				pw.print(textEditorProper.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
@@ -409,11 +406,11 @@ public class PropriedadeContainer extends AbstratoContainer {
 		@Override
 		protected void copiar() {
 			Aba aba = (Aba) ficharioInner.getSelectedComponent();
-			if (aba == null || aba.file == file) {
-				String string = Util.getString(textEditor);
+			if (aba == null || aba.file == fileProper) {
+				String string = Util.getString(textEditorProper);
 				Util.setContentTransfered(string);
 				copiarMensagem(string);
-				textEditor.requestFocus();
+				textEditorProper.requestFocus();
 			} else {
 				String string = Util.getString(aba.textPane);
 				Util.setContentTransfered(string);
@@ -425,8 +422,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Aba aba = (Aba) ficharioInner.getSelectedComponent();
-			if (aba == null || aba.file == file) {
-				Util.getContentTransfered(textEditor, numeros, letras);
+			if (aba == null || aba.file == fileProper) {
+				Util.getContentTransfered(textEditorProper, numeros, letras);
 			} else {
 				Util.getContentTransfered(aba.textPane, numeros, letras);
 			}
@@ -436,8 +433,8 @@ public class PropriedadeContainer extends AbstratoContainer {
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				Aba aba = (Aba) ficharioInner.getSelectedComponent();
-				if (aba == null || aba.file == file) {
-					selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
+				if (aba == null || aba.file == fileProper) {
+					selecao = Util.getSelecao(textEditorProper, selecao, txtPesquisa.getText());
 				} else {
 					selecao = Util.getSelecao(aba.textPane, selecao, txtPesquisa.getText());
 				}
