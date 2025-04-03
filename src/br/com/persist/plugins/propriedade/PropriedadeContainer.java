@@ -143,7 +143,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 			Panel panelArea = new Panel();
 			panelArea.add(BorderLayout.CENTER, textPane);
 			ScrollPane scrollPane = new ScrollPane(panelArea);
-			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+			scrollPane.setRowHeaderView(new TextEditorLine(textPane));
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
@@ -213,6 +213,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 	private void abrirArquivo(File file) {
 		abrirArquivo(textEditor, file);
+		toolbar.gerar();
 	}
 
 	private void abrirArquivo(Aba aba) {
@@ -274,13 +275,14 @@ public class PropriedadeContainer extends AbstratoContainer {
 				Arvore raiz = PropriedadeUtil.criarRaiz(string);
 				if (raiz != null) {
 					painelResultado.processar(raiz);
+					colorTextArea(raiz);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
 		}
 
-		void colorTextArea(Arvore raiz) {
+		private void colorTextArea(Arvore raiz) {
 			textEditor.setText(Constantes.VAZIO);
 			try {
 				raiz.print(textEditor.getStyledDocument());
