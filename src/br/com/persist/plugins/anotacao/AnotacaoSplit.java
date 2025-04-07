@@ -341,11 +341,13 @@ class Aba extends Transferivel {
 		if (arquivo.getFile().exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(arquivo.getFile()), StandardCharsets.UTF_8))) {
+				StringBuilder sb = new StringBuilder();
 				String linha = br.readLine();
 				while (linha != null) {
-					editor.append(linha + Constantes.QL);
+					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
+				editor.setText(sb.toString());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
