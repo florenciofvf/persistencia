@@ -57,6 +57,22 @@ public class ArquivoUtil {
 		return lista;
 	}
 
+	public static String getString(File file) throws IOException {
+		if (file == null || !file.exists() || !file.isFile() || !file.canRead()) {
+			return "";
+		}
+		try (BufferedReader br = new BufferedReader(
+				new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+			StringBuilder sb = new StringBuilder();
+			String linha = br.readLine();
+			while (linha != null) {
+				sb.append(linha + Constantes.QL);
+				linha = br.readLine();
+			}
+			return sb.toString();
+		}
+	}
+
 	public static String primeiroIniciadoCom(String string, File file) {
 		if (string != null && file != null && file.isFile() && file.canRead()) {
 			try (BufferedReader br = new BufferedReader(
