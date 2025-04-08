@@ -9,10 +9,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
@@ -20,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.Arquivo;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
@@ -67,16 +65,9 @@ public class AbaText extends Panel {
 	void abrir() {
 		editor.setText(Constantes.VAZIO);
 		if (arquivo.getFile().exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(arquivo.getFile()), StandardCharsets.UTF_8))) {
-				StringBuilder sb = new StringBuilder();
+			try {
 				int value = getValueScrollPane();
-				String linha = br.readLine();
-				while (linha != null) {
-					sb.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
-				editor.setText(sb.toString());
+				editor.setText(ArquivoUtil.getString(arquivo.getFile()));
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ExecucaoConstantes.PAINEL_EXECUCAO, ex, this);
