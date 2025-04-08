@@ -22,10 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -40,6 +37,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -229,13 +227,8 @@ public class ConsultaContainer extends AbstratoContainer {
 		toolbar.limparNomeBackup();
 		textEditor.limpar();
 		if (file.exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-				String linha = br.readLine();
-				while (linha != null) {
-					textEditor.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
+			try {
+				textEditor.setText(ArquivoUtil.getString(file));
 				consultaCor.processar(textEditor.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, ConsultaContainer.this);

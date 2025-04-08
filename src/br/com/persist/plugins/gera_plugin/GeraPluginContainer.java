@@ -357,9 +357,11 @@ public class GeraPluginContainer extends AbstratoContainer {
 		if (erros.isEmpty()) {
 			gerar();
 		} else {
+			StringBuilder sb = new StringBuilder();
 			for (String string : erros) {
-				textEditor.append(string + Constantes.QL);
+				sb.append(string + Constantes.QL);
 			}
+			textEditor.setText(sb.toString());
 		}
 	}
 
