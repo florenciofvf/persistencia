@@ -12,11 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -368,13 +365,8 @@ class Aba extends Transferivel {
 	private void abrir() {
 		editor.limpar();
 		if (arquivo.getFile().exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(arquivo.getFile()), StandardCharsets.UTF_8))) {
-				String linha = br.readLine();
-				while (linha != null) {
-					editor.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
+			try {
+				editor.setText(ArquivoUtil.getString(arquivo.getFile()));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
