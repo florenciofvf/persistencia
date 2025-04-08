@@ -17,10 +17,7 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -29,6 +26,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -122,13 +120,8 @@ public class AmbienteContainer extends AbstratoContainer {
 		toolbar.limparNomeBackup();
 		textEditor.limpar();
 		if (file.exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-				String linha = br.readLine();
-				while (linha != null) {
-					textEditor.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
+			try {
+				textEditor.setText(ArquivoUtil.getString(file));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(AmbienteConstantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
 			}
