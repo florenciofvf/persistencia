@@ -15,13 +15,10 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
@@ -42,6 +39,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.ArgumentoException;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
@@ -547,16 +545,9 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private void abrir(boolean checarModo) {
 		textEditorReq.setText(Constantes.VAZIO);
 		if (file.exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-				StringBuilder sb = new StringBuilder();
+			try {
 				int value = getValueScrollPane();
-				String linha = br.readLine();
-				while (linha != null) {
-					sb.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
-				textEditorReq.setText(sb.toString());
+				textEditorReq.setText(ArquivoUtil.getString(file));
 				textEditorReq.validoSel = false;
 				setValueScrollPane(value);
 			} catch (Exception ex) {

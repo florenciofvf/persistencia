@@ -8,11 +8,8 @@ import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -23,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
@@ -92,16 +90,9 @@ public class MapaPagina extends Panel {
 		void abrir() {
 			textEditor.setText(Constantes.VAZIO);
 			if (file.exists()) {
-				try (BufferedReader br = new BufferedReader(
-						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-					StringBuilder sb = new StringBuilder();
+				try {
 					int value = getValueScrollPane();
-					String linha = br.readLine();
-					while (linha != null) {
-						sb.append(linha + Constantes.QL);
-						linha = br.readLine();
-					}
-					textEditor.setText(sb.toString());
+					textEditor.setText(ArquivoUtil.getString(file));
 					setValueScrollPane(value);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, this);
