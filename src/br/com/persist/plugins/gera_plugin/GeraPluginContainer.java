@@ -409,6 +409,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 			if (chkComListener.isSelected()) {
 				GeraPluginUtil.listener(config);
 			}
+			textEditor.setText("FONTE GERADO COM SUCESSO");
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(GeraPluginConstantes.PAINEL_GERA_PLUGIN, ex, GeraPluginContainer.this);
 		}
