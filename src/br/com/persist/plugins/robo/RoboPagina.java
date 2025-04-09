@@ -32,6 +32,7 @@ import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -92,15 +93,18 @@ public class RoboPagina extends Panel {
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
+		private final CheckBox chkExecSel = new CheckBox();
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
 			executarAcao.setActionListener(e -> new Thread(this::executar).start());
+			chkExecSel.setToolTipText(RoboMensagens.getString("label.exec_sel"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			addButton(executarAcao);
+			add(chkExecSel);
 			add(txtPesquisa);
 			add(label);
 		}
@@ -110,7 +114,7 @@ public class RoboPagina extends Panel {
 		}
 
 		private void executar() {
-			String string = Util.getString(textEditor);
+			String string = chkExecSel.isSelected() ? Util.getString(textEditor) : textEditor.getText();
 			if (Util.isEmpty(string)) {
 				Util.mensagem(RoboPagina.this, RoboMensagens.getString("erro.sem_conteudo"));
 				return;
