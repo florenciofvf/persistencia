@@ -114,10 +114,14 @@ public class RoboPagina extends Panel {
 		}
 
 		private void executar() {
-			String string = chkExecSel.isSelected() ? Util.getString(textEditor) : textEditor.getText();
+			boolean execSelecionado = chkExecSel.isSelected();
+			String string = execSelecionado ? Util.getString(textEditor) : textEditor.getText();
 			if (Util.isEmpty(string)) {
 				Util.mensagem(RoboPagina.this, RoboMensagens.getString("erro.sem_conteudo"));
 				return;
+			}
+			if (execSelecionado) {
+				textEditor.requestFocus();
 			}
 			Robot robot = null;
 			try {
