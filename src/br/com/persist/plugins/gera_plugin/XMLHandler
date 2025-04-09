@@ -17,9 +17,11 @@ class ###nameCap###XMLHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
+		//TODO - impl
 	}
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
+		//TODO - impl
 	}
 }

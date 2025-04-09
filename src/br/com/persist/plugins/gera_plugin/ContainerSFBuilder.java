@@ -402,6 +402,8 @@ public class ContainerSFBuilder extends Builder {
 		Funcao funcao = classe.criarFuncaoProtegida("void", "baixar");
 		if (config.comFichario) {
 			funcao.addInstrucao("abrir(null, getIdPagina())");
+		} else {
+			funcao.addComentario("TODO - impl");
 		}
 	}
 
@@ -420,6 +422,8 @@ public class ContainerSFBuilder extends Builder {
 			funcao.addInstrucao("ativa.salvar(atomic)");
 			se = funcao.criarIf("atomic.get()", null);
 			se.addInstrucao("salvoMensagem()");
+		} else {
+			funcao.addComentario("TODO - impl");
 		}
 	}
 
