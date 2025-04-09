@@ -14,8 +14,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -431,8 +429,8 @@ class Aba extends Transferivel {
 		}
 
 		private void salvarArquivo(File file) {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(editor.getText());
+			try {
+				ArquivoUtil.salvar(editor, file);
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);

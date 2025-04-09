@@ -10,8 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import javax.swing.Icon;
@@ -19,6 +17,7 @@ import javax.swing.JFileChooser;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
@@ -143,8 +142,8 @@ public class OuvinteContainer extends AbstratoContainer {
 		}
 
 		private void salvar(File file) {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textEditor.getText());
+			try {
+				ArquivoUtil.salvar(textEditor, file);
 				salvoMensagem();
 			} catch (Exception e) {
 				Util.mensagem(OuvinteContainer.this, e.getMessage());

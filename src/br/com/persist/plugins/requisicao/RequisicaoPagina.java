@@ -19,9 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.io.RandomAccessFile;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -579,8 +577,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				RequisicaoMensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
-		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-			pw.print(textEditorReq.getText());
+		try {
+			ArquivoUtil.salvar(textEditorReq, file);
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);

@@ -648,8 +648,8 @@ class Aba extends Transferivel {
 		}
 
 		private void salvarArquivo(File file) {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(editor.getText());
+			try {
+				ArquivoUtil.salvar(editor, file);
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);

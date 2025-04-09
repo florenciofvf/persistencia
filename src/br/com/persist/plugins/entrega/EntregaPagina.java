@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -170,8 +168,8 @@ public class EntregaPagina extends Panel {
 		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, EntregaMensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
-		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-			pw.print(textEditor.getText());
+		try {
+			ArquivoUtil.salvar(textEditor, file);
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(EntregaConstantes.PAINEL_ENTREGA, ex, this);

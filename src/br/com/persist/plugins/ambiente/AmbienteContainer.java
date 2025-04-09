@@ -18,8 +18,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -233,8 +231,8 @@ public class AmbienteContainer extends AbstratoContainer {
 		}
 
 		private void salvarArquivo(File file) {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textEditor.getText());
+			try {
+				ArquivoUtil.salvar(textEditor, file);
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(AmbienteConstantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);

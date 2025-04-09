@@ -8,9 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
@@ -87,8 +86,8 @@ public class MensagemContainer extends Panel {
 
 		@Override
 		protected void salvar() {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textEditor.getText());
+			try {
+				ArquivoUtil.salvar(textEditor, file);
 				salvoMensagem();
 			} catch (Exception e) {
 				Util.mensagem(MensagemContainer.this, e.getMessage());

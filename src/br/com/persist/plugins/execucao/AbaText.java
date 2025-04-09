@@ -10,8 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -134,8 +132,8 @@ public class AbaText extends Panel {
 		}
 
 		private void salvarArquivo(File file) {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(editor.getText());
+			try {
+				ArquivoUtil.salvar(editor, file);
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, this);

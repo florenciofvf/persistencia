@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JTextPane;
 
 import br.com.persist.arquivo.Arquivo;
 
@@ -70,6 +73,12 @@ public class ArquivoUtil {
 				linha = br.readLine();
 			}
 			return sb.toString();
+		}
+	}
+
+	public static void salvar(JTextPane textPane, File file) throws IOException {
+		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
+			pw.print(textPane.getText());
 		}
 	}
 

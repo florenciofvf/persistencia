@@ -23,8 +23,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -351,8 +349,8 @@ public class ConsultaContainer extends AbstratoContainer {
 		}
 
 		private void salvarArquivo(File file) {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textEditor.getText());
+			try {
+				ArquivoUtil.salvar(textEditor, file);
 				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, ConsultaContainer.this);
