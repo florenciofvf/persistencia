@@ -12,6 +12,24 @@ public class IMap {
 		return new HashMap<>();
 	}
 
+	@Biblio(6)
+	public static Map<Object, Object> createOf(Object lista) throws IllegalAccessException {
+		Map<Object, Object> mapa = create();
+		if (lista instanceof Lista) {
+			Lista list = (Lista) lista;
+			long size = list.size().longValue();
+			for (long i = 0; i < size; i += 2) {
+				Object chave = list.get(i);
+				Object valor = "";
+				if (i + 1 < size) {
+					valor = list.get(i);
+				}
+				mapa.put(chave, valor);
+			}
+		}
+		return mapa;
+	}
+
 	@Biblio(3)
 	@SuppressWarnings("unchecked")
 	public static void put(Object mapa, Object chave, Object valor) {
