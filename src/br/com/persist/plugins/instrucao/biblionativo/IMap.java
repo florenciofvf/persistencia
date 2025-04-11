@@ -22,7 +22,7 @@ public class IMap {
 				Object chave = list.get(i);
 				Object valor = "";
 				if (i + 1 < size) {
-					valor = list.get(i);
+					valor = list.get(i + 1);
 				}
 				mapa.put(chave, valor);
 			}
