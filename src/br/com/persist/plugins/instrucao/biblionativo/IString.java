@@ -54,4 +54,12 @@ public class IString {
 	public static BigInteger size(Object object) {
 		return object == null ? BigInteger.ZERO : BigInteger.valueOf(object.toString().length());
 	}
+
+	@Biblio(9)
+	public static BigInteger contains(Object string, Object procurado) {
+		if (string == null || procurado == null) {
+			return IUtil.FALSE;
+		}
+		return string.toString().contains(procurado.toString()) ? IUtil.TRUE : IUtil.FALSE;
+	}
 }
