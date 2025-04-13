@@ -82,6 +82,18 @@ public class ArquivoUtil {
 		}
 	}
 
+	public static void salvar(List<String> arquivo, File file) throws IOException {
+		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
+			for (int i = 0; i < arquivo.size(); i++) {
+				String string = arquivo.get(i);
+				pw.print(string);
+				if (i + 1 < arquivo.size()) {
+					pw.println();
+				}
+			}
+		}
+	}
+
 	public static String primeiroIniciadoCom(String string, File file) {
 		if (string != null && file != null && file.isFile() && file.canRead()) {
 			try (BufferedReader br = new BufferedReader(
