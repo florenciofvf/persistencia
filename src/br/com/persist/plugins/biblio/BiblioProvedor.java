@@ -64,6 +64,13 @@ public class BiblioProvedor {
 		lista.add(biblio);
 	}
 
+	public static Biblio getBiblio(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			return lista.get(indice);
+		}
+		return null;
+	}
+
 	public static Biblio getBiblio(String nome) {
 		for (Biblio item : lista) {
 			if (item.getNome().equals(nome)) {
