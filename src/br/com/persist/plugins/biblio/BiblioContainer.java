@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -143,7 +144,7 @@ public class BiblioContainer extends AbstratoContainer {
 			if (linhas != null && linhas.length == 1) {
 				int indice = linhas[0];
 				BiblioProvedor.adicionar(biblio, indice);
-				tabela.setRowSelectionInterval(indice, indice);
+				SwingUtilities.invokeLater(() -> tabela.setRowSelectionInterval(indice, indice));
 			} else {
 				BiblioProvedor.adicionar(biblio);
 			}
