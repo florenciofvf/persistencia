@@ -138,7 +138,14 @@ public class BiblioContainer extends AbstratoContainer {
 
 		@Override
 		protected void novo() {
-			BiblioProvedor.adicionar(new Biblio("#-" + BiblioProvedor.nextIndice()));
+			int[] linhas = tabela.getSelectedRows();
+			Biblio biblio = new Biblio("#-" + BiblioProvedor.nextInt());
+			if (linhas != null && linhas.length == 1) {
+				int indice = linhas[0];
+				BiblioProvedor.adicionar(biblio, indice);
+			} else {
+				BiblioProvedor.adicionar(biblio);
+			}
 			biblioModelo.fireTableDataChanged();
 		}
 

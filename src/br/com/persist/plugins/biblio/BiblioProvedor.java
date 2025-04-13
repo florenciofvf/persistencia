@@ -14,7 +14,7 @@ public class BiblioProvedor {
 	private static final List<Biblio> lista = new ArrayList<>();
 	private static final Logger LOG = Logger.getGlobal();
 	private static final File file;
-	private static int indice;
+	private static int valor;
 
 	private BiblioProvedor() {
 	}
@@ -23,8 +23,8 @@ public class BiblioProvedor {
 		file = new File("libs" + Constantes.SEPARADOR + "outras_libs");
 	}
 
-	public static synchronized int nextIndice() {
-		return ++indice;
+	public static synchronized int nextInt() {
+		return ++valor;
 	}
 
 	public static void inicializar() {
@@ -49,12 +49,19 @@ public class BiblioProvedor {
 		ArquivoUtil.salvar(list, file);
 	}
 
-	public static boolean contem(Biblio conexao) {
-		return contem(conexao.getNome());
+	public static boolean contem(Biblio biblio) {
+		return contem(biblio.getNome());
 	}
 
 	public static boolean contem(String nome) {
 		return getBiblio(nome) != null;
+	}
+
+	public static void adicionar(Biblio biblio, int indice) {
+		if (contem(biblio)) {
+			return;
+		}
+		lista.add(indice, biblio);
 	}
 
 	public static void adicionar(Biblio biblio) {
