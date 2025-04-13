@@ -143,6 +143,7 @@ public class BiblioContainer extends AbstratoContainer {
 			if (linhas != null && linhas.length == 1) {
 				int indice = linhas[0];
 				BiblioProvedor.adicionar(biblio, indice);
+				tabela.setRowSelectionInterval(indice, indice);
 			} else {
 				BiblioProvedor.adicionar(biblio);
 			}
