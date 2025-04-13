@@ -44,7 +44,7 @@ public class BiblioContainer extends AbstratoContainer {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
-		configurar();
+		toolbar.baixar();
 	}
 
 	public BiblioDialogo getBiblioDialogo() {
@@ -72,11 +72,6 @@ public class BiblioContainer extends AbstratoContainer {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabela));
-	}
-
-	private void configurar() {
-		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		toolbar.baixar();
 	}
 
 	@Override
