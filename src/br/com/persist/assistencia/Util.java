@@ -91,6 +91,17 @@ public class Util {
 		return mensagemHtml;
 	}
 
+	public static String getHtml(String string) {
+		StringBuilder sb = new StringBuilder("<html>");
+		sb.append("<head>");
+		sb.append("</head>");
+		sb.append("<body>");
+		sb.append(string);
+		sb.append("</body>");
+		sb.append("</html>");
+		return sb.toString();
+	}
+
 	public static void setMensagemHtml(boolean mensagemHtml) {
 		Util.mensagemHtml = mensagemHtml;
 	}

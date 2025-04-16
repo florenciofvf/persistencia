@@ -860,15 +860,8 @@ public class TabelaPersistencia extends JTable {
 				String string = Util.getStringLista(lista, Constantes.QL2, true, false);
 				boolean paintERT = TextEditor.isPaintERT();
 				if (option) {
-					StringBuilder sb = new StringBuilder("<html>");
-					sb.append("<head>");
-					sb.append("</head>");
-					sb.append("<body>");
-					sb.append(string);
-					sb.append("</body>");
-					sb.append("</html>");
 					Util.setMensagemHtml(true);
-					string = sb.toString();
+					string = Util.getHtml(string);
 					TextEditor.setPaintERT(false);
 				}
 				Util.mensagem(TabelaPersistencia.this, string);
