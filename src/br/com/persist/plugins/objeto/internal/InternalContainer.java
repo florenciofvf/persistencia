@@ -2616,12 +2616,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					adicionarConstantes(biblioteca, map);
 					List<Object> resp = processador.processar(nomeBiblio, "main");
 					String string = getStringResposta(resp);
-					boolean paintERT = TextEditor.isPaintERT();
-					Util.setMensagemHtml(true);
-					string = Util.getHtml(string);
-					TextEditor.setPaintERT(false);
-					Util.mensagem(InternalContainer.this, string);
-					TextEditor.setPaintERT(paintERT);
+					if (Util.confirmar(InternalContainer.this, "HTML?", false)) {
+						boolean paintERT = TextEditor.isPaintERT();
+						Util.setMensagemHtml(true);
+						string = Util.getHtml(string);
+						TextEditor.setPaintERT(false);
+						Util.mensagem(InternalContainer.this, string);
+						TextEditor.setPaintERT(paintERT);
+					} else {
+						Util.mensagem(InternalContainer.this, string);
+					}
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 				}
