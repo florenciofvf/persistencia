@@ -95,6 +95,7 @@ import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.SetLista.Config;
 import br.com.persist.componente.SetListaCheck;
+import br.com.persist.componente.TextEditor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
@@ -2614,7 +2615,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
 					adicionarConstantes(biblioteca, map);
 					List<Object> resp = processador.processar(nomeBiblio, "main");
-					Util.mensagem(InternalContainer.this, getStringResposta(resp));
+					String string = getStringResposta(resp);
+					boolean paintERT = TextEditor.isPaintERT();
+					Util.setMensagemHtml(true);
+					string = Util.getHtml(string);
+					TextEditor.setPaintERT(false);
+					Util.mensagem(InternalContainer.this, string);
+					TextEditor.setPaintERT(paintERT);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 				}
