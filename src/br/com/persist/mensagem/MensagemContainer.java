@@ -5,13 +5,23 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
 import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.Text;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -37,6 +47,39 @@ public class MensagemContainer extends Panel {
 		textEditor.setText(string);
 		toolbar.ini(janela);
 		montarLayout();
+	}
+
+	public MensagemContainer(Janela janela, List<Text> listaText) throws BadLocationException {
+		this.file = null;
+		StyleContext sc = new StyleContext();
+		DefaultStyledDocument doc = new DefaultStyledDocument(sc);
+		configStyleContext(sc);
+		insertString(listaText, doc, sc);
+		textEditor.setStyledDocument(doc);
+		toolbar.ini(janela);
+		montarLayout();
+	}
+
+	private void configStyleContext(StyleContext styleContext) {
+		styleContext.addStyle("none", null);
+		Style def = styleContext.getStyle(StyleContext.DEFAULT_STYLE);
+		Style info = styleContext.addStyle("info", def);
+		StyleConstants.setForeground(info, Color.BLUE);
+		Style warn = styleContext.addStyle("warn", def);
+		StyleConstants.setForeground(warn, Color.ORANGE);
+		Style erro = styleContext.addStyle("erro", def);
+		StyleConstants.setForeground(erro, Color.RED);
+	}
+
+	private void insertString(List<Text> listaText, DefaultStyledDocument document, StyleContext styleContext)
+			throws BadLocationException {
+		if (listaText == null) {
+			return;
+		}
+		for (Text text : listaText) {
+			Style style = styleContext.getStyle(text.getIdStyle());
+			document.insertString(document.getLength(), text.getContent() + Constantes.QL, style);
+		}
 	}
 
 	private void montarLayout() {

@@ -399,6 +399,19 @@ public class Util {
 		}
 	}
 
+	public static void mensagem(Component componente, List<Text> listaText) throws BadLocationException {
+		Component view = getViewParent(componente);
+		if (view instanceof Frame) {
+			mensagemFrame(view, listaText);
+		} else if (view instanceof Dialog) {
+			mensagemDialogo(view, listaText);
+		} else if (listaText != null) {
+			messageDialog(componente, listaText.toString());
+		} else {
+			messageDialog(componente, IllegalStateException.class.getName());
+		}
+	}
+
 	public static void mensagemSel(Component componente, String string, String sel) {
 		Component view = getViewParent(componente);
 		if (view instanceof Frame) {
@@ -428,11 +441,29 @@ public class Util {
 		mensagem.setVisible(true);
 	}
 
+	private static void mensagemDialogo(Component view, List<Text> listaText) throws BadLocationException {
+		Dialog dialog = (Dialog) view;
+		MensagemDialogo mensagem = MensagemDialogo.criar(dialog, Mensagens.getString(Constantes.LABEL_ATENCAO),
+				listaText);
+		mensagem.setSize(Preferencias.getDimensionMensagem());
+		mensagem.setLocationRelativeTo(dialog);
+		mensagem.setVisible(true);
+	}
+
 	private static void mensagemFrame(String string, File file, Component view, String sel) {
 		Frame frame = (Frame) view;
 		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
 		mensagem.setSel(sel);
+		mensagem.setSize(Preferencias.getDimensionMensagem());
+		mensagem.setLocationRelativeTo(frame);
+		mensagem.setVisible(true);
+	}
+
+	private static void mensagemFrame(Component view, List<Text> listaText) throws BadLocationException {
+		Frame frame = (Frame) view;
+		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO),
+				listaText);
 		mensagem.setSize(Preferencias.getDimensionMensagem());
 		mensagem.setLocationRelativeTo(frame);
 		mensagem.setVisible(true);
