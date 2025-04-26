@@ -1,5 +1,6 @@
 package br.com.persist.assistencia;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class TextPool {
 
 	private void add(String idStyle, String string) {
 		if (string != null) {
-			listaText.add(new Text(idStyle, string));
+			listaText.add(new Text(idStyle, new String(string.getBytes(), StandardCharsets.UTF_8)));
 		}
 	}
 }

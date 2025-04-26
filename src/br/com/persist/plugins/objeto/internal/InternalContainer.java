@@ -75,6 +75,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.TextPool;
 import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Acao;
@@ -95,7 +96,6 @@ import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.SetLista.Config;
 import br.com.persist.componente.SetListaCheck;
-import br.com.persist.componente.TextEditor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
@@ -2615,15 +2615,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
 					adicionarConstantes(biblioteca, map);
 					List<Object> resp = processador.processar(nomeBiblio, "main");
-					String string = getStringResposta(resp);
-					if (Util.confirmar(InternalContainer.this, "HTML?", false)) {
-						boolean paintERT = TextEditor.isPaintERT();
-						Util.setMensagemHtml(true);
-						string = Util.getHtml(string);
-						TextEditor.setPaintERT(false);
-						Util.mensagem(InternalContainer.this, string);
-						TextEditor.setPaintERT(paintERT);
+					if (isTextPool(resp)) {
+						TextPool textPool = (TextPool) resp.get(0);
+						Util.mensagem(InternalContainer.this, textPool.getListaText());
 					} else {
+						String string = getStringResposta(resp);
 						Util.mensagem(InternalContainer.this, string);
 					}
 				} catch (Exception ex) {
@@ -2638,6 +2634,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					constante.setValor(entry.getValue());
 					biblioteca.addConstante(constante);
 				}
+			}
+
+			private boolean isTextPool(List<Object> resp) {
+				return !resp.isEmpty() && resp.get(0) instanceof TextPool;
 			}
 
 			private String getStringResposta(List<Object> lista) {
