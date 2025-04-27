@@ -82,7 +82,6 @@ public class MensagemContainer extends Panel {
 
 		Style nota = styleContext.addStyle("nota", padrao);
 		StyleConstants.setForeground(nota, new Color(0, 153, 153));
-
 	}
 
 	private void insertString(List<Text> listaText, DefaultStyledDocument document, StyleContext styleContext)
