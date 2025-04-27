@@ -45,4 +45,11 @@ public class IDoc {
 			textPool.erro(object.toString());
 		}
 	}
+
+	@Biblio(6)
+	public static void nota(Object object) {
+		if (object != null) {
+			textPool.nota(object.toString());
+		}
+	}
 }

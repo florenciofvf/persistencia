@@ -79,6 +79,10 @@ public class MensagemContainer extends Panel {
 		Style erro = styleContext.addStyle("erro", padrao);
 		StyleConstants.setForeground(erro, Color.RED);
 		StyleConstants.setItalic(erro, true);
+
+		Style nota = styleContext.addStyle("nota", padrao);
+		StyleConstants.setForeground(nota, new Color(0, 153, 153));
+
 	}
 
 	private void insertString(List<Text> listaText, DefaultStyledDocument document, StyleContext styleContext)

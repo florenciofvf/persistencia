@@ -35,6 +35,10 @@ public class TextPool {
 		add("erro", string);
 	}
 
+	public void nota(String string) {
+		add("nota", string);
+	}
+
 	private void add(String idStyle, String string) {
 		if (string != null) {
 			listaText.add(new Text(idStyle, new String(string.getBytes(), StandardCharsets.UTF_8)));
