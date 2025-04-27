@@ -42,7 +42,7 @@ public class Separador extends JSplitPane implements FicharioListener {
 		if (c instanceof Transferivel) {
 			Transferivel aba = (Transferivel) c;
 			Fichario fichario = new Fichario();
-			fichario.addTab(aba.getTitle(), aba);
+			fichario.addTab(aba.getTitle(), null, aba, aba.getHint());
 			c = fichario;
 		}
 		return c;
