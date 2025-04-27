@@ -61,14 +61,24 @@ public class MensagemContainer extends Panel {
 	}
 
 	private void configStyleContext(StyleContext styleContext) {
-		styleContext.addStyle("none", null);
 		Style def = styleContext.getStyle(StyleContext.DEFAULT_STYLE);
-		Style info = styleContext.addStyle("info", def);
+
+		Style padrao = styleContext.addStyle("padrao", def);
+		StyleConstants.setFontFamily(padrao, "SansSerif");
+		StyleConstants.setBold(padrao, true);
+
+		Style none = styleContext.addStyle("none", padrao);
+		StyleConstants.setForeground(none, Color.BLACK);
+
+		Style info = styleContext.addStyle("info", padrao);
 		StyleConstants.setForeground(info, Color.BLUE);
-		Style warn = styleContext.addStyle("warn", def);
+
+		Style warn = styleContext.addStyle("warn", padrao);
 		StyleConstants.setForeground(warn, Color.ORANGE);
-		Style erro = styleContext.addStyle("erro", def);
+
+		Style erro = styleContext.addStyle("erro", padrao);
 		StyleConstants.setForeground(erro, Color.RED);
+		StyleConstants.setItalic(erro, true);
 	}
 
 	private void insertString(List<Text> listaText, DefaultStyledDocument document, StyleContext styleContext)
