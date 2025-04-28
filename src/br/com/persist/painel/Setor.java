@@ -24,8 +24,8 @@ class Setor {
 	private int metadeLarguraComp;
 	private int metadeAlturaComp;
 	static final char SUL = 'S';
+	Dimension dimensionComp;
 	Component dropTarget;
-	Dimension dimension;
 	boolean selecionado;
 	final float alpha;
 	final char local;
@@ -40,9 +40,9 @@ class Setor {
 	}
 
 	void localizar(Component c) {
-		dimension = c.getSize();
-		metadeLarguraComp = dimension.width / 2;
-		metadeAlturaComp = dimension.height / 2;
+		dimensionComp = c.getSize();
+		metadeLarguraComp = dimensionComp.width / 2;
+		metadeAlturaComp = dimensionComp.height / 2;
 		valido = false;
 		if (local == NORTE) {
 			x = metadeLarguraComp - metadeLado;
@@ -50,10 +50,10 @@ class Setor {
 			valido = true;
 		} else if (local == SUL) {
 			x = metadeLarguraComp - metadeLado;
-			y = dimension.height - lado;
+			y = dimensionComp.height - lado;
 			valido = true;
 		} else if (local == LESTE) {
-			x = dimension.width - lado;
+			x = dimensionComp.width - lado;
 			y = metadeAlturaComp - metadeLado;
 			valido = true;
 		} else if (local == OESTE) {
@@ -76,13 +76,13 @@ class Setor {
 		g2.fillRect(x, y, lado, lado);
 		if (selecionado) {
 			if (local == NORTE) {
-				g2.fillRect(1, 1, dimension.width - 3, metadeAlturaComp);
+				g2.fillRect(1, 1, dimensionComp.width - 3, metadeAlturaComp);
 			} else if (local == SUL) {
-				g2.fillRect(1, metadeAlturaComp, dimension.width - 3, metadeAlturaComp - 2);
+				g2.fillRect(1, metadeAlturaComp, dimensionComp.width - 3, metadeAlturaComp - 2);
 			} else if (local == LESTE) {
-				g2.fillRect(metadeLarguraComp, 1, metadeLarguraComp - 2, dimension.height - 3);
+				g2.fillRect(metadeLarguraComp, 1, metadeLarguraComp - 2, dimensionComp.height - 3);
 			} else if (local == OESTE) {
-				g2.fillRect(1, 1, metadeLarguraComp, dimension.height - 3);
+				g2.fillRect(1, 1, metadeLarguraComp, dimensionComp.height - 3);
 			}
 		}
 	}

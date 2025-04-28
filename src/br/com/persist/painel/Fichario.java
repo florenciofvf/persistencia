@@ -455,7 +455,7 @@ class Deslocar extends Setor {
 
 	@Override
 	boolean contem(int posX, int posY) {
-		return (posX >= x && posX <= x + dimension.width) && (posY >= y && posY <= y + metadeLado);
+		return (posX >= x && posX <= x + dimensionComp.width) && (posY >= y && posY <= y + metadeLado);
 	}
 
 	@Override
@@ -465,9 +465,9 @@ class Deslocar extends Setor {
 		}
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		g2.drawRect(x, y, dimension.width, metadeLado);
+		g2.drawRect(x, y, dimensionComp.width, metadeLado);
 		if (selecionado) {
-			g.fillRect(x, y, dimension.width, metadeLado);
+			g.fillRect(x, y, dimensionComp.width, metadeLado);
 		}
 	}
 
