@@ -29,8 +29,8 @@ class Setor {
 	boolean selecionado;
 	final float alpha;
 	final char local;
+	Point pointDrop;
 	boolean valido;
-	Point point;
 	int x;
 	int y;
 
@@ -73,8 +73,9 @@ class Setor {
 		}
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		g2.fillRect(x, y, lado, lado);
+		g2.drawRect(x, y, lado, lado);
 		if (selecionado) {
+			g2.fillRect(x, y, lado, lado);
 			if (local == NORTE) {
 				g2.fillRect(1, 1, dimensionComp.width - 3, metadeAlturaComp);
 			} else if (local == SUL) {

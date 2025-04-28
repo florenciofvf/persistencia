@@ -206,8 +206,8 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 					restaurarBorda();
 					if (valido(objeto, setor)) {
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
+						setor.pointDrop = e.getLocation();
 						setor.dropTarget = Fichario.this;
-						setor.point = e.getLocation();
 						objeto.setSetor(setor);
 						e.dropComplete(true);
 					} else {
@@ -474,7 +474,7 @@ class Deslocar extends Setor {
 	@Override
 	void processar(Transferivel objeto) {
 		Fichario fichario = (Fichario) dropTarget;
-		int destino = fichario.indexAtLocation(point.x, point.y);
+		int destino = fichario.indexAtLocation(pointDrop.x, pointDrop.y);
 		int origem = objeto.getIndex();
 		if (origem != -1 && destino != -1 && origem != destino) {
 			inverter(origem, destino, fichario);
