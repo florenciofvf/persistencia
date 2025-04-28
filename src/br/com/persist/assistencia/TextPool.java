@@ -44,4 +44,17 @@ public class TextPool {
 			listaText.add(new Text(idStyle, new String(string.getBytes(), StandardCharsets.UTF_8)));
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < listaText.size(); i++) {
+			Text item = listaText.get(i);
+			sb.append(item.toString());
+			if (i + 1 < listaText.size()) {
+				sb.append(Constantes.QL);
+			}
+		}
+		return sb.toString();
+	}
 }
