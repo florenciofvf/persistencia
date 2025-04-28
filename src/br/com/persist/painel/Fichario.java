@@ -26,8 +26,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -37,6 +39,7 @@ import br.com.persist.componente.Popup;
 import br.com.persist.marca.XMLUtil;
 
 public class Fichario extends JTabbedPane implements ChangeListener {
+	private final transient Border borderDnD = BorderFactory.createEmptyBorder(20, 20, 20, 20);
 	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_3);
 	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_3);
 	private transient Setor oes = new Setor(Setor.OESTE, Setor.ALPHA_3);
@@ -47,6 +50,7 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 	private transient Deslocar des = new Deslocar();
 	private static final long serialVersionUID = 1L;
 	private final PopupFichario popupFichario;
+	private transient Border borderBackup;
 	private static Fichario selecionado;
 
 	public Fichario() {
@@ -108,6 +112,19 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 		des.paint(g);
 	}
 
+	public void backupBorda() {
+		Border border = getBorder();
+		if (border != borderDnD) {
+			borderBackup = border;
+		}
+	}
+
+	public void restaurarBorda() {
+		if (borderBackup != borderDnD) {
+			setBorder(borderBackup);
+		}
+	}
+
 	private transient DropTargetListener dropTargetListener = new DropTargetListener() {
 		@Override
 		public void dropActionChanged(DropTargetDragEvent e) {
@@ -123,6 +140,8 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 				e.rejectDrag();
 				invalidar();
 			} else {
+				backupBorda();
+				setBorder(borderDnD);
 				nor.localizar(Fichario.this);
 				sul.localizar(Fichario.this);
 				les.localizar(Fichario.this);
@@ -149,6 +168,7 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 
 		@Override
 		public void dragExit(DropTargetEvent dte) {
+			restaurarBorda();
 			invalidar();
 		}
 
@@ -183,6 +203,7 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 				try {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
 					Setor setor = Setor.get(e, nor, sul, les, oes, inc, des);
+					restaurarBorda();
 					if (valido(objeto, setor)) {
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						setor.dropTarget = Fichario.this;
@@ -393,7 +414,7 @@ class Inclusao extends Setor {
 
 	@Override
 	void localizar(Component c) {
-		y = metade + 2;
+		y = metadeLado + 2;
 		valido = true;
 	}
 
@@ -404,9 +425,9 @@ class Inclusao extends Setor {
 		}
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		g.drawRect(x, y, larguraAltura, larguraAltura);
+		g.drawRect(x, y, lado, lado);
 		if (selecionado) {
-			g.fillRect(x, y, larguraAltura, larguraAltura);
+			g.fillRect(x, y, lado, lado);
 		}
 	}
 
@@ -434,7 +455,7 @@ class Deslocar extends Setor {
 
 	@Override
 	boolean contem(int posX, int posY) {
-		return (posX >= x && posX <= x + dimension.width) && (posY >= y && posY <= y + metade);
+		return (posX >= x && posX <= x + dimension.width) && (posY >= y && posY <= y + metadeLado);
 	}
 
 	@Override
@@ -444,9 +465,9 @@ class Deslocar extends Setor {
 		}
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		g2.drawRect(x, y, dimension.width, metade);
+		g2.drawRect(x, y, dimension.width, metadeLado);
 		if (selecionado) {
-			g.fillRect(x, y, dimension.width, metade);
+			g.fillRect(x, y, dimension.width, metadeLado);
 		}
 	}
 

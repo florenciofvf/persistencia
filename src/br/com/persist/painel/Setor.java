@@ -12,18 +12,18 @@ import java.awt.dnd.DropTargetDropEvent;
 import javax.swing.SwingUtilities;
 
 class Setor {
-	int larguraAltura = 40;
+	int lado = 20;
+	int metadeLado = lado / 2;
 	static final float ALPHA_7 = 0.7f;
 	static final float ALPHA_3 = 0.3f;
-	int metade = larguraAltura / 2;
 	static final char DESLOCAR = 'D';
 	static final char INCLUIR = 'I';
 	static final char NORTE = 'N';
 	static final char LESTE = 'L';
 	static final char OESTE = 'O';
+	private int metadeLarguraComp;
+	private int metadeAlturaComp;
 	static final char SUL = 'S';
-	private int metadeLargura;
-	private int metadeAltura;
 	Component dropTarget;
 	Dimension dimension;
 	boolean selecionado;
@@ -41,30 +41,30 @@ class Setor {
 
 	void localizar(Component c) {
 		dimension = c.getSize();
-		metadeLargura = dimension.width / 2;
-		metadeAltura = dimension.height / 2;
+		metadeLarguraComp = dimension.width / 2;
+		metadeAlturaComp = dimension.height / 2;
 		valido = false;
 		if (local == NORTE) {
-			x = metadeLargura - metade;
-			y = metade;
+			x = metadeLarguraComp - metadeLado;
+			y = metadeLado;
 			valido = true;
 		} else if (local == SUL) {
-			x = metadeLargura - metade;
-			y = dimension.height - larguraAltura;
+			x = metadeLarguraComp - metadeLado;
+			y = dimension.height - lado;
 			valido = true;
 		} else if (local == LESTE) {
-			x = dimension.width - larguraAltura;
-			y = metadeAltura - metade;
+			x = dimension.width - lado;
+			y = metadeAlturaComp - metadeLado;
 			valido = true;
 		} else if (local == OESTE) {
 			x = 0;
-			y = metadeAltura - metade;
+			y = metadeAlturaComp - metadeLado;
 			valido = true;
 		}
 	}
 
 	boolean contem(int posX, int posY) {
-		return (posX >= x && posX <= x + larguraAltura) && (posY >= y && posY <= y + larguraAltura);
+		return (posX >= x && posX <= x + lado) && (posY >= y && posY <= y + lado);
 	}
 
 	void paint(Graphics g) {
@@ -73,16 +73,16 @@ class Setor {
 		}
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		g2.fillRect(x, y, larguraAltura, larguraAltura);
+		g2.fillRect(x, y, lado, lado);
 		if (selecionado) {
 			if (local == NORTE) {
-				g2.fillRect(1, 1, dimension.width - 3, metadeAltura);
+				g2.fillRect(1, 1, dimension.width - 3, metadeAlturaComp);
 			} else if (local == SUL) {
-				g2.fillRect(1, metadeAltura, dimension.width - 3, metadeAltura - 2);
+				g2.fillRect(1, metadeAlturaComp, dimension.width - 3, metadeAlturaComp - 2);
 			} else if (local == LESTE) {
-				g2.fillRect(metadeLargura, 1, metadeLargura - 2, dimension.height - 3);
+				g2.fillRect(metadeLarguraComp, 1, metadeLarguraComp - 2, dimension.height - 3);
 			} else if (local == OESTE) {
-				g2.fillRect(1, 1, metadeLargura, dimension.height - 3);
+				g2.fillRect(1, 1, metadeLarguraComp, dimension.height - 3);
 			}
 		}
 	}
