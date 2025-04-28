@@ -46,7 +46,7 @@ class Setor {
 		valido = false;
 		if (local == NORTE) {
 			x = metadeLarguraComp - metadeLado;
-			y = metadeLado;
+			y = 0;
 			valido = true;
 		} else if (local == SUL) {
 			x = metadeLarguraComp - metadeLado;

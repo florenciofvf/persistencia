@@ -39,7 +39,7 @@ import br.com.persist.componente.Popup;
 import br.com.persist.marca.XMLUtil;
 
 public class Fichario extends JTabbedPane implements ChangeListener {
-	private final transient Border borderDnD = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+	private final transient Border borderDnD = BorderFactory.createEmptyBorder(0, 16, 16, 16);
 	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_3);
 	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_3);
 	private transient Setor oes = new Setor(Setor.OESTE, Setor.ALPHA_3);
@@ -148,6 +148,7 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 				oes.localizar(Fichario.this);
 				inc.localizar(Fichario.this);
 				des.localizar(Fichario.this);
+				des.pointDrop = e.getLocation();
 				repaint();
 			}
 		}
@@ -162,7 +163,7 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 			les.selecionado = les.contem(x, y);
 			oes.selecionado = oes.contem(x, y);
 			inc.selecionado = inc.contem(x, y);
-			des.selecionado = des.contem(x, y);
+			des.pointDrop = p;
 			repaint();
 		}
 
@@ -414,8 +415,8 @@ class Inclusao extends Setor {
 
 	@Override
 	void localizar(Component c) {
-		y = metadeLado + 2;
 		valido = true;
+		y = 0;
 	}
 
 	@Override
@@ -449,13 +450,12 @@ class Deslocar extends Setor {
 
 	@Override
 	void localizar(Component c) {
-		super.localizar(c);
 		valido = true;
 	}
 
 	@Override
 	boolean contem(int posX, int posY) {
-		return (posX >= x && posX <= x + dimensionComp.width) && (posY >= y && posY <= y + metadeLado);
+		return true;
 	}
 
 	@Override
@@ -465,14 +465,16 @@ class Deslocar extends Setor {
 		}
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		g2.drawRect(x, y, dimensionComp.width, metadeLado);
-		if (selecionado) {
-			g.fillRect(x, y, dimensionComp.width, metadeLado);
+		if (pointDrop != null) {
+			g.drawRect(pointDrop.x, pointDrop.y, lado, lado);
 		}
 	}
 
 	@Override
 	void processar(Transferivel objeto) {
+		if (dropTarget == null || pointDrop == null) {
+			return;
+		}
 		Fichario fichario = (Fichario) dropTarget;
 		int destino = fichario.indexAtLocation(pointDrop.x, pointDrop.y);
 		int origem = objeto.getIndex();
