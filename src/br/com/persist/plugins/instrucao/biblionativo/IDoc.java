@@ -52,4 +52,11 @@ public class IDoc {
 			textPool.nota(object.toString());
 		}
 	}
+
+	@Biblio(7)
+	public static void show(Object object) {
+		if (object != null) {
+			textPool.show(object.toString());
+		}
+	}
 }
