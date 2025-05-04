@@ -85,6 +85,7 @@ public class Objeto implements Runnable {
 	private boolean ccsc = true;
 	private boolean sane = true;
 	private long totalRegistros;
+	private int margemInferior;
 	private String complemento;
 	private String classBiblio;
 	private String destacaveis;
@@ -159,6 +160,7 @@ public class Objeto implements Runnable {
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.ajusteAutoForm = ajusteAutoForm;
+		o.margemInferior = margemInferior;
 		o.ajustarLargura = ajustarLargura;
 		o.larguraRotulos = larguraRotulos;
 		o.biblioChecagem = biblioChecagem;
@@ -239,6 +241,10 @@ public class Objeto implements Runnable {
 		if (!Util.isEmpty(strIntervalo)) {
 			intervalo = Integer.parseInt(strIntervalo);
 		}
+		String strMargemInf = attr.getValue("margemInferior");
+		if (!Util.isEmpty(strMargemInf)) {
+			margemInferior = Integer.parseInt(strMargemInf);
+		}
 	}
 
 	public void salvar(XMLUtil util) {
@@ -263,6 +269,7 @@ public class Objeto implements Runnable {
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
+		util.atributo("margemInferior", getMargemInferior());
 		util.atributoCheck("mapeamento", getMapeamento());
 		util.atributoCheck("sequencias", getSequencias());
 		util.atributo("intervalo", getIntervalo());
@@ -973,11 +980,22 @@ public class Objeto implements Runnable {
 		y += y * 0.10;
 	}
 
+	public int getMargemInferior() {
+		if (margemInferior < 0) {
+			margemInferior = 0;
+		}
+		return margemInferior;
+	}
+
 	public int getIntervalo() {
 		if (intervalo < Constantes.QUATROCENTOS) {
 			intervalo = Constantes.QUATROCENTOS;
 		}
 		return intervalo;
+	}
+
+	public void setMargemInferior(int margemInferior) {
+		this.margemInferior = margemInferior;
 	}
 
 	public void setIntervalo(int intervalo) {

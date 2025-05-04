@@ -396,6 +396,7 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelGeral extends Panel implements ActionListener {
 		private TextField txtBiblioChecagem = new TextField();
+		private TextField txtMargemInferior = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
 		private TextField txtIdTempForm = new TextField();
@@ -417,6 +418,7 @@ public class ObjetoContainer extends Panel {
 
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
+			txtMargemInferior.setText(VAZIO + objeto.getMargemInferior());
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
 			chkCopiarDestac.setSelected(objeto.isClonarAoDestacar());
@@ -429,6 +431,7 @@ public class ObjetoContainer extends Panel {
 			txtY.setText(VAZIO + objeto.getY());
 			txtId.setText(objeto.getId());
 			txtBiblioChecagem.addFocusListener(focusListenerInner);
+			txtMargemInferior.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
@@ -437,6 +440,7 @@ public class ObjetoContainer extends Panel {
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
 			txtBiblioChecagem.addActionListener(this);
+			txtMargemInferior.addActionListener(this);
 			chkTransparente.addActionListener(this);
 			chkCopiarDestac.addActionListener(this);
 			chkDesenharId.addActionListener(this);
@@ -472,6 +476,9 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinhaRotulo("label.desloc_y_id", txtDeslocYId));
+			container.add(criarLinhaComLinkCopiar("label.margem_inferior", txtIntervalo,
+					ObjetoMensagens.getString("hint.margem_inferior"),
+					PanelGeral.this::mensagemPropriedadeMargemInferior));
 			container.add(criarLinhaComLinkCopiar("label.intervalo", txtIntervalo,
 					ObjetoMensagens.getString("hint.intervalo"), PanelGeral.this::mensagemPropriedadeIntervalo));
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
@@ -528,6 +535,10 @@ public class ObjetoContainer extends Panel {
 			txtId.addMouseListener(listenerVinculado);
 			txtX.addMouseListener(listenerVinculado);
 			txtY.addMouseListener(listenerVinculado);
+		}
+
+		private void mensagemPropriedadeMargemInferior(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.propriedade_margem_inferior"));
 		}
 
 		private void mensagemPropriedadeIntervalo(Label label) {
