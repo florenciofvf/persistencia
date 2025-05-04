@@ -593,6 +593,7 @@ public class ObjetoContainer extends Panel {
 				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
 			} else if (txtMargemInferior == e.getSource()) {
 				objeto.setMargemInferior(Util.getInt(txtMargemInferior.getText(), objeto.getMargemInferior()));
+				objetoSuperficie.localizarInternalFormulario(objeto);
 			}
 			actionPerformedCont(e);
 			objetoSuperficie.repaint();
