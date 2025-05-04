@@ -302,18 +302,18 @@ public class ObjetoContainer extends Panel {
 				para.setDestacaveis(compChave.getText(), marcador);
 			} else if ("CHECAR_REGISTRO".equals(compChave.chave)) {
 				para.setBiblioChecagem(compChave.getText(), marcador);
-			}
-		}
-
-		private void processar2(ParaTabela para) {
-			if ("ORDER_BY".equals(compChave.chave)) {
-				para.setOrderBy(compChave.getText(), marcador);
 			} else if ("CLASSBIBLIO".equals(compChave.chave)) {
 				para.setClassBiblio(compChave.getText(), marcador);
 			} else if ("FINAL_CONSULTA".equals(compChave.chave)) {
 				para.setFinalConsulta(compChave.getText(), marcador);
 			} else if ("COLUNA_INFO".equals(compChave.chave)) {
 				para.setColunaInfo(compChave.getBool(), marcador);
+			}
+		}
+
+		private void processar2(ParaTabela para) {
+			if ("ORDER_BY".equals(compChave.chave)) {
+				para.setOrderBy(compChave.getText(), marcador);
 			} else if ("ABRIR_AUTO".equals(compChave.chave)) {
 				para.setDestacavel(compChave.getBool(), marcador);
 			} else if ("LINK_AUTO".equals(compChave.chave)) {
@@ -332,6 +332,10 @@ public class ObjetoContainer extends Panel {
 				para.setCcsc(compChave.getBool(), marcador);
 			} else if ("BPNT".equals(compChave.chave)) {
 				para.setBpnt(compChave.getBool(), marcador);
+			} else if ("MARGEM_INFERIOR".equals(compChave.chave)) {
+				para.setMargemInferior(compChave.getText(), marcador);
+			} else if ("INTERVALO".equals(compChave.chave)) {
+				para.setIntervalo(compChave.getText(), marcador);
 			}
 		}
 
@@ -353,8 +357,6 @@ public class ObjetoContainer extends Panel {
 				para.setArquivo(compChave.getText(), marcador);
 			} else if ("DESENHAR_ID".equals(compChave.chave)) {
 				para.setDesenharId(compChave.getBool(), marcador);
-			} else if ("INTERVALO".equals(compChave.chave)) {
-				para.setIntervalo(compChave.getText(), marcador);
 			} else if ("DESLOC_X_ID".equals(compChave.chave)) {
 				para.setDeslocXId(compChave.getText(), marcador);
 			} else if ("DESLOC_Y_ID".equals(compChave.chave)) {
@@ -476,7 +478,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinhaRotulo("label.desloc_y_id", txtDeslocYId));
-			container.add(criarLinhaComLinkCopiar("label.margem_inferior", txtIntervalo,
+			container.add(criarLinhaComLinkCopiar("label.margem_inferior", txtMargemInferior,
 					ObjetoMensagens.getString("hint.margem_inferior"),
 					PanelGeral.this::mensagemPropriedadeMargemInferior));
 			container.add(criarLinhaComLinkCopiar("label.intervalo", txtIntervalo,
@@ -507,6 +509,7 @@ public class ObjetoContainer extends Panel {
 
 		private void vincular() {
 			vinculados.add(new CompChave(txtBiblioChecagem, "CHECAR_REGISTRO"));
+			vinculados.add(new CompChave(txtMargemInferior, "MARGEM_INFERIOR"));
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
 			vinculados.add(new CompChave(txtIdTempForm, "ID_TEMP_FORM"));
@@ -522,6 +525,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtY, "Y"));
 
 			txtBiblioChecagem.addMouseListener(listenerVinculado);
+			txtMargemInferior.addMouseListener(listenerVinculado);
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
 			chkDesenharId.addMouseListener(listenerVinculado);
@@ -587,6 +591,8 @@ public class ObjetoContainer extends Panel {
 				MacroProvedor.deslocarYIdDescricao(objeto.getDeslocamentoYId());
 			} else if (txtIntervalo == e.getSource()) {
 				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
+			} else if (txtMargemInferior == e.getSource()) {
+				objeto.setMargemInferior(Util.getInt(txtMargemInferior.getText(), objeto.getMargemInferior()));
 			}
 			actionPerformedCont(e);
 			objetoSuperficie.repaint();
@@ -654,7 +660,8 @@ public class ObjetoContainer extends Panel {
 			}
 			txtIdTempForm.setText(para.getIdTempForm());
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
-					txtDeslocYId, txtInstrucao, txtIntervalo, txtArquivo, txtFiltro, txtId, txtIdTempForm, txtX, txtY);
+					txtDeslocYId, txtInstrucao, txtIntervalo, txtMargemInferior, txtArquivo, txtFiltro, txtId,
+					txtIdTempForm, txtX, txtY);
 		}
 
 		public void idParaTabelaAlterado() {

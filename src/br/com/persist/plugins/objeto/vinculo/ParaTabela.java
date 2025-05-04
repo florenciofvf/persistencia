@@ -19,6 +19,7 @@ public class ParaTabela {
 	private static final String SELECT_ALTERNATIVO = "selectAlternativo";
 	private static final String TABELA_ALTERNATIVO = "tabelaAlternativo";
 	private static final String CLONAR_AO_DESTACAR = "clonarAoDestacar";
+	private static final String STR_MARGEM_INFERIOR = "margemInferior";
 	private static final String BIBLIO_CHECAGEM = "biblioChecagem";
 	private static final String LARGURA_ROTULOS = "larguraRotulos";
 	private static final String AJUSTAR_LARGURA = "ajustarLargura";
@@ -66,6 +67,7 @@ public class ParaTabela {
 	private String larguraRotulos;
 	private String biblioChecagem;
 	private String ajustarLargura;
+	private String margemInferior;
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String internalFormX;
@@ -286,9 +288,16 @@ public class ParaTabela {
 		if (!Util.isEmpty(desenharId)) {
 			objeto.setDesenharId(Boolean.parseBoolean(desenharId));
 		}
+		if (!Util.isEmpty(margemInferior)) {
+			objeto.setMargemInferior(Integer.parseInt(margemInferior));
+		}
 		if (!Util.isEmpty(intervalo)) {
 			objeto.setIntervalo(Integer.parseInt(intervalo));
 		}
+		config4(objeto);
+	}
+
+	private void config4(Objeto objeto) {
 		if (!Util.isEmpty(deslocXId)) {
 			objeto.setDeslocamentoXId(Integer.parseInt(deslocXId));
 		}
@@ -312,6 +321,7 @@ public class ParaTabela {
 		setTabelaAlternativo(attributes.getValue(TABELA_ALTERNATIVO), null);
 		setSelectAlternativo(attributes.getValue(SELECT_ALTERNATIVO), null);
 		setClonarAoDestacar(attributes.getValue(CLONAR_AO_DESTACAR), null);
+		setMargemInferior(attributes.getValue(STR_MARGEM_INFERIOR), null);
 		setLarguraRotulos(attributes.getValue(LARGURA_ROTULOS), null);
 		setBiblioChecagem(attributes.getValue(BIBLIO_CHECAGEM), null);
 		setAjustarLargura(attributes.getValue(AJUSTAR_LARGURA), null);
@@ -371,6 +381,7 @@ public class ParaTabela {
 		atributoValor(util, TABELA_ALTERNATIVO, tabelaAlternativo);
 		atributoValor(util, SELECT_ALTERNATIVO, selectAlternativo);
 		atributoValor(util, CLONAR_AO_DESTACAR, clonarAoDestacar);
+		atributoValor(util, STR_MARGEM_INFERIOR, margemInferior);
 		atributoValor(util, LARGURA_ROTULOS, larguraRotulos);
 		atributoValor(util, BIBLIO_CHECAGEM, biblioChecagem);
 		atributoValor(util, AJUSTAR_LARGURA, ajustarLargura);
@@ -440,6 +451,7 @@ public class ParaTabela {
 		util.tab().atributo(STR_COMPLEMENTO, "").ql();
 		util.tab().atributo(STR_DESTACAVEIS, "").ql();
 		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
+		util.tab().atributo(STR_MARGEM_INFERIOR, "").ql();
 		util.tab().atributo(STR_DESENHAR_ID, true).ql();
 		util.tab().atributo(STR_MAPEAMENTO, "").ql();
 		util.tab().atributo(STR_SEQUENCIAS, "").ql();
@@ -971,8 +983,20 @@ public class ParaTabela {
 		this.desenharId = desenharId;
 	}
 
+	public String getMargemInferior() {
+		return margemInferior;
+	}
+
 	public String getIntervalo() {
 		return intervalo;
+	}
+
+	public void setMargemInferior(String margemInferior, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.margemInferior);
+			return;
+		}
+		this.margemInferior = margemInferior;
 	}
 
 	public void setIntervalo(String intervalo, Marcador marcador) {
