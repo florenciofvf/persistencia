@@ -159,12 +159,18 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 
 	private void empilhar(JInternalFrame[] frames, JInternalFrame referencia, int deltaY) {
 		int y = referencia.getY() + referencia.getHeight() + deltaY;
+		if (referencia instanceof InternalFormulario) {
+			y += ((InternalFormulario) referencia).getMargemInferior();
+		}
 		for (JInternalFrame frame : frames) {
 			if (!frame.isVisible() || frame == referencia) {
 				continue;
 			}
 			frame.setLocation(frame.getX(), y);
 			y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
+			if (frame instanceof InternalFormulario) {
+				y += ((InternalFormulario) frame).getMargemInferior();
+			}
 		}
 	}
 

@@ -60,6 +60,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private Dimension dimensionDestacar;
 	private boolean processadoPesquisa;
 	private boolean processado;
+	private int margemInferior;
 	private Desktop desktop;
 	private long ultimo;
 
@@ -675,5 +676,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void setCompositeDestacar(AlphaComposite compositeDestacar) {
 		this.compositeDestacar = compositeDestacar;
+	}
+
+	public int getMargemInferior() {
+		return margemInferior;
+	}
+
+	public void setMargemInferior(int margemInferior) {
+		this.margemInferior = margemInferior;
 	}
 }
