@@ -1893,7 +1893,8 @@ class SuperficiePopup2 extends Popup {
 
 	private void colar() {
 		try {
-			CopiarColar.colar(superficie, true, superficie.popup2.xLocal, superficie.popup2.yLocal);
+			int raio = Objeto.DIAMETRO / 2;
+			CopiarColar.colar(superficie, true, superficie.popup2.xLocal - raio, superficie.popup2.yLocal - raio);
 		} catch (AssistenciaException ex) {
 			Util.mensagem(superficie, ex.getMessage());
 		}
@@ -1901,7 +1902,8 @@ class SuperficiePopup2 extends Popup {
 
 	private void criarNovoObjeto() {
 		try {
-			superficie.criarNovoObjeto(superficie.popup2.xLocal, superficie.popup2.yLocal);
+			int raio = Objeto.DIAMETRO / 2;
+			superficie.criarNovoObjeto(superficie.popup2.xLocal - raio, superficie.popup2.yLocal - raio);
 		} catch (AssistenciaException ex) {
 			Util.mensagem(superficie, ex.getMessage());
 		}
