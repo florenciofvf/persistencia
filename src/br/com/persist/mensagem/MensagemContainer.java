@@ -97,8 +97,27 @@ public class MensagemContainer extends Panel {
 		}
 		for (Text text : listaText) {
 			Style style = styleContext.getStyle(text.getIdStyle());
-			document.insertString(document.getLength(), text.getContent() + Constantes.QL, style);
+			if (text.getIdStyle() != null && text.getIdStyle().endsWith("Underline")) {
+				String pre = getPre(text.getContent());
+				document.insertString(document.getLength(), pre, null);
+				String pos = text.getContent().substring(pre.length());
+				document.insertString(document.getLength(), pos + Constantes.QL, style);
+			} else {
+				document.insertString(document.getLength(), text.getContent() + Constantes.QL, style);
+			}
 		}
+	}
+
+	private String getPre(String content) {
+		StringBuilder sb = new StringBuilder();
+		for (char c : content.toCharArray()) {
+			if (c <= ' ') {
+				sb.append(c);
+			} else {
+				break;
+			}
+		}
+		return sb.toString();
 	}
 
 	private void montarLayout() {
