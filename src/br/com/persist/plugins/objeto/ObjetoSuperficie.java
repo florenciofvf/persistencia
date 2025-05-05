@@ -1807,6 +1807,15 @@ class CopiarColar {
 				clone.setY(y);
 			}
 		}
+		if (copiados.size() == 1) {
+			Objeto item = copiados.get(0);
+			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormularioInterseccao(superficie, item);
+			if (interno != null) {
+				Objeto objeto = interno.getInternalContainer().getObjeto();
+				objeto.setMargemInferior(Constantes.QUARENTA);
+				superficie.localizarInternalFormulario(objeto);
+			}
+		}
 		superficie.repaint();
 	}
 

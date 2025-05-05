@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -475,6 +476,20 @@ public class ObjetoSuperficieUtil {
 		label.limpar();
 		superficie.repaint();
 		return total;
+	}
+
+	public static InternalFormulario getInternalFormularioInterseccao(ObjetoSuperficie superficie, Objeto objeto) {
+		for (JInternalFrame frame : superficie.getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				Rectangle boundsInterno = interno.getBounds();
+				Rectangle boundsObjeto = objeto.getBounds();
+				if (boundsInterno.intersects(boundsObjeto) && boundsInterno.y > boundsObjeto.y) {
+					return interno;
+				}
+			}
+		}
+		return null;
 	}
 
 	public static InternalFormulario getInternalFormulario(ObjetoSuperficie superficie, Objeto objeto) {

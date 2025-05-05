@@ -7,6 +7,7 @@ import java.awt.Composite;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.RoundRectangle2D;
@@ -1428,6 +1429,10 @@ public class Objeto implements Runnable {
 
 	public void setIdTempForm(String idTempForm) {
 		this.idTempForm = idTempForm;
+	}
+
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, DIAMETRO, DIAMETRO);
 	}
 }
 
