@@ -1798,18 +1798,19 @@ class CopiarColar {
 
 	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) throws AssistenciaException {
 		ObjetoSuperficieUtil.limparSelecao(superficie);
+		Objeto colado = null;
 		for (Objeto objeto : copiados) {
 			Objeto clone = get(objeto, superficie);
 			superficie.addObjeto(clone);
 			clone.setSelecionado(true);
+			colado = clone;
 			if (b) {
 				clone.setX(x);
 				clone.setY(y);
 			}
 		}
 		if (copiados.size() == 1) {
-			Objeto item = copiados.get(0);
-			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormularioInterseccao(superficie, item);
+			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormularioInterseccao(superficie, colado);
 			if (interno != null) {
 				Objeto objeto = interno.getInternalContainer().getObjeto();
 				objeto.setMargemInferior(Constantes.QUARENTA);
