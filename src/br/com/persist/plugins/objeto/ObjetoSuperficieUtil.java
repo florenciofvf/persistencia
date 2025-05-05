@@ -484,7 +484,7 @@ public class ObjetoSuperficieUtil {
 				InternalFormulario interno = (InternalFormulario) frame;
 				Rectangle boundsInterno = interno.getBounds();
 				Rectangle boundsObjeto = objeto.getBounds();
-				if (boundsInterno.intersects(boundsObjeto) && boundsInterno.y > boundsObjeto.y) {
+				if (boundsInterno.intersects(boundsObjeto) && boundsInterno.y < boundsObjeto.y) {
 					return interno;
 				}
 			}
