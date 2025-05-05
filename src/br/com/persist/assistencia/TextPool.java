@@ -19,6 +19,10 @@ public class TextPool {
 		return listaText;
 	}
 
+	public void noneUnderline(String string) {
+		add("noneUnderline", string);
+	}
+
 	public void none(String string) {
 		add("none", string);
 	}

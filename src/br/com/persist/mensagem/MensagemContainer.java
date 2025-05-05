@@ -70,6 +70,9 @@ public class MensagemContainer extends Panel {
 		Style none = styleContext.addStyle("none", padrao);
 		StyleConstants.setForeground(none, Color.BLACK);
 
+		Style noneUnderline = styleContext.addStyle("noneUnderline", none);
+		StyleConstants.setUnderline(noneUnderline, true);
+
 		Style info = styleContext.addStyle("info", padrao);
 		StyleConstants.setForeground(info, Color.BLUE);
 

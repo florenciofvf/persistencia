@@ -18,6 +18,13 @@ public class IDoc {
 		return textPool;
 	}
 
+	@Biblio(8)
+	public static void noneUnderline(Object object) {
+		if (object != null) {
+			textPool.noneUnderline(object.toString());
+		}
+	}
+
 	@Biblio(2)
 	public static void none(Object object) {
 		if (object != null) {
