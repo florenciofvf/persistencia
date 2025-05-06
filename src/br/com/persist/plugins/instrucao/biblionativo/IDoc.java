@@ -18,13 +18,6 @@ public class IDoc {
 		return textPool;
 	}
 
-	@Biblio(8)
-	public static void noneUnderline(Object object) {
-		if (object != null) {
-			textPool.noneUnderline(object.toString());
-		}
-	}
-
 	@Biblio(2)
 	public static void none(Object object) {
 		if (object != null) {
@@ -64,6 +57,48 @@ public class IDoc {
 	public static void show(Object object) {
 		if (object != null) {
 			textPool.show(object.toString());
+		}
+	}
+
+	@Biblio(8)
+	public static void noneUnderline(Object object) {
+		if (object != null) {
+			textPool.noneUnderline(object.toString());
+		}
+	}
+
+	@Biblio(9)
+	public static void infoUnderline(Object object) {
+		if (object != null) {
+			textPool.infoUnderline(object.toString());
+		}
+	}
+
+	@Biblio(10)
+	public static void warnUnderline(Object object) {
+		if (object != null) {
+			textPool.warnUnderline(object.toString());
+		}
+	}
+
+	@Biblio(11)
+	public static void erroUnderline(Object object) {
+		if (object != null) {
+			textPool.erroUnderline(object.toString());
+		}
+	}
+
+	@Biblio(12)
+	public static void notaUnderline(Object object) {
+		if (object != null) {
+			textPool.notaUnderline(object.toString());
+		}
+	}
+
+	@Biblio(13)
+	public static void showUnderline(Object object) {
+		if (object != null) {
+			textPool.showUnderline(object.toString());
 		}
 	}
 }

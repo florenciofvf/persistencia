@@ -19,32 +19,52 @@ public class TextPool {
 		return listaText;
 	}
 
-	public void noneUnderline(String string) {
-		add("noneUnderline", string);
-	}
-
 	public void none(String string) {
 		add("none", string);
+	}
+
+	public void noneUnderline(String string) {
+		add("noneUnderline", string);
 	}
 
 	public void info(String string) {
 		add("info", string);
 	}
 
+	public void infoUnderline(String string) {
+		add("infoUnderline", string);
+	}
+
 	public void warn(String string) {
 		add("warn", string);
+	}
+
+	public void warnUnderline(String string) {
+		add("warnUnderline", string);
 	}
 
 	public void erro(String string) {
 		add("erro", string);
 	}
 
+	public void erroUnderline(String string) {
+		add("erroUnderline", string);
+	}
+
 	public void nota(String string) {
 		add("nota", string);
 	}
 
+	public void notaUnderline(String string) {
+		add("notaUnderline", string);
+	}
+
 	public void show(String string) {
 		add("show", string);
+	}
+
+	public void showUnderline(String string) {
+		add("showUnderline", string);
 	}
 
 	private void add(String idStyle, String string) {

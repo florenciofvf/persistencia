@@ -76,18 +76,33 @@ public class MensagemContainer extends Panel {
 		Style info = styleContext.addStyle("info", padrao);
 		StyleConstants.setForeground(info, Color.BLUE);
 
+		Style infoUnderline = styleContext.addStyle("infoUnderline", info);
+		StyleConstants.setUnderline(infoUnderline, true);
+
 		Style warn = styleContext.addStyle("warn", padrao);
 		StyleConstants.setForeground(warn, Color.ORANGE);
+
+		Style warnUnderline = styleContext.addStyle("warnUnderline", warn);
+		StyleConstants.setUnderline(warnUnderline, true);
 
 		Style erro = styleContext.addStyle("erro", padrao);
 		StyleConstants.setForeground(erro, Color.RED);
 		StyleConstants.setItalic(erro, true);
 
+		Style erroUnderline = styleContext.addStyle("erroUnderline", erro);
+		StyleConstants.setUnderline(erroUnderline, true);
+
 		Style nota = styleContext.addStyle("nota", padrao);
 		StyleConstants.setForeground(nota, new Color(0, 153, 153));
 
+		Style notaUnderline = styleContext.addStyle("notaUnderline", nota);
+		StyleConstants.setUnderline(notaUnderline, true);
+
 		Style show = styleContext.addStyle("show", padrao);
 		StyleConstants.setForeground(show, Color.MAGENTA);
+
+		Style showUnderline = styleContext.addStyle("showUnderline", show);
+		StyleConstants.setUnderline(showUnderline, true);
 	}
 
 	private void insertString(List<Text> listaText, DefaultStyledDocument document, StyleContext styleContext)
