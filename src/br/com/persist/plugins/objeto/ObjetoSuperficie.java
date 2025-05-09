@@ -1168,28 +1168,30 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	public void atualizarTotal(Conexao conexao, MenuItem[] menuItens, Label label) {
-		if (conexao != null) {
-			int total = preTotalRecente(label);
-			if (total > 0) {
-				String[] opcoes = new String[] { ObjetoMensagens.getString("label.total_sem_exibicao"),
-						ObjetoMensagens.getString("label.total_com_exibicao") };
-				String opcao = Util.getValorInputDialog(ObjetoSuperficie.this, opcoes);
-				if (opcao == null) {
-					Util.mensagem(ObjetoSuperficie.this, "ABORTADO");
-					return;
-				}
-				boolean exibirTotal = opcoes[opcoes.length - 1].equals(opcao);
-				Font font = getFont();
-				if (font != null) {
-					FontMetrics fm = getFontMetrics(font);
-					if (fm != null) {
+		if (conexao == null) {
+			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
+			return;
+		}
+		if (!ObjetoSuperficieUtil.objetosComTabela(this).isEmpty()) {
+			String[] opcoes = new String[] { ObjetoMensagens.getString("label.total_sem_exibicao"),
+					ObjetoMensagens.getString("label.total_com_exibicao") };
+			String opcao = Util.getValorInputDialog(ObjetoSuperficie.this, opcoes);
+			if (opcao == null) {
+				Util.mensagem(ObjetoSuperficie.this, "ABORTADO");
+				return;
+			}
+			boolean exibirTotal = opcoes[opcoes.length - 1].equals(opcao);
+			Font font = getFont();
+			if (font != null) {
+				FontMetrics fm = getFontMetrics(font);
+				if (fm != null) {
+					int total = preTotalRecente(label);
+					if (total > 0) {
 						new ThreadTotal(ObjetoSuperficie.this, menuItens, conexao, label, total, exibirTotal, fm)
 								.start();
 					}
 				}
 			}
-		} else {
-			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
 		}
 	}
 
