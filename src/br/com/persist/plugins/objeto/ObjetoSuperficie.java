@@ -1667,6 +1667,7 @@ class ThreadTotal extends ThreadComparacao {
 		info.setDeslocamentoYId(objeto.getDeslocamentoYId());
 		info.setId("" + objeto.getTotalRegistros());
 		info.setCorFonte(objeto.getCorFonte());
+		info.setIdSub(info.getId());
 		info.setTransparente(true);
 		info.associado = objeto;
 		novos.add(info);

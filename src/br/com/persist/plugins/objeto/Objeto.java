@@ -115,6 +115,7 @@ public class Objeto implements Runnable {
 	private boolean bpnt;
 	private String grupo;
 	private Color corTmp;
+	private String idSub;
 	private Icon icon;
 	private String id;
 	protected int x;
@@ -343,7 +344,11 @@ public class Objeto implements Runnable {
 		}
 		if (desenharId) {
 			g2.setColor(corFonte);
-			g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
+			if (idSub != null) {
+				g2.drawString(idSub, x + deslocamentoXId, y + deslocamentoYId);
+			} else {
+				g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
+			}
 		}
 		if (selecionado) {
 			g2.setStroke(Constantes.STROKE_PADRAO);
@@ -858,6 +863,10 @@ public class Objeto implements Runnable {
 		return abrirAuto;
 	}
 
+	public void setIdSub(String idSub) {
+		this.idSub = idSub;
+	}
+
 	public void setId(String id) {
 		if (!Util.isEmpty(id)) {
 			if (listener != null && listener.contemId(this, id)) {
@@ -889,6 +898,10 @@ public class Objeto implements Runnable {
 
 	public Color getCor() {
 		return cor;
+	}
+
+	public String getIdSub() {
+		return idSub;
 	}
 
 	public String getId() {
