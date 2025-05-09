@@ -190,6 +190,7 @@ public class Objeto implements Runnable {
 		o.chaves = chaves;
 		o.grupo = grupo;
 		o.joins = joins;
+		o.idSub = idSub;
 		o.ccsc = ccsc;
 		o.sane = sane;
 		o.bpnt = bpnt;
@@ -238,7 +239,11 @@ public class Objeto implements Runnable {
 		chaves = attr.getValue("chaves");
 		grupo = attr.getValue("grupo");
 		joins = attr.getValue("joins");
+		idSub = attr.getValue("idSub");
 		id = attr.getValue("id");
+		if (Util.isEmpty(idSub)) {
+			idSub = null;
+		}
 		String strIntervalo = attr.getValue("intervalo");
 		if (!Util.isEmpty(strIntervalo)) {
 			intervalo = Integer.parseInt(strIntervalo);
@@ -252,6 +257,7 @@ public class Objeto implements Runnable {
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
 		util.atributo("id", id);
+		util.atributoCheck("idSub", idSub);
 		util.atributoCheck("transparente", thread == null ? transparente : transparenteBkp);
 		util.atributoCheck("finalConsulta", getFinalConsulta());
 		util.atributoCheck("chaveamento", getChaveamento());
