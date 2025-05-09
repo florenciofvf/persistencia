@@ -51,6 +51,7 @@ public class ParaTabela {
 	public static final String COR_FUNDO = "corFundo";
 	private static final String ORDER_BY = "orderBy";
 	private static final String STR_JOINS = "joins";
+	private static final String STR_IDSUB = "idSub";
 	private static final String STR_CCSC = "ccsc";
 	private static final String STR_SANE = "sane";
 	private static final String STR_BPNT = "bpnt";
@@ -95,6 +96,7 @@ public class ParaTabela {
 	private Color corFundo;
 	private String ignorar;
 	private String chaves;
+	private String idSub;
 	private String joins;
 	private String grupo;
 	private String icone;
@@ -279,6 +281,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(id)) {
 			objeto.setId(id);
 		}
+		if (!Util.isEmpty(idSub)) {
+			objeto.setIdSub(idSub);
+		}
 		if (icone != null) {
 			objeto.setIcone(icone);
 		}
@@ -353,6 +358,7 @@ public class ParaTabela {
 		setChaves(attributes.getValue(STR_CHAVES), null);
 		setOrderBy(attributes.getValue(ORDER_BY), null);
 		setJoins(attributes.getValue(STR_JOINS), null);
+		setIdSub(attributes.getValue(STR_IDSUB), null);
 		setSane(attributes.getValue(STR_SANE), null);
 		setCcsc(attributes.getValue(STR_CCSC), null);
 		setBpnt(attributes.getValue(STR_BPNT), null);
@@ -412,6 +418,7 @@ public class ParaTabela {
 		atributoValor(util, STR_CHAVES, chaves);
 		atributoValor(util, ORDER_BY, orderBy);
 		atributoValor(util, STR_JOINS, joins);
+		atributoValor(util, STR_IDSUB, idSub);
 		atributoValor(util, STR_SANE, sane);
 		atributoValor(util, STR_CCSC, ccsc);
 		atributoValor(util, STR_BPNT, bpnt);
@@ -474,6 +481,7 @@ public class ParaTabela {
 		util.tab().atributo(STR_SANE, true).ql();
 		util.tab().atributo(STR_CCSC, true).ql();
 		util.tab().atributo(STR_BPNT, false).ql();
+		util.tab().atributo(STR_IDSUB, "").ql();
 		util.tab().atributo(STR_ID, "").ql();
 		util.tab().atributo(STR_X, "").ql();
 		util.tab().atributo(STR_Y, "").fecharTag();
@@ -831,12 +839,24 @@ public class ParaTabela {
 		return id;
 	}
 
+	public String getIdSub() {
+		return idSub;
+	}
+
 	public void setId(String id, Marcador marcador) {
 		if (marcador != null) {
 			marcador.aplicarIf(this.id);
 			return;
 		}
 		this.id = id;
+	}
+
+	public void setIdSub(String idSub, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.idSub);
+			return;
+		}
+		this.idSub = idSub;
 	}
 
 	public String getX() {

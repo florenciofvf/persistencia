@@ -353,6 +353,8 @@ public class ObjetoContainer extends Panel {
 				if (marcador == null) {
 					toolbar.idParaTabelaAlterado();
 				}
+			} else if ("ID_SUB".equals(compChave.chave)) {
+				para.setIdSub(compChave.getText(), marcador);
 			} else if ("ARQUIVO".equals(compChave.chave)) {
 				para.setArquivo(compChave.getText(), marcador);
 			} else if ("DESENHAR_ID".equals(compChave.chave)) {
@@ -410,6 +412,7 @@ public class ObjetoContainer extends Panel {
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtArquivo = new TextField();
 		private TextField txtFiltro = new TextField();
+		private TextField txtIdSub = new TextField();
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
@@ -431,6 +434,7 @@ public class ObjetoContainer extends Panel {
 			txtArquivo.setText(objeto.getArquivo());
 			txtX.setText(VAZIO + objeto.getX());
 			txtY.setText(VAZIO + objeto.getY());
+			txtIdSub.setText(objeto.getIdSub());
 			txtId.setText(objeto.getId());
 			txtBiblioChecagem.addFocusListener(focusListenerInner);
 			txtMargemInferior.addFocusListener(focusListenerInner);
@@ -438,6 +442,7 @@ public class ObjetoContainer extends Panel {
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
 			txtArquivo.addFocusListener(focusListenerInner);
+			txtIdSub.addFocusListener(focusListenerInner);
 			txtId.addFocusListener(focusListenerInner);
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
@@ -450,6 +455,7 @@ public class ObjetoContainer extends Panel {
 			txtDeslocYId.addActionListener(this);
 			txtIntervalo.addActionListener(this);
 			txtArquivo.addActionListener(this);
+			txtIdSub.addActionListener(this);
 			txtId.addActionListener(this);
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
@@ -474,6 +480,8 @@ public class ObjetoContainer extends Panel {
 			container.add(panel);
 			container.add(criarLinhaComLinkCopiar("label.id_temp_form", txtIdTempForm,
 					ObjetoMensagens.getString("hint.id_temp_form"), PanelGeral.this::mensagemIdFormTemp));
+			container.add(criarLinhaComLinkCopiar("label.id_subst", txtIdSub,
+					ObjetoMensagens.getString("hint.id_subst"), PanelGeral.this::mensagemIdSubstituto));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
@@ -520,6 +528,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtIntervalo, "INTERVALO"));
 			vinculados.add(new CompChave(txtArquivo, "ARQUIVO"));
 			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
+			vinculados.add(new CompChave(txtIdSub, "ID_SUB"));
 			vinculados.add(new CompChave(txtId, "ID"));
 			vinculados.add(new CompChave(txtX, "X"));
 			vinculados.add(new CompChave(txtY, "Y"));
@@ -536,6 +545,7 @@ public class ObjetoContainer extends Panel {
 			txtIntervalo.addMouseListener(listenerVinculado);
 			txtArquivo.addMouseListener(listenerVinculado);
 			txtFiltro.addMouseListener(listenerVinculado);
+			txtIdSub.addMouseListener(listenerVinculado);
 			txtId.addMouseListener(listenerVinculado);
 			txtX.addMouseListener(listenerVinculado);
 			txtY.addMouseListener(listenerVinculado);
@@ -564,6 +574,10 @@ public class ObjetoContainer extends Panel {
 
 		private void mensagemIdFormTemp(Label label) {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.id_temp_form"));
+		}
+
+		private void mensagemIdSubstituto(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.id_subst"));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -625,6 +639,8 @@ public class ObjetoContainer extends Panel {
 						Util.mensagem(ObjetoContainer.this, ex.getMessage());
 					}
 				}
+			} else if (txtIdSub == e.getSource()) {
+				objeto.setIdSub(txtIdSub.getText());
 			} else if (txtArquivo == e.getSource()) {
 				objeto.setArquivo(txtArquivo.getText());
 			} else if (chkDesenharId == e.getSource()) {
@@ -661,7 +677,7 @@ public class ObjetoContainer extends Panel {
 			}
 			txtIdTempForm.setText(para.getIdTempForm());
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
-					txtDeslocYId, txtInstrucao, txtIntervalo, txtMargemInferior, txtArquivo, txtFiltro, txtId,
+					txtDeslocYId, txtInstrucao, txtIntervalo, txtMargemInferior, txtArquivo, txtFiltro, txtId, txtIdSub,
 					txtIdTempForm, txtX, txtY);
 		}
 
