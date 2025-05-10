@@ -92,7 +92,7 @@ public class InvocacaoContexto extends Container {
 		}
 		if (parametros.getSize() != argumento.getSize()) {
 			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", identity, "" + parametros.getSize(),
-					"" + argumento.getSize());
+					"" + argumento.getSize(), funcaoContexto.getBiblioteca().getNome());
 		}
 	}
 
