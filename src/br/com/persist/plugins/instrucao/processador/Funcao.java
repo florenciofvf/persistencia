@@ -154,7 +154,7 @@ public class Funcao {
 			return;
 		}
 		if (isNativo()) {
-			throw new InstrucaoException("erro.funcao_nativa_add_inst", nome);
+			throw new InstrucaoException("erro.funcao_nativa_add_inst", nome, biblioteca.getNome());
 		}
 		InstrucaoItem no = new InstrucaoItem(instrucao);
 		instrucoes.put(instrucao.sequencia, no);

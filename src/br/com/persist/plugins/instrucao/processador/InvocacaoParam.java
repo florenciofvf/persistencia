@@ -28,7 +28,8 @@ public abstract class InvocacaoParam extends Instrucao {
 			throw new InstrucaoException("erro.valor_param", nomeParam);
 		}
 		if (!(valor instanceof Funcao)) {
-			throw new InstrucaoException("erro.valor_param_nao_funcao", nomeParam, funcao.getNome(), valor.toString());
+			throw new InstrucaoException("erro.valor_param_nao_funcao", nomeParam, funcao.getNome(), valor.toString(),
+					biblioteca.getNome());
 		}
 		Funcao funcaoParam = (Funcao) valor;
 		Invocacao.validar(funcaoParam, exp, totalParam);
