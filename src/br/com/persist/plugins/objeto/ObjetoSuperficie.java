@@ -1172,6 +1172,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
 			return;
 		}
+		if (Preferencias.isDesconectado()) {
+			Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
+			return;
+		}
 		if (!ObjetoSuperficieUtil.objetosComTabela(this).isEmpty()) {
 			String[] opcoes = new String[] { ObjetoMensagens.getString("label.total_sem_exibicao"),
 					ObjetoMensagens.getString("label.total_com_exibicao") };
@@ -1202,6 +1206,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	public void compararRecent(Conexao conexao, MenuItem[] menuItens, Label label) {
 		if (conexao == null) {
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
+			return;
+		}
+		if (Preferencias.isDesconectado()) {
+			Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
 			return;
 		}
 		Font font = getFont();
