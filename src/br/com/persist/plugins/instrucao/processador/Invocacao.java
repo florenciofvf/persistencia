@@ -74,7 +74,7 @@ public abstract class Invocacao extends Instrucao {
 		}
 		if (funcao.getTotalParametro() != totalParam) {
 			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome(),
-					"" + funcao.getTotalParametro(), "" + totalParam, funcao.getBiblioteca().getNome());
+					funcao.getTotalParametro(), totalParam, funcao.getBiblioteca().getNome());
 		}
 	}
 
