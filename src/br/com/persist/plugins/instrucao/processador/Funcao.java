@@ -73,7 +73,7 @@ public class Funcao {
 	public void setIndice(int indice) throws InstrucaoException {
 		InstrucaoItem item = instrucoes.get(indice);
 		if (item == null) {
-			throw new InstrucaoException("erro.funcao_set_indice", nome, indice);
+			throw new InstrucaoException("erro.funcao_set_indice", nome, indice, biblioteca.getNome());
 		}
 		ponteiro = item;
 	}
