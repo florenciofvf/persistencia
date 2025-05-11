@@ -1820,12 +1820,13 @@ class CopiarColar {
 				clone.setY(y);
 			}
 		}
-		if (copiados.size() == 1) {
-			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormularioInterseccao(superficie, colado);
+		if (copiados.size() == 1 && colado != null) {
+			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormularioIntersecao(superficie, colado);
 			if (interno != null) {
 				Objeto objeto = interno.getInternalContainer().getObjeto();
 				objeto.setMargemInferior(Constantes.QUARENTA);
 				superficie.localizarInternalFormulario(objeto);
+				colado.setTemp(objeto);
 			}
 		}
 		superficie.repaint();

@@ -478,7 +478,7 @@ public class ObjetoSuperficieUtil {
 		return total;
 	}
 
-	public static InternalFormulario getInternalFormularioInterseccao(ObjetoSuperficie superficie, Objeto objeto) {
+	public static InternalFormulario getInternalFormularioIntersecao(ObjetoSuperficie superficie, Objeto objeto) {
 		for (JInternalFrame frame : superficie.getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;

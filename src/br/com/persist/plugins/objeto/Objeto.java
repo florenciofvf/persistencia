@@ -116,6 +116,7 @@ public class Objeto implements Runnable {
 	private String grupo;
 	private Color corTmp;
 	private String idSub;
+	private Objeto temp;
 	private Icon icon;
 	private String id;
 	protected int x;
@@ -1452,6 +1453,14 @@ public class Objeto implements Runnable {
 
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, DIAMETRO, DIAMETRO);
+	}
+
+	public Objeto getTemp() {
+		return temp;
+	}
+
+	public void setTemp(Objeto temp) {
+		this.temp = temp;
 	}
 }
 
