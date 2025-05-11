@@ -1465,8 +1465,12 @@ public class Objeto implements Runnable {
 
 	public void processarTemp() {
 		if (temp != null) {
+			Objeto bkp = temp;
 			temp.setMargemInferior(0);
 			temp = null;
+			if (listener != null) {
+				listener.localizarInternalFormulario(bkp);
+			}
 		}
 	}
 }
