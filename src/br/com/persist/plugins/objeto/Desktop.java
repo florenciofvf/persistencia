@@ -419,6 +419,7 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 		internal.setLocation(point);
 		internal.setSize(dimension);
 		internal.setVisible(true);
+		objeto.processarTemp();
 		add(internal);
 	}
 

@@ -1462,6 +1462,13 @@ public class Objeto implements Runnable {
 	public void setTemp(Objeto temp) {
 		this.temp = temp;
 	}
+
+	public void processarTemp() {
+		if (temp != null) {
+			temp.setMargemInferior(0);
+			temp = null;
+		}
+	}
 }
 
 class Memento {

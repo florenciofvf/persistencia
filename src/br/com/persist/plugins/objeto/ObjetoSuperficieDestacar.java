@@ -67,6 +67,7 @@ public class ObjetoSuperficieDestacar {
 			if (!Util.isEmpty(objeto.getTabela())) {
 				Desktop.setComplemento(conexao, objeto);
 				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, false));
+				objeto.processarTemp();
 			}
 		}
 	}
