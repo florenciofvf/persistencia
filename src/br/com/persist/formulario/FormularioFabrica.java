@@ -91,7 +91,7 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 			Map<String, Object> args = new HashMap<>();
 			args.put(FormularioEvento.FECHAR_CONEXOES, fecharConexao);
 			args.put(FormularioEvento.FECHAR_FORMULARIO, true);
-			formulario.salvarGC();
+			formulario.salvarMonitorFormComoPreferencial();
 			formulario.processar(args);
 			System.exit(0);
 		}

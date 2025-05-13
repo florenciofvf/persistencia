@@ -282,6 +282,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 
 	private class PainelMonitorPreferencial extends Panel {
 		private Button buttonNaoPreferencial = new Button("label.nao_preferencial");
+		private Button buttonNaoPrefFormular = new Button("label.nao_pref_formula");
 		private Button buttonPreferencial = new Button("label.preferencial");
 		private static final long serialVersionUID = 1L;
 
@@ -289,8 +290,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			super(new FlowLayout());
 			add(buttonPreferencial);
 			add(buttonNaoPreferencial);
+			add(buttonNaoPrefFormular);
 			buttonPreferencial.addActionListener(e -> formulario.salvarMonitorComoPreferencial());
 			buttonNaoPreferencial.addActionListener(e -> formulario.excluirMonitorComoPreferencial());
+			buttonNaoPrefFormular.addActionListener(e -> formulario.excluirMonitorFormComoPreferencial());
 		}
 	}
 

@@ -338,7 +338,7 @@ public class Formulario extends JFrame {
 		return rect;
 	}
 
-	public void salvarGC() {
+	public void salvarMonitorFormComoPreferencial() {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
 		if (device != null) {
 			Preferencias.setString(Constantes.GC_O_FORMULARIO, device.getIDstring());
@@ -353,10 +353,11 @@ public class Formulario extends JFrame {
 	}
 
 	public void excluirMonitorComoPreferencial() {
-		GraphicsDevice device = getGraphicsConfiguration().getDevice();
-		if (device != null) {
-			Preferencias.setString(Constantes.GC_PREFERENCIAL, Constantes.VAZIO);
-		}
+		Preferencias.setString(Constantes.GC_PREFERENCIAL, Constantes.VAZIO);
+	}
+
+	public void excluirMonitorFormComoPreferencial() {
+		Preferencias.setString(Constantes.GC_O_FORMULARIO, Constantes.VAZIO);
 	}
 
 	public void listarNomeBiblio(List<String> lista) {
