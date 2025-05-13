@@ -126,7 +126,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.monitor_preferencial"),
 					new PainelMonitorPreferencial(pref, form)));
 		}
-		muro.camada(Muro.panelGridBorderTop(
+		muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.pref_fonte_editores"),
 				new PanelCenter(criarLabel("label.fonte"), comboFontes, criarLabel("label.tamanho"), comboSize)));
 		add(BorderLayout.CENTER, muro);
 	}
