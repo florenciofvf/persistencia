@@ -341,7 +341,7 @@ public class Formulario extends JFrame {
 	public void salvarGC() {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
 		if (device != null) {
-			Preferencias.setString(Constantes.GC, device.getIDstring());
+			Preferencias.setString(Constantes.GC_O_FORMULARIO, device.getIDstring());
 		}
 	}
 

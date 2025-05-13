@@ -28,6 +28,7 @@ public class Constantes {
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_APARENCIA = "label.aparencia";
 	public static final String GC_PREFERENCIAL = "GC_PREFERENCIAL";
+	public static final String GC_O_FORMULARIO = "GC_O_FORMULARIO";
 	public static final Dimension SIZE2 = new Dimension(900, 700);
 	public static final Dimension SIZE3 = new Dimension(400, 400);
 	public static final Dimension SIZE = new Dimension(1000, 700);
@@ -94,7 +95,6 @@ public class Constantes {
 	public static final int QUARENTA = 40;
 	public static final String TAB = "\t";
 	public static final String VAZIO = "";
-	public static final String GC = "GC";
 	public static final String QL = "\n";
 	public static final int SETENTA = 70;
 	public static final int TRINTA = 30;
