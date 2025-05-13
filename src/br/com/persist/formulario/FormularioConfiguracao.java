@@ -121,8 +121,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
 				chkFicharioScroll));
 		if (Preferencias.isMonitorPreferencial()) {
+			String pref = Preferencias.getString(Constantes.GC_PREFERENCIAL);
+			String form = Preferencias.getString(Constantes.GC_O_FORMULARIO);
 			muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.monitor_preferencial"),
-					new PainelMonitorPreferencial()));
+					new PainelMonitorPreferencial(pref, form)));
 		}
 		muro.camada(Muro.panelGridBorderTop(
 				new PanelCenter(criarLabel("label.fonte"), comboFontes, criarLabel("label.tamanho"), comboSize)));
@@ -286,7 +288,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		private Button buttonPreferencial = new Button("label.preferencial");
 		private static final long serialVersionUID = 1L;
 
-		private PainelMonitorPreferencial() {
+		private PainelMonitorPreferencial(String pref, String form) {
 			super(new FlowLayout());
 			add(buttonPreferencial);
 			add(buttonNaoPreferencial);
@@ -294,6 +296,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			buttonPreferencial.addActionListener(e -> formulario.salvarMonitorComoPreferencial());
 			buttonNaoPreferencial.addActionListener(e -> formulario.excluirMonitorComoPreferencial());
 			buttonNaoPrefFormular.addActionListener(e -> formulario.excluirMonitorFormComoPreferencial());
+			if (!Util.isEmpty(pref)) {
+				buttonNaoPreferencial.setText(buttonNaoPreferencial.getText() + "[" + pref + "]");
+			}
+			if (!Util.isEmpty(form)) {
+				buttonNaoPrefFormular.setText(buttonNaoPrefFormular.getText() + "[" + form + "]");
+			}
 		}
 	}
 
