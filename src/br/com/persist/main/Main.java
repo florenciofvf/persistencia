@@ -57,11 +57,9 @@ public class Main {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		String idPref = Preferencias.getString(Constantes.GC_PREFERENCIAL);
 		String idForm = Preferencias.getString(Constantes.GC_O_FORMULARIO);
-
 		GraphicsDevice[] gd = ge.getScreenDevices();
 		GraphicsDevice devicePref = getDevice(gd, idPref);
 		GraphicsDevice deviceForm = getDevice(gd, idForm);
-
 		return devicePref != null ? getGC(devicePref) : getGC(deviceForm);
 	}
 

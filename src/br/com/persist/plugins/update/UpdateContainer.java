@@ -36,6 +36,7 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -380,14 +381,18 @@ public class UpdateContainer extends AbstratoContainer {
 
 		@Override
 		public void atualizar() {
+			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+			if (conexao == null) {
+				Util.mensagem(UpdateContainer.this, Constantes.CONEXAO_NULA);
+				return;
+			}
+			if (Preferencias.isDesconectado()) {
+				Util.mensagem(UpdateContainer.this, Constantes.DESCONECTADO);
+				return;
+			}
 			if (!Util.isEmpty(textEditor.getText())) {
-				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-				if (conexao != null) {
-					String instrucao = Util.getString(textEditor);
-					atualizar(conexao, instrucao);
-				} else {
-					Util.mensagem(UpdateContainer.this, Constantes.CONEXAO_NULA);
-				}
+				String instrucao = Util.getString(textEditor);
+				atualizar(conexao, instrucao);
 			}
 		}
 
