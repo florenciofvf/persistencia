@@ -1193,8 +1193,8 @@ public class ObjetoContainer extends Panel {
 				int pos = str.indexOf("http");
 				if (pos == -1) {
 					Util.setContentTransfered(string);
-				} else if (Util.confirmar(ObjetoContainer.this, ObjetoMensagens.getString("msg.copiar_apartir_http"),
-						false)) {
+				} else if (pos > 0 && Util.confirmar(ObjetoContainer.this,
+						ObjetoMensagens.getString("msg.copiar_apartir_http"), false)) {
 					Util.setContentTransfered(string.substring(pos));
 				} else {
 					Util.setContentTransfered(string);
