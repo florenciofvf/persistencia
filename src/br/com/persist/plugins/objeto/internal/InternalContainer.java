@@ -3926,6 +3926,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		processado.set(true);
 		actionListenerInner.actionPerformed(null);
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
+		larguraRotulos();
 		if (!processado.get()) {
 			txtComplemento.setText(complemento);
 		}
@@ -4972,6 +4973,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			processar(getGraphics());
 		}
 		Util.ajustar(tabelaPersistencia, getGraphics());
+		larguraRotulos();
 	}
 
 	@Override
