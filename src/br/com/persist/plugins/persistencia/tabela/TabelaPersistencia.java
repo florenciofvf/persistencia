@@ -275,6 +275,16 @@ public class TabelaPersistencia extends JTable {
 		}
 	}
 
+	public void inativarColuna(int coluna, boolean inativo) {
+		TableColumn tableColumn = getTableColumn(coluna);
+		CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
+		if (cabecalho != null) {
+			inativar(cabecalho, inativo);
+			SwingUtilities.updateComponentTreeUI(this);
+			tornarVisivel(0, coluna);
+		}
+	}
+
 	private void destacar(CabecalhoColuna cabecalho, boolean inverter) {
 		if (!inverter) {
 			cabecalho.setForeground(Color.WHITE);
@@ -286,6 +296,16 @@ public class TabelaPersistencia extends JTable {
 			cabecalho.setBackground(null);
 		} else {
 			destacar(cabecalho, false);
+		}
+	}
+
+	private void inativar(CabecalhoColuna cabecalho, boolean inativo) {
+		if (inativo) {
+			cabecalho.setForeground(Color.WHITE);
+			cabecalho.setBackground(Color.BLACK);
+		} else {
+			cabecalho.setForeground(null);
+			cabecalho.setBackground(null);
 		}
 	}
 
@@ -654,6 +674,7 @@ public class TabelaPersistencia extends JTable {
 			inativoTempCheck.addActionListener(e -> {
 				if (colunaTabela != null) {
 					colunaTabela.setInativoTemp(inativoTempCheck.isSelected());
+					inativarColuna(colunaTabela.getIndice(), colunaTabela.isInativoTemp());
 				}
 			});
 			copiarNomeColunaAcao.setActionListener(e -> {
