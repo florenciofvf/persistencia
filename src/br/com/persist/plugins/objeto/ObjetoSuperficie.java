@@ -829,7 +829,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		if (interno != null) {
 			interno.setMargemInferior(objeto.getMargemInferior());
 			aproximarEmpilharUsarForms();
-			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
+			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, null);
 		}
 	}
 
