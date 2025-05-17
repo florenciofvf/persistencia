@@ -1825,7 +1825,8 @@ class CopiarColar {
 			if (interno != null) {
 				Objeto objeto = interno.getInternalContainer().getObjeto();
 				objeto.setMargemInferior(Constantes.QUARENTA);
-				superficie.localizarInternalFormulario(objeto);
+				interno.setMargemInferior(objeto.getMargemInferior());
+				superficie.getMenuAjuste().aproximarEmpilharUsarForms();
 				colado.setTemp(objeto);
 			}
 		}
