@@ -828,9 +828,23 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
 		if (interno != null) {
 			interno.setMargemInferior(objeto.getMargemInferior());
-			menuAjuste.aproximarEmpilharUsarForms();
+			aproximarEmpilharUsarForms();
 			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, interno);
 		}
+	}
+
+	public void margemInferiorInternalFormulario(Objeto objeto) {
+		if (objeto == null) {
+			return;
+		}
+		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficie.this, objeto);
+		if (interno != null) {
+			interno.setMargemInferior(objeto.getMargemInferior());
+		}
+	}
+
+	public void aproximarEmpilharUsarForms() {
+		menuAjuste.aproximarEmpilharUsarForms();
 	}
 
 	@Override

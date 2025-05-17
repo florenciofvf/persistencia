@@ -1469,7 +1469,8 @@ public class Objeto implements Runnable {
 			temp.setMargemInferior(0);
 			temp = null;
 			if (listener != null) {
-				listener.localizarInternalFormulario(bkp);
+				listener.margemInferiorInternalFormulario(bkp);
+				listener.aproximarEmpilharUsarForms();
 			}
 		}
 	}
