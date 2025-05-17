@@ -1840,7 +1840,7 @@ class CopiarColar {
 				Objeto objeto = interno.getInternalContainer().getObjeto();
 				objeto.setMargemInferior(Constantes.QUARENTA);
 				interno.setMargemInferior(objeto.getMargemInferior());
-				superficie.getMenuAjuste().aproximarEmpilharUsarForms();
+				superficie.aproximarEmpilharUsarForms();
 				colado.setTemp(objeto);
 			}
 		}
@@ -1989,7 +1989,7 @@ class SuperficiePopup2 extends Popup {
 					interno.setVisible(b);
 				}
 			}
-			superficie.getMenuAjuste().aproximarEmpilharUsarForms();
+			superficie.aproximarEmpilharUsarForms();
 		}
 
 		private void ignorar(boolean b) {
