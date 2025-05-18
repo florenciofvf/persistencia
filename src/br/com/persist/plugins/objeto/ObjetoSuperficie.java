@@ -1866,13 +1866,14 @@ class CopiarColar {
 }
 
 class SuperficiePopup2 extends Popup {
+	private Action atualizarFormulariosAndOuvir = ObjetoSuperficie.acaoMenu("label.forms_atualizar_e_ouv",
+			Icones.ATUALIZAR);
 	private Action limparFormulariosFiltroAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios_filtro",
 			Icones.NOVO);
 	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
 	private Action formulariosComExcecaoAcaoMsg = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_msg");
 	private Action formulariosComExcecaoAcaoOuv = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_ouv");
-	private Action atualizarFormulariosAndOuvir = ObjetoSuperficie.acaoMenu("label.forms_atualizar_e_ouv");
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
 	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu("label.objetos_com_tabela");
@@ -1892,10 +1893,10 @@ class SuperficiePopup2 extends Popup {
 		add(true, superficie.getMenuAjustar());
 		addMenuItem(true, formulariosComExcecaoAcaoMsg);
 		addMenuItem(formulariosComExcecaoAcaoOuv);
-		addMenuItem(atualizarFormulariosAndOuvir);
 		addMenuItem(true, formulariosInvisiveisAcao);
+		addMenuItem(true, atualizarFormulariosAndOuvir);
 		addMenuItem(atualizarFormulariosAcao);
-		addMenuItem(limparFormulariosAcao);
+		addMenuItem(true, limparFormulariosAcao);
 		MenuItem item = addMenuItem(limparFormulariosFiltroAcao);
 		add(true, superficie.getMenuLargura());
 		add(true, superficie.getMenuAjuste());
