@@ -1896,13 +1896,12 @@ class SuperficiePopup2 extends Popup {
 		addMenuItem(true, formulariosInvisiveisAcao);
 		addMenuItem(true, atualizarFormulariosAndOuvir);
 		addMenuItem(atualizarFormulariosAcao);
-		addMenuItem(true, limparFormulariosAcao);
-		MenuItem item = addMenuItem(limparFormulariosFiltroAcao);
+		addMenuItem(true, limparFormulariosFiltroAcao, ObjetoMensagens.getString("hint.limpar_formularios_filtro"));
+		addMenuItem(limparFormulariosAcao);
 		add(true, superficie.getMenuLargura());
 		add(true, superficie.getMenuAjuste());
 		add(true, menuIgnorados);
 		addMenuItem(true, propriedadesAcao);
-		item.setToolTipText(ObjetoMensagens.getString("hint.limpar_formularios_filtro"));
 		eventos();
 	}
 
@@ -1953,11 +1952,9 @@ class SuperficiePopup2 extends Popup {
 		if (contemFrames && contemExcecao()) {
 			formulariosComExcecaoAcaoMsg.icon(Icones.GLOBO_GIF);
 			formulariosComExcecaoAcaoOuv.icon(Icones.GLOBO_GIF);
-			atualizarFormulariosAndOuvir.icon(Icones.GLOBO_GIF);
 		} else {
 			formulariosComExcecaoAcaoMsg.icon(null);
 			formulariosComExcecaoAcaoOuv.icon(null);
-			atualizarFormulariosAndOuvir.icon(null);
 		}
 	}
 
