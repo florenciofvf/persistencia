@@ -1353,7 +1353,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
-					nomeReferAcao.setActionListener(e -> nomeRefer());
+					nomeReferAcao.setActionListener(e -> preNomeRefer());
 					int size = pesquisa.getReferencias().size();
 					nomeIconeReferAcao.setEnabled(size == 1);
 					nomeReferAcao.setEnabled(size == 1);
@@ -1373,6 +1373,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void preNomeIconeRefer() {
 					try {
 						nomeIconeRefer();
+					} catch (AssistenciaException ex) {
+						Util.mensagem(InternalContainer.this, ex.getMessage());
+					}
+				}
+
+				private void preNomeRefer() {
+					try {
+						nomeRefer();
 					} catch (AssistenciaException ex) {
 						Util.mensagem(InternalContainer.this, ex.getMessage());
 					}
@@ -1686,7 +1694,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					}
-
 				}
 
 				private void excluirPesquisa() {
@@ -1804,7 +1811,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					pesq.setIconeGrupo(nomeIcone);
 				}
 
-				private void nomeRefer() {
+				private void nomeRefer() throws AssistenciaException {
 					Referencia ref = pesquisa.get();
 					if (vinculoListener == null || ref == null) {
 						return;
