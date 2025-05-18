@@ -1310,8 +1310,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private class MenuPesquisa extends MenuPadrao2 {
 				private Action ordenarArrastoAcao = actionMenu("label.ordenar_arrasto", Icones.ASC_TEXTO);
 				private Action ordenarManualAcao = actionMenu("label.ordenar_manual", Icones.ASC_TEXTO);
+				private Action excluirReferenciaAcao = actionMenu("label.excluir_referencia");
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
-				private Action excluirElementoAcao = actionMenu("label.excluir_elemento");
+				private Action excluirPesquisaAcao = actionMenu("label.excluir_pesquisa");
 				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
 				private JCheckBoxMenuItem chkSomenteTotal = new JCheckBoxMenuItem(
@@ -1319,7 +1320,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action limparItensAcao = acaoMenu("label.limpar_itens");
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
 				private Action renomearAcao = actionMenu("label.renomear");
-				private Action excluirAcao = actionMenu("label.excluir");
 				private static final long serialVersionUID = 1L;
 				private ButtonGroup grupo = new ButtonGroup();
 				private MenuInfo menuInfo = new MenuInfo();
@@ -1337,23 +1337,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(renomearAcao);
 					addMenuItem(true, ordenarManualAcao);
 					addMenuItem(ordenarArrastoAcao);
-					addMenuItem(true, excluirElementoAcao);
-					addMenuItem(excluirAcao);
+					addMenuItem(true, excluirPesquisaAcao);
+					addMenuItem(excluirReferenciaAcao);
 					addSeparator();
 					add(menuInfo);
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
+					excluirReferenciaAcao.setActionListener(e -> excluirReferencia());
 					limparItensAcao.setActionListener(e -> grupo.clearSelection());
 					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
-					excluirElementoAcao.setActionListener(e -> excluirElemento());
+					excluirPesquisaAcao.setActionListener(e -> excluirPesquisa());
 					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					nomeReferAcao.setActionListener(e -> nomeRefer());
 					renomearAcao.setActionListener(e -> renomear());
-					excluirAcao.setActionListener(e -> excluir());
 					int size = pesquisa.getReferencias().size();
 					nomeIconeReferAcao.setEnabled(size == 1);
 					nomeReferAcao.setEnabled(size == 1);
@@ -1689,7 +1689,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				}
 
-				private void excluir() {
+				private void excluirPesquisa() {
 					if (vinculoListener == null) {
 						return;
 					}
@@ -1709,7 +1709,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
-				private void excluirElemento() {
+				private void excluirReferencia() {
 					if (vinculoListener == null) {
 						return;
 					}
