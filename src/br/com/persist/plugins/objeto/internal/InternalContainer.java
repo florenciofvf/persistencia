@@ -1506,9 +1506,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
-						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-						if (pesq != null) {
-							configurarIcone(nomeIcone, vinculacao, pesq);
+						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+						if (arquivo != null) {
+							configurarIcone(nomeIcone, vinculacao, arquivo);
 						}
 					}
 
@@ -1532,9 +1532,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
-						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-						if (pesq != null) {
-							configurarIcone(nomeIcone, vinculacao, pesq);
+						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+						if (arquivo != null) {
+							configurarIcone(nomeIcone, vinculacao, arquivo);
 						}
 					}
 
@@ -1556,9 +1556,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 								return;
 							}
-							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-							if (pesq != null) {
-								configurarIcone(nome, vinculacao, pesq);
+							Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+							if (arquivo != null) {
+								configurarIcone(nome, vinculacao, arquivo);
 							}
 						}
 
@@ -1574,11 +1574,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 								return;
 							}
-							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-							if (pesq != null) {
+							Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+							if (arquivo != null) {
 								MenuPesquisa.this.setIcon(null);
 								pesquisa.setIconeGrupo(Constantes.VAZIO);
-								pesq.setIconeGrupo(Constantes.VAZIO);
+								arquivo.setIconeGrupo(Constantes.VAZIO);
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
 						}
@@ -1595,16 +1595,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
-						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-						if (pesq != null) {
+						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+						if (arquivo != null) {
 							try {
-								if (adicionar && !pesq.contemLimparResto()) {
+								if (adicionar && !arquivo.contemLimparResto()) {
 									pesquisa.addLimparResto();
-									pesq.addLimparResto();
+									arquivo.addLimparResto();
 									vinculoListener.salvarVinculacao(vinculacao);
-								} else if (!adicionar && pesq.contemLimparResto()) {
+								} else if (!adicionar && arquivo.contemLimparResto()) {
 									pesquisa.excluirLimparResto();
-									pesq.excluirLimparResto();
+									arquivo.excluirLimparResto();
 									vinculoListener.salvarVinculacao(vinculacao);
 								}
 							} catch (ObjetoException ex) {
@@ -1624,15 +1624,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
-						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-						if (pesq != null) {
+						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+						if (arquivo != null) {
 							if (invisivel) {
 								pesquisa.setVazioInvisivel();
-								pesq.setVazioInvisivel();
+								arquivo.setVazioInvisivel();
 								vinculoListener.salvarVinculacao(vinculacao);
 							} else {
 								pesquisa.setVazioVisivel();
-								pesq.setVazioVisivel();
+								arquivo.setVazioVisivel();
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
 						}
@@ -1700,11 +1700,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
-					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-					if (pesq != null
-							&& Util.confirmar(InternalContainer.this,
-									ObjetoMensagens.getString("msg.confirmar_exclusao_pesquisa", pesq.getNome()), false)
-							&& vinculacao.excluir(pesq) && objeto.excluir(pesquisa)) {
+					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+					if (arquivo != null && Util.confirmar(InternalContainer.this,
+							ObjetoMensagens.getString("msg.confirmar_exclusao_pesquisa", arquivo.getNome()), false)
+							&& vinculacao.excluir(arquivo) && objeto.excluir(pesquisa)) {
 						vinculoListener.salvarVinculacao(vinculacao);
 						toolbar.buttonPesquisa.complemento(objeto);
 					}
@@ -1721,16 +1720,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
-					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-					if (pesq != null) {
+					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+					if (arquivo != null) {
 						try {
-							Referencia ref = selecionarRef(pesq);
+							Referencia ref = selecionarRef(arquivo);
 							if (ref != null
 									&& Util.confirmar(InternalContainer.this,
 											ObjetoMensagens.getString("msg.confirmar_exclusao_elemento",
 													ref.toString()),
 											false)
-									&& pesq.remove(ref) && pesquisa.remove(ref)) {
+									&& arquivo.remove(ref) && pesquisa.remove(ref)) {
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
 						} catch (ObjetoException ex) {
@@ -1766,12 +1765,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
-					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-					if (pesq != null && !Util.isEmpty(objetoRef.getId())) {
+					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+					if (arquivo != null && !Util.isEmpty(objetoRef.getId())) {
 						String nomeBkp = pesquisa.getNome();
 						String nome = objetoRef.getId();
 						if (nome.equalsIgnoreCase(pesquisa.getNome())) {
-							checarConfigurarIcone(objetoRef, vinculacao, pesq);
+							checarConfigurarIcone(objetoRef, vinculacao, arquivo);
 							return;
 						}
 						pesquisa.setNome(nome);
@@ -1779,11 +1778,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							msgNomePesquisaExistente(nome);
 							pesquisa.setNome(nomeBkp);
 						} else {
-							pesq.setNome(nome);
-							setText(pesq.getNomeParaMenuItem());
+							arquivo.setNome(nome);
+							setText(arquivo.getNomeParaMenuItem());
 							String nomeIcone = objetoRef.getIcone();
 							if (!Util.isEmpty(nomeIcone)) {
-								configurarIcone(pesq, nomeIcone);
+								configurarIcone(arquivo, nomeIcone);
 							}
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
@@ -1821,8 +1820,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
-					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-					if (pesq != null && !Util.isEmpty(objetoRef.getId())) {
+					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+					if (arquivo != null && !Util.isEmpty(objetoRef.getId())) {
 						String nomeBkp = pesquisa.getNome();
 						String nome = objetoRef.getId();
 						if (nome.equalsIgnoreCase(pesquisa.getNome())) {
@@ -1833,8 +1832,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							msgNomePesquisaExistente(nome);
 							pesquisa.setNome(nomeBkp);
 						} else {
-							pesq.setNome(nome);
-							setText(pesq.getNomeParaMenuItem());
+							arquivo.setNome(nome);
+							setText(arquivo.getNomeParaMenuItem());
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
 					}
@@ -1856,9 +1855,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
-					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-					if (pesq != null) {
-						renomear(pesq, vinculacao);
+					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+					if (arquivo != null) {
+						renomear(arquivo, vinculacao);
 					}
 				}
 
@@ -1932,9 +1931,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					public void salvar() {
 						if (vinculoListener != null) {
 							for (Pesquisa p : pesquisas) {
-								Pesquisa pesq = objeto.getPesquisa(p);
+								Pesquisa memoria = objeto.getPesquisa(p);
 								if (p != null) {
-									pesq.setOrdem(p.getOrdem());
+									memoria.setOrdem(p.getOrdem());
 								}
 							}
 							vinculoListener.salvarVinculacao(vinculacao);
@@ -3666,8 +3665,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private void atualizarPesquisa(Vinculacao vinculacao, AtomicBoolean atom, Pesquisa pesquisa,
 							Referencia ref) throws ObjetoException {
 						List<Pesquisa> lista = vinculacao.getPesquisas(objeto);
-						for (Pesquisa pesq : lista) {
-							if (pesq.ehEquivalente(pesquisa, objeto) && pesq.add(ref)) {
+						for (Pesquisa memoria : lista) {
+							if (memoria.ehEquivalente(pesquisa, objeto) && memoria.add(ref)) {
 								atom.set(true);
 							}
 						}
