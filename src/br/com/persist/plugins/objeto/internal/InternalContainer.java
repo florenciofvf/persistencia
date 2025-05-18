@@ -1649,10 +1649,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
-						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
-						if (pesq != null) {
+						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+						if (arquivo != null) {
 							VisibilidadeManualDialogo.criar(InternalContainer.this, objeto.getId(),
-									new ListenerVisibilidade(pesquisa.getReferencias(), pesquisa, pesq, vinculacao));
+									new ListenerVisibilidade(arquivo.getReferencias(), arquivo, pesquisa, vinculacao));
 						}
 					}
 
@@ -1680,7 +1680,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								try {
 									pesquisaMemoria.copiarVisibilidade(pesquisaArquivo);
 									vinculoListener.salvarVinculacao(vinculacao);
-									toolbar.buttonPesquisa.complemento(objeto);
 								} catch (ObjetoException ex) {
 									Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 								}
