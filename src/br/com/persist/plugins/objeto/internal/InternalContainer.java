@@ -1498,6 +1498,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 
 					public void iconeRefer() throws AssistenciaException {
+						checarTotalReferencia(pesquisa);
 						Referencia ref = pesquisa.get();
 						if (vinculoListener == null || ref == null) {
 							return;
@@ -1757,6 +1758,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void nomeIconeRefer() throws AssistenciaException {
+					checarTotalReferencia(pesquisa);
 					Referencia ref = pesquisa.get();
 					if (vinculoListener == null || ref == null) {
 						return;
@@ -1812,6 +1814,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void nomeRefer() throws AssistenciaException {
+					checarTotalReferencia(pesquisa);
 					Referencia ref = pesquisa.get();
 					if (vinculoListener == null || ref == null) {
 						return;
@@ -1843,6 +1846,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							setText(arquivo.getNomeParaMenuItem());
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
+					}
+				}
+
+				private void checarTotalReferencia(Pesquisa pesquisa) throws AssistenciaException {
+					if (pesquisa.getReferencias().size() != 1) {
+						String erro = ObjetoMensagens.getString("erro.pesquisa.total.ref_manipul",
+								pesquisa.getReferencias().size());
+						throw new AssistenciaException(erro);
 					}
 				}
 
