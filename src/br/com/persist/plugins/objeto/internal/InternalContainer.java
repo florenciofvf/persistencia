@@ -1311,6 +1311,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action ordenarArrastoAcao = actionMenu("label.ordenar_arrasto", Icones.ASC_TEXTO);
 				private Action ordenarManualAcao = actionMenu("label.ordenar_manual", Icones.ASC_TEXTO);
 				private Action excluirReferenciaAcao = actionMenu("label.excluir_referencia");
+				private Action renomearPesquisaAcao = actionMenu("label.renomear_pesquisa");
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private Action excluirPesquisaAcao = actionMenu("label.excluir_pesquisa");
 				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
@@ -1319,7 +1320,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						ObjetoMensagens.getString("label.somente_total_reg"));
 				private Action limparItensAcao = acaoMenu("label.limpar_itens");
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
-				private Action renomearAcao = actionMenu("label.renomear");
 				private static final long serialVersionUID = 1L;
 				private ButtonGroup grupo = new ButtonGroup();
 				private MenuInfo menuInfo = new MenuInfo();
@@ -1334,7 +1334,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addItem(chkSomenteTotal);
 					addMenuItem(true, nomeIconeReferAcao);
 					addMenuItem(nomeReferAcao);
-					addMenuItem(renomearAcao);
+					addMenuItem(true, renomearPesquisaAcao);
 					addMenuItem(true, ordenarManualAcao);
 					addMenuItem(ordenarArrastoAcao);
 					addMenuItem(true, excluirPesquisaAcao);
@@ -1345,6 +1345,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					add(menuUtil);
 					this.pesquisa = pesquisa;
 					excluirReferenciaAcao.setActionListener(e -> excluirReferencia());
+					renomearPesquisaAcao.setActionListener(e -> renomearPesquisa());
 					limparItensAcao.setActionListener(e -> grupo.clearSelection());
 					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
 					excluirPesquisaAcao.setActionListener(e -> excluirPesquisa());
@@ -1353,7 +1354,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					semAspasAcao.setActionListener(e -> preProcessar(false));
 					comAspasAcao.setActionListener(e -> preProcessar(true));
 					nomeReferAcao.setActionListener(e -> nomeRefer());
-					renomearAcao.setActionListener(e -> renomear());
 					int size = pesquisa.getReferencias().size();
 					nomeIconeReferAcao.setEnabled(size == 1);
 					nomeReferAcao.setEnabled(size == 1);
@@ -1844,7 +1844,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							ObjetoMensagens.getString("msg.nome_pesquisa_existente", nome));
 				}
 
-				private void renomear() {
+				private void renomearPesquisa() {
 					if (vinculoListener == null) {
 						return;
 					}
