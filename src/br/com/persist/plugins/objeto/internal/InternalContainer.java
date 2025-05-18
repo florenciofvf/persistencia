@@ -143,6 +143,8 @@ import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
+import br.com.persist.plugins.objeto.vinculo.VisibilidadeListener;
+import br.com.persist.plugins.objeto.vinculo.VisibilidadeManualDialogo;
 import br.com.persist.plugins.persistencia.ChaveValor;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.IndiceValor;
@@ -1439,6 +1441,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private Action addLimparRestoAcao = acaoMenu("label.add_limpar_resto");
 					private Action excLimparRestoAcao = acaoMenu("label.exc_limpar_resto");
 					private Action vazioInvisivelAcao = acaoMenu("label.vazio_invisivel");
+					private Action visibilidadeAcao = acaoMenu("label.visibilidade_manu");
 					private Action vazioVisivelAcao = acaoMenu("label.vazio_visivel");
 					private Action iconeColarAcao = actionMenu("label.colar_icone");
 					private Action iconeRefAcao = acaoMenu("label.icone_apontado");
@@ -1449,7 +1452,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						super("label.util");
 						addMenuItem(addLimparRestoAcao);
 						addMenuItem(excLimparRestoAcao);
-						addMenuItem(true, vazioInvisivelAcao);
+						addMenuItem(true, visibilidadeAcao);
+						addMenuItem(vazioInvisivelAcao);
 						addMenuItem(vazioVisivelAcao);
 						addMenuItem(true, iconeRefAcao);
 						addMenuItem(iconeColarAcao);
@@ -1457,6 +1461,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						iconeAcao.hint(ObjetoMensagens.getString("hint.pesquisa.icone.excluir"));
 						excLimparRestoAcao.setActionListener(e -> processar(false));
 						addLimparRestoAcao.setActionListener(e -> processar(true));
+						visibilidadeAcao.setActionListener(e -> visibilidadeMn());
 						vazioInvisivelAcao.setActionListener(e -> vazio(true));
 						vazioVisivelAcao.setActionListener(e -> vazio(false));
 						iconeColarAcao.setActionListener(e -> preIconeColar());
@@ -1632,6 +1637,57 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					}
+
+					private void visibilidadeMn() {
+						if (vinculoListener == null) {
+							return;
+						}
+						Vinculacao vinculacao = new Vinculacao();
+						try {
+							vinculoListener.preencherVinculacao(vinculacao);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							return;
+						}
+						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+						if (pesq != null) {
+							VisibilidadeManualDialogo.criar(InternalContainer.this, objeto.getId(),
+									new ListenerVisibilidade(pesquisa.getReferencias(), pesquisa, pesq, vinculacao));
+						}
+					}
+
+					private class ListenerVisibilidade implements VisibilidadeListener {
+						final List<Referencia> referencias;
+						final Pesquisa pesquisaArquivo;
+						final Pesquisa pesquisaMemoria;
+						final Vinculacao vinculacao;
+
+						ListenerVisibilidade(List<Referencia> referencias, Pesquisa pesquisaArquivo,
+								Pesquisa pesquisaMemoria, Vinculacao vinculacao) {
+							this.pesquisaArquivo = pesquisaArquivo;
+							this.pesquisaMemoria = pesquisaMemoria;
+							this.referencias = referencias;
+							this.vinculacao = vinculacao;
+						}
+
+						public List<Referencia> getReferencias() {
+							return referencias;
+						}
+
+						@Override
+						public void salvar() {
+							if (vinculoListener != null) {
+								try {
+									pesquisaMemoria.copiarVisibilidade(pesquisaArquivo);
+									vinculoListener.salvarVinculacao(vinculacao);
+									toolbar.buttonPesquisa.complemento(objeto);
+								} catch (ObjetoException ex) {
+									Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+								}
+							}
+						}
+					}
+
 				}
 
 				private void excluir() {

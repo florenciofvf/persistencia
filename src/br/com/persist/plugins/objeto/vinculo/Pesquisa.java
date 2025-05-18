@@ -343,6 +343,21 @@ public class Pesquisa {
 		}
 	}
 
+	public void copiarVisibilidade(Pesquisa pesquisa) throws ObjetoException {
+		if (pesquisa == null) {
+			return;
+		}
+		for (Referencia item : pesquisa.getReferencias()) {
+			int i = ReferenciaUtil.getIndice(item, referencias);
+			if (i != -1) {
+				Referencia that = referencias.get(i);
+				if (!that.ehCoringa()) {
+					that.setVazioInvisivel(item.isVazioInvisivel());
+				}
+			}
+		}
+	}
+
 	public String getNomeParaMenuItem() {
 		return nome + " - " + referencia.getCampo();
 	}
