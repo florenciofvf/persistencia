@@ -1332,8 +1332,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(limparItensAcao);
 					addItem(chkPesqEmMemoria);
 					addItem(chkSomenteTotal);
-					addMenuItem(true, nomeIconeReferAcao);
-					addMenuItem(nomeReferAcao);
+					addMenuItem(true, nomeIconeReferAcao).setToolTipText(ObjetoUtil.getHintTotalRefValidaManipul());
+					addMenuItem(nomeReferAcao).setToolTipText(ObjetoUtil.getHintTotalRefValidaManipul());
 					addMenuItem(true, renomearPesquisaAcao);
 					addMenuItem(true, ordenarManualAcao);
 					addMenuItem(ordenarArrastoAcao);
@@ -1463,7 +1463,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						addMenuItem(true, visibilidadeAcao);
 						addMenuItem(vazioInvisivelAcao);
 						addMenuItem(vazioVisivelAcao);
-						addMenuItem(true, iconeRefAcao);
+						addMenuItem(true, iconeRefAcao).setToolTipText(ObjetoUtil.getHintTotalRefValidaManipul());
 						addMenuItem(iconeColarAcao);
 						addMenuItem(iconeAcao);
 						iconeAcao.hint(ObjetoMensagens.getString("hint.pesquisa.icone.excluir"));

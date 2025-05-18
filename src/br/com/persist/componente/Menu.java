@@ -22,15 +22,17 @@ public class Menu extends JMenu {
 		super(Mensagens.getString(chaveRotulo));
 	}
 
-	protected void addMenuItem(Action action) {
-		addMenuItem(false, action);
+	protected MenuItem addMenuItem(Action action) {
+		return addMenuItem(false, action);
 	}
 
-	protected void addMenuItem(boolean separador, Action action) {
+	protected MenuItem addMenuItem(boolean separador, Action action) {
 		if (separador) {
 			addSeparator();
 		}
-		add(new MenuItem(action));
+		MenuItem item = new MenuItem(action);
+		add(item);
+		return item;
 	}
 
 	public void add(boolean separador, JMenuItem menuItem) {

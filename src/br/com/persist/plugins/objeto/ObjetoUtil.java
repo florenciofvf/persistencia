@@ -140,4 +140,8 @@ public class ObjetoUtil {
 		}
 		return null;
 	}
+
+	public static String getHintTotalRefValidaManipul() {
+		return ObjetoMensagens.getString("hint.pesquisa.total.ref_manipul");
+	}
 }
