@@ -6,6 +6,7 @@ import java.util.Iterator;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ExpressaoContexto extends ListaMapaContexto {
+	private ExpressaoContextoListener listener;
 	private Contexto finalizador;
 
 	public ExpressaoContexto(Contexto finalizador) {
@@ -15,6 +16,14 @@ public class ExpressaoContexto extends ListaMapaContexto {
 
 	public ExpressaoContexto() {
 		this(null);
+	}
+
+	public ExpressaoContextoListener getListener() {
+		return listener;
+	}
+
+	public void setListener(ExpressaoContextoListener listener) {
+		this.listener = listener;
 	}
 
 	@Override
@@ -38,6 +47,15 @@ public class ExpressaoContexto extends ListaMapaContexto {
 			finalizador.finalizador(compilador, token);
 		}
 		montarArvore(compilador);
+	}
+
+	@Override
+	public void separador(Compilador compilador, Token token) throws InstrucaoException {
+		if (listener == null) {
+			super.separador(compilador, token);
+		} else {
+			listener.separador(compilador, token, this);
+		}
 	}
 
 	@Override
