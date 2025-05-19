@@ -65,11 +65,13 @@ public class ArgumentoContexto extends ListaMapaContexto implements ExpressaoCon
 			expressao.adicionarImpl(compilador, ultimo.token, ultimo);
 		}
 		expressao.operador(compilador, token);
+		compilador.setContexto(expressao);
 	}
 
 	@Override
 	public void separador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
 		Token tokenFinal = new Token(")", Token.Tipo.FINALIZADOR);
+		expressao.setListener(null);
 		expressao.finalizador(compilador, tokenFinal);
 		separador(compilador, token);
 	}
