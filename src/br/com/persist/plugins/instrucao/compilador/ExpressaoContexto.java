@@ -7,11 +7,10 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class ExpressaoContexto extends ListaMapaContexto {
 	private ExpressaoContextoListener listener;
-	private Contexto finalizador;
 
-	public ExpressaoContexto(Contexto finalizador) {
+	public ExpressaoContexto(ExpressaoContextoListener listener) {
 		contexto = Contextos.PARENTESES;
-		this.finalizador = finalizador;
+		this.listener = listener;
 	}
 
 	public ExpressaoContexto() {
@@ -40,15 +39,13 @@ public class ExpressaoContexto extends ListaMapaContexto {
 
 	@Override
 	public void finalizador(Compilador compilador, Token token) throws InstrucaoException {
-		if (finalizador == null) {
+		if (listener != null) {
+			montarArvore(compilador);
+			listener.finalizador(compilador, token, this);
+		} else {
 			contexto.finalizador(compilador, token);
 			compilador.setContexto(getPai());
-		} else {
-			finalizador.finalizador(compilador, token);
-		}
-		montarArvore(compilador);
-		if (listener != null) {
-			listener.finalizador(compilador, token, this);
+			montarArvore(compilador);
 		}
 	}
 

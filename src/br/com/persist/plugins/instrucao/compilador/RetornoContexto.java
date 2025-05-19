@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
-public class RetornoContexto extends Container {
+public class RetornoContexto extends Container implements ExpressaoContextoListener {
 	public RetornoContexto() {
 		adicionar(new ExpressaoContexto(this));
 		contexto = Contextos.PONTO_VIRGULA;
@@ -27,6 +27,16 @@ public class RetornoContexto extends Container {
 			compilador.invalidar(token, funcao.getNome() + " --> deve retornar um valor");
 		}
 		compilador.setContexto(getPai());
+	}
+
+	@Override
+	public void finalizador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
+		finalizador(compilador, token);
+	}
+
+	@Override
+	public void separador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
+		compilador.invalidar(token);
 	}
 
 	@Override

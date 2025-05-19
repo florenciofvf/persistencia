@@ -56,6 +56,14 @@ public class ArgumentoContexto extends ListaMapaContexto implements ExpressaoCon
 	}
 
 	@Override
+	public void separador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
+		Token tokenFinal = new Token(")", Token.Tipo.FINALIZADOR);
+		expressao.setListener(null);
+		expressao.finalizador(compilador, tokenFinal);
+		separador(compilador, token);
+	}
+
+	@Override
 	public void operador(Compilador compilador, Token token) throws InstrucaoException {
 		Container ultimo = excluirUltimo();
 		ExpressaoContexto expressao = new ExpressaoContexto();
@@ -66,14 +74,6 @@ public class ArgumentoContexto extends ListaMapaContexto implements ExpressaoCon
 		}
 		expressao.operador(compilador, token);
 		compilador.setContexto(expressao);
-	}
-
-	@Override
-	public void separador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
-		Token tokenFinal = new Token(")", Token.Tipo.FINALIZADOR);
-		expressao.setListener(null);
-		expressao.finalizador(compilador, tokenFinal);
-		separador(compilador, token);
 	}
 
 	@Override

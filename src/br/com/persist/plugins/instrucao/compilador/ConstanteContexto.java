@@ -6,7 +6,7 @@ import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
-public class ConstanteContexto extends Container {
+public class ConstanteContexto extends Container implements ExpressaoContextoListener {
 	public static final String LOAD_CONST = "load_const";
 	private final ConstanteIdentityContexto identity;
 
@@ -27,6 +27,16 @@ public class ConstanteContexto extends Container {
 			throw new InstrucaoException("Valor indefinido para: " + identity.token.string, false);
 		}
 		compilador.setContexto(getPai());
+	}
+
+	@Override
+	public void finalizador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
+		finalizador(compilador, token);
+	}
+
+	@Override
+	public void separador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
+		compilador.invalidar(token);
 	}
 
 	@Override
