@@ -10,7 +10,7 @@ import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 import br.com.persist.plugins.instrucao.processador.Biblioteca;
 import br.com.persist.plugins.instrucao.processador.Funcao;
 
-public class ArgumentoContexto extends ListaMapaContexto {
+public class ArgumentoContexto extends ListaMapaContexto implements ExpressaoContextoListener {
 	public static final String ERRO_FUNCAO_PARENT = "erro.funcao_parent";
 	private final IdentityContexto identity;
 
@@ -48,6 +48,25 @@ public class ArgumentoContexto extends ListaMapaContexto {
 			compilador.invalidar(token);
 		}
 		adicionarImpl(compilador, token, new SeparadorContexto(token));
+	}
+
+	@Override
+	public void operador(Compilador compilador, Token token) throws InstrucaoException {
+		Container ultimo = excluirUltimo();
+		ExpressaoContexto expressao = new ExpressaoContexto(null);
+		expressao.setListener(this);
+		adicionarImpl(compilador, token, expressao);
+		if (ultimo != null) {
+			expressao.adicionarImpl(compilador, ultimo.token, ultimo);
+		}
+		expressao.operador(compilador, token);
+	}
+
+	@Override
+	public void separador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
+		Token tokenFinal = new Token(")", Token.Tipo.FINALIZADOR);
+		expressao.finalizador(compilador, tokenFinal);
+		separador(compilador, token);
 	}
 
 	@Override
