@@ -66,8 +66,7 @@ public class ArgumentoContexto extends ListaMapaContexto implements ExpressaoCon
 	@Override
 	public void operador(Compilador compilador, Token token) throws InstrucaoException {
 		Container ultimo = excluirUltimo();
-		ExpressaoContexto expressao = new ExpressaoContexto();
-		expressao.setListener(this);
+		ExpressaoContexto expressao = new ExpressaoContexto(this);
 		adicionarImpl(compilador, token, expressao);
 		if (ultimo != null) {
 			expressao.adicionarImpl(compilador, ultimo.token, ultimo);
