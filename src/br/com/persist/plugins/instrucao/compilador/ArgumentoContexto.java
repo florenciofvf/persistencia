@@ -43,6 +43,11 @@ public class ArgumentoContexto extends ListaMapaContexto implements ExpressaoCon
 	}
 
 	@Override
+	public void finalizador(Compilador compilador, Token token, ExpressaoContexto expressao) throws InstrucaoException {
+		finalizador(compilador, token);
+	}
+
+	@Override
 	public void separador(Compilador compilador, Token token) throws InstrucaoException {
 		if (isEmpty() || getUltimo() instanceof SeparadorContexto) {
 			compilador.invalidar(token);
@@ -53,7 +58,7 @@ public class ArgumentoContexto extends ListaMapaContexto implements ExpressaoCon
 	@Override
 	public void operador(Compilador compilador, Token token) throws InstrucaoException {
 		Container ultimo = excluirUltimo();
-		ExpressaoContexto expressao = new ExpressaoContexto(null);
+		ExpressaoContexto expressao = new ExpressaoContexto();
 		expressao.setListener(this);
 		adicionarImpl(compilador, token, expressao);
 		if (ultimo != null) {

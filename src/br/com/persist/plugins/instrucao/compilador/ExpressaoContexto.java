@@ -47,6 +47,9 @@ public class ExpressaoContexto extends ListaMapaContexto {
 			finalizador.finalizador(compilador, token);
 		}
 		montarArvore(compilador);
+		if (listener != null) {
+			listener.finalizador(compilador, token, this);
+		}
 	}
 
 	@Override
