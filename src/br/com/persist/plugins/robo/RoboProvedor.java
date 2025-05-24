@@ -28,6 +28,7 @@ public class RoboProvedor {
 		lista.add(new MouseMove());
 		lista.add(new KeyPress());
 		lista.add(new Delay());
+		lista.add(new Break());
 	}
 }
 
