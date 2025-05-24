@@ -129,3 +129,14 @@ class Delay extends Robo {
 		}
 	}
 }
+
+class Break extends Robo {
+	protected Break() {
+		super("break");
+	}
+
+	@Override
+	void processar(Robot robot, String[] params) {
+		//
+	}
+}

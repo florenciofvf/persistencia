@@ -137,10 +137,15 @@ public class RoboPagina extends Panel {
 				Robo robo = RoboProvedor.getRobo(array[0]);
 				if (robo != null) {
 					try {
+						if (robo instanceof Break) {
+							break;
+						}
 						robo.processar(robot, array);
 					} catch (Exception ex) {
 						Util.mensagem(RoboPagina.this, ex.getMessage());
 					}
+				} else {
+					Util.mensagem(RoboPagina.this, array[0]);
 				}
 			}
 		}
