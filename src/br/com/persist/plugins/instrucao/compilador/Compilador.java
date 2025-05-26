@@ -337,12 +337,12 @@ public class Compilador {
 	}
 
 	class Atom {
+		final boolean entreChaves;
 		final String str;
-		final boolean id;
 
-		Atom(String str, boolean id) {
+		Atom(String str, boolean entreChaves) {
+			this.entreChaves = entreChaves;
 			this.str = str;
-			this.id = id;
 		}
 
 		Token criar(Token token) throws InstrucaoException {
@@ -351,7 +351,7 @@ public class Compilador {
 			}
 			StringBuilder sb = getSring();
 			String s = sb.toString();
-			if (!id) {
+			if (!entreChaves) {
 				return new Token(s, Tipo.STRING);
 			}
 			if (s.startsWith("[")) {
@@ -377,7 +377,7 @@ public class Compilador {
 
 		private StringBuilder getSring() {
 			StringBuilder sb = new StringBuilder();
-			if (id) {
+			if (entreChaves) {
 				for (char c : str.toCharArray()) {
 					if (c <= ' ') {
 						continue;
