@@ -367,11 +367,19 @@ public class Compilador {
 					return null;
 				}
 			} else {
-				char c = s.charAt(0);
-				if (c >= '0' && c <= '9') {
-					invalidar(token);
-				}
+				validarEntreChaves(token, s);
 				return new Token(s, Tipo.IDENTITY);
+			}
+		}
+
+		private void validarEntreChaves(Token token, String s) throws InstrucaoException {
+			char c = s.charAt(0);
+			char d = s.charAt(s.length() - 1);
+			if (c >= '0' && c <= '9') {
+				invalidar(token);
+			}
+			if (c == '\'' || c == '"' || d == '\'' || d == '"') {
+				invalidar(token, "Aceita somente identity em: " + s);
 			}
 		}
 
