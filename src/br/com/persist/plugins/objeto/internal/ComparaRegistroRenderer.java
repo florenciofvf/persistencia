@@ -14,8 +14,8 @@ import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 
 public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
-	static final String MODELO_DE_DADOS_ANTERIOR_NULO = "MODELO DE DADOS ANTERIOR NULO";
-	private static final String ANTERIOR = "]   ANTERIOR: [";
+	static final String MODELO_DE_DADOS_ANTERIOR_NULO = "Modelo de dados anterior nulo";
+	private static final String ANTERIOR = "] Anterior:[";
 	private static final long serialVersionUID = 1L;
 	private final String nomeColuna;
 	private final Toolbar toolbar;
@@ -45,7 +45,7 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 		Coluna colunaBackup = backup.getColuna(colunaModelo.getNome());
 
 		if (colunaBackup == null) {
-			colunaModelo.setStringComparaRegistro("NOVA COLUNA ADICIONADA: [" + colunaModelo.getNome() + "]");
+			colunaModelo.setStringComparaRegistro("Nova coluna adicionada:[" + colunaModelo.getNome() + "]");
 			toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 			setForeground(Color.WHITE);
 			setBackground(Color.BLUE);
@@ -53,18 +53,18 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 			String strModelo = modelo.getValueAt(0, colunaModelo.getIndice()).toString();
 			String strBackup = backup.getValueAt(0, colunaBackup.getIndice()).toString();
 			if (!Util.isEmpty(strModelo) && Util.isEmpty(strBackup)) {
-				colunaModelo.setStringComparaRegistro("NOVO VALOR EM: [" + nomeColuna + valor(strModelo) + "]");
+				colunaModelo.setStringComparaRegistro("Novo valor em:[" + nomeColuna + valor(strModelo) + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.GREEN);
 			} else if (Util.isEmpty(strModelo) && !Util.isEmpty(strBackup)) {
-				colunaModelo.setStringComparaRegistro("EXCLUIDO EM: [" + nomeColuna + ANTERIOR + strBackup + "]");
+				colunaModelo.setStringComparaRegistro("Exclu\u00EDdo em:[" + nomeColuna + ANTERIOR + strBackup + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.RED);
 			} else if (!Util.isEmpty(strModelo) && !Util.isEmpty(strBackup) && !strModelo.equals(strBackup)) {
 				colunaModelo.setStringComparaRegistro(
-						"ALTERADO EM: [" + nomeColuna + valor(strModelo) + ANTERIOR + strBackup + "]");
+						"Alterado em:[" + nomeColuna + valor(strModelo) + ANTERIOR + strBackup + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.ORANGE);
@@ -79,6 +79,6 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 	}
 
 	static String getStringTotaisDiff(OrdenacaoModelo modelo, OrdenacaoModelo backup) {
-		return "TOTAL: [" + modelo.getRowCount() + ANTERIOR + backup.getRowCount() + "]";
+		return "Total:[" + modelo.getRowCount() + ANTERIOR + backup.getRowCount() + "]";
 	}
 }
