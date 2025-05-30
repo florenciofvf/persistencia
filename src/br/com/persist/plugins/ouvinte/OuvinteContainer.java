@@ -1,6 +1,8 @@
 package br.com.persist.plugins.ouvinte;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
@@ -9,6 +11,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Map;
 
@@ -20,6 +24,8 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
@@ -28,6 +34,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -83,14 +90,21 @@ public class OuvinteContainer extends AbstratoContainer {
 		}
 	}
 
-	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
+	private class Toolbar extends BarraButton implements ActionListener {
+		private final TextField txtPesquisa = new TextField(35);
 		private final CheckBox chkAtivar = new CheckBox();
+		private static final long serialVersionUID = 1L;
+		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, SALVAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, SALVAR, COPIAR,
+					COLAR);
 			chkAtivar.setToolTipText(OuvinteMensagens.getString("hint.formulario_top_mensagem"));
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
 			add(chkAtivar);
+			add(txtPesquisa);
+			add(label);
 		}
 
 		@Override
@@ -125,6 +139,29 @@ public class OuvinteContainer extends AbstratoContainer {
 		@Override
 		protected void limpar() {
 			textEditor.limpar();
+		}
+
+		@Override
+		protected void copiar() {
+			String string = Util.getString(textEditor);
+			Util.setContentTransfered(string);
+			copiarMensagem(string);
+			textEditor.requestFocus();
+		}
+
+		@Override
+		protected void colar(boolean numeros, boolean letras) {
+			Util.getContentTransfered(textEditor, numeros, letras);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
+				selecao.selecionar(label);
+			} else {
+				label.limpar();
+			}
 		}
 
 		@Override
