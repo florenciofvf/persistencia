@@ -74,8 +74,10 @@ public class MiscelaniaContainer extends Panel {
 		XMLUtil util = new XMLUtil(sw);
 		util.prologo();
 		util.abrirTag2(ITENS);
+		boolean ql = false;
 		for (Instrucao item : objeto.getInstrucoes()) {
-			item.salvar(util, true);
+			item.salvar(util, ql);
+			ql = true;
 		}
 		util.finalizarTag(ITENS);
 		util.close();
@@ -87,8 +89,10 @@ public class MiscelaniaContainer extends Panel {
 		XMLUtil util = new XMLUtil(sw);
 		util.prologo();
 		util.abrirTag2(ITENS);
+		boolean ql = false;
 		for (Filtro item : objeto.getFiltros()) {
-			item.salvar(util, true);
+			item.salvar(util, ql);
+			ql = true;
 		}
 		util.finalizarTag(ITENS);
 		util.close();
