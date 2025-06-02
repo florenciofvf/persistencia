@@ -29,6 +29,7 @@ import br.com.persist.plugins.objeto.vinculo.Instrucao;
 public class MiscelaniaContainer extends Panel {
 	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
+	private transient MiscelaniaListener listener;
 	private final Toolbar toolbar = new Toolbar();
 	public static final String ITENS = "itens";
 	private final transient Objeto objeto;
@@ -176,6 +177,14 @@ public class MiscelaniaContainer extends Panel {
 		return sb.toString();
 	}
 
+	public MiscelaniaListener getListener() {
+		return listener;
+	}
+
+	public void setListener(MiscelaniaListener listener) {
+		this.listener = listener;
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
@@ -198,6 +207,10 @@ public class MiscelaniaContainer extends Panel {
 					objeto.setClassBiblio(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.DESTACAVEIS.equals(tipo)) {
 					objeto.setDestacaveis(Util.normalizar(textEditor.getText(), false));
+				} else if (Tipo.INSTRUCAO.equals(tipo) && listener != null) {
+					listener.aplicar(textEditor.getText());
+				} else if (Tipo.FILTRO.equals(tipo) && listener != null) {
+					listener.aplicar(textEditor.getText());
 				}
 				fechar();
 			} catch (Exception ex) {
