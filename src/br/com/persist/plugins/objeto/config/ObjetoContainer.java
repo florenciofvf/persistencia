@@ -564,9 +564,14 @@ public class ObjetoContainer extends Panel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					if (e.getClickCount() >= Constantes.DOIS) {
+						if (Util.isEmpty(txtTabela.getText())) {
+							Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
+							return;
+						}
 						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
 						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
 								MiscelaniaContainer.Tipo.INSTRUCAO);
+						form.setMiscelaniaListener(new InstrucaoListener());
 						config(dialog, form);
 						form.setVisible(true);
 					}
@@ -576,14 +581,31 @@ public class ObjetoContainer extends Panel {
 			}
 		};
 
+		private class InstrucaoListener implements MiscelaniaListener {
+			@Override
+			public void aplicar(String string) {
+			}
+		}
+
+		private class FiltroListener implements MiscelaniaListener {
+			@Override
+			public void aplicar(String string) {
+			}
+		}
+
 		private transient MouseListener filtroListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
 					if (e.getClickCount() >= Constantes.DOIS) {
+						if (Util.isEmpty(txtTabela.getText())) {
+							Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
+							return;
+						}
 						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
 						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
 								MiscelaniaContainer.Tipo.FILTRO);
+						form.setMiscelaniaListener(new FiltroListener());
 						config(dialog, form);
 						form.setVisible(true);
 					}
