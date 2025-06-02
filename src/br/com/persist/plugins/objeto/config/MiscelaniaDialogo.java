@@ -5,13 +5,14 @@ import java.awt.Dialog;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class MiscelaniaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final MiscelaniaContainer container;
 
-	private MiscelaniaDialogo(Dialog dialog, Objeto objeto, MiscelaniaContainer.Tipo tipo) {
+	private MiscelaniaDialogo(Dialog dialog, Objeto objeto, MiscelaniaContainer.Tipo tipo) throws XMLException {
 		super(dialog, objeto.getId());
 		container = new MiscelaniaContainer(this, objeto, tipo);
 		montarLayout();
@@ -38,7 +39,7 @@ public class MiscelaniaDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static MiscelaniaDialogo criar(Dialog dialog, Objeto objeto, MiscelaniaContainer.Tipo tipo) {
+	public static MiscelaniaDialogo criar(Dialog dialog, Objeto objeto, MiscelaniaContainer.Tipo tipo) throws XMLException {
 		return new MiscelaniaDialogo(dialog, objeto, tipo);
 	}
 }

@@ -6,6 +6,7 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -17,25 +18,30 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoUtil;
+import br.com.persist.plugins.objeto.vinculo.Filtro;
+import br.com.persist.plugins.objeto.vinculo.Instrucao;
 
 public class MiscelaniaContainer extends Panel {
 	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	public static final String ITENS = "itens";
 	private final transient Objeto objeto;
 	private final Tipo tipo;
 
-	public MiscelaniaContainer(Janela janela, Objeto objeto, Tipo tipo) {
+	public MiscelaniaContainer(Janela janela, Objeto objeto, Tipo tipo) throws XMLException {
 		this.objeto = objeto;
 		montarLayout(tipo);
 		toolbar.ini(janela);
 		this.tipo = tipo;
 	}
 
-	private void montarLayout(Tipo tipo) {
+	private void montarLayout(Tipo tipo) throws XMLException {
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		add(BorderLayout.NORTH, toolbar);
@@ -55,8 +61,38 @@ public class MiscelaniaContainer extends Panel {
 			classBiblio(builder);
 		} else if (Tipo.DESTACAVEIS.equals(tipo)) {
 			destac(builder);
+		} else if (Tipo.INSTRUCAO.equals(tipo)) {
+			instrucao(builder);
+		} else if (Tipo.FILTRO.equals(tipo)) {
+			filtro(builder);
 		}
 		textEditor.setText(builder.toString().trim());
+	}
+
+	private void instrucao(StringBuilder builder) throws XMLException {
+		StringWriter sw = new StringWriter();
+		XMLUtil util = new XMLUtil(sw);
+		util.prologo();
+		util.abrirTag2(ITENS);
+		for (Instrucao item : objeto.getInstrucoes()) {
+			item.salvar(util, true);
+		}
+		util.finalizarTag(ITENS);
+		util.close();
+		builder.append(sw.toString());
+	}
+
+	private void filtro(StringBuilder builder) throws XMLException {
+		StringWriter sw = new StringWriter();
+		XMLUtil util = new XMLUtil(sw);
+		util.prologo();
+		util.abrirTag2(ITENS);
+		for (Filtro item : objeto.getFiltros()) {
+			item.salvar(util, true);
+		}
+		util.finalizarTag(ITENS);
+		util.close();
+		builder.append(sw.toString());
 	}
 
 	private void chave(StringBuilder builder) {
