@@ -23,6 +23,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -60,6 +61,8 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
+import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
@@ -69,10 +72,9 @@ import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
-import br.com.persist.plugins.objeto.vinculo.Filtro;
-import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Marcador;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
+import br.com.persist.plugins.objeto.vinculo.ParaTabelaHandler;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
@@ -589,12 +591,12 @@ public class ObjetoContainer extends Panel {
 			public void aplicar(String string) {
 				try {
 					processar(string);
-				} catch (ObjetoException ex) {
+				} catch (Exception ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
 			}
 
-			private void processar(String string) throws ObjetoException {
+			private void processar(String string) throws ObjetoException, XMLException {
 				Vinculacao vinculacao = null;
 				try {
 					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
@@ -616,12 +618,10 @@ public class ObjetoContainer extends Panel {
 				salvarVinculacao(vinculacao);
 			}
 
-			private void processar(ParaTabela para, String string) {
-				List<Instrucao> lista = new ArrayList<>();
+			private void processar(ParaTabela para, String string) throws XMLException {
+				ParaTabelaHandler handler = new ParaTabelaHandler(para);
 				para.getInstrucoes().clear();
-				for (Instrucao item : lista) {
-					para.add(item);
-				}
+				XML.processar(new ByteArrayInputStream(string.getBytes()), handler);
 			}
 		}
 
@@ -630,12 +630,12 @@ public class ObjetoContainer extends Panel {
 			public void aplicar(String string) {
 				try {
 					processar(string);
-				} catch (ObjetoException ex) {
+				} catch (Exception ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
 			}
 
-			private void processar(String string) throws ObjetoException {
+			private void processar(String string) throws ObjetoException, XMLException {
 				Vinculacao vinculacao = null;
 				try {
 					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
@@ -657,12 +657,10 @@ public class ObjetoContainer extends Panel {
 				salvarVinculacao(vinculacao);
 			}
 
-			private void processar(ParaTabela para, String string) {
-				List<Filtro> lista = new ArrayList<>();
+			private void processar(ParaTabela para, String string) throws XMLException {
+				ParaTabelaHandler handler = new ParaTabelaHandler(para);
 				para.getFiltros().clear();
-				for (Filtro item : lista) {
-					para.add(item);
-				}
+				XML.processar(new ByteArrayInputStream(string.getBytes()), handler);
 			}
 		}
 
