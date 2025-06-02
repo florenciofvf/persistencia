@@ -69,6 +69,8 @@ import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
+import br.com.persist.plugins.objeto.vinculo.Filtro;
+import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Marcador;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
@@ -77,6 +79,7 @@ public class ObjetoContainer extends Panel {
 	private static final String CHAVE_MENSAGEM_VI = "msg.arquivo_vinculo_inexistente";
 	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
 	private static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
+	private static final String VINCULAR_EM_BANCO = "VINCULAR EM BANCO";
 	private transient List<CompChave> vinculados = new ArrayList<>();
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
 	private TabelaPopup tabelaPopup = new TabelaPopup();
@@ -243,7 +246,7 @@ public class ObjetoContainer extends Panel {
 			try {
 				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("VINCULAR EM BANCO", ex, ObjetoContainer.this);
+				Util.stackTraceAndMessage(VINCULAR_EM_BANCO, ex, ObjetoContainer.this);
 				return;
 			}
 			if (vinculacao == null) {
@@ -584,12 +587,82 @@ public class ObjetoContainer extends Panel {
 		private class InstrucaoListener implements MiscelaniaListener {
 			@Override
 			public void aplicar(String string) {
+				try {
+					processar(string);
+				} catch (ObjetoException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				}
+			}
+
+			private void processar(String string) throws ObjetoException {
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(VINCULAR_EM_BANCO, ex, ObjetoContainer.this);
+					return;
+				}
+				if (vinculacao == null) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					return;
+				}
+				String tabela = txtTabela.getText().trim();
+				ParaTabela para = vinculacao.getParaTabela(tabela);
+				if (para == null) {
+					para = new ParaTabela(tabela);
+					vinculacao.putParaTabela(para);
+				}
+				processar(para, string);
+				salvarVinculacao(vinculacao);
+			}
+
+			private void processar(ParaTabela para, String string) {
+				List<Instrucao> lista = new ArrayList<>();
+				para.getInstrucoes().clear();
+				for (Instrucao item : lista) {
+					para.add(item);
+				}
 			}
 		}
 
 		private class FiltroListener implements MiscelaniaListener {
 			@Override
 			public void aplicar(String string) {
+				try {
+					processar(string);
+				} catch (ObjetoException ex) {
+					Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				}
+			}
+
+			private void processar(String string) throws ObjetoException {
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(VINCULAR_EM_BANCO, ex, ObjetoContainer.this);
+					return;
+				}
+				if (vinculacao == null) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					return;
+				}
+				String tabela = txtTabela.getText().trim();
+				ParaTabela para = vinculacao.getParaTabela(tabela);
+				if (para == null) {
+					para = new ParaTabela(tabela);
+					vinculacao.putParaTabela(para);
+				}
+				processar(para, string);
+				salvarVinculacao(vinculacao);
+			}
+
+			private void processar(ParaTabela para, String string) {
+				List<Filtro> lista = new ArrayList<>();
+				para.getFiltros().clear();
+				for (Filtro item : lista) {
+					para.add(item);
+				}
 			}
 		}
 
