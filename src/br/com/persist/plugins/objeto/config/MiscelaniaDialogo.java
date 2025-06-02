@@ -39,7 +39,8 @@ public class MiscelaniaDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static MiscelaniaDialogo criar(Dialog dialog, Objeto objeto, MiscelaniaContainer.Tipo tipo) throws XMLException {
+	public static MiscelaniaDialogo criar(Dialog dialog, Objeto objeto, MiscelaniaContainer.Tipo tipo)
+			throws XMLException {
 		return new MiscelaniaDialogo(dialog, objeto, tipo);
 	}
 }
