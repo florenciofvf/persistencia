@@ -398,6 +398,10 @@ public class ObjetoContainer extends Panel {
 		}
 	}
 
+	private void config(Window parent, Window child) {
+		Util.configSizeLocation(parent, child, ObjetoContainer.this);
+	}
+
 	private class PanelGeral extends Panel implements ActionListener {
 		private TextField txtBiblioChecagem = new TextField();
 		private TextField txtMargemInferior = new TextField();
@@ -502,6 +506,10 @@ public class ObjetoContainer extends Panel {
 					ObjetoMensagens.getString("hint.add_instrucao"), PanelGeral.this::mensagemAddInstrucao));
 			container.add(criarLinhaComLinkCopiar("label.add_filtro", txtFiltro,
 					ObjetoMensagens.getString("hint.add_filtro"), PanelGeral.this::mensagemAddFiltro));
+			txtInstrucao.addMouseListener(instrucaoListener);
+			txtFiltro.addMouseListener(filtroListener);
+			txtInstrucao.setEnabled(false);
+			txtFiltro.setEnabled(false);
 			add(BorderLayout.CENTER, new ScrollPane(container));
 			vincular();
 		}
@@ -550,6 +558,31 @@ public class ObjetoContainer extends Panel {
 			txtX.addMouseListener(listenerVinculado);
 			txtY.addMouseListener(listenerVinculado);
 		}
+
+		private transient MouseListener instrucaoListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+							MiscelaniaContainer.Tipo.INSTRUCAO);
+					config(dialog, form);
+					form.setVisible(true);
+				}
+			}
+		};
+
+		private transient MouseListener filtroListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto, MiscelaniaContainer.Tipo.FILTRO);
+					config(dialog, form);
+					form.setVisible(true);
+				}
+			}
+		};
 
 		private void mensagemPropriedadeMargemInferior(Label label) {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.propriedade_margem_inferior"));
@@ -971,10 +1004,6 @@ public class ObjetoContainer extends Panel {
 				}
 			}
 		};
-
-		private void config(Window parent, Window child) {
-			Util.configSizeLocation(parent, child, ObjetoContainer.this);
-		}
 
 		private transient MouseListener mapeamentoListener = new MouseAdapter() {
 			@Override

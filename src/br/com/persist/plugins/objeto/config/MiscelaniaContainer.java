@@ -120,7 +120,7 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA
+		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA, INSTRUCAO, FILTRO
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
