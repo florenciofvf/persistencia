@@ -562,12 +562,16 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener instrucaoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
-							MiscelaniaContainer.Tipo.INSTRUCAO);
-					config(dialog, form);
-					form.setVisible(true);
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.INSTRUCAO);
+						config(dialog, form);
+						form.setVisible(true);
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.INSTRUCAO.toString(), ex, ObjetoContainer.this);
 				}
 			}
 		};
@@ -575,11 +579,16 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener filtroListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto, MiscelaniaContainer.Tipo.FILTRO);
-					config(dialog, form);
-					form.setVisible(true);
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.FILTRO);
+						config(dialog, form);
+						form.setVisible(true);
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.FILTRO.toString(), ex, ObjetoContainer.this);
 				}
 			}
 		};
@@ -952,13 +961,18 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener chaveamentoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
-							MiscelaniaContainer.Tipo.CHAVEAMENTO);
-					config(dialog, form);
-					form.setVisible(true);
-					txtChaveamento.setText(objeto.getChaveamento());
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.CHAVEAMENTO);
+						config(dialog, form);
+						form.setVisible(true);
+						txtChaveamento.setText(objeto.getChaveamento());
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.CHAVEAMENTO.toString(), ex,
+							ObjetoContainer.this);
 				}
 			}
 		};
@@ -966,13 +980,18 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener complementoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
-							MiscelaniaContainer.Tipo.COMPLEMENTO);
-					config(dialog, form);
-					form.setVisible(true);
-					txtComplemento.setText(objeto.getComplemento());
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.COMPLEMENTO);
+						config(dialog, form);
+						form.setVisible(true);
+						txtComplemento.setText(objeto.getComplemento());
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.COMPLEMENTO.toString(), ex,
+							ObjetoContainer.this);
 				}
 			}
 		};
@@ -980,13 +999,18 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener classBiblioListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
-							MiscelaniaContainer.Tipo.CLASSBIBLIO);
-					config(dialog, form);
-					form.setVisible(true);
-					txtClassBiblio.setText(objeto.getClassBiblio());
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.CLASSBIBLIO);
+						config(dialog, form);
+						form.setVisible(true);
+						txtClassBiblio.setText(objeto.getClassBiblio());
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.CLASSBIBLIO.toString(), ex,
+							ObjetoContainer.this);
 				}
 			}
 		};
@@ -994,13 +1018,18 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener destacaveisListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
-							MiscelaniaContainer.Tipo.DESTACAVEIS);
-					config(dialog, form);
-					form.setVisible(true);
-					txtDestacaveis.setText(objeto.getDestacaveis());
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.DESTACAVEIS);
+						config(dialog, form);
+						form.setVisible(true);
+						txtDestacaveis.setText(objeto.getDestacaveis());
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.DESTACAVEIS.toString(), ex,
+							ObjetoContainer.this);
 				}
 			}
 		};
@@ -1008,13 +1037,17 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener mapeamentoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
-							MiscelaniaContainer.Tipo.MAPEAMENTO);
-					config(dialog, form);
-					form.setVisible(true);
-					txtMapeamento.setText(objeto.getMapeamento());
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.MAPEAMENTO);
+						config(dialog, form);
+						form.setVisible(true);
+						txtMapeamento.setText(objeto.getMapeamento());
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.MAPEAMENTO.toString(), ex, ObjetoContainer.this);
 				}
 			}
 		};
@@ -1022,13 +1055,17 @@ public class ObjetoContainer extends Panel {
 		private transient MouseListener sequenciaListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
-							MiscelaniaContainer.Tipo.SEQUENCIA);
-					config(dialog, form);
-					form.setVisible(true);
-					txtSequencias.setText(objeto.getSequencias());
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.SEQUENCIA);
+						config(dialog, form);
+						form.setVisible(true);
+						txtSequencias.setText(objeto.getSequencias());
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.SEQUENCIA.toString(), ex, ObjetoContainer.this);
 				}
 			}
 		};
