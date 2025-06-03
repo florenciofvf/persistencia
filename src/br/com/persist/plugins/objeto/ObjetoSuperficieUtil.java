@@ -244,21 +244,21 @@ public class ObjetoSuperficieUtil {
 		}
 	}
 
-	public static void configuracaoDinamica2(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
+	public static void configuracaoDinamicaFiltro(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
 		InternalFormulario interno = getInternalFormulario(superficie, objeto);
 		if (interno == null) {
 			Util.mensagem(componente, ObjetoMensagens.getString(MSG_SEM_FORM_SEQ_CHAVE_MAPA, objeto.getId()));
 		} else {
-			interno.configuracaoDinamica2(objeto);
+			interno.configuracaoDinamicaFiltro(objeto);
 		}
 	}
 
-	public static void configuracaoDinamica3(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
+	public static void configuracaoDinamicaInstrucao(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
 		InternalFormulario interno = getInternalFormulario(superficie, objeto);
 		if (interno == null) {
 			Util.mensagem(componente, ObjetoMensagens.getString(MSG_SEM_FORM_SEQ_CHAVE_MAPA, objeto.getId()));
 		} else {
-			interno.configuracaoDinamica3(objeto);
+			interno.configuracaoDinamicaInstrucao(objeto);
 		}
 	}
 

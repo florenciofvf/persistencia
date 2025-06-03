@@ -79,6 +79,24 @@ public abstract class ButtonPopup extends Button {
 		}
 	}
 
+	private Component getPrimeiroItem(Class<?> classe) {
+		for (int i = 0; i < popup.getComponentCount(); i++) {
+			Component c = popup.getComponent(i);
+			if (c.getClass() == classe) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	public void excluirItens(Class<?> classe) {
+		Component c = getPrimeiroItem(classe);
+		while (c != null) {
+			popup.remove(c);
+			c = getPrimeiroItem(classe);
+		}
+	}
+
 	public Component[] getComponentes() {
 		return popup.getComponents();
 	}

@@ -1103,22 +1103,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
-			private MenuFiltro getPrimeiroMenuFiltro() {
-				for (int i = 0; i < super.getComponentCount(); i++) {
-					Component c = super.getComponent(i);
-					if (c instanceof MenuFiltro) {
-						return (MenuFiltro) c;
-					}
-				}
-				return null;
-			}
-
 			private void processarFiltro(Objeto objeto) {
-				MenuFiltro obj = getPrimeiroMenuFiltro();
-				while (obj != null) {
-					super.remove(obj);
-					obj = getPrimeiroMenuFiltro();
-				}
+				excluirItens(MenuFiltro.class);
 				int i = 0;
 				objeto.ordenarFiltros();
 				for (Filtro f : objeto.getFiltros()) {
@@ -1132,22 +1118,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
-			private MenuInstrucao getPrimeiroMenuInstrucao() {
-				for (int i = 0; i < super.getComponentCount(); i++) {
-					Component c = super.getComponent(i);
-					if (c instanceof MenuInstrucao) {
-						return (MenuInstrucao) c;
-					}
-				}
-				return null;
-			}
-
 			private void processarInstrucao(Objeto objeto) {
-				MenuInstrucao obj = getPrimeiroMenuInstrucao();
-				while (obj != null) {
-					super.remove(obj);
-					obj = getPrimeiroMenuInstrucao();
-				}
+				excluirItens(MenuInstrucao.class);
 				objeto.ordenarInstrucoes();
 				for (Instrucao inst : objeto.getInstrucoes()) {
 					if (!Util.isEmpty(inst.getValor()) && inst.isComoFiltro()) {
@@ -2171,23 +2143,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				eventos();
 			}
 
-			private MenuInstrucao getPrimeiroMenuInstrucao() {
-				for (int i = 0; i < super.getComponentCount(); i++) {
-					Component c = super.getComponent(i);
-					if (c instanceof MenuInstrucao) {
-						return (MenuInstrucao) c;
-					}
-				}
-				return null;
-			}
-
 			private void complemento(Objeto objeto) {
 				if (objeto != null) {
-					MenuInstrucao obj = getPrimeiroMenuInstrucao();
-					while (obj != null) {
-						super.remove(obj);
-						obj = getPrimeiroMenuInstrucao();
-					}
+					excluirItens(MenuInstrucao.class);
 					objeto.ordenarInstrucoes();
 					listaMenuInstrucao.clear();
 					for (Instrucao i : objeto.getInstrucoes()) {
@@ -4754,11 +4712,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		tabelaPersistencia.setClassBiblio(objeto.getClassBiblio());
 	}
 
-	public void configuracaoDinamica2(Objeto objeto) {
+	public void configuracaoDinamicaFiltro(Objeto objeto) {
 		toolbar.buttonComplemento.complemento(objeto);
 	}
 
-	public void configuracaoDinamica3(Objeto objeto) {
+	public void configuracaoDinamicaInstrucao(Objeto objeto) {
 		toolbar.buttonUpdate.complemento(objeto);
 	}
 

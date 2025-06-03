@@ -26,6 +26,7 @@ import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Box;
@@ -97,8 +98,8 @@ public class ObjetoContainer extends Panel {
 	private final Fichario fichario;
 
 	public ObjetoContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Objeto objeto) {
+		this.objeto = Objects.requireNonNull(objeto);
 		this.objetoSuperficie = objetoSuperficie;
-		this.objeto = objeto;
 		fichario = new Fichario();
 		MacroProvedor.limpar();
 		toolbar.ini(janela);
@@ -595,7 +596,7 @@ public class ObjetoContainer extends Panel {
 			public void aplicar(String string) {
 				try {
 					processar(string);
-					ObjetoSuperficieUtil.configuracaoDinamica3(objetoSuperficie, ObjetoContainer.this, objeto);
+					ObjetoSuperficieUtil.configuracaoDinamicaInstrucao(objetoSuperficie, ObjetoContainer.this, objeto);
 				} catch (Exception ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
@@ -621,6 +622,8 @@ public class ObjetoContainer extends Panel {
 				}
 				processar(para, string);
 				salvarVinculacao(vinculacao);
+				objeto.getInstrucoes().clear();
+				objeto.addInstrucoes(para.getInstrucoes());
 			}
 
 			private void processar(ParaTabela para, String string) throws XMLException {
@@ -635,7 +638,7 @@ public class ObjetoContainer extends Panel {
 			public void aplicar(String string) {
 				try {
 					processar(string);
-					ObjetoSuperficieUtil.configuracaoDinamica2(objetoSuperficie, ObjetoContainer.this, objeto);
+					ObjetoSuperficieUtil.configuracaoDinamicaFiltro(objetoSuperficie, ObjetoContainer.this, objeto);
 				} catch (Exception ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
@@ -661,6 +664,8 @@ public class ObjetoContainer extends Panel {
 				}
 				processar(para, string);
 				salvarVinculacao(vinculacao);
+				objeto.getFiltros().clear();
+				objeto.addFiltros(para.getFiltros());
 			}
 
 			private void processar(ParaTabela para, String string) throws XMLException {
