@@ -1104,7 +1104,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private MenuFiltro getPrimeiroMenuFiltro() {
-				for (int i = 0; i < getComponentCount(); i++) {
+				for (int i = 0; i < super.getComponentCount(); i++) {
 					Component c = super.getComponent(i);
 					if (c instanceof MenuFiltro) {
 						return (MenuFiltro) c;
@@ -1116,7 +1116,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private void processarFiltro(Objeto objeto) {
 				MenuFiltro obj = getPrimeiroMenuFiltro();
 				while (obj != null) {
-					remove(obj);
+					super.remove(obj);
 					obj = getPrimeiroMenuFiltro();
 				}
 				int i = 0;
@@ -1133,7 +1133,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private MenuInstrucao getPrimeiroMenuInstrucao() {
-				for (int i = 0; i < getComponentCount(); i++) {
+				for (int i = 0; i < super.getComponentCount(); i++) {
 					Component c = super.getComponent(i);
 					if (c instanceof MenuInstrucao) {
 						return (MenuInstrucao) c;
@@ -1145,7 +1145,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private void processarInstrucao(Objeto objeto) {
 				MenuInstrucao obj = getPrimeiroMenuInstrucao();
 				while (obj != null) {
-					remove(obj);
+					super.remove(obj);
 					obj = getPrimeiroMenuInstrucao();
 				}
 				objeto.ordenarInstrucoes();
@@ -2172,7 +2172,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private MenuInstrucao getPrimeiroMenuInstrucao() {
-				for (int i = 0; i < getComponentCount(); i++) {
+				for (int i = 0; i < super.getComponentCount(); i++) {
 					Component c = super.getComponent(i);
 					if (c instanceof MenuInstrucao) {
 						return (MenuInstrucao) c;
@@ -2185,10 +2185,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (objeto != null) {
 					MenuInstrucao obj = getPrimeiroMenuInstrucao();
 					while (obj != null) {
-						remove(obj);
+						super.remove(obj);
 						obj = getPrimeiroMenuInstrucao();
 					}
 					objeto.ordenarInstrucoes();
+					listaMenuInstrucao.clear();
 					for (Instrucao i : objeto.getInstrucoes()) {
 						if (!Util.isEmpty(i.getValor()) && !i.isComoFiltro()) {
 							MenuInstrucao menu = new MenuInstrucao(i);
