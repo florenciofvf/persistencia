@@ -242,6 +242,15 @@ public class ObjetoSuperficieUtil {
 		}
 	}
 
+	public static void configuracaoDinamica2(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
+		InternalFormulario interno = getInternalFormulario(superficie, objeto);
+		if (interno == null) {
+			Util.mensagem(componente, ObjetoMensagens.getString("msg.sem_form_seq_chave_mapa", objeto.getId()));
+		} else {
+			interno.configuracaoDinamica2(objeto);
+		}
+	}
+
 	public static void pontoOrigem(ObjetoSuperficie superficie, boolean b) {
 		for (Relacao relacao : superficie.relacoes) {
 			relacao.setPontoOrigem(b);

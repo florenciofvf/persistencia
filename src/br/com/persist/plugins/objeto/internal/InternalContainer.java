@@ -1098,6 +1098,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void complemento(Objeto objeto) {
 				if (objeto != null) {
+					limparPopup();
 					processarFiltro(objeto);
 					processarInstrucao(objeto);
 				}
@@ -4706,6 +4707,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.atualizarSequencias(objeto.getMapaSequencias());
 		tabelaPersistencia.setClassBiblio(objeto.getClassBiblio());
+	}
+
+	public void configuracaoDinamica2(Objeto objeto) {
+		toolbar.buttonComplemento.complemento(objeto);
 	}
 
 	public void pesquisarLink(Referencia referencia, String argumentos) {
