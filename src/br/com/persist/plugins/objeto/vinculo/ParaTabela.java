@@ -125,10 +125,10 @@ public class ParaTabela {
 		return filtros;
 	}
 
-	public void addInstrucao(String instrucao, Marcador marcador) throws ObjetoException {
+	public Instrucao addInstrucao(String instrucao, Marcador marcador) throws ObjetoException {
 		if (marcador != null) {
 			marcador.aplicarIf(instrucoes.isEmpty() ? "" : ".");
-			return;
+			return null;
 		}
 		if (Util.isEmpty(instrucao)) {
 			instrucao = "ALTERE PARA SUA INSTRUCAO";
@@ -138,19 +138,20 @@ public class ParaTabela {
 		i.setComoFiltro(false);
 		i.setValor(instrucao);
 		i.setOrdem(1);
-		add(i);
+		return add(i);
 	}
 
-	public void add(Instrucao i) {
+	public Instrucao add(Instrucao i) {
 		if (i != null) {
 			instrucoes.add(i);
 		}
+		return i;
 	}
 
-	public void addFiltro(String filtro, Marcador marcador) throws ObjetoException {
+	public Filtro addFiltro(String filtro, Marcador marcador) throws ObjetoException {
 		if (marcador != null) {
 			marcador.aplicarIf(filtros.isEmpty() ? "" : ".");
-			return;
+			return null;
 		}
 		if (Util.isEmpty(filtro)) {
 			filtro = "ALTERE PARA SEU FILTRO";
@@ -158,13 +159,14 @@ public class ParaTabela {
 		Filtro f = new Filtro("Resumo");
 		f.setValor(filtro);
 		f.setOrdem(1);
-		add(f);
+		return add(f);
 	}
 
-	public void add(Filtro f) {
+	public Filtro add(Filtro f) {
 		if (f != null) {
 			filtros.add(f);
 		}
+		return f;
 	}
 
 	public void config(Objeto objeto) throws AssistenciaException {

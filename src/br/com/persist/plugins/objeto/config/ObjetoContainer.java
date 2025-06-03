@@ -72,6 +72,8 @@ import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
+import br.com.persist.plugins.objeto.vinculo.Filtro;
+import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Marcador;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.ParaTabelaHandler;
@@ -350,9 +352,11 @@ public class ObjetoContainer extends Panel {
 			} else if ("AJUSTE_LARG".equals(compChave.chave)) {
 				para.setAjustarLargura(compChave.getBool(), marcador);
 			} else if ("INSTRUCAO".equals(compChave.chave)) {
-				para.addInstrucao(compChave.getText(), marcador);
+				Instrucao obj = para.addInstrucao(compChave.getText(), marcador);
+				objeto.addInstrucao(obj);
 			} else if ("FILTRO".equals(compChave.chave)) {
-				para.addFiltro(compChave.getText(), marcador);
+				Filtro obj = para.addFiltro(compChave.getText(), marcador);
+				objeto.addFiltro(obj);
 			} else if ("ID".equals(compChave.chave)) {
 				para.setId(compChave.getText(), marcador);
 				if (marcador == null) {
