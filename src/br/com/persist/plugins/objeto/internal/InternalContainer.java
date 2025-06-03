@@ -4710,13 +4710,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.atualizarSequencias(objeto.getMapaSequencias());
 		tabelaPersistencia.setClassBiblio(objeto.getClassBiblio());
-	}
-
-	public void configuracaoDinamicaFiltro(Objeto objeto) {
 		toolbar.buttonComplemento.complemento(objeto);
-	}
-
-	public void configuracaoDinamicaInstrucao(Objeto objeto) {
 		toolbar.buttonUpdate.complemento(objeto);
 	}
 

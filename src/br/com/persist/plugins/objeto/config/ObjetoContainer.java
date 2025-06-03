@@ -596,7 +596,7 @@ public class ObjetoContainer extends Panel {
 			public void aplicar(String string) {
 				try {
 					processar(string);
-					ObjetoSuperficieUtil.configuracaoDinamicaInstrucao(objetoSuperficie, ObjetoContainer.this, objeto);
+					ObjetoSuperficieUtil.configuracaoDinamica(objetoSuperficie, ObjetoContainer.this, objeto);
 				} catch (Exception ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
@@ -638,7 +638,7 @@ public class ObjetoContainer extends Panel {
 			public void aplicar(String string) {
 				try {
 					processar(string);
-					ObjetoSuperficieUtil.configuracaoDinamicaFiltro(objetoSuperficie, ObjetoContainer.this, objeto);
+					ObjetoSuperficieUtil.configuracaoDinamica(objetoSuperficie, ObjetoContainer.this, objeto);
 				} catch (Exception ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}

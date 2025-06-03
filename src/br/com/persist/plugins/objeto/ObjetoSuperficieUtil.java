@@ -33,8 +33,6 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
-	private static final String MSG_SEM_FORM_SEQ_CHAVE_MAPA = "msg.sem_form_seq_chave_mapa";
-
 	private ObjetoSuperficieUtil() {
 	}
 
@@ -238,27 +236,9 @@ public class ObjetoSuperficieUtil {
 	public static void configuracaoDinamica(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
 		InternalFormulario interno = getInternalFormulario(superficie, objeto);
 		if (interno == null) {
-			Util.mensagem(componente, ObjetoMensagens.getString(MSG_SEM_FORM_SEQ_CHAVE_MAPA, objeto.getId()));
+			Util.mensagem(componente, ObjetoMensagens.getString("msg.sem_form_seq_chave_mapa", objeto.getId()));
 		} else {
 			interno.configuracaoDinamica(objeto);
-		}
-	}
-
-	public static void configuracaoDinamicaFiltro(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
-		InternalFormulario interno = getInternalFormulario(superficie, objeto);
-		if (interno == null) {
-			Util.mensagem(componente, ObjetoMensagens.getString(MSG_SEM_FORM_SEQ_CHAVE_MAPA, objeto.getId()));
-		} else {
-			interno.configuracaoDinamicaFiltro(objeto);
-		}
-	}
-
-	public static void configuracaoDinamicaInstrucao(ObjetoSuperficie superficie, Component componente, Objeto objeto) {
-		InternalFormulario interno = getInternalFormulario(superficie, objeto);
-		if (interno == null) {
-			Util.mensagem(componente, ObjetoMensagens.getString(MSG_SEM_FORM_SEQ_CHAVE_MAPA, objeto.getId()));
-		} else {
-			interno.configuracaoDinamicaInstrucao(objeto);
 		}
 	}
 
