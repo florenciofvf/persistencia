@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JPopupMenu;
 
 import br.com.persist.assistencia.Mensagens;
 
@@ -89,11 +90,23 @@ public abstract class ButtonPopup extends Button {
 		return null;
 	}
 
+	private Component getUltimoItem() {
+		if (popup.getComponentCount() > 0) {
+			return popup.getComponent(popup.getComponentCount() - 1);
+		}
+		return null;
+	}
+
 	public void excluirItens(Class<?> classe) {
 		Component c = getPrimeiroItem(classe);
 		while (c != null) {
 			popup.remove(c);
 			c = getPrimeiroItem(classe);
+		}
+		c = getUltimoItem();
+		while (c instanceof JPopupMenu.Separator) {
+			popup.remove(c);
+			c = getUltimoItem();
 		}
 	}
 
