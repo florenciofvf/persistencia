@@ -1098,13 +1098,27 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void complemento(Objeto objeto) {
 				if (objeto != null) {
-					limparPopup();
 					processarFiltro(objeto);
 					processarInstrucao(objeto);
 				}
 			}
 
+			private MenuFiltro getPrimeiroMenuFiltro() {
+				for (int i = 0; i < getComponentCount(); i++) {
+					Component c = getComponent(i);
+					if (c instanceof MenuFiltro) {
+						return (MenuFiltro) c;
+					}
+				}
+				return null;
+			}
+
 			private void processarFiltro(Objeto objeto) {
+				MenuFiltro obj = getPrimeiroMenuFiltro();
+				while (obj != null) {
+					remove(obj);
+					obj = getPrimeiroMenuFiltro();
+				}
 				int i = 0;
 				objeto.ordenarFiltros();
 				for (Filtro f : objeto.getFiltros()) {
@@ -1118,7 +1132,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
+			private MenuInstrucao getPrimeiroMenuInstrucao() {
+				for (int i = 0; i < getComponentCount(); i++) {
+					Component c = getComponent(i);
+					if (c instanceof MenuInstrucao) {
+						return (MenuInstrucao) c;
+					}
+				}
+				return null;
+			}
+
 			private void processarInstrucao(Objeto objeto) {
+				MenuInstrucao obj = getPrimeiroMenuInstrucao();
+				while (obj != null) {
+					remove(obj);
+					obj = getPrimeiroMenuInstrucao();
+				}
 				objeto.ordenarInstrucoes();
 				for (Instrucao inst : objeto.getInstrucoes()) {
 					if (!Util.isEmpty(inst.getValor()) && inst.isComoFiltro()) {
