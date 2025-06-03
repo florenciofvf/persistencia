@@ -103,7 +103,11 @@ public abstract class ButtonPopup extends Button {
 			popup.remove(c);
 			c = getPrimeiroItem(classe);
 		}
-		c = getUltimoItem();
+		excluirItensSeparador();
+	}
+
+	public void excluirItensSeparador() {
+		Component c = getUltimoItem();
 		while (c instanceof JPopupMenu.Separator) {
 			popup.remove(c);
 			c = getUltimoItem();

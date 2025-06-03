@@ -1098,13 +1098,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void complemento(Objeto objeto) {
 				if (objeto != null) {
+					excluirItens(MenuFiltro.class);
+					excluirItens(MenuInstrucao.class);
+					excluirItensSeparador();
 					processarFiltro(objeto);
 					processarInstrucao(objeto);
 				}
 			}
 
 			private void processarFiltro(Objeto objeto) {
-				excluirItens(MenuFiltro.class);
 				int i = 0;
 				objeto.ordenarFiltros();
 				for (Filtro f : objeto.getFiltros()) {
@@ -1119,7 +1121,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void processarInstrucao(Objeto objeto) {
-				excluirItens(MenuInstrucao.class);
 				objeto.ordenarInstrucoes();
 				for (Instrucao inst : objeto.getInstrucoes()) {
 					if (!Util.isEmpty(inst.getValor()) && inst.isComoFiltro()) {
