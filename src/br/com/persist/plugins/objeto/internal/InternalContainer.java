@@ -1105,7 +1105,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private MenuFiltro getPrimeiroMenuFiltro() {
 				for (int i = 0; i < getComponentCount(); i++) {
-					Component c = getComponent(i);
+					Component c = super.getComponent(i);
 					if (c instanceof MenuFiltro) {
 						return (MenuFiltro) c;
 					}
@@ -1134,7 +1134,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private MenuInstrucao getPrimeiroMenuInstrucao() {
 				for (int i = 0; i < getComponentCount(); i++) {
-					Component c = getComponent(i);
+					Component c = super.getComponent(i);
 					if (c instanceof MenuInstrucao) {
 						return (MenuInstrucao) c;
 					}
@@ -2171,8 +2171,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				eventos();
 			}
 
+			private MenuInstrucao getPrimeiroMenuInstrucao() {
+				for (int i = 0; i < getComponentCount(); i++) {
+					Component c = super.getComponent(i);
+					if (c instanceof MenuInstrucao) {
+						return (MenuInstrucao) c;
+					}
+				}
+				return null;
+			}
+
 			private void complemento(Objeto objeto) {
 				if (objeto != null) {
+					MenuInstrucao obj = getPrimeiroMenuInstrucao();
+					while (obj != null) {
+						remove(obj);
+						obj = getPrimeiroMenuInstrucao();
+					}
 					objeto.ordenarInstrucoes();
 					for (Instrucao i : objeto.getInstrucoes()) {
 						if (!Util.isEmpty(i.getValor()) && !i.isComoFiltro()) {
@@ -4740,6 +4755,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public void configuracaoDinamica2(Objeto objeto) {
 		toolbar.buttonComplemento.complemento(objeto);
+	}
+
+	public void configuracaoDinamica3(Objeto objeto) {
+		toolbar.buttonUpdate.complemento(objeto);
 	}
 
 	public void pesquisarLink(Referencia referencia, String argumentos) {
