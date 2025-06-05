@@ -16,7 +16,7 @@ import br.com.persist.plugins.objeto.macro.Macro.Bpnt;
 import br.com.persist.plugins.objeto.macro.Macro.Ccsc;
 import br.com.persist.plugins.objeto.macro.Macro.ColunaInfo;
 import br.com.persist.plugins.objeto.macro.Macro.Complemento;
-import br.com.persist.plugins.objeto.macro.Macro.CopiarDestacado;
+import br.com.persist.plugins.objeto.macro.Macro.ClonarAoDestacar;
 import br.com.persist.plugins.objeto.macro.Macro.Cor;
 import br.com.persist.plugins.objeto.macro.Macro.CorFonte;
 import br.com.persist.plugins.objeto.macro.Macro.DesenharIdDescricao;
@@ -37,7 +37,7 @@ import br.com.persist.plugins.objeto.macro.Macro.YPos;
 public class MacroProvedor {
 	private static final List<Instrucao> instrucoes = new ArrayList<>();
 	private static final Map<String, Instrucao> mapa = new HashMap<>();
-	private static final String COPIAR_DESTACADO = "copiarDestacado";
+	private static final String CLONAR_AO_DESTACAR = "clonarAoDestacar";
 	private static final String AJUSTE_AUTO_FORM = "ajusteAutoForm";
 	private static final String AJUSTE_LARG_FORM = "ajusteLargForm";
 	private static final String DESENHAR_ID_DESC = "desenharIdDesc";
@@ -101,7 +101,7 @@ public class MacroProvedor {
 		mapa.put(DESCLOC_X_ID_DESC, new DeslocamentoXIdDescricao());
 		mapa.put(DESCLOC_Y_ID_DESC, new DeslocamentoYIdDescricao());
 		mapa.put(DESENHAR_ID_DESC, new DesenharIdDescricao());
-		mapa.put(COPIAR_DESTACADO, new CopiarDestacado());
+		mapa.put(CLONAR_AO_DESTACAR, new ClonarAoDestacar());
 		mapa.put(AJUSTE_AUTO_FORM, new AjusteAutoForm());
 		mapa.put(AJUSTE_LARG_FORM, new AjusteLargForm());
 		mapa.put(LARGURA_ROTULOS, new LarguraRotulos());
@@ -235,7 +235,7 @@ public class MacroProvedor {
 	}
 
 	public static void copiarDestacado(Object valor) {
-		Instrucao instrucao = get(COPIAR_DESTACADO);
+		Instrucao instrucao = get(CLONAR_AO_DESTACAR);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

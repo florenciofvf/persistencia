@@ -62,13 +62,13 @@ public class ParaTabela {
 	private final List<Filtro> filtros;
 	private String esquemaAlternativo;
 	private String tabelaAlternativo;
-	private String prefixoNomeTabela;
+	private String prefixoNomeTabela;//
 	private String selectAlternativo;
 	private String clonarAoDestacar;
 	private String larguraRotulos;
 	private String biblioChecagem;
 	private String ajustarLargura;
-	private String margemInferior;
+	private String margemInferior;//
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String internalFormX;
@@ -84,7 +84,7 @@ public class ParaTabela {
 	private String sequencias;
 	private String campoNomes;
 	private String mapeamento;
-	private String intervalo;
+	private String intervalo;//
 	private String deslocXId;
 	private String deslocYId;
 	private String linkAuto;
@@ -98,7 +98,7 @@ public class ParaTabela {
 	private String chaves;
 	private String idSub;
 	private String joins;
-	private String grupo;
+	private String grupo;//
 	private String icone;
 	private String sane;
 	private String ccsc;

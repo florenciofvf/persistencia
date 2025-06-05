@@ -168,7 +168,7 @@ public class Macro {
 		}
 	}
 
-	static class CopiarDestacado extends Instrucao {
+	static class ClonarAoDestacar extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) throws MacroException {
 			throw new MacroException();
