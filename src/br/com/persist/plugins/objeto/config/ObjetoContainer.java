@@ -1187,6 +1187,7 @@ public class ObjetoContainer extends Panel {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txtComplemento.getText());
+				MacroProvedor.complemento(objeto.getComplemento());
 			} else if (txtClassBiblio == e.getSource()) {
 				objeto.setClassBiblio(txtClassBiblio.getText());
 				atom.set(true);

@@ -15,6 +15,7 @@ import br.com.persist.plugins.objeto.macro.Macro.AjusteLargForm;
 import br.com.persist.plugins.objeto.macro.Macro.Bpnt;
 import br.com.persist.plugins.objeto.macro.Macro.Ccsc;
 import br.com.persist.plugins.objeto.macro.Macro.ColunaInfo;
+import br.com.persist.plugins.objeto.macro.Macro.Complemento;
 import br.com.persist.plugins.objeto.macro.Macro.CopiarDestacado;
 import br.com.persist.plugins.objeto.macro.Macro.Cor;
 import br.com.persist.plugins.objeto.macro.Macro.CorFonte;
@@ -46,6 +47,7 @@ public class MacroProvedor {
 	private static final String PONTO_DESTINO = "pontoDestino";
 	private static final String TRANSPARENTE = "transparente";
 	private static final String PONTO_ORIGEM = "pontoOrigem";
+	private static final String COMPLEMENTO = "complemento";
 	private static final String COLUNA_INFO = "colunaInfo";
 	private static final String ABRIR_AUTO = "abrirAuto";
 	private static final String COR_FONTE = "corFonte";
@@ -106,6 +108,7 @@ public class MacroProvedor {
 		mapa.put(PONTO_DESTINO, new PontoDestino());
 		mapa.put(TRANSPARENTE, new Transparente());
 		mapa.put(PONTO_ORIGEM, new PontoOrigem());
+		mapa.put(COMPLEMENTO, new Complemento());
 		mapa.put(COLUNA_INFO, new ColunaInfo());
 		mapa.put(ABRIR_AUTO, new AbrirAuto());
 		mapa.put(LINK_AUTO, new LinkAuto());
@@ -155,6 +158,12 @@ public class MacroProvedor {
 
 	public static void colunaInfo(Object valor) {
 		Instrucao instrucao = get(COLUNA_INFO);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public static void complemento(Object valor) {
+		Instrucao instrucao = get(COMPLEMENTO);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

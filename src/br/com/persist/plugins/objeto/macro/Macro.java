@@ -204,6 +204,20 @@ public class Macro {
 		}
 	}
 
+	static class Complemento extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			if (valor != null) {
+				objeto.setComplemento(valor.toString());
+			}
+		}
+	}
+
 	static class PontoDestino extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
