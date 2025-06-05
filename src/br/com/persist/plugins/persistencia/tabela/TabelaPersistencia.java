@@ -907,8 +907,8 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuColocarColuna extends MenuPadrao2 {
-			private Action comAspasAtalhoAcao = acaoMenu("label.com_aspas_atalho", Icones.ASPAS);
-			private Action semAspasAtalhoAcao = acaoMenu("label.sem_aspas_atalho");
+			private Action comAspasAtalhoAcao = acaoMenu("label.com_aspas_atalho2", Icones.ASPAS);
+			private Action semAspasAtalhoAcao = acaoMenu("label.sem_aspas_atalho2");
 			private static final long serialVersionUID = 1L;
 			private final boolean numeros;
 			private final boolean letras;
