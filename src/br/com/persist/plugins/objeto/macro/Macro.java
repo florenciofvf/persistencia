@@ -48,6 +48,44 @@ public class Macro {
 		}
 	}
 
+	static class PrefixoNomeTabela extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			if (valor != null) {
+				objeto.setPrefixoNomeTabela(valor.toString());
+			}
+		}
+	}
+
+	static class MargemInferior extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setMargemInferior((Integer) valor);
+		}
+	}
+
+	static class Intervalo extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setIntervalo((Integer) valor);
+		}
+	}
+
 	static class Quebrado extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
@@ -117,6 +155,20 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setIgnorar((Boolean) valor);
+		}
+	}
+
+	static class Grupo extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			if (valor != null) {
+				objeto.setGrupo(valor.toString());
+			}
 		}
 	}
 
