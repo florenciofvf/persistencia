@@ -751,8 +751,10 @@ public class ObjetoContainer extends Panel {
 				MacroProvedor.deslocarYIdDescricao(objeto.getDeslocamentoYId());
 			} else if (txtIntervalo == e.getSource()) {
 				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
+				MacroProvedor.intervalo(objeto.getIntervalo());
 			} else if (txtMargemInferior == e.getSource()) {
 				objeto.setMargemInferior(Util.getInt(txtMargemInferior.getText(), objeto.getMargemInferior()));
+				MacroProvedor.margemInferior(objeto.getMargemInferior());
 				objetoSuperficie.localizarInternalFormulario(objeto);
 			}
 			actionPerformedCont(e);
@@ -1197,12 +1199,14 @@ public class ObjetoContainer extends Panel {
 				objeto.setOrderBy(txtOrderBy.getText());
 			} else if (txtGrupo == e.getSource()) {
 				objeto.setGrupo(txtGrupo.getText());
+				MacroProvedor.grupo(objeto.getGrupo());
 			} else if (txtApelido == e.getSource()) {
 				objeto.setApelidoParaJoins(txtApelido.getText());
 			} else if (txtTabela == e.getSource()) {
 				objeto.setTabela(txtTabela.getText());
 			} else if (txtPrefixoNT == e.getSource()) {
 				objeto.setPrefixoNomeTabela(txtPrefixoNT.getText());
+				MacroProvedor.prefixoNomeTabela(objeto.getPrefixoNomeTabela());
 			} else if (txtChaves == e.getSource()) {
 				objeto.setChaves(txtChaves.getText());
 			} else if (txtSequencias == e.getSource()) {
