@@ -118,6 +118,7 @@ import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.Objeto.Estado;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
@@ -4392,7 +4393,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (coletor.size() != 1) {
 				return;
 			}
-			List<Objeto> objetos = vinculoListener.objetosComTabela();
+			List<Objeto> objetos = vinculoListener.objetosComTabela(Estado.INDIFERENTE);
 			if (objetos.isEmpty()) {
 				return;
 			}

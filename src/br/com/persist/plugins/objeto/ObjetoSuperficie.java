@@ -78,6 +78,7 @@ import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoConstantes;
 import br.com.persist.plugins.metadado.MetadadoEvento;
 import br.com.persist.plugins.metadado.MetadadoException;
+import br.com.persist.plugins.objeto.Objeto.Estado;
 import br.com.persist.plugins.objeto.circular.CircularContainer.Tipo;
 import br.com.persist.plugins.objeto.circular.CircularDialogo;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
@@ -1191,7 +1192,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
 			return;
 		}
-		if (!ObjetoSuperficieUtil.objetosComTabela(this, false).isEmpty()) {
+		if (!ObjetoSuperficieUtil.objetosComTabela(this, Estado.INDIFERENTE).isEmpty()) {
 			String[] opcoes = new String[] { ObjetoMensagens.getString("label.total_sem_exibicao"),
 					ObjetoMensagens.getString("label.total_com_exibicao") };
 			String opcao = Util.getValorInputDialog(ObjetoSuperficie.this, opcoes);
@@ -1307,8 +1308,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public Coletor getObjetosComTabela(boolean selecionado) {
-		List<Objeto> listaObjeto = ObjetoSuperficieUtil.objetosComTabela(this, selecionado);
+	public Coletor getObjetosComTabela(Estado estado) {
+		List<Objeto> listaObjeto = ObjetoSuperficieUtil.objetosComTabela(this, estado);
 		Coletor coletor = new Coletor();
 		if (listaObjeto.isEmpty()) {
 			Util.mensagem(getFormulario(), ObjetoMensagens.getString("msg.nenhum_objeto_com_tabela"));
@@ -2062,7 +2063,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void objetosComTabela() {
-		Coletor coletor = superficie.getObjetosComTabela(false);
+		Coletor coletor = superficie.getObjetosComTabela(Estado.INDIFERENTE);
 		if (coletor.size() == 0) {
 			return;
 		}
@@ -2506,7 +2507,7 @@ class SuperficiePopup extends Popup {
 	}
 
 	private void objetosComTabela() {
-		Coletor coletor = superficie.getObjetosComTabela(true);
+		Coletor coletor = superficie.getObjetosComTabela(Estado.SELECIONADO);
 		if (coletor.size() == 0) {
 			return;
 		}
