@@ -99,6 +99,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
+	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
 	final transient Vinculacao vinculacao = new Vinculacao();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
@@ -1317,7 +1318,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		for (Objeto objeto : listaObjeto) {
 			lista.add(objeto.getTabela());
 		}
-		SetLista.view(ObjetoMensagens.getString("label.objetos_com_tabela"), lista, coletor, this, null);
+		SetLista.view(ObjetoMensagens.getString(LABEL_OBJETOS_COM_TABELA), lista, coletor, this, null);
 		return coletor;
 	}
 
@@ -1871,12 +1872,12 @@ class SuperficiePopup2 extends Popup {
 	private Action limparFormulariosFiltroAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios_filtro",
 			Icones.NOVO);
 	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
+	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
 	private Action formulariosComExcecaoAcaoMsg = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_msg");
 	private Action formulariosComExcecaoAcaoOuv = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_ouv");
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
-	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu("label.objetos_com_tabela");
 	private Action propriedadesAcao = actionMenu("label.propriedades");
 	private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
 	private MenuIgnorados menuIgnorados = new MenuIgnorados();
@@ -2118,6 +2119,7 @@ class SuperficiePopup2 extends Popup {
 }
 
 class SuperficiePopup extends Popup {
+	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
 	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
 	private Action criarRelacaoAcao = ObjetoSuperficie.acaoMenu("label.criar_relacao", Icones.SETA);
 	private Action copiarIconeAcao = ObjetoSuperficie.acaoMenu("label.copiar_icone", Icones.COPIA);
@@ -2139,7 +2141,8 @@ class SuperficiePopup extends Popup {
 
 	SuperficiePopup(ObjetoSuperficie superficie) {
 		this.superficie = superficie;
-		add(menuAlinhamento);
+		addMenuItem(objetosComTabelaAcao);
+		add(true, menuAlinhamento);
 		add(true, menuDistribuicao);
 		addMenuItem(true, copiarIconeAcao);
 		addMenuItem(colarIconeAcao);
@@ -2474,6 +2477,7 @@ class SuperficiePopup extends Popup {
 			}
 		});
 		excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(superficie));
+		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
 		criarRelacaoAcao.setActionListener(e -> criarRelacao());
 		relacoesAcao.setActionListener(e -> {
 			if (superficie.selecionadoObjeto != null) {
@@ -2499,6 +2503,21 @@ class SuperficiePopup extends Popup {
 		copiarIconeAcao.setActionListener(e -> copiarIcone(copiarIconeAcao));
 		colarIconeAcao.setActionListener(e -> colarIcone(colarIconeAcao));
 		copiarAcao.setActionListener(e -> copiar());
+	}
+
+	private void objetosComTabela() {
+		Coletor coletor = superficie.getObjetosComTabela();
+		if (coletor.size() == 0) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (String tabela : coletor.getLista()) {
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(tabela);
+		}
+		Util.mensagem(superficie, sb.toString());
 	}
 
 	private void criarRelacao() {
