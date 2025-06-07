@@ -20,6 +20,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.objeto.Objeto.Estado;
 import br.com.persist.plugins.objeto.internal.Argumento;
 import br.com.persist.plugins.objeto.internal.ArgumentoArray;
 import br.com.persist.plugins.objeto.internal.ArgumentoString;
@@ -535,14 +536,20 @@ public class ObjetoSuperficieUtil {
 		return null;
 	}
 
-	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie, boolean selecionado) {
+	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie, Estado estado) {
 		List<Objeto> resp = new ArrayList<>();
 		for (Objeto objeto : superficie.objetos) {
-			if (!Util.isEmpty(objeto.getTabela()) && objeto.isSelecionado() == selecionado) {
+			if (!Util.isEmpty(objeto.getTabela()) && validoIncluir(objeto, estado)) {
 				resp.add(objeto);
 			}
 		}
 		return resp;
+	}
+
+	private static boolean validoIncluir(Objeto objeto, Estado estado) {
+		return (estado == null || estado == Objeto.Estado.INDIFERENTE)
+				|| (estado == Objeto.Estado.SELECIONADO && objeto.isSelecionado())
+				|| (estado == Objeto.Estado.NAO_SELECIONADO && !objeto.isSelecionado());
 	}
 
 	public static List<String> getListaStringIds(ObjetoSuperficie superficie) {

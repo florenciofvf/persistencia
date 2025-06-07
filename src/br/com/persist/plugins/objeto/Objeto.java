@@ -365,6 +365,10 @@ public class Objeto implements Runnable {
 		}
 	}
 
+	public enum Estado {
+		SELECIONADO, NAO_SELECIONADO, INDIFERENTE
+	}
+
 	public static long novaSequencia() {
 		return ++sequencia;
 	}
