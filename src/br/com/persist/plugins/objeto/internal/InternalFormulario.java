@@ -37,6 +37,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.Objeto.Estado;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
@@ -359,10 +360,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			return null;
 		}
 
-		public List<Objeto> objetosComTabela() {
+		public List<Objeto> objetosComTabela(Estado estado) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				return ObjetoSuperficieUtil.objetosComTabela((ObjetoSuperficie) desktop);
+				return ObjetoSuperficieUtil.objetosComTabela((ObjetoSuperficie) desktop, estado);
 			}
 			return new ArrayList<>();
 		}

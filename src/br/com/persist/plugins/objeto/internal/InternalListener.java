@@ -15,6 +15,7 @@ import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.MetadadoException;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.Objeto.Estado;
 import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -53,11 +54,11 @@ public interface InternalListener {
 
 		public void salvarVinculacao(Vinculacao vinculacao);
 
+		public List<Objeto> objetosComTabela(Estado estado);
+
 		public void atualizarComplemento(Objeto objeto);
 
 		public Objeto getObjeto(Referencia ref);
-
-		public List<Objeto> objetosComTabela();
 
 		public boolean validoInvisibilidade();
 	}
