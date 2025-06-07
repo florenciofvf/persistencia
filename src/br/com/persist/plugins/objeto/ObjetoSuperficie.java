@@ -1191,7 +1191,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
 			return;
 		}
-		if (!ObjetoSuperficieUtil.objetosComTabela(this).isEmpty()) {
+		if (!ObjetoSuperficieUtil.objetosComTabela(this, false).isEmpty()) {
 			String[] opcoes = new String[] { ObjetoMensagens.getString("label.total_sem_exibicao"),
 					ObjetoMensagens.getString("label.total_com_exibicao") };
 			String opcao = Util.getValorInputDialog(ObjetoSuperficie.this, opcoes);
@@ -1307,8 +1307,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public Coletor getObjetosComTabela() {
-		List<Objeto> listaObjeto = ObjetoSuperficieUtil.objetosComTabela(this);
+	public Coletor getObjetosComTabela(boolean selecionado) {
+		List<Objeto> listaObjeto = ObjetoSuperficieUtil.objetosComTabela(this, selecionado);
 		Coletor coletor = new Coletor();
 		if (listaObjeto.isEmpty()) {
 			Util.mensagem(getFormulario(), ObjetoMensagens.getString("msg.nenhum_objeto_com_tabela"));
@@ -2062,7 +2062,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void objetosComTabela() {
-		Coletor coletor = superficie.getObjetosComTabela();
+		Coletor coletor = superficie.getObjetosComTabela(false);
 		if (coletor.size() == 0) {
 			return;
 		}
@@ -2506,7 +2506,7 @@ class SuperficiePopup extends Popup {
 	}
 
 	private void objetosComTabela() {
-		Coletor coletor = superficie.getObjetosComTabela();
+		Coletor coletor = superficie.getObjetosComTabela(true);
 		if (coletor.size() == 0) {
 			return;
 		}

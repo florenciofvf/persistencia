@@ -535,10 +535,10 @@ public class ObjetoSuperficieUtil {
 		return null;
 	}
 
-	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie) {
+	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie, boolean selecionado) {
 		List<Objeto> resp = new ArrayList<>();
 		for (Objeto objeto : superficie.objetos) {
-			if (!Util.isEmpty(objeto.getTabela())) {
+			if (!Util.isEmpty(objeto.getTabela()) && objeto.isSelecionado() == selecionado) {
 				resp.add(objeto);
 			}
 		}
