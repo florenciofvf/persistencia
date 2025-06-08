@@ -101,6 +101,7 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
+	transient MacroManager macroManager = new MacroManager();
 	final transient Vinculacao vinculacao = new Vinculacao();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
@@ -140,12 +141,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_Z), "zoom_menos");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_X), "zoom_mais");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_M), "macro");
-		getActionMap().put("thread_processar", threadProcessar);
-		getActionMap().put("thread_desativar", threadDesativar);
-		getActionMap().put("macro_lista", macroLista);
-		getActionMap().put("zoom_menos", zoomMenos);
-		getActionMap().put("zoom_mais", zoomMais);
-		getActionMap().put("macro", macro);
+		getActionMap().put("thread_processar", macroManager.threadProcessar);
+		getActionMap().put("thread_desativar", macroManager.threadDesativar);
+		getActionMap().put("macro_lista", macroManager.macroLista);
+		getActionMap().put("zoom_menos", macroManager.zoomMenos);
+		getActionMap().put("zoom_mais", macroManager.zoomMais);
+		getActionMap().put("macro", macroManager.macro);
 	}
 
 	public void checarLargura(InternalContainer invocador) {
@@ -240,108 +241,110 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		this.processar = processar;
 	}
 
-	private transient javax.swing.Action threadProcessar = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
+	class MacroManager {
+		private javax.swing.Action threadProcessar = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ObjetoSuperficieUtil.processar(ObjetoSuperficie.this);
-		}
-	};
-
-	private transient javax.swing.Action threadDesativar = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ObjetoSuperficieUtil.desativar(ObjetoSuperficie.this);
-		}
-	};
-
-	private transient javax.swing.Action macroLista = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (MacroProvedor.isEmpty()) {
-				return;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ObjetoSuperficieUtil.processar(ObjetoSuperficie.this);
 			}
-			MacroDialogo.criar(container.getFrame());
-		}
-	};
+		};
 
-	transient javax.swing.Action macro = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
+		private javax.swing.Action threadDesativar = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			List<MacroProvedor.Instrucao> instrucoes = MacroProvedor.getInstrucoes();
-			if (instrucoes.isEmpty()) {
-				return;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ObjetoSuperficieUtil.desativar(ObjetoSuperficie.this);
 			}
-			try {
-				macroObjetos(instrucoes);
-				macroRelacoes(instrucoes);
+		};
+
+		private javax.swing.Action macroLista = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (MacroProvedor.isEmpty()) {
+					return;
+				}
+				MacroDialogo.criar(container.getFrame());
+			}
+		};
+
+		javax.swing.Action macro = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<MacroProvedor.Instrucao> instrucoes = MacroProvedor.getInstrucoes();
+				if (instrucoes.isEmpty()) {
+					return;
+				}
+				try {
+					macroObjetos(instrucoes);
+					macroRelacoes(instrucoes);
+					repaint();
+				} catch (AssistenciaException ex) {
+					Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
+				}
+			}
+
+			private void macroObjetos(List<MacroProvedor.Instrucao> instrucoes) throws AssistenciaException {
+				for (Objeto objeto : objetos) {
+					if (objeto.isSelecionado()) {
+						for (MacroProvedor.Instrucao instrucao : instrucoes) {
+							try {
+								instrucao.executar(objeto);
+								instrucao.posExecutar(ObjetoSuperficie.this, objeto, null);
+							} catch (MacroException ex) {
+								Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
+							}
+						}
+					}
+				}
+			}
+
+			private void macroRelacoes(List<MacroProvedor.Instrucao> instrucoes) {
+				for (Relacao relacao : relacoes) {
+					if (relacao.isSelecionado()) {
+						for (MacroProvedor.Instrucao instrucao : instrucoes) {
+							try {
+								instrucao.executar(relacao);
+								instrucao.posExecutar(ObjetoSuperficie.this, null, relacao);
+							} catch (MacroException ex) {
+								Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
+							}
+						}
+					}
+				}
+			}
+		};
+
+		private javax.swing.Action zoomMenos = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Objeto objeto : objetos) {
+					objeto.zoomMenos();
+				}
 				repaint();
-			} catch (AssistenciaException ex) {
-				Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
 			}
-		}
+		};
 
-		private void macroObjetos(List<MacroProvedor.Instrucao> instrucoes) throws AssistenciaException {
-			for (Objeto objeto : objetos) {
-				if (objeto.isSelecionado()) {
-					for (MacroProvedor.Instrucao instrucao : instrucoes) {
-						try {
-							instrucao.executar(objeto);
-							instrucao.posExecutar(ObjetoSuperficie.this, objeto, null);
-						} catch (MacroException ex) {
-							Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
-						}
-					}
+		private javax.swing.Action zoomMais = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Objeto objeto : objetos) {
+					objeto.zoomMais();
 				}
+				repaint();
 			}
-		}
-
-		private void macroRelacoes(List<MacroProvedor.Instrucao> instrucoes) {
-			for (Relacao relacao : relacoes) {
-				if (relacao.isSelecionado()) {
-					for (MacroProvedor.Instrucao instrucao : instrucoes) {
-						try {
-							instrucao.executar(relacao);
-							instrucao.posExecutar(ObjetoSuperficie.this, null, relacao);
-						} catch (MacroException ex) {
-							Util.mensagem(ObjetoSuperficie.this, ex.getMessage());
-						}
-					}
-				}
-			}
-		}
-	};
-
-	private transient javax.swing.Action zoomMenos = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			for (Objeto objeto : objetos) {
-				objeto.zoomMenos();
-			}
-			repaint();
-		}
-	};
-
-	private transient javax.swing.Action zoomMais = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			for (Objeto objeto : objetos) {
-				objeto.zoomMais();
-			}
-			repaint();
-		}
-	};
+		};
+	}
 
 	public int getTotalArrastado() {
 		return totalArrastado;
@@ -2193,7 +2196,7 @@ class SuperficiePopup extends Popup {
 				} else {
 					MacroProvedor.xLocal(superficie.selecionadoObjeto.x);
 				}
-				superficie.macro.actionPerformed(null);
+				superficie.macroManager.macro.actionPerformed(null);
 			}
 		}
 	}
