@@ -78,19 +78,19 @@ public class ObjetoSuperficieUtil {
 	}
 
 	private static void salvarObjetos(ObjetoSuperficie superficie, XMLUtil util) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.salvar(util);
 		}
-		if (superficie.objetos.length > 0) {
+		if (superficie.getObjetos().length > 0) {
 			util.ql();
 		}
 	}
 
 	private static void salvarRelacoes(ObjetoSuperficie superficie, XMLUtil util) {
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			relacao.salvar(util);
 		}
-		if (superficie.relacoes.length > 0) {
+		if (superficie.getRelacoes().length > 0) {
 			util.ql();
 		}
 	}
@@ -227,7 +227,7 @@ public class ObjetoSuperficieUtil {
 
 	public static List<Objeto> getObjetosTabelaIcone(ObjetoSuperficie superficie) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (!Util.isEmpty(objeto.getTabela()) && !Util.isEmpty(objeto.getIcone())) {
 				resp.add(objeto);
 			}
@@ -260,14 +260,14 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void pontoOrigem(ObjetoSuperficie superficie, boolean b) {
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			relacao.setPontoOrigem(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void pontoDestino(ObjetoSuperficie superficie, boolean b) {
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			relacao.setPontoDestino(b);
 		}
 		superficie.repaint();
@@ -282,14 +282,14 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void deselRelacoes(ObjetoSuperficie superficie) {
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			relacao.setSelecionado(false);
 			relacao.setObjetoTemp(null);
 		}
 	}
 
 	public static void mover(ObjetoSuperficie superficie, char c) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.isSelecionado()) {
 				if (c == 'L') {
 					objeto.x -= 5;
@@ -307,7 +307,7 @@ public class ObjetoSuperficieUtil {
 
 	public static void excluirSemTabela(ObjetoSuperficie superficie) {
 		boolean contem = false;
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (Util.isEmpty(objeto.getTabela())) {
 				contem = true;
 				break;
@@ -318,12 +318,12 @@ public class ObjetoSuperficieUtil {
 			return;
 		}
 		if (Util.confirmaExclusao(superficie, true)) {
-			for (Objeto objeto : superficie.objetos) {
+			for (Objeto objeto : superficie.getObjetos()) {
 				if (Util.isEmpty(objeto.getTabela())) {
 					superficie.excluir(objeto);
 				}
 			}
-			for (Objeto objeto : superficie.objetos) {
+			for (Objeto objeto : superficie.getObjetos()) {
 				objeto.associado = null;
 			}
 		}
@@ -332,7 +332,7 @@ public class ObjetoSuperficieUtil {
 
 	public static void excluirTabelaCriterioTR(ObjetoSuperficie superficie, Label lblStatus1, Label lblStatus2) {
 		List<Objeto> lista = new ArrayList<>();
-		for (Objeto item : superficie.objetos) {
+		for (Objeto item : superficie.getObjetos()) {
 			if (!Util.isEmpty(item.getTabela())) {
 				lista.add(item);
 			}
@@ -483,7 +483,7 @@ public class ObjetoSuperficieUtil {
 
 	public static int preTotalRecente(ObjetoSuperficie superficie, Label label) {
 		int total = 0;
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (!Util.isEmpty(objeto.getTabela())) {
 				objeto.criarMemento();
 				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
@@ -544,7 +544,7 @@ public class ObjetoSuperficieUtil {
 		if (ref == null) {
 			return null;
 		}
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (ref.igual(objeto)) {
 				return objeto;
 			}
@@ -554,7 +554,7 @@ public class ObjetoSuperficieUtil {
 
 	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie, Estado estado) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (!Util.isEmpty(objeto.getTabela()) && validoIncluir(objeto, estado)) {
 				resp.add(objeto);
 			}
@@ -570,7 +570,7 @@ public class ObjetoSuperficieUtil {
 
 	public static List<String> getListaStringIds(ObjetoSuperficie superficie) {
 		List<String> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			resp.add(objeto.getId());
 		}
 		return resp;
@@ -578,7 +578,7 @@ public class ObjetoSuperficieUtil {
 
 	public static List<Objeto> getSelecionados(ObjetoSuperficie superficie) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.isSelecionado()) {
 				resp.add(objeto);
 			}
@@ -588,7 +588,7 @@ public class ObjetoSuperficieUtil {
 
 	public static List<Objeto> getIgnorados(ObjetoSuperficie superficie) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.isIgnorar()) {
 				resp.add(objeto);
 			}
@@ -597,23 +597,23 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void desativarObjetos(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.desativar();
 		}
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			relacao.desativar();
 		}
 		superficie.repaint();
 	}
 
 	public static void limparSelecao(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.setSelecionado(false);
 		}
 	}
 
 	public static Objeto getPrimeiroObjetoSelecionado(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.isSelecionado()) {
 				return objeto;
 			}
@@ -622,7 +622,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static Relacao getPrimeiroRelacaoSelecionado(ObjetoSuperficie superficie) {
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			if (relacao.isSelecionado()) {
 				return relacao;
 			}
@@ -632,7 +632,7 @@ public class ObjetoSuperficieUtil {
 
 	public static Relacao getRelacao(ObjetoSuperficie superficie, Objeto obj) {
 		if (obj != null) {
-			for (Relacao relacao : superficie.relacoes) {
+			for (Relacao relacao : superficie.getRelacoes()) {
 				if (relacao.contem(obj)) {
 					return relacao;
 				}
@@ -643,7 +643,7 @@ public class ObjetoSuperficieUtil {
 
 	public static Set<String> getIdOrigens(ObjetoSuperficie superficie) {
 		Set<String> set = new HashSet<>();
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			set.add(relacao.getOrigem().getId());
 		}
 		return set;
@@ -652,7 +652,7 @@ public class ObjetoSuperficieUtil {
 	public static List<Relacao> getRelacoes(ObjetoSuperficie superficie, Objeto obj) {
 		List<Relacao> lista = new ArrayList<>();
 		if (obj != null) {
-			for (Relacao relacao : superficie.relacoes) {
+			for (Relacao relacao : superficie.getRelacoes()) {
 				if (relacao.contem(obj)) {
 					lista.add(relacao);
 				}
@@ -664,7 +664,7 @@ public class ObjetoSuperficieUtil {
 	public static Relacao getRelacao(ObjetoSuperficie superficie, Objeto obj1, Objeto obj2) throws ObjetoException {
 		if (obj1 != null && obj2 != null) {
 			Relacao temp = new Relacao(obj1, obj2);
-			for (Relacao relacao : superficie.relacoes) {
+			for (Relacao relacao : superficie.getRelacoes()) {
 				if (relacao.equals(temp)) {
 					return relacao;
 				}
@@ -674,8 +674,8 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static boolean contemId(ObjetoSuperficie superficie, Objeto obj, String id) {
-		for (int i = 0; i < superficie.objetos.length; i++) {
-			Objeto objeto = superficie.objetos[i];
+		for (int i = 0; i < superficie.getObjetos().length; i++) {
+			Objeto objeto = superficie.getObjetos()[i];
 			if (objeto != obj && objeto.idEquals(id)) {
 				return true;
 			}
@@ -684,8 +684,8 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static boolean contemId(ObjetoSuperficie superficie, Objeto obj) {
-		for (int i = 0; i < superficie.objetos.length; i++) {
-			Objeto objeto = superficie.objetos[i];
+		for (int i = 0; i < superficie.getObjetos().length; i++) {
+			Objeto objeto = superficie.getObjetos()[i];
 			if (objeto != obj && objeto.equalsId(obj)) {
 				return true;
 			}
@@ -694,51 +694,51 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static Objeto getObjeto(ObjetoSuperficie superficie, String id) {
-		for (int i = 0; i < superficie.objetos.length; i++) {
-			if (superficie.objetos[i].getId().equals(id)) {
-				return superficie.objetos[i];
+		for (int i = 0; i < superficie.getObjetos().length; i++) {
+			if (superficie.getObjetos()[i].getId().equals(id)) {
+				return superficie.getObjetos()[i];
 			}
 		}
 		return null;
 	}
 
 	public static void desenharDesc(ObjetoSuperficie superficie, boolean b) {
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			relacao.setDesenharDescricao(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void selecaoGeral(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.setSelecionado(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void compararRegistro(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.setCompararRegistro(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void desenharIds(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.setDesenharId(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void transparente(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.setTransparente(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void ignorar(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.setIgnorar(b);
 		}
 		superficie.repaint();
@@ -746,8 +746,8 @@ public class ObjetoSuperficieUtil {
 
 	public static int getIndiceId(ObjetoSuperficie superficie, Objeto obj) {
 		if (obj != null) {
-			for (int i = 0; i < superficie.objetos.length; i++) {
-				if (superficie.objetos[i].equalsId(obj)) {
+			for (int i = 0; i < superficie.getObjetos().length; i++) {
+				if (superficie.getObjetos()[i].equalsId(obj)) {
 					return i;
 				}
 			}
@@ -757,8 +757,8 @@ public class ObjetoSuperficieUtil {
 
 	public static int getIndice(ObjetoSuperficie superficie, Objeto obj) {
 		if (obj != null) {
-			for (int i = 0; i < superficie.objetos.length; i++) {
-				if (superficie.objetos[i] == obj || superficie.objetos[i].equals(obj)) {
+			for (int i = 0; i < superficie.getObjetos().length; i++) {
+				if (superficie.getObjetos()[i] == obj || superficie.getObjetos()[i].equals(obj)) {
 					return i;
 				}
 			}
@@ -768,8 +768,8 @@ public class ObjetoSuperficieUtil {
 
 	public static int getIndice(ObjetoSuperficie superficie, Relacao obj) {
 		if (obj != null) {
-			for (int i = 0; i < superficie.relacoes.length; i++) {
-				if (superficie.relacoes[i] == obj || superficie.relacoes[i].equals(obj)) {
+			for (int i = 0; i < superficie.getRelacoes().length; i++) {
+				if (superficie.getRelacoes()[i] == obj || superficie.getRelacoes()[i].equals(obj)) {
 					return i;
 				}
 			}
@@ -778,7 +778,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static boolean contemObjetoComTabela(ObjetoSuperficie superficie, String nomeTabela) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.getTabela().equalsIgnoreCase(nomeTabela)) {
 				return true;
 			}
@@ -787,7 +787,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static boolean contemReferencia(ObjetoSuperficie superficie, Objeto objeto) {
-		for (Objeto obj : superficie.objetos) {
+		for (Objeto obj : superficie.getObjetos()) {
 			if (obj == objeto) {
 				return true;
 			}
@@ -800,13 +800,13 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void processar(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.isSelecionado()) {
 				objeto.setProcessar(true);
 				objeto.ativar();
 			}
 		}
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			if (relacao.isSelecionado()) {
 				relacao.setProcessar(true);
 				relacao.ativar();
@@ -821,7 +821,7 @@ public class ObjetoSuperficieUtil {
 			return total;
 		}
 		string = string.trim().toUpperCase();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.getId().toUpperCase().indexOf(string) != -1
 					|| objeto.getTabela().toUpperCase().indexOf(string) != -1) {
 				objeto.setProcessar(true);
@@ -834,12 +834,12 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void desativar(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.isSelecionado()) {
 				objeto.desativar();
 			}
 		}
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			if (relacao.isSelecionado()) {
 				relacao.desativar();
 			}
@@ -848,7 +848,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void prefixoNomeTabela(ObjetoSuperficie superficie, String prefixoNomeTabela) {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.setPrefixoNomeTabela(prefixoNomeTabela);
 		}
 	}

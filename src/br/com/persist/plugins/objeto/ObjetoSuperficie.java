@@ -111,12 +111,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private final transient Area area = new Area();
 	private transient Relacao selecionadoRelacao;
 	private transient Objeto selecionadoObjeto;
+	private transient Relacao[] relacoes;
+	private transient Objeto[] objetos;
 	final ObjetoContainer container;
 	private boolean validoArrastar;
 	final SuperficiePopup2 popup2;
-	transient Relacao[] relacoes;
 	final SuperficiePopup popup;
-	transient Objeto[] objetos;
 	private int totalArrastado;
 	String arquivoVinculo;
 	private byte estado;
@@ -196,6 +196,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public Vinculacao getVinculacao() {
 		return vinculacao;
+	}
+
+	public Relacao[] getRelacoes() {
+		return relacoes;
+	}
+
+	public Objeto[] getObjetos() {
+		return objetos;
 	}
 
 	@Override
@@ -1381,7 +1389,7 @@ abstract class ThreadComparacao extends Thread {
 	}
 
 	void restaurarMemento() {
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			objeto.restaurarMemento();
 		}
 	}
@@ -1417,7 +1425,7 @@ class ThreadTotal extends ThreadComparacao {
 		setItensEnabled(false);
 		int atual = 0;
 		List<Objeto> novos = new ArrayList<>();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (!Util.isEmpty(objeto.getTabela())) {
 				try {
 					String[] array = { "0", "0" };
@@ -1503,7 +1511,7 @@ class ThreadRecente extends ThreadComparacao {
 		setItensEnabled(false);
 		int atual = 0;
 		List<Objeto> novos = new ArrayList<>();
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (!Util.isEmpty(objeto.getTabela())) {
 				try {
 					String[] array = { "0", "0" };
@@ -1855,7 +1863,7 @@ class SuperficiePopup2 extends Popup {
 		StringBuilder sbi = new StringBuilder();
 		int invisiveis = 0;
 		int visiveis = 0;
-		for (Objeto objeto : superficie.objetos) {
+		for (Objeto objeto : superficie.getObjetos()) {
 			if (objeto.visivel) {
 				visiveis++;
 			} else {
@@ -3244,7 +3252,7 @@ class ThreadManager implements Runnable {
 
 	private void processarHora() {
 		totalHoras = 0;
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			try {
 				if (HoraUtil.formatoValido(relacao.getDescricao())) {
 					totalHoras += HoraUtil.getSegundos(relacao.getDescricao());
@@ -3257,7 +3265,7 @@ class ThreadManager implements Runnable {
 	}
 
 	public void reiniciarHoras() throws AssistenciaException {
-		for (Relacao relacao : superficie.relacoes) {
+		for (Relacao relacao : superficie.getRelacoes()) {
 			relacao.reiniciarHoras(true, superficie);
 		}
 		totalHoras = 0;
@@ -3358,7 +3366,7 @@ class MacroManager {
 		}
 
 		private void macroObjetos(List<MacroProvedor.Instrucao> instrucoes) throws AssistenciaException {
-			for (Objeto objeto : superficie.objetos) {
+			for (Objeto objeto : superficie.getObjetos()) {
 				if (objeto.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
 						try {
@@ -3373,7 +3381,7 @@ class MacroManager {
 		}
 
 		private void macroRelacoes(List<MacroProvedor.Instrucao> instrucoes) {
-			for (Relacao relacao : superficie.relacoes) {
+			for (Relacao relacao : superficie.getRelacoes()) {
 				if (relacao.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
 						try {
@@ -3393,7 +3401,7 @@ class MacroManager {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (Objeto objeto : superficie.objetos) {
+			for (Objeto objeto : superficie.getObjetos()) {
 				objeto.zoomMenos();
 			}
 			superficie.repaint();
@@ -3405,7 +3413,7 @@ class MacroManager {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (Objeto objeto : superficie.objetos) {
+			for (Objeto objeto : superficie.getObjetos()) {
 				objeto.zoomMais();
 			}
 			superficie.repaint();
