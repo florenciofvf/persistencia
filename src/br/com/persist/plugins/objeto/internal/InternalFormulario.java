@@ -387,14 +387,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).adicionarHierarquicoInvisivelAbaixo(getLocation());
+				((ObjetoSuperficie) desktop).getVisivelManager().adicionarHierarquicoInvisivelAbaixo(getLocation());
 			}
 		}
 
 		public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).adicionarHierarquicoInvisivelAcima(getLocation());
+				((ObjetoSuperficie) desktop).getVisivelManager().adicionarHierarquicoInvisivelAcima(getLocation());
 			}
 		}
 

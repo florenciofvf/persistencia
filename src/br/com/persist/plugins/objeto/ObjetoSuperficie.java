@@ -100,6 +100,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
+	transient HierarquicoVisivelManager visivelManager = new HierarquicoVisivelManager(this);
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
 	transient ThreadManager threadManager = new ThreadManager(this);
 	transient MacroManager macroManager = new MacroManager(this);
@@ -159,6 +160,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				}
 			}
 		}
+	}
+
+	public HierarquicoVisivelManager getVisivelManager() {
+		return visivelManager;
 	}
 
 	@Override
@@ -1111,26 +1116,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 	}
 
-	public void adicionarHierarquicoInvisivelAbaixo(Point point) {
-		if (point != null) {
-			point.y += Constantes.TRINTA;
-		}
-		Coletor coletor = getColetorFormsInvisiveis();
-		if (coletor.size() == 1) {
-			tornarVisivel(coletor.get(0), point);
-		}
-	}
-
-	public void adicionarHierarquicoInvisivelAcima(Point point) {
-		if (point != null) {
-			point.y -= Constantes.TRINTA;
-		}
-		Coletor coletor = getColetorFormsInvisiveis();
-		if (coletor.size() == 1) {
-			tornarVisivel(coletor.get(0), point);
-		}
-	}
-
 	public Coletor getObjetosComTabela(Estado estado) {
 		List<Objeto> listaObjeto = ObjetoSuperficieUtil.objetosComTabela(this, estado);
 		Coletor coletor = new Coletor();
@@ -1144,22 +1129,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 		SetLista.view(ObjetoMensagens.getString(LABEL_OBJETOS_COM_TABELA), lista, coletor, this, null);
 		return coletor;
-	}
-
-	public Coletor getColetorFormsInvisiveis() {
-		Coletor coletor = new Coletor();
-		List<String> lista = ObjetoSuperficieUtil.getListaFormulariosInvisiveis(this);
-		if (lista.isEmpty()) {
-			Util.mensagem(getFormulario(), ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
-			return coletor;
-		}
-		SetLista.view(ObjetoMensagens.getString("label.forms_invisiveis"), lista, coletor, this,
-				new SetLista.Config(true, true));
-		return coletor;
-	}
-
-	private void tornarVisivel(String grupoTabela, Point point) {
-		ObjetoSuperficieUtil.tornarVisivel(this, grupoTabela, point);
 	}
 
 	public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) throws AssistenciaException {
@@ -1897,7 +1866,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void formulariosInvisiveis() {
-		Coletor coletor = superficie.getColetorFormsInvisiveis();
+		Coletor coletor = superficie.visivelManager.getColetorFormsInvisiveis();
 		if (coletor.size() == 1) {
 			tornarVisivel(coletor.get(0));
 		}
