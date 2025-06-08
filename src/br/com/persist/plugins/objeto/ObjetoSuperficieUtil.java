@@ -24,6 +24,7 @@ import br.com.persist.plugins.objeto.Objeto.Estado;
 import br.com.persist.plugins.objeto.internal.Argumento;
 import br.com.persist.plugins.objeto.internal.ArgumentoArray;
 import br.com.persist.plugins.objeto.internal.ArgumentoString;
+import br.com.persist.plugins.objeto.internal.ExternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
@@ -105,6 +106,11 @@ public class ObjetoSuperficieUtil {
 				form.salvar(util);
 			}
 		}
+	}
+
+	public static void criarExternalFormulario(ObjetoSuperficie superficie, Conexao conexao, Objeto objeto) {
+		Desktop.setComplemento(conexao, objeto);
+		ExternalFormulario.criar(superficie.getFormulario(), conexao, objeto);
 	}
 
 	public static void listarNomeBiblio(ObjetoSuperficie superficie, List<String> lista) {
@@ -875,7 +881,7 @@ public class ObjetoSuperficieUtil {
 		objeto.setComplemento(string);
 		objeto.setReferenciaPesquisa(referencia);
 		if (ObjetoPreferencia.isAbrirAutoDestacado()) {
-			superficie.criarExternalFormulario(conexao != null ? conexao : superficie.container.getConexaoPadrao(),
+			criarExternalFormulario(superficie, conexao != null ? conexao : superficie.container.getConexaoPadrao(),
 					objeto.clonar());
 		} else {
 			objeto.setSelecionado(true);

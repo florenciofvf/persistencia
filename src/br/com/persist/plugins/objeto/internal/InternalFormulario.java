@@ -387,28 +387,32 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).getVisivelManager().adicionarHierarquicoInvisivelAbaixo(getLocation());
+				((ObjetoSuperficie) desktop).getHierarquicoVisivelManager()
+						.adicionarHierarquicoInvisivelAbaixo(getLocation());
 			}
 		}
 
 		public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).getVisivelManager().adicionarHierarquicoInvisivelAcima(getLocation());
+				((ObjetoSuperficie) desktop).getHierarquicoVisivelManager()
+						.adicionarHierarquicoInvisivelAcima(getLocation());
 			}
 		}
 
 		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) throws AssistenciaException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulsoAbaixo(conexao, objeto);
+				((ObjetoSuperficie) desktop).getHierarquicoAvulsoManager().adicionarHierarquicoAvulsoAbaixo(conexao,
+						objeto);
 			}
 		}
 
 		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) throws AssistenciaException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).adicionarHierarquicoAvulsoAcima(conexao, objeto);
+				((ObjetoSuperficie) desktop).getHierarquicoAvulsoManager().adicionarHierarquicoAvulsoAcima(conexao,
+						objeto);
 			}
 		}
 

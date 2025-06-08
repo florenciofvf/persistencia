@@ -84,7 +84,6 @@ import br.com.persist.plugins.objeto.circular.CircularDialogo;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
 import br.com.persist.plugins.objeto.config.RelacaoDialogo;
 import br.com.persist.plugins.objeto.internal.Argumento;
-import br.com.persist.plugins.objeto.internal.ExternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
@@ -100,7 +99,8 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
-	transient HierarquicoVisivelManager visivelManager = new HierarquicoVisivelManager(this);
+	transient HierarquicoVisivelManager hierarquicoVisivelManager = new HierarquicoVisivelManager(this);
+	transient HierarquicoAvulsoManager hierarquicoAvulsoManager = new HierarquicoAvulsoManager(this);
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
 	transient ThreadManager threadManager = new ThreadManager(this);
 	transient MacroManager macroManager = new MacroManager(this);
@@ -162,8 +162,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public HierarquicoVisivelManager getVisivelManager() {
-		return visivelManager;
+	public HierarquicoVisivelManager getHierarquicoVisivelManager() {
+		return hierarquicoVisivelManager;
+	}
+
+	public HierarquicoAvulsoManager getHierarquicoAvulsoManager() {
+		return hierarquicoAvulsoManager;
 	}
 
 	@Override
@@ -639,7 +643,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 					conexao = container.getConexaoPadrao();
 				}
 				if (Util.isEmpty(objeto.getArquivo())) {
-					criarExternalFormulario(conexao, objeto);
+					ObjetoSuperficieUtil.criarExternalFormulario(ObjetoSuperficie.this, conexao, objeto);
 				} else {
 					abrirArquivo(conexao, objeto, interno);
 				}
@@ -1006,11 +1010,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		ObjetoSuperficieUtil.pesquisarReferencia(this, conexao, pesquisa, referencia, argumento, objeto);
 	}
 
-	void criarExternalFormulario(Conexao conexao, Objeto objeto) {
-		setComplemento(conexao, objeto);
-		ExternalFormulario.criar(formulario, conexao, objeto);
-	}
-
 	public void atualizarTotal(Conexao conexao, MenuItem[] menuItens, Label label) {
 		if (conexao == null) {
 			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
@@ -1081,7 +1080,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		Util.updateComponentTreeUI(getParent());
 	}
 
-	private void msgInexistenteMetadado(Objeto objeto) {
+	public void msgInexistenteMetadado(Objeto objeto) {
 		Util.mensagem(ObjetoSuperficie.this, ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
 	}
 
@@ -1129,58 +1128,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 		SetLista.view(ObjetoMensagens.getString(LABEL_OBJETOS_COM_TABELA), lista, coletor, this, null);
 		return coletor;
-	}
-
-	public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) throws AssistenciaException {
-		Map<String, Object> args = new HashMap<>();
-		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
-		formulario.processar(args);
-		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
-		if (metadado == null) {
-			msgInexistenteMetadado(objeto);
-		} else {
-			if (conexao == null) {
-				conexao = container.getConexaoPadrao();
-			}
-			criarObjetoHierarquicoAvulsoAcima(conexao, objeto, metadado);
-		}
-	}
-
-	public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) throws AssistenciaException {
-		Map<String, Object> args = new HashMap<>();
-		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
-		formulario.processar(args);
-		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
-		if (metadado == null) {
-			msgInexistenteMetadado(objeto);
-		} else {
-			if (conexao == null) {
-				conexao = container.getConexaoPadrao();
-			}
-			criarObjetoHierarquicoAvulsoAbaixo(conexao, objeto, metadado);
-		}
-	}
-
-	private void criarObjetoHierarquicoAvulsoAcima(Conexao conexao, Objeto principal, Metadado tabela)
-			throws AssistenciaException {
-		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
-		Metadado tabelaAvulsa = exportacao.getTabelaAvulsa();
-		if (tabelaAvulsa != null) {
-			exportacao.adicionarObjetoAvulso(tabelaAvulsa);
-			exportacao.localizarObjetoAcima();
-			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
-		}
-	}
-
-	private void criarObjetoHierarquicoAvulsoAbaixo(Conexao conexao, Objeto principal, Metadado tabela)
-			throws AssistenciaException {
-		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, null, tabela.getPai());
-		Metadado tabelaAvulsa = exportacao.getTabelaAvulsa();
-		if (tabelaAvulsa != null) {
-			exportacao.adicionarObjetoAvulso(tabelaAvulsa);
-			exportacao.localizarObjetoAbaixo();
-			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
-		}
 	}
 
 	public void getMetadado(AtomicReference<Object> ref, Objeto objeto) {
@@ -1866,7 +1813,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void formulariosInvisiveis() {
-		Coletor coletor = superficie.visivelManager.getColetorFormsInvisiveis();
+		Coletor coletor = superficie.hierarquicoVisivelManager.getColetorFormsInvisiveis();
 		if (coletor.size() == 1) {
 			tornarVisivel(coletor.get(0));
 		}
@@ -2359,7 +2306,7 @@ class SuperficiePopup extends Popup {
 
 	private void abrirObjeto(Objeto objeto) {
 		Conexao conexao = superficie.container.getConexaoPadrao();
-		superficie.criarExternalFormulario(conexao, objeto);
+		ObjetoSuperficieUtil.criarExternalFormulario(superficie, conexao, objeto);
 	}
 
 	private void selecionarRelacao(Objeto objeto) throws ObjetoException {
