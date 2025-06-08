@@ -116,9 +116,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	final ObjetoContainer container;
 	private boolean validoArrastar;
 	final SuperficiePopup2 popup2;
+	private String arquivoVinculo;
 	final SuperficiePopup popup;
 	private int totalArrastado;
-	String arquivoVinculo;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -204,6 +204,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public Objeto[] getObjetos() {
 		return objetos;
+	}
+
+	public void setArquivoVinculo(String arquivoVinculo) {
+		this.arquivoVinculo = arquivoVinculo;
+	}
+
+	public String getArquivoVinculo() {
+		return arquivoVinculo;
 	}
 
 	@Override
@@ -1284,10 +1292,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO) {
 			ObjetoSuperficieDestacar.destacarPropriaSuperficie(this, selecionados, conexao, config);
 		}
-	}
-
-	public void setArquivoVinculo(String arquivoVinculo) {
-		this.arquivoVinculo = arquivoVinculo;
 	}
 
 	public void selecionarCampo(Objeto objeto, Coletor coletor, Component c, String selecionarItem) {

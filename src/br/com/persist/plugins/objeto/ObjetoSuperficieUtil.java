@@ -71,7 +71,7 @@ public class ObjetoSuperficieUtil {
 		util.atributoCheck("processar", superficie.getThreadManager().processar);
 		util.atributo("largura", superficie.getWidth());
 		util.atributo("altura", superficie.getHeight());
-		util.atributo("arquivoVinculo", superficie.arquivoVinculo);
+		util.atributo("arquivoVinculo", superficie.getArquivoVinculo());
 		if (conexao != null) {
 			util.atributo("conexao", conexao.getNome());
 		}
@@ -192,7 +192,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void todosIconesParaArquivoVinculado(ObjetoSuperficie superficie) throws ObjetoException {
-		if (Util.isEmpty(superficie.arquivoVinculo)) {
+		if (Util.isEmpty(superficie.getArquivoVinculo())) {
 			Util.mensagem(superficie, ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_inexistente"));
 			return;
 		}
@@ -240,7 +240,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static ArquivoVinculo criarArquivoVinculo(ObjetoSuperficie superficie) {
-		return new ArquivoVinculo(superficie.arquivoVinculo);
+		return new ArquivoVinculo(superficie.getArquivoVinculo());
 	}
 
 	public static void atualizarComplemento(ObjetoSuperficie superficie, Objeto objeto) {
