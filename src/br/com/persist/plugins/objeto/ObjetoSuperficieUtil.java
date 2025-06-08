@@ -107,6 +107,10 @@ public class ObjetoSuperficieUtil {
 		}
 	}
 
+	public static void listarNomeBiblio(ObjetoSuperficie superficie, List<String> lista) {
+		superficie.getFormulario().listarNomeBiblio(lista);
+	}
+
 	public static void paraFrente(ObjetoSuperficie superficie, Relacao obj) {
 		if (superficie.excluir(obj)) {
 			superficie.addRelacao(obj);

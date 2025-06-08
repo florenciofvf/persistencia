@@ -1360,10 +1360,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void listarNomeBiblio(List<String> lista) {
-		formulario.listarNomeBiblio(lista);
-	}
-
 	@Override
 	public void labelTotalRegistros(Objeto objeto) {
 		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(this, objeto);

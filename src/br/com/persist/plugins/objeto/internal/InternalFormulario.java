@@ -341,7 +341,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public void listarNomeBiblio(List<String> lista, Component c) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).listarNomeBiblio(lista);
+				ObjetoSuperficieUtil.listarNomeBiblio((ObjetoSuperficie) desktop, lista);
 			}
 		}
 
