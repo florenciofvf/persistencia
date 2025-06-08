@@ -104,7 +104,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
 	private transient ThreadManager threadManager = new ThreadManager(this);
 	private transient MacroManager macroManager = new MacroManager(this);
-	final transient Vinculacao vinculacao = new Vinculacao();
+	private final transient Vinculacao vinculacao = new Vinculacao();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
 	private static final long serialVersionUID = 1L;
@@ -176,6 +176,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public MacroManager getMacroManager() {
 		return macroManager;
+	}
+
+	public Vinculacao getVinculacao() {
+		return vinculacao;
 	}
 
 	@Override
@@ -3119,33 +3123,33 @@ class ExportacaoImportacao {
 
 	private void salvar(Pesquisa pesquisa) throws ObjetoException {
 		try {
-			superficie.vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
+			superficie.getVinculacao().abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("SALVAR", ex, superficie);
 			return;
 		}
-		superficie.vinculacao.adicionarPesquisa(pesquisa);
+		superficie.getVinculacao().adicionarPesquisa(pesquisa);
 		for (Referencia ref : pesquisa.getReferencias()) {
 			Pesquisa pesq = ref.rotuloDe(principal);
-			superficie.vinculacao.adicionarPesquisa(pesq);
+			superficie.getVinculacao().adicionarPesquisa(pesq);
 		}
-		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
+		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.getVinculacao());
 	}
 
 	private void salvar(List<Pesquisa> listaRef) throws ObjetoException {
 		try {
-			superficie.vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
+			superficie.getVinculacao().abrir(ObjetoSuperficieUtil.criarArquivoVinculo(superficie), superficie);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("VINCULAR", ex, superficie);
 			return;
 		}
 		for (Pesquisa pesq : listaRef) {
-			superficie.vinculacao.adicionarPesquisa(pesq);
+			superficie.getVinculacao().adicionarPesquisa(pesq);
 			for (Referencia ref : pesq.getReferencias()) {
-				superficie.vinculacao.adicionarPesquisa(ref.rotuloDe(principal));
+				superficie.getVinculacao().adicionarPesquisa(ref.rotuloDe(principal));
 			}
 		}
-		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.vinculacao);
+		ObjetoSuperficieUtil.salvarVinculacao(superficie, superficie.getVinculacao());
 	}
 }
 
