@@ -579,8 +579,8 @@ public class ObjetoContainer extends AbstratoContainer {
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				desenharIdAcao.setActionListener(e -> ObjetoSuperficieUtil.desenharIds(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				somarHorasAcao.addActionListener(
-						e -> objetoSuperficie.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				somarHorasAcao.addActionListener(e -> objetoSuperficie.threadManager
+						.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				reiniciarAction.setActionListener(e -> reiniciarHoras());
 				gradeAction.setActionListener(e -> objetoSuperficie.setTotalArrastado(1));
 				ignorarAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorar(objetoSuperficie,
@@ -589,7 +589,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			private void reiniciarHoras() {
 				try {
-					objetoSuperficie.reiniciarHoras();
+					objetoSuperficie.threadManager.reiniciarHoras();
 				} catch (AssistenciaException ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
@@ -605,7 +605,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			@Override
 			protected void popupPreShow() {
-				somarHorasAcao.setSelected(objetoSuperficie.isProcessando());
+				somarHorasAcao.setSelected(objetoSuperficie.threadManager.isProcessando());
 			}
 
 			private void reiniciar() {
@@ -769,7 +769,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	public void abrir(File file, ObjetoColetor coletor, InternalConfig config)
 			throws XMLException, ObjetoException, AssistenciaException {
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
-		objetoSuperficie.setProcessar(coletor.getProcessar().get());
+		objetoSuperficie.threadManager.setProcessar(coletor.getProcessar().get());
 		objetoSuperficie.abrir(coletor);
 		arquivo = file;
 		btnSelecao.click();

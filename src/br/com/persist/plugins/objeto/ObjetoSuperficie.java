@@ -99,8 +99,9 @@ import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
-public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
+public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
+	transient ThreadManager threadManager = new ThreadManager();
 	transient MacroManager macroManager = new MacroManager();
 	final transient Vinculacao vinculacao = new Vinculacao();
 	private static final Logger LOG = Logger.getGlobal();
@@ -110,17 +111,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	transient Relacao selecionadoRelacao;
 	transient Objeto selecionadoObjeto;
 	final ObjetoContainer container;
-	private transient Thread thread;
 	private boolean validoArrastar;
 	final SuperficiePopup2 popup2;
 	transient Relacao[] relacoes;
 	final SuperficiePopup popup;
 	transient Objeto[] objetos;
 	private int totalArrastado;
-	private int totalHoras;
 	String arquivoVinculo;
 	private byte estado;
-	boolean processar;
 	private int ultX;
 	private int ultY;
 
@@ -174,71 +172,81 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	@Override
-	public void run() {
-		while (!Thread.currentThread().isInterrupted()) {
-			processarHora();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-		}
-	}
+	class ThreadManager implements Runnable {
+		boolean processar;
+		int totalHoras;
+		Thread thread;
 
-	private void processarHora() {
-		totalHoras = 0;
-		for (Relacao relacao : relacoes) {
-			try {
-				if (HoraUtil.formatoValido(relacao.getDescricao())) {
-					totalHoras += HoraUtil.getSegundos(relacao.getDescricao());
+		@Override
+		public void run() {
+			while (!Thread.currentThread().isInterrupted()) {
+				processarHora();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
 				}
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
-		repaint();
-	}
 
-	public void reiniciarHoras() throws AssistenciaException {
-		for (Relacao relacao : relacoes) {
-			relacao.reiniciarHoras(true, this);
+		private void processarHora() {
+			totalHoras = 0;
+			for (Relacao relacao : relacoes) {
+				try {
+					if (HoraUtil.formatoValido(relacao.getDescricao())) {
+						totalHoras += HoraUtil.getSegundos(relacao.getDescricao());
+					}
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
+			}
+			repaint();
 		}
-		totalHoras = 0;
-		repaint();
-	}
 
-	public void somarHoras(boolean b) {
-		if (b) {
-			processar = true;
-			ativar();
-		} else {
-			desativar();
+		public void reiniciarHoras() throws AssistenciaException {
+			for (Relacao relacao : relacoes) {
+				relacao.reiniciarHoras(true, ObjetoSuperficie.this);
+			}
+			totalHoras = 0;
+			repaint();
 		}
-		repaint();
-	}
 
-	public void ativar() {
-		if (processar && thread == null) {
-			thread = new Thread(this);
-			thread.start();
+		public void somarHoras(boolean b) {
+			if (b) {
+				processar = true;
+				ativar();
+			} else {
+				desativar();
+			}
+			repaint();
 		}
-	}
 
-	public void desativar() {
-		if (thread != null) {
-			thread.interrupt();
-			processar = false;
-			thread = null;
+		public void ativar() {
+			if (processar && thread == null) {
+				thread = new Thread(this);
+				thread.start();
+			}
 		}
-	}
 
-	public boolean isProcessando() {
-		return thread != null;
-	}
+		public void desativar() {
+			if (thread != null) {
+				thread.interrupt();
+				processar = false;
+				thread = null;
+			}
+		}
 
-	public void setProcessar(boolean processar) {
-		this.processar = processar;
+		public boolean isProcessando() {
+			return thread != null;
+		}
+
+		public void setProcessar(boolean processar) {
+			this.processar = processar;
+		}
+
+		boolean validoDesenhar() {
+			return processar && thread != null;
+		}
 	}
 
 	class MacroManager {
@@ -881,14 +889,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			objeto.desenhar(this, g2, stroke);
 		}
 		area.desenhar(g2);
-		if (processar && thread != null) {
+		if (threadManager.validoDesenhar()) {
 			g2.setFont(ObjetoConstantes.FONT_HORAS);
 
 			int xValor = 40;
 			int xTexto = 550;
 			int yTodos = 300;
 
-			g2.drawString(HoraUtil.formatar(totalHoras), xValor, yTodos);
+			g2.drawString(HoraUtil.formatar(threadManager.totalHoras), xValor, yTodos);
 			g2.drawString("<<< TRABALHANDO", xTexto, yTodos);
 			yTodos += 180;
 
@@ -896,7 +904,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			g2.drawString("<<< HORA ATUAL", xTexto, yTodos);
 			yTodos += 180;
 
-			int faltando = HoraUtil.OITO_HORAS - totalHoras;
+			int faltando = HoraUtil.OITO_HORAS - threadManager.totalHoras;
 			if (faltando > 0) {
 				g2.drawString(HoraUtil.formatar(faltando), xValor, yTodos);
 				g2.drawString("<<< FALTANDO", xTexto, yTodos);
@@ -1066,7 +1074,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		for (Relacao relacao : coletor.getRelacoes()) {
 			relacao.ativar();
 		}
-		ativar();
+		threadManager.ativar();
 		arquivoVinculo = coletor.getArquivoVinculo();
 		vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(this), ObjetoSuperficie.this);
 		for (Objeto objeto : objetos) {
@@ -1124,7 +1132,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			relacao.setListener(null);
 			relacao.desativar();
 		}
-		desativar();
+		threadManager.desativar();
 	}
 
 	@Override
