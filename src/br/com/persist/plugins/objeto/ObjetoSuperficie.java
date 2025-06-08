@@ -99,11 +99,11 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
-	transient HierarquicoVisivelManager hierarquicoVisivelManager = new HierarquicoVisivelManager(this);
-	transient HierarquicoAvulsoManager hierarquicoAvulsoManager = new HierarquicoAvulsoManager(this);
+	private transient HierarquicoVisivelManager hierarquicoVisivelManager = new HierarquicoVisivelManager(this);
+	private transient HierarquicoAvulsoManager hierarquicoAvulsoManager = new HierarquicoAvulsoManager(this);
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
-	transient ThreadManager threadManager = new ThreadManager(this);
-	transient MacroManager macroManager = new MacroManager(this);
+	private transient ThreadManager threadManager = new ThreadManager(this);
+	private transient MacroManager macroManager = new MacroManager(this);
 	final transient Vinculacao vinculacao = new Vinculacao();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
@@ -168,6 +168,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public HierarquicoAvulsoManager getHierarquicoAvulsoManager() {
 		return hierarquicoAvulsoManager;
+	}
+
+	public ThreadManager getThreadManager() {
+		return threadManager;
+	}
+
+	public MacroManager getMacroManager() {
+		return macroManager;
 	}
 
 	@Override
@@ -1813,7 +1821,7 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void formulariosInvisiveis() {
-		Coletor coletor = superficie.hierarquicoVisivelManager.getColetorFormsInvisiveis();
+		Coletor coletor = superficie.getHierarquicoVisivelManager().getColetorFormsInvisiveis();
 		if (coletor.size() == 1) {
 			tornarVisivel(coletor.get(0));
 		}
@@ -1928,7 +1936,7 @@ class SuperficiePopup extends Popup {
 				} else {
 					MacroProvedor.xLocal(superficie.selecionadoObjeto.x);
 				}
-				superficie.macroManager.macro.actionPerformed(null);
+				superficie.getMacroManager().macro.actionPerformed(null);
 			}
 		}
 	}

@@ -68,7 +68,7 @@ public class ObjetoSuperficieUtil {
 		util.atributo("ajusteAutoForm", superficie.isAjusteAutoEmpilhaForm());
 		util.atributo("ajusteLarguraForm", superficie.isAjusteAutoLarguraForm());
 		util.atributo("compararRegistros", superficie.container.isCompararRegistros());
-		util.atributoCheck("processar", superficie.threadManager.processar);
+		util.atributoCheck("processar", superficie.getThreadManager().processar);
 		util.atributo("largura", superficie.getWidth());
 		util.atributo("altura", superficie.getHeight());
 		util.atributo("arquivoVinculo", superficie.arquivoVinculo);

@@ -579,7 +579,7 @@ public class ObjetoContainer extends AbstratoContainer {
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				desenharIdAcao.setActionListener(e -> ObjetoSuperficieUtil.desenharIds(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
-				somarHorasAcao.addActionListener(e -> objetoSuperficie.threadManager
+				somarHorasAcao.addActionListener(e -> objetoSuperficie.getThreadManager()
 						.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				reiniciarAction.setActionListener(e -> reiniciarHoras());
 				gradeAction.setActionListener(e -> objetoSuperficie.setTotalArrastado(1));
@@ -589,7 +589,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			private void reiniciarHoras() {
 				try {
-					objetoSuperficie.threadManager.reiniciarHoras();
+					objetoSuperficie.getThreadManager().reiniciarHoras();
 				} catch (AssistenciaException ex) {
 					Util.mensagem(ObjetoContainer.this, ex.getMessage());
 				}
@@ -605,7 +605,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			@Override
 			protected void popupPreShow() {
-				somarHorasAcao.setSelected(objetoSuperficie.threadManager.isProcessando());
+				somarHorasAcao.setSelected(objetoSuperficie.getThreadManager().isProcessando());
 			}
 
 			private void reiniciar() {
@@ -769,7 +769,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	public void abrir(File file, ObjetoColetor coletor, InternalConfig config)
 			throws XMLException, ObjetoException, AssistenciaException {
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
-		objetoSuperficie.threadManager.setProcessar(coletor.getProcessar().get());
+		objetoSuperficie.getThreadManager().setProcessar(coletor.getProcessar().get());
 		objetoSuperficie.abrir(coletor);
 		arquivo = file;
 		btnSelecao.click();
