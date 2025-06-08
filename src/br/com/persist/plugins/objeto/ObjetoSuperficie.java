@@ -960,12 +960,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void paraFrente(Relacao obj) {
-		if (excluir(obj)) {
-			addRelacao(obj);
-		}
-	}
-
 	public void addRelacao(Relacao obj) {
 		if (obj == null || ObjetoSuperficieUtil.contem(this, obj)) {
 			return;

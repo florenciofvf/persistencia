@@ -107,6 +107,12 @@ public class ObjetoSuperficieUtil {
 		}
 	}
 
+	public static void paraFrente(ObjetoSuperficie superficie, Relacao obj) {
+		if (superficie.excluir(obj)) {
+			superficie.addRelacao(obj);
+		}
+	}
+
 	public static void checagemId(ObjetoSuperficie superficie, Objeto objeto, String id, String sep) {
 		boolean contem = ObjetoSuperficieUtil.contemId(superficie, objeto);
 		while (contem) {

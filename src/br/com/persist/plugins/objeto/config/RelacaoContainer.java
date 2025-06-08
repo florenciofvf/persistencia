@@ -58,6 +58,7 @@ import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 
@@ -382,7 +383,7 @@ public class RelacaoContainer extends Panel {
 				relacao.setQuebrado(chk.isSelected());
 				MacroProvedor.linhaQuebrada(chk.isSelected());
 			} else if (btnParaFrente == e.getSource()) {
-				objetoSuperficie.paraFrente(relacao);
+				ObjetoSuperficieUtil.paraFrente(objetoSuperficie, relacao);
 			}
 			objetoSuperficie.repaint();
 		}
