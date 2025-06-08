@@ -109,8 +109,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private final transient Linha linha = new Linha();
 	private static final long serialVersionUID = 1L;
 	private final transient Area area = new Area();
-	transient Relacao selecionadoRelacao;
-	transient Objeto selecionadoObjeto;
+	private transient Relacao selecionadoRelacao;
+	private transient Objeto selecionadoObjeto;
 	final ObjetoContainer container;
 	private boolean validoArrastar;
 	final SuperficiePopup2 popup2;
@@ -160,6 +160,22 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 				}
 			}
 		}
+	}
+
+	public void setSelecionadoRelacao(Relacao selecionadoRelacao) {
+		this.selecionadoRelacao = selecionadoRelacao;
+	}
+
+	public Relacao getSelecionadoRelacao() {
+		return selecionadoRelacao;
+	}
+
+	public void setSelecionadoObjeto(Objeto selecionadoObjeto) {
+		this.selecionadoObjeto = selecionadoObjeto;
+	}
+
+	public Objeto getSelecionadoObjeto() {
+		return selecionadoObjeto;
 	}
 
 	public HierarquicoVisivelManager getHierarquicoVisivelManager() {
@@ -1933,12 +1949,12 @@ class SuperficiePopup extends Popup {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (superficie.selecionadoObjeto != null) {
+			if (superficie.getSelecionadoObjeto() != null) {
 				MacroProvedor.limpar();
 				if (horizontal) {
-					MacroProvedor.yLocal(superficie.selecionadoObjeto.y);
+					MacroProvedor.yLocal(superficie.getSelecionadoObjeto().y);
 				} else {
-					MacroProvedor.xLocal(superficie.selecionadoObjeto.x);
+					MacroProvedor.xLocal(superficie.getSelecionadoObjeto().x);
 				}
 				superficie.getMacroManager().macro.actionPerformed(null);
 			}
@@ -1970,9 +1986,9 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void inverterPosicao() {
-			if (superficie.selecionadoObjeto != null) {
+			if (superficie.getSelecionadoObjeto() != null) {
 				List<String> list = ObjetoSuperficieUtil.getListaStringIds(superficie);
-				list.remove(superficie.selecionadoObjeto.getId());
+				list.remove(superficie.getSelecionadoObjeto().getId());
 				if (list.isEmpty()) {
 					return;
 				}
@@ -1980,10 +1996,11 @@ class SuperficiePopup extends Popup {
 				Coletor coletor = new Coletor();
 				SetLista.Config config = new SetLista.Config(true, true);
 				config.setMensagem(ObjetoMensagens.getString("label.sel_outro_obj_para_trocar_pos_com",
-						superficie.selecionadoObjeto.getId()));
-				SetLista.view(superficie.selecionadoObjeto.getId(), list, coletor, superficie, config);
+						superficie.getSelecionadoObjeto().getId()));
+				SetLista.view(superficie.getSelecionadoObjeto().getId(), list, coletor, superficie, config);
 				if (coletor.size() == 1) {
-					inverter(superficie.selecionadoObjeto, ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0)));
+					inverter(superficie.getSelecionadoObjeto(),
+							ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0)));
 				}
 			}
 		}
@@ -2021,7 +2038,7 @@ class SuperficiePopup extends Popup {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (superficie.selecionadoObjeto != null) {
+			if (superficie.getSelecionadoObjeto() != null) {
 				List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(superficie);
 				if (lista.size() < 3) {
 					return;
@@ -2228,9 +2245,9 @@ class SuperficiePopup extends Popup {
 		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
 		criarRelacaoAcao.setActionListener(e -> criarRelacao());
 		relacoesAcao.setActionListener(e -> {
-			if (superficie.selecionadoObjeto != null) {
+			if (superficie.getSelecionadoObjeto() != null) {
 				try {
-					selecionarRelacao(superficie.selecionadoObjeto);
+					selecionarRelacao(superficie.getSelecionadoObjeto());
 				} catch (ObjetoException ex) {
 					Util.mensagem(SuperficiePopup.this, ex.getMessage());
 				}
@@ -2238,11 +2255,11 @@ class SuperficiePopup extends Popup {
 		});
 		configuracaoAcao.setActionListener(e -> {
 			Frame frame = superficie.container.getFrame();
-			if (superficie.selecionadoObjeto != null) {
-				ObjetoDialogo.criar(frame, superficie, superficie.selecionadoObjeto);
-			} else if (superficie.selecionadoRelacao != null) {
+			if (superficie.getSelecionadoObjeto() != null) {
+				ObjetoDialogo.criar(frame, superficie, superficie.getSelecionadoObjeto());
+			} else if (superficie.getSelecionadoRelacao() != null) {
 				try {
-					RelacaoDialogo.criar(frame, superficie, superficie.selecionadoRelacao);
+					RelacaoDialogo.criar(frame, superficie, superficie.getSelecionadoRelacao());
 				} catch (AssistenciaException ex) {
 					Util.mensagem(SuperficiePopup.this, ex.getMessage());
 				}
@@ -2328,10 +2345,10 @@ class SuperficiePopup extends Popup {
 			Coletor coletor = new Coletor();
 			SetLista.view(objeto.getId(), ids, coletor, superficie, new SetLista.Config(true, true));
 			if (coletor.size() == 1) {
-				superficie.selecionadoObjeto = null;
+				superficie.setSelecionadoObjeto(null);
 				String id = coletor.get(0);
 				Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, id);
-				superficie.selecionadoRelacao = ObjetoSuperficieUtil.getRelacao(superficie, objeto, outro);
+				superficie.setSelecionadoRelacao(ObjetoSuperficieUtil.getRelacao(superficie, objeto, outro));
 				superficie.popup.configuracaoAcao.actionPerformed(null);
 			}
 		}
@@ -2351,7 +2368,7 @@ class SuperficiePopup extends Popup {
 
 	void preShow(boolean objetoSelecionado) {
 		List<Objeto> selecionados = ObjetoSuperficieUtil.getSelecionados(superficie);
-		Objeto objeto = superficie.selecionadoObjeto;
+		Objeto objeto = superficie.getSelecionadoObjeto();
 		String nomeTabela = objeto != null ? objeto.getTabela() : null;
 		boolean comTabela = objetoSelecionado && objeto != null && !Util.isEmpty(nomeTabela);
 		relacoesAcao.setEnabled(objetoSelecionado && selecionados.size() == Constantes.UM);
@@ -2396,16 +2413,16 @@ class SuperficiePopup extends Popup {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (superficie.selecionadoRelacao != null) {
+			if (superficie.getSelecionadoRelacao() != null) {
 				try {
-					Objeto novo = superficie.selecionadoRelacao.criarObjetoMeio();
-					Objeto destino = superficie.selecionadoRelacao.getDestino();
-					Objeto origem = superficie.selecionadoRelacao.getOrigem();
+					Objeto novo = superficie.getSelecionadoRelacao().criarObjetoMeio();
+					Objeto destino = superficie.getSelecionadoRelacao().getDestino();
+					Objeto origem = superficie.getSelecionadoRelacao().getOrigem();
 					ObjetoSuperficieUtil.checagemId(superficie, novo, Constantes.VAZIO, Constantes.VAZIO);
 					superficie.addObjeto(novo);
-					superficie.selecionadoRelacao.setSelecionado(false);
-					superficie.excluir(superficie.selecionadoRelacao);
-					superficie.selecionadoRelacao = null;
+					superficie.getSelecionadoRelacao().setSelecionado(false);
+					superficie.excluir(superficie.getSelecionadoRelacao());
+					superficie.setSelecionadoRelacao(null);
 					superficie.addRelacao(new Relacao(origem, false, novo, false));
 					superficie.addRelacao(new Relacao(novo, false, destino, false));
 					superficie.repaint();
