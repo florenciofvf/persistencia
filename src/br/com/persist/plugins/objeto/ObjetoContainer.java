@@ -86,8 +86,8 @@ public class ObjetoContainer extends AbstratoContainer {
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
 	private static final Logger LOG = Logger.getGlobal();
+	private final ObjetoSuperficieExt objetoSuperficie;
 	private static final long serialVersionUID = 1L;
-	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
 	private ObjetoFormulario objetoFormulario;
@@ -97,7 +97,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 	public ObjetoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
-		objetoSuperficie = new ObjetoSuperficie(formulario, this);
+		objetoSuperficie = new ObjetoSuperficieExt(formulario, this);
 		comboConexao = ConexaoProvedor.criarComboConexao(null);
 		toolbar.ini(janela);
 		montarLayout();

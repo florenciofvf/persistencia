@@ -42,6 +42,7 @@ import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.ObjetoSuperficieExt;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
@@ -386,32 +387,32 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 		public void adicionarHierarquicoInvisivelAbaixo(Conexao conexao, Objeto objeto) {
 			checarDesktop();
-			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).getHierarquicoVisivelManager()
+			if (desktop instanceof ObjetoSuperficieExt) {
+				((ObjetoSuperficieExt) desktop).getHierarquicoVisivelManager()
 						.adicionarHierarquicoInvisivelAbaixo(getLocation());
 			}
 		}
 
 		public void adicionarHierarquicoInvisivelAcima(Conexao conexao, Objeto objeto) {
 			checarDesktop();
-			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).getHierarquicoVisivelManager()
+			if (desktop instanceof ObjetoSuperficieExt) {
+				((ObjetoSuperficieExt) desktop).getHierarquicoVisivelManager()
 						.adicionarHierarquicoInvisivelAcima(getLocation());
 			}
 		}
 
 		public void adicionarHierarquicoAvulsoAbaixo(Conexao conexao, Objeto objeto) throws AssistenciaException {
 			checarDesktop();
-			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).getHierarquicoAvulsoManager().adicionarHierarquicoAvulsoAbaixo(conexao,
+			if (desktop instanceof ObjetoSuperficieExt) {
+				((ObjetoSuperficieExt) desktop).getHierarquicoAvulsoManager().adicionarHierarquicoAvulsoAbaixo(conexao,
 						objeto);
 			}
 		}
 
 		public void adicionarHierarquicoAvulsoAcima(Conexao conexao, Objeto objeto) throws AssistenciaException {
 			checarDesktop();
-			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).getHierarquicoAvulsoManager().adicionarHierarquicoAvulsoAcima(conexao,
+			if (desktop instanceof ObjetoSuperficieExt) {
+				((ObjetoSuperficieExt) desktop).getHierarquicoAvulsoManager().adicionarHierarquicoAvulsoAcima(conexao,
 						objeto);
 			}
 		}
