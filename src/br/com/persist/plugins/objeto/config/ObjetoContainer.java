@@ -513,9 +513,9 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinhaRotulo("label.copiar_destacado", chkCopiarDestac));
-			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.add_instrucao"), false, txtInstrucao,
+			container.add(criarLinhaComLink("label.add_instrucao", true, txtInstrucao,
 					ObjetoMensagens.getString("hint.add_instrucao"), PanelGeral.this::mensagemAddInstrucao));
-			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.add_filtro"), false, txtFiltro,
+			container.add(criarLinhaComLink("label.add_filtro", true, txtFiltro,
 					ObjetoMensagens.getString("hint.add_filtro"), PanelGeral.this::mensagemAddFiltro));
 			txtInstrucao.addMouseListener(instrucaoListener);
 			txtFiltro.addMouseListener(filtroListener);
