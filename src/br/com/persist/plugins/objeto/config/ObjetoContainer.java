@@ -508,13 +508,14 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
 					ObjetoMensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
-			container.add(criarLinha("label.checar_reg", txtBiblioChecagem));
+			container.add(criarLinhaComLinkCopiar("label.checar_reg", txtBiblioChecagem,
+					ObjetoMensagens.getString("hint.checar_reg"), PanelGeral.this::mensagemBiblioChecagem));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinhaRotulo("label.copiar_destacado", chkCopiarDestac));
-			container.add(criarLinhaComLinkCopiar("label.add_instrucao", txtInstrucao,
+			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.add_instrucao"), false, txtInstrucao,
 					ObjetoMensagens.getString("hint.add_instrucao"), PanelGeral.this::mensagemAddInstrucao));
-			container.add(criarLinhaComLinkCopiar("label.add_filtro", txtFiltro,
+			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.add_filtro"), false, txtFiltro,
 					ObjetoMensagens.getString("hint.add_filtro"), PanelGeral.this::mensagemAddFiltro));
 			txtInstrucao.addMouseListener(instrucaoListener);
 			txtFiltro.addMouseListener(filtroListener);
@@ -708,6 +709,10 @@ public class ObjetoContainer extends Panel {
 
 		private void mensagemPropriedadeArquivo(Label label) {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.propriedade_arquivo"));
+		}
+
+		private void mensagemBiblioChecagem(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.biblio_checagem"));
 		}
 
 		private void mensagemAddInstrucao(Label label) {
