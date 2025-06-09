@@ -96,18 +96,18 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
-	private transient HierarquicoVisivelManager hierarquicoVisivelManager = new HierarquicoVisivelManager(this);
-	private transient HierarquicoAvulsoManager hierarquicoAvulsoManager = new HierarquicoAvulsoManager(this);
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
-	private transient ThreadManager threadManager = new ThreadManager(this);
-	private transient MacroManager macroManager = new MacroManager(this);
-	private final transient Vinculacao vinculacao = new Vinculacao();
+	final transient HierarquicoVisivelManager hierarquicoVisivelManager;
+	final transient HierarquicoAvulsoManager hierarquicoAvulsoManager;
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
 	private static final long serialVersionUID = 1L;
 	private final transient Area area = new Area();
+	private final transient Vinculacao vinculacao;
 	private transient Relacao selecionadoRelacao;
+	final transient ThreadManager threadManager;
 	private transient Objeto selecionadoObjeto;
+	final transient MacroManager macroManager;
 	private transient Relacao[] relacoes;
 	private transient Objeto[] objetos;
 	final ObjetoContainer container;
@@ -122,10 +122,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 
 	public ObjetoSuperficie(Formulario formulario, ObjetoContainer container) {
 		super(formulario, true);
+		hierarquicoVisivelManager = new HierarquicoVisivelManager(this);
+		hierarquicoAvulsoManager = new HierarquicoAvulsoManager(this);
 		this.container = Objects.requireNonNull(container);
+		threadManager = new ThreadManager(this);
 		configEstado(ObjetoConstantes.SELECAO);
+		macroManager = new MacroManager(this);
 		popup2 = new SuperficiePopup2(this);
 		popup = new SuperficiePopup(this);
+		vinculacao = new Vinculacao();
 		configurar();
 		limpar();
 	}
