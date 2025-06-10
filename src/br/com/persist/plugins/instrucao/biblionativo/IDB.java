@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -81,6 +82,14 @@ public class IDB {
 	public static Connection getConnectionProvedor(Object conexao) throws ConexaoException {
 		if (conexao instanceof Conexao) {
 			return ConexaoProvedor.getConnection((Conexao) conexao);
+		}
+		return null;
+	}
+
+	@Biblio(5)
+	public static PreparedStatement createPreparedStatement(Object conexao, Object instrucao) throws SQLException {
+		if (conexao instanceof Connection) {
+			return ((Connection) conexao).prepareStatement((String) instrucao);
 		}
 		return null;
 	}

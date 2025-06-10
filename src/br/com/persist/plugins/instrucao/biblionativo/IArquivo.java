@@ -7,9 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
+
+import br.com.persist.assistencia.Util;
 
 public class IArquivo {
 	private IArquivo() {
@@ -127,5 +131,17 @@ public class IArquivo {
 	@Biblio(6)
 	public static String separador() {
 		return File.separator;
+	}
+
+	@Biblio(7)
+	public static Reader createStringReader(Object absoluto) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		String arquivo = absoluto.toString();
+		checarAbsoluto(arquivo);
+		try (InputStream is = new FileInputStream(arquivo)) {
+			byte[] bytes = Util.getArrayBytes(is);
+			sb.append(new String(bytes));
+		}
+		return new StringReader(sb.toString());
 	}
 }
