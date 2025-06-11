@@ -123,7 +123,7 @@ public class RoboContainer extends AbstratoContainer {
 							|| ArquivoUtil.contem(RoboConstantes.ROBOSCRIPTS, f.getName())) {
 						continue;
 					}
-					ordenados.add(new RoboPagina(f));
+					ordenados.add(new RoboPagina(f, formulario));
 				}
 				for (RoboPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
@@ -239,7 +239,7 @@ public class RoboContainer extends AbstratoContainer {
 			}
 			try {
 				if (f.createNewFile()) {
-					RoboPagina pagina = new RoboPagina(f);
+					RoboPagina pagina = new RoboPagina(f, formulario);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {

@@ -39,17 +39,20 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
+import br.com.persist.formulario.Formulario;
 
 public class RoboPagina extends Panel {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private final Formulario formulario;
 	private ScrollPane scrollPane;
 	private final File file;
 
-	public RoboPagina(File file) {
+	public RoboPagina(File file, Formulario formulario) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		this.formulario = formulario;
 		this.file = file;
 		montarLayout();
 		abrir();
@@ -140,6 +143,7 @@ public class RoboPagina extends Panel {
 						if (robo instanceof Break) {
 							break;
 						}
+						robo.formulario = formulario;
 						robo.processar(robot, array);
 					} catch (Exception ex) {
 						Util.mensagem(RoboPagina.this, ex.getMessage());
