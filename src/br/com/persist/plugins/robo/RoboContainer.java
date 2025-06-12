@@ -21,6 +21,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
@@ -42,6 +44,7 @@ import br.com.persist.formulario.Formulario;
 public class RoboContainer extends AbstratoContainer {
 	private static final File file = new File(RoboConstantes.ROBOSCRIPTS);
 	private final RoboFichario fichario = new RoboFichario();
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private RoboFormulario roboFormulario;
@@ -134,6 +137,7 @@ public class RoboContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action executarAcao = acaoIcon("label.executar_todos", Icones.EXECUTAR);
 		private final TextField txtArquivo = new TextField(35);
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
@@ -141,11 +145,25 @@ public class RoboContainer extends AbstratoContainer {
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
+			executarAcao.setActionListener(e -> new Thread(this::executar).start());
 			addButton(excluirAtivoAcao);
+			addButton(executarAcao);
 			add(txtArquivo);
 			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			txtArquivo.addActionListener(this);
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(RoboMensagens.getString(chave), icon);
+		}
+
+		private void executar() {
+			try {
+				fichario.executarTodos();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, e.getMessage());
+			}
 		}
 
 		@Override

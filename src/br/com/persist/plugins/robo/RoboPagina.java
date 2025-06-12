@@ -93,6 +93,10 @@ public class RoboPagina extends Panel {
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
+	void executar() {
+		toolbar.executar();
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);

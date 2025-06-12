@@ -86,4 +86,15 @@ public class RoboFichario extends JTabbedPane {
 			Util.beep();
 		}
 	}
+
+	public void executarTodos() throws InterruptedException {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof RoboPagina) {
+				RoboPagina p = (RoboPagina) cmp;
+				p.executar();
+				Thread.sleep(2000);
+			}
+		}
+	}
 }
