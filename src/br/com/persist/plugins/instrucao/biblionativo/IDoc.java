@@ -13,6 +13,11 @@ public class IDoc {
 		textPool.init();
 	}
 
+	@Biblio(14)
+	public static void ordenar() {
+		textPool.ordenar();
+	}
+
 	@Biblio(1)
 	public static TextPool getPool() {
 		return textPool;

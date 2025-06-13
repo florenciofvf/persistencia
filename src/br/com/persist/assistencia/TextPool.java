@@ -2,6 +2,7 @@ package br.com.persist.assistencia;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TextPool {
@@ -65,6 +66,10 @@ public class TextPool {
 
 	public void showUnderline(String string) {
 		add("showUnderline", string);
+	}
+
+	public void ordenar() {
+		Collections.sort(listaText);
 	}
 
 	private void add(String idStyle, String string) {
