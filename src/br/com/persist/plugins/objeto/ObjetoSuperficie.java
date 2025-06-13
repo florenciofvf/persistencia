@@ -1299,6 +1299,7 @@ class SuperficiePopup2 extends Popup {
 		if (result == null) {
 			Util.mensagem(superficie.getFormulario(),
 					ObjetoMensagens.getString("msg.nenhum_instrucao_biblio_paraObjeto_result"));
+			return;
 		}
 		String nomeBiblio = ObjetoUtil.getSelBiblio(superficie, result);
 		if (nomeBiblio == null) {
@@ -1777,6 +1778,7 @@ class SuperficiePopup extends Popup {
 		if (result == null) {
 			Util.mensagem(superficie.getFormulario(),
 					ObjetoMensagens.getString("msg.nenhum_instrucao_biblio_paraObjeto_result"));
+			return;
 		}
 		String nomeBiblio = ObjetoUtil.getSelBiblio(superficie, result);
 		if (nomeBiblio == null) {

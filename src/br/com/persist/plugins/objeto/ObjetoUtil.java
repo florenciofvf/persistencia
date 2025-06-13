@@ -42,6 +42,9 @@ public class ObjetoUtil {
 	}
 
 	public static String getSelBiblio(Component comp, String string) {
+		if (string == null) {
+			return null;
+		}
 		String[] strings = string.split(",");
 		if (strings.length == 1) {
 			return string;
