@@ -69,6 +69,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
 import br.com.persist.plugins.consulta.ConsultaFormulario;
+import br.com.persist.plugins.instrucao.InstrucaoEvento;
 import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoConstantes;
@@ -1292,9 +1293,9 @@ class SuperficiePopup2 extends Popup {
 
 	private void processarObjetos() {
 		Map<String, Object> args = new HashMap<>();
-		args.put("instrucao.biblio.paraObjeto", "");
+		args.put(InstrucaoEvento.BIBLIO_PARA_OBJETO_REQUEST, "");
 		superficie.getFormulario().processar(args);
-		String result = (String) args.get("instrucao.biblio.paraObjetoResult");
+		String result = (String) args.get(InstrucaoEvento.BIBLIO_PARA_OBJETO_RESPONSE);
 		if (result == null) {
 			Util.mensagem(superficie.getFormulario(),
 					ObjetoMensagens.getString("msg.nenhum_instrucao_biblio_paraObjeto_result"));
@@ -1770,9 +1771,9 @@ class SuperficiePopup extends Popup {
 
 	private void processarObjetos() {
 		Map<String, Object> args = new HashMap<>();
-		args.put("instrucao.biblio.paraObjeto", "");
+		args.put(InstrucaoEvento.BIBLIO_PARA_OBJETO_REQUEST, "");
 		superficie.getFormulario().processar(args);
-		String result = (String) args.get("instrucao.biblio.paraObjetoResult");
+		String result = (String) args.get(InstrucaoEvento.BIBLIO_PARA_OBJETO_RESPONSE);
 		if (result == null) {
 			Util.mensagem(superficie.getFormulario(),
 					ObjetoMensagens.getString("msg.nenhum_instrucao_biblio_paraObjeto_result"));
