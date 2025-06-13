@@ -360,10 +360,6 @@ public class Formulario extends JFrame {
 		Preferencias.setString(Constantes.GC_O_FORMULARIO, Constantes.VAZIO);
 	}
 
-	public void listarNomeBiblio(List<String> lista) {
-		lista.addAll(FormularioFabrica.listarNomeBiblio());
-	}
-
 	public OuvinteFormulario getOuvinteFormulario() {
 		return ouvinteFormulario;
 	}

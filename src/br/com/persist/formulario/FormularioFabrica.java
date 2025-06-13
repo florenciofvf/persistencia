@@ -31,20 +31,6 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 		Util.criarDiretorio("libs");
 	}
 
-	public static List<String> listarNomeBiblio() {
-		List<String> lista = new ArrayList<>();
-		File file = new File("libs");
-		if (file.isDirectory()) {
-			File[] files = file.listFiles();
-			if (files != null) {
-				for (File item : files) {
-					lista.add(item.getAbsolutePath());
-				}
-			}
-		}
-		return lista;
-	}
-
 	@Override
 	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
 		return new FormularioConfiguracao(formulario);
@@ -52,7 +38,7 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public List<Servico> getServicos(Formulario formulario) {
-		return Arrays.asList(new FecharServico(), new FormularioServico());
+		return Arrays.asList(new FecharServico(), new FormularioServico(), new BiblioServico());
 	}
 
 	private class FecharServico extends AbstratoServico {
@@ -67,6 +53,34 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 		public void windowOpenedHandler(Window window) {
 			((Formulario) window).definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
 			((Formulario) window).definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
+		}
+	}
+
+	private class BiblioServico extends AbstratoServico {
+		@Override
+		public void processar(Formulario formulario, Map<String, Object> args) {
+			if (args.get(FormularioEvento.LISTA_BIBLIO_REQUEST) == null) {
+				return;
+			}
+			List<String> lista = listarNomeBiblio();
+			if (lista.isEmpty()) {
+				return;
+			}
+			args.put(FormularioEvento.LISTA_BIBLIO_RESPONSE, lista);
+		}
+
+		private List<String> listarNomeBiblio() {
+			List<String> lista = new ArrayList<>();
+			File file = new File("libs");
+			if (file.isDirectory()) {
+				File[] files = file.listFiles();
+				if (files != null) {
+					for (File item : files) {
+						lista.add(item.getAbsolutePath());
+					}
+				}
+			}
+			return lista;
 		}
 	}
 

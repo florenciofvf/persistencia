@@ -12,6 +12,7 @@ import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,6 +33,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.formulario.FormularioEvento;
 import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.MetadadoException;
@@ -342,7 +344,16 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public void listarNomeBiblio(List<String> lista, Component c) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				ObjetoSuperficieUtil.listarNomeBiblio((ObjetoSuperficie) desktop, lista);
+				Map<String, Object> args = new HashMap<>();
+				args.put(FormularioEvento.LISTA_BIBLIO_REQUEST, "");
+				formulario.processar(args);
+				Object result = args.get(FormularioEvento.LISTA_BIBLIO_RESPONSE);
+				if (result instanceof List<?>) {
+					List<?> resp = (List<?>) result;
+					for (Object item : resp) {
+						lista.add(item.toString());
+					}
+				}
 			}
 		}
 
