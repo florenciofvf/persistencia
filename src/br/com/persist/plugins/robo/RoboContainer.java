@@ -163,6 +163,7 @@ public class RoboContainer extends AbstratoContainer {
 				fichario.executarTodos();
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, e.getMessage());
+				Thread.currentThread().interrupt();
 			}
 		}
 
