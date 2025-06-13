@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,9 +13,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.TextPool;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.instrucao.biblionativo.Lista;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
@@ -22,6 +25,54 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoUtil {
 	private ObjetoUtil() {
+	}
+
+	public static Lista criarLista(Objeto... objetos) {
+		Lista lista = new Lista();
+		if (objetos != null) {
+			for (Objeto item : objetos) {
+				lista.add(item);
+			}
+		}
+		return lista;
+	}
+
+	public static Lista criarLista(List<Objeto> objetos) {
+		return criarLista(objetos.toArray(new Objeto[0]));
+	}
+
+	public static String getSelBiblio(Component comp, String string) {
+		String[] strings = string.split(",");
+		if (strings.length == 1) {
+			return string;
+		}
+		Object resp = Util.getValorInputDialogSelect(comp, strings);
+		return resp == null ? null : resp.toString();
+	}
+
+	public static String getStringResposta(List<Object> lista) {
+		if (lista == null) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder();
+		for (Object obj : lista) {
+			if (obj == null) {
+				sb.append("null\n");
+				continue;
+			}
+			String string = obj.toString();
+			if (string != null) {
+				sb.append(new String(string.getBytes(), StandardCharsets.UTF_8) + "\n");
+			}
+		}
+		if (sb.length() > 0) {
+			sb.delete(sb.length() - 1, sb.length());
+		}
+		return sb.toString();
+	}
+
+	public static boolean isTextPool(List<Object> resp) {
+		return resp != null && !resp.isEmpty() && resp.get(0) instanceof TextPool;
 	}
 
 	public static Map<String, List<String>> criarMapaCampoNomes(String string) {

@@ -32,7 +32,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2641,17 +2640,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 
-			private String getSelBiblio(String string) {
-				String[] strings = string.split(",");
-				if (strings.length == 1) {
-					return string;
-				}
-				Object resp = Util.getValorInputDialogSelect(InternalContainer.this, strings);
-				return resp == null ? null : resp.toString();
-			}
-
 			private void checarRegistro() {
-				String nomeBiblio = getSelBiblio(objeto.getBiblioChecagem());
+				String nomeBiblio = ObjetoUtil.getSelBiblio(InternalContainer.this, objeto.getBiblioChecagem());
 				if (nomeBiblio == null) {
 					return;
 				}
@@ -2694,11 +2684,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblio);
 					adicionarConstantes(biblioteca, map);
 					List<Object> resp = processador.processar(nomeBiblio, "main");
-					if (isTextPool(resp)) {
+					if (ObjetoUtil.isTextPool(resp)) {
 						TextPool textPool = (TextPool) resp.get(0);
 						Util.mensagem(InternalContainer.this, textPool.getListaText());
 					} else {
-						String string = getStringResposta(resp);
+						String string = ObjetoUtil.getStringResposta(resp);
 						Util.mensagem(InternalContainer.this, string);
 					}
 				} catch (Exception ex) {
@@ -2713,28 +2703,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					constante.setValor(entry.getValue());
 					biblioteca.addConstante(constante);
 				}
-			}
-
-			private boolean isTextPool(List<Object> resp) {
-				return !resp.isEmpty() && resp.get(0) instanceof TextPool;
-			}
-
-			private String getStringResposta(List<Object> lista) {
-				StringBuilder sb = new StringBuilder();
-				for (Object obj : lista) {
-					if (obj == null) {
-						sb.append("null\n");
-						continue;
-					}
-					String string = obj.toString();
-					if (string != null) {
-						sb.append(new String(string.getBytes(), StandardCharsets.UTF_8) + "\n");
-					}
-				}
-				if (sb.length() > 0) {
-					sb.delete(sb.length() - 1, sb.length());
-				}
-				return sb.toString();
 			}
 
 			private class MenuTemp extends Menu {

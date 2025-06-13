@@ -47,6 +47,7 @@ import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.TextPool;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Vetor;
 import br.com.persist.componente.Acao;
@@ -68,6 +69,7 @@ import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
 import br.com.persist.plugins.consulta.ConsultaFormulario;
+import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoConstantes;
 import br.com.persist.plugins.metadado.MetadadoEvento;
@@ -92,6 +94,7 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
+	public static final String LABEL_PROCESSAR_OBJETOS = "label.processar_objetos";
 	protected static final Logger LOG = Logger.getGlobal();
 	protected final transient Linha linha = new Linha();
 	protected final transient Area area = new Area();
@@ -1081,6 +1084,7 @@ class SuperficiePopup2 extends Popup {
 			Icones.NOVO);
 	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
 	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
+	private Action processarObjetosAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_PROCESSAR_OBJETOS);
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
 	private Action formulariosComExcecaoAcaoMsg = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_msg");
 	private Action formulariosComExcecaoAcaoOuv = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_ouv");
@@ -1096,6 +1100,7 @@ class SuperficiePopup2 extends Popup {
 
 	SuperficiePopup2(ObjetoSuperficieExt superficie) {
 		this.superficie = superficie;
+		addMenuItem(processarObjetosAcao);
 		addMenuItem(objetosComTabelaAcao);
 		addMenuItem(true, criarObjetoAcao);
 		addMenuItem(true, colarAcao);
@@ -1123,6 +1128,7 @@ class SuperficiePopup2 extends Popup {
 		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
 		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
+		processarObjetosAcao.setActionListener(e -> processarObjetos());
 		criarObjetoAcao.setActionListener(e -> criarNovoObjeto());
 		propriedadesAcao.setActionListener(e -> propriedades());
 		colarAcao.setActionListener(e -> colar());
@@ -1284,6 +1290,36 @@ class SuperficiePopup2 extends Popup {
 		Util.mensagem(superficie, sb.toString());
 	}
 
+	private void processarObjetos() {
+		Map<String, Object> args = new HashMap<>();
+		args.put("instrucao.biblio.paraObjeto", "");
+		superficie.getFormulario().processar(args);
+		String result = (String) args.get("instrucao.biblio.paraObjetoResult");
+		if (result == null) {
+			Util.mensagem(superficie.getFormulario(),
+					ObjetoMensagens.getString("msg.nenhum_instrucao_biblio_paraObjeto_result"));
+		}
+		String nomeBiblio = ObjetoUtil.getSelBiblio(superficie, result);
+		if (nomeBiblio == null) {
+			return;
+		}
+		try {
+			nomeBiblio = nomeBiblio.trim();
+			Processador processador = new Processador();
+			List<Object> resp = processador.processar(nomeBiblio, "processar",
+					ObjetoUtil.criarLista(superficie.getObjetos()));
+			if (ObjetoUtil.isTextPool(resp)) {
+				TextPool textPool = (TextPool) resp.get(0);
+				Util.mensagem(superficie, textPool.getListaText());
+			} else {
+				String string = ObjetoUtil.getStringResposta(resp);
+				Util.mensagem(superficie, string);
+			}
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("PROCESSAR_OBJETOS", ex, superficie);
+		}
+	}
+
 	private void formulariosInvisiveis() {
 		Coletor coletor = superficie.getHierarquicoVisivelManager().getColetorFormsInvisiveis();
 		if (coletor.size() == 1) {
@@ -1328,6 +1364,7 @@ class SuperficiePopup2 extends Popup {
 
 class SuperficiePopup extends Popup {
 	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
+	private Action processarObjetosAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_PROCESSAR_OBJETOS);
 	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
 	private Action criarRelacaoAcao = ObjetoSuperficie.acaoMenu("label.criar_relacao", Icones.SETA);
 	private Action copiarIconeAcao = ObjetoSuperficie.acaoMenu("label.copiar_icone", Icones.COPIA);
@@ -1349,6 +1386,7 @@ class SuperficiePopup extends Popup {
 
 	SuperficiePopup(ObjetoSuperficieExt superficie) {
 		this.superficie = superficie;
+		addMenuItem(processarObjetosAcao);
 		addMenuItem(objetosComTabelaAcao);
 		add(true, menuAlinhamento);
 		add(true, menuDistribuicao);
@@ -1687,6 +1725,7 @@ class SuperficiePopup extends Popup {
 		});
 		excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(superficie));
 		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
+		processarObjetosAcao.setActionListener(e -> processarObjetos());
 		criarRelacaoAcao.setActionListener(e -> criarRelacao());
 		relacoesAcao.setActionListener(e -> {
 			if (superficie.getSelecionadoObjeto() != null) {
@@ -1727,6 +1766,36 @@ class SuperficiePopup extends Popup {
 			sb.append(tabela);
 		}
 		Util.mensagem(superficie, sb.toString());
+	}
+
+	private void processarObjetos() {
+		Map<String, Object> args = new HashMap<>();
+		args.put("instrucao.biblio.paraObjeto", "");
+		superficie.getFormulario().processar(args);
+		String result = (String) args.get("instrucao.biblio.paraObjetoResult");
+		if (result == null) {
+			Util.mensagem(superficie.getFormulario(),
+					ObjetoMensagens.getString("msg.nenhum_instrucao_biblio_paraObjeto_result"));
+		}
+		String nomeBiblio = ObjetoUtil.getSelBiblio(superficie, result);
+		if (nomeBiblio == null) {
+			return;
+		}
+		try {
+			nomeBiblio = nomeBiblio.trim();
+			Processador processador = new Processador();
+			List<Object> resp = processador.processar(nomeBiblio, "processar",
+					ObjetoUtil.criarLista(ObjetoSuperficieUtil.getSelecionados(superficie)));
+			if (ObjetoUtil.isTextPool(resp)) {
+				TextPool textPool = (TextPool) resp.get(0);
+				Util.mensagem(superficie, textPool.getListaText());
+			} else {
+				String string = ObjetoUtil.getStringResposta(resp);
+				Util.mensagem(superficie, string);
+			}
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("PROCESSAR_OBJETOS", ex, superficie);
+		}
 	}
 
 	private void criarRelacao() {
