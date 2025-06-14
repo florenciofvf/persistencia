@@ -66,13 +66,14 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 		}
 
 		private List<String> listarNomeBiblio() {
+			final String paraObjeto = "paraObjeto";
 			List<String> lista = new ArrayList<>();
-			File file = new File(CacheBiblioteca.COMPILADOS, "paraObjeto");
+			File file = new File(CacheBiblioteca.COMPILADOS, paraObjeto);
 			if (file.isDirectory()) {
 				File[] files = file.listFiles();
 				if (files != null) {
 					for (File item : files) {
-						lista.add(get(item.getName()));
+						lista.add(paraObjeto + "." + get(item.getName()));
 					}
 				}
 			}
