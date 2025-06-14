@@ -19,6 +19,8 @@ import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.plugins.instrucao.processador.Biblioteca;
+import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 
 public class InstrucaoFabrica extends AbstratoFabricaContainer {
 	@Override
@@ -65,16 +67,23 @@ public class InstrucaoFabrica extends AbstratoFabricaContainer {
 
 		private List<String> listarNomeBiblio() {
 			List<String> lista = new ArrayList<>();
-			File file = new File(InstrucaoConstantes.INSTRUCAO + Constantes.SEPARADOR + "paraObjeto");
+			File file = new File(CacheBiblioteca.COMPILADOS, "paraObjeto");
 			if (file.isDirectory()) {
 				File[] files = file.listFiles();
 				if (files != null) {
 					for (File item : files) {
-						lista.add(item.getName());
+						lista.add(get(item.getName()));
 					}
 				}
 			}
 			return lista;
+		}
+
+		private String get(String name) {
+			if (name.endsWith(Biblioteca.EXTENSAO)) {
+				name = name.substring(0, name.length() - Biblioteca.EXTENSAO.length());
+			}
+			return name;
 		}
 	}
 
