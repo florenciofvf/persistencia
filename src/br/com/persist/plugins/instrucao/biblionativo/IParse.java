@@ -12,12 +12,12 @@ public class IParse {
 	}
 
 	@Biblio(0)
-	public static BigInteger bigInteger(Object object) {
+	public static BigInteger createBigInteger(Object object) {
 		return new BigInteger(object.toString());
 	}
 
 	@Biblio(1)
-	public static BigDecimal bigDecimal(Object object) {
+	public static BigDecimal createBigDecimal(Object object) {
 		return new BigDecimal(object.toString());
 	}
 
