@@ -5,7 +5,7 @@ public class ILinhas {
 	}
 
 	@Biblio(0)
-	public static Lista contem(Object arquivo, Object string) throws IllegalAccessException {
+	public static Lista getLinhasQueContem(Object arquivo, Object string) throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		String str = (String) string;
 		Lista resposta = new Lista();
@@ -21,7 +21,7 @@ public class ILinhas {
 	}
 
 	@Biblio(1)
-	public static Lista contemExtremos(Object arquivo, Object stringInicio, Object stringFinal)
+	public static Lista getLinhasQueContemExtremos(Object arquivo, Object stringInicio, Object stringFinal)
 			throws IllegalAccessException {
 		Arquivo entityArquivo = (Arquivo) arquivo;
 		String strInicio = (String) stringInicio;
