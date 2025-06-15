@@ -84,6 +84,7 @@ public class ObjetoContainer extends Panel {
 	private static final String CHAVE_MENSAGEM_VI = "msg.arquivo_vinculo_inexistente";
 	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
 	private static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
+	private static final String HINT_VINCULO = "hint.aplicar_arq_vinculo";
 	private static final String VINCULAR_EM_BANCO = "VINCULAR EM BANCO";
 	private transient List<CompChave> vinculados = new ArrayList<>();
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
@@ -231,7 +232,7 @@ public class ObjetoContainer extends Panel {
 		private transient Marcador marcador;
 
 		private VinculadoPopup() {
-			add(action);
+			add(action).setToolTipText(ObjetoMensagens.getString(HINT_VINCULO));
 			action.setActionListener(e -> preProcessar());
 		}
 
