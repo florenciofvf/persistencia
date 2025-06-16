@@ -61,6 +61,7 @@ import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
+import br.com.persist.plugins.objeto.vinculo.Marcador;
 
 public class RelacaoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -118,6 +119,13 @@ public class RelacaoContainer extends Panel {
 			container.add(criarLinha("label.desenhar_desc", true, chkDesenharDesc));
 			add(BorderLayout.SOUTH, container);
 			add(BorderLayout.NORTH, toolbar);
+			configDestaqueMacro();
+		}
+
+		private void configDestaqueMacro() {
+			Marcador.aplicarBordaMacro(txtDeslocXDesc);
+			Marcador.aplicarBordaMacro(txtDeslocYDesc);
+			Marcador.aplicarBordaMacro(chkDesenharDesc);
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -276,6 +284,7 @@ public class RelacaoContainer extends Panel {
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
+			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override
@@ -324,6 +333,7 @@ public class RelacaoContainer extends Panel {
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
+			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override
@@ -374,6 +384,7 @@ public class RelacaoContainer extends Panel {
 			chkQuebrado.setSelected(relacao.isQuebrado());
 			add(BorderLayout.CENTER, new ScrollPane(new PanelLados()));
 			chkQuebrado.setMargin(new Insets(5, 10, 5, 5));
+			Marcador.aplicarBordaMacro(chkQuebrado);
 		}
 
 		@Override
@@ -421,6 +432,7 @@ public class RelacaoContainer extends Panel {
 			add(new PanelCenter(new PanelObjeto(origem ? relacao.getOrigem() : relacao.getDestino())));
 			add(new PanelCenter(chkPonto));
 			add(new PanelCenter(new PanelChave(txtChave, origem ? relacao.getOrigem() : relacao.getDestino())));
+			Marcador.aplicarBordaMacro(chkPonto);
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {

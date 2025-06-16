@@ -32,4 +32,17 @@ public class Marcador {
 	public static Border criarBorda() {
 		return BorderFactory.createLineBorder(Color.MAGENTA, 3);
 	}
+
+	public static Border criarBordaMacro() {
+		return BorderFactory.createLineBorder(Color.PINK, 3);
+	}
+
+	public static void aplicarBordaMacro(JComponent comp) {
+		if (comp != null) {
+			comp.setBorder(criarBordaMacro());
+			if (comp instanceof AbstractButton) {
+				((AbstractButton) comp).setBorderPainted(true);
+			}
+		}
+	}
 }

@@ -523,7 +523,21 @@ public class ObjetoContainer extends Panel {
 			txtInstrucao.setEnabled(false);
 			txtFiltro.setEnabled(false);
 			add(BorderLayout.CENTER, new ScrollPane(container));
+			configDestaqueMacro();
 			vincular();
+		}
+
+		private void configDestaqueMacro() {
+			Marcador.aplicarBordaMacro(txtX);
+			Marcador.aplicarBordaMacro(txtY);
+			Marcador.aplicarBordaMacro(txtDeslocXId);
+			Marcador.aplicarBordaMacro(txtDeslocYId);
+			Marcador.aplicarBordaMacro(txtIntervalo);
+			Marcador.aplicarBordaMacro(txtMargemInferior);
+			Marcador.aplicarBordaMacro(chkDesenharId);
+			Marcador.aplicarBordaMacro(chkTransparente);
+			Marcador.aplicarBordaMacro(chkCopiarDestac);
+			Marcador.aplicarBordaMacro(panelIcone);
 		}
 
 		private void configHora(Panel panel) {
@@ -990,7 +1004,24 @@ public class ObjetoContainer extends Panel {
 			txtMapeamento.addMouseListener(mapeamentoListener);
 			txtSequencias.addMouseListener(sequenciaListener);
 			add(BorderLayout.CENTER, new ScrollPane(container));
+			configDestaqueMacro();
 			vincular();
+		}
+
+		private void configDestaqueMacro() {
+			Marcador.aplicarBordaMacro(txtComplemento);
+			Marcador.aplicarBordaMacro(txtGrupo);
+			Marcador.aplicarBordaMacro(txtPrefixoNT);
+			Marcador.aplicarBordaMacro(chkColunaInfo);
+			Marcador.aplicarBordaMacro(chkAbrirAuto);
+			Marcador.aplicarBordaMacro(chkLinkAuto);
+			Marcador.aplicarBordaMacro(chkLarguraRotulos);
+			Marcador.aplicarBordaMacro(chkCCSC);
+			Marcador.aplicarBordaMacro(chkIgnorar);
+			Marcador.aplicarBordaMacro(chkSANE);
+			Marcador.aplicarBordaMacro(chkBPNT);
+			Marcador.aplicarBordaMacro(chkAjusteAutoForm);
+			Marcador.aplicarBordaMacro(chkAjusteLargForm);
 		}
 
 		private void vincular() {
@@ -1513,6 +1544,7 @@ public class ObjetoContainer extends Panel {
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
+			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override
@@ -1604,6 +1636,7 @@ public class ObjetoContainer extends Panel {
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
+			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override
