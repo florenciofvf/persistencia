@@ -282,9 +282,9 @@ public class RelacaoContainer extends Panel {
 		private PanelCorFonte() {
 			colorChooser = new JColorChooser(relacao.getCorFonte());
 			colorChooser.getSelectionModel().addChangeListener(this);
+			Marcador.aplicarBordaMacro(colorChooser);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
-			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override
@@ -331,9 +331,9 @@ public class RelacaoContainer extends Panel {
 		private PanelCorFundo() {
 			colorChooser = new JColorChooser(relacao.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
+			Marcador.aplicarBordaMacro(colorChooser);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
-			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override

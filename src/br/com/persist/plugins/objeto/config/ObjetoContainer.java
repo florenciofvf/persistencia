@@ -1542,9 +1542,9 @@ public class ObjetoContainer extends Panel {
 		private PanelCorFonte() {
 			colorChooser = new JColorChooser(objeto.getCorFonte());
 			colorChooser.getSelectionModel().addChangeListener(this);
+			Marcador.aplicarBordaMacro(colorChooser);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
-			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override
@@ -1634,9 +1634,9 @@ public class ObjetoContainer extends Panel {
 		private PanelCorFundo() {
 			colorChooser = new JColorChooser(objeto.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
+			Marcador.aplicarBordaMacro(colorChooser);
 			add(BorderLayout.CENTER, colorChooser);
 			add(BorderLayout.NORTH, toolbar);
-			Marcador.aplicarBordaMacro(this);
 		}
 
 		@Override
