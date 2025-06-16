@@ -17,8 +17,8 @@ import br.com.persist.plugins.objeto.macro.Macro.Ccsc;
 import br.com.persist.plugins.objeto.macro.Macro.ClonarAoDestacar;
 import br.com.persist.plugins.objeto.macro.Macro.ColunaInfo;
 import br.com.persist.plugins.objeto.macro.Macro.Complemento;
-import br.com.persist.plugins.objeto.macro.Macro.Cor;
 import br.com.persist.plugins.objeto.macro.Macro.CorFonte;
+import br.com.persist.plugins.objeto.macro.Macro.CorFundo;
 import br.com.persist.plugins.objeto.macro.Macro.DesenharIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.DeslocamentoXIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.DeslocamentoYIdDescricao;
@@ -57,6 +57,7 @@ public class MacroProvedor {
 	private static final String COLUNA_INFO = "colunaInfo";
 	private static final String ABRIR_AUTO = "abrirAuto";
 	private static final String INTERVALO = "intervalo";
+	private static final String COR_FUNDO = "corFundo";
 	private static final String COR_FONTE = "corFonte";
 	private static final String LINK_AUTO = "linkAuto";
 	private static final String QUEBRADO = "quebrado";
@@ -66,7 +67,6 @@ public class MacroProvedor {
 	private static final String CCSC = "ccsc";
 	private static final String SANE = "sane";
 	private static final String BPNT = "bpnt";
-	private static final String COR = "cor";
 	private static final String X = "x";
 	private static final String Y = "y";
 
@@ -123,6 +123,7 @@ public class MacroProvedor {
 		mapa.put(ABRIR_AUTO, new AbrirAuto());
 		mapa.put(INTERVALO, new Intervalo());
 		mapa.put(LINK_AUTO, new LinkAuto());
+		mapa.put(COR_FUNDO, new CorFundo());
 		mapa.put(COR_FONTE, new CorFonte());
 		mapa.put(QUEBRADO, new Quebrado());
 		mapa.put(IGNORAR, new Ignorar());
@@ -131,7 +132,6 @@ public class MacroProvedor {
 		mapa.put(CCSC, new Ccsc());
 		mapa.put(SANE, new Sane());
 		mapa.put(BPNT, new Bpnt());
-		mapa.put(COR, new Cor());
 		mapa.put(X, new XPos());
 		mapa.put(Y, new YPos());
 	}
@@ -288,6 +288,12 @@ public class MacroProvedor {
 		adicionar(instrucao);
 	}
 
+	public static void corFundo(Object valor) {
+		Instrucao instrucao = get(COR_FUNDO);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
 	public static void corFonte(Object valor) {
 		Instrucao instrucao = get(COR_FONTE);
 		instrucao.setValor(valor);
@@ -296,12 +302,6 @@ public class MacroProvedor {
 
 	public static void imagem(Object valor) {
 		Instrucao instrucao = get(ICONE);
-		instrucao.setValor(valor);
-		adicionar(instrucao);
-	}
-
-	public static void corFundo(Object valor) {
-		Instrucao instrucao = get(COR);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

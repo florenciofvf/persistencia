@@ -294,6 +294,18 @@ public class Macro {
 		}
 	}
 
+	static class CorFundo extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			relacao.setCor((Color) valor);
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setCor((Color) valor);
+		}
+	}
+
 	static class CorFonte extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
@@ -319,18 +331,6 @@ public class Macro {
 			} else {
 				objeto.limparIcone();
 			}
-		}
-	}
-
-	static class Cor extends Instrucao {
-		@Override
-		public void executar(Relacao relacao) {
-			relacao.setCor((Color) valor);
-		}
-
-		@Override
-		public void executar(Objeto objeto) {
-			objeto.setCor((Color) valor);
 		}
 	}
 
