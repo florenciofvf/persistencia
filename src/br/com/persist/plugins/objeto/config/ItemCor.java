@@ -25,4 +25,9 @@ public class ItemCor {
 	public Color getColor() {
 		return color;
 	}
+
+	@Override
+	public String toString() {
+		return "Linha=" + linha + " Coluna=" + coluna;
+	}
 }

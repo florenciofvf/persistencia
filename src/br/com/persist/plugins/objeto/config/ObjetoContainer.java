@@ -6,6 +6,7 @@ import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -34,6 +35,7 @@ import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -81,6 +83,7 @@ import br.com.persist.plugins.objeto.vinculo.ParaTabelaHandler;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
+	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
 	private static final String CHAVE_MENSAGEM_VI = "msg.arquivo_vinculo_inexistente";
 	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
 	private static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
@@ -1555,6 +1558,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
+			private Action selCorPanelSwatch = acaoIcon(LABEL_SEL_COR_PANEL_SWATCH, Icones.SUCESSO);
 			private Action actionCorFonteVinculo = acaoIcon(LABEL_VINCULO, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
@@ -1562,7 +1566,31 @@ public class ObjetoContainer extends Panel {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 				addButton(actionCorFonteVinculo);
+				addButton(selCorPanelSwatch);
 				actionCorFonteVinculo.setActionListener(e -> preCorFonteVinculo());
+				selCorPanelSwatch.setActionListener(e -> selectCorPanelSwatch());
+			}
+
+			private void selectCorPanelSwatch() {
+				if (objeto.getCorFonte() != null) {
+					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+					if (panels != null && panels.length > 0) {
+						processar(panels[0], objeto.getCorFonte());
+					}
+				}
+			}
+
+			private void processar(AbstractColorChooserPanel panel, Color cor) {
+				if (panel.getDisplayName().contains("Swatch")) {
+					ItemCorUtil util = new ItemCorUtil();
+					ItemCor itemCor = util.getItem(cor);
+					processar(panel, itemCor);
+				}
+			}
+
+			private void processar(AbstractColorChooserPanel panel, ItemCor itemCor) {
+				if (itemCor != null) {
+				}
 			}
 
 			private void preCorFonteVinculo() {
