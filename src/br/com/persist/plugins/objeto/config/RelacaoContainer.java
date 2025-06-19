@@ -6,6 +6,7 @@ import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,6 +14,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.Robot;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +33,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -64,6 +67,7 @@ import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Marcador;
 
 public class RelacaoContainer extends Panel {
+	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
 	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
@@ -295,11 +299,23 @@ public class RelacaoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
+			private Action selCorPanelSwatch = acaoIcon(LABEL_SEL_COR_PANEL_SWATCH, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
+				addButton(selCorPanelSwatch);
+				selCorPanelSwatch.setActionListener(e -> selectCorPanelSwatch());
+			}
+
+			private void selectCorPanelSwatch() {
+				if (relacao.getCorFonte() != null) {
+					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+					if (panels != null && panels.length > 0) {
+						processar(panels[0], relacao.getCorFonte());
+					}
+				}
 			}
 
 			@Override
@@ -320,6 +336,43 @@ public class RelacaoContainer extends Panel {
 			protected void aplicar() {
 				stateChanged(null);
 			}
+		}
+	}
+
+	private void processar(AbstractColorChooserPanel panel, Color cor) {
+		if (panel.getDisplayName().contains("Swatch")) {
+			ItemCorUtil util = new ItemCorUtil();
+			ItemCor itemCor = util.getItem(cor);
+			processar(panel, itemCor);
+		}
+	}
+
+	private void processar(AbstractColorChooserPanel panel, ItemCor itemCor) {
+		if (itemCor != null) {
+			Robot robot = null;
+			try {
+				robot = new Robot();
+			} catch (Exception ex) {
+				Util.mensagem(RelacaoContainer.this, ex.getMessage());
+				return;
+			}
+			selecionarCor(robot, panel, itemCor);
+		}
+	}
+
+	private void selecionarCor(Robot robot, AbstractColorChooserPanel panel, ItemCor itemCor) {
+		panel.requestFocusInWindow();
+		keyPress(robot, KeyEvent.VK_TAB, 1);
+		keyPress(robot, KeyEvent.VK_DOWN, itemCor.linha);
+		keyPress(robot, KeyEvent.VK_RIGHT, itemCor.coluna);
+		keyPress(robot, KeyEvent.VK_SPACE, 1);
+	}
+
+	private void keyPress(Robot robot, int vk, int total) {
+		for (int i = 0; i < total; i++) {
+			robot.keyPress(vk);
+			robot.keyRelease(vk);
+			robot.delay(100);
 		}
 	}
 
@@ -344,11 +397,23 @@ public class RelacaoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
+			private Action selCorPanelSwatch = acaoIcon(LABEL_SEL_COR_PANEL_SWATCH, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
+				addButton(selCorPanelSwatch);
+				selCorPanelSwatch.setActionListener(e -> selectCorPanelSwatch());
+			}
+
+			private void selectCorPanelSwatch() {
+				if (relacao.getCor() != null) {
+					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+					if (panels != null && panels.length > 0) {
+						processar(panels[0], relacao.getCor());
+					}
+				}
 			}
 
 			@Override
@@ -521,6 +586,10 @@ public class RelacaoContainer extends Panel {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			objeto.desenhar(this, g2, stroke);
 		}
+	}
+
+	Action acaoIcon(String chave, Icon icon) {
+		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
 	}
 
 	private class Fichario extends TabbedPane {

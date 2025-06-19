@@ -1581,43 +1581,6 @@ public class ObjetoContainer extends Panel {
 				}
 			}
 
-			private void processar(AbstractColorChooserPanel panel, Color cor) {
-				if (panel.getDisplayName().contains("Swatch")) {
-					ItemCorUtil util = new ItemCorUtil();
-					ItemCor itemCor = util.getItem(cor);
-					processar(panel, itemCor);
-				}
-			}
-
-			private void processar(AbstractColorChooserPanel panel, ItemCor itemCor) {
-				if (itemCor != null) {
-					Robot robot = null;
-					try {
-						robot = new Robot();
-					} catch (Exception ex) {
-						Util.mensagem(ObjetoContainer.this, ex.getMessage());
-						return;
-					}
-					selecionarCor(robot, panel, itemCor);
-				}
-			}
-
-			private void selecionarCor(Robot robot, AbstractColorChooserPanel panel, ItemCor itemCor) {
-				panel.requestFocusInWindow();
-				keyPress(robot, KeyEvent.VK_TAB, 1);
-				keyPress(robot, KeyEvent.VK_DOWN, itemCor.linha);
-				keyPress(robot, KeyEvent.VK_RIGHT, itemCor.coluna);
-				keyPress(robot, KeyEvent.VK_SPACE, 1);
-			}
-
-			private void keyPress(Robot robot, int vk, int total) {
-				for (int i = 0; i < total; i++) {
-					robot.keyPress(vk);
-					robot.keyRelease(vk);
-					robot.delay(100);
-				}
-			}
-
 			private void preCorFonteVinculo() {
 				try {
 					corFonteVinculo();
@@ -1679,6 +1642,43 @@ public class ObjetoContainer extends Panel {
 		}
 	}
 
+	private void processar(AbstractColorChooserPanel panel, Color cor) {
+		if (panel.getDisplayName().contains("Swatch")) {
+			ItemCorUtil util = new ItemCorUtil();
+			ItemCor itemCor = util.getItem(cor);
+			processar(panel, itemCor);
+		}
+	}
+
+	private void processar(AbstractColorChooserPanel panel, ItemCor itemCor) {
+		if (itemCor != null) {
+			Robot robot = null;
+			try {
+				robot = new Robot();
+			} catch (Exception ex) {
+				Util.mensagem(ObjetoContainer.this, ex.getMessage());
+				return;
+			}
+			selecionarCor(robot, panel, itemCor);
+		}
+	}
+
+	private void selecionarCor(Robot robot, AbstractColorChooserPanel panel, ItemCor itemCor) {
+		panel.requestFocusInWindow();
+		keyPress(robot, KeyEvent.VK_TAB, 1);
+		keyPress(robot, KeyEvent.VK_DOWN, itemCor.linha);
+		keyPress(robot, KeyEvent.VK_RIGHT, itemCor.coluna);
+		keyPress(robot, KeyEvent.VK_SPACE, 1);
+	}
+
+	private void keyPress(Robot robot, int vk, int total) {
+		for (int i = 0; i < total; i++) {
+			robot.keyPress(vk);
+			robot.keyRelease(vk);
+			robot.delay(100);
+		}
+	}
+
 	private class PanelCorFundo extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
@@ -1700,6 +1700,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
+			private Action selCorPanelSwatch = acaoIcon(LABEL_SEL_COR_PANEL_SWATCH, Icones.SUCESSO);
 			private Action actionCorVinculo = acaoIcon(LABEL_VINCULO, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
@@ -1707,7 +1708,18 @@ public class ObjetoContainer extends Panel {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 				addButton(actionCorVinculo);
+				addButton(selCorPanelSwatch);
+				selCorPanelSwatch.setActionListener(e -> selectCorPanelSwatch());
 				actionCorVinculo.setActionListener(e -> preCorVinculo());
+			}
+
+			private void selectCorPanelSwatch() {
+				if (objeto.getCorFonte() != null) {
+					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+					if (panels != null && panels.length > 0) {
+						processar(panels[0], objeto.getCorFonte());
+					}
+				}
 			}
 
 			private void preCorVinculo() {
