@@ -311,6 +311,7 @@ public class RelacaoContainer extends Panel {
 
 			private void selectCorPanelSwatch() {
 				if (relacao.getCorFonte() != null) {
+					colorChooser.updateUI();
 					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
 					if (panels != null && panels.length > 0) {
 						processar(panels[0], relacao.getCorFonte());
@@ -409,6 +410,7 @@ public class RelacaoContainer extends Panel {
 
 			private void selectCorPanelSwatch() {
 				if (relacao.getCor() != null) {
+					colorChooser.updateUI();
 					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
 					if (panels != null && panels.length > 0) {
 						processar(panels[0], relacao.getCor());

@@ -28,6 +28,6 @@ public class ItemCor {
 
 	@Override
 	public String toString() {
-		return "Linha=" + linha + " Coluna=" + coluna;
+		return "Linha=" + linha + ", Coluna=" + coluna;
 	}
 }

@@ -1574,6 +1574,7 @@ public class ObjetoContainer extends Panel {
 
 			private void selectCorPanelSwatch() {
 				if (objeto.getCorFonte() != null) {
+					colorChooser.updateUI();
 					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
 					if (panels != null && panels.length > 0) {
 						processar(panels[0], objeto.getCorFonte());
@@ -1714,10 +1715,11 @@ public class ObjetoContainer extends Panel {
 			}
 
 			private void selectCorPanelSwatch() {
-				if (objeto.getCorFonte() != null) {
+				if (objeto.getCor() != null) {
+					colorChooser.updateUI();
 					AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
 					if (panels != null && panels.length > 0) {
-						processar(panels[0], objeto.getCorFonte());
+						processar(panels[0], objeto.getCor());
 					}
 				}
 			}
