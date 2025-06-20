@@ -843,9 +843,13 @@ public class ObjetoContainer extends Panel {
 			}
 			if (!Util.isEmpty(para.getInternalFormX())) {
 				panelFormX.setBorder(Marcador.criarBorda());
+			} else {
+				panelFormX.borda();
 			}
 			if (!Util.isEmpty(para.getInternalFormL())) {
 				panelFormL.setBorder(Marcador.criarBorda());
+			} else {
+				panelFormL.borda();
 			}
 			txtIdTempForm.setText(para.getIdTempForm());
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
