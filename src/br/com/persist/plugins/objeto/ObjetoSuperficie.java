@@ -422,6 +422,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		for (Objeto objeto : objetos) {
 			vinculacao.processar(objeto);
 		}
+		ObjetoSuperficieUtil.processarRelacaoVinculo(this, vinculacao, coletor);
 	}
 
 	public void excluido() {

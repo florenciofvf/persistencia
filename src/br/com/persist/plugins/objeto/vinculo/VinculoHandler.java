@@ -22,9 +22,11 @@ public class VinculoHandler extends XMLHandler {
 	public static final String INVISIVEL = "invisivel";
 	public static final String INSTRUCAO = "instrucao";
 	public static final String PESQUISA = "pesquisa";
+	public static final String RELACAO = "relacao";
 	public static final String ROTULO = "rotulo";
 	public static final String FILTRO = "filtro";
 	public static final String TABELA = "tabela";
+	private final List<RelacaoVinculo> relacoes;
 	public static final String CAMPO = "campo";
 	public static final String VALOR = "valor";
 	public static final String ICONE = "icone";
@@ -43,10 +45,15 @@ public class VinculoHandler extends XMLHandler {
 	public VinculoHandler() {
 		mapaParaTabela = new LinkedHashMap<>();
 		pesquisas = new ArrayList<>();
+		relacoes = new ArrayList<>();
 	}
 
 	public Map<String, ParaTabela> getMapaParaTabela() {
 		return mapaParaTabela;
+	}
+
+	public List<RelacaoVinculo> getRelacoes() {
+		return relacoes;
 	}
 
 	public List<Pesquisa> getPesquisas() {
@@ -62,36 +69,51 @@ public class VinculoHandler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		try {
-			if (PESQUISA.equals(qName)) {
-				selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes),
-						attributes.getValue(ICONE_GRUPO));
-				String ordem = attributes.getValue(ORDEM);
-				if (!Util.isEmpty(ordem)) {
-					selecionado.setOrdem(Integer.parseInt(ordem));
-				}
-				if (!PesquisaUtil.contem(selecionado, pesquisas)) {
-					pesquisas.add(selecionado);
-				}
-			} else if (PARA.equals(qName)) {
-				tabelaSelecionada = attributes.getValue(TABELA);
-				if (!Util.isEmpty(tabelaSelecionada)) {
-					ParaTabela paraTabela = criarParaTabela(tabelaSelecionada, attributes);
-					mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> paraTabela);
-				}
-			} else if (INSTRUCAO.equals(qName)) {
-				processarInstrucao(attributes);
-				limpar();
-			} else if (FILTRO.equals(qName)) {
-				processarFiltro(attributes);
-				limpar();
-			} else if (REF.equals(qName) && selecionado != null) {
-				selecionado.add(criar(attributes));
-			} else if (PARAM.equals(qName) && selecionado != null) {
-				selecionado.add(criarParam(attributes));
-			}
+			processStartElement(qName, attributes);
 		} catch (ObjetoException ex) {
 			throw new SAXException(ex);
 		}
+	}
+
+	private void processStartElement(String qName, Attributes attributes) throws ObjetoException {
+		if (PESQUISA.equals(qName)) {
+			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes), attributes.getValue(ICONE_GRUPO));
+			String ordem = attributes.getValue(ORDEM);
+			if (!Util.isEmpty(ordem)) {
+				selecionado.setOrdem(Integer.parseInt(ordem));
+			}
+			if (!PesquisaUtil.contem(selecionado, pesquisas)) {
+				pesquisas.add(selecionado);
+			}
+		} else if (PARA.equals(qName)) {
+			tabelaSelecionada = attributes.getValue(TABELA);
+			if (!Util.isEmpty(tabelaSelecionada)) {
+				ParaTabela paraTabela = criarParaTabela(tabelaSelecionada, attributes);
+				mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> paraTabela);
+			}
+		} else if (INSTRUCAO.equals(qName)) {
+			processarInstrucao(attributes);
+			limpar();
+		} else if (FILTRO.equals(qName)) {
+			processarFiltro(attributes);
+			limpar();
+		} else if (REF.equals(qName) && selecionado != null) {
+			selecionado.add(criar(attributes));
+		} else if (PARAM.equals(qName) && selecionado != null) {
+			selecionado.add(criarParam(attributes));
+		} else if (RELACAO.equals(qName)) {
+			processarRelacao(attributes);
+		}
+	}
+
+	private void processarRelacao(Attributes attributes) throws ObjetoException {
+		boolean pontoDestino = Boolean.parseBoolean(attributes.getValue("pontoDestino"));
+		boolean pontoOrigem = Boolean.parseBoolean(attributes.getValue("pontoOrigem"));
+		String destino = attributes.getValue("destino");
+		String origem = attributes.getValue("origem");
+		RelacaoVinculo relacao = new RelacaoVinculo(origem, pontoOrigem, destino, pontoDestino);
+		relacao.aplicar(attributes);
+		relacoes.add(relacao);
 	}
 
 	private void processarInstrucao(Attributes attributes) throws ObjetoException {

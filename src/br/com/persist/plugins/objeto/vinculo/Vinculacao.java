@@ -18,11 +18,13 @@ import br.com.persist.plugins.objeto.ObjetoException;
 public class Vinculacao {
 	private final Map<String, ParaTabela> mapaParaTabela;
 	private static final String VINCULO = "vinculo";
+	private final List<RelacaoVinculo> relacoes;
 	private final List<Pesquisa> pesquisas;
 
 	public Vinculacao() {
 		mapaParaTabela = new LinkedHashMap<>();
 		pesquisas = new ArrayList<>();
+		relacoes = new ArrayList<>();
 	}
 
 	public boolean adicionarPesquisa(Pesquisa pesquisa) throws ObjetoException {
@@ -49,6 +51,7 @@ public class Vinculacao {
 				VinculoHandler handler = new VinculoHandler();
 				XML.processar(file, handler);
 				pesquisas.addAll(handler.getPesquisas());
+				relacoes.addAll(handler.getRelacoes());
 				mapaParaTabela.putAll(handler.getMapaParaTabela());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
@@ -78,6 +81,10 @@ public class Vinculacao {
 			}
 		}
 		return null;
+	}
+
+	public List<RelacaoVinculo> getRelacoes() {
+		return relacoes;
 	}
 
 	public boolean excluir(Pesquisa pesquisa) {
@@ -114,6 +121,9 @@ public class Vinculacao {
 				for (Pesquisa pesquisa : pesquisas) {
 					pesquisa.salvar(util, ql);
 					ql = true;
+				}
+				for (RelacaoVinculo relacao : relacoes) {
+					relacao.salvar(util);
 				}
 				util.finalizarTag(VINCULO);
 				util.close();

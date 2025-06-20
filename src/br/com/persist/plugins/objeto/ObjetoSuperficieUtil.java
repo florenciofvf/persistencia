@@ -32,6 +32,7 @@ import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
+import br.com.persist.plugins.objeto.vinculo.RelacaoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoSuperficieUtil {
@@ -116,6 +117,13 @@ public class ObjetoSuperficieUtil {
 	public static void paraFrente(ObjetoSuperficie superficie, Relacao obj) {
 		if (superficie.excluir(obj)) {
 			superficie.addRelacao(obj);
+		}
+	}
+
+	public static void processarRelacaoVinculo(ObjetoSuperficie superficie, Vinculacao vinculacao,
+			ObjetoColetor coletor) {
+		for (RelacaoVinculo item : vinculacao.getRelacoes()) {
+			superficie.addRelacao(item.criarRelacao(coletor));
 		}
 	}
 

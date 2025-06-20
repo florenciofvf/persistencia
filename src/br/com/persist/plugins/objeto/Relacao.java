@@ -14,8 +14,8 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
 public class Relacao implements Runnable {
-	private static final Color COR_PADRAO_FONTE = Color.BLACK;
-	private static final Color COR_PADRAO = Color.BLACK;
+	public static final Color COR_PADRAO_FONTE = Color.BLACK;
+	public static final Color COR_PADRAO = Color.BLACK;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private int deslocamentoXDesc = -5;
 	private int deslocamentoYDesc = -5;
