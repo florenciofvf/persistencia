@@ -840,6 +840,8 @@ public class ObjetoContainer extends Panel {
 		public void checarVinculados(ParaTabela para) {
 			if (!Util.isEmpty(para.getIcone())) {
 				panelIcone.setBorder(Marcador.criarBorda());
+			} else {
+				panelIcone.borda();
 			}
 			if (!Util.isEmpty(para.getInternalFormX())) {
 				panelFormX.setBorder(Marcador.criarBorda());
