@@ -1839,7 +1839,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void processar(MouseEvent e) {
-			if (e.isPopupTrigger() && !Util.isEmpty(objeto.getIcone())) {
+			if (e.isPopupTrigger()) {
 				popup.show(popupTriggerPanel ? panel : label, e.getX(), e.getY());
 			}
 		}
