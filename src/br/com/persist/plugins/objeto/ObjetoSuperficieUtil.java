@@ -121,7 +121,7 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void processarRelacaoVinculo(ObjetoSuperficie superficie, Vinculacao vinculacao,
-			ObjetoColetor coletor) {
+			ObjetoColetor coletor) throws ObjetoException {
 		for (RelacaoVinculo item : vinculacao.getRelacoes()) {
 			superficie.addRelacao(item.criarRelacao(coletor));
 		}

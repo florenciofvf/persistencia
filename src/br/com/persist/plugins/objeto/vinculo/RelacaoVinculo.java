@@ -8,6 +8,7 @@ import org.xml.sax.Attributes;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoColetor;
 import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.Relacao;
@@ -159,7 +160,31 @@ public class RelacaoVinculo {
 		util.finalizarTag("relacao");
 	}
 
-	public Relacao criarRelacao(ObjetoColetor coletor) {
+	public Relacao criarRelacao(ObjetoColetor coletor) throws ObjetoException {
+		Objeto objDestino = getObjeto(this.destino, coletor);
+		Objeto objOrigem = getObjeto(this.origem, coletor);
+		if (objOrigem == null || objDestino == null) {
+			return null;
+		}
+		Relacao relacao = new Relacao(objOrigem, pontoOrigem, objDestino, pontoDestino);
+		relacao.setDesenharDescricao(desenharDescricao);
+		relacao.setDeslocamentoXDesc(deslocamentoXDesc);
+		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
+		relacao.setChaveDestino(chaveDestino);
+		relacao.setChaveOrigem(chaveOrigem);
+		relacao.setProcessar(processar);
+		relacao.setQuebrado(quebrado);
+		relacao.setCorFonte(corFonte);
+		relacao.setCor(cor);
+		return relacao;
+	}
+
+	private Objeto getObjeto(String nome, ObjetoColetor coletor) {
+		for (Objeto objeto : coletor.getObjetos()) {
+			if (nome.equals(objeto.getId())) {
+				return objeto;
+			}
+		}
 		return null;
 	}
 
