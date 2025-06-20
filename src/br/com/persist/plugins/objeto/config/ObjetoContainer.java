@@ -88,6 +88,7 @@ public class ObjetoContainer extends Panel {
 	private static final String CHAVE_MENSAGEM_VI = "msg.arquivo_vinculo_inexistente";
 	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
 	private static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
+	private static final String HINT_VINCULO2 = "hint.aplicar_arq_vinculo2";
 	private static final String HINT_VINCULO = "hint.aplicar_arq_vinculo";
 	private static final String VINCULAR_EM_BANCO = "VINCULAR EM BANCO";
 	private transient List<CompChave> vinculados = new ArrayList<>();
@@ -1804,7 +1805,7 @@ public class ObjetoContainer extends Panel {
 			this.objeto = objeto;
 			this.label = label;
 			this.panel = panel;
-			popup.add(action);
+			popup.add(action).setToolTipText(ObjetoMensagens.getString(HINT_VINCULO2));
 			action.setActionListener(e -> preConfigIconeVinculo());
 		}
 
