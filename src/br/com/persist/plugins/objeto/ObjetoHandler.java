@@ -4,7 +4,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import br.com.persist.assistencia.AssistenciaException;
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
 import br.com.persist.plugins.objeto.internal.InternalForm;
@@ -43,7 +42,7 @@ public class ObjetoHandler extends XMLHandler {
 			}
 		} else if ("form".equals(qName)) {
 			processarForm(attributes);
-		} else if ("desc".equals(qName) || Constantes.VALOR.equals(qName) || "buscaAutomatica".equals(qName)) {
+		} else if ("desc".equals(qName)) {
 			limpar();
 		}
 	}

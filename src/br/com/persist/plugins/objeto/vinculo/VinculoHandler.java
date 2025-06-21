@@ -91,7 +91,12 @@ public class VinculoHandler extends XMLHandler {
 				ParaTabela paraTabela = criarParaTabela(tabelaSelecionada, attributes);
 				mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> paraTabela);
 			}
-		} else if (INSTRUCAO.equals(qName)) {
+		}
+		processStartElement2(qName, attributes);
+	}
+
+	private void processStartElement2(String qName, Attributes attributes) throws ObjetoException {
+		if (INSTRUCAO.equals(qName)) {
 			processarInstrucao(attributes);
 			limpar();
 		} else if (FILTRO.equals(qName)) {
@@ -103,6 +108,8 @@ public class VinculoHandler extends XMLHandler {
 			selecionado.add(criarParam(attributes));
 		} else if (RELACAO.equals(qName)) {
 			processarRelacao(attributes);
+		} else if ("desc".equals(qName)) {
+			limpar();
 		}
 	}
 
