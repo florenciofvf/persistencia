@@ -269,4 +269,9 @@ public class RelacaoVinculo {
 	public void setChaveOrigem(String chaveOrigem) {
 		this.chaveOrigem = chaveOrigem;
 	}
+
+	@Override
+	public String toString() {
+		return "Origem=" + origem + ", Destino=" + destino;
+	}
 }

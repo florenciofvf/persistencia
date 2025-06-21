@@ -43,6 +43,7 @@ public class Vinculacao {
 	public void abrir(ArquivoVinculo av, Component componente) throws XMLException {
 		mapaParaTabela.clear();
 		pesquisas.clear();
+		relacoes.clear();
 		File file = null;
 		if (av.valido()) {
 			file = av.getFile();
