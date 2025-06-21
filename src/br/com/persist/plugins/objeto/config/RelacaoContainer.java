@@ -68,6 +68,7 @@ import br.com.persist.plugins.objeto.vinculo.Marcador;
 
 public class RelacaoContainer extends Panel {
 	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
+	public static final String LABEL_VINCULO_REMOVE = "label.aplicar_arq_vinculo_remove";
 	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
@@ -89,7 +90,29 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class Toolbar extends BarraButton {
+		private Action addVinculadoAcao = acaoIcon(ObjetoContainer.LABEL_VINCULO, Icones.SUCESSO);
+		private Action removeVinculadoAcao = acaoIcon(LABEL_VINCULO_REMOVE, Icones.SUCESSO);
+		private Action vinculadosAcao = acaoIcon("label.checar_vinculados", Icones.SUCESSO);
 		private static final long serialVersionUID = 1L;
+
+		public void ini(Janela janela) {
+			super.ini(janela);
+			add(vinculadosAcao);
+			add(addVinculadoAcao);
+			add(removeVinculadoAcao);
+			removeVinculadoAcao.setActionListener(e -> excluirVinculado());
+			addVinculadoAcao.setActionListener(e -> adicionarVinculado());
+			vinculadosAcao.setActionListener(e -> checarVinculado());
+		}
+
+		private void adicionarVinculado() {
+		}
+
+		private void excluirVinculado() {
+		}
+
+		private void checarVinculado() {
+		}
 	}
 
 	private class PanelDescricao extends Panel implements ActionListener {

@@ -87,8 +87,8 @@ public class ObjetoContainer extends Panel {
 	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
 	private static final String CHAVE_MENSAGEM_VI = "msg.arquivo_vinculo_inexistente";
 	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
-	private static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
 	private static final String HINT_VINCULO2 = "hint.aplicar_arq_vinculo2";
+	public static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
 	private static final String HINT_VINCULO = "hint.aplicar_arq_vinculo";
 	private static final String VINCULAR_EM_BANCO = "VINCULAR EM BANCO";
 	private transient List<CompChave> vinculados = new ArrayList<>();
@@ -118,8 +118,8 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private Action vinculadosAcao = acaoIcon("label.checar_vinculados", Icones.SUCESSO);
+		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela);
