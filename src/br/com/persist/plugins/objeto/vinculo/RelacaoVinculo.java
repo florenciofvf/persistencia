@@ -57,6 +57,17 @@ public class RelacaoVinculo {
 		this.pontoOrigem = ponto;
 	}
 
+	public Color getCorFonte() {
+		return corFonte;
+	}
+
+	public void setCorFonte(Color corFonte) {
+		this.corFonte = corFonte;
+		if (this.corFonte == null) {
+			this.corFonte = Relacao.COR_PADRAO_FONTE;
+		}
+	}
+
 	public boolean isDesenharDescricao() {
 		return desenharDescricao;
 	}
@@ -83,6 +94,13 @@ public class RelacaoVinculo {
 
 	public boolean isSelecionado() {
 		return selecionado;
+	}
+
+	public void setCor(Color cor) {
+		this.cor = cor;
+		if (this.cor == null) {
+			this.cor = Relacao.COR_PADRAO;
+		}
 	}
 
 	public String getDescricao() {
@@ -186,6 +204,24 @@ public class RelacaoVinculo {
 			}
 		}
 		return null;
+	}
+
+	public boolean igual(Relacao relacao) {
+		if (relacao == null) {
+			return false;
+		}
+		String idOrigem = relacao.getOrigem().getId();
+		String idDestino = relacao.getDestino().getId();
+		return (origem.equals(idOrigem) && destino.equals(idDestino))
+				|| (origem.equals(idDestino) && destino.equals(idOrigem));
+	}
+
+	public boolean isProcessar() {
+		return processar;
+	}
+
+	public void setProcessar(boolean processar) {
+		this.processar = processar;
 	}
 
 	public int getDeslocamentoXDesc() {

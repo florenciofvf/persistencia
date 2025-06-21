@@ -12,6 +12,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.vinculo.RelacaoVinculo;
 
 public class Relacao implements Runnable {
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
@@ -611,5 +612,19 @@ public class Relacao implements Runnable {
 
 	public void setObjetoTemp(Objeto objetoTemp) {
 		this.objetoTemp = objetoTemp;
+	}
+
+	public RelacaoVinculo criarRelacaoVinculo() throws ObjetoException {
+		RelacaoVinculo relacao = new RelacaoVinculo(origem.getId(), pontoOrigem, destino.getId(), pontoDestino);
+		relacao.setDesenharDescricao(desenharDescricao);
+		relacao.setDeslocamentoXDesc(deslocamentoXDesc);
+		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
+		relacao.setChaveDestino(chaveDestino);
+		relacao.setChaveOrigem(chaveOrigem);
+		relacao.setProcessar(processar);
+		relacao.setQuebrado(quebrado);
+		relacao.setCorFonte(corFonte);
+		relacao.setCor(cor);
+		return relacao;
 	}
 }

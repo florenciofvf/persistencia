@@ -14,6 +14,7 @@ import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoException;
+import br.com.persist.plugins.objeto.Relacao;
 
 public class Vinculacao {
 	private final Map<String, ParaTabela> mapaParaTabela;
@@ -85,6 +86,27 @@ public class Vinculacao {
 
 	public List<RelacaoVinculo> getRelacoes() {
 		return relacoes;
+	}
+
+	public RelacaoVinculo getRelacaoVinculo(Relacao relacao) {
+		for (RelacaoVinculo item : relacoes) {
+			if (item.igual(relacao)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	public boolean excluirRelacaoVinculo(RelacaoVinculo relacao) {
+		return relacoes.remove(relacao);
+	}
+
+	public boolean adicionarRelacaoVinculo(Relacao relacao) throws ObjetoException {
+		if (relacao == null || getRelacaoVinculo(relacao) != null) {
+			return false;
+		}
+		RelacaoVinculo obj = relacao.criarRelacaoVinculo();
+		return relacoes.add(obj);
 	}
 
 	public boolean excluir(Pesquisa pesquisa) {

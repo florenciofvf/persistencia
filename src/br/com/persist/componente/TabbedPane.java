@@ -14,12 +14,16 @@ public class TabbedPane extends JTabbedPane {
 	@Override
 	public void addTab(String chaveRotulo, Icon icon, Component component) {
 		super.addTab(Mensagens.getString(chaveRotulo), icon, component);
-		setBorder(BorderFactory.createEmptyBorder());
+		borda();
 	}
 
 	@Override
 	public void addTab(String chaveRotulo, Component component) {
 		super.addTab(Mensagens.getString(chaveRotulo), component);
+		borda();
+	}
+
+	public void borda() {
 		setBorder(BorderFactory.createEmptyBorder());
 	}
 }

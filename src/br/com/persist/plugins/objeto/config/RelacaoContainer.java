@@ -65,6 +65,8 @@ import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Marcador;
+import br.com.persist.plugins.objeto.vinculo.RelacaoVinculo;
+import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class RelacaoContainer extends Panel {
 	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
@@ -74,6 +76,7 @@ public class RelacaoContainer extends Panel {
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Relacao relacao;
 	private String ultimoCampoSelecionado;
+	private Fichario fichario;
 
 	public RelacaoContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Relacao relacao)
 			throws AssistenciaException {
@@ -85,14 +88,15 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private void montarLayout() throws AssistenciaException {
-		add(BorderLayout.CENTER, new Fichario());
+		fichario = new Fichario();
+		add(BorderLayout.CENTER, fichario);
 		add(BorderLayout.NORTH, toolbar);
 	}
 
 	private class Toolbar extends BarraButton {
 		private Action addVinculadoAcao = acaoIcon(ObjetoContainer.LABEL_VINCULO, Icones.SUCESSO);
 		private Action removeVinculadoAcao = acaoIcon(LABEL_VINCULO_REMOVE, Icones.SUCESSO);
-		private Action vinculadosAcao = acaoIcon("label.checar_vinculados", Icones.SUCESSO);
+		private Action vinculadosAcao = acaoIcon("label.checar_vinculado", Icones.SUCESSO);
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
@@ -106,12 +110,65 @@ public class RelacaoContainer extends Panel {
 		}
 
 		private void adicionarVinculado() {
+			Vinculacao vinculacao = null;
+			try {
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ADICIONAR OBJETO VINCULADO", ex, RelacaoContainer.this);
+				return;
+			}
+			if (vinculacao == null) {
+				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+				return;
+			}
+			try {
+				if (vinculacao.adicionarRelacaoVinculo(relacao)) {
+					salvarVinculacao(vinculacao);
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ADICIONAR OBJETO VINCULADO", ex, RelacaoContainer.this);
+			}
 		}
 
 		private void excluirVinculado() {
+			Vinculacao vinculacao = null;
+			try {
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("EXCLUIR OBJETO VINCULADO", ex, RelacaoContainer.this);
+				return;
+			}
+			if (vinculacao == null) {
+				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+				return;
+			}
+			RelacaoVinculo relacaoVinculo = vinculacao.getRelacaoVinculo(relacao);
+			if (vinculacao.excluirRelacaoVinculo(relacaoVinculo)) {
+				salvarVinculacao(vinculacao);
+			}
 		}
 
 		private void checarVinculado() {
+			Vinculacao vinculacao = null;
+			try {
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("CHECAR OBJETO VINCULADO", ex, RelacaoContainer.this);
+				return;
+			}
+			if (vinculacao == null) {
+				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+				return;
+			}
+			if (vinculacao.getRelacaoVinculo(relacao) != null) {
+				fichario.setBorder(Marcador.criarBorda());
+			} else {
+				fichario.borda();
+			}
+		}
+
+		private void salvarVinculacao(Vinculacao vinculacao) {
+			ObjetoSuperficieUtil.salvarVinculacao(objetoSuperficie, vinculacao);
 		}
 	}
 
