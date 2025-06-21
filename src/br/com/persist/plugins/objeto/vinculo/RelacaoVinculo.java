@@ -190,6 +190,7 @@ public class RelacaoVinculo {
 		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
 		relacao.setChaveDestino(chaveDestino);
 		relacao.setChaveOrigem(chaveOrigem);
+		relacao.setDescricao(descricao);
 		relacao.setProcessar(processar);
 		relacao.setQuebrado(quebrado);
 		relacao.setCorFonte(corFonte);

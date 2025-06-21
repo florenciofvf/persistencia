@@ -197,7 +197,22 @@ public class VinculoHandler extends XMLHandler {
 				setValorFiltro(paraTabela.getFiltros());
 			}
 			limpar();
+		} else if ("desc".equals(qName)) {
+			setDescricao();
 		}
+	}
+
+	private void setDescricao() {
+		if (relacoes.isEmpty()) {
+			limpar();
+			return;
+		}
+		String string = builder.toString();
+		if (!Util.isEmpty(string)) {
+			RelacaoVinculo item = relacoes.get(relacoes.size() - 1);
+			item.setDescricao(string.trim());
+		}
+		limpar();
 	}
 
 	private void setValorInstrucao(List<Instrucao> lista) {
