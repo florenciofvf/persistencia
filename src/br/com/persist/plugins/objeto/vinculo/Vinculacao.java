@@ -144,6 +144,9 @@ public class Vinculacao {
 					pesquisa.salvar(util, ql);
 					ql = true;
 				}
+				if (ql) {
+					util.ql();
+				}
 				for (RelacaoVinculo relacao : relacoes) {
 					relacao.salvar(util);
 				}
