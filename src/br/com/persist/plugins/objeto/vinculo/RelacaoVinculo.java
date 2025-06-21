@@ -198,6 +198,24 @@ public class RelacaoVinculo {
 		return relacao;
 	}
 
+	public void copiarProps(Relacao relacao) {
+		if (relacao == null) {
+			return;
+		}
+		setDeslocamentoXDesc(relacao.getDeslocamentoXDesc());
+		setDeslocamentoYDesc(relacao.getDeslocamentoYDesc());
+		setDesenharDescricao(relacao.isDesenharDescricao());
+		setChaveDestino(relacao.getChaveDestino());
+		setPontoDestino(relacao.isPontoDestino());
+		setChaveOrigem(relacao.getChaveOrigem());
+		setPontoOrigem(relacao.isPontoOrigem());
+		setDescricao(relacao.getDescricao());
+		setProcessar(relacao.isProcessar());
+		setCorFonte(relacao.getCorFonte());
+		setQuebrado(relacao.isQuebrado());
+		setCor(relacao.getCor());
+	}
+
 	private Objeto getObjeto(String nome, ObjetoColetor coletor) {
 		for (Objeto objeto : coletor.getObjetos()) {
 			if (nome.equals(objeto.getId())) {

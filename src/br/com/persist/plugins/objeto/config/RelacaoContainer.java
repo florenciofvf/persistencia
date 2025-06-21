@@ -122,7 +122,11 @@ public class RelacaoContainer extends Panel {
 				return;
 			}
 			try {
-				if (vinculacao.adicionarRelacaoVinculo(relacao)) {
+				RelacaoVinculo relacaoVinculo = vinculacao.getRelacaoVinculo(relacao);
+				if (relacaoVinculo != null) {
+					relacaoVinculo.copiarProps(relacao);
+					salvarVinculacao(vinculacao);
+				} else if (vinculacao.adicionarRelacaoVinculo(relacao)) {
 					salvarVinculacao(vinculacao);
 				}
 			} catch (Exception ex) {

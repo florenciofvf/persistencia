@@ -633,17 +633,17 @@ public class Relacao implements Runnable {
 		if (relacao == null) {
 			return;
 		}
-		relacao.setDesenharDescricao(desenharDescricao);
-		relacao.setDeslocamentoXDesc(deslocamentoXDesc);
-		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
-		relacao.setPontoDestino(pontoDestino);
-		relacao.setChaveDestino(chaveDestino);
-		relacao.setPontoOrigem(pontoOrigem);
-		relacao.setChaveOrigem(chaveOrigem);
-		relacao.setDescricao(descricao);
-		relacao.setProcessar(processar);
-		relacao.setQuebrado(quebrado);
-		relacao.setCorFonte(corFonte);
-		relacao.setCor(cor);
+		setDesenharDescricao(relacao.desenharDescricao);
+		setDeslocamentoXDesc(relacao.deslocamentoXDesc);
+		setDeslocamentoYDesc(relacao.deslocamentoYDesc);
+		setPontoDestino(relacao.pontoDestino);
+		setChaveDestino(relacao.chaveDestino);
+		setPontoOrigem(relacao.pontoOrigem);
+		setChaveOrigem(relacao.chaveOrigem);
+		setDescricao(relacao.descricao);
+		setProcessar(relacao.processar);
+		setQuebrado(relacao.quebrado);
+		setCorFonte(relacao.corFonte);
+		setCor(relacao.cor);
 	}
 }
