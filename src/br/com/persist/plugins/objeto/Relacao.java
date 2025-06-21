@@ -621,10 +621,29 @@ public class Relacao implements Runnable {
 		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
 		relacao.setChaveDestino(chaveDestino);
 		relacao.setChaveOrigem(chaveOrigem);
+		relacao.setDescricao(descricao);
 		relacao.setProcessar(processar);
 		relacao.setQuebrado(quebrado);
 		relacao.setCorFonte(corFonte);
 		relacao.setCor(cor);
 		return relacao;
+	}
+
+	public void copiarProps(Relacao relacao) {
+		if (relacao == null) {
+			return;
+		}
+		relacao.setDesenharDescricao(desenharDescricao);
+		relacao.setDeslocamentoXDesc(deslocamentoXDesc);
+		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
+		relacao.setPontoDestino(pontoDestino);
+		relacao.setChaveDestino(chaveDestino);
+		relacao.setPontoOrigem(pontoOrigem);
+		relacao.setChaveOrigem(chaveOrigem);
+		relacao.setDescricao(descricao);
+		relacao.setProcessar(processar);
+		relacao.setQuebrado(quebrado);
+		relacao.setCorFonte(corFonte);
+		relacao.setCor(cor);
 	}
 }
