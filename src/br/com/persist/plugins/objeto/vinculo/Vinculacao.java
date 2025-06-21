@@ -145,7 +145,7 @@ public class Vinculacao {
 					pesquisa.salvar(util, ql);
 					ql = true;
 				}
-				if (ql) {
+				if (ql && !relacoes.isEmpty()) {
 					util.ql();
 				}
 				for (RelacaoVinculo relacao : relacoes) {
