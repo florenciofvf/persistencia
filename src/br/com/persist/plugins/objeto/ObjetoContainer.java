@@ -339,7 +339,8 @@ public class ObjetoContainer extends AbstratoContainer {
 			}
 
 			private void processar(MouseEvent e) {
-				if (e.isPopupTrigger() && !Util.isEmpty(txtArquivoVinculo.getText())) {
+				if (e.isPopupTrigger()) {
+					popupArquivoVinculado.getComponent(0).setEnabled(!Util.isEmpty(txtArquivoVinculo.getText()));
 					popupArquivoVinculado.show(txtArquivoVinculo, e.getX(), e.getY());
 				}
 			}
