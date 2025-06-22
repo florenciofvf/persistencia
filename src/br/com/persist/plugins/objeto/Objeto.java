@@ -875,6 +875,9 @@ public class Objeto implements Runnable {
 	}
 
 	public void setIdSub(String idSub) {
+		if (Util.isEmpty(idSub)) {
+			idSub = null;
+		}
 		this.idSub = idSub;
 	}
 
