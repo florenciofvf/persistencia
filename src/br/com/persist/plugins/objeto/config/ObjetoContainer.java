@@ -451,6 +451,7 @@ public class ObjetoContainer extends Panel {
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtIntervalo.setText(VAZIO + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
+			txtIdTempForm.setText(objeto.getIdTempForm());
 			txtArquivo.setText(objeto.getArquivo());
 			txtX.setText(VAZIO + objeto.getX());
 			txtY.setText(VAZIO + objeto.getY());
