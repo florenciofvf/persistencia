@@ -1507,6 +1507,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (vinculoListener == null || ref == null) {
 							return;
 						}
+						String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+						if (Util.isEmpty(arquivoVinculado)) {
+							String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+							if (!Util.confirmar(InternalContainer.this, msg, false)) {
+								return;
+							}
+						}
 						Objeto objetoRef = vinculoListener.getObjeto(ref);
 						if (objetoRef == null || Util.isEmpty(objetoRef.getIcone())) {
 							return;
@@ -1536,6 +1543,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					public void iconeColar() throws AssistenciaException {
 						if (vinculoListener == null || Util.isEmpty(IconeContainer.getNomeIconeCopiado())) {
 							return;
+						}
+						String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+						if (Util.isEmpty(arquivoVinculado)) {
+							String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+							if (!Util.confirmar(InternalContainer.this, msg, false)) {
+								return;
+							}
 						}
 						String nomeIcone = IconeContainer.getNomeIconeCopiado();
 						Vinculacao vinculacao = new Vinculacao();
@@ -1724,13 +1738,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 						@Override
 						public void salvar() {
-							if (vinculoListener != null) {
-								try {
-									pesquisaMemoria.copiarVisibilidade(pesquisaArquivo);
-									vinculoListener.salvarVinculacao(vinculacao);
-								} catch (ObjetoException ex) {
-									Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							if (vinculoListener == null) {
+								return;
+							}
+							String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+							if (Util.isEmpty(arquivoVinculado)) {
+								String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+								if (!Util.confirmar(InternalContainer.this, msg, false)) {
+									return;
 								}
+							}
+							try {
+								pesquisaMemoria.copiarVisibilidade(pesquisaArquivo);
+								vinculoListener.salvarVinculacao(vinculacao);
+							} catch (ObjetoException ex) {
+								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 							}
 						}
 					}
@@ -1816,6 +1838,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					if (vinculoListener == null || ref == null) {
 						return;
 					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
+					}
 					Objeto objetoRef = vinculoListener.getObjeto(ref);
 					if (objetoRef == null) {
 						return;
@@ -1871,6 +1900,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Referencia ref = pesquisa.get();
 					if (vinculoListener == null || ref == null) {
 						return;
+					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
 					}
 					Objeto objetoRef = vinculoListener.getObjeto(ref);
 					if (objetoRef == null) {
