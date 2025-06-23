@@ -4357,6 +4357,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (vinculoListener == null) {
 				return;
 			}
+			String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+			if (Util.isEmpty(arquivoVinculado)) {
+				String msg = ObjetoMensagens.getString("msg.arquivo_vinculo_nao_definido");
+				if (!Util.confirmar(InternalContainer.this, msg, false)) {
+					return;
+				}
+			}
 			Coletor coletor = getNomePesquisa();
 			if (coletor.size() != 1) {
 				return;

@@ -58,6 +58,8 @@ public interface InternalListener {
 
 		public void atualizarComplemento(Objeto objeto);
 
+		public String getStringArquivoVinculado();
+
 		public Objeto getObjeto(Referencia ref);
 
 		public boolean validoInvisibilidade();

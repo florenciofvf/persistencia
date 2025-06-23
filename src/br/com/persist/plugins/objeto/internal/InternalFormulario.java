@@ -448,6 +448,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				ObjetoSuperficieUtil.salvarVinculacao((ObjetoSuperficie) desktop, vinculacao);
 			}
 		}
+
+		public String getStringArquivoVinculado() {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				return ((ObjetoSuperficie) desktop).getArquivoVinculo();
+			}
+			return null;
+		}
 	};
 
 	private transient InternalListener.Visibilidade visibilidadeListener = new InternalListener.Visibilidade() {
