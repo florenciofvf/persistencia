@@ -9,6 +9,8 @@ public interface TabelaPersistenciaListener {
 
 	public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
 
+	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) throws ObjetoException;
+
 	public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
 	public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
@@ -32,8 +34,6 @@ public interface TabelaPersistenciaListener {
 	public void selectMaximo(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
 	public void tabelaMouseClick(TabelaPersistencia tabelaPersistencia, int colunaClicada);
-
-	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) throws ObjetoException;
 
 	public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, Coluna coluna);
 
