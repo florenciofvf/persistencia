@@ -2093,6 +2093,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							return;
 						}
 					}
+					processarImpl(apostrofes);
+				}
+
+				private void processarImpl(boolean apostrofes) throws ObjetoException, AssistenciaException {
 					int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
 							pesquisa.getReferencia().getCampo(), false);
 					if (coluna != -1) {
