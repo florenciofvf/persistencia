@@ -1849,6 +1849,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					if (objetoRef == null) {
 						return;
 					}
+					nomeIconeReferImpl(objetoRef);
+				}
+
+				private void nomeIconeReferImpl(Objeto objetoRef) throws AssistenciaException {
 					Vinculacao vinculacao = new Vinculacao();
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
