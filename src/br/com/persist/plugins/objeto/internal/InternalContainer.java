@@ -2021,16 +2021,24 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 					@Override
 					public void salvar() {
-						if (vinculoListener != null) {
-							for (Pesquisa p : pesquisas) {
-								Pesquisa memoria = objeto.getPesquisa(p);
-								if (p != null) {
-									memoria.setOrdem(p.getOrdem());
-								}
-							}
-							vinculoListener.salvarVinculacao(vinculacao);
-							toolbar.buttonPesquisa.complemento(objeto);
+						if (vinculoListener == null) {
+							return;
 						}
+						String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+						if (Util.isEmpty(arquivoVinculado)) {
+							String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+							if (!Util.confirmar(InternalContainer.this, msg, false)) {
+								return;
+							}
+						}
+						for (Pesquisa p : pesquisas) {
+							Pesquisa memoria = objeto.getPesquisa(p);
+							if (p != null) {
+								memoria.setOrdem(p.getOrdem());
+							}
+						}
+						vinculoListener.salvarVinculacao(vinculacao);
+						toolbar.buttonPesquisa.complemento(objeto);
 					}
 				}
 
@@ -3653,15 +3661,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (vinculoListener != null) {
-							Map<String, Object> mapaRef = new HashMap<>();
-							mapaRef.put(ObjetoConstantes.ERROR, Boolean.FALSE);
-							try {
-								vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
-								processarMapaReferencia(mapaRef);
-							} catch (MetadadoException | ObjetoException | AssistenciaException ex) {
-								Util.mensagem(InternalContainer.this, ex.getMessage());
+						if (vinculoListener == null) {
+							return;
+						}
+						String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+						if (Util.isEmpty(arquivoVinculado)) {
+							String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+							if (!Util.confirmar(InternalContainer.this, msg, false)) {
+								return;
 							}
+						}
+						Map<String, Object> mapaRef = new HashMap<>();
+						mapaRef.put(ObjetoConstantes.ERROR, Boolean.FALSE);
+						try {
+							vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
+							processarMapaReferencia(mapaRef);
+						} catch (MetadadoException | ObjetoException | AssistenciaException ex) {
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 						}
 					}
 
