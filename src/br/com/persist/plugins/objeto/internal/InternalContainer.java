@@ -168,6 +168,7 @@ import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalContainer extends Panel implements ItemListener, Pagina, WindowHandler, WindowInternalHandler {
+	private static final String MSG_ARQUIVO_VINCULO_NAO_DEFINIDO = "msg.arquivo_vinculo_nao_definido";
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
@@ -1561,6 +1562,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							if (vinculoListener == null) {
 								return;
 							}
+							String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+							if (Util.isEmpty(arquivoVinculado)) {
+								String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+								if (!Util.confirmar(InternalContainer.this, msg, false)) {
+									return;
+								}
+							}
 							Vinculacao vinculacao = new Vinculacao();
 							try {
 								vinculoListener.preencherVinculacao(vinculacao);
@@ -1578,6 +1586,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						public void limparIcone() {
 							if (vinculoListener == null) {
 								return;
+							}
+							String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+							if (Util.isEmpty(arquivoVinculado)) {
+								String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+								if (!Util.confirmar(InternalContainer.this, msg, false)) {
+									return;
+								}
 							}
 							Vinculacao vinculacao = new Vinculacao();
 							try {
@@ -1599,6 +1614,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private void processar(boolean adicionar) {
 						if (vinculoListener == null) {
 							return;
+						}
+						String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+						if (Util.isEmpty(arquivoVinculado)) {
+							String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+							if (!Util.confirmar(InternalContainer.this, msg, false)) {
+								return;
+							}
 						}
 						Vinculacao vinculacao = new Vinculacao();
 						try {
@@ -1629,6 +1651,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (vinculoListener == null) {
 							return;
 						}
+						String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+						if (Util.isEmpty(arquivoVinculado)) {
+							String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+							if (!Util.confirmar(InternalContainer.this, msg, false)) {
+								return;
+							}
+						}
 						Vinculacao vinculacao = new Vinculacao();
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
@@ -1653,6 +1682,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private void visibilidadeMn() {
 						if (vinculoListener == null) {
 							return;
+						}
+						String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+						if (Util.isEmpty(arquivoVinculado)) {
+							String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+							if (!Util.confirmar(InternalContainer.this, msg, false)) {
+								return;
+							}
 						}
 						Vinculacao vinculacao = new Vinculacao();
 						try {
@@ -1704,6 +1740,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					if (vinculoListener == null) {
 						return;
 					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
+					}
 					Vinculacao vinculacao = new Vinculacao();
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
@@ -1723,6 +1766,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void excluirReferencia() {
 					if (vinculoListener == null) {
 						return;
+					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
 					}
 					Vinculacao vinculacao = new Vinculacao();
 					try {
@@ -1869,6 +1919,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					if (vinculoListener == null) {
 						return;
 					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
+					}
 					Vinculacao vinculacao = new Vinculacao();
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
@@ -1907,6 +1964,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					if (vinculoListener == null) {
 						return;
 					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
+					}
 					Vinculacao vinculacao = new Vinculacao();
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
@@ -1922,6 +1986,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void ordenarManual() {
 					if (vinculoListener == null) {
 						return;
+					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
 					}
 					Vinculacao vinculacao = new Vinculacao();
 					try {
@@ -2014,6 +2085,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private void processar(boolean apostrofes) throws ObjetoException, AssistenciaException {
 					if (vinculoListener == null) {
 						return;
+					}
+					String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+					if (Util.isEmpty(arquivoVinculado)) {
+						String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+						if (!Util.confirmar(InternalContainer.this, msg, false)) {
+							return;
+						}
 					}
 					int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
 							pesquisa.getReferencia().getCampo(), false);
@@ -4282,6 +4360,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (vinculoListener == null) {
 				return;
 			}
+			String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+			if (Util.isEmpty(arquivoVinculado)) {
+				String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+				if (!Util.confirmar(InternalContainer.this, msg, false)) {
+					return;
+				}
+			}
 			Coletor coletor = getNomeBiblio();
 			if (coletor.size() != 1) {
 				return;
@@ -4359,7 +4444,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
 			if (Util.isEmpty(arquivoVinculado)) {
-				String msg = ObjetoMensagens.getString("msg.arquivo_vinculo_nao_definido");
+				String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
 				if (!Util.confirmar(InternalContainer.this, msg, false)) {
 					return;
 				}
