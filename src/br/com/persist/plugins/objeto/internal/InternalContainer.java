@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -129,6 +130,7 @@ import br.com.persist.plugins.objeto.alter.AlternativoDialogo;
 import br.com.persist.plugins.objeto.alter.AlternativoListener;
 import br.com.persist.plugins.objeto.complem.ComplementoDialogo;
 import br.com.persist.plugins.objeto.complem.ComplementoListener;
+import br.com.persist.plugins.objeto.config.ObjetoContainer;
 import br.com.persist.plugins.objeto.internal.InternalListener.Alinhamento;
 import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
 import br.com.persist.plugins.objeto.internal.InternalListener.Dimensao;
@@ -5202,6 +5204,30 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public void setInternalConfig(InternalConfig internalConfig) {
 		this.internalConfig = internalConfig;
+	}
+
+	private void checarProcesso(ArquivoVinculo arquivoVinculo, AtomicBoolean confirmarProcessarEmMemoria)
+			throws ObjetoException {
+		Objects.requireNonNull(arquivoVinculo);
+		if (vinculoListener == null) {
+			throw new ObjetoException(ObjetoMensagens.getString("erro.sem_vinculo_listener"));
+		}
+		if (ArquivoVinculo.INDIFERENTE == arquivoVinculo) {
+			return;
+		}
+		String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
+		if (Util.isEmpty(arquivoVinculado)) {
+			if (ArquivoVinculo.OBRIGATORIO == arquivoVinculo) {
+				throw new ObjetoException(ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+			} else if (ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA == arquivoVinculo) {
+				String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+				confirmarProcessarEmMemoria.set(Util.confirmar(InternalContainer.this, msg, false));
+			}
+		}
+	}
+
+	public enum ArquivoVinculo {
+		OBRIGATORIO, CONFIRMAR_PROCESSO_MEMORIA, INDIFERENTE
 	}
 }
 
