@@ -169,7 +169,6 @@ import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalContainer extends Panel implements ItemListener, Pagina, WindowHandler, WindowInternalHandler {
-	private static final String MSG_ARQUIVO_VINCULO_NAO_DEFINIDO = "msg.arquivo_vinculo_nao_definido";
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
@@ -1566,6 +1565,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
 						if (arquivo != null) {
 							configurarIcone(nomeIcone, vinculacao, arquivo);
+						} else {
+							MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
 						}
 					}
 
@@ -1725,7 +1726,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							try {
 								checarProcesso(ArquivoVinculo.OBRIGATORIO);
 							} catch (ObjetoException ex) {
-								Util.stackTraceAndMessage("visibilidadeReferencia", ex, InternalContainer.this);
+								Util.stackTraceAndMessage("visibilidadeItemReferencia", ex, InternalContainer.this);
 								return;
 							}
 							try {
@@ -1765,7 +1766,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("excluirReferencia", ex, InternalContainer.this);
+						Util.stackTraceAndMessage("excluirItemReferencia", ex, InternalContainer.this);
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
@@ -5162,7 +5163,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				throw new ObjetoException(ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
 			} else if (ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA == arquivoVinculo) {
 				result.put("resultRequest", ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA);
-				String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
+				String msg = ObjetoMensagens.getString("msg.arquivo_vinculo_nao_definido");
 				result.put("resultResponse", Util.confirmar(InternalContainer.this, msg, false));
 			}
 		}
