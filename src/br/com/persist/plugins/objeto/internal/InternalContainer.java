@@ -5206,9 +5206,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		this.internalConfig = internalConfig;
 	}
 
-	private void checarProcesso(ArquivoVinculo arquivoVinculo, AtomicBoolean confirmarProcessarEmMemoria)
-			throws ObjetoException {
-		Objects.requireNonNull(arquivoVinculo);
+	private void checarProcesso(ArquivoVinculo arquivoVinculo, Map<String, Object> result) throws ObjetoException {
+		if (arquivoVinculo == null) {
+			throw new ObjetoException("arquivoVinculo nulo.");
+		}
 		if (vinculoListener == null) {
 			throw new ObjetoException(ObjetoMensagens.getString("erro.sem_vinculo_listener"));
 		}
@@ -5220,8 +5221,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (ArquivoVinculo.OBRIGATORIO == arquivoVinculo) {
 				throw new ObjetoException(ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
 			} else if (ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA == arquivoVinculo) {
+				result.put("resultRequest", ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA);
 				String msg = ObjetoMensagens.getString(MSG_ARQUIVO_VINCULO_NAO_DEFINIDO);
-				confirmarProcessarEmMemoria.set(Util.confirmar(InternalContainer.this, msg, false));
+				result.put("resultResponse", Util.confirmar(InternalContainer.this, msg, false));
 			}
 		}
 	}
