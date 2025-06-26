@@ -1510,7 +1510,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							checarProcesso(ArquivoVinculo.OBRIGATORIO);
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage("iconeReferenciado", ex, InternalContainer.this);
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 							return;
 						}
 						Objeto objetoRef = vinculoListener.getObjeto(ref);
@@ -1547,7 +1547,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							checarProcesso(ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA, result);
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage("colarIconePesquisa", ex, InternalContainer.this);
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 							return;
 						}
 						if (result.get("resultRequest") == ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA
@@ -1581,7 +1581,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							try {
 								checarProcesso(ArquivoVinculo.OBRIGATORIO);
 							} catch (ObjetoException ex) {
-								Util.stackTraceAndMessage("iconePesquisa", ex, InternalContainer.this);
+								Util.mensagem(InternalContainer.this, ex.getMessage());
 								return;
 							}
 							Vinculacao vinculacao = new Vinculacao();
@@ -1602,7 +1602,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							try {
 								checarProcesso(ArquivoVinculo.OBRIGATORIO);
 							} catch (ObjetoException ex) {
-								Util.stackTraceAndMessage("limparIconePesquisa", ex, InternalContainer.this);
+								Util.mensagem(InternalContainer.this, ex.getMessage());
 								return;
 							}
 							Vinculacao vinculacao = new Vinculacao();
@@ -1626,7 +1626,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							checarProcesso(ArquivoVinculo.OBRIGATORIO);
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage("limparResto", ex, InternalContainer.this);
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 							return;
 						}
 						Vinculacao vinculacao = new Vinculacao();
@@ -1658,7 +1658,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							checarProcesso(ArquivoVinculo.OBRIGATORIO);
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage("vazioInvisivel", ex, InternalContainer.this);
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 							return;
 						}
 						Vinculacao vinculacao = new Vinculacao();
@@ -1686,7 +1686,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							checarProcesso(ArquivoVinculo.OBRIGATORIO);
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage("visibilidadeReferenciaManual", ex, InternalContainer.this);
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 							return;
 						}
 						Vinculacao vinculacao = new Vinculacao();
@@ -1726,7 +1726,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							try {
 								checarProcesso(ArquivoVinculo.OBRIGATORIO);
 							} catch (ObjetoException ex) {
-								Util.stackTraceAndMessage("visibilidadeItemReferencia", ex, InternalContainer.this);
+								Util.mensagem(InternalContainer.this, ex.getMessage());
 								return;
 							}
 							try {
@@ -1743,7 +1743,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("excluirPesquisa", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
@@ -1766,7 +1766,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("excluirItemReferencia", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
@@ -1814,7 +1814,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("nomeIconeReferenciado", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					Objeto objetoRef = vinculoListener.getObjeto(ref);
@@ -1880,7 +1880,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("nomeReferenciado", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					Objeto objetoRef = vinculoListener.getObjeto(ref);
@@ -1930,7 +1930,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("renomearPesquisa", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
@@ -1971,7 +1971,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("ordenarPesquisaArrasto", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
@@ -1990,7 +1990,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.OBRIGATORIO);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("ordenarPesquisaManual", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
@@ -2023,7 +2023,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							checarProcesso(ArquivoVinculo.OBRIGATORIO);
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage("ordenarPesquisa", ex, InternalContainer.this);
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 							return;
 						}
 						for (Pesquisa p : pesquisas) {
@@ -2089,7 +2089,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					try {
 						checarProcesso(ArquivoVinculo.INDIFERENTE);
 					} catch (ObjetoException ex) {
-						Util.stackTraceAndMessage("processarPesquisa", ex, InternalContainer.this);
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 						return;
 					}
 					processarImpl(apostrofes);
@@ -3655,7 +3655,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							checarProcesso(ArquivoVinculo.OBRIGATORIO);
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage("RelacionadoAbaixoAcao", ex, InternalContainer.this);
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 							return;
 						}
 						Map<String, Object> mapaRef = new HashMap<>();
@@ -4367,7 +4367,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			try {
 				checarProcesso(ArquivoVinculo.OBRIGATORIO);
 			} catch (ObjetoException ex) {
-				Util.stackTraceAndMessage("mapearApartirBiblio", ex, InternalContainer.this);
+				Util.mensagem(InternalContainer.this, ex.getMessage());
 				return;
 			}
 			Coletor coletor = getNomeBiblio();
@@ -4445,7 +4445,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			try {
 				checarProcesso(ArquivoVinculo.OBRIGATORIO);
 			} catch (ObjetoException ex) {
-				Util.stackTraceAndMessage("pesquisaApartirColuna", ex, InternalContainer.this);
+				Util.mensagem(InternalContainer.this, ex.getMessage());
 				return;
 			}
 			Coletor coletor = getNomePesquisa();
