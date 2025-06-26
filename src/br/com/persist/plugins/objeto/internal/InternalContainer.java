@@ -1165,10 +1165,34 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void filtrar(Filtro filtro) {
-					txtComplemento.setText(filtro.getValor());
+					if (param(filtro)) {
+						processar(filtro);
+					} else {
+						txtComplemento.setText(filtro.getValor());
+					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
 					}
+				}
+
+				private void processar(Filtro filtro) {
+					String complemento = Util.getContentTransfered();
+					if (Util.isEmpty(complemento)) {
+						txtComplemento.setText(filtro.getValor());
+					} else {
+						String valor = filtro.getValor();
+						complemento = complemento.trim();
+						String[] array = complemento.split("/");
+						for (int i = 0; i < array.length; i++) {
+							valor = Util.replaceAll(valor, "{" + i + "}", array[i]);
+						}
+						txtComplemento.setText(valor);
+					}
+				}
+
+				private boolean param(Filtro filtro) {
+					String nome = filtro.getNome();
+					return nome.contains("{0}") && nome.contains("/");
 				}
 			}
 
