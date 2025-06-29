@@ -1956,8 +1956,8 @@ class SuperficiePopup extends Popup {
 	}
 
 	private class MenuArqVinculo extends Menu {
-		private Action removeVinculadoAcao = acaoIcon(RelacaoContainer.LABEL_VINCULO_REMOVE, Icones.SUCESSO);
-		private Action addVinculadoAcao = acaoIcon(ObjetoConstantes.LABEL_VINCULO, Icones.SUCESSO);
+		private Action removeVinculadoAcao = acaoMenu(RelacaoContainer.LABEL_VINCULO_REMOVE, Icones.SUCESSO);
+		private Action addVinculadoAcao = acaoMenu(ObjetoConstantes.LABEL_VINCULO, Icones.SUCESSO);
 		private static final long serialVersionUID = 1L;
 
 		private MenuArqVinculo() {
@@ -1968,8 +1968,8 @@ class SuperficiePopup extends Popup {
 			addVinculadoAcao.setActionListener(e -> adicionarVinculado());
 		}
 
-		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+		Action acaoMenu(String chave, Icon icon) {
+			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 		}
 
 		private void adicionarVinculado() {
