@@ -59,6 +59,7 @@ import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
@@ -94,7 +95,7 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action addVinculadoAcao = acaoIcon(ObjetoContainer.LABEL_VINCULO, Icones.SUCESSO);
+		private Action addVinculadoAcao = acaoIcon(ObjetoConstantes.LABEL_VINCULO, Icones.SUCESSO);
 		private Action removeVinculadoAcao = acaoIcon(LABEL_VINCULO_REMOVE, Icones.SUCESSO);
 		private Action vinculadosAcao = acaoIcon("label.checar_vinculado", Icones.SUCESSO);
 		private static final long serialVersionUID = 1L;
@@ -118,7 +119,7 @@ public class RelacaoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 				return;
 			}
 			try {
@@ -143,7 +144,7 @@ public class RelacaoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 				return;
 			}
 			RelacaoVinculo relacaoVinculo = vinculacao.getRelacaoVinculo(relacao);
@@ -161,7 +162,7 @@ public class RelacaoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+				Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 				return;
 			}
 			if (vinculacao.getRelacaoVinculo(relacao) != null) {

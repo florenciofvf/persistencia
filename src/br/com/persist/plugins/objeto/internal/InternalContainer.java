@@ -129,7 +129,6 @@ import br.com.persist.plugins.objeto.alter.AlternativoDialogo;
 import br.com.persist.plugins.objeto.alter.AlternativoListener;
 import br.com.persist.plugins.objeto.complem.ComplementoDialogo;
 import br.com.persist.plugins.objeto.complem.ComplementoListener;
-import br.com.persist.plugins.objeto.config.ObjetoContainer;
 import br.com.persist.plugins.objeto.internal.InternalListener.Alinhamento;
 import br.com.persist.plugins.objeto.internal.InternalListener.ConfiguraAlturaSemRegistros;
 import br.com.persist.plugins.objeto.internal.InternalListener.Dimensao;
@@ -5184,7 +5183,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		String arquivoVinculado = vinculoListener.getStringArquivoVinculado();
 		if (Util.isEmpty(arquivoVinculado)) {
 			if (ArquivoVinculo.OBRIGATORIO == arquivoVinculo) {
-				throw new ObjetoException(ObjetoMensagens.getString(ObjetoContainer.CHAVE_MENSAGEM_VI));
+				throw new ObjetoException(ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 			} else if (ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA == arquivoVinculo) {
 				result.put("resultRequest", ArquivoVinculo.CONFIRMAR_PROCESSO_MEMORIA);
 				String msg = ObjetoMensagens.getString("msg.arquivo_vinculo_nao_definido");
