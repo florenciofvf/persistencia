@@ -68,6 +68,7 @@ import br.com.persist.componente.TextField;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
@@ -85,10 +86,8 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
 	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
-	public static final String CHAVE_MENSAGEM_VI = "msg.arquivo_vinculo_inexistente";
 	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
 	private static final String HINT_VINCULO2 = "hint.aplicar_arq_vinculo2";
-	public static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
 	private static final String HINT_VINCULO = "hint.aplicar_arq_vinculo";
 	private static final String VINCULAR_EM_BANCO = "VINCULAR EM BANCO";
 	private transient List<CompChave> vinculados = new ArrayList<>();
@@ -231,7 +230,7 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class VinculadoPopup extends Popup {
-		private Action action = acaoMenu(LABEL_VINCULO);
+		private Action action = acaoMenu(ObjetoConstantes.LABEL_VINCULO);
 		private static final long serialVersionUID = 1L;
 		private transient CompChave compChave;
 		private transient Marcador marcador;
@@ -261,7 +260,7 @@ public class ObjetoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 				return;
 			}
 			String tabela = txtTabela.getText().trim();
@@ -633,7 +632,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();
@@ -675,7 +674,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();
@@ -1567,8 +1566,8 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
+			private Action actionCorFonteVinculo = acaoIcon(ObjetoConstantes.LABEL_VINCULO, Icones.SUCESSO);
 			private Action selCorPanelSwatch = acaoIcon(LABEL_SEL_COR_PANEL_SWATCH, Icones.SUCESSO);
-			private Action actionCorFonteVinculo = acaoIcon(LABEL_VINCULO, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
@@ -1611,7 +1610,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();
@@ -1709,8 +1708,8 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
+			private Action actionCorVinculo = acaoIcon(ObjetoConstantes.LABEL_VINCULO, Icones.SUCESSO);
 			private Action selCorPanelSwatch = acaoIcon(LABEL_SEL_COR_PANEL_SWATCH, Icones.SUCESSO);
-			private Action actionCorVinculo = acaoIcon(LABEL_VINCULO, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
@@ -1753,7 +1752,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();
@@ -1794,7 +1793,7 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class IconeListener extends MouseAdapter {
-		private Action action = acaoMenu(LABEL_VINCULO);
+		private Action action = acaoMenu(ObjetoConstantes.LABEL_VINCULO);
 		private final boolean popupTriggerPanel;
 		private Popup popup = new Popup();
 		private final PanelCenter panel;
@@ -1859,7 +1858,7 @@ public class ObjetoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 				return;
 			}
 			String tabela = txtTabela.getText().trim();
@@ -1920,7 +1919,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 					return;
 				}
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
@@ -1992,7 +1991,7 @@ public class ObjetoContainer extends Panel {
 					return;
 				}
 				if (vinculacao == null) {
-					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 					return;
 				}
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
@@ -2069,7 +2068,7 @@ public class ObjetoContainer extends Panel {
 				return;
 			}
 			if (vinculacao == null) {
-				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM_VI));
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
 				return;
 			}
 			String tabela = txtTabela.getText().trim();

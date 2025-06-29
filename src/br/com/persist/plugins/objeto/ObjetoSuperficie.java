@@ -79,6 +79,7 @@ import br.com.persist.plugins.objeto.Objeto.Estado;
 import br.com.persist.plugins.objeto.circular.CircularContainer.Tipo;
 import br.com.persist.plugins.objeto.circular.CircularDialogo;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
+import br.com.persist.plugins.objeto.config.RelacaoContainer;
 import br.com.persist.plugins.objeto.config.RelacaoDialogo;
 import br.com.persist.plugins.objeto.internal.Argumento;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
@@ -87,6 +88,7 @@ import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
+import br.com.persist.plugins.objeto.vinculo.RelacaoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.ouvinte.OuvinteEvento;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
@@ -1379,6 +1381,7 @@ class SuperficiePopup extends Popup {
 	private Action dadosAcao = actionMenu("label.dados", Icones.TABELA);
 	private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
 	private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
+	private MenuArqVinculo menuArqVinculo = new MenuArqVinculo();
 	private MenuItem itemPartir = new MenuItem(new PartirAcao());
 	private MenuDestacar menuDestacar = new MenuDestacar();
 	private MenuCircular menuCircular = new MenuCircular();
@@ -1401,6 +1404,7 @@ class SuperficiePopup extends Popup {
 		add(true, menuIgnorar);
 		add(true, menuMestreDetalhe);
 		addMenuItem(true, excluirAcao);
+		add(true, menuArqVinculo);
 		add(true, itemPartir);
 		add(true, itemDados);
 		addMenuItem(true, relacoesAcao);
@@ -1897,6 +1901,7 @@ class SuperficiePopup extends Popup {
 		criarRelacaoAcao.setEnabled(selecionados.size() == Constantes.DOIS);
 		itemDados.setObject(itemDados.isEnabled() ? objeto : null);
 		menuDistribuicao.setEnabled(objetoSelecionado);
+		menuArqVinculo.setEnabled(!objetoSelecionado);
 		itemPartir.setEnabled(!objetoSelecionado);
 		copiarAcao.setEnabled(objetoSelecionado);
 		menuMestreDetalhe.preShow(selecionados);
@@ -1947,6 +1952,79 @@ class SuperficiePopup extends Popup {
 					Util.mensagem(SuperficiePopup.this, ex.getMessage());
 				}
 			}
+		}
+	}
+
+	private class MenuArqVinculo extends Menu {
+		private Action removeVinculadoAcao = acaoIcon(RelacaoContainer.LABEL_VINCULO_REMOVE, Icones.SUCESSO);
+		private Action addVinculadoAcao = acaoIcon(ObjetoConstantes.LABEL_VINCULO, Icones.SUCESSO);
+		private static final long serialVersionUID = 1L;
+
+		private MenuArqVinculo() {
+			super("label.arquivo_vinculo");
+			addMenuItem(addVinculadoAcao);
+			addMenuItem(removeVinculadoAcao);
+			removeVinculadoAcao.setActionListener(e -> excluirVinculado());
+			addVinculadoAcao.setActionListener(e -> adicionarVinculado());
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+		}
+
+		private void adicionarVinculado() {
+			Relacao relacao = superficie.getSelecionadoRelacao();
+			if (relacao == null) {
+				return;
+			}
+			Vinculacao vinculacao = null;
+			try {
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(superficie);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ADICIONAR OBJETO VINCULADO", ex, superficie);
+				return;
+			}
+			if (vinculacao == null) {
+				Util.mensagem(superficie, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
+				return;
+			}
+			try {
+				RelacaoVinculo relacaoVinculo = vinculacao.getRelacaoVinculo(relacao);
+				if (relacaoVinculo != null) {
+					relacaoVinculo.copiarProps(relacao);
+					salvarVinculacao(vinculacao);
+				} else if (vinculacao.adicionarRelacaoVinculo(relacao)) {
+					salvarVinculacao(vinculacao);
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ADICIONAR OBJETO VINCULADO", ex, superficie);
+			}
+		}
+
+		private void excluirVinculado() {
+			Relacao relacao = superficie.getSelecionadoRelacao();
+			if (relacao == null) {
+				return;
+			}
+			Vinculacao vinculacao = null;
+			try {
+				vinculacao = ObjetoSuperficieUtil.getVinculacao(superficie);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("EXCLUIR OBJETO VINCULADO", ex, superficie);
+				return;
+			}
+			if (vinculacao == null) {
+				Util.mensagem(superficie, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
+				return;
+			}
+			RelacaoVinculo relacaoVinculo = vinculacao.getRelacaoVinculo(relacao);
+			if (vinculacao.excluirRelacaoVinculo(relacaoVinculo)) {
+				salvarVinculacao(vinculacao);
+			}
+		}
+
+		private void salvarVinculacao(Vinculacao vinculacao) {
+			ObjetoSuperficieUtil.salvarVinculacao(superficie, vinculacao);
 		}
 	}
 }
