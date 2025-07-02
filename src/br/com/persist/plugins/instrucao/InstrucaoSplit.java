@@ -507,9 +507,11 @@ class Aba extends Transferivel {
 				editor.setText(conteudo(arquivo.getFile()));
 				setValueScrollPane(value);
 				InstrucaoCor.clearAttr(editor.getStyledDocument());
-				if (editor.getText().trim().startsWith("/*abrir_compilar*/")) {
+				String texto = editor.getText().trim();
+				if (texto.startsWith("/*abrir_compilar*/")) {
 					SwingUtilities.invokeLater(toolbar::atualizar);
 				}
+				toolbar.executarAcao.setEnabled(!texto.startsWith("/*montar_arquivo*/"));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
