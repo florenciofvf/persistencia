@@ -57,6 +57,7 @@ public class SetLista {
 
 	public static class Config {
 		final String selecionarItemIgual;
+		private boolean clickAplicar;
 		final boolean obrigatorio;
 		final boolean somenteUm;
 		String mensagem;
@@ -94,6 +95,14 @@ public class SetLista {
 
 		public void setMensagem(String mensagem) {
 			this.mensagem = mensagem;
+		}
+
+		public boolean isClickAplicar() {
+			return clickAplicar;
+		}
+
+		public void setClickAplicar(boolean clickAplicar) {
+			this.clickAplicar = clickAplicar;
 		}
 	}
 
@@ -433,6 +442,7 @@ class SetListaDialogo extends AbstratoDialogo {
 				}
 				return;
 			}
+			config.setClickAplicar(true);
 			coletor.setLista(listar);
 			janela.fechar();
 		}

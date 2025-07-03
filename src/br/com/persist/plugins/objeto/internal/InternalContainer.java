@@ -2778,9 +2778,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 					linhas = sel;
 				}
+				Config config = new Config();
 				Coletor coletor = new Coletor();
 				SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-						InternalContainer.this, null);
+						InternalContainer.this, config);
+				if (!config.isClickAplicar()) {
+					return;
+				}
 				Map<String, Object> map = modelo.getMap(linhas[0], coletor);
 				map.put("CONEXAO", conn);
 				try {
