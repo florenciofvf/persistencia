@@ -2008,7 +2008,7 @@ class PainelTest2 extends AbstratoTest {
 			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest2.this);
 			return;
 		}
-		List<Metodo> metodos = new ArrayList<>();
+		List<MetodoGetSet> metodosGetSet = new ArrayList<>();
 		List<IMetodo> imetodos;
 		try {
 			Method[] methods = classe.getDeclaredMethods();
@@ -2022,9 +2022,9 @@ class PainelTest2 extends AbstratoTest {
 					if (Util.isEmpty(nome)) {
 						continue;
 					}
-					Metodo obj = new Metodo(nome);
+					MetodoGetSet obj = new MetodoGetSet(nome);
 					if (contemSet(methods, obj)) {
-						metodos.add(obj);
+						metodosGetSet.add(obj);
 					}
 				}
 			}
@@ -2074,7 +2074,7 @@ class PainelTest2 extends AbstratoTest {
 		params.addString(", ");
 		params.addString(objeto + " destino");
 		funcao = classeTest.criarFuncaoPrivada("void", "converter", params);
-		for (Metodo item : metodos) {
+		for (MetodoGetSet item : metodosGetSet) {
 			funcao.addInstrucao(item.gerar());
 		}
 
@@ -2094,10 +2094,10 @@ class PainelTest2 extends AbstratoTest {
 		return "label.test2";
 	}
 
-	private class Metodo {
+	private class MetodoGetSet {
 		final String nome;
 
-		Metodo(String nome) {
+		MetodoGetSet(String nome) {
 			this.nome = nome;
 		}
 
@@ -2147,7 +2147,7 @@ class PainelTest2 extends AbstratoTest {
 		}
 	}
 
-	private boolean contemSet(Method[] methods, Metodo obj) {
+	private boolean contemSet(Method[] methods, MetodoGetSet obj) {
 		for (Method item : methods) {
 			if (item.isSynthetic()) {
 				continue;
@@ -2257,9 +2257,9 @@ class MetodoHandle {
 	void processar() {
 		List<String> invocacoes = new ArrayList<>();
 		for (String string : linhasArquivo) {
-			String metodo = Util.getNomeMetodo(string);
-			if (metodo != null) {
-				selecionado = new IMetodo(metodo);
+			String nome = Util.getNomeMetodo(string);
+			if (nome != null) {
+				selecionado = new IMetodo(nome);
 				metodos.add(selecionado);
 			} else {
 				Util.invocacoes(string, invocacoes);
