@@ -2107,24 +2107,19 @@ class PainelTest2 extends AbstratoTest {
 	}
 
 	private List<IMetodo> ordenar(List<IMetodo> metodos, Method[] methods) {
-		List<Method> temp = new ArrayList<>(Arrays.asList(methods));
+		List<Method> listMethod = new ArrayList<>(Arrays.asList(methods));
 		List<IMetodo> resposta = new ArrayList<>();
 		for (IMetodo metodo : metodos) {
-			Method method = get(temp, metodo);
+			Method method = get(metodo, listMethod);
 			if (method != null) {
 				metodo.setMethod(method);
 				resposta.add(metodo);
 			}
 		}
-		for (Method method : temp) {
-			IMetodo metodo = new IMetodo(method.getName());
-			metodo.setMethod(method);
-			resposta.add(metodo);
-		}
 		return resposta;
 	}
 
-	private Method get(List<Method> metodos, IMetodo metodo) {
+	private Method get(IMetodo metodo, List<Method> metodos) {
 		Iterator<Method> it = metodos.iterator();
 		while (it.hasNext()) {
 			Method method = it.next();
