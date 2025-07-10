@@ -1960,6 +1960,7 @@ class PainelTest2 extends AbstratoTest {
 		toolbar.add(txtArquivo);
 		Action gerarTestAcao = Action.acaoMenu(AtributoMensagens.getString("label.gerar_teste"), Icones.SINCRONIZAR);
 		Action arquivoAction = Action.acaoMenu(AtributoMensagens.getString("label.arquivo_java"), Icones.ABRIR);
+		txtArquivo.setToolTipText(Mensagens.getString("label.test2_tooltip_txt_arquivo"));
 		gerarTestAcao.setActionListener(e -> gerarTeste());
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
@@ -2196,6 +2197,7 @@ class PainelTest3 extends AbstratoTest {
 		super(pagina, true);
 		toolbar.add(txtNomeClasse);
 		Action newObjetoAcao = Action.acaoMenu(AtributoMensagens.getString("label.novo_objeto"), Icones.CRIAR);
+		txtNomeClasse.setToolTipText(Mensagens.getString("label.test3_tooltip_txt_nome_classe"));
 		newObjetoAcao.setActionListener(e -> novoObjeto());
 		toolbar.add(chkSetText);
 		toolbar.addButton(newObjetoAcao);
