@@ -1548,7 +1548,7 @@ public class Util {
 				return null;
 			}
 		}
-		int pos = string.lastIndexOf("(");
+		int pos = string.indexOf("(");
 		if (pos == -1) {
 			return null;
 		}
