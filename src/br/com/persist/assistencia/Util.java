@@ -1555,7 +1555,10 @@ public class Util {
 		return getNome(string.substring(0, pos));
 	}
 
-	private static boolean inicioValido(String string) {
+	public static boolean inicioValido(String string) {
+		if (string == null) {
+			return false;
+		}
 		return string.startsWith("public ") || string.startsWith("protected ") || string.startsWith("private ");
 	}
 

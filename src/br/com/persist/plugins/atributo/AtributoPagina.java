@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -2252,18 +2253,21 @@ class PainelTest3 extends AbstratoTest {
 }
 
 class MetodoHandle {
+	private final List<String> linhasArquivoProcessado;
 	private final List<String> linhasArquivo;
 	private final List<IMetodo> metodos;
 	private IMetodo selecionado;
 
 	public MetodoHandle(List<String> linhasArquivo) {
-		this.linhasArquivo = linhasArquivo;
+		this.linhasArquivo = Objects.requireNonNull(linhasArquivo);
+		this.linhasArquivoProcessado = new ArrayList<>();
 		metodos = new ArrayList<>();
 	}
 
 	void processar() {
+		preProcessar();
 		List<String> invocacoes = new ArrayList<>();
-		for (String string : linhasArquivo) {
+		for (String string : linhasArquivoProcessado) {
 			String nome = Util.getNomeMetodo(string);
 			if (nome != null) {
 				selecionado = new IMetodo(nome);
@@ -2277,7 +2281,48 @@ class MetodoHandle {
 		}
 	}
 
+	private void preProcessar() {
+		StringBuilder assinatura = null;
+		for (String string : linhasArquivo) {
+			Resposta resp = analisar(string.trim());
+			if (resp == Resposta.INI_ASSINATURA) {
+				assinatura = new StringBuilder(string);
+			} else if (resp == Resposta.FIM_ASSINATURA) {
+				if (assinatura == null) {
+					linhasArquivoProcessado.add(string);
+				} else {
+					assinatura.append(" " + string);
+					linhasArquivoProcessado.add(assinatura.toString());
+					assinatura = null;
+				}
+			} else {
+				if (assinatura == null) {
+					linhasArquivoProcessado.add(string);
+				} else {
+					assinatura.append(" " + string);
+				}
+			}
+		}
+	}
+
+	private Resposta analisar(String string) {
+		if (Util.inicioValido(string) && string.contains("(") && string.endsWith("{")) {
+			return null;
+		}
+		if (Util.inicioValido(string) && string.contains("(")) {
+			return Resposta.INI_ASSINATURA;
+		}
+		if (string.endsWith("{")) {
+			return Resposta.FIM_ASSINATURA;
+		}
+		return null;
+	}
+
 	public List<IMetodo> getMetodos() {
 		return metodos;
+	}
+
+	enum Resposta {
+		INI_ASSINATURA, FIM_ASSINATURA
 	}
 }
