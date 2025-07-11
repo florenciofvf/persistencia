@@ -2014,7 +2014,7 @@ class PainelTest2 extends AbstratoTest {
 			Method[] methods = classe.getDeclaredMethods();
 			MetodoHandle metodoHandle = new MetodoHandle(linhasArquivo);
 			metodoHandle.processar();
-			imetodos = ordenar(metodoHandle.getMetodos(), methods);
+			imetodos = configurar(metodoHandle.getMetodos(), methods);
 			for (IMetodo metodo : imetodos) {
 				Method item = metodo.getMethod();
 				if (!item.isSynthetic() && item.getName().startsWith("get")) {
@@ -2106,8 +2106,15 @@ class PainelTest2 extends AbstratoTest {
 		}
 	}
 
-	private List<IMetodo> ordenar(List<IMetodo> metodos, Method[] methods) {
+	private List<IMetodo> configurar(List<IMetodo> metodos, Method[] methods) {
 		List<Method> listMethod = new ArrayList<>(Arrays.asList(methods));
+		Iterator<Method> it = listMethod.iterator();
+		while (it.hasNext()) {
+			Method method = it.next();
+			if (method.isSynthetic()) {
+				it.remove();
+			}
+		}
 		List<IMetodo> resposta = new ArrayList<>();
 		for (IMetodo metodo : metodos) {
 			Method method = get(metodo, listMethod);
