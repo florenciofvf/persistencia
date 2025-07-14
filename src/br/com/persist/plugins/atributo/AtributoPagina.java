@@ -2053,21 +2053,21 @@ class PainelTest2 extends AbstratoTest {
 
 		classeTest.addAnotacao("Test");
 		Funcao funcao = classeTest.criarFuncaoPublica("void", "equalsTest");
-		funcao.addInstrucao(objeto + " objetoA = criar" + objeto + "()");
-		funcao.addInstrucao(objeto + " objetoB = criar" + objeto + "()");
+		funcao.addInstrucao(objeto + " objetoA = new" + objeto + "()");
+		funcao.addInstrucao(objeto + " objetoB = new" + objeto + "()");
 		funcao.addInstrucao("converter(objetoA, objetoB)");
 		funcao.addInstrucao("assertEquals(objetoA, objetoB)");
 
 		classeTest.newLine();
 		classeTest.addAnotacao("Test");
 		funcao = classeTest.criarFuncaoPublica("void", "hashCodeTest");
-		funcao.addInstrucao(objeto + " objetoA = criar" + objeto + "()");
-		funcao.addInstrucao(objeto + " objetoB = criar" + objeto + "()");
+		funcao.addInstrucao(objeto + " objetoA = new" + objeto + "()");
+		funcao.addInstrucao(objeto + " objetoB = new" + objeto + "()");
 		funcao.addInstrucao("converter(objetoA, objetoB)");
 		funcao.addInstrucao("assertEquals(objetoA.hashCode(), objetoB.hashCode())");
 
 		classeTest.newLine();
-		funcao = classeTest.criarFuncaoPrivada(objeto, "criar" + objeto);
+		funcao = classeTest.criarFuncaoPrivada(objeto, "new" + objeto);
 		funcao.addReturn("new " + objeto + "()");
 
 		classeTest.newLine();
