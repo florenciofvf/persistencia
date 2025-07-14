@@ -1577,37 +1577,37 @@ public class Util {
 	}
 
 	public static void invocacoes(String string, List<String> resposta) {
-		resposta.clear();
 		if (string == null) {
 			return;
 		}
+		resposta.clear();
 		string = string.trim();
+		if (string.contains(").") || string.contains("))") || string.contains("((")) {
+			return;
+		}
 		int pos = string.indexOf('.');
-		while (pos != -1) {
+		while (pos > 0) {
 			string = invocacoes(string, resposta, pos);
 			pos = string.indexOf('.');
 		}
 	}
 
 	private static String invocacoes(String string, List<String> resposta, int pos) {
-		if (pos > 0) {
-			String ref = getNome(string.substring(0, pos));
-			if (!ref.isEmpty()) {
-				int posP = string.indexOf('(', pos + 1);
-				if (posP > 0) {
-					String nome = getNome(string.substring(pos + 1, posP));
-					if (!nome.isEmpty()) {
-						resposta.add(ref + '.' + nome);
-					}
-					string = string.substring(posP);
-				} else {
-					string = string.substring(pos + 1);
+		int posAvanco = pos + 1;
+		String ref = getNome(string.substring(0, pos));
+		if (!ref.isEmpty()) {
+			int posParentese = string.indexOf('(', posAvanco);
+			if (posParentese > 0) {
+				String nome = getNome(string.substring(posAvanco, posParentese));
+				if (!nome.isEmpty()) {
+					resposta.add(ref + '.' + nome);
 				}
+				string = string.substring(posParentese);
 			} else {
-				string = string.substring(pos + 1);
+				string = string.substring(posAvanco);
 			}
 		} else {
-			string = string.substring(pos + 1);
+			string = string.substring(posAvanco);
 		}
 		return string.trim();
 	}
