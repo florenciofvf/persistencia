@@ -1582,7 +1582,7 @@ public class Util {
 		}
 		resposta.clear();
 		string = string.trim();
-		if (string.contains(").") || string.contains("))") || string.contains("((")) {
+		if (string.contains(").") || string.contains("((")) {
 			return;
 		}
 		int pos = string.indexOf('.');
