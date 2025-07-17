@@ -396,8 +396,11 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 	}
 
 	public void fechandoFormulario() {
+		int total = getTabCount();
+		if (total > 0 && !Util.confirmar(Fichario.this, "msg.confirmar_salvar_estado_fichario")) {
+			return;
+		}
 		try (PrintWriter pw = new PrintWriter(Constantes.PERSISTENCIA_FVF, StandardCharsets.UTF_8.name())) {
-			int total = getTabCount();
 			for (int i = 0; i < total; i++) {
 				Pagina pagina = getPagina(i);
 				if (pagina != null) {
