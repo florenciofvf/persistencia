@@ -30,6 +30,8 @@ import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private final JComboBox<String> cmbNivelTransparencia = new JComboBox<>(ObjetoConstantes.NIVEIS_TRANSPARENCIA_FORM);
+	private final CheckBox chkMouseWheelTitleFormInternalTopDown = new CheckBox(
+			ObjetoMensagens.getString("label.mouseWheelTitleFormInternalTopDown"), true);
 	private final CheckBox chkExibirTotalColunasTabela = new CheckBox(
 			ObjetoMensagens.getString("label.exibirTotalColunasTabelaTitle"), false);
 	private final CheckBox chkHabitEsquemaTabelaAlter = new CheckBox(
@@ -92,6 +94,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				ObjetoPreferencia.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
 
+		chkMouseWheelTitleFormInternalTopDown.setSelected(ObjetoPreferencia.isMouseWheelTitleFormInternalTopDown());
 		cmbNivelTransparencia.setSelectedItem(String.valueOf(ObjetoPreferencia.getNivelTransparencia()));
 		chkMoverTopoFormOrigemPesquisa.setSelected(ObjetoPreferencia.isMoverTopoFormOrigemPesquisa());
 		chkHabitEsquemaTabelaAlter.setSelected(ObjetoPreferencia.isHabilitadoEsquemaTabelaAlter());
@@ -110,7 +113,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
 				chkPesquisaFormInternalLazy, chkExibirTotalColunasTabela, chkMoverTopoFormOrigemPesquisa,
-				chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj));
+				chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj, chkMouseWheelTitleFormInternalTopDown));
 		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados,
 				tituloDestacForm, panelDestacForm));
 		muro.camada(Muro
@@ -166,6 +169,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				e -> ObjetoPreferencia.setExibirTotalColunasTabela(chkExibirTotalColunasTabela.isSelected()));
 		chkPesquisaFormInternalLazy.addActionListener(
 				e -> ObjetoPreferencia.setPesquisaFormInternalLazy(chkPesquisaFormInternalLazy.isSelected()));
+		chkMouseWheelTitleFormInternalTopDown.addActionListener(e -> ObjetoPreferencia
+				.setMouseWheelTitleFormInternalTopDown(chkMouseWheelTitleFormInternalTopDown.isSelected()));
 		chkHabitInnerJoinsObj.addActionListener(
 				e -> ObjetoPreferencia.setHabilitadoInnerJoinsObjeto(chkHabitInnerJoinsObj.isSelected()));
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {
