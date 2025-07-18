@@ -31,7 +31,7 @@ import br.com.persist.formulario.Formulario;
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private final JComboBox<String> cmbNivelTransparencia = new JComboBox<>(ObjetoConstantes.NIVEIS_TRANSPARENCIA_FORM);
 	private final CheckBox chkMouseWheelTitleFormInternalTopDown = new CheckBox(
-			ObjetoMensagens.getString("label.mouseWheelTitleFormInternalTopDown"), true);
+			ObjetoMensagens.getString("label.mouseWheelTitleFormInternalTopDown"), false);
 	private final CheckBox chkExibirTotalColunasTabela = new CheckBox(
 			ObjetoMensagens.getString("label.exibirTotalColunasTabelaTitle"), false);
 	private final CheckBox chkHabitEsquemaTabelaAlter = new CheckBox(
