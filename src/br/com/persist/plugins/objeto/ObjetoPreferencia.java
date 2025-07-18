@@ -6,6 +6,7 @@ import java.util.prefs.Preferences;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoPreferencia {
+	private static boolean mouseWheelTitleFormInternalTopDown;
 	private static boolean habilitadoEsquemaTabelaAlter;
 	private static boolean moverTopoFormOrigemPesquisa;
 	private static boolean habilitadoInnerJoinsObjeto;
@@ -31,6 +32,7 @@ public class ObjetoPreferencia {
 				ObjetoConstantes.TIPO_DESTAC_FORM_VISIBILIDADE);
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto",
 				ObjetoConstantes.TIPO_CONTAINER_FORMULARIO);
+		mouseWheelTitleFormInternalTopDown = pref.getBoolean("mouseWheelTitleFormInternalTopDown", true);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		habilitadoEsquemaTabelaAlter = pref.getBoolean("habilitado_esquema_tabela_alter", false);
 		moverTopoFormOrigemPesquisa = pref.getBoolean("mover_topo_form_origem_pesquisa", false);
@@ -48,6 +50,7 @@ public class ObjetoPreferencia {
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		pref.putBoolean("mouseWheelTitleFormInternalTopDown", mouseWheelTitleFormInternalTopDown);
 		pref.putBoolean("habilitado_esquema_tabela_alter", habilitadoEsquemaTabelaAlter);
 		pref.putBoolean("mover_topo_form_origem_pesquisa", moverTopoFormOrigemPesquisa);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
@@ -183,5 +186,13 @@ public class ObjetoPreferencia {
 
 	public static void setTipoDestaqueFormulario(int tipoDestaqueFormulario) {
 		ObjetoPreferencia.tipoDestaqueFormulario = tipoDestaqueFormulario;
+	}
+
+	public static boolean isMouseWheelTitleFormInternalTopDown() {
+		return mouseWheelTitleFormInternalTopDown;
+	}
+
+	public static void setMouseWheelTitleFormInternalTopDown(boolean mouseWheelTitleFormInternalTopDown) {
+		ObjetoPreferencia.mouseWheelTitleFormInternalTopDown = mouseWheelTitleFormInternalTopDown;
 	}
 }

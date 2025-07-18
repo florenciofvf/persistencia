@@ -118,15 +118,27 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			return;
 		}
 		if (y < 21) {
-			int altura = getHeight();
-			if (precisao > 0) {
+			checarAlturaImpl(precisao);
+		}
+	}
+
+	private void checarAlturaImpl(int precisao) {
+		int altura = getHeight();
+		if (precisao > 0) {
+			if (ObjetoPreferencia.isMouseWheelTitleFormInternalTopDown()) {
 				processarNorte(altura, true);
-			} else if (precisao < 0) {
+			} else {
 				processarSul(altura, true);
 			}
-			if (desktop != null) {
-				desktop.repaint();
+		} else if (precisao < 0) {
+			if (ObjetoPreferencia.isMouseWheelTitleFormInternalTopDown()) {
+				processarSul(altura, true);
+			} else {
+				processarNorte(altura, true);
 			}
+		}
+		if (desktop != null) {
+			desktop.repaint();
 		}
 	}
 
