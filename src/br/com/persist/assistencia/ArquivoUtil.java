@@ -268,4 +268,16 @@ public class ArquivoUtil {
 	public static List<String> getIgnorados(File arquivo) {
 		return lerArquivo(arquivo);
 	}
+
+	public static void arquivoIgnorado(List<String> ignorados, boolean exibir) {
+		if (exibir) {
+			while (ignorados.contains(Constantes.IGNORADOS)) {
+				ignorados.remove(Constantes.IGNORADOS);
+			}
+		} else {
+			if (!ignorados.contains(Constantes.IGNORADOS)) {
+				ignorados.add(Constantes.IGNORADOS);
+			}
+		}
+	}
 }

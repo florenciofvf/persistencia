@@ -73,6 +73,7 @@ class ProjetoSplit extends SplitPane {
 	void inicializar() {
 		File file = new File(fileRoot, ProjetoConstantes.IGNORADOS);
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
+		ArquivoUtil.arquivoIgnorado(ignorados, ProjetoPreferencia.isExibirArqIgnorados());
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
 		tree.getArquivoPopup().addMenuItem(sufixosAct);
