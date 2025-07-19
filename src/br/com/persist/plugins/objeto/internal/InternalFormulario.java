@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,7 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
+import sun.awt.AWTAccessor;
 
 public class InternalFormulario extends AbstratoInternalFrame {
 	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
@@ -92,7 +94,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	private void configurar2() {
-		addMouseWheelListener(e -> checarAltura(e.getY(), e.getWheelRotation(), System.currentTimeMillis()));
+		addMouseWheelListener(e -> checarAltura(e, System.currentTimeMillis()));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -108,7 +110,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	private synchronized void checarAltura(int y, int precisao, long time) {
+	private synchronized void checarAltura(MouseWheelEvent e, long time) {
+		int y = e.getY();
+		int precisao = e.getWheelRotation();
 		if (precisao == 0 || container.getObjeto().isIgnorar()) {
 			return;
 		}
@@ -117,6 +121,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (diff < 90) {
 			return;
 		}
+		boolean causedByTouchEvent = AWTAccessor.getMouseEventAccessor().isCausedByTouchEvent(e);
+		ObjetoPreferencia.setMouseWheelTitleFormInternalTopDown(causedByTouchEvent);
 		if (y < 21) {
 			checarAlturaImpl(precisao);
 		}
