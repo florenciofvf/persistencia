@@ -54,7 +54,6 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
-import sun.awt.AWTAccessor;
 
 public class InternalFormulario extends AbstratoInternalFrame {
 	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
@@ -62,6 +61,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private static final Logger LOG = Logger.getGlobal();
 	private transient AlphaComposite compositeDestacar;
 	private static final long serialVersionUID = 1L;
+	private static final int X_MOUSE_WHEEL = 100;
+	private static final int A_MOUSE_WHEEL = 20;
 	private final InternalContainer container;
 	private Dimension dimensionDestacar;
 	private boolean processadoPesquisa;
@@ -122,8 +123,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			return;
 		}
 		if (y < 21) {
-			boolean causedByTouchEvent = AWTAccessor.getMouseEventAccessor().isCausedByTouchEvent(e);
-			ObjetoPreferencia.setMouseWheelTitleFormInternalTopDown(causedByTouchEvent);
+			ObjetoPreferencia.setMouseWheelTitleFormInternalTopDown(e.getX() > X_MOUSE_WHEEL);
 			checarAlturaImpl(precisao);
 		}
 	}
@@ -578,6 +578,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			g.setColor(Color.ORANGE);
 			g.fillRect(0, 0, dimensionDestacar.width, dimensionDestacar.height);
 		}
+		g.setColor(Color.LIGHT_GRAY);
+		g.drawLine(X_MOUSE_WHEEL, 0, X_MOUSE_WHEEL, A_MOUSE_WHEEL);
 	}
 
 	public boolean ehReferencia(Referencia referencia) {
