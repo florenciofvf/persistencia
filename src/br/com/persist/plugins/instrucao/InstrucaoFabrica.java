@@ -14,6 +14,8 @@ import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
@@ -25,7 +27,13 @@ import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 public class InstrucaoFabrica extends AbstratoFabricaContainer {
 	@Override
 	public void inicializar() {
+		Preferencias.addOutraPreferencia(InstrucaoPreferencia.class);
 		Util.criarDiretorio(InstrucaoConstantes.INSTRUCAO);
+	}
+
+	@Override
+	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
+		return new InstrucaoConfiguracao(formulario);
 	}
 
 	@Override
