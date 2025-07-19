@@ -119,6 +119,7 @@ class ExecucaoSplit extends SplitPane {
 
 	private Fichario novoFichario(Arquivo arquivo, Formulario formulario) {
 		Fichario fichario = new Fichario();
+		fichario.setTabPlacement(ExecucaoPreferencia.getExecucaoPosicaoAbaFichario());
 		novaAba(fichario, arquivo, formulario);
 		return fichario;
 	}
@@ -476,6 +477,7 @@ class ExecucaoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("fichario".equals(qName)) {
 			fichario = new Fichario();
+			fichario.setTabPlacement(ExecucaoPreferencia.getExecucaoPosicaoAbaFichario());
 			root.setRootIf(fichario);
 			setComponent(separador, fichario);
 		} else if ("separador".equals(qName)) {

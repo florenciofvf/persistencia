@@ -128,6 +128,7 @@ class AnotacaoSplit extends SplitPane {
 
 	private Fichario novoFichario(Arquivo arquivo) {
 		Fichario fichario = new Fichario();
+		fichario.setTabPlacement(AnotacaoPreferencia.getAnotacaoPosicaoAbaFichario());
 		novaAba(fichario, arquivo);
 		return fichario;
 	}
@@ -549,6 +550,7 @@ class AnotacaoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("fichario".equals(qName)) {
 			fichario = new Fichario();
+			fichario.setTabPlacement(AnotacaoPreferencia.getAnotacaoPosicaoAbaFichario());
 			root.setRootIf(fichario);
 			setComponent(separador, fichario);
 		} else if ("separador".equals(qName)) {

@@ -157,6 +157,7 @@ class ProjetoSplit extends SplitPane {
 
 	private Fichario novoFichario(Arquivo arquivo) {
 		Fichario fichario = new Fichario();
+		fichario.setTabPlacement(ProjetoPreferencia.getProjetoPosicaoAbaFichario());
 		novaAba(fichario, arquivo);
 		return fichario;
 	}
@@ -578,6 +579,7 @@ class ProjetoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("fichario".equals(qName)) {
 			fichario = new Fichario();
+			fichario.setTabPlacement(ProjetoPreferencia.getProjetoPosicaoAbaFichario());
 			root.setRootIf(fichario);
 			setComponent(separador, fichario);
 		} else if ("separador".equals(qName)) {
