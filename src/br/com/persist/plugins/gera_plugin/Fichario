@@ -12,6 +12,7 @@ public class ###nameCap###Fichario extends JTabbedPane {
 
 	public ###nameCap###Fichario() {
 		setTabPlacement(###nameCap###Preferencia.get###nameCap###PosicaoAbaFichario());
+		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 	}
 
 	public void adicionarPagina(###nameCap###Pagina pagina) {

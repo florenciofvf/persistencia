@@ -12,6 +12,7 @@ public class EntregaFichario extends JTabbedPane {
 
 	public EntregaFichario() {
 		setTabPlacement(EntregaPreferencia.getEntregaPosicaoAbaFichario());
+		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 	}
 
 	public void adicionarPagina(EntregaPagina pagina) {
