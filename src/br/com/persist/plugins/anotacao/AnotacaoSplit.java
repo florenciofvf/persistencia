@@ -71,6 +71,7 @@ class AnotacaoSplit extends SplitPane {
 	void inicializar() {
 		File file = new File(fileRoot, AnotacaoConstantes.IGNORADOS);
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
+		ArquivoUtil.arquivoIgnorado(ignorados, AnotacaoPreferencia.isExibirArqIgnorados());
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
 		setLeftComponent(new ScrollPane(tree));
