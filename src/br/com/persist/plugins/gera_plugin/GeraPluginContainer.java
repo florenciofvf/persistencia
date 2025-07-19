@@ -274,8 +274,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_arvore"));
 		}
 
-		if (chkFichario.isSelected() && !chkComConfiguracao.isSelected()) {
-			resp.add(GeraPluginMensagens.getString("erro.preferencia_devido_fichario"));
+		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComConfiguracao.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.preferencia_devido_fichario_arvore"));
 		}
 
 		if (!Util.isEmpty(txtDiretorioRecursos.getText()) && caracterInvalido(txtDiretorioRecursos.getText())) {
