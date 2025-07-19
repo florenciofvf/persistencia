@@ -121,9 +121,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (diff < 90) {
 			return;
 		}
-		boolean causedByTouchEvent = AWTAccessor.getMouseEventAccessor().isCausedByTouchEvent(e);
-		ObjetoPreferencia.setMouseWheelTitleFormInternalTopDown(causedByTouchEvent);
 		if (y < 21) {
+			boolean causedByTouchEvent = AWTAccessor.getMouseEventAccessor().isCausedByTouchEvent(e);
+			ObjetoPreferencia.setMouseWheelTitleFormInternalTopDown(causedByTouchEvent);
 			checarAlturaImpl(precisao);
 		}
 	}
