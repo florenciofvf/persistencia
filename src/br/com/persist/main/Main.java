@@ -19,7 +19,7 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		System.setProperty("line.separator", "\r");
+		System.setProperty("line.separator", "\n");
 		String[] opcoes = new String[] { Constantes.CONECTADO, Constantes.DESCONECTADO };
 		String opcao = Util.getValorInputDialog(null, opcoes);
 		if (opcao == null) {
