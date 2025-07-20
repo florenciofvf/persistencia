@@ -724,7 +724,11 @@ public class Util {
 			PrintWriter pw = new PrintWriter(sw);
 			ex.printStackTrace(pw);
 		}
-		return Util.replaceAll(sw.toString(), "\r", "");
+		return replaceCR(sw.toString());
+	}
+
+	public static String replaceCR(String string) {
+		return Util.replaceAll(string, "\r", "");
 	}
 
 	public static void configWindowC(Window window) {

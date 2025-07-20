@@ -8,6 +8,9 @@ public class Text implements Comparable<Text> {
 
 	public Text(String idStyle, String content) {
 		this.idStyle = idStyle;
+		if (content != null) {
+			content = Util.replaceCR(content);
+		}
 		this.content = content;
 	}
 
