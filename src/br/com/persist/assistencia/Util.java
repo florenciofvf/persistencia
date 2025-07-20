@@ -719,12 +719,12 @@ public class Util {
 
 	public static String getStackTrace(String info, Throwable ex) {
 		StringWriter sw = new StringWriter();
-		sw.append(info + "\r\n\r\n");
+		sw.append(info + Constantes.QL2);
 		if (ex != null) {
 			PrintWriter pw = new PrintWriter(sw);
 			ex.printStackTrace(pw);
 		}
-		return sw.toString();
+		return Util.replaceAll(sw.toString(), "\r", "");
 	}
 
 	public static void configWindowC(Window window) {
