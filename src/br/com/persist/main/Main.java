@@ -19,8 +19,11 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		System.setProperty("sun.jnu.encoding", "UTF-8");
-		System.setProperty("file.encoding", "UTF-8");
+		final String encoding = "UTF-8";
+		System.setProperty("sun.jnu.encoding", encoding);
+		System.setProperty("stdout.encoding", encoding);
+		System.setProperty("stderr.encoding", encoding);
+		System.setProperty("file.encoding", encoding);
 		System.setProperty("line.separator", "\n");
 		String[] opcoes = new String[] { Constantes.CONECTADO, Constantes.DESCONECTADO };
 		String opcao = Util.getValorInputDialog(null, opcoes);
