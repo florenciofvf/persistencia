@@ -17,4 +17,12 @@ public class IDesktop {
 		}
 		DESKTOP.open(new File(absoluto.toString()));
 	}
+
+	@Biblio(1)
+	public static void edit(Object absoluto) throws IOException {
+		if (absoluto == null) {
+			return;
+		}
+		DESKTOP.edit(new File(absoluto.toString()));
+	}
 }
