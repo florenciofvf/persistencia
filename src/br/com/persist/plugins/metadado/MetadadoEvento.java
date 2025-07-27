@@ -1,6 +1,8 @@
 package br.com.persist.plugins.metadado;
 
-public class MetadadoEvento {
+import br.com.persist.assistencia.Evento;
+
+public class MetadadoEvento implements Evento {
 	public static final String ABRIR_EXPORTACAO_METADADO_FORM = "abrirExportacaoMetadadoForm";
 	public static final String ABRIR_EXPORTACAO_METADADO_FICH = "abrirExportacaoMetadadoFich";
 	public static final String ABRIR_IMPORTACAO_METADADO_FORM = "abrirImportacaoMetadadoForm";
