@@ -92,10 +92,10 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 				Icones.SAIR);
 		itemOutraInstancia.addActionListener(e -> abrirOutraInstancia(formulario));
 		itemFecharEConexao.addActionListener(e -> fechar(formulario, true));
-		itemFechar.addActionListener(e -> fechar(formulario, false));
+		itemFechar.addActionListener(e -> fechar(formulario, true));
 		menu.add(itemOutraInstancia);
 		menu.addSeparator();
-		menu.add(itemFecharEConexao);
+		/** menu.add(itemFecharEConexao); */
 		menu.add(itemFechar);
 		return new ArrayList<>();
 	}
