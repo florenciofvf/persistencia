@@ -29,6 +29,9 @@ public class AtributoPreferencia {
 	}
 
 	public static int getAtributoPosicaoAbaFichario() {
+		if (atributoPosicaoAbaFichario == 0) {
+			atributoPosicaoAbaFichario = 1;
+		}
 		return atributoPosicaoAbaFichario;
 	}
 

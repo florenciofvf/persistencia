@@ -26,6 +26,9 @@ public class InstrucaoPreferencia {
 	}
 
 	public static int getInstrucaoPosicaoAbaFichario() {
+		if (instrucaoPosicaoAbaFichario == 0) {
+			instrucaoPosicaoAbaFichario = 1;
+		}
 		return instrucaoPosicaoAbaFichario;
 	}
 

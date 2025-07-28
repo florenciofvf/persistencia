@@ -26,6 +26,9 @@ public class ###nameCap###Preferencia {
 	}
 
 	public static int get###nameCap###PosicaoAbaFichario() {
+		if (###nameLower###PosicaoAbaFichario == 0) {
+			###nameLower###PosicaoAbaFichario = 1;
+		}
 		return ###nameLower###PosicaoAbaFichario;
 	}
 

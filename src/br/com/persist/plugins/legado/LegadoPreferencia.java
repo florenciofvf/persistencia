@@ -26,6 +26,9 @@ public class LegadoPreferencia {
 	}
 
 	public static int getLegadoPosicaoAbaFichario() {
+		if (legadoPosicaoAbaFichario == 0) {
+			legadoPosicaoAbaFichario = 1;
+		}
 		return legadoPosicaoAbaFichario;
 	}
 

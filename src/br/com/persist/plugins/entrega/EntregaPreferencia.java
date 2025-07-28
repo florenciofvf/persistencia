@@ -26,6 +26,9 @@ public class EntregaPreferencia {
 	}
 
 	public static int getEntregaPosicaoAbaFichario() {
+		if (entregaPosicaoAbaFichario == 0) {
+			entregaPosicaoAbaFichario = 1;
+		}
 		return entregaPosicaoAbaFichario;
 	}
 

@@ -26,6 +26,9 @@ public class ExecucaoPreferencia {
 	}
 
 	public static int getExecucaoPosicaoAbaFichario() {
+		if (execucaoPosicaoAbaFichario == 0) {
+			execucaoPosicaoAbaFichario = 1;
+		}
 		return execucaoPosicaoAbaFichario;
 	}
 

@@ -26,6 +26,9 @@ public class RoboPreferencia {
 	}
 
 	public static int getRoboPosicaoAbaFichario() {
+		if (roboPosicaoAbaFichario == 0) {
+			roboPosicaoAbaFichario = 1;
+		}
 		return roboPosicaoAbaFichario;
 	}
 

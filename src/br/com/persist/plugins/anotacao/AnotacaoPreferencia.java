@@ -26,6 +26,9 @@ public class AnotacaoPreferencia {
 	}
 
 	public static int getAnotacaoPosicaoAbaFichario() {
+		if (anotacaoPosicaoAbaFichario == 0) {
+			anotacaoPosicaoAbaFichario = 1;
+		}
 		return anotacaoPosicaoAbaFichario;
 	}
 

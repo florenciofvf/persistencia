@@ -26,6 +26,9 @@ public class ProjetoPreferencia {
 	}
 
 	public static int getProjetoPosicaoAbaFichario() {
+		if (projetoPosicaoAbaFichario == 0) {
+			projetoPosicaoAbaFichario = 1;
+		}
 		return projetoPosicaoAbaFichario;
 	}
 

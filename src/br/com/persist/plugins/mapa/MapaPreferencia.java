@@ -26,6 +26,9 @@ public class MapaPreferencia {
 	}
 
 	public static int getMapaPosicaoAbaFichario() {
+		if (mapaPosicaoAbaFichario == 0) {
+			mapaPosicaoAbaFichario = 1;
+		}
 		return mapaPosicaoAbaFichario;
 	}
 
