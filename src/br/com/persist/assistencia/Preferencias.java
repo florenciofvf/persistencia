@@ -207,6 +207,9 @@ public class Preferencias {
 	}
 
 	public static int getPosicaoAbaFichario() {
+		if (posicaoAbaFichario == 0) {
+			posicaoAbaFichario = 1;
+		}
 		return posicaoAbaFichario;
 	}
 
