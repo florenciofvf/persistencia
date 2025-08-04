@@ -501,10 +501,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		public List<Metadado> converterImportados(List<Importado> lista) throws ArgumentoException {
 			List<Metadado> resposta = new ArrayList<>();
-			for (Importado imp : lista) {
-				Metadado campo = new Metadado(imp.getCampo(), false);
+			for (Importado item : lista) {
+				Metadado campo = new Metadado(item.getCampo(), false);
 				resposta.add(campo);
-				Metadado ref = new Metadado(imp.getTabelaOrigem() + "(" + imp.getCampoOrigem() + ")", false);
+				Metadado ref = new Metadado(item.getTabelaOrigem() + "(" + item.getCampoOrigem() + ")", false);
 				campo.add(ref);
 			}
 			return resposta;
@@ -512,10 +512,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		public List<Metadado> converterExportados(List<Exportado> lista) throws ArgumentoException {
 			List<Metadado> resposta = new ArrayList<>();
-			for (Exportado imp : lista) {
-				Metadado campo = new Metadado(imp.getCampo(), false);
+			for (Exportado item : lista) {
+				Metadado campo = new Metadado(item.getCampo(), false);
 				resposta.add(campo);
-				Metadado ref = new Metadado(imp.getTabelaDestino() + "(" + imp.getCampoDestino() + ")", false);
+				Metadado ref = new Metadado(item.getTabelaDestino() + "(" + item.getCampoDestino() + ")", false);
 				campo.add(ref);
 			}
 			return resposta;
