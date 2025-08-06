@@ -100,6 +100,7 @@ public class Icones {
 	public static final Icon KEY = criarImagem("key");
 	public static final Icon TAG = criarImagem("tag");
 	public static final Icon URL = criarImagem("url");
+	public static final Icon JS = criarImagem("js");
 
 	private Icones() {
 	}

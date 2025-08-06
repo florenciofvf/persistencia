@@ -108,6 +108,7 @@ class ProjetoSplit extends SplitPane {
 		sb.append(Constantes.QL + "_down");
 		sb.append(Constantes.QL + "_url");
 		sb.append(Constantes.QL + "_up");
+		sb.append(Constantes.QL + "_js");
 		Util.mensagem(ProjetoSplit.this, sb.toString());
 	}
 

@@ -68,6 +68,8 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			setIcon(Icones.BAIXAR);
 		} else if (obj.isUp()) {
 			setIcon(Icones.UPDATE);
+		} else if (obj.isJS()) {
+			setIcon(Icones.JS);
 		}
 	}
 }

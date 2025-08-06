@@ -212,6 +212,10 @@ public class Arquivo {
 		return getName().endsWith("_up");
 	}
 
+	public boolean isJS() {
+		return getName().endsWith("_js");
+	}
+
 	public void ordenar() {
 		ArquivoUtil.ordenar(filhos);
 	}
