@@ -426,7 +426,7 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private void processar(AbstractColorChooserPanel panel, Color cor) {
-		if (panel.getDisplayName().contains("Swatch")) {
+		if (ItemCorUtil.isDisplaySwatch(panel)) {
 			ItemCorUtil util = new ItemCorUtil();
 			ItemCor itemCor = util.getItem(cor);
 			processar(panel, itemCor);

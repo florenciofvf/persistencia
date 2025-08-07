@@ -2,6 +2,8 @@ package br.com.persist.plugins.objeto.config;
 
 import java.awt.Color;
 
+import javax.swing.colorchooser.AbstractColorChooserPanel;
+
 public class ItemCorUtil {
 	private ItemCor[] itens;
 
@@ -84,5 +86,13 @@ public class ItemCorUtil {
 			}
 		}
 		return rawMatrix;
+	}
+
+	public static boolean isDisplaySwatch(AbstractColorChooserPanel panel) {
+		if (panel == null || panel.getDisplayName() == null) {
+			return false;
+		}
+		String displayName = panel.getDisplayName();
+		return displayName.contains("Swatch") || displayName.contains("Amostras");
 	}
 }

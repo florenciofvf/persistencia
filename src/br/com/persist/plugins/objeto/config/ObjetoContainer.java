@@ -1651,8 +1651,7 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private void processar(AbstractColorChooserPanel panel, Color cor) {
-		String displayName = panel.getDisplayName();
-		if (displayName.contains("Swatch") || displayName.contains("Amostras")) {
+		if (ItemCorUtil.isDisplaySwatch(panel)) {
 			ItemCorUtil util = new ItemCorUtil();
 			ItemCor itemCor = util.getItem(cor);
 			processar(panel, itemCor);
