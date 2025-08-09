@@ -81,10 +81,12 @@ import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.InstrucaoMensagens;
 import br.com.persist.plugins.instrucao.InstrucaoMetadados;
 import br.com.persist.plugins.instrucao.MetaDialogoListener;
+import br.com.persist.plugins.instrucao.biblionativo.HttpResult;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.processador.Processador;
+import br.com.persist.plugins.objeto.ObjetoUtil;
 
 class NavegacaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
@@ -484,6 +486,16 @@ class Aba extends Transferivel {
 			checkSplitPane();
 		}
 
+		private void setResposta(List<Object> resposta) {
+			if (NavegacaoUtil.isHttpResult(resposta)) {
+				HttpResult result = (HttpResult) resposta.get(0);
+				processar(result);
+			} else {
+				String string = ObjetoUtil.getStringResposta(resposta);
+				setText(string);
+			}
+		}
+
 		private void checkSplitPane() {
 			JSplitPane split = null;
 			Component c = this;
@@ -496,6 +508,35 @@ class Aba extends Transferivel {
 			}
 			if (split != null && split.getLastDividerLocation() == -1) {
 				split.setDividerLocation(0.9);
+			}
+		}
+
+		private void processar(HttpResult result) {
+			StringBuilder builder = new StringBuilder();
+			info("Request", builder, result.getRequest());
+			builder.append(Constantes.QL2);
+			info("Response", builder, result.getResponse());
+			setText(builder.toString());
+		}
+
+		private void info(String titulo, StringBuilder builder, Map<String, Object> mapa) {
+			builder.append(titulo + Constantes.QL);
+			builder.append(Util.completar("", titulo.length(), '-') + Constantes.QL);
+			append(0, builder, mapa);
+		}
+
+		@SuppressWarnings("unchecked")
+		private void append(int tab, StringBuilder builder, Map<String, Object> mapa) {
+			builder.append(Util.completar("", tab, '\t'));
+			for (Map.Entry<String, Object> entry : mapa.entrySet()) {
+				String chave = entry.getKey();
+				Object valor = entry.getValue();
+				if (valor instanceof Map) {
+					builder.append(Util.completar("", tab, '\t') + chave + ": " + Constantes.QL);
+					append(tab + 1, builder, (Map<String, Object>) valor);
+				} else {
+					builder.append(Util.completar("", tab, '\t') + chave + ": " + valor + Constantes.QL);
+				}
 			}
 		}
 	}
@@ -590,7 +631,7 @@ class Aba extends Transferivel {
 			try {
 				Processador processador = new Processador();
 				List<Object> resposta = processador.processar(biblio.getNome(), "main");
-				painelResultado.setText(resposta.toString());
+				painelResultado.setResposta(resposta);
 			} catch (InstrucaoException ex) {
 				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex));
 			}
