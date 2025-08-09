@@ -105,10 +105,6 @@ class MetaContainer extends Panel {
 	}
 }
 
-interface MetaDialogoListener {
-	void setFragmento(String string);
-}
-
 class MetaDialogo extends JWindow implements MetaListener {
 	private final transient MetaDialogoListener listener;
 	private static final long serialVersionUID = 1L;
