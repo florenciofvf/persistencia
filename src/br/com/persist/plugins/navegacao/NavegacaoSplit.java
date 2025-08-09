@@ -531,7 +531,7 @@ class Aba extends Transferivel {
 				String chave = entry.getKey();
 				Object valor = entry.getValue();
 				if (valor instanceof Map) {
-					builder.append(Util.completar("", tab + 1, '\t') + "{" + chave + "}" + Constantes.QL);
+					builder.append(Util.completar("", tab, '\t') + chave + ":" + Constantes.QL);
 					append(tab + 1, builder, (Map<String, Object>) valor);
 				} else {
 					builder.append(Util.completar("", tab, '\t') + chave + ": " + valor + Constantes.QL);
