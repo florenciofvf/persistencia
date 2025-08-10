@@ -51,6 +51,7 @@ import br.com.persist.arquivo.ArquivoModelo;
 import br.com.persist.arquivo.ArquivoTree;
 import br.com.persist.arquivo.ArquivoTreeListener;
 import br.com.persist.arquivo.ArquivoTreeUtil;
+import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -87,6 +88,8 @@ import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.objeto.ObjetoUtil;
+import br.com.persist.plugins.variaveis.Variavel;
+import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 class NavegacaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
@@ -517,6 +520,7 @@ class Aba extends Transferivel {
 			builder.append(Constantes.QL2);
 			info("Response", builder, result.getResponse());
 			setText(builder.toString());
+			observadores(result.getResponse());
 		}
 
 		private void info(String titulo, StringBuilder builder, Map<String, Object> mapa) {
@@ -536,6 +540,15 @@ class Aba extends Transferivel {
 				} else {
 					builder.append(Util.completar("", tab, '\t') + chave + ": " + valor + Constantes.QL);
 				}
+			}
+		}
+
+		private void observadores(Map<String, Object> mapa) {
+			Object conteudo = mapa.get("bytesResponse");
+			if (conteudo instanceof byte[]) {
+				byte[] bytes = (byte[]) conteudo;
+				String string = new String(bytes);
+				AuthenticityToken.processar(string);
 			}
 		}
 	}
@@ -917,6 +930,35 @@ class NavegacaoHandler extends XMLHandler {
 				separador = (Separador) separador.getParent();
 			}
 			fichario = null;
+		}
+	}
+}
+
+class AuthenticityToken {
+	private AuthenticityToken() {
+	}
+
+	static void processar(String string) {
+		if (Util.isEmpty(string)) {
+			return;
+		}
+		String str = "name=\"authenticity_token\" value=\"";
+		int pos = string.indexOf(str);
+		if (pos == -1) {
+			return;
+		}
+		int pos2 = string.indexOf('"', pos + str.length() + 1);
+		String valor = string.substring(pos + str.length(), pos2);
+		final String NOME_VAR = "VAR_AUTHENTICITY_TOKEN";
+		Variavel v = VariavelProvedor.getVariavel(NOME_VAR);
+		if (v == null) {
+			try {
+				VariavelProvedor.adicionar(NOME_VAR, valor);
+			} catch (ArgumentoException e) {
+				//
+			}
+		} else {
+			v.setValor(valor);
 		}
 	}
 }
