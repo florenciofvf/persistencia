@@ -23,7 +23,7 @@ public class HttpUtil {
 			result.getResponse().put("headerResponse", conn.getHeaderFields());
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
-			result.getResponse().put("exception", ex.getMessage());
+			result.getResponse().put("exception", Util.getStackTrace("GET", ex));
 		}
 		return result;
 	}
@@ -51,7 +51,7 @@ public class HttpUtil {
 			result.getResponse().put("headerResponse", conn.getHeaderFields());
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
-			result.getResponse().put("exception", ex.getMessage());
+			result.getResponse().put("exception", Util.getStackTrace("POST", ex));
 		}
 		return result;
 	}

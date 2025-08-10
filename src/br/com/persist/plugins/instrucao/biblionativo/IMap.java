@@ -1,6 +1,6 @@
 package br.com.persist.plugins.instrucao.biblionativo;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class IMap {
@@ -9,7 +9,7 @@ public class IMap {
 
 	@Biblio(5)
 	public static Map<Object, Object> create() {
-		return new HashMap<>();
+		return new LinkedHashMap<>();
 	}
 
 	@Biblio(6)
