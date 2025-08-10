@@ -544,10 +544,20 @@ class Aba extends Transferivel {
 		}
 
 		private void observadores(Map<String, Object> mapa) {
+			String mimes = NavegacaoUtil.getMimes(mapa);
+			if (Util.isEmpty(mimes)) {
+				return;
+			}
 			Object conteudo = mapa.get("bytesResponse");
 			if (conteudo instanceof byte[]) {
 				byte[] bytes = (byte[]) conteudo;
 				String string = new String(bytes);
+				notificar(mimes, string);
+			}
+		}
+
+		private void notificar(String mimes, String string) {
+			if (mimes.contains("text/html")) {
 				AuthenticityToken.processar(string);
 			}
 		}
