@@ -19,12 +19,16 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,12 +40,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.TextUI;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.Document;
+import javax.swing.text.StyledDocument;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -60,6 +70,7 @@ import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -68,6 +79,13 @@ import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
+import br.com.persist.data.Array;
+import br.com.persist.data.ContainerDocument;
+import br.com.persist.data.DataParser;
+import br.com.persist.data.Filtro;
+import br.com.persist.data.Objeto;
+import br.com.persist.data.Texto;
+import br.com.persist.data.Tipo;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -88,6 +106,7 @@ import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.objeto.ObjetoUtil;
+import br.com.persist.plugins.requisicao.RequisicaoMensagens;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -471,22 +490,12 @@ class Aba extends Transferivel {
 	}
 
 	private class PainelResultado extends Panel {
-		private TextEditor textEditor = new TextEditor();
+		private final JTabbedPane fichario = new JTabbedPane();
 		private static final long serialVersionUID = 1L;
 
 		private PainelResultado() {
-			add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
-			ScrollPane scrollPane2 = new ScrollPane(textEditor);
-			scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
-			Panel panelScroll = new Panel();
-			panelScroll.add(BorderLayout.CENTER, scrollPane2);
-			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-		}
-
-		private void setText(String string) {
-			textEditor.setText(string);
-			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
-			checkSplitPane();
+			fichario.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			add(BorderLayout.CENTER, fichario);
 		}
 
 		private void setResposta(List<Object> resposta) {
@@ -497,6 +506,11 @@ class Aba extends Transferivel {
 				String string = ObjetoUtil.getStringResposta(resposta);
 				setText(string);
 			}
+		}
+
+		private void setText(String string) {
+			fichario.removeAll();
+			addTab(new PainelDados(string));
 		}
 
 		private void checkSplitPane() {
@@ -515,31 +529,96 @@ class Aba extends Transferivel {
 		}
 
 		private void processar(HttpResult result) {
-			StringBuilder builder = new StringBuilder();
-			info("Request", builder, result.getRequest());
-			builder.append(Constantes.QL2);
-			info("Response", builder, result.getResponse());
-			setText(builder.toString());
+			fichario.removeAll();
+			addTab(new PainelMetadados(result));
 			observadores(result.getResponse());
 		}
 
-		private void info(String titulo, StringBuilder builder, Map<String, Object> mapa) {
-			builder.append(titulo + Constantes.QL);
-			builder.append(Util.completar("", titulo.length(), '-') + Constantes.QL);
-			append(0, builder, mapa);
+		private class PainelDados extends Panel implements IVisualizador {
+			private static final long serialVersionUID = 1L;
+			private TextEditor textEditor = new TextEditor();
+
+			PainelDados(String string) {
+				setText(string);
+
+				add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
+				ScrollPane scrollPane2 = new ScrollPane(textEditor);
+				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
+				Panel panelScroll = new Panel();
+				panelScroll.add(BorderLayout.CENTER, scrollPane2);
+				add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+			}
+
+			private void setText(String string) {
+				textEditor.setText(string);
+				SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+				checkSplitPane();
+			}
+
+			@Override
+			public String getTitulo() {
+				return "Dados";
+			}
+
+			@Override
+			public Icon getIcone() {
+				return Icones.NOVO;
+			}
 		}
 
-		@SuppressWarnings("unchecked")
-		private void append(int tab, StringBuilder builder, Map<String, Object> mapa) {
-			for (Map.Entry<String, Object> entry : mapa.entrySet()) {
-				String chave = entry.getKey();
-				Object valor = entry.getValue();
-				if (valor instanceof Map) {
-					builder.append(Util.completar("", tab, '\t') + chave + ":" + Constantes.QL);
-					append(tab + 1, builder, (Map<String, Object>) valor);
-				} else {
-					builder.append(Util.completar("", tab, '\t') + chave + ": " + valor + Constantes.QL);
+		private class PainelMetadados extends Panel implements IVisualizador {
+			private static final long serialVersionUID = 1L;
+			private TextEditor textEditor = new TextEditor();
+
+			PainelMetadados(HttpResult result) {
+				StringBuilder builder = new StringBuilder();
+				info("Request", builder, result.getRequest());
+				builder.append(Constantes.QL2);
+				info("Response", builder, result.getResponse());
+				setText(builder.toString());
+
+				add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
+				ScrollPane scrollPane2 = new ScrollPane(textEditor);
+				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
+				Panel panelScroll = new Panel();
+				panelScroll.add(BorderLayout.CENTER, scrollPane2);
+				add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+			}
+
+			private void info(String titulo, StringBuilder builder, Map<String, Object> mapa) {
+				builder.append(titulo + Constantes.QL);
+				builder.append(Util.completar("", titulo.length(), '-') + Constantes.QL);
+				append(0, builder, mapa);
+			}
+
+			@SuppressWarnings("unchecked")
+			private void append(int tab, StringBuilder builder, Map<String, Object> mapa) {
+				for (Map.Entry<String, Object> entry : mapa.entrySet()) {
+					String chave = entry.getKey();
+					Object valor = entry.getValue();
+					if (valor instanceof Map) {
+						builder.append(Util.completar("", tab, '\t') + chave + ":" + Constantes.QL);
+						append(tab + 1, builder, (Map<String, Object>) valor);
+					} else {
+						builder.append(Util.completar("", tab, '\t') + chave + ": " + valor + Constantes.QL);
+					}
 				}
+			}
+
+			private void setText(String string) {
+				textEditor.setText(string);
+				SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+				checkSplitPane();
+			}
+
+			@Override
+			public String getTitulo() {
+				return "Metadados";
+			}
+
+			@Override
+			public Icon getIcone() {
+				return Icones.NOVO;
 			}
 		}
 
@@ -552,14 +631,29 @@ class Aba extends Transferivel {
 			if (conteudo instanceof byte[]) {
 				byte[] bytes = (byte[]) conteudo;
 				String string = new String(bytes);
-				notificar(mimes, string);
+				Cookie.processar(mapa);
+				notificar(mimes, bytes, string);
 			}
 		}
 
-		private void notificar(String mimes, String string) {
-			if (mimes.contains("text/html")) {
-				AuthenticityToken.processar(string);
+		private void notificar(String mimes, byte[] bytes, String string) {
+			addTab(new VisualizadorTexto(bytes, string));
+			if (mimes.contains("image/")) {
+				addTab(new VisualizadorImagem(bytes, string));
 			}
+			if (mimes.contains("text/html")) {
+				addTab(new VisualizadorHTML(bytes, string));
+			}
+			if (mimes.contains("application/json")) {
+				addTab(new VisualizadorJSON(bytes, string));
+			}
+			if (mimes.contains("application/pdf")) {
+				addTab(new VisualizadorPDF(bytes, string));
+			}
+		}
+
+		private void addTab(IVisualizador visualizador) {
+			fichario.addTab(visualizador.getTitulo(), visualizador.getIcone(), (Component) visualizador);
 		}
 	}
 
@@ -944,6 +1038,29 @@ class NavegacaoHandler extends XMLHandler {
 	}
 }
 
+class Cookie {
+	private Cookie() {
+	}
+
+	static void processar(Map<String, Object> mapa) {
+		String valor = NavegacaoUtil.getCookie(mapa);
+		if (Util.isEmpty(valor)) {
+			return;
+		}
+		final String NOME_VAR = "VAR_COOKIE";
+		Variavel v = VariavelProvedor.getVariavel(NOME_VAR);
+		if (v == null) {
+			try {
+				VariavelProvedor.adicionar(NOME_VAR, valor);
+			} catch (ArgumentoException e) {
+				//
+			}
+		} else {
+			v.setValor(valor);
+		}
+	}
+}
+
 class AuthenticityToken {
 	private AuthenticityToken() {
 	}
@@ -970,5 +1087,297 @@ class AuthenticityToken {
 		} else {
 			v.setValor(valor);
 		}
+	}
+}
+
+class AccessToken {
+	private AccessToken() {
+	}
+
+	static void processar(Tipo json) {
+		String accessToken = getAccessToken(json);
+		salvarAccessToken(accessToken);
+	}
+
+	private static String getAccessToken(Tipo tipo) {
+		if (tipo instanceof Objeto) {
+			Objeto objeto = (Objeto) tipo;
+			Tipo tipoAccessToken = objeto.getValor("access_token");
+			return tipoAccessToken instanceof Texto ? tipoAccessToken.toString() : null;
+		}
+		return null;
+	}
+
+	private static void salvarAccessToken(String valor) {
+		if (Util.isEmpty(valor)) {
+			return;
+		}
+		final String NOME_VAR = "VAR_ACCESS_TOKEN";
+		Variavel v = VariavelProvedor.getVariavel(NOME_VAR);
+		if (v == null) {
+			try {
+				VariavelProvedor.adicionar(NOME_VAR, valor);
+			} catch (ArgumentoException e) {
+				//
+			}
+		} else {
+			v.setValor(valor);
+		}
+	}
+}
+
+interface IVisualizador {
+	public String getTitulo();
+
+	public Icon getIcone();
+}
+
+abstract class Visualizador extends Panel implements IVisualizador {
+	private static final long serialVersionUID = 1L;
+	protected final String string;
+	protected final byte[] bytes;
+
+	protected Visualizador(byte[] bytes, String string) {
+		this.string = string;
+		this.bytes = bytes;
+	}
+
+	protected BarraButton criarToolbarPesquisa(JTextPane textPane) {
+		return new ToolbarPesquisa(textPane);
+	}
+}
+
+class VisualizadorImagem extends Visualizador {
+	private static final long serialVersionUID = 1L;
+
+	protected VisualizadorImagem(byte[] bytes, String string) {
+		super(bytes, string);
+
+		Label label = new Label();
+		label.setIcon(new ImageIcon(bytes));
+
+		add(BorderLayout.CENTER, new ScrollPane(label));
+		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
+	}
+
+	@Override
+	public String getTitulo() {
+		return "Imagem";
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.ICON;
+	}
+}
+
+class VisualizadorTexto extends Visualizador {
+	private static final long serialVersionUID = 1L;
+
+	protected VisualizadorTexto(byte[] bytes, String string) {
+		super(bytes, string);
+
+		JTextPane textPane = new JTextPane();
+		textPane.setText(string);
+
+		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		add(BorderLayout.CENTER, new ScrollPane(textPane));
+		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+	}
+
+	@Override
+	public String getTitulo() {
+		return "Texto";
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.TEXTO;
+	}
+}
+
+class VisualizadorPDF extends Visualizador {
+	private static final long serialVersionUID = 1L;
+
+	protected VisualizadorPDF(byte[] bytes, String string) {
+		super(bytes, string);
+		try {
+			Class<?> klass = Class.forName("com.qoppa.pdfViewer.PDFViewerBean");
+			Object objeto = klass.newInstance();
+			JComponent comp = (JComponent) objeto;
+			load(klass, objeto, bytes);
+			add(BorderLayout.CENTER, comp);
+			SwingUtilities.invokeLater(() -> comp.scrollRectToVisible(new Rectangle()));
+		} catch (Exception e) {
+			//
+		}
+	}
+
+	private void load(Class<?> klass, Object objeto, byte[] bytes)
+			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		Method method = klass.getDeclaredMethod("loadPDF", InputStream.class);
+		method.invoke(objeto, new ByteArrayInputStream(bytes));
+	}
+
+	@Override
+	public String getTitulo() {
+		return "PDF";
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.PDF;
+	}
+}
+
+class VisualizadorHTML extends Visualizador {
+	private static final long serialVersionUID = 1L;
+
+	protected VisualizadorHTML(byte[] bytes, String string) {
+		super(bytes, string);
+
+		JTextPane textPane = new JTextPane();
+		textPane.setEditable(false);
+		textPane.setContentType("text/html");
+		textPane.setText(string);
+
+		AuthenticityToken.processar(string);
+
+		Panel panelTextPane = new Panel();
+		panelTextPane.add(BorderLayout.CENTER, textPane);
+
+		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
+		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+	}
+
+	@Override
+	public String getTitulo() {
+		return "HTML";
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.URL;
+	}
+}
+
+class VisualizadorJSON extends Visualizador {
+	private final transient DataParser parser = new DataParser();
+	private static final long serialVersionUID = 1L;
+
+	protected VisualizadorJSON(byte[] bytes, String string) {
+		super(bytes, string);
+		try {
+			JTextPane textPane = new JTextPane();
+			Tipo json = parser.parse(string);
+			setText(json, textPane);
+
+			AccessToken.processar(json);
+
+			Panel panelTextPane = new Panel();
+			panelTextPane.add(BorderLayout.CENTER, textPane);
+
+			BarraButton barraButton = criarToolbarPesquisa(textPane);
+			config(barraButton, json, textPane);
+
+			add(BorderLayout.NORTH, barraButton);
+			add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
+			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+		} catch (Exception e) {
+			//
+		}
+	}
+
+	private void setText(Tipo json, JTextPane textPane) {
+		textPane.setText(Constantes.VAZIO);
+		StyledDocument styledDoc = textPane.getStyledDocument();
+		if (styledDoc instanceof AbstractDocument && json != null) {
+			AbstractDocument doc = (AbstractDocument) styledDoc;
+			json.export(new ContainerDocument(doc), 0);
+		}
+	}
+
+	private void config(BarraButton barraButton, Tipo json, JTextPane textPane) {
+		Action totalElemAction = Action.acaoIcon(RequisicaoMensagens.getString("label.total_elementos"), Icones.INFO);
+		Action comAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.com_atributos"), null);
+		Action semAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.sem_atributos"), null);
+		Action originalAction = Action.acaoMenu(RequisicaoMensagens.getString("label.original"), null);
+		TextField txtComAtributo = new TextField(20);
+		TextField txtSemAtributo = new TextField(20);
+
+		comAtributoAction.setActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo));
+		semAtributoAction.setActionListener(e -> filtrarSemAtributo(json, textPane, txtSemAtributo));
+		totalElemAction.setActionListener(e -> totalElementos(textPane));
+		originalAction.setActionListener(e -> retornar(json, textPane));
+
+		barraButton.addButton(comAtributoAction);
+		barraButton.add(txtComAtributo);
+		barraButton.addButton(semAtributoAction);
+		barraButton.add(txtSemAtributo);
+		barraButton.addButton(originalAction);
+		barraButton.addButton(totalElemAction);
+	}
+
+	private void totalElementos(JTextPane textPane) {
+		if (!Util.isEmpty(textPane.getText())) {
+			try {
+				Tipo json = parser.parse(textPane.getText());
+				if (json instanceof Array) {
+					String msg = RequisicaoMensagens.getString("label.total_elementos");
+					Util.mensagem(textPane, msg + " [" + ((Array) json).getElementos().size() + "]");
+				} else {
+					Util.mensagem(textPane, RequisicaoMensagens.getString("msg.objeto_principal_nao_array"));
+				}
+			} catch (Exception e) {
+				Util.mensagem(textPane, e.getMessage());
+			}
+		}
+	}
+
+	private void filtrarComAtributo(Tipo json, JTextPane textPane, TextField textField) {
+		if ((json instanceof Objeto || json instanceof Array) && !Util.isEmpty(textField.getText())) {
+			String[] atributos = textField.getText().split(",");
+			filtrarComAtributos(json.clonar(), atributos, textPane);
+		}
+	}
+
+	private void filtrarSemAtributo(Tipo json, JTextPane textPane, TextField textField) {
+		if ((json instanceof Objeto || json instanceof Array) && !Util.isEmpty(textField.getText())) {
+			String[] atributos = textField.getText().split(",");
+			filtrarSemAtributos(json.clonar(), atributos, textPane);
+		}
+	}
+
+	private void retornar(Tipo json, JTextPane textPane) {
+		setText(json, textPane);
+	}
+
+	private void filtrarComAtributos(Tipo json, String[] atributos, JTextPane textPane) {
+		if (json instanceof Objeto) {
+			json = Filtro.comAtributos((Objeto) json, atributos);
+		} else if (json instanceof Array) {
+			json = Filtro.comAtributos((Array) json, atributos);
+		}
+		setText(json, textPane);
+	}
+
+	private void filtrarSemAtributos(Tipo json, String[] atributos, JTextPane textPane) {
+		if (json instanceof Objeto) {
+			json = Filtro.semAtributos((Objeto) json, atributos);
+		} else if (json instanceof Array) {
+			json = Filtro.semAtributos((Array) json, atributos);
+		}
+		setText(json, textPane);
+	}
+
+	@Override
+	public String getTitulo() {
+		return "JSON";
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.CONFIG;
 	}
 }
