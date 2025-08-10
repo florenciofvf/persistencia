@@ -35,9 +35,6 @@ public class OperadorContexto extends Container {
 	}
 
 	public short getPrioridade() throws InstrucaoException {
-		if (igual(":")) {
-			return 50;
-		}
 		if (igual("%")) {
 			return 100;
 		}
@@ -52,6 +49,9 @@ public class OperadorContexto extends Container {
 		}
 		if (igual("&", "|", "^")) {
 			return 300;
+		}
+		if (igual(":")) {
+			return 400;
 		}
 		throw new InstrucaoException("Operador >>> " + id, false);
 	}
