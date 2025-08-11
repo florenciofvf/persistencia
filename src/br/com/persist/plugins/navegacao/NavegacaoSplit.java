@@ -19,6 +19,9 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,6 +80,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
@@ -494,13 +498,50 @@ class Aba extends Transferivel {
 	}
 
 	private class PainelResultado extends Panel {
+		private final PopupFichario popupFichario = new PopupFichario();
 		private final JTabbedPane fichario = new JTabbedPane();
 		private static final long serialVersionUID = 1L;
 
 		private PainelResultado() {
 			fichario.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			fichario.addMouseListener(mouseListenerFichario);
 			add(BorderLayout.CENTER, fichario);
 		}
+
+		private class PopupFichario extends Popup {
+			private Action fechar = actionMenu("label.fechar");
+			private static final long serialVersionUID = 1L;
+
+			PopupFichario() {
+				addMenuItem(fechar);
+				fechar.setActionListener(e -> fechar());
+			}
+
+			private void fechar() {
+				int indice = fichario.getSelectedIndex();
+				if (indice != -1) {
+					fichario.removeTabAt(indice);
+				}
+			}
+		}
+
+		private transient MouseListener mouseListenerFichario = new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				processar(e);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				processar(e);
+			}
+
+			private void processar(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					popupFichario.show(fichario, e.getX(), e.getY());
+				}
+			}
+		};
 
 		private void setResposta(List<Object> resposta, boolean limpar) {
 			if (NavegacaoUtil.isHttpResult(resposta)) {
