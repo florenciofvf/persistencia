@@ -29,6 +29,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,10 +43,13 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
@@ -1238,6 +1242,7 @@ class VisualizadorHTML extends Visualizador {
 
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
+		textPane.addHyperlinkListener(new Listener());
 		textPane.setContentType("text/html");
 		textPane.setText(string);
 
@@ -1249,6 +1254,26 @@ class VisualizadorHTML extends Visualizador {
 		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
 		add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
 		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+	}
+
+	private class Listener implements HyperlinkListener {
+		public void hyperlinkUpdate(HyperlinkEvent e) {
+			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+				JEditorPane pane = (JEditorPane) e.getSource();
+				URL url = e.getURL();
+				if (url != null) {
+					setPage(pane, url);
+				}
+			}
+		}
+
+		private void setPage(JEditorPane pane, URL url) {
+			try {
+				pane.setPage(url);
+			} catch (Exception ex) {
+				//
+			}
+		}
 	}
 
 	@Override
