@@ -580,7 +580,7 @@ class Aba extends Transferivel {
 				fichario.removeAll();
 			}
 			addTab(new PainelMetadados(result));
-			observadores(result.getResponse());
+			observadores(result.getRequest(), result.getResponse());
 		}
 
 		private class PainelDados extends Panel implements IVisualizador {
@@ -671,17 +671,17 @@ class Aba extends Transferivel {
 			}
 		}
 
-		private void observadores(Map<String, Object> mapa) {
-			String mimes = NavegacaoUtil.getMimes(mapa);
+		private void observadores(Map<String, Object> mapaRequest, Map<String, Object> mapaResponse) {
+			String mimes = NavegacaoUtil.getMimes(mapaResponse);
 			if (Util.isEmpty(mimes)) {
 				return;
 			}
-			Object conteudo = mapa.get("bytesResponse");
+			Object conteudo = mapaResponse.get("bytesResponse");
 			if (conteudo instanceof byte[]) {
 				byte[] bytes = (byte[]) conteudo;
 				String string = new String(bytes);
-				Cookie.processar(mapa);
-				notificar(getBase(mapa.get("url")), mimes, bytes, string);
+				Cookie.processar(mapaResponse);
+				notificar(getBase(mapaRequest.get("url")), mimes, bytes, string);
 			}
 		}
 
