@@ -502,18 +502,20 @@ class Aba extends Transferivel {
 			add(BorderLayout.CENTER, fichario);
 		}
 
-		private void setResposta(List<Object> resposta) {
+		private void setResposta(List<Object> resposta, boolean limpar) {
 			if (NavegacaoUtil.isHttpResult(resposta)) {
 				HttpResult result = (HttpResult) resposta.get(0);
-				processar(result);
+				processar(result, limpar);
 			} else {
 				String string = ObjetoUtil.getStringResposta(resposta);
-				setText(string);
+				setText(string, limpar);
 			}
 		}
 
-		private void setText(String string) {
-			fichario.removeAll();
+		private void setText(String string, boolean limpar) {
+			if (limpar) {
+				fichario.removeAll();
+			}
 			addTab(new PainelDados(string));
 		}
 
@@ -532,8 +534,10 @@ class Aba extends Transferivel {
 			}
 		}
 
-		private void processar(HttpResult result) {
-			fichario.removeAll();
+		private void processar(HttpResult result, boolean limpar) {
+			if (limpar) {
+				fichario.removeAll();
+			}
 			addTab(new PainelMetadados(result));
 			observadores(result.getResponse());
 		}
@@ -682,7 +686,13 @@ class Aba extends Transferivel {
 		private class InnerVisualizadorListener implements VisualizadorListener {
 			@Override
 			public void processarLink(String base, String complemento) {
-
+				try {
+					Processador processador = new Processador();
+					List<Object> resposta = processador.processar("navegacao.processarLink", "main", base, complemento);
+					setResposta(resposta, false);
+				} catch (InstrucaoException ex) {
+					setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), false);
+				}
 			}
 		}
 	}
@@ -771,15 +781,15 @@ class Aba extends Transferivel {
 
 		private void executar() {
 			if (biblio == null) {
-				painelResultado.setText(InstrucaoMensagens.getString("msg.nao_compilado"));
+				painelResultado.setText(InstrucaoMensagens.getString("msg.nao_compilado"), true);
 				return;
 			}
 			try {
 				Processador processador = new Processador();
 				List<Object> resposta = processador.processar(biblio.getNome(), "main");
-				painelResultado.setResposta(resposta);
+				painelResultado.setResposta(resposta, true);
 			} catch (InstrucaoException ex) {
-				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex));
+				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);
 			}
 		}
 
@@ -796,12 +806,12 @@ class Aba extends Transferivel {
 				}
 				boolean resp = biblio != null;
 				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
-						: InstrucaoMensagens.getString("msg.nao_compilado"));
+						: InstrucaoMensagens.getString("msg.nao_compilado"), true);
 				if (resp && colorir) {
 					InstrucaoCor.processar(editor.getStyledDocument(), compilador.getTokens());
 				}
 			} catch (IOException | InstrucaoException ex) {
-				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex));
+				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);
 			}
 		}
 
