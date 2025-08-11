@@ -636,17 +636,36 @@ class Aba extends Transferivel {
 				byte[] bytes = (byte[]) conteudo;
 				String string = new String(bytes);
 				Cookie.processar(mapa);
-				notificar(mimes, bytes, string);
+				notificar(getBase(mapa.get("url")), mimes, bytes, string);
 			}
 		}
 
-		private void notificar(String mimes, byte[] bytes, String string) {
+		private String getBase(Object obj) {
+			if (obj == null) {
+				return null;
+			}
+			String string = obj.toString();
+			int pos = string.indexOf("://");
+			if (pos == -1) {
+				return null;
+			}
+			pos = string.indexOf("/", pos + 3);
+			if (pos == -1) {
+				return string;
+			}
+			return string.substring(0, pos);
+		}
+
+		private void notificar(String base, String mimes, byte[] bytes, String string) {
 			addTab(new VisualizadorTexto(bytes, string));
 			if (mimes.contains("image/")) {
 				addTab(new VisualizadorImagem(bytes, string));
 			}
 			if (mimes.contains("text/html") || mimes.contains("text/javascript")) {
-				addTab(new VisualizadorHTML(bytes, string));
+				VisualizadorHTML visualizador = new VisualizadorHTML(bytes, string);
+				visualizador.visualizadorListener = new InnerVisualizadorListener();
+				visualizador.base = base;
+				addTab(visualizador);
 			}
 			if (mimes.contains("application/json")) {
 				addTab(new VisualizadorJSON(bytes, string));
@@ -658,6 +677,13 @@ class Aba extends Transferivel {
 
 		private void addTab(IVisualizador visualizador) {
 			fichario.addTab(visualizador.getTitulo(), visualizador.getIcone(), (Component) visualizador);
+		}
+
+		private class InnerVisualizadorListener implements VisualizadorListener {
+			@Override
+			public void processarLink(String base, String complemento) {
+
+			}
 		}
 	}
 
@@ -1136,10 +1162,16 @@ interface IVisualizador {
 	public Icon getIcone();
 }
 
+interface VisualizadorListener {
+	public void processarLink(String base, String complemento);
+}
+
 abstract class Visualizador extends Panel implements IVisualizador {
+	protected transient VisualizadorListener visualizadorListener;
 	private static final long serialVersionUID = 1L;
 	protected final String string;
 	protected final byte[] bytes;
+	protected String base;
 
 	protected Visualizador(byte[] bytes, String string) {
 		this.string = string;
@@ -1263,6 +1295,11 @@ class VisualizadorHTML extends Visualizador {
 				URL url = e.getURL();
 				if (url != null) {
 					setPage(pane, url);
+					return;
+				}
+				String desc = e.getDescription();
+				if (!Util.isEmpty(base) && !Util.isEmpty(desc) && visualizadorListener != null) {
+					visualizadorListener.processarLink(base, desc);
 				}
 			}
 		}
