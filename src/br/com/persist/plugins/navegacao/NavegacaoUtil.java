@@ -50,21 +50,13 @@ public class NavegacaoUtil {
 			StringBuilder builder = new StringBuilder();
 			for (String item : list) {
 				if (builder.length() > 0) {
-					builder.append("; ");
+					builder.append(", ");
 				}
-				builder.append(normal(item));
+				builder.append(item);
 			}
 			return builder.toString();
 		}
 		return null;
-	}
-
-	private static String normal(String string) {
-		int pos = string.indexOf(';');
-		if (pos != -1) {
-			return string.substring(0, pos);
-		}
-		return string;
 	}
 
 	private static String mimes(Map<String, List<String>> header) {
