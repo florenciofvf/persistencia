@@ -2,6 +2,8 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
@@ -9,6 +11,8 @@ import java.util.Map;
 import br.com.persist.assistencia.Util;
 
 public class HttpUtil {
+	private static CookieManager cookieManager;
+
 	private HttpUtil() {
 	}
 
@@ -77,5 +81,10 @@ public class HttpUtil {
 			builder.append(nome + "=" + valor);
 		}
 		return builder.toString();
+	}
+
+	static {
+		cookieManager = new CookieManager();
+		CookieHandler.setDefault(cookieManager);
 	}
 }
