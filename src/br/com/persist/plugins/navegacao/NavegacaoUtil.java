@@ -40,6 +40,12 @@ public class NavegacaoUtil {
 
 	private static String cookie(Map<String, List<String>> header) {
 		List<String> list = header.get("Set-Cookie");
+		if (list == null) {
+			list = header.get("set-cookie");
+		}
+		if (list == null) {
+			list = header.get("SET-COOKIE");
+		}
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
