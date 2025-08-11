@@ -641,7 +641,7 @@ class Aba extends Transferivel {
 			if (mimes.contains("image/")) {
 				addTab(new VisualizadorImagem(bytes, string));
 			}
-			if (mimes.contains("text/html")) {
+			if (mimes.contains("text/html") || mimes.contains("text/javascript")) {
 				addTab(new VisualizadorHTML(bytes, string));
 			}
 			if (mimes.contains("application/json")) {
