@@ -1181,17 +1181,38 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					} else {
 						String valor = filtro.getValor();
 						complemento = complemento.trim();
-						String[] array = complemento.split("/");
-						for (int i = 0; i < array.length; i++) {
-							valor = Util.replaceAll(valor, "{" + i + "}", array[i]);
+						String[] complementos = complemento.split("\n");
+						StringBuilder builder = new StringBuilder();
+						for (String item : complementos) {
+							String frag = processar(item, valor);
+							if (!Util.isEmpty(frag)) {
+								if (builder.length() > 0) {
+									builder.append(" OR (");
+								}
+								builder.append(frag);
+								if (builder.indexOf(" OR (") != -1) {
+									builder.append(")");
+								}
+							}
 						}
-						txtComplemento.setText(valor);
+						txtComplemento.setText(builder.toString());
 					}
 				}
 
 				private boolean param(Filtro filtro) {
 					String nome = filtro.getNome();
 					return nome.contains("{0}") && nome.contains("/");
+				}
+
+				private String processar(String complemento, String valor) {
+					if (Util.isEmpty(complemento)) {
+						return "";
+					}
+					String[] array = complemento.split("/");
+					for (int i = 0; i < array.length; i++) {
+						valor = Util.replaceAll(valor, "{" + i + "}", array[i]);
+					}
+					return valor;
 				}
 			}
 
