@@ -3,10 +3,11 @@ package br.com.persist.plugins.navegacao;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.instrucao.biblionativo.HttpResult;
 
 public class NavegacaoUtil {
+	private static final String HEADER_RESPONSE = "headerResponse";
+
 	private NavegacaoUtil() {
 	}
 
@@ -15,27 +16,36 @@ public class NavegacaoUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static String getMimes(Map<String, Object> mapa) {
-		if (mapa == null) {
-			return "";
+	public static String getLocation(Map<String, Object> mapa) {
+		if (mapa != null) {
+			Object header = mapa.get(HEADER_RESPONSE);
+			if (header instanceof Map) {
+				return location((Map<String, List<String>>) header);
+			}
 		}
-		Object header = mapa.get("headerResponse");
-		if (header instanceof Map) {
-			return mimes((Map<String, List<String>>) header);
+		return null;
+	}
+
+	private static String location(Map<String, List<String>> header) {
+		List<String> list = header.get("Location");
+		if (list == null) {
+			list = header.get("location");
 		}
-		return "";
+		if (list == null) {
+			list = header.get("LOCATION");
+		}
+		return getStringOuNull(list);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static String getCookie(Map<String, Object> mapa) {
-		if (mapa == null) {
-			return "";
+		if (mapa != null) {
+			Object header = mapa.get(HEADER_RESPONSE);
+			if (header instanceof Map) {
+				return cookie((Map<String, List<String>>) header);
+			}
 		}
-		Object header = mapa.get("headerResponse");
-		if (header instanceof Map) {
-			return cookie((Map<String, List<String>>) header);
-		}
-		return "";
+		return null;
 	}
 
 	private static String cookie(Map<String, List<String>> header) {
@@ -46,7 +56,33 @@ public class NavegacaoUtil {
 		if (list == null) {
 			list = header.get("SET-COOKIE");
 		}
-		if (list != null && !list.isEmpty()) {
+		return getStringOuNull(list);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static String getMimes(Map<String, Object> mapa) {
+		if (mapa != null) {
+			Object header = mapa.get(HEADER_RESPONSE);
+			if (header instanceof Map) {
+				return mimes((Map<String, List<String>>) header);
+			}
+		}
+		return null;
+	}
+
+	private static String mimes(Map<String, List<String>> header) {
+		List<String> list = header.get("Content-Type");
+		if (list == null) {
+			list = header.get("content-type");
+		}
+		if (list == null) {
+			list = header.get("CONTENT-TYPE");
+		}
+		return getStringOuNull(list);
+	}
+
+	private static String getStringOuNull(List<String> list) {
+		if (list != null) {
 			StringBuilder builder = new StringBuilder();
 			for (String item : list) {
 				if (builder.length() > 0) {
@@ -54,40 +90,8 @@ public class NavegacaoUtil {
 				}
 				builder.append(item);
 			}
-			return builder.toString();
+			return builder.toString().trim();
 		}
 		return null;
-	}
-
-	private static String mimes(Map<String, List<String>> header) {
-		List<String> list = getList(header);
-		if (list != null && !list.isEmpty()) {
-			return get(list);
-		}
-		return "";
-	}
-
-	private static List<String> getList(Map<String, List<String>> map) {
-		List<String> list = map.get("Content-Type");
-		if (list == null) {
-			list = map.get("content-type");
-		}
-		if (list == null) {
-			list = map.get("CONTENT-TYPE");
-		}
-		return list;
-	}
-
-	private static String get(List<String> list) {
-		StringBuilder builder = new StringBuilder();
-		for (String item : list) {
-			if (!Util.isEmpty(item)) {
-				if (builder.length() > 0) {
-					builder.append(", ");
-				}
-				builder.append(item.trim());
-			}
-		}
-		return builder.toString().trim();
 	}
 }

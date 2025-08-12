@@ -672,6 +672,7 @@ class Aba extends Transferivel {
 		}
 
 		private void observadores(Map<String, Object> mapaRequest, Map<String, Object> mapaResponse) {
+			String location = NavegacaoUtil.getLocation(mapaResponse);
 			String mimes = NavegacaoUtil.getMimes(mapaResponse);
 			if (Util.isEmpty(mimes)) {
 				return;
@@ -681,7 +682,7 @@ class Aba extends Transferivel {
 				byte[] bytes = (byte[]) conteudo;
 				String string = new String(bytes);
 				Cookie.processar(mapaResponse);
-				notificar(getBase(mapaRequest.get("url")), mimes, bytes, string);
+				notificar(getBase(mapaRequest.get("url")), location, mimes, bytes, string);
 			}
 		}
 
@@ -701,7 +702,18 @@ class Aba extends Transferivel {
 			return string.substring(0, pos);
 		}
 
-		private void notificar(String base, String mimes, byte[] bytes, String string) {
+		private void notificar(String base, String location, String mimes, byte[] bytes, String string) {
+			if (!Util.isEmpty(location)) {
+				String complemento = null;
+				if (location.startsWith("http://") || location.startsWith("https://")) {
+					base = " ";
+					complemento = location;
+				} else {
+					complemento = location.startsWith("/") ? location : "/" + location;
+				}
+				new InnerVisualizadorListener().processarLink(base, complemento);
+				return;
+			}
 			addTab(new VisualizadorTexto(bytes, string));
 			if (mimes.contains("image/")) {
 				addTab(new VisualizadorImagem(bytes, string));
