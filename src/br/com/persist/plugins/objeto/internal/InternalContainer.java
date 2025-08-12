@@ -1174,6 +1174,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 
+				private boolean param(Filtro filtro) {
+					String nome = filtro.getNome();
+					return nome.contains("{0}") && nome.contains("/");
+				}
+
 				private void processar(Filtro filtro) {
 					String complemento = Util.getContentTransfered();
 					if (Util.isEmpty(complemento)) {
@@ -1182,32 +1187,40 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						String valor = filtro.getValor();
 						complemento = complemento.trim();
 						String[] complementos = complemento.split("\n");
-						StringBuilder builder = new StringBuilder();
-						for (String item : complementos) {
-							String frag = processar(item, valor);
-							if (!Util.isEmpty(frag)) {
-								if (builder.length() > 0) {
-									builder.append(" OR (");
-								}
-								builder.append(frag);
-								if (builder.indexOf(" OR (") != -1) {
-									builder.append(")");
-								}
-							}
+						boolean quebrarLinha = false;
+						if (complementos.length > 1) {
+							quebrarLinha = Util.confirmar(InternalContainer.this, "quest.quebrarLinha");
 						}
+						StringBuilder builder = new StringBuilder();
+						processar(valor, complementos, quebrarLinha, builder);
 						txtComplemento.setText(builder.toString());
 					}
 				}
 
-				private boolean param(Filtro filtro) {
-					String nome = filtro.getNome();
-					return nome.contains("{0}") && nome.contains("/");
+				private void processar(String valor, String[] complementos, boolean quebrarLinha,
+						StringBuilder builder) {
+					for (String item : complementos) {
+						String frag = processar(item, valor);
+						if (!Util.isEmpty(frag)) {
+							if (builder.length() > 0) {
+								if (quebrarLinha) {
+									builder.append(Constantes.QL);
+								}
+								builder.append(" OR (");
+							}
+							builder.append(frag);
+							if (builder.indexOf(" OR (") != -1) {
+								builder.append(")");
+							}
+						}
+					}
 				}
 
 				private String processar(String complemento, String valor) {
 					if (Util.isEmpty(complemento)) {
 						return "";
 					}
+					complemento = complemento.trim();
 					String[] array = complemento.split("/");
 					for (int i = 0; i < array.length; i++) {
 						valor = Util.replaceAll(valor, "{" + i + "}", array[i]);
