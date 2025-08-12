@@ -722,6 +722,8 @@ class Aba extends Transferivel {
 
 		private void addTab(IVisualizador visualizador) {
 			fichario.addTab(visualizador.getTitulo(), visualizador.getIcone(), (Component) visualizador);
+			int ultimoIndice = fichario.getTabCount() - 1;
+			fichario.setSelectedIndex(ultimoIndice);
 		}
 
 		private class InnerVisualizadorListener implements VisualizadorListener {
