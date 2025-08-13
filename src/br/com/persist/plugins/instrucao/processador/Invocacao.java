@@ -2,6 +2,7 @@ package br.com.persist.plugins.instrucao.processador;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -55,8 +56,12 @@ public abstract class Invocacao extends Instrucao {
 				throw new InstrucaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
 			}
 		} else {
+			List<Object> lista = null;
+			if ("ibiblio".equals(nomeBiblio)) {
+				lista = new ArrayList<>(Arrays.asList(biblioteca));
+			}
 			AtomicBoolean atomic = new AtomicBoolean();
-			Object resp = invocarNativo(clone, pilhaFuncao, pilhaOperando, atomic);
+			Object resp = invocarNativo(lista, clone, pilhaFuncao, pilhaOperando, atomic);
 			if (atomic.get()) {
 				pilhaOperando.push(resp);
 			}
@@ -94,8 +99,8 @@ public abstract class Invocacao extends Instrucao {
 		return resp;
 	}
 
-	private Object invocarNativo(Funcao funcao, PilhaFuncao pilhaMetodo, PilhaOperando pilhaOperando,
-			AtomicBoolean atomic) throws InstrucaoException {
+	private Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
+			PilhaOperando pilhaOperando, AtomicBoolean atomic) throws InstrucaoException {
 		Object resposta = null;
 		Class<?> klass = null;
 		try {
@@ -106,6 +111,10 @@ public abstract class Invocacao extends Instrucao {
 		List<Integer> params = indiceParametros(funcao);
 		Class<?>[] tipoParametros = getTipoParametros(params);
 		Object[] valorParametros = getValorParametros(pilhaOperando, params);
+		if (lista != null) {
+			tipoParametros = editarTipoParametros(tipoParametros, lista);
+			valorParametros = editarValorParametros(valorParametros, lista);
+		}
 		try {
 			Method method = klass.getDeclaredMethod(funcao.getNome(), tipoParametros);
 			Class<?> returnType = method.getReturnType();
@@ -135,6 +144,14 @@ public abstract class Invocacao extends Instrucao {
 		return tipoParametros;
 	}
 
+	private Class<?>[] editarTipoParametros(Class<?>[] tipoParametros, List<Object> lista) {
+		List<Class<?>> resposta = new ArrayList<>(Arrays.asList(tipoParametros));
+		for (int i = 0; i < lista.size(); i++) {
+			resposta.add(Object.class);
+		}
+		return resposta.toArray(new Class<?>[0]);
+	}
+
 	private Object[] getValorParametros(PilhaOperando pilhaOperando, List<Integer> params) throws InstrucaoException {
 		Object[] valorParametros = new Object[params.size()];
 		for (int i = params.size() - 1; i >= 0; i--) {
@@ -142,6 +159,14 @@ public abstract class Invocacao extends Instrucao {
 			valorParametros[i] = valor;
 		}
 		return valorParametros;
+	}
+
+	private Object[] editarValorParametros(Object[] valorParametros, List<Object> lista) {
+		List<Object> resposta = new ArrayList<>(Arrays.asList(valorParametros));
+		for (Object item : lista) {
+			resposta.add(item);
+		}
+		return resposta.toArray(new Object[0]);
 	}
 
 	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
