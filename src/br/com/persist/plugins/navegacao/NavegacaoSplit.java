@@ -579,7 +579,9 @@ class Aba extends Transferivel {
 			if (limpar) {
 				fichario.removeAll();
 			}
-			addTab(new PainelMetadados(result));
+			if (NavegacaoPreferencia.isExibirMetadados()) {
+				addTab(new PainelMetadados(result));
+			}
 			observadores(result.getRequest(), result.getResponse());
 		}
 

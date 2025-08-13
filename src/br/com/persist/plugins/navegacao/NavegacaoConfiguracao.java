@@ -18,6 +18,7 @@ import br.com.persist.formulario.Formulario;
 public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkExibirConteudoPlano = criarCheckBox("label.exibir_conteudo_plano");
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
+	private final CheckBox chkExibirMetadados = criarCheckBox("label.exibir_metadados");
 	private static final long serialVersionUID = 1L;
 
 	private final transient NomeValor[] posicoes = {
@@ -36,18 +37,22 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, NavegacaoPreferencia.getNavegacaoPosicaoAbaFichario());
 		chkExibirConteudoPlano.setSelected(NavegacaoPreferencia.isExibirConteudoPlano());
 		chkExibirArqIgnorados.setSelected(NavegacaoPreferencia.isExibirArqIgnorados());
+		chkExibirMetadados.setSelected(NavegacaoPreferencia.isExibirMetadados());
 
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		muro.camada(Muro.panelGrid(chkExibirConteudoPlano));
+		muro.camada(Muro.panelGrid(chkExibirMetadados));
 		add(BorderLayout.CENTER, muro);
 	}
 
 	private void configurar() {
 		chkExibirArqIgnorados
 				.addActionListener(e -> NavegacaoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
+		chkExibirMetadados
+				.addActionListener(e -> NavegacaoPreferencia.setExibirMetadados(chkExibirMetadados.isSelected()));
 		chkExibirConteudoPlano.addActionListener(
 				e -> NavegacaoPreferencia.setExibirConteudoPlano(chkExibirConteudoPlano.isSelected()));
 	}

@@ -10,6 +10,7 @@ public class NavegacaoPreferencia {
 	private static int navegacaoPosicaoAbaFichario;
 	private static boolean exibirConteudoPlano;
 	private static boolean exibirArqIgnorados;
+	private static boolean exibirMetadados;
 
 	private NavegacaoPreferencia() {
 	}
@@ -19,6 +20,7 @@ public class NavegacaoPreferencia {
 		navegacaoPosicaoAbaFichario = pref.getInt("navegacao_posicao_aba_fichario", SwingConstants.TOP);
 		exibirConteudoPlano = pref.getBoolean("navegacao_exibir_conteudo_plano", false);
 		exibirArqIgnorados = pref.getBoolean("navegacao_exibir_arq_ignorados", false);
+		exibirMetadados = pref.getBoolean("navegacao_exibir_metadados", false);
 	}
 
 	public static void salvar() {
@@ -26,6 +28,7 @@ public class NavegacaoPreferencia {
 		pref.putInt("navegacao_posicao_aba_fichario", navegacaoPosicaoAbaFichario);
 		pref.putBoolean("navegacao_exibir_conteudo_plano", exibirConteudoPlano);
 		pref.putBoolean("navegacao_exibir_arq_ignorados", exibirArqIgnorados);
+		pref.putBoolean("navegacao_exibir_metadados", exibirMetadados);
 	}
 
 	public static int getNavegacaoPosicaoAbaFichario() {
@@ -53,5 +56,13 @@ public class NavegacaoPreferencia {
 
 	public static void setExibirArqIgnorados(boolean exibirArqIgnorados) {
 		NavegacaoPreferencia.exibirArqIgnorados = exibirArqIgnorados;
+	}
+
+	public static boolean isExibirMetadados() {
+		return exibirMetadados;
+	}
+
+	public static void setExibirMetadados(boolean exibirMetadados) {
+		NavegacaoPreferencia.exibirMetadados = exibirMetadados;
 	}
 }
