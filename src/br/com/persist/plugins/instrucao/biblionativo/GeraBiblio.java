@@ -24,7 +24,7 @@ public class GeraBiblio {
 		Class<?>[] classes = { IArquivo.class, IClass.class, IDB.class, ILinha.class, ILinhas.class, IList.class,
 				IMap.class, IMethod.class, IParse.class, IRuntime.class, IString.class, ISwing.class, ISystem.class,
 				IUtil.class, IVar.class, IFormat.class, ICamunda.class, IPath.class, IDesktop.class, IHtml.class,
-				ICfg.class, IDoc.class, IPsmt.class, IHttp.class };
+				ICfg.class, IDoc.class, IPsmt.class, IHttp.class, IBiblio.class };
 
 		for (Class<?> item : classes) {
 			processarObjeto(item);
