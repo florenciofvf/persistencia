@@ -40,6 +40,7 @@ import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
+import br.com.persist.main.Main;
 import br.com.persist.marca.XML;
 import br.com.persist.plugins.ouvinte.OuvinteFormulario;
 
@@ -341,14 +342,14 @@ public class Formulario extends JFrame {
 	public void salvarMonitorFormComoPreferencial() {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
 		if (device != null) {
-			Preferencias.setString(Constantes.GC_O_FORMULARIO, device.getIDstring());
+			Preferencias.setString(Constantes.GC_O_FORMULARIO, Main.getStringGC(device));
 		}
 	}
 
 	public void salvarMonitorComoPreferencial() {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
 		if (device != null) {
-			Preferencias.setString(Constantes.GC_PREFERENCIAL, device.getIDstring());
+			Preferencias.setString(Constantes.GC_PREFERENCIAL, Main.getStringGC(device));
 		}
 	}
 

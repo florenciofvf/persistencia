@@ -3,6 +3,7 @@ package br.com.persist.main;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,31 +64,53 @@ public class Main {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		String idPref = Preferencias.getString(Constantes.GC_PREFERENCIAL);
 		String idForm = Preferencias.getString(Constantes.GC_O_FORMULARIO);
-		GraphicsDevice[] gd = ge.getScreenDevices();
-		GraphicsDevice devicePref = getDevice(gd, idPref);
-		GraphicsDevice deviceForm = getDevice(gd, idForm);
-		return devicePref != null ? getGC(devicePref) : getGC(deviceForm);
+		GraphicsDevice[] gds = ge.getScreenDevices();
+		GraphicsConfiguration gcPref = getGC(gds, idPref);
+		GraphicsConfiguration gcForm = getGC(gds, idForm);
+		return gcPref != null ? gcPref : gcForm;
 	}
 
-	private static GraphicsDevice getDevice(GraphicsDevice[] gd, String id) {
-		GraphicsDevice device = null;
-		if (gd != null && id != null) {
-			for (GraphicsDevice item : gd) {
-				if (id.equals(item.getIDstring())) {
-					device = item;
+	private static GraphicsConfiguration getGC(GraphicsDevice[] gds, String id) {
+		if (gds == null || id == null) {
+			return null;
+		}
+		for (GraphicsDevice itemGD : gds) {
+			GraphicsConfiguration[] gcs = itemGD.getConfigurations();
+			if (gcs == null) {
+				continue;
+			}
+			for (GraphicsConfiguration itemGC : gcs) {
+				Rectangle bounds = itemGC.getBounds();
+				if (bounds != null && valido(id, bounds)) {
+					return itemGC;
 				}
 			}
 		}
-		return device;
+		return null;
 	}
 
-	private static GraphicsConfiguration getGC(GraphicsDevice device) {
-		if (device != null) {
-			GraphicsConfiguration[] gcs = device.getConfigurations();
-			if (gcs != null && gcs.length > 0) {
-				return gcs[0];
+	private static boolean valido(String id, Rectangle bounds) {
+		return id.equals(bounds.x + "," + bounds.y);
+	}
+
+	public static String getStringGC(GraphicsDevice gd) {
+		if (gd == null) {
+			return "";
+		}
+		GraphicsConfiguration[] gcs = gd.getConfigurations();
+		if (gcs == null) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		for (GraphicsConfiguration item : gcs) {
+			Rectangle bounds = item.getBounds();
+			if (bounds != null) {
+				if (builder.length() > 0) {
+					builder.append("; ");
+				}
+				builder.append(bounds.x + "," + bounds.y);
 			}
 		}
-		return null;
+		return builder.toString();
 	}
 }
