@@ -9,7 +9,9 @@ public class IBiblio {
 	@Biblio(1)
 	public static String name(Object biblio) {
 		if (biblio instanceof Biblioteca) {
-			return ((Biblioteca) biblio).getNome();
+			String nome = ((Biblioteca) biblio).getNome();
+			int pos = nome.lastIndexOf(".");
+			return pos != -1 ? nome.substring(0, pos) : nome;
 		}
 		return "";
 	}
