@@ -714,7 +714,9 @@ class Aba extends Transferivel {
 				new InnerVisualizadorListener().processarLink(base, complemento);
 				return;
 			}
-			addTab(new VisualizadorTexto(bytes, string));
+			if (NavegacaoPreferencia.isExibirConteudoPlano()) {
+				addTab(new VisualizadorConteudo(bytes, string));
+			}
 			if (mimes.contains("image/")) {
 				addTab(new VisualizadorImagem(bytes, string));
 			}
@@ -1272,10 +1274,10 @@ class VisualizadorImagem extends Visualizador {
 	}
 }
 
-class VisualizadorTexto extends Visualizador {
+class VisualizadorConteudo extends Visualizador {
 	private static final long serialVersionUID = 1L;
 
-	protected VisualizadorTexto(byte[] bytes, String string) {
+	protected VisualizadorConteudo(byte[] bytes, String string) {
 		super(bytes, string);
 
 		JTextPane textPane = new JTextPane();
@@ -1288,7 +1290,7 @@ class VisualizadorTexto extends Visualizador {
 
 	@Override
 	public String getTitulo() {
-		return "Texto";
+		return NavegacaoMensagens.getString("label.conteudo");
 	}
 
 	@Override

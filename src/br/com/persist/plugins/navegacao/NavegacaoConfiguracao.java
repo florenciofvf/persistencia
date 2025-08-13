@@ -16,6 +16,7 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
 public class NavegacaoConfiguracao extends AbstratoConfiguracao {
+	private final CheckBox chkExibirConteudoPlano = criarCheckBox("label.exibir_conteudo_plano");
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 	private static final long serialVersionUID = 1L;
 
@@ -33,18 +34,22 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, NavegacaoPreferencia.getNavegacaoPosicaoAbaFichario());
+		chkExibirConteudoPlano.setSelected(NavegacaoPreferencia.isExibirConteudoPlano());
 		chkExibirArqIgnorados.setSelected(NavegacaoPreferencia.isExibirArqIgnorados());
 
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
+		muro.camada(Muro.panelGrid(chkExibirConteudoPlano));
 		add(BorderLayout.CENTER, muro);
 	}
 
 	private void configurar() {
 		chkExibirArqIgnorados
 				.addActionListener(e -> NavegacaoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
+		chkExibirConteudoPlano.addActionListener(
+				e -> NavegacaoPreferencia.setExibirConteudoPlano(chkExibirConteudoPlano.isSelected()));
 	}
 
 	private Label criarLabelTituloRotulo(String rotulo) {
