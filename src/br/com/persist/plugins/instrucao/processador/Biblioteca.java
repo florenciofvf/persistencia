@@ -31,6 +31,10 @@ public class Biblioteca {
 		return nomePackage != null ? nomePackage + "." + nome : nome;
 	}
 
+	public String getNomeSimples() {
+		return nome;
+	}
+
 	public String getNomePackage() {
 		return nomePackage;
 	}
