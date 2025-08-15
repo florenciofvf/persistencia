@@ -28,6 +28,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Valor;
 import br.com.persist.componente.Action;
@@ -829,13 +830,16 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuCopiarLinhas extends MenuPadrao2 {
 			private Action comAspasAtalhoAcao = acaoMenu("label.com_aspas_atalho", Icones.ASPAS);
+			private Action destacComBarraAcao = acaoMenu("label.copiar_destac_com_barra");
 			private Action semAspasAtalhoAcao = acaoMenu("label.sem_aspas_atalho");
 			private static final long serialVersionUID = 1L;
 
 			private MenuCopiarLinhas() {
 				super(TabelaMensagens.getString("label.copiar_header"), false, null);
+				addMenuItem(true, destacComBarraAcao);
 				addMenuItem(true, semAspasAtalhoAcao);
 				addMenuItem(comAspasAtalhoAcao);
+				destacComBarraAcao.setActionListener(e -> copiarDestacComBarra());
 				semAspasAtalhoAcao.setActionListener(e -> copiarAtalho(false));
 				comAspasAtalhoAcao.setActionListener(e -> copiarAtalho(true));
 				semAspasAcao.setActionListener(e -> copiar(false));
@@ -859,6 +863,15 @@ public class TabelaPersistencia extends JTable {
 				if (!Util.isEmpty(string)) {
 					Util.setContentTransfered(string);
 					setIcon(Icones.SUCESSO);
+				}
+			}
+
+			private void copiarDestacComBarra() {
+				List<Integer> indices = Util.getIndicesLinha(TabelaPersistencia.this);
+				TransferidorTabular transferidor = Util.criarTransferidorTabular(TabelaPersistencia.this,
+						getListaNomeColunasDestacadas(), indices);
+				if (transferidor != null) {
+					Util.setContentTransfered(transferidor.getBarra());
 				}
 			}
 		}
