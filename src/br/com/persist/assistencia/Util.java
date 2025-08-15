@@ -273,7 +273,7 @@ public class Util {
 		SetLista.view("Colunas", colunas == null ? nomeColunas(columnModel) : colunas, coletor, table,
 				new SetLista.Config(true, false));
 		if (coletor.estaVazio()) {
-			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO, Constantes.VAZIO);
+			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO, Constantes.VAZIO, Constantes.VAZIO);
 		}
 		return criarTransferidorTabular(columnModel, model, indices, coletor, table);
 	}
@@ -282,15 +282,16 @@ public class Util {
 			List<Integer> indices, Coletor coletor, JTable table) {
 		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
 		StringBuilder tabular = new StringBuilder();
+		StringBuilder barra = new StringBuilder();
 		StringBuilder html = new StringBuilder();
 		StringBuilder pipe = new StringBuilder();
 		iniciar(html);
 		if (confirmar(table, "msg.com_cabecalho")) {
 			cabecalho(html, tabular, pipe, columnModel, selecionadas);
 		}
-		conteudo(html, tabular, pipe, model, indices, selecionadas);
+		conteudo(html, tabular, pipe, barra, model, indices, selecionadas);
 		finalizar(html, tabular);
-		return new TransferidorTabular(html.toString(), tabular.toString(), pipe.toString());
+		return new TransferidorTabular(html.toString(), tabular.toString(), pipe.toString(), barra.toString());
 	}
 
 	private static void iniciar(StringBuilder html) {
@@ -357,19 +358,28 @@ public class Util {
 		pipe.append(Constantes.QL);
 	}
 
-	private static void conteudo(StringBuilder html, StringBuilder tabular, StringBuilder pipe, TableModel model,
-			List<Integer> indices, List<ColunaSel> selecionadas) {
+	private static void conteudo(StringBuilder html, StringBuilder tabular, StringBuilder pipe, StringBuilder barra,
+			TableModel model, List<Integer> indices, List<ColunaSel> selecionadas) {
 		for (Integer i : indices) {
 			html.append("<tr>").append(Constantes.QL);
 			pipe.append("|");
+			StringBuilder sbBarra = new StringBuilder();
 			for (ColunaSel sel : selecionadas) {
 				Object obj = model.getValueAt(i, sel.indiceModel);
 				String val = obj == null ? Constantes.VAZIO : obj.toString();
 				tabular.append(val + Constantes.TAB);
 				pipe.append(val + "|");
+				if (sbBarra.length() > 0) {
+					sbBarra.append("/");
+				}
+				sbBarra.append(val);
 				html.append("<td>" + val + "</td>");
 				html.append(Constantes.QL);
 			}
+			if (barra.length() > 0) {
+				barra.append(Constantes.QL);
+			}
+			barra.append(sbBarra.toString());
 			html.append("</tr>").append(Constantes.QL);
 			tabular.deleteCharAt(tabular.length() - 1);
 			tabular.append(Constantes.QL);
