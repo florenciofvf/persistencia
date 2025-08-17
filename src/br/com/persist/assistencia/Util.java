@@ -287,7 +287,7 @@ public class Util {
 		StringBuilder pipe = new StringBuilder();
 		iniciar(html);
 		if (confirmar(table, "msg.com_cabecalho")) {
-			cabecalho(html, tabular, pipe, columnModel, selecionadas);
+			cabecalho(html, tabular, pipe, barra, columnModel, selecionadas);
 		}
 		conteudo(html, tabular, pipe, barra, model, indices, selecionadas);
 		finalizar(html, tabular);
@@ -341,7 +341,7 @@ public class Util {
 		return object == null ? Constantes.VAZIO : object.toString();
 	}
 
-	private static void cabecalho(StringBuilder html, StringBuilder tabular, StringBuilder pipe,
+	private static void cabecalho(StringBuilder html, StringBuilder tabular, StringBuilder pipe, StringBuilder barra,
 			TableColumnModel columnModel, List<ColunaSel> selecionadas) {
 		html.append("<tr>").append(Constantes.QL);
 		pipe.append("|");
@@ -351,6 +351,10 @@ public class Util {
 			html.append("<th>" + coluna + "</th>").append(Constantes.QL);
 			tabular.append(coluna + Constantes.TAB);
 			pipe.append("_." + coluna + "|");
+			if (barra.length() > 0) {
+				barra.append("/");
+			}
+			barra.append(coluna);
 		}
 		html.append("</tr>").append(Constantes.QL);
 		tabular.deleteCharAt(tabular.length() - 1);
