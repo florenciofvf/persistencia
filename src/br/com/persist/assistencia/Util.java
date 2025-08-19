@@ -394,6 +394,7 @@ public class Util {
 	private static void finalizar(StringBuilder html, StringBuilder tabular) {
 		html.append("</table>").append(Constantes.QL);
 		html.append("</body>").append(Constantes.QL);
+		html.append("<style>table, th, td {border: 1px solid black;}</style>");
 		html.append("</html>");
 		tabular.deleteCharAt(tabular.length() - 1);
 	}
