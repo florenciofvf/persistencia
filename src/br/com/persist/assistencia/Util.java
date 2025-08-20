@@ -1140,12 +1140,13 @@ public class Util {
 			return "NAO EH ARQUIVO: " + file.getAbsolutePath();
 		}
 		File destino = gerarFileDestino(file);
-		Object resp = getValorInputDialog(parent, "label.nome_arquivo", "label.edite_nome_arquivo", destino.getName());
+		Object resp = getValorInputDialog(parent, "label.nome_arquivo", Mensagens.getString("label.edite_nome_arquivo"),
+				destino.getName());
 		if (resp == null || Util.isEmpty(resp.toString())) {
 			return "NOME NAO DEFINIDO (processo abortado)";
 		}
 		if (!resp.toString().trim().equals(destino.getName())) {
-			destino = new File(resp.toString().trim());
+			destino = new File(destino.getParentFile(), resp.toString().trim());
 		}
 		try (FileInputStream fis = new FileInputStream(file)) {
 			try (FileOutputStream fos = new FileOutputStream(destino)) {
