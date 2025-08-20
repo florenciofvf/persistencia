@@ -250,7 +250,7 @@ class NavegacaoSplit extends SplitPane {
 
 		private void clonar(Arquivo arquivo) {
 			try {
-				String resp = Util.clonar(arquivo.getFile());
+				String resp = Util.clonar(NavegacaoSplit.this, arquivo.getFile());
 				Util.mensagem(NavegacaoSplit.this, resp);
 			} catch (IOException e) {
 				Util.mensagem(NavegacaoSplit.this, e.getMessage());

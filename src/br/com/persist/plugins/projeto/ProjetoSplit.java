@@ -218,7 +218,7 @@ class ProjetoSplit extends SplitPane {
 
 		private void clonar(Arquivo arquivo) {
 			try {
-				String resp = Util.clonar(arquivo.getFile());
+				String resp = Util.clonar(ProjetoSplit.this, arquivo.getFile());
 				Util.mensagem(ProjetoSplit.this, resp);
 			} catch (IOException e) {
 				Util.mensagem(ProjetoSplit.this, e.getMessage());

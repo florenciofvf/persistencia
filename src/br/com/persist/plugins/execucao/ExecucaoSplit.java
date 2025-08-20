@@ -179,7 +179,7 @@ class ExecucaoSplit extends SplitPane {
 
 		private void clonar(Arquivo arquivo) {
 			try {
-				String resp = Util.clonar(arquivo.getFile());
+				String resp = Util.clonar(ExecucaoSplit.this, arquivo.getFile());
 				Util.mensagem(ExecucaoSplit.this, resp);
 			} catch (IOException e) {
 				Util.mensagem(ExecucaoSplit.this, e.getMessage());

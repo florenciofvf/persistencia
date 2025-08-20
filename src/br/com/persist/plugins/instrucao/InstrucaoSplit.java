@@ -213,7 +213,7 @@ class InstrucaoSplit extends SplitPane {
 
 		private void clonar(Arquivo arquivo) {
 			try {
-				String resp = Util.clonar(arquivo.getFile());
+				String resp = Util.clonar(InstrucaoSplit.this, arquivo.getFile());
 				Util.mensagem(InstrucaoSplit.this, resp);
 			} catch (IOException e) {
 				Util.mensagem(InstrucaoSplit.this, e.getMessage());

@@ -277,7 +277,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 	private void clonar(Anexo anexo) {
 		try {
-			String resp = Util.clonar(anexo.getFile());
+			String resp = Util.clonar(AnexoContainer.this, anexo.getFile());
 			Util.mensagem(AnexoContainer.this, resp);
 		} catch (IOException e) {
 			Util.mensagem(AnexoContainer.this, e.getMessage());

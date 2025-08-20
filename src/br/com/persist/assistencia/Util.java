@@ -1132,15 +1132,22 @@ public class Util {
 		return s != null && s.startsWith("Mac OS");
 	}
 
-	public static String clonar(File file) throws IOException {
+	public static String clonar(Component parent, File file) throws IOException {
 		if (file == null) {
 			return "ARQUIVO NULL";
 		}
 		if (!file.isFile()) {
 			return "NAO EH ARQUIVO: " + file.getAbsolutePath();
 		}
+		File destino = gerarFileDestino(file);
+		Object resp = getValorInputDialog(parent, "label.nome_arquivo", "label.edite_nome_arquivo", destino.getName());
+		if (resp == null || Util.isEmpty(resp.toString())) {
+			return "NOME NAO DEFINIDO (processo abortado)";
+		}
+		if (!resp.toString().trim().equals(destino.getName())) {
+			destino = new File(resp.toString().trim());
+		}
 		try (FileInputStream fis = new FileInputStream(file)) {
-			File destino = gerarFileDestino(file);
 			try (FileOutputStream fos = new FileOutputStream(destino)) {
 				FileChannel fci = fis.getChannel();
 				FileChannel fco = fos.getChannel();

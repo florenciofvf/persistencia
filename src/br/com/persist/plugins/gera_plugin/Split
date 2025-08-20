@@ -188,7 +188,7 @@ class ###nameCap###Split extends SplitPane {
 
 		private void clonar(Arquivo arquivo) {
 			try {
-				String resp = Util.clonar(arquivo.getFile());
+				String resp = Util.clonar(###nameCap###Split.this, arquivo.getFile());
 				Util.mensagem(###nameCap###Split.this, resp);
 			} catch (IOException e) {
 				Util.mensagem(###nameCap###Split.this, e.getMessage());

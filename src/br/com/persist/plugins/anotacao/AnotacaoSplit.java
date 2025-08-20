@@ -188,7 +188,7 @@ class AnotacaoSplit extends SplitPane {
 
 		private void clonar(Arquivo arquivo) {
 			try {
-				String resp = Util.clonar(arquivo.getFile());
+				String resp = Util.clonar(AnotacaoSplit.this, arquivo.getFile());
 				Util.mensagem(AnotacaoSplit.this, resp);
 			} catch (IOException e) {
 				Util.mensagem(AnotacaoSplit.this, e.getMessage());
