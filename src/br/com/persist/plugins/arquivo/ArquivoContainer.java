@@ -29,6 +29,7 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -296,7 +297,9 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		try {
 			AtomicReference<File> ref = new AtomicReference<>();
 			String resp = Util.clonar(ArquivoContainer.this, arquivo.getFile(), ref);
-			Util.mensagem(ArquivoContainer.this, resp);
+			if (Preferencias.isExibirTotalBytesClonados()) {
+				Util.mensagem(ArquivoContainer.this, resp);
+			}
 			adicionar(arquivoTree, arquivo.getPai(), ref.get());
 		} catch (IOException e) {
 			Util.mensagem(ArquivoContainer.this, e.getMessage());

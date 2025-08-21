@@ -36,6 +36,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
@@ -281,7 +282,9 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		try {
 			AtomicReference<File> ref = new AtomicReference<>();
 			String resp = Util.clonar(AnexoContainer.this, anexo.getFile(), ref);
-			Util.mensagem(AnexoContainer.this, resp);
+			if (Preferencias.isExibirTotalBytesClonados()) {
+				Util.mensagem(AnexoContainer.this, resp);
+			}
 			adicionar(anexoTree, anexo.getPai(), ref.get());
 		} catch (IOException e) {
 			Util.mensagem(AnexoContainer.this, e.getMessage());

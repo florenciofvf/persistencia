@@ -56,6 +56,7 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -216,7 +217,9 @@ class InstrucaoSplit extends SplitPane {
 			try {
 				AtomicReference<File> ref = new AtomicReference<>();
 				String resp = Util.clonar(InstrucaoSplit.this, arquivo.getFile(), ref);
-				Util.mensagem(InstrucaoSplit.this, resp);
+				if (Preferencias.isExibirTotalBytesClonados()) {
+					Util.mensagem(InstrucaoSplit.this, resp);
+				}
 				adicionar(arquivoTree, arquivo.getPai(), ref.get());
 			} catch (IOException e) {
 				Util.mensagem(InstrucaoSplit.this, e.getMessage());

@@ -32,6 +32,7 @@ public class Preferencias {
 	private static final String ARQ_PREF = "preferencias";
 	private static final Logger LOG = Logger.getGlobal();
 	private static final String LA_500_300 = "500,300";
+	private static boolean exibirTotalBytesClonados;
 	private static boolean exibiuMensagemConnection;
 	private static boolean desenharEspacoRetornoTab;
 	private static boolean fecharComESCFormulario;
@@ -388,6 +389,14 @@ public class Preferencias {
 	public static void setDesenharEspacoRetornoTab(boolean desenharEspacoRetornoTab) {
 		Preferencias.desenharEspacoRetornoTab = desenharEspacoRetornoTab;
 		TextEditor.setPaintERT(desenharEspacoRetornoTab);
+	}
+
+	public static boolean isExibirTotalBytesClonados() {
+		return exibirTotalBytesClonados;
+	}
+
+	public static void setExibirTotalBytesClonados(boolean exibirTotalBytesClonados) {
+		Preferencias.exibirTotalBytesClonados = exibirTotalBytesClonados;
 	}
 
 	public static void setFontPreferencia(Font font) {
