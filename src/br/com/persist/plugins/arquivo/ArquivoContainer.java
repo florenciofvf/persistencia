@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
 
@@ -287,16 +288,30 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	public void clonarArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			clonar(arquivo);
+			clonar(arquivoTree, arquivo);
 		}
 	}
 
-	private void clonar(Arquivo arquivo) {
+	private void clonar(ArquivoTree arquivoTree, Arquivo arquivo) {
 		try {
-			String resp = Util.clonar(ArquivoContainer.this, arquivo.getFile());
+			AtomicReference<File> ref = new AtomicReference<>();
+			String resp = Util.clonar(ArquivoContainer.this, arquivo.getFile(), ref);
 			Util.mensagem(ArquivoContainer.this, resp);
+			adicionar(arquivoTree, arquivo.getPai(), ref.get());
 		} catch (IOException e) {
 			Util.mensagem(ArquivoContainer.this, e.getMessage());
+		}
+	}
+
+	private void adicionar(ArquivoTree arquivoTree, Arquivo arquivo, File file) {
+		if (file != null && arquivo != null) {
+			Arquivo novo = arquivo.adicionar(file);
+			if (novo != null) {
+				ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
+				requestFocus();
+				ArquivoTreeUtil.selecionarObjeto(arquivoTree, novo);
+				arquivoTree.repaint();
+			}
 		}
 	}
 

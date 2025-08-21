@@ -38,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -1132,7 +1133,7 @@ public class Util {
 		return s != null && s.startsWith("Mac OS");
 	}
 
-	public static String clonar(Component parent, File file) throws IOException {
+	public static String clonar(Component parent, File file, AtomicReference<File> ref) throws IOException {
 		if (file == null) {
 			return "ARQUIVO NULL";
 		}
@@ -1152,7 +1153,12 @@ public class Util {
 			try (FileOutputStream fos = new FileOutputStream(destino)) {
 				FileChannel fci = fis.getChannel();
 				FileChannel fco = fos.getChannel();
-				return destino.getAbsolutePath() + "\nTOTAL COPIADO(s): " + fci.transferTo(0, file.length(), fco);
+				String string = destino.getAbsolutePath() + "\nTOTAL COPIADO(s): "
+						+ fci.transferTo(0, file.length(), fco);
+				if (ref != null) {
+					ref.set(destino);
+				}
+				return string;
 			}
 		}
 	}

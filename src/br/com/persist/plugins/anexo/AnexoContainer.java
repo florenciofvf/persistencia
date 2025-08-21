@@ -14,6 +14,7 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.Set;
 
 import javax.swing.Icon;
@@ -271,16 +273,30 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	public void clonarAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {
-			clonar(anexo);
+			clonar(anexoTree, anexo);
 		}
 	}
 
-	private void clonar(Anexo anexo) {
+	private void clonar(AnexoTree anexoTree, Anexo anexo) {
 		try {
-			String resp = Util.clonar(AnexoContainer.this, anexo.getFile());
+			AtomicReference<File> ref = new AtomicReference<>();
+			String resp = Util.clonar(AnexoContainer.this, anexo.getFile(), ref);
 			Util.mensagem(AnexoContainer.this, resp);
+			adicionar(anexoTree, anexo.getPai(), ref.get());
 		} catch (IOException e) {
 			Util.mensagem(AnexoContainer.this, e.getMessage());
+		}
+	}
+
+	private void adicionar(AnexoTree anexoTree, Anexo anexo, File file) {
+		if (anexo != null && file != null) {
+			Anexo novo = anexo.adicionar(file);
+			if (novo != null) {
+				AnexoTreeUtil.atualizarEstrutura(anexoTree, anexo);
+				requestFocus();
+				AnexoTreeUtil.selecionarObjeto(anexoTree, novo);
+				anexoTree.repaint();
+			}
 		}
 	}
 

@@ -158,14 +158,19 @@ public class Arquivo {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 				for (File f : files) {
 					if (!ArquivoUtil.contem(ArquivoConstantes.ARQUIVOS, f.getName())) {
-						Arquivo arq = new Arquivo(f);
-						filhos.add(arq);
-						arq.pai = this;
+						adicionar(f);
 					}
 				}
 			}
 		}
 		processado = true;
+	}
+
+	public Arquivo adicionar(File file) {
+		Arquivo arq = new Arquivo(file);
+		filhos.add(arq);
+		arq.pai = this;
+		return arq;
 	}
 
 	public boolean pathValido() {

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -182,14 +183,16 @@ class AnotacaoSplit extends SplitPane {
 		public void clonarArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null) {
-				clonar(arquivo);
+				clonar(arquivoTree, arquivo);
 			}
 		}
 
-		private void clonar(Arquivo arquivo) {
+		private void clonar(ArquivoTree arquivoTree, Arquivo arquivo) {
 			try {
-				String resp = Util.clonar(AnotacaoSplit.this, arquivo.getFile());
+				AtomicReference<File> ref = new AtomicReference<>();
+				String resp = Util.clonar(AnotacaoSplit.this, arquivo.getFile(), ref);
 				Util.mensagem(AnotacaoSplit.this, resp);
+				adicionar(arquivoTree, arquivo.getPai(), ref.get());
 			} catch (IOException e) {
 				Util.mensagem(AnotacaoSplit.this, e.getMessage());
 			}
@@ -243,7 +246,7 @@ class AnotacaoSplit extends SplitPane {
 		}
 
 		private void adicionar(ArquivoTree arquivoTree, Arquivo arquivo, File file) {
-			if (file != null) {
+			if (file != null && arquivo != null) {
 				Arquivo novo = arquivo.adicionar(file);
 				if (novo != null) {
 					arquivo.ordenar();

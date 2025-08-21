@@ -145,14 +145,19 @@ public class Anexo {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 				for (File f : files) {
 					if (!ArquivoUtil.contem(AnexoConstantes.ANEXOS, f.getName())) {
-						Anexo arq = new Anexo(f);
-						filhos.add(arq);
-						arq.pai = this;
+						adicionar(f);
 					}
 				}
 			}
 		}
 		processado = true;
+	}
+
+	public Anexo adicionar(File file) {
+		Anexo arq = new Anexo(file);
+		filhos.add(arq);
+		arq.pai = this;
+		return arq;
 	}
 
 	public boolean pathValido() {
