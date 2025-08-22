@@ -904,18 +904,25 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuAbrirArquivo extends Menu {
+			private Action diretorioAcao = acaoMenu("label.diretorio");
 			private Action abrirAcao = acaoMenu("label.abrir");
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrirArquivo() {
 				super(TabelaMensagens.getString("label.abrir_arquivos"), false, null);
+				addMenuItem(diretorioAcao);
 				addMenuItem(abrirAcao);
-				abrirAcao.setActionListener(e -> abrir());
+				diretorioAcao.setActionListener(e -> abrir(true));
+				abrirAcao.setActionListener(e -> abrir(false));
 			}
 
-			private void abrir() {
+			private void abrir(boolean diretorio) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
-				Util.abrir(TabelaPersistencia.this, lista);
+				if (diretorio) {
+					Util.diretorio(TabelaPersistencia.this, lista);
+				} else {
+					Util.abrir(TabelaPersistencia.this, lista);
+				}
 			}
 		}
 

@@ -1544,6 +1544,21 @@ public class Util {
 		}
 	}
 
+	public static void diretorio(Component c, List<String> lista) {
+		for (String string : lista) {
+			if (!isEmpty(string)) {
+				try {
+					File file = new File(string);
+					if (file.exists()) {
+						ArquivoUtil.diretorio(file);
+					}
+				} catch (IOException ex) {
+					Util.mensagem(c, ex.getMessage());
+				}
+			}
+		}
+	}
+
 	public static void beep() {
 		SwingUtilities.invokeLater(() -> Toolkit.getDefaultToolkit().beep());
 	}
