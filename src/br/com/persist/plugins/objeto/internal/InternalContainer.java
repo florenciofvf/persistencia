@@ -3158,8 +3158,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void processar(int tipo) {
 					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-					TransferidorTabular transferidor = Util.criarTransferidorTabular(tabelaPersistencia,
-							getNomeColunas(), indices);
+					List<String> listaNomeColunasDestacadas = tabelaPersistencia.getListaNomeColunasDestacadas();
+					TransferidorTabular transferidor = null;
+					if (listaNomeColunasDestacadas.isEmpty()) {
+						transferidor = Util.criarTransferidorTabular(tabelaPersistencia, getNomeColunas(), indices);
+					} else if (Util.confirmar(InternalContainer.this,
+							ObjetoMensagens.getString("msg.copiar_somente_destacados"), false)) {
+						transferidor = Util.criarTransferidorTabular(tabelaPersistencia, listaNomeColunasDestacadas,
+								indices);
+					} else {
+						transferidor = Util.criarTransferidorTabular(tabelaPersistencia, getNomeColunas(), indices);
+					}
 					if (transferidor != null) {
 						if (tipo == 0) {
 							Util.setTransfered(transferidor);
