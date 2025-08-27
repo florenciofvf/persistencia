@@ -83,15 +83,16 @@ public class RelacaoContainer extends Panel {
 			throws AssistenciaException {
 		this.objetoSuperficie = Objects.requireNonNull(objetoSuperficie);
 		this.relacao = Objects.requireNonNull(relacao);
+		fichario = new Fichario();
 		MacroProvedor.limpar();
 		toolbar.ini(janela);
 		montarLayout();
 	}
 
-	private void montarLayout() throws AssistenciaException {
-		fichario = new Fichario();
-		add(BorderLayout.CENTER, fichario);
+	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, fichario);
+		add(BorderLayout.SOUTH, ObjetoContainer.panelLegenda());
 	}
 
 	private class Toolbar extends BarraButton {

@@ -112,8 +112,19 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, fichario);
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, fichario);
+		add(BorderLayout.SOUTH, panelLegenda());
+	}
+
+	public static PanelBloco panelLegenda() {
+		Label lblLegendaVinculo = new Label(ObjetoMensagens.getString("legenda.vinculo"), false);
+		Label lblLegendaMacro = new Label(ObjetoMensagens.getString("legenda.macro"), false);
+		lblLegendaVinculo.setForeground(Marcador.getColorVinculo());
+		lblLegendaMacro.setForeground(Marcador.getColorMacro());
+		lblLegendaVinculo.setOpaque(true);
+		lblLegendaMacro.setOpaque(true);
+		return new PanelBloco(new PanelCenter(lblLegendaMacro), new PanelCenter(lblLegendaVinculo));
 	}
 
 	private class Toolbar extends BarraButton {

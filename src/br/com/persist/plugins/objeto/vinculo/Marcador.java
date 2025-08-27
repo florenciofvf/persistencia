@@ -30,11 +30,19 @@ public class Marcador {
 	}
 
 	public static Border criarBorda() {
-		return BorderFactory.createLineBorder(Color.MAGENTA, 3);
+		return BorderFactory.createLineBorder(getColorVinculo(), 3);
+	}
+
+	public static Color getColorVinculo() {
+		return Color.MAGENTA;
 	}
 
 	public static Border criarBordaMacro() {
-		return BorderFactory.createLineBorder(Color.PINK, 3);
+		return BorderFactory.createLineBorder(getColorMacro(), 3);
+	}
+
+	public static Color getColorMacro() {
+		return Color.PINK;
 	}
 
 	public static void aplicarBordaMacro(JComponent comp) {
