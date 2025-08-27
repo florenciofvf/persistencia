@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
@@ -44,6 +45,7 @@ import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -124,7 +126,9 @@ public class ObjetoContainer extends Panel {
 		lblLegendaMacro.setForeground(Marcador.getColorMacro());
 		lblLegendaVinculo.setOpaque(true);
 		lblLegendaMacro.setOpaque(true);
-		return new PanelBloco(new PanelCenter(lblLegendaMacro), new PanelCenter(lblLegendaVinculo));
+		PanelBloco panel = new PanelBloco(new PanelCenter(lblLegendaMacro), new PanelCenter(lblLegendaVinculo));
+		panel.setBorder(BorderFactory.createTitledBorder(Mensagens.getString("label.legenda")));
+		return panel;
 	}
 
 	private class Toolbar extends BarraButton {
