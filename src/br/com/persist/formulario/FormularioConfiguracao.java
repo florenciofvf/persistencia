@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
@@ -121,9 +122,11 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
 				chkFicharioScroll));
 		if (Preferencias.isMonitorPreferencial()) {
+			Point location = formulario.getLocation();
 			String pref = Preferencias.getString(Constantes.GC_PREFERENCIAL);
 			String form = Preferencias.getString(Constantes.GC_O_FORMULARIO);
-			muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.monitor_preferencial"),
+			muro.camada(Muro.panelGridBorderTop(
+					criarLabelTituloRotulo("label.monitor_preferencial", location.x, location.y),
 					new PainelMonitorPreferencial(pref, form)));
 		}
 		muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.pref_fonte_editores"),
@@ -262,6 +265,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		int porcentagem = Util.getInt(txtDefinirAltura.getText(), Preferencias.getPorcVerticalLocalForm());
 		formulario.definirAlturaEmPorcentagem(porcentagem);
 		Preferencias.setPorcVerticalLocalForm(porcentagem);
+	}
+
+	private Label criarLabelTituloRotulo(String rotulo, int x, int y) {
+		return criarLabelTitulo(FormularioMensagens.getString(rotulo, x, y), false);
 	}
 
 	private Label criarLabelTituloRotulo(String rotulo) {
