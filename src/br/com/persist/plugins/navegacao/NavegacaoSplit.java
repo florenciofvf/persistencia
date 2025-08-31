@@ -803,7 +803,12 @@ class Aba extends Transferivel {
 		}
 	}
 
+	private void executar() {
+		toolbar.executar();
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action executarAnterioresAcao = acaoIcon("label.executar_anteriores", Icones.EXECUTAR);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private final TextField txtPesquisa = new TextField(35);
@@ -813,11 +818,13 @@ class Aba extends Transferivel {
 		public void ini() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
+			executarAnterioresAcao.setActionListener(e -> executarAnteriores());
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
 			addButton(compiladoAcao);
+			addButton(executarAnterioresAcao);
 			addButton(executarAcao);
 			add(txtPesquisa);
 			add(label);
@@ -842,6 +849,34 @@ class Aba extends Transferivel {
 			} catch (Exception e) {
 				Util.mensagem(Aba.this, e.getMessage());
 			}
+		}
+
+		private void executarAnteriores() {
+			Fichario fichario = getFichario();
+			if (fichario == null) {
+				return;
+			}
+			List<Aba> abas = new ArrayList<>();
+			for (int i = 0; i < fichario.getTabCount(); i++) {
+				Component c = fichario.getComponent(i);
+				if (c instanceof Aba) {
+					abas.add((Aba) c);
+				}
+			}
+			for (Aba item : abas) {
+				item.executar();
+			}
+		}
+
+		private Fichario getFichario() {
+			Component c = this;
+			while (c != null) {
+				if (c instanceof Fichario) {
+					return (Fichario) c;
+				}
+				c = c.getParent();
+			}
+			return null;
 		}
 
 		private void executar() {
