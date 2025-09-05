@@ -117,6 +117,7 @@ import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
 import br.com.persist.plugins.instrucao.processador.Processador;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.requisicao.RequisicaoMensagens;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHeader;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -809,6 +810,7 @@ class Aba extends Transferivel {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAnterioresAcao = acaoIcon("label.executar_anteriores", Icones.EXECUTAR);
+		private Action vAccessTokenAcao = acaoMenu("label.atualizar_access_token_var");
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private final TextField txtPesquisa = new TextField(35);
@@ -820,9 +822,12 @@ class Aba extends Transferivel {
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			executarAnterioresAcao.setActionListener(e -> executarAnteriores());
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			vAccessTokenAcao.setActionListener(e -> atualizarVar());
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
+			buttonColar.addSeparator();
+			buttonColar.addItem(vAccessTokenAcao);
 			addButton(compiladoAcao);
 			addButton(executarAnterioresAcao);
 			addButton(executarAcao);
@@ -835,8 +840,23 @@ class Aba extends Transferivel {
 			add(label);
 		}
 
+		Action acaoMenu(String chave) {
+			return Action.acaoMenu(NavegacaoMensagens.getString(chave), null);
+		}
+
 		Action acaoIcon(String chave, Icon icon) {
 			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
+		}
+
+		private void atualizarVar() {
+			String string = Util.getContentTransfered();
+			if (!Util.isEmpty(string)) {
+				try {
+					RequisicaoVisualizadorHeader.setAccesToken(string);
+				} catch (ArgumentoException ex) {
+					Util.mensagem(Aba.this, ex.getMessage());
+				}
+			}
 		}
 
 		private void verCompilado() {
