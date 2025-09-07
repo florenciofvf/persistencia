@@ -24,6 +24,16 @@ public class IBiblio {
 		return "";
 	}
 
+	@Biblio(3)
+	public static String nameAPartir(String string, Object biblio) {
+		String nome = simpleName(biblio);
+		int pos = nome.indexOf(string);
+		if (pos != -1) {
+			return nome.substring(pos + string.length());
+		}
+		return "";
+	}
+
 	private static String getNome(String string) {
 		int pos = string.lastIndexOf(".");
 		return pos != -1 ? string.substring(0, pos) : string;
