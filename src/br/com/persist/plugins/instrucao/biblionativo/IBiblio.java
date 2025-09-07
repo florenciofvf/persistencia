@@ -25,11 +25,15 @@ public class IBiblio {
 	}
 
 	@Biblio(3)
-	public static String nameAPartir(String string, Object biblio) {
+	public static String nameAPartir(Object apartir, Object biblio) {
+		if (apartir == null) {
+			return "";
+		}
 		String nome = simpleName(biblio);
-		int pos = nome.indexOf(string);
+		String strAPartir = apartir.toString();
+		int pos = nome.indexOf(strAPartir);
 		if (pos != -1) {
-			return nome.substring(pos + string.length());
+			return nome.substring(pos + strAPartir.length());
 		}
 		return "";
 	}
