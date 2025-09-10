@@ -3,6 +3,7 @@ package br.com.persist.main;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +46,12 @@ public class Main {
 
 	private static void abrirForm() {
 		Formulario form = criarFormulario(getGC());
+		String string = System.getProperty("form_location_deltaX");
+		if (string != null && !string.trim().isEmpty()) {
+			Point location = form.getLocation();
+			location.x += Integer.parseInt(string.trim());
+			form.setLocation(location);
+		}
 		form.setVisible(true);
 	}
 
