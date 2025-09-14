@@ -6,14 +6,56 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.GeneralSecurityException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import br.com.persist.assistencia.Util;
 
 public class HttpUtil {
+	protected static final Logger LOG = Logger.getGlobal();
 	private static CookieManager cookieManager;
 
 	private HttpUtil() {
+	}
+
+	public static void setCertificados(boolean b) {
+		if (b) {
+			HttpsURLConnection.setDefaultSSLSocketFactory(HttpsURLConnection.getDefaultSSLSocketFactory());
+			return;
+		}
+		TrustManager[] array = new TrustManager[] { new X509TrustManager() {
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				return new X509Certificate[0];
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				LOG.log(Level.FINEST, "checkServerTrusted");
+			}
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+				LOG.log(Level.FINEST, "checkClientTrusted");
+			}
+		} };
+		try {
+			SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+			sslContext.init(null, array, new SecureRandom());
+			HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+		} catch (GeneralSecurityException ex) {
+			LOG.log(Level.SEVERE, ex.getMessage(), ex);
+		}
 	}
 
 	public static HttpResult get(Map<String, Object> param) {

@@ -79,6 +79,7 @@ import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -111,6 +112,7 @@ import br.com.persist.plugins.instrucao.InstrucaoMensagens;
 import br.com.persist.plugins.instrucao.InstrucaoMetadados;
 import br.com.persist.plugins.instrucao.MetaDialogoListener;
 import br.com.persist.plugins.instrucao.biblionativo.HttpResult;
+import br.com.persist.plugins.instrucao.biblionativo.HttpUtil;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
@@ -813,12 +815,15 @@ class Aba extends Transferivel {
 		private Action vAccessTokenAcao = acaoMenu("label.atualizar_access_token_var");
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
+		private final CheckBox chkCertificados = new CheckBox();
 		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
+			chkCertificados.addActionListener(e -> HttpUtil.setCertificados(!chkCertificados.isSelected()));
+			chkCertificados.setToolTipText(Mensagens.getString("label.sem_certificados"));
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			executarAnterioresAcao.setActionListener(e -> executarAnteriores());
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
@@ -829,6 +834,7 @@ class Aba extends Transferivel {
 			buttonColar.addSeparator();
 			buttonColar.addItem(vAccessTokenAcao);
 			addButton(compiladoAcao);
+			add(chkCertificados);
 			addButton(executarAnterioresAcao);
 			addButton(executarAcao);
 			add(txtPesquisa);
