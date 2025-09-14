@@ -16,12 +16,14 @@ import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import br.com.persist.assistencia.Util;
 
 public class HttpUtil {
+	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
 	private static CookieManager cookieManager;
 
@@ -30,7 +32,7 @@ public class HttpUtil {
 
 	public static void setCertificados(boolean b) {
 		if (b) {
-			HttpsURLConnection.setDefaultSSLSocketFactory(HttpsURLConnection.getDefaultSSLSocketFactory());
+			HttpsURLConnection.setDefaultSSLSocketFactory(defaultSSLSocketFactory);
 			return;
 		}
 		TrustManager[] array = new TrustManager[] { new X509TrustManager() {
@@ -126,6 +128,7 @@ public class HttpUtil {
 	}
 
 	static {
+		defaultSSLSocketFactory = HttpsURLConnection.getDefaultSSLSocketFactory();
 		cookieManager = new CookieManager();
 		CookieHandler.setDefault(cookieManager);
 	}
