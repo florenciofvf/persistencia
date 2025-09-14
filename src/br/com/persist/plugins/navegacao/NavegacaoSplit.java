@@ -755,12 +755,26 @@ class Aba extends Transferivel {
 			@Override
 			public void processarLink(String base, String complemento) {
 				try {
+					String aux = auxiliar(base, complemento);
 					Processador processador = new Processador();
-					List<Object> resposta = processador.processar("navegacao.processarLink", "main", base, complemento);
+					List<Object> resposta = processador.processar("navegacao.processarLink", "main", base + aux,
+							complemento);
 					setResposta(resposta, false);
 				} catch (InstrucaoException ex) {
 					setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), false);
 				}
+			}
+
+			private String auxiliar(String base, String complemento) {
+				if (base == null || complemento == null) {
+					return "";
+				}
+				base = base.trim();
+				complemento = complemento.trim();
+				if (base.endsWith("/") || complemento.startsWith("/")) {
+					return "";
+				}
+				return "/";
 			}
 		}
 	}
