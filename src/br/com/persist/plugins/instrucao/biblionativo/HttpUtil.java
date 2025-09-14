@@ -34,10 +34,10 @@ public class HttpUtil {
 
 	@SuppressWarnings("unchecked")
 	private static void configHeader(Map<String, Object> param, URLConnection conn) {
-		Map<String, String> header = (Map<String, String>) param.get("headerRequest");
+		Map<String, Object> header = (Map<String, Object>) param.get("headerRequest");
 		if (header != null) {
-			for (Map.Entry<String, String> entry : header.entrySet()) {
-				conn.setRequestProperty(entry.getKey(), entry.getValue());
+			for (Map.Entry<String, Object> entry : header.entrySet()) {
+				conn.setRequestProperty(entry.getKey(), entry.getValue().toString());
 			}
 		}
 	}
