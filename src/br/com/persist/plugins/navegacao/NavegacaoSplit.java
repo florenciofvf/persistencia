@@ -433,6 +433,7 @@ class Aba extends Transferivel {
 	private final Editor editor = new Editor();
 	final transient Arquivo arquivo;
 	private ScrollPane scrollPane;
+	private JSplitPane split;
 
 	Aba(Arquivo arquivo) {
 		this.arquivo = Objects.requireNonNull(arquivo);
@@ -475,26 +476,11 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
-		SwingUtilities.invokeLater(Aba.this::configDivisao);
+		split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-	}
-
-	private void configDivisao() {
-		JSplitPane split = null;
-		Component c = this;
-		while (c != null) {
-			if (c instanceof JSplitPane) {
-				split = (JSplitPane) c;
-				break;
-			}
-			c = c.getParent();
-		}
-		if (split != null) {
-			split.setResizeWeight(.5D);
-		}
 	}
 
 	private Panel criarPanel() {
@@ -585,17 +571,17 @@ class Aba extends Transferivel {
 		}
 
 		private void checkSplitPane() {
-			JSplitPane split = null;
+			JSplitPane splitp = null;
 			Component c = this;
 			while (c != null) {
 				if (c instanceof JSplitPane) {
-					split = (JSplitPane) c;
+					splitp = (JSplitPane) c;
 					break;
 				}
 				c = c.getParent();
 			}
-			if (split != null && split.getLastDividerLocation() == -1) {
-				split.setDividerLocation(0.9);
+			if (splitp != null && splitp.getLastDividerLocation() == -1) {
+				splitp.setDividerLocation(0.9);
 			}
 		}
 
@@ -807,7 +793,7 @@ class Aba extends Transferivel {
 					SwingUtilities.invokeLater(toolbar::atualizar);
 				}
 				toolbar.executarAcao.setEnabled(!texto.startsWith("/*montar_arquivo*/"));
-				SwingUtilities.invokeLater(Aba.this::configDivisao);
+				SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
