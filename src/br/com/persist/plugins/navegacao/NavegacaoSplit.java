@@ -476,10 +476,25 @@ class Aba extends Transferivel {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
-		SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
+		SwingUtilities.invokeLater(Aba.this::configDivisao);
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
+	}
+
+	private void configDivisao() {
+		JSplitPane split = null;
+		Component c = this;
+		while (c != null) {
+			if (c instanceof JSplitPane) {
+				split = (JSplitPane) c;
+				break;
+			}
+			c = c.getParent();
+		}
+		if (split != null) {
+			split.setResizeWeight(.5D);
+		}
 	}
 
 	private Panel criarPanel() {
@@ -792,6 +807,7 @@ class Aba extends Transferivel {
 					SwingUtilities.invokeLater(toolbar::atualizar);
 				}
 				toolbar.executarAcao.setEnabled(!texto.startsWith("/*montar_arquivo*/"));
+				SwingUtilities.invokeLater(Aba.this::configDivisao);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}

@@ -44,10 +44,10 @@ public class IBiblio {
 			return "";
 		}
 		String nome = simpleName(biblio);
-		String strAPartir = apos.toString();
-		int pos = nome.indexOf(strAPartir);
+		String strApos = apos.toString();
+		int pos = nome.indexOf(strApos);
 		if (pos != -1) {
-			return nome.substring(pos + strAPartir.length());
+			return nome.substring(pos + strApos.length());
 		}
 		return "";
 	}
