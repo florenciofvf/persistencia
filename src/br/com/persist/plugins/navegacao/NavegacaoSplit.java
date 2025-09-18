@@ -433,7 +433,6 @@ class Aba extends Transferivel {
 	private final Editor editor = new Editor();
 	final transient Arquivo arquivo;
 	private ScrollPane scrollPane;
-	private JSplitPane split;
 
 	Aba(Arquivo arquivo) {
 		this.arquivo = Objects.requireNonNull(arquivo);
@@ -476,7 +475,7 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
@@ -570,21 +569,6 @@ class Aba extends Transferivel {
 			addTab(new PainelDados(string));
 		}
 
-		private void checkSplitPane() {
-			JSplitPane splitp = null;
-			Component c = this;
-			while (c != null) {
-				if (c instanceof JSplitPane) {
-					splitp = (JSplitPane) c;
-					break;
-				}
-				c = c.getParent();
-			}
-			if (splitp != null && splitp.getLastDividerLocation() == -1) {
-				splitp.setDividerLocation(0.9);
-			}
-		}
-
 		private void processar(HttpResult result, boolean limpar) {
 			if (limpar) {
 				fichario.removeAll();
@@ -613,7 +597,6 @@ class Aba extends Transferivel {
 			private void setText(String string) {
 				textEditor.setText(string);
 				SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
-				checkSplitPane();
 			}
 
 			@Override
@@ -669,7 +652,6 @@ class Aba extends Transferivel {
 			private void setText(String string) {
 				textEditor.setText(string);
 				SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
-				checkSplitPane();
 			}
 
 			@Override
@@ -793,7 +775,6 @@ class Aba extends Transferivel {
 					SwingUtilities.invokeLater(toolbar::atualizar);
 				}
 				toolbar.executarAcao.setEnabled(!texto.startsWith("/*montar_arquivo*/"));
-				SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
