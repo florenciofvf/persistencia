@@ -436,7 +436,7 @@ class Aba extends Transferivel {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(1.0));
+		SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
@@ -482,22 +482,6 @@ class Aba extends Transferivel {
 		private void setText(String string) {
 			textEditor.setText(string);
 			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
-			checkSplitPane();
-		}
-
-		private void checkSplitPane() {
-			JSplitPane split = null;
-			Component c = this;
-			while (c != null) {
-				if (c instanceof JSplitPane) {
-					split = (JSplitPane) c;
-					break;
-				}
-				c = c.getParent();
-			}
-			if (split != null && split.getLastDividerLocation() == -1) {
-				split.setDividerLocation(0.9);
-			}
 		}
 	}
 
