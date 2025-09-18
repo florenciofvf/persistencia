@@ -33,6 +33,20 @@ public class IBiblio {
 		String strAPartir = apartir.toString();
 		int pos = nome.indexOf(strAPartir);
 		if (pos != -1) {
+			return nome.substring(pos);
+		}
+		return "";
+	}
+
+	@Biblio(4)
+	public static String nameApos(Object apos, Object biblio) {
+		if (apos == null) {
+			return "";
+		}
+		String nome = simpleName(biblio);
+		String strAPartir = apos.toString();
+		int pos = nome.indexOf(strAPartir);
+		if (pos != -1) {
 			return nome.substring(pos + strAPartir.length());
 		}
 		return "";
