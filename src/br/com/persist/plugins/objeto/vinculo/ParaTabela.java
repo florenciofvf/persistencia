@@ -30,6 +30,7 @@ public class ParaTabela {
 	private static final String AJUSTAR_ALTURA = "ajustarAltura";
 	private static final String STR_COMPLEMENTO = "complemento";
 	private static final String STR_DESTACAVEIS = "destacaveis";
+	private static final String STR_LARCONTEUDO = "larConteudo";
 	private static final String STR_DESENHAR_ID = "desenharId";
 	private static final String STR_SEQUENCIAS = "sequencias";
 	private static final String STR_MAPEAMENTO = "mapeamento";
@@ -77,6 +78,7 @@ public class ParaTabela {
 	private String complemento;
 	private String classBiblio;
 	private String destacaveis;
+	private String larConteudo;
 	private String idTempForm;
 	private String desenharId;
 	private String colunaInfo;
@@ -320,6 +322,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(idTempForm)) {
 			objeto.setIdTempForm(idTempForm);
 		}
+		if (!Util.isEmpty(larConteudo)) {
+			objeto.setLarConteudo(larConteudo);
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -339,6 +344,7 @@ public class ParaTabela {
 		setAjustarAltura(attributes.getValue(AJUSTAR_ALTURA), null);
 		setComplemento(attributes.getValue(STR_COMPLEMENTO), null);
 		setDestacaveis(attributes.getValue(STR_DESTACAVEIS), null);
+		setLarConteudo(attributes.getValue(STR_LARCONTEUDO), null);
 		setDesenharId(attributes.getValue(STR_DESENHAR_ID), null);
 		setIcone(attributes.getValue(VinculoHandler.ICONE));
 		setGrupo(attributes.getValue(VinculoHandler.GRUPO), null);
@@ -400,6 +406,7 @@ public class ParaTabela {
 		atributoValor(util, AJUSTAR_ALTURA, ajustarAltura);
 		atributoValor(util, STR_COMPLEMENTO, complemento);
 		atributoValor(util, STR_DESTACAVEIS, destacaveis);
+		atributoValor(util, STR_LARCONTEUDO, larConteudo);
 		atributoValor(util, VinculoHandler.GRUPO, grupo);
 		atributoValor(util, STR_DESENHAR_ID, desenharId);
 		atributoValor(util, STR_MAPEAMENTO, mapeamento);
@@ -459,6 +466,7 @@ public class ParaTabela {
 		util.tab().atributo(AJUSTAR_ALTURA, true).ql();
 		util.tab().atributo(STR_COMPLEMENTO, "").ql();
 		util.tab().atributo(STR_DESTACAVEIS, "").ql();
+		util.tab().atributo(STR_LARCONTEUDO, "").ql();
 		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
 		util.tab().atributo(STR_MARGEM_INFERIOR, "").ql();
 		util.tab().atributo(STR_DESENHAR_ID, true).ql();
@@ -659,6 +667,18 @@ public class ParaTabela {
 			return;
 		}
 		this.destacaveis = destacaveis;
+	}
+
+	public String getLarConteudo() {
+		return larConteudo;
+	}
+
+	public void setLarConteudo(String larConteudo, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.larConteudo);
+			return;
+		}
+		this.larConteudo = larConteudo;
 	}
 
 	public String getCampoNomes() {
