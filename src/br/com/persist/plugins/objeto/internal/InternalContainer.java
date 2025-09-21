@@ -1079,21 +1079,24 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private class ButtonComplemento extends ButtonPopup {
 			private Action copiarNomeTabAcao = acaoMenu("label.copiar_nome_tabela");
+			private Action concatAndAcao = acaoMenu("label.baixar_concatenado_and");
+			private Action concatOrAcao = acaoMenu("label.baixar_concatenado_or");
 			private Action copiarAcao = acaoMenu("label.copiar_complemento");
-			private Action concatAcao = acaoMenu("label.baixar_concatenado");
 			private Action normalAcao = acaoMenu("label.baixar_normal");
 			private static final long serialVersionUID = 1L;
 
 			private ButtonComplemento() {
 				super("label.complemento", Icones.BAIXAR2);
 				addMenuItem(normalAcao);
-				addMenuItem(true, concatAcao);
+				addMenuItem(true, concatAndAcao);
+				addMenuItem(concatOrAcao);
 				addMenuItem(true, copiarAcao);
 				addMenuItem(true, copiarNomeTabAcao);
 				copiarNomeTabAcao.setActionListener(e -> copiarNomeTabela());
 				copiarAcao.setActionListener(e -> copiarComplemento());
-				concatAcao.setActionListener(e -> processar(false));
-				normalAcao.setActionListener(e -> processar(true));
+				concatAndAcao.setActionListener(e -> processar(1));
+				concatOrAcao.setActionListener(e -> processar(2));
+				normalAcao.setActionListener(e -> processar(0));
 			}
 
 			private void complemento(Objeto objeto) {
@@ -1248,7 +1251,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				Util.setContentTransfered(objeto.semApelido(string));
 			}
 
-			private void processar(boolean normal) {
+			private void processar(int tipoConcat) {
 				Conexao conexao = getConexao();
 				if (conexao == null) {
 					return;
@@ -1258,16 +1261,29 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					txtComplemento.setText(objeto.getComplemento());
 				} else {
 					complemento = complemento.trim();
-					if (normal) {
+					if (tipoConcat == 0) {
 						txtComplemento.setText(complemento);
 					} else {
 						String s = txtComplemento.getText().trim();
+						complemento = normalizarConcat(complemento, tipoConcat);
 						txtComplemento.setText(Util.concatenar(s, complemento));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
 					}
 				}
+			}
+
+			private String normalizarConcat(String complemento, int tipoConcat) {
+				if (tipoConcat == 1) {
+					complemento = Util.removerDoInicio("OR ", complemento);
+					return Util.concatenarSe("AND ", complemento);
+				}
+				if (tipoConcat == 2) {
+					complemento = Util.removerDoInicio("AND ", complemento);
+					return Util.concatenarSe("OR ", complemento);
+				}
+				return complemento;
 			}
 		}
 

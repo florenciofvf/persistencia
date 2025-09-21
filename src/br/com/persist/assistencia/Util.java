@@ -1344,6 +1344,25 @@ public class Util {
 		return sb.toString();
 	}
 
+	public static String removerDoInicio(String prefixo, String string) {
+		String prefixoUpper = prefixo.toUpperCase();
+		String stringUpper = string.toUpperCase();
+		boolean b = stringUpper.startsWith(prefixoUpper);
+		while (b) {
+			stringUpper = stringUpper.substring(prefixo.length());
+			string = string.substring(prefixo.length());
+			b = stringUpper.startsWith(prefixoUpper);
+		}
+		return string;
+	}
+
+	public static String concatenarSe(String prefixo, String string) {
+		String prefixoUpper = prefixo.toUpperCase();
+		String stringUpper = string.toUpperCase();
+		boolean b = stringUpper.startsWith(prefixoUpper);
+		return b ? string : prefixo + string;
+	}
+
 	public static String completar(String string, int length, char c) {
 		if (string == null) {
 			return string;
