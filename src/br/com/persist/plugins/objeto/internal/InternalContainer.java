@@ -4168,9 +4168,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
+	private void largurConteudo() {
+		if (!Util.isEmpty(objeto.getLarConteudo())) {
+			SwingUtilities.invokeLater(() -> tabelaPersistencia.larguraConteudo(objeto.getLarConteudo()));
+		}
+	}
+
 	private void larguraRotulos() {
 		if (objeto.isLarguraRotulos()) {
-			SwingUtilities.invokeLater(tabelaPersistencia::larguraTituloTodos);
+			SwingUtilities.invokeLater(() -> {
+				tabelaPersistencia.larguraTituloTodos();
+				largurConteudo();
+			});
 		}
 	}
 

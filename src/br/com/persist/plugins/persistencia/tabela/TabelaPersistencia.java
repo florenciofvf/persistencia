@@ -382,6 +382,18 @@ public class TabelaPersistencia extends JTable {
 		}
 	}
 
+	public void larguraConteudo(String larConteudo) {
+		String[] strings = larConteudo.split(",");
+		for (String item : strings) {
+			if (!Util.isEmpty(item)) {
+				int coluna = TabelaPersistenciaUtil.getIndiceColuna(TabelaPersistencia.this, item.trim(), false);
+				if (coluna != -1) {
+					popupHeader.larguraConteudo(coluna);
+				}
+			}
+		}
+	}
+
 	private TableColumn getTableColumn(int coluna) {
 		int colunaView = convertColumnIndexToView(coluna);
 		TableColumnModel columnModel = getColumnModel();
