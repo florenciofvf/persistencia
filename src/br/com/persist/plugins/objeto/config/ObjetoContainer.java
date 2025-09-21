@@ -328,6 +328,8 @@ public class ObjetoContainer extends Panel {
 				para.setComplemento(compChave.getText(), marcador);
 			} else if ("DESTACAVEIS".equals(compChave.chave)) {
 				para.setDestacaveis(compChave.getText(), marcador);
+			} else if ("LARCONTEUDO".equals(compChave.chave)) {
+				para.setLarConteudo(compChave.getText(), marcador);
 			} else if ("CHECAR_REGISTRO".equals(compChave.chave)) {
 				para.setBiblioChecagem(compChave.getText(), marcador);
 			} else if ("CLASSBIBLIO".equals(compChave.chave)) {
@@ -891,6 +893,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtComplemento = new TextField();
 		private TextField txtClassBiblio = new TextField();
 		private TextField txtDestacaveis = new TextField();
+		private TextField txtLarConteudo = new TextField();
 		private TextField txtTabelaAlter = new TextField();
 		private TextField txtMapeamento = new TextField();
 		private TextField txtPrefixoNT = new TextField();
@@ -923,6 +926,7 @@ public class ObjetoContainer extends Panel {
 			txtComplemento.setText(objeto.getComplemento());
 			txtClassBiblio.setText(objeto.getClassBiblio());
 			txtDestacaveis.setText(objeto.getDestacaveis());
+			txtLarConteudo.setText(objeto.getLarConteudo());
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
 			txtSequencias.setText(objeto.getSequencias());
 			txtMapeamento.setText(objeto.getMapeamento());
@@ -944,6 +948,7 @@ public class ObjetoContainer extends Panel {
 			txtComplemento.addFocusListener(focusListenerInner);
 			txtClassBiblio.addFocusListener(focusListenerInner);
 			txtDestacaveis.addFocusListener(focusListenerInner);
+			txtLarConteudo.addFocusListener(focusListenerInner);
 			txtSelectAlter.addFocusListener(focusListenerInner);
 			txtMapeamento.addFocusListener(focusListenerInner);
 			txtSequencias.addFocusListener(focusListenerInner);
@@ -965,6 +970,7 @@ public class ObjetoContainer extends Panel {
 			txtComplemento.addActionListener(this);
 			txtClassBiblio.addActionListener(this);
 			txtDestacaveis.addActionListener(this);
+			txtLarConteudo.addActionListener(this);
 			txtSelectAlter.addActionListener(this);
 			txtMapeamento.addActionListener(this);
 			txtSequencias.addActionListener(this);
@@ -1008,6 +1014,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
 			container.add(criarLinhaCopiar("label.class_biblio", txtClassBiblio));
 			container.add(criarLinhaCopiar("label.campos_destac", txtDestacaveis));
+			container.add(criarLinhaCopiar("label.campos_lar_conteudo", txtLarConteudo));
 			container.add(criarLinhaCopiar("label.order_by", txtOrderBy));
 			container.add(criarLinhaCopiarRotulo("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinhaRotulo("label.coluna_info", chkColunaInfo));
@@ -1027,6 +1034,7 @@ public class ObjetoContainer extends Panel {
 			txtComplemento.addMouseListener(complementoListener);
 			txtClassBiblio.addMouseListener(classBiblioListener);
 			txtDestacaveis.addMouseListener(destacaveisListener);
+			txtLarConteudo.addMouseListener(larConteudoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
 			txtSequencias.addMouseListener(sequenciaListener);
 			add(BorderLayout.CENTER, new ScrollPane(container));
@@ -1062,6 +1070,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtComplemento, "COMPLEMENTO"));
 			vinculados.add(new CompChave(txtClassBiblio, "CLASSBIBLIO"));
 			vinculados.add(new CompChave(txtDestacaveis, "DESTACAVEIS"));
+			vinculados.add(new CompChave(txtLarConteudo, "LARCONTEUDO"));
 			vinculados.add(new CompChave(chkColunaInfo, "COLUNA_INFO"));
 			vinculados.add(new CompChave(txtMapeamento, "MAPEAMENTO"));
 			vinculados.add(new CompChave(txtPrefixoNT, "PREFIXO_NT"));
@@ -1090,6 +1099,7 @@ public class ObjetoContainer extends Panel {
 			txtComplemento.addMouseListener(listenerVinculado);
 			txtClassBiblio.addMouseListener(listenerVinculado);
 			txtDestacaveis.addMouseListener(listenerVinculado);
+			txtLarConteudo.addMouseListener(listenerVinculado);
 			txtSequencias.addMouseListener(listenerVinculado);
 			txtMapeamento.addMouseListener(listenerVinculado);
 			chkColunaInfo.addMouseListener(listenerVinculado);
@@ -1203,6 +1213,25 @@ public class ObjetoContainer extends Panel {
 			}
 		};
 
+		private transient MouseListener larConteudoListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					if (e.getClickCount() >= Constantes.DOIS) {
+						Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+						MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+								MiscelaniaContainer.Tipo.LARCONTEUDO);
+						config(dialog, form);
+						form.setVisible(true);
+						txtLarConteudo.setText(objeto.getLarConteudo());
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MiscelaniaContainer.Tipo.LARCONTEUDO.toString(), ex,
+							ObjetoContainer.this);
+				}
+			}
+		};
+
 		private transient MouseListener mapeamentoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -1258,6 +1287,8 @@ public class ObjetoContainer extends Panel {
 				atom.set(true);
 			} else if (txtDestacaveis == e.getSource()) {
 				objeto.setDestacaveis(txtDestacaveis.getText());
+			} else if (txtLarConteudo == e.getSource()) {
+				objeto.setLarConteudo(txtLarConteudo.getText());
 			} else if (txtOrderBy == e.getSource()) {
 				objeto.setOrderBy(txtOrderBy.getText());
 			} else if (txtGrupo == e.getSource()) {
@@ -1345,9 +1376,9 @@ public class ObjetoContainer extends Panel {
 		public void checarVinculados(ParaTabela para) {
 			marcarVinculados(para, chkLarguraRotulos, txtFinalConsulta, chkAjusteAutoForm, chkAjusteLargForm,
 					txtEsquemaAlter, txtTabelaAlter, txtSelectAlter, txtChaveamento, txtComplemento, txtClassBiblio,
-					txtDestacaveis, chkColunaInfo, txtMapeamento, txtPrefixoNT, chkAbrirAuto, txtSequencias,
-					chkLinkAuto, txtOrderBy, txtApelido, txtTabelas, chkIgnorar, txtChaves, txtJoins, txtGrupo, chkSANE,
-					chkCCSC, chkBPNT);
+					txtDestacaveis, txtLarConteudo, chkColunaInfo, txtMapeamento, txtPrefixoNT, chkAbrirAuto,
+					txtSequencias, chkLinkAuto, txtOrderBy, txtApelido, txtTabelas, chkIgnorar, txtChaves, txtJoins,
+					txtGrupo, chkSANE, chkCCSC, chkBPNT);
 		}
 
 		private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {

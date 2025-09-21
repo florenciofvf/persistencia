@@ -28,6 +28,8 @@ public class MiscelaniaDialogo extends AbstratoDialogo {
 			setTitle(Mensagens.getString("label.class_biblio") + " - " + getTitle());
 		} else if (MiscelaniaContainer.Tipo.DESTACAVEIS.equals(tipo)) {
 			setTitle(Mensagens.getString("label.campos_destac") + " - " + getTitle());
+		} else if (MiscelaniaContainer.Tipo.LARCONTEUDO.equals(tipo)) {
+			setTitle(Mensagens.getString("label.campos_lar_conteudo") + " - " + getTitle());
 		} else if (MiscelaniaContainer.Tipo.INSTRUCAO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.add_instrucao") + " - " + getTitle());
 		} else if (MiscelaniaContainer.Tipo.FILTRO.equals(tipo)) {

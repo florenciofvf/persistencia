@@ -62,6 +62,8 @@ public class MiscelaniaContainer extends Panel {
 			classBiblio(builder);
 		} else if (Tipo.DESTACAVEIS.equals(tipo)) {
 			destac(builder);
+		} else if (Tipo.LARCONTEUDO.equals(tipo)) {
+			larConteudo(builder);
 		} else if (Tipo.INSTRUCAO.equals(tipo)) {
 			instrucao(builder);
 		} else if (Tipo.FILTRO.equals(tipo)) {
@@ -160,8 +162,12 @@ public class MiscelaniaContainer extends Panel {
 		builder.append(objeto.getDestacaveis());
 	}
 
+	private void larConteudo(StringBuilder builder) {
+		builder.append(objeto.getLarConteudo());
+	}
+
 	public enum Tipo {
-		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA, INSTRUCAO, FILTRO
+		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, LARCONTEUDO, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA, INSTRUCAO, FILTRO
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -207,6 +213,8 @@ public class MiscelaniaContainer extends Panel {
 					objeto.setClassBiblio(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.DESTACAVEIS.equals(tipo)) {
 					objeto.setDestacaveis(Util.normalizar(textEditor.getText(), false));
+				} else if (Tipo.LARCONTEUDO.equals(tipo)) {
+					objeto.setLarConteudo(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.INSTRUCAO.equals(tipo) && listener != null) {
 					listener.aplicar(textEditor.getText());
 				} else if (Tipo.FILTRO.equals(tipo) && listener != null) {

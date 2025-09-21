@@ -90,6 +90,7 @@ public class Objeto implements Runnable {
 	private String complemento;
 	private String classBiblio;
 	private String destacaveis;
+	private String larConteudo;
 	private String chaveamento;
 	private boolean colunaInfo;
 	protected Objeto associado;
@@ -173,6 +174,7 @@ public class Objeto implements Runnable {
 		o.complemento = complemento;
 		o.classBiblio = classBiblio;
 		o.destacaveis = destacaveis;
+		o.larConteudo = larConteudo;
 		o.chaveamento = chaveamento;
 		o.desenharId = desenharId;
 		o.colunaInfo = colunaInfo;
@@ -228,6 +230,7 @@ public class Objeto implements Runnable {
 		complemento = attr.getValue("complemento");
 		classBiblio = attr.getValue("classBiblio");
 		destacaveis = attr.getValue("destacaveis");
+		larConteudo = attr.getValue("larConteudo");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
@@ -265,6 +268,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("complemento", getComplemento());
 		util.atributoCheck("classBiblio", getClassBiblio());
 		util.atributoCheck("destacaveis", getDestacaveis());
+		util.atributoCheck("larConteudo", getLarConteudo());
 		util.atributoCheck("esquemaAlternativo", getEsquemaAlternativo());
 		util.atributoCheck("selectAlternativo", getSelectAlternativo());
 		util.atributoCheck("tabelaAlternativo", getTabelaAlternativo());
@@ -426,6 +430,10 @@ public class Objeto implements Runnable {
 
 	public void setDestacaveis(String destacaveis) {
 		this.destacaveis = destacaveis;
+	}
+
+	public void setLarConteudo(String larConteudo) {
+		this.larConteudo = larConteudo;
 	}
 
 	public void setDesenharId(boolean desenharId) {
@@ -590,6 +598,13 @@ public class Objeto implements Runnable {
 			destacaveis = Constantes.VAZIO;
 		}
 		return destacaveis;
+	}
+
+	public String getLarConteudo() {
+		if (Util.isEmpty(larConteudo)) {
+			larConteudo = Constantes.VAZIO;
+		}
+		return larConteudo;
 	}
 
 	public String getChaves() {
