@@ -1014,7 +1014,8 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
 			container.add(criarLinhaCopiar("label.class_biblio", txtClassBiblio));
 			container.add(criarLinhaCopiar("label.campos_destac", txtDestacaveis));
-			container.add(criarLinhaCopiar("label.campos_lar_conteudo", txtLarConteudo));
+			container.add(criarLinhaCopiar("label.campos_lar_conteudo", txtLarConteudo,
+					ObjetoMensagens.getString("hint.campos_lar_conteudo")));
 			container.add(criarLinhaCopiar("label.order_by", txtOrderBy));
 			container.add(criarLinhaCopiarRotulo("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinhaRotulo("label.coluna_info", chkColunaInfo));
