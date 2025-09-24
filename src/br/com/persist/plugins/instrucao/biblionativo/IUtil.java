@@ -2,6 +2,8 @@ package br.com.persist.plugins.instrucao.biblionativo;
 
 import java.math.BigInteger;
 
+import br.com.persist.assistencia.Util;
+
 public class IUtil {
 	public static final BigInteger FALSE = BigInteger.valueOf(0);
 	public static final BigInteger TRUE = BigInteger.valueOf(1);
@@ -38,5 +40,10 @@ public class IUtil {
 	public static Object log(Object desc, Object object) {
 		System.out.println(desc + " " + object);
 		return object;
+	}
+
+	@Biblio(7)
+	public static Object replaceAll(Object string, Object atual, Object novo) {
+		return Util.replaceAll(string.toString(), atual.toString(), novo.toString());
 	}
 }
