@@ -181,7 +181,7 @@ public class ContainerArvoreBuilder extends Builder {
 		If se2 = se.criarIf("chkPsqConteudo.isSelected()", else2);
 		se2.addInstrucao("Set<String> set = new LinkedHashSet<>()");
 		se2.addInstrucao("split.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected())");
-		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
+		se2.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();
 		funcao = classe.criarFuncaoPrivada(STRING, "getString", new Parametros("Set<String> set"));
