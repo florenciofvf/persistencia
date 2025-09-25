@@ -169,26 +169,26 @@ public class ContainerArvoreBuilder extends Builder {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
 
-		Else else1 = new Else();
-		else1.addInstrucao("label.limpar()");
+		Else elseExterno = new Else();
+		elseExterno.addInstrucao("label.limpar()");
+		If ifExterno = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", elseExterno);
 
-		If se = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", else1);
-		Else else2 = new Else();
-		else2.addInstrucao(
+		Else elseInterno = new Else();
+		elseInterno.addInstrucao(
 				"pesquisa = split.getTree().getPesquisa(pesquisa, txtArquivo.getText(), chkPorParte.isSelected())");
-		else2.addInstrucao("pesquisa.selecionar(label)");
+		elseInterno.addInstrucao("pesquisa.selecionar(label)");
 
-		If se2 = se.criarIf("chkPsqConteudo.isSelected()", else2);
-		se2.addInstrucao("Set<String> set = new LinkedHashSet<>()");
-		se2.addInstrucao("split.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected())");
-		se2.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
+		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
+		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
+		ifInterno.addInstrucao("split.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected())");
+		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();
 		funcao = classe.criarFuncaoPrivada(STRING, "getString", new Parametros("Set<String> set"));
 		funcao.addInstrucao("StringBuilder sb = new StringBuilder()");
 		For loop = funcao.criarFor("String string : set");
-		se = loop.criarIf("sb.length() > 0", null);
-		se.addInstrucao("sb.append(Constantes.QL)");
+		ifExterno = loop.criarIf("sb.length() > 0", null);
+		ifExterno.addInstrucao("sb.append(Constantes.QL)");
 		loop.addInstrucao("sb.append(string)");
 		funcao.addReturn("sb.toString()");
 	}
