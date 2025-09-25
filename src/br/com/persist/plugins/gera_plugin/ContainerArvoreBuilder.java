@@ -15,7 +15,7 @@ import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
-public class ContainerABuilder extends Builder {
+public class ContainerArvoreBuilder extends Builder {
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";
@@ -24,7 +24,7 @@ public class ContainerABuilder extends Builder {
 	private static final String STRING = "String";
 	private static final String LABEL = "LABEL_";
 
-	protected ContainerABuilder(Config config) {
+	protected ContainerArvoreBuilder(Config config) {
 		super("Container", "extends AbstratoContainer", config);
 	}
 
@@ -174,7 +174,8 @@ public class ContainerABuilder extends Builder {
 
 		If se = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", else1);
 		Else else2 = new Else();
-		else2.addInstrucao("pesquisa = split.getTree().getPesquisa(pesquisa, txtArquivo.getText(), chkPorParte.isSelected())");
+		else2.addInstrucao(
+				"pesquisa = split.getTree().getPesquisa(pesquisa, txtArquivo.getText(), chkPorParte.isSelected())");
 		else2.addInstrucao("pesquisa.selecionar(label)");
 
 		If se2 = se.criarIf("chkPsqConteudo.isSelected()", else2);

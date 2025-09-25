@@ -14,7 +14,7 @@ import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
-public class ContainerSFBuilder extends Builder {
+public class ContainerSimpleFicharioBuilder extends Builder {
 	private static final String ATIVA_PAGINA_ATIVA = " ativa = fichario.getPaginaAtiva()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String ATIVA_DIFF_NULL = "ativa != null";
@@ -26,7 +26,7 @@ public class ContainerSFBuilder extends Builder {
 	private static final String LABEL = "LABEL_";
 	private final boolean fichario;
 
-	protected ContainerSFBuilder(Config config, boolean fichario) {
+	protected ContainerSimpleFicharioBuilder(Config config, boolean fichario) {
 		super("Container", "extends AbstratoContainer", config);
 		this.fichario = fichario;
 	}
