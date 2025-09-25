@@ -30,6 +30,15 @@ public class ArquivoTree extends Tree {
 		ouvintes = new ArrayList<>();
 	}
 
+	public ArquivoPesquisa getPesquisa(ArquivoPesquisa pesquisa, String string, boolean porParte) {
+		if (pesquisa == null) {
+			return new ArquivoPesquisa(this, string, porParte);
+		} else if (pesquisa.igual(string, porParte)) {
+			return pesquisa;
+		}
+		return new ArquivoPesquisa(this, string, porParte);
+	}
+
 	public ArquivoPopup getArquivoPopup() {
 		return arquivoPopup;
 	}
@@ -87,9 +96,9 @@ public class ArquivoTree extends Tree {
 		raiz.preencher(lista, nome, porParte);
 	}
 
-	public void contemConteudo(Set<String> set, String string) {
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
 		Arquivo raiz = getRaiz();
-		raiz.contemConteudo(set, string);
+		raiz.contemConteudo(set, string, porParte);
 		if (set.isEmpty()) {
 			Util.beep();
 		}
