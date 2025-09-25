@@ -5,6 +5,7 @@ import br.com.persist.geradores.Catch;
 import br.com.persist.geradores.ClassePrivada;
 import br.com.persist.geradores.ClassePublica;
 import br.com.persist.geradores.Container;
+import br.com.persist.geradores.Else;
 import br.com.persist.geradores.ElseIf;
 import br.com.persist.geradores.For;
 import br.com.persist.geradores.Funcao;
@@ -53,11 +54,13 @@ public class ContainerABuilder extends Builder {
 
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Mensagens");
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
+		arquivo.addImport("br.com.persist.componente.CheckBox");
 		arquivo.addImport("br.com.persist.componente.Janela");
 		arquivo.addImport("br.com.persist.componente.TextField");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
@@ -132,15 +135,23 @@ public class ContainerABuilder extends Builder {
 		ClassePrivada classePrivada = null;
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
+		classePrivada.addInstrucao("private final CheckBox chkPorParte = new CheckBox(true)");
 		classePrivada.addInstrucao("private final TextField txtArquivo = new TextField(35)");
+		classePrivada.addInstrucao("private final CheckBox chkPsqConteudo = new CheckBox()");
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
+		classePrivada.addInstrucao("private transient ArquivoPesquisa pesquisa").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));
 		funcao.addInstrucao(
 				"super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO)");
+		funcao.addInstrucao("chkPsqConteudo.setToolTipText(Mensagens.getString(\"msg.pesq_no_conteudo\"))");
+		funcao.addInstrucao("chkPorParte.setToolTipText(Mensagens.getString(\"label.por_parte\"))");
 		funcao.addInstrucao("txtArquivo.setToolTipText(Mensagens.getString(\"label.pesquisar\"))");
 		funcao.addInstrucao("txtArquivo.addActionListener(this)");
 		funcao.addInstrucao("add(txtArquivo)");
+		funcao.addInstrucao("add(chkPorParte)");
+		funcao.addInstrucao("add(chkPsqConteudo)");
+		funcao.addInstrucao("add(label)");
 
 		contemConteudo(classePrivada);
 		destacar(classePrivada);
@@ -158,9 +169,17 @@ public class ContainerABuilder extends Builder {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
 
-		If se = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", null);
-		se.addInstrucao("Set<String> set = new LinkedHashSet<>()");
-		se.addInstrucao("split.contemConteudo(set, txtArquivo.getText())");
+		Else else1 = new Else();
+		else1.addInstrucao("label.limpar()");
+
+		If se = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", else1);
+		Else else2 = new Else();
+		else2.addInstrucao("pesquisa = split.getTree().getPesquisa(pesquisa, txtArquivo.getText(), chkPorParte.isSelected())");
+		else2.addInstrucao("pesquisa.selecionar(label)");
+
+		If se2 = se.criarIf("chkPsqConteudo.isSelected()", else2);
+		se2.addInstrucao("Set<String> set = new LinkedHashSet<>()");
+		se2.addInstrucao("split.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected())");
 		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();

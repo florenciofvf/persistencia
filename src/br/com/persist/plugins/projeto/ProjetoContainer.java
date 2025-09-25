@@ -21,11 +21,13 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.arquivo.ArquivoPesquisa;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
@@ -82,22 +84,37 @@ public class ProjetoContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtArquivo = new TextField(35);
+		private final CheckBox chkPsqConteudo = new CheckBox();
 		private static final long serialVersionUID = 1L;
+		private transient ArquivoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
+			chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo"));
+			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtArquivo.addActionListener(this);
 			add(txtArquivo);
+			add(chkPorParte);
+			add(chkPsqConteudo);
+			add(label);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtArquivo.getText())) {
-				Set<String> set = new LinkedHashSet<>();
-				split.contemConteudo(set, txtArquivo.getText());
-				Util.mensagem(ProjetoContainer.this, getString(set));
+				if (chkPsqConteudo.isSelected()) {
+					Set<String> set = new LinkedHashSet<>();
+					split.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected());
+					Util.mensagem(ProjetoContainer.this, getString(set));
+				} else {
+					pesquisa = split.getTree().getPesquisa(pesquisa, txtArquivo.getText(), chkPorParte.isSelected());
+					pesquisa.selecionar(label);
+				}
+			} else {
+				label.limpar();
 			}
 		}
 
