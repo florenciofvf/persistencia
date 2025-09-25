@@ -149,8 +149,8 @@ class InstrucaoSplit extends SplitPane {
 		SwingUtilities.updateComponentTreeUI(panel);
 	}
 
-	public void contemConteudo(Set<String> set, String string) {
-		tree.contemConteudo(set, string);
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
+		tree.contemConteudo(set, string, porParte);
 	}
 
 	private Fichario novoFichario(Arquivo arquivo) {
