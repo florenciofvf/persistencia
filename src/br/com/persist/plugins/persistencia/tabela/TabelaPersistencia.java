@@ -497,7 +497,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						infoColuna();
+						SwingUtilities.invokeLater(() -> infoColuna());
 					}
 				});
 				infoColunaAcao.setActionListener(e -> infoColuna());
@@ -958,7 +958,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						copiar(true, true);
+						SwingUtilities.invokeLater(() -> copiar(true, true));
 					}
 				});
 			}
