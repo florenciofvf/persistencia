@@ -471,13 +471,14 @@ public class TabelaPersistencia extends JTable {
 			private MenuSelectDistinct distinct = new MenuSelectDistinct();
 			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
 			private Action infoColunaAcao = actionMenu("label.info");
+			private static final long serialVersionUID = 1L;
 			private MenuMinimo minimo = new MenuMinimo();
 			private MenuMaximo maximo = new MenuMaximo();
-			private static final long serialVersionUID = 1L;
+			private MenuItem menuItemInfoColuna;
 
 			private MenuMetadados() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
-				addMenuItem(infoColunaAcao);
+				menuItemInfoColuna = addMenuItem(infoColunaAcao);
 				addMenuItem(true, exportaParaAcao);
 				addMenuItem(true, importaDeAcao);
 				addSeparator();
@@ -497,7 +498,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						SwingUtilities.invokeLater(() -> infoColuna());
+						menuItemInfoColuna.doClick();
 					}
 				});
 				infoColunaAcao.setActionListener(e -> infoColuna());
@@ -942,13 +943,14 @@ public class TabelaPersistencia extends JTable {
 			private Action comAspasAtalhoAcao = acaoMenu("label.com_aspas_atalho2", Icones.ASPAS);
 			private Action semAspasAtalhoAcao = acaoMenu("label.sem_aspas_atalho2");
 			private static final long serialVersionUID = 1L;
+			private MenuItem menuItemAspasAtalho;
 			private final boolean numeros;
 			private final boolean letras;
 
 			private MenuColocarColuna(String titulo, boolean numero, boolean letra) {
 				super(TabelaMensagens.getString(titulo), false, null);
 				addMenuItem(true, semAspasAtalhoAcao);
-				addMenuItem(comAspasAtalhoAcao);
+				menuItemAspasAtalho = addMenuItem(comAspasAtalhoAcao);
 				numeros = numero;
 				letras = letra;
 				semAspasAtalhoAcao.setActionListener(e -> copiar(false, true));
@@ -958,7 +960,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						SwingUtilities.invokeLater(() -> copiar(true, true));
+						menuItemAspasAtalho.doClick();
 					}
 				});
 			}
