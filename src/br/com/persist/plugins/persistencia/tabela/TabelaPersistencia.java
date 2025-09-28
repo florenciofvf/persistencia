@@ -825,6 +825,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						popupHeader.setVisible(false);
 						colocarNomeColuna(true);
 					}
 				});
@@ -861,6 +862,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						popupHeader.setVisible(false);
 						copiarAtalho(true);
 					}
 				});
