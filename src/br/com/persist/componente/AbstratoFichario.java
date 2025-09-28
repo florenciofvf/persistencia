@@ -38,7 +38,7 @@ public class AbstratoFichario extends JTabbedPane {
 	}
 
 	private InputMap inputMap() {
-		return getInputMap(WHEN_FOCUSED);
+		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
 	}
 
 	public AbstratoFicharioListener getListener() {
