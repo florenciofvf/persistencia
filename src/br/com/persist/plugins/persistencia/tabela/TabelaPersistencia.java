@@ -498,7 +498,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						menuItemInfoColuna.doClick();
+						SwingUtilities.invokeLater(() -> menuItemInfoColuna.doClick());
 					}
 				});
 				infoColunaAcao.setActionListener(e -> infoColuna());
@@ -960,7 +960,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						menuItemAspasAtalho.doClick();
+						SwingUtilities.invokeLater(() -> menuItemAspasAtalho.doClick());
 					}
 				});
 			}
