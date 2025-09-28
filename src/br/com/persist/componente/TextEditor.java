@@ -3,8 +3,14 @@ package br.com.persist.componente;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
 import javax.swing.event.CaretEvent;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.AbstractDocument;
@@ -29,6 +35,7 @@ public class TextEditor extends TextPane {
 	public static final Color COLOR_RET = Color.LIGHT_GRAY;
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+	private transient TextEditorListener listener;
 	private static boolean paintERT;
 	final Rectangle caretRect;
 
@@ -37,6 +44,39 @@ public class TextEditor extends TextPane {
 		setEditorKit(new TextEditorKit());
 		addCaretListener(this::processar);
 		caretRect = new Rectangle();
+		configurar();
+	}
+
+	private void configurar() {
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
+		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
+	}
+
+	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (listener != null) {
+				listener.focusInputPesquisar(TextEditor.this);
+			}
+		}
+	};
+
+	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
+		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
+	}
+
+	private InputMap inputMap() {
+		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	}
+
+	public TextEditorListener getListener() {
+		return listener;
+	}
+
+	public void setListener(TextEditorListener listener) {
+		this.listener = listener;
 	}
 
 	public static boolean isPaintERT() {
