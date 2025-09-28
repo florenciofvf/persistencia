@@ -815,18 +815,19 @@ public class TabelaPersistencia extends JTable {
 			private Action atalhoAcao = acaoMenu("label.atalho");
 			private Action opcoesAcao = acaoMenu("label.opcoes");
 			private static final long serialVersionUID = 1L;
+			private MenuItem menuItemAtalho;
 
 			private MenuColocarNomeColuna() {
 				super(TabelaMensagens.getString("label.colocar_nome_coluna"), false, null);
 				addMenuItem(opcoesAcao);
-				addMenuItem(true, atalhoAcao);
+				menuItemAtalho = addMenuItem(true, atalhoAcao);
 				opcoesAcao.setActionListener(e -> colocarNomeColuna(false));
 				atalhoAcao.setActionListener(e -> colocarNomeColuna(true));
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						popupHeader.setVisible(false);
-						colocarNomeColuna(true);
+						menuItemAtalho.doClick();
 					}
 				});
 			}
@@ -848,12 +849,13 @@ public class TabelaPersistencia extends JTable {
 			private Action destacComBarraAcao = acaoMenu("label.copiar_destac_com_barra");
 			private Action semAspasAtalhoAcao = acaoMenu("label.sem_aspas_atalho");
 			private static final long serialVersionUID = 1L;
+			private MenuItem menuItemAtalho;
 
 			private MenuCopiarLinhas() {
 				super(TabelaMensagens.getString("label.copiar_header"), false, null);
 				addMenuItem(true, destacComBarraAcao);
 				addMenuItem(true, semAspasAtalhoAcao);
-				addMenuItem(comAspasAtalhoAcao);
+				menuItemAtalho = addMenuItem(comAspasAtalhoAcao);
 				destacComBarraAcao.setActionListener(e -> copiarDestacComBarra());
 				semAspasAtalhoAcao.setActionListener(e -> copiarAtalho(false));
 				comAspasAtalhoAcao.setActionListener(e -> copiarAtalho(true));
@@ -863,7 +865,7 @@ public class TabelaPersistencia extends JTable {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						popupHeader.setVisible(false);
-						copiarAtalho(true);
+						menuItemAtalho.doClick();
 					}
 				});
 			}
