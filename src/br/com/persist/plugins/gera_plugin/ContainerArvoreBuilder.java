@@ -125,6 +125,7 @@ public class ContainerArvoreBuilder extends Builder {
 		funcao = classe.criarFuncaoPublica("void", "setJanela", new Parametros("Janela janela"));
 		funcao.addInstrucao("toolbar.setJanela(janela)");
 
+		classe.newLine();
 		funcao = classe.criarFuncaoPublica("void", "focusInputPesquisar");
 		funcao.addInstrucao("toolbar.focusInputPesquisar()");
 
@@ -170,6 +171,7 @@ public class ContainerArvoreBuilder extends Builder {
 	}
 
 	private void focusInput(ClassePrivada classe) {
+		classe.newLine();
 		Funcao funcao = classe.criarFuncaoProtegida("void", "focusInputPesquisar");
 		funcao.addInstrucao("txtArquivo.requestFocus()");
 	}
