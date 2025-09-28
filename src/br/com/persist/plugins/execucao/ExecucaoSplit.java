@@ -280,8 +280,8 @@ class Aba extends Transferivel {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	private static final long serialVersionUID = 1L;
 	final transient Arquivo arquivo;
-	private final AbaView abaView;
 	private final AbaText abaText;
+	private final AbaView abaView;
 
 	Aba(Arquivo arquivo, Formulario formulario) {
 		abaView = new AbaView(arquivo.getFile(), formulario);

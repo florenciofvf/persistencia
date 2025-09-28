@@ -480,6 +480,7 @@ class Aba extends Transferivel {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
+		editor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private Panel criarPanel() {
@@ -841,6 +842,10 @@ class Aba extends Transferivel {
 		public void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
+		}
+
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		Action acaoMenu(String chave) {

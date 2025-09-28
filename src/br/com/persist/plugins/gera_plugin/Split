@@ -337,6 +337,7 @@ class Aba extends Transferivel {
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		editor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private void abrir() {
@@ -373,6 +374,10 @@ class Aba extends Transferivel {
 		public void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
+		}
+
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		@Override

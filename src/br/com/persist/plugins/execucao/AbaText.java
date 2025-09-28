@@ -46,6 +46,7 @@ public class AbaText extends Panel {
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		editor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	int getValueScrollPane() {
@@ -97,6 +98,10 @@ public class AbaText extends Panel {
 		void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
+		}
+
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		@Override
