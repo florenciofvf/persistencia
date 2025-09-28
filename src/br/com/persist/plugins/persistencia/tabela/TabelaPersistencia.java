@@ -498,6 +498,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						popupHeader.setVisible(false);
 						menuItemInfoColuna.doClick();
 					}
 				});
@@ -515,7 +516,7 @@ public class TabelaPersistencia extends JTable {
 							builder.append(string.length() + Constantes.QL);
 						}
 					}
-					SwingUtilities.invokeLater(() -> Util.mensagem(TabelaPersistencia.this, builder.toString()));
+					Util.mensagem(TabelaPersistencia.this, builder.toString());
 				}
 			}
 
@@ -960,6 +961,7 @@ public class TabelaPersistencia extends JTable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						popupHeader.setVisible(false);
 						menuItemAspasAtalho.doClick();
 					}
 				});
@@ -973,14 +975,11 @@ public class TabelaPersistencia extends JTable {
 					if (aspas && !Util.isEmpty(memoria)) {
 						memoria = Util.citar(memoria);
 					}
-					String memoriaFinal = memoria;
-					SwingUtilities.invokeLater(() -> {
-						if (atalho) {
-							listener.colocarColunaComMemoriaAtalho(TabelaPersistencia.this, coluna, memoriaFinal);
-						} else {
-							listener.colocarColunaComMemoria(TabelaPersistencia.this, coluna, memoriaFinal);
-						}
-					});
+					if (atalho) {
+						listener.colocarColunaComMemoriaAtalho(TabelaPersistencia.this, coluna, memoria);
+					} else {
+						listener.colocarColunaComMemoria(TabelaPersistencia.this, coluna, memoria);
+					}
 				}
 			}
 		}
