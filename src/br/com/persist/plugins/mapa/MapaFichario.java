@@ -2,11 +2,10 @@ package br.com.persist.plugins.mapa;
 
 import java.awt.Component;
 
-import javax.swing.JTabbedPane;
-
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.AbstratoFichario;
 
-public class MapaFichario extends JTabbedPane {
+public class MapaFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
 
 	public MapaFichario() {

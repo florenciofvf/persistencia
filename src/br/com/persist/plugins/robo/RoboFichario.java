@@ -3,11 +3,10 @@ package br.com.persist.plugins.robo;
 import java.awt.Component;
 import java.util.Set;
 
-import javax.swing.JTabbedPane;
-
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.AbstratoFichario;
 
-public class RoboFichario extends JTabbedPane {
+public class RoboFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
 
 	public RoboFichario() {

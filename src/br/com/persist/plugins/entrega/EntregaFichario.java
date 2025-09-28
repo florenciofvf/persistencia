@@ -3,11 +3,10 @@ package br.com.persist.plugins.entrega;
 import java.awt.Component;
 import java.util.Set;
 
-import javax.swing.JTabbedPane;
-
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.AbstratoFichario;
 
-public class EntregaFichario extends JTabbedPane {
+public class EntregaFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
 
 	public EntregaFichario() {
