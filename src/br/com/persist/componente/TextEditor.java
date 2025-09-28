@@ -68,7 +68,7 @@ public class TextEditor extends TextPane {
 	}
 
 	private InputMap inputMap() {
-		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
+		return getInputMap(WHEN_FOCUSED);
 	}
 
 	public TextEditorListener getListener() {

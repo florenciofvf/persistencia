@@ -55,7 +55,7 @@ public class ArquivoTree extends Tree {
 	}
 
 	private InputMap inputMap() {
-		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
+		return getInputMap(WHEN_FOCUSED);
 	}
 
 	public ArquivoPesquisa getPesquisa(ArquivoPesquisa pesquisa, String string, boolean porParte) {
