@@ -100,6 +100,7 @@ public class AbaText extends Panel {
 			add(label);
 		}
 
+		@Override
 		protected void focusInputPesquisar() {
 			txtPesquisa.requestFocus();
 		}

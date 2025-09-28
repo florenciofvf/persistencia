@@ -78,6 +78,9 @@ public abstract class BarraButton extends JToolBar
 		configBackup(enuns);
 	}
 
+	protected void focusInputPesquisar() {
+	}
+
 	protected Action actionIcon(String chaveRotulo, Icon icone) {
 		return Action.actionIcon(chaveRotulo, icone);
 	}

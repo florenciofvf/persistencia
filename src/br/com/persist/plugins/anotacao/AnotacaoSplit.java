@@ -385,6 +385,7 @@ class Aba extends Transferivel {
 			add(label);
 		}
 
+		@Override
 		protected void focusInputPesquisar() {
 			txtPesquisa.requestFocus();
 		}

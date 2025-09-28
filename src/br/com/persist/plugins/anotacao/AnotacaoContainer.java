@@ -105,6 +105,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 			add(label);
 		}
 
+		@Override
 		protected void focusInputPesquisar() {
 			txtArquivo.requestFocus();
 		}

@@ -106,6 +106,7 @@ public class NavegacaoContainer extends AbstratoContainer {
 			add(label);
 		}
 
+		@Override
 		protected void focusInputPesquisar() {
 			txtArquivo.requestFocus();
 		}
