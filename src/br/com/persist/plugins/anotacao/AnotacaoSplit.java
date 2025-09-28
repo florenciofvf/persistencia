@@ -61,6 +61,7 @@ import br.com.persist.painel.Transferivel;
 class AnotacaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+	AnotacaoContainer container;
 	private final File fileRoot;
 	private ArquivoTree tree;
 	private PanelRoot panel;
@@ -70,7 +71,8 @@ class AnotacaoSplit extends SplitPane {
 		fileRoot = new File(AnotacaoConstantes.ANOTACOES);
 	}
 
-	void inicializar() {
+	void inicializar(AnotacaoContainer container) {
+		this.container = container;
 		File file = new File(fileRoot, AnotacaoConstantes.IGNORADOS);
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		ArquivoUtil.arquivoIgnorado(ignorados, AnotacaoPreferencia.isExibirArqIgnorados());
@@ -154,6 +156,13 @@ class AnotacaoSplit extends SplitPane {
 	}
 
 	private transient ArquivoTreeListener treeListener = new ArquivoTreeListener() {
+		@Override
+		public void focusInputPesquisar(ArquivoTree arquivoTree) {
+			if (container != null) {
+				container.focusInputPesquisar();
+			}
+		}
+
 		@Override
 		public void renomearArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();

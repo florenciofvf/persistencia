@@ -51,6 +51,7 @@ class ExecucaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Formulario formulario;
+	ExecucaoContainer container;
 	private final File fileRoot;
 	private ArquivoTree tree;
 	private PanelRoot panel;
@@ -61,7 +62,8 @@ class ExecucaoSplit extends SplitPane {
 		fileRoot = new File(ExecucaoConstantes.EXECUCOES);
 	}
 
-	void inicializar() {
+	void inicializar(ExecucaoContainer container) {
+		this.container = container;
 		File file = new File(fileRoot, ExecucaoConstantes.IGNORADOS);
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		ArquivoUtil.arquivoIgnorado(ignorados, ExecucaoPreferencia.isExibirArqIgnorados());
@@ -145,6 +147,13 @@ class ExecucaoSplit extends SplitPane {
 	}
 
 	private transient ArquivoTreeListener treeListener = new ArquivoTreeListener() {
+		@Override
+		public void focusInputPesquisar(ArquivoTree arquivoTree) {
+			if (container != null) {
+				container.focusInputPesquisar();
+			}
+		}
+
 		@Override
 		public void renomearArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();

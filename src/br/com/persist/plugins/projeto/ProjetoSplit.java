@@ -64,6 +64,7 @@ class ProjetoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final File fileRoot;
+	ProjetoContainer container;
 	private ArquivoTree tree;
 	private PanelRoot panel;
 
@@ -72,7 +73,8 @@ class ProjetoSplit extends SplitPane {
 		fileRoot = new File(ProjetoConstantes.PROJETOS);
 	}
 
-	void inicializar() {
+	void inicializar(ProjetoContainer container) {
+		this.container = container;
 		File file = new File(fileRoot, ProjetoConstantes.IGNORADOS);
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		ArquivoUtil.arquivoIgnorado(ignorados, ProjetoPreferencia.isExibirArqIgnorados());
@@ -184,6 +186,13 @@ class ProjetoSplit extends SplitPane {
 	}
 
 	private transient ArquivoTreeListener treeListener = new ArquivoTreeListener() {
+		@Override
+		public void focusInputPesquisar(ArquivoTree arquivoTree) {
+			if (container != null) {
+				container.focusInputPesquisar();
+			}
+		}
+
 		@Override
 		public void renomearArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();

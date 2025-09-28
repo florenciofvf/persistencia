@@ -126,6 +126,7 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 class NavegacaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+	NavegacaoContainer container;
 	private final File fileRoot;
 	private ArquivoTree tree;
 	private PanelRoot panel;
@@ -135,7 +136,8 @@ class NavegacaoSplit extends SplitPane {
 		fileRoot = new File(NavegacaoConstantes.NAVEGACOES);
 	}
 
-	void inicializar() {
+	void inicializar(NavegacaoContainer container) {
+		this.container = container;
 		File file = new File(fileRoot, NavegacaoConstantes.IGNORADOS);
 		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		ArquivoUtil.arquivoIgnorado(ignorados, NavegacaoPreferencia.isExibirArqIgnorados());
@@ -219,6 +221,13 @@ class NavegacaoSplit extends SplitPane {
 	}
 
 	private transient ArquivoTreeListener treeListener = new ArquivoTreeListener() {
+		@Override
+		public void focusInputPesquisar(ArquivoTree arquivoTree) {
+			if (container != null) {
+				container.focusInputPesquisar();
+			}
+		}
+
 		@Override
 		public void renomearArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
