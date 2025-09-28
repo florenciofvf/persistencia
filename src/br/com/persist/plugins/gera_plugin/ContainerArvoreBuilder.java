@@ -171,7 +171,7 @@ public class ContainerArvoreBuilder extends Builder {
 	}
 
 	private void focusInput(ClassePrivada classe) {
-		classe.newLine();
+		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "focusInputPesquisar");
 		funcao.addInstrucao("txtArquivo.requestFocus()");
 	}

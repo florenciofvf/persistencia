@@ -149,6 +149,7 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		funcao.addInstrucao("add(BorderLayout.NORTH, toolbar)");
 		if (config.comFichario) {
 			funcao.addInstrucao("add(BorderLayout.CENTER, fichario)");
+			funcao.addInstrucao("fichario.setListener(e -> focusInputPesquisar())");
 		}
 
 		classe.addOverride(true);
@@ -216,6 +217,10 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		loop2.addInstrucao("fichario.adicionarPagina(pagina)");
 
 		funcao.addInstrucao("fichario.setConteudo(conteudo, idPagina)");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPublica("void", "focusInputPesquisar");
+		funcao.addInstrucao("toolbar.focusInputPesquisar()");
 	}
 
 	private void templateToolbar(ClassePublica classe) {
@@ -247,6 +252,7 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		}
 
 		if (config.comFichario) {
+			focusInput(classePrivada);
 			contemConteudo(classePrivada);
 		}
 		destacar(classePrivada);
@@ -268,6 +274,12 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		if (config.comFichario) {
 			excluir(classePrivada);
 		}
+	}
+
+	private void focusInput(ClassePrivada classe) {
+		classe.addOverride(true);
+		Funcao funcao = classe.criarFuncaoProtegida("void", "focusInputPesquisar");
+		funcao.addInstrucao("txtArquivo.requestFocus()");
 	}
 
 	private void contemConteudo(ClassePrivada classe) {

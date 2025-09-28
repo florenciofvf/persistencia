@@ -82,6 +82,7 @@ public class RoboContainer extends AbstratoContainer {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
+		fichario.setListener(e -> focusInputPesquisar());
 	}
 
 	@Override
@@ -136,6 +137,10 @@ public class RoboContainer extends AbstratoContainer {
 		fichario.setConteudo(conteudo, idPagina);
 	}
 
+	public void focusInputPesquisar() {
+		toolbar.focusInputPesquisar();
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAcao = acaoIcon("label.executar_todos", Icones.EXECUTAR);
 		private final TextField txtArquivo = new TextField(35);
@@ -152,6 +157,11 @@ public class RoboContainer extends AbstratoContainer {
 			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			txtArquivo.addActionListener(this);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtArquivo.requestFocus();
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
