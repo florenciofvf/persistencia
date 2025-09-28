@@ -1,5 +1,7 @@
 package br.com.persist.arquivo;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -9,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.assistencia.Constantes;
@@ -28,6 +33,29 @@ public class ArquivoTree extends Tree {
 		addMouseListener(mouseListenerInner);
 		addKeyListener(keyListenerInner);
 		ouvintes = new ArrayList<>();
+		configurar();
+	}
+
+	private void configurar() {
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
+		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
+	}
+
+	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ouvintes.forEach(o -> o.focusInputPesquisar(ArquivoTree.this));
+		}
+	};
+
+	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
+		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
+	}
+
+	private InputMap inputMap() {
+		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
 	}
 
 	public ArquivoPesquisa getPesquisa(ArquivoPesquisa pesquisa, String string, boolean porParte) {

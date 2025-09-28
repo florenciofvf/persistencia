@@ -45,7 +45,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 	public AnotacaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		split = new AnotacaoSplit();
-		split.inicializar();
+		split.inicializar(this);
 		toolbar.ini(janela);
 		montarLayout();
 	}
@@ -82,6 +82,10 @@ public class AnotacaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
+	public void focusInputPesquisar() {
+		toolbar.focusInputPesquisar();
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtArquivo = new TextField(35);
@@ -99,6 +103,10 @@ public class AnotacaoContainer extends AbstratoContainer {
 			add(chkPorParte);
 			add(chkPsqConteudo);
 			add(label);
+		}
+
+		protected void focusInputPesquisar() {
+			txtArquivo.requestFocus();
 		}
 
 		@Override
@@ -173,7 +181,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 
 		@Override
 		protected void baixar() {
-			split.inicializar();
+			split.inicializar(AnotacaoContainer.this);
 		}
 	}
 

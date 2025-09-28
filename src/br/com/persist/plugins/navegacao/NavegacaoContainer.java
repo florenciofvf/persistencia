@@ -46,7 +46,7 @@ public class NavegacaoContainer extends AbstratoContainer {
 	public NavegacaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		split = new NavegacaoSplit();
-		split.inicializar();
+		split.inicializar(this);
 		toolbar.ini(janela);
 		montarLayout();
 	}
@@ -83,6 +83,10 @@ public class NavegacaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
+	public void focusInputPesquisar() {
+		toolbar.focusInputPesquisar();
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtArquivo = new TextField(35);
@@ -100,6 +104,10 @@ public class NavegacaoContainer extends AbstratoContainer {
 			add(chkPorParte);
 			add(chkPsqConteudo);
 			add(label);
+		}
+
+		protected void focusInputPesquisar() {
+			txtArquivo.requestFocus();
 		}
 
 		@Override
@@ -174,7 +182,7 @@ public class NavegacaoContainer extends AbstratoContainer {
 
 		@Override
 		protected void baixar() {
-			split.inicializar();
+			split.inicializar(NavegacaoContainer.this);
 		}
 	}
 

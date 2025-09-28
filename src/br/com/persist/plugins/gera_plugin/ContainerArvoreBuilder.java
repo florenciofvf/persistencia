@@ -85,7 +85,7 @@ public class ContainerArvoreBuilder extends Builder {
 
 		construtor.addInstrucao("super(formulario)");
 		construtor.addInstrucao("split = new " + config.nameCapSplit() + "()");
-		construtor.addInstrucao("split.inicializar()");
+		construtor.addInstrucao("split.inicializar(this)");
 		construtor.addInstrucao("toolbar.ini(janela)");
 		construtor.addInstrucao("montarLayout()");
 
@@ -125,6 +125,9 @@ public class ContainerArvoreBuilder extends Builder {
 		funcao = classe.criarFuncaoPublica("void", "setJanela", new Parametros("Janela janela"));
 		funcao.addInstrucao("toolbar.setJanela(janela)");
 
+		funcao = classe.criarFuncaoPublica("void", "focusInputPesquisar");
+		funcao.addInstrucao("toolbar.focusInputPesquisar()");
+
 		templateToolbar(classe);
 		finalizar(classe);
 		titulo(classe);
@@ -153,6 +156,7 @@ public class ContainerArvoreBuilder extends Builder {
 		funcao.addInstrucao("add(chkPsqConteudo)");
 		funcao.addInstrucao("add(label)");
 
+		focusInput(classePrivada);
 		contemConteudo(classePrivada);
 		destacar(classePrivada);
 		retornar(classePrivada);
@@ -163,6 +167,11 @@ public class ContainerArvoreBuilder extends Builder {
 		}
 		adicionadoAoFichario(classePrivada);
 		baixar(classePrivada);
+	}
+
+	private void focusInput(ClassePrivada classe) {
+		Funcao funcao = classe.criarFuncaoProtegida("void", "focusInputPesquisar");
+		funcao.addInstrucao("txtArquivo.requestFocus()");
 	}
 
 	private void contemConteudo(ClassePrivada classe) {
@@ -255,7 +264,7 @@ public class ContainerArvoreBuilder extends Builder {
 	private void baixar(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "baixar");
-		funcao.addInstrucao("split.inicializar()");
+		funcao.addInstrucao("split.inicializar(" + config.nameCapContainer() + DOT_THIS);
 	}
 
 	private void finalizar(ClassePublica classe) {
