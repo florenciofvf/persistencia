@@ -71,6 +71,7 @@ public class MapaPagina extends Panel {
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+			textEditor.setListener(e -> toolbar.focusInputPesquisar());
 		}
 
 		int getValueScrollPane() {
@@ -109,6 +110,11 @@ public class MapaPagina extends Panel {
 				txtPesquisa.addActionListener(this);
 				add(txtPesquisa);
 				add(label);
+			}
+
+			@Override
+			protected void focusInputPesquisar() {
+				txtPesquisa.requestFocus();
 			}
 
 			@Override

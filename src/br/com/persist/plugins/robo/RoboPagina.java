@@ -64,6 +64,7 @@ public class RoboPagina extends Panel {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private Panel criarPanel() {
@@ -114,6 +115,11 @@ public class RoboPagina extends Panel {
 			add(chkExecSel);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		Action acaoIcon(String chave, Icon icon) {

@@ -54,6 +54,7 @@ public class EntregaPagina extends Panel {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private Panel criarPanel() {
@@ -94,6 +95,11 @@ public class EntregaPagina extends Panel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		@Override

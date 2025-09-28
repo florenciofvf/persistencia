@@ -312,6 +312,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
+		textEditorReq.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private Panel criarPanel() {
@@ -369,6 +370,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			clonarSelAcao.setActionListener(e -> clonarSelecionados());
 			chkModoTabela.setToolTipText(RequisicaoMensagens.getString("label.modo_tabela"));
 			chkModoTabela.addActionListener(e -> modoTabelaHandler(chkModoTabela.isSelected()));
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		private void modoTabelaHandler(boolean modoTabela) {

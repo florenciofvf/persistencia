@@ -55,6 +55,7 @@ public class ###nameCap###Pagina extends Panel {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
 		add(BorderLayout.CENTER, split);
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private Panel criarPanel() {
@@ -98,6 +99,11 @@ public class ###nameCap###Pagina extends Panel {
 			addButton(executarAcao);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
