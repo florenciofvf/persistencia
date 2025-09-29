@@ -74,6 +74,7 @@ public class AtributoContainer extends AbstratoContainer {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
+		fichario.setListener(e -> focusInputPesquisar());
 	}
 
 	public String getConteudo() {
@@ -126,6 +127,10 @@ public class AtributoContainer extends AbstratoContainer {
 	@Override
 	public void setJanela(Janela janela) {
 		toolbar.setJanela(janela);
+	}
+
+	public void focusInputPesquisar() {
+		fichario.focusInputPesquisar();
 	}
 
 	private class Toolbar extends BarraButton {

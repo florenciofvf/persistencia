@@ -2,11 +2,10 @@ package br.com.persist.plugins.atributo;
 
 import java.awt.Component;
 
-import javax.swing.JTabbedPane;
-
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.AbstratoFichario;
 
-public class AtributoFichario extends JTabbedPane {
+public class AtributoFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
 
 	public AtributoFichario() {
@@ -70,6 +69,13 @@ public class AtributoFichario extends JTabbedPane {
 				pagina.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
+		}
+	}
+
+	public void focusInputPesquisar() {
+		AtributoPagina ativa = getPaginaAtiva();
+		if (ativa != null) {
+			ativa.focusInputPesquisar();
 		}
 	}
 }

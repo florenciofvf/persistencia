@@ -120,6 +120,10 @@ public class AtributoPagina extends Panel {
 		return painelAtributo.getAtributos();
 	}
 
+	public void focusInputPesquisar() {
+		painelAtributo.toolbar.focusInputPesquisar();
+	}
+
 	class PainelAtributo extends Panel {
 		private final JTable tabela = new JTable(new AtributoModelo());
 		public final TextEditor textEditor = new TextEditor();
@@ -170,6 +174,10 @@ public class AtributoPagina extends Panel {
 			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 		}
 
+		public void focusInputPesquisar() {
+			toolbar.focusInputPesquisar();
+		}
+
 		private class Toolbar extends BarraButton implements ActionListener {
 			private Action tabelaAcao = acaoIcon("label.atualizar_tabela", Icones.SINCRONIZAR);
 			private Action modelIdAcao = acaoMenu("label.ler_id", Icones.FIELDS);
@@ -187,6 +195,11 @@ public class AtributoPagina extends Panel {
 				addButton(modelIdAcao);
 				modelIdAcao.setActionListener(e -> lerArquivo());
 				tabelaAcao.setActionListener(e -> carregar());
+			}
+
+			@Override
+			protected void focusInputPesquisar() {
+				txtPesquisa.requestFocus();
 			}
 
 			Action acaoMenu(String chave, Icon icon) {
@@ -506,6 +519,7 @@ abstract class AbstratoPanel extends Panel {
 		if (comCheckModelo) {
 			toolbar.add(chkModeloLista);
 		}
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	void selecionarModeloLista(boolean b) {
@@ -535,6 +549,11 @@ abstract class AbstratoPanel extends Panel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		@Override
