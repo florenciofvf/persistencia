@@ -41,6 +41,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
+import br.com.persist.componente.TextEditorListener;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.fichario.Fichario;
@@ -108,23 +109,25 @@ public class PropriedadeContainer extends AbstratoContainer {
 		return panel;
 	}
 
+	private transient TextEditorListener listener = e -> toolbar.focusInputPesquisar();
+
 	private class FicharioInner extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 
 		void init() {
-			Aba aba = new Aba(0, fileProper);
+			Aba aba = new Aba(0, fileProper, listener);
 			aba.montarLayout();
 			addTab("label.configuracoes", Icones.CONFIG, aba);
 
-			aba = new Aba(1, fileDesenv);
+			aba = new Aba(1, fileDesenv, listener);
 			aba.montarLayout();
 			addTab("label.desenvolvimento", Icones.CONFIG2, aba);
 
-			aba = new Aba(2, filePrehom);
+			aba = new Aba(2, filePrehom, listener);
 			aba.montarLayout();
 			addTab("label.pre_homologacao", Icones.CONFIG2, aba);
 
-			aba = new Aba(3, fileHomolo);
+			aba = new Aba(3, fileHomolo, listener);
 			aba.montarLayout();
 			addTab("label.homologacao", Icones.CONFIG2, aba);
 		}
@@ -205,6 +208,11 @@ public class PropriedadeContainer extends AbstratoContainer {
 			add(label);
 			comboFontes.addItemListener(Toolbar.this::alterarFonte);
 			gerarAcao.setActionListener(e -> gerar());
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
@@ -449,11 +457,13 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 class Aba extends Panel {
 	private static final long serialVersionUID = 1L;
+	transient TextEditorListener listener;
 	TextEditor editor;
 	final int indice;
 	final File file;
 
-	Aba(int indice, File file) {
+	Aba(int indice, File file, TextEditorListener listener) {
+		this.listener = listener;
 		this.indice = indice;
 		this.file = file;
 	}
@@ -469,6 +479,7 @@ class Aba extends Panel {
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		editor.setText(abrirArquivo());
+		editor.setListener(listener);
 	}
 
 	private String abrirArquivo() {

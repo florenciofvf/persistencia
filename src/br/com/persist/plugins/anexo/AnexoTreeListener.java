@@ -5,6 +5,8 @@ import br.com.persist.assistencia.AssistenciaException;
 public interface AnexoTreeListener {
 	public void copiarAtributosAnexo(AnexoTree anexoTree);
 
+	public void focusInputPesquisar(AnexoTree anexoTree);
+
 	public void colarAtributosAnexo(AnexoTree anexoTree) throws AssistenciaException;
 
 	public void diretorioAnexo(AnexoTree anexoTree);

@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
 
@@ -106,6 +106,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			add(chkPorParte);
 			add(label);
 			eventos();
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtAnexo.requestFocus();
 		}
 
 		private void eventos() {
@@ -216,6 +221,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 				Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoContainer.this);
 			}
 		}
+	}
+
+	@Override
+	public void focusInputPesquisar(AnexoTree anexoTree) {
+		toolbar.focusInputPesquisar();
 	}
 
 	@Override

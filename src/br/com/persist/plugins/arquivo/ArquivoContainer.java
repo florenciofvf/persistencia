@@ -114,6 +114,11 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			eventos();
 		}
 
+		@Override
+		protected void focusInputPesquisar() {
+			txtArquivo.requestFocus();
+		}
+
 		private void eventos() {
 			chkSempreTopArq.addActionListener(e -> arquivoFormulario.setAlwaysOnTop(chkSempreTopArq.isSelected()));
 			fecharAcao.setActionListener(e -> formulario.fecharTodos());
@@ -316,6 +321,11 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 				arquivoTree.repaint();
 			}
 		}
+	}
+
+	@Override
+	public void focusInputPesquisar(ArquivoTree arquivoTree) {
+		toolbar.focusInputPesquisar();
 	}
 
 	@Override
