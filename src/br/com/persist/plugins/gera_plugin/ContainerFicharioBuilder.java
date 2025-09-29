@@ -14,7 +14,7 @@ import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
-public class ContainerSimpleFicharioBuilder extends Builder {
+public class ContainerFicharioBuilder extends Builder {
 	private static final String ATIVA_PAGINA_ATIVA = " ativa = fichario.getPaginaAtiva()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String ATIVA_DIFF_NULL = "ativa != null";
@@ -24,24 +24,18 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 	private static final String DOT_THIS = ".this)";
 	private static final String STRING = "String";
 	private static final String LABEL = "LABEL_";
-	private final boolean fichario;
 
-	protected ContainerSimpleFicharioBuilder(Config config, boolean fichario) {
+	protected ContainerFicharioBuilder(Config config) {
 		super("Container", "extends AbstratoContainer", config);
-		this.fichario = fichario;
 	}
 
 	@Override
 	void templateImport(Arquivo arquivo) {
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.BAIXAR");
-		if (fichario) {
-			arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO");
-		}
+		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO");
-		if (fichario) {
-			arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.NOVO");
-		}
+		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.NOVO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.SALVAR").newLine();
 		arquivo.addImport("java.awt.BorderLayout");
@@ -51,36 +45,29 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		}
 		arquivo.addImport("java.awt.Window");
 
-		if (fichario) {
-			arquivo.addImport("java.awt.event.ActionEvent");
-			arquivo.addImport("java.awt.event.ActionListener");
-			arquivo.addImport("java.util.LinkedHashSet");
-			arquivo.addImport("java.util.Set");
+		arquivo.addImport("java.awt.event.ActionEvent");
+		arquivo.addImport("java.awt.event.ActionListener");
+		arquivo.addImport("java.util.LinkedHashSet");
+		arquivo.addImport("java.util.Set");
 
-			arquivo.addImport("java.io.File");
-			arquivo.addImport("java.io.IOException");
-			arquivo.addImport("java.util.ArrayList");
-			arquivo.addImport("java.util.List");
-			arquivo.addImport("java.util.concurrent.atomic.AtomicBoolean").newLine();
-		}
+		arquivo.addImport("java.io.File");
+		arquivo.addImport("java.io.IOException");
+		arquivo.addImport("java.util.ArrayList");
+		arquivo.addImport("java.util.List");
+		arquivo.addImport("java.util.concurrent.atomic.AtomicBoolean").newLine();
+
 		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
-		if (fichario) {
-			arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
-		}
+		arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
-		if (fichario) {
-			arquivo.addImport("br.com.persist.assistencia.Mensagens");
-			arquivo.addImport("br.com.persist.assistencia.Util");
-			arquivo.addImport("br.com.persist.componente.Action");
-		}
+		arquivo.addImport("br.com.persist.assistencia.Mensagens");
+		arquivo.addImport("br.com.persist.assistencia.Util");
+		arquivo.addImport("br.com.persist.componente.Action");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
-		if (fichario) {
-			arquivo.addImport("br.com.persist.componente.TextField");
-		}
+		arquivo.addImport("br.com.persist.componente.TextField");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
 		arquivo.addImport("br.com.persist.formulario.Formulario").newLine();
@@ -88,12 +75,10 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 
 	@Override
 	void templateClass(ClassePublica classe) {
-		if (config.comFichario) {
-			classe.addInstrucao("private static final File file = new File(" + config.nameCapConstantes() + "."
-					+ config.recurso + ")");
-			classe.addInstrucao(
-					"private final " + config.nameCapFichario() + " fichario = new " + config.nameCapFichario() + "()");
-		}
+		classe.addInstrucao(
+				"private static final File file = new File(" + config.nameCapConstantes() + "." + config.recurso + ")");
+		classe.addInstrucao(
+				"private final " + config.nameCapFichario() + " fichario = new " + config.nameCapFichario() + "()");
 		classe.addInstrucao("private static final long serialVersionUID = 1L");
 		classe.addInstrucao("private final Toolbar toolbar = new Toolbar()");
 		classe.addInstrucao("private " + config.nameCapFormulario() + " " + config.nameDecapFormulario());
@@ -102,20 +87,13 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		}
 		classe.newLine();
 		Container construtor = null;
-		if (config.comFichario) {
-			construtor = classe.criarConstrutorPublico(config.nameCapContainer(),
-					new Parametros("Janela janela, Formulario formulario, String conteudo, String idPagina"));
-		} else {
-			construtor = classe.criarConstrutorPublico(config.nameCapContainer(),
-					new Parametros("Janela janela, Formulario formulario"));
-		}
+		construtor = classe.criarConstrutorPublico(config.nameCapContainer(),
+				new Parametros("Janela janela, Formulario formulario, String conteudo, String idPagina"));
 		construtor.addInstrucao("super(formulario)");
 		construtor.addInstrucao("toolbar.ini(janela)");
 		construtor.addInstrucao("montarLayout()");
 
-		if (config.comFichario) {
-			construtor.addInstrucao("abrir(conteudo, idPagina)");
-		}
+		construtor.addInstrucao("abrir(conteudo, idPagina)");
 
 		if (config.comDialogo) {
 			classe.newLine();
@@ -147,18 +125,14 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		classe.newLine();
 		funcao = classe.criarFuncaoPrivada("void", "montarLayout");
 		funcao.addInstrucao("add(BorderLayout.NORTH, toolbar)");
-		if (config.comFichario) {
-			funcao.addInstrucao("add(BorderLayout.CENTER, fichario)");
-			funcao.addInstrucao("fichario.setListener(e -> focusInputPesquisar())");
-		}
+		funcao.addInstrucao("add(BorderLayout.CENTER, fichario)");
+		funcao.addInstrucao("fichario.setListener(e -> focusInputPesquisar())");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "setJanela", new Parametros("Janela janela"));
 		funcao.addInstrucao("toolbar.setJanela(janela)");
 
-		if (config.comFichario) {
-			templateFichario(classe);
-		}
+		templateFichario(classe);
 		templateToolbar(classe);
 		finalizar(classe);
 		titulo(classe);
@@ -227,53 +201,36 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 		classe.newLine();
 		ClassePrivada classePrivada = null;
 
-		if (config.comFichario) {
-			classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
-			classePrivada.addInstrucao("private final TextField txtArquivo = new TextField(35)");
-			classePrivada.addInstrucao("private Action excluirAtivoAcao = actionIconExcluir()");
-		} else {
-			classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton");
-		}
+		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
+		classePrivada.addInstrucao("private final TextField txtArquivo = new TextField(35)");
+		classePrivada.addInstrucao("private Action excluirAtivoAcao = actionIconExcluir()");
 
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));
-		if (config.comFichario) {
-			funcao.addInstrucao(
-					"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR)");
-			funcao.addInstrucao("addButton(excluirAtivoAcao)");
-			funcao.addInstrucao("add(txtArquivo)");
-			funcao.addInstrucao("txtArquivo.setToolTipText(Mensagens.getString(\"label.pesquisar\"))");
-			funcao.addInstrucao("excluirAtivoAcao.setActionListener(e -> excluirAtivo())");
-			funcao.addInstrucao("txtArquivo.addActionListener(this)");
-		} else {
-			funcao.addInstrucao(
-					"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR)");
-		}
+		funcao.addInstrucao(
+				"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR)");
+		funcao.addInstrucao("addButton(excluirAtivoAcao)");
+		funcao.addInstrucao("add(txtArquivo)");
+		funcao.addInstrucao("txtArquivo.setToolTipText(Mensagens.getString(\"label.pesquisar\"))");
+		funcao.addInstrucao("excluirAtivoAcao.setActionListener(e -> excluirAtivo())");
+		funcao.addInstrucao("txtArquivo.addActionListener(this)");
 
-		if (config.comFichario) {
-			focusInput(classePrivada);
-			contemConteudo(classePrivada);
-		}
+		focusInput(classePrivada);
+		contemConteudo(classePrivada);
 		destacar(classePrivada);
 		retornar(classePrivada);
-		if (config.comFichario) {
-			clonar(classePrivada);
-		}
+		clonar(classePrivada);
 		abrir(classePrivada);
 		windowOpended(classePrivada);
 		if (config.comDialogo) {
 			dialogOpened(classePrivada);
 		}
 		adicionadoAoFichario(classePrivada);
-		if (config.comFichario) {
-			novo(classePrivada);
-		}
+		novo(classePrivada);
 		baixar(classePrivada);
 		salvar(classePrivada);
-		if (config.comFichario) {
-			excluir(classePrivada);
-		}
+		excluir(classePrivada);
 	}
 
 	private void focusInput(ClassePrivada classe) {
@@ -352,11 +309,7 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 			se.addInstrucao(config.nameDecapDialogo() + EXCLUIR_CONTAINER);
 		}
 
-		if (config.comFichario) {
-			funcao.addInstrucao(config.nameCapFormulario() + ".criar(formulario, null, null)");
-		} else {
-			funcao.addInstrucao(config.nameCapFormulario() + ".criar(formulario)");
-		}
+		funcao.addInstrucao(config.nameCapFormulario() + ".criar(formulario, null, null)");
 	}
 
 	private void windowOpended(ClassePrivada classe) {
@@ -412,31 +365,23 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 	private void baixar(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "baixar");
-		if (config.comFichario) {
-			funcao.addInstrucao("abrir(null, getIdPagina())");
-		} else {
-			funcao.addComentario("TODO - impl");
-		}
+		funcao.addInstrucao("abrir(null, getIdPagina())");
 	}
 
 	private void salvar(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "salvar");
-		if (config.comFichario) {
-			funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
+		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 
-			If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
-			se.addInstrucao("salvar(ativa)");
+		If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
+		se.addInstrucao("salvar(ativa)");
 
-			classe.newLine();
-			funcao = classe.criarFuncaoPrivada("void", "salvar", new Parametros(config.nameCapPagina() + " ativa"));
-			funcao.addInstrucao("AtomicBoolean atomic = new AtomicBoolean(false)");
-			funcao.addInstrucao("ativa.salvar(atomic)");
-			se = funcao.criarIf("atomic.get()", null);
-			se.addInstrucao("salvoMensagem()");
-		} else {
-			funcao.addComentario("TODO - impl");
-		}
+		classe.newLine();
+		funcao = classe.criarFuncaoPrivada("void", "salvar", new Parametros(config.nameCapPagina() + " ativa"));
+		funcao.addInstrucao("AtomicBoolean atomic = new AtomicBoolean(false)");
+		funcao.addInstrucao("ativa.salvar(atomic)");
+		se = funcao.criarIf("atomic.get()", null);
+		se.addInstrucao("salvoMensagem()");
 	}
 
 	private void excluir(ClassePrivada classe) {
@@ -468,11 +413,9 @@ public class ContainerSimpleFicharioBuilder extends Builder {
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica(STRING, "getStringPersistencia");
-		if (config.comFichario) {
-			funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
-			If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
-			se.addReturn("ativa.getNome()");
-		}
+		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
+		If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
+		se.addReturn("ativa.getNome()");
 		funcao.addReturn("Constantes.VAZIO");
 
 		classe.addOverride(true);
