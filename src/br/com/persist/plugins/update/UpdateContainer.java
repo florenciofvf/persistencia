@@ -116,6 +116,7 @@ public class UpdateContainer extends AbstratoContainer {
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private void configurar() {
@@ -198,6 +199,11 @@ public class UpdateContainer extends AbstratoContainer {
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			updateAcao.setActionListener(e -> atualizar());
 			txtPesquisa.addActionListener(this);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		Action acaoMenu(String chave) {

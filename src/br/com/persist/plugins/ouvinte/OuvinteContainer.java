@@ -67,6 +67,7 @@ public class OuvinteContainer extends AbstratoContainer {
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	@Override
@@ -105,6 +106,11 @@ public class OuvinteContainer extends AbstratoContainer {
 			add(chkAtivar);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		@Override

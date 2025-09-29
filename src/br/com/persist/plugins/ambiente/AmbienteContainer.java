@@ -99,6 +99,7 @@ public class AmbienteContainer extends AbstratoContainer {
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	public String getConteudo() {
@@ -150,6 +151,11 @@ public class AmbienteContainer extends AbstratoContainer {
 			add(label);
 			addButton(pesquisaGeralAcao);
 			pesquisaGeralAcao.setActionListener(e -> pesquisarGeral());
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		private void pesquisarGeral() {

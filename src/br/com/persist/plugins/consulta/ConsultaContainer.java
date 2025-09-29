@@ -128,6 +128,7 @@ public class ConsultaContainer extends AbstratoContainer {
 		add(BorderLayout.CENTER, split);
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
+		textEditor.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private Panel criarPanelTabela() {
@@ -275,6 +276,11 @@ public class ConsultaContainer extends AbstratoContainer {
 			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
 		}
 
 		Action acaoMenu(String chave) {
