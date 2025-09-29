@@ -481,7 +481,9 @@ class Aba extends Transferivel {
 		private static final long serialVersionUID = 1L;
 
 		private PainelResultado() {
-			add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
+			ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+			add(BorderLayout.NORTH, toolbarPesquisa);
 			ScrollPane scrollPane2 = new ScrollPane(textEditor);
 			scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
 			Panel panelScroll = new Panel();

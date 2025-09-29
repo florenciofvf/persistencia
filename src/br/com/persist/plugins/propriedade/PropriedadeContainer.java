@@ -146,6 +146,7 @@ public class PropriedadeContainer extends AbstratoContainer {
 
 		private PainelResultado() {
 			toolbarPesquisa = new ToolbarPesquisa(textPane);
+			textPane.setListener(e -> toolbarPesquisa.focusInputPesquisar());
 			add(BorderLayout.NORTH, toolbarPesquisa);
 			ScrollPane scrollPane = new ScrollPane(textPane);
 			scrollPane.setRowHeaderView(new TextEditorLine(textPane));

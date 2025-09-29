@@ -596,7 +596,9 @@ class Aba extends Transferivel {
 			PainelDados(String string) {
 				setText(string);
 
-				add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
+				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+				textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+				add(BorderLayout.NORTH, toolbarPesquisa);
 				ScrollPane scrollPane2 = new ScrollPane(textEditor);
 				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
 				Panel panelScroll = new Panel();
@@ -631,7 +633,9 @@ class Aba extends Transferivel {
 				info("Response", builder, result.getResponse());
 				setText(builder.toString());
 
-				add(BorderLayout.NORTH, new ToolbarPesquisa(textEditor));
+				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+				textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+				add(BorderLayout.NORTH, toolbarPesquisa);
 				ScrollPane scrollPane2 = new ScrollPane(textEditor);
 				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
 				Panel panelScroll = new Panel();
@@ -1326,8 +1330,12 @@ abstract class Visualizador extends Panel implements IVisualizador {
 		this.bytes = bytes;
 	}
 
-	protected BarraButton criarToolbarPesquisa(JTextPane textPane) {
-		return new ToolbarPesquisa(textPane);
+	protected BarraButton criarToolbarPesquisa(JTextPane textPane, TextEditor textEditor) {
+		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
+		if (textEditor != null) {
+			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+		}
+		return toolbarPesquisa;
 	}
 }
 
@@ -1364,7 +1372,7 @@ class VisualizadorConteudo extends Visualizador {
 		JTextPane textPane = new JTextPane();
 		textPane.setText(string);
 
-		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, null));
 		add(BorderLayout.CENTER, new ScrollPane(textPane));
 		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 	}
@@ -1431,7 +1439,7 @@ class VisualizadorHTML extends Visualizador {
 		Panel panelTextPane = new Panel();
 		panelTextPane.add(BorderLayout.CENTER, textPane);
 
-		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, null));
 		add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
 		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 	}
@@ -1488,7 +1496,7 @@ class VisualizadorJSON extends Visualizador {
 			Panel panelTextPane = new Panel();
 			panelTextPane.add(BorderLayout.CENTER, textPane);
 
-			BarraButton barraButton = criarToolbarPesquisa(textPane);
+			BarraButton barraButton = criarToolbarPesquisa(textPane, null);
 			config(barraButton, json, textPane);
 
 			add(BorderLayout.NORTH, barraButton);

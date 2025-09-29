@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import javax.swing.JTextPane;
 
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
@@ -39,7 +40,11 @@ public interface RequisicaoVisualizador {
 
 	public RequisicaoRota getRequisicaoRota();
 
-	public default BarraButton criarToolbarPesquisa(JTextPane textPane) {
-		return new ToolbarPesquisa(textPane);
+	public default BarraButton criarToolbarPesquisa(JTextPane textPane, TextEditor textEditor) {
+		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
+		if (textEditor != null) {
+			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+		}
+		return toolbarPesquisa;
 	}
 }

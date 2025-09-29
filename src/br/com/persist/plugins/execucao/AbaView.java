@@ -136,7 +136,9 @@ class PanelLog extends Panel {
 	private final Editor editor = new Editor();
 
 	PanelLog() {
-		add(BorderLayout.NORTH, new ToolbarPesquisa(editor));
+		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(editor);
+		editor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+		add(BorderLayout.NORTH, toolbarPesquisa);
 		add(BorderLayout.CENTER, new JScrollPane(editor));
 	}
 

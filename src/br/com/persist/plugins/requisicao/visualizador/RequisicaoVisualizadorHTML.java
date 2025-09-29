@@ -37,7 +37,7 @@ public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 			panelTextPane.add(BorderLayout.CENTER, textPane);
 
 			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+			panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, null));
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
 			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 

@@ -43,7 +43,7 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 			panelTextPane.add(BorderLayout.CENTER, textPane);
 
 			Panel panel = new Panel();
-			BarraButton barraButton = criarToolbarPesquisa(textPane);
+			BarraButton barraButton = criarToolbarPesquisa(textPane, null);
 			config(barraButton, json, textPane);
 			panel.add(BorderLayout.NORTH, barraButton);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));

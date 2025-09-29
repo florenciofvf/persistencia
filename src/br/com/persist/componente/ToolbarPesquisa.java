@@ -30,6 +30,11 @@ public class ToolbarPesquisa extends BarraButton implements ActionListener {
 	}
 
 	@Override
+	public void focusInputPesquisar() {
+		txtPesquisa.requestFocus();
+	}
+
+	@Override
 	protected void limpar() {
 		textPane.setText(Constantes.VAZIO);
 	}

@@ -22,7 +22,7 @@ public class RequisicaoVisualizadorTexto extends AbstratoRequisicaoVisualizador 
 			textPane.setText(Util.getString(bytes));
 
 			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+			panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, null));
 			panel.add(BorderLayout.CENTER, new ScrollPane(textPane));
 			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 
