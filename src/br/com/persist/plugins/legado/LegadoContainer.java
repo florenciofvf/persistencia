@@ -79,6 +79,7 @@ public class LegadoContainer extends AbstratoContainer {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
+		fichario.setListener(e -> focusInputPesquisar());
 	}
 
 	@Override
@@ -133,6 +134,10 @@ public class LegadoContainer extends AbstratoContainer {
 		fichario.setConteudo(conteudo, idPagina);
 	}
 
+	public void focusInputPesquisar() {
+		toolbar.focusInputPesquisar();
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private final TextField txtArquivo = new TextField(35);
 		private Action excluirAtivoAcao = actionIconExcluir();
@@ -146,6 +151,11 @@ public class LegadoContainer extends AbstratoContainer {
 			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			txtArquivo.addActionListener(this);
+		}
+
+		@Override
+		protected void focusInputPesquisar() {
+			txtArquivo.requestFocus();
 		}
 
 		@Override
