@@ -11,7 +11,7 @@ import br.com.persist.geradores.If;
 import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 
-public class ContainerSimpleBuilder extends Builder {
+public class ContainerSimplesBuilder extends Builder {
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String GET_STRING = ".getString(";
 	private static final String DIFF_NULL = " != null";
@@ -19,7 +19,7 @@ public class ContainerSimpleBuilder extends Builder {
 	private static final String STRING = "String";
 	private static final String LABEL = "LABEL_";
 
-	protected ContainerSimpleBuilder(Config config) {
+	protected ContainerSimplesBuilder(Config config) {
 		super("Container", "extends AbstratoContainer", config);
 	}
 

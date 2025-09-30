@@ -372,7 +372,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 			new ConstantesBuilder(config).gerar();
 
 			if (chkSimples.isSelected()) {
-				new ContainerSimpleBuilder(config).gerar();
+				new ContainerSimplesBuilder(config).gerar();
 			} else if (chkFichario.isSelected()) {
 				new ContainerFicharioBuilder(config).gerar();
 			} else if (chkArvore.isSelected()) {

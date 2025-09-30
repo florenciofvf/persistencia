@@ -34,24 +34,19 @@ public class ContainerArvoreBuilder extends Builder {
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.BAIXAR");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO").newLine();
-
 		arquivo.addImport("java.awt.BorderLayout");
 		arquivo.addImport("java.awt.Component");
 		if (config.comDialogo) {
 			arquivo.addImport("java.awt.Dialog");
 		}
 		arquivo.addImport("java.awt.Window");
-
 		arquivo.addImport("java.awt.event.ActionEvent");
 		arquivo.addImport("java.awt.event.ActionListener");
 		arquivo.addImport("java.util.LinkedHashSet");
 		arquivo.addImport("java.util.Set").newLine();
-
 		arquivo.addImport("java.util.logging.Level");
 		arquivo.addImport("java.util.logging.Logger").newLine();
-
 		arquivo.addImport("javax.swing.Icon").newLine();
-
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
