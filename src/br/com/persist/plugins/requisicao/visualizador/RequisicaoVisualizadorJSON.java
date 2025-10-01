@@ -122,9 +122,9 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 
 	private void filtrarComAtributos(Tipo json, String[] atributos, JTextPane textPane) {
 		if (json instanceof Objeto) {
-			json = Filtro.comAtributos((Objeto) json, atributos);
+			json = Filtro.comAtributos((Objeto) json, atributos, null);
 		} else if (json instanceof Array) {
-			json = Filtro.comAtributos((Array) json, atributos);
+			json = Filtro.comAtributos((Array) json, atributos, null);
 		}
 		setText(json, textPane);
 	}

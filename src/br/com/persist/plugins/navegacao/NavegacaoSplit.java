@@ -1521,16 +1521,19 @@ class VisualizadorJSON extends Visualizador {
 		Action comAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.com_atributos"), null);
 		Action semAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.sem_atributos"), null);
 		Action originalAction = Action.acaoMenu(RequisicaoMensagens.getString("label.original"), null);
-		TextField txtComAtributo = new TextField(20);
-		TextField txtSemAtributo = new TextField(20);
+		TextField txtComAtributo = new TextField(15);
+		TextField txtVlrAtributo = new TextField(15);
+		TextField txtSemAtributo = new TextField(15);
 
-		comAtributoAction.setActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo));
+		comAtributoAction.setActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo, txtVlrAtributo));
 		semAtributoAction.setActionListener(e -> filtrarSemAtributo(json, textPane, txtSemAtributo));
+		txtVlrAtributo.setToolTipText(NavegacaoMensagens.getString("label.valor_atributo"));
 		totalElemAction.setActionListener(e -> totalElementos(textPane));
 		originalAction.setActionListener(e -> retornar(json, textPane));
 
 		barraButton.addButton(comAtributoAction);
 		barraButton.add(txtComAtributo);
+		barraButton.add(txtVlrAtributo);
 		barraButton.addButton(semAtributoAction);
 		barraButton.add(txtSemAtributo);
 		barraButton.addButton(originalAction);
@@ -1553,10 +1556,11 @@ class VisualizadorJSON extends Visualizador {
 		}
 	}
 
-	private void filtrarComAtributo(Tipo json, JTextPane textPane, TextField textField) {
+	private void filtrarComAtributo(Tipo json, JTextPane textPane, TextField textField,
+			TextField textFieldValorAtributo) {
 		if ((json instanceof Objeto || json instanceof Array) && !Util.isEmpty(textField.getText())) {
 			String[] atributos = textField.getText().split(",");
-			filtrarComAtributos(json.clonar(), atributos, textPane);
+			filtrarComAtributos(json.clonar(), atributos, textFieldValorAtributo.getText(), textPane);
 		}
 	}
 
@@ -1571,11 +1575,11 @@ class VisualizadorJSON extends Visualizador {
 		setText(json, textPane);
 	}
 
-	private void filtrarComAtributos(Tipo json, String[] atributos, JTextPane textPane) {
+	private void filtrarComAtributos(Tipo json, String[] atributos, String valorAtributo, JTextPane textPane) {
 		if (json instanceof Objeto) {
-			json = Filtro.comAtributos((Objeto) json, atributos);
+			json = Filtro.comAtributos((Objeto) json, atributos, valorAtributo);
 		} else if (json instanceof Array) {
-			json = Filtro.comAtributos((Array) json, atributos);
+			json = Filtro.comAtributos((Array) json, atributos, valorAtributo);
 		}
 		setText(json, textPane);
 	}
