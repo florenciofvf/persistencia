@@ -168,8 +168,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (totalRegistros < 1) {
 			int alturaTitulo = getAlturaTitulo();
 			int alturaToolbar = container.getAlturaToolbar();
-			int alturaHeader = container.getAlturaTableHeader();
-			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader + Constantes.DEZ;
+			int alturaTableHeader = container.getAlturaTableHeader();
+			int alturaScrollHorizontal = container.getAlturaScrollHorizontal();
+			int novaAltura = alturaTitulo + alturaToolbar + alturaTableHeader + alturaScrollHorizontal + Constantes.DEZ;
 			if (novaAltura != alturaAtual) {
 				setSize(getWidth(), novaAltura);
 				if (update) {

@@ -53,6 +53,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -407,6 +408,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public int getAlturaTableHeader() {
 		return tabelaPersistencia.getTableHeader().getHeight();
+	}
+
+	public int getAlturaScrollHorizontal() {
+		JScrollBar horizontalScrollBar = scrollPane.getHorizontalScrollBar();
+		return horizontalScrollBar.isVisible() ? horizontalScrollBar.getHeight() : 0;
 	}
 
 	public boolean scrollVisivel() {
