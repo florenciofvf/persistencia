@@ -11,6 +11,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -116,7 +117,9 @@ public class HttpUtil {
 			return;
 		}
 		Map<String, List<String>> map = (Map<String, List<String>>) result.getResponse().get(HEADER_RESPONSE);
-		if (map != null) {
+		if (map == null || map.isEmpty()) {
+			map = new LinkedHashMap<>();
+			result.getResponse().put(HEADER_RESPONSE, map);
 			map.put("Content-Type", Arrays.asList(string));
 		}
 	}
