@@ -33,13 +33,18 @@ public class Logico extends Tipo {
 		return conteudo.toString();
 	}
 
-	static {
-		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.RED);
+	@Override
+	public boolean contem(String string) {
+		return toString().contains(string);
 	}
 
 	@Override
 	public Tipo clonar() {
 		return new Logico(conteudo);
+	}
+
+	static {
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, Color.RED);
 	}
 }

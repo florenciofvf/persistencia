@@ -51,13 +51,18 @@ public class Numero extends Tipo {
 		return conteudo.toString();
 	}
 
-	static {
-		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, new Color(0, 125, 0));
+	@Override
+	public boolean contem(String string) {
+		return toString().contains(string);
 	}
 
 	@Override
 	public Tipo clonar() {
 		return new Numero(conteudo);
+	}
+
+	static {
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, new Color(0, 125, 0));
 	}
 }

@@ -11,5 +11,7 @@ public abstract class Tipo {
 
 	public abstract void append(Container c, int tab);
 
+	public abstract boolean contem(String string);
+
 	public abstract Tipo clonar();
 }

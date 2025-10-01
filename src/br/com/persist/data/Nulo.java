@@ -28,13 +28,18 @@ public class Nulo extends Tipo {
 		return CONTEUDO;
 	}
 
-	static {
-		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, new Color(255, 0, 255));
+	@Override
+	public boolean contem(String string) {
+		return false;
 	}
 
 	@Override
 	public Tipo clonar() {
 		return new Nulo();
+	}
+
+	static {
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, new Color(255, 0, 255));
 	}
 }

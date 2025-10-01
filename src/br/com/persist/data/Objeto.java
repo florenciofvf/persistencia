@@ -55,6 +55,15 @@ public class Objeto extends Tipo {
 		return null;
 	}
 
+	public NomeValor getAtributo(String nome) {
+		for (NomeValor item : atributos) {
+			if (item.nome.equals(nome)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
 	public void atualizar(String nome, String valor) {
 		for (int i = 0; i < atributos.size(); i++) {
 			NomeValor nomeValor = atributos.get(i);
@@ -111,11 +120,9 @@ public class Objeto extends Tipo {
 		}
 	}
 
-	static {
-		att2 = new SimpleAttributeSet();
-		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.BLACK);
-		StyleConstants.setForeground(att2, new Color(125, 0, 0));
+	@Override
+	public boolean contem(String string) {
+		return false;
 	}
 
 	@Override
@@ -127,20 +134,27 @@ public class Objeto extends Tipo {
 		return objeto;
 	}
 
-	public void filtrarComAtributos(String[] atts) {
+	static {
+		att2 = new SimpleAttributeSet();
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, Color.BLACK);
+		StyleConstants.setForeground(att2, new Color(125, 0, 0));
+	}
+
+	public void filtrarComAtributos(String[] atts, String valorAtributo) {
 		Iterator<NomeValor> it = atributos.iterator();
 		while (it.hasNext()) {
 			NomeValor nv = it.next();
 			Tipo tipo = nv.valor;
 			if (tipo instanceof Objeto) {
-				Objeto objeto = Filtro.comAtributos((Objeto) tipo, atts);
+				Objeto objeto = Filtro.comAtributos((Objeto) tipo, atts, valorAtributo);
 				if (objeto == null) {
 					it.remove();
 				} else {
-					objeto.filtrarComAtributos(atts);
+					objeto.filtrarComAtributos(atts, valorAtributo);
 				}
 			} else if (tipo instanceof Array) {
-				((Array) tipo).filtrarComAtributos(atts);
+				((Array) tipo).filtrarComAtributos(atts, valorAtributo);
 			}
 		}
 	}

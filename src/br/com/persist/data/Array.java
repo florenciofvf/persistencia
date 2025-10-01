@@ -54,9 +54,9 @@ public class Array extends Tipo {
 		return DataUtil.toString(this);
 	}
 
-	static {
-		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.BLACK);
+	@Override
+	public boolean contem(String string) {
+		return false;
 	}
 
 	@Override
@@ -68,19 +68,24 @@ public class Array extends Tipo {
 		return array;
 	}
 
-	public void filtrarComAtributos(String[] atts) {
+	static {
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, Color.BLACK);
+	}
+
+	public void filtrarComAtributos(String[] atts, String valorAtributo) {
 		Iterator<Tipo> it = elementos.iterator();
 		while (it.hasNext()) {
 			Tipo tipo = it.next();
 			if (tipo instanceof Objeto) {
-				Objeto objeto = Filtro.comAtributos((Objeto) tipo, atts);
+				Objeto objeto = Filtro.comAtributos((Objeto) tipo, atts, valorAtributo);
 				if (objeto == null) {
 					it.remove();
 				} else {
-					objeto.filtrarComAtributos(atts);
+					objeto.filtrarComAtributos(atts, valorAtributo);
 				}
 			} else if (tipo instanceof Array) {
-				((Array) tipo).filtrarComAtributos(atts);
+				((Array) tipo).filtrarComAtributos(atts, valorAtributo);
 			}
 		}
 	}

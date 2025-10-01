@@ -46,9 +46,9 @@ public class Texto extends Tipo {
 		return alternativo != null ? alternativo : conteudo;
 	}
 
-	static {
-		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.BLUE);
+	@Override
+	public boolean contem(String string) {
+		return conteudo.contains(string);
 	}
 
 	@Override
@@ -56,5 +56,10 @@ public class Texto extends Tipo {
 		Texto texto = new Texto(conteudo);
 		texto.alternativo = alternativo;
 		return texto;
+	}
+
+	static {
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, Color.BLUE);
 	}
 }

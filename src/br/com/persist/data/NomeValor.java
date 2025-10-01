@@ -13,6 +13,10 @@ class NomeValor {
 		this.valor = Objects.requireNonNull(valor);
 	}
 
+	boolean contemValor(String string) {
+		return valor.contem(string);
+	}
+
 	boolean compativel(Method metodoSet) {
 		Class<?> param = metodoSet.getParameterTypes()[0];
 		if (valor instanceof Logico) {
