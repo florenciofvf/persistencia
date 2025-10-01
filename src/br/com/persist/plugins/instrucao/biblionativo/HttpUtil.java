@@ -10,6 +10,8 @@ import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,7 @@ import javax.net.ssl.X509TrustManager;
 import br.com.persist.assistencia.Util;
 
 public class HttpUtil {
+	private static final String HEADER_RESPONSE = "headerResponse";
 	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
 	private static CookieManager cookieManager;
@@ -68,7 +71,8 @@ public class HttpUtil {
 			URLConnection conn = url.openConnection();
 			configHeader(param, conn);
 			conn.connect();
-			result.getResponse().put("headerResponse", conn.getHeaderFields());
+			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
+			putHeaderResponse(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put("exception", Util.getStackTrace("GET", ex));
@@ -96,12 +100,25 @@ public class HttpUtil {
 			conn.setDoOutput(true);
 			conn.connect();
 			writer(param, conn);
-			result.getResponse().put("headerResponse", conn.getHeaderFields());
+			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
+			putHeaderResponse(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put("exception", Util.getStackTrace("POST", ex));
 		}
 		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void putHeaderResponse(HttpResult result, Map<String, Object> param) {
+		String string = (String) param.get("putContentTypeHeaderResponse");
+		if (string == null) {
+			return;
+		}
+		Map<String, List<String>> map = (Map<String, List<String>>) result.getResponse().get(HEADER_RESPONSE);
+		if (map != null) {
+			map.put("Content-Type", Arrays.asList(string));
+		}
 	}
 
 	@SuppressWarnings("unchecked")
