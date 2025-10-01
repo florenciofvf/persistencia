@@ -140,16 +140,16 @@ public class PropriedadeContainer extends AbstratoContainer {
 	}
 
 	private class PainelResultado extends Panel {
+		private TextEditor textEditor = new TextEditor();
 		private static final long serialVersionUID = 1L;
-		private TextEditor textPane = new TextEditor();
 		private final ToolbarPesquisa toolbarPesquisa;
 
 		private PainelResultado() {
-			toolbarPesquisa = new ToolbarPesquisa(textPane);
-			textPane.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+			toolbarPesquisa = new ToolbarPesquisa(textEditor);
+			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
 			add(BorderLayout.NORTH, toolbarPesquisa);
-			ScrollPane scrollPane = new ScrollPane(textPane);
-			scrollPane.setRowHeaderView(new TextEditorLine(textPane));
+			ScrollPane scrollPane = new ScrollPane(textEditor);
+			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
@@ -159,30 +159,30 @@ public class PropriedadeContainer extends AbstratoContainer {
 		}
 
 		private void setText(String string) {
-			textPane.setText(string);
-			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+			textEditor.setText(string);
+			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 		}
 
 		void setFontTextArea(Font font) {
-			textPane.setFont(font);
+			textEditor.setFont(font);
 		}
 
 		private void processar(Arvore raiz) {
-			textPane.setText(Constantes.VAZIO);
+			textEditor.setText(Constantes.VAZIO);
 			try {
-				raiz.gerarProperty(textPane.getStyledDocument());
+				raiz.gerarProperty(textEditor.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PropriedadeConstantes.PAINEL_PROPRIEDADE, ex, PropriedadeContainer.this);
 			}
 		}
 
 		private void copiar2() {
-			String string = textPane.getText();
+			String string = textEditor.getText();
 			Util.setContentTransfered(string);
 			toolbarPesquisa.copiar2Mensagem(string);
-			textPane.setSelectionStart(0);
-			textPane.setSelectionEnd(string.length());
-			textPane.requestFocus();
+			textEditor.setSelectionStart(0);
+			textEditor.setSelectionEnd(string.length());
+			textEditor.requestFocus();
 		}
 	}
 
