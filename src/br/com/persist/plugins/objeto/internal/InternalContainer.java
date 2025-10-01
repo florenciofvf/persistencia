@@ -412,7 +412,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public int getAlturaScrollHorizontal() {
 		JScrollBar horizontalScrollBar = scrollPane.getHorizontalScrollBar();
-		return horizontalScrollBar.isVisible() ? horizontalScrollBar.getHeight() : 0;
+		if (horizontalScrollBar.isVisible()) {
+			Variavel varScroll = VariavelProvedor
+					.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SCROLL_HOR_VISIVEL);
+			if (varScroll == null) {
+				return 0;
+			}
+			return varScroll.getInteiro(0);
+		}
+		return 0;
 	}
 
 	public boolean scrollVisivel() {
