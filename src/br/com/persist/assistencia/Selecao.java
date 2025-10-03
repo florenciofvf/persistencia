@@ -20,7 +20,7 @@ public class Selecao implements Busca {
 
 	public Selecao(JTextComponent component, String string) {
 		if (!Util.isEmpty(string)) {
-			this.string = Util.replaceAll(Util.replaceAll(string.toUpperCase(), "\\N", "\n"), "\\R", "\r");
+			this.string = normalizar(string);
 		} else {
 			this.string = null;
 		}
@@ -44,7 +44,18 @@ public class Selecao implements Busca {
 	}
 
 	public boolean igual(String string) {
-		return this.string == null ? string == null : this.string.equalsIgnoreCase(string);
+		if (this.string == null && string == null) {
+			return true;
+		}
+		if (this.string == null || string == null) {
+			return false;
+		}
+		string = normalizar(string);
+		return this.string.equals(string);
+	}
+
+	private static String normalizar(String string) {
+		return Util.replaceAll(Util.replaceAll(string.toUpperCase(), "\\N", "\n"), "\\R", "\r");
 	}
 
 	public String getString() {
