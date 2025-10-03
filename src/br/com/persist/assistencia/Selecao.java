@@ -20,7 +20,7 @@ public class Selecao implements Busca {
 
 	public Selecao(JTextComponent component, String string) {
 		if (!Util.isEmpty(string)) {
-			this.string = Util.replaceAll(Util.replaceAll(string.toLowerCase(), "\\N", "\n"), "\\R", "\r");
+			this.string = Util.replaceAll(Util.replaceAll(string.toUpperCase(), "\\N", "\n"), "\\R", "\r");
 		} else {
 			this.string = null;
 		}
@@ -35,7 +35,7 @@ public class Selecao implements Busca {
 	}
 
 	private void inicializar() {
-		String sequencia = component.getText().toLowerCase();
+		String sequencia = component.getText().toUpperCase();
 		int pos = sequencia.indexOf(string);
 		while (pos != -1) {
 			lista.add(new Fragmento(pos, string.length()));
