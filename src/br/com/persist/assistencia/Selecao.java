@@ -20,7 +20,7 @@ public class Selecao implements Busca {
 
 	public Selecao(JTextComponent component, String string) {
 		if (!Util.isEmpty(string)) {
-			this.string = Util.replaceAll(string.toLowerCase(), "\\N", "\n");
+			this.string = Util.replaceAll(Util.replaceAll(string.toLowerCase(), "\\N", "\n"), "\\R", "\r");
 		} else {
 			this.string = null;
 		}
