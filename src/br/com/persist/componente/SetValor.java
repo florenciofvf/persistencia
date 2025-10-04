@@ -31,7 +31,7 @@ public class SetValor {
 		if (!Util.isEmpty(valor.get()) && valor.get().length() < 200) {
 			form.pack();
 			Dimension size = form.getSize();
-			form.setSize(size.width, size.height + 40);
+			form.setSize(size.width + 50, size.height + 40);
 		}
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
