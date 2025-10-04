@@ -10,6 +10,8 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 
+import javax.swing.JScrollBar;
+
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetValor.Valor;
@@ -29,9 +31,8 @@ public class SetValor {
 			form = new SetValorDialogo((Frame) null, valor);
 		}
 		if (!Util.isEmpty(valor.get()) && valor.get().length() < 200) {
+			form.configAjuste = true;
 			form.pack();
-			Dimension size = form.getSize();
-			form.setSize(size.width + 50, size.height + 40);
 		}
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
@@ -51,6 +52,8 @@ class SetValorDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Valor valor;
+	private ScrollPane scrollPane;
+	boolean configAjuste;
 
 	SetValorDialogo(Frame frame, Valor valor) {
 		super(frame, valor.getTitle());
@@ -73,11 +76,30 @@ class SetValorDialogo extends AbstratoDialogo {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		ScrollPane scrollPane = new ScrollPane(textEditor);
+		scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		if (!configAjuste) {
+			return;
+		}
+		JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
+		while (scrollBar.isVisible()) {
+			Dimension size = getSize();
+			setSize(size.width, size.height + 10);
+			scrollBar = scrollPane.getVerticalScrollBar();
+		}
+		scrollBar = scrollPane.getHorizontalScrollBar();
+		while (scrollBar.isVisible()) {
+			Dimension size = getSize();
+			setSize(size.width + 10, size.height);
+			scrollBar = scrollPane.getHorizontalScrollBar();
+		}
 	}
 
 	private class Toolbar extends BarraButton {
