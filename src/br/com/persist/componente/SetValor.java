@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 
 import javax.swing.JScrollBar;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Util;
@@ -76,29 +77,38 @@ class SetValorDialogo extends AbstratoDialogo {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		scrollPane = new ScrollPane(textEditor);
-		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+		ScrollPane scrollPaneEditor = new ScrollPane(textEditor);
+		scrollPaneEditor.setRowHeaderView(new TextEditorLine(textEditor));
 		Panel panelScroll = new Panel();
-		panelScroll.add(BorderLayout.CENTER, scrollPane);
-		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		panelScroll.add(BorderLayout.CENTER, scrollPaneEditor);
+		scrollPane = new ScrollPane(panelScroll);
+		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	@Override
 	public void dialogOpenedHandler(Dialog dialog) {
-		if (!configAjuste) {
-			return;
+		if (configAjuste) {
+			checarVisivelScrollVertical();
 		}
+	}
+
+	private void checarVisivelScrollVertical() {
 		JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
-		while (scrollBar.isVisible()) {
+		if (scrollBar.isVisible()) {
 			Dimension size = getSize();
 			setSize(size.width, size.height + 10);
-			scrollBar = scrollPane.getVerticalScrollBar();
+			SwingUtilities.invokeLater(SetValorDialogo.this::checarVisivelScrollVertical);
+		} else {
+			checarVisivelScrollHorizontal();
 		}
-		scrollBar = scrollPane.getHorizontalScrollBar();
-		while (scrollBar.isVisible()) {
+	}
+
+	private void checarVisivelScrollHorizontal() {
+		JScrollBar scrollBar = scrollPane.getHorizontalScrollBar();
+		if (scrollBar.isVisible()) {
 			Dimension size = getSize();
 			setSize(size.width + 10, size.height);
-			scrollBar = scrollPane.getHorizontalScrollBar();
+			SwingUtilities.invokeLater(SetValorDialogo.this::checarVisivelScrollHorizontal);
 		}
 	}
 
