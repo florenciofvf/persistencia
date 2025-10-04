@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
@@ -29,6 +30,8 @@ public class SetValor {
 		}
 		if (!Util.isEmpty(valor.get()) && valor.get().length() < 200) {
 			form.pack();
+			Dimension size = form.getSize();
+			form.setSize(size.width, size.height + 40);
 		}
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
