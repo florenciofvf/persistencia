@@ -109,6 +109,11 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		}
 
 		@Override
+		protected void focusInputPesquisar() {
+			txtPesquisa.requestFocus();
+		}
+
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				AbstratoConfiguracao config = painelConfiguracao.localizar(txtPesquisa.getText().toUpperCase());
@@ -157,17 +162,20 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		public void windowOpenedHandler(Window window) {
 			painelConfiguracao.windowOpenedHandler(window);
 			buttonDestacar.estadoFormulario();
+			focusInputPesquisar();
 		}
 
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			painelConfiguracao.dialogOpenedHandler(dialog);
 			buttonDestacar.estadoDialogo();
+			focusInputPesquisar();
 		}
 
 		void adicionadoAoFichario() {
 			painelConfiguracao.adicionadoAoFichario();
 			buttonDestacar.estadoFichario();
+			focusInputPesquisar();
 		}
 
 		@Override
