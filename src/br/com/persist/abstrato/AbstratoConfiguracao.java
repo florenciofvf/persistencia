@@ -14,10 +14,12 @@ import br.com.persist.formulario.Formulario;
 public abstract class AbstratoConfiguracao extends Panel implements WindowHandler, DialogHandler, FicharioHandler {
 	private static final long serialVersionUID = 1L;
 	protected final Formulario formulario;
+	private final String titulo;
 
 	protected AbstratoConfiguracao(Formulario formulario, String titulo) {
 		setBorder(BorderFactory.createTitledBorder(Objects.requireNonNull(titulo)));
 		this.formulario = Objects.requireNonNull(formulario);
+		this.titulo = Objects.requireNonNull(titulo);
 	}
 
 	public void adicionadoAoFichario() {
@@ -49,5 +51,9 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 
 	@Override
 	public void windowOpenedHandler(Window window) {
+	}
+
+	public String getTitulo() {
+		return titulo;
 	}
 }

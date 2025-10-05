@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +25,12 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -38,6 +42,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private ConfiguracaoDialogo configuracaoDialogo;
 	private final Toolbar toolbar = new Toolbar();
+	private ScrollPane scrollPane;
 
 	public ConfiguracaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
@@ -83,7 +88,8 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			painelConfiguracao.addConfiguracao(configuracao);
 		}
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(painelConfiguracao));
+		scrollPane = new ScrollPane(painelConfiguracao);
+		add(BorderLayout.CENTER, scrollPane);
 	}
 
 	@Override
@@ -91,11 +97,29 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private final TextField txtPesquisa = new TextField(35);
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, SALVAR);
+			add(txtPesquisa);
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				AbstratoConfiguracao config = painelConfiguracao.localizar(txtPesquisa.getText().toUpperCase());
+				if (config != null) {
+					exibir(config);
+				}
+			}
+		}
+
+		private void exibir(AbstratoConfiguracao config) {
+			int altura = painelConfiguracao.getAlturaPara(config);
+			scrollPane.getVerticalScrollBar().setValue(altura);
 		}
 
 		@Override
@@ -239,6 +263,27 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			for (AbstratoConfiguracao ac : lista) {
 				ac.adicionadoAoFichario();
 			}
+		}
+
+		AbstratoConfiguracao localizar(String string) {
+			for (AbstratoConfiguracao item : lista) {
+				String titulo = item.getTitulo().toUpperCase();
+				if (titulo.indexOf(string) != -1) {
+					return item;
+				}
+			}
+			return null;
+		}
+
+		int getAlturaPara(AbstratoConfiguracao config) {
+			int total = 0;
+			for (AbstratoConfiguracao item : lista) {
+				if (item == config) {
+					break;
+				}
+				total += item.getHeight();
+			}
+			return total;
 		}
 	}
 }
