@@ -1,10 +1,12 @@
 package br.com.persist.abstrato;
 
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.Objects;
 
 import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 import br.com.persist.componente.Panel;
 import br.com.persist.fichario.Fichario;
@@ -17,9 +19,9 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 	private final String titulo;
 
 	protected AbstratoConfiguracao(Formulario formulario, String titulo) {
-		setBorder(BorderFactory.createTitledBorder(Objects.requireNonNull(titulo)));
 		this.formulario = Objects.requireNonNull(formulario);
 		this.titulo = Objects.requireNonNull(titulo);
+		destacar(false);
 	}
 
 	public void adicionadoAoFichario() {
@@ -55,5 +57,14 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 
 	public String getTitulo() {
 		return titulo;
+	}
+
+	public void destacar(boolean b) {
+		if (b) {
+			Border border = BorderFactory.createLineBorder(Color.RED);
+			setBorder(BorderFactory.createTitledBorder(border, Objects.requireNonNull(titulo)));
+		} else {
+			setBorder(BorderFactory.createTitledBorder(Objects.requireNonNull(titulo)));
+		}
 	}
 }

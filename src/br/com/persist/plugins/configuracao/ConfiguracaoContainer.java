@@ -121,6 +121,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		private void exibir(AbstratoConfiguracao config) {
 			int altura = painelConfiguracao.getAlturaPara(config);
 			scrollPane.getVerticalScrollBar().setValue(altura);
+			config.destacar(true);
 		}
 
 		@Override
@@ -267,6 +268,9 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		}
 
 		AbstratoConfiguracao localizar(String string) {
+			for (AbstratoConfiguracao item : lista) {
+				item.destacar(false);
+			}
 			for (AbstratoConfiguracao item : lista) {
 				String titulo = item.getTitulo().toUpperCase();
 				if (titulo.indexOf(string) != -1) {
