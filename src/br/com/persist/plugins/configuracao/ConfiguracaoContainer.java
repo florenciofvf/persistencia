@@ -105,6 +105,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, SALVAR);
 			add(txtPesquisa);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
 		}
 
 		@Override
