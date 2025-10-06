@@ -36,6 +36,7 @@ public class SetListaCheck {
 		} else {
 			form = new SetListaCheckDialogo((Frame) null, titulo, listaCheck);
 		}
+		form.pack();
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}

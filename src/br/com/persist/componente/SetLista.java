@@ -51,6 +51,7 @@ public class SetLista {
 		} else {
 			form = new SetListaDialogo((Frame) null, titulo, lista, coletor, config);
 		}
+		form.pack();
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
@@ -374,15 +375,12 @@ class SetListaDialogo extends AbstratoDialogo {
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
 			add(ordenarAcao);
-			int colunas = 0;
 			if (!config.somenteUm) {
 				add(chkTodos);
-				colunas += 5;
 			}
 			if (config.criar) {
 				add(criarAcao);
 				criarAcao.setActionListener(e -> criarCampo());
-				colunas += 5;
 			}
 			if (config.mensagem != null) {
 				add(label);
@@ -391,7 +389,6 @@ class SetListaDialogo extends AbstratoDialogo {
 			add(txtPesquisa);
 			add(chkPorParte);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
-			txtPesquisa.setColumns(txtPesquisa.getColumns() - colunas);
 			txtPesquisa.setText(config.selecionarItemIgual);
 			ordenarAcao.setActionListener(e -> ordenar());
 			chkTodos.setSelected(!config.somenteUm);
