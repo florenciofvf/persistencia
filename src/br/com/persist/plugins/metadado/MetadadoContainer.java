@@ -43,7 +43,6 @@ import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -132,7 +131,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	private class Toolbar extends BarraButton implements ActionListener {
 		private ButtonInfoDiff buttonInfoDiff = new ButtonInfoDiff();
 		private final JProgressBar progresso = new JProgressBar();
-		private final TextField txtMetadado = new TextField(35);
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private ButtonInfo buttonInfo = new ButtonInfo();
 		private static final long serialVersionUID = 1L;
@@ -143,22 +141,21 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 					SALVAR);
 			add(buttonInfo);
 			add(true, comboConexao);
-			add(txtMetadado);
+			add(txtPesquisa);
 			add(chkPorParte);
 			add(label);
 			add(progresso);
 			add(true, comboConexaoDireita);
 			add(buttonInfoDiff);
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
-			txtMetadado.setToolTipText(Mensagens.getString("label.pesquisar"));
-			txtMetadado.addActionListener(this);
+			txtPesquisa.addActionListener(this);
 			progresso.setStringPainted(true);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.isEmpty(txtMetadado.getText())) {
-				pesquisa = getPesquisa(metadadoTree, pesquisa, txtMetadado.getText(), chkPorParte.isSelected());
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				pesquisa = getPesquisa(metadadoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
 			} else {
 				label.limpar();
