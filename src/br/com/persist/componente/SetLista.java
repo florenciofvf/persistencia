@@ -374,12 +374,15 @@ class SetListaDialogo extends AbstratoDialogo {
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
 			add(ordenarAcao);
+			int colunas = 0;
 			if (!config.somenteUm) {
 				add(chkTodos);
+				colunas += 5;
 			}
 			if (config.criar) {
 				add(criarAcao);
 				criarAcao.setActionListener(e -> criarCampo());
+				colunas += 5;
 			}
 			if (config.mensagem != null) {
 				add(label);
@@ -388,11 +391,11 @@ class SetListaDialogo extends AbstratoDialogo {
 			add(txtPesquisa);
 			add(chkPorParte);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
+			txtPesquisa.setColumns(txtPesquisa.getColumns() - colunas);
 			txtPesquisa.setText(config.selecionarItemIgual);
 			ordenarAcao.setActionListener(e -> ordenar());
 			chkTodos.setSelected(!config.somenteUm);
 			txtPesquisa.addActionListener(this);
-			txtPesquisa.setColumns(19);
 		}
 
 		private void ordenar() {
