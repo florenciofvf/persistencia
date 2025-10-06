@@ -131,7 +131,7 @@ public class ContainerArvoreBuilder extends Builder {
 		ClassePrivada classePrivada = null;
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
-		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
+		classePrivada.addInstrucao("private static final long serialVersionUID = 1L");
 		classePrivada.addInstrucao("private transient ArquivoPesquisa pesquisa").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));

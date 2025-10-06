@@ -109,7 +109,6 @@ public class ContainerSimplesBuilder extends Builder {
 		ClassePrivada classePrivada = null;
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton");
-
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));

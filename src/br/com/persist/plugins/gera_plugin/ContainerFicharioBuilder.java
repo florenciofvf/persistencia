@@ -199,7 +199,6 @@ public class ContainerFicharioBuilder extends Builder {
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
 		classePrivada.addInstrucao("private Action excluirAtivoAcao = actionIconExcluir()");
-
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));
