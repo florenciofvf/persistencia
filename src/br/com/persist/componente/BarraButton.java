@@ -36,7 +36,7 @@ public abstract class BarraButton extends JToolBar
 	protected Action atualizarAcao = Action.actionIconAtualizar();
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
-	protected final TextField txtPesquisa = new TextField(35);
+	protected final TextField txtPesquisa = new TextField(25);
 	protected final CheckBox chkPorParte = new CheckBox(true);
 	protected final CheckBox chkPsqConteudo = new CheckBox();
 	protected Action salvarAcao = Action.actionIconSalvar();
