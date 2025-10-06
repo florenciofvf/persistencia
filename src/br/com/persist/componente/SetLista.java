@@ -392,6 +392,7 @@ class SetListaDialogo extends AbstratoDialogo {
 			ordenarAcao.setActionListener(e -> ordenar());
 			chkTodos.setSelected(!config.somenteUm);
 			txtPesquisa.addActionListener(this);
+			txtPesquisa.setColumns(19);
 		}
 
 		private void ordenar() {
