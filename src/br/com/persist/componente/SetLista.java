@@ -52,6 +52,7 @@ public class SetLista {
 			form = new SetListaDialogo((Frame) null, titulo, lista, coletor, config);
 		}
 		form.pack();
+		form.setSize(form.getWidth(), Constantes.SIZE3.height);
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
