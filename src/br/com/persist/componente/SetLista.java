@@ -355,6 +355,11 @@ class SetListaDialogo extends AbstratoDialogo {
 		});
 	}
 
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		toolbar.focusInputPesquisar();
+	}
+
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(lista));
