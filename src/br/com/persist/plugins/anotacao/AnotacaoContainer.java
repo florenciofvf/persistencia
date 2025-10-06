@@ -23,10 +23,8 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.arquivo.ArquivoPesquisa;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
-import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -86,15 +84,11 @@ public class AnotacaoContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private final CheckBox chkPorParte = new CheckBox(true);
-		private final CheckBox chkPsqConteudo = new CheckBox();
 		private static final long serialVersionUID = 1L;
 		private transient ArquivoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
-			chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo"));
-			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(chkPorParte);

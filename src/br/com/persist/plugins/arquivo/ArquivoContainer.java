@@ -82,8 +82,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private Action statusAcao = actionIcon("label.abertos", Icones.HIERARQUIA);
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopArq = new CheckBox();
-		private final CheckBox chkPorParte = new CheckBox(true);
-		private final CheckBox chkPsqConteudo = new CheckBox();
 		private final CheckBox chkDuplicar = new CheckBox();
 		private final CheckBox chkLinkAuto = new CheckBox();
 		private static final long serialVersionUID = 1L;
@@ -95,8 +93,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
 			chkLinkAuto.setToolTipText(ArquivoMensagens.getString("msg.arquivo.link_auto"));
 			chkDuplicar.setToolTipText(ArquivoMensagens.getString("msg.arquivo.duplicar"));
-			chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo"));
-			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			chkLinkAuto.setSelected(true);
 			addButton(statusAcao);
 			add(chkSempreTopArq);

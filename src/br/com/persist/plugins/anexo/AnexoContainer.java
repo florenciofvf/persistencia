@@ -88,7 +88,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	private class Toolbar extends BarraButton implements ActionListener {
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopAnex = new CheckBox();
-		private final CheckBox chkPorParte = new CheckBox(true);
 		private static final long serialVersionUID = 1L;
 		private transient AnexoPesquisa pesquisa;
 
@@ -96,7 +95,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
 			chkSempreTopAnex.setToolTipText(AnexoMensagens.getString("msg.anexo.sempreTopAnex"));
 			chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
-			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			add(chkSempreTopAnex);
 			add(chkSempreTopForm);
 			add(txtPesquisa);

@@ -40,7 +40,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
-import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
@@ -131,7 +130,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	private class Toolbar extends BarraButton implements ActionListener {
 		private ButtonInfoDiff buttonInfoDiff = new ButtonInfoDiff();
 		private final JProgressBar progresso = new JProgressBar();
-		private final CheckBox chkPorParte = new CheckBox(true);
 		private ButtonInfo buttonInfo = new ButtonInfo();
 		private static final long serialVersionUID = 1L;
 		private transient MetadadoPesquisa pesquisa;
@@ -147,7 +145,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			add(progresso);
 			add(true, comboConexaoDireita);
 			add(buttonInfoDiff);
-			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtPesquisa.addActionListener(this);
 			progresso.setStringPainted(true);
 		}

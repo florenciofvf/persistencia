@@ -37,6 +37,8 @@ public abstract class BarraButton extends JToolBar
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
 	protected final TextField txtPesquisa = new TextField(35);
+	protected final CheckBox chkPorParte = new CheckBox(true);
+	protected final CheckBox chkPsqConteudo = new CheckBox();
 	protected Action salvarAcao = Action.actionIconSalvar();
 	protected ButtonColar buttonColar = new ButtonColar();
 	private Action baixarAcao = Action.actionIconBaixar();
@@ -519,6 +521,10 @@ public abstract class BarraButton extends JToolBar
 	public Component add(Component comp) {
 		if (comp == txtPesquisa) {
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+		} else if (comp == chkPorParte) {
+			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
+		} else if (comp == chkPsqConteudo) {
+			chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo"));
 		}
 		return super.add(comp);
 	}

@@ -364,7 +364,6 @@ class SetListaDialogo extends AbstratoDialogo {
 		private Action ordenarAcao = actionIcon("label.ordenar", Icones.ASC_TEXTO);
 		private Action criarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private final CheckBox chkTodos = new CheckBox("label.todos");
-		private final CheckBox chkPorParte = new CheckBox(true);
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
@@ -384,7 +383,6 @@ class SetListaDialogo extends AbstratoDialogo {
 			add(txtPesquisa);
 			add(chkPorParte);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
-			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtPesquisa.setText(config.selecionarItemIgual);
 			ordenarAcao.setActionListener(e -> ordenar());
 			chkTodos.setSelected(!config.somenteUm);

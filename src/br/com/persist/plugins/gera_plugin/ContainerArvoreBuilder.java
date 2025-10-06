@@ -52,10 +52,8 @@ public class ContainerArvoreBuilder extends Builder {
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
-		arquivo.addImport("br.com.persist.assistencia.Mensagens");
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
-		arquivo.addImport("br.com.persist.componente.CheckBox");
 		arquivo.addImport("br.com.persist.componente.Janela");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
@@ -133,16 +131,12 @@ public class ContainerArvoreBuilder extends Builder {
 		ClassePrivada classePrivada = null;
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
-		classePrivada.addInstrucao("private final CheckBox chkPorParte = new CheckBox(true)");
-		classePrivada.addInstrucao("private final CheckBox chkPsqConteudo = new CheckBox()");
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
 		classePrivada.addInstrucao("private transient ArquivoPesquisa pesquisa").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));
 		funcao.addInstrucao(
 				"super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO)");
-		funcao.addInstrucao("chkPsqConteudo.setToolTipText(Mensagens.getString(\"msg.pesq_no_conteudo\"))");
-		funcao.addInstrucao("chkPorParte.setToolTipText(Mensagens.getString(\"label.por_parte\"))");
 		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
 		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("add(chkPorParte)");
