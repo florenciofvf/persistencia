@@ -30,7 +30,6 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -99,18 +98,11 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private final TextField txtPesquisa = new TextField(35);
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, SALVAR);
 			add(txtPesquisa);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		@Override

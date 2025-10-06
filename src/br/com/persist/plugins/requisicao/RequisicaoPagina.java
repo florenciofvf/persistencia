@@ -43,7 +43,6 @@ import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.FragmentoUtil;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.RequestResult;
 import br.com.persist.assistencia.RequestUtil;
 import br.com.persist.assistencia.Selecao;
@@ -59,7 +58,6 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 import br.com.persist.data.Array;
 import br.com.persist.data.DataParser;
 import br.com.persist.data.DataUtil;
@@ -351,7 +349,6 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action clonarSelAcao = acaoIcon("label.clonar_selecionados", Icones.COPIA);
 		private Action vAccessTokenAcao = acaoMenu("label.atualizar_access_token_var");
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private CheckBox chkModoTabela = new CheckBox();
 		private transient Selecao selecao;
@@ -362,7 +359,6 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			buttonColar.addSeparator();
 			buttonColar.addItem(vAccessTokenAcao);
 			vAccessTokenAcao.setActionListener(e -> atualizarVar());
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
@@ -370,11 +366,6 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			clonarSelAcao.setActionListener(e -> clonarSelecionados());
 			chkModoTabela.setToolTipText(RequisicaoMensagens.getString("label.modo_tabela"));
 			chkModoTabela.addActionListener(e -> modoTabelaHandler(chkModoTabela.isSelected()));
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		private void modoTabelaHandler(boolean modoTabela) {

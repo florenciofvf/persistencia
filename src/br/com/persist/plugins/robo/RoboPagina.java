@@ -27,7 +27,6 @@ import javax.swing.SwingUtilities;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -38,7 +37,6 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 import br.com.persist.formulario.Formulario;
 
 public class RoboPagina extends Panel {
@@ -100,7 +98,6 @@ public class RoboPagina extends Panel {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
-		private final TextField txtPesquisa = new TextField(35);
 		private final CheckBox chkExecSel = new CheckBox();
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
@@ -109,17 +106,11 @@ public class RoboPagina extends Panel {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
 			executarAcao.setActionListener(e -> new Thread(this::executar).start());
 			chkExecSel.setToolTipText(RoboMensagens.getString("label.exec_sel"));
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			addButton(executarAcao);
 			add(chkExecSel);
 			add(txtPesquisa);
 			add(label);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		Action acaoIcon(String chave, Icon icon) {

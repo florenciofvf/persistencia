@@ -17,7 +17,6 @@ import javax.swing.SwingUtilities;
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -25,7 +24,6 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 
 public class AbaText extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -83,13 +81,11 @@ public class AbaText extends Panel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		void ini() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, SALVAR, COPIAR, COLAR);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
@@ -98,11 +94,6 @@ public class AbaText extends Panel {
 		void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		@Override

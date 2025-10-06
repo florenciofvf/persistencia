@@ -35,7 +35,6 @@ import javax.swing.SwingUtilities;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.StringPool;
 import br.com.persist.assistencia.Util;
@@ -181,13 +180,11 @@ public class AtributoPagina extends Panel {
 		private class Toolbar extends BarraButton implements ActionListener {
 			private Action tabelaAcao = acaoIcon("label.atualizar_tabela", Icones.SINCRONIZAR);
 			private Action modelIdAcao = acaoMenu("label.ler_id", Icones.FIELDS);
-			private final TextField txtPesquisa = new TextField(15);
 			private static final long serialVersionUID = 1L;
 			private transient Selecao selecao;
 
 			private Toolbar() {
 				super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
-				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 				txtPesquisa.addActionListener(this);
 				addButton(tabelaAcao);
 				add(txtPesquisa);
@@ -195,11 +192,6 @@ public class AtributoPagina extends Panel {
 				addButton(modelIdAcao);
 				modelIdAcao.setActionListener(e -> lerArquivo());
 				tabelaAcao.setActionListener(e -> carregar());
-			}
-
-			@Override
-			protected void focusInputPesquisar() {
-				txtPesquisa.requestFocus();
 			}
 
 			Action acaoMenu(String chave, Icon icon) {
@@ -539,21 +531,14 @@ abstract class AbstratoPanel extends Panel {
 	}
 
 	protected class Toolbar extends BarraButton implements ActionListener {
-		private final TextField txtPesquisa = new TextField(15);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, ATUALIZAR, COPIAR);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		@Override

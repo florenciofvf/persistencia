@@ -47,7 +47,6 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -368,13 +367,11 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, SALVAR, COPIAR, COLAR);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);

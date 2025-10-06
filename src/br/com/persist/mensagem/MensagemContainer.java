@@ -19,7 +19,6 @@ import javax.swing.text.StyleContext;
 
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Text;
 import br.com.persist.assistencia.Util;
@@ -29,7 +28,6 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 
 public class MensagemContainer extends Panel {
 	private final TextEditor textEditor = new TextEditor();
@@ -146,12 +144,11 @@ public class MensagemContainer extends Panel {
 
 	public void setSel(String string) {
 		if (string != null) {
-			toolbar.txtPesquisa.setText(string);
+			toolbar.setText(string);
 		}
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
@@ -161,10 +158,13 @@ public class MensagemContainer extends Panel {
 			} else {
 				super.ini(janela, COPIAR, COLAR);
 			}
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		void setText(String string) {
+			txtPesquisa.setText(string);
 		}
 
 		@Override

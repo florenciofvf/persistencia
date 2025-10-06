@@ -30,7 +30,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
-import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -92,7 +91,6 @@ public class ExecucaoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private final CheckBox chkPorParte = new CheckBox(true);
-		private final TextField txtArquivo = new TextField(35);
 		private final CheckBox chkPsqConteudo = new CheckBox();
 		private static final long serialVersionUID = 1L;
 		private transient ArquivoPesquisa pesquisa;
@@ -101,28 +99,22 @@ public class ExecucaoContainer extends AbstratoContainer {
 			super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
 			chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo"));
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
-			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
-			txtArquivo.addActionListener(this);
-			add(txtArquivo);
+			txtPesquisa.addActionListener(this);
+			add(txtPesquisa);
 			add(chkPorParte);
 			add(chkPsqConteudo);
 			add(label);
 		}
 
 		@Override
-		protected void focusInputPesquisar() {
-			txtArquivo.requestFocus();
-		}
-
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.isEmpty(txtArquivo.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
-					split.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected());
+					split.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(ExecucaoContainer.this, getString(set));
 				} else {
-					pesquisa = split.getTree().getPesquisa(pesquisa, txtArquivo.getText(), chkPorParte.isSelected());
+					pesquisa = split.getTree().getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 					pesquisa.selecionar(label);
 				}
 			} else {

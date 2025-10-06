@@ -36,7 +36,6 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioEvento;
 import br.com.persist.fichario.Pagina;
@@ -84,7 +83,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopArq = new CheckBox();
 		private final CheckBox chkPorParte = new CheckBox(true);
-		private final TextField txtArquivo = new TextField(35);
 		private final CheckBox chkPsqConteudo = new CheckBox();
 		private final CheckBox chkDuplicar = new CheckBox();
 		private final CheckBox chkLinkAuto = new CheckBox();
@@ -99,7 +97,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			chkDuplicar.setToolTipText(ArquivoMensagens.getString("msg.arquivo.duplicar"));
 			chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo"));
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
-			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			chkLinkAuto.setSelected(true);
 			addButton(statusAcao);
 			add(chkSempreTopArq);
@@ -107,16 +104,11 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			add(chkLinkAuto);
 			add(chkDuplicar);
 			add(fecharAcao);
-			add(txtArquivo);
+			add(txtPesquisa);
 			add(chkPorParte);
 			add(chkPsqConteudo);
 			add(label);
 			eventos();
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtArquivo.requestFocus();
 		}
 
 		private void eventos() {
@@ -124,18 +116,18 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			fecharAcao.setActionListener(e -> formulario.fecharTodos());
 			chkSempreTopForm.addActionListener(e -> topFormulario());
 			statusAcao.setActionListener(e -> statusArquivo());
-			txtArquivo.addActionListener(this);
+			txtPesquisa.addActionListener(this);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.isEmpty(txtArquivo.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
-					arquivoTree.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected());
+					arquivoTree.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(ArquivoContainer.this, getString(set));
 				} else {
-					pesquisa = getPesquisa(arquivoTree, pesquisa, txtArquivo.getText(), chkPorParte.isSelected());
+					pesquisa = getPesquisa(arquivoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 					pesquisa.selecionar(label);
 				}
 			} else {

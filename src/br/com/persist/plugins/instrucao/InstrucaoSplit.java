@@ -67,7 +67,6 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -541,14 +540,12 @@ class Aba extends Transferivel {
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
@@ -561,11 +558,6 @@ class Aba extends Transferivel {
 		public void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		Action acaoIcon(String chave, Icon icon) {

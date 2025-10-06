@@ -40,7 +40,6 @@ import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -136,7 +135,6 @@ public class AmbienteContainer extends AbstratoContainer {
 		private Action pesquisaGeralAcao = Action.acaoIcon(AmbienteMensagens.getString("label.pesquisa_geral"),
 				Icones.BOLA_AMARELA);
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
@@ -144,18 +142,12 @@ public class AmbienteContainer extends AbstratoContainer {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP);
 			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(chkPesquisaLocal);
 			add(label);
 			addButton(pesquisaGeralAcao);
 			pesquisaGeralAcao.setActionListener(e -> pesquisarGeral());
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		private void pesquisarGeral() {

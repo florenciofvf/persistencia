@@ -57,7 +57,6 @@ import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -257,7 +256,6 @@ public class ConsultaContainer extends AbstratoContainer {
 		private Action colarApartirNcaractAcao = acaoMenu("label.colar_apartir_n_caracteres");
 		private Action colarSemAspasAcao = acaoMenu("label.colar_sem_aspas");
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
@@ -274,13 +272,7 @@ public class ConsultaContainer extends AbstratoContainer {
 			colarApartirNcaractAcao.setActionListener(e -> colarApartirNCaract());
 			colarSemAspasAcao.setActionListener(e -> colarSemAspas());
 			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		Action acaoMenu(String chave) {

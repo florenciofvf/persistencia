@@ -30,7 +30,6 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -42,7 +41,6 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextEditorListener;
-import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -194,7 +192,6 @@ public class PropriedadeContainer extends AbstratoContainer {
 	protected class Toolbar extends BarraButton implements ActionListener {
 		private JComboBox<String> comboFontes = new JComboBox<>(PropriedadeConstantes.FONTES);
 		private Action gerarAcao = acaoIcon("label.gerar_conteudo", Icones.EXECUTAR);
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
@@ -203,17 +200,11 @@ public class PropriedadeContainer extends AbstratoContainer {
 					COPIAR, COLAR);
 			addButton(gerarAcao);
 			add(comboFontes);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
 			comboFontes.addItemListener(Toolbar.this::alterarFonte);
 			gerarAcao.setActionListener(e -> gerar());
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		Action acaoIcon(String chave, Icon icon) {

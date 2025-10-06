@@ -20,7 +20,6 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -29,7 +28,6 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 
 public class MapaPagina extends Panel {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
@@ -100,21 +98,14 @@ public class MapaPagina extends Panel {
 		}
 
 		private class Toolbar extends BarraButton implements ActionListener {
-			private final TextField txtPesquisa = new TextField(35);
 			private static final long serialVersionUID = 1L;
 			private transient Selecao selecao;
 
 			private Toolbar() {
 				super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
-				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 				txtPesquisa.addActionListener(this);
 				add(txtPesquisa);
 				add(label);
-			}
-
-			@Override
-			protected void focusInputPesquisar() {
-				txtPesquisa.requestFocus();
 			}
 
 			@Override

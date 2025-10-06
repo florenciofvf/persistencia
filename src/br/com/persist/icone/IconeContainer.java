@@ -26,7 +26,6 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextField;
 
 public class IconeContainer extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -95,7 +94,6 @@ public class IconeContainer extends Panel {
 	}
 
 	private class Toolbar extends BarraButton {
-		private TextField txtPesquisa = new TextField(10);
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {

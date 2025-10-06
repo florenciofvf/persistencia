@@ -27,14 +27,12 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.TextField;
 import br.com.persist.plugins.mapa.organiza.Organizador;
 
 public class AbaView extends Panel {
@@ -97,13 +95,11 @@ public class AbaView extends Panel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 
 		private Toolbar() {
 			super.ini(new Nil(), BAIXAR);
 			add(true, new ButtonStatus());
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 		}

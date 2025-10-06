@@ -42,7 +42,6 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -90,7 +89,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopAnex = new CheckBox();
 		private final CheckBox chkPorParte = new CheckBox(true);
-		private final TextField txtAnexo = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient AnexoPesquisa pesquisa;
 
@@ -99,30 +97,24 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			chkSempreTopAnex.setToolTipText(AnexoMensagens.getString("msg.anexo.sempreTopAnex"));
 			chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
-			txtAnexo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			add(chkSempreTopAnex);
 			add(chkSempreTopForm);
-			add(txtAnexo);
+			add(txtPesquisa);
 			add(chkPorParte);
 			add(label);
 			eventos();
 		}
 
-		@Override
-		protected void focusInputPesquisar() {
-			txtAnexo.requestFocus();
-		}
-
 		private void eventos() {
 			chkSempreTopAnex.addActionListener(e -> anexoFormulario.setAlwaysOnTop(chkSempreTopAnex.isSelected()));
 			chkSempreTopForm.addActionListener(e -> topFormulario());
-			txtAnexo.addActionListener(this);
+			txtPesquisa.addActionListener(this);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.isEmpty(txtAnexo.getText())) {
-				pesquisa = getPesquisa(anexoTree, pesquisa, txtAnexo.getText(), chkPorParte.isSelected());
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				pesquisa = getPesquisa(anexoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
 			} else {
 				label.limpar();

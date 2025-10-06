@@ -36,7 +36,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -143,7 +142,6 @@ public class RoboContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAcao = acaoIcon("label.executar_todos", Icones.EXECUTAR);
-		private final TextField txtArquivo = new TextField(35);
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
 
@@ -153,15 +151,9 @@ public class RoboContainer extends AbstratoContainer {
 			executarAcao.setActionListener(e -> new Thread(this::executar).start());
 			addButton(excluirAtivoAcao);
 			addButton(executarAcao);
-			add(txtArquivo);
-			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
+			add(txtPesquisa);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
-			txtArquivo.addActionListener(this);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtArquivo.requestFocus();
+			txtPesquisa.addActionListener(this);
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
@@ -178,9 +170,9 @@ public class RoboContainer extends AbstratoContainer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!Util.isEmpty(txtArquivo.getText())) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
 				Set<String> set = new LinkedHashSet<>();
-				fichario.contemConteudo(set, txtArquivo.getText());
+				fichario.contemConteudo(set, txtPesquisa.getText());
 				Util.mensagem(RoboContainer.this, getString(set));
 			}
 		}

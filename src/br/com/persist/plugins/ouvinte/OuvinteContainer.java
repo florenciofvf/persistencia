@@ -24,7 +24,6 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -34,7 +33,6 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -92,7 +90,6 @@ public class OuvinteContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private final TextField txtPesquisa = new TextField(35);
 		private final CheckBox chkAtivar = new CheckBox();
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
@@ -101,16 +98,10 @@ public class OuvinteContainer extends AbstratoContainer {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, LIMPAR, SALVAR, COPIAR,
 					COLAR);
 			chkAtivar.setToolTipText(OuvinteMensagens.getString("hint.formulario_top_mensagem"));
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(chkAtivar);
 			add(txtPesquisa);
 			add(label);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		@Override

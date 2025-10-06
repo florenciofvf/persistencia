@@ -13,6 +13,7 @@ import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.abstrato.WindowInternalHandler;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
@@ -35,6 +36,7 @@ public abstract class BarraButton extends JToolBar
 	protected Action atualizarAcao = Action.actionIconAtualizar();
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
+	protected final TextField txtPesquisa = new TextField(35);
 	protected Action salvarAcao = Action.actionIconSalvar();
 	protected ButtonColar buttonColar = new ButtonColar();
 	private Action baixarAcao = Action.actionIconBaixar();
@@ -78,7 +80,8 @@ public abstract class BarraButton extends JToolBar
 		configBackup(enuns);
 	}
 
-	protected void focusInputPesquisar() {
+	public void focusInputPesquisar() {
+		txtPesquisa.requestFocus();
 	}
 
 	protected Action actionIcon(String chaveRotulo, Icon icone) {
@@ -510,6 +513,14 @@ public abstract class BarraButton extends JToolBar
 
 	public void addButton(Action action) {
 		addButton(false, action);
+	}
+
+	@Override
+	public Component add(Component comp) {
+		if (comp == txtPesquisa) {
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+		}
+		return super.add(comp);
 	}
 
 	public void setJanela(Janela janela) {

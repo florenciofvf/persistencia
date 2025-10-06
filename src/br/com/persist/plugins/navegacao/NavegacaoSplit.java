@@ -827,7 +827,6 @@ class Aba extends Transferivel {
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private final CheckBox chkCertificados = new CheckBox();
-		private final TextField txtPesquisa = new TextField(35);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
@@ -837,7 +836,6 @@ class Aba extends Transferivel {
 			chkCertificados.setToolTipText(Mensagens.getString("label.sem_certificados"));
 			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
 			executarAnterioresAcao.setActionListener(e -> executarAnteriores());
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			vAccessTokenAcao.setActionListener(e -> atualizarVar());
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
@@ -855,11 +853,6 @@ class Aba extends Transferivel {
 		public void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
-		}
-
-		@Override
-		protected void focusInputPesquisar() {
-			txtPesquisa.requestFocus();
 		}
 
 		Action acaoMenu(String chave) {
