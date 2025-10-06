@@ -64,7 +64,6 @@ public class ContainerFicharioBuilder extends Builder {
 		arquivo.addImport("br.com.persist.componente.Action");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
-		arquivo.addImport("br.com.persist.componente.TextField");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
 		arquivo.addImport("br.com.persist.formulario.Formulario").newLine();
@@ -199,7 +198,6 @@ public class ContainerFicharioBuilder extends Builder {
 		ClassePrivada classePrivada = null;
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
-		classePrivada.addInstrucao("private final TextField txtArquivo = new TextField(35)");
 		classePrivada.addInstrucao("private Action excluirAtivoAcao = actionIconExcluir()");
 
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
@@ -208,12 +206,10 @@ public class ContainerFicharioBuilder extends Builder {
 		funcao.addInstrucao(
 				"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR)");
 		funcao.addInstrucao("addButton(excluirAtivoAcao)");
-		funcao.addInstrucao("add(txtArquivo)");
-		funcao.addInstrucao("txtArquivo.setToolTipText(Mensagens.getString(\"label.pesquisar\"))");
+		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("excluirAtivoAcao.setActionListener(e -> excluirAtivo())");
-		funcao.addInstrucao("txtArquivo.addActionListener(this)");
+		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
 
-		focusInput(classePrivada);
 		contemConteudo(classePrivada);
 		destacar(classePrivada);
 		retornar(classePrivada);
@@ -230,19 +226,13 @@ public class ContainerFicharioBuilder extends Builder {
 		excluir(classePrivada);
 	}
 
-	private void focusInput(ClassePrivada classe) {
-		classe.addOverride(true);
-		Funcao funcao = classe.criarFuncaoProtegida("void", "focusInputPesquisar");
-		funcao.addInstrucao("txtArquivo.requestFocus()");
-	}
-
 	private void contemConteudo(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
 
-		If se = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", null);
+		If se = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", null);
 		se.addInstrucao("Set<String> set = new LinkedHashSet<>()");
-		se.addInstrucao("fichario.contemConteudo(set, txtArquivo.getText())");
+		se.addInstrucao("fichario.contemConteudo(set, txtPesquisa.getText())");
 		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();

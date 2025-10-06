@@ -57,7 +57,6 @@ public class ContainerArvoreBuilder extends Builder {
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.CheckBox");
 		arquivo.addImport("br.com.persist.componente.Janela");
-		arquivo.addImport("br.com.persist.componente.TextField");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
 		arquivo.addImport("br.com.persist.formulario.Formulario");
@@ -135,7 +134,6 @@ public class ContainerArvoreBuilder extends Builder {
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
 		classePrivada.addInstrucao("private final CheckBox chkPorParte = new CheckBox(true)");
-		classePrivada.addInstrucao("private final TextField txtArquivo = new TextField(35)");
 		classePrivada.addInstrucao("private final CheckBox chkPsqConteudo = new CheckBox()");
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
 		classePrivada.addInstrucao("private transient ArquivoPesquisa pesquisa").newLine();
@@ -145,14 +143,12 @@ public class ContainerArvoreBuilder extends Builder {
 				"super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO)");
 		funcao.addInstrucao("chkPsqConteudo.setToolTipText(Mensagens.getString(\"msg.pesq_no_conteudo\"))");
 		funcao.addInstrucao("chkPorParte.setToolTipText(Mensagens.getString(\"label.por_parte\"))");
-		funcao.addInstrucao("txtArquivo.setToolTipText(Mensagens.getString(\"label.pesquisar\"))");
-		funcao.addInstrucao("txtArquivo.addActionListener(this)");
-		funcao.addInstrucao("add(txtArquivo)");
+		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
+		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("add(chkPorParte)");
 		funcao.addInstrucao("add(chkPsqConteudo)");
 		funcao.addInstrucao("add(label)");
 
-		focusInput(classePrivada);
 		contemConteudo(classePrivada);
 		destacar(classePrivada);
 		retornar(classePrivada);
@@ -165,28 +161,22 @@ public class ContainerArvoreBuilder extends Builder {
 		baixar(classePrivada);
 	}
 
-	private void focusInput(ClassePrivada classe) {
-		classe.addOverride(true);
-		Funcao funcao = classe.criarFuncaoProtegida("void", "focusInputPesquisar");
-		funcao.addInstrucao("txtArquivo.requestFocus()");
-	}
-
 	private void contemConteudo(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
 
 		Else elseExterno = new Else();
 		elseExterno.addInstrucao("label.limpar()");
-		If ifExterno = funcao.criarIf("!Util.isEmpty(txtArquivo.getText())", elseExterno);
+		If ifExterno = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", elseExterno);
 
 		Else elseInterno = new Else();
 		elseInterno.addInstrucao(
-				"pesquisa = split.getTree().getPesquisa(pesquisa, txtArquivo.getText(), chkPorParte.isSelected())");
+				"pesquisa = split.getTree().getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected())");
 		elseInterno.addInstrucao("pesquisa.selecionar(label)");
 
 		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
 		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
-		ifInterno.addInstrucao("split.contemConteudo(set, txtArquivo.getText(), chkPorParte.isSelected())");
+		ifInterno.addInstrucao("split.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected())");
 		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();
