@@ -92,6 +92,14 @@ class Config {
 		return nameCap + "Fichario";
 	}
 
+	String nameCapProvedor() {
+		return nameCap + "Provedor";
+	}
+
+	String nameCapModelo() {
+		return nameCap + "Modelo";
+	}
+
 	String nameCapDialogo() {
 		return nameCap + "Dialogo";
 	}
@@ -118,5 +126,9 @@ class Config {
 
 	String nameDecapDialogo() {
 		return nameDecap + "Dialogo";
+	}
+
+	String declaracao() {
+		return nameCap + " " + nameDecap;
 	}
 }

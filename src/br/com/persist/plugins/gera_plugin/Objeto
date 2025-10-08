@@ -3,6 +3,14 @@ package ###package###;
 public class ###nameCap### {
 	private String nome;
 
+	public ###nameCap###() {
+		this(null);
+	}
+
+	public ###nameCap###(String nome) {
+		this.nome = nome;
+	}
+
 	public String getNome() {
 		return nome;
 	}

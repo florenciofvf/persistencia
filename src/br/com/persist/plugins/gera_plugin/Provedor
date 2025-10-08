@@ -3,6 +3,8 @@ package ###package###;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.componente.SetValor.Valor;
+
 public class ###nameCap###Provedor {
 	private static final List<###nameCap###> lista = new ArrayList<>();
 
@@ -16,5 +18,40 @@ public class ###nameCap###Provedor {
 			}
 		}
 		return null;
+	}
+
+	public static ###nameCap### get###nameCap###(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			return lista.get(indice);
+		}
+		return null;
+	}
+
+	public static Valor getValor(int i) {
+		###nameCap### item = get###nameCap###(i);
+		return new ###nameCap###Valor(item);
+	}
+
+	private static class ###nameCap###Valor implements Valor {
+		private final ###nameCap### item;
+
+		public ###nameCap###Valor(###nameCap### item) {
+			this.item = item;
+		}
+
+		@Override
+		public String getTitle() {
+			return "Valor";
+		}
+
+		@Override
+		public String get() {
+			return null;//item.getValor();
+		}
+
+		@Override
+		public void set(String s) {
+			//item.setValor(s);
+		}
 	}
 }

@@ -6,3 +6,4 @@ label.plugin_###nameLower###=Plugin ###nameCap###
 label.###nameLower###=###nameCap###
 label.###nameLower###_min=###nameMin###
 label.executar=Executar
+label.nome=Nome

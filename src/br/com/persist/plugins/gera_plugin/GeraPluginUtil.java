@@ -48,6 +48,10 @@ public class GeraPluginUtil {
 		transferir(config, "Provedor");
 	}
 
+	static void tabela(Config config) throws IOException {
+		transferir(config, "Editor");
+	}
+
 	static void modelo(Config config) throws IOException {
 		transferir(config, "Modelo");
 	}

@@ -60,6 +60,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private CheckBox chkComModelo = criarCheckBox("label.com_modelo");
 	private CheckBox chkFichario = criarCheckBox("label.fichario");
 	private CheckBox chkSimples = criarCheckBox("label.simples");
+	private CheckBox chkTabela = criarCheckBox("label.tabela");
 	private CheckBox chkArvore = criarCheckBox("label.arvore");
 	private TextField txtDiretorioRecursos = new TextField();
 	private TextField txtDiretorioDestino = new TextField();
@@ -169,10 +170,11 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 		ButtonGroup grupo = new ButtonGroup();
 		grupo.add(chkSimples);
+		grupo.add(chkTabela);
 		grupo.add(chkFichario);
 		grupo.add(chkArvore);
 
-		Panel panel = criarCamada(chkSimples, chkFichario, chkArvore);
+		Panel panel = criarCamada(chkSimples, chkTabela, chkFichario, chkArvore);
 		panel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.MAGENTA));
 
 		Muro muro = new Muro();
@@ -266,6 +268,10 @@ public class GeraPluginContainer extends AbstratoContainer {
 			resp.add(GeraPluginMensagens.getString("erro.excecao_devido_fichario_arvore"));
 		}
 
+		if (chkTabela.isSelected() && !chkComProvedor.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.provedor_devido_tabela"));
+		}
+
 		if (chkFichario.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_fichario"));
 		}
@@ -302,7 +308,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private void validarModeloPlugin(List<String> resp) {
-		if (!chkSimples.isSelected() && !chkFichario.isSelected() && !chkArvore.isSelected()) {
+		if (!chkSimples.isSelected() && !chkTabela.isSelected() && !chkFichario.isSelected()
+				&& !chkArvore.isSelected()) {
 			resp.add(GeraPluginMensagens.getString("erro.modelo_plugin_vazio"));
 		}
 	}
@@ -373,6 +380,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 			if (chkSimples.isSelected()) {
 				new ContainerSimplesBuilder(config).gerar();
+			} else if (chkTabela.isSelected()) {
+				new ContainerTabelaBuilder(config).gerar();
 			} else if (chkFichario.isSelected()) {
 				new ContainerFicharioBuilder(config).gerar();
 			} else if (chkArvore.isSelected()) {
@@ -386,6 +395,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 			GeraPluginUtil.objeto(config);
 			if (chkComDialogo.isSelected()) {
 				new DialogoBuilder(config).gerar();
+			}
+			if (chkTabela.isSelected()) {
+				GeraPluginUtil.tabela(config);
 			}
 			if (chkFichario.isSelected()) {
 				GeraPluginUtil.fichario(config);
