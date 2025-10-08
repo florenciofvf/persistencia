@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -34,6 +36,7 @@ import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.SelecaoTabela;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -125,23 +128,37 @@ public class ConexaoContainer extends AbstratoContainer {
 		return acaoIcon(chave, null);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private Action desconectaAcao = acaoIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = actionIcon("label.conectar", Icones.CONECTA);
 		private Action descerAcao = actionIcon("label.descer", Icones.BAIXAR2);
 		private Action subirAcao = actionIcon("label.subir", Icones.TOP);
 		private Action infoAcao = actionIcon("label.info", Icones.INFO);
 		private static final long serialVersionUID = 1L;
+		private transient SelecaoTabela selecao;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
 					EXCLUIR, COPIAR, APLICAR);
+			txtPesquisa.addActionListener(this);
 			addButton(true, descerAcao);
 			addButton(subirAcao);
 			addButton(true, conectaAcao);
 			addButton(true, infoAcao);
 			addButton(true, desconectaAcao);
+			add(txtPesquisa);
+			add(label);
 			eventos();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText());
+				selecao.selecionar(label);
+			} else {
+				label.limpar();
+			}
 		}
 
 		private void eventos() {
@@ -210,15 +227,18 @@ public class ConexaoContainer extends AbstratoContainer {
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+			toolbar.focusInputPesquisar();
 		}
 
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
+			toolbar.focusInputPesquisar();
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
+			toolbar.focusInputPesquisar();
 		}
 
 		@Override

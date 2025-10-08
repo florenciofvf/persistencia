@@ -1120,6 +1120,15 @@ public class Util {
 		return new Selecao(component, string);
 	}
 
+	public static SelecaoTabela getSelecaoTabela(JTable tabela, SelecaoTabela selecao, int coluna, String string) {
+		if (selecao == null) {
+			return new SelecaoTabela(tabela, string, coluna);
+		} else if (selecao.igual(string)) {
+			return selecao;
+		}
+		return new SelecaoTabela(tabela, string, coluna);
+	}
+
 	public static double menorEmPorcentagem(double menor, double maior) {
 		return (menor * 100) / maior;
 	}

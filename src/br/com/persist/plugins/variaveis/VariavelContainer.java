@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,6 +31,7 @@ import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.SelecaoTabela;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -92,14 +95,28 @@ public class VariavelContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private transient VariavelColetor coletor;
+		private transient SelecaoTabela selecao;
 
 		public void ini(Janela janela, VariavelColetor coletor) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
 					EXCLUIR, COPIAR, APLICAR);
+			txtPesquisa.addActionListener(this);
 			setColetor(coletor);
+			add(txtPesquisa);
+			add(label);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText());
+				selecao.selecionar(label);
+			} else {
+				label.limpar();
+			}
 		}
 
 		private void setColetor(VariavelColetor coletor) {
@@ -139,15 +156,18 @@ public class VariavelContainer extends AbstratoContainer {
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+			toolbar.focusInputPesquisar();
 		}
 
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
+			toolbar.focusInputPesquisar();
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
+			toolbar.focusInputPesquisar();
 		}
 
 		@Override
@@ -162,13 +182,13 @@ public class VariavelContainer extends AbstratoContainer {
 			}
 		}
 
-		private void adicionar(Variavel var) {
-			if (VariavelProvedor.contem(var)) {
+		private void adicionar(Variavel variavel) {
+			if (VariavelProvedor.contem(variavel)) {
 				Util.mensagem(VariavelContainer.this,
-						Mensagens.getString("label.indentificador_ja_existente") + " " + var.getNome());
+						Mensagens.getString("label.indentificador_ja_existente") + " " + variavel.getNome());
 				return;
 			}
-			VariavelProvedor.adicionar(var);
+			VariavelProvedor.adicionar(variavel);
 			variavelModelo.fireTableDataChanged();
 			ajustarTabela();
 		}

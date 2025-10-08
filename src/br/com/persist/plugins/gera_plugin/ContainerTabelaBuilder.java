@@ -5,6 +5,7 @@ import br.com.persist.geradores.Catch;
 import br.com.persist.geradores.ClassePrivada;
 import br.com.persist.geradores.ClassePublica;
 import br.com.persist.geradores.Container;
+import br.com.persist.geradores.Else;
 import br.com.persist.geradores.ElseIf;
 import br.com.persist.geradores.For;
 import br.com.persist.geradores.Funcao;
@@ -15,6 +16,7 @@ import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
 public class ContainerTabelaBuilder extends Builder {
+	private static final String TOOLBAR_FOCUS_INPUT_PESQUISAR = "toolbar.focusInputPesquisar()";
 	private static final String FIRE_TABLE_DATA_CHANGED = ".fireTableDataChanged()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String AJUSTAR_TABELA = "ajustarTabela()";
@@ -46,6 +48,8 @@ public class ContainerTabelaBuilder extends Builder {
 			arquivo.addImport("java.awt.Dialog");
 		}
 		arquivo.addImport("java.awt.Window");
+		arquivo.addImport("java.awt.event.ActionEvent");
+		arquivo.addImport("java.awt.event.ActionListener");
 		arquivo.addImport("java.util.logging.Level");
 		arquivo.addImport("java.util.logging.Logger").newLine();
 		arquivo.addImport("javax.swing.Icon");
@@ -57,6 +61,7 @@ public class ContainerTabelaBuilder extends Builder {
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Mensagens");
+		arquivo.addImport("br.com.persist.assistencia.SelecaoTabela");
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
@@ -141,13 +146,18 @@ public class ContainerTabelaBuilder extends Builder {
 		classe.newLine();
 		ClassePrivada classePrivada = null;
 
-		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton");
-		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
+		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
+		classePrivada.addInstrucao("private static final long serialVersionUID = 1L");
+		classePrivada.addInstrucao("private transient SelecaoTabela selecao").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));
 		funcao.addInstrucao(
 				"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR, EXCLUIR, COPIAR)");
+		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
+		funcao.addInstrucao("add(txtPesquisa)");
+		funcao.addInstrucao("add(label)");
 
+		actionPerf(classePrivada);
 		destacar(classePrivada);
 		retornar(classePrivada);
 		abrir(classePrivada);
@@ -161,6 +171,18 @@ public class ContainerTabelaBuilder extends Builder {
 		salvar(classePrivada);
 		copiar(classePrivada);
 		excluir(classePrivada);
+	}
+
+	private void actionPerf(ClassePrivada classe) {
+		classe.addOverride(true);
+		Funcao funcao = classe.criarFuncaoProtegida("void", "actionPerformed", new Parametros("ActionEvent e"));
+
+		Else elsee = new Else();
+		elsee.addInstrucao("label.limpar()");
+
+		If se = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", elsee);
+		se.addInstrucao("selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText())");
+		se.addInstrucao("selecao.selecionar(label)");
 	}
 
 	private void destacar(ClassePrivada classe) {
@@ -209,18 +231,21 @@ public class ContainerTabelaBuilder extends Builder {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "windowOpenedHandler", new Parametros("Window window"));
 		funcao.addInstrucao("buttonDestacar.estadoFormulario()");
+		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void dialogOpened(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
 		funcao.addInstrucao("buttonDestacar.estadoDialogo()");
+		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void adicionadoAoFichario(ClassePrivada classe) {
 		classe.newLine();
 		FuncaoDefault funcao = classe.criarFuncaoDefault("void", "adicionadoAoFichario");
 		funcao.addInstrucao("buttonDestacar.estadoFichario()");
+		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void novo(ClassePrivada classe) {
