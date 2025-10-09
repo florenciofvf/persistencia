@@ -5,29 +5,15 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import br.com.persist.assistencia.Constantes;
+
 public class ###nameCap###Modelo extends AbstractTableModel {
-	private final transient List<###nameCap###> lista = new ArrayList<>();
 	private static final String[] COLUNAS = { "NOME", "VALOR"};
 	private static final long serialVersionUID = 1L;
 
-	public ###nameCap### get###nameCap###(int i) {
-		if (i >= 0 && i < lista.size()) {
-			return lista.get(i);
-		}
-		return null;
-	}
-
-	public int adicionar(###nameCap### ###nameDecap###) {
-		if (###nameDecap### != null) {
-			lista.add(###nameDecap###);
-			return lista.size() - 1;
-		}
-		return -1;
-	}
-
 	@Override
 	public int getRowCount() {
-		return lista.size();
+		return ###nameCap###Provedor.getSize();
 	}
 
 	@Override
@@ -47,30 +33,28 @@ public class ###nameCap###Modelo extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return 1 == columnIndex;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		###nameCap### ###nameDecap### = lista.get(rowIndex);
+		###nameCap### item = ###nameCap###Provedor.get###nameCap###(rowIndex);
 		if (columnIndex == 0) {
-			return ###nameDecap###.getNome();
+			return item.getNome();
 		} else if (columnIndex == 1) {
-			return ###nameDecap###.getValor();
+			return item.getValor();
 		}
 		return null;
 	}
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		if (aValue == null) {
-			return;
-		}
-		###nameCap### ###nameDecap### = lista.get(rowIndex);
+		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
+		###nameCap### item = ###nameCap###Provedor.get###nameCap###(rowIndex);
 		if (columnIndex == 0) {
-			###nameDecap###.setNome(aValue.toString());
+			item.setNome(valor);
 		} else if (columnIndex == 1) {
-			###nameDecap###.setValor(aValue.toString());
+			item.setValor(valor);
 		}
 	}
 }

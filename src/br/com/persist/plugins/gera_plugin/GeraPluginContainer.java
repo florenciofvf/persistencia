@@ -260,16 +260,13 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 		validarModeloPlugin(resp);
 		validarDiretorio(resp);
+		validarTabela(resp);
 		validarNome(resp);
 		validarMin(resp);
 		validarPct(resp);
 
 		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComException.isSelected()) {
 			resp.add(GeraPluginMensagens.getString("erro.excecao_devido_fichario_arvore"));
-		}
-
-		if (chkTabela.isSelected() && !chkComProvedor.isSelected()) {
-			resp.add(GeraPluginMensagens.getString("erro.provedor_devido_tabela"));
 		}
 
 		if (chkFichario.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
@@ -289,6 +286,15 @@ public class GeraPluginContainer extends AbstratoContainer {
 		}
 
 		return resp;
+	}
+
+	private void validarTabela(List<String> resp) {
+		if (chkTabela.isSelected() && !chkComProvedor.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.provedor_devido_tabela"));
+		}
+		if (chkTabela.isSelected() && !chkComModelo.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.modelo_devido_tabela"));
+		}
 	}
 
 	private void validarPct(List<String> resp) {

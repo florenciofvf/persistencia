@@ -104,9 +104,9 @@ public class ###nameCap###Provedor {
 	public static void salvar() throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2(###nameCap###Constantes.###recurso###);
+		util.abrirTag2(###nameCap###Constantes.###recurso###S);
 		salvar###nameCap###(util);
-		util.finalizarTag(###nameCap###Constantes.###recurso###);
+		util.finalizarTag(###nameCap###Constantes.###recurso###S);
 		util.close();
 	}
 
