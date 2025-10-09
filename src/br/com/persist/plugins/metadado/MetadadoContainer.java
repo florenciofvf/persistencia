@@ -196,10 +196,12 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+			toolbar.focusInputPesquisar();
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
+			toolbar.focusInputPesquisar();
 		}
 
 		private class ButtonInfoDiff extends ButtonPopup {

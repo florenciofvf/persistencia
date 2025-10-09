@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private CheckBox chkComModelo = criarCheckBox("label.com_modelo");
 	private CheckBox chkFichario = criarCheckBox("label.fichario");
 	private CheckBox chkSimples = criarCheckBox("label.simples");
+	private CheckBox chkArquivo = criarCheckBox("label.arquivo");
 	private CheckBox chkTabela = criarCheckBox("label.tabela");
 	private CheckBox chkArvore = criarCheckBox("label.arvore");
 	private TextField txtDiretorioRecursos = new TextField();
@@ -171,10 +173,11 @@ public class GeraPluginContainer extends AbstratoContainer {
 		ButtonGroup grupo = new ButtonGroup();
 		grupo.add(chkSimples);
 		grupo.add(chkTabela);
+		grupo.add(chkArquivo);
 		grupo.add(chkFichario);
 		grupo.add(chkArvore);
 
-		Panel panel = criarCamada(chkSimples, chkTabela, chkFichario, chkArvore);
+		Panel panel = criarCamada(chkSimples, chkTabela, chkArquivo, chkFichario, chkArvore);
 		panel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.MAGENTA));
 
 		Muro muro = new Muro();
@@ -387,16 +390,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 			new FormularioBuilder(config).gerar();
 			new ConstantesBuilder(config).gerar();
 
-			if (chkSimples.isSelected()) {
-				new ContainerSimplesBuilder(config).gerar();
-			} else if (chkTabela.isSelected()) {
-				new ContainerTabelaBuilder(config).gerar();
-			} else if (chkFichario.isSelected()) {
-				new ContainerFicharioBuilder(config).gerar();
-			} else if (chkArvore.isSelected()) {
-				new ContainerArvoreBuilder(config).gerar();
-				GeraPluginUtil.split(config);
-			}
+			gerarContainer();
 
 			GeraPluginUtil.mensagensProp(config);
 			new FabricaBuilder(config).gerar();
@@ -435,6 +429,21 @@ public class GeraPluginContainer extends AbstratoContainer {
 			textEditor.setText("FONTE GERADO COM SUCESSO");
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(GeraPluginConstantes.PAINEL_GERA_PLUGIN, ex, GeraPluginContainer.this);
+		}
+	}
+
+	private void gerarContainer() throws IOException {
+		if (chkSimples.isSelected()) {
+			new ContainerSimplesBuilder(config).gerar();
+		} else if (chkTabela.isSelected()) {
+			new ContainerTabelaBuilder(config).gerar();
+		} else if (chkArquivo.isSelected()) {
+			new ContainerArquivoBuilder(config).gerar();
+		} else if (chkFichario.isSelected()) {
+			new ContainerFicharioBuilder(config).gerar();
+		} else if (chkArvore.isSelected()) {
+			new ContainerArvoreBuilder(config).gerar();
+			GeraPluginUtil.split(config);
 		}
 	}
 
