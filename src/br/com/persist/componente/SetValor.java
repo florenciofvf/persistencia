@@ -87,6 +87,7 @@ class SetValorDialogo extends AbstratoDialogo {
 
 	@Override
 	public void dialogOpenedHandler(Dialog dialog) {
+		textEditor.requestFocus();
 		if (configAjuste) {
 			checarVisivelScrollVertical();
 		}
