@@ -1,14 +1,23 @@
 package ###package###;
 
+import br.com.persist.assistencia.ArgumentoException;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
+
 public class ###nameCap### {
 	private String nome;
+	private String valor;
 
-	public ###nameCap###() {
+	public ###nameCap###() throws ArgumentoException {
 		this(null);
 	}
 
-	public ###nameCap###(String nome) {
+	public ###nameCap###(String nome) throws ArgumentoException {
 		this.nome = nome;
+	}
+
+	public ###nameCap### clonar(String novoNome) throws ArgumentoException {
+		return new ###nameCap###(novoNome);
 	}
 
 	public String getNome() {
@@ -17,5 +26,32 @@ public class ###nameCap### {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public String getValor() {
+		if (Util.isEmpty(valor)) {
+			valor = Constantes.VAZIO;
+		}
+		return valor;
+	}
+
+	public boolean isValido() {
+		return !Util.isEmpty(nome);
+	}
+
+	public void salvar(XMLUtil util) {
+		util.abrirTag(###nameCap###Constantes.###recurso###);
+		util.atributo("nome", nome);
+		util.fecharTag();
+		util.abrirTag2(Constantes.VALOR);
+		util.conteudo("<![CDATA[").ql();
+		util.tab().conteudo(getValor()).ql();
+		util.conteudo("]]>").ql();
+		util.finalizarTag(Constantes.VALOR);
+		util.finalizarTag(###nameCap###Constantes.###recurso###);
 	}
 }

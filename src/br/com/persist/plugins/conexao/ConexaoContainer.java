@@ -154,7 +154,7 @@ public class ConexaoContainer extends AbstratoContainer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText());
+				selecao = Util.getSelecaoTabela(tabela, selecao, 1, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();

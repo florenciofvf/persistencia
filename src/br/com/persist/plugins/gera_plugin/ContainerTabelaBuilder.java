@@ -175,7 +175,7 @@ public class ContainerTabelaBuilder extends Builder {
 
 	private void actionPerf(ClassePrivada classe) {
 		classe.addOverride(true);
-		Funcao funcao = classe.criarFuncaoProtegida("void", "actionPerformed", new Parametros("ActionEvent e"));
+		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
 
 		Else elsee = new Else();
 		elsee.addInstrucao("label.limpar()");

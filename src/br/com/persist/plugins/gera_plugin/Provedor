@@ -1,14 +1,27 @@
 package ###package###;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.SetValor.Valor;
+import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
 
 public class ###nameCap###Provedor {
 	private static final List<###nameCap###> lista = new ArrayList<>();
+	private static final Logger LOG = Logger.getGlobal();
+	private static final File file;
 
 	private ###nameCap###Provedor() {
+	}
+
+	static {
+		file = new File(###nameCap###Constantes.###recurso### + Constantes.SEPARADOR + "###nameLower###.xml");
 	}
 
 	public static ###nameCap### get###nameCap###(String nome) {
@@ -20,11 +33,89 @@ public class ###nameCap###Provedor {
 		return null;
 	}
 
+	public static void excluir(int[] indices) {
+		List<###nameCap###> lista = new ArrayList<>();
+		for (int i : indices) {
+			###nameCap### item = get###nameCap###(i);
+			if (item != null) {
+				lista.add(item);
+			}
+		}
+		for (###nameCap### item : lista) {
+			int indice = getIndice(item.getNome());
+			if (indice != -1) {
+				excluir(indice);
+			}
+		}
+	}
+
+	public static void excluir(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			lista.remove(indice);
+		}
+	}
+
 	public static ###nameCap### get###nameCap###(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
 		}
 		return null;
+	}
+
+	public static int getIndice(String nome) {
+		for (int i = 0; i < lista.size(); i++) {
+			###nameCap### item = lista.get(i);
+			if (item.getNome().equals(nome)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public static int getSize() {
+		return lista.size();
+	}
+
+	public static boolean contem(###nameCap### ###nameDecap###) {
+		return contem(###nameDecap###.getNome());
+	}
+
+	public static boolean contem(String nome) {
+		return get###nameCap###(nome) != null;
+	}
+
+	public static void adicionar(###nameCap### ###nameDecap###) {
+		if (!contem(###nameDecap###)) {
+			lista.add(###nameDecap###);
+		}
+	}
+
+	public static void inicializar() {
+		lista.clear();
+		try {
+			if (file.exists() && file.canRead()) {
+				XML.processar(file, new ###nameCap###XMLHandler());
+			}
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	public static void salvar() throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2(###nameCap###Constantes.###recurso###);
+		salvar###nameCap###(util);
+		util.finalizarTag(###nameCap###Constantes.###recurso###);
+		util.close();
+	}
+
+	private static void salvar###nameCap###(XMLUtil util) {
+		for (###nameCap### item : lista) {
+			if (item.isValido()) {
+				item.salvar(util);
+			}
+		}
 	}
 
 	public static Valor getValor(int i) {
@@ -46,12 +137,12 @@ public class ###nameCap###Provedor {
 
 		@Override
 		public String get() {
-			return null;//item.getValor();
+			return item.getValor();
 		}
 
 		@Override
 		public void set(String s) {
-			//item.setValor(s);
+			item.setValor(s);
 		}
 	}
 }

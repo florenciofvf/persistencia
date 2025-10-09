@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class ###nameCap###Modelo extends AbstractTableModel {
 	private final transient List<###nameCap###> lista = new ArrayList<>();
-	private static final String[] COLUNAS = { "NOME" };
+	private static final String[] COLUNAS = { "NOME", "VALOR"};
 	private static final long serialVersionUID = 1L;
 
 	public ###nameCap### get###nameCap###(int i) {
@@ -55,6 +55,8 @@ public class ###nameCap###Modelo extends AbstractTableModel {
 		###nameCap### ###nameDecap### = lista.get(rowIndex);
 		if (columnIndex == 0) {
 			return ###nameDecap###.getNome();
+		} else if (columnIndex == 1) {
+			return ###nameDecap###.getValor();
 		}
 		return null;
 	}
@@ -67,6 +69,8 @@ public class ###nameCap###Modelo extends AbstractTableModel {
 		###nameCap### ###nameDecap### = lista.get(rowIndex);
 		if (columnIndex == 0) {
 			###nameDecap###.setNome(aValue.toString());
+		} else if (columnIndex == 1) {
+			###nameDecap###.setValor(aValue.toString());
 		}
 	}
 }
