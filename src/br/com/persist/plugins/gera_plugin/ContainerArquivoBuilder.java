@@ -59,6 +59,10 @@ public class ContainerArquivoBuilder extends Builder {
 		arquivo.addImport("br.com.persist.assistencia.Mensagens");
 		arquivo.addImport("br.com.persist.assistencia.SelecaoTabela");
 		arquivo.addImport("br.com.persist.assistencia.Util");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoModelo");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoTree");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeListener");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
 		arquivo.addImport("br.com.persist.componente.ScrollPane");
