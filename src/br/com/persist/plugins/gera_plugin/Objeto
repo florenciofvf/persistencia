@@ -18,7 +18,9 @@ public class ###nameCap### {
 	}
 
 	public ###nameCap### clonar(String novoNome) throws ArgumentoException {
-		return new ###nameCap###(novoNome);
+		###nameCap### obj = new ###nameCap###(novoNome);
+		obj.setValor(valor);
+		return obj;
 	}
 
 	public String getNome() {

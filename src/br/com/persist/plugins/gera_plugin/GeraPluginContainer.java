@@ -295,6 +295,9 @@ public class GeraPluginContainer extends AbstratoContainer {
 		if (chkTabela.isSelected() && !chkComModelo.isSelected()) {
 			resp.add(GeraPluginMensagens.getString("erro.modelo_devido_tabela"));
 		}
+		if (chkTabela.isSelected() && !chkComHandler.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.handler_devido_tabela"));
+		}
 	}
 
 	private void validarPct(List<String> resp) {
