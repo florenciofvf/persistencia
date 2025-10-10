@@ -172,12 +172,12 @@ public class GeraPluginContainer extends AbstratoContainer {
 
 		ButtonGroup grupo = new ButtonGroup();
 		grupo.add(chkSimples);
-		grupo.add(chkTabela);
 		grupo.add(chkArquivo);
+		grupo.add(chkTabela);
 		grupo.add(chkFichario);
 		grupo.add(chkArvore);
 
-		Panel panel = criarCamada(chkSimples, chkTabela, chkArquivo, chkFichario, chkArvore);
+		Panel panel = criarCamada(chkSimples, chkArquivo, chkTabela, chkFichario, chkArvore);
 		panel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.MAGENTA));
 
 		Muro muro = new Muro();
@@ -320,7 +320,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private void validarModeloPlugin(List<String> resp) {
-		if (!chkSimples.isSelected() && !chkTabela.isSelected() && !chkFichario.isSelected()
+		if (!chkSimples.isSelected() && !chkArquivo.isSelected() && !chkTabela.isSelected() && !chkFichario.isSelected()
 				&& !chkArvore.isSelected()) {
 			resp.add(GeraPluginMensagens.getString("erro.modelo_plugin_vazio"));
 		}
