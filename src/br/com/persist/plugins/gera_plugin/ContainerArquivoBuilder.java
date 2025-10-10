@@ -32,12 +32,8 @@ public class ContainerArquivoBuilder extends Builder {
 	void templateImport(Arquivo arquivo) {
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.BAIXAR");
-		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.COPIAR");
 		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO");
-		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.EXCLUIR");
-		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.NOVO");
-		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO");
-		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.SALVAR").newLine();
+		arquivo.addImport("static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO").newLine();
 		arquivo.addImport("java.awt.BorderLayout");
 		arquivo.addImport("java.awt.Component");
 		if (config.comDialogo) {
@@ -46,26 +42,18 @@ public class ContainerArquivoBuilder extends Builder {
 		arquivo.addImport("java.awt.Window");
 		arquivo.addImport("java.awt.event.ActionEvent");
 		arquivo.addImport("java.awt.event.ActionListener");
-		arquivo.addImport("java.util.logging.Level");
-		arquivo.addImport("java.util.logging.Logger").newLine();
-
 		arquivo.addImport("java.util.LinkedHashSet");
 		arquivo.addImport("java.util.Set").newLine();
-		arquivo.addImport("javax.swing.Icon");
-		arquivo.addImport("javax.swing.JTable").newLine();
+		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
-		arquivo.addImport("br.com.persist.assistencia.ArgumentoException");
-		arquivo.addImport("br.com.persist.assistencia.CellRenderer");
-		arquivo.addImport("br.com.persist.assistencia.Constantes");
-		arquivo.addImport("br.com.persist.assistencia.Icones");
-		arquivo.addImport("br.com.persist.assistencia.Mensagens");
-		arquivo.addImport("br.com.persist.assistencia.SelecaoTabela");
-		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoModelo");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTree");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeListener");
+		arquivo.addImport("br.com.persist.assistencia.Constantes");
+		arquivo.addImport("br.com.persist.assistencia.Icones");
+		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
 		arquivo.addImport("br.com.persist.componente.ScrollPane");
