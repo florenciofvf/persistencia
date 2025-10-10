@@ -26,7 +26,7 @@ public class ContainerFicharioBuilder extends Builder {
 	private static final String LABEL = "LABEL_";
 
 	protected ContainerFicharioBuilder(Config config) {
-		super("Container", "extends AbstratoContainer", config);
+		super("Container", "extends AbstratoContainer implements PluginFichario", config);
 	}
 
 	@Override
@@ -56,6 +56,7 @@ public class ContainerFicharioBuilder extends Builder {
 		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
+		arquivo.addImport("br.com.persist.abstrato.PluginFichario");
 		arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");

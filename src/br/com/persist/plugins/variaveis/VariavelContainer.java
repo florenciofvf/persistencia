@@ -26,6 +26,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginTabela;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
@@ -40,7 +41,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class VariavelContainer extends AbstratoContainer {
+public class VariavelContainer extends AbstratoContainer implements PluginTabela {
 	private final VariavelModelo variavelModelo = new VariavelModelo();
 	private final JTable tabela = new JTable(variavelModelo);
 	private static final Logger LOG = Logger.getGlobal();

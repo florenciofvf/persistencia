@@ -22,6 +22,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
@@ -35,7 +36,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class QuebraLogContainer extends AbstratoContainer {
+public class QuebraLogContainer extends AbstratoContainer implements PluginBasico {
 	private PanelQuebraLog panel = new PanelQuebraLog();
 	private QuebraLogFormulario quebraLogFormulario;
 	private static final long serialVersionUID = 1L;

@@ -26,6 +26,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginFichario;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -38,7 +39,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class EntregaContainer extends AbstratoContainer {
+public class EntregaContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(EntregaConstantes.ENTREGAS);
 	private final EntregaFichario fichario = new EntregaFichario();
 	private static final long serialVersionUID = 1L;

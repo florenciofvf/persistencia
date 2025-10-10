@@ -66,6 +66,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopAlinhamento;
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.abstrato.WindowInternalHandler;
 import br.com.persist.assistencia.ArgumentoException;
@@ -168,7 +169,8 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class InternalContainer extends Panel implements ItemListener, Pagina, WindowHandler, WindowInternalHandler {
+public class InternalContainer extends Panel
+		implements ItemListener, Pagina, WindowHandler, WindowInternalHandler, PluginBasico {
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;

@@ -37,6 +37,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
@@ -69,7 +70,7 @@ import br.com.persist.plugins.objeto.vinculo.Marcador;
 import br.com.persist.plugins.objeto.vinculo.RelacaoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
-public class RelacaoContainer extends Panel {
+public class RelacaoContainer extends Panel implements PluginBasico {
 	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
 	public static final String LABEL_VINCULO_REMOVE = "label.aplicar_arq_vinculo_remove";
 	private static final long serialVersionUID = 1L;

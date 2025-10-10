@@ -32,6 +32,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.FabricaContainer;
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
@@ -44,7 +45,7 @@ import br.com.persist.main.Main;
 import br.com.persist.marca.XML;
 import br.com.persist.plugins.ouvinte.OuvinteFormulario;
 
-public class Formulario extends JFrame {
+public class Formulario extends JFrame implements PluginBasico {
 	private final transient Map<String, FabricaContainer> fabricas = new HashMap<>();
 	private final transient List<Servico> servicos = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();

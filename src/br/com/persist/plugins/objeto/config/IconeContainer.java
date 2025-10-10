@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
@@ -28,7 +29,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 
-public class IconeContainer extends Panel {
+public class IconeContainer extends Panel implements PluginBasico {
 	private static final long serialVersionUID = 1L;
 	private final List<LabelIcone> listaLabelIcone;
 	private final Toolbar toolbar = new Toolbar();

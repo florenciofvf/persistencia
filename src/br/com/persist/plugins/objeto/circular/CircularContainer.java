@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Vetor;
 import br.com.persist.componente.BarraButton;
@@ -23,7 +24,7 @@ import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoSuperficieUtil;
 import br.com.persist.plugins.objeto.Relacao;
 
-public class CircularContainer extends Panel {
+public class CircularContainer extends Panel implements PluginBasico {
 	private final TextField txtGrauTotal = new TextField("360");
 	private final TextField txtGrauOrigem = new TextField("0");
 	private final TextField txtRaio = new TextField("300");

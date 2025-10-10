@@ -30,6 +30,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Muro;
@@ -49,7 +50,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class GeraPluginContainer extends AbstratoContainer {
+public class GeraPluginContainer extends AbstratoContainer implements PluginBasico {
 	private JComboBox<Icone> cmbIconePlugin = new JComboBox<>(arrayObjetoIcone());
 	private CheckBox chkComConfiguracao = criarCheckBox("label.com_configuracao");
 	private CheckBox chkComClasseUtil = criarCheckBox("label.com_classe_util");

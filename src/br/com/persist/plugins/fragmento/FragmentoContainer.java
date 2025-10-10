@@ -26,6 +26,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginTabela;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
@@ -40,7 +41,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class FragmentoContainer extends AbstratoContainer {
+public class FragmentoContainer extends AbstratoContainer implements PluginTabela {
 	private final FragmentoModelo fragmentoModelo = new FragmentoModelo();
 	private final JTable tabela = new JTable(fragmentoModelo);
 	private static final Logger LOG = Logger.getGlobal();

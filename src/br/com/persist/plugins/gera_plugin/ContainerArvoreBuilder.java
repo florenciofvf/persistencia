@@ -25,7 +25,7 @@ public class ContainerArvoreBuilder extends Builder {
 	private static final String LABEL = "LABEL_";
 
 	protected ContainerArvoreBuilder(Config config) {
-		super("Container", "extends AbstratoContainer", config);
+		super("Container", "extends AbstratoContainer implements PluginArvore", config);
 	}
 
 	@Override
@@ -49,6 +49,7 @@ public class ContainerArvoreBuilder extends Builder {
 		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
+		arquivo.addImport("br.com.persist.abstrato.PluginArvore");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");

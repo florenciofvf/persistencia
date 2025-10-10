@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -26,7 +27,7 @@ import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 
-public class MiscelaniaContainer extends Panel {
+public class MiscelaniaContainer extends Panel implements PluginBasico {
 	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private transient MiscelaniaListener listener;

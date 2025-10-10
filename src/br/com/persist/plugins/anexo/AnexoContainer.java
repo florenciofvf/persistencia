@@ -30,6 +30,7 @@ import javax.swing.Icon;
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginArquivo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
@@ -46,7 +47,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class AnexoContainer extends AbstratoContainer implements AnexoTreeListener {
+public class AnexoContainer extends AbstratoContainer implements AnexoTreeListener, PluginArquivo {
 	private final AnexoTree anexoTree = new AnexoTree(new AnexoModelo());
 	private static final Map<String, Object> map = new HashMap<>();
 	private static final long serialVersionUID = 1L;

@@ -6,9 +6,10 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JList;
 
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.componente.Panel;
 
-public class MacroContainer extends Panel {
+public class MacroContainer extends Panel implements PluginBasico {
 	private static final long serialVersionUID = 1L;
 	private JList<MacroProvedor.Instrucao> lista;
 

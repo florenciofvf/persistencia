@@ -20,6 +20,7 @@ import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.FabricaContainer;
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -35,7 +36,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioFabrica;
 
-public class ConfiguracaoContainer extends AbstratoContainer {
+public class ConfiguracaoContainer extends AbstratoContainer implements PluginBasico {
 	private final PainelConfiguracao painelConfiguracao = new PainelConfiguracao();
 	private ConfiguracaoFormulario configuracaoFormulario;
 	private static final long serialVersionUID = 1L;

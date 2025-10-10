@@ -32,6 +32,7 @@ import javax.swing.table.JTableHeader;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginTabela;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -47,7 +48,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioEvento;
 
-public class ConexaoContainer extends AbstratoContainer {
+public class ConexaoContainer extends AbstratoContainer implements PluginTabela {
 	private final ConexaoModelo conexaoModelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(conexaoModelo);
 	private static final Logger LOG = Logger.getGlobal();

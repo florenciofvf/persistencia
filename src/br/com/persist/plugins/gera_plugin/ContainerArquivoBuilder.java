@@ -25,7 +25,7 @@ public class ContainerArquivoBuilder extends Builder {
 	private static final String TODO = "TODO";
 
 	protected ContainerArquivoBuilder(Config config) {
-		super("Container", "extends AbstratoContainer implements ArquivoTreeListener", config);
+		super("Container", "extends AbstratoContainer implements ArquivoTreeListener, PluginArquivo", config);
 	}
 
 	@Override
@@ -47,6 +47,7 @@ public class ContainerArquivoBuilder extends Builder {
 		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
+		arquivo.addImport("br.com.persist.abstrato.PluginArquivo");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoModelo");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTree");

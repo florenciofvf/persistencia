@@ -29,6 +29,7 @@ import javax.swing.JInternalFrame;
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopLargura;
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
@@ -54,7 +55,7 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, FicharioHandler {
+public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, FicharioHandler, PluginBasico {
 	private final DesktopPopup popup = new DesktopPopup();
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;

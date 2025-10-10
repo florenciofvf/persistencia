@@ -25,6 +25,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginArquivo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -42,7 +43,7 @@ import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeListener {
+public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeListener, PluginArquivo {
 	private final ArquivoTree arquivoTree = new ArquivoTree(new ArquivoModelo());
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();

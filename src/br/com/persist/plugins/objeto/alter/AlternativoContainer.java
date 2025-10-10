@@ -25,6 +25,7 @@ import javax.swing.ListSelectionModel;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginTabela;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
@@ -39,7 +40,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class AlternativoContainer extends AbstratoContainer {
+public class AlternativoContainer extends AbstratoContainer implements PluginTabela {
 	private final AlternativoModelo alternativoModelo = new AlternativoModelo();
 	private final JTable tabela = new JTable(alternativoModelo);
 	private static final Logger LOG = Logger.getGlobal();

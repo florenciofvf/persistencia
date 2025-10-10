@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -46,7 +47,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
-public class PropriedadeContainer extends AbstratoContainer {
+public class PropriedadeContainer extends AbstratoContainer implements PluginBasico {
 	private final PainelResultado painelResultado = new PainelResultado();
 	private final FicharioInner ficharioInner = new FicharioInner();
 	private PropriedadeFormulario propriedadeFormulario;

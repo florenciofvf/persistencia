@@ -41,6 +41,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
@@ -86,7 +87,7 @@ import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.ParaTabelaHandler;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
-public class ObjetoContainer extends Panel {
+public class ObjetoContainer extends Panel implements PluginBasico {
 	private static final String LABEL_SEL_COR_PANEL_SWATCH = "label.sel_cor_panel_swatch";
 	private static final String CHAVE_MENSAGEM = "msg.config_tabela_aba_banco";
 	private static final String HINT_VINCULO2 = "hint.aplicar_arq_vinculo2";

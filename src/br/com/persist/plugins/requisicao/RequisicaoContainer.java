@@ -27,6 +27,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginFichario;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -44,7 +45,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 
-public class RequisicaoContainer extends AbstratoContainer {
+public class RequisicaoContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(RequisicaoConstantes.REQUISICOES);
 	private final RequisicaoFichario fichario = new RequisicaoFichario();
 	private final transient RequisicaoPoolVisualizador poolVisualizador;

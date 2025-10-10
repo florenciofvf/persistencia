@@ -14,6 +14,7 @@ import javax.swing.JList;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
+import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.ColecaoStringModelo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -27,7 +28,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
-public class ComplementoContainer extends Panel {
+public class ComplementoContainer extends Panel implements PluginBasico {
 	private final ToolbarLista toolbarLista = new ToolbarLista();
 	private final ToolbarArea toolbarArea = new ToolbarArea();
 	private final TextEditor textEditor = new TextEditor();

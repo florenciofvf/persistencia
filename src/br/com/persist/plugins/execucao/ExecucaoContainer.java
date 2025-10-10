@@ -22,6 +22,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginArvore;
 import br.com.persist.arquivo.ArquivoPesquisa;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -34,7 +35,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
 
-public class ExecucaoContainer extends AbstratoContainer {
+public class ExecucaoContainer extends AbstratoContainer implements PluginArvore {
 	private static final Map<String, EditorCor> mapEditorCor;
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;

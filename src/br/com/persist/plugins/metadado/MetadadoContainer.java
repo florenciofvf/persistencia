@@ -30,6 +30,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.PluginArquivo;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Base64Util;
@@ -59,7 +60,7 @@ import br.com.persist.plugins.persistencia.Importado;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaException;
 
-public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener {
+public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener, PluginArquivo {
 	private static final File file = new File(MetadadoConstantes.METADADOS);
 	private final JComboBox<Conexao> comboConexaoDireita;
 	private static final long serialVersionUID = 1L;

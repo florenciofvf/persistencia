@@ -29,7 +29,7 @@ public class ContainerTabelaBuilder extends Builder {
 	private static final String LABEL = "LABEL_";
 
 	protected ContainerTabelaBuilder(Config config) {
-		super("Container", "extends AbstratoContainer", config);
+		super("Container", "extends AbstratoContainer implements PluginTabela", config);
 	}
 
 	@Override
@@ -56,6 +56,7 @@ public class ContainerTabelaBuilder extends Builder {
 		arquivo.addImport("javax.swing.JTable").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
+		arquivo.addImport("br.com.persist.abstrato.PluginTabela");
 		arquivo.addImport("br.com.persist.assistencia.ArgumentoException");
 		arquivo.addImport("br.com.persist.assistencia.CellRenderer");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
