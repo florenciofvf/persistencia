@@ -82,7 +82,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
-		fichario.setListener(e -> focusInputPesquisar());
+		fichario.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	@Override
@@ -135,10 +135,6 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 			}
 		}
 		fichario.setConteudo(conteudo, idPagina);
-	}
-
-	public void focusInputPesquisar() {
-		toolbar.focusInputPesquisar();
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {

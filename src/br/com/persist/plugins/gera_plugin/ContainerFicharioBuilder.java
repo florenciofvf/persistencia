@@ -123,7 +123,7 @@ public class ContainerFicharioBuilder extends Builder {
 		funcao = classe.criarFuncaoPrivada("void", "montarLayout");
 		funcao.addInstrucao("add(BorderLayout.NORTH, toolbar)");
 		funcao.addInstrucao("add(BorderLayout.CENTER, fichario)");
-		funcao.addInstrucao("fichario.setListener(e -> focusInputPesquisar())");
+		funcao.addInstrucao("fichario.setListener(e -> toolbar.focusInputPesquisar())");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "setJanela", new Parametros("Janela janela"));
@@ -188,10 +188,6 @@ public class ContainerFicharioBuilder extends Builder {
 		loop2.addInstrucao("fichario.adicionarPagina(pagina)");
 
 		funcao.addInstrucao("fichario.setConteudo(conteudo, idPagina)");
-
-		classe.newLine();
-		funcao = classe.criarFuncaoPublica("void", "focusInputPesquisar");
-		funcao.addInstrucao("toolbar.focusInputPesquisar()");
 	}
 
 	private void templateToolbar(ClassePublica classe) {

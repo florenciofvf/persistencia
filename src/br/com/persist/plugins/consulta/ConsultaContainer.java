@@ -320,18 +320,15 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
-			toolbar.focusInputPesquisar();
 		}
 
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
-			toolbar.focusInputPesquisar();
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
-			toolbar.focusInputPesquisar();
 		}
 
 		@Override

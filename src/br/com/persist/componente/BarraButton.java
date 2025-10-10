@@ -358,6 +358,7 @@ public abstract class BarraButton extends JToolBar
 			retornarAoFichario.setEnabled(retornar);
 			clonarEmFormulario.setEnabled(clonar);
 			abrirEmFormulario.setEnabled(abrir);
+			focusInputPesquisar();
 		}
 
 		public void estadoFormulario() {

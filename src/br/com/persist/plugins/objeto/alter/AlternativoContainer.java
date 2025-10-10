@@ -161,18 +161,15 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
-			toolbar.focusInputPesquisar();
 		}
 
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
-			toolbar.focusInputPesquisar();
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
-			toolbar.focusInputPesquisar();
 		}
 
 		@Override

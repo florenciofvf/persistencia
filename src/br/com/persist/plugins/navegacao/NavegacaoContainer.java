@@ -80,7 +80,7 @@ public class NavegacaoContainer extends AbstratoContainer implements PluginArvor
 		toolbar.setJanela(janela);
 	}
 
-	public void focusInputPesquisar() {
+	public void focusInputPesquisarTree() {
 		toolbar.focusInputPesquisar();
 	}
 

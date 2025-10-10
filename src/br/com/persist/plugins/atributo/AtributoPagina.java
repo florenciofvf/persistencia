@@ -173,10 +173,6 @@ public class AtributoPagina extends Panel {
 			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 		}
 
-		public void focusInputPesquisar() {
-			toolbar.focusInputPesquisar();
-		}
-
 		private class Toolbar extends BarraButton implements ActionListener {
 			private Action tabelaAcao = acaoIcon("label.atualizar_tabela", Icones.SINCRONIZAR);
 			private Action modelIdAcao = acaoMenu("label.ler_id", Icones.FIELDS);

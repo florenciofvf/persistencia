@@ -80,7 +80,7 @@ public class AnotacaoContainer extends AbstratoContainer implements PluginArvore
 		toolbar.setJanela(janela);
 	}
 
-	public void focusInputPesquisar() {
+	public void focusInputPesquisarTree() {
 		toolbar.focusInputPesquisar();
 	}
 

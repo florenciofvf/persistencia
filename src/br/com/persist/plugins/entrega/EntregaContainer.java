@@ -79,7 +79,7 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
-		fichario.setListener(e -> focusInputPesquisar());
+		fichario.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	public String getConteudo() {
@@ -132,10 +132,6 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 	@Override
 	public void setJanela(Janela janela) {
 		toolbar.setJanela(janela);
-	}
-
-	public void focusInputPesquisar() {
-		toolbar.focusInputPesquisar();
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {

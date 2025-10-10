@@ -16,7 +16,6 @@ import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
 public class ContainerTabelaBuilder extends Builder {
-	private static final String TOOLBAR_FOCUS_INPUT_PESQUISAR = "toolbar.focusInputPesquisar()";
 	private static final String FIRE_TABLE_DATA_CHANGED = ".fireTableDataChanged()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String AJUSTAR_TABELA = "ajustarTabela()";
@@ -232,21 +231,18 @@ public class ContainerTabelaBuilder extends Builder {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "windowOpenedHandler", new Parametros("Window window"));
 		funcao.addInstrucao("buttonDestacar.estadoFormulario()");
-		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void dialogOpened(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
 		funcao.addInstrucao("buttonDestacar.estadoDialogo()");
-		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void adicionadoAoFichario(ClassePrivada classe) {
 		classe.newLine();
 		FuncaoDefault funcao = classe.criarFuncaoDefault("void", "adicionadoAoFichario");
 		funcao.addInstrucao("buttonDestacar.estadoFichario()");
-		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void novo(ClassePrivada classe) {

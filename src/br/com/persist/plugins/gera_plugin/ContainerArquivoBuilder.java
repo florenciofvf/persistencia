@@ -14,7 +14,6 @@ import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 
 public class ContainerArquivoBuilder extends Builder {
-	private static final String TOOLBAR_FOCUS_INPUT_PESQUISAR = "toolbar.focusInputPesquisar()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";
@@ -239,21 +238,18 @@ public class ContainerArquivoBuilder extends Builder {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "windowOpenedHandler", new Parametros("Window window"));
 		funcao.addInstrucao("buttonDestacar.estadoFormulario()");
-		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void dialogOpened(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
 		funcao.addInstrucao("buttonDestacar.estadoDialogo()");
-		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void adicionadoAoFichario(ClassePrivada classe) {
 		classe.newLine();
 		FuncaoDefault funcao = classe.criarFuncaoDefault("void", "adicionadoAoFichario");
 		funcao.addInstrucao("buttonDestacar.estadoFichario()");
-		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
 	}
 
 	private void baixar(ClassePrivada classe) {
@@ -297,7 +293,7 @@ public class ContainerArquivoBuilder extends Builder {
 		Parametros parametros = new Parametros("ArquivoTree arquivoTree");
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "focusInputPesquisar", parametros);
-		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
+		funcao.addInstrucao("toolbar.focusInputPesquisar()");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "diretorioArquivo", parametros);

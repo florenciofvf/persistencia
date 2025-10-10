@@ -84,7 +84,7 @@ public class ExecucaoContainer extends AbstratoContainer implements PluginArvore
 		toolbar.setJanela(janela);
 	}
 
-	public void focusInputPesquisar() {
+	public void focusInputPesquisarTree() {
 		toolbar.focusInputPesquisar();
 	}
 

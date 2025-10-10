@@ -183,13 +183,11 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
-			toolbar.focusInputPesquisar();
 			chkSempreTopArq.setEnabled(arquivoFormulario != null);
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
-			toolbar.focusInputPesquisar();
 			chkSempreTopArq.setEnabled(arquivoFormulario != null);
 		}
 

@@ -150,7 +150,7 @@ class ExecucaoSplit extends SplitPane {
 		@Override
 		public void focusInputPesquisar(ArquivoTree arquivoTree) {
 			if (container != null) {
-				container.focusInputPesquisar();
+				container.focusInputPesquisarTree();
 			}
 		}
 

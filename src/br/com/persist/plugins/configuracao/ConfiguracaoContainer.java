@@ -155,20 +155,17 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 		public void windowOpenedHandler(Window window) {
 			painelConfiguracao.windowOpenedHandler(window);
 			buttonDestacar.estadoFormulario();
-			focusInputPesquisar();
 		}
 
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			painelConfiguracao.dialogOpenedHandler(dialog);
 			buttonDestacar.estadoDialogo();
-			focusInputPesquisar();
 		}
 
 		void adicionadoAoFichario() {
 			painelConfiguracao.adicionadoAoFichario();
 			buttonDestacar.estadoFichario();
-			focusInputPesquisar();
 		}
 
 		@Override

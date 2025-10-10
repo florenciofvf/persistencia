@@ -160,13 +160,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
-			toolbar.focusInputPesquisar();
 			chkSempreTopAnex.setEnabled(anexoFormulario != null);
 		}
 
 		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
-			toolbar.focusInputPesquisar();
 			chkSempreTopAnex.setEnabled(anexoFormulario != null);
 		}
 

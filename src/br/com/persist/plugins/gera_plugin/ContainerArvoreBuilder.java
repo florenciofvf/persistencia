@@ -119,7 +119,7 @@ public class ContainerArvoreBuilder extends Builder {
 		funcao.addInstrucao("toolbar.setJanela(janela)");
 
 		classe.newLine();
-		funcao = classe.criarFuncaoPublica("void", "focusInputPesquisar");
+		funcao = classe.criarFuncaoPublica("void", "focusInputPesquisarTree");
 		funcao.addInstrucao("toolbar.focusInputPesquisar()");
 
 		templateToolbar(classe);
