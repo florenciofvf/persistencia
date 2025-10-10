@@ -1,6 +1,7 @@
 package br.com.persist.arquivo;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -16,6 +17,10 @@ public class ArquivoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
+
+	public ArquivoModelo() {
+		this(new Arquivo(new File("."), new ArrayList<>()));
+	}
 
 	public ArquivoModelo(Arquivo raiz) {
 		this.raiz = Objects.requireNonNull(raiz);

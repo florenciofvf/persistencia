@@ -22,6 +22,7 @@ public class ContainerArquivoBuilder extends Builder {
 	private static final String DOT_THIS = ".this)";
 	private static final String STRING = "String";
 	private static final String LABEL = "LABEL_";
+	private static final String TODO = "TODO";
 
 	protected ContainerArquivoBuilder(Config config) {
 		super("Container", "extends AbstratoContainer implements ArquivoTreeListener", config);
@@ -134,6 +135,7 @@ public class ContainerArquivoBuilder extends Builder {
 
 		templateToolbar(classe);
 		finalizar(classe);
+		metodos(classe);
 		titulo(classe);
 	}
 
@@ -268,11 +270,10 @@ public class ContainerArquivoBuilder extends Builder {
 	private void baixar(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "baixar");
-		funcao.addComentario("ArquivoModelo modelo = new ArquivoModelo();");
-		funcao.addComentario("arquivoTree.setModel(modelo);");
-		funcao.addComentario("baixar(modelo);");
-		funcao.addComentario("pesquisa = null;");
-		funcao.addComentario("label.limpar();");
+		funcao.addInstrucao("ArquivoModelo modelo = new ArquivoModelo()");
+		funcao.addInstrucao("arquivoTree.setModel(modelo)");
+		funcao.addInstrucao("pesquisa = null");
+		funcao.addInstrucao("label.limpar()");
 	}
 
 	private void finalizar(ClassePublica classe) {
@@ -301,6 +302,41 @@ public class ContainerArquivoBuilder extends Builder {
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("Component", "getComponent");
 		funcao.addReturn("this");
+	}
+
+	private void metodos(ClassePublica classe) {
+		Parametros parametros = new Parametros("ArquivoTree arquivoTree");
+		classe.addOverride(true);
+		Funcao funcao = classe.criarFuncaoPublica("void", "focusInputPesquisar", parametros);
+		funcao.addInstrucao(TOOLBAR_FOCUS_INPUT_PESQUISAR);
+
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "diretorioArquivo", parametros);
+		funcao.addComentario(TODO);
+
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "renomearArquivo", parametros);
+		funcao.addComentario(TODO);
+
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "excluirArquivo", parametros);
+		funcao.addComentario(TODO);
+
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "novoDiretorio", parametros);
+		funcao.addComentario(TODO);
+
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "clonarArquivo", parametros);
+		funcao.addComentario(TODO);
+
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "abrirArquivo", parametros);
+		funcao.addComentario(TODO);
+
+		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "novoArquivo", parametros);
+		funcao.addComentario(TODO);
 	}
 
 	private void titulo(ClassePublica classe) {
