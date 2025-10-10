@@ -16,7 +16,6 @@ import br.com.persist.geradores.RetornoClasseAnonima;
 public class ContainerArquivoBuilder extends Builder {
 	private static final String TOOLBAR_FOCUS_INPUT_PESQUISAR = "toolbar.focusInputPesquisar()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
-	private static final String AJUSTAR_TABELA = "ajustarTabela()";
 	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";
 	private static final String DIFF_NULL = " != null";
@@ -48,6 +47,9 @@ public class ContainerArquivoBuilder extends Builder {
 		arquivo.addImport("java.awt.event.ActionListener");
 		arquivo.addImport("java.util.logging.Level");
 		arquivo.addImport("java.util.logging.Logger").newLine();
+
+		arquivo.addImport("java.util.LinkedHashSet");
+		arquivo.addImport("java.util.Set").newLine();
 		arquivo.addImport("javax.swing.Icon");
 		arquivo.addImport("javax.swing.JTable").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
@@ -192,7 +194,7 @@ public class ContainerArquivoBuilder extends Builder {
 		funcao.addReturn("sb.toString()");
 
 		classe.newLine();
-		funcao = classe.criarFuncaoPublica(STRING, "getPesquisa",
+		funcao = classe.criarFuncaoPublica("ArquivoPesquisa", "getPesquisa",
 				new Parametros("ArquivoTree arquivoTree, ArquivoPesquisa pesquisa, String string, boolean porParte"));
 		If if3 = funcao.criarIf("pesquisa == null", null);
 		ElseIf elseIf = if3.criarElseIf("pesquisa.igual(string, porParte)");
@@ -266,11 +268,11 @@ public class ContainerArquivoBuilder extends Builder {
 	private void baixar(ClassePrivada classe) {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "baixar");
-		funcao.addInstrucao("ArquivoModelo modelo = new ArquivoModelo()");
-		funcao.addInstrucao("arquivoTree.setModel(modelo)");
-		funcao.addInstrucao("baixar(modelo)");
-		funcao.addInstrucao("pesquisa = null");
-		funcao.addInstrucao("label.limpar()");
+		funcao.addComentario("ArquivoModelo modelo = new ArquivoModelo();");
+		funcao.addComentario("arquivoTree.setModel(modelo);");
+		funcao.addComentario("baixar(modelo);");
+		funcao.addComentario("pesquisa = null;");
+		funcao.addComentario("label.limpar();");
 	}
 
 	private void finalizar(ClassePublica classe) {
@@ -286,7 +288,6 @@ public class ContainerArquivoBuilder extends Builder {
 			classe.addOverride(true);
 			funcao = classe.criarFuncaoPublica("void", "dialogOpenedHandler", new Parametros("Dialog dialog"));
 			funcao.addInstrucao("toolbar.dialogOpenedHandler(dialog)");
-			funcao.addInstrucao(AJUSTAR_TABELA);
 		}
 
 		classe.addOverride(true);
