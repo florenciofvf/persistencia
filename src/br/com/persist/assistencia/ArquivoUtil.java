@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import br.com.persist.arquivo.Arquivo;
 
 public class ArquivoUtil {
 	private static final Map<String, List<String>> map = new HashMap<>();
+	private static final BigInteger MENOS_UM = BigInteger.valueOf(-1);
 	private static final Logger LOG = Logger.getGlobal();
 
 	private ArquivoUtil() {
@@ -135,7 +137,7 @@ public class ArquivoUtil {
 			item.setTag(extrairNumero(item.getName()));
 		}
 		if (porTag(arquivos)) {
-			Collections.sort(arquivos, (a1, a2) -> a1.getTag() - a2.getTag());
+			Collections.sort(arquivos, (a1, a2) -> a1.getTag().compareTo(a2.getTag()));
 		} else {
 			Collections.sort(arquivos, (a1, a2) -> a1.getName().compareTo(a2.getName()));
 		}
@@ -143,7 +145,7 @@ public class ArquivoUtil {
 
 	private static boolean porTag(List<Arquivo> arquivos) {
 		for (Arquivo item : arquivos) {
-			if (item.getTag() == -1) {
+			if (MENOS_UM.equals(item.getTag())) {
 				return false;
 			}
 		}
@@ -166,12 +168,12 @@ public class ArquivoUtil {
 		return resp;
 	}
 
-	private static int extrairNumero(String s) {
+	private static BigInteger extrairNumero(String s) {
 		if (s == null) {
-			return -1;
+			return MENOS_UM;
 		}
 		if (Constantes.IGNORADOS.equals(s)) {
-			return 0;
+			return BigInteger.ZERO;
 		}
 		StringBuilder sb = new StringBuilder();
 		int i = 0;
@@ -185,9 +187,9 @@ public class ArquivoUtil {
 			i++;
 		}
 		if (sb.length() > 0) {
-			return Integer.parseInt(sb.toString());
+			return new BigInteger(sb.toString());
 		}
-		return -1;
+		return MENOS_UM;
 	}
 
 	public static void diretorio(File file) throws IOException {

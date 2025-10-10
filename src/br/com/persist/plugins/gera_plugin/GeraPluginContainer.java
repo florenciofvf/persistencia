@@ -60,8 +60,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 	private CheckBox chkComHandler = criarCheckBox("label.com_handler");
 	private CheckBox chkComModelo = criarCheckBox("label.com_modelo");
 	private CheckBox chkFichario = criarCheckBox("label.fichario");
-	private CheckBox chkSimples = criarCheckBox("label.simples");
 	private CheckBox chkArquivo = criarCheckBox("label.arquivo");
+	private CheckBox chkBasico = criarCheckBox("label.basico");
 	private CheckBox chkTabela = criarCheckBox("label.tabela");
 	private CheckBox chkArvore = criarCheckBox("label.arvore");
 	private TextField txtDiretorioRecursos = new TextField();
@@ -171,13 +171,13 @@ public class GeraPluginContainer extends AbstratoContainer {
 		add(BorderLayout.NORTH, toolbar);
 
 		ButtonGroup grupo = new ButtonGroup();
-		grupo.add(chkSimples);
+		grupo.add(chkBasico);
 		grupo.add(chkArquivo);
 		grupo.add(chkTabela);
 		grupo.add(chkFichario);
 		grupo.add(chkArvore);
 
-		Panel panel = criarCamada(chkSimples, chkArquivo, chkTabela, chkFichario, chkArvore);
+		Panel panel = criarCamada(chkBasico, chkArquivo, chkTabela, chkFichario, chkArvore);
 		panel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.MAGENTA));
 
 		Muro muro = new Muro();
@@ -320,7 +320,7 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private void validarModeloPlugin(List<String> resp) {
-		if (!chkSimples.isSelected() && !chkArquivo.isSelected() && !chkTabela.isSelected() && !chkFichario.isSelected()
+		if (!chkBasico.isSelected() && !chkArquivo.isSelected() && !chkTabela.isSelected() && !chkFichario.isSelected()
 				&& !chkArvore.isSelected()) {
 			resp.add(GeraPluginMensagens.getString("erro.modelo_plugin_vazio"));
 		}
@@ -433,8 +433,8 @@ public class GeraPluginContainer extends AbstratoContainer {
 	}
 
 	private void gerarContainer() throws IOException {
-		if (chkSimples.isSelected()) {
-			new ContainerSimplesBuilder(config).gerar();
+		if (chkBasico.isSelected()) {
+			new ContainerBasicoBuilder(config).gerar();
 		} else if (chkTabela.isSelected()) {
 			new ContainerTabelaBuilder(config).gerar();
 		} else if (chkArquivo.isSelected()) {

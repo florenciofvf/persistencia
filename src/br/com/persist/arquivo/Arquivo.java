@@ -2,6 +2,7 @@ package br.com.persist.arquivo;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,9 +22,9 @@ public class Arquivo {
 	private final List<Arquivo> filhos;
 	private boolean arquivoAberto;
 	private boolean processado;
+	private BigInteger tag;
 	private Arquivo pai;
 	private File file;
-	private int tag;
 
 	public Arquivo(File file, List<String> ignorados) {
 		this.ignorados = Objects.requireNonNull(ignorados);
@@ -346,11 +347,11 @@ public class Arquivo {
 		this.arquivoAberto = arquivoAberto;
 	}
 
-	public int getTag() {
+	public BigInteger getTag() {
 		return tag;
 	}
 
-	public void setTag(int tag) {
+	public void setTag(BigInteger tag) {
 		this.tag = tag;
 	}
 
