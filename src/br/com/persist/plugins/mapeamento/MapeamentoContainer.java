@@ -102,13 +102,14 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 					EXCLUIR, COPIAR);
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
+			add(chkPorParte);
 			add(label);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText());
+				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(), chkPorParte.isSelected());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();

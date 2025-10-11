@@ -108,13 +108,14 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 			txtPesquisa.addActionListener(this);
 			setListener(listener);
 			add(txtPesquisa);
+			add(chkPorParte);
 			add(label);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText());
+				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(), chkPorParte.isSelected());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();

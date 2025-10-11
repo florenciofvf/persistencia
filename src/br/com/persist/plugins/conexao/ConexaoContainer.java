@@ -148,6 +148,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 			addButton(true, infoAcao);
 			addButton(true, desconectaAcao);
 			add(txtPesquisa);
+			add(chkPorParte);
 			add(label);
 			eventos();
 		}
@@ -155,7 +156,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecaoTabela(tabela, selecao, 1, txtPesquisa.getText());
+				selecao = Util.getSelecaoTabela(tabela, selecao, 1, txtPesquisa.getText(), chkPorParte.isSelected());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();

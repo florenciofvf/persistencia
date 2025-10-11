@@ -33,7 +33,7 @@ public class SelecaoTabela implements Busca {
 			Object item = tabela.getValueAt(i, coluna);
 			if (item != null) {
 				String itemValor = item.toString();
-				if(Util.existeEm(itemValor, string, porParte)) {
+				if (Util.existeEm(itemValor, string, porParte)) {
 					lista.add(i);
 				}
 			}

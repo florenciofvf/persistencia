@@ -107,13 +107,14 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 			txtPesquisa.addActionListener(this);
 			setColetor(coletor);
 			add(txtPesquisa);
+			add(chkPorParte);
 			add(label);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText());
+				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(), chkPorParte.isSelected());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();

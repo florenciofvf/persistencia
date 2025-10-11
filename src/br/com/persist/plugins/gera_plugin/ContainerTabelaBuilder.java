@@ -155,6 +155,7 @@ public class ContainerTabelaBuilder extends Builder {
 				"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR, EXCLUIR, COPIAR)");
 		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
 		funcao.addInstrucao("add(txtPesquisa)");
+		funcao.addInstrucao("add(chkPorParte)");
 		funcao.addInstrucao("add(label)");
 
 		actionPerf(classePrivada);
@@ -181,7 +182,8 @@ public class ContainerTabelaBuilder extends Builder {
 		elsee.addInstrucao("label.limpar()");
 
 		If se = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", elsee);
-		se.addInstrucao("selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText())");
+		se.addInstrucao(
+				"selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(), chkPorParte.isSelected())");
 		se.addInstrucao("selecao.selecionar(label)");
 	}
 
