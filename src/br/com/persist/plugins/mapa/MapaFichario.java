@@ -3,6 +3,7 @@ package br.com.persist.plugins.mapa;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Aba;
@@ -72,6 +73,19 @@ public class MapaFichario extends AbstratoFichario {
 				pagina.setConteudo(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof MapaPagina) {
+				MapaPagina p = (MapaPagina) cmp;
+				p.contemConteudo(set, string);
+			}
+		}
+		if (set.isEmpty()) {
+			Util.beep();
 		}
 	}
 

@@ -34,6 +34,7 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.FicharioPesquisa;
 import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -137,12 +138,16 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
+		private transient FicharioPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
 			add(txtPesquisa);
+			add(chkPorParte);
+			add(chkPsqConteudo);
+			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			txtPesquisa.addActionListener(this);
 		}
@@ -150,9 +155,16 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				Set<String> set = new LinkedHashSet<>();
-				fichario.contemConteudo(set, txtPesquisa.getText());
-				Util.mensagem(AtributoContainer.this, getString(set));
+				if (chkPsqConteudo.isSelected()) {
+					Set<String> set = new LinkedHashSet<>();
+					fichario.contemConteudo(set, txtPesquisa.getText());
+					Util.mensagem(AtributoContainer.this, getString(set));
+				} else {
+					pesquisa = getPesquisa(fichario, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+					pesquisa.selecionar(label);
+				}
+			} else {
+				label.limpar();
 			}
 		}
 
@@ -165,6 +177,16 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 				sb.append(string);
 			}
 			return sb.toString();
+		}
+
+		public FicharioPesquisa getPesquisa(AtributoFichario fichario, FicharioPesquisa pesquisa, String string,
+				boolean porParte) {
+			if (pesquisa == null) {
+				return new FicharioPesquisa(fichario, string, porParte);
+			} else if (pesquisa.igual(string, porParte)) {
+				return pesquisa;
+			}
+			return new FicharioPesquisa(fichario, string, porParte);
 		}
 
 		@Override

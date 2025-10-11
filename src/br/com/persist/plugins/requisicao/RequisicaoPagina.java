@@ -888,6 +888,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		return poolVisualizador.getVisualizadores();
 	}
 
+	public void contemConteudo(Set<String> set, String string) {
+		if (Util.contemStringEm(file, string, true)) {
+			set.add(file.getAbsolutePath());
+		}
+	}
+
 	@Override
 	public void setIndice(int i) {
 		indicePagina = i;

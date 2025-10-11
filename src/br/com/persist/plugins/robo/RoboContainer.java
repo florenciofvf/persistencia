@@ -36,6 +36,7 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.FicharioPesquisa;
 import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -141,6 +142,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 		private Action executarAcao = acaoIcon("label.executar_todos", Icones.EXECUTAR);
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
+		private transient FicharioPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
@@ -149,28 +151,26 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 			addButton(excluirAtivoAcao);
 			addButton(executarAcao);
 			add(txtPesquisa);
+			add(chkPorParte);
+			add(chkPsqConteudo);
+			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			txtPesquisa.addActionListener(this);
-		}
-
-		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(RoboMensagens.getString(chave), icon);
-		}
-
-		private void executar() {
-			try {
-				fichario.executarTodos();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, e.getMessage());
-			}
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				Set<String> set = new LinkedHashSet<>();
-				fichario.contemConteudo(set, txtPesquisa.getText());
-				Util.mensagem(RoboContainer.this, getString(set));
+				if (chkPsqConteudo.isSelected()) {
+					Set<String> set = new LinkedHashSet<>();
+					fichario.contemConteudo(set, txtPesquisa.getText());
+					Util.mensagem(RoboContainer.this, getString(set));
+				} else {
+					pesquisa = getPesquisa(fichario, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+					pesquisa.selecionar(label);
+				}
+			} else {
+				label.limpar();
 			}
 		}
 
@@ -183,6 +183,28 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 				sb.append(string);
 			}
 			return sb.toString();
+		}
+
+		public FicharioPesquisa getPesquisa(RoboFichario fichario, FicharioPesquisa pesquisa, String string,
+				boolean porParte) {
+			if (pesquisa == null) {
+				return new FicharioPesquisa(fichario, string, porParte);
+			} else if (pesquisa.igual(string, porParte)) {
+				return pesquisa;
+			}
+			return new FicharioPesquisa(fichario, string, porParte);
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(RoboMensagens.getString(chave), icon);
+		}
+
+		private void executar() {
+			try {
+				fichario.executarTodos();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, e.getMessage());
+			}
 		}
 
 		@Override

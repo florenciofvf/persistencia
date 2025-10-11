@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JTabbedPane;
@@ -183,6 +184,12 @@ public class MapaPagina extends Panel implements Aba {
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, this);
+		}
+	}
+
+	public void contemConteudo(Set<String> set, String string) {
+		if (Util.contemStringEm(file, string, true)) {
+			set.add(file.getAbsolutePath());
 		}
 	}
 

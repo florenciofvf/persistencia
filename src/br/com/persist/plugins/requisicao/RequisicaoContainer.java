@@ -13,11 +13,15 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +40,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
+import br.com.persist.componente.FicharioPesquisa;
 import br.com.persist.componente.Janela;
 import br.com.persist.data.DataDialogo;
 import br.com.persist.data.DataListener;
@@ -158,12 +163,13 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private Action atualizarAcao2 = actionIcon("label.requisicao", Icones.URL);
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private ButtonUtil buttonUtil = new ButtonUtil();
 		private ButtonRota buttonRota = new ButtonRota();
 		private static final long serialVersionUID = 1L;
+		private transient FicharioPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
@@ -172,8 +178,50 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 			addButton(true, atualizarAcao2);
 			add(true, buttonUtil);
 			add(buttonRota);
+			add(txtPesquisa);
+			add(chkPorParte);
+			add(chkPsqConteudo);
+			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			atualizarAcao2.setActionListener(e -> atualizar());
+			txtPesquisa.addActionListener(this);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				if (chkPsqConteudo.isSelected()) {
+					Set<String> set = new LinkedHashSet<>();
+					fichario.contemConteudo(set, txtPesquisa.getText());
+					Util.mensagem(RequisicaoContainer.this, getString(set));
+				} else {
+					pesquisa = getPesquisa(fichario, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+					pesquisa.selecionar(label);
+				}
+			} else {
+				label.limpar();
+			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
+		}
+
+		public FicharioPesquisa getPesquisa(RequisicaoFichario fichario, FicharioPesquisa pesquisa, String string,
+				boolean porParte) {
+			if (pesquisa == null) {
+				return new FicharioPesquisa(fichario, string, porParte);
+			} else if (pesquisa.igual(string, porParte)) {
+				return pesquisa;
+			}
+			return new FicharioPesquisa(fichario, string, porParte);
 		}
 
 		private class ButtonUtil extends ButtonPopup {
