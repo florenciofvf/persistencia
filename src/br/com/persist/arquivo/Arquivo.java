@@ -259,17 +259,13 @@ public class Arquivo {
 	}
 
 	public Arquivo getArquivo(String descricao, boolean porParte) {
-		for (Arquivo m : filhos) {
-			String nome = m.file.getName();
-			if (porParte && nome.toUpperCase().indexOf(descricao.toUpperCase()) != -1) {
-				return m;
-			}
-			if (nome.equalsIgnoreCase(descricao)) {
-				return m;
+		for (Arquivo item : filhos) {
+			if (Util.existeEm(item.file.getName(), descricao, porParte)) {
+				return item;
 			}
 		}
-		for (Arquivo m : filhos) {
-			Arquivo resp = m.getArquivo(descricao, porParte);
+		for (Arquivo item : filhos) {
+			Arquivo resp = item.getArquivo(descricao, porParte);
 			if (resp != null) {
 				return resp;
 			}
@@ -278,13 +274,11 @@ public class Arquivo {
 	}
 
 	public void preencher(List<Arquivo> lista, String descricao, boolean porParte) {
-		String nome = file.getName();
-		if ((porParte && nome.toUpperCase().indexOf(descricao.toUpperCase()) != -1)
-				|| nome.equalsIgnoreCase(descricao)) {
+		if (Util.existeEm(file.getName(), descricao, porParte)) {
 			lista.add(this);
 		}
-		for (Arquivo a : filhos) {
-			a.preencher(lista, descricao, porParte);
+		for (Arquivo item : filhos) {
+			item.preencher(lista, descricao, porParte);
 		}
 	}
 

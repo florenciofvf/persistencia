@@ -24,8 +24,7 @@ public class MetadadoPesquisa implements Busca {
 	}
 
 	public boolean igual(String string, boolean porParte) {
-		boolean resp = this.string == null ? string == null : this.string.equalsIgnoreCase(string);
-		return resp && this.porParte == porParte;
+		return Util.iguaisEm(this.string, string, this.porParte, porParte);
 	}
 
 	public String getString() {

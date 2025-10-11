@@ -97,16 +97,13 @@ public class Metadado implements Transferable {
 	}
 
 	public Metadado getMetadado(String descricao, boolean porParte) {
-		for (Metadado m : filhos) {
-			if (porParte && m.descricao.toUpperCase().indexOf(descricao.toUpperCase()) != -1) {
-				return m;
-			}
-			if (m.descricao.equalsIgnoreCase(descricao)) {
-				return m;
+		for (Metadado item : filhos) {
+			if (Util.existeEm(item.descricao, descricao, porParte)) {
+				return item;
 			}
 		}
-		for (Metadado m : filhos) {
-			Metadado resp = m.getMetadado(descricao, porParte);
+		for (Metadado item : filhos) {
+			Metadado resp = item.getMetadado(descricao, porParte);
 			if (resp != null) {
 				return resp;
 			}
@@ -115,12 +112,11 @@ public class Metadado implements Transferable {
 	}
 
 	public void preencher(List<Metadado> lista, String descricao, boolean porParte) {
-		if ((porParte && this.descricao.toUpperCase().indexOf(descricao.toUpperCase()) != -1)
-				|| this.descricao.equalsIgnoreCase(descricao)) {
+		if (Util.existeEm(this.descricao, descricao, porParte)) {
 			lista.add(this);
 		}
-		for (Metadado m : filhos) {
-			m.preencher(lista, descricao, porParte);
+		for (Metadado item : filhos) {
+			item.preencher(lista, descricao, porParte);
 		}
 	}
 

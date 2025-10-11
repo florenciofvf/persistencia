@@ -18,6 +18,7 @@ import javax.swing.Icon;
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class Anexo {
 	private static final Logger LOG = Logger.getGlobal();
@@ -109,17 +110,13 @@ public class Anexo {
 	}
 
 	public Anexo getAnexo(String descricao, boolean porParte) {
-		for (Anexo m : filhos) {
-			String nome = m.file.getName();
-			if (porParte && nome.toUpperCase().indexOf(descricao.toUpperCase()) != -1) {
-				return m;
-			}
-			if (nome.equalsIgnoreCase(descricao)) {
-				return m;
+		for (Anexo item : filhos) {
+			if (Util.existeEm(item.file.getName(), descricao, porParte)) {
+				return item;
 			}
 		}
-		for (Anexo m : filhos) {
-			Anexo resp = m.getAnexo(descricao, porParte);
+		for (Anexo item : filhos) {
+			Anexo resp = item.getAnexo(descricao, porParte);
 			if (resp != null) {
 				return resp;
 			}
@@ -128,13 +125,11 @@ public class Anexo {
 	}
 
 	public void preencher(List<Anexo> lista, String descricao, boolean porParte) {
-		String nome = file.getName();
-		if ((porParte && nome.toUpperCase().indexOf(descricao.toUpperCase()) != -1)
-				|| nome.equalsIgnoreCase(descricao)) {
+		if (Util.existeEm(file.getName(), descricao, porParte)) {
 			lista.add(this);
 		}
-		for (Anexo a : filhos) {
-			a.preencher(lista, descricao, porParte);
+		for (Anexo item : filhos) {
+			item.preencher(lista, descricao, porParte);
 		}
 	}
 
