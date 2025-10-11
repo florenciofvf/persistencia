@@ -9,7 +9,7 @@ import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
-public class AbstratoFichario extends JTabbedPane {
+public abstract class AbstratoFichario extends JTabbedPane {
 	private transient AbstratoFicharioListener listener;
 	private static final long serialVersionUID = 1L;
 

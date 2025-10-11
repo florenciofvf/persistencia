@@ -1,6 +1,7 @@
 package br.com.persist.plugins.atributo;
 
 import java.awt.Component;
+import java.util.Set;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.AbstratoFichario;
@@ -72,10 +73,16 @@ public class AtributoFichario extends AbstratoFichario {
 		}
 	}
 
-	public void focusInputPesquisar() {
-		AtributoPagina ativa = getPaginaAtiva();
-		if (ativa != null) {
-			ativa.focusInputPesquisar();
+	public void contemConteudo(Set<String> set, String string) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof AtributoPagina) {
+				AtributoPagina p = (AtributoPagina) cmp;
+				p.contemConteudo(set, string);
+			}
+		}
+		if (set.isEmpty()) {
+			Util.beep();
 		}
 	}
 }

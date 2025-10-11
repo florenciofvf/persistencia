@@ -12,10 +12,14 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
@@ -75,7 +79,7 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
-		fichario.setListener(e -> fichario.focusInputPesquisar());
+		fichario.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	public String getConteudo() {
@@ -130,7 +134,7 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private Action excluirAtivoAcao = actionIconExcluir();
 		private static final long serialVersionUID = 1L;
 
@@ -138,7 +142,29 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
+			add(txtPesquisa);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
+			txtPesquisa.addActionListener(this);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				Set<String> set = new LinkedHashSet<>();
+				fichario.contemConteudo(set, txtPesquisa.getText());
+				Util.mensagem(AtributoContainer.this, getString(set));
+			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
 		}
 
 		@Override

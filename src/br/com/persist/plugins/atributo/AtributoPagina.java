@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -111,16 +112,18 @@ public class AtributoPagina extends Panel {
 		painelAtributo.salvar(atomic);
 	}
 
+	public void contemConteudo(Set<String> set, String string) {
+		if (Util.contemStringEm(painelAtributo.file, string, true)) {
+			set.add(painelAtributo.file.getAbsolutePath());
+		}
+	}
+
 	public void setText(String conteudo) {
 		painelAtributo.textEditor.setText(conteudo);
 	}
 
 	public List<Atributo> getAtributos() {
 		return painelAtributo.getAtributos();
-	}
-
-	public void focusInputPesquisar() {
-		painelAtributo.toolbar.focusInputPesquisar();
 	}
 
 	class PainelAtributo extends Panel {
@@ -155,6 +158,7 @@ public class AtributoPagina extends Panel {
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+			textEditor.setListener(e -> toolbar.focusInputPesquisar());
 			return panel;
 		}
 
