@@ -6,6 +6,9 @@ import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,6 +19,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
@@ -64,6 +70,38 @@ public class MetadadoTree extends Tree {
 				dge.startDrag(null, metadado, listenerArrasto);
 			}
 		});
+
+		getInputMap(WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
+		getActionMap().put(Constantes.EXEC, actionAtualizarArvore);
+
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
+		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
+	}
+
+	private transient javax.swing.Action actionAtualizarArvore = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ouvintes.forEach(o -> o.atualizarArvore(MetadadoTree.this));
+		}
+	};
+
+	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ouvintes.forEach(o -> o.focusInputPesquisar(MetadadoTree.this));
+		}
+	};
+
+	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
+		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
+	}
+
+	private InputMap inputMap() {
+		return getInputMap(WHEN_FOCUSED);
 	}
 
 	private transient DragSourceListener listenerArrasto = new DragSourceListener() {

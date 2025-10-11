@@ -17,5 +17,9 @@ public interface MetadadoTreeListener {
 
 	public void exportarFichArquivo(MetadadoTree metadadoTree);
 
+	public void focusInputPesquisar(MetadadoTree metadadoTree);
+
+	public void atualizarArvore(MetadadoTree metadadoTree);
+
 	public void constraintInfo(MetadadoTree metadadoTree);
 }

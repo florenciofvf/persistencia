@@ -12,7 +12,6 @@ import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JProgressBar;
-import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -93,8 +91,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	private void configurar() {
-		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.getAtualizarAcao());
 		metadadoTree.adicionarOuvinte(this);
 	}
 
@@ -576,6 +572,16 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			}
 		}
 		return args;
+	}
+
+	@Override
+	public void focusInputPesquisar(MetadadoTree metadadoTree) {
+		toolbar.focusInputPesquisar();
+	}
+
+	@Override
+	public void atualizarArvore(MetadadoTree metadadoTree) {
+		toolbar.getAtualizarAcao();
 	}
 
 	@Override
