@@ -474,8 +474,7 @@ class SetListaDialogo extends AbstratoDialogo {
 				if (item.getRotulo() == null) {
 					continue;
 				}
-				String str = item.getRotulo().toUpperCase();
-				if ((porParte && str.indexOf(string) != -1) || str.equals(string)) {
+				if (Util.existeEm(item.getRotulo(), string, porParte)) {
 					item.setTag(i);
 					return item;
 				}

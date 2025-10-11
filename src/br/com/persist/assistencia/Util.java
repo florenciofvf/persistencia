@@ -1254,7 +1254,7 @@ public class Util {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 				String linha = br.readLine();
 				while (linha != null) {
-					if ((porParte && linha.toUpperCase().indexOf(string) != -1) || string.equals(linha.toUpperCase())) {
+					if (existeEm(linha, string, porParte)) {
 						return true;
 					}
 					linha = br.readLine();
