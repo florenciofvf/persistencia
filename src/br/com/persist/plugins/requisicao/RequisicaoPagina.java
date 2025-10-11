@@ -47,6 +47,7 @@ import br.com.persist.assistencia.RequestResult;
 import br.com.persist.assistencia.RequestUtil;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Aba;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
@@ -71,7 +72,7 @@ import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHead
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorListener {
+public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorListener, Aba {
 	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final PopupFichario popupFichario = new PopupFichario();
 	public final TextEditorReq textEditorReq = new TextEditorReq();
@@ -84,6 +85,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private final Toolbar toolbar = new Toolbar();
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
+	private int indicePagina;
 	private JSplitPane split;
 	private final File file;
 	private int sleep;
@@ -884,5 +886,20 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 	public RequisicaoVisualizador[] getVisualizadores() {
 		return poolVisualizador.getVisualizadores();
+	}
+
+	@Override
+	public void setIndice(int i) {
+		indicePagina = i;
+	}
+
+	@Override
+	public int getIndice() {
+		return indicePagina;
+	}
+
+	@Override
+	public File getFile() {
+		return file;
 	}
 }

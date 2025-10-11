@@ -1,12 +1,14 @@
 package br.com.persist.plugins.requisicao;
 
 import java.awt.Component;
-
-import javax.swing.JTabbedPane;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Aba;
+import br.com.persist.componente.AbstratoFichario;
 
-public class RequisicaoFichario extends JTabbedPane {
+public class RequisicaoFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
 
 	public void adicionarPagina(RequisicaoPagina pagina) {
@@ -67,5 +69,18 @@ public class RequisicaoFichario extends JTabbedPane {
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}
+	}
+
+	@Override
+	public List<Aba> getAbas() {
+		List<Aba> resposta = new ArrayList<>();
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof Aba) {
+				((Aba) cmp).setIndice(i);
+				resposta.add((Aba) cmp);
+			}
+		}
+		return resposta;
 	}
 }

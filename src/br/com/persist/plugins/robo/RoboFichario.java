@@ -1,9 +1,12 @@
 package br.com.persist.plugins.robo;
 
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Aba;
 import br.com.persist.componente.AbstratoFichario;
 
 public class RoboFichario extends AbstratoFichario {
@@ -94,5 +97,18 @@ public class RoboFichario extends AbstratoFichario {
 				p.executar();
 			}
 		}
+	}
+
+	@Override
+	public List<Aba> getAbas() {
+		List<Aba> resposta = new ArrayList<>();
+		for (int i = 0; i < getTabCount(); i++) {
+			Component cmp = getComponentAt(i);
+			if (cmp instanceof Aba) {
+				((Aba) cmp).setIndice(i);
+				resposta.add((Aba) cmp);
+			}
+		}
+		return resposta;
 	}
 }

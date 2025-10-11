@@ -12,14 +12,16 @@ import br.com.persist.componente.Label;
 
 public class SelecaoTabela implements Busca {
 	private List<Integer> lista = new ArrayList<>();
+	final boolean porParte;
 	final JTable tabela;
 	final String string;
 	int indice;
 	int coluna;
 
-	public SelecaoTabela(JTable tabela, String string, int coluna) {
-		this.string = Objects.requireNonNull(string).toUpperCase();
+	public SelecaoTabela(JTable tabela, String string, int coluna, boolean porParte) {
+		this.string = Objects.requireNonNull(string);
 		this.tabela = Objects.requireNonNull(tabela);
+		this.porParte = porParte;
 		this.coluna = coluna;
 		inicializar();
 	}
@@ -30,23 +32,16 @@ public class SelecaoTabela implements Busca {
 		for (int i = 0; i < tableModel.getRowCount(); i++) {
 			Object item = tabela.getValueAt(i, coluna);
 			if (item != null) {
-				String itemValor = item.toString().toUpperCase();
-				if (itemValor.indexOf(string) != -1) {
+				String itemValor = item.toString();
+				if(Util.existeEm(itemValor, string, porParte)) {
 					lista.add(i);
 				}
 			}
 		}
 	}
 
-	public boolean igual(String string) {
-		if (this.string == null && string == null) {
-			return true;
-		}
-		if (this.string == null || string == null) {
-			return false;
-		}
-		string = string.toUpperCase();
-		return this.string.equals(string);
+	public boolean igual(String string, boolean porParte) {
+		return Util.iguaisEm(this.string, string, this.porParte, porParte);
 	}
 
 	public String getString() {

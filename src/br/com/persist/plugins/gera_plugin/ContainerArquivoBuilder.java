@@ -187,6 +187,7 @@ public class ContainerArquivoBuilder extends Builder {
 		funcao = classe.criarFuncaoPublica("ArquivoPesquisa", "getPesquisa",
 				new Parametros("ArquivoTree arquivoTree, ArquivoPesquisa pesquisa, String string, boolean porParte"));
 		If if3 = funcao.criarIf("pesquisa == null", null);
+		if3.addReturn("new ArquivoPesquisa(arquivoTree, string, porParte)");
 		ElseIf elseIf = if3.criarElseIf("pesquisa.igual(string, porParte)");
 		elseIf.addReturn("pesquisa");
 		funcao.addReturn("new ArquivoPesquisa(arquivoTree, string, porParte)");

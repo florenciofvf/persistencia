@@ -5,6 +5,7 @@ import br.com.persist.geradores.Catch;
 import br.com.persist.geradores.ClassePrivada;
 import br.com.persist.geradores.ClassePublica;
 import br.com.persist.geradores.Container;
+import br.com.persist.geradores.Else;
 import br.com.persist.geradores.ElseIf;
 import br.com.persist.geradores.For;
 import br.com.persist.geradores.Funcao;
@@ -64,6 +65,7 @@ public class ContainerFicharioBuilder extends Builder {
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.Action");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
+		arquivo.addImport("br.com.persist.componente.FicharioPesquisa");
 		arquivo.addImport("br.com.persist.componente.Janela");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
@@ -196,13 +198,17 @@ public class ContainerFicharioBuilder extends Builder {
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
 		classePrivada.addInstrucao("private Action excluirAtivoAcao = actionIconExcluir()");
-		classePrivada.addInstrucao("private static final long serialVersionUID = 1L").newLine();
+		classePrivada.addInstrucao("private static final long serialVersionUID = 1L");
+		classePrivada.addInstrucao("private transient FicharioPesquisa pesquisa").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));
 		funcao.addInstrucao(
 				"super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR)");
 		funcao.addInstrucao("addButton(excluirAtivoAcao)");
 		funcao.addInstrucao("add(txtPesquisa)");
+		funcao.addInstrucao("add(chkPorParte)");
+		funcao.addInstrucao("add(chkPsqConteudo)");
+		funcao.addInstrucao("add(label)");
 		funcao.addInstrucao("excluirAtivoAcao.setActionListener(e -> excluirAtivo())");
 		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
 
@@ -226,19 +232,37 @@ public class ContainerFicharioBuilder extends Builder {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
 
-		If se = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", null);
-		se.addInstrucao("Set<String> set = new LinkedHashSet<>()");
-		se.addInstrucao("fichario.contemConteudo(set, txtPesquisa.getText())");
-		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
+		Else elseExterno = new Else();
+		elseExterno.addInstrucao("label.limpar()");
+		If ifExterno = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", elseExterno);
+
+		Else elseInterno = new Else();
+		elseInterno.addInstrucao(
+				"pesquisa = getPesquisa(fichario, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected())");
+		elseInterno.addInstrucao("pesquisa.selecionar(label)");
+
+		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
+		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
+		ifInterno.addInstrucao("fichario.contemConteudo(set, txtPesquisa.getText())");
+		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();
 		funcao = classe.criarFuncaoPrivada(STRING, "getString", new Parametros("Set<String> set"));
 		funcao.addInstrucao("StringBuilder sb = new StringBuilder()");
 		For loop = funcao.criarFor("String string : set");
-		se = loop.criarIf("sb.length() > 0", null);
-		se.addInstrucao("sb.append(Constantes.QL)");
+		ifExterno = loop.criarIf("sb.length() > 0", null);
+		ifExterno.addInstrucao("sb.append(Constantes.QL)");
 		loop.addInstrucao("sb.append(string)");
 		funcao.addReturn("sb.toString()");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPublica("FicharioPesquisa", "getPesquisa", new Parametros(
+				config.nameCap + "Fichario fichario, FicharioPesquisa pesquisa, String string, boolean porParte"));
+		If if3 = funcao.criarIf("pesquisa == null", null);
+		if3.addReturn("new FicharioPesquisa(fichario, string, porParte)");
+		ElseIf elseIf = if3.criarElseIf("pesquisa.igual(string, porParte)");
+		elseIf.addReturn("pesquisa");
+		funcao.addReturn("new FicharioPesquisa(fichario, string, porParte)");
 	}
 
 	private void destacar(ClassePrivada classe) {

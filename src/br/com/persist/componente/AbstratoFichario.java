@@ -3,6 +3,7 @@ package br.com.persist.componente;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -48,4 +49,6 @@ public abstract class AbstratoFichario extends JTabbedPane {
 	public void setListener(AbstratoFicharioListener listener) {
 		this.listener = listener;
 	}
+
+	public abstract List<Aba> getAbas();
 }

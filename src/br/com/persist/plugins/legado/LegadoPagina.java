@@ -28,6 +28,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Aba;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
@@ -37,13 +38,14 @@ import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.marca.XML;
 
-public class LegadoPagina extends Panel {
+public class LegadoPagina extends Panel implements Aba {
 	private final TextEditor textEditorResult = new TextEditor();
 	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ScrollPane scrollPane;
 	private final File file;
+	private int indice;
 
 	public LegadoPagina(File file) {
 		this.file = file;
@@ -209,5 +211,20 @@ public class LegadoPagina extends Panel {
 		if (Util.contemStringEm(file, string, true)) {
 			set.add(file.getAbsolutePath());
 		}
+	}
+
+	@Override
+	public void setIndice(int i) {
+		indice = i;
+	}
+
+	@Override
+	public int getIndice() {
+		return indice;
+	}
+
+	@Override
+	public File getFile() {
+		return file;
 	}
 }

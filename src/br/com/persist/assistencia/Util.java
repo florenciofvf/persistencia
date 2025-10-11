@@ -1120,13 +1120,14 @@ public class Util {
 		return new Selecao(component, string);
 	}
 
-	public static SelecaoTabela getSelecaoTabela(JTable tabela, SelecaoTabela selecao, int coluna, String string) {
+	public static SelecaoTabela getSelecaoTabela(JTable tabela, SelecaoTabela selecao, int coluna, String string,
+			boolean porParte) {
 		if (selecao == null) {
-			return new SelecaoTabela(tabela, string, coluna);
-		} else if (selecao.igual(string)) {
+			return new SelecaoTabela(tabela, string, coluna, porParte);
+		} else if (selecao.igual(string, porParte)) {
 			return selecao;
 		}
-		return new SelecaoTabela(tabela, string, coluna);
+		return new SelecaoTabela(tabela, string, coluna, porParte);
 	}
 
 	public static double menorEmPorcentagem(double menor, double maior) {
@@ -1686,5 +1687,23 @@ public class Util {
 			string = string.substring(posAvanco);
 		}
 		return string.trim();
+	}
+
+	public static boolean existeEm(String string, String pesquisado, boolean porParte) {
+		String stringUpper = string.toUpperCase();
+		String pesquiadoUpper = pesquisado.toUpperCase();
+		return porParte ? stringUpper.indexOf(pesquiadoUpper) != -1 : stringUpper.equals(pesquiadoUpper);
+	}
+
+	public static boolean iguaisEm(String string, String comparado, boolean porParte, boolean porParteComparado) {
+		if (string == null && comparado == null) {
+			return true;
+		}
+		if (string == null || comparado == null) {
+			return false;
+		}
+		String stringUpper = string.toUpperCase();
+		String pesquiadoUpper = comparado.toUpperCase();
+		return stringUpper.equals(pesquiadoUpper) && porParte == porParteComparado;
 	}
 }

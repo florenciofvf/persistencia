@@ -22,6 +22,7 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Aba;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -29,12 +30,13 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
-public class MapaPagina extends Panel {
+public class MapaPagina extends Panel implements Aba {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	private static final long serialVersionUID = 1L;
 	private final AbaText abaText = new AbaText();
 	private final AbaView abaView;
 	private final File file;
+	private int indice;
 
 	public MapaPagina(File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -182,5 +184,20 @@ public class MapaPagina extends Panel {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, this);
 		}
+	}
+
+	@Override
+	public void setIndice(int i) {
+		indice = i;
+	}
+
+	@Override
+	public int getIndice() {
+		return indice;
+	}
+
+	@Override
+	public File getFile() {
+		return file;
 	}
 }

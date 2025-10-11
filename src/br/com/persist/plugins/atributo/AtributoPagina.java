@@ -39,6 +39,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.StringPool;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Aba;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
@@ -67,11 +68,12 @@ import br.com.persist.geradores.JSVarObj;
 import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.Variavel;
 
-public class AtributoPagina extends Panel {
+public class AtributoPagina extends Panel implements Aba {
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
 	private transient Raiz raiz;
+	private int indice;
 
 	public AtributoPagina(File file) {
 		painelAtributo = new PainelAtributo(file);
@@ -444,6 +446,21 @@ public class AtributoPagina extends Panel {
 				Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
 			}
 		}
+	}
+
+	@Override
+	public void setIndice(int i) {
+		indice = i;
+	}
+
+	@Override
+	public int getIndice() {
+		return indice;
+	}
+
+	@Override
+	public File getFile() {
+		return painelAtributo.file;
 	}
 }
 
