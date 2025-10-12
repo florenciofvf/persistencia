@@ -1,10 +1,13 @@
 package ###package###;
 
+import java.util.Set;
+
 import javax.swing.table.AbstractTableModel;
 
+import br.com.persist.assistencia.BuscaConteudo;
 import br.com.persist.assistencia.Constantes;
 
-public class ###nameCap###Modelo extends AbstractTableModel {
+public class ###nameCap###Modelo extends AbstractTableModel implements BuscaConteudo {
 	private static final String[] COLUNAS = { "NOME", "VALOR"};
 	private static final long serialVersionUID = 1L;
 
@@ -53,5 +56,10 @@ public class ###nameCap###Modelo extends AbstractTableModel {
 		} else if (columnIndex == 1) {
 			item.setValor(valor);
 		}
+	}
+
+	@Override
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
+		###nameCap###Provedor.contemConteudo(set, string, porParte);
 	}
 }

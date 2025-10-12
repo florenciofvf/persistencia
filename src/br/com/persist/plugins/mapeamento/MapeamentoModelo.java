@@ -1,10 +1,13 @@
 package br.com.persist.plugins.mapeamento;
 
+import java.util.Set;
+
 import javax.swing.table.AbstractTableModel;
 
+import br.com.persist.assistencia.BuscaConteudo;
 import br.com.persist.assistencia.Constantes;
 
-public class MapeamentoModelo extends AbstractTableModel {
+public class MapeamentoModelo extends AbstractTableModel implements BuscaConteudo {
 	private static final String[] COLUNAS = { "NOME", "VALOR" };
 	private static final long serialVersionUID = 1L;
 
@@ -53,5 +56,10 @@ public class MapeamentoModelo extends AbstractTableModel {
 		if (1 == columnIndex) {
 			v.setValor(valor);
 		}
+	}
+
+	@Override
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
+		MapeamentoProvedor.contemConteudo(set, string, porParte);
 	}
 }
