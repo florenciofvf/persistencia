@@ -157,7 +157,7 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
-					fichario.contemConteudo(set, txtPesquisa.getText());
+					fichario.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(AtributoContainer.this, getString(set));
 				} else {
 					pesquisa = getPesquisa(fichario, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());

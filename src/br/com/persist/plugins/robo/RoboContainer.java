@@ -163,7 +163,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
-					fichario.contemConteudo(set, txtPesquisa.getText());
+					fichario.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(RoboContainer.this, getString(set));
 				} else {
 					pesquisa = getPesquisa(fichario, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());

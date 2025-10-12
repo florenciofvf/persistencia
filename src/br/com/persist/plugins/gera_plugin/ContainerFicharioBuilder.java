@@ -243,7 +243,7 @@ public class ContainerFicharioBuilder extends Builder {
 
 		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
 		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
-		ifInterno.addInstrucao("fichario.contemConteudo(set, txtPesquisa.getText())");
+		ifInterno.addInstrucao("fichario.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected())");
 		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
 
 		classe.newLine();
