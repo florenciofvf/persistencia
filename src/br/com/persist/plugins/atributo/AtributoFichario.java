@@ -76,12 +76,12 @@ public class AtributoFichario extends AbstratoFichario {
 		}
 	}
 
-	public void contemConteudo(Set<String> set, String string) {
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Component cmp = getComponentAt(i);
 			if (cmp instanceof AtributoPagina) {
 				AtributoPagina p = (AtributoPagina) cmp;
-				p.contemConteudo(set, string);
+				p.contemConteudo(set, string, porParte);
 			}
 		}
 		if (set.isEmpty()) {
