@@ -1,5 +1,6 @@
 package br.com.persist.plugins.gera_plugin;
 
+import br.com.persist.abstrato.PluginArvore;
 import br.com.persist.geradores.Arquivo;
 import br.com.persist.geradores.Catch;
 import br.com.persist.geradores.ClassePrivada;
@@ -15,7 +16,7 @@ import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
-public class ContainerArvoreBuilder extends Builder {
+public class ContainerArvoreBuilder extends Builder implements PluginArvore {
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";

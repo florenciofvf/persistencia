@@ -1,5 +1,6 @@
 package br.com.persist.plugins.gera_plugin;
 
+import br.com.persist.abstrato.PluginFichario;
 import br.com.persist.geradores.Arquivo;
 import br.com.persist.geradores.Catch;
 import br.com.persist.geradores.ClassePrivada;
@@ -15,7 +16,7 @@ import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
-public class ContainerFicharioBuilder extends Builder {
+public class ContainerFicharioBuilder extends Builder implements PluginFichario {
 	private static final String ATIVA_PAGINA_ATIVA = " ativa = fichario.getPaginaAtiva()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String ATIVA_DIFF_NULL = "ativa != null";
@@ -207,6 +208,7 @@ public class ContainerFicharioBuilder extends Builder {
 		funcao.addInstrucao("addButton(excluirAtivoAcao)");
 		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("add(chkPorParte)");
+		funcao.addInstrucao("chkPsqConteudo.setTag(\"FICHARIO\")");
 		funcao.addInstrucao("add(chkPsqConteudo)");
 		funcao.addInstrucao("add(label)");
 		funcao.addInstrucao("excluirAtivoAcao.setActionListener(e -> excluirAtivo())");

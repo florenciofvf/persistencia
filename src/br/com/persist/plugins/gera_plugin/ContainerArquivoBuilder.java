@@ -1,5 +1,6 @@
 package br.com.persist.plugins.gera_plugin;
 
+import br.com.persist.abstrato.PluginArquivo;
 import br.com.persist.geradores.Arquivo;
 import br.com.persist.geradores.ClassePrivada;
 import br.com.persist.geradores.ClassePublica;
@@ -13,7 +14,7 @@ import br.com.persist.geradores.If;
 import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 
-public class ContainerArquivoBuilder extends Builder {
+public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";

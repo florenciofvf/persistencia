@@ -105,6 +105,7 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(chkPorParte);
+			chkPsqConteudo.setTag("TABELA");
 			add(chkPsqConteudo);
 			add(label);
 		}

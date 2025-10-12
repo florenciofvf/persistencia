@@ -146,6 +146,7 @@ public class MapaContainer extends AbstratoContainer implements PluginFichario {
 			addButton(excluirAtivoAcao);
 			add(txtPesquisa);
 			add(chkPorParte);
+			chkPsqConteudo.setTag("FICHARIO");
 			add(chkPsqConteudo);
 			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());

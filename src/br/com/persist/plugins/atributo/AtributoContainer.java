@@ -146,6 +146,7 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 			addButton(excluirAtivoAcao);
 			add(txtPesquisa);
 			add(chkPorParte);
+			chkPsqConteudo.setTag("FICHARIO");
 			add(chkPsqConteudo);
 			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());

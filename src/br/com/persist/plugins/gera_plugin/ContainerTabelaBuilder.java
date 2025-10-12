@@ -1,5 +1,6 @@
 package br.com.persist.plugins.gera_plugin;
 
+import br.com.persist.abstrato.PluginTabela;
 import br.com.persist.geradores.Arquivo;
 import br.com.persist.geradores.Catch;
 import br.com.persist.geradores.ClassePrivada;
@@ -15,7 +16,7 @@ import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
-public class ContainerTabelaBuilder extends Builder {
+public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 	private static final String FIRE_TABLE_DATA_CHANGED = ".fireTableDataChanged()";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String AJUSTAR_TABELA = "ajustarTabela()";
@@ -158,6 +159,7 @@ public class ContainerTabelaBuilder extends Builder {
 		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
 		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("add(chkPorParte)");
+		funcao.addInstrucao("chkPsqConteudo.setTag(\"TABELA\")");
 		funcao.addInstrucao("add(chkPsqConteudo)");
 		funcao.addInstrucao("add(label)");
 
