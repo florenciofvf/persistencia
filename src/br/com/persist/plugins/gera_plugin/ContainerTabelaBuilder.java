@@ -49,6 +49,8 @@ public class ContainerTabelaBuilder extends Builder {
 		arquivo.addImport("java.awt.Window");
 		arquivo.addImport("java.awt.event.ActionEvent");
 		arquivo.addImport("java.awt.event.ActionListener");
+		arquivo.addImport("java.util.LinkedHashSet");
+		arquivo.addImport("java.util.Set");
 		arquivo.addImport("java.util.logging.Level");
 		arquivo.addImport("java.util.logging.Logger").newLine();
 		arquivo.addImport("javax.swing.Icon");
@@ -156,6 +158,7 @@ public class ContainerTabelaBuilder extends Builder {
 		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
 		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("add(chkPorParte)");
+		funcao.addInstrucao("add(chkPsqConteudo)");
 		funcao.addInstrucao("add(label)");
 
 		actionPerf(classePrivada);
@@ -178,13 +181,29 @@ public class ContainerTabelaBuilder extends Builder {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoPublica("void", "actionPerformed", new Parametros("ActionEvent e"));
 
-		Else elsee = new Else();
-		elsee.addInstrucao("label.limpar()");
+		Else elseExterno = new Else();
+		elseExterno.addInstrucao("label.limpar()");
+		If ifExterno = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", elseExterno);
 
-		If se = funcao.criarIf("!Util.isEmpty(txtPesquisa.getText())", elsee);
-		se.addInstrucao(
+		Else elseInterno = new Else();
+		elseInterno.addInstrucao(
 				"selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(), chkPorParte.isSelected())");
-		se.addInstrucao("selecao.selecionar(label)");
+		elseInterno.addInstrucao("selecao.selecionar(label)");
+
+		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
+		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
+		ifInterno.addInstrucao(
+				config.nameDecap + "Modelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected())");
+		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPrivada(STRING, "getString", new Parametros("Set<String> set"));
+		funcao.addInstrucao("StringBuilder sb = new StringBuilder()");
+		For loop = funcao.criarFor("String string : set");
+		ifExterno = loop.criarIf("sb.length() > 0", null);
+		ifExterno.addInstrucao("sb.append(Constantes.QL)");
+		loop.addInstrucao("sb.append(string)");
+		funcao.addReturn("sb.toString()");
 	}
 
 	private void destacar(ClassePrivada classe) {

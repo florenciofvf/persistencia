@@ -16,6 +16,8 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -109,17 +111,36 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 			setListener(listener);
 			add(txtPesquisa);
 			add(chkPorParte);
+			add(chkPsqConteudo);
 			add(label);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(), chkPorParte.isSelected());
-				selecao.selecionar(label);
+				if (chkPsqConteudo.isSelected()) {
+					Set<String> set = new LinkedHashSet<>();
+					alternativoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
+					Util.mensagem(AlternativoContainer.this, getString(set));
+				} else {
+					selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(),
+							chkPorParte.isSelected());
+					selecao.selecionar(label);
+				}
 			} else {
 				label.limpar();
 			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
 		}
 
 		private void setListener(AlternativoListener listener) {

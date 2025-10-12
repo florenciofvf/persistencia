@@ -21,8 +21,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -149,6 +151,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 			addButton(true, desconectaAcao);
 			add(txtPesquisa);
 			add(chkPorParte);
+			add(chkPsqConteudo);
 			add(label);
 			eventos();
 		}
@@ -156,11 +159,29 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecaoTabela(tabela, selecao, 1, txtPesquisa.getText(), chkPorParte.isSelected());
-				selecao.selecionar(label);
+				if (chkPsqConteudo.isSelected()) {
+					Set<String> set = new LinkedHashSet<>();
+					conexaoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
+					Util.mensagem(ConexaoContainer.this, getString(set));
+				} else {
+					selecao = Util.getSelecaoTabela(tabela, selecao, 1, txtPesquisa.getText(),
+							chkPorParte.isSelected());
+					selecao.selecionar(label);
+				}
 			} else {
 				label.limpar();
 			}
+		}
+
+		private String getString(Set<String> set) {
+			StringBuilder sb = new StringBuilder();
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+			return sb.toString();
 		}
 
 		private void eventos() {
