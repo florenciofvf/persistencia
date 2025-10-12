@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +16,7 @@ import javax.swing.event.PopupMenuListener;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -266,6 +268,14 @@ public class ConexaoProvedor {
 		@Override
 		public void set(String s) {
 			conexao.setUrlBanco(s);
+		}
+	}
+
+	public static void contemConteudo(Set<String> set, String string, boolean porParte) {
+		for (Conexao item : lista) {
+			if (Util.existeEm(item.getUrlBanco(), string, porParte)) {
+				set.add(item.getNome());
+			}
 		}
 	}
 }

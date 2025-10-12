@@ -4,11 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -166,6 +168,14 @@ public class VariavelProvedor {
 		@Override
 		public void set(String s) {
 			variavel.setValor(s);
+		}
+	}
+
+	public static void contemConteudo(Set<String> set, String string, boolean porParte) {
+		for (Variavel item : lista) {
+			if (Util.existeEm(item.getValor(), string, porParte)) {
+				set.add(item.getNome());
+			}
 		}
 	}
 }
