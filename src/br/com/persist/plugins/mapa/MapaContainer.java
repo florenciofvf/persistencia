@@ -80,6 +80,7 @@ public class MapaContainer extends AbstratoContainer implements PluginFichario {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
+		fichario.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	public String getConteudo() {

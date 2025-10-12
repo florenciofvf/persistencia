@@ -95,6 +95,7 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
+		fichario.setListener(e -> toolbar.focusInputPesquisar());
 	}
 
 	private void configurar() {
