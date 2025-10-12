@@ -114,8 +114,8 @@ public class AtributoPagina extends Panel implements Aba {
 		painelAtributo.salvar(atomic);
 	}
 
-	public void contemConteudo(Set<String> set, String string) {
-		if (Util.contemStringEm(painelAtributo.file, string, true)) {
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
+		if (Util.contemStringEm(painelAtributo.file, string, porParte)) {
 			set.add(painelAtributo.file.getAbsolutePath());
 		}
 	}

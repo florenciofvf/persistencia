@@ -187,8 +187,8 @@ public class MapaPagina extends Panel implements Aba {
 		}
 	}
 
-	public void contemConteudo(Set<String> set, String string) {
-		if (Util.contemStringEm(file, string, true)) {
+	public void contemConteudo(Set<String> set, String string, boolean porParte) {
+		if (Util.contemStringEm(file, string, porParte)) {
 			set.add(file.getAbsolutePath());
 		}
 	}
