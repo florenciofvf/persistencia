@@ -10,7 +10,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.componente.Label;
 
-public class SelecaoTabela implements Busca {
+public class TabelaPesquisa implements Busca {
 	private List<Integer> lista = new ArrayList<>();
 	final boolean porParte;
 	final JTable tabela;
@@ -18,7 +18,7 @@ public class SelecaoTabela implements Busca {
 	int indice;
 	int coluna;
 
-	public SelecaoTabela(JTable tabela, String string, int coluna, boolean porParte) {
+	public TabelaPesquisa(JTable tabela, String string, int coluna, boolean porParte) {
 		this.string = Objects.requireNonNull(string);
 		this.tabela = Objects.requireNonNull(tabela);
 		this.porParte = porParte;

@@ -1120,14 +1120,14 @@ public class Util {
 		return new Selecao(component, string);
 	}
 
-	public static SelecaoTabela getSelecaoTabela(JTable tabela, SelecaoTabela selecao, int coluna, String string,
+	public static TabelaPesquisa getTabelaPesquisa(JTable tabela, TabelaPesquisa pesquisa, int coluna, String string,
 			boolean porParte) {
-		if (selecao == null) {
-			return new SelecaoTabela(tabela, string, coluna, porParte);
-		} else if (selecao.igual(string, porParte)) {
-			return selecao;
+		if (pesquisa == null) {
+			return new TabelaPesquisa(tabela, string, coluna, porParte);
+		} else if (pesquisa.igual(string, porParte)) {
+			return pesquisa;
 		}
-		return new SelecaoTabela(tabela, string, coluna, porParte);
+		return new TabelaPesquisa(tabela, string, coluna, porParte);
 	}
 
 	public static double menorEmPorcentagem(double menor, double maior) {

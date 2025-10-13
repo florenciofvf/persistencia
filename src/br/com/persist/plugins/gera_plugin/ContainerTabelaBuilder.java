@@ -64,7 +64,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Mensagens");
-		arquivo.addImport("br.com.persist.assistencia.SelecaoTabela");
+		arquivo.addImport("br.com.persist.assistencia.TabelaPesquisa");
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
@@ -151,7 +151,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 
 		classePrivada = classe.criarClassePrivada("Toolbar extends BarraButton implements ActionListener");
 		classePrivada.addInstrucao("private static final long serialVersionUID = 1L");
-		classePrivada.addInstrucao("private transient SelecaoTabela selecao").newLine();
+		classePrivada.addInstrucao("private transient TabelaPesquisa pesquisa").newLine();
 
 		Funcao funcao = classePrivada.criarFuncaoPublica("void", "ini", new Parametros("Janela janela"));
 		funcao.addInstrucao(
@@ -189,8 +189,8 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 
 		Else elseInterno = new Else();
 		elseInterno.addInstrucao(
-				"selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(), chkPorParte.isSelected())");
-		elseInterno.addInstrucao("selecao.selecionar(label)");
+				"pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 0, txtPesquisa.getText(), chkPorParte.isSelected())");
+		elseInterno.addInstrucao("pesquisa.selecionar(label)");
 
 		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
 		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");

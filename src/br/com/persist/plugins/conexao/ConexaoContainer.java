@@ -39,7 +39,7 @@ import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.SelecaoTabela;
+import br.com.persist.assistencia.TabelaPesquisa;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -138,7 +138,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		private Action subirAcao = actionIcon("label.subir", Icones.TOP);
 		private Action infoAcao = actionIcon("label.info", Icones.INFO);
 		private static final long serialVersionUID = 1L;
-		private transient SelecaoTabela selecao;
+		private transient TabelaPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
@@ -165,9 +165,9 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 					conexaoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(ConexaoContainer.this, getString(set));
 				} else {
-					selecao = Util.getSelecaoTabela(tabela, selecao, 1, txtPesquisa.getText(),
+					pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 1, txtPesquisa.getText(),
 							chkPorParte.isSelected());
-					selecao.selecionar(label);
+					pesquisa.selecionar(label);
 				}
 			} else {
 				label.limpar();

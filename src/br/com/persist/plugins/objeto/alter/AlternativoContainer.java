@@ -33,7 +33,7 @@ import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.SelecaoTabela;
+import br.com.persist.assistencia.TabelaPesquisa;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -102,7 +102,7 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private transient AlternativoListener listener;
-		private transient SelecaoTabela selecao;
+		private transient TabelaPesquisa pesquisa;
 
 		public void ini(Janela janela, AlternativoListener listener) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
@@ -124,9 +124,9 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 					alternativoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(AlternativoContainer.this, getString(set));
 				} else {
-					selecao = Util.getSelecaoTabela(tabela, selecao, 0, txtPesquisa.getText(),
+					pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 0, txtPesquisa.getText(),
 							chkPorParte.isSelected());
-					selecao.selecionar(label);
+					pesquisa.selecionar(label);
 				}
 			} else {
 				label.limpar();

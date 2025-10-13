@@ -372,7 +372,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		if (arquivo != null) {
 			Frame frame = Util.getViewParentFrame(AnexoContainer.this);
 			IconeDialogo form = IconeDialogo.criar(frame, arquivo.toString(), new ListenerIcone(arquivo),
-					arquivo.toString());
+					arquivo.getNomeIcone());
 			config(frame, form);
 			form.setVisible(true);
 			AnexoTreeUtil.refreshEstrutura(anexoTree, arquivo);
