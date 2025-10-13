@@ -20,6 +20,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
+import br.com.persist.assistencia.Busca;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -104,21 +105,33 @@ public class IconeContainer extends Panel implements PluginBasico {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private transient IconePesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, LIMPAR, COPIAR);
 			add(true, txtPesquisa);
+			add(chkPorParte);
+			add(label);
 			txtPesquisa.addActionListener(e -> selecionar());
 		}
 
 		private void selecionar() {
-			String string = txtPesquisa.getText();
-			if (Util.isEmpty(string)) {
-				return;
+			if (!Util.isEmpty(txtPesquisa.getText())) {
+				pesquisa = getPesquisa(listaLabelIcone, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+				pesquisa.selecionar(label);
+			} else {
+				label.limpar();
 			}
-			for (LabelIcone icone : listaLabelIcone) {
-				icone.selecionar(string);
+		}
+
+		public IconePesquisa getPesquisa(List<LabelIcone> listaLabelIcone, IconePesquisa pesquisa, String string,
+				boolean porParte) {
+			if (pesquisa == null) {
+				return new IconePesquisa(listaLabelIcone, string, porParte);
+			} else if (pesquisa.igual(string, porParte)) {
+				return pesquisa;
 			}
+			return new IconePesquisa(listaLabelIcone, string, porParte);
 		}
 
 		@Override
@@ -143,5 +156,65 @@ public class IconeContainer extends Panel implements PluginBasico {
 
 	public static void setNomeIconeCopiado(String nomeIconeCopiado) {
 		IconeContainer.nomeIconeCopiado = nomeIconeCopiado;
+	}
+
+	class IconePesquisa implements Busca {
+		private List<LabelIcone> lista = new ArrayList<>();
+		private final List<LabelIcone> listaLabelIcone;
+		final boolean porParte;
+		final String string;
+		int indice;
+
+		public IconePesquisa(List<LabelIcone> listaLabelIcone, String string, boolean porParte) {
+			this.listaLabelIcone = Objects.requireNonNull(listaLabelIcone);
+			this.string = Objects.requireNonNull(string);
+			this.porParte = porParte;
+			if (!Util.isEmpty(string)) {
+				inicializar();
+			}
+		}
+
+		private void inicializar() {
+			indice = 0;
+			for (LabelIcone item : listaLabelIcone) {
+				if (Util.existeEm(item.nome, string, porParte)) {
+					lista.add(item);
+				}
+			}
+		}
+
+		public boolean igual(String string, boolean porParte) {
+			return Util.iguaisEm(this.string, string, this.porParte, porParte);
+		}
+
+		public String getString() {
+			return string;
+		}
+
+		public int getTotal() {
+			return lista.size();
+		}
+
+		public int getIndice() {
+			return indice;
+		}
+
+		public void selecionar(Label label) {
+			if (label == null) {
+				return;
+			}
+			if (indice < getTotal()) {
+				LabelIcone item = lista.get(indice);
+				item.selecionar(string);
+				indice++;
+				label.setText(indice + "/" + getTotal());
+			} else {
+				for (LabelIcone item : IconeContainer.this.listaLabelIcone) {
+					item.setBorder(null);
+				}
+				label.limpar();
+				indice = 0;
+			}
+		}
 	}
 }
