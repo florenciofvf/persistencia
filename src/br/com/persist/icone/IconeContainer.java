@@ -34,11 +34,15 @@ public class IconeContainer extends Panel implements PluginBasico {
 	private final transient IconeListener listener;
 	private final Toolbar toolbar = new Toolbar();
 	private static String nomeIconeCopiado;
+	private final transient Object objeto;
+	private final Label labelIcone;
 	private final String iconeSel;
 	private int totalIcones;
 
 	public IconeContainer(Janela janela, IconeListener listener, String iconeSel) {
 		this.listener = Objects.requireNonNull(listener);
+		this.labelIcone = listener.getOptLabel();
+		this.objeto = listener.getOptObjeto();
 		listaLabelIcone = new ArrayList<>();
 		this.iconeSel = iconeSel;
 		toolbar.ini(janela);
@@ -77,7 +81,7 @@ public class IconeContainer extends Panel implements PluginBasico {
 
 		private void selecionar(String nomeIcone) {
 			if (nome.equalsIgnoreCase(nomeIcone)) {
-				setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
+				setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 			}
 		}
 
@@ -85,7 +89,11 @@ public class IconeContainer extends Panel implements PluginBasico {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					listener.setIcone(nome);
+					if (labelIcone != null) {
+						labelIcone.setToolTipText(nome);
+						labelIcone.setIcon(getIcon());
+					}
+					listener.setIcone(objeto, nome, getIcon());
 					toolbar.fechar();
 				} catch (AssistenciaException ex) {
 					Util.mensagem(IconeContainer.this, ex.getMessage());
@@ -121,7 +129,10 @@ public class IconeContainer extends Panel implements PluginBasico {
 
 		@Override
 		protected void limpar() {
-			listener.limparIcone();
+			listener.limparIcone(objeto);
+			if (labelIcone != null) {
+				labelIcone.setIcon(null);
+			}
 			fechar();
 		}
 	}

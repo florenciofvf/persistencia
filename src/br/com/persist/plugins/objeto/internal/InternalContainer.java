@@ -1660,13 +1660,15 @@ public class InternalContainer extends Panel
 					}
 
 					private void icone() {
-						IconeDialogo.criar(InternalContainer.this, pesquisa.getNomeParaMenuItem(), new ListenerIcone(),
+						IconeDialogo form = IconeDialogo.criar(pesquisa.getNomeParaMenuItem(), new ListenerIcone(),
 								pesquisa.getIconeGrupo());
+						form.setLocationRelativeTo(Util.getViewParent(InternalContainer.this));
+						form.setVisible(true);
 					}
 
 					private class ListenerIcone implements IconeListener {
 						@Override
-						public void setIcone(String nome) throws AssistenciaException {
+						public void setIcone(Object objeto, String nome, Icon icon) throws AssistenciaException {
 							try {
 								checarProcesso(ArquivoVinculo.OBRIGATORIO);
 							} catch (ObjetoException ex) {
@@ -1687,7 +1689,7 @@ public class InternalContainer extends Panel
 						}
 
 						@Override
-						public void limparIcone() {
+						public void limparIcone(Object objeto) {
 							try {
 								checarProcesso(ArquivoVinculo.OBRIGATORIO);
 							} catch (ObjetoException ex) {
@@ -1708,6 +1710,16 @@ public class InternalContainer extends Panel
 								arquivo.setIconeGrupo(Constantes.VAZIO);
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
+						}
+
+						@Override
+						public Object getOptObjeto() {
+							return null;
+						}
+
+						@Override
+						public Label getOptLabel() {
+							return null;
 						}
 					}
 

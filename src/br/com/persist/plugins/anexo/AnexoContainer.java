@@ -42,10 +42,13 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.Label;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.icone.IconeDialogo;
+import br.com.persist.icone.IconeListener;
 
 public class AnexoContainer extends AbstratoContainer implements AnexoTreeListener, PluginArquivo {
 	private final AnexoTree anexoTree = new AnexoTree(new AnexoModelo());
@@ -368,10 +371,43 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo != null) {
 			Frame frame = Util.getViewParentFrame(AnexoContainer.this);
-			AnexoIconeDialogo form = AnexoIconeDialogo.criar(frame, arquivo);
+			IconeDialogo form = IconeDialogo.criar(frame, arquivo.toString(), new ListenerIcone(arquivo),
+					arquivo.toString());
 			config(frame, form);
 			form.setVisible(true);
 			AnexoTreeUtil.refreshEstrutura(anexoTree, arquivo);
+		}
+	}
+
+	private class ListenerIcone implements IconeListener {
+		private final Anexo anexo;
+
+		public ListenerIcone(Anexo anexo) {
+			this.anexo = anexo;
+		}
+
+		@Override
+		public void setIcone(Object objeto, String nome, Icon icon) throws AssistenciaException {
+			Anexo item = (Anexo) objeto;
+			item.setIcone(icon, nome);
+			AnexoModelo.putAnexo(item);
+		}
+
+		@Override
+		public void limparIcone(Object objeto) {
+			Anexo item = (Anexo) objeto;
+			AnexoModelo.putAnexo(item);
+			item.limparIcone();
+		}
+
+		@Override
+		public Object getOptObjeto() {
+			return anexo;
+		}
+
+		@Override
+		public Label getOptLabel() {
+			return null;
 		}
 	}
 

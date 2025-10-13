@@ -68,6 +68,7 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
+import br.com.persist.icone.IconeDialogo;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.objeto.Objeto;
@@ -1871,10 +1872,45 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				return;
 			}
 			Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
-			IconeDialogo form = IconeDialogo.criar(dialog, objeto, label);
+			IconeDialogo form = IconeDialogo.criar(dialog, objeto.getId(), new ListenerIcone(objeto, label),
+					objeto.getIcone());
 			Util.configSizeLocation(dialog, form, ObjetoContainer.this);
 			form.setVisible(true);
 			objetoSuperficie.repaint();
+		}
+
+		private class ListenerIcone implements br.com.persist.icone.IconeListener {
+			private final Objeto objeto;
+			private final Label label;
+
+			public ListenerIcone(Objeto objeto, Label label) {
+				this.objeto = objeto;
+				this.label = label;
+			}
+
+			@Override
+			public void setIcone(Object objeto, String nome, Icon icon) throws AssistenciaException {
+				Objeto item = (Objeto) objeto;
+				item.setIcone(nome);
+				MacroProvedor.imagem(item.getIcone());
+			}
+
+			@Override
+			public void limparIcone(Object objeto) {
+				Objeto item = (Objeto) objeto;
+				MacroProvedor.imagem(null);
+				item.limparIcone();
+			}
+
+			@Override
+			public Object getOptObjeto() {
+				return objeto;
+			}
+
+			@Override
+			public Label getOptLabel() {
+				return label;
+			}
 		}
 
 		@Override
