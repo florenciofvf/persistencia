@@ -82,8 +82,12 @@ public class IconeContainer extends Panel implements PluginBasico {
 
 		private void selecionar(String nomeIcone) {
 			if (nome.equalsIgnoreCase(nomeIcone)) {
-				setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+				selecionar(true);
 			}
+		}
+
+		private void selecionar(boolean b) {
+			setBorder(b ? BorderFactory.createLineBorder(Color.BLACK, 3) : null);
 		}
 
 		private transient MouseListener mouseListenerInner = new MouseAdapter() {
@@ -205,7 +209,7 @@ public class IconeContainer extends Panel implements PluginBasico {
 			}
 			if (indice < getTotal()) {
 				LabelIcone item = lista.get(indice);
-				item.selecionar(string);
+				item.selecionar(true);
 				indice++;
 				label.setText(indice + "/" + getTotal());
 			} else {
@@ -218,7 +222,7 @@ public class IconeContainer extends Panel implements PluginBasico {
 		@Override
 		public void limparSelecao() {
 			for (LabelIcone item : IconeContainer.this.listaLabelIcone) {
-				item.setBorder(null);
+				item.selecionar(false);
 			}
 		}
 	}
