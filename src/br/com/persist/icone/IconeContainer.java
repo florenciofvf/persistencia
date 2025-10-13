@@ -209,11 +209,16 @@ public class IconeContainer extends Panel implements PluginBasico {
 				indice++;
 				label.setText(indice + "/" + getTotal());
 			} else {
-				for (LabelIcone item : IconeContainer.this.listaLabelIcone) {
-					item.setBorder(null);
-				}
+				limparSelecao();
 				label.limpar();
 				indice = 0;
+			}
+		}
+
+		@Override
+		public void limparSelecao() {
+			for (LabelIcone item : IconeContainer.this.listaLabelIcone) {
+				item.setBorder(null);
 			}
 		}
 	}

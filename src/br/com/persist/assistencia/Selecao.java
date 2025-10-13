@@ -99,7 +99,7 @@ public class Selecao implements Busca {
 				}
 			}
 		} else {
-			component.getCaret().setSelectionVisible(false);
+			limparSelecao();
 			label.limpar();
 			indice = 0;
 		}
@@ -114,6 +114,11 @@ public class Selecao implements Busca {
 			c = c.getParent();
 		}
 		return null;
+	}
+
+	@Override
+	public void limparSelecao() {
+		component.getCaret().setSelectionVisible(false);
 	}
 }
 

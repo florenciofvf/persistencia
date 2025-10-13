@@ -49,8 +49,14 @@ public class AnexoPesquisa implements Busca {
 			indice++;
 			label.setText(indice + "/" + getTotal());
 		} else {
+			limparSelecao();
 			label.limpar();
 			indice = 0;
 		}
+	}
+
+	@Override
+	public void limparSelecao() {
+		anexoTree.clearSelection();
 	}
 }

@@ -79,9 +79,14 @@ public class SelecaoTabela implements Busca {
 			indice++;
 			label.setText(indice + "/" + getTotal());
 		} else {
-			tabela.clearSelection();
+			limparSelecao();
 			label.limpar();
 			indice = 0;
 		}
+	}
+
+	@Override
+	public void limparSelecao() {
+		tabela.clearSelection();
 	}
 }
