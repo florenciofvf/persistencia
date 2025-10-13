@@ -42,12 +42,17 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 	private static final long serialVersionUID = 1L;
 	private ConfiguracaoDialogo configuracaoDialogo;
 	private final Toolbar toolbar = new Toolbar();
+	private int totalConfiguracoes;
 	private ScrollPane scrollPane;
 
 	public ConfiguracaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
+	}
+
+	public int getTotalConfiguracoes() {
+		return totalConfiguracoes;
 	}
 
 	public ConfiguracaoDialogo getConfiguracaoDialogo() {
@@ -242,6 +247,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 
 		void addConfiguracao(AbstratoConfiguracao configuracao) {
 			if (configuracao != null) {
+				totalConfiguracoes++;
 				lista.add(configuracao);
 				muro.camada(configuracao);
 			}

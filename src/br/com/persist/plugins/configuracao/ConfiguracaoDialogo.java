@@ -25,6 +25,7 @@ public class ConfiguracaoDialogo extends AbstratoDialogo {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
+		setTitle(Mensagens.getString(Constantes.LABEL_CONFIGURACOES) + " [" + container.getTotalConfiguracoes() + "]");
 	}
 
 	public static void criar(Formulario formulario) {

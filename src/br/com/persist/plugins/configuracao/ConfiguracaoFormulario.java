@@ -30,6 +30,7 @@ public class ConfiguracaoFormulario extends AbstratoFormulario {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
+		setTitle(Mensagens.getString(Constantes.LABEL_CONFIGURACOES) + " [" + container.getTotalConfiguracoes() + "]");
 	}
 
 	public static void criar(Formulario formulario, ConfiguracaoContainer container) {
