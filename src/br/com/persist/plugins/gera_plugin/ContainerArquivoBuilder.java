@@ -2,6 +2,7 @@ package br.com.persist.plugins.gera_plugin;
 
 import br.com.persist.abstrato.PluginArquivo;
 import br.com.persist.geradores.Arquivo;
+import br.com.persist.geradores.Catch;
 import br.com.persist.geradores.ClassePrivada;
 import br.com.persist.geradores.ClassePublica;
 import br.com.persist.geradores.Container;
@@ -13,16 +14,19 @@ import br.com.persist.geradores.FuncaoDefault;
 import br.com.persist.geradores.If;
 import br.com.persist.geradores.Parametros;
 import br.com.persist.geradores.RetornoClasseAnonima;
+import br.com.persist.geradores.Try;
 
 public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
+	private static final String ARQUIVO_TREE_GET_OBJETO_SELECIONADO = "Arquivo arquivo = arquivoTree.getObjetoSelecionado()";
+	private static final String THIS_ARQUIVO_GET_FILE = ".this, arquivo.getFile())";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
+	private static final String ARQUIVO_DIFF_NULL = "arquivo != null";
 	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";
 	private static final String DIFF_NULL = " != null";
 	private static final String DOT_THIS = ".this)";
 	private static final String STRING = "String";
 	private static final String LABEL = "LABEL_";
-	private static final String TODO = "TODO";
 
 	protected ContainerArquivoBuilder(Config config) {
 		super("Container", "extends AbstratoContainer implements ArquivoTreeListener, PluginArquivo", config);
@@ -42,8 +46,10 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		arquivo.addImport("java.awt.Window");
 		arquivo.addImport("java.awt.event.ActionEvent");
 		arquivo.addImport("java.awt.event.ActionListener");
+		arquivo.addImport("java.io.File");
 		arquivo.addImport("java.util.LinkedHashSet");
-		arquivo.addImport("java.util.Set").newLine();
+		arquivo.addImport("java.util.Set");
+		arquivo.addImport("java.util.concurrent.atomic.AtomicReference").newLine();
 		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
@@ -53,6 +59,7 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTree");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeListener");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
+		arquivo.addImport("br.com.persist.assistencia.Preferencias");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
@@ -299,31 +306,85 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "diretorioArquivo", parametros);
-		funcao.addComentario(TODO);
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		If se = funcao.criarIf(ARQUIVO_DIFF_NULL, null);
+		se.addInstrucao("desktopOpen(arquivo)");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPrivada("void", "desktopOpen", new Parametros("Arquivo arquivo"));
+		Catch catche = new Catch("IOException ex");
+		catche.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, ex.getMessage())");
+		Try tre = funcao.criarTry(catche);
+		tre.addInstrucao("ArquivoUtil.diretorio(arquivo.getFile())");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "renomearArquivo", parametros);
-		funcao.addComentario(TODO);
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf(ARQUIVO_DIFF_NULL, null);
+		se.addInstrucao("String nome = ArquivoUtil.getNome(" + config.nameCapContainer() + ".this, arquivo.getName())");
+		se = se.criarIf("nome != null && arquivo.renomear(nome)", null);
+		se.addInstrucao("ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo)");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "excluirArquivo", parametros);
-		funcao.addComentario(TODO);
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf(
+				"arquivo != null && Util.confirmar(" + config.nameCapContainer() + ".this, \"msg.confirma_exclusao\")",
+				null);
+		se.addInstrucao("arquivo.excluir()");
+		se.addInstrucao("ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo)");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "novoDiretorio", parametros);
-		funcao.addComentario(TODO);
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf("valido(arquivo)", null);
+		se.addInstrucao("File file = ArquivoUtil.novoDiretorio(" + config.nameCapContainer() + THIS_ARQUIVO_GET_FILE);
+		se.addInstrucao("adicionar(arquivoTree, arquivo, file)");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPrivada("boolean", "valido", new Parametros("Arquivo arquivo"));
+		funcao.addReturn("arquivo != null && arquivo.isDirectory()");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPrivada("void", "adicionar",
+				new Parametros("ArquivoTree arquivoTree, Arquivo arquivo, File file"));
+		se = funcao.criarIf("file != null && arquivo != null", null);
+		se.addInstrucao("Arquivo novo = arquivo.adicionar(file)");
+		se = se.criarIf("novo != null", null);
+		se.addInstrucao("arquivo.ordenar()");
+		se.addInstrucao("ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo)");
+		se.addInstrucao("requestFocus()");
+		se.addInstrucao("ArquivoTreeUtil.selecionarObjeto(arquivoTree, novo)");
+		se.addInstrucao("arquivoTree.repaint()");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "clonarArquivo", parametros);
-		funcao.addComentario(TODO);
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf(ARQUIVO_DIFF_NULL, null);
+		se.addInstrucao("clonar(arquivoTree, arquivo)");
+
+		classe.newLine();
+		funcao = classe.criarFuncaoPrivada("void", "clonar",
+				new Parametros("ArquivoTree arquivoTree, Arquivo arquivo"));
+		tre = funcao.criarTry(catche);
+		tre.addComentario("AtomicReference<File> ref = new AtomicReference<>()");
+		tre.addComentario("String resp = Util.clonar(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref)");
+		se = tre.criarIf("Preferencias.isExibirTotalBytesClonados()", null);
+		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, resp)");
+		tre.addInstrucao("adicionar(arquivoTree, arquivo.getPai(), ref.get())");
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "abrirArquivo", parametros);
-		funcao.addComentario(TODO);
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf(ARQUIVO_DIFF_NULL, null);
+		se.addInstrucao("Util.abrir(" + config.nameCapContainer() + THIS_ARQUIVO_GET_FILE);
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "novoArquivo", parametros);
-		funcao.addComentario(TODO);
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf("valido(arquivo)", null);
+		se.addInstrucao("File file = ArquivoUtil.novoArquivo(" + config.nameCapContainer() + THIS_ARQUIVO_GET_FILE);
+		se.addInstrucao("adicionar(arquivoTree, arquivo, file)");
 	}
 
 	private void titulo(ClassePublica classe) {

@@ -1561,15 +1561,19 @@ public class Util {
 	public static void abrir(Component c, List<String> lista) {
 		for (String string : lista) {
 			if (!isEmpty(string)) {
-				try {
-					File file = new File(string);
-					if (file.exists()) {
-						desktop.open(file);
-					}
-				} catch (IOException ex) {
-					Util.mensagem(c, ex.getMessage());
-				}
+				File file = new File(string);
+				abrir(c, file);
 			}
+		}
+	}
+
+	public static void abrir(Component c, File file) {
+		try {
+			if (file != null && file.exists()) {
+				desktop.open(file);
+			}
+		} catch (IOException ex) {
+			Util.mensagem(c, ex.getMessage());
 		}
 	}
 
