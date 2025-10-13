@@ -47,6 +47,7 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		arquivo.addImport("java.awt.event.ActionEvent");
 		arquivo.addImport("java.awt.event.ActionListener");
 		arquivo.addImport("java.io.File");
+		arquivo.addImport("java.io.IOException");
 		arquivo.addImport("java.util.LinkedHashSet");
 		arquivo.addImport("java.util.Set");
 		arquivo.addImport("java.util.concurrent.atomic.AtomicReference").newLine();
@@ -54,13 +55,16 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginArquivo");
+		arquivo.addImport("br.com.persist.arquivo.Arquivo");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoModelo");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTree");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeListener");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeUtil");
+		arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
-		arquivo.addImport("br.com.persist.assistencia.Preferencias");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
+		arquivo.addImport("br.com.persist.assistencia.Preferencias");
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
@@ -367,8 +371,8 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		funcao = classe.criarFuncaoPrivada("void", "clonar",
 				new Parametros("ArquivoTree arquivoTree, Arquivo arquivo"));
 		tre = funcao.criarTry(catche);
-		tre.addComentario("AtomicReference<File> ref = new AtomicReference<>()");
-		tre.addComentario("String resp = Util.clonar(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref)");
+		tre.addInstrucao("AtomicReference<File> ref = new AtomicReference<>()");
+		tre.addInstrucao("String resp = Util.clonar(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref)");
 		se = tre.criarIf("Preferencias.isExibirTotalBytesClonados()", null);
 		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, resp)");
 		tre.addInstrucao("adicionar(arquivoTree, arquivo.getPai(), ref.get())");
