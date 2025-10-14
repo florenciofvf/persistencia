@@ -1,25 +1,25 @@
 package br.com.persist.plugins.arquivo;
 
 public interface ArquivoTreeListener {
-	public void abrirArquivoFormulario(ArquivoTree arquivoTree);
+	public void abrirArquivoFormulario(ArquivoTreeExt arquivoTree);
 
-	public void abrirArquivoFichario(ArquivoTree arquivoTree);
+	public void abrirArquivoFichario(ArquivoTreeExt arquivoTree);
 
-	public void focusInputPesquisar(ArquivoTree anexoTree);
+	public void focusInputPesquisar(ArquivoTreeExt anexoTree);
 
-	public void selecionarArquivo(ArquivoTree arquivoTree);
+	public void selecionarArquivo(ArquivoTreeExt arquivoTree);
 
-	public void diretorioArquivo(ArquivoTree arquivoTree);
+	public void diretorioArquivo(ArquivoTreeExt arquivoTree);
 
-	public void atualizarArquivo(ArquivoTree arquivoTree);
+	public void atualizarArquivo(ArquivoTreeExt arquivoTree);
 
-	public void conteudoArquivo(ArquivoTree arquivoTree);
+	public void conteudoArquivo(ArquivoTreeExt arquivoTree);
 
-	public void excluirArquivo(ArquivoTree arquivoTree);
+	public void excluirArquivo(ArquivoTreeExt arquivoTree);
 
-	public void fecharArquivo(ArquivoTree arquivoTree);
+	public void fecharArquivo(ArquivoTreeExt arquivoTree);
 
-	public void clonarArquivo(ArquivoTree arquivoTree);
+	public void clonarArquivo(ArquivoTreeExt arquivoTree);
 
-	public void clickArquivo(ArquivoTree arquivoTree);
+	public void clickArquivo(ArquivoTreeExt arquivoTree);
 }

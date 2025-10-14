@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,8 +31,8 @@ public class ArquivoTree extends Tree {
 
 	public ArquivoTree(ArquivoModelo modelo) {
 		super(modelo);
-		addMouseListener(mouseListenerInner);
-		addKeyListener(keyListenerInner);
+		addMouseListener(getMouseListenerInner());
+		addKeyListener(getKeyListenerInner());
 		ouvintes = new ArrayList<>();
 		configurar();
 	}
@@ -132,6 +133,10 @@ public class ArquivoTree extends Tree {
 		}
 	}
 
+	protected KeyListener getKeyListenerInner() {
+		return keyListenerInner;
+	}
+
 	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -141,6 +146,10 @@ public class ArquivoTree extends Tree {
 			}
 		}
 	};
+
+	protected MouseListener getMouseListenerInner() {
+		return mouseListenerInner;
+	}
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override

@@ -1,46 +1,43 @@
 package br.com.persist.plugins.arquivo;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
-import javax.swing.KeyStroke;
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import br.com.persist.arquivo.Arquivo;
+import br.com.persist.arquivo.ArquivoModelo;
+import br.com.persist.arquivo.ArquivoTree;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
-import br.com.persist.componente.Tree;
 
-public class ArquivoTree extends Tree {
+public class ArquivoTreeExt extends ArquivoTree {
 	private final transient List<ArquivoTreeListener> ouvintes;
 	private ArquivoPopup arvorePopup = new ArquivoPopup();
 	private static final long serialVersionUID = 1L;
 
-	public ArquivoTree(TreeModel newModel) {
-		super(newModel);
+	public ArquivoTreeExt(ArquivoModelo modelo) {
+		super(modelo);
 		setCellRenderer(new ArquivoRenderer());
-		addMouseListener(mouseListenerInner);
-		addKeyListener(keyListenerInner);
 		ouvintes = new ArrayList<>();
-		configurar();
+		configurarExt();
 	}
 
-	private void configurar() {
-		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
+	private void configurarExt() {
+		inputMapExt().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
 	}
 
@@ -49,59 +46,31 @@ public class ArquivoTree extends Tree {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ouvintes.forEach(o -> o.focusInputPesquisar(ArquivoTree.this));
+			ouvintes.forEach(o -> o.focusInputPesquisar(ArquivoTreeExt.this));
 		}
 	};
 
-	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
-		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
-	}
-
-	private InputMap inputMap() {
+	private InputMap inputMapExt() {
 		return getInputMap(WHEN_FOCUSED);
 	}
 
-	public void adicionarOuvinte(ArquivoTreeListener listener) {
-		if (listener != null) {
-			ouvintes.add(listener);
-		}
-	}
-
-	public Arquivo getRaiz() {
-		ArquivoModelo modelo = (ArquivoModelo) getModel();
-		return (Arquivo) modelo.getRoot();
-	}
-
 	public void selecionar(File file) {
-		Arquivo arquivo = getRaiz().get(file);
+		Arquivo arquivo = getRaiz().getArquivo(file);
 		if (arquivo != null) {
 			selecionarArquivo(arquivo);
 			arquivo.setArquivoAberto(true);
 		}
 	}
 
-	public Arquivo getObjetoSelecionado() {
-		TreePath path = getSelectionPath();
-		if (path == null) {
-			return null;
-		}
-		if (path.getLastPathComponent() instanceof Arquivo) {
-			return (Arquivo) path.getLastPathComponent();
-		}
-		return null;
-	}
-
-	public void selecionarArquivo(Arquivo arquivo) {
-		if (arquivo != null) {
-			ArquivoTreeUtil.selecionarObjeto(this, arquivo);
+	public void adicionarOuvinteExt(ArquivoTreeListener listener) {
+		if (listener != null) {
+			ouvintes.add(listener);
 		}
 	}
 
-	public void excluirSelecionado() {
-		Arquivo selecionado = getObjetoSelecionado();
-		if (selecionado != null) {
-			ArquivoTreeUtil.excluirEstrutura(this, selecionado);
-		}
+	@Override
+	protected KeyListener getKeyListenerInner() {
+		return keyListenerInner;
 	}
 
 	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
@@ -110,10 +79,15 @@ public class ArquivoTree extends Tree {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				popupTrigger = false;
 				mouseListenerInner
-						.mouseClicked(new MouseEvent(ArquivoTree.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+						.mouseClicked(new MouseEvent(ArquivoTreeExt.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
 			}
 		}
 	};
+
+	@Override
+	protected MouseListener getMouseListenerInner() {
+		return mouseListenerInner;
+	}
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
@@ -147,7 +121,7 @@ public class ArquivoTree extends Tree {
 				if (selecionado.getLastPathComponent() instanceof Arquivo) {
 					Arquivo arquivo = (Arquivo) selecionado.getLastPathComponent();
 					arvorePopup.preShow(arquivo);
-					arvorePopup.show(ArquivoTree.this, e.getX(), e.getY());
+					arvorePopup.show(ArquivoTreeExt.this, e.getX(), e.getY());
 				} else {
 					setSelectionPath(null);
 				}
@@ -174,7 +148,7 @@ public class ArquivoTree extends Tree {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				Arquivo arquivo = getObjetoSelecionado();
 				if (arquivo != null && arquivo.isFile()) {
-					ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this));
+					ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTreeExt.this));
 				}
 			} else {
 				Arquivo arquivo = (Arquivo) clicado.getLastPathComponent();
@@ -182,7 +156,7 @@ public class ArquivoTree extends Tree {
 					setSelectionPath(null);
 					return;
 				}
-				ouvintes.forEach(o -> o.clickArquivo(ArquivoTree.this));
+				ouvintes.forEach(o -> o.clickArquivo(ArquivoTreeExt.this));
 			}
 		}
 	};
@@ -201,10 +175,10 @@ public class ArquivoTree extends Tree {
 			addMenuItem(true, fecharAcao);
 			addMenuItem(true, excluirAcao);
 			addMenuItem(true, atualizarAcao);
-			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(ArquivoTree.this)));
-			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArquivo(ArquivoTree.this)));
-			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTree.this)));
-			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(ArquivoTree.this)));
+			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(ArquivoTreeExt.this)));
+			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArquivo(ArquivoTreeExt.this)));
+			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTreeExt.this)));
+			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(ArquivoTreeExt.this)));
 		}
 
 		private void preShow(Arquivo arquivo) {
@@ -231,36 +205,16 @@ public class ArquivoTree extends Tree {
 				addSeparator();
 				addMenuItem(clonarAcao);
 				formularioAcao
-						.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFormulario(ArquivoTree.this)));
-				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this)));
-				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
-				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoArquivo(ArquivoTree.this)));
-				clonarAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarArquivo(ArquivoTree.this)));
+						.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFormulario(ArquivoTreeExt.this)));
+				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTreeExt.this)));
+				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTreeExt.this)));
+				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoArquivo(ArquivoTreeExt.this)));
+				clonarAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarArquivo(ArquivoTreeExt.this)));
 			}
 
 			private void preShow(Arquivo arquivo) {
 				diretorioAcao.setEnabled(arquivo.pathValido());
 			}
 		}
-	}
-
-	public void selecionar(String nome, boolean porParte) {
-		Arquivo raiz = getRaiz();
-		Arquivo arquivo = raiz.getArquivo(nome, porParte);
-		if (arquivo != null) {
-			ArquivoTreeUtil.selecionarObjeto(this, arquivo);
-		} else {
-			setSelectionPath(null);
-		}
-	}
-
-	public void preencher(List<Arquivo> lista, String nome, boolean porParte) {
-		Arquivo raiz = getRaiz();
-		raiz.preencher(lista, nome, porParte);
-	}
-
-	public void contemConteudo(Set<String> set, String string, boolean porParte) {
-		Arquivo raiz = getRaiz();
-		raiz.contemConteudo(set, string, porParte);
 	}
 }

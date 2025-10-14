@@ -1,5 +1,6 @@
 package br.com.persist.arquivo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +51,20 @@ public class ArquivoTreeUtil {
 		arquivoTree.makeVisible(path);
 		arquivoTree.setSelectionPath(path);
 		arquivoTree.scrollPathToVisible(path);
+		SwingUtilities.updateComponentTreeUI(arquivoTree);
 	}
 
 	public static void reiniciarEstrutura(ArquivoTree arquivoTree) {
 		ArquivoModelo modelo = arquivoTree.getModelo();
 		arquivoTree.setModel(new ArquivoModelo((Arquivo) modelo.getRoot()));
 	}
+
+	public static File getRoot(ArquivoTree arquivoTree) {
+		Object root = arquivoTree.getModel().getRoot();
+		if (root instanceof Arquivo) {
+			return ((Arquivo) root).getFile();
+		}
+		return null;
+	}
+
 }
