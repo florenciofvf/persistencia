@@ -177,22 +177,13 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 
 		Else elseInterno = new Else();
 		elseInterno.addInstrucao(
-				"pesquisa = getPesquisa(arquivoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected())");
+				"pesquisa = arquivoTree.getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected())");
 		elseInterno.addInstrucao("pesquisa.selecionar(label)");
 
 		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
 		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
 		ifInterno.addInstrucao("arquivoTree.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected())");
 		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, Util.getString(set))");
-
-		classe.newLine();
-		funcao = classe.criarFuncaoPublica("ArquivoPesquisa", "getPesquisa",
-				new Parametros("ArquivoTree arquivoTree, ArquivoPesquisa pesquisa, String string, boolean porParte"));
-		If if3 = funcao.criarIf("pesquisa == null", null);
-		if3.addReturn("new ArquivoPesquisa(arquivoTree, string, porParte)");
-		ElseIf elseIf = if3.criarElseIf("pesquisa.igual(string, porParte)");
-		elseIf.addReturn("pesquisa");
-		funcao.addReturn("new ArquivoPesquisa(arquivoTree, string, porParte)");
 	}
 
 	private void destacar(ClassePrivada classe) {

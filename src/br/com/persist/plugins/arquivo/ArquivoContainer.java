@@ -52,13 +52,13 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ArquivoFormulario arquivoFormulario;
-	private final ArquivoTreeExt arquivoTree;
+	private final ArquivoTreeExt arquivoTreeExt;
 
 	public ArquivoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		File ignorados = new File(file, ArquivoConstantes.IGNORADOS);
 		Arquivo raiz = new Arquivo(file, ArquivoUtil.lerArquivo(ignorados));
-		arquivoTree = new ArquivoTreeExt(new ArquivoModelo(raiz));
+		arquivoTreeExt = new ArquivoTreeExt(new ArquivoModelo(raiz));
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -74,11 +74,11 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(arquivoTree));
+		add(BorderLayout.CENTER, new ScrollPane(arquivoTreeExt));
 	}
 
 	private void configurar() {
-		arquivoTree.adicionarOuvinteExt(this);
+		arquivoTreeExt.adicionarOuvinteExt(this);
 	}
 
 	@Override
@@ -129,25 +129,15 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			if (!Util.isEmpty(txtPesquisa.getText())) {
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
-					arquivoTree.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
+					arquivoTreeExt.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(ArquivoContainer.this, Util.getString(set));
 				} else {
-					pesquisa = getPesquisa(arquivoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+					pesquisa = arquivoTreeExt.getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 					pesquisa.selecionar(label);
 				}
 			} else {
 				label.limpar();
 			}
-		}
-
-		public ArquivoPesquisa getPesquisa(ArquivoTreeExt arquivoTree, ArquivoPesquisa pesquisa, String string,
-				boolean porParte) {
-			if (pesquisa == null) {
-				return new ArquivoPesquisa(arquivoTree, string, porParte);
-			} else if (pesquisa.igual(string, porParte)) {
-				return pesquisa;
-			}
-			return new ArquivoPesquisa(arquivoTree, string, porParte);
 		}
 
 		private void topFormulario() {
@@ -191,7 +181,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		@Override
 		public void baixar() {
 			ArquivoModelo modelo = new ArquivoModelo();
-			arquivoTree.setModel(modelo);
+			arquivoTreeExt.setModel(modelo);
 			baixar(modelo);
 			pesquisa = null;
 			label.limpar();
@@ -206,7 +196,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		}
 
 		private void statusArquivo() {
-			ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
+			ArquivoModelo modelo = (ArquivoModelo) arquivoTreeExt.getModel();
 			List<Arquivo> lista = statusArquivo(modelo);
 			statusArquivoSelecionar(lista);
 		}
@@ -217,19 +207,19 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			for (Arquivo arquivo : lista) {
 				arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
 				if (arquivo.isArquivoAberto()) {
-					ArquivoTreeUtil.selecionarObjeto(arquivoTree, arquivo);
+					ArquivoTreeUtil.selecionarObjeto(arquivoTreeExt, arquivo);
 				} else {
-					ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
+					ArquivoTreeUtil.refreshEstrutura(arquivoTreeExt, arquivo);
 				}
 			}
 			return lista;
 		}
 
 		private void statusArquivoSelecionar(List<Arquivo> lista) {
-			arquivoTree.clearSelection();
+			arquivoTreeExt.clearSelection();
 			for (Arquivo arquivo : lista) {
 				if (formulario.isAtivo(arquivo.getFile())) {
-					ArquivoTreeUtil.selecionarObjeto(arquivoTree, arquivo);
+					ArquivoTreeUtil.selecionarObjeto(arquivoTreeExt, arquivo);
 				}
 			}
 		}
@@ -257,7 +247,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			return;
 		}
 		File fileSel = pagina.getFile();
-		arquivoTree.selecionar(fileSel);
+		arquivoTreeExt.selecionar(fileSel);
 	}
 
 	@Override
@@ -376,7 +366,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void excluirArquivo(ArquivoTreeExt arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-		File root = ArquivoTreeUtil.getRoot(this.arquivoTree);
+		File root = ArquivoTreeUtil.getRoot(this.arquivoTreeExt);
 		if (arquivo != null && arquivo.getPai() != null && root != null && !root.equals(arquivo.getFile())
 				&& Util.confirmaExclusao(ArquivoContainer.this, false)) {
 			arquivo.excluir();

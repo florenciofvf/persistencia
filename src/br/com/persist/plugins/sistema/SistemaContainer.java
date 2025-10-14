@@ -111,22 +111,12 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 					arquivoTree.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
 					Util.mensagem(SistemaContainer.this, Util.getString(set));
 				} else {
-					pesquisa = getPesquisa(arquivoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+					pesquisa = arquivoTree.getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 					pesquisa.selecionar(label);
 				}
 			} else {
 				label.limpar();
 			}
-		}
-
-		public ArquivoPesquisa getPesquisa(ArquivoTree arquivoTree, ArquivoPesquisa pesquisa, String string,
-				boolean porParte) {
-			if (pesquisa == null) {
-				return new ArquivoPesquisa(arquivoTree, string, porParte);
-			} else if (pesquisa.igual(string, porParte)) {
-				return pesquisa;
-			}
-			return new ArquivoPesquisa(arquivoTree, string, porParte);
 		}
 
 		@Override
