@@ -51,4 +51,13 @@ public abstract class AbstratoFichario extends JTabbedPane {
 	}
 
 	public abstract List<Aba> getAbas();
+
+	public FicharioPesquisa getPesquisa(FicharioPesquisa pesquisa, String string, boolean porParte) {
+		if (pesquisa == null) {
+			return new FicharioPesquisa(this, string, porParte);
+		} else if (pesquisa.igual(string, porParte)) {
+			return pesquisa;
+		}
+		return new FicharioPesquisa(this, string, porParte);
+	}
 }

@@ -159,35 +159,14 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					fichario.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(EntregaContainer.this, getString(set));
+					Util.mensagem(EntregaContainer.this, Util.getString(set));
 				} else {
-					pesquisa = getPesquisa(fichario, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+					pesquisa = fichario.getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 					pesquisa.selecionar(label);
 				}
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
-		}
-
-		public FicharioPesquisa getPesquisa(EntregaFichario fichario, FicharioPesquisa pesquisa, String string,
-				boolean porParte) {
-			if (pesquisa == null) {
-				return new FicharioPesquisa(fichario, string, porParte);
-			} else if (pesquisa.igual(string, porParte)) {
-				return pesquisa;
-			}
-			return new FicharioPesquisa(fichario, string, porParte);
 		}
 
 		@Override

@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -1709,5 +1710,18 @@ public class Util {
 		String stringUpper = string.toUpperCase();
 		String pesquiadoUpper = comparado.toUpperCase();
 		return stringUpper.equals(pesquiadoUpper) && porParte == porParteComparado;
+	}
+
+	public static String getString(Set<String> set) {
+		StringBuilder sb = new StringBuilder();
+		if (set != null) {
+			for (String string : set) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append(string);
+			}
+		}
+		return sb.toString();
 	}
 }
