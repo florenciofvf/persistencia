@@ -130,7 +130,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					arquivoTree.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(ArquivoContainer.this, getString(set));
+					Util.mensagem(ArquivoContainer.this, Util.getString(set));
 				} else {
 					pesquisa = getPesquisa(arquivoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 					pesquisa.selecionar(label);
@@ -138,17 +138,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
 		}
 
 		public ArquivoPesquisa getPesquisa(ArquivoTreeExt arquivoTree, ArquivoPesquisa pesquisa, String string,

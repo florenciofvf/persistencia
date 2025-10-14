@@ -124,7 +124,7 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					fragmentoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(FragmentoContainer.this, getString(set));
+					Util.mensagem(FragmentoContainer.this, Util.getString(set));
 				} else {
 					pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 0, txtPesquisa.getText(),
 							chkPorParte.isSelected());
@@ -133,17 +133,6 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
 		}
 
 		private void setListener(FragmentoListener listener) {

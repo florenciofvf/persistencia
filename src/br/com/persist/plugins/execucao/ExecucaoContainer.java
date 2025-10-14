@@ -107,7 +107,7 @@ public class ExecucaoContainer extends AbstratoContainer implements PluginArvore
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					split.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(ExecucaoContainer.this, getString(set));
+					Util.mensagem(ExecucaoContainer.this, Util.getString(set));
 				} else {
 					pesquisa = split.getTree().getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 					pesquisa.selecionar(label);
@@ -115,17 +115,6 @@ public class ExecucaoContainer extends AbstratoContainer implements PluginArvore
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
 		}
 
 		@Override

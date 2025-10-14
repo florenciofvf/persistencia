@@ -122,7 +122,7 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					alternativoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(AlternativoContainer.this, getString(set));
+					Util.mensagem(AlternativoContainer.this, Util.getString(set));
 				} else {
 					pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 0, txtPesquisa.getText(),
 							chkPorParte.isSelected());
@@ -131,17 +131,6 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
 		}
 
 		private void setListener(AlternativoListener listener) {

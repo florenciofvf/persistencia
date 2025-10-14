@@ -163,7 +163,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					conexaoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(ConexaoContainer.this, getString(set));
+					Util.mensagem(ConexaoContainer.this, Util.getString(set));
 				} else {
 					pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 1, txtPesquisa.getText(),
 							chkPorParte.isSelected());
@@ -172,17 +172,6 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
 		}
 
 		private void eventos() {

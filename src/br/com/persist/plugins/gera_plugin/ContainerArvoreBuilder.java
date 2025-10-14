@@ -8,7 +8,6 @@ import br.com.persist.geradores.ClassePublica;
 import br.com.persist.geradores.Container;
 import br.com.persist.geradores.Else;
 import br.com.persist.geradores.ElseIf;
-import br.com.persist.geradores.For;
 import br.com.persist.geradores.Funcao;
 import br.com.persist.geradores.FuncaoDefault;
 import br.com.persist.geradores.If;
@@ -173,16 +172,7 @@ public class ContainerArvoreBuilder extends Builder implements PluginArvore {
 		If ifInterno = ifExterno.criarIf("chkPsqConteudo.isSelected()", elseInterno);
 		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
 		ifInterno.addInstrucao("split.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected())");
-		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
-
-		classe.newLine();
-		funcao = classe.criarFuncaoPrivada(STRING, "getString", new Parametros("Set<String> set"));
-		funcao.addInstrucao("StringBuilder sb = new StringBuilder()");
-		For loop = funcao.criarFor("String string : set");
-		ifExterno = loop.criarIf("sb.length() > 0", null);
-		ifExterno.addInstrucao("sb.append(Constantes.QL)");
-		loop.addInstrucao("sb.append(string)");
-		funcao.addReturn("sb.toString()");
+		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, Util.getString(set))");
 	}
 
 	private void destacar(ClassePrivada classe) {

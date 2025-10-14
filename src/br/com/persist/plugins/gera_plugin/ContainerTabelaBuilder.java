@@ -196,16 +196,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		ifInterno.addInstrucao("Set<String> set = new LinkedHashSet<>()");
 		ifInterno.addInstrucao(
 				config.nameDecap + "Modelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected())");
-		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, getString(set))");
-
-		classe.newLine();
-		funcao = classe.criarFuncaoPrivada(STRING, "getString", new Parametros("Set<String> set"));
-		funcao.addInstrucao("StringBuilder sb = new StringBuilder()");
-		For loop = funcao.criarFor("String string : set");
-		ifExterno = loop.criarIf("sb.length() > 0", null);
-		ifExterno.addInstrucao("sb.append(Constantes.QL)");
-		loop.addInstrucao("sb.append(string)");
-		funcao.addReturn("sb.toString()");
+		ifInterno.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, Util.getString(set))");
 	}
 
 	private void destacar(ClassePrivada classe) {

@@ -121,7 +121,7 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					variavelModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(VariavelContainer.this, getString(set));
+					Util.mensagem(VariavelContainer.this, Util.getString(set));
 				} else {
 					pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 0, txtPesquisa.getText(),
 							chkPorParte.isSelected());
@@ -130,17 +130,6 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
 		}
 
 		private void setColetor(VariavelColetor coletor) {

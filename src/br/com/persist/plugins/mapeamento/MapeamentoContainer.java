@@ -116,7 +116,7 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 				if (chkPsqConteudo.isSelected()) {
 					Set<String> set = new LinkedHashSet<>();
 					mapeamentoModelo.contemConteudo(set, txtPesquisa.getText(), chkPorParte.isSelected());
-					Util.mensagem(MapeamentoContainer.this, getString(set));
+					Util.mensagem(MapeamentoContainer.this, Util.getString(set));
 				} else {
 					pesquisa = Util.getTabelaPesquisa(tabela, pesquisa, 0, txtPesquisa.getText(),
 							chkPorParte.isSelected());
@@ -125,17 +125,6 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 			} else {
 				label.limpar();
 			}
-		}
-
-		private String getString(Set<String> set) {
-			StringBuilder sb = new StringBuilder();
-			for (String string : set) {
-				if (sb.length() > 0) {
-					sb.append(Constantes.QL);
-				}
-				sb.append(string);
-			}
-			return sb.toString();
 		}
 
 		@Override
