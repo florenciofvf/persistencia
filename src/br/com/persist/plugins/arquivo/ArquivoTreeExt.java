@@ -31,7 +31,9 @@ public class ArquivoTreeExt extends ArquivoTree {
 
 	public ArquivoTreeExt(ArquivoModelo modelo) {
 		super(modelo);
+		addMouseListener(getMouseListenerInner());
 		setCellRenderer(new ArquivoRenderer());
+		addKeyListener(getKeyListenerInner());
 		ouvintes = new ArrayList<>();
 		configurarExt();
 	}
