@@ -149,21 +149,11 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				pesquisa = getPesquisa(metadadoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+				pesquisa = metadadoTree.getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
 			} else {
 				label.limpar();
 			}
-		}
-
-		public MetadadoPesquisa getPesquisa(MetadadoTree metadadoTree, MetadadoPesquisa pesquisa, String string,
-				boolean porParte) {
-			if (pesquisa == null) {
-				return new MetadadoPesquisa(metadadoTree, string, porParte);
-			} else if (pesquisa.igual(string, porParte)) {
-				return pesquisa;
-			}
-			return new MetadadoPesquisa(metadadoTree, string, porParte);
 		}
 
 		@Override

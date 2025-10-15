@@ -116,21 +116,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				pesquisa = getPesquisa(anexoTree, pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
+				pesquisa = anexoTree.getPesquisa(pesquisa, txtPesquisa.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
 			} else {
 				label.limpar();
 			}
-		}
-
-		public AnexoPesquisa getPesquisa(AnexoTree arquivoTree, AnexoPesquisa pesquisa, String string,
-				boolean porParte) {
-			if (pesquisa == null) {
-				return new AnexoPesquisa(arquivoTree, string, porParte);
-			} else if (pesquisa.igual(string, porParte)) {
-				return pesquisa;
-			}
-			return new AnexoPesquisa(arquivoTree, string, porParte);
 		}
 
 		private void topFormulario() {

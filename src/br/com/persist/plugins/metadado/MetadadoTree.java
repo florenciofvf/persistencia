@@ -104,6 +104,15 @@ public class MetadadoTree extends Tree {
 		return getInputMap(WHEN_FOCUSED);
 	}
 
+	public MetadadoPesquisa getPesquisa(MetadadoPesquisa pesquisa, String string, boolean porParte) {
+		if (pesquisa == null) {
+			return new MetadadoPesquisa(this, string, porParte);
+		} else if (pesquisa.igual(string, porParte)) {
+			return pesquisa;
+		}
+		return new MetadadoPesquisa(this, string, porParte);
+	}
+
 	private transient DragSourceListener listenerArrasto = new DragSourceListener() {
 		@Override
 		public void dropActionChanged(DragSourceDragEvent dsde) {

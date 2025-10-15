@@ -169,7 +169,7 @@ public class IconeContainer extends Panel implements PluginBasico {
 		final String string;
 		int indice;
 
-		public IconePesquisa(List<LabelIcone> listaLabelIcone, String string, boolean porParte) {
+		IconePesquisa(List<LabelIcone> listaLabelIcone, String string, boolean porParte) {
 			this.listaLabelIcone = Objects.requireNonNull(listaLabelIcone);
 			this.string = Objects.requireNonNull(string);
 			this.porParte = porParte;

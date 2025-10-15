@@ -62,6 +62,15 @@ public class AnexoTree extends Tree {
 		return getInputMap(WHEN_FOCUSED);
 	}
 
+	public AnexoPesquisa getPesquisa(AnexoPesquisa pesquisa, String string, boolean porParte) {
+		if (pesquisa == null) {
+			return new AnexoPesquisa(this, string, porParte);
+		} else if (pesquisa.igual(string, porParte)) {
+			return pesquisa;
+		}
+		return new AnexoPesquisa(this, string, porParte);
+	}
+
 	public void adicionarOuvinte(AnexoTreeListener listener) {
 		if (listener != null) {
 			ouvintes.add(listener);
