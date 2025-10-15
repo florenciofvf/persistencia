@@ -60,7 +60,7 @@ public class AlternativoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuAlternativo(Formulario formulario) {
-			super(Constantes.LABEL_ALTERNATIVO, Icones.VAR);
+			super(Constantes.LABEL_ALTERNATIVO, Icones.FILTRO);
 			ficharioAcao.setActionListener(
 					e -> formulario.adicionarPagina(new AlternativoContainer(null, formulario, null)));
 			formularioAcao.setActionListener(e -> AlternativoFormulario.criar(formulario));

@@ -349,7 +349,7 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 
 			@Override
 			public Icon getIcone() {
-				return Icones.VAR;
+				return Icones.FILTRO;
 			}
 		};
 	}
