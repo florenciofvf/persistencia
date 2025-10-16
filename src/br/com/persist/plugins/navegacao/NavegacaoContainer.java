@@ -35,8 +35,8 @@ import br.com.persist.marca.XMLException;
 public class NavegacaoContainer extends AbstratoContainer implements PluginArvore {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
-	private final Toolbar toolbar = new Toolbar();
 	private NavegacaoFormulario navegacaoFormulario;
+	private final Toolbar toolbar = new Toolbar();
 	private NavegacaoDialogo navegacaoDialogo;
 	private final NavegacaoSplit split;
 
