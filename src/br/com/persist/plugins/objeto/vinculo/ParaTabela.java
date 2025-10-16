@@ -35,6 +35,7 @@ public class ParaTabela {
 	private static final String STR_SEQUENCIAS = "sequencias";
 	private static final String STR_MAPEAMENTO = "mapeamento";
 	private static final String STR_DESTACAVEL = "destacavel";
+	private static final String STR_METODO_SET = "metodoSet";
 	private static final String CLASS_BIBLIO = "classBiblio";
 	private static final String STR_INTERVALO = "intervalo";
 	private static final String ID_TEMP_FORM = "idTempForm";
@@ -86,6 +87,7 @@ public class ParaTabela {
 	private String sequencias;
 	private String campoNomes;
 	private String mapeamento;
+	private String metodoSet;
 	private String intervalo;
 	private String deslocXId;
 	private String deslocYId;
@@ -325,6 +327,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(larConteudo)) {
 			objeto.setLarConteudo(larConteudo);
 		}
+		if (!Util.isEmpty(metodoSet)) {
+			objeto.setMetodoSet(metodoSet);
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -351,6 +356,7 @@ public class ParaTabela {
 		setMapeamento(attributes.getValue(STR_MAPEAMENTO), null);
 		setSequencias(attributes.getValue(STR_SEQUENCIAS), null);
 		setDestacavel(attributes.getValue(STR_DESTACAVEL), null);
+		setMetodoSet(attributes.getValue(STR_METODO_SET), null);
 		setClassBiblio(attributes.getValue(CLASS_BIBLIO), null);
 		setIdTempForm(attributes.getValue(ID_TEMP_FORM), null);
 		setIntervalo(attributes.getValue(STR_INTERVALO), null);
@@ -412,6 +418,7 @@ public class ParaTabela {
 		atributoValor(util, STR_MAPEAMENTO, mapeamento);
 		atributoValor(util, STR_SEQUENCIAS, sequencias);
 		atributoValor(util, STR_DESTACAVEL, destacavel);
+		atributoValor(util, STR_METODO_SET, metodoSet);
 		atributoValor(util, CLASS_BIBLIO, classBiblio);
 		atributoValor(util, ID_TEMP_FORM, idTempForm);
 		atributoValor(util, STR_INTERVALO, intervalo);
@@ -471,6 +478,7 @@ public class ParaTabela {
 		util.tab().atributo(STR_MARGEM_INFERIOR, "").ql();
 		util.tab().atributo(STR_DESENHAR_ID, true).ql();
 		util.tab().atributo(STR_MAPEAMENTO, "").ql();
+		util.tab().atributo(STR_METODO_SET, "").ql();
 		util.tab().atributo(STR_SEQUENCIAS, "").ql();
 		util.tab().atributo(STR_DESTACAVEL, true).ql();
 		util.tab().atributo(CLASS_BIBLIO, "").ql();
@@ -703,6 +711,18 @@ public class ParaTabela {
 			return;
 		}
 		this.mapeamento = mapeamento;
+	}
+
+	public void setMetodoSet(String metodoSet, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.metodoSet);
+			return;
+		}
+		this.metodoSet = metodoSet;
+	}
+
+	public String getMetodoSet() {
+		return metodoSet;
 	}
 
 	public String getChaves() {

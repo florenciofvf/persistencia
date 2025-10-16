@@ -55,6 +55,8 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 			chave(builder);
 		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 			mapa(builder);
+		} else if (Tipo.METODO_SET.equals(tipo)) {
+			metodoSet(builder);
 		} else if (Tipo.SEQUENCIA.equals(tipo)) {
 			seque(builder);
 		} else if (Tipo.COMPLEMENTO.equals(tipo)) {
@@ -138,6 +140,24 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 		}
 	}
 
+	private void metodoSet(StringBuilder builder) {
+		Map<String, String> campoChave = ObjetoUtil
+				.criarMapaCampoChave(!Util.isEmpty(objeto.getMetodoSet()) ? objeto.getMetodoSet()
+						: ObjetoMensagens.getString("hint.metodo_set"));
+		int i = 0;
+		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
+			String chave = entry.getKey();
+			String valor = entry.getValue();
+			builder.append(chave + "=" + valor);
+			if (i + 1 < campoChave.size()) {
+				builder.append(Constantes.QL);
+				builder.append(";");
+			}
+			builder.append(Constantes.QL);
+			i++;
+		}
+	}
+
 	private void seque(StringBuilder builder) {
 		String[] sequencias = !Util.isEmpty(objeto.getSequencias()) ? objeto.getSequencias().split(";")
 				: ObjetoMensagens.getString("hint.sequencias").split(";");
@@ -168,7 +188,8 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 	}
 
 	public enum Tipo {
-		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, LARCONTEUDO, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA, INSTRUCAO, FILTRO
+		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, LARCONTEUDO, CHAVEAMENTO, MAPEAMENTO, METODO_SET, SEQUENCIA, INSTRUCAO,
+		FILTRO
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -206,6 +227,8 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 					objeto.setChaveamento(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 					objeto.setMapeamento(Util.normalizar(textEditor.getText(), false));
+				} else if (Tipo.METODO_SET.equals(tipo)) {
+					objeto.setMetodoSet(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.SEQUENCIA.equals(tipo)) {
 					objeto.setSequencias(Util.normalizar(textEditor.getText(), false));
 				} else if (Tipo.COMPLEMENTO.equals(tipo)) {

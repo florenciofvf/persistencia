@@ -99,6 +99,7 @@ public class Objeto implements Runnable {
 	private boolean processar;
 	private Metadado metadado;
 	private String idTempForm;
+	private String metodoSet;
 	private String descricao;
 	private boolean ignorar;
 	private Memento memento;
@@ -180,6 +181,7 @@ public class Objeto implements Runnable {
 		o.colunaInfo = colunaInfo;
 		o.mapeamento = mapeamento;
 		o.sequencias = sequencias;
+		o.metodoSet = metodoSet;
 		o.abrirAuto = abrirAuto;
 		o.descricao = descricao;
 		o.addFiltros(filtros);
@@ -235,6 +237,7 @@ public class Objeto implements Runnable {
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
 		sequencias = attr.getValue("sequencias");
+		metodoSet = attr.getValue("metodoSet");
 		orderBy = attr.getValue("orderBy");
 		arquivo = attr.getValue("arquivo");
 		tabelas = attr.getValue("tabelas");
@@ -285,6 +288,7 @@ public class Objeto implements Runnable {
 		util.atributo("margemInferior", getMargemInferior());
 		util.atributoCheck("mapeamento", getMapeamento());
 		util.atributoCheck("sequencias", getSequencias());
+		util.atributoCheck("metodoSet", getMetodoSet());
 		util.atributo("intervalo", getIntervalo());
 		util.atributoCheck("desenharId", desenharId);
 		util.atributoCheck("colunaInfo", colunaInfo);
@@ -619,6 +623,13 @@ public class Objeto implements Runnable {
 			mapeamento = Constantes.VAZIO;
 		}
 		return mapeamento;
+	}
+
+	public String getMetodoSet() {
+		if (Util.isEmpty(metodoSet)) {
+			metodoSet = Constantes.VAZIO;
+		}
+		return metodoSet;
 	}
 
 	public void setSequencias(String sequencias) {
@@ -1183,6 +1194,10 @@ public class Objeto implements Runnable {
 	public void setMapeamento(String mapeamento) {
 		this.mapeamento = mapeamento;
 		mapeamentoAlterado = true;
+	}
+
+	public void setMetodoSet(String metodoSet) {
+		this.metodoSet = metodoSet;
 	}
 
 	public Map<String, String> getMapaSequencias() {
