@@ -239,10 +239,15 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			StringBuilder sb = new StringBuilder(txtChaves.getText().trim());
 			sb.append("=");
 			String tabela = txtTabela.getText().trim();
-			sb.append("SQ");
-			sb.append(tabela.length() > 2 ? tabela.substring(2) : tabela);
+			sb.append("SQ_");
+			sb.append(get(tabela));
 			sb.append(".NEXTVAL");
 			txtSequencias.setText(sb.toString());
+		}
+
+		private String get(String tabela) {
+			int pos = tabela.indexOf("_");
+			return pos == 2 ? tabela.substring(pos + 1) : tabela;
 		}
 	}
 
