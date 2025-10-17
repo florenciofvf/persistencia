@@ -52,19 +52,19 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		StringBuilder builder = new StringBuilder();
 		if (Tipo.CHAVEAMENTO.equals(tipo)) {
-			chave(builder);
+			campoAVariosNomes(builder);
 		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
-			mapa(builder);
+			campoAUmaChave(builder);
 		} else if (Tipo.METODO_SET.equals(tipo)) {
 			metodoSet(builder);
 		} else if (Tipo.SEQUENCIA.equals(tipo)) {
-			seque(builder);
+			sequencias(builder);
 		} else if (Tipo.COMPLEMENTO.equals(tipo)) {
-			compl(builder);
+			complemento(builder);
 		} else if (Tipo.CLASSBIBLIO.equals(tipo)) {
 			classBiblio(builder);
 		} else if (Tipo.DESTACAVEIS.equals(tipo)) {
-			destac(builder);
+			camposDestaque(builder);
 		} else if (Tipo.LARCONTEUDO.equals(tipo)) {
 			larConteudo(builder);
 		} else if (Tipo.INSTRUCAO.equals(tipo)) {
@@ -105,15 +105,15 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 		builder.append(sw.toString());
 	}
 
-	private void chave(StringBuilder builder) {
+	private void campoAVariosNomes(StringBuilder builder) {
 		Map<String, List<String>> campoNomes = ObjetoUtil
-				.criarMapaCampoNomes(!Util.isEmpty(objeto.getChaveamento()) ? objeto.getChaveamento()
-						: ObjetoMensagens.getString("hint.chaveamento"));
+				.criarMapeamentoCampoAVariosNomes(!Util.isEmpty(objeto.getChaveamento()) ? objeto.getChaveamento()
+						: ObjetoMensagens.getString("hint.chaveamento"), true);
 		int i = 0;
 		for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
 			String chave = entry.getKey();
 			List<String> nomes = entry.getValue();
-			builder.append(campoDetalhe(chave, nomes));
+			builder.append(campoNomes(chave, nomes));
 			if (i + 1 < campoNomes.size()) {
 				builder.append(";");
 			}
@@ -122,77 +122,7 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 		}
 	}
 
-	private void mapa(StringBuilder builder) {
-		Map<String, String> campoChave = ObjetoUtil
-				.criarMapaCampoChave(!Util.isEmpty(objeto.getMapeamento()) ? objeto.getMapeamento()
-						: ObjetoMensagens.getString("hint.mapeamento"));
-		int i = 0;
-		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
-			String chave = entry.getKey();
-			String valor = entry.getValue();
-			builder.append(chave + "=" + valor);
-			if (i + 1 < campoChave.size()) {
-				builder.append(Constantes.QL);
-				builder.append(";");
-			}
-			builder.append(Constantes.QL);
-			i++;
-		}
-	}
-
-	private void metodoSet(StringBuilder builder) {
-		Map<String, String> campoChave = ObjetoUtil
-				.criarMapaCampoChave(!Util.isEmpty(objeto.getMetodoSet()) ? objeto.getMetodoSet()
-						: ObjetoMensagens.getString("hint.metodo_set"));
-		int i = 0;
-		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
-			String chave = entry.getKey();
-			String valor = entry.getValue();
-			builder.append(chave + "=" + valor);
-			if (i + 1 < campoChave.size()) {
-				builder.append(Constantes.QL);
-				builder.append(";");
-			}
-			builder.append(Constantes.QL);
-			i++;
-		}
-	}
-
-	private void seque(StringBuilder builder) {
-		String[] sequencias = !Util.isEmpty(objeto.getSequencias()) ? objeto.getSequencias().split(";")
-				: ObjetoMensagens.getString("hint.sequencias").split(";");
-		for (int i = 0; i < sequencias.length; i++) {
-			if (i > 0) {
-				builder.append(Constantes.QL);
-				builder.append(";");
-			}
-			builder.append(Constantes.QL);
-			builder.append(sequencias[i]);
-		}
-	}
-
-	private void classBiblio(StringBuilder builder) {
-		builder.append(objeto.getClassBiblio());
-	}
-
-	private void compl(StringBuilder builder) {
-		builder.append(objeto.getComplemento());
-	}
-
-	private void destac(StringBuilder builder) {
-		builder.append(objeto.getDestacaveis());
-	}
-
-	private void larConteudo(StringBuilder builder) {
-		builder.append(objeto.getLarConteudo());
-	}
-
-	public enum Tipo {
-		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, LARCONTEUDO, CHAVEAMENTO, MAPEAMENTO, METODO_SET, SEQUENCIA, INSTRUCAO,
-		FILTRO
-	}
-
-	private String campoDetalhe(String chave, List<String> lista) {
+	private String campoNomes(String chave, List<String> lista) {
 		StringBuilder sb = new StringBuilder(chave + "=" + Constantes.QL);
 		for (int i = 0; i < lista.size(); i++) {
 			String string = lista.get(i);
@@ -203,6 +133,63 @@ public class MiscelaniaContainer extends Panel implements PluginBasico {
 			sb.append(Constantes.QL);
 		}
 		return sb.toString();
+	}
+
+	private void campoAUmaChave(StringBuilder builder) {
+		Map<String, String> campoChave = ObjetoUtil
+				.criarMapeamentoCampoAUmaChave(!Util.isEmpty(objeto.getMapeamento()) ? objeto.getMapeamento()
+						: ObjetoMensagens.getString("hint.mapeamento"), true);
+		appendCampoAUmaChave(builder, campoChave);
+	}
+
+	private void metodoSet(StringBuilder builder) {
+		Map<String, String> campoChave = ObjetoUtil
+				.criarMapeamentoCampoAUmaChave(!Util.isEmpty(objeto.getMetodoSet()) ? objeto.getMetodoSet()
+						: ObjetoMensagens.getString("hint.metodo_set"), false);
+		appendCampoAUmaChave(builder, campoChave);
+	}
+
+	private void sequencias(StringBuilder builder) {
+		Map<String, String> campoChave = ObjetoUtil
+				.criarMapeamentoCampoAUmaChave(!Util.isEmpty(objeto.getSequencias()) ? objeto.getSequencias()
+						: ObjetoMensagens.getString("hint.sequencias"), false);
+		appendCampoAUmaChave(builder, campoChave);
+	}
+
+	private void appendCampoAUmaChave(StringBuilder builder, Map<String, String> campoChave) {
+		int i = 0;
+		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
+			String chave = entry.getKey();
+			String valor = entry.getValue();
+			builder.append(chave + "=" + valor);
+			if (i + 1 < campoChave.size()) {
+				builder.append(Constantes.QL);
+				builder.append(";");
+			}
+			builder.append(Constantes.QL);
+			i++;
+		}
+	}
+
+	private void classBiblio(StringBuilder builder) {
+		builder.append(objeto.getClassBiblio());
+	}
+
+	private void complemento(StringBuilder builder) {
+		builder.append(objeto.getComplemento());
+	}
+
+	private void camposDestaque(StringBuilder builder) {
+		builder.append(objeto.getDestacaveis());
+	}
+
+	private void larConteudo(StringBuilder builder) {
+		builder.append(objeto.getLarConteudo());
+	}
+
+	public enum Tipo {
+		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, LARCONTEUDO, CHAVEAMENTO, MAPEAMENTO, METODO_SET, SEQUENCIA, INSTRUCAO,
+		FILTRO
 	}
 
 	public MiscelaniaListener getListener() {

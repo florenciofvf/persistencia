@@ -510,11 +510,12 @@ public class InternalContainer extends Panel
 	private void checarAtributosObjeto() {
 		if (objeto.isChaveamentoAlterado()) {
 			objeto.setChaveamentoAlterado(false);
-			tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
+			tabelaPersistencia
+					.setChaveamento(ObjetoUtil.criarMapeamentoCampoAVariosNomes(objeto.getChaveamento(), true));
 		}
 		if (objeto.isMapeamentoAlterado()) {
 			objeto.setMapeamentoAlterado(false);
-			tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
+			tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapeamentoCampoAUmaChave(objeto.getMapeamento(), true));
 		}
 	}
 
@@ -563,7 +564,7 @@ public class InternalContainer extends Panel
 		Parametros param = new Parametros(conn, conexao, consulta);
 		if (objeto.isSequenciasAlterado()) {
 			objeto.setSequenciasAlterado(false);
-			objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
+			objeto.setMapaSequencias(ObjetoUtil.criarMapeamentoChaveValor(objeto.getSequencias(), false));
 		}
 		param.setMapaFuncoes(conexao.getMapaTiposFuncoes());
 		param.setMapaSequencia(objeto.getMapaSequencias());
@@ -4889,9 +4890,9 @@ public class InternalContainer extends Panel
 	}
 
 	public void configuracaoDinamica(Objeto objeto) {
-		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
-		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
-		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
+		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapeamentoCampoAVariosNomes(objeto.getChaveamento(), true));
+		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapeamentoCampoAUmaChave(objeto.getMapeamento(), true));
+		objeto.setMapaSequencias(ObjetoUtil.criarMapeamentoChaveValor(objeto.getSequencias(), false));
 		tabelaPersistencia.atualizarSequencias(objeto.getMapaSequencias());
 		tabelaPersistencia.setClassBiblio(objeto.getClassBiblio());
 		toolbar.buttonComplemento.complemento(objeto);

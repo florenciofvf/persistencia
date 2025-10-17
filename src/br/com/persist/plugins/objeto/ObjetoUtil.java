@@ -78,46 +78,48 @@ public class ObjetoUtil {
 		return resp != null && !resp.isEmpty() && resp.get(0) instanceof TextPool;
 	}
 
-	public static Map<String, List<String>> criarMapaCampoNomes(String string) {
+	public static Map<String, List<String>> criarMapeamentoCampoAVariosNomes(String string, boolean chaveLower) {
 		Map<String, List<String>> mapa = new HashMap<>();
 		if (!Util.isEmpty(string)) {
-			String[] strings = string.split(";");
-			if (strings != null) {
-				for (String s : strings) {
-					aux(s, mapa);
+			String[] array = string.split(";");
+			if (array != null) {
+				for (String item : array) {
+					mapearNomes(item, mapa, chaveLower);
 				}
 			}
 		}
 		return mapa;
 	}
 
-	private static void aux(String string, Map<String, List<String>> mapa) {
-		String[] strings = string.split("=");
-		if (strings != null && strings.length > 1) {
-			String campo = strings[0].trim().toLowerCase();
-			List<String> lista = mapa.computeIfAbsent(campo, t -> new ArrayList<>());
-			String nomes = strings[1];
-			String[] strNomes = nomes.split(",");
-			for (String nome : strNomes) {
-				lista.add(nome.trim());
+	private static void mapearNomes(String string, Map<String, List<String>> mapa, boolean chaveLower) {
+		String[] array = string.split("=");
+		if (array != null && array.length > 1) {
+			String campo = array[0].trim();
+			List<String> lista = mapa.computeIfAbsent(chaveLower ? campo.toLowerCase() : campo, t -> new ArrayList<>());
+			String nomes = array[1];
+			String[] arrayNomes = nomes.split(",");
+			for (String item : arrayNomes) {
+				lista.add(item.trim());
 			}
 		}
 	}
 
-	public static Map<String, String> criarMapaCampoChave(String string) {
-		return criarMapaSequencias(string);
+	public static Map<String, String> criarMapeamentoCampoAUmaChave(String string, boolean chaveLower) {
+		return criarMapeamentoChaveValor(string, chaveLower);
 	}
 
-	public static Map<String, String> criarMapaSequencias(String string) {
+	public static Map<String, String> criarMapeamentoChaveValor(String string, boolean chaveLower) {
 		Map<String, String> mapa = new HashMap<>();
-		if (!Util.isEmpty(string)) {
-			String[] strings = string.split(";");
-			if (strings != null) {
-				for (String chaveValor : strings) {
-					String[] stringsCV = chaveValor.split("=");
-					if (stringsCV != null && stringsCV.length > 1) {
-						mapa.put(stringsCV[0].trim().toLowerCase(), stringsCV[1].trim());
-					}
+		if (Util.isEmpty(string)) {
+			return mapa;
+		}
+		String[] array = string.split(";");
+		if (array != null) {
+			for (String item : array) {
+				String[] chaveValor = item.split("=");
+				if (chaveValor != null && chaveValor.length > 1) {
+					String chave = chaveValor[0].trim();
+					mapa.put(chaveLower ? chave.toLowerCase() : chave, chaveValor[1].trim());
 				}
 			}
 		}

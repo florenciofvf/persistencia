@@ -804,7 +804,7 @@ public class Objeto implements Runnable {
 	public String getNomeSequencia(String nomeColuna) {
 		String resp = null;
 		if (nomeColuna != null) {
-			resp = getMapaSequencias().get(nomeColuna.trim().toLowerCase());
+			resp = getMapaSequencias().get(nomeColuna.trim());
 		}
 		return resp;
 	}
