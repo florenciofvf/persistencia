@@ -3986,6 +3986,7 @@ public class InternalContainer extends Panel
 				ConsultaFormulario form = ConsultaFormulario.criar2(frame, conexao, instrucao);
 				Formulario.posicionarJanela(frame, form);
 				form.setTitle(titulo);
+				form.setVisible(!Util.isMac());
 				form.setVisible(true);
 			} else {
 				Formulario frame = getFormulario();
@@ -3993,6 +3994,7 @@ public class InternalContainer extends Panel
 				ConsultaDialogo form = ConsultaDialogo.criar2(frame, conexao, instrucao);
 				config2(comp, frame, form);
 				form.setTitle(titulo);
+				form.setVisible(!Util.isMac());
 				form.setVisible(true);
 			}
 		}
@@ -4003,6 +4005,7 @@ public class InternalContainer extends Panel
 				UpdateFormulario form = UpdateFormulario.criar2(formulario, conexao, instrucao);
 				Formulario.posicionarJanela(formulario, form);
 				form.setTitle(titulo);
+				form.setVisible(!Util.isMac());
 				form.setVisible(true);
 			} else {
 				Formulario formulario = getFormulario();
@@ -4011,6 +4014,7 @@ public class InternalContainer extends Panel
 				UpdateDialogo form = UpdateDialogo.criar2(frame, formulario, conexao, instrucao);
 				config2(comp, formulario, form);
 				form.setTitle(titulo);
+				form.setVisible(!Util.isMac());
 				form.setVisible(true);
 			}
 		}

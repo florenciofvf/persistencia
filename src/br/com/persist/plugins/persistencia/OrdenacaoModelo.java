@@ -180,7 +180,27 @@ public class OrdenacaoModelo extends AbstractTableModel {
 				resposta.add(item);
 			}
 		}
-		return resposta;
+		return ordenar(resposta, campoChave);
+	}
+
+	private List<Coluna> ordenar(List<Coluna> resposta, Map<String, String> campoChave) {
+		List<Coluna> lista = new ArrayList<>();
+		for (String chave : campoChave.keySet()) {
+			Coluna col = get(resposta, chave);
+			if (col != null) {
+				lista.add(col);
+			}
+		}
+		return lista;
+	}
+
+	private Coluna get(List<Coluna> resposta, String chave) {
+		for (Coluna item : resposta) {
+			if (chave.equals(item.getNome())) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao)
