@@ -1028,7 +1028,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 					criarLinhaCopiar("label.metodo_set", txtMetodoSet, ObjetoMensagens.getString("hint.metodo_set")));
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
 			container.add(criarLinhaCopiar("label.class_biblio", txtClassBiblio));
-			container.add(criarLinhaCopiar("label.campos_destac", txtDestacaveis));
+			container.add(criarLinhaCopiar("label.campos_destac", txtDestacaveis,
+					ObjetoMensagens.getString("hint.lista_campos")));
 			container.add(criarLinhaCopiar("label.campos_lar_conteudo", txtLarConteudo,
 					ObjetoMensagens.getString("hint.campos_lar_conteudo")));
 			container.add(criarLinhaCopiar("label.order_by", txtOrderBy));
