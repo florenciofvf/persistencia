@@ -367,7 +367,7 @@ public class Persistencia {
 						chave = Boolean.TRUE;
 					}
 				}
-				String nomeSequencia = mapaSequencia.get(nome.toLowerCase());
+				String nomeSequencia = mapaSequencia.get(nome);
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave, blob, classe,
 						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc, nomeSequencia));
 				coluna.configFuncao(mapaFuncoes);
