@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -79,7 +79,7 @@ public class ObjetoUtil {
 	}
 
 	public static Map<String, List<String>> criarMapeamentoCampoAVariosNomes(String string, boolean chaveLower) {
-		Map<String, List<String>> mapa = new HashMap<>();
+		Map<String, List<String>> mapa = new LinkedHashMap<>();
 		if (!Util.isEmpty(string)) {
 			String[] array = string.split(";");
 			if (array != null) {
@@ -109,7 +109,7 @@ public class ObjetoUtil {
 	}
 
 	public static Map<String, String> criarMapeamentoChaveValor(String string, boolean chaveLower) {
-		Map<String, String> mapa = new HashMap<>();
+		Map<String, String> mapa = new LinkedHashMap<>();
 		if (Util.isEmpty(string)) {
 			return mapa;
 		}

@@ -13,6 +13,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.objeto.ObjetoUtil;
 
 public class OrdenacaoModelo extends AbstractTableModel {
 	private final transient PersistenciaModelo model;
@@ -144,6 +145,42 @@ public class OrdenacaoModelo extends AbstractTableModel {
 	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao)
 			throws PersistenciaException {
 		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela, coletor, comWhere, conexao);
+	}
+
+	public String gerarEntidades(int[] linhas, Coletor coletor, String entidade, String metodoSet) {
+		Map<String, String> campoChave = ObjetoUtil.criarMapeamentoCampoAUmaChave(metodoSet, false);
+		List<Coluna> colunas = selecionar(coletor.getLista(), campoChave);
+		if (colunas.isEmpty()) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		builder.append("List<" + entidade + "> lista = new ArrayList<>();" + Constantes.QL);
+		builder.append(entidade + "item = null;" + Constantes.QL2);
+		for (int itemLinha : linhas) {
+			builder.append("item = new " + entidade + "();" + Constantes.QL);
+			List<Object> registro = getRegistro(itemLinha);
+			for (Coluna itemColuna : colunas) {
+				Object valor = registro.get(itemColuna.getIndice());
+				itemColuna.set(valor, builder);
+			}
+			builder.append("lista.add(item);" + Constantes.QL2);
+		}
+		return builder.toString();
+	}
+
+	private List<Coluna> selecionar(List<String> lista, Map<String, String> campoChave) {
+		List<Coluna> resposta = new ArrayList<>();
+		for (Coluna item : model.getColunas()) {
+			if (!lista.contains(item.getNome())) {
+				continue;
+			}
+			String nomeMetodoSet = campoChave.get(item.getNome());
+			if (!Util.isEmpty(nomeMetodoSet)) {
+				item.setNomeMetodoSet(nomeMetodoSet);
+				resposta.add(item);
+			}
+		}
+		return resposta;
 	}
 
 	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao)

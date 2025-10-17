@@ -2310,6 +2310,7 @@ public class InternalContainer extends Panel
 			private Action dadosAcao = actionMenu("label.dados", Icones.TABELA);
 			private List<MenuInstrucao> listaMenuInstrucao = new ArrayList<>();
 			private MenuUpdateMul menuUpdateMul = new MenuUpdateMul();
+			private MenuEntityMul menuEntityMul = new MenuEntityMul();
 			private MenuDeleteMul menuDeleteMul = new MenuDeleteMul();
 			private MenuUpdate menuUpdate = new MenuUpdate();
 			private MenuDelete menuDelete = new MenuDelete();
@@ -2321,6 +2322,7 @@ public class InternalContainer extends Panel
 				addMenuItem(dadosAcao);
 				addMenu(true, menuUpdate);
 				addMenu(menuUpdateMul);
+				addMenu(menuEntityMul);
 				addMenu(true, menuDelete);
 				addMenu(menuDeleteMul);
 				addMenu(true, menuInsert);
@@ -2366,10 +2368,56 @@ public class InternalContainer extends Panel
 				menuUpdate.setEnabled(umaLinhaSel);
 				menuDelete.setEnabled(umaLinhaSel);
 				menuUpdateMul.setHabilitado(linhas);
+				menuEntityMul.setHabilitado(linhas);
 				menuDeleteMul.setHabilitado(linhas);
 				menuInsert.setEnabled(umaLinhaSel);
 				for (MenuInstrucao menu : listaMenuInstrucao) {
 					menu.setHabilitado(linhas);
+				}
+			}
+
+			private class MenuEntityMul extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuEntityMul() {
+					super("label.entidades", Icones.TABELA);
+					formularioAcao.setActionListener(e -> processar(true));
+					dialogoAcao.setActionListener(e -> processar(false));
+				}
+
+				private void processar(boolean abrirEmForm) {
+					Conexao conexao = getConexao();
+					if (conexao == null) {
+						return;
+					}
+					if (Util.isEmpty(objeto.getMetodoSet())) {
+						Util.mensagem(InternalContainer.this, ObjetoMensagens.getString("msg.objeto_sem_metodo"));
+						return;
+					}
+					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length > 0) {
+						Object resp = Util.getValorInputDialog(InternalContainer.this, Constantes.LABEL_ENTIDADE,
+								Mensagens.getString(Constantes.LABEL_ENTIDADE), Constantes.VAZIO);
+						if (resp == null || Util.isEmpty(resp.toString())) {
+							return;
+						}
+						Coletor coletor = new Coletor();
+						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+								InternalContainer.this, new SetLista.Config(true, false));
+						if (!coletor.estaVazio()) {
+							String fonte = modelo.gerarEntidades(linhas, coletor, resp.toString().trim(),
+									objeto.getMetodoSet());
+							if (!Util.isEmpty(fonte)) {
+								updateFormDialog(abrirEmForm, conexao, fonte,
+										Mensagens.getString(Constantes.LABEL_ENTIDADE));
+							}
+						}
+					}
+				}
+
+				private void setHabilitado(int[] linhas) {
+					setEnabled(linhas.length >= 1);
 				}
 			}
 

@@ -14,6 +14,7 @@ public class Coluna {
 	private final boolean autoInc;
 	private final boolean nulavel;
 	private final boolean numero;
+	private String nomeMetodoSet;
 	private boolean inativoTemp;
 	private final boolean chave;
 	private final boolean blob;
@@ -151,6 +152,18 @@ public class Coluna {
 		return nome;
 	}
 
+	public void set(Object o, StringBuilder builder) {
+		if (o == null || nomeMetodoSet == null) {
+			return;
+		}
+		String s = o.toString();
+		if (numero) {
+			builder.append("item." + nomeMetodoSet + "(" + s + ");" + Constantes.QL);
+		} else {
+			builder.append("item." + nomeMetodoSet + "(" + Util.citar2(s) + ");" + Constantes.QL);
+		}
+	}
+
 	public String get(Object o, Conexao conexao) {
 		if (o == null) {
 			return Constantes.VAZIO;
@@ -219,5 +232,13 @@ public class Coluna {
 
 	public void setStringComparaRegistro(String stringComparaRegistro) {
 		this.stringComparaRegistro = stringComparaRegistro;
+	}
+
+	public String getNomeMetodoSet() {
+		return nomeMetodoSet;
+	}
+
+	public void setNomeMetodoSet(String nomeMetodoSet) {
+		this.nomeMetodoSet = nomeMetodoSet;
 	}
 }
