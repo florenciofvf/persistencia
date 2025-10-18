@@ -10,11 +10,12 @@ public class Coluna {
 	private String valorAlternativoInsert;
 	private String stringComparaRegistro;
 	private final boolean colunaInfo;
+	private String nomeMetodoSetPre;
+	private String nomeMetodoSetPos;
 	private final String tipoBanco;
 	private final boolean autoInc;
 	private final boolean nulavel;
 	private final boolean numero;
-	private String nomeMetodoSet;
 	private boolean inativoTemp;
 	private final boolean chave;
 	private final boolean blob;
@@ -153,14 +154,14 @@ public class Coluna {
 	}
 
 	public void set(Object o, StringBuilder builder) {
-		if (o == null || nomeMetodoSet == null) {
+		if (o == null || nomeMetodoSetPre == null || nomeMetodoSetPos == null) {
 			return;
 		}
 		String s = o.toString();
 		if (numero) {
-			builder.append("item." + nomeMetodoSet + "(" + s + ");" + Constantes.QL);
+			builder.append("item." + nomeMetodoSetPre + s + nomeMetodoSetPos + ";" + Constantes.QL);
 		} else {
-			builder.append("item." + nomeMetodoSet + "(" + Util.citar2(s) + ");" + Constantes.QL);
+			builder.append("item." + nomeMetodoSetPre + Util.citar2(s) + nomeMetodoSetPos + ";" + Constantes.QL);
 		}
 	}
 
@@ -234,11 +235,20 @@ public class Coluna {
 		this.stringComparaRegistro = stringComparaRegistro;
 	}
 
-	public String getNomeMetodoSet() {
-		return nomeMetodoSet;
-	}
-
 	public void setNomeMetodoSet(String nomeMetodoSet) {
-		this.nomeMetodoSet = nomeMetodoSet;
+		if (Util.isEmpty(nomeMetodoSet)) {
+			nomeMetodoSetPre = null;
+			nomeMetodoSetPos = null;
+		} else {
+			final String chaves = "{}";
+			int pos = nomeMetodoSet.indexOf(chaves);
+			if (pos == -1) {
+				nomeMetodoSetPre = nomeMetodoSet + "(";
+				nomeMetodoSetPos = ")";
+			} else {
+				nomeMetodoSetPre = nomeMetodoSet.substring(0, pos);
+				nomeMetodoSetPos = nomeMetodoSet.substring(pos + chaves.length());
+			}
+		}
 	}
 }

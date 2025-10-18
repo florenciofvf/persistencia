@@ -155,7 +155,7 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append("List<" + entidade + "> lista = new ArrayList<>();" + Constantes.QL);
-		builder.append(entidade + "item = null;" + Constantes.QL2);
+		builder.append(entidade + " item = null;" + Constantes.QL2);
 		for (int itemLinha : linhas) {
 			builder.append("item = new " + entidade + "();" + Constantes.QL);
 			List<Object> registro = getRegistro(itemLinha);
