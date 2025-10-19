@@ -240,7 +240,7 @@ public class OrdenacaoModelo extends AbstractTableModel {
 			} else {
 				colunas.add(colPonto);
 			}
-			template = template.substring(ponto[1]);
+			template = template.substring(ponto[1] + 1);
 			ponto = getPonto(template);
 		}
 		if (!Util.isEmpty(template)) {
