@@ -13,12 +13,20 @@ public class Metodo {
 		return nome;
 	}
 
+	public boolean isConstrutor(String classe) {
+		return nome.equals(classe);
+	}
+
 	public boolean isGet() {
 		return nome.startsWith("get");
 	}
 
 	public boolean isSet() {
 		return nome.startsWith("set");
+	}
+
+	public boolean isIs() {
+		return nome.startsWith("is");
 	}
 
 	@Override

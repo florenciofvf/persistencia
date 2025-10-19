@@ -1971,9 +1971,12 @@ class PainelTest1 extends AbstratoTest {
 }
 
 class PainelTest2 extends AbstratoTest {
+	private final CheckBox chkConstrutor = new CheckBox(AtributoMensagens.getString("label.construtor"), false);
 	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
+	private final CheckBox chkOutros = new CheckBox(AtributoMensagens.getString("label.outros"), false);
 	private final CheckBox chkGet = new CheckBox(AtributoMensagens.getString("label.get"), false);
 	private final CheckBox chkSet = new CheckBox(AtributoMensagens.getString("label.set"), false);
+	private final CheckBox chkIs = new CheckBox(AtributoMensagens.getString("label.is"), false);
 	private TextField txtArquivo = new TextField(25);
 	private static final long serialVersionUID = 1L;
 	private List<String> linhasArquivo;
@@ -1988,8 +1991,11 @@ class PainelTest2 extends AbstratoTest {
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
 		toolbar.add(chkMockito);
+		toolbar.add(chkConstrutor);
+		toolbar.add(chkOutros);
 		toolbar.add(chkGet);
 		toolbar.add(chkSet);
+		toolbar.add(chkIs);
 		toolbar.addButton(gerarTestAcao);
 	}
 
@@ -2035,14 +2041,15 @@ class PainelTest2 extends AbstratoTest {
 			Util.mensagem(PainelTest2.this, AtributoMensagens.getString("msg.classe_teste_nao_definida"));
 			return;
 		}
+		String objeto = getNomeClasse(false);
 		MetodoHandle metodoHandle = new MetodoHandle(linhasArquivo);
-		metodoHandle.processar(chkGet.isSelected(), chkSet.isSelected());
+		metodoHandle.processar(chkGet.isSelected(), chkSet.isSelected(), chkIs.isSelected(), chkConstrutor.isSelected(),
+				objeto, chkOutros.isSelected());
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
 		adicionarImports(arquivo, null, getNomeClasse(true), chkMockito.isSelected());
 
-		String objeto = getNomeClasse(false);
 		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
 		if (chkMockito.isSelected()) {
 			classeTest.addAnotacao("InjectMocks");
@@ -2053,33 +2060,6 @@ class PainelTest2 extends AbstratoTest {
 		}
 
 		criarPreTest(classeTest);
-		classeTest.newLine();
-
-		classeTest.addAnotacao("Test");
-		Funcao funcao = classeTest.criarFuncaoPublica("void", "equalsTest");
-		funcao.addInstrucao(objeto + " objetoA = new" + objeto + "()");
-		funcao.addInstrucao(objeto + " objetoB = new" + objeto + "()");
-		funcao.addInstrucao("converter(objetoA, objetoB)");
-		funcao.addInstrucao("assertEquals(objetoA, objetoB)");
-
-		classeTest.newLine();
-		classeTest.addAnotacao("Test");
-		funcao = classeTest.criarFuncaoPublica("void", "hashCodeTest");
-		funcao.addInstrucao(objeto + " objetoA = new" + objeto + "()");
-		funcao.addInstrucao(objeto + " objetoB = new" + objeto + "()");
-		funcao.addInstrucao("converter(objetoA, objetoB)");
-		funcao.addInstrucao("assertEquals(objetoA.hashCode(), objetoB.hashCode())");
-
-		classeTest.newLine();
-		funcao = classeTest.criarFuncaoPrivada(objeto, "new" + objeto);
-		funcao.addReturn("new " + objeto + "()");
-
-		classeTest.newLine();
-		Parametros params = new Parametros(objeto + " origem");
-		params.addString(", ");
-		params.addString(objeto + " destino");
-		classeTest.criarFuncaoPrivada("void", "converter", params);
-
 		testes(classeTest, metodoHandle.getMetodos());
 
 		arquivo.gerar(-1, pool);
@@ -2193,26 +2173,33 @@ class MetodoHandle {
 		metodos = new ArrayList<>();
 	}
 
-	void processar(boolean get, boolean set) {
+	void processar(boolean get, boolean set, boolean is, boolean construtor, String classe, boolean outros) {
 		for (String itemLinha : linhasArquivo) {
 			String nome = Util.getNomeMetodo(itemLinha);
 			if (nome != null) {
 				Metodo metodo = new Metodo(nome);
-				if (valido(metodo, get, set)) {
+				if (valido(metodo, get, set, is, construtor, classe, outros)) {
 					metodos.add(metodo);
 				}
 			}
 		}
 	}
 
-	private boolean valido(Metodo metodo, boolean get, boolean set) {
+	private boolean valido(Metodo metodo, boolean get, boolean set, boolean is, boolean construtor, String classe,
+			boolean outros) {
 		if (metodo.isGet()) {
 			return get;
 		}
 		if (metodo.isSet()) {
 			return set;
 		}
-		return true;
+		if (metodo.isIs()) {
+			return is;
+		}
+		if (metodo.isConstrutor(classe)) {
+			return construtor;
+		}
+		return outros;
 	}
 
 	public List<Metodo> getMetodos() {
