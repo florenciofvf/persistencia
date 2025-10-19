@@ -1616,36 +1616,18 @@ public class Util {
 			return null;
 		}
 		string = string.trim();
-		if (!inicioValido(string) || !string.endsWith("{")) {
+		if (!string.startsWith("public ")) {
 			return null;
-		}
-		string = string.substring(0, string.length() - 1).trim();
-		if (!string.endsWith(")")) {
-			int pos = string.lastIndexOf("throws ");
-			if (pos == -1) {
-				return null;
-			}
-			string = string.substring(0, pos).trim();
-			if (!string.endsWith(")")) {
-				return null;
-			}
 		}
 		int pos = string.indexOf("(");
 		if (pos == -1) {
 			return null;
 		}
-		return getNome(string.substring(0, pos));
+		string = string.substring(0, pos).trim();
+		return extrair(string);
 	}
 
-	public static boolean inicioValido(String string) {
-		if (string == null) {
-			return false;
-		}
-		return string.startsWith("public ") || string.startsWith("protected ") || string.startsWith("private ");
-	}
-
-	private static String getNome(String string) {
-		string = string.trim();
+	private static String extrair(String string) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = string.length() - 1; i >= 0; i--) {
 			char c = string.charAt(i);
@@ -1656,42 +1638,6 @@ public class Util {
 			}
 		}
 		return sb.toString();
-	}
-
-	public static void invocacoes(String string, List<String> resposta) {
-		if (string == null) {
-			return;
-		}
-		resposta.clear();
-		string = string.trim();
-		if (string.contains(").") || string.contains("((")) {
-			return;
-		}
-		int pos = string.indexOf('.');
-		while (pos > 0) {
-			string = invocacoes(string, resposta, pos);
-			pos = string.indexOf('.');
-		}
-	}
-
-	private static String invocacoes(String string, List<String> resposta, int pos) {
-		int posAvanco = pos + 1;
-		String ref = getNome(string.substring(0, pos));
-		if (!ref.isEmpty()) {
-			int posParentese = string.indexOf('(', posAvanco);
-			if (posParentese > 0) {
-				String nome = getNome(string.substring(posAvanco, posParentese));
-				if (!nome.isEmpty()) {
-					resposta.add(ref + '.' + nome);
-				}
-				string = string.substring(posParentese);
-			} else {
-				string = string.substring(posAvanco);
-			}
-		} else {
-			string = string.substring(posAvanco);
-		}
-		return string.trim();
 	}
 
 	public static boolean existeEm(String string, String pesquisado, boolean porParte) {

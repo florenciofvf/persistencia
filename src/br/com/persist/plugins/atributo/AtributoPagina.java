@@ -12,14 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -1865,7 +1861,7 @@ abstract class AbstratoTest extends AbstratoPanel {
 		//
 	}
 
-	protected void adicionarImports(Arquivo arquivo, Class<?> classe, boolean comMockito) {
+	protected void adicionarImports(Arquivo arquivo, Class<?> classe, String nomeClasse, boolean comMockito) {
 		arquivo.addImport("org.junit.Before");
 		arquivo.addImport("org.junit.Test").newLine();
 		if (comMockito) {
@@ -1880,6 +1876,9 @@ abstract class AbstratoTest extends AbstratoPanel {
 		if (classe != null) {
 			arquivo.addImport(classe.getName()).newLine();
 		}
+		if (nomeClasse != null) {
+			arquivo.addImport(nomeClasse).newLine();
+		}
 		if (comMockito) {
 			arquivo.addAnotacao("RunWith(MockitoJUnitRunner.class)");
 		}
@@ -1887,7 +1886,7 @@ abstract class AbstratoTest extends AbstratoPanel {
 
 	protected void criarPreTest(ClassePublica classe) {
 		classe.addAnotacao("Before");
-		Funcao funcao = classe.criarFuncaoPublica("void", "preTest");
+		Funcao funcao = classe.criarFuncaoPublica("void", "setUp");
 		funcao.addComentario("when(dao.metodo(any())).thenReturn(newObjeto());");
 	}
 }
@@ -1915,7 +1914,7 @@ class PainelTest1 extends AbstratoTest {
 	void gerar(Raiz raiz, List<Atributo> atributos) {
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		adicionarImports(arquivo, null, chkMockito.isSelected());
+		adicionarImports(arquivo, null, null, chkMockito.isSelected());
 
 		Mapa mapaService = raiz.getMapaService();
 		Mapa mapaTest = raiz.getMapaTest();
@@ -1973,6 +1972,8 @@ class PainelTest1 extends AbstratoTest {
 
 class PainelTest2 extends AbstratoTest {
 	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
+	private final CheckBox chkGet = new CheckBox(AtributoMensagens.getString("label.get"), false);
+	private final CheckBox chkSet = new CheckBox(AtributoMensagens.getString("label.set"), false);
 	private TextField txtArquivo = new TextField(25);
 	private static final long serialVersionUID = 1L;
 	private List<String> linhasArquivo;
@@ -1987,6 +1988,8 @@ class PainelTest2 extends AbstratoTest {
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
 		toolbar.add(chkMockito);
+		toolbar.add(chkGet);
+		toolbar.add(chkSet);
 		toolbar.addButton(gerarTestAcao);
 	}
 
@@ -2018,48 +2021,28 @@ class PainelTest2 extends AbstratoTest {
 		txtArquivo.setText(strPackage + "." + nome);
 	}
 
+	private String getNomeClasse(boolean absoluto) {
+		String nome = txtArquivo.getText().trim();
+		if (absoluto) {
+			return nome;
+		}
+		int pos = nome.lastIndexOf(".");
+		return pos == -1 ? nome : nome.substring(pos + 1);
+	}
+
 	private void gerarTeste() {
 		if (Util.isEmpty(txtArquivo.getText())) {
 			Util.mensagem(PainelTest2.this, AtributoMensagens.getString("msg.classe_teste_nao_definida"));
 			return;
 		}
-		Class<?> classe = null;
-		try {
-			classe = Class.forName(txtArquivo.getText().trim());
-		} catch (Throwable ex) {
-			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest2.this);
-			return;
-		}
-		List<MetodoGetSet> metodosGetSet = new ArrayList<>();
-		List<IMetodo> imetodos;
-		try {
-			Method[] methods = classe.getDeclaredMethods();
-			MetodoHandle metodoHandle = new MetodoHandle(linhasArquivo);
-			metodoHandle.processar();
-			imetodos = configurar(metodoHandle.getMetodos(), methods);
-			for (IMetodo metodo : imetodos) {
-				Method item = metodo.getMethod();
-				if (!item.isSynthetic() && item.getName().startsWith("get")) {
-					String nome = item.getName().substring("get".length());
-					if (Util.isEmpty(nome)) {
-						continue;
-					}
-					MetodoGetSet obj = new MetodoGetSet(nome);
-					if (contemSet(methods, obj)) {
-						metodosGetSet.add(obj);
-					}
-				}
-			}
-		} catch (Throwable ex) {
-			Util.stackTraceAndMessage(AtributoConstantes.PAINEL_TEST, ex, PainelTest2.this);
-			return;
-		}
+		MetodoHandle metodoHandle = new MetodoHandle(linhasArquivo);
+		metodoHandle.processar(chkGet.isSelected(), chkSet.isSelected());
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		adicionarImports(arquivo, classe, chkMockito.isSelected());
+		adicionarImports(arquivo, null, getNomeClasse(true), chkMockito.isSelected());
 
-		String objeto = classe.getSimpleName();
+		String objeto = getNomeClasse(false);
 		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
 		if (chkMockito.isSelected()) {
 			classeTest.addAnotacao("InjectMocks");
@@ -2095,12 +2078,9 @@ class PainelTest2 extends AbstratoTest {
 		Parametros params = new Parametros(objeto + " origem");
 		params.addString(", ");
 		params.addString(objeto + " destino");
-		funcao = classeTest.criarFuncaoPrivada("void", "converter", params);
-		for (MetodoGetSet item : metodosGetSet) {
-			funcao.addInstrucao(item.gerar());
-		}
+		classeTest.criarFuncaoPrivada("void", "converter", params);
 
-		testes(classeTest, imetodos);
+		testes(classeTest, metodoHandle.getMetodos());
 
 		arquivo.gerar(-1, pool);
 		setText(pool.toString());
@@ -2116,98 +2096,29 @@ class PainelTest2 extends AbstratoTest {
 		return "label.test2";
 	}
 
-	private class MetodoGetSet {
-		final String nome;
-
-		MetodoGetSet(String nome) {
-			this.nome = nome;
+	private void testes(ClassePublica classe, List<Metodo> imetodos) {
+		List<Teste> testes = new ArrayList<>();
+		for (Metodo item : imetodos) {
+			Teste teste = new Teste(item);
+			testes.add(teste);
 		}
-
-		String gerar() {
-			return "destino.set" + nome + "(origem.get" + nome + "())";
+		for (Teste item : testes) {
+			item.gerar(classe);
 		}
-	}
-
-	private List<IMetodo> configurar(List<IMetodo> metodos, Method[] methods) {
-		List<Method> listMethod = new ArrayList<>(Arrays.asList(methods));
-		Iterator<Method> it = listMethod.iterator();
-		while (it.hasNext()) {
-			Method method = it.next();
-			if (method.isSynthetic()) {
-				it.remove();
-			}
-		}
-		List<IMetodo> resposta = new ArrayList<>();
-		for (IMetodo metodo : metodos) {
-			Method method = get(metodo, listMethod);
-			if (method != null) {
-				metodo.setMethod(method);
-				resposta.add(metodo);
-			}
-		}
-		return resposta;
-	}
-
-	private Method get(IMetodo metodo, List<Method> metodos) {
-		Iterator<Method> it = metodos.iterator();
-		while (it.hasNext()) {
-			Method method = it.next();
-			if (method.getName().equals(metodo.getNome())) {
-				it.remove();
-				return method;
-			}
-		}
-		return null;
-	}
-
-	private void testes(ClassePublica classe, List<IMetodo> imetodos) {
-		List<Teste> metodos = new ArrayList<>();
-		for (IMetodo metodo : imetodos) {
-			Method item = metodo.getMethod();
-			String name = item.getName();
-			if (item.isSynthetic() || name.startsWith("get") || name.startsWith("set")) {
-				continue;
-			}
-			Teste obj = new Teste(metodo);
-			metodos.add(obj);
-		}
-		for (Teste teste : metodos) {
-			teste.gerar(classe);
-		}
-	}
-
-	private boolean contemSet(Method[] methods, MetodoGetSet obj) {
-		for (Method item : methods) {
-			if (item.isSynthetic()) {
-				continue;
-			}
-			if (item.getName().equals("set" + obj.nome)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private class Teste {
-		final IMetodo metodo;
+		final Metodo metodo;
 
-		Teste(IMetodo metodo) {
+		Teste(Metodo metodo) {
 			this.metodo = metodo;
 		}
 
 		void gerar(ClassePublica classe) {
-			Method method = metodo.getMethod();
-			if (Modifier.isPublic(method.getModifiers())) {
-				String name = method.getName();
-				classe.newLine();
-				classe.addAnotacao("Test");
-				Funcao funcao = classe.criarFuncaoPublica("void", name + "Test");
-				for (String invocacao : metodo.getInvocacoes()) {
-					funcao.addComentario("when(" + invocacao + "(any())).thenReturn(newObjeto());");
-				}
-				funcao.addComentario("bean." + name + "();");
-				funcao.addComentario("assertTrue(false);");
-			}
+			classe.newLine();
+			classe.addAnotacao("Test");
+			Funcao funcao = classe.criarFuncaoPublica("void", metodo.getNome() + "Test");
+			funcao.addComentario("bean." + metodo.getNome() + "();");
 		}
 	}
 }
@@ -2274,76 +2185,37 @@ class PainelTest3 extends AbstratoTest {
 }
 
 class MetodoHandle {
-	private final List<String> linhasArquivoProcessado;
 	private final List<String> linhasArquivo;
-	private final List<IMetodo> metodos;
-	private IMetodo selecionado;
+	private final List<Metodo> metodos;
 
 	public MetodoHandle(List<String> linhasArquivo) {
 		this.linhasArquivo = Objects.requireNonNull(linhasArquivo);
-		this.linhasArquivoProcessado = new ArrayList<>();
 		metodos = new ArrayList<>();
 	}
 
-	void processar() {
-		preProcessar();
-		List<String> invocacoes = new ArrayList<>();
-		for (String string : linhasArquivoProcessado) {
-			String nome = Util.getNomeMetodo(string);
+	void processar(boolean get, boolean set) {
+		for (String itemLinha : linhasArquivo) {
+			String nome = Util.getNomeMetodo(itemLinha);
 			if (nome != null) {
-				selecionado = new IMetodo(nome);
-				metodos.add(selecionado);
-			} else {
-				Util.invocacoes(string, invocacoes);
-				if (selecionado != null) {
-					selecionado.addInvocacoes(invocacoes);
+				Metodo metodo = new Metodo(nome);
+				if (valido(metodo, get, set)) {
+					metodos.add(metodo);
 				}
 			}
 		}
 	}
 
-	private void preProcessar() {
-		StringBuilder assinatura = null;
-		for (String string : linhasArquivo) {
-			Resposta resp = analisar(string.trim());
-			if (resp == Resposta.INI_ASSINATURA) {
-				assinatura = new StringBuilder(string);
-			} else if (resp == Resposta.FIM_ASSINATURA) {
-				if (assinatura == null) {
-					linhasArquivoProcessado.add(string);
-				} else {
-					assinatura.append(" " + string);
-					linhasArquivoProcessado.add(assinatura.toString());
-					assinatura = null;
-				}
-			} else {
-				if (assinatura == null) {
-					linhasArquivoProcessado.add(string);
-				} else {
-					assinatura.append(" " + string);
-				}
-			}
+	private boolean valido(Metodo metodo, boolean get, boolean set) {
+		if (metodo.isGet()) {
+			return get;
 		}
+		if (metodo.isSet()) {
+			return set;
+		}
+		return true;
 	}
 
-	private Resposta analisar(String string) {
-		if (Util.inicioValido(string) && string.contains("(") && string.endsWith("{")) {
-			return null;
-		}
-		if (Util.inicioValido(string) && string.contains("(")) {
-			return Resposta.INI_ASSINATURA;
-		}
-		if (string.endsWith("{")) {
-			return Resposta.FIM_ASSINATURA;
-		}
-		return null;
-	}
-
-	public List<IMetodo> getMetodos() {
+	public List<Metodo> getMetodos() {
 		return metodos;
-	}
-
-	enum Resposta {
-		INI_ASSINATURA, FIM_ASSINATURA
 	}
 }
