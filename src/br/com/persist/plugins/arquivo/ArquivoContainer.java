@@ -56,12 +56,16 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	public ArquivoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
-		File ignorados = new File(file, ArquivoConstantes.IGNORADOS);
-		Arquivo raiz = new Arquivo(file, ArquivoUtil.lerArquivo(ignorados));
-		arquivoTreeExt = new ArquivoTreeExt(new ArquivoModelo(raiz));
+		arquivoTreeExt = new ArquivoTreeExt(criarArquivoModeloRaiz());
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	private ArquivoModelo criarArquivoModeloRaiz() {
+		File ignorados = new File(file, ArquivoConstantes.IGNORADOS);
+		Arquivo raiz = new Arquivo(file, ArquivoUtil.lerArquivo(ignorados));
+		return new ArquivoModelo(raiz);
 	}
 
 	public ArquivoFormulario getArquivoFormulario() {
@@ -180,7 +184,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 		@Override
 		public void baixar() {
-			ArquivoModelo modelo = new ArquivoModelo();
+			ArquivoModelo modelo = criarArquivoModeloRaiz();
 			arquivoTreeExt.setModel(modelo);
 			baixar(modelo);
 			pesquisa = null;
