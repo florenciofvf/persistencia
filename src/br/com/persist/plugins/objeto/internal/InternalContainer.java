@@ -2309,6 +2309,7 @@ public class InternalContainer extends Panel
 		private class ButtonUpdate extends ButtonPopup {
 			private Action dadosAcao = actionMenu("label.dados", Icones.TABELA);
 			private List<MenuInstrucao> listaMenuInstrucao = new ArrayList<>();
+			private MenuFragmentoMul menuFragmentoMul = new MenuFragmentoMul();
 			private MenuUpdateMul menuUpdateMul = new MenuUpdateMul();
 			private MenuEntityMul menuEntityMul = new MenuEntityMul();
 			private MenuDeleteMul menuDeleteMul = new MenuDeleteMul();
@@ -2323,6 +2324,7 @@ public class InternalContainer extends Panel
 				addMenu(true, menuUpdate);
 				addMenu(menuUpdateMul);
 				addMenu(menuEntityMul);
+				addMenu(menuFragmentoMul);
 				addMenu(true, menuDelete);
 				addMenu(menuDeleteMul);
 				addMenu(true, menuInsert);
@@ -2365,12 +2367,13 @@ public class InternalContainer extends Panel
 			private void setHabilitado(int[] linhas) {
 				boolean umaLinhaSel = linhas.length == 1;
 				dadosAcao.setEnabled(umaLinhaSel);
+				menuInsert.setEnabled(umaLinhaSel);
 				menuUpdate.setEnabled(umaLinhaSel);
 				menuDelete.setEnabled(umaLinhaSel);
 				menuUpdateMul.setHabilitado(linhas);
 				menuEntityMul.setHabilitado(linhas);
 				menuDeleteMul.setHabilitado(linhas);
-				menuInsert.setEnabled(umaLinhaSel);
+				menuFragmentoMul.setHabilitado(linhas);
 				for (MenuInstrucao menu : listaMenuInstrucao) {
 					menu.setHabilitado(linhas);
 				}
@@ -2386,10 +2389,6 @@ public class InternalContainer extends Panel
 				}
 
 				private void processar(boolean abrirEmForm) {
-					Conexao conexao = getConexao();
-					if (conexao == null) {
-						return;
-					}
 					if (Util.isEmpty(objeto.getMetodoSet())) {
 						Util.mensagem(InternalContainer.this, ObjetoMensagens.getString("msg.objeto_sem_metodo"));
 						return;
@@ -2409,9 +2408,39 @@ public class InternalContainer extends Panel
 							String fonte = modelo.gerarEntidades(linhas, coletor, resp.toString().trim(),
 									objeto.getMetodoSet());
 							if (!Util.isEmpty(fonte)) {
-								updateFormDialog(abrirEmForm, conexao, fonte,
+								updateFormDialog(abrirEmForm, null, fonte,
 										Mensagens.getString(Constantes.LABEL_ENTIDADE));
 							}
+						}
+					}
+				}
+
+				private void setHabilitado(int[] linhas) {
+					setEnabled(linhas.length >= 1);
+				}
+			}
+
+			private class MenuFragmentoMul extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuFragmentoMul() {
+					super("label.fragmentos", Icones.TABELA);
+					formularioAcao.setActionListener(e -> processar(true));
+					dialogoAcao.setActionListener(e -> processar(false));
+				}
+
+				private void processar(boolean abrirEmForm) {
+					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length > 0) {
+						Object resp = Util.getValorInputDialog(InternalContainer.this, Constantes.LABEL_FRAGMENTO,
+								Mensagens.getString("label.template"), Constantes.VAZIO);
+						if (resp == null || Util.isEmpty(resp.toString())) {
+							return;
+						}
+						String fonte = modelo.gerarFragmentos(linhas, resp.toString().trim());
+						if (!Util.isEmpty(fonte)) {
+							updateFormDialog(abrirEmForm, null, fonte, Mensagens.getString("label.fragmentos"));
 						}
 					}
 				}

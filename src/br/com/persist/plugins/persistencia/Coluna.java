@@ -24,6 +24,7 @@ public class Coluna {
 	private final int tamanho;
 	private final int indice;
 	private String sequencia;
+	private String fragmento;
 	private String funcao;
 
 	public Coluna(String nome, int indice) {
@@ -233,6 +234,14 @@ public class Coluna {
 
 	public void setStringComparaRegistro(String stringComparaRegistro) {
 		this.stringComparaRegistro = stringComparaRegistro;
+	}
+
+	public String getFragmento() {
+		return fragmento;
+	}
+
+	public void setFragmento(String fragmento) {
+		this.fragmento = fragmento;
 	}
 
 	public void setNomeMetodoSet(String nomeMetodoSet) {

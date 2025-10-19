@@ -203,6 +203,66 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return null;
 	}
 
+	public String gerarFragmentos(int[] linhas, String template) {
+		StringBuilder builder = new StringBuilder();
+		List<Coluna> fragmentos = estruturar(template);
+		for (int itemLinha : linhas) {
+			List<Object> registro = getRegistro(itemLinha);
+			for (Coluna colFrag : fragmentos) {
+				if (colFrag.getFragmento() != null) {
+					builder.append(colFrag.getFragmento());
+				} else {
+					Object valor = registro.get(colFrag.getIndice());
+					builder.append(colFrag.get(valor, null));
+				}
+			}
+			builder.append(Constantes.QL);
+		}
+		return builder.toString();
+	}
+
+	private List<Coluna> estruturar(String template) {
+		List<Coluna> colunas = new ArrayList<>();
+		int[] ponto = getPonto(template);
+		while (ponto.length == 2) {
+			String antes = template.substring(0, ponto[0]);
+			if (!Util.isEmpty(antes)) {
+				Coluna colFragmento = new Coluna(null, -1);
+				colFragmento.setFragmento(antes);
+				colunas.add(colFragmento);
+			}
+			String strPonto = template.substring(ponto[0], ponto[1]).trim();
+			Coluna colPonto = getColuna(strPonto);
+			if (colPonto == null) {
+				Coluna colFragmento = new Coluna(null, -1);
+				colFragmento.setFragmento("{" + strPonto + "}");
+				colunas.add(colFragmento);
+			} else {
+				colunas.add(colPonto);
+			}
+			template = template.substring(ponto[1]);
+			ponto = getPonto(template);
+		}
+		if (!Util.isEmpty(template)) {
+			Coluna colFragmento = new Coluna(null, -1);
+			colFragmento.setFragmento(template);
+			colunas.add(colFragmento);
+		}
+		return colunas;
+	}
+
+	private int[] getPonto(String template) {
+		int pos = template.indexOf("{");
+		if (pos == -1) {
+			return new int[0];
+		}
+		int pos2 = template.indexOf("}", pos + 1);
+		if (pos2 == -1) {
+			return new int[] { pos, template.length() };
+		}
+		return new int[] { pos, pos2 };
+	}
+
 	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao)
 			throws PersistenciaException {
 		return model.getUpdate(prefixoNomeTabela, coletor, comWhere, conexao);
