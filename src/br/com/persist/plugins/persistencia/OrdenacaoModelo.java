@@ -231,7 +231,7 @@ public class OrdenacaoModelo extends AbstractTableModel {
 				colFragmento.setFragmento(antes);
 				colunas.add(colFragmento);
 			}
-			String strPonto = template.substring(ponto[0], ponto[1]).trim();
+			String strPonto = template.substring(ponto[0] + 1, ponto[1]).trim();
 			Coluna colPonto = getColuna(strPonto);
 			if (colPonto == null) {
 				Coluna colFragmento = new Coluna(null, -1);
