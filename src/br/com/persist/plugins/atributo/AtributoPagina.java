@@ -1990,12 +1990,19 @@ class PainelTest2 extends AbstratoTest {
 		gerarTestAcao.setActionListener(e -> gerarTeste());
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
+		toolbar.addSeparator();
 		toolbar.add(chkMockito);
+		toolbar.addSeparator();
 		toolbar.add(chkConstrutor);
+		toolbar.addSeparator();
 		toolbar.add(chkGet);
+		toolbar.addSeparator();
 		toolbar.add(chkSet);
+		toolbar.addSeparator();
 		toolbar.add(chkIs);
+		toolbar.addSeparator();
 		toolbar.add(chkOutros);
+		toolbar.addSeparator();
 		toolbar.addButton(gerarTestAcao);
 	}
 
