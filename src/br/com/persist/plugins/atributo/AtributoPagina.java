@@ -1992,10 +1992,10 @@ class PainelTest2 extends AbstratoTest {
 		toolbar.addButton(arquivoAction);
 		toolbar.add(chkMockito);
 		toolbar.add(chkConstrutor);
-		toolbar.add(chkOutros);
 		toolbar.add(chkGet);
 		toolbar.add(chkSet);
 		toolbar.add(chkIs);
+		toolbar.add(chkOutros);
 		toolbar.addButton(gerarTestAcao);
 	}
 
