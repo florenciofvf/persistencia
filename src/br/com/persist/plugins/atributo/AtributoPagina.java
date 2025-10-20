@@ -1987,7 +1987,9 @@ class PainelTest2 extends AbstratoTest {
 		gerarTestAcao.setActionListener(e -> gerarTeste());
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
+		toolbar.addSeparator();
 		toolbar.add(opcoes);
+		toolbar.addSeparator();
 		toolbar.addButton(gerarTestAcao);
 	}
 
@@ -2006,11 +2008,14 @@ class PainelTest2 extends AbstratoTest {
 		private ButtonOpcoes() {
 			super("label.opcoes", Icones.TAG2);
 			addItem(chkMockito);
-			addItem(chkSetUp);
+			addSeparator();
 			addItem(chkConstrutor);
+			addSeparator();
+			addItem(chkSetUp);
 			addItem(chkGet);
 			addItem(chkSet);
 			addItem(chkIs);
+			addSeparator();
 			addItem(chkOutros);
 		}
 	}
