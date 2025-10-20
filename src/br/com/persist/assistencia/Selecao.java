@@ -16,6 +16,7 @@ public class Selecao implements Busca {
 	private List<Fragmento> lista = new ArrayList<>();
 	final JTextComponent component;
 	final String string;
+	int comprimento;
 	int indice;
 
 	public Selecao(JTextComponent component, String string) {
@@ -36,6 +37,7 @@ public class Selecao implements Busca {
 
 	private void inicializar() {
 		String sequencia = component.getText().toUpperCase();
+		comprimento = sequencia.length();
 		int pos = sequencia.indexOf(string);
 		while (pos != -1) {
 			lista.add(new Fragmento(pos, string.length()));
@@ -43,7 +45,7 @@ public class Selecao implements Busca {
 		}
 	}
 
-	public boolean igual(String string) {
+	public boolean igual(String string, int length) {
 		if (this.string == null && string == null) {
 			return true;
 		}
@@ -51,7 +53,7 @@ public class Selecao implements Busca {
 			return false;
 		}
 		string = normalizar(string);
-		return this.string.equals(string);
+		return this.string.equals(string) && comprimento == length;
 	}
 
 	private static String normalizar(String string) {

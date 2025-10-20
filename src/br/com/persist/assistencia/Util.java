@@ -1115,7 +1115,7 @@ public class Util {
 	public static Selecao getSelecao(JTextComponent component, Selecao selecao, String string) {
 		if (selecao == null) {
 			return new Selecao(component, string);
-		} else if (selecao.igual(string)) {
+		} else if (selecao.igual(string, component.getDocument().getLength())) {
 			return selecao;
 		}
 		return new Selecao(component, string);
