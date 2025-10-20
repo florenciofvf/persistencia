@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -38,6 +39,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Aba;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -1971,13 +1973,8 @@ class PainelTest1 extends AbstratoTest {
 }
 
 class PainelTest2 extends AbstratoTest {
-	private final CheckBox chkConstrutor = new CheckBox(AtributoMensagens.getString("label.construtor"), false);
-	private final CheckBox chkMockito = new CheckBox(AtributoMensagens.getString("label.mockito"), false);
-	private final CheckBox chkOutros = new CheckBox(AtributoMensagens.getString("label.outros"), false);
-	private final CheckBox chkGet = new CheckBox(AtributoMensagens.getString("label.get"), false);
-	private final CheckBox chkSet = new CheckBox(AtributoMensagens.getString("label.set"), false);
-	private final CheckBox chkIs = new CheckBox(AtributoMensagens.getString("label.is"), false);
 	private TextField txtArquivo = new TextField(25);
+	private ButtonOpcoes opcoes = new ButtonOpcoes();
 	private static final long serialVersionUID = 1L;
 	private List<String> linhasArquivo;
 
@@ -1990,20 +1987,32 @@ class PainelTest2 extends AbstratoTest {
 		gerarTestAcao.setActionListener(e -> gerarTeste());
 		arquivoAction.setActionListener(e -> lerArquivo());
 		toolbar.addButton(arquivoAction);
-		toolbar.addSeparator();
-		toolbar.add(chkMockito);
-		toolbar.addSeparator();
-		toolbar.add(chkConstrutor);
-		toolbar.addSeparator();
-		toolbar.add(chkGet);
-		toolbar.addSeparator();
-		toolbar.add(chkSet);
-		toolbar.addSeparator();
-		toolbar.add(chkIs);
-		toolbar.addSeparator();
-		toolbar.add(chkOutros);
-		toolbar.addSeparator();
+		toolbar.add(opcoes);
 		toolbar.addButton(gerarTestAcao);
+	}
+
+	private class ButtonOpcoes extends ButtonPopup {
+		private final JCheckBoxMenuItem chkConstrutor = new JCheckBoxMenuItem(
+				AtributoMensagens.getString("label.construtor"));
+		private final JCheckBoxMenuItem chkMockito = new JCheckBoxMenuItem(
+				AtributoMensagens.getString("label.mockito"));
+		private final JCheckBoxMenuItem chkOutros = new JCheckBoxMenuItem(AtributoMensagens.getString("label.outros"));
+		private final JCheckBoxMenuItem chkSetUp = new JCheckBoxMenuItem(AtributoMensagens.getString("label.setup"));
+		private final JCheckBoxMenuItem chkGet = new JCheckBoxMenuItem(AtributoMensagens.getString("label.get"));
+		private final JCheckBoxMenuItem chkSet = new JCheckBoxMenuItem(AtributoMensagens.getString("label.set"));
+		private final JCheckBoxMenuItem chkIs = new JCheckBoxMenuItem(AtributoMensagens.getString("label.is"));
+		private static final long serialVersionUID = 1L;
+
+		private ButtonOpcoes() {
+			super("label.opcoes", Icones.TAG2);
+			addItem(chkMockito);
+			addItem(chkSetUp);
+			addItem(chkConstrutor);
+			addItem(chkGet);
+			addItem(chkSet);
+			addItem(chkIs);
+			addItem(chkOutros);
+		}
 	}
 
 	private void lerArquivo() {
@@ -2050,15 +2059,16 @@ class PainelTest2 extends AbstratoTest {
 		}
 		String objeto = getNomeClasse(false);
 		MetodoHandle metodoHandle = new MetodoHandle(linhasArquivo);
-		metodoHandle.processar(chkGet.isSelected(), chkSet.isSelected(), chkIs.isSelected(), chkConstrutor.isSelected(),
-				objeto, chkOutros.isSelected());
+		metodoHandle.processar(opcoes.chkGet.isSelected(), opcoes.chkSet.isSelected(), opcoes.chkIs.isSelected(),
+				opcoes.chkConstrutor.isSelected(), objeto, opcoes.chkOutros.isSelected());
 
 		StringPool pool = new StringPool();
 		Arquivo arquivo = new Arquivo();
-		adicionarImports(arquivo, null, getNomeClasse(true), chkMockito.isSelected());
+		adicionarImports(arquivo, null, getNomeClasse(true), opcoes.chkMockito.isSelected());
 
 		ClassePublica classeTest = arquivo.criarClassePublica(objeto + "Test");
-		if (chkMockito.isSelected()) {
+
+		if (opcoes.chkMockito.isSelected()) {
 			classeTest.addAnotacao("InjectMocks");
 			classeTest.addCampoPrivado(new Variavel("Bean", "bean")).newLine();
 
@@ -2066,7 +2076,10 @@ class PainelTest2 extends AbstratoTest {
 			classeTest.addCampoPrivado(new Variavel("DAO", "dao")).newLine();
 		}
 
-		criarPreTest(classeTest);
+		if (opcoes.chkSetUp.isSelected()) {
+			criarPreTest(classeTest);
+		}
+
 		testes(classeTest, metodoHandle.getMetodos());
 
 		arquivo.gerar(-1, pool);
