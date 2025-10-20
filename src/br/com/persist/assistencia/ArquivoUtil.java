@@ -282,4 +282,20 @@ public class ArquivoUtil {
 			}
 		}
 	}
+
+	public static File getValido(String string) {
+		if (string == null) {
+			return null;
+		}
+		File file = new File(string);
+		boolean existe = file.exists();
+		while (!existe) {
+			file = file.getParentFile();
+			if (file == null) {
+				break;
+			}
+			existe = file.exists();
+		}
+		return file;
+	}
 }

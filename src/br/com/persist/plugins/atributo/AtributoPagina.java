@@ -290,7 +290,8 @@ public class AtributoPagina extends Panel implements Aba {
 			}
 
 			private void lerArquivo() {
-				JFileChooser fileChooser = new JFileChooser(AtributoPreferencia.getDirPadraoSelecaoArquivos());
+				JFileChooser fileChooser = new JFileChooser(
+						ArquivoUtil.getValido(AtributoPreferencia.getDirPadraoSelecaoArquivos()));
 				int i = fileChooser.showOpenDialog(AtributoPagina.this);
 				if (i == JFileChooser.APPROVE_OPTION) {
 					File sel = fileChooser.getSelectedFile();
@@ -2021,7 +2022,8 @@ class PainelTest2 extends AbstratoTest {
 	}
 
 	private void lerArquivo() {
-		JFileChooser fileChooser = new JFileChooser(AtributoPreferencia.getDirPadraoSelecaoArquivos());
+		JFileChooser fileChooser = new JFileChooser(
+				ArquivoUtil.getValido(AtributoPreferencia.getDirPadraoSelecaoArquivos()));
 		int i = fileChooser.showOpenDialog(PainelTest2.this);
 		if (i == JFileChooser.APPROVE_OPTION) {
 			File sel = fileChooser.getSelectedFile();

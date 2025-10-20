@@ -12,6 +12,7 @@ import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.Button;
@@ -65,7 +66,7 @@ public class AtributoConfiguracao extends AbstratoConfiguracao {
 			}
 		});
 		btnDirPadraoSelArquivos.addActionListener(e -> {
-			JFileChooser fileChooser = new JFileChooser(txtDirPadraoSelArquivos.getText());
+			JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtDirPadraoSelArquivos.getText()));
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int i = fileChooser.showOpenDialog(AtributoConfiguracao.this);
 			if (i == JFileChooser.APPROVE_OPTION) {
