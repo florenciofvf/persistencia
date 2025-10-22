@@ -2,6 +2,7 @@ package br.com.persist.plugins.biblio;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ public class BiblioJarProvedor {
 						}
 					}
 				}
+				Collections.sort(lista, (o1, o2) -> o1.getNome().compareTo(o2.getNome()));
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
