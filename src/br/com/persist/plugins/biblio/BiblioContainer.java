@@ -165,7 +165,9 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 		@Override
 		protected void baixar() {
 			BiblioProvedor.inicializar();
+			BiblioJarProvedor.inicializar();
 			biblioModelo.fireTableDataChanged();
+			biblioJarModelo.fireTableDataChanged();
 		}
 
 		@Override
