@@ -30,7 +30,7 @@ public class BiblioJarProvedor {
 					for (File item : files) {
 						String nome = item.getName().toLowerCase();
 						if (nome.endsWith(".jar")) {
-							lista.add(new Biblio(nome));
+							lista.add(new Biblio(item.getName()));
 						}
 					}
 				}
