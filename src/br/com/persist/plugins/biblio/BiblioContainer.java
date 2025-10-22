@@ -29,12 +29,16 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class BiblioContainer extends AbstratoContainer implements PluginBasico {
+	private final BiblioJarModelo biblioJarModelo = new BiblioJarModelo();
 	private final BiblioModelo biblioModelo = new BiblioModelo();
+	private final JTable tabelaJar = new JTable(biblioJarModelo);
+	private final FicharioInner fichario = new FicharioInner();
 	private final JTable tabela = new JTable(biblioModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
@@ -73,7 +77,13 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(tabela));
+		add(BorderLayout.CENTER, fichario);
+		fichario.addTab("label.jars", Icones.CONFIG, new ScrollPane(tabelaJar));
+		fichario.addTab("label.outros", Icones.CONFIG2, new ScrollPane(tabela));
+	}
+
+	private class FicharioInner extends TabbedPane {
+		private static final long serialVersionUID = 1L;
 	}
 
 	@Override
