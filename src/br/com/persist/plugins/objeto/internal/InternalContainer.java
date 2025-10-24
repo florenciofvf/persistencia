@@ -541,7 +541,7 @@ public class InternalContainer extends Panel
 	private boolean continuar(String complemento, Conexao conexao) {
 		if (objeto.isSane() && todosVazio(complemento, conexao)) {
 			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela());
-			Util.mensagem(InternalContainer.this, msg);
+			SwingUtilities.invokeLater(() -> Util.mensagem(InternalContainer.this, msg));
 			return false;
 		}
 		if (!Util.isEmpty(txtComplemento.getText()) || !Util.isEmpty(complemento)
