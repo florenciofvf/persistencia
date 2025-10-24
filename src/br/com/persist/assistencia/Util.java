@@ -1627,6 +1627,12 @@ public class Util {
 		return extrair(string);
 	}
 
+	public static String retorno(String string, String nomeMetodo) {
+		string = string.trim();
+		int pos = string.indexOf(nomeMetodo);
+		return string.substring("public ".length(), pos).trim();
+	}
+
 	private static String extrair(String string) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = string.length() - 1; i >= 0; i--) {

@@ -2125,7 +2125,7 @@ class PainelTest2 extends AbstratoTest {
 			classe.newLine();
 			classe.addAnotacao("Test");
 			Funcao funcao = classe.criarFuncaoPublica("void", metodo.getNome() + "Test");
-			funcao.addComentario("bean." + metodo.getNome() + "();");
+			funcao.addComentario(metodo.getRetorno() + "bean." + metodo.getNome() + "();");
 		}
 	}
 }
@@ -2206,6 +2206,7 @@ class MetodoHandle {
 			if (nome != null) {
 				Metodo metodo = new Metodo(nome);
 				if (valido(metodo, get, set, is, construtor, classe, outros)) {
+					metodo.setRetorno(Util.retorno(itemLinha, nome));
 					metodos.add(metodo);
 				}
 			}
