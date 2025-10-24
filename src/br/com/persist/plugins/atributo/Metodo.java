@@ -34,7 +34,7 @@ public class Metodo {
 		if (retorno == null) {
 			return "";
 		}
-		return retorno;
+		return retorno + " resp = ";
 	}
 
 	public void setRetorno(String retorno) {
