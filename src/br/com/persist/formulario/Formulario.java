@@ -53,6 +53,7 @@ public class Formulario extends JFrame implements PluginBasico {
 	private final Fichario fichario = new Fichario();
 	private static final long serialVersionUID = 1L;
 	private OuvinteFormulario ouvinteFormulario;
+	private String tag;
 
 	public Formulario(GraphicsConfiguration gc) {
 		super(Mensagens.getTituloAplicacao(), gc);
@@ -368,5 +369,13 @@ public class Formulario extends JFrame implements PluginBasico {
 
 	public void setOuvinteFormulario(OuvinteFormulario ouvinteFormulario) {
 		this.ouvinteFormulario = ouvinteFormulario;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 }

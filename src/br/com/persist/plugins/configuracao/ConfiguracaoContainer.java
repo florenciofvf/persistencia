@@ -117,6 +117,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 				AbstratoConfiguracao config = painelConfiguracao.localizar(txtPesquisa.getText().toUpperCase());
 				if (config != null) {
 					exibir(config);
+					formulario.setTag(txtPesquisa.getText());
 				}
 			}
 		}
@@ -160,17 +161,20 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 		public void windowOpenedHandler(Window window) {
 			painelConfiguracao.windowOpenedHandler(window);
 			buttonDestacar.estadoFormulario();
+			txtPesquisa.setText(formulario.getTag());
 		}
 
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			painelConfiguracao.dialogOpenedHandler(dialog);
 			buttonDestacar.estadoDialogo();
+			txtPesquisa.setText(formulario.getTag());
 		}
 
 		void adicionadoAoFichario() {
 			painelConfiguracao.adicionadoAoFichario();
 			buttonDestacar.estadoFichario();
+			txtPesquisa.setText(formulario.getTag());
 		}
 
 		@Override
