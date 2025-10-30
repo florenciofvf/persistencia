@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 
 import br.com.persist.assistencia.Icones;
 
@@ -19,13 +20,10 @@ public class BiblioRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		if (value instanceof Biblio) {
-			File file = ((Biblio) value).getFile();
-			if (file.exists()) {
-				setIcon(Icones.SUCESSO);
-			} else {
-				setIcon(null);
-			}
+		TableModel model = table.getModel();
+		if (model instanceof BiblioModelo) {
+			File file = BiblioProvedor.getBiblio(row).getFile();
+			setIcon(file.exists() ? Icones.SUCESSO : Icones.EXCEPTION);
 		}
 		return this;
 	}
