@@ -81,6 +81,7 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 		fichario.addTab("label.jars", Icones.CONFIG, new ScrollPane(tabelaJar));
 		fichario.addTab("label.outros", Icones.CONFIG2, new ScrollPane(tabela));
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new BiblioRenderer());
+		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
 
 	private class FicharioInner extends TabbedPane {
@@ -169,6 +170,7 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 			BiblioJarProvedor.inicializar();
 			biblioModelo.fireTableDataChanged();
 			biblioJarModelo.fireTableDataChanged();
+			ajustarTabela();
 		}
 
 		@Override
@@ -218,16 +220,19 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
 		toolbar.adicionadoAoFichario();
+		ajustarTabela();
 	}
 
 	@Override
 	public void windowOpenedHandler(Window window) {
 		toolbar.windowOpenedHandler(window);
+		ajustarTabela();
 	}
 
 	@Override
 	public void dialogOpenedHandler(Dialog dialog) {
 		toolbar.dialogOpenedHandler(dialog);
+		ajustarTabela();
 	}
 
 	@Override
@@ -268,5 +273,9 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 				return Icones.COR;
 			}
 		};
+	}
+
+	private void ajustarTabela() {
+		Util.ajustar(tabela, getGraphics());
 	}
 }
