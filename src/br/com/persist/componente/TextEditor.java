@@ -31,6 +31,7 @@ import javax.swing.text.ViewFactory;
 
 public class TextEditor extends TextPane {
 	public static final Color COLOR_SEL = new Color(230, 240, 250);
+	private transient TextEditorSalvarListener salvarListener;
 	public static final Color COLOR_TAB = Color.LIGHT_GRAY;
 	public static final Color COLOR_RET = Color.LIGHT_GRAY;
 	private static final Logger LOG = Logger.getGlobal();
@@ -49,7 +50,9 @@ public class TextEditor extends TextPane {
 
 	private void configurar() {
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_S), "salvar_conteudo");
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
+		getActionMap().put("salvar_conteudo", actionSalvarConteudo);
 	}
 
 	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
@@ -59,6 +62,17 @@ public class TextEditor extends TextPane {
 		public void actionPerformed(ActionEvent e) {
 			if (listener != null) {
 				listener.focusInputPesquisar(TextEditor.this);
+			}
+		}
+	};
+
+	private transient javax.swing.Action actionSalvarConteudo = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (salvarListener != null) {
+				salvarListener.salvarConteudo(TextEditor.this);
 			}
 		}
 	};
@@ -77,6 +91,14 @@ public class TextEditor extends TextPane {
 
 	public void setListener(TextEditorListener listener) {
 		this.listener = listener;
+	}
+
+	public TextEditorSalvarListener getSalvarListener() {
+		return salvarListener;
+	}
+
+	public void setSalvarListener(TextEditorSalvarListener salvarListener) {
+		this.salvarListener = salvarListener;
 	}
 
 	public static boolean isPaintERT() {

@@ -346,6 +346,7 @@ class Aba extends Transferivel {
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		editor.setListener(e -> toolbar.focusInputPesquisar());
+		editor.setSalvarListener(e -> toolbar.salvar());
 	}
 
 	private void abrir() {
