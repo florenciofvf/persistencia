@@ -1,14 +1,17 @@
 package br.com.persist.plugins.biblio;
 
+import java.io.File;
+
 public class Biblio {
 	private String nome;
+	private File file;
 
 	public Biblio() {
 		this("");
 	}
 
 	public Biblio(String nome) {
-		this.nome = nome;
+		setNome(nome);
 	}
 
 	public String getNome() {
@@ -16,6 +19,11 @@ public class Biblio {
 	}
 
 	public void setNome(String nome) {
+		file = new File(nome);
 		this.nome = nome;
+	}
+
+	public File getFile() {
+		return file;
 	}
 }

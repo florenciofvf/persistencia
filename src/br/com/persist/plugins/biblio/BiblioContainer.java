@@ -80,6 +80,7 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 		add(BorderLayout.CENTER, fichario);
 		fichario.addTab("label.jars", Icones.CONFIG, new ScrollPane(tabelaJar));
 		fichario.addTab("label.outros", Icones.CONFIG2, new ScrollPane(tabela));
+		tabela.getColumnModel().getColumn(0).setCellRenderer(new BiblioRenderer());
 	}
 
 	private class FicharioInner extends TabbedPane {

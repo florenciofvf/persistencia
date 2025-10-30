@@ -3,7 +3,7 @@ package br.com.persist.plugins.biblio;
 import javax.swing.table.AbstractTableModel;
 
 public class BiblioModelo extends AbstractTableModel {
-	private static final String[] COLUNAS = { "NOME" };
+	private static final String[] COLUNAS = { "EXISTENTE", "NOME" };
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -34,7 +34,7 @@ public class BiblioModelo extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Biblio biblio = BiblioProvedor.getBiblio(rowIndex);
-		if (columnIndex == 0) {
+		if (columnIndex == 1) {
 			return biblio.getNome();
 		}
 		return null;
@@ -46,7 +46,7 @@ public class BiblioModelo extends AbstractTableModel {
 			return;
 		}
 		Biblio biblio = BiblioProvedor.getBiblio(rowIndex);
-		if (columnIndex == 0) {
+		if (columnIndex == 1) {
 			biblio.setNome(aValue.toString());
 		}
 	}
