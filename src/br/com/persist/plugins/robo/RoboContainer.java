@@ -44,15 +44,16 @@ import br.com.persist.formulario.Formulario;
 
 public class RoboContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(RoboConstantes.ROBOSCRIPTS);
-	private final RoboFichario fichario = new RoboFichario();
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private RoboFormulario roboFormulario;
+	private final RoboFichario fichario;
 	private RoboDialogo roboDialogo;
 
 	public RoboContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
+		fichario = new RoboFichario(this);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo, idPagina);
@@ -107,6 +108,10 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 		return null;
 	}
 
+	public void salvar() {
+		toolbar.salvar();
+	}
+
 	public int getIndice() {
 		return fichario.getIndiceAtivo();
 	}
@@ -128,7 +133,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 							|| ArquivoUtil.contem(RoboConstantes.ROBOSCRIPTS, f.getName())) {
 						continue;
 					}
-					ordenados.add(new RoboPagina(f, formulario));
+					ordenados.add(new RoboPagina(fichario, f, formulario));
 				}
 				for (RoboPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
@@ -258,7 +263,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 			}
 			try {
 				if (f.createNewFile()) {
-					RoboPagina pagina = new RoboPagina(f, formulario);
+					RoboPagina pagina = new RoboPagina(fichario, f, formulario);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {

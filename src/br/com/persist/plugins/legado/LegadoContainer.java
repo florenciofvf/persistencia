@@ -42,14 +42,15 @@ import br.com.persist.formulario.Formulario;
 
 public class LegadoContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(LegadoConstantes.LEGADO);
-	private final LegadoFichario fichario = new LegadoFichario();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private LegadoFormulario legadoFormulario;
+	private final LegadoFichario fichario;
 	private LegadoDialogo legadoDialogo;
 
 	public LegadoContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
+		fichario = new LegadoFichario(this);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo, idPagina);
@@ -104,6 +105,10 @@ public class LegadoContainer extends AbstratoContainer implements PluginFichario
 		return null;
 	}
 
+	public void salvar() {
+		toolbar.salvar();
+	}
+
 	public int getIndice() {
 		return fichario.getIndiceAtivo();
 	}
@@ -125,7 +130,7 @@ public class LegadoContainer extends AbstratoContainer implements PluginFichario
 							|| ArquivoUtil.contem(LegadoConstantes.LEGADO, f.getName())) {
 						continue;
 					}
-					ordenados.add(new LegadoPagina(f));
+					ordenados.add(new LegadoPagina(fichario, f));
 				}
 				for (LegadoPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
@@ -240,7 +245,7 @@ public class LegadoContainer extends AbstratoContainer implements PluginFichario
 			}
 			try {
 				if (f.createNewFile()) {
-					LegadoPagina pagina = new LegadoPagina(f);
+					LegadoPagina pagina = new LegadoPagina(fichario, f);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {

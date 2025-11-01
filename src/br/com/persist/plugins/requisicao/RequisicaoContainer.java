@@ -52,7 +52,6 @@ import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador
 
 public class RequisicaoContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(RequisicaoConstantes.REQUISICOES);
-	private final RequisicaoFichario fichario = new RequisicaoFichario();
 	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final transient RequisicaoRota rota = new RequisicaoRota();
 	private static final Logger LOG = Logger.getGlobal();
@@ -60,9 +59,11 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private RequisicaoDialogo requisicaoDialogo;
+	private final RequisicaoFichario fichario;
 
 	public RequisicaoContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
+		fichario = new RequisicaoFichario(this);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -119,6 +120,10 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 		return null;
 	}
 
+	public void salvar() {
+		toolbar.salvar();
+	}
+
 	public int getIndice() {
 		return fichario.getIndiceAtivo();
 	}
@@ -148,7 +153,7 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(RequisicaoConstantes.REQUISICOES, f.getName())) {
 						continue;
 					}
-					ordenados.add(new RequisicaoPagina(poolVisualizador, rota, f));
+					ordenados.add(new RequisicaoPagina(fichario, poolVisualizador, rota, f));
 				}
 				for (RequisicaoPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
@@ -367,7 +372,7 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 			}
 			try {
 				if (f.createNewFile()) {
-					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
+					RequisicaoPagina pagina = new RequisicaoPagina(fichario, poolVisualizador, rota, f);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {

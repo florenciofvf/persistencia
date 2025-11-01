@@ -42,14 +42,15 @@ import br.com.persist.formulario.Formulario;
 
 public class AtributoContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(AtributoConstantes.ATRIBUTO);
-	private final AtributoFichario fichario = new AtributoFichario();
 	private static final long serialVersionUID = 1L;
 	private AtributoFormulario atributoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private AtributoDialogo atributoDialogo;
+	private final AtributoFichario fichario;
 
 	public AtributoContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
+		fichario = new AtributoFichario(this);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo, idPagina);
@@ -99,6 +100,10 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 		return null;
 	}
 
+	public void salvar() {
+		toolbar.salvar();
+	}
+
 	public int getIndice() {
 		return fichario.getIndiceAtivo();
 	}
@@ -120,7 +125,7 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 							|| ArquivoUtil.contem(AtributoConstantes.ATRIBUTO, f.getName())) {
 						continue;
 					}
-					ordenados.add(new AtributoPagina(f));
+					ordenados.add(new AtributoPagina(fichario, f));
 				}
 				for (AtributoPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
@@ -240,7 +245,7 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 			}
 			try {
 				if (f.createNewFile()) {
-					AtributoPagina pagina = new AtributoPagina(f);
+					AtributoPagina pagina = new AtributoPagina(fichario, f);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {

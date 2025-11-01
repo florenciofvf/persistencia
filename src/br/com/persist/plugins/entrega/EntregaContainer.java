@@ -42,14 +42,15 @@ import br.com.persist.formulario.Formulario;
 
 public class EntregaContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(EntregaConstantes.ENTREGAS);
-	private final EntregaFichario fichario = new EntregaFichario();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private EntregaFormulario entregaFormulario;
+	private final EntregaFichario fichario;
 	private EntregaDialogo entregaDialogo;
 
 	public EntregaContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
+		fichario = new EntregaFichario(this);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo, idPagina);
@@ -99,6 +100,10 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 		return null;
 	}
 
+	public void salvar() {
+		toolbar.salvar();
+	}
+
 	public int getIndice() {
 		return fichario.getIndiceAtivo();
 	}
@@ -120,7 +125,7 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 							|| ArquivoUtil.contem(EntregaConstantes.ENTREGAS, f.getName())) {
 						continue;
 					}
-					ordenados.add(new EntregaPagina(f));
+					ordenados.add(new EntregaPagina(fichario, f));
 				}
 				for (EntregaPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
@@ -240,7 +245,7 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 			}
 			try {
 				if (f.createNewFile()) {
-					EntregaPagina pagina = new EntregaPagina(f);
+					EntregaPagina pagina = new EntregaPagina(fichario, f);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {

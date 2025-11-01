@@ -25,6 +25,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 	private static final String DIFF_NULL = " != null";
 	private static final String DOT_THIS = ".this)";
 	private static final String STRING = "String";
+	private static final String SALVAR = "salvar";
 	private static final String LABEL = "LABEL_";
 
 	protected ContainerFicharioBuilder(Config config) {
@@ -77,11 +78,10 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 	void templateClass(ClassePublica classe) {
 		classe.addInstrucao(
 				"private static final File file = new File(" + config.nameCapConstantes() + "." + config.recurso + ")");
-		classe.addInstrucao(
-				"private final " + config.nameCapFichario() + " fichario = new " + config.nameCapFichario() + "()");
 		classe.addInstrucao("private static final long serialVersionUID = 1L");
 		classe.addInstrucao("private final Toolbar toolbar = new Toolbar()");
 		classe.addInstrucao("private " + config.nameCapFormulario() + " " + config.nameDecapFormulario());
+		classe.addInstrucao("private final " + config.nameCapFichario() + " fichario");
 		if (config.comDialogo) {
 			classe.addInstrucao("private " + config.nameCapDialogo() + " " + config.nameDecapDialogo());
 		}
@@ -90,6 +90,8 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 		construtor = classe.criarConstrutorPublico(config.nameCapContainer(),
 				new Parametros("Janela janela, Formulario formulario, String conteudo, String idPagina"));
 		construtor.addInstrucao("super(formulario)");
+		classe.addInstrucao("fichario = new " + config.nameCapFichario() + "(this)");
+
 		construtor.addInstrucao("toolbar.ini(janela)");
 		construtor.addInstrucao("montarLayout()");
 
@@ -154,6 +156,10 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 		funcao.addReturn("null");
 
 		classe.newLine();
+		funcao = classe.criarFuncaoPublica("void", SALVAR);
+		funcao.addInstrucao("toolbar.salvar()");
+
+		classe.newLine();
 		funcao = classe.criarFuncaoPublica("int", "getIndice");
 		funcao.addReturn("fichario.getIndiceAtivo()");
 
@@ -185,7 +191,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 				+ "Preferencia.isExibirArqIgnorados()) || ArquivoUtil.contem(" + config.nameCapConstantes() + "."
 				+ config.recurso + ", f.getName())", null);
 		se3.addInstrucao("continue");
-		loop1.addInstrucao("ordenados.add(new " + config.nameCapPagina() + "(f))");
+		loop1.addInstrucao("ordenados.add(new " + config.nameCapPagina() + "(fichario, f))");
 
 		For loop2 = se2.criarFor(config.nameCapPagina() + " pagina : ordenados");
 		loop2.addInstrucao("fichario.adicionarPagina(pagina)");
@@ -349,7 +355,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 
 		Try tre = funcao.criarTry(catche);
 		se = tre.criarIf("f.createNewFile()", null);
-		se.addInstrucao(config.nameCapPagina() + " pagina = new " + config.nameCapPagina() + "(f)");
+		se.addInstrucao(config.nameCapPagina() + " pagina = new " + config.nameCapPagina() + "(fichario, f)");
 		se.addInstrucao("fichario.adicionarPagina(pagina)");
 	}
 
@@ -361,14 +367,14 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 
 	private void salvar(ClassePrivada classe) {
 		classe.addOverride(true);
-		Funcao funcao = classe.criarFuncaoProtegida("void", "salvar");
+		Funcao funcao = classe.criarFuncaoProtegida("void", SALVAR);
 		funcao.addInstrucao(config.nameCapPagina() + ATIVA_PAGINA_ATIVA);
 
 		If se = funcao.criarIf(ATIVA_DIFF_NULL, null);
 		se.addInstrucao("salvar(ativa)");
 
 		classe.newLine();
-		funcao = classe.criarFuncaoPrivada("void", "salvar", new Parametros(config.nameCapPagina() + " ativa"));
+		funcao = classe.criarFuncaoPrivada("void", SALVAR, new Parametros(config.nameCapPagina() + " ativa"));
 		funcao.addInstrucao("AtomicBoolean atomic = new AtomicBoolean(false)");
 		funcao.addInstrucao("ativa.salvar(atomic)");
 		se = funcao.criarIf("atomic.get()", null);

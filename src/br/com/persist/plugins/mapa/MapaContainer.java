@@ -42,14 +42,15 @@ import br.com.persist.formulario.Formulario;
 
 public class MapaContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(MapaConstantes.MAPAS);
-	private final MapaFichario fichario = new MapaFichario();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private MapaFormulario mapaFormulario;
+	private final MapaFichario fichario;
 	private MapaDialogo mapaDialogo;
 
 	public MapaContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
+		fichario = new MapaFichario(this);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo, idPagina);
@@ -99,6 +100,10 @@ public class MapaContainer extends AbstratoContainer implements PluginFichario {
 		return null;
 	}
 
+	public void salvar() {
+		toolbar.salvar();
+	}
+
 	public int getIndice() {
 		return fichario.getIndiceAtivo();
 	}
@@ -120,7 +125,7 @@ public class MapaContainer extends AbstratoContainer implements PluginFichario {
 							|| ArquivoUtil.contem(MapaConstantes.MAPAS, f.getName())) {
 						continue;
 					}
-					ordenados.add(new MapaPagina(f));
+					ordenados.add(new MapaPagina(fichario, f));
 				}
 				for (MapaPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
@@ -240,7 +245,7 @@ public class MapaContainer extends AbstratoContainer implements PluginFichario {
 			}
 			try {
 				if (f.createNewFile()) {
-					MapaPagina pagina = new MapaPagina(f);
+					MapaPagina pagina = new MapaPagina(fichario, f);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {
