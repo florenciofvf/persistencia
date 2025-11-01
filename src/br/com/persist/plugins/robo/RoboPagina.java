@@ -46,13 +46,15 @@ public class RoboPagina extends Panel implements Aba {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
+	private final RoboFichario fichario;
 	private ScrollPane scrollPane;
 	private final File file;
 	private int indice;
 
-	public RoboPagina(File file, Formulario formulario) {
+	public RoboPagina(RoboFichario fichario, File file, Formulario formulario) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.formulario = formulario;
+		this.fichario = fichario;
 		this.file = file;
 		montarLayout();
 		abrir();
@@ -64,7 +66,7 @@ public class RoboPagina extends Panel implements Aba {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-		textEditor.setListener(e -> toolbar.focusInputPesquisar());
+		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
 	}
 
 	private Panel criarPanel() {

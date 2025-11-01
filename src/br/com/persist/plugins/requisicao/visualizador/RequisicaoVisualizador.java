@@ -43,7 +43,7 @@ public interface RequisicaoVisualizador {
 	public default BarraButton criarToolbarPesquisa(JTextPane textPane, TextEditor textEditor) {
 		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
 		if (textEditor != null) {
-			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 		}
 		return toolbarPesquisa;
 	}

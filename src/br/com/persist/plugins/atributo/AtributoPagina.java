@@ -70,12 +70,14 @@ public class AtributoPagina extends Panel implements Aba {
 	private static final long serialVersionUID = 1L;
 	private final PainelAtributo painelAtributo;
 	private final PainelFichario painelFichario;
+	private final AtributoFichario fichario;
 	private transient Raiz raiz;
 	private int indice;
 
-	public AtributoPagina(File file) {
+	public AtributoPagina(AtributoFichario fichario, File file) {
 		painelAtributo = new PainelAtributo(file);
 		painelFichario = new PainelFichario(this);
+		this.fichario = fichario;
 		montarLayout();
 		abrir();
 	}
@@ -158,7 +160,7 @@ public class AtributoPagina extends Panel implements Aba {
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-			textEditor.setListener(e -> toolbar.focusInputPesquisar());
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
 			return panel;
 		}
 
@@ -527,7 +529,7 @@ abstract class AbstratoPanel extends Panel {
 		if (comCheckModelo) {
 			toolbar.add(chkModeloLista);
 		}
-		textEditor.setListener(e -> toolbar.focusInputPesquisar());
+		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar));
 	}
 
 	void selecionarModeloLista(boolean b) {

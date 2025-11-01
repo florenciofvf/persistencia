@@ -37,12 +37,14 @@ public class EntregaPagina extends Panel implements Aba {
 	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private final EntregaFichario fichario;
 	private ScrollPane scrollPane;
 	private final File file;
 	private int indice;
 
-	public EntregaPagina(File file) {
+	public EntregaPagina(EntregaFichario fichario, File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		this.fichario = fichario;
 		this.file = file;
 		montarLayout();
 		abrir();
@@ -54,7 +56,7 @@ public class EntregaPagina extends Panel implements Aba {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-		textEditor.setListener(e -> toolbar.focusInputPesquisar());
+		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
 	}
 
 	private Panel criarPanel() {

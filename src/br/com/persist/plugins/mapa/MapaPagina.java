@@ -35,13 +35,15 @@ public class MapaPagina extends Panel implements Aba {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	private static final long serialVersionUID = 1L;
 	private final AbaText abaText = new AbaText();
+	private final MapaFichario fichario;
 	private final AbaView abaView;
 	private final File file;
 	private int indice;
 
-	public MapaPagina(File file) {
+	public MapaPagina(MapaFichario fichario, File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		abaView = new AbaView(file);
+		this.fichario = fichario;
 		this.file = file;
 		montarLayout();
 		abrir();
@@ -72,7 +74,7 @@ public class MapaPagina extends Panel implements Aba {
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-			textEditor.setListener(e -> toolbar.focusInputPesquisar());
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
 		}
 
 		int getValueScrollPane() {

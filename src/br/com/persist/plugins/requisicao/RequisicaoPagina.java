@@ -84,17 +84,20 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Tabela tabela = new Tabela();
+	private final RequisicaoFichario fichario;
 	private ScrollPane scrollPane;
 	private int indicePagina;
 	private JSplitPane split;
 	private final File file;
 	private int sleep;
 
-	public RequisicaoPagina(RequisicaoPoolVisualizador poolVisualizador, RequisicaoRota requisicaoRota, File file) {
+	public RequisicaoPagina(RequisicaoFichario fichario, RequisicaoPoolVisualizador poolVisualizador,
+			RequisicaoRota requisicaoRota, File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.addMouseListener(mouseListenerFichario);
 		this.poolVisualizador = poolVisualizador;
 		this.requisicaoRota = requisicaoRota;
+		this.fichario = fichario;
 		this.file = file;
 		montarLayout();
 		abrir(true);
@@ -312,7 +315,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-		textEditorReq.setListener(e -> toolbar.focusInputPesquisar());
+		textEditorReq.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
 	}
 
 	private Panel criarPanel() {
