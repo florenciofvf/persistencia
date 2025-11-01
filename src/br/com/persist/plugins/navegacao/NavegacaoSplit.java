@@ -489,7 +489,7 @@ class Aba extends Transferivel {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-		editor.setListener(e -> toolbar.focusInputPesquisar());
+		editor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar));
 	}
 
 	private Panel criarPanel() {
@@ -597,7 +597,7 @@ class Aba extends Transferivel {
 				setText(string);
 
 				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
-				textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+				textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 				add(BorderLayout.NORTH, toolbarPesquisa);
 				ScrollPane scrollPane2 = new ScrollPane(textEditor);
 				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
@@ -634,7 +634,7 @@ class Aba extends Transferivel {
 				setText(builder.toString());
 
 				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
-				textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+				textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 				add(BorderLayout.NORTH, toolbarPesquisa);
 				ScrollPane scrollPane2 = new ScrollPane(textEditor);
 				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
@@ -1326,7 +1326,7 @@ abstract class Visualizador extends Panel implements IVisualizador {
 	protected BarraButton criarToolbarPesquisa(JTextPane textPane, TextEditor textEditor) {
 		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
 		if (textEditor != null) {
-			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 		}
 		return toolbarPesquisa;
 	}

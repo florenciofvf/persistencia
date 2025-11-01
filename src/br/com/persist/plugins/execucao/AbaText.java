@@ -23,6 +23,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
 public class AbaText extends Panel {
@@ -44,7 +45,7 @@ public class AbaText extends Panel {
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-		editor.setListener(e -> toolbar.focusInputPesquisar());
+		editor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar));
 	}
 
 	int getValueScrollPane() {

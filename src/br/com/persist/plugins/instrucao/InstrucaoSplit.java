@@ -448,7 +448,7 @@ class Aba extends Transferivel {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-		editor.setListener(e -> toolbar.focusInputPesquisar());
+		editor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar));
 	}
 
 	private Panel criarPanel() {
@@ -481,7 +481,7 @@ class Aba extends Transferivel {
 
 		private PainelResultado() {
 			ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
-			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar));
 			add(BorderLayout.NORTH, toolbarPesquisa);
 			ScrollPane scrollPane2 = new ScrollPane(textEditor);
 			scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
