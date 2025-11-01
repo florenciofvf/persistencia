@@ -90,7 +90,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 		construtor = classe.criarConstrutorPublico(config.nameCapContainer(),
 				new Parametros("Janela janela, Formulario formulario, String conteudo, String idPagina"));
 		construtor.addInstrucao("super(formulario)");
-		classe.addInstrucao("fichario = new " + config.nameCapFichario() + "(this)");
+		construtor.addInstrucao("fichario = new " + config.nameCapFichario() + "(this)");
 
 		construtor.addInstrucao("toolbar.ini(janela)");
 		construtor.addInstrucao("montarLayout()");
