@@ -34,16 +34,17 @@ import br.com.persist.componente.TextEditorLine;
 public class MapaPagina extends Panel implements Aba {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	private static final long serialVersionUID = 1L;
-	private final AbaText abaText = new AbaText();
 	private final MapaFichario fichario;
+	private final AbaText abaText;
 	private final AbaView abaView;
 	private final File file;
 	private int indice;
 
 	public MapaPagina(MapaFichario fichario, File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		abaView = new AbaView(file);
 		this.fichario = fichario;
+		abaView = new AbaView(file);
+		abaText = new AbaText();
 		this.file = file;
 		montarLayout();
 		abrir();

@@ -75,9 +75,9 @@ public class AtributoPagina extends Panel implements Aba {
 	private int indice;
 
 	public AtributoPagina(AtributoFichario fichario, File file) {
+		this.fichario = fichario;
 		painelAtributo = new PainelAtributo(file);
 		painelFichario = new PainelFichario(this);
-		this.fichario = fichario;
 		montarLayout();
 		abrir();
 	}
