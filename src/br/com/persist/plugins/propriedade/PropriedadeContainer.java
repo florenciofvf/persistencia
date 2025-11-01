@@ -108,7 +108,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 		return panel;
 	}
 
-	private transient TextEditorListener listener = e -> toolbar.focusInputPesquisar();
+	private transient TextEditorListener listener = TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar);
 
 	private class FicharioInner extends TabbedPane {
 		private static final long serialVersionUID = 1L;
@@ -145,7 +145,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 
 		private PainelResultado() {
 			toolbarPesquisa = new ToolbarPesquisa(textEditor);
-			textEditor.setListener(e -> toolbarPesquisa.focusInputPesquisar());
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 			add(BorderLayout.NORTH, toolbarPesquisa);
 			ScrollPane scrollPane = new ScrollPane(textEditor);
 			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));

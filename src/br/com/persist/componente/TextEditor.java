@@ -31,7 +31,6 @@ import javax.swing.text.ViewFactory;
 
 public class TextEditor extends TextPane {
 	public static final Color COLOR_SEL = new Color(230, 240, 250);
-	private transient TextEditorSalvarListener salvarListener;
 	public static final Color COLOR_TAB = Color.LIGHT_GRAY;
 	public static final Color COLOR_RET = Color.LIGHT_GRAY;
 	private static final Logger LOG = Logger.getGlobal();
@@ -71,11 +70,19 @@ public class TextEditor extends TextPane {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (salvarListener != null) {
-				salvarListener.salvarConteudo(TextEditor.this);
+			if (listener != null) {
+				listener.salvarConteudo(TextEditor.this);
 			}
 		}
 	};
+
+	public static TextEditorListener newTextEditorAdapter(Runnable focus, Runnable salvar) {
+		return new TextEditorAdapter(focus, salvar);
+	}
+
+	public static TextEditorListener newTextEditorAdapter(Runnable focus) {
+		return new TextEditorAdapter(focus);
+	}
 
 	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
@@ -91,14 +98,6 @@ public class TextEditor extends TextPane {
 
 	public void setListener(TextEditorListener listener) {
 		this.listener = listener;
-	}
-
-	public TextEditorSalvarListener getSalvarListener() {
-		return salvarListener;
-	}
-
-	public void setSalvarListener(TextEditorSalvarListener salvarListener) {
-		this.salvarListener = salvarListener;
 	}
 
 	public static boolean isPaintERT() {

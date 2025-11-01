@@ -99,7 +99,7 @@ public class AmbienteContainer extends AbstratoContainer implements PluginBasico
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-		textEditor.setListener(e -> toolbar.focusInputPesquisar());
+		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar));
 	}
 
 	public String getConteudo() {
