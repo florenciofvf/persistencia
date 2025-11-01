@@ -11,9 +11,11 @@ import br.com.persist.componente.AbstratoFichario;
 
 public class MapaFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
+	private final MapaContainer container;
 
-	public MapaFichario() {
+	public MapaFichario(MapaContainer container) {
 		setTabPlacement(MapaPreferencia.getMapaPosicaoAbaFichario());
+		this.container = container;
 	}
 
 	public void adicionarPagina(MapaPagina pagina) {
@@ -38,6 +40,10 @@ public class MapaFichario extends AbstratoFichario {
 			return (MapaPagina) getComponentAt(indice);
 		}
 		return null;
+	}
+
+	public void salvar() {
+		container.salvar();
 	}
 
 	private MapaPagina getPagina(String idPagina) {

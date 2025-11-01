@@ -11,9 +11,11 @@ import br.com.persist.componente.AbstratoFichario;
 
 public class RoboFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
+	private final RoboContainer container;
 
-	public RoboFichario() {
+	public RoboFichario(RoboContainer container) {
 		setTabPlacement(RoboPreferencia.getRoboPosicaoAbaFichario());
+		this.container = container;
 	}
 
 	public void adicionarPagina(RoboPagina pagina) {
@@ -38,6 +40,10 @@ public class RoboFichario extends AbstratoFichario {
 			return (RoboPagina) getComponentAt(indice);
 		}
 		return null;
+	}
+
+	public void salvar() {
+		container.salvar();
 	}
 
 	private RoboPagina getPagina(String idPagina) {

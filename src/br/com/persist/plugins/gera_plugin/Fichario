@@ -11,10 +11,12 @@ import br.com.persist.componente.AbstratoFichario;
 
 public class ###nameCap###Fichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
+	private final ###nameCap###Container container;
 
-	public ###nameCap###Fichario() {
+	public ###nameCap###Fichario(###nameCap###Container container) {
 		setTabPlacement(###nameCap###Preferencia.get###nameCap###PosicaoAbaFichario());
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
+		this.container = container;
 	}
 
 	public void adicionarPagina(###nameCap###Pagina pagina) {
@@ -39,6 +41,10 @@ public class ###nameCap###Fichario extends AbstratoFichario {
 			return (###nameCap###Pagina) getComponentAt(indice);
 		}
 		return null;
+	}
+
+	public void salvar() {
+		container.salvar();
 	}
 
 	private ###nameCap###Pagina getPagina(String idPagina) {

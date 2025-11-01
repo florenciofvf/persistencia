@@ -11,9 +11,11 @@ import br.com.persist.componente.AbstratoFichario;
 
 public class LegadoFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
+	private final LegadoContainer container;
 
-	public LegadoFichario() {
+	public LegadoFichario(LegadoContainer container) {
 		setTabPlacement(LegadoPreferencia.getLegadoPosicaoAbaFichario());
+		this.container = container;
 	}
 
 	public void adicionarPagina(LegadoPagina pagina) {
@@ -38,6 +40,10 @@ public class LegadoFichario extends AbstratoFichario {
 			return (LegadoPagina) getComponentAt(indice);
 		}
 		return null;
+	}
+
+	public void salvar() {
+		container.salvar();
 	}
 
 	private LegadoPagina getPagina(String idPagina) {

@@ -11,9 +11,11 @@ import br.com.persist.componente.AbstratoFichario;
 
 public class AtributoFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;
+	private final AtributoContainer container;
 
-	public AtributoFichario() {
+	public AtributoFichario(AtributoContainer container) {
 		setTabPlacement(AtributoPreferencia.getAtributoPosicaoAbaFichario());
+		this.container = container;
 	}
 
 	public void adicionarPagina(AtributoPagina pagina) {
@@ -38,6 +40,10 @@ public class AtributoFichario extends AbstratoFichario {
 			return (AtributoPagina) getComponentAt(indice);
 		}
 		return null;
+	}
+
+	public void salvar() {
+		container.salvar();
 	}
 
 	private AtributoPagina getPagina(String idPagina) {
