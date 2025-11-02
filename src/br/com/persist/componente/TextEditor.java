@@ -50,8 +50,10 @@ public class TextEditor extends TextPane {
 	private void configurar() {
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_S), "salvar_conteudo");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_B), "baixar_conteudo");
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
 		getActionMap().put("salvar_conteudo", actionSalvarConteudo);
+		getActionMap().put("baixar_conteudo", actionBaixarConteudo);
 	}
 
 	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
@@ -76,8 +78,19 @@ public class TextEditor extends TextPane {
 		}
 	};
 
-	public static TextEditorListener newTextEditorAdapter(Runnable focus, Runnable salvar) {
-		return new TextEditorAdapter(focus, salvar);
+	private transient javax.swing.Action actionBaixarConteudo = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (listener != null) {
+				listener.baixarConteudo(TextEditor.this);
+			}
+		}
+	};
+
+	public static TextEditorListener newTextEditorAdapter(Runnable focus, Runnable salvar, Runnable baixar) {
+		return new TextEditorAdapter(focus, salvar, baixar);
 	}
 
 	public static TextEditorListener newTextEditorAdapter(Runnable focus) {
