@@ -116,7 +116,8 @@ public class UpdateContainer extends AbstratoContainer implements PluginBasico {
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
-		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar));
+		textEditor.setListener(
+				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
 	}
 
 	private void configurar() {

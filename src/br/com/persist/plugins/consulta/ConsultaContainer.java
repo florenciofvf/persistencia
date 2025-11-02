@@ -128,7 +128,8 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 		add(BorderLayout.CENTER, split);
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
-		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar));
+		textEditor.setListener(
+				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
 	}
 
 	private Panel criarPanelTabela() {

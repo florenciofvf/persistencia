@@ -109,7 +109,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 	}
 
 	private transient TextEditorListener listener = TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar,
-			toolbar::salvar);
+			toolbar::salvar, toolbar::baixar);
 
 	private class FicharioInner extends TabbedPane {
 		private static final long serialVersionUID = 1L;
