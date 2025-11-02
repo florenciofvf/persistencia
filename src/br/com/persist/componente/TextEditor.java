@@ -6,6 +6,9 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
@@ -29,8 +32,12 @@ import javax.swing.text.TabSet;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
+
 public class TextEditor extends TextPane {
 	public static final Color COLOR_SEL = new Color(230, 240, 250);
+	private final TextEditorPopup popup = new TextEditorPopup();
 	public static final Color COLOR_TAB = Color.LIGHT_GRAY;
 	public static final Color COLOR_RET = Color.LIGHT_GRAY;
 	private static final Logger LOG = Logger.getGlobal();
@@ -41,6 +48,7 @@ public class TextEditor extends TextPane {
 
 	public TextEditor() {
 		setHighlighter(new TextEditorHighlighter());
+		addMouseListener(mouseListenerInner);
 		setEditorKit(new TextEditorKit());
 		addCaretListener(this::processar);
 		caretRect = new Rectangle();
@@ -120,6 +128,44 @@ public class TextEditor extends TextPane {
 	public static void setPaintERT(boolean paintERT) {
 		TextEditor.paintERT = paintERT;
 	}
+
+	private class TextEditorPopup extends Popup {
+		private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
+		private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
+		private static final long serialVersionUID = 1L;
+
+		private TextEditorPopup() {
+			add(copiarAcao);
+			add(colarAcao);
+			copiarAcao.setActionListener(e -> copiar());
+			colarAcao.setActionListener(e -> colar());
+		}
+
+		private void copiar() {
+			String string = Util.getString(TextEditor.this);
+			Util.setContentTransfered(string);
+		}
+
+		private void colar() {
+			Util.getContentTransfered(TextEditor.this, false, false);
+		}
+	}
+
+	private final transient MouseListener mouseListenerInner = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				popup.show(TextEditor.this, e.getX(), e.getY());
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				popup.show(TextEditor.this, e.getX(), e.getY());
+			}
+		}
+	};
 
 	private void processar(CaretEvent e) {
 		TextUI textUI = getUI();
