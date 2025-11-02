@@ -489,7 +489,8 @@ class Aba extends Transferivel {
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-		editor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar));
+		editor.setListener(
+				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
 	}
 
 	private Panel criarPanel() {
