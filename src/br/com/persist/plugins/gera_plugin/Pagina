@@ -57,7 +57,7 @@ public class ###nameCap###Pagina extends Panel implements Aba {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
 		add(BorderLayout.CENTER, split);
-		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
+		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
 	}
 
 	private Panel criarPanel() {

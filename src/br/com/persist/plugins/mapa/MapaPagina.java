@@ -75,7 +75,8 @@ public class MapaPagina extends Panel implements Aba {
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
+			textEditor.setListener(
+					TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
 		}
 
 		int getValueScrollPane() {

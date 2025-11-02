@@ -315,7 +315,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
-		textEditorReq.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
+		textEditorReq.setListener(
+				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
 	}
 
 	private Panel criarPanel() {

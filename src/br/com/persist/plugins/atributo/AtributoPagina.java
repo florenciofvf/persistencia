@@ -160,7 +160,8 @@ public class AtributoPagina extends Panel implements Aba {
 			Panel panelScroll = new Panel();
 			panelScroll.add(BorderLayout.CENTER, scrollPane);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar));
+			textEditor.setListener(
+					TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
 			return panel;
 		}
 
