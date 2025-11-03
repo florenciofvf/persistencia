@@ -131,14 +131,20 @@ public class TextEditor extends TextPane {
 
 	private class TextEditorPopup extends Popup {
 		private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
-		private Action colarAcao = actionMenu("label.colar", Icones.COLAR);
+		private Action numeroAcao = actionMenu("label.numeros", Icones.COLAR);
+		private Action letraAcao = actionMenu("label.letras", Icones.COLAR);
+		private Action todosAcao = actionMenu("label.todos", Icones.COLAR);
 		private static final long serialVersionUID = 1L;
 
 		private TextEditorPopup() {
 			add(copiarAcao);
-			add(colarAcao);
+			addMenuItem(true, numeroAcao);
+			addMenuItem(letraAcao);
+			addMenuItem(todosAcao);
 			copiarAcao.setActionListener(e -> copiar());
-			colarAcao.setActionListener(e -> colar());
+			numeroAcao.setActionListener(e -> colar(true, false));
+			letraAcao.setActionListener(e -> colar(false, true));
+			todosAcao.setActionListener(e -> colar(false, false));
 		}
 
 		private void copiar() {
@@ -146,8 +152,8 @@ public class TextEditor extends TextPane {
 			Util.setContentTransfered(string);
 		}
 
-		private void colar() {
-			Util.getContentTransfered(TextEditor.this, false, false);
+		private void colar(boolean numeros, boolean letras) {
+			Util.getContentTransfered(TextEditor.this, numeros, letras);
 		}
 	}
 
