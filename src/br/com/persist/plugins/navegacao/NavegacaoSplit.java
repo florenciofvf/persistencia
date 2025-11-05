@@ -1512,9 +1512,11 @@ class VisualizadorJSON extends Visualizador {
 
 	private void config(BarraButton barraButton, Tipo json, JTextPane textPane) {
 		Action totalElemAction = Action.acaoIcon(RequisicaoMensagens.getString("label.total_elementos"), Icones.INFO);
-		Action comAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.com_atributos"), null);
-		Action semAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.sem_atributos"), null);
-		Action originalAction = Action.acaoMenu(RequisicaoMensagens.getString("label.original"), null);
+		Action comAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.com_atributos"),
+				Icones.EXECUTAR);
+		Action semAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.sem_atributos"),
+				Icones.EXECUTAR);
+		Action originalAction = Action.acaoMenu(RequisicaoMensagens.getString("label.original"), Icones.EXECUTAR);
 		TextField txtComAtributo = new TextField(15);
 		TextField txtVlrAtributo = new TextField(15);
 		TextField txtSemAtributo = new TextField(15);
