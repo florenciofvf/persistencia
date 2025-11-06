@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -53,6 +54,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	private final Toolbar toolbar = new Toolbar();
 	private ArquivoFormulario arquivoFormulario;
 	private final ArquivoTreeExt arquivoTreeExt;
+	private ArquivoDialogo arquivoDialogo;
 
 	public ArquivoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
@@ -62,10 +64,15 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		configurar();
 	}
 
-	private ArquivoModelo criarArquivoModeloRaiz() {
-		File ignorados = new File(file, ArquivoConstantes.IGNORADOS);
-		Arquivo raiz = new Arquivo(file, ArquivoUtil.lerArquivo(ignorados));
-		return new ArquivoModelo(raiz);
+	public ArquivoDialogo getArquivoDialogo() {
+		return arquivoDialogo;
+	}
+
+	public void setArquivoDialogo(ArquivoDialogo arquivoDialogo) {
+		this.arquivoDialogo = arquivoDialogo;
+		if (arquivoDialogo != null) {
+			arquivoFormulario = null;
+		}
 	}
 
 	public ArquivoFormulario getArquivoFormulario() {
@@ -74,6 +81,15 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	public void setArquivoFormulario(ArquivoFormulario arquivoFormulario) {
 		this.arquivoFormulario = arquivoFormulario;
+		if (arquivoFormulario != null) {
+			arquivoDialogo = null;
+		}
+	}
+
+	private ArquivoModelo criarArquivoModeloRaiz() {
+		File ignorados = new File(file, ArquivoConstantes.IGNORADOS);
+		Arquivo raiz = new Arquivo(file, ArquivoUtil.lerArquivo(ignorados));
+		return new ArquivoModelo(raiz);
 	}
 
 	private void montarLayout() {
@@ -155,6 +171,9 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(ArquivoContainer.this)) {
 				ArquivoFormulario.criar(formulario, ArquivoContainer.this);
+			} else if (arquivoDialogo != null) {
+				arquivoDialogo.excluirContainer();
+				ArquivoFormulario.criar(formulario, ArquivoContainer.this);
 			}
 		}
 
@@ -163,17 +182,29 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			if (arquivoFormulario != null) {
 				arquivoFormulario.excluirContainer();
 				formulario.adicionarPagina(ArquivoContainer.this);
+			} else if (arquivoDialogo != null) {
+				arquivoDialogo.excluirContainer();
+				formulario.adicionarPagina(ArquivoContainer.this);
 			}
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
+			if (arquivoDialogo != null) {
+				arquivoDialogo.excluirContainer();
+			}
 			ArquivoFormulario.criar(formulario);
 		}
 
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+			chkSempreTopArq.setEnabled(arquivoFormulario != null);
+		}
+
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
+			buttonDestacar.estadoDialogo();
 			chkSempreTopArq.setEnabled(arquivoFormulario != null);
 		}
 

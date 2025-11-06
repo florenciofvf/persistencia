@@ -10,6 +10,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +44,7 @@ public class OuvinteContainer extends AbstratoContainer implements PluginBasico 
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private OuvinteFormulario ouvinteFormulario;
+	private OuvinteDialogo ouvinteDialogo;
 	private File arquivo;
 
 	public OuvinteContainer(Janela janela, Formulario formulario) {
@@ -51,12 +53,26 @@ public class OuvinteContainer extends AbstratoContainer implements PluginBasico 
 		montarLayout();
 	}
 
+	public OuvinteDialogo getOuvinteDialogo() {
+		return ouvinteDialogo;
+	}
+
+	public void setOuvinteDialogo(OuvinteDialogo ouvinteDialogo) {
+		this.ouvinteDialogo = ouvinteDialogo;
+		if (ouvinteDialogo != null) {
+			ouvinteFormulario = null;
+		}
+	}
+
 	public OuvinteFormulario getOuvinteFormulario() {
 		return ouvinteFormulario;
 	}
 
 	public void setOuvinteFormulario(OuvinteFormulario ouvinteFormulario) {
 		this.ouvinteFormulario = ouvinteFormulario;
+		if (ouvinteFormulario != null) {
+			ouvinteDialogo = null;
+		}
 	}
 
 	private void montarLayout() {
@@ -109,6 +125,9 @@ public class OuvinteContainer extends AbstratoContainer implements PluginBasico 
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(OuvinteContainer.this)) {
 				OuvinteFormulario.criar(formulario, OuvinteContainer.this);
+			} else if (ouvinteDialogo != null) {
+				ouvinteDialogo.excluirContainer();
+				OuvinteFormulario.criar(formulario, OuvinteContainer.this);
 			}
 		}
 
@@ -117,17 +136,28 @@ public class OuvinteContainer extends AbstratoContainer implements PluginBasico 
 			if (ouvinteFormulario != null) {
 				ouvinteFormulario.excluirContainer();
 				formulario.adicionarPagina(OuvinteContainer.this);
+			} else if (ouvinteDialogo != null) {
+				ouvinteDialogo.excluirContainer();
+				formulario.adicionarPagina(OuvinteContainer.this);
 			}
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
+			if (ouvinteDialogo != null) {
+				ouvinteDialogo.excluirContainer();
+			}
 			OuvinteFormulario.criar(formulario);
 		}
 
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+		}
+
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
+			buttonDestacar.estadoDialogo();
 		}
 
 		void adicionadoAoFichario() {

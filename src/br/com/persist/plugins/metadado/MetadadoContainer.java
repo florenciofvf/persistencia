@@ -9,6 +9,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,6 +67,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
 	private final MetadadoTree metadadoTree;
+	private MetadadoDialogo metadadoDialogo;
 
 	public MetadadoContainer(Janela janela, Formulario formulario, Conexao conexao) throws ArgumentoException {
 		super(formulario);
@@ -77,12 +79,26 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		configurar();
 	}
 
+	public MetadadoDialogo getMetadadoDialogo() {
+		return metadadoDialogo;
+	}
+
+	public void setMetadadoDialogo(MetadadoDialogo metadadoDialogo) {
+		this.metadadoDialogo = metadadoDialogo;
+		if (metadadoDialogo != null) {
+			metadadoFormulario = null;
+		}
+	}
+
 	public MetadadoFormulario getMetadadoFormulario() {
 		return metadadoFormulario;
 	}
 
 	public void setMetadadoFormulario(MetadadoFormulario metadadoFormulario) {
 		this.metadadoFormulario = metadadoFormulario;
+		if (metadadoFormulario != null) {
+			metadadoDialogo = null;
+		}
 	}
 
 	private void montarLayout() {
@@ -160,6 +176,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(MetadadoContainer.this)) {
 				MetadadoFormulario.criar(formulario, MetadadoContainer.this);
+			} else if (metadadoDialogo != null) {
+				metadadoDialogo.excluirContainer();
+				MetadadoFormulario.criar(formulario, MetadadoContainer.this);
 			}
 		}
 
@@ -168,12 +187,18 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			if (metadadoFormulario != null) {
 				metadadoFormulario.excluirContainer();
 				formulario.adicionarPagina(MetadadoContainer.this);
+			} else if (metadadoDialogo != null) {
+				metadadoDialogo.excluirContainer();
+				formulario.adicionarPagina(MetadadoContainer.this);
 			}
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
 			try {
+				if (metadadoDialogo != null) {
+					metadadoDialogo.excluirContainer();
+				}
 				MetadadoFormulario.criar(formulario, (Conexao) null);
 			} catch (ArgumentoException ex) {
 				Util.mensagem(formulario, ex.getMessage());
@@ -183,6 +208,11 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+		}
+
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
+			buttonDestacar.estadoDialogo();
 		}
 
 		void adicionadoAoFichario() {

@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -57,6 +58,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	private final Toolbar toolbar = new Toolbar();
 	private AnexoFormulario anexoFormulario;
 	private final transient Desktop desktop;
+	private AnexoDialogo anexoDialogo;
 
 	public AnexoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
@@ -66,12 +68,26 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		configurar();
 	}
 
+	public AnexoDialogo getAnexoDialogo() {
+		return anexoDialogo;
+	}
+
+	public void setAnexoDialogo(AnexoDialogo anexoDialogo) {
+		this.anexoDialogo = anexoDialogo;
+		if (anexoDialogo != null) {
+			anexoFormulario = null;
+		}
+	}
+
 	public AnexoFormulario getAnexoFormulario() {
 		return anexoFormulario;
 	}
 
 	public void setAnexoFormulario(AnexoFormulario anexoFormulario) {
 		this.anexoFormulario = anexoFormulario;
+		if (anexoFormulario != null) {
+			anexoDialogo = null;
+		}
 	}
 
 	private void montarLayout() {
@@ -134,6 +150,9 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(AnexoContainer.this)) {
 				AnexoFormulario.criar(formulario, AnexoContainer.this);
+			} else if (anexoDialogo != null) {
+				anexoDialogo.excluirContainer();
+				AnexoFormulario.criar(formulario, AnexoContainer.this);
 			}
 		}
 
@@ -142,17 +161,29 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			if (anexoFormulario != null) {
 				anexoFormulario.excluirContainer();
 				formulario.adicionarPagina(AnexoContainer.this);
+			} else if (anexoDialogo != null) {
+				anexoDialogo.excluirContainer();
+				formulario.adicionarPagina(AnexoContainer.this);
 			}
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
+			if (anexoDialogo != null) {
+				anexoDialogo.excluirContainer();
+			}
 			AnexoFormulario.criar(formulario);
 		}
 
 		@Override
 		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
+			chkSempreTopAnex.setEnabled(anexoFormulario != null);
+		}
+
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
+			buttonDestacar.estadoDialogo();
 			chkSempreTopAnex.setEnabled(anexoFormulario != null);
 		}
 
