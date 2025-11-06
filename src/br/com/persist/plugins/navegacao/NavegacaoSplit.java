@@ -1522,7 +1522,10 @@ class VisualizadorJSON extends Visualizador {
 		TextField txtSemAtributo = new TextField(15);
 
 		comAtributoAction.setActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo, txtVlrAtributo));
+		txtComAtributo.addActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo, txtVlrAtributo));
+		txtVlrAtributo.addActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo, txtVlrAtributo));
 		semAtributoAction.setActionListener(e -> filtrarSemAtributo(json, textPane, txtSemAtributo));
+		txtSemAtributo.addActionListener(e -> filtrarSemAtributo(json, textPane, txtSemAtributo));
 		txtVlrAtributo.setToolTipText(NavegacaoMensagens.getString("label.valor_atributo"));
 		totalElemAction.setActionListener(e -> totalElementos(textPane));
 		originalAction.setActionListener(e -> retornar(json, textPane));
