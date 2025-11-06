@@ -57,10 +57,11 @@ public class OuvinteFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuOuvinte(Formulario formulario) {
-			super(Constantes.LABEL_VAZIO, Icones.PANEL, false);
+			super(Constantes.LABEL_VAZIO, Icones.PANEL);
 			setText(OuvinteMensagens.getString(OuvinteConstantes.LABEL_OUVINTE));
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new OuvinteContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> OuvinteFormulario.criar(formulario));
+			dialogoAcao.setActionListener(e -> OuvinteDialogo.criar(formulario));
 		}
 	}
 }

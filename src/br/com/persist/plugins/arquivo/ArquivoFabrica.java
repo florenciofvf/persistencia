@@ -60,11 +60,12 @@ public class ArquivoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuArquivo(Formulario formulario) {
-			super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
+			super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR);
 			addMenuItem(true, separadorAcao);
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new ArquivoContainer(null, formulario)));
 			separadorAcao.setActionListener(e -> formulario.adicionarPagina(new SeparadorArquivo()));
 			formularioAcao.setActionListener(e -> ArquivoFormulario.criar(formulario));
+			dialogoAcao.setActionListener(e -> ArquivoDialogo.criar(formulario));
 		}
 	}
 }

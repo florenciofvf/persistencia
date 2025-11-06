@@ -57,9 +57,10 @@ public class MetadadoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuMetadado(Formulario formulario) {
-			super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
+			super(Constantes.LABEL_METADADOS, Icones.CAMPOS);
 			ficharioAcao.setActionListener(e -> adicionarPagina(formulario));
-			formularioAcao.setActionListener(e -> criar(formulario));
+			formularioAcao.setActionListener(e -> criarForm(formulario));
+			dialogoAcao.setActionListener(e -> criarDialog(formulario));
 		}
 
 		private void adicionarPagina(Formulario formulario) {
@@ -70,9 +71,17 @@ public class MetadadoFabrica extends AbstratoFabricaContainer {
 			}
 		}
 
-		private void criar(Formulario formulario) {
+		private void criarForm(Formulario formulario) {
 			try {
 				MetadadoFormulario.criar(formulario, (Conexao) null);
+			} catch (ArgumentoException ex) {
+				Util.mensagem(formulario, ex.getMessage());
+			}
+		}
+
+		private void criarDialog(Formulario formulario) {
+			try {
+				MetadadoDialogo.criar(formulario, (Conexao) null);
 			} catch (ArgumentoException ex) {
 				Util.mensagem(formulario, ex.getMessage());
 			}

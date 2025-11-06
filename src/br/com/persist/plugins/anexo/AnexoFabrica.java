@@ -55,9 +55,10 @@ public class AnexoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuAnexo(Formulario formulario) {
-			super(Constantes.LABEL_ANEXOS, Icones.ANEXO, false);
+			super(Constantes.LABEL_ANEXOS, Icones.ANEXO);
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new AnexoContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> AnexoFormulario.criar(formulario));
+			dialogoAcao.setActionListener(e -> AnexoDialogo.criar(formulario));
 		}
 	}
 }
