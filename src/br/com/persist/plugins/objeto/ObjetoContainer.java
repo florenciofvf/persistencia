@@ -11,6 +11,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR_COMO;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
@@ -92,6 +93,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
 	private ObjetoFormulario objetoFormulario;
+	private ObjetoDialogo objetoDialogo;
 	private String tituloTemporario;
 	private String conexaoFile;
 	private File arquivo;
@@ -105,12 +107,26 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		configurar();
 	}
 
+	public ObjetoDialogo getObjetoDialogo() {
+		return objetoDialogo;
+	}
+
+	public void setObjetoDialogo(ObjetoDialogo objetoDialogo) {
+		this.objetoDialogo = objetoDialogo;
+		if (objetoDialogo != null) {
+			objetoFormulario = null;
+		}
+	}
+
 	public ObjetoFormulario getObjetoFormulario() {
 		return objetoFormulario;
 	}
 
 	public void setObjetoFormulario(ObjetoFormulario objetoFormulario) {
 		this.objetoFormulario = objetoFormulario;
+		if (objetoFormulario != null) {
+			objetoDialogo = null;
+		}
 	}
 
 	private void montarLayout() {
@@ -378,6 +394,9 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		protected void destacarEmFormulario() {
 			if (formulario.liberarPagina(ObjetoContainer.this)) {
 				ObjetoFormulario.criar(formulario, ObjetoContainer.this);
+			} else if (objetoDialogo != null) {
+				objetoDialogo.excluirContainer();
+				ObjetoFormulario.criar(formulario, ObjetoContainer.this);
 			}
 		}
 
@@ -385,6 +404,9 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		protected void retornarAoFichario() {
 			if (objetoFormulario != null) {
 				objetoFormulario.excluirContainer();
+				formulario.adicionarPagina(ObjetoContainer.this);
+			} else if (objetoDialogo != null) {
+				objetoDialogo.excluirContainer();
 				formulario.adicionarPagina(ObjetoContainer.this);
 			}
 		}
@@ -397,6 +419,9 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 				if (conexao != null) {
 					config = new InternalConfig(conexao.getNome());
 				}
+				if (objetoDialogo != null) {
+					objetoDialogo.excluirContainer();
+				}
 				ObjetoFabrica.abrirNoFormulario(formulario, getArquivo(), config);
 			} else {
 				Util.mensagem(ObjetoContainer.this, Mensagens.getString("msg.arquivo_inexistente"));
@@ -407,6 +432,16 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		public void windowOpenedHandler(Window window) {
 			if (objetoFormulario != null) {
 				buttonDestacar.estadoFormulario();
+			} else {
+				buttonDestacar.estadoFichario();
+			}
+			estadoSelecao();
+		}
+
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
+			if (objetoDialogo != null) {
+				buttonDestacar.estadoDialogo();
 			} else {
 				buttonDestacar.estadoFichario();
 			}

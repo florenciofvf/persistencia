@@ -196,11 +196,12 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuAbrir(Formulario formulario) {
-			super("label.abrir", Icones.ABRIR, false);
+			super("label.abrir", Icones.ABRIR);
 			formularioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
 			ficharioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
 			formularioAcao.setActionListener(e -> abrirEmFormulario(formulario));
 			ficharioAcao.setActionListener(e -> abrirNoFichario(formulario));
+			dialogoAcao.setActionListener(e -> abrirEmDialogo(formulario));
 		}
 
 		private void abrirNoFichario(Formulario formulario) {
@@ -219,6 +220,15 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			if (files != null) {
 				for (File file : files) {
 					abrirNoFormulario(formulario, file, null);
+				}
+			}
+		}
+
+		private void abrirEmDialogo(Formulario formulario) {
+			File[] files = getSelectedFiles(formulario, true);
+			if (files != null) {
+				for (File file : files) {
+					abrirNoDialogo(formulario, file, null);
 				}
 			}
 		}
@@ -243,6 +253,14 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			return;
 		}
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
+		form.abrirArquivo(file, config);
+	}
+
+	public static void abrirNoDialogo(Formulario formulario, File file, InternalConfig config) {
+		if (file == null || !file.isFile()) {
+			return;
+		}
+		ObjetoDialogo form = ObjetoDialogo.criar(formulario, file);
 		form.abrirArquivo(file, config);
 	}
 
