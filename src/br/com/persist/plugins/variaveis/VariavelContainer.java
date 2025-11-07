@@ -110,7 +110,7 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 			setColetor(coletor);
 			add(txtPesquisa);
 			add(chkPorParte);
-			chkPsqConteudo.setTag("TABELA");
+			chkPsqConteudo.setTag(Constantes.TABELA);
 			add(chkPsqConteudo);
 			add(label);
 		}

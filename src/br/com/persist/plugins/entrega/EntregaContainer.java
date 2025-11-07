@@ -151,7 +151,7 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 			addButton(excluirAtivoAcao);
 			add(txtPesquisa);
 			add(chkPorParte);
-			chkPsqConteudo.setTag("FICHARIO");
+			chkPsqConteudo.setTag(Constantes.FICHARIO);
 			add(chkPsqConteudo);
 			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());

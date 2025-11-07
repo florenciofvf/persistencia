@@ -111,7 +111,7 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 			setListener(listener);
 			add(txtPesquisa);
 			add(chkPorParte);
-			chkPsqConteudo.setTag("TABELA");
+			chkPsqConteudo.setTag(Constantes.TABELA);
 			add(chkPsqConteudo);
 			add(label);
 		}

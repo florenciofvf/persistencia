@@ -151,7 +151,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 			addButton(true, desconectaAcao);
 			add(txtPesquisa);
 			add(chkPorParte);
-			chkPsqConteudo.setTag("TABELA");
+			chkPsqConteudo.setTag(Constantes.TABELA);
 			add(chkPsqConteudo);
 			add(label);
 			eventos();

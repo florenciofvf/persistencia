@@ -157,7 +157,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 			addButton(executarAcao);
 			add(txtPesquisa);
 			add(chkPorParte);
-			chkPsqConteudo.setTag("FICHARIO");
+			chkPsqConteudo.setTag(Constantes.FICHARIO);
 			add(chkPsqConteudo);
 			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());

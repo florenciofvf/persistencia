@@ -113,7 +113,7 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 			setListener(listener);
 			add(txtPesquisa);
 			add(chkPorParte);
-			chkPsqConteudo.setTag("TABELA");
+			chkPsqConteudo.setTag(Constantes.TABELA);
 			add(chkPsqConteudo);
 			add(label);
 		}

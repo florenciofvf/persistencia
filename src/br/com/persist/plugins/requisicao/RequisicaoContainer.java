@@ -186,7 +186,7 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 			add(buttonRota);
 			add(txtPesquisa);
 			add(chkPorParte);
-			chkPsqConteudo.setTag("FICHARIO");
+			chkPsqConteudo.setTag(Constantes.FICHARIO);
 			add(chkPsqConteudo);
 			add(label);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());

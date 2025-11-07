@@ -525,9 +525,9 @@ public abstract class BarraButton extends JToolBar
 		} else if (comp == chkPorParte) {
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 		} else if (comp == chkPsqConteudo) {
-			if ("TABELA".equals(chkPsqConteudo.getTag())) {
+			if (Constantes.TABELA.equals(chkPsqConteudo.getTag())) {
 				chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo_tabela"));
-			} else if ("FICHARIO".equals(chkPsqConteudo.getTag())) {
+			} else if (Constantes.FICHARIO.equals(chkPsqConteudo.getTag())) {
 				chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo_fichario"));
 			} else {
 				chkPsqConteudo.setToolTipText(Mensagens.getString("msg.pesq_no_conteudo"));
