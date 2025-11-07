@@ -159,7 +159,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		funcao.addInstrucao("txtPesquisa.addActionListener(this)");
 		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("add(chkPorParte)");
-		funcao.addInstrucao("chkPsqConteudo.setTag(\"TABELA\")");
+		funcao.addInstrucao("chkPsqConteudo.setTag(Constantes.TABELA)");
 		funcao.addInstrucao("add(chkPsqConteudo)");
 		funcao.addInstrucao("add(label)");
 

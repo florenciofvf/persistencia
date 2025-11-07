@@ -214,7 +214,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 		funcao.addInstrucao("addButton(excluirAtivoAcao)");
 		funcao.addInstrucao("add(txtPesquisa)");
 		funcao.addInstrucao("add(chkPorParte)");
-		funcao.addInstrucao("chkPsqConteudo.setTag(\"FICHARIO\")");
+		funcao.addInstrucao("chkPsqConteudo.setTag(Constantes.FICHARIO)");
 		funcao.addInstrucao("add(chkPsqConteudo)");
 		funcao.addInstrucao("add(label)");
 		funcao.addInstrucao("excluirAtivoAcao.setActionListener(e -> excluirAtivo())");

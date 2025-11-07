@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.formulario.Formulario;
 
@@ -43,7 +44,7 @@ public class DesktopDialogo extends AbstratoDialogo {
 
 	public static DesktopDialogo criar(Formulario formulario) {
 		DesktopDialogo form = new DesktopDialogo(formulario);
-		Formulario.posicionarJanela(formulario, form);
+		Util.configSizeLocation(formulario, form, null);
 		return form;
 	}
 }
