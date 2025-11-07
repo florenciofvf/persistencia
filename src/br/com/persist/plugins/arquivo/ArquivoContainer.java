@@ -264,7 +264,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	public void abrirArquivoFormulario(ArquivoTreeExt arauivoTree) {
 		Arquivo arquivo = arauivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			formulario.processar(criarArgs(arquivo.getFile(), "FORM"));
+			formulario.processar(criarArgs(arquivo.getFile(), Constantes.FORM));
 		}
 	}
 
@@ -272,7 +272,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	public void abrirArquivoDialogo(ArquivoTreeExt arauivoTree) {
 		Arquivo arquivo = arauivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			formulario.processar(criarArgs(arquivo.getFile(), "DIALOG"));
+			formulario.processar(criarArgs(arquivo.getFile(), Constantes.DIALOG));
 		}
 	}
 
@@ -368,10 +368,10 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
 			if (toolbar.chkDuplicar.isSelected()) {
-				formulario.processar(criarArgs(arquivo.getFile(), "FICHARIO"));
+				formulario.processar(criarArgs(arquivo.getFile(), Constantes.FICHA));
 			} else {
 				if (!formulario.isAberto(arquivo.getFile())) {
-					formulario.processar(criarArgs(arquivo.getFile(), "FICHARIO"));
+					formulario.processar(criarArgs(arquivo.getFile(), Constantes.FICHA));
 				}
 			}
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));

@@ -99,13 +99,13 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			File file = (File) args.get(ArquivoEvento.ABRIR_ARQUIVO);
 			if (file != null) {
 				String tipoContainer = (String) args.get(ArquivoEvento.TIPO_CONTAINER);
-				if ("FICHARIO".equals(tipoContainer)) {
+				if (Constantes.FICHA.equals(tipoContainer)) {
 					Pagina pagina = getPaginaServico().criarPagina(formulario, file.getAbsolutePath());
 					ObjetoProvedor.setParentFile(file.getParentFile());
 					formulario.adicionarPagina(pagina);
-				} else if ("FORM".equals(tipoContainer)) {
+				} else if (Constantes.FORM.equals(tipoContainer)) {
 					abrirNoFormulario(formulario, file, null);
-				} else if ("DIALOG".equals(tipoContainer)) {
+				} else if (Constantes.DIALOG.equals(tipoContainer)) {
 					abrirNoDialogo(formulario, file, null);
 				}
 			}

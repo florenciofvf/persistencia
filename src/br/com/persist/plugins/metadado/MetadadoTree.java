@@ -297,16 +297,13 @@ public class MetadadoTree extends Tree {
 		}
 
 		private class MenuExportacao extends MenuPadrao1 {
-			private static final String FICHARIO = "FICHARIO";
 			private static final long serialVersionUID = 1L;
-			private static final String DIALOG = "DIALOG";
-			private static final String FORM = "FORM";
 
 			MenuExportacao() {
 				super("label.exportar", Icones.ABRIR);
-				formularioAcao.setActionListener(e -> initExportacao(FORM));
-				dialogoAcao.setActionListener(e -> initExportacao(DIALOG));
-				ficharioAcao.setActionListener(e -> initExportacao(FICHARIO));
+				formularioAcao.setActionListener(e -> initExportacao(Constantes.FORM));
+				dialogoAcao.setActionListener(e -> initExportacao(Constantes.DIALOG));
+				ficharioAcao.setActionListener(e -> initExportacao(Constantes.FICHA));
 			}
 
 			private void initExportacao(String tipoContainer) {
@@ -329,11 +326,11 @@ public class MetadadoTree extends Tree {
 			}
 
 			private String getTitulo(String tipoContainer) {
-				if (FORM.equals(tipoContainer)) {
+				if (Constantes.FORM.equals(tipoContainer)) {
 					return MetadadoMensagens.getString("label.exportar_objetos_form");
-				} else if (DIALOG.equals(tipoContainer)) {
+				} else if (Constantes.DIALOG.equals(tipoContainer)) {
 					return MetadadoMensagens.getString("label.exportar_objetos_dialog");
-				} else if (FICHARIO.equals(tipoContainer)) {
+				} else if (Constantes.FICHA.equals(tipoContainer)) {
 					return MetadadoMensagens.getString("label.exportar_objetos_fich");
 				}
 				return "???";
@@ -344,11 +341,11 @@ public class MetadadoTree extends Tree {
 					Metadado meta = metadado.getMetadado(i);
 					meta.setSelecionado(coletor.contem(meta.getDescricao()));
 				}
-				if (FORM.equals(tipoContainer)) {
+				if (Constantes.FORM.equals(tipoContainer)) {
 					ouvintes.forEach(o -> o.exportarFormArquivo(MetadadoTree.this));
-				} else if (DIALOG.equals(tipoContainer)) {
+				} else if (Constantes.DIALOG.equals(tipoContainer)) {
 					ouvintes.forEach(o -> o.exportarDialogArquivo(MetadadoTree.this));
-				} else if (FICHARIO.equals(tipoContainer)) {
+				} else if (Constantes.FICHA.equals(tipoContainer)) {
 					ouvintes.forEach(o -> o.exportarFichArquivo(MetadadoTree.this));
 				}
 			}
