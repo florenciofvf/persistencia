@@ -24,12 +24,12 @@ public class MenuPadrao1 extends Menu {
 
 	private void init() {
 		String[] strings = Preferencias.getFormFichaDialogo().split(",");
-		for (String s : strings) {
-			if (Constantes.FORM.equals(s)) {
+		for (String item : strings) {
+			if (Constantes.FORM.equals(item)) {
 				addMenuItem(formularioAcao);
-			} else if (Constantes.FICHA.equals(s)) {
+			} else if (Constantes.FICHA.equals(item)) {
 				addMenuItem(ficharioAcao);
-			} else if (Constantes.DIALOG.equals(s)) {
+			} else if (Constantes.DIALOG.equals(item)) {
 				addMenuItem(dialogoAcao);
 			}
 		}
