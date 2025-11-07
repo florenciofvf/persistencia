@@ -76,6 +76,8 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private class ObjetoServico extends AbstratoServico {
+		private static final String LABEL_ABRIR_EXPORTACAO = "label.abrir_exportacao";
+		private static final String LABEL_ABRIR_IMPORTACAO = "label.abrir_importacao";
 		private static final String LABEL_EXPORTAR = "label.exportar";
 
 		@Override
@@ -119,10 +121,14 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 				boolean circular = Boolean.TRUE.equals(boolCircular);
 				if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM.equals(metodo)) {
 					abrirExportacaoMetadadoFormulario(formulario, conexao, metadado, circular);
+				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_DIALOG.equals(metodo)) {
+					abrirExportacaoMetadadoDialogo(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH.equals(metodo)) {
 					abrirExportacaoMetadadoFichario(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
 					abrirImportacaoMetadadoFormulario(formulario, conexao, metadado, circular);
+				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_DIALOG.equals(metodo)) {
+					abrirImportacaoMetadadoDialogo(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FICH.equals(metodo)) {
 					abrirImportacaoMetadadoFichario(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
@@ -141,7 +147,14 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void abrirExportacaoMetadadoFormulario(Formulario formulario, Conexao conexao, Metadado metadado,
 				boolean circular) throws MetadadoException, ObjetoException, AssistenciaException {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
-					new File(ObjetoMensagens.getString("label.abrir_exportacao")));
+					new File(ObjetoMensagens.getString(LABEL_ABRIR_EXPORTACAO)));
+			form.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
+		}
+
+		private void abrirExportacaoMetadadoDialogo(Formulario formulario, Conexao conexao, Metadado metadado,
+				boolean circular) throws MetadadoException, ObjetoException, AssistenciaException {
+			ObjetoDialogo form = ObjetoDialogo.criar(formulario,
+					new File(ObjetoMensagens.getString(LABEL_ABRIR_EXPORTACAO)));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
 		}
 
@@ -151,7 +164,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			AtomicReference<String> tituloTemp = new AtomicReference<>();
 			container.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular, tituloTemp);
 			if (Util.isEmpty(tituloTemp.get())) {
-				container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
+				container.setTituloTemporario(ObjetoMensagens.getString(LABEL_ABRIR_EXPORTACAO));
 			}
 			formulario.adicionarPagina(container);
 		}
@@ -159,7 +172,14 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void abrirImportacaoMetadadoFormulario(Formulario formulario, Conexao conexao, Metadado metadado,
 				boolean circular) throws MetadadoException, ObjetoException, AssistenciaException {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
-					new File(ObjetoMensagens.getString("label.abrir_importacao")));
+					new File(ObjetoMensagens.getString(LABEL_ABRIR_IMPORTACAO)));
+			form.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
+		}
+
+		private void abrirImportacaoMetadadoDialogo(Formulario formulario, Conexao conexao, Metadado metadado,
+				boolean circular) throws MetadadoException, ObjetoException, AssistenciaException {
+			ObjetoDialogo form = ObjetoDialogo.criar(formulario,
+					new File(ObjetoMensagens.getString(LABEL_ABRIR_IMPORTACAO)));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
 		}
 
@@ -169,7 +189,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			AtomicReference<String> tituloTemp = new AtomicReference<>();
 			container.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular, tituloTemp);
 			if (Util.isEmpty(tituloTemp.get())) {
-				container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
+				container.setTituloTemporario(ObjetoMensagens.getString(LABEL_ABRIR_IMPORTACAO));
 			}
 			formulario.adicionarPagina(container);
 		}

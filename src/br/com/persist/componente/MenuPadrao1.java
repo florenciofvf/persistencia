@@ -13,38 +13,24 @@ public class MenuPadrao1 extends Menu {
 	protected Action dialogoAcao = Action.actionMenuDialogo();
 	private static final long serialVersionUID = 1L;
 
-	public MenuPadrao1(String rotulo, boolean chaveRotulo, Icon icon, boolean dialogo) {
+	public MenuPadrao1(String rotulo, boolean chaveRotulo, Icon icon) {
 		super(rotulo, chaveRotulo, icon);
-		init(dialogo);
-	}
-
-	public MenuPadrao1(String chaveRotulo, Icon icon, boolean dialogo) {
-		this(chaveRotulo, true, icon, dialogo);
+		init();
 	}
 
 	public MenuPadrao1(String chaveRotulo, Icon icon) {
-		this(chaveRotulo, icon, true);
+		this(chaveRotulo, true, icon);
 	}
 
-	private void init(boolean dialogo) {
+	private void init() {
 		String[] strings = Preferencias.getFormFichaDialogo().split(",");
-		if (dialogo) {
-			for (String s : strings) {
-				if (Constantes.FORM.equals(s)) {
-					addMenuItem(formularioAcao);
-				} else if (Constantes.FICHA.equals(s)) {
-					addMenuItem(ficharioAcao);
-				} else if (Constantes.DIALOG.equals(s)) {
-					addMenuItem(dialogoAcao);
-				}
-			}
-		} else {
-			for (String s : strings) {
-				if (Constantes.FORM.equals(s)) {
-					addMenuItem(formularioAcao);
-				} else if (Constantes.FICHA.equals(s)) {
-					addMenuItem(ficharioAcao);
-				}
+		for (String s : strings) {
+			if (Constantes.FORM.equals(s)) {
+				addMenuItem(formularioAcao);
+			} else if (Constantes.FICHA.equals(s)) {
+				addMenuItem(ficharioAcao);
+			} else if (Constantes.DIALOG.equals(s)) {
+				addMenuItem(dialogoAcao);
 			}
 		}
 	}

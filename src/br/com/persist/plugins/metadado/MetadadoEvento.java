@@ -3,9 +3,11 @@ package br.com.persist.plugins.metadado;
 import br.com.persist.assistencia.Evento;
 
 public class MetadadoEvento implements Evento {
+	public static final String ABRIR_EXPORTACAO_METADADO_DIALOG = "abrirExportacaoMetadadoDialog";
+	public static final String ABRIR_IMPORTACAO_METADADO_DIALOG = "abrirImportacaoMetadadoDialog";
 	public static final String ABRIR_EXPORTACAO_METADADO_FORM = "abrirExportacaoMetadadoForm";
-	public static final String ABRIR_EXPORTACAO_METADADO_FICH = "abrirExportacaoMetadadoFich";
 	public static final String ABRIR_IMPORTACAO_METADADO_FORM = "abrirImportacaoMetadadoForm";
+	public static final String ABRIR_EXPORTACAO_METADADO_FICH = "abrirExportacaoMetadadoFich";
 	public static final String ABRIR_IMPORTACAO_METADADO_FICH = "abrirImportacaoMetadadoFich";
 	public static final String EXPORTAR_METADADO_RAIZ_DIALOG = "exportarMetadadoRaizDialog";
 	public static final String EXPORTAR_METADADO_RAIZ_FORM = "exportarMetadadoRaizForm";

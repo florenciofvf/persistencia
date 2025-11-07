@@ -55,7 +55,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final Button buttonConectaDesconecta = new Button();
 	private final TextField txtDefinirAltura = new TextField();
 	private final TextField txtFormDialogo = new TextField();
-	private final TextField txtFormFicha = new TextField();
 	private static final long serialVersionUID = 1L;
 	private final transient NomeValor[] posicoes = {
 			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
@@ -95,7 +94,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtDimensaoMensagem.setText(Preferencias.getDimensaoMensagem());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
-		txtFormFicha.setText(Preferencias.getFormFicha());
 
 		Font font = Preferencias.getFontPreferencia();
 		if (font != null) {
@@ -111,7 +109,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		muro.camada(
 				Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
 						new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
-						new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha),
 						new PanelCenter(criarLabel("label.dimensao_mensagem"), txtDimensaoMensagem)));
 		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
@@ -164,7 +161,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		chkAplicarAlturaAoAbrirArquivo.addActionListener(
 				e -> Preferencias.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivo.isSelected()));
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
-		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
 		buttonConectaDesconecta.addActionListener(e -> buttonConectaDesconectaHandler());
 		txtDefinirLargura.addActionListener(e -> definirLargura());
 		txtDefinirAltura.addActionListener(e -> definirAltura());
@@ -184,12 +180,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			@Override
 			public void focusLost(FocusEvent e) {
 				Preferencias.setFormDialogo(txtFormDialogo.getText());
-			}
-		});
-		txtFormFicha.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				Preferencias.setFormFicha(txtFormFicha.getText());
 			}
 		});
 		buttonAplicarLA.addActionListener(e -> {

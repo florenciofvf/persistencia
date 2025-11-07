@@ -3,11 +3,15 @@ package br.com.persist.plugins.metadado;
 import br.com.persist.assistencia.AssistenciaException;
 
 public interface MetadadoTreeListener {
+	public void abrirExportacaoDialogArquivo(MetadadoTree metadadoTree, boolean circular);
+
+	public void abrirImportacaoDialogArquivo(MetadadoTree metadadoTree, boolean circular);
+
 	public void abrirExportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular);
 
-	public void abrirExportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular);
-
 	public void abrirImportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular);
+
+	public void abrirExportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular);
 
 	public void abrirImportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular);
 

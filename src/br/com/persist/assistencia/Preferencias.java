@@ -53,7 +53,6 @@ public class Preferencias {
 	private static boolean tituloAbaMin;
 	private static boolean desconectado;
 	private static String formDialogo;
-	private static String formFicha;
 	private static Color corCopiado;
 
 	private Preferencias() {
@@ -86,7 +85,6 @@ public class Preferencias {
 		getObjetosBanco = pref.get("get_objetos_banco", "TABLE");
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
-		formFicha = pref.get("form_ficha", "FORM,FICHA");
 		if (Util.isEmpty(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
 		}
@@ -98,9 +96,6 @@ public class Preferencias {
 		}
 		if (Util.isEmpty(formDialogo)) {
 			formDialogo = "FORM,DIALOG";
-		}
-		if (Util.isEmpty(formFicha)) {
-			formFicha = "FORM,FICHA";
 		}
 		abrirOutras();
 	}
@@ -136,7 +131,6 @@ public class Preferencias {
 		pref.put("get_objetos_banco", getObjetosBanco);
 		pref.put(DIMENSAO_MENSAGEM, dimensaoMensagem);
 		pref.put("form_dialogo", formDialogo);
-		pref.put("form_ficha", formFicha);
 		salvarOutras();
 	}
 
@@ -264,14 +258,6 @@ public class Preferencias {
 
 	public static void setFormDialogo(String formDialogo) {
 		Preferencias.formDialogo = formDialogo;
-	}
-
-	public static String getFormFicha() {
-		return formFicha;
-	}
-
-	public static void setFormFicha(String formFicha) {
-		Preferencias.formFicha = formFicha;
 	}
 
 	public static boolean isTituloAbaMin() {

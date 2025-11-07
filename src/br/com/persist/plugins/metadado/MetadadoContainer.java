@@ -615,6 +615,16 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
+	public void abrirExportacaoDialogArquivo(MetadadoTree metadadoTree, boolean circular) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		if (ehValido(metadado)) {
+			Map<String, Object> args = criarArgs(metadado, MetadadoEvento.ABRIR_EXPORTACAO_METADADO_DIALOG);
+			args.put(MetadadoEvento.CIRCULAR, circular);
+			formulario.processar(args);
+		}
+	}
+
+	@Override
 	public void abrirExportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (ehValido(metadado)) {
@@ -629,6 +639,16 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (ehValido(metadado)) {
 			Map<String, Object> args = criarArgs(metadado, MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM);
+			args.put(MetadadoEvento.CIRCULAR, circular);
+			formulario.processar(args);
+		}
+	}
+
+	@Override
+	public void abrirImportacaoDialogArquivo(MetadadoTree metadadoTree, boolean circular) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		if (ehValido(metadado)) {
+			Map<String, Object> args = criarArgs(metadado, MetadadoEvento.ABRIR_IMPORTACAO_METADADO_DIALOG);
 			args.put(MetadadoEvento.CIRCULAR, circular);
 			formulario.processar(args);
 		}

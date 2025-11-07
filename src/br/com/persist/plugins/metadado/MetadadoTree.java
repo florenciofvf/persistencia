@@ -358,9 +358,11 @@ public class MetadadoTree extends Tree {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirExportacaoC() {
-				super(MetadadoMensagens.getString("label.abrir_exportacao_c"), false, Icones.ABRIR, false);
+				super(MetadadoMensagens.getString("label.abrir_exportacao_c"), false, Icones.ABRIR);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, true)));
+				dialogoAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoDialogArquivo(MetadadoTree.this, true)));
 				ficharioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, true)));
 			}
@@ -370,9 +372,11 @@ public class MetadadoTree extends Tree {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirExportacaoH() {
-				super(MetadadoMensagens.getString("label.abrir_exportacao_h"), false, Icones.ABRIR, false);
+				super(MetadadoMensagens.getString("label.abrir_exportacao_h"), false, Icones.ABRIR);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, false)));
+				dialogoAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoDialogArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, false)));
 			}
@@ -382,9 +386,11 @@ public class MetadadoTree extends Tree {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirImportacaoC() {
-				super(MetadadoMensagens.getString("label.abrir_importacao_c"), false, Icones.ABRIR, false);
+				super(MetadadoMensagens.getString("label.abrir_importacao_c"), false, Icones.ABRIR);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, true)));
+				dialogoAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirImportacaoDialogArquivo(MetadadoTree.this, true)));
 				ficharioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(MetadadoTree.this, true)));
 			}
@@ -394,9 +400,11 @@ public class MetadadoTree extends Tree {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirImportacaoH() {
-				super(MetadadoMensagens.getString("label.abrir_importacao_h"), false, Icones.ABRIR, false);
+				super(MetadadoMensagens.getString("label.abrir_importacao_h"), false, Icones.ABRIR);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, false)));
+				dialogoAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirImportacaoDialogArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(MetadadoTree.this, false)));
 			}
