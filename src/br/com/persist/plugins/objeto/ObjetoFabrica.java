@@ -156,6 +156,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			ObjetoDialogo form = ObjetoDialogo.criar(formulario,
 					new File(ObjetoMensagens.getString(LABEL_ABRIR_EXPORTACAO)));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
+			form.setVisible(true);
 		}
 
 		private void abrirExportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
@@ -181,6 +182,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			ObjetoDialogo form = ObjetoDialogo.criar(formulario,
 					new File(ObjetoMensagens.getString(LABEL_ABRIR_IMPORTACAO)));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
+			form.setVisible(true);
 		}
 
 		private void abrirImportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
@@ -203,6 +205,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void exportarMetadadoRaizDialogo(Formulario formulario, Metadado metadado) throws AssistenciaException {
 			ObjetoDialogo form = ObjetoDialogo.criar(formulario, new File(Mensagens.getString(LABEL_EXPORTAR)));
 			form.exportarMetadadoRaiz(metadado);
+			form.setVisible(true);
 		}
 
 		private void exportarMetadadoRaizFichario(Formulario formulario, Metadado metadado)
@@ -294,6 +297,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		}
 		ObjetoDialogo form = ObjetoDialogo.criar(formulario, file);
 		form.abrirArquivo(file, config);
+		form.setVisible(true);
 	}
 
 	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, InternalConfig config) {

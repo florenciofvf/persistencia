@@ -47,7 +47,7 @@ public class ObjetoDialogo extends AbstratoDialogo {
 
 	public static ObjetoDialogo criar(Formulario formulario, File file) {
 		ObjetoDialogo form = new ObjetoDialogo(formulario, file);
-		Formulario.posicionarJanela(formulario, form);
+		Util.configSizeLocation(formulario, form, null);
 		return form;
 	}
 
