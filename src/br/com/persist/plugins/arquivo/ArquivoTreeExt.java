@@ -200,7 +200,7 @@ public class ArquivoTreeExt extends ArquivoTree {
 			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {
-				super("label.abrir", Icones.ABRIR, false);
+				super("label.abrir", Icones.ABRIR);
 				addSeparator();
 				addMenuItem(diretorioAcao);
 				addMenuItem(conteudoAcao);
@@ -208,6 +208,7 @@ public class ArquivoTreeExt extends ArquivoTree {
 				addMenuItem(clonarAcao);
 				formularioAcao
 						.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFormulario(ArquivoTreeExt.this)));
+				dialogoAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoDialogo(ArquivoTreeExt.this)));
 				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTreeExt.this)));
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTreeExt.this)));
 				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoArquivo(ArquivoTreeExt.this)));

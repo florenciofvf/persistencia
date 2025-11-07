@@ -297,15 +297,19 @@ public class MetadadoTree extends Tree {
 		}
 
 		private class MenuExportacao extends MenuPadrao1 {
+			private static final String FICHARIO = "FICHARIO";
 			private static final long serialVersionUID = 1L;
+			private static final String DIALOG = "DIALOG";
+			private static final String FORM = "FORM";
 
 			MenuExportacao() {
-				super("label.exportar", Icones.ABRIR, false);
-				formularioAcao.setActionListener(e -> initExportacao(true));
-				ficharioAcao.setActionListener(e -> initExportacao(false));
+				super("label.exportar", Icones.ABRIR);
+				formularioAcao.setActionListener(e -> initExportacao(FORM));
+				dialogoAcao.setActionListener(e -> initExportacao(DIALOG));
+				ficharioAcao.setActionListener(e -> initExportacao(FICHARIO));
 			}
 
-			private void initExportacao(boolean form) {
+			private void initExportacao(String tipoContainer) {
 				Metadado metadado = getObjetoSelecionado();
 				if (metadado == null) {
 					return;
@@ -317,23 +321,34 @@ public class MetadadoTree extends Tree {
 					meta.setSelecionado(true);
 				}
 				Coletor coletor = new Coletor();
-				SetLista.view(
-						form ? MetadadoMensagens.getString("label.exportar_objetos_form")
-								: MetadadoMensagens.getString("label.exportar_objetos_fich"),
-						nomes, coletor, MetadadoTree.this, new SetLista.Config(true, false));
+				SetLista.view(getTitulo(tipoContainer), nomes, coletor, MetadadoTree.this,
+						new SetLista.Config(true, false));
 				if (!coletor.estaVazio()) {
-					exportar(coletor, metadado, form);
+					exportar(coletor, metadado, tipoContainer);
 				}
 			}
 
-			private void exportar(Coletor coletor, Metadado metadado, boolean form) {
+			private String getTitulo(String tipoContainer) {
+				if (FORM.equals(tipoContainer)) {
+					return MetadadoMensagens.getString("label.exportar_objetos_form");
+				} else if (DIALOG.equals(tipoContainer)) {
+					return MetadadoMensagens.getString("label.exportar_objetos_dialog");
+				} else if (FICHARIO.equals(tipoContainer)) {
+					return MetadadoMensagens.getString("label.exportar_objetos_fich");
+				}
+				return "???";
+			}
+
+			private void exportar(Coletor coletor, Metadado metadado, String tipoContainer) {
 				for (int i = 0; i < metadado.getTotal(); i++) {
 					Metadado meta = metadado.getMetadado(i);
 					meta.setSelecionado(coletor.contem(meta.getDescricao()));
 				}
-				if (form) {
+				if (FORM.equals(tipoContainer)) {
 					ouvintes.forEach(o -> o.exportarFormArquivo(MetadadoTree.this));
-				} else {
+				} else if (DIALOG.equals(tipoContainer)) {
+					ouvintes.forEach(o -> o.exportarDialogArquivo(MetadadoTree.this));
+				} else if (FICHARIO.equals(tipoContainer)) {
 					ouvintes.forEach(o -> o.exportarFichArquivo(MetadadoTree.this));
 				}
 			}

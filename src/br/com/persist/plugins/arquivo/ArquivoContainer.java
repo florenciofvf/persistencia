@@ -264,14 +264,22 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	public void abrirArquivoFormulario(ArquivoTreeExt arauivoTree) {
 		Arquivo arquivo = arauivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			formulario.processar(criarArgs(arquivo.getFile(), false));
+			formulario.processar(criarArgs(arquivo.getFile(), "FORM"));
 		}
 	}
 
-	private Map<String, Object> criarArgs(File file, Boolean fichario) {
+	@Override
+	public void abrirArquivoDialogo(ArquivoTreeExt arauivoTree) {
+		Arquivo arquivo = arauivoTree.getObjetoSelecionado();
+		if (arquivo != null) {
+			formulario.processar(criarArgs(arquivo.getFile(), "DIALOG"));
+		}
+	}
+
+	private Map<String, Object> criarArgs(File file, String tipoContainer) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(ArquivoEvento.ABRIR_ARQUIVO, file);
-		args.put(ArquivoEvento.FICHARIO, fichario);
+		args.put(ArquivoEvento.TIPO_CONTAINER, tipoContainer);
 		return args;
 	}
 
@@ -360,10 +368,10 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
 			if (toolbar.chkDuplicar.isSelected()) {
-				formulario.processar(criarArgs(arquivo.getFile(), true));
+				formulario.processar(criarArgs(arquivo.getFile(), "FICHARIO"));
 			} else {
 				if (!formulario.isAberto(arquivo.getFile())) {
-					formulario.processar(criarArgs(arquivo.getFile(), true));
+					formulario.processar(criarArgs(arquivo.getFile(), "FICHARIO"));
 				}
 			}
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));

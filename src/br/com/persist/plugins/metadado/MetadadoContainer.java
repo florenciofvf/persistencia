@@ -653,6 +653,14 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
+	public void exportarDialogArquivo(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		if (metadado != null) {
+			formulario.processar(criarArgs(metadado, MetadadoEvento.EXPORTAR_METADADO_RAIZ_DIALOG));
+		}
+	}
+
+	@Override
 	public void exportarFichArquivo(MetadadoTree metadadoTree) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {

@@ -76,6 +76,8 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private class ObjetoServico extends AbstratoServico {
+		private static final String LABEL_EXPORTAR = "label.exportar";
+
 		@Override
 		public void windowOpenedHandler(Window window) {
 			MacroProvedor.inicializar();
@@ -94,13 +96,15 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void checarArquivo(Formulario formulario, Map<String, Object> args) {
 			File file = (File) args.get(ArquivoEvento.ABRIR_ARQUIVO);
 			if (file != null) {
-				Boolean fichario = (Boolean) args.get(ArquivoEvento.FICHARIO);
-				if (Boolean.TRUE.equals(fichario)) {
+				String tipoContainer = (String) args.get(ArquivoEvento.TIPO_CONTAINER);
+				if ("FICHARIO".equals(tipoContainer)) {
 					Pagina pagina = getPaginaServico().criarPagina(formulario, file.getAbsolutePath());
 					ObjetoProvedor.setParentFile(file.getParentFile());
 					formulario.adicionarPagina(pagina);
-				} else {
+				} else if ("FORM".equals(tipoContainer)) {
 					abrirNoFormulario(formulario, file, null);
+				} else if ("DIALOG".equals(tipoContainer)) {
+					abrirNoDialogo(formulario, file, null);
 				}
 			}
 		}
@@ -124,6 +128,9 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
 					exportarMetadadoRaizFormulario(formulario, metadado);
+				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_DIALOG.equals(metodo) && metadado.getEhRaiz()
+						&& !metadado.estaVazio()) {
+					exportarMetadadoRaizDialogo(formulario, metadado);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FICH.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
 					exportarMetadadoRaizFichario(formulario, metadado);
@@ -169,7 +176,12 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		private void exportarMetadadoRaizFormulario(Formulario formulario, Metadado metadado)
 				throws AssistenciaException {
-			ObjetoFormulario form = ObjetoFormulario.criar(formulario, new File(Mensagens.getString("label.exportar")));
+			ObjetoFormulario form = ObjetoFormulario.criar(formulario, new File(Mensagens.getString(LABEL_EXPORTAR)));
+			form.exportarMetadadoRaiz(metadado);
+		}
+
+		private void exportarMetadadoRaizDialogo(Formulario formulario, Metadado metadado) throws AssistenciaException {
+			ObjetoDialogo form = ObjetoDialogo.criar(formulario, new File(Mensagens.getString(LABEL_EXPORTAR)));
 			form.exportarMetadadoRaiz(metadado);
 		}
 
@@ -177,7 +189,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 				throws AssistenciaException {
 			ObjetoContainer container = criarObjetoContainer(formulario);
 			container.exportarMetadadoRaiz(metadado);
-			container.setTituloTemporario(Mensagens.getString("label.exportar"));
+			container.setTituloTemporario(Mensagens.getString(LABEL_EXPORTAR));
 			formulario.adicionarPagina(container);
 		}
 	}

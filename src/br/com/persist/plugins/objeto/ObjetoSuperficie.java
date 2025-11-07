@@ -724,6 +724,8 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config, List<Objeto> selecionados) {
 		if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_FORMULARIO) {
 			ObjetoSuperficieDestacar.destacarDesktopFormulario(selecionados, conexao, config, formulario);
+		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_DIALOGO) {
+			ObjetoSuperficieDestacar.destacarDesktopDialogo(selecionados, conexao, config, formulario);
 		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_DESKTOP) {
 			ObjetoSuperficieDestacar.destacarDeskopPagina(selecionados, conexao, config, formulario);
 		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_FICHARIO) {
@@ -1681,11 +1683,13 @@ class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
 
 		private MenuDestacar() {
-			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
+			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
 			addMenuItem(desktopAcao);
 			addMenuItem(true, proprioAcao);
 			formularioAcao.setActionListener(e -> superficie.destacar(superficie.container.getConexaoPadrao(),
 					ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, null));
+			dialogoAcao.setActionListener(e -> superficie.destacar(superficie.container.getConexaoPadrao(),
+					ObjetoConstantes.TIPO_CONTAINER_DIALOGO, null));
 			ficharioAcao.setActionListener(e -> superficie.destacar(superficie.container.getConexaoPadrao(),
 					ObjetoConstantes.TIPO_CONTAINER_FICHARIO, null));
 			desktopAcao.setActionListener(e -> superficie.destacar(superficie.container.getConexaoPadrao(),
@@ -1693,6 +1697,7 @@ class SuperficiePopup extends Popup {
 			proprioAcao.setActionListener(e -> destacarProprioContainer());
 			formularioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_formulario"));
 			ficharioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_fichario"));
+			dialogoAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_dialogo"));
 			desktopAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_desktop"));
 		}
 

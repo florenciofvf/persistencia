@@ -5,6 +5,8 @@ public interface ArquivoTreeListener {
 
 	public void abrirArquivoFichario(ArquivoTreeExt arquivoTree);
 
+	public void abrirArquivoDialogo(ArquivoTreeExt arquivoTree);
+
 	public void focusInputPesquisar(ArquivoTreeExt anexoTree);
 
 	public void selecionarArquivo(ArquivoTreeExt arquivoTree);

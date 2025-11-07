@@ -76,6 +76,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private final transient NomeValor[] destacados = {
 			new NomeValor("label.formulario", ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
 			new NomeValor("label.fichario", ObjetoConstantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
+			new NomeValor("label.dialogo", ObjetoConstantes.TIPO_CONTAINER_DIALOGO, NomeValor.DESTACADOS),
 			new NomeValor("label.desktop", ObjetoConstantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
 	private static final long serialVersionUID = 1L;
 

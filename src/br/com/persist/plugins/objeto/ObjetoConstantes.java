@@ -24,6 +24,7 @@ public class ObjetoConstantes {
 	public static final int TIPO_DESTAC_FORM_TITULO = 2;
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
+	public static final int TIPO_CONTAINER_DIALOGO = 4;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
 	public static final String INVISIVEL = "invisivel";

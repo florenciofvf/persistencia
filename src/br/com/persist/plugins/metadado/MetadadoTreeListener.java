@@ -13,6 +13,8 @@ public interface MetadadoTreeListener {
 
 	public void registros(MetadadoTree metadadoTree) throws AssistenciaException;
 
+	public void exportarDialogArquivo(MetadadoTree metadadoTree);
+
 	public void exportarFormArquivo(MetadadoTree metadadoTree);
 
 	public void exportarFichArquivo(MetadadoTree metadadoTree);

@@ -43,6 +43,26 @@ public class ObjetoSuperficieDestacar {
 		form.setVisible(true);
 	}
 
+	public static void destacarDesktopDialogo(List<Objeto> objetos, Conexao conexao, InternalConfig config,
+			Formulario formulario) {
+		DesktopDialogo form = DesktopDialogo.criar(formulario);
+		int x = 10;
+		int y = 10;
+		for (Objeto objeto : objetos) {
+			if (!Util.isEmpty(objeto.getTabela())) {
+				if (objeto.getReferenciaPesquisa() != null) {
+					objeto.getReferenciaPesquisa().setValidoInvisibilidade(true);
+				}
+				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
+				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), false, config);
+				x += 25;
+				y += 25;
+			}
+		}
+		form.setVisible(!Util.isMac());
+		form.setVisible(true);
+	}
+
 	public static void destacarDeskopPagina(List<Objeto> objetos, Conexao conexao, InternalConfig config,
 			Formulario formulario) {
 		Desktop desktop = new Desktop(formulario, false);
