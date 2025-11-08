@@ -1,20 +1,27 @@
 package br.com.persist.plugins.objeto.complem;
 
 import static br.com.persist.componente.BarraButtonEnum.APLICAR;
+import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
+import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JList;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
 import br.com.persist.abstrato.PluginBasico;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.ColecaoStringModelo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -31,8 +38,10 @@ import br.com.persist.componente.TextEditorLine;
 public class ComplementoContainer extends Panel implements PluginBasico {
 	private final ToolbarLista toolbarLista = new ToolbarLista();
 	private final ToolbarArea toolbarArea = new ToolbarArea();
+	private File fileComplementos = new File("complementos");
 	private final TextEditor textEditor = new TextEditor();
 	private final transient ComplementoListener listener;
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final JList<String> listaComplementos;
@@ -131,7 +140,7 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		private static final long serialVersionUID = 1L;
 
 		private ToolbarLista() {
-			super.ini(new Nil());
+			super.ini(new Nil(), BAIXAR, SALVAR);
 			addButton(limparComplementosAcao);
 			limparComplementosAcao.setActionListener(e -> limparComplementos());
 		}
@@ -141,6 +150,29 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 					ComplementoMensagens.getString("msg.confirma_exclusao_complementos"), false)) {
 				listener.getColecaoComplemento().clear();
 				listaComplementos.setModel(new ColecaoStringModelo(listener.getColecaoComplemento()));
+			}
+		}
+
+		@Override
+		protected void baixar() {
+			try {
+				if (fileComplementos.exists() && fileComplementos.canRead()) {
+					List<String> list = ArquivoUtil.lerArquivo(fileComplementos);
+					listaComplementos.setModel(new ColecaoStringModelo(list));
+				}
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
+
+		@Override
+		protected void salvar() {
+			try {
+				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+				ArquivoUtil.salvar(modelo.getStrings(), fileComplementos);
+				salvoMensagem();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
 	}
