@@ -59,7 +59,6 @@ public class ObjetoSuperficieDestacar {
 				y += 25;
 			}
 		}
-		form.setVisible(!Util.isMac());
 		form.setVisible(true);
 	}
 
