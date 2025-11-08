@@ -704,7 +704,6 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 				montarSelecionadoProprio(selecionados, objeto);
 			} else {
 				selecionados.add(objeto.clonar());
-				objeto.setSelecionado(false);
 			}
 		} else {
 			selecionados.add(objeto);
