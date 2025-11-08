@@ -89,7 +89,11 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 			String sel = listaComplementos.getSelectedValue();
 			if (!Util.isEmpty(sel)) {
 				String string = textEditor.getText();
-				textEditor.setText(string + " " + sel);
+				if (Util.isEmpty(string)) {
+					textEditor.setText(sel);
+				} else {
+					textEditor.setText(string + " " + sel);
+				}
 			}
 		}
 	};
