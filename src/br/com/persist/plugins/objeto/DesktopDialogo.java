@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -46,5 +47,10 @@ public class DesktopDialogo extends AbstratoDialogo {
 		DesktopDialogo form = new DesktopDialogo(formulario);
 		Util.configSizeLocation(formulario, form, null);
 		return form;
+	}
+
+	@Override
+	public void dialogActivatedHandler(Dialog dialog) {
+		desktop.windowActivatedHandler(dialog);
 	}
 }
