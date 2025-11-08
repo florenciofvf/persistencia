@@ -18,7 +18,7 @@ public class DesktopDialogo extends AbstratoDialogo {
 	private final Desktop desktop;
 
 	private DesktopDialogo(Formulario formulario) {
-		super((Frame) null, Mensagens.getString(Constantes.LABEL_FORMULARIO));
+		super((Frame) null, Mensagens.getString(Constantes.LABEL_DIALOGO));
 		desktop = new Desktop(formulario, false);
 		desktop.setAjusteAutoLarguraForm(true);
 		desktop.addTotalDireitoAuto();
