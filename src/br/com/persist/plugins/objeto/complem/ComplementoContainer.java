@@ -4,6 +4,7 @@ import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
+import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
@@ -144,12 +145,12 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 
 	private class ToolbarLista extends BarraButton {
 		private Action limparComplementosAcao = Action
-				.acaoIcon(ComplementoMensagens.getString("label.limpar_complementos"), Icones.EXCLUIR);
+				.acaoIcon(ComplementoMensagens.getString("label.limpar_complementos"), Icones.NOVO);
 		private Action adicionarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private static final long serialVersionUID = 1L;
 
 		private ToolbarLista() {
-			super.ini(new Nil(), BAIXAR, SALVAR);
+			super.ini(new Nil(), BAIXAR, SALVAR, EXCLUIR);
 			addButton(limparComplementosAcao);
 			addButton(adicionarAcao);
 			limparComplementosAcao.setActionListener(e -> limparComplementos());
@@ -180,11 +181,24 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		protected void salvar() {
 			try {
 				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
-				ArquivoUtil.salvar(modelo.getStrings(), fileComplementos);
+				ArquivoUtil.salvar(modelo.getLista(), fileComplementos);
 				salvoMensagem();
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
+		}
+
+		@Override
+		protected void excluir() {
+			int i = listaComplementos.getSelectedIndex();
+			if (i == -1) {
+				Util.mensagem(ComplementoContainer.this,
+						ComplementoMensagens.getString("msg.selecione_um_item_para_exclusao"));
+				return;
+			}
+			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+			modelo.excluir(i);
+			listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 		}
 
 		private void adicionar() {
@@ -201,7 +215,7 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 			}
 			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
 			modelo.incluir(i, resp.toString().trim());
-			listaComplementos.setModel(new ColecaoStringModelo(modelo.getStrings()));
+			listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 		}
 	}
 }

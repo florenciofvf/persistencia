@@ -9,31 +9,35 @@ import javax.swing.AbstractListModel;
 
 public class ColecaoStringModelo extends AbstractListModel<String> {
 	private static final long serialVersionUID = 1L;
-	private final List<String> strings;
+	private final List<String> lista;
 
 	public ColecaoStringModelo(List<String> strings) {
-		this.strings = Objects.requireNonNull(strings);
+		this.lista = Objects.requireNonNull(strings);
 	}
 
 	public ColecaoStringModelo(Set<String> strings) {
-		this.strings = new ArrayList<>(strings);
+		this.lista = new ArrayList<>(strings);
 	}
 
-	public List<String> getStrings() {
-		return strings;
+	public List<String> getLista() {
+		return lista;
 	}
 
 	public void incluir(int i, String string) {
-		strings.add(i, string);
+		lista.add(i, string);
+	}
+
+	public void excluir(int i) {
+		lista.remove(i);
 	}
 
 	@Override
 	public int getSize() {
-		return strings.size();
+		return lista.size();
 	}
 
 	@Override
 	public String getElementAt(int index) {
-		return strings.get(index);
+		return lista.get(index);
 	}
 }
