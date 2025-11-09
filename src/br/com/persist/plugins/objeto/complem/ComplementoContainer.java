@@ -26,7 +26,6 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.ColecaoStringModelo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -151,13 +150,16 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 
 		private ToolbarLista() {
 			super.ini(new Nil(), BAIXAR, SALVAR, EXCLUIR);
-			addButton(limparComplementosAcao);
 			addButton(adicionarAcao);
+			addButton(limparComplementosAcao);
 			limparComplementosAcao.setActionListener(e -> limparComplementos());
 			adicionarAcao.setActionListener(e -> adicionar());
 		}
 
 		private void limparComplementos() {
+			if (listener.getColecaoComplemento().isEmpty() && listaComplementos.getModel().getSize() == 0) {
+				return;
+			}
 			if (Util.confirmar(ComplementoContainer.this,
 					ComplementoMensagens.getString("msg.confirma_exclusao_complementos"), false)) {
 				listener.getColecaoComplemento().clear();
@@ -209,7 +211,7 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 				return;
 			}
 			Object resp = Util.getValorInputDialog(ComplementoContainer.this, "label.atencao",
-					Mensagens.getString("label.texto"), null);
+					ComplementoMensagens.getString("msg.texto_inclusao"), null);
 			if (resp == null || Util.isEmpty(resp.toString())) {
 				return;
 			}
