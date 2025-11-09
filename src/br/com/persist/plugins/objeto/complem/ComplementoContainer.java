@@ -198,9 +198,12 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 						ComplementoMensagens.getString("msg.selecione_um_item_para_exclusao"));
 				return;
 			}
-			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
-			modelo.excluir(i);
-			listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
+			if (Util.confirmar(ComplementoContainer.this, ComplementoMensagens.getString("msg.confirma_exclusao_item"),
+					false)) {
+				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+				modelo.excluir(i);
+				listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
+			}
 		}
 
 		private void adicionar() {
