@@ -25,6 +25,7 @@ import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.ColecaoStringModelo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -88,6 +89,9 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		public void mouseClicked(MouseEvent e) {
 			String sel = listaComplementos.getSelectedValue();
 			if (!Util.isEmpty(sel)) {
+				if (sel.startsWith("#")) {
+					return;
+				}
 				String string = textEditor.getText();
 				if (Util.isEmpty(string)) {
 					textEditor.setText(sel);
@@ -141,12 +145,15 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 	private class ToolbarLista extends BarraButton {
 		private Action limparComplementosAcao = Action
 				.acaoIcon(ComplementoMensagens.getString("label.limpar_complementos"), Icones.EXCLUIR);
+		private Action adicionarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private static final long serialVersionUID = 1L;
 
 		private ToolbarLista() {
 			super.ini(new Nil(), BAIXAR, SALVAR);
 			addButton(limparComplementosAcao);
+			addButton(adicionarAcao);
 			limparComplementosAcao.setActionListener(e -> limparComplementos());
+			adicionarAcao.setActionListener(e -> adicionar());
 		}
 
 		private void limparComplementos() {
@@ -178,6 +185,23 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
+		}
+
+		private void adicionar() {
+			int i = listaComplementos.getSelectedIndex();
+			if (i == -1) {
+				Util.mensagem(ComplementoContainer.this,
+						ComplementoMensagens.getString("msg.selecione_um_item_para_inclusao"));
+				return;
+			}
+			Object resp = Util.getValorInputDialog(ComplementoContainer.this, "label.atencao",
+					Mensagens.getString("label.texto"), null);
+			if (resp == null || Util.isEmpty(resp.toString())) {
+				return;
+			}
+			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+			modelo.incluir(i, resp.toString().trim());
+			listaComplementos.setModel(new ColecaoStringModelo(modelo.getStrings()));
 		}
 	}
 }

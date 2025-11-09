@@ -23,6 +23,10 @@ public class ColecaoStringModelo extends AbstractListModel<String> {
 		return strings;
 	}
 
+	public void incluir(int i, String string) {
+		strings.add(i, string);
+	}
+
 	@Override
 	public int getSize() {
 		return strings.size();
