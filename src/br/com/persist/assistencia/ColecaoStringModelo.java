@@ -27,6 +27,10 @@ public class ColecaoStringModelo extends AbstractListModel<String> {
 		lista.add(i, string);
 	}
 
+	public void adicionar(String string) {
+		lista.add(string);
+	}
+
 	public void excluir(int i) {
 		lista.remove(i);
 	}

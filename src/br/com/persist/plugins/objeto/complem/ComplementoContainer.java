@@ -145,14 +145,17 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 	private class ToolbarLista extends BarraButton {
 		private Action limparComplementosAcao = Action
 				.acaoIcon(ComplementoMensagens.getString("label.limpar_complementos"), Icones.NOVO);
+		private Action adicionar2Acao = actionIcon("label.adicionar", Icones.CRIAR2);
 		private Action adicionarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private static final long serialVersionUID = 1L;
 
 		private ToolbarLista() {
 			super.ini(new Nil(), BAIXAR, SALVAR, EXCLUIR);
 			addButton(adicionarAcao);
+			addButton(adicionar2Acao);
 			addButton(limparComplementosAcao);
 			limparComplementosAcao.setActionListener(e -> limparComplementos());
+			adicionar2Acao.setActionListener(e -> adicionar2());
 			adicionarAcao.setActionListener(e -> adicionar());
 		}
 
@@ -220,6 +223,17 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 			}
 			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
 			modelo.incluir(i, resp.toString().trim());
+			listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
+		}
+
+		private void adicionar2() {
+			Object resp = Util.getValorInputDialog(ComplementoContainer.this, "label.atencao",
+					ComplementoMensagens.getString("msg.texto_inclusao"), null);
+			if (resp == null || Util.isEmpty(resp.toString())) {
+				return;
+			}
+			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+			modelo.adicionar(resp.toString().trim());
 			listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 		}
 	}
