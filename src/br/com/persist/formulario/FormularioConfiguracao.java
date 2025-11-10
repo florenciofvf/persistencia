@@ -51,6 +51,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private JComboBox<String> comboFontes = new JComboBox<>(FONTES);
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDimensaoMensagem = new TextField();
+	private final TextField txtTotalConfirmacao = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
 	private final Button buttonConectaDesconecta = new Button();
 	private final TextField txtDefinirAltura = new TextField();
@@ -89,6 +90,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
 		chkMonitorPreferencial.setSelected(Preferencias.isMonitorPreferencial());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
+		txtTotalConfirmacao.setText("" + Preferencias.getTotalConfirmacao());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		txtDimensaoMensagem.setText(Preferencias.getDimensaoMensagem());
@@ -109,7 +111,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		muro.camada(
 				Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
 						new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
-						new PanelCenter(criarLabel("label.dimensao_mensagem"), txtDimensaoMensagem)));
+						new PanelCenter(criarLabel("label.dimensao_mensagem"), txtDimensaoMensagem),
+						new PanelCenter(criarLabel("label.total_confirmacao"), txtTotalConfirmacao)));
 		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(buttonAplicarLA)));
@@ -147,6 +150,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				.addActionListener(e -> Preferencias.setFecharComESCInternal(chkFecharComESCInternal.isSelected()));
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
 		txtDimensaoMensagem.addActionListener(e -> Preferencias.setDimensaoMensagem(txtDimensaoMensagem.getText()));
+		txtTotalConfirmacao.addActionListener(e -> Preferencias.setTotalConfirmacao(getTotalConfirmacao()));
 		chkFecharComESCDialogo
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
 		chkMonitorPreferencial
@@ -176,6 +180,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				Preferencias.setDimensaoMensagem(txtDimensaoMensagem.getText());
 			}
 		});
+		txtTotalConfirmacao.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Preferencias.setTotalConfirmacao(getTotalConfirmacao());
+			}
+		});
 		txtFormDialogo.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -199,6 +209,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			}
 		});
 		buttonConectaDesconectaText();
+	}
+
+	private int getTotalConfirmacao() {
+		return Util.getInt(txtTotalConfirmacao.getText(), Preferencias.getTotalConfirmacao());
 	}
 
 	private void alterarFonteNome(ItemEvent e) {

@@ -52,6 +52,7 @@ public class Preferencias {
 	private static Color corFonteCopiado;
 	private static boolean tituloAbaMin;
 	private static boolean desconectado;
+	private static int totalConfirmacao;
 	private static String formDialogo;
 	private static Color corCopiado;
 
@@ -84,6 +85,7 @@ public class Preferencias {
 		dimensaoMensagem = pref.get(DIMENSAO_MENSAGEM, LA_500_300);
 		getObjetosBanco = pref.get("get_objetos_banco", "TABLE");
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
+		totalConfirmacao = pref.getInt("total_confirmacao", 1);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		if (Util.isEmpty(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
@@ -126,6 +128,7 @@ public class Preferencias {
 		pref.putBoolean("monitor_preferencial", monitorPreferencial);
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
+		pref.putInt("total_confirmacao", totalConfirmacao);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
 		pref.put("get_objetos_banco", getObjetosBanco);
@@ -298,6 +301,14 @@ public class Preferencias {
 
 	public static void setPorcVerticalLocalForm(int porcVerticalLocalForm) {
 		Preferencias.porcVerticalLocalForm = porcVerticalLocalForm;
+	}
+
+	public static int getTotalConfirmacao() {
+		return totalConfirmacao;
+	}
+
+	public static void setTotalConfirmacao(int totalConfirmacao) {
+		Preferencias.totalConfirmacao = totalConfirmacao;
 	}
 
 	public static boolean isAplicarLarguraAoAbrirArquivoObjeto() {
