@@ -267,7 +267,7 @@ public class UpdateContainer extends AbstratoContainer implements PluginBasico {
 
 		@Override
 		protected void salvar() {
-			if (Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
+			if (Util.confirmaSalvar(UpdateContainer.this)) {
 				salvarArquivo(backup != null ? backup : file);
 			}
 		}

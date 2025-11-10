@@ -225,7 +225,7 @@ public class AmbienteContainer extends AbstratoContainer implements PluginBasico
 
 		@Override
 		protected void salvar() {
-			if (Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
+			if (Util.confirmaSalvar(AmbienteContainer.this)) {
 				salvarArquivo(backup != null ? backup : file);
 			}
 		}

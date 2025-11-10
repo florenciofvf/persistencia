@@ -344,7 +344,7 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 
 		@Override
 		protected void salvar() {
-			if (Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {
+			if (Util.confirmaSalvar(ConsultaContainer.this)) {
 				salvarArquivo(backup != null ? backup : file);
 			}
 		}

@@ -340,7 +340,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 
 		@Override
 		public void salvar() {
-			if (Util.confirmaSalvar(PropriedadeContainer.this, Constantes.TRES)) {
+			if (Util.confirmaSalvar(PropriedadeContainer.this)) {
 				Aba aba = (Aba) ficharioInner.getSelectedComponent();
 				if (aba != null && aba.isValido()) {
 					salvarArquivo(aba);

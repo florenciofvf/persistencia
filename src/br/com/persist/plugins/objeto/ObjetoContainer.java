@@ -487,7 +487,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		@Override
 		protected void salvar() {
 			if (arquivo != null) {
-				if (Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
+				if (Util.confirmaSalvar(ObjetoContainer.this)) {
 					int invisiveis = objetoSuperficie.getTotalFormsInvisiveis();
 					int minimizado = objetoSuperficie.getTotalFormsMinimizados();
 					int maximizado = objetoSuperficie.getTotalFormsMaximizados();

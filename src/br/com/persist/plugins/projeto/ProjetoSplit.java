@@ -440,7 +440,7 @@ class Aba extends Transferivel {
 
 		@Override
 		protected void salvar() {
-			if (Util.confirmaSalvar(Aba.this, Constantes.TRES)) {
+			if (Util.confirmaSalvar(Aba.this)) {
 				salvarArquivo(arquivo.getFile());
 			}
 		}

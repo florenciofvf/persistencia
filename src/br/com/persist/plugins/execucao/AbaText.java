@@ -125,7 +125,7 @@ public class AbaText extends Panel {
 
 		@Override
 		protected void salvar() {
-			if (Util.confirmaSalvar(this, Constantes.TRES)) {
+			if (Util.confirmaSalvar(this)) {
 				salvarArquivo(arquivo.getFile());
 			}
 		}

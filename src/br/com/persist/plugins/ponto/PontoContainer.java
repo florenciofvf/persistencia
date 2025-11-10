@@ -138,7 +138,7 @@ public class PontoContainer extends AbstratoContainer implements PluginBasico {
 
 		@Override
 		protected void salvar() {
-			if (Util.confirmaSalvar(PontoContainer.this, Constantes.TRES)) {
+			if (Util.confirmaSalvar(PontoContainer.this)) {
 				area.salvar(file);
 				salvoMensagem();
 			}
