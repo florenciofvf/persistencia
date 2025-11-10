@@ -184,12 +184,15 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 
 		@Override
 		protected void salvar() {
-			try {
-				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
-				ArquivoUtil.salvar(modelo.getLista(), fileComplementos);
-				salvoMensagem();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			if (Util.confirmar(ComplementoContainer.this,
+					ComplementoMensagens.getString("msg.confirma_salvar_complementos"), false)) {
+				try {
+					ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+					ArquivoUtil.salvar(modelo.getLista(), fileComplementos);
+					salvoMensagem();
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 		}
 
