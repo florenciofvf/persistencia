@@ -199,7 +199,7 @@ public class LegadoPagina extends Panel implements Aba {
 	}
 
 	public void salvar(AtomicBoolean atomic) {
-		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, LegadoMensagens.getString("msg.confirmar_salvar_ativa"))) {
+		if (!Util.confirmaSalvarMsg(this, LegadoMensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
 		try {

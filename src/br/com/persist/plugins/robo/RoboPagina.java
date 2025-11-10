@@ -229,7 +229,7 @@ public class RoboPagina extends Panel implements Aba {
 	}
 
 	public void salvar(AtomicBoolean atomic) {
-		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, RoboMensagens.getString("msg.confirmar_salvar_ativa"))) {
+		if (!Util.confirmaSalvarMsg(this, RoboMensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
 		try {

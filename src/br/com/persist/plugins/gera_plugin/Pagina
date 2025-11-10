@@ -178,7 +178,7 @@ public class ###nameCap###Pagina extends Panel implements Aba {
 	}
 
 	public void salvar(AtomicBoolean atomic) {
-		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, ###nameCap###Mensagens.getString("msg.confirmar_salvar_ativa"))) {
+		if (!Util.confirmaSalvarMsg(this, ###nameCap###Mensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
 		try {

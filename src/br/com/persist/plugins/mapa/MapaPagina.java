@@ -180,7 +180,7 @@ public class MapaPagina extends Panel implements Aba {
 	}
 
 	public void salvar(AtomicBoolean atomic) {
-		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, MapaMensagens.getString("msg.confirmar_salvar_ativa"))) {
+		if (!Util.confirmaSalvarMsg(this, MapaMensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
 		try {

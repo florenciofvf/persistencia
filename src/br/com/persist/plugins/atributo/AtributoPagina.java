@@ -437,8 +437,7 @@ public class AtributoPagina extends Panel implements Aba {
 		}
 
 		private void salvar(AtomicBoolean atomic) {
-			if (!Util.confirmaSalvarMsg(this, Constantes.TRES,
-					AtributoMensagens.getString("msg.confirmar_salvar_ativa"))) {
+			if (!Util.confirmaSalvarMsg(this, AtributoMensagens.getString("msg.confirmar_salvar_ativa"))) {
 				return;
 			}
 			try {

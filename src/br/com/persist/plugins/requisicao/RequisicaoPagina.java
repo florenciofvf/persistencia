@@ -576,8 +576,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public void salvar(AtomicBoolean atomic) {
-		if (!Util.confirmaSalvarMsg(this, Constantes.TRES,
-				RequisicaoMensagens.getString("msg.confirmar_salvar_ativa"))) {
+		if (!Util.confirmaSalvarMsg(this, RequisicaoMensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
 		try {
