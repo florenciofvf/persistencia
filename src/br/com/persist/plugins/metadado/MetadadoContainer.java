@@ -436,7 +436,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		protected void salvar() {
 			Conexao conexao = getConexao();
-			if (conexao != null && Util.confirmaSalvar(MetadadoContainer.this, Constantes.UM)) {
+			if (conexao != null && Util.confirmaSalvar(MetadadoContainer.this)) {
 				salvarArquivo(criarNomeArquivo(conexao));
 			}
 		}

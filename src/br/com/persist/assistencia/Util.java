@@ -666,11 +666,11 @@ public class Util {
 				new Config(messageType)) == JOptionPane.OK_OPTION;
 	}
 
-	public static boolean confirmaSalvar(Component componente, int confirmacoes) {
-		return confirmaSalvar(componente, confirmacoes, null);
+	public static boolean confirmaSalvar(Component componente) {
+		return confirmaSalvar(componente, Preferencias.getTotalConfirmacao(), null);
 	}
 
-	public static boolean confirmaSalvar(Component componente, int confirmacoes, String chaveMsg) {
+	private static boolean confirmaSalvar(Component componente, int confirmacoes, String chaveMsg) {
 		int total = 0;
 		while (total < confirmacoes
 				&& confirmar(componente, chaveMsg != null ? chaveMsg : Constantes.LABEL_CONFIRMA_SALVAR)) {
@@ -679,7 +679,8 @@ public class Util {
 		return total >= confirmacoes;
 	}
 
-	public static boolean confirmaSalvarMsg(Component componente, int confirmacoes, String msg) {
+	public static boolean confirmaSalvarMsg(Component componente, String msg) {
+		final int confirmacoes = Preferencias.getTotalConfirmacao();
 		int total = 0;
 		while (total < confirmacoes && confirmar(componente, msg, false)) {
 			total++;
