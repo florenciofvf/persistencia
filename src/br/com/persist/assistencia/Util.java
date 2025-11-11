@@ -565,20 +565,6 @@ public class Util {
 		}
 	}
 
-	public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType) {
-		return showConfirmDialog(parentComponent, message, title, optionType, JOptionPane.QUESTION_MESSAGE);
-	}
-
-	public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType,
-			int messageType) {
-		return showConfirmDialog(parentComponent, message, title, optionType, messageType, null);
-	}
-
-	public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType,
-			int messageType, Icon icon) {
-		return showOptionDialog(parentComponent, message, title, optionType, new Config(messageType, icon, null, null));
-	}
-
 	public static int showOptionDialog(Component parentComponent, Object message, String title, int optionType,
 			Config config) {
 		JOptionPane pane = new JOptionPane(message, config.messageType, optionType, config.icon, config.options,
@@ -677,6 +663,20 @@ public class Util {
 			total++;
 		}
 		return total >= confirmacoes;
+	}
+
+	private static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType) {
+		return showConfirmDialog(parentComponent, message, title, optionType, JOptionPane.QUESTION_MESSAGE);
+	}
+
+	private static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType,
+			int messageType) {
+		return showConfirmDialog(parentComponent, message, title, optionType, messageType, null);
+	}
+
+	private static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType,
+			int messageType, Icon icon) {
+		return showOptionDialog(parentComponent, message, title, optionType, new Config(messageType, icon, null, null));
 	}
 
 	public static Object showInputDialog(Component parent, String titulo, String mensagem, String valorPadrao) {
