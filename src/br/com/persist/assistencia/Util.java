@@ -654,25 +654,11 @@ public class Util {
 	}
 
 	public static boolean confirmaSalvar(Component componente) {
-		return confirmaSalvar(componente, Preferencias.getTotalConfirmacao(), null);
-	}
-
-	private static boolean confirmaSalvar(Component componente, int confirmacoes, String chaveMsg) {
-		int total = 0;
-		while (total < confirmacoes
-				&& confirmar(componente, chaveMsg != null ? chaveMsg : Constantes.LABEL_CONFIRMA_SALVAR)) {
-			total++;
-		}
-		return total >= confirmacoes;
+		return confirmar(componente, Constantes.LABEL_CONFIRMA_SALVAR);
 	}
 
 	public static boolean confirmaSalvarMsg(Component componente, String msg) {
-		final int confirmacoes = Preferencias.getTotalConfirmacao();
-		int total = 0;
-		while (total < confirmacoes && confirmar(componente, msg, false)) {
-			total++;
-		}
-		return total >= confirmacoes;
+		return confirmar(componente, msg, false);
 	}
 
 	public static boolean confirmaExclusao(Component componente, boolean objetos) {
@@ -684,8 +670,13 @@ public class Util {
 	}
 
 	public static boolean confirmar(Component componente, String msg, boolean msgEhChave) {
-		return showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
-				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
+		final int confirmacoes = Preferencias.getTotalConfirmacao();
+		int total = 0;
+		while (total < confirmacoes && showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
+				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION) {
+			total++;
+		}
+		return total >= confirmacoes;
 	}
 
 	public static Object showInputDialog(Component parent, String titulo, String mensagem, String valorPadrao) {
