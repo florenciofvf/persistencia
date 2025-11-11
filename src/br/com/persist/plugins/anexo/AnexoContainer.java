@@ -216,24 +216,26 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 		@Override
 		public void salvar() {
-			try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo, StandardCharsets.UTF_8.name())) {
-				Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexos().entrySet();
-				for (Entry<String, Anexo> entry : entrySet) {
-					Anexo anexo = entry.getValue();
-					pw.println(entry.getKey());
-					pw.println(AnexoConstantes.ABRIR_VISIVEL + anexo.isAbrirVisivel());
-					pw.println(AnexoConstantes.PADRAO_ABRIR + anexo.isPadraoAbrir());
-					if (!Util.isEmpty(anexo.getNomeIcone())) {
-						pw.println(Constantes.ICONE + anexo.getNomeIcone());
+			if (Util.confirmaSalvar(AnexoContainer.this)) {
+				try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo, StandardCharsets.UTF_8.name())) {
+					Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexos().entrySet();
+					for (Entry<String, Anexo> entry : entrySet) {
+						Anexo anexo = entry.getValue();
+						pw.println(entry.getKey());
+						pw.println(AnexoConstantes.ABRIR_VISIVEL + anexo.isAbrirVisivel());
+						pw.println(AnexoConstantes.PADRAO_ABRIR + anexo.isPadraoAbrir());
+						if (!Util.isEmpty(anexo.getNomeIcone())) {
+							pw.println(Constantes.ICONE + anexo.getNomeIcone());
+						}
+						if (anexo.getCorFonte() != null) {
+							pw.println(Constantes.COR_FONTE + anexo.getCorFonte().getRGB());
+						}
+						pw.println();
 					}
-					if (anexo.getCorFonte() != null) {
-						pw.println(Constantes.COR_FONTE + anexo.getCorFonte().getRGB());
-					}
-					pw.println();
+					salvoMensagem();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoContainer.this);
 				}
-				salvoMensagem();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoContainer.this);
 			}
 		}
 	}

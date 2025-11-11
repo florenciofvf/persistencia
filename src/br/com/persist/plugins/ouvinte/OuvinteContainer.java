@@ -207,11 +207,13 @@ public class OuvinteContainer extends AbstratoContainer implements PluginBasico 
 		}
 
 		private void salvar(File file) {
-			try {
-				ArquivoUtil.salvar(textEditor, file);
-				salvoMensagem();
-			} catch (Exception e) {
-				Util.mensagem(OuvinteContainer.this, e.getMessage());
+			if (Util.confirmaSalvar(OuvinteContainer.this)) {
+				try {
+					ArquivoUtil.salvar(textEditor, file);
+					salvoMensagem();
+				} catch (Exception e) {
+					Util.mensagem(OuvinteContainer.this, e.getMessage());
+				}
 			}
 		}
 

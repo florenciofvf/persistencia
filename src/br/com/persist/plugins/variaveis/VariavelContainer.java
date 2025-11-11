@@ -221,11 +221,13 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 
 		@Override
 		protected void salvar() {
-			try {
-				VariavelProvedor.salvar();
-				salvoMensagem();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			if (Util.confirmaSalvar(VariavelContainer.this)) {
+				try {
+					VariavelProvedor.salvar();
+					salvoMensagem();
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 		}
 

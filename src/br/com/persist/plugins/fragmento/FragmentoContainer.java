@@ -234,11 +234,13 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 
 		@Override
 		protected void salvar() {
-			try {
-				FragmentoProvedor.salvar();
-				salvoMensagem();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			if (Util.confirmaSalvar(FragmentoContainer.this)) {
+				try {
+					FragmentoProvedor.salvar();
+					salvoMensagem();
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 		}
 

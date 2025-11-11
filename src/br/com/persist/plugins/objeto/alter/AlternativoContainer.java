@@ -232,11 +232,13 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 
 		@Override
 		protected void salvar() {
-			try {
-				AlternativoProvedor.salvar();
-				salvoMensagem();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			if (Util.confirmaSalvar(AlternativoContainer.this)) {
+				try {
+					AlternativoProvedor.salvar();
+					salvoMensagem();
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 		}
 

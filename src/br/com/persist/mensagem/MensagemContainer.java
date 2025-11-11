@@ -183,11 +183,13 @@ public class MensagemContainer extends Panel implements PluginBasico {
 
 		@Override
 		protected void salvar() {
-			try {
-				ArquivoUtil.salvar(textEditor, file);
-				salvoMensagem();
-			} catch (Exception e) {
-				Util.mensagem(MensagemContainer.this, e.getMessage());
+			if (Util.confirmaSalvar(MensagemContainer.this)) {
+				try {
+					ArquivoUtil.salvar(textEditor, file);
+					salvoMensagem();
+				} catch (Exception e) {
+					Util.mensagem(MensagemContainer.this, e.getMessage());
+				}
 			}
 		}
 

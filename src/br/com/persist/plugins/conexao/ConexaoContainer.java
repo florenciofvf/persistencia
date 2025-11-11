@@ -292,11 +292,13 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 
 		@Override
 		protected void salvar() {
-			try {
-				ConexaoProvedor.salvar();
-				salvoMensagem();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			if (Util.confirmaSalvar(ConexaoContainer.this)) {
+				try {
+					ConexaoProvedor.salvar();
+					salvoMensagem();
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 		}
 

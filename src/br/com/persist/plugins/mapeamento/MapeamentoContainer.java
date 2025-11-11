@@ -211,11 +211,13 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 
 		@Override
 		protected void salvar() {
-			try {
-				MapeamentoProvedor.salvar();
-				salvoMensagem();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			if (Util.confirmaSalvar(MapeamentoContainer.this)) {
+				try {
+					MapeamentoProvedor.salvar();
+					salvoMensagem();
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 		}
 

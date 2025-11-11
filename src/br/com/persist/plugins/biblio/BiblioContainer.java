@@ -175,11 +175,13 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 
 		@Override
 		protected void salvar() {
-			try {
-				BiblioProvedor.salvar();
-				salvoMensagem();
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			if (Util.confirmaSalvar(BiblioContainer.this)) {
+				try {
+					BiblioProvedor.salvar();
+					salvoMensagem();
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 		}
 

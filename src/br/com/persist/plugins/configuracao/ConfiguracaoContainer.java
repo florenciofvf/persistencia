@@ -179,8 +179,10 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 
 		@Override
 		protected void salvar() {
-			Preferencias.salvar();
-			salvoMensagem();
+			if (Util.confirmaSalvar(ConfiguracaoContainer.this)) {
+				Preferencias.salvar();
+				salvoMensagem();
+			}
 		}
 	}
 
