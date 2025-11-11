@@ -644,7 +644,7 @@ public class Util {
 		return botoes[0].equals(botoes[i]);
 	}
 
-	public static boolean confirmar3(Component componente, String chaveMsg) {
+	public static boolean confirmarComDeslocamento(Component componente, String chaveMsg) {
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
 		String mensagem = Mensagens.getString(chaveMsg);
 		int messageType = JOptionPane.QUESTION_MESSAGE;

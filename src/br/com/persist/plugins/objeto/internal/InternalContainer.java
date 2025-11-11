@@ -4783,7 +4783,7 @@ public class InternalContainer extends Panel
 			String comApelido = objeto.comApelido(prefixo, nome);
 			txtComplemento.setText(string + comApelido + getValor(opcao, memoria));
 			focus();
-			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+			if (Util.confirmarComDeslocamento(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
 		}
@@ -4792,7 +4792,7 @@ public class InternalContainer extends Panel
 		public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabela, String nome, String memoria) {
 			txtComplemento.setText(objeto.comApelido("AND", nome) + getValor("=", memoria));
 			focus();
-			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+			if (Util.confirmarComDeslocamento(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
 		}
