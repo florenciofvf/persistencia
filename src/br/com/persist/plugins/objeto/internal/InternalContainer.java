@@ -1060,13 +1060,13 @@ public class InternalContainer extends Panel
 					if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(InternalContainer.this, false)) {
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						List<List<IndiceValor>> listaValores = new ArrayList<>();
-						AtomicBoolean atom = null;
+						AtomicBoolean confirmarCadaItem = null;
 						if (linhas.length > 1) {
-							atom = new AtomicBoolean(true);
+							confirmarCadaItem = new AtomicBoolean(true);
 						}
 						for (int linha : linhas) {
 							int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true, conexao,
-									atom);
+									confirmarCadaItem);
 							if (excluido == 0 || excluido == 1) {
 								List<IndiceValor> chaves = modelo.getValoresChaves(linha);
 								checarListaIndiceValor(chaves);

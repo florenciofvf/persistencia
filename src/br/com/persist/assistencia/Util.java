@@ -547,15 +547,6 @@ public class Util {
 		mensagem.setVisible(true);
 	}
 
-	public static boolean confirmaExclusao(Component componente, boolean objetos) {
-		return confirmar(componente, objetos ? "msg.confirma_exclusao_objetos" : "msg.confirma_exclusao_registros");
-	}
-
-	public static boolean confirmar(Component componente, String msg, boolean msgEhChave) {
-		return showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
-				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
-	}
-
 	public static class Config {
 		final int messageType;
 		final Icon icon;
@@ -639,11 +630,7 @@ public class Util {
 		return new String[] { sim, nao, sem };
 	}
 
-	public static boolean confirmar(Component componente, String chaveMsg) {
-		return confirmar(componente, chaveMsg, true);
-	}
-
-	public static boolean confirmar2(Component parent, String mensagem, AtomicBoolean atom) {
+	public static boolean confirmarComMemoria(Component parent, String mensagem, AtomicBoolean confirmarCadaItem) {
 		String[] botoes = getArraySimNaoContinuar();
 		int i = JOptionPane.showOptionDialog(parent, mensagem, Mensagens.getString("label.atencao"),
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, botoes, botoes[0]);
@@ -651,7 +638,7 @@ public class Util {
 			return false;
 		}
 		if (botoes[2].equals(botoes[i])) {
-			atom.set(false);
+			confirmarCadaItem.set(false);
 			return true;
 		}
 		return botoes[0].equals(botoes[i]);
@@ -686,6 +673,19 @@ public class Util {
 			total++;
 		}
 		return total >= confirmacoes;
+	}
+
+	public static boolean confirmaExclusao(Component componente, boolean objetos) {
+		return confirmar(componente, objetos ? "msg.confirma_exclusao_objetos" : "msg.confirma_exclusao_registros");
+	}
+
+	public static boolean confirmar(Component componente, String chaveMsg) {
+		return confirmar(componente, chaveMsg, true);
+	}
+
+	public static boolean confirmar(Component componente, String msg, boolean msgEhChave) {
+		return showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
+				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
 	}
 
 	public static Object showInputDialog(Component parent, String titulo, String mensagem, String valorPadrao) {

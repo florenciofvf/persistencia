@@ -367,15 +367,16 @@ public class PersistenciaModelo implements TableModel {
 		return gerarInsert(null, prefixoNomeTabela, coletor);
 	}
 
-	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao, AtomicBoolean atom) {
+	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao,
+			AtomicBoolean confirmarCadaItem) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere, conexao);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
-				if (atom != null) {
-					if (atom.get()
-							&& Util.confirmar2(componente, PersistenciaMensagens.getString(MSG_AREA_TRANS), atom)) {
+				if (confirmarCadaItem != null) {
+					if (confirmarCadaItem.get() && Util.confirmarComMemoria(componente,
+							PersistenciaMensagens.getString(MSG_AREA_TRANS), confirmarCadaItem)) {
 						Util.setContentTransfered(delete);
 					}
 				} else {

@@ -126,8 +126,8 @@ public class OrdenacaoModelo extends AbstractTableModel {
 	}
 
 	public int excluirRegistro(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao,
-			AtomicBoolean atom) {
-		return model.excluir(linhas[rowIndex].indice, prefixoNomeTabela, comWhere, conexao, atom);
+			AtomicBoolean confirmarCadaItem) {
+		return model.excluir(linhas[rowIndex].indice, prefixoNomeTabela, comWhere, conexao, confirmarCadaItem);
 	}
 
 	public List<Object> getRegistro(int rowIndex) {
