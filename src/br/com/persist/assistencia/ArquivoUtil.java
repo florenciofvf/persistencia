@@ -44,14 +44,22 @@ public class ArquivoUtil {
 	}
 
 	public static List<String> lerArquivo(File file) {
+		return lerArquivo(file, false);
+	}
+
+	public static List<String> lerArquivo(File file, boolean linhaVazia) {
 		List<String> lista = new ArrayList<>();
 		if (file != null && file.isFile() && file.canRead()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				while (linha != null) {
-					if (!Util.isEmpty(linha)) {
+					if (linhaVazia) {
 						lista.add(linha);
+					} else {
+						if (!Util.isEmpty(linha)) {
+							lista.add(linha);
+						}
 					}
 					linha = br.readLine();
 				}

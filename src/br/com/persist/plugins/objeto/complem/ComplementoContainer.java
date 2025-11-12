@@ -88,16 +88,14 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			String sel = listaComplementos.getSelectedValue();
-			if (!Util.isEmpty(sel)) {
-				if (sel.startsWith("#")) {
-					return;
-				}
-				String string = textEditor.getText();
-				if (Util.isEmpty(string)) {
-					textEditor.setText(sel);
-				} else {
-					textEditor.setText(string + " " + sel);
-				}
+			if (Util.isEmpty(sel) || sel.startsWith("#")) {
+				return;
+			}
+			String string = textEditor.getText();
+			if (Util.isEmpty(string)) {
+				textEditor.setText(sel);
+			} else {
+				textEditor.setText(string + " " + sel);
 			}
 		}
 	};
@@ -174,7 +172,7 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		protected void baixar() {
 			try {
 				if (fileComplementos.exists() && fileComplementos.canRead()) {
-					List<String> list = ArquivoUtil.lerArquivo(fileComplementos);
+					List<String> list = ArquivoUtil.lerArquivo(fileComplementos, true);
 					listaComplementos.setModel(new ColecaoStringModelo(list));
 				}
 			} catch (Exception e) {
