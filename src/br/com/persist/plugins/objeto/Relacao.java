@@ -328,6 +328,7 @@ public class Relacao implements Runnable {
 			if (objetoTemp == null || objetoTemp.corTemp == null) {
 				g2.setColor(Color.CYAN);
 			} else {
+				g2.setStroke(Constantes.STROKE_CDADOS);
 				g2.setColor(objetoTemp.corTemp);
 			}
 		}
