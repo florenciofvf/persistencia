@@ -219,23 +219,21 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 			}
 			Object resp = Util.getValorInputDialog(ComplementoContainer.this, "label.atencao",
 					ComplementoMensagens.getString("msg.texto_inclusao"), null);
-			if (resp == null || Util.isEmpty(resp.toString())) {
-				return;
+			if (resp != null) {
+				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+				modelo.incluir(i, resp.toString());
+				listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 			}
-			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
-			modelo.incluir(i, resp.toString().trim());
-			listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 		}
 
 		private void adicionar2() {
 			Object resp = Util.getValorInputDialog(ComplementoContainer.this, "label.atencao",
 					ComplementoMensagens.getString("msg.texto_inclusao"), null);
-			if (resp == null || Util.isEmpty(resp.toString())) {
-				return;
+			if (resp != null) {
+				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
+				modelo.adicionar(resp.toString());
+				listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 			}
-			ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
-			modelo.adicionar(resp.toString().trim());
-			listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 		}
 	}
 }
