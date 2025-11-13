@@ -33,7 +33,7 @@ public class Constantes {
 	public static final Dimension SIZE3 = new Dimension(400, 400);
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
-	public static final Stroke STROKE_CDADOS = new BasicStroke(4);
+	public static final Stroke STROKE_CDADOS = new BasicStroke(3);
 	public static final String LABEL_EXECUTAR = "label.executar";
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_ARRASTAR = "label.arrastar";
