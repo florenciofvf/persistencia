@@ -22,7 +22,7 @@ import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
 import br.com.persist.abstrato.PluginBasico;
-import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ColecaoStringModelo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;

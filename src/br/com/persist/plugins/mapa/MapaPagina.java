@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;

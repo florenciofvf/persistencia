@@ -1,4 +1,4 @@
-package br.com.persist.assistencia;
+package br.com.persist.arquivo;
 
 import java.awt.Component;
 import java.awt.Desktop;
@@ -22,7 +22,9 @@ import java.util.logging.Logger;
 
 import javax.swing.JTextPane;
 
-import br.com.persist.arquivo.Arquivo;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 
 public class ArquivoUtil {
 	private static final Map<String, List<String>> map = new HashMap<>();

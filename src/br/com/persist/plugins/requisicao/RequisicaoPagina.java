@@ -36,8 +36,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ArgumentoException;
-import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;

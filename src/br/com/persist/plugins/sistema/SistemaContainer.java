@@ -28,7 +28,7 @@ import br.com.persist.arquivo.ArquivoPesquisa;
 import br.com.persist.arquivo.ArquivoTree;
 import br.com.persist.arquivo.ArquivoTreeListener;
 import br.com.persist.arquivo.ArquivoTreeUtil;
-import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Preferencias;

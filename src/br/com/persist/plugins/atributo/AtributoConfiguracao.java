@@ -12,7 +12,7 @@ import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
-import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.Button;

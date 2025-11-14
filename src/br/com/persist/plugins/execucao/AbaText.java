@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.Arquivo;
-import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;

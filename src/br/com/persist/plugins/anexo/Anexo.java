@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 
 import br.com.persist.arquivo.Arquivo;
-import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 

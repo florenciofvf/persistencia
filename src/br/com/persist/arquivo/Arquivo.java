@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Util;
 
 public class Arquivo {

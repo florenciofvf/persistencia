@@ -60,7 +60,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginFichario");
-		arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoUtil");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Mensagens");

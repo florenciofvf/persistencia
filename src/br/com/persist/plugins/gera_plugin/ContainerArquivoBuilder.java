@@ -55,12 +55,12 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginArquivo");
 		arquivo.addImport("br.com.persist.arquivo.Arquivo");
+		arquivo.addImport("br.com.persist.arquivo.ArquivoUtil");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoModelo");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTree");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeListener");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeUtil");
-		arquivo.addImport("br.com.persist.assistencia.ArquivoUtil");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Preferencias");

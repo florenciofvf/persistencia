@@ -23,7 +23,7 @@ import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.assistencia.ArquivoUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
