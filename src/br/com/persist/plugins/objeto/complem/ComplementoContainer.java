@@ -59,6 +59,7 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelTextArea(), criarPanelLista());
 		listaComplementos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listaComplementos.setCellRenderer(new ComplementoCellRenderer());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
