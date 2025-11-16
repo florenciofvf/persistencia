@@ -632,12 +632,14 @@ public class Util {
 	}
 
 	public static boolean confirmarComDeslocamento(Component componente, String chaveMsg) {
-		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
-		String mensagem = Mensagens.getString(chaveMsg);
-		int messageType = JOptionPane.QUESTION_MESSAGE;
-		int optionType = JOptionPane.YES_OPTION;
-		return showOptionDialog(componente, mensagem, titulo, optionType,
-				new Config(messageType)) == JOptionPane.OK_OPTION;
+		final int confirmacoes = Preferencias.getTotalConfirmacao();
+		int total = 0;
+		while (total < confirmacoes && showOptionDialog(componente, Mensagens.getString(chaveMsg),
+				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION,
+				new Config(JOptionPane.QUESTION_MESSAGE)) == JOptionPane.OK_OPTION) {
+			total++;
+		}
+		return total >= confirmacoes;
 	}
 
 	public static boolean confirmaSalvar(Component componente) {
