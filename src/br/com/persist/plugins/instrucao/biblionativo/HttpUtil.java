@@ -30,6 +30,7 @@ public class HttpUtil {
 	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
 	private static CookieManager cookieManager;
+	private static boolean checarTruster;
 
 	private HttpUtil() {
 	}
@@ -48,11 +49,17 @@ public class HttpUtil {
 			@Override
 			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 				LOG.log(Level.FINEST, "checkServerTrusted");
+				if (checarTruster && (chain == null || chain.length == 0)) {
+					throw new CertificateException();
+				}
 			}
 
 			@Override
 			public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
 				LOG.log(Level.FINEST, "checkClientTrusted");
+				if (checarTruster && (arg0 == null || arg0.length == 0)) {
+					throw new CertificateException();
+				}
 			}
 		} };
 		try {
@@ -145,6 +152,14 @@ public class HttpUtil {
 			builder.append(nome + "=" + valor);
 		}
 		return builder.toString();
+	}
+
+	public static boolean isChecarTruster() {
+		return checarTruster;
+	}
+
+	public static void setChecarTruster(boolean checarTruster) {
+		HttpUtil.checarTruster = checarTruster;
 	}
 
 	static {
