@@ -23,6 +23,7 @@ class FragmentoHandler extends XMLHandler {
 		if (FragmentoConstantes.FRAGMENTO.equals(qName)) {
 			try {
 				selecionado = new Fragmento(attributes.getValue("resumo"), attributes.getValue("grupo"));
+				selecionado.setDemanda(attributes.getValue("demanda"));
 				FragmentoProvedor.adicionar(selecionado);
 			} catch (ArgumentoException ex) {
 				throw new SAXException(ex);

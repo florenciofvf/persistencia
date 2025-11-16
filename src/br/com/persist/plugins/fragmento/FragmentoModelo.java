@@ -8,7 +8,7 @@ import br.com.persist.assistencia.BuscaConteudo;
 import br.com.persist.assistencia.Constantes;
 
 public class FragmentoModelo extends AbstractTableModel implements BuscaConteudo {
-	private static final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
+	private static final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR", "DEMANDA" };
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -33,7 +33,7 @@ public class FragmentoModelo extends AbstractTableModel implements BuscaConteudo
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return 2 == columnIndex;
+		return columnIndex >= 2;
 	}
 
 	@Override
@@ -46,6 +46,8 @@ public class FragmentoModelo extends AbstractTableModel implements BuscaConteudo
 			return f.getGrupo();
 		case 2:
 			return f.getValor();
+		case 3:
+			return f.getDemanda();
 		default:
 			return null;
 		}
@@ -57,6 +59,8 @@ public class FragmentoModelo extends AbstractTableModel implements BuscaConteudo
 		Fragmento f = FragmentoProvedor.getFragmento(rowIndex);
 		if (2 == columnIndex) {
 			f.setValor(valor);
+		} else if (3 == columnIndex) {
+			f.setDemanda(valor);
 		}
 	}
 

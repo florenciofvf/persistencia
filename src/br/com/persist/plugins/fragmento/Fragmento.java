@@ -8,6 +8,7 @@ import br.com.persist.marca.XMLUtil;
 public class Fragmento {
 	private final String resumo;
 	private final String grupo;
+	private String demanda;
 	private String valor;
 
 	public Fragmento(String resumo, String grupo) throws ArgumentoException {
@@ -23,6 +24,7 @@ public class Fragmento {
 
 	public Fragmento clonar(String novoResumo) throws ArgumentoException {
 		Fragmento c = new Fragmento(novoResumo, grupo);
+		c.demanda = demanda;
 		c.valor = valor;
 		return c;
 	}
@@ -31,6 +33,7 @@ public class Fragmento {
 		util.abrirTag(FragmentoConstantes.FRAGMENTO);
 		util.atributo("resumo", resumo);
 		util.atributo("grupo", grupo);
+		util.atributo("demanda", demanda);
 		util.fecharTag();
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo("<![CDATA[").ql();
@@ -61,6 +64,17 @@ public class Fragmento {
 			valor = Constantes.VAZIO;
 		}
 		return valor;
+	}
+
+	public String getDemanda() {
+		if (Util.isEmpty(demanda)) {
+			demanda = Constantes.VAZIO;
+		}
+		return demanda;
+	}
+
+	public void setDemanda(String demanda) {
+		this.demanda = demanda;
 	}
 
 	public Fragmento cloneOr() throws ArgumentoException {
