@@ -375,7 +375,7 @@ public class PersistenciaModelo implements TableModel {
 				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere, conexao);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
 				if (confirmarCadaItem != null) {
-					if (confirmarCadaItem.get() && Util.confirmarComMemoria(componente,
+					if (confirmarCadaItem.get() && Util.confirmarComMemorizacao(componente,
 							PersistenciaMensagens.getString(MSG_AREA_TRANS), confirmarCadaItem)) {
 						Util.setContentTransfered(delete);
 					}

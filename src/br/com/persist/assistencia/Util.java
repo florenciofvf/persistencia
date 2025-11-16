@@ -617,7 +617,16 @@ public class Util {
 		return new String[] { sim, nao, sem };
 	}
 
-	public static boolean confirmarComMemoria(Component parent, String mensagem, AtomicBoolean confirmarCadaItem) {
+	public static boolean confirmarComMemorizacao(Component parent, String mensagem, AtomicBoolean confirmarCadaItem) {
+		final int confirmacoes = Preferencias.getTotalConfirmacao();
+		int total = 0;
+		while (total < confirmacoes && confirmar(parent, mensagem, confirmarCadaItem)) {
+			total++;
+		}
+		return total >= confirmacoes;
+	}
+
+	private static boolean confirmar(Component parent, String mensagem, AtomicBoolean confirmarCadaItem) {
 		String[] botoes = getArraySimNaoContinuar();
 		int i = JOptionPane.showOptionDialog(parent, mensagem, Mensagens.getString("label.atencao"),
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, botoes, botoes[0]);
