@@ -89,15 +89,22 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isPopupTrigger()) {
-				textEditor.limpar();
-				mouseClicked(e);
+				processarPopupTrigger(e);
 			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (e.isPopupTrigger()) {
-				textEditor.limpar();
+				processarPopupTrigger(e);
+			}
+		}
+
+		private void processarPopupTrigger(MouseEvent e) {
+			textEditor.limpar();
+			int index = listaComplementos.locationToIndex(e.getPoint());
+			if (index != -1) {
+				listaComplementos.setSelectedIndex(index);
 				mouseClicked(e);
 			}
 		}
