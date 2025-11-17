@@ -87,6 +87,22 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
+		public void mousePressed(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				textEditor.limpar();
+				mouseClicked(e);
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				textEditor.limpar();
+				mouseClicked(e);
+			}
+		}
+
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			String sel = listaComplementos.getSelectedValue();
 			if (Util.isEmpty(sel) || sel.startsWith("#")) {
