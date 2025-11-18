@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import javax.swing.JList;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.arquivo.ArquivoUtil;
@@ -90,14 +89,14 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isPopupTrigger()) {
-				SwingUtilities.invokeLater(() -> processarPopupTrigger(e));
+				processarPopupTrigger(e);
 			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (e.isPopupTrigger()) {
-				SwingUtilities.invokeLater(() -> processarPopupTrigger(e));
+				processarPopupTrigger(e);
 			}
 		}
 
@@ -106,12 +105,18 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 			int index = listaComplementos.locationToIndex(e.getPoint());
 			if (index != -1) {
 				listaComplementos.setSelectedIndex(index);
-				mouseClicked(e);
+				processar();
 			}
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			if (MouseEvent.BUTTON1 == e.getButton()) {
+				processar();
+			}
+		}
+
+		private void processar() {
 			String sel = listaComplementos.getSelectedValue();
 			if (Util.isEmpty(sel) || sel.startsWith("#")) {
 				return;
