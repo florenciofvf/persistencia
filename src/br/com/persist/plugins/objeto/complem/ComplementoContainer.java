@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JList;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.arquivo.ArquivoUtil;
@@ -89,14 +90,14 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isPopupTrigger()) {
-				processarPopupTrigger(e);
+				SwingUtilities.invokeLater(() -> processarPopupTrigger(e));
 			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (e.isPopupTrigger()) {
-				processarPopupTrigger(e);
+				SwingUtilities.invokeLater(() -> processarPopupTrigger(e));
 			}
 		}
 
