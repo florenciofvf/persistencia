@@ -13,11 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
+import javax.swing.JFileChooser;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -34,8 +36,10 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -91,6 +95,8 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private final Button btnDiretorio = new Button("label.diretorio");
+		private final TextField txtNovaRaiz = new TextField(25);
 		private static final long serialVersionUID = 1L;
 		private transient ArquivoPesquisa pesquisa;
 
@@ -101,6 +107,23 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 			add(chkPorParte);
 			add(chkPsqConteudo);
 			add(label);
+			add(txtNovaRaiz);
+			add(btnDiretorio);
+			btnDiretorio.addActionListener(e -> {
+				JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtNovaRaiz.getText()));
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int i = fileChooser.showOpenDialog(SistemaContainer.this);
+				if (i == JFileChooser.APPROVE_OPTION) {
+					File sel = fileChooser.getSelectedFile();
+					txtNovaRaiz.setText(sel.getAbsolutePath());
+					atualizarArvore(txtNovaRaiz.getText());
+				}
+			});
+		}
+
+		private void atualizarArvore(String diretorio) {
+			Arquivo arquivo = new Arquivo(new File(diretorio), new ArrayList<>());
+			arquivoTree.setModel(new ArquivoModelo(arquivo));
 		}
 
 		@Override
