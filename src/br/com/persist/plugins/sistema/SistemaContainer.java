@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
@@ -33,6 +34,7 @@ import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -95,6 +97,7 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private final Button btnTotalArquivos = new Button("label.total_arquivos");
 		private final Button btnDiretorio = new Button("label.diretorio");
 		private final TextField txtNovaRaiz = new TextField(25);
 		private static final long serialVersionUID = 1L;
@@ -109,6 +112,7 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 			add(label);
 			add(txtNovaRaiz);
 			add(btnDiretorio);
+			add(btnTotalArquivos);
 			btnDiretorio.addActionListener(e -> {
 				JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtNovaRaiz.getText()));
 				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -119,11 +123,26 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 					atualizarArvore(txtNovaRaiz.getText());
 				}
 			});
+			btnTotalArquivos.addActionListener(e -> totalArquivos());
 		}
 
 		private void atualizarArvore(String diretorio) {
 			Arquivo arquivo = new Arquivo(new File(diretorio), new ArrayList<>());
 			arquivoTree.setModel(new ArquivoModelo(arquivo));
+		}
+
+		private void totalArquivos() {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo == null) {
+				Util.mensagem(SistemaContainer.this, SistemaMensagens.getString("msg.selecione_um_arquivo"));
+				return;
+			}
+			Object resp = Util.getValorInputDialog(SistemaContainer.this, "label.nome_arquivo",
+					Mensagens.getString("label.nome_arquivo"), Constantes.VAZIO);
+			String param = resp == null ? "" : resp.toString().trim();
+			AtomicInteger contador = new AtomicInteger(0);
+			arquivo.pesquisar(param, contador);
+			Util.mensagem(SistemaContainer.this, contador.toString());
 		}
 
 		@Override

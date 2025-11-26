@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -278,6 +279,15 @@ public class Arquivo {
 		}
 		for (Arquivo item : filhos) {
 			item.preencher(lista, descricao, porParte);
+		}
+	}
+
+	public void pesquisar(String nome, AtomicInteger contador) {
+		if (file.getName().endsWith(nome)) {
+			contador.incrementAndGet();
+		}
+		for (Arquivo item : filhos) {
+			item.pesquisar(nome, contador);
 		}
 	}
 
