@@ -141,7 +141,8 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 					Mensagens.getString("label.nome_arquivo"), Constantes.VAZIO);
 			String param = resp == null ? "" : resp.toString().trim();
 			AtomicInteger contador = new AtomicInteger(0);
-			arquivo.pesquisar(param, contador);
+			arquivo.pesquisar(param, contador,
+					Util.confirmar(SistemaContainer.this, SistemaMensagens.getString("confirm.recursivo"), false));
 			Util.mensagem(SistemaContainer.this, contador.toString());
 		}
 

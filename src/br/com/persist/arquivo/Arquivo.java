@@ -282,12 +282,20 @@ public class Arquivo {
 		}
 	}
 
-	public void pesquisar(String nome, AtomicInteger contador) {
+	public void pesquisar(String nome, AtomicInteger contador, boolean recursivo) {
 		if (file.getName().endsWith(nome)) {
 			contador.incrementAndGet();
 		}
-		for (Arquivo item : filhos) {
-			item.pesquisar(nome, contador);
+		if (recursivo) {
+			for (Arquivo item : filhos) {
+				item.pesquisar(nome, contador, recursivo);
+			}
+		} else {
+			for (Arquivo item : filhos) {
+				if (item.getName().endsWith(nome)) {
+					contador.incrementAndGet();
+				}
+			}
 		}
 	}
 
