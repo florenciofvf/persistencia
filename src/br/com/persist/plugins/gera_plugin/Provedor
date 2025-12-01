@@ -27,8 +27,8 @@ public class ###nameCap###Provedor {
 	}
 
 	public static ###nameCap### get###nameCap###(String nome) {
-		for (###nameCap### obj : lista) {
-			if (obj.getNome().equals(nome)) {
+		for (###nameCap### item : lista) {
+			if (item.getNome().equals(nome)) {
 				return obj;
 			}
 		}

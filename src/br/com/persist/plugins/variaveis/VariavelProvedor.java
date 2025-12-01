@@ -43,8 +43,8 @@ public class VariavelProvedor {
 				lista.add(v);
 			}
 		}
-		for (Variavel v : lista) {
-			int indice = getIndice(v.getNome());
+		for (Variavel item : lista) {
+			int indice = getIndice(item.getNome());
 			if (indice != -1) {
 				excluir(indice);
 			}
@@ -58,9 +58,9 @@ public class VariavelProvedor {
 	}
 
 	public static Variavel getVariavel(String nome) {
-		for (Variavel v : lista) {
-			if (v.getNome().equals(nome)) {
-				return v;
+		for (Variavel item : lista) {
+			if (item.getNome().equals(nome)) {
+				return item;
 			}
 		}
 		return null;
@@ -68,8 +68,8 @@ public class VariavelProvedor {
 
 	public static int getIndice(String nome) {
 		for (int i = 0; i < lista.size(); i++) {
-			Variavel v = lista.get(i);
-			if (v.getNome().equals(nome)) {
+			Variavel item = lista.get(i);
+			if (item.getNome().equals(nome)) {
 				return i;
 			}
 		}

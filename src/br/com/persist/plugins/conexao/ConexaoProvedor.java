@@ -37,8 +37,8 @@ public class ConexaoProvedor {
 
 	public static int primeiro(int indice) {
 		if (indice > 0 && indice < getSize()) {
-			Conexao c = lista.remove(indice);
-			lista.add(0, c);
+			Conexao item = lista.remove(indice);
+			lista.add(0, item);
 			return 0;
 		}
 		return -1;
@@ -46,9 +46,19 @@ public class ConexaoProvedor {
 
 	public static int anterior(int indice) {
 		if (indice > 0 && indice < getSize()) {
-			Conexao c = lista.remove(indice);
+			Conexao item = lista.remove(indice);
 			indice--;
-			lista.add(indice, c);
+			lista.add(indice, item);
+			return indice;
+		}
+		return -1;
+	}
+
+	public static int proximo(int indice) {
+		if (indice + 1 < getSize()) {
+			Conexao item = lista.remove(indice);
+			indice++;
+			lista.add(indice, item);
 			return indice;
 		}
 		return -1;
@@ -60,16 +70,6 @@ public class ConexaoProvedor {
 		}
 	}
 
-	public static int proximo(int indice) {
-		if (indice + 1 < getSize()) {
-			Conexao c = lista.remove(indice);
-			indice++;
-			lista.add(indice, c);
-			return indice;
-		}
-		return -1;
-	}
-
 	public static Conexao getConexao(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
@@ -78,9 +78,9 @@ public class ConexaoProvedor {
 	}
 
 	public static Conexao getConexao(String nome) {
-		for (Conexao c : lista) {
-			if (c.getNome().equals(nome)) {
-				return c;
+		for (Conexao item : lista) {
+			if (item.getNome().equals(nome)) {
+				return item;
 			}
 		}
 		return null;
@@ -88,8 +88,8 @@ public class ConexaoProvedor {
 
 	public static int getIndice(String nome) {
 		for (int i = 0; i < lista.size(); i++) {
-			Conexao c = lista.get(i);
-			if (c.getNome().equals(nome)) {
+			Conexao item = lista.get(i);
+			if (item.getNome().equals(nome)) {
 				return i;
 			}
 		}
@@ -138,9 +138,9 @@ public class ConexaoProvedor {
 	}
 
 	private static void salvarConexoes(XMLUtil util) {
-		for (Conexao c : lista) {
-			if (c.isValido()) {
-				c.salvar(util);
+		for (Conexao item : lista) {
+			if (item.isValido()) {
+				item.salvar(util);
 			}
 		}
 	}

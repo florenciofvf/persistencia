@@ -36,6 +36,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.TabelaPesquisa;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
@@ -100,6 +101,8 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action descerAcao = actionIcon("label.descer", Icones.BAIXAR2);
+		private Action subirAcao = actionIcon("label.subir", Icones.TOP);
 		private static final long serialVersionUID = 1L;
 		private transient FragmentoListener listener;
 		private transient TabelaPesquisa pesquisa;
@@ -110,12 +113,16 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 			buttonAplicar.setTextAplicar2(FragmentoMensagens.getString("label.aplicar_concatenado_and"));
 			buttonAplicar.setTextAplicar3(FragmentoMensagens.getString("label.aplicar_concatenado_or"));
 			txtPesquisa.addActionListener(this);
+			addButton(true, descerAcao);
+			addButton(subirAcao);
 			setListener(listener);
 			add(txtPesquisa);
 			add(chkPorParte);
 			chkPsqConteudo.setTag(Constantes.TABELA);
 			add(chkPsqConteudo);
 			add(label);
+			descerAcao.setActionListener(e -> descer());
+			subirAcao.setActionListener(e -> subir());
 		}
 
 		@Override
@@ -137,6 +144,8 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 
 		private void setListener(FragmentoListener listener) {
 			buttonAplicar.setEnabled(listener != null);
+			descerAcao.setEnabled(listener == null);
+			subirAcao.setEnabled(listener == null);
 			this.listener = listener;
 		}
 
@@ -329,6 +338,30 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(FragmentoContainer.this, false)) {
 				FragmentoProvedor.excluir(linhas);
 				fragmentoModelo.fireTableDataChanged();
+			}
+		}
+
+		private void subir() {
+			int[] linhas = tabela.getSelectedRows();
+			int registros = fragmentoModelo.getRowCount();
+			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] > 0) {
+				int i = FragmentoProvedor.anterior(linhas[0]);
+				fragmentoModelo.fireTableDataChanged();
+				if (i != -1) {
+					tabela.setRowSelectionInterval(i, i);
+				}
+			}
+		}
+
+		private void descer() {
+			int[] linhas = tabela.getSelectedRows();
+			int registros = fragmentoModelo.getRowCount();
+			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] + 1 < registros) {
+				int i = FragmentoProvedor.proximo(linhas[0]);
+				fragmentoModelo.fireTableDataChanged();
+				if (i != -1) {
+					tabela.setRowSelectionInterval(i, i);
+				}
 			}
 		}
 	}

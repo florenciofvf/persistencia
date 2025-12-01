@@ -29,6 +29,41 @@ public class FragmentoProvedor {
 		file = new File(FragmentoConstantes.FRAGMENTOS + Constantes.SEPARADOR + "fragmentos.xml");
 	}
 
+	public static int primeiro(int indice) {
+		if (indice > 0 && indice < getSize()) {
+			Fragmento item = lista.remove(indice);
+			lista.add(0, item);
+			return 0;
+		}
+		return -1;
+	}
+
+	public static int anterior(int indice) {
+		if (indice > 0 && indice < getSize()) {
+			Fragmento item = lista.remove(indice);
+			indice--;
+			lista.add(indice, item);
+			return indice;
+		}
+		return -1;
+	}
+
+	public static int proximo(int indice) {
+		if (indice + 1 < getSize()) {
+			Fragmento item = lista.remove(indice);
+			indice++;
+			lista.add(indice, item);
+			return indice;
+		}
+		return -1;
+	}
+
+	public static void excluir(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			lista.remove(indice);
+		}
+	}
+
 	public static Fragmento getFragmento(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
@@ -44,24 +79,18 @@ public class FragmentoProvedor {
 				lista.add(f);
 			}
 		}
-		for (Fragmento frag : lista) {
-			int indice = getIndice(frag.getResumo());
+		for (Fragmento item : lista) {
+			int indice = getIndice(item.getResumo());
 			if (indice != -1) {
 				excluir(indice);
 			}
 		}
 	}
 
-	public static void excluir(int indice) {
-		if (indice >= 0 && indice < getSize()) {
-			lista.remove(indice);
-		}
-	}
-
 	public static Fragmento getFragmento(String resumo) {
-		for (Fragmento f : lista) {
-			if (f.getResumo().equals(resumo)) {
-				return f;
+		for (Fragmento item : lista) {
+			if (item.getResumo().equals(resumo)) {
+				return item;
 			}
 		}
 		return null;
@@ -69,8 +98,8 @@ public class FragmentoProvedor {
 
 	public static int getIndice(String resumo) {
 		for (int i = 0; i < lista.size(); i++) {
-			Fragmento f = lista.get(i);
-			if (f.getResumo().equals(resumo)) {
+			Fragmento item = lista.get(i);
+			if (item.getResumo().equals(resumo)) {
 				return i;
 			}
 		}
@@ -123,17 +152,17 @@ public class FragmentoProvedor {
 	}
 
 	private static void salvarFragmentosLista(XMLUtil util) {
-		for (Fragmento f : lista) {
-			if (f.isValido()) {
-				f.salvar(util);
+		for (Fragmento item : lista) {
+			if (item.isValido()) {
+				item.salvar(util);
 			}
 		}
 	}
 
 	private static void salvarFragmentosPasta(XMLUtil util) {
-		for (Fragmento f : pasta) {
-			if (f.isValido()) {
-				f.salvar(util);
+		for (Fragmento item : pasta) {
+			if (item.isValido()) {
+				item.salvar(util);
 			}
 		}
 	}
@@ -142,17 +171,17 @@ public class FragmentoProvedor {
 		removerFiltro();
 		Iterator<Fragmento> it = lista.iterator();
 		while (it.hasNext()) {
-			Fragmento f = it.next();
-			if (!contem(grupos, f.getGrupo())) {
-				pasta.add(f);
+			Fragmento item = it.next();
+			if (!contem(grupos, item.getGrupo())) {
+				pasta.add(item);
 				it.remove();
 			}
 		}
 	}
 
 	private static boolean contem(List<String> grupos, String grupo) {
-		for (String s : grupos) {
-			if (s.equalsIgnoreCase(grupo)) {
+		for (String item : grupos) {
+			if (item.equalsIgnoreCase(grupo)) {
 				return true;
 			}
 		}
@@ -162,8 +191,8 @@ public class FragmentoProvedor {
 	public static void removerFiltro() {
 		Iterator<Fragmento> it = pasta.iterator();
 		while (it.hasNext()) {
-			Fragmento f = it.next();
-			lista.add(f);
+			Fragmento item = it.next();
+			lista.add(item);
 			it.remove();
 		}
 	}
