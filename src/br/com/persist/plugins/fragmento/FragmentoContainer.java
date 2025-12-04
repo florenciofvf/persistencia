@@ -16,6 +16,7 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -101,6 +102,7 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action conteudoAcao = actionIcon("label.conteudo", Icones.TEXTO);
 		private Action descerAcao = actionIcon("label.descer", Icones.BAIXAR2);
 		private Action subirAcao = actionIcon("label.subir", Icones.TOP);
 		private static final long serialVersionUID = 1L;
@@ -115,12 +117,14 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 			txtPesquisa.addActionListener(this);
 			addButton(true, descerAcao);
 			addButton(subirAcao);
+			addButton(conteudoAcao);
 			setListener(listener);
 			add(txtPesquisa);
 			add(chkPorParte);
 			chkPsqConteudo.setTag(Constantes.TABELA);
 			add(chkPsqConteudo);
 			add(label);
+			conteudoAcao.setActionListener(e -> conteudo());
 			descerAcao.setActionListener(e -> descer());
 			subirAcao.setActionListener(e -> subir());
 		}
@@ -362,6 +366,14 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 				if (i != -1) {
 					tabela.setRowSelectionInterval(i, i);
 				}
+			}
+		}
+
+		private void conteudo() {
+			try {
+				Util.conteudo(FragmentoContainer.this, FragmentoProvedor.getFile());
+			} catch (IOException e) {
+				Util.mensagem(FragmentoContainer.this, e.getMessage());
 			}
 		}
 	}

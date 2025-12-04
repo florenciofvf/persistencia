@@ -29,6 +29,10 @@ public class FragmentoProvedor {
 		file = new File(FragmentoConstantes.FRAGMENTOS + Constantes.SEPARADOR + "fragmentos.xml");
 	}
 
+	public static File getFile() {
+		return file;
+	}
+
 	public static int primeiro(int indice) {
 		if (indice > 0 && indice < getSize()) {
 			Fragmento item = lista.remove(indice);
