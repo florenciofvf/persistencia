@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
@@ -42,6 +43,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkAbrirFormularioDireita = criarCheckBox("label.abrir_formulario_direita");
 	private final CheckBox chkAbrirFormularioAbaixo = criarCheckBox("label.abrir_formulario_abaixo");
 	private final CheckBox chkFecharComESCInternal = criarCheckBox("label.fechar_com_esc_internal");
+	private final JSpinner txtTotalConfirmacao = new JSpinner(new SpinnerNumberModel(0, 0, 10, 1));
 	private final CheckBox chkFecharComESCDialogo = criarCheckBox("label.fechar_com_esc_dialogo");
 	private final CheckBox chkMonitorPreferencial = criarCheckBox("label.monitor_preferencial");
 	private final Button buttonAplicarLA = criarButton("label.aplicar_largura_altura");
@@ -52,7 +54,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private JComboBox<String> comboFontes = new JComboBox<>(FONTES);
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDimensaoMensagem = new TextField();
-	private final JSpinner txtTotalConfirmacao = new JSpinner();
 	private final TextField txtDefinirLargura = new TextField();
 	private final Button buttonConectaDesconecta = new Button();
 	private final TextField txtDefinirAltura = new TextField();
