@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
@@ -51,7 +52,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private JComboBox<String> comboFontes = new JComboBox<>(FONTES);
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDimensaoMensagem = new TextField();
-	private final TextField txtTotalConfirmacao = new TextField();
+	private final JSpinner txtTotalConfirmacao = new JSpinner();
 	private final TextField txtDefinirLargura = new TextField();
 	private final Button buttonConectaDesconecta = new Button();
 	private final TextField txtDefinirAltura = new TextField();
@@ -90,8 +91,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
 		chkMonitorPreferencial.setSelected(Preferencias.isMonitorPreferencial());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
-		txtTotalConfirmacao.setText("" + Preferencias.getTotalConfirmacao());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
+		txtTotalConfirmacao.setValue(Preferencias.getTotalConfirmacao());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		txtDimensaoMensagem.setText(Preferencias.getDimensaoMensagem());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
@@ -150,7 +151,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				.addActionListener(e -> Preferencias.setFecharComESCInternal(chkFecharComESCInternal.isSelected()));
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
 		txtDimensaoMensagem.addActionListener(e -> Preferencias.setDimensaoMensagem(txtDimensaoMensagem.getText()));
-		txtTotalConfirmacao.addActionListener(e -> Preferencias.setTotalConfirmacao(getTotalConfirmacao()));
+		txtTotalConfirmacao.addChangeListener(e -> Preferencias.setTotalConfirmacao(getTotalConfirmacao()));
 		chkFecharComESCDialogo
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
 		chkMonitorPreferencial
@@ -212,7 +213,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private int getTotalConfirmacao() {
-		return Util.getInt(txtTotalConfirmacao.getText(), Preferencias.getTotalConfirmacao());
+		return Util.getInt(txtTotalConfirmacao.getValue().toString(), Preferencias.getTotalConfirmacao());
 	}
 
 	private void alterarFonteNome(ItemEvent e) {
