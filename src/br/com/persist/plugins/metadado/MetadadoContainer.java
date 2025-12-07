@@ -241,8 +241,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			}
 
 			private void somenteEsquerda() {
-				Conexao conexao = getConexao();
-				if (conexao == null) {
+				Conexao conexaoEsquerda = getConexao();
+				if (conexaoEsquerda == null) {
 					Util.mensagem(MetadadoContainer.this, CONEXAO_ESQUERDA_NULA);
 					return;
 				}
@@ -251,7 +251,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 					Util.mensagem(MetadadoContainer.this, CONEXAO_DIREITA_NULA);
 					return;
 				}
-				File fileE = new File(file, criarNomeArquivo(conexao));
+				File fileE = new File(file, criarNomeArquivo(conexaoEsquerda));
 				if (!fileE.isFile()) {
 					Util.mensagem(MetadadoContainer.this, ARQUIVO_ESQUERDO_INEXISTENTE);
 					return;
@@ -287,8 +287,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			}
 
 			private void somenteDireita() {
-				Conexao conexao = getConexao();
-				if (conexao == null) {
+				Conexao conexaoEsquerda = getConexao();
+				if (conexaoEsquerda == null) {
 					Util.mensagem(MetadadoContainer.this, CONEXAO_ESQUERDA_NULA);
 					return;
 				}
@@ -297,7 +297,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 					Util.mensagem(MetadadoContainer.this, CONEXAO_DIREITA_NULA);
 					return;
 				}
-				File fileE = new File(file, criarNomeArquivo(conexao));
+				File fileE = new File(file, criarNomeArquivo(conexaoEsquerda));
 				if (!fileE.isFile()) {
 					Util.mensagem(MetadadoContainer.this, ARQUIVO_ESQUERDO_INEXISTENTE);
 					return;
