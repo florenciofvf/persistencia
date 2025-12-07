@@ -386,8 +386,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			private void append(StringBuilder sb, String tabela, Set<String> campos) {
 				sb.append(tabela);
 				sb.append(Constantes.QL + aux(tabela.length()));
-				for (String campo : campos) {
-					sb.append(Constantes.QL + campo);
+				for (String item : campos) {
+					sb.append(Constantes.QL + item);
 				}
 				sb.append(Constantes.QL);
 				sb.append(Constantes.QL);
@@ -460,7 +460,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		protected void atualizar() {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
-				new Thread(() -> atualizar(conexao)).start();
+				String msg = MetadadoMensagens.getString("msg.confirmar_atualizar_objetos");
+				if (Util.confirmar(MetadadoContainer.this, msg, false)) {
+					new Thread(() -> atualizar(conexao)).start();
+				}
 			} else {
 				Util.mensagem(MetadadoContainer.this, Constantes.CONEXAO_NULA);
 			}
@@ -484,29 +487,29 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		private void atualizar(Metadado raiz, List<Metadado> tabelas, Conexao conexao, Connection conn)
 				throws PersistenciaException, ArgumentoException {
 			int contador = 0;
-			for (Metadado tabela : tabelas) {
-				tabela.setTabela(true);
-				List<Metadado> campos = converterLista(Persistencia.listarCampos(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO);
+			for (Metadado item : tabelas) {
+				item.setTabela(true);
+				List<Metadado> campos = converterLista(Persistencia.listarCampos(conn, conexao, item.getDescricao()));
+				preencher(item, campos, Constantes.CAMPOS, Constantes.CAMPO);
 				List<Metadado> chavesPrimarias = converterLista(
-						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, chavesPrimarias, MetadadoConstantes.CHAVES_PRIMARIAS,
+						Persistencia.listarChavesPrimarias(conn, conexao, item.getDescricao()));
+				preencher(item, chavesPrimarias, MetadadoConstantes.CHAVES_PRIMARIAS,
 						MetadadoConstantes.CHAVE_PRIMARIA);
 				List<Metadado> camposImportados = converterImportados(
-						Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, camposImportados, MetadadoConstantes.CAMPOS_IMPORTADOS,
+						Persistencia.listarCamposImportados(conn, conexao, item.getDescricao()));
+				preencher(item, camposImportados, MetadadoConstantes.CAMPOS_IMPORTADOS,
 						MetadadoConstantes.CAMPO_IMPORTADO);
 				List<Metadado> camposExportados = converterExportados(
-						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, camposExportados, MetadadoConstantes.CAMPOS_EXPORTADOS,
+						Persistencia.listarCamposExportados(conn, conexao, item.getDescricao()));
+				preencher(item, camposExportados, MetadadoConstantes.CAMPOS_EXPORTADOS,
 						MetadadoConstantes.CAMPO_EXPORTADO);
 				if (!Util.isEmpty(conexao.getConstraint())) {
 					List<Metadado> constraints = converterConstraint(
-							Persistencia.listarConstraints(conn, conexao, tabela.getDescricao()));
-					preencher(tabela, constraints, MetadadoConstantes.CONSTRAINTS, MetadadoConstantes.CONSTRAINT);
+							Persistencia.listarConstraints(conn, conexao, item.getDescricao()));
+					preencher(item, constraints, MetadadoConstantes.CONSTRAINTS, MetadadoConstantes.CONSTRAINT);
 				}
 				progresso.setValue(++contador);
-				raiz.add(tabela);
+				raiz.add(item);
 			}
 		}
 
@@ -534,8 +537,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		private List<Metadado> converterLista(List<String> lista) throws ArgumentoException {
 			List<Metadado> resposta = new ArrayList<>();
-			for (String string : lista) {
-				resposta.add(new Metadado(string, false));
+			for (String item : lista) {
+				resposta.add(new Metadado(item, false));
 			}
 			return resposta;
 		}
@@ -567,8 +570,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			if (!campos.isEmpty()) {
 				String descricao = campos.size() > 1 ? tipoPlural : tipoSingular;
 				Metadado tipo = new Metadado(descricao, true);
-				for (Metadado campo : campos) {
-					tipo.add(campo);
+				for (Metadado item : campos) {
+					tipo.add(item);
 				}
 				tabela.add(tipo);
 			}
