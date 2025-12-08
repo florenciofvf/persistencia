@@ -109,7 +109,20 @@ class SeparadorContainer extends Panel {
 			dialogo.dispose();
 		} else if (lista.size() == 1) {
 			String string = Util.getStringLista(lista, Constantes.VAZIO, false, comAspas);
-			Util.setContentTransfered(string);
+			if (string != null) {
+				int pos = string.indexOf("@");
+				if (pos != -1) {
+					if (Util.confirmar(SeparadorContainer.this, Mensagens.getString("msg.copiar_ate_arroba"), false)) {
+						Util.setContentTransfered(string.substring(0, pos));
+					} else {
+						Util.setContentTransfered(string);
+					}
+				} else {
+					Util.setContentTransfered(string);
+				}
+			} else {
+				Util.setContentTransfered(string);
+			}
 			dialogo.dispose();
 		}
 	}
