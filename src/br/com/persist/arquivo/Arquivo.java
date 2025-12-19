@@ -246,7 +246,7 @@ public class Arquivo {
 	}
 
 	public Arquivo getArquivo(File file) {
-		if (this.file.equals(file)) {
+		if (file != null && file.getAbsolutePath().equals(this.file.getAbsolutePath())) {
 			return this;
 		}
 		for (Arquivo m : filhos) {
