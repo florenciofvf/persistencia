@@ -261,35 +261,44 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 
 	private List<String> validar() {
 		List<String> resp = new ArrayList<>();
-
 		validarModeloPlugin(resp);
 		validarDiretorio(resp);
+		validarFichario(resp);
+		validarRecurso(resp);
 		validarTabela(resp);
+		validarArvore(resp);
+		validarMisto(resp);
 		validarNome(resp);
 		validarMin(resp);
 		validarPct(resp);
+		return resp;
+	}
 
-		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComException.isSelected()) {
-			resp.add(GeraPluginMensagens.getString("erro.excecao_devido_fichario_arvore"));
+	private void validarModeloPlugin(List<String> resp) {
+		if (!chkBasico.isSelected() && !chkArquivo.isSelected() && !chkTabela.isSelected() && !chkFichario.isSelected()
+				&& !chkArvore.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.modelo_plugin_vazio"));
 		}
+	}
 
+	private void validarDiretorio(List<String> resp) {
+		if (Util.isEmpty(txtDiretorioDestino.getText())) {
+			resp.add(mensagemObrigatoria("label.diretorio_destino"));
+		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
+		}
+	}
+
+	private void validarFichario(List<String> resp) {
 		if (chkFichario.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_fichario"));
 		}
+	}
 
-		if (chkArvore.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
-			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_arvore"));
-		}
-
-		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComConfiguracao.isSelected()) {
-			resp.add(GeraPluginMensagens.getString("erro.preferencia_devido_fichario_arvore"));
-		}
-
+	private void validarRecurso(List<String> resp) {
 		if (!Util.isEmpty(txtDiretorioRecursos.getText()) && caracterInvalido(txtDiretorioRecursos.getText())) {
 			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos"));
 		}
-
-		return resp;
 	}
 
 	private void validarTabela(List<String> resp) {
@@ -304,26 +313,18 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		}
 	}
 
-	private void validarPct(List<String> resp) {
-		if (Util.isEmpty(txtPacotePlugin.getText())) {
-			resp.add(mensagemObrigatoria("label.pacote_plugin"));
-		} else if (caracterInvalidoPacote(txtPacotePlugin.getText())) {
-			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
+	private void validarMisto(List<String> resp) {
+		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComException.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.excecao_devido_fichario_arvore"));
+		}
+		if ((chkFichario.isSelected() || chkArvore.isSelected()) && !chkComConfiguracao.isSelected()) {
+			resp.add(GeraPluginMensagens.getString("erro.preferencia_devido_fichario_arvore"));
 		}
 	}
 
-	private void validarMin(List<String> resp) {
-		if (Util.isEmpty(txtMinimPlugin.getText())) {
-			resp.add(mensagemObrigatoria("label.nome_min_plugin"));
-		} else if (caracterInvalido(txtMinimPlugin.getText())) {
-			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
-		}
-	}
-
-	private void validarModeloPlugin(List<String> resp) {
-		if (!chkBasico.isSelected() && !chkArquivo.isSelected() && !chkTabela.isSelected() && !chkFichario.isSelected()
-				&& !chkArvore.isSelected()) {
-			resp.add(GeraPluginMensagens.getString("erro.modelo_plugin_vazio"));
+	private void validarArvore(List<String> resp) {
+		if (chkArvore.isSelected() && Util.isEmpty(txtDiretorioRecursos.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.diretorio_recursos_devido_arvore"));
 		}
 	}
 
@@ -337,11 +338,19 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		}
 	}
 
-	private void validarDiretorio(List<String> resp) {
-		if (Util.isEmpty(txtDiretorioDestino.getText())) {
-			resp.add(mensagemObrigatoria("label.diretorio_destino"));
-		} else if (!new File(txtDiretorioDestino.getText()).isDirectory()) {
-			resp.add(GeraPluginMensagens.getString("erro.diretorio_destino_invalido"));
+	private void validarMin(List<String> resp) {
+		if (Util.isEmpty(txtMinimPlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.nome_min_plugin"));
+		} else if (caracterInvalido(txtMinimPlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.minim_plugin"));
+		}
+	}
+
+	private void validarPct(List<String> resp) {
+		if (Util.isEmpty(txtPacotePlugin.getText())) {
+			resp.add(mensagemObrigatoria("label.pacote_plugin"));
+		} else if (caracterInvalidoPacote(txtPacotePlugin.getText())) {
+			resp.add(GeraPluginMensagens.getString("erro.pacote_plugin"));
 		}
 	}
 
