@@ -31,6 +31,7 @@ public class VinculoHandler extends XMLHandler {
 	public static final String VALOR = "valor";
 	public static final String ICONE = "icone";
 	public static final String GRUPO = "grupo";
+	public static final String TURMA = "turma";
 	public static final String VAZIO = "vazio";
 	public static final String PARAM = "param";
 	public static final String CHAVE = "chave";

@@ -172,6 +172,20 @@ public class Macro {
 		}
 	}
 
+	static class Turma extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) throws MacroException {
+			throw new MacroException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			if (valor != null) {
+				objeto.setTurma(valor.toString());
+			}
+		}
+	}
+
 	static class Ccsc extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) throws MacroException {

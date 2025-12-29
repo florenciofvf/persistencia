@@ -103,6 +103,7 @@ public class ParaTabela {
 	private String idSub;
 	private String joins;
 	private String grupo;
+	private String turma;
 	private String icone;
 	private String sane;
 	private String ccsc;
@@ -330,6 +331,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(metodoSet)) {
 			objeto.setMetodoSet(metodoSet);
 		}
+		if (!Util.isEmpty(turma)) {
+			objeto.setTurma(turma);
+		}
 	}
 
 	public void aplicar(Attributes attributes) {
@@ -353,6 +357,7 @@ public class ParaTabela {
 		setDesenharId(attributes.getValue(STR_DESENHAR_ID), null);
 		setIcone(attributes.getValue(VinculoHandler.ICONE));
 		setGrupo(attributes.getValue(VinculoHandler.GRUPO), null);
+		setTurma(attributes.getValue(VinculoHandler.TURMA), null);
 		setMapeamento(attributes.getValue(STR_MAPEAMENTO), null);
 		setSequencias(attributes.getValue(STR_SEQUENCIAS), null);
 		setDestacavel(attributes.getValue(STR_DESTACAVEL), null);
@@ -414,6 +419,7 @@ public class ParaTabela {
 		atributoValor(util, STR_DESTACAVEIS, destacaveis);
 		atributoValor(util, STR_LARCONTEUDO, larConteudo);
 		atributoValor(util, VinculoHandler.GRUPO, grupo);
+		atributoValor(util, VinculoHandler.TURMA, turma);
 		atributoValor(util, STR_DESENHAR_ID, desenharId);
 		atributoValor(util, STR_MAPEAMENTO, mapeamento);
 		atributoValor(util, STR_SEQUENCIAS, sequencias);
@@ -475,6 +481,7 @@ public class ParaTabela {
 		util.tab().atributo(STR_DESTACAVEIS, "").ql();
 		util.tab().atributo(STR_LARCONTEUDO, "").ql();
 		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
+		util.tab().atributo(VinculoHandler.TURMA, "").ql();
 		util.tab().atributo(STR_MARGEM_INFERIOR, "").ql();
 		util.tab().atributo(STR_DESENHAR_ID, true).ql();
 		util.tab().atributo(STR_MAPEAMENTO, "").ql();
@@ -741,12 +748,24 @@ public class ParaTabela {
 		return grupo;
 	}
 
+	public String getTurma() {
+		return turma;
+	}
+
 	public void setGrupo(String grupo, Marcador marcador) {
 		if (marcador != null) {
 			marcador.aplicarIf(this.grupo);
 			return;
 		}
 		this.grupo = grupo;
+	}
+
+	public void setTurma(String turma, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.turma);
+			return;
+		}
+		this.turma = turma;
 	}
 
 	public Color getCorFonte() {

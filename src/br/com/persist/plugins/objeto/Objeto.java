@@ -116,6 +116,7 @@ public class Objeto implements Runnable {
 	private String icone;
 	private boolean bpnt;
 	private String grupo;
+	private String turma;
 	private Color corTmp;
 	private String idSub;
 	private Objeto temp;
@@ -194,6 +195,7 @@ public class Objeto implements Runnable {
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.grupo = grupo;
+		o.turma = turma;
 		o.joins = joins;
 		o.idSub = idSub;
 		o.ccsc = ccsc;
@@ -245,6 +247,7 @@ public class Objeto implements Runnable {
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
 		grupo = attr.getValue("grupo");
+		turma = attr.getValue("turma");
 		joins = attr.getValue("joins");
 		idSub = attr.getValue("idSub");
 		id = attr.getValue("id");
@@ -300,6 +303,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("chaves", getChaves());
 		util.atributoCheck("linkAuto", linkAuto);
 		util.atributoCheck("grupo", getGrupo());
+		util.atributoCheck("turma", getTurma());
 		util.atributoCheck("ignorar", ignorar);
 		util.atributo("cor", cor.getRGB());
 		util.atributoCheck("joins", getJoins());
@@ -833,8 +837,19 @@ public class Objeto implements Runnable {
 		return grupo;
 	}
 
+	public String getTurma() {
+		if (Util.isEmpty(turma)) {
+			turma = Constantes.VAZIO;
+		}
+		return turma;
+	}
+
 	public void setGrupo(String grupo) {
 		this.grupo = grupo;
+	}
+
+	public void setTurma(String turma) {
+		this.turma = turma;
 	}
 
 	public String getSelectAlternativo() {

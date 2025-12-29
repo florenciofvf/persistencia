@@ -307,6 +307,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				para.setApelido(compChave.getText(), marcador);
 			} else if ("GRUPO".equals(compChave.chave)) {
 				para.setGrupo(compChave.getText(), marcador);
+			} else if ("TURMA".equals(compChave.chave)) {
+				para.setTurma(compChave.getText(), marcador);
 			} else if ("CHAVES".equals(compChave.chave)) {
 				para.setChaves(compChave.getText(), marcador);
 			} else if ("JOINS".equals(compChave.chave)) {
@@ -915,6 +917,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private TextField txtApelido = new TextField();
 		private CheckBox chkLinkAuto = new CheckBox();
 		private TextField txtGrupo = new TextField();
+		private TextField txtTurma = new TextField();
 		private TextField txtJoins = new TextField();
 		private CheckBox chkIgnorar = new CheckBox();
 		private CheckBox chkCCSC = new CheckBox();
@@ -951,6 +954,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			chkSANE.setSelected(objeto.isSane());
 			chkBPNT.setSelected(objeto.isBpnt());
 			txtGrupo.setText(objeto.getGrupo());
+			txtTurma.setText(objeto.getTurma());
 			txtJoins.setText(objeto.getJoins());
 			txtFinalConsulta.addFocusListener(focusListenerInner);
 			txtEsquemaAlter.addFocusListener(focusListenerInner);
@@ -972,6 +976,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			txtChaves.addFocusListener(focusListenerInner);
 			txtJoins.addFocusListener(focusListenerInner);
 			txtGrupo.addFocusListener(focusListenerInner);
+			txtTurma.addFocusListener(focusListenerInner);
 			chkAjusteAutoForm.addActionListener(this);
 			chkAjusteLargForm.addActionListener(this);
 			chkLarguraRotulos.addActionListener(this);
@@ -998,6 +1003,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			txtChaves.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtGrupo.addActionListener(this);
+			txtTurma.addActionListener(this);
 			txtJoins.addActionListener(this);
 			chkCCSC.addActionListener(this);
 			chkSANE.addActionListener(this);
@@ -1005,6 +1011,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			Box container = Box.createVerticalBox();
 			container.add(criarLinhaCopiarRotulo("label.apelido_para_joins", txtApelido));
 			container.add(criarLinhaCopiar("label.grupo", txtGrupo));
+			container.add(criarLinhaCopiar("label.turma", txtTurma));
 			container.add(criarLinhaCopiar("label.tabela", txtTabela));
 			container.add(criarLinhaCopiar("label.chaves", txtChaves, ObjetoMensagens.getString("hint.chaves")));
 			container.add(criarLinhaCopiarRotulo("label.select_alter", txtSelectAlter));
@@ -1063,6 +1070,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private void configDestaqueMacro() {
 			Marcador.aplicarBordaMacro(txtComplemento);
 			Marcador.aplicarBordaMacro(txtGrupo);
+			Marcador.aplicarBordaMacro(txtTurma);
 			Marcador.aplicarBordaMacro(txtPrefixoNT);
 			Marcador.aplicarBordaMacro(chkColunaInfo);
 			Marcador.aplicarBordaMacro(chkAbrirAuto);
@@ -1103,6 +1111,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			vinculados.add(new CompChave(txtChaves, "CHAVES"));
 			vinculados.add(new CompChave(txtJoins, "JOINS"));
 			vinculados.add(new CompChave(txtGrupo, "GRUPO"));
+			vinculados.add(new CompChave(txtTurma, "TURMA"));
 			vinculados.add(new CompChave(chkSANE, "SANE"));
 			vinculados.add(new CompChave(chkCCSC, "CCSC"));
 			vinculados.add(new CompChave(chkBPNT, "BPNT"));
@@ -1133,6 +1142,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			txtChaves.addMouseListener(listenerVinculado);
 			txtJoins.addMouseListener(listenerVinculado);
 			txtGrupo.addMouseListener(listenerVinculado);
+			txtTurma.addMouseListener(listenerVinculado);
 			chkSANE.addMouseListener(listenerVinculado);
 			chkCCSC.addMouseListener(listenerVinculado);
 			chkBPNT.addMouseListener(listenerVinculado);
@@ -1410,6 +1420,9 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				objeto.setJoins(txtJoins.getText());
 			} else if (txtMetodoSet == e.getSource()) {
 				objeto.setMetodoSet(txtMetodoSet.getText());
+			} else if (txtTurma == e.getSource()) {
+				objeto.setTurma(txtTurma.getText());
+				MacroProvedor.turma(objeto.getTurma());
 			}
 		}
 
@@ -1418,7 +1431,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 					txtEsquemaAlter, txtTabelaAlter, txtSelectAlter, txtChaveamento, txtComplemento, txtClassBiblio,
 					txtDestacaveis, txtLarConteudo, chkColunaInfo, txtMapeamento, txtMetodoSet, txtPrefixoNT,
 					chkAbrirAuto, txtSequencias, chkLinkAuto, txtOrderBy, txtApelido, txtTabelas, chkIgnorar, txtChaves,
-					txtJoins, txtGrupo, chkSANE, chkCCSC, chkBPNT);
+					txtJoins, txtGrupo, txtTurma, chkSANE, chkCCSC, chkBPNT);
 		}
 
 		private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {

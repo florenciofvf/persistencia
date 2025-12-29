@@ -35,6 +35,7 @@ import br.com.persist.plugins.objeto.macro.Macro.PrefixoNomeTabela;
 import br.com.persist.plugins.objeto.macro.Macro.Quebrado;
 import br.com.persist.plugins.objeto.macro.Macro.Sane;
 import br.com.persist.plugins.objeto.macro.Macro.Transparente;
+import br.com.persist.plugins.objeto.macro.Macro.Turma;
 import br.com.persist.plugins.objeto.macro.Macro.XPos;
 import br.com.persist.plugins.objeto.macro.Macro.YPos;
 
@@ -64,6 +65,7 @@ public class MacroProvedor {
 	private static final String IGNORAR = "ignorar";
 	private static final String ICONE = "icone";
 	private static final String GRUPO = "grupo";
+	private static final String TURMA = "turma";
 	private static final String CCSC = "ccsc";
 	private static final String SANE = "sane";
 	private static final String BPNT = "bpnt";
@@ -129,6 +131,7 @@ public class MacroProvedor {
 		mapa.put(IGNORAR, new Ignorar());
 		mapa.put(ICONE, new Icone());
 		mapa.put(GRUPO, new Grupo());
+		mapa.put(TURMA, new Turma());
 		mapa.put(CCSC, new Ccsc());
 		mapa.put(SANE, new Sane());
 		mapa.put(BPNT, new Bpnt());
@@ -320,6 +323,12 @@ public class MacroProvedor {
 
 	public static void grupo(Object valor) {
 		Instrucao instrucao = get(GRUPO);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public static void turma(Object valor) {
+		Instrucao instrucao = get(TURMA);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}
