@@ -315,11 +315,16 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 				ObjetoSuperficieUtil.desativarObjetos(objetoSuperficie);
 				labelStatus2.limpar();
 			} else {
-				int total = ObjetoSuperficieUtil.ativarObjetos(objetoSuperficie, txtDestacaObjeto.getText());
-				if (total == 0) {
-					Util.beep();
+				String string = txtDestacaObjeto.getText();
+				if (string.startsWith("t:") || string.startsWith("T:")) {
+					ObjetoSuperficieUtil.processarTurma(objetoSuperficie, string.substring(2).trim().toUpperCase());
+				} else {
+					int total = ObjetoSuperficieUtil.ativarObjetos(objetoSuperficie, string);
+					if (total == 0) {
+						Util.beep();
+					}
+					labelStatus2.setText("(" + total + ")");
 				}
-				labelStatus2.setText("(" + total + ")");
 			}
 		}
 

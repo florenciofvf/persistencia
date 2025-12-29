@@ -79,8 +79,8 @@ public class ObjetoSuperficieUtil {
 	}
 
 	private static void salvarObjetos(ObjetoSuperficie superficie, XMLUtil util) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.salvar(util);
+		for (Objeto item : superficie.getObjetos()) {
+			item.salvar(util);
 		}
 		if (superficie.getObjetos().length > 0) {
 			util.ql();
@@ -88,8 +88,8 @@ public class ObjetoSuperficieUtil {
 	}
 
 	private static void salvarRelacoes(ObjetoSuperficie superficie, XMLUtil util) {
-		for (Relacao relacao : superficie.getRelacoes()) {
-			relacao.salvar(util);
+		for (Relacao item : superficie.getRelacoes()) {
+			item.salvar(util);
 		}
 		if (superficie.getRelacoes().length > 0) {
 			util.ql();
@@ -100,8 +100,8 @@ public class ObjetoSuperficieUtil {
 		JInternalFrame[] frames = superficie.getAllFrames();
 		if (frames.length > 0) {
 			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
-			for (JInternalFrame frame : frames) {
-				InternalFormulario interno = (InternalFormulario) frame;
+			for (JInternalFrame item : frames) {
+				InternalFormulario interno = (InternalFormulario) item;
 				InternalForm form = new InternalForm();
 				form.copiar(interno);
 				form.salvar(util);
@@ -150,9 +150,9 @@ public class ObjetoSuperficieUtil {
 
 	public static List<String> getListaFormulariosInvisiveis(ObjetoSuperficie superficie) {
 		List<String> lista = new ArrayList<>();
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (!frame.isVisible() && frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
+		for (JInternalFrame item : superficie.getAllFrames()) {
+			if (!item.isVisible() && item instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) item;
 				Objeto objeto = interno.getInternalContainer().getObjeto();
 				lista.add(getGrupoTabela(objeto));
 			}
@@ -161,9 +161,9 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void tornarVisivel(ObjetoSuperficie superficie, String grupoTabela, Point point) {
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (!frame.isVisible() && frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
+		for (JInternalFrame item : superficie.getAllFrames()) {
+			if (!item.isVisible() && item instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) item;
 				Objeto objeto = interno.getInternalContainer().getObjeto();
 				String grupoT = getGrupoTabela(objeto);
 				if (grupoT.equals(grupoTabela)) {
@@ -225,14 +225,14 @@ public class ObjetoSuperficieUtil {
 			Util.stackTraceAndMessage("TODOS_ICONES_PARA_ARQUIVO_VINCULADO", ex, superficie);
 			return;
 		}
-		for (Objeto objeto : objetosTabelaIcone) {
-			String tabela = objeto.getTabela().trim();
+		for (Objeto item : objetosTabelaIcone) {
+			String tabela = item.getTabela().trim();
 			ParaTabela para = vinculacao.getParaTabela(tabela);
 			if (para == null) {
 				para = new ParaTabela(tabela);
 				vinculacao.putParaTabela(para);
 			}
-			para.setIcone(objeto.getIcone());
+			para.setIcone(item.getIcone());
 		}
 		ObjetoSuperficieUtil.salvarVinculacao(superficie, vinculacao);
 		Util.mensagem(superficie, "SUCESSO");
@@ -240,9 +240,9 @@ public class ObjetoSuperficieUtil {
 
 	public static List<Objeto> getObjetosTabelaIcone(ObjetoSuperficie superficie) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (!Util.isEmpty(objeto.getTabela()) && !Util.isEmpty(objeto.getIcone())) {
-				resp.add(objeto);
+		for (Objeto item : superficie.getObjetos()) {
+			if (!Util.isEmpty(item.getTabela()) && !Util.isEmpty(item.getIcone())) {
+				resp.add(item);
 			}
 		}
 		return resp;
@@ -273,15 +273,15 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void pontoOrigem(ObjetoSuperficie superficie, boolean b) {
-		for (Relacao relacao : superficie.getRelacoes()) {
-			relacao.setPontoOrigem(b);
+		for (Relacao item : superficie.getRelacoes()) {
+			item.setPontoOrigem(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void pontoDestino(ObjetoSuperficie superficie, boolean b) {
-		for (Relacao relacao : superficie.getRelacoes()) {
-			relacao.setPontoDestino(b);
+		for (Relacao item : superficie.getRelacoes()) {
+			item.setPontoDestino(b);
 		}
 		superficie.repaint();
 	}
@@ -295,23 +295,23 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void deselRelacoes(ObjetoSuperficie superficie) {
-		for (Relacao relacao : superficie.getRelacoes()) {
-			relacao.setSelecionado(false);
-			relacao.setObjetoTemp(null);
+		for (Relacao item : superficie.getRelacoes()) {
+			item.setSelecionado(false);
+			item.setObjetoTemp(null);
 		}
 	}
 
 	public static void mover(ObjetoSuperficie superficie, char c) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.isSelecionado()) {
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.isSelecionado()) {
 				if (c == 'L') {
-					objeto.x -= 5;
+					item.x -= 5;
 				} else if (c == 'R') {
-					objeto.x += 5;
+					item.x += 5;
 				} else if (c == 'U') {
-					objeto.y -= 5;
+					item.y -= 5;
 				} else if (c == 'D') {
-					objeto.y += 5;
+					item.y += 5;
 				}
 			}
 		}
@@ -320,8 +320,8 @@ public class ObjetoSuperficieUtil {
 
 	public static void excluirSemTabela(ObjetoSuperficie superficie) {
 		boolean contem = false;
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (Util.isEmpty(objeto.getTabela())) {
+		for (Objeto item : superficie.getObjetos()) {
+			if (Util.isEmpty(item.getTabela())) {
 				contem = true;
 				break;
 			}
@@ -331,9 +331,9 @@ public class ObjetoSuperficieUtil {
 			return;
 		}
 		if (Util.confirmaExclusao(superficie, true)) {
-			for (Objeto objeto : superficie.getObjetos()) {
-				if (Util.isEmpty(objeto.getTabela())) {
-					superficie.excluir(objeto);
+			for (Objeto item : superficie.getObjetos()) {
+				if (Util.isEmpty(item.getTabela())) {
+					superficie.excluir(item);
 				}
 			}
 			for (Objeto objeto : superficie.getObjetos()) {
@@ -496,10 +496,10 @@ public class ObjetoSuperficieUtil {
 
 	public static int preTotalRecente(ObjetoSuperficie superficie, Label label) {
 		int total = 0;
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (!Util.isEmpty(objeto.getTabela())) {
-				objeto.criarMemento();
-				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
+		for (Objeto item : superficie.getObjetos()) {
+			if (!Util.isEmpty(item.getTabela())) {
+				item.criarMemento();
+				item.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
 				total++;
 			}
 		}
@@ -509,9 +509,9 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static InternalFormulario getInternalFormularioIntersecao(ObjetoSuperficie superficie, Objeto objeto) {
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
+		for (JInternalFrame item : superficie.getAllFrames()) {
+			if (item instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) item;
 				Rectangle boundsInterno = interno.getBounds();
 				Rectangle boundsObjeto = objeto.getBounds();
 				if (boundsInterno.intersects(boundsObjeto) && boundsInterno.y < boundsObjeto.y) {
@@ -523,9 +523,9 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static InternalFormulario getInternalFormulario(ObjetoSuperficie superficie, Objeto objeto) {
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
+		for (JInternalFrame item : superficie.getAllFrames()) {
+			if (item instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) item;
 				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
 					return interno;
 				}
@@ -535,9 +535,9 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void setTransparenciaInternalFormulario(ObjetoSuperficie superficie, float nivel) {
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
+		for (JInternalFrame item : superficie.getAllFrames()) {
+			if (item instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) item;
 				interno.setNivelTransparencia(nivel);
 			}
 		}
@@ -545,9 +545,9 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void selecionarConexao(ObjetoSuperficie superficie, Conexao conexao) {
-		for (JInternalFrame frame : superficie.getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
+		for (JInternalFrame item : superficie.getAllFrames()) {
+			if (item instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) item;
 				interno.selecionarConexao(conexao);
 			}
 		}
@@ -557,9 +557,9 @@ public class ObjetoSuperficieUtil {
 		if (ref == null) {
 			return null;
 		}
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (ref.igual(objeto)) {
-				return objeto;
+		for (Objeto item : superficie.getObjetos()) {
+			if (ref.igual(item)) {
+				return item;
 			}
 		}
 		return null;
@@ -567,9 +567,9 @@ public class ObjetoSuperficieUtil {
 
 	public static List<Objeto> objetosComTabela(ObjetoSuperficie superficie, Estado estado) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (!Util.isEmpty(objeto.getTabela()) && validoIncluir(objeto, estado)) {
-				resp.add(objeto);
+		for (Objeto item : superficie.getObjetos()) {
+			if (!Util.isEmpty(item.getTabela()) && validoIncluir(item, estado)) {
+				resp.add(item);
 			}
 		}
 		return resp;
@@ -583,17 +583,17 @@ public class ObjetoSuperficieUtil {
 
 	public static List<String> getListaStringIds(ObjetoSuperficie superficie) {
 		List<String> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.getObjetos()) {
-			resp.add(objeto.getId());
+		for (Objeto item : superficie.getObjetos()) {
+			resp.add(item.getId());
 		}
 		return resp;
 	}
 
 	public static List<Objeto> getSelecionados(ObjetoSuperficie superficie) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.isSelecionado()) {
-				resp.add(objeto);
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.isSelecionado()) {
+				resp.add(item);
 			}
 		}
 		return resp;
@@ -601,43 +601,43 @@ public class ObjetoSuperficieUtil {
 
 	public static List<Objeto> getIgnorados(ObjetoSuperficie superficie) {
 		List<Objeto> resp = new ArrayList<>();
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.isIgnorar()) {
-				resp.add(objeto);
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.isIgnorar()) {
+				resp.add(item);
 			}
 		}
 		return resp;
 	}
 
 	public static void desativarObjetos(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.desativar();
+		for (Objeto item : superficie.getObjetos()) {
+			item.desativar();
 		}
-		for (Relacao relacao : superficie.getRelacoes()) {
-			relacao.desativar();
+		for (Relacao item : superficie.getRelacoes()) {
+			item.desativar();
 		}
 		superficie.repaint();
 	}
 
 	public static void limparSelecao(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.setSelecionado(false);
+		for (Objeto item : superficie.getObjetos()) {
+			item.setSelecionado(false);
 		}
 	}
 
 	public static Objeto getPrimeiroObjetoSelecionado(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.isSelecionado()) {
-				return objeto;
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.isSelecionado()) {
+				return item;
 			}
 		}
 		return null;
 	}
 
 	public static Relacao getPrimeiroRelacaoSelecionado(ObjetoSuperficie superficie) {
-		for (Relacao relacao : superficie.getRelacoes()) {
-			if (relacao.isSelecionado()) {
-				return relacao;
+		for (Relacao item : superficie.getRelacoes()) {
+			if (item.isSelecionado()) {
+				return item;
 			}
 		}
 		return null;
@@ -645,9 +645,9 @@ public class ObjetoSuperficieUtil {
 
 	public static Relacao getRelacao(ObjetoSuperficie superficie, Objeto obj) {
 		if (obj != null) {
-			for (Relacao relacao : superficie.getRelacoes()) {
-				if (relacao.contem(obj)) {
-					return relacao;
+			for (Relacao item : superficie.getRelacoes()) {
+				if (item.contem(obj)) {
+					return item;
 				}
 			}
 		}
@@ -656,8 +656,8 @@ public class ObjetoSuperficieUtil {
 
 	public static Set<String> getIdOrigens(ObjetoSuperficie superficie) {
 		Set<String> set = new HashSet<>();
-		for (Relacao relacao : superficie.getRelacoes()) {
-			set.add(relacao.getOrigem().getId());
+		for (Relacao item : superficie.getRelacoes()) {
+			set.add(item.getOrigem().getId());
 		}
 		return set;
 	}
@@ -665,9 +665,9 @@ public class ObjetoSuperficieUtil {
 	public static List<Relacao> getRelacoes(ObjetoSuperficie superficie, Objeto obj) {
 		List<Relacao> lista = new ArrayList<>();
 		if (obj != null) {
-			for (Relacao relacao : superficie.getRelacoes()) {
-				if (relacao.contem(obj)) {
-					lista.add(relacao);
+			for (Relacao item : superficie.getRelacoes()) {
+				if (item.contem(obj)) {
+					lista.add(item);
 				}
 			}
 		}
@@ -677,9 +677,9 @@ public class ObjetoSuperficieUtil {
 	public static Relacao getRelacao(ObjetoSuperficie superficie, Objeto obj1, Objeto obj2) throws ObjetoException {
 		if (obj1 != null && obj2 != null) {
 			Relacao temp = new Relacao(obj1, obj2);
-			for (Relacao relacao : superficie.getRelacoes()) {
-				if (relacao.equals(temp)) {
-					return relacao;
+			for (Relacao item : superficie.getRelacoes()) {
+				if (item.equals(temp)) {
+					return item;
 				}
 			}
 		}
@@ -688,8 +688,8 @@ public class ObjetoSuperficieUtil {
 
 	public static boolean contemId(ObjetoSuperficie superficie, Objeto obj, String id) {
 		for (int i = 0; i < superficie.getObjetos().length; i++) {
-			Objeto objeto = superficie.getObjetos()[i];
-			if (objeto != obj && objeto.idEquals(id)) {
+			Objeto item = superficie.getObjetos()[i];
+			if (item != obj && item.idEquals(id)) {
 				return true;
 			}
 		}
@@ -698,8 +698,8 @@ public class ObjetoSuperficieUtil {
 
 	public static boolean contemId(ObjetoSuperficie superficie, Objeto obj) {
 		for (int i = 0; i < superficie.getObjetos().length; i++) {
-			Objeto objeto = superficie.getObjetos()[i];
-			if (objeto != obj && objeto.equalsId(obj)) {
+			Objeto item = superficie.getObjetos()[i];
+			if (item != obj && item.equalsId(obj)) {
 				return true;
 			}
 		}
@@ -716,43 +716,43 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void desenharDesc(ObjetoSuperficie superficie, boolean b) {
-		for (Relacao relacao : superficie.getRelacoes()) {
-			relacao.setDesenharDescricao(b);
+		for (Relacao item : superficie.getRelacoes()) {
+			item.setDesenharDescricao(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void selecaoGeral(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.setSelecionado(b);
+		for (Objeto item : superficie.getObjetos()) {
+			item.setSelecionado(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void compararRegistro(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.setCompararRegistro(b);
+		for (Objeto item : superficie.getObjetos()) {
+			item.setCompararRegistro(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void desenharIds(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.setDesenharId(b);
+		for (Objeto item : superficie.getObjetos()) {
+			item.setDesenharId(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void transparente(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.setTransparente(b);
+		for (Objeto item : superficie.getObjetos()) {
+			item.setTransparente(b);
 		}
 		superficie.repaint();
 	}
 
 	public static void ignorar(ObjetoSuperficie superficie, boolean b) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.setIgnorar(b);
+		for (Objeto item : superficie.getObjetos()) {
+			item.setIgnorar(b);
 		}
 		superficie.repaint();
 	}
@@ -791,8 +791,8 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static boolean contemObjetoComTabela(ObjetoSuperficie superficie, String nomeTabela) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.getTabela().equalsIgnoreCase(nomeTabela)) {
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.getTabela().equalsIgnoreCase(nomeTabela)) {
 				return true;
 			}
 		}
@@ -800,8 +800,8 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static boolean contemReferencia(ObjetoSuperficie superficie, Objeto objeto) {
-		for (Objeto obj : superficie.getObjetos()) {
-			if (obj == objeto) {
+		for (Objeto item : superficie.getObjetos()) {
+			if (item == objeto) {
 				return true;
 			}
 		}
@@ -813,16 +813,16 @@ public class ObjetoSuperficieUtil {
 	}
 
 	public static void processar(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.isSelecionado()) {
-				objeto.setProcessar(true);
-				objeto.ativar();
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.isSelecionado()) {
+				item.setProcessar(true);
+				item.ativar();
 			}
 		}
-		for (Relacao relacao : superficie.getRelacoes()) {
-			if (relacao.isSelecionado()) {
-				relacao.setProcessar(true);
-				relacao.ativar();
+		for (Relacao item : superficie.getRelacoes()) {
+			if (item.isSelecionado()) {
+				item.setProcessar(true);
+				item.ativar();
 			}
 		}
 		superficie.repaint();
@@ -834,11 +834,11 @@ public class ObjetoSuperficieUtil {
 			return total;
 		}
 		string = string.trim().toUpperCase();
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.getId().toUpperCase().indexOf(string) != -1
-					|| objeto.getTabela().toUpperCase().indexOf(string) != -1) {
-				objeto.setProcessar(true);
-				objeto.ativar();
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.getId().toUpperCase().indexOf(string) != -1
+					|| item.getTabela().toUpperCase().indexOf(string) != -1) {
+				item.setProcessar(true);
+				item.ativar();
 				total++;
 			}
 		}
@@ -846,29 +846,50 @@ public class ObjetoSuperficieUtil {
 		return total;
 	}
 
-	public static void desativar(ObjetoSuperficie superficie) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.isSelecionado()) {
-				objeto.desativar();
+	public static void processarTurma(ObjetoSuperficie superficie, String string) {
+		for (Objeto item : superficie.getObjetos()) {
+			boolean visivel = contem(item.getTurma().toUpperCase().split(","), string);
+			item.setVisivel(visivel);
+			InternalFormulario interno = getInternalFormulario(superficie, item);
+			if (interno != null) {
+				interno.setVisible(visivel);
 			}
 		}
-		for (Relacao relacao : superficie.getRelacoes()) {
-			if (relacao.isSelecionado()) {
-				relacao.desativar();
+		superficie.repaint();
+	}
+
+	private static boolean contem(String[] array, String string) {
+		for (String item : array) {
+			if (item.trim().equals(string)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static void desativar(ObjetoSuperficie superficie) {
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.isSelecionado()) {
+				item.desativar();
+			}
+		}
+		for (Relacao item : superficie.getRelacoes()) {
+			if (item.isSelecionado()) {
+				item.desativar();
 			}
 		}
 		superficie.repaint();
 	}
 
 	public static void prefixoNomeTabela(ObjetoSuperficie superficie, String prefixoNomeTabela) {
-		for (Objeto objeto : superficie.getObjetos()) {
-			objeto.setPrefixoNomeTabela(prefixoNomeTabela);
+		for (Objeto item : superficie.getObjetos()) {
+			item.setPrefixoNomeTabela(prefixoNomeTabela);
 		}
 	}
 
 	public static boolean getContinua(List<Objeto> lista) {
-		for (Objeto objeto : lista) {
-			if (!Util.isEmpty(objeto.getTabela())) {
+		for (Objeto item : lista) {
+			if (!Util.isEmpty(item.getTabela())) {
 				return true;
 			}
 		}
