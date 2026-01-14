@@ -282,6 +282,14 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	@Override
+	public void copiarSeLinkAnexo(AnexoTree anexoTree) {
+		Anexo anexo = anexoTree.getObjetoSelecionado();
+		if (anexo != null) {
+			copiarSeLink(anexo);
+		}
+	}
+
+	@Override
 	public void conteudoAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {
@@ -292,6 +300,14 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	private void conteudo(Anexo anexo) {
 		try {
 			Util.conteudo(AnexoContainer.this, anexo.getFile());
+		} catch (IOException e) {
+			Util.mensagem(AnexoContainer.this, e.getMessage());
+		}
+	}
+
+	private void copiarSeLink(Anexo anexo) {
+		try {
+			Util.copiarSeLink(anexo.getFile());
 		} catch (IOException e) {
 			Util.mensagem(AnexoContainer.this, e.getMessage());
 		}

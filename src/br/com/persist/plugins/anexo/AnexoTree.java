@@ -263,6 +263,7 @@ public class AnexoTree extends Tree {
 		private class MenuAbrir extends Menu {
 			private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
 			private Action imprimirAcao = actionMenu("label.imprimir", Icones.PRINT);
+			private Action copiarSeLinkAcao = actionMenu("label.copiar_se_link");
 			private Action editarAcao = actionMenu("label.editar", Icones.EDIT);
 			private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
 			private Action conteudoAcao = actionMenu("label.conteudo");
@@ -279,6 +280,7 @@ public class AnexoTree extends Tree {
 				addMenuItem(conteudoAcao);
 				addSeparator();
 				addMenuItem(clonarAcao);
+				copiarSeLinkAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarSeLinkAnexo(AnexoTree.this)));
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioAnexo(AnexoTree.this)));
 				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoAnexo(AnexoTree.this)));
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirAnexo(AnexoTree.this)));

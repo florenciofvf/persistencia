@@ -1216,6 +1216,26 @@ public class Util {
 		return Constantes.VAZIO;
 	}
 
+	public static void copiarSeLink(File file) throws IOException {
+		if (file != null && file.isFile() && file.length() < 1024) {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					processarSeLink(linha);
+					linha = br.readLine();
+				}
+			}
+		}
+	}
+
+	private static void processarSeLink(String string) {
+		String linha = string.toUpperCase();
+		String prefixo = "URL=";
+		if (linha.startsWith(prefixo)) {
+			setContentTransfered(string.substring(prefixo.length()));
+		}
+	}
+
 	public static String conteudo(File file, Charset charset) throws IOException {
 		if (file != null && file.exists()) {
 			StringBuilder sb = new StringBuilder();
