@@ -46,4 +46,13 @@ public class IUtil {
 	public static Object replaceAll(Object string, Object atual, Object novo) {
 		return Util.replaceAll(string.toString(), atual.toString(), novo.toString());
 	}
+
+	@Biblio(8)
+	public static String getContentTransfered() {
+		String string = Util.getContentTransfered();
+		if (string == null) {
+			string = "";
+		}
+		return string;
+	}
 }
