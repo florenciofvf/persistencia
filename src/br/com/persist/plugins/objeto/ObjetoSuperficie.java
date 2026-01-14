@@ -402,27 +402,27 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 
 	public void abrir(ObjetoColetor coletor) throws XMLException, ObjetoException, AssistenciaException {
 		limpar();
-		for (Objeto objeto : coletor.getObjetos()) {
-			addObjeto(objeto);
+		for (Objeto item : coletor.getObjetos()) {
+			addObjeto(item);
 		}
-		for (Relacao relacao : coletor.getRelacoes()) {
-			addRelacao(relacao);
+		for (Relacao item : coletor.getRelacoes()) {
+			addRelacao(item);
 		}
 		removeAll();
 		repaint();
 		setPreferredSize(coletor.getDimension());
 		Util.updateComponentTreeUI(getParent());
-		for (Objeto objeto : coletor.getObjetos()) {
-			objeto.ativar();
+		for (Objeto item : coletor.getObjetos()) {
+			item.ativar();
 		}
-		for (Relacao relacao : coletor.getRelacoes()) {
-			relacao.ativar();
+		for (Relacao item : coletor.getRelacoes()) {
+			item.ativar();
 		}
 		getThreadManager().ativar();
 		arquivoVinculo = coletor.getArquivoVinculo();
 		vinculacao.abrir(ObjetoSuperficieUtil.criarArquivoVinculo(this), ObjetoSuperficie.this);
-		for (Objeto objeto : objetos) {
-			vinculacao.processar(objeto);
+		for (Objeto item : objetos) {
+			vinculacao.processar(item);
 		}
 		ObjetoSuperficieUtil.processarRelacaoVinculo(this, vinculacao, coletor);
 	}

@@ -861,21 +861,22 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 	}
 
 	private void adicionarInternalFormulario(Conexao conexao, ObjetoColetor coletor, InternalConfig config) {
-		for (InternalForm form : coletor.getForms()) {
+		for (InternalForm formItem : coletor.getForms()) {
 			Objeto instancia = null;
-			for (Objeto objeto : coletor.getObjetos()) {
-				if (form.getObjeto().equals(objeto.getId()) || form.getObjeto().equals(objeto.getIdTempForm())) {
-					instancia = objeto;
+			for (Objeto objItem : coletor.getObjetos()) {
+				if (formItem.getIdObjeto().equals(objItem.getId())
+						|| formItem.getIdObjeto().equals(objItem.getIdTempForm())) {
+					instancia = objItem;
 				}
 			}
 			if (instancia != null) {
-				int l = Util.isEmpty(instancia.getInternalFormL()) ? form.getLargura()
+				int l = Util.isEmpty(instancia.getInternalFormL()) ? formItem.getLargura()
 						: Integer.parseInt(instancia.getInternalFormL());
 				Object[] array = InternalTransferidor.criarArray(conexao, instancia,
-						new Dimension(l, form.getAltura()));
-				int x = Util.isEmpty(instancia.getInternalFormX()) ? form.getX()
+						new Dimension(l, formItem.getAltura()));
+				int x = Util.isEmpty(instancia.getInternalFormX()) ? formItem.getX()
 						: Integer.parseInt(instancia.getInternalFormX());
-				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(x, form.getY()), true, config);
+				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(x, formItem.getY()), true, config);
 			}
 		}
 	}

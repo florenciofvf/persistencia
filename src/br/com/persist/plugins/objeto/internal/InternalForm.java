@@ -5,14 +5,14 @@ import org.xml.sax.Attributes;
 import br.com.persist.marca.XMLUtil;
 
 public class InternalForm {
-	private String objeto;
+	private String idObjeto;
 	private int largura;
 	private int altura;
 	private int x;
 	private int y;
 
 	public void copiar(InternalFormulario interno) {
-		objeto = interno.getInternalContainer().getObjeto().getId();
+		idObjeto = interno.getInternalContainer().getObjeto().getId();
 		largura = interno.getWidth();
 		altura = interno.getHeight();
 		x = interno.getX();
@@ -24,12 +24,12 @@ public class InternalForm {
 		altura = Integer.parseInt(attr.getValue("altura"));
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
-		objeto = attr.getValue("objeto");
+		idObjeto = attr.getValue("objeto");
 	}
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("form");
-		util.atributo("objeto", objeto);
+		util.atributo("objeto", idObjeto);
 		util.atributo("largura", largura);
 		util.atributo("altura", altura);
 		util.atributo("x", x);
@@ -37,8 +37,8 @@ public class InternalForm {
 		util.fecharTag().finalizarTag("form");
 	}
 
-	public String getObjeto() {
-		return objeto;
+	public String getIdObjeto() {
+		return idObjeto;
 	}
 
 	public int getLargura() {
