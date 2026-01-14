@@ -278,6 +278,7 @@ public class AnexoTree extends Tree {
 				addSeparator();
 				addMenuItem(diretorioAcao);
 				addMenuItem(conteudoAcao);
+				addMenuItem(copiarSeLinkAcao);
 				addSeparator();
 				addMenuItem(clonarAcao);
 				copiarSeLinkAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarSeLinkAnexo(AnexoTree.this)));
