@@ -14,6 +14,7 @@ public class MetadadoEvento implements Evento {
 	public static final String EXPORTAR_METADADO_RAIZ_FICH = "exportarMetadadoRaizFich";
 	public static final String GET_METADADO_OBJETO = "GET_METADADO_OBJETO";
 	public static final String ABRIR_METADADO = "ABRIR_METADADO";
+	public static final String EM_MEMORIA = "EM_MEMORIA";
 	public static final String CIRCULAR = "CIRCULAR";
 	public static final String CONEXAO = "CONEXAO";
 	public static final String METODO = "METODO";

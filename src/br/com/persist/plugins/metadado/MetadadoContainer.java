@@ -618,6 +618,17 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
+	public void abrirExportacaoFormArquivoCircularAndMemoria(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		if (ehValido(metadado)) {
+			Map<String, Object> args = criarArgs(metadado, MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM);
+			args.put(MetadadoEvento.EM_MEMORIA, true);
+			args.put(MetadadoEvento.CIRCULAR, true);
+			formulario.processar(args);
+		}
+	}
+
+	@Override
 	public void abrirExportacaoDialogArquivo(MetadadoTree metadadoTree, boolean circular) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (ehValido(metadado)) {
@@ -628,11 +639,33 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
+	public void abrirExportacaoDialogArquivoCircularAndMemoria(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		if (ehValido(metadado)) {
+			Map<String, Object> args = criarArgs(metadado, MetadadoEvento.ABRIR_EXPORTACAO_METADADO_DIALOG);
+			args.put(MetadadoEvento.EM_MEMORIA, true);
+			args.put(MetadadoEvento.CIRCULAR, true);
+			formulario.processar(args);
+		}
+	}
+
+	@Override
 	public void abrirExportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (ehValido(metadado)) {
 			Map<String, Object> args = criarArgs(metadado, MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH);
 			args.put(MetadadoEvento.CIRCULAR, circular);
+			formulario.processar(args);
+		}
+	}
+
+	@Override
+	public void abrirExportacaoFichArquivoCircularAndMemoria(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		if (ehValido(metadado)) {
+			Map<String, Object> args = criarArgs(metadado, MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH);
+			args.put(MetadadoEvento.EM_MEMORIA, true);
+			args.put(MetadadoEvento.CIRCULAR, true);
 			formulario.processar(args);
 		}
 	}

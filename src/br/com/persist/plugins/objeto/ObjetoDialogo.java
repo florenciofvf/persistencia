@@ -52,9 +52,9 @@ public class ObjetoDialogo extends AbstratoDialogo {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular) throws MetadadoException, ObjetoException, AssistenciaException {
+			boolean circular, boolean emMemoria) throws MetadadoException, ObjetoException, AssistenciaException {
 		AtomicReference<String> tituloTemp = new AtomicReference<>();
-		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, tituloTemp);
+		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, tituloTemp, emMemoria);
 		if (!Util.isEmpty(tituloTemp.get())) {
 			setTitle(tituloTemp.get());
 		}

@@ -227,6 +227,7 @@ public class MetadadoTree extends Tree {
 				Icones.COPIA);
 		private Action constraintInfoAction = Action.acaoMenu(MetadadoMensagens.getString("label.constraint_info"),
 				null);
+		private MenuAbrirExportacaoCAndMemoria menuAbrirExportacaoCAndMemoria = new MenuAbrirExportacaoCAndMemoria();
 		private MenuAbrirExportacaoH menuAbrirExportacaoH = new MenuAbrirExportacaoH();
 		private MenuAbrirImportacaoH menuAbrirImportacaoH = new MenuAbrirImportacaoH();
 		private MenuAbrirExportacaoC menuAbrirExportacaoC = new MenuAbrirExportacaoC();
@@ -243,6 +244,7 @@ public class MetadadoTree extends Tree {
 			add(menuAbrirImportacaoH);
 			add(menuAbrirExportacaoC);
 			add(menuAbrirImportacaoC);
+			add(true, menuAbrirExportacaoCAndMemoria);
 			add(true, itemDados);
 			addMenuItem(true, copiarDescricaoAcao);
 			addMenuItem(destacarAcao, getString("hint.destacar"));
@@ -292,6 +294,7 @@ public class MetadadoTree extends Tree {
 			menuAbrirExportacaoH.setEnabled(ehTabela);
 			menuAbrirImportacaoH.setEnabled(ehTabela);
 			menuAbrirExportacaoC.setEnabled(ehTabela);
+			menuAbrirExportacaoCAndMemoria.setEnabled(ehTabela);
 			menuAbrirImportacaoC.setEnabled(ehTabela);
 			itemDados.setEnabled(ehTabela);
 		}
@@ -362,6 +365,20 @@ public class MetadadoTree extends Tree {
 						e -> ouvintes.forEach(o -> o.abrirExportacaoDialogArquivo(MetadadoTree.this, true)));
 				ficharioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, true)));
+			}
+		}
+
+		private class MenuAbrirExportacaoCAndMemoria extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuAbrirExportacaoCAndMemoria() {
+				super(MetadadoMensagens.getString("label.abrir_exportacao_c_mem"), false, Icones.ABRIR);
+				formularioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivoCircularAndMemoria(MetadadoTree.this)));
+				dialogoAcao.setActionListener(e -> ouvintes
+						.forEach(o -> o.abrirExportacaoDialogArquivoCircularAndMemoria(MetadadoTree.this)));
+				ficharioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivoCircularAndMemoria(MetadadoTree.this)));
 			}
 		}
 

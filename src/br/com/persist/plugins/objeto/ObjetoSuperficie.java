@@ -626,7 +626,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
-			boolean circular, AtomicReference<String> ref)
+			boolean circular, AtomicReference<String> ref, boolean emMemoria)
 			throws MetadadoException, ObjetoException, AssistenciaException {
 		ExportacaoImportacao expImp = criarExportacaoImportacao(exportacao, circular);
 		expImp.processarPrincipal(tabela);
@@ -639,8 +639,10 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 			}
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
-		expImp.vincular(ref);
-		Util.mensagemFormulario(formulario, expImp.getString());
+		if (!emMemoria) {
+			expImp.vincular(ref);
+			Util.mensagemFormulario(formulario, expImp.getString());
+		}
 	}
 
 	private ExportacaoImportacao criarExportacaoImportacao(boolean exportacao, boolean circular)
