@@ -241,6 +241,9 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		}
 
 		void modoEmMemoria() {
+			removeAction(baixarAcao);
+			removeAction(salvarAcao);
+			removeAction(salvarComoAcao);
 			remove(chkAjusteAutoEmpilhaForm);
 			remove(chkAjusteAutoLarguraForm);
 			remove(comboConexao);

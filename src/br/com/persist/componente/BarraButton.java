@@ -23,7 +23,7 @@ import static br.com.persist.componente.BarraButtonEnum.*;
 public abstract class BarraButton extends JToolBar
 		implements WindowHandler, DialogHandler, FicharioHandler, WindowInternalHandler {
 	protected Action aplicarAcao = actionIcon(Constantes.LABEL_APLICAR, Icones.SUCESSO);
-	private Action salvarComoAcao = actionIcon("label.salvar_como", Icones.SALVARC);
+	protected Action salvarComoAcao = actionIcon("label.salvar_como", Icones.SALVARC);
 	private Action fecharAcao = actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
 	private Action limpar2Acao = actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = actionIcon("label.copiar2", Icones.COPIA);
@@ -40,8 +40,8 @@ public abstract class BarraButton extends JToolBar
 	protected final CheckBox chkPorParte = new CheckBox(true);
 	protected final CheckBox chkPsqConteudo = new CheckBox();
 	protected Action salvarAcao = Action.actionIconSalvar();
+	protected Action baixarAcao = Action.actionIconBaixar();
 	protected ButtonColar buttonColar = new ButtonColar();
-	private Action baixarAcao = Action.actionIconBaixar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
 	private Action excluirAcao = actionIconExcluir();
