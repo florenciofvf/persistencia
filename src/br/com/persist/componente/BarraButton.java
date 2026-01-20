@@ -1,8 +1,33 @@
 package br.com.persist.componente;
 
+import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO3;
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
+import static br.com.persist.componente.BarraButtonEnum.BACKUP;
+import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
+import static br.com.persist.componente.BarraButtonEnum.BAIXAR2;
+import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
+import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR0;
+import static br.com.persist.componente.BarraButtonEnum.COLAR2;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR2;
+import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
+import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
+import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
+import static br.com.persist.componente.BarraButtonEnum.LIMPAR2;
+import static br.com.persist.componente.BarraButtonEnum.NOVO;
+import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
+import static br.com.persist.componente.BarraButtonEnum.SALVAR;
+import static br.com.persist.componente.BarraButtonEnum.SALVAR_COMO;
+
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.JInternalFrame;
@@ -17,8 +42,6 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
-
-import static br.com.persist.componente.BarraButtonEnum.*;
 
 public abstract class BarraButton extends JToolBar
 		implements WindowHandler, DialogHandler, FicharioHandler, WindowInternalHandler {
@@ -564,6 +587,44 @@ public abstract class BarraButton extends JToolBar
 		if (button != null) {
 			button.removeActionListener(action.getActionListener());
 			remove(button);
+		}
+	}
+
+	public void normalSeparador() {
+		List<CompIndex> lista = new ArrayList<>();
+		Component[] components = getComponents();
+		int total = getComponentCount();
+		for (int i = 0; i < total; i++) {
+			Component comp = components[i];
+			if (comp instanceof JToolBar.Separator) {
+				lista.add(new CompIndex(comp, i));
+			}
+		}
+		for (int i = 0; i < lista.size(); i++) {
+			CompIndex ci = lista.get(i);
+			int j = i + 1;
+			if (j < lista.size()) {
+				CompIndex cj = lista.get(j);
+				if (ci.index + 1 == cj.index) {
+					ci.excluir = true;
+				}
+			}
+		}
+		for (CompIndex item : lista) {
+			if (item.excluir) {
+				remove(item.comp);
+			}
+		}
+	}
+
+	class CompIndex {
+		final Component comp;
+		final int index;
+		boolean excluir;
+
+		CompIndex(Component comp, int index) {
+			this.comp = comp;
+			this.index = index;
 		}
 	}
 

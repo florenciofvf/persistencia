@@ -250,6 +250,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			remove(buttonInfo);
 			remove(txtPrefixoNomeTabela);
 			remove(txtArquivoVinculo);
+			normalSeparador();
 		}
 
 		Action acaoMenu(String chave, Icon icon) {
