@@ -600,27 +600,14 @@ public abstract class BarraButton extends JToolBar
 				lista.add(new CompIndex(comp, i));
 			}
 		}
-		for (int i = 0; i < lista.size(); i++) {
-			CompIndex ci = lista.get(i);
-			int j = i + 1;
-			if (j < lista.size()) {
-				CompIndex cj = lista.get(j);
-				if (ci.index + 1 == cj.index) {
-					ci.excluir = true;
-				}
-			}
-		}
-		for (CompIndex item : lista) {
-			if (item.excluir) {
-				remove(item.comp);
-			}
+		for (int i = 1; i < lista.size(); i++) {
+			remove(lista.get(i).comp);
 		}
 	}
 
 	class CompIndex {
 		final Component comp;
 		final int index;
-		boolean excluir;
 
 		CompIndex(Component comp, int index) {
 			this.comp = comp;
