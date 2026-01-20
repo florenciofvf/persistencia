@@ -207,6 +207,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		private TextField txtDestacaObjeto = new TextField(10);
 		private ButtonStatus buttonStatus = new ButtonStatus();
 		private Popup popupArquivoVinculado = new Popup();
+		private ButtonInfo buttonInfo = new ButtonInfo();
 		private static final long serialVersionUID = 1L;
 		private Label labelStatus2 = new Label();
 		private Label labelStatus = new Label();
@@ -224,7 +225,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			add(true, chkAjusteAutoEmpilhaForm);
 			add(chkAjusteAutoLarguraForm);
 			add(true, comboConexao);
-			add(true, new ButtonInfo());
+			add(true, buttonInfo);
 			add(labelStatus);
 			add(true, txtPrefixoNomeTabela);
 			add(true, txtDestacaObjeto);
@@ -237,6 +238,15 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			txtDestacaObjeto.addActionListener(e -> destacarObjetos());
 			popupArquivoVinculado.add(arquivoVinculadoAcao);
 			popupArquivoVinculado.addMenuItem(true, arquivoContainerAcao);
+		}
+
+		void modoEmMemoria() {
+			remove(chkAjusteAutoEmpilhaForm);
+			remove(chkAjusteAutoLarguraForm);
+			remove(comboConexao);
+			remove(buttonInfo);
+			remove(txtPrefixoNomeTabela);
+			remove(txtArquivoVinculo);
 		}
 
 		Action acaoMenu(String chave, Icon icon) {
@@ -784,13 +794,18 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular, AtomicReference<String> tituloTemp)
+			boolean circular, AtomicReference<String> tituloTemp, boolean emMemoria)
 			throws MetadadoException, ObjetoException, AssistenciaException {
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 		}
 		AtomicReference<String> ref = new AtomicReference<>();
-		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, ref);
+		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, ref, emMemoria);
+		if (emMemoria) {
+			toolbar.modoEmMemoria();
+			btnSelecao.click();
+			return;
+		}
 		if (!Util.isEmpty(ref.get())) {
 			objetoSuperficie.setAjusteAutoEmpilhaForm(true);
 			toolbar.txtArquivoVinculo.setText(ref.get());
