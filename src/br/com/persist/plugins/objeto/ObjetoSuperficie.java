@@ -1397,7 +1397,7 @@ class SuperficiePopup extends Popup {
 	private Action criarRelacaoAcao = ObjetoSuperficie.acaoMenu("label.criar_relacao", Icones.SETA);
 	private Action copiarIconeAcao = ObjetoSuperficie.acaoMenu("label.copiar_icone", Icones.COPIA);
 	private Action colarIconeAcao = ObjetoSuperficie.acaoMenu("label.colar_icone", Icones.COLAR);
-	private Action exportacoesAcao = actionMenu("label.exportacoes", Icones.CONFIG);
+	private Action exportacoesAcao = actionMenu("label.exportacoes", Icones.FIELDS);
 	Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
 	private Action relacoesAcao = actionMenu("label.relacoes", Icones.SETA);
 	private MenuMestreDetalhe menuMestreDetalhe = new MenuMestreDetalhe();
