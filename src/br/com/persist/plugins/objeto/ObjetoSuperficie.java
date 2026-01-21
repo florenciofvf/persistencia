@@ -584,6 +584,27 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		}
 	}
 
+	public void exibirExportacoes(Objeto objeto) {
+		if (objeto == null) {
+			return;
+		}
+		Map<String, Object> args = new HashMap<>();
+		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
+		formulario.processar(args);
+		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
+		if (metadado == null) {
+			msgInexistenteMetadado(objeto);
+			return;
+		}
+		args.clear();
+		args.put(MetadadoEvento.METODO, MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM);
+		args.put(MetadadoEvento.CONEXAO, container.getConexaoPadrao());
+		args.put(MetadadoEvento.ABRIR_METADADO, metadado);
+		args.put(MetadadoEvento.EM_MEMORIA, true);
+		args.put(MetadadoEvento.CIRCULAR, true);
+		formulario.processar(args);
+	}
+
 	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef, Metadado tabela)
 			throws MetadadoException, ObjetoException, AssistenciaException {
 		Exportacao exportacao = new Exportacao(ObjetoSuperficie.this, principal, mapaRef, tabela.getPai());
@@ -1376,6 +1397,7 @@ class SuperficiePopup extends Popup {
 	private Action criarRelacaoAcao = ObjetoSuperficie.acaoMenu("label.criar_relacao", Icones.SETA);
 	private Action copiarIconeAcao = ObjetoSuperficie.acaoMenu("label.copiar_icone", Icones.COPIA);
 	private Action colarIconeAcao = ObjetoSuperficie.acaoMenu("label.colar_icone", Icones.COLAR);
+	private Action exportacoesAcao = actionMenu("label.exportacoes", Icones.CONFIG);
 	Action configuracaoAcao = actionMenu("label.configuracoes", Icones.CONFIG);
 	private Action relacoesAcao = actionMenu("label.relacoes", Icones.SETA);
 	private MenuMestreDetalhe menuMestreDetalhe = new MenuMestreDetalhe();
@@ -1410,6 +1432,7 @@ class SuperficiePopup extends Popup {
 		add(true, itemPartir);
 		add(true, itemDados);
 		addMenuItem(true, relacoesAcao);
+		addMenuItem(exportacoesAcao);
 		addMenuItem(criarRelacaoAcao);
 		addMenuItem(true, configuracaoAcao);
 		eventos();
@@ -1736,33 +1759,44 @@ class SuperficiePopup extends Popup {
 			}
 		});
 		excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(superficie));
-		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
-		processarObjetosAcao.setActionListener(e -> processarObjetos());
-		criarRelacaoAcao.setActionListener(e -> criarRelacao());
-		relacoesAcao.setActionListener(e -> {
-			if (superficie.getSelecionadoObjeto() != null) {
-				try {
-					selecionarRelacao(superficie.getSelecionadoObjeto());
-				} catch (ObjetoException ex) {
-					Util.mensagem(SuperficiePopup.this, ex.getMessage());
-				}
-			}
-		});
-		configuracaoAcao.setActionListener(e -> {
-			Frame frame = superficie.container.getFrame();
-			if (superficie.getSelecionadoObjeto() != null) {
-				ObjetoDialogo.criar(frame, superficie, superficie.getSelecionadoObjeto());
-			} else if (superficie.getSelecionadoRelacao() != null) {
-				try {
-					RelacaoDialogo.criar(frame, superficie, superficie.getSelecionadoRelacao());
-				} catch (AssistenciaException ex) {
-					Util.mensagem(SuperficiePopup.this, ex.getMessage());
-				}
-			}
-		});
 		copiarIconeAcao.setActionListener(e -> copiarIcone(copiarIconeAcao));
 		colarIconeAcao.setActionListener(e -> colarIcone(colarIconeAcao));
+		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
+		processarObjetosAcao.setActionListener(e -> processarObjetos());
+		configuracaoAcao.setActionListener(e -> exibirConfiguracoes());
+		exportacoesAcao.setActionListener(e -> processarExportacoes());
+		relacoesAcao.setActionListener(e -> processarRelacoes());
+		criarRelacaoAcao.setActionListener(e -> criarRelacao());
 		copiarAcao.setActionListener(e -> copiar());
+	}
+
+	private void exibirConfiguracoes() {
+		Frame frame = superficie.container.getFrame();
+		if (superficie.getSelecionadoObjeto() != null) {
+			ObjetoDialogo.criar(frame, superficie, superficie.getSelecionadoObjeto());
+		} else if (superficie.getSelecionadoRelacao() != null) {
+			try {
+				RelacaoDialogo.criar(frame, superficie, superficie.getSelecionadoRelacao());
+			} catch (AssistenciaException ex) {
+				Util.mensagem(SuperficiePopup.this, ex.getMessage());
+			}
+		}
+	}
+
+	private void processarRelacoes() {
+		if (superficie.getSelecionadoObjeto() != null) {
+			try {
+				selecionarRelacao(superficie.getSelecionadoObjeto());
+			} catch (ObjetoException ex) {
+				Util.mensagem(SuperficiePopup.this, ex.getMessage());
+			}
+		}
+	}
+
+	private void processarExportacoes() {
+		if (superficie.getSelecionadoObjeto() != null) {
+			superficie.exibirExportacoes(superficie.getSelecionadoObjeto());
+		}
 	}
 
 	private void objetosComTabela() {
@@ -1917,6 +1951,7 @@ class SuperficiePopup extends Popup {
 		menuDestacar.setEnabled(comTabela);
 		if (objetoSelecionado) {
 			configuracaoAcao.setEnabled(selecionados.size() == Constantes.UM);
+			exportacoesAcao.setEnabled(selecionados.size() == Constantes.UM);
 		} else {
 			configuracaoAcao.setEnabled(true);
 		}
