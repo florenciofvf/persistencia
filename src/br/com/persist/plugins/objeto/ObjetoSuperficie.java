@@ -2663,10 +2663,10 @@ class ExportacaoImportacao {
 	}
 
 	private void localizacaoCircular() {
-		graus = 360 / objetos.size();
+		graus = Math.round(360F / objetos.size());
 		for (Objeto item : objetos) {
-			item.x = centroX + Math.round(vetor.getX());
-			item.y = centroY + Math.round(vetor.getY());
+			item.x = centroX + (int) vetor.getX();
+			item.y = centroY + (int) vetor.getY();
 			vetor.rotacionar(graus);
 		}
 	}
