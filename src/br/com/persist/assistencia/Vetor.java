@@ -56,7 +56,7 @@ public final class Vetor {
 		y = y * valor;
 	}
 
-	public void rotacionar(int grau) {
+	public void rotacionar(float grau) {
 		double cos = Math.cos(grau * FVF);
 		double sen = Math.sin(grau * FVF);
 		double novoX = x * cos - y * sen;

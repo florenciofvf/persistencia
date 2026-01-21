@@ -2495,7 +2495,7 @@ class ExportacaoImportacao {
 	Vetor vetor;
 	int centroX;
 	int centroY;
-	int graus;
+	float graus;
 	int y;
 
 	ExportacaoImportacao(ObjetoSuperficie superficie, boolean exportacao, boolean circular)
@@ -2663,7 +2663,7 @@ class ExportacaoImportacao {
 	}
 
 	private void localizacaoCircular() {
-		graus = Math.round(360F / objetos.size());
+		graus = 360F / objetos.size();
 		for (Objeto item : objetos) {
 			item.x = centroX + (int) vetor.getX();
 			item.y = centroY + (int) vetor.getY();
