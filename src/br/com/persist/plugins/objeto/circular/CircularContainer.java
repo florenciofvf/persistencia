@@ -44,7 +44,7 @@ public class CircularContainer extends Panel implements PluginBasico {
 	}
 
 	public enum Tipo {
-		EXPORTACAO, IMPORTACAO, NORMAL
+		EXPORTACAO, IMPORTACAO, NENHUM
 	}
 
 	private void montarLayout() {
@@ -103,22 +103,22 @@ public class CircularContainer extends Panel implements PluginBasico {
 		}
 
 		private void atualizar(Objeto pivo, Tipo tipo, List<Objeto> selecionados) throws ObjetoException {
-			int graus = definirGrauUnidade(selecionados);
+			float graus = definirGrau(selecionados);
 			Vetor vetor = criarVetor();
-			for (Objeto objeto : selecionados) {
-				localizar(objeto, pivo, vetor);
+			for (Objeto item : selecionados) {
+				localizar(item, pivo, vetor);
 				vetor.rotacionar(graus);
-				processarRelacao(objeto, pivo, tipo);
+				processarRelacao(item, pivo, tipo);
 			}
 		}
 
-		private int definirGrauUnidade(List<Objeto> selecionados) {
-			return Util.getInt(txtGrauTotal.getText(), 360) / selecionados.size();
+		private float definirGrau(List<Objeto> selecionados) {
+			return Util.getFloat(txtGrauTotal.getText(), 360F) / selecionados.size();
 		}
 
 		private Vetor criarVetor() {
 			Vetor vetor = new Vetor(Util.getInt(txtRaio.getText(), 300), 0);
-			vetor.rotacionar(Util.getInt(txtGrauOrigem.getText(), 0));
+			vetor.rotacionar(Util.getFloat(txtGrauOrigem.getText(), 0F));
 			return vetor;
 		}
 
@@ -129,8 +129,8 @@ public class CircularContainer extends Panel implements PluginBasico {
 
 		private void processarRelacao(Objeto objeto, Objeto pivo, Tipo tipo) throws ObjetoException {
 			Relacao relacao = ObjetoSuperficieUtil.getRelacao(objetoSuperficie, pivo, objeto);
-			if (relacao != null && tipo == Tipo.NORMAL) {
-				pontoNormal(relacao);
+			if (relacao != null && tipo == Tipo.NENHUM) {
+				pontoNenhum(relacao);
 			} else if (relacao != null && tipo == Tipo.EXPORTACAO) {
 				pontoExportacao(pivo, relacao);
 			} else if (relacao != null && tipo == Tipo.IMPORTACAO) {
@@ -138,7 +138,7 @@ public class CircularContainer extends Panel implements PluginBasico {
 			}
 		}
 
-		private void pontoNormal(Relacao relacao) {
+		private void pontoNenhum(Relacao relacao) {
 			relacao.setPontoOrigem(false);
 			relacao.setPontoDestino(false);
 		}

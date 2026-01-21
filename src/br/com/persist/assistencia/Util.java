@@ -869,6 +869,17 @@ public class Util {
 		}
 	}
 
+	public static float getFloat(String string, float padrao) {
+		if (Util.isEmpty(string)) {
+			return padrao;
+		}
+		try {
+			return Float.parseFloat(string.trim());
+		} catch (Exception e) {
+			return padrao;
+		}
+	}
+
 	public static String normalizar(String string, boolean substituir) {
 		StringBuilder sb = new StringBuilder();
 		if (string != null) {

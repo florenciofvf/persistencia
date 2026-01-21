@@ -1592,17 +1592,17 @@ class SuperficiePopup extends Popup {
 	private class MenuCircular extends Menu {
 		private Action exportacaoAcao = actionMenu("label.exportacao");
 		private Action importacaoAcao = actionMenu("label.importacao");
-		private Action normalAcao = actionMenu("label.normal");
+		private Action nenhumAcao = actionMenu("label.nenhum");
 		private static final long serialVersionUID = 1L;
 
 		private MenuCircular() {
 			super(Constantes.LABEL_CIRCULAR);
 			addMenuItem(exportacaoAcao);
 			addMenuItem(importacaoAcao);
-			addMenuItem(normalAcao);
+			addMenuItem(nenhumAcao);
 			exportacaoAcao.setActionListener(e -> abrirModal(Tipo.EXPORTACAO));
 			importacaoAcao.setActionListener(e -> abrirModal(Tipo.IMPORTACAO));
-			normalAcao.setActionListener(e -> abrirModal(Tipo.NORMAL));
+			nenhumAcao.setActionListener(e -> abrirModal(Tipo.NENHUM));
 		}
 
 		private void preShow(List<Objeto> selecionados) {
