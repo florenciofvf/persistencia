@@ -197,6 +197,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 
 	private class Toolbar extends BarraButton {
 		private Action excluirAcao = acaoIcon("label.excluir_selecionado", Icones.EXCLUIR);
+		private Action modeloMemoriaAcao = acaoIcon("label.modelo_visao", Icones.FAVORITO);
 		private Action arquivoVinculadoAcao = acaoMenu("label.abrir_criar_arq_vinculado");
 		private Action arquivoContainerAcao = acaoMenu("label.abrir_arquivo_principal");
 		private Action criarObjetoAcao = acaoIcon("label.criar_objeto", Icones.CRIAR);
@@ -251,6 +252,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			remove(txtPrefixoNomeTabela);
 			remove(txtArquivoVinculo);
 			normalSeparador();
+			addButton(modeloMemoriaAcao);
 		}
 
 		Action acaoMenu(String chave, Icon icon) {
@@ -287,6 +289,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			txtPrefixoNomeTabela.addActionListener(
 					e -> ObjetoSuperficieUtil.prefixoNomeTabela(objetoSuperficie, txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(objetoSuperficie));
+			modeloMemoriaAcao.setActionListener(e -> objetoSuperficie.modeloMemoriaAlternarVisao());
 			chkAjusteAutoEmpilhaForm.addActionListener(e -> setAjusteAutoEmpilhaForm());
 			chkAjusteAutoLarguraForm.addActionListener(e -> setAjusteAutoLarguraForm());
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);

@@ -98,6 +98,7 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
 	public static final String LABEL_PROCESSAR_OBJETOS = "label.processar_objetos";
+	private transient ExportacaoImportacao exportacaoImportacao;
 	protected static final Logger LOG = Logger.getGlobal();
 	protected final transient Linha linha = new Linha();
 	protected final transient Area area = new Area();
@@ -663,6 +664,20 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		if (!emMemoria) {
 			expImp.vincular(ref);
 			Util.mensagemFormulario(formulario, expImp.getString());
+		} else {
+			exportacaoImportacao = expImp;
+		}
+	}
+
+	public void modeloMemoriaAlternarVisao() {
+		if (exportacaoImportacao != null) {
+			exportacaoImportacao.circular = !exportacaoImportacao.circular;
+			exportacaoImportacao.localizarObjetos();
+			for (Relacao item : relacoes) {
+				item.setQuebrado(!exportacaoImportacao.circular);
+			}
+			ObjetoSuperficieUtil.limparSelecao(this);
+			repaint();
 		}
 	}
 
@@ -2489,8 +2504,8 @@ class ExportacaoImportacao {
 	final ObjetoSuperficie superficie;
 	final boolean exportacao;
 	Metadado campoProcessado;
-	final boolean circular;
 	final Objeto principal;
+	boolean circular;
 	Metadado raiz;
 	Vetor vetor;
 	int centroX;
