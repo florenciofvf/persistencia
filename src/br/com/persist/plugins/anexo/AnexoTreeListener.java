@@ -9,6 +9,8 @@ public interface AnexoTreeListener {
 
 	public void colarAtributosAnexo(AnexoTree anexoTree) throws AssistenciaException;
 
+	public void usarVarNavegadorAnexo(AnexoTree anexoTree);
+
 	public void copiarSeLinkAnexo(AnexoTree anexoTree);
 
 	public void diretorioAnexo(AnexoTree anexoTree);

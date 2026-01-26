@@ -50,6 +50,9 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.IconeListener;
+import br.com.persist.plugins.instrucao.biblionativo.IRuntime;
+import br.com.persist.plugins.variaveis.Variavel;
+import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class AnexoContainer extends AbstratoContainer implements AnexoTreeListener, PluginArquivo {
 	private final AnexoTree anexoTree = new AnexoTree(new AnexoModelo());
@@ -277,6 +280,24 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 				desktop.open(anexo.getFile());
 			} catch (IOException e) {
 				Util.mensagem(AnexoContainer.this, e.getMessage());
+			}
+		}
+	}
+
+	@Override
+	public void usarVarNavegadorAnexo(AnexoTree anexoTree) {
+		copiarSeLinkAnexo(anexoTree);
+		String string = Util.getContentTransfered();
+		if (!Util.isEmpty(string)) {
+			Variavel variavel = VariavelProvedor.getVariavel("VAR_NAVEGADOR");
+			if (variavel == null) {
+				Util.mensagem(AnexoContainer.this, "Defina o valor de VAR_NAVEGADOR");
+			} else {
+				try {
+					IRuntime.exec(variavel.getValor() + string);
+				} catch (IOException e) {
+					Util.mensagem(AnexoContainer.this, e.getMessage());
+				}
 			}
 		}
 	}
