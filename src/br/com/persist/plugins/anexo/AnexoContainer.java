@@ -294,7 +294,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 				Util.mensagem(AnexoContainer.this, "Defina o valor de VAR_NAVEGADOR");
 			} else {
 				try {
-					IRuntime.exec(variavel.getValor() + string);
+					IRuntime.exec(variavel.getValor() + " " + string);
 				} catch (IOException e) {
 					Util.mensagem(AnexoContainer.this, e.getMessage());
 				}
