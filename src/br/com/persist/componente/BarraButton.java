@@ -530,15 +530,17 @@ public abstract class BarraButton extends JToolBar
 		return add(comp);
 	}
 
-	protected void addButton(boolean separador, Action action) {
+	protected Button addButton(boolean separador, Action action) {
 		if (separador) {
 			addSeparator();
 		}
-		add(new Button(action));
+		Button button = new Button(action);
+		add(button);
+		return button;
 	}
 
-	public void addButton(Action action) {
-		addButton(false, action);
+	public Button addButton(Action action) {
+		return addButton(false, action);
 	}
 
 	@Override

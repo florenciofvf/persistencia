@@ -179,8 +179,8 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 
 		private ToolbarLista() {
 			super.ini(new Nil(), BAIXAR, SALVAR, EXCLUIR);
-			addButton(adicionarAcao);
-			addButton(adicionar2Acao);
+			addButton(adicionarAcao).setToolTipText(ComplementoMensagens.getString("hint.criar"));
+			addButton(adicionar2Acao).setToolTipText(ComplementoMensagens.getString("hint.adicionar"));
 			addButton(limparComplementosAcao);
 			limparComplementosAcao.setActionListener(e -> limparComplementos());
 			adicionar2Acao.setActionListener(e -> adicionar2());
@@ -261,7 +261,11 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 					ComplementoMensagens.getString("msg.texto_inclusao"), null);
 			if (resp != null) {
 				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
-				modelo.adicionar(resp.toString());
+				String string = resp.toString();
+				if (string.isEmpty()) {
+					string = "   ";
+				}
+				modelo.adicionar(string);
 				listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 			}
 		}
