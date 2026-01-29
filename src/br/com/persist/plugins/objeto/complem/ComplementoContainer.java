@@ -251,7 +251,11 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 					ComplementoMensagens.getString("msg.texto_inclusao"), null);
 			if (resp != null) {
 				ColecaoStringModelo modelo = (ColecaoStringModelo) listaComplementos.getModel();
-				modelo.incluir(i, resp.toString());
+				String string = resp.toString();
+				if (string.isEmpty()) {
+					string = "   ";
+				}
+				modelo.incluir(i, string);
 				listaComplementos.setModel(new ColecaoStringModelo(modelo.getLista()));
 			}
 		}
