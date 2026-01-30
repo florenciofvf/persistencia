@@ -193,6 +193,10 @@ public class Arquivo {
 		return getName().endsWith("_exception");
 	}
 
+	public boolean isEstados() {
+		return getName().endsWith("_estados");
+	}
+
 	public boolean isRefresh() {
 		return getName().endsWith("_refresh");
 	}

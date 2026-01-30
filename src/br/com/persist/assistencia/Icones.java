@@ -11,6 +11,7 @@ public class Icones {
 	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
 	public static final Icon ALINHA_ESQUERDO = criarImagem("alinha_esquerdo");
 	public static final Icon ALINHA_DIREITO = criarImagem("alinha_direito");
+	public static final Icon BOLA_VERMELHA = criarImagem("bola_vermelha");
 	public static final Icon BANCO_DESCONECTA = criarImagem("dbdisconn");
 	public static final Icon BOLA_AMARELA = criarImagem("bola_amarela");
 	public static final Icon DESC_NUMERO = criarImagem("desc_numero");

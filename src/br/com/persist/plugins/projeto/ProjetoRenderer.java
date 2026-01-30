@@ -60,6 +60,8 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 	private void configIcon2(Arquivo obj) {
 		if (obj.isRefresh()) {
 			setIcon(Icones.ATUALIZAR);
+		} else if (obj.isEstados()) {
+			setIcon(Icones.BOLA_VERMELHA);
 		} else if (obj.isSinc()) {
 			setIcon(Icones.SINCRONIZAR);
 		} else if (obj.isEmpty()) {

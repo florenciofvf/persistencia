@@ -94,6 +94,7 @@ class ProjetoSplit extends SplitPane {
 		StringBuilder sb = new StringBuilder();
 		sb.append("_parent");
 		sb.append(Constantes.QL + "_exception");
+		sb.append(Constantes.QL + "_estados");
 		sb.append(Constantes.QL + "_service");
 		sb.append(Constantes.QL + "_refresh");
 		sb.append(Constantes.QL + "_pessoa");
