@@ -91,29 +91,7 @@ class ProjetoSplit extends SplitPane {
 	}
 
 	private void sufixos(ActionEvent e) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("_parent");
-		sb.append(Constantes.QL + "_exception");
-		sb.append(Constantes.QL + "_estados");
-		sb.append(Constantes.QL + "_service");
-		sb.append(Constantes.QL + "_refresh");
-		sb.append(Constantes.QL + "_pessoa");
-		sb.append(Constantes.QL + "_empty");
-		sb.append(Constantes.QL + "_timer");
-		sb.append(Constantes.QL + "_anexo");
-		sb.append(Constantes.QL + "_check");
-		sb.append(Constantes.QL + "_auto");
-		sb.append(Constantes.QL + "_exec");
-		sb.append(Constantes.QL + "_info");
-		sb.append(Constantes.QL + "_seta");
-		sb.append(Constantes.QL + "_desc");
-		sb.append(Constantes.QL + "_sinc");
-		sb.append(Constantes.QL + "_file");
-		sb.append(Constantes.QL + "_down");
-		sb.append(Constantes.QL + "_url");
-		sb.append(Constantes.QL + "_up");
-		sb.append(Constantes.QL + "_js");
-		Util.mensagem(ProjetoSplit.this, sb.toString());
+		ProjetoSufixoDialogo.view(ProjetoSplit.this);
 	}
 
 	void salvar() throws XMLException {

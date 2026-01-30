@@ -2,11 +2,11 @@ package br.com.persist.plugins.projeto;
 
 import java.awt.Component;
 
+import javax.swing.Icon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import br.com.persist.arquivo.Arquivo;
-import br.com.persist.assistencia.Icones;
 
 public class ProjetoRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = 1L;
@@ -16,62 +16,12 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			int row, boolean hasFocus) {
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 		if (value instanceof Arquivo) {
-			configIcon(value);
+			Arquivo arquivo = (Arquivo) value;
+			Icon icon = MapaSufixos.getIcon(arquivo);
+			if (icon != null) {
+				setIcon(icon);
+			}
 		}
 		return this;
-	}
-
-	private void configIcon(Object value) {
-		Arquivo obj = (Arquivo) value;
-		if (obj.isDescricao()) {
-			setIcon(Icones.RULE);
-		} else if (obj.isException()) {
-			setIcon(Icones.EXCEPTION);
-		} else if (obj.isPai()) {
-			setIcon(Icones.FAVORITO);
-		} else if (obj.isService()) {
-			setIcon(Icones.CONFIG);
-		} else if (obj.isExec()) {
-			setIcon(Icones.EXECUTAR);
-		} else if (obj.isAuto()) {
-			setIcon(Icones.CONFIG2);
-		} else if (obj.isPessoa()) {
-			setIcon(Icones.PESSOA);
-		} else if (obj.isTimer()) {
-			setIcon(Icones.TIMER);
-		} else if (obj.isAnexo()) {
-			setIcon(Icones.ANEXO);
-		} else if (obj.isInfo()) {
-			setIcon(Icones.INFO);
-		} else if (obj.isSeta()) {
-			setIcon(Icones.SETA);
-		} else if (obj.isCheck()) {
-			setIcon(Icones.SUCESSO);
-		} else if (obj.isURL()) {
-			setIcon(Icones.URL);
-		} else if (obj.isFile2()) {
-			setIcon(Icones.NOVO);
-		} else if (obj.isFile()) {
-			setIcon(Icones.TEXTO);
-		}
-		configIcon2(obj);
-	}
-
-	private void configIcon2(Arquivo obj) {
-		if (obj.isRefresh()) {
-			setIcon(Icones.ATUALIZAR);
-		} else if (obj.isEstados()) {
-			setIcon(Icones.BOLA_VERMELHA);
-		} else if (obj.isSinc()) {
-			setIcon(Icones.SINCRONIZAR);
-		} else if (obj.isEmpty()) {
-			setIcon(Icones.VAZIO);
-		} else if (obj.isDown()) {
-			setIcon(Icones.BAIXAR);
-		} else if (obj.isUp()) {
-			setIcon(Icones.UPDATE);
-		} else if (obj.isJS()) {
-			setIcon(Icones.JS);
-		}
 	}
 }
