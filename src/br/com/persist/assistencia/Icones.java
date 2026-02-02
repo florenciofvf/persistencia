@@ -37,6 +37,7 @@ public class Icones {
 	public static final Icon SINCRONIZAR = criarImagem("sync");
 	public static final Icon ELEMENTO = criarImagem("element");
 	public static final Icon ARRASTAR = criarImagem("synonym");
+	public static final Icon ESTRELA = criarImagem("estrela");
 	public static final Icon LARGURA = criarImagem("largura");
 	public static final Icon EXCLUIR = criarImagem("excluir");
 	public static final Icon CONECTA = criarImagem("connect");

@@ -44,11 +44,11 @@ public class MapaSufixos {
 	}
 
 	static {
-		lista.add(new ChaveIcone("parent", Icones.FAVORITO));
 		lista.add(new ChaveIcone("exception", Icones.EXCEPTION));
-		lista.add(new ChaveIcone("estados", Icones.BOLA_VERMELHA));
+		lista.add(new ChaveIcone("estados", Icones.ESTRELA));
 		lista.add(new ChaveIcone("service", Icones.CONFIG));
 		lista.add(new ChaveIcone("refresh", Icones.ATUALIZAR));
+		lista.add(new ChaveIcone("parent", Icones.FAVORITO));
 		lista.add(new ChaveIcone("pessoa", Icones.PESSOA));
 		lista.add(new ChaveIcone("empty", Icones.VAZIO));
 		lista.add(new ChaveIcone("timer", Icones.TIMER));
