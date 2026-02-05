@@ -47,6 +47,7 @@ public class Icones {
 	public static final Icon SALVARC = criarImagem("saveas");
 	public static final Icon BAIXAR2 = criarImagem("bottom");
 	public static final Icon CRIAR2 = criarImagem("create2");
+	public static final Icon MODULO = criarImagem("module");
 	public static final Icon CAMPOS = criarImagem("campos");
 	public static final Icon RESUME = criarImagem("resume");
 	public static final Icon TABELA = criarImagem("tabela");
