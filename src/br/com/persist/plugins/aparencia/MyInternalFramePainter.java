@@ -12,15 +12,15 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
 
 public class MyInternalFramePainter extends MyAbstractRegionPainter {
-	static final int BACKGROUND_ENABLED = 1;
 	static final int BACKGROUND_ENABLED_WINDOWFOCUSED = 2;
+	static final int BACKGROUND_ENABLED = 1;
 
-	private int state;
 	private PaintContext ctx;
+	private int state;
 
-	private Path2D path = new Path2D.Float();
 	private RoundRectangle2D roundRect = new RoundRectangle2D.Float(0, 0, 0, 0, 0, 0);
 	protected Ellipse2D ellipse = new Ellipse2D.Float(0, 0, 0, 0);
+	private Path2D path = new Path2D.Float();
 
 	private Color color5 = decodeColor("nimbusBlueGrey", 0.0f, -0.023821115f, -0.06666666f, 0);
 	private Color color7 = decodeColor("nimbusBlueGrey", -0.006944418f, -0.07399663f, 0.11372548f, 0);
@@ -32,7 +32,6 @@ public class MyInternalFramePainter extends MyAbstractRegionPainter {
 	protected Object[] componentColors;
 
 	public MyInternalFramePainter(PaintContext ctx, int state) {
-		super();
 		this.state = state;
 		this.ctx = ctx;
 	}
@@ -40,13 +39,10 @@ public class MyInternalFramePainter extends MyAbstractRegionPainter {
 	@Override
 	protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
 		componentColors = extendedCacheKeys;
-		switch (state) {
-		case BACKGROUND_ENABLED:
+		if (state == BACKGROUND_ENABLED) {
 			paintBackgroundEnabled(g);
-			break;
-		case BACKGROUND_ENABLED_WINDOWFOCUSED:
+		} else if (state == BACKGROUND_ENABLED_WINDOWFOCUSED) {
 			paintBackgroundEnabledAndWindowFocused(g);
-			break;
 		}
 	}
 

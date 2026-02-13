@@ -20,14 +20,15 @@ public class MyLazyPainter implements UIDefaults.LazyValue {
 		this.ctx = new MyAbstractRegionPainter.PaintContext(insets, canvasSize, inverted);
 	}
 
-	MyLazyPainter(String className, int which, Insets insets, Dimension canvasSize, boolean inverted,
+	MyLazyPainter(String className, int which, boolean inverted,
 			MyAbstractRegionPainter.PaintContext.CacheMode cacheMode, double maxH, double maxV) {
 		if (className == null) {
 			throw new IllegalArgumentException("The className must be specified");
 		}
 		this.className = className;
 		this.which = which;
-		this.ctx = new MyAbstractRegionPainter.PaintContext(insets, canvasSize, inverted, cacheMode, maxH, maxV);
+		this.ctx = new MyAbstractRegionPainter.PaintContext(new Insets(25, 6, 6, 6), new Dimension(25, 36), inverted,
+				cacheMode, maxH, maxV);
 	}
 
 	@Override
@@ -35,8 +36,11 @@ public class MyLazyPainter implements UIDefaults.LazyValue {
 	public Object createValue(UIDefaults table) {
 		try {
 			Class c;
-			Object cl;
-			if (table == null || !((cl = table.get("ClassLoader")) instanceof ClassLoader)) {
+			Object cl = null;
+			if (table != null) {
+				cl = table.get("ClassLoader");
+			}
+			if (!(cl instanceof ClassLoader)) {
 				cl = Thread.currentThread().getContextClassLoader();
 				if (cl == null) {
 					cl = ClassLoader.getSystemClassLoader();

@@ -62,7 +62,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private transient AlphaComposite compositeDestacar;
 	private static final long serialVersionUID = 1L;
 	private static final int X_MOUSE_WHEEL = 100;
-	private static final int A_MOUSE_WHEEL = 20;
+	private static final int A_MOUSE_WHEEL = 22;
 	private final InternalContainer container;
 	private Dimension dimensionDestacar;
 	private boolean processadoPesquisa;
