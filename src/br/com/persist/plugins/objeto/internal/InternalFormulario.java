@@ -59,11 +59,11 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private transient AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 			ObjetoPreferencia.getNivelTransparencia());
 	private static final Logger LOG = Logger.getGlobal();
+	private final transient InternalContainer container;
 	private transient AlphaComposite compositeDestacar;
 	private static final long serialVersionUID = 1L;
 	private static final int X_MOUSE_WHEEL = 100;
-	private static final int A_MOUSE_WHEEL = 23;
-	private final InternalContainer container;
+	private static final int A_MOUSE_WHEEL = 24;
 	private Dimension dimensionDestacar;
 	private boolean processadoPesquisa;
 	private boolean processado;
