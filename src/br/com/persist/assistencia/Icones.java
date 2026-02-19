@@ -52,6 +52,7 @@ public class Icones {
 	public static final Icon RESUME = criarImagem("resume");
 	public static final Icon TABELA = criarImagem("tabela");
 	public static final Icon UPDATE = criarImagem("update");
+	public static final Icon TARGET = criarImagem("target");
 	public static final Icon CONFIG = criarImagem("config");
 	public static final Icon FILTRO = criarImagem("filtro");
 	public static final Icon BAIXAR = criarImagem("baixar");
