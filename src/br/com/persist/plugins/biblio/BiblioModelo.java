@@ -33,9 +33,9 @@ public class BiblioModelo extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Biblio biblio = BiblioProvedor.getBiblio(rowIndex);
+		Biblio item = BiblioProvedor.getBiblio(rowIndex);
 		if (columnIndex == 1) {
-			return biblio.getNome();
+			return item.getNome();
 		}
 		return null;
 	}
@@ -45,9 +45,9 @@ public class BiblioModelo extends AbstractTableModel {
 		if (aValue == null) {
 			return;
 		}
-		Biblio biblio = BiblioProvedor.getBiblio(rowIndex);
+		Biblio item = BiblioProvedor.getBiblio(rowIndex);
 		if (columnIndex == 1) {
-			biblio.setNome(aValue.toString());
+			item.setNome(aValue.toString());
 		}
 	}
 }
