@@ -44,7 +44,7 @@ public class ISystem {
 			String valor = value == null ? "" : value;
 			Map<String, String> mapa = new HashMap<>();
 			mapa.put(item.getKey(), valor);
-			lista.add(map);
+			lista.add(mapa);
 		}
 		return lista;
 	}
