@@ -270,8 +270,8 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		private void configurar() {
 			chkAjusteAutoLarguraForm.setToolTipText(ObjetoMensagens.getString("label.ajuste_largura_form"));
 			chkAjusteAutoEmpilhaForm.setToolTipText(ObjetoMensagens.getString("label.ajuste_automatico"));
+			txtDestacaObjeto.setToolTipText(ObjetoMensagens.getStringHtml("label.destacar_objetos"));
 			txtArquivoVinculo.setToolTipText(ObjetoMensagens.getString("hint.arquivo_vinculado"));
-			txtDestacaObjeto.setToolTipText(ObjetoMensagens.getString("label.destacar_objetos"));
 			txtPrefixoNomeTabela.setToolTipText(ObjetoMensagens.getString("label.prefixo_nt"));
 			configAtalho(excluirAcao, KeyEvent.VK_D);
 			configAtalho(salvarAcao, KeyEvent.VK_S);

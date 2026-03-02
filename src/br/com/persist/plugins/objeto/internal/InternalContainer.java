@@ -2993,7 +2993,7 @@ public class InternalContainer extends Panel
 					addMenuItem(true, largAltAcao);
 					addMenuItem(true, xyAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
-					tabelasRepetidasAcao.hint(ObjetoMensagens.getString("hint.incon_link_auto"));
+					tabelasRepetidasAcao.hint(ObjetoMensagens.getStringHtml("hint.incon_link_auto"));
 					selIntervaloColunaAcao.setActionListener(e -> selIntervaloRegistro());
 					tabelasRepetidasAcao.setActionListener(e -> tabelasRepetidas());
 					complFinalBarraAcao.setActionListener(e -> complFinalBarra());

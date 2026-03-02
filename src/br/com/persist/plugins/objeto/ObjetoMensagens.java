@@ -3,6 +3,8 @@ package br.com.persist.plugins.objeto;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import br.com.persist.assistencia.Util;
+
 public class ObjetoMensagens {
 	public static final ResourceBundle bundle = ResourceBundle
 			.getBundle(ObjetoMensagens.class.getPackage().getName() + ".mensagens");
@@ -15,5 +17,9 @@ public class ObjetoMensagens {
 			return bundle.getString(chave);
 		}
 		return MessageFormat.format(bundle.getString(chave), argumentos);
+	}
+
+	public static String getStringHtml(String chave) {
+		return Util.getHtml(getString(chave));
 	}
 }
