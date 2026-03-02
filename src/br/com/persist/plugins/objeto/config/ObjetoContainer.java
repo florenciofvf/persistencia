@@ -1046,7 +1046,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			container.add(criarLinhaRotulo("label.link_auto", chkLinkAuto));
 			container.add(criarLinha("label.largura_rotulos", chkLarguraRotulos,
 					ObjetoMensagens.getString("hint.largura_rotulos")));
-			container.add(criarLinha("label.sane", chkSANE, ObjetoMensagens.getString("hint.sane")));
+			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.sane"), false, chkSANE,
+					ObjetoMensagens.getString("hint.sane"), PanelBanco.this::mensagemSANE));
 			container.add(criarLinha("label.ccsc", chkCCSC, ObjetoMensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.bpnt", chkBPNT, ObjetoMensagens.getString("hint.bpnt")));
 			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.ajuste_auto_form"), false,
@@ -1158,6 +1159,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			}
 			sb.append("SELECT " + seq + " FROM DUAL;");
 			Util.mensagem(ObjetoContainer.this, sb.toString());
+		}
+
+		private void mensagemSANE(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.sane2"));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
