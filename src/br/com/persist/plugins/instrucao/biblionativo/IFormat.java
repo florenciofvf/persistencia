@@ -32,21 +32,21 @@ public class IFormat {
 
 		String date(Object object) {
 			if (object instanceof Date) {
-				return formatDate.format((Date) object);
+				return formatDate.format(object);
 			}
 			return "";
 		}
 
 		String time(Object object) {
 			if (object instanceof Date) {
-				return formatTime.format((Date) object);
+				return formatTime.format(object);
 			}
 			return "";
 		}
 
 		String dateTime(Object object) {
 			if (object instanceof Date) {
-				return formatDateTime.format((Date) object);
+				return formatDateTime.format(object);
 			}
 			return "";
 		}
