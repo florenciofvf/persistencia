@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1322,13 +1324,29 @@ class SuperficiePopup2 extends Popup {
 		if (coletor.size() == 0) {
 			return;
 		}
+
+		Collection<String> collection = null;
+
+		if (Util.confirmar(superficie, ObjetoMensagens.getString("msb.objetos_com_tabela_confirmar_duplicados",
+				"[Total: " + coletor.size() + "]"), false)) {
+			collection = new ArrayList<>();
+		} else {
+			collection = new TreeSet<>();
+		}
+
+		for (String item : coletor.getLista()) {
+			collection.add(item);
+		}
+
 		StringBuilder sb = new StringBuilder();
-		for (String tabela : coletor.getLista()) {
+		for (String item : collection) {
 			if (sb.length() > 0) {
 				sb.append(Constantes.QL);
 			}
-			sb.append(tabela);
+			sb.append(item);
 		}
+		sb.append(Constantes.QL);
+		sb.append("TOTAL - " + collection.size());
 		Util.mensagem(superficie, sb.toString());
 	}
 
