@@ -1327,7 +1327,7 @@ class SuperficiePopup2 extends Popup {
 
 		Collection<String> collection = null;
 
-		if (Util.confirmar(superficie, ObjetoMensagens.getString("msb.objetos_com_tabela_confirmar_duplicados",
+		if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.objetos_com_tabela_confirmar_duplicados",
 				"[Total: " + coletor.size() + "]"), false)) {
 			collection = new ArrayList<>();
 		} else {
@@ -1762,7 +1762,7 @@ class SuperficiePopup extends Popup {
 			if (ObjetoSuperficieUtil.getContinua(lista)) {
 				String ajustes = nomeObjetosAjusteAuto(lista);
 				if (!Util.isEmpty(ajustes) && !Util.confirmar(superficie,
-						ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {
+						ObjetoMensagens.getString("msg.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {
 					return;
 				}
 				superficie.destacar(superficie.container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_PROPRIO,
