@@ -98,6 +98,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
+	public static final String LABEL_OBJETOS_COM_TABELA_TREESET = "label.objetos_com_tabela_treeset";
 	public static final String LABEL_OBJETOS_COM_TABELA = "label.objetos_com_tabela";
 	public static final String LABEL_PROCESSAR_OBJETOS = "label.processar_objetos";
 	private transient ExportacaoImportacao exportacaoImportacao;
@@ -1127,6 +1128,8 @@ class SuperficiePopup2 extends Popup {
 	private Action limparFormulariosFiltroAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios_filtro",
 			Icones.NOVO);
 	private Action atualizarFormulariosAcao = ObjetoSuperficie.acaoMenu("label.atualizar_forms", Icones.ATUALIZAR);
+	private Action objetosComTabelaTreeSetAcao = ObjetoSuperficie
+			.acaoMenu(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA_TREESET);
 	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
 	private Action processarObjetosAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_PROCESSAR_OBJETOS);
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
@@ -1146,6 +1149,7 @@ class SuperficiePopup2 extends Popup {
 		this.superficie = superficie;
 		addMenuItem(processarObjetosAcao);
 		addMenuItem(objetosComTabelaAcao);
+		addMenuItem(objetosComTabelaTreeSetAcao);
 		addMenuItem(true, criarObjetoAcao);
 		addMenuItem(true, colarAcao);
 		add(true, superficie.getMenuAjustar());
@@ -1170,6 +1174,7 @@ class SuperficiePopup2 extends Popup {
 		atualizarFormulariosAndOuvir.setActionListener(e -> atualizarFormsAndOuvir());
 		formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
 		limparFormulariosFiltroAcao.setActionListener(e -> superficie.limpar3());
+		objetosComTabelaTreeSetAcao.setActionListener(e -> visualizarTreeSet());
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
 		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
 		processarObjetosAcao.setActionListener(e -> processarObjetos());
@@ -1327,8 +1332,8 @@ class SuperficiePopup2 extends Popup {
 
 		Collection<String> collection = null;
 
-		if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.objetos_com_tabela_confirmar_duplicados",
-				"[Total: " + coletor.size() + "]"), false)) {
+		if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.objetos_com_tabela_confirmar_duplicados"),
+				false)) {
 			collection = new ArrayList<>();
 		} else {
 			collection = new TreeSet<>();
@@ -1336,6 +1341,13 @@ class SuperficiePopup2 extends Popup {
 
 		for (String item : coletor.getLista()) {
 			collection.add(item);
+		}
+
+		if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.salvar_tree_set_formulario"), false)) {
+			if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.salvar_tree_set_formulario_limpar"), false)) {
+				superficie.getFormulario().limparTreeSet();
+			}
+			superficie.getFormulario().addEmTreeSet(collection);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -1347,6 +1359,19 @@ class SuperficiePopup2 extends Popup {
 		}
 		sb.append(Constantes.QL);
 		sb.append("TOTAL - " + collection.size());
+		Util.mensagem(superficie, sb.toString());
+	}
+
+	private void visualizarTreeSet() {
+		StringBuilder sb = new StringBuilder();
+		for (String item : superficie.getFormulario().getTreeSet()) {
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(item);
+		}
+		sb.append(Constantes.QL);
+		sb.append("TOTAL - " + superficie.getFormulario().getTreeSet().size());
 		Util.mensagem(superficie, sb.toString());
 	}
 
