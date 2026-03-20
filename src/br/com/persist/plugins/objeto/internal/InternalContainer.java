@@ -498,6 +498,13 @@ public class InternalContainer extends Panel
 		return modeloOrdenacao;
 	}
 
+	public void ultimaConsulta(StringBuilder builder) {
+		if (ultimaConsulta != null) {
+			builder.append("--### " + objeto.getId() + Constantes.QL);
+			builder.append(ultimaConsulta + Constantes.QL2);
+		}
+	}
+
 	private void configurarCompararRegistroAntes() {
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		if (objeto.isCompararRegistro()) {
@@ -1481,6 +1488,7 @@ public class InternalContainer extends Panel
 				}
 
 				private class MenuInfo extends Menu {
+					private Action ultimasConsultasAcao = acaoMenu("label.ultimas_consultas");
 					private Action destParticAcao = acaoMenu("label.dest_particp");
 					private Action elementosAcao = actionMenu("label.elementos");
 					private Action descricaoAcao = actionMenu("label.descricao");
@@ -1493,10 +1501,21 @@ public class InternalContainer extends Panel
 						addMenuItem(true, elementosAcao);
 						addMenuItem(true, descricaoAcao);
 						addMenuItem(true, consultaAcao);
+						addMenuItem(true, ultimasConsultasAcao);
+						ultimasConsultasAcao.setActionListener(e -> ultimasConsultas());
 						destParticAcao.setActionListener(e -> destacarParticps());
 						elementosAcao.setActionListener(e -> elementos());
 						descricaoAcao.setActionListener(e -> descricao());
 						consultaAcao.setActionListener(e -> consulta());
+					}
+
+					private void ultimasConsultas() {
+						if (vinculoListener != null) {
+							StringBuilder builder = new StringBuilder();
+							ultimaConsulta(builder);
+							vinculoListener.ultimasConsultas(pesquisa, builder);
+							Util.mensagem(InternalContainer.this, builder.toString());
+						}
 					}
 
 					private void destacarParticps() {

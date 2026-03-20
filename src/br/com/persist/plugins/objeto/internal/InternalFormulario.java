@@ -330,6 +330,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		@Override
+		public void ultimasConsultas(Pesquisa pesquisa, StringBuilder builder) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.ultimasConsultas(pesquisa, builder);
+			}
+		}
+
+		@Override
 		public void pesquisarApos(Objeto fonte, Pesquisa pesquisa) {
 			checarDesktop();
 			if (desktop != null) {
@@ -622,6 +630,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void destacarObjeto(boolean b) {
 		container.destacarObjeto(b);
+	}
+
+	public void ultimaConsulta(StringBuilder builder) {
+		container.ultimaConsulta(builder);
 	}
 
 	public void atualizarFormulario() {

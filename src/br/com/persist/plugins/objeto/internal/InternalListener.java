@@ -42,6 +42,8 @@ public interface InternalListener {
 
 		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException;
 
+		public void ultimasConsultas(Pesquisa pesquisa, StringBuilder builder);
+
 		public void getMetadado(AtomicReference<Object> ref, Objeto objeto);
 
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
