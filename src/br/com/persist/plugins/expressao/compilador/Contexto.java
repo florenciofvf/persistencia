@@ -37,6 +37,32 @@ public abstract class Contexto {
 
 	}
 
+	class AbreParentese implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isAbreParentese()) {
+				ExpressaoContexto expressao = new ExpressaoContexto();
+				compilador.setSelecionado(expressao);
+				add(expressao);
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	class AbreChave implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isAbreParentese()) {
+				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				compilador.setSelecionado(instrucoes);
+				add(instrucoes);
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
 	protected class PontoEVirgula implements TokenExec {
 		public void processar(Compilador compilador, Token token) {
 			if (token.isPontoEVirgula()) {

@@ -31,17 +31,4 @@ public class ConstanteContexto extends Contexto {
 			}
 		}
 	}
-
-	class AbreParentese implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
-			if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.setSelecionado(expressao);
-				add(expressao);
-				indiceEstado++;
-			} else {
-				compilador.invalidar(token);
-			}
-		}
-	}
 }
