@@ -3,11 +3,11 @@ package br.com.persist.plugins.expressao.compilador;
 public class PacoteContexto extends Contexto {
 	private Token pacote;
 
-	@Context("pacote_da_funcao")
-	@Doc({ "package nome;" })
+	@Context("pacote_da_biblioteca")
+	@Doc({ "package chaveN;" })
 	@Override
 	public void processar(Compilador compilador, Token token) {
-		if (token.isNomePacote()) {
+		if (token.isChaveN()) {
 			if (pacote != null) {
 				compilador.invalidar(token, "pacote_ja_definido");
 			} else {

@@ -14,7 +14,9 @@ public class Token {
 	}
 
 	public enum Tipo {
-		PONTO_E_VIRGULA(";"), ABRE_PARENTESE("("), IGUAL("=="), ATRIBUICAO("="), NOME_PACOTE("br.com.teste");
+		CHAVE("[a-z][A-Z][0-9]"), CHAVE2("chave.chave"), CHAVEN("chave.chave.chave"), PONTO_E_VIRGULA(";"),
+		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_CHAVE("["), FECHA_CHAVE("]"), IGUAL("=="), DIFERENTE("!="),
+		ATRIBUICAO("=");
 
 		private String desc;
 
@@ -35,7 +37,15 @@ public class Token {
 		return tipo == Tipo.ABRE_PARENTESE;
 	}
 
-	public boolean isNomePacote() {
-		return tipo == Tipo.NOME_PACOTE;
+	public boolean isChave() {
+		return tipo == Tipo.CHAVE;
+	}
+
+	public boolean isChave2() {
+		return tipo == Tipo.CHAVE2;
+	}
+
+	public boolean isChaveN() {
+		return tipo == Tipo.CHAVEN;
 	}
 }
