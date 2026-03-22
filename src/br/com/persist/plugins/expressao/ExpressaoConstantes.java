@@ -8,6 +8,18 @@ public class ExpressaoConstantes {
 	public static final String EXPRESSOES = "expressoes";
 	public static final String IGNORADOS = "ignorados";
 
+	public static final String DEFUN_NATIVE = "defun_native";
+	public static final String PACKAGE = "package";
+	public static final String RETURN = "return";
+	public static final String ELSEIF = "elseif";
+	public static final String ALIAS = "alias";
+	public static final String CONST = "const";
+	public static final String DEFUN = "defun";
+	public static final String WHILE = "while";
+	public static final String ELSE = "else";
+	public static final String LAMB = "lamb";
+	public static final String IF = "if";
+
 	private ExpressaoConstantes() {
 	}
 }

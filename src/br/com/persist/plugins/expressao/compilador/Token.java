@@ -2,6 +2,8 @@ package br.com.persist.plugins.expressao.compilador;
 
 import java.util.Objects;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+
 public class Token {
 	final String string;
 	final int indice;
@@ -11,6 +13,10 @@ public class Token {
 		this.string = Objects.requireNonNull(string);
 		this.indice = Objects.requireNonNull(indice);
 		this.tipo = Objects.requireNonNull(tipo);
+	}
+
+	public String getString() {
+		return string;
 	}
 
 	public enum Tipo {
@@ -47,5 +53,14 @@ public class Token {
 
 	public boolean isChaveN() {
 		return tipo == Tipo.CHAVEN;
+	}
+
+	public boolean isReservado() {
+		return ExpressaoConstantes.CONST.equals(string) || ExpressaoConstantes.DEFUN.equals(string)
+				|| ExpressaoConstantes.DEFUN_NATIVE.equals(string) || ExpressaoConstantes.IF.equals(string)
+				|| ExpressaoConstantes.WHILE.equals(string) || ExpressaoConstantes.ELSEIF.equals(string)
+				|| ExpressaoConstantes.ELSE.equals(string) || ExpressaoConstantes.RETURN.equals(string)
+				|| ExpressaoConstantes.PACKAGE.equals(string) || ExpressaoConstantes.ALIAS.equals(string)
+				|| ExpressaoConstantes.LAMB.equals(string);
 	}
 }
