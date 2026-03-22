@@ -1,4 +1,4 @@
-package ###package###;
+package br.com.persist.plugins.expressao;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,20 +14,20 @@ import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 
-public class ###nameCap###Provedor {
-	private static final List<###nameCap###> lista = new ArrayList<>();
+public class ExpressaoProvedor {
+	private static final List<Expressao> lista = new ArrayList<>();
 	private static final Logger LOG = Logger.getGlobal();
 	private static final File file;
 
-	private ###nameCap###Provedor() {
+	private ExpressaoProvedor() {
 	}
 
 	static {
-		file = new File(###nameCap###Constantes.###recurso### + Constantes.SEPARADOR + "###nameLower###.xml");
+		file = new File(ExpressaoConstantes.EXPRESSOES + Constantes.SEPARADOR + "expressao.xml");
 	}
 
-	public static ###nameCap### get###nameCap###(String nome) {
-		for (###nameCap### item : lista) {
+	public static Expressao getExpressao(String nome) {
+		for (Expressao item : lista) {
 			if (item.getNome().equals(nome)) {
 				return item;
 			}
@@ -36,14 +36,14 @@ public class ###nameCap###Provedor {
 	}
 
 	public static void excluir(int[] indices) {
-		List<###nameCap###> lista = new ArrayList<>();
+		List<Expressao> lista = new ArrayList<>();
 		for (int i : indices) {
-			###nameCap### item = get###nameCap###(i);
+			Expressao item = getExpressao(i);
 			if (item != null) {
 				lista.add(item);
 			}
 		}
-		for (###nameCap### item : lista) {
+		for (Expressao item : lista) {
 			int indice = getIndice(item.getNome());
 			if (indice != -1) {
 				excluir(indice);
@@ -57,7 +57,7 @@ public class ###nameCap###Provedor {
 		}
 	}
 
-	public static ###nameCap### get###nameCap###(int indice) {
+	public static Expressao getExpressao(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
 		}
@@ -66,7 +66,7 @@ public class ###nameCap###Provedor {
 
 	public static int getIndice(String nome) {
 		for (int i = 0; i < lista.size(); i++) {
-			###nameCap### item = lista.get(i);
+			Expressao item = lista.get(i);
 			if (item.getNome().equals(nome)) {
 				return i;
 			}
@@ -78,17 +78,17 @@ public class ###nameCap###Provedor {
 		return lista.size();
 	}
 
-	public static boolean contem(###nameCap### ###nameDecap###) {
-		return contem(###nameDecap###.getNome());
+	public static boolean contem(Expressao expressao) {
+		return contem(expressao.getNome());
 	}
 
 	public static boolean contem(String nome) {
-		return get###nameCap###(nome) != null;
+		return getExpressao(nome) != null;
 	}
 
-	public static void adicionar(###nameCap### ###nameDecap###) {
-		if (!contem(###nameDecap###)) {
-			lista.add(###nameDecap###);
+	public static void adicionar(Expressao expressao) {
+		if (!contem(expressao)) {
+			lista.add(expressao);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class ###nameCap###Provedor {
 		lista.clear();
 		try {
 			if (file.exists() && file.canRead()) {
-				XML.processar(file, new ###nameCap###XMLHandler());
+				XML.processar(file, new ExpressaoXMLHandler());
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
@@ -106,14 +106,14 @@ public class ###nameCap###Provedor {
 	public static void salvar() throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2("###recurso###S");
-		salvar###nameCap###(util);
-		util.finalizarTag("###recurso###S");
+		util.abrirTag2("EXPRESSOESS");
+		salvarExpressao(util);
+		util.finalizarTag("EXPRESSOESS");
 		util.close();
 	}
 
-	private static void salvar###nameCap###(XMLUtil util) {
-		for (###nameCap### item : lista) {
+	private static void salvarExpressao(XMLUtil util) {
+		for (Expressao item : lista) {
 			if (item.isValido()) {
 				item.salvar(util);
 			}
@@ -121,14 +121,14 @@ public class ###nameCap###Provedor {
 	}
 
 	public static Valor getValor(int i) {
-		###nameCap### item = get###nameCap###(i);
-		return new ###nameCap###Valor(item);
+		Expressao item = getExpressao(i);
+		return new ExpressaoValor(item);
 	}
 
-	private static class ###nameCap###Valor implements Valor {
-		private final ###nameCap### item;
+	private static class ExpressaoValor implements Valor {
+		private final Expressao item;
 
-		public ###nameCap###Valor(###nameCap### item) {
+		public ExpressaoValor(Expressao item) {
 			this.item = item;
 		}
 
@@ -148,9 +148,8 @@ public class ###nameCap###Provedor {
 		}
 	}
 
-
 	public static void contemConteudo(Set<String> set, String string, boolean porParte) {
-		for (###nameCap### item : lista) {
+		for (Expressao item : lista) {
 			if (Util.existeEm(item.getValor(), string, porParte)) {
 				set.add(item.getNome());
 			}
