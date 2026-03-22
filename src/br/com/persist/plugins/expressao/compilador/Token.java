@@ -43,6 +43,10 @@ public class Token {
 		return tipo == Tipo.ABRE_PARENTESE;
 	}
 
+	public boolean isAtribuicao() {
+		return tipo == Tipo.ATRIBUICAO;
+	}
+
 	public boolean isChave() {
 		return tipo == Tipo.CHAVE;
 	}

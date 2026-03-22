@@ -1,10 +1,47 @@
 package br.com.persist.plugins.expressao.compilador;
 
 public class ConstanteContexto extends Contexto {
-	/*
-	 * const id = expressao;
-	 */
+	private TokenExec[] execs = { new Chave(), new Atribuicao(), new AbreParentese(), new PontoEVirgula() };
+	protected Token chave;
+
+	@Context("declaracao_constante")
+	@Doc("const chave = expressao;")
 	@Override
 	public void processar(Compilador compilador, Token token) {
+		execs[indiceEstado].processar(compilador, token);
+	}
+
+	class Chave implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isChave()) {
+				chave = token;
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	class Atribuicao implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isAtribuicao()) {
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	class AbreParentese implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isAbreParentese()) {
+				ExpressaoContexto expressao = new ExpressaoContexto();
+				compilador.setSelecionado(expressao);
+				add(expressao);
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
+		}
 	}
 }
