@@ -14,7 +14,17 @@ public class Token {
 	}
 
 	public enum Tipo {
-		PONTO_E_VIRGULA, ABRE_PARENTESE
+		PONTO_E_VIRGULA(";"), ABRE_PARENTESE("("), IGUAL("=="), ATRIBUICAO("=");
+
+		private String desc;
+
+		Tipo(String desc) {
+			this.desc = desc;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
 	}
 
 	public boolean isPontoEVirgula() {

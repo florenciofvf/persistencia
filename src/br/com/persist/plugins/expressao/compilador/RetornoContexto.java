@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
 public class RetornoContexto extends Contexto {
+	@Context("retorno_da_funcao")
 	@Doc({ "return;", "return expressao;" })
 	@Override
 	public void processar(Compilador compilador, Token token) {
