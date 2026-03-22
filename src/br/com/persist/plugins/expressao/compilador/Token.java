@@ -14,7 +14,7 @@ public class Token {
 	}
 
 	public enum Tipo {
-		PONTO_E_VIRGULA(";"), ABRE_PARENTESE("("), IGUAL("=="), ATRIBUICAO("=");
+		PONTO_E_VIRGULA(";"), ABRE_PARENTESE("("), IGUAL("=="), ATRIBUICAO("="), NOME_PACOTE("br.com.teste");
 
 		private String desc;
 
@@ -33,5 +33,9 @@ public class Token {
 
 	public boolean isAbreParentese() {
 		return tipo == Tipo.ABRE_PARENTESE;
+	}
+
+	public boolean isNomePacote() {
+		return tipo == Tipo.NOME_PACOTE;
 	}
 }
