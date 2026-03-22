@@ -1,35 +1,36 @@
 package br.com.persist.plugins.expressao.compilador;
 
 public class AliasContexto extends Contexto {
-	private Token pacote;
-	private Token chave;
+	private TokenExec[] execs = { new ChaveN(), new Chave(), new PontoEVirgula() };
+	protected Token pacote;
+	protected Token alias;
 
 	@Context("alias_para_biblioteca")
 	@Doc({ "alias chaveN chave;" })
 	@Override
 	public void processar(Compilador compilador, Token token) {
-		if (token.isChaveN()) {
-			if (pacote != null) {
-				compilador.invalidar(token, "pacote_ja_definido");
-			} else {
+		execs[indiceEstado].processar(compilador, token);
+	}
+
+	class ChaveN implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isChaveN()) {
 				pacote = token;
-			}
-		} else if (token.isChave()) {
-			if (chave != null) {
-				compilador.invalidar(token, "chave_ja_definida");
+				indiceEstado++;
 			} else {
-				chave = token;
+				compilador.invalidar(token);
 			}
-		} else if (token.isPontoEVirgula()) {
-			if (pacote == null) {
-				compilador.invalidar(token, "pacote_nao_definido");
-			} else if (chave == null) {
-				compilador.invalidar(token, "chave_nao_definida");
+		}
+	}
+
+	class Chave implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isChave()) {
+				alias = token;
+				indiceEstado++;
 			} else {
-				compilador.setSelecionado(parent);
+				compilador.invalidar(token);
 			}
-		} else {
-			compilador.invalidar(token);
 		}
 	}
 }

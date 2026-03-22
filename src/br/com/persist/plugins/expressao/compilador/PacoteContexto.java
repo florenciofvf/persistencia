@@ -21,15 +21,4 @@ public class PacoteContexto extends Contexto {
 			}
 		}
 	}
-
-	class PontoEVirgula implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
-			if (token.isPontoEVirgula()) {
-				compilador.setSelecionado(parent);
-				indiceEstado++;
-			} else {
-				compilador.invalidar(token);
-			}
-		}
-	}
 }
