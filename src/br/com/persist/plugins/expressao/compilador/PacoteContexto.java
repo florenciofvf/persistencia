@@ -1,26 +1,35 @@
 package br.com.persist.plugins.expressao.compilador;
 
 public class PacoteContexto extends Contexto {
-	private Token pacote;
+	private TokenExec[] execs = { new ChaveN(), new PontoEVirgula() };
+	protected Token pacote;
 
 	@Context("pacote_da_biblioteca")
 	@Doc({ "package chaveN;" })
 	@Override
 	public void processar(Compilador compilador, Token token) {
-		if (token.isChaveN()) {
-			if (pacote != null) {
-				compilador.invalidar(token, "pacote_ja_definido");
-			} else {
+		execs[indiceEstado].processar(compilador, token);
+	}
+
+	class ChaveN implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isChaveN()) {
 				pacote = token;
-			}
-		} else if (token.isPontoEVirgula()) {
-			if (pacote == null) {
-				compilador.invalidar(token, "pacote_nao_definido");
+				indiceEstado++;
 			} else {
-				compilador.setSelecionado(parent);
+				compilador.invalidar(token);
 			}
-		} else {
-			compilador.invalidar(token);
+		}
+	}
+
+	class PontoEVirgula implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isPontoEVirgula()) {
+				compilador.setSelecionado(parent);
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
 		}
 	}
 }

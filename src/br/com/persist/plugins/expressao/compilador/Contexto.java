@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class Contexto {
 	protected final List<Contexto> componentes;
+	protected int indiceEstado;
 	protected Contexto parent;
 
 	protected Contexto() {
