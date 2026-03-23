@@ -7,6 +7,7 @@ public abstract class Contexto {
 	protected final List<Contexto> componentes;
 	protected int indiceEstado;
 	protected Contexto parent;
+	protected Token token;
 
 	protected Contexto() {
 		componentes = new ArrayList<>();
@@ -14,6 +15,19 @@ public abstract class Contexto {
 
 	public Contexto getParent() {
 		return parent;
+	}
+
+	public Contexto getUltimo() {
+		if (componentes.isEmpty()) {
+			return null;
+		}
+		return componentes.get(componentes.size() - 1);
+	}
+
+	public Contexto excluirUltimo() {
+		Contexto ultimo = getUltimo();
+		remove(ultimo);
+		return ultimo;
 	}
 
 	public void add(Contexto c) {

@@ -21,8 +21,8 @@ public class Token {
 
 	public enum Tipo {
 		CHAVE("[a-z][A-Z][0-9]"), CHAVE2("chave.chave"), CHAVEN("chave.chave.chave"), PONTO_E_VIRGULA(";"),
-		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_CHAVE("{"), FECHA_CHAVE("}"), IGUAL("=="), DIFERENTE("!="),
-		ATRIBUICAO("="), VIRGULA(",");
+		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_CHAVE("{"), FECHA_CHAVE("}"), ATRIBUICAO("="), VIRGULA(","),
+		OPERADOR(""), STRING("'xyz'"), INTEIRO("[0-9]"), FLUTUANTE("[0-9].[0-9]");
 
 		private String desc;
 
@@ -59,8 +59,24 @@ public class Token {
 		return tipo == Tipo.ATRIBUICAO;
 	}
 
+	public boolean isFlutuante() {
+		return tipo == Tipo.FLUTUANTE;
+	}
+
+	public boolean isOperador() {
+		return tipo == Tipo.OPERADOR;
+	}
+
 	public boolean isVirgula() {
 		return tipo == Tipo.VIRGULA;
+	}
+
+	public boolean isInteiro() {
+		return tipo == Tipo.INTEIRO;
+	}
+
+	public boolean isString() {
+		return tipo == Tipo.STRING;
 	}
 
 	public boolean isChave() {
