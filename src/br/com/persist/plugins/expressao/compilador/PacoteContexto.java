@@ -5,7 +5,7 @@ public class PacoteContexto extends Contexto {
 	protected Token pacote;
 
 	@Context("pacote_da_biblioteca")
-	@Doc({ "package chaveN;" })
+	@Doc("package chaveN;")
 	@Override
 	public void processar(Compilador compilador, Token token) {
 		execs[indiceEstado].processar(compilador, token);

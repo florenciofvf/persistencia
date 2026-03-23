@@ -22,7 +22,7 @@ public class Token {
 	public enum Tipo {
 		CHAVE("[a-z][A-Z][0-9]"), CHAVE2("chave.chave"), CHAVEN("chave.chave.chave"), PONTO_E_VIRGULA(";"),
 		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_CHAVE("{"), FECHA_CHAVE("}"), IGUAL("=="), DIFERENTE("!="),
-		ATRIBUICAO("=");
+		ATRIBUICAO("="), VIRGULA(",");
 
 		private String desc;
 
@@ -43,12 +43,24 @@ public class Token {
 		return tipo == Tipo.ABRE_PARENTESE;
 	}
 
+	public boolean isFechaParentese() {
+		return tipo == Tipo.FECHA_PARENTESE;
+	}
+
 	public boolean isAbreChave() {
 		return tipo == Tipo.ABRE_CHAVE;
 	}
 
+	public boolean isFechaChave() {
+		return tipo == Tipo.FECHA_CHAVE;
+	}
+
 	public boolean isAtribuicao() {
 		return tipo == Tipo.ATRIBUICAO;
+	}
+
+	public boolean isVirgula() {
+		return tipo == Tipo.VIRGULA;
 	}
 
 	public boolean isChave() {
