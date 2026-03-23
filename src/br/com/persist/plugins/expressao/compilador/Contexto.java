@@ -52,7 +52,7 @@ public abstract class Contexto {
 
 	class AbreChave implements TokenExec {
 		public void processar(Compilador compilador, Token token) {
-			if (token.isAbreParentese()) {
+			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
