@@ -25,6 +25,10 @@ public class InstrucoesContexto extends Contexto {
 			} else {
 				compilador.invalidar(token);
 			}
+		} else if (token.isChave() || token.isChave2()) {
+			InvocacaoContexto invocacao = new InvocacaoContexto(token);
+			compilador.setSelecionado(invocacao);
+			add(invocacao);
 		} else {
 			compilador.invalidar(token);
 		}
