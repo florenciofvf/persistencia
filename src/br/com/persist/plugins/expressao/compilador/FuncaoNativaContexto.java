@@ -3,14 +3,27 @@ package br.com.persist.plugins.expressao.compilador;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 
 public class FuncaoNativaContexto extends Contexto {
-	private TokenExec[] execs = { new IniParametros(), new TipoRetornoOuPontoEVirgula(), new PontoEVirgula() };
+	private TokenExec[] execs = { new ChaveN(), new IniParametros(), new TipoRetornoOuPontoEVirgula(),
+			new PontoEVirgula() };
 	protected boolean retornoVoid;
+	protected Token biblioteca;
 
 	@Context("funcao_nativa")
-	@Doc({ "funcao_nativa parametros;", "funcao_nativa parametros void;" })
+	@Doc({ "funcao_nativa biblioteca parametros;", "funcao_nativa parametros void;" })
 	@Override
 	public void processar(Compilador compilador, Token token) {
 		execs[indiceEstado].processar(compilador, token);
+	}
+
+	class ChaveN implements TokenExec {
+		public void processar(Compilador compilador, Token token) {
+			if (token.isChaveN()) {
+				biblioteca = token;
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
+		}
 	}
 
 	class IniParametros implements TokenExec {
@@ -30,7 +43,7 @@ public class FuncaoNativaContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) {
 			if (token.isPontoEVirgula()) {
-				execs = new TokenExec[] { new IniParametros(), new TipoRetornoOuPontoEVirgula() };
+				execs = new TokenExec[] { new ChaveN(), new IniParametros(), new TipoRetornoOuPontoEVirgula() };
 				compilador.setSelecionado(parent);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {

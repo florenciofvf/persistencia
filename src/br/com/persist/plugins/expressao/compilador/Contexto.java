@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Contexto {
+	protected final List<Contexto> ordenacaoLocal;
 	protected final List<Contexto> componentes;
 	protected int indiceEstado;
 	protected Contexto parent;
 	protected Token token;
 
 	protected Contexto() {
+		ordenacaoLocal = new ArrayList<>();
 		componentes = new ArrayList<>();
 	}
 
@@ -49,6 +51,34 @@ public abstract class Contexto {
 
 	public void processar(Compilador compilador, Token token) {
 
+	}
+
+	public void listar(List<Contexto> lista) {
+		listarPre(lista);
+		for (Contexto item : componentes) {
+			item.listar(lista);
+		}
+		listarPos(lista);
+	}
+
+	protected void listarPre(List<Contexto> lista) {
+	}
+
+	protected void listarPos(List<Contexto> lista) {
+	}
+
+	public void ordenarLocalmente() {
+		ordenarLocalmentePre();
+		for (Contexto item : componentes) {
+			item.ordenarLocalmente();
+		}
+		ordenarLocalmentePos();
+	}
+
+	protected void ordenarLocalmentePre() {
+	}
+
+	protected void ordenarLocalmentePos() {
 	}
 
 	class AbreParentese implements TokenExec {
