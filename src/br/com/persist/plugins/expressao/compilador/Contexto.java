@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Contexto {
-	protected final List<Contexto> ordenacaoLocal;
 	protected final List<Contexto> componentes;
+	protected final List<Contexto> pilhaLocal;
 	protected int indiceEstado;
 	protected Contexto parent;
 	protected Token token;
 
-	protected Contexto() {
-		ordenacaoLocal = new ArrayList<>();
+	protected Contexto(Token token) {
 		componentes = new ArrayList<>();
+		pilhaLocal = new ArrayList<>();
+		this.token = token;
+	}
+
+	protected Contexto() {
+		this(null);
 	}
 
 	public Contexto getParent() {
@@ -67,18 +72,23 @@ public abstract class Contexto {
 	protected void listarPos(List<Contexto> lista) {
 	}
 
-	public void ordenarLocalmente() {
-		ordenarLocalmentePre();
+	public void empilharLocal(List<Contexto> lista) {
+		empilharLocalPre(lista);
 		for (Contexto item : componentes) {
-			item.ordenarLocalmente();
+			item.empilharLocal(lista);
 		}
-		ordenarLocalmentePos();
+		empilharLocalPos(lista);
 	}
 
-	protected void ordenarLocalmentePre() {
+	public void empilharLocalIni() {
+		pilhaLocal.clear();
+		empilharLocal(pilhaLocal);
 	}
 
-	protected void ordenarLocalmentePos() {
+	protected void empilharLocalPre(List<Contexto> lista) {
+	}
+
+	protected void empilharLocalPos(List<Contexto> lista) {
 	}
 
 	class AbreParentese implements TokenExec {
@@ -95,9 +105,15 @@ public abstract class Contexto {
 	}
 
 	class AbreChave implements TokenExec {
+		final byte estrutura;
+
+		AbreChave(byte estrutura) {
+			this.estrutura = estrutura;
+		}
+
 		public void processar(Compilador compilador, Token token) {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(estrutura);
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				indiceEstado++;

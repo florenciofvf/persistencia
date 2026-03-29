@@ -3,6 +3,20 @@ package br.com.persist.plugins.expressao.compilador;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 
 public class InstrucoesContexto extends Contexto {
+	public static final byte FUNCAO = 0;
+	public static final byte LOOP = 1;
+	public static final byte SE = 2;
+	private final byte estrutura;
+
+	public InstrucoesContexto(byte estrutura) {
+		super();
+		this.estrutura = estrutura;
+	}
+
+	public InstrucoesContexto() {
+		this(FUNCAO);
+	}
+
 	@Override
 	public void processar(Compilador compilador, Token token) {
 		if (token.isReservado()) {
