@@ -1,20 +1,20 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import java.util.List;
+
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class InstrucoesContexto extends Contexto {
 	public static final byte FUNCAO = 0;
 	public static final byte LOOP = 1;
+	private GotoContexto gotoContexto;
 	public static final byte SE = 2;
 	private final byte estrutura;
 
 	public InstrucoesContexto(byte estrutura) {
 		super();
 		this.estrutura = estrutura;
-	}
-
-	public InstrucoesContexto() {
-		this(FUNCAO);
 	}
 
 	@Override
@@ -46,5 +46,48 @@ public class InstrucoesContexto extends Contexto {
 		} else {
 			compilador.invalidar(token);
 		}
+	}
+
+	@Override
+	protected void configurarSaltosPos() throws ExpressaoException {
+		if (estrutura == LOOP) {
+			configurarSaltoLoop();
+		} else if (estrutura == SE) {
+			configurarSaltoSe();
+		}
+	}
+
+	private void configurarSaltoLoop() throws ExpressaoException {
+		if (!(parent instanceof WhileContexto)) {
+			throw new ExpressaoException("erro.instrucoes.sem_parent", "while");
+		}
+		checarVazio();
+		Contexto ultimo = getUltimo();
+		if (ultimo instanceof RetornoContexto) {
+			return;
+		}
+		WhileContexto loop = (WhileContexto) parent;
+		Contexto expressao = loop.getPrimeiro();
+		if (!(expressao instanceof ExpressaoContexto)) {
+			throw new ExpressaoException("erro.loop.sem_expressao");
+		}
+		expressao.empilharLocalIni();
+		List<Contexto> pilha = expressao.getPilhaLocal();
+		if (pilha.isEmpty()) {
+			throw new ExpressaoException("erro.pilhaLocal.vazio");
+		}
+		gotoContexto = new GotoContexto();
+		gotoContexto.setDestino(pilha.get(0));
+		add(gotoContexto);
+	}
+
+	private void checarVazio() throws ExpressaoException {
+		if (isEmpty()) {
+			throw new ExpressaoException("erro.instrucoes.vazio");
+		}
+	}
+
+	private void configurarSaltoSe() throws ExpressaoException {
+		// TODO Auto-generated method stub
 	}
 }

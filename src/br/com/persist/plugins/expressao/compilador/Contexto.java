@@ -3,6 +3,8 @@ package br.com.persist.plugins.expressao.compilador;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.expressao.ExpressaoException;
+
 public abstract class Contexto {
 	protected final List<Contexto> componentes;
 	protected final List<Contexto> pilhaLocal;
@@ -20,15 +22,27 @@ public abstract class Contexto {
 		this(null);
 	}
 
+	public boolean isEmpty() {
+		return componentes.isEmpty();
+	}
+
 	public Contexto getParent() {
 		return parent;
 	}
 
 	public Contexto getUltimo() {
-		if (componentes.isEmpty()) {
-			return null;
+		return get(componentes.size() - 1);
+	}
+
+	public Contexto getPrimeiro() {
+		return get(0);
+	}
+
+	public Contexto get(int indice) {
+		if (indice >= 0 && indice < componentes.size()) {
+			return componentes.get(indice);
 		}
-		return componentes.get(componentes.size() - 1);
+		return null;
 	}
 
 	public Contexto excluirUltimo() {
@@ -72,6 +86,20 @@ public abstract class Contexto {
 	protected void listarPos(List<Contexto> lista) {
 	}
 
+	public void configurarSaltos() throws ExpressaoException {
+		configurarSaltosPre();
+		for (Contexto item : componentes) {
+			item.configurarSaltos();
+		}
+		configurarSaltosPos();
+	}
+
+	protected void configurarSaltosPre() throws ExpressaoException {
+	}
+
+	protected void configurarSaltosPos() throws ExpressaoException {
+	}
+
 	public void empilharLocal(List<Contexto> lista) {
 		empilharLocalPre(lista);
 		for (Contexto item : componentes) {
@@ -83,6 +111,10 @@ public abstract class Contexto {
 	public void empilharLocalIni() {
 		pilhaLocal.clear();
 		empilharLocal(pilhaLocal);
+	}
+
+	public List<Contexto> getPilhaLocal() {
+		return pilhaLocal;
 	}
 
 	protected void empilharLocalPre(List<Contexto> lista) {
