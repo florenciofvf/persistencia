@@ -6,6 +6,7 @@ import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class InstrucoesContexto extends Contexto {
+	private static final String ERRO_PILHA_LOCAL_VAZIO = "erro.pilhaLocal.vazio";
 	public static final byte FUNCAO = 0;
 	public static final byte LOOP = 1;
 	private GotoContexto gotoContexto;
@@ -74,7 +75,7 @@ public class InstrucoesContexto extends Contexto {
 		expressao.empilharLocalIni();
 		List<Contexto> pilha = expressao.getPilhaLocal();
 		if (pilha.isEmpty()) {
-			throw new ExpressaoException("erro.pilhaLocal.vazio");
+			throw new ExpressaoException(ERRO_PILHA_LOCAL_VAZIO);
 		}
 		gotoContexto = new GotoContexto();
 		gotoContexto.setDestino(pilha.get(0));
@@ -91,5 +92,55 @@ public class InstrucoesContexto extends Contexto {
 			return;
 		}
 		IFContexto se = (IFContexto) parent;
+		Contexto instrucoes = se.parent;
+		if (!(instrucoes instanceof InstrucoesContexto)) {
+			throw new ExpressaoException("erro.if.sem_parent");
+		}
+		Contexto contextoApos = instrucoes.getApos(se);
+		if (contextoApos != null) {
+			contextoApos.empilharLocalIni();
+			List<Contexto> pilha = contextoApos.getPilhaLocal();
+			if (pilha.isEmpty()) {
+				throw new ExpressaoException(ERRO_PILHA_LOCAL_VAZIO);
+			}
+			gotoContexto = new GotoContexto();
+			gotoContexto.setDestino(pilha.get(0));
+			add(gotoContexto);
+		} else {
+			if (instrucoes.parent instanceof FuncaoContexto) {
+				throw new ExpressaoException("erro.funcao.sem_retorno");
+			}
+			configurarSaltoSeAcima(instrucoes.parent);
+		}
+	}
+
+	private void configurarSaltoSeAcima(Contexto contexto) throws ExpressaoException {
+		if (contexto == null) {
+			throw new ExpressaoException("erro.objeto.contexto.nulo");
+		}
+		if (contexto instanceof IFContexto || contexto instanceof WhileContexto) {
+			Contexto instrucoes = contexto.parent;
+			if (!(instrucoes instanceof InstrucoesContexto)) {
+				throw new ExpressaoException("erro.estrutura.sem_parent", contexto.getClass().getName());
+			}
+			Contexto contextoApos = instrucoes.getApos(contexto);
+			if (contextoApos != null) {
+				contextoApos.empilharLocalIni();
+				List<Contexto> pilha = contextoApos.getPilhaLocal();
+				if (pilha.isEmpty()) {
+					throw new ExpressaoException(ERRO_PILHA_LOCAL_VAZIO);
+				}
+				gotoContexto = new GotoContexto();
+				gotoContexto.setDestino(pilha.get(0));
+				add(gotoContexto);
+			} else {
+				if (instrucoes.parent instanceof FuncaoContexto) {
+					throw new ExpressaoException("erro.funcao.sem_retorno");
+				}
+				configurarSaltoSeAcima(instrucoes.parent);
+			}
+		} else {
+			throw new ExpressaoException("erro.estrutura.invalida");
+		}
 	}
 }

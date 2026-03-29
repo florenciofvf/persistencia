@@ -32,6 +32,10 @@ public abstract class Contexto {
 		return componentes.isEmpty();
 	}
 
+	public int getSize() {
+		return componentes.size();
+	}
+
 	public Contexto getParent() {
 		return parent;
 	}
@@ -72,6 +76,23 @@ public abstract class Contexto {
 			componentes.remove(c);
 			c.parent = null;
 		}
+	}
+
+	public int getIndice(Contexto contexto) throws ExpressaoException {
+		for (int i = 0; i < componentes.size(); i++) {
+			if (componentes.get(i) == contexto) {
+				return i;
+			}
+		}
+		throw new ExpressaoException("erro.contexto.nao_contem_contexto");
+	}
+
+	public Contexto getApos(Contexto contexto) throws ExpressaoException {
+		int indice = getIndice(contexto);
+		if (indice + 1 < getSize()) {
+			return get(indice + 1);
+		}
+		return null;
 	}
 
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {

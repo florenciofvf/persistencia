@@ -1,5 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import java.util.List;
+
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class FlutuanteContexto extends Contexto {
@@ -12,5 +14,10 @@ public class FlutuanteContexto extends Contexto {
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		compilador.invalidar(token);
+	}
+
+	@Override
+	public void empilharLocal(List<Contexto> lista) {
+		lista.add(this);
 	}
 }

@@ -1,5 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import java.util.List;
+
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class RetornoContexto extends Contexto {
@@ -11,6 +13,11 @@ public class RetornoContexto extends Contexto {
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		checarIndiceEstado(compilador, execs, token);
 		execs[indiceEstado].processar(compilador, token);
+	}
+
+	@Override
+	protected void empilharLocalPos(List<Contexto> lista) {
+		lista.add(this);
 	}
 
 	class PontoEVirgulaOuAbreParentese implements TokenExec {

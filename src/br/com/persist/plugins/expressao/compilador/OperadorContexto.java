@@ -1,5 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import java.util.List;
+
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class OperadorContexto extends Contexto {
@@ -13,5 +15,10 @@ public class OperadorContexto extends Contexto {
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		compilador.invalidar(token);
+	}
+
+	@Override
+	protected void empilharLocalPos(List<Contexto> lista) {
+		lista.add(this);
 	}
 }
