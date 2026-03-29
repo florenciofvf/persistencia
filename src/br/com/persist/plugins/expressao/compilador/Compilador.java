@@ -49,7 +49,7 @@ public class Compilador {
 		return selecionado;
 	}
 
-	public void processar() throws ExpressaoException {
+	public void montarHierarquia() throws ExpressaoException {
 		tokens.clear();
 		indice = 0;
 		while (indice < string.length()) {
@@ -202,9 +202,9 @@ public class Compilador {
 		case '^':
 			return tokenOperador2(c, indiceBackup);
 		case '=':
+		case '!':
 		case '&':
 		case '|':
-		case '!':
 		case '<':
 		case '>':
 			return tokenOperador3(c, indiceBackup);

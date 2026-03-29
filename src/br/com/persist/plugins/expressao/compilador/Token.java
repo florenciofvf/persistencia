@@ -5,20 +5,14 @@ import java.util.Objects;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 
 public class Token {
-	final boolean virtual;
 	final String string;
 	final int indice;
 	final Tipo tipo;
 
-	public Token(String string, Tipo tipo, int indice, boolean virtual) {
+	public Token(String string, Tipo tipo, int indice) {
 		this.string = Objects.requireNonNull(string);
 		this.tipo = Objects.requireNonNull(tipo);
-		this.virtual = virtual;
 		this.indice = indice;
-	}
-
-	public Token(String string, Tipo tipo, int indice) {
-		this(string, tipo, indice, false);
 	}
 
 	public String getString() {
@@ -28,7 +22,8 @@ public class Token {
 	public enum Tipo {
 		CHAVE("[a-z][A-Z][0-9]"), CHAVE2("chave.chave"), CHAVEN("chave.chave.chave"), PONTO_E_VIRGULA(";"),
 		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_CHAVE("{"), FECHA_CHAVE("}"), ATRIBUICAO("="), VIRGULA(","),
-		OPERADOR(""), STRING("'xyz'"), INTEIRO("[0-9]"), FLUTUANTE("[0-9].[0-9]"), COMENTARIO("// ou /*cmt*/");
+		OPERADOR(""), STRING("'xyz'"), INTEIRO("[0-9]"), FLUTUANTE("[0-9].[0-9]"), COMENTARIO("// ou /*cmt*/"),
+		VIRTUAL("");
 
 		private String desc;
 

@@ -1,9 +1,20 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import java.io.File;
+import java.util.Iterator;
+
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 
 public class BibliotecaContexto extends Contexto {
+	private FuncaoConstantesContexto funcaoConstantes;
+	private final String nome;
+
+	public BibliotecaContexto(File file) {
+		this.nome = file.getName();
+	}
+
 	@Context("biblioteca")
 	@Doc({ "package;", "alias;", "const;", "defun;", "defun_native;" })
 	@Override
@@ -34,6 +45,17 @@ public class BibliotecaContexto extends Contexto {
 			}
 		} else {
 			compilador.invalidar(token);
+		}
+	}
+
+	public void transferirConstantes() throws ExpressaoException {
+		Token token = new Token(ExpressaoConstantes.FUNCAO_CONSTANTES, Tipo.VIRTUAL, -1);
+		funcaoConstantes = new FuncaoConstantesContexto(token);
+		add(funcaoConstantes);
+		Iterator<Contexto> it = componentes.iterator();
+		while (it.hasNext()) {
+			Contexto contexto = it.next();
+			funcaoConstantes.add(contexto);
 		}
 	}
 }

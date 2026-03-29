@@ -14,17 +14,6 @@ public class ConstanteContexto extends Contexto {
 		execs[indiceEstado].processar(compilador, token);
 	}
 
-	class Chave implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
-			if (token.isChave()) {
-				chave = token;
-				indiceEstado++;
-			} else {
-				compilador.invalidar(token);
-			}
-		}
-	}
-
 	class Atribuicao implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAtribuicao()) {

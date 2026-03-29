@@ -1,5 +1,6 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,57 +29,59 @@ public abstract class Contexto {
 		this(null);
 	}
 
-	public boolean isEmpty() {
+	protected boolean isEmpty() {
 		return componentes.isEmpty();
 	}
 
-	public int getSize() {
+	protected int getSize() {
 		return componentes.size();
 	}
 
-	public Contexto getParent() {
+	protected Contexto getParent() {
 		return parent;
 	}
 
-	public Contexto getUltimo() {
+	protected Contexto getUltimo() {
 		return get(componentes.size() - 1);
 	}
 
-	public Contexto getPrimeiro() {
+	protected Contexto getPrimeiro() {
 		return get(0);
 	}
 
-	public Contexto get(int indice) {
+	protected Contexto get(int indice) {
 		if (indice >= 0 && indice < componentes.size()) {
 			return componentes.get(indice);
 		}
 		return null;
 	}
 
-	public Contexto excluirUltimo() {
+	protected Contexto excluirUltimo() {
 		Contexto ultimo = getUltimo();
 		remove(ultimo);
 		return ultimo;
 	}
 
-	public void add(Contexto c) {
+	protected void add(Contexto c) throws ExpressaoException {
 		if (c != null) {
 			if (c.parent != null) {
 				c.parent.remove(c);
 			}
 			componentes.add(c);
 			c.parent = this;
+		} else {
+			throw new ExpressaoException("erro.inclusao.nulo");
 		}
 	}
 
-	public void remove(Contexto c) {
+	protected void remove(Contexto c) {
 		if (c != null && c.parent == this) {
 			componentes.remove(c);
 			c.parent = null;
 		}
 	}
 
-	public int getIndice(Contexto contexto) throws ExpressaoException {
+	protected int getIndice(Contexto contexto) throws ExpressaoException {
 		for (int i = 0; i < componentes.size(); i++) {
 			if (componentes.get(i) == contexto) {
 				return i;
@@ -87,7 +90,7 @@ public abstract class Contexto {
 		throw new ExpressaoException("erro.contexto.nao_contem_contexto");
 	}
 
-	public Contexto getApos(Contexto contexto) throws ExpressaoException {
+	protected Contexto getApos(Contexto contexto) throws ExpressaoException {
 		int indice = getIndice(contexto);
 		if (indice + 1 < getSize()) {
 			return get(indice + 1);
@@ -95,11 +98,11 @@ public abstract class Contexto {
 		return null;
 	}
 
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processar(Compilador compilador, Token token) throws ExpressaoException {
 
 	}
 
-	public void listar(List<Contexto> lista) {
+	protected void listar(List<Contexto> lista) {
 		listarPre(lista);
 		for (Contexto item : componentes) {
 			item.listar(lista);
@@ -113,7 +116,7 @@ public abstract class Contexto {
 	protected void listarPos(List<Contexto> lista) {
 	}
 
-	public void configurarSaltos() throws ExpressaoException {
+	protected void configurarSaltos() throws ExpressaoException {
 		configurarSaltosPre();
 		for (Contexto item : componentes) {
 			item.configurarSaltos();
@@ -127,7 +130,7 @@ public abstract class Contexto {
 	protected void configurarSaltosPos() throws ExpressaoException {
 	}
 
-	public void empilharLocal(List<Contexto> lista) {
+	protected void empilharLocal(List<Contexto> lista) {
 		empilharLocalPre(lista);
 		for (Contexto item : componentes) {
 			item.empilharLocal(lista);
@@ -135,12 +138,12 @@ public abstract class Contexto {
 		empilharLocalPos(lista);
 	}
 
-	public void empilharLocalIni() {
+	protected void empilharLocalIni() {
 		pilhaLocal.clear();
 		empilharLocal(pilhaLocal);
 	}
 
-	public List<Contexto> getPilhaLocal() {
+	protected List<Contexto> getPilhaLocal() {
 		return pilhaLocal;
 	}
 
@@ -162,7 +165,22 @@ public abstract class Contexto {
 		}
 	}
 
-	class AbreParentese implements TokenExec {
+	protected void salvar(PrintWriter pw) throws ExpressaoException {
+
+	}
+
+	protected class Chave implements TokenExec {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+			if (token.isChave()) {
+				Contexto.this.token = token;
+				indiceEstado++;
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	protected class AbreParentese implements TokenExec {
 		final boolean comSalto;
 
 		public AbreParentese(boolean comSalto) {
@@ -181,7 +199,7 @@ public abstract class Contexto {
 		}
 	}
 
-	class AbreChave implements TokenExec {
+	protected class AbreChave implements TokenExec {
 		final byte estrutura;
 
 		AbreChave(byte estrutura) {
