@@ -1,11 +1,13 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import br.com.persist.plugins.expressao.ExpressaoException;
+
 public class ExpressaoContexto extends Contexto {
 	@Context("expressao")
 	@Doc({ "(valor)", "(valor operador valor)", "(valor operador expressao)", "(expressao operador valor)",
 			"(expressao operador expressao)" })
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		if (token.isFechaParentese()) {
 			compilador.setSelecionado(parent);
 		} else if (token.isAbreParentese()) {

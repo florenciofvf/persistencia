@@ -18,6 +18,12 @@ public abstract class Contexto {
 		this.token = token;
 	}
 
+	protected void checarIndiceEstado(Compilador compilador, Object[] array, Token token) throws ExpressaoException {
+		if (indiceEstado >= array.length) {
+			compilador.invalidar(token);
+		}
+	}
+
 	protected Contexto() {
 		this(null);
 	}
@@ -68,7 +74,7 @@ public abstract class Contexto {
 		}
 	}
 
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 
 	}
 
@@ -123,8 +129,14 @@ public abstract class Contexto {
 	protected void empilharLocalPos(List<Contexto> lista) {
 	}
 
+	protected void checarVazio() throws ExpressaoException {
+		if (isEmpty()) {
+			throw new ExpressaoException("erro.instrucoes.vazio");
+		}
+	}
+
 	class AbreParentese implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.setSelecionado(expressao);
@@ -143,7 +155,7 @@ public abstract class Contexto {
 			this.estrutura = estrutura;
 		}
 
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto(estrutura);
 				compilador.setSelecionado(instrucoes);
@@ -156,7 +168,7 @@ public abstract class Contexto {
 	}
 
 	protected class PontoEVirgula implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
 				compilador.setSelecionado(parent);
 				indiceEstado++;

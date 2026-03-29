@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class FuncaoContexto extends Contexto {
 	private TokenExec[] execs = { new IniParametros(), new TipoRetornoOuIniInstrucoes(), new PontoEVirgula() };
@@ -9,12 +10,13 @@ public class FuncaoContexto extends Contexto {
 	@Context("funcao")
 	@Doc({ "funcao parametros instrucoes;", "funcao parametros void instrucoes;" })
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		checarIndiceEstado(compilador, execs, token);
 		execs[indiceEstado].processar(compilador, token);
 	}
 
 	class IniParametros implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
 				compilador.setSelecionado(parametros);
@@ -28,15 +30,15 @@ public class FuncaoContexto extends Contexto {
 
 	class TipoRetornoOuIniInstrucoes implements TokenExec {
 		@Override
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(InstrucoesContexto.FUNCAO);
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
-				execs = new TokenExec[] { new IniParametros(), new TipoRetornoOuIniInstrucoes(), new AbreChave(),
-						new PontoEVirgula() };
+				execs = new TokenExec[] { new IniParametros(), new TipoRetornoOuIniInstrucoes(),
+						new AbreChave(InstrucoesContexto.FUNCAO), new PontoEVirgula() };
 				retornoVoid = true;
 				indiceEstado++;
 			} else {

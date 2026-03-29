@@ -1,5 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import br.com.persist.plugins.expressao.ExpressaoException;
+
 public class PacoteContexto extends Contexto {
 	private TokenExec[] execs = { new ChaveN(), new PontoEVirgula() };
 	protected Token pacote;
@@ -7,12 +9,13 @@ public class PacoteContexto extends Contexto {
 	@Context("pacote_da_biblioteca")
 	@Doc("package chaveN;")
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		checarIndiceEstado(compilador, execs, token);
 		execs[indiceEstado].processar(compilador, token);
 	}
 
 	class ChaveN implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isChaveN()) {
 				pacote = token;
 				indiceEstado++;

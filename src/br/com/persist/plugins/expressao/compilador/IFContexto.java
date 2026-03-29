@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class IFContexto extends Contexto {
 	private TokenExec selecionado = new IniExpressao();
@@ -11,12 +12,12 @@ public class IFContexto extends Contexto {
 			"if expressao instrucoes elseif expressao instrucoes else instrucoes;",
 			"if expressao instrucoes elseif expressao instrucoes elseif expressao instrucoes else instrucoes;" })
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		selecionado.processar(compilador, token);
 	}
 
 	class IniExpressao implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.setSelecionado(expressao);
@@ -29,9 +30,9 @@ public class IFContexto extends Contexto {
 	}
 
 	class IniInstrucao implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(InstrucoesContexto.SE);
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				selecionado = new FinalizaOuElseOuElseIf();
@@ -43,7 +44,7 @@ public class IFContexto extends Contexto {
 
 	class FinalizaOuElseOuElseIf implements TokenExec {
 		@Override
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
 				compilador.setSelecionado(parent);
 			} else if (ExpressaoConstantes.ELSE.equals(token.getString())) {
@@ -57,9 +58,9 @@ public class IFContexto extends Contexto {
 	}
 
 	class IniInstrucaoElse implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(InstrucoesContexto.SE);
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				selecionado = new PontoEVirgula();

@@ -1,5 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
+import br.com.persist.plugins.expressao.ExpressaoException;
+
 public class OperadorContexto extends Contexto {
 	protected final Token operador;
 
@@ -9,7 +11,7 @@ public class OperadorContexto extends Contexto {
 
 	@Context("operador")
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		compilador.invalidar(token);
 	}
 }

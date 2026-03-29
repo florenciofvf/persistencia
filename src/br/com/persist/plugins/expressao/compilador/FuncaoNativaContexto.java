@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.compilador;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class FuncaoNativaContexto extends Contexto {
 	private TokenExec[] execs = { new ChaveN(), new IniParametros(), new TipoRetornoOuPontoEVirgula(),
@@ -11,12 +12,13 @@ public class FuncaoNativaContexto extends Contexto {
 	@Context("funcao_nativa")
 	@Doc({ "funcao_nativa biblioteca parametros;", "funcao_nativa parametros void;" })
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		checarIndiceEstado(compilador, execs, token);
 		execs[indiceEstado].processar(compilador, token);
 	}
 
 	class ChaveN implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isChaveN()) {
 				biblioteca = token;
 				indiceEstado++;
@@ -27,7 +29,7 @@ public class FuncaoNativaContexto extends Contexto {
 	}
 
 	class IniParametros implements TokenExec {
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
 				compilador.setSelecionado(parametros);
@@ -41,7 +43,7 @@ public class FuncaoNativaContexto extends Contexto {
 
 	class TipoRetornoOuPontoEVirgula implements TokenExec {
 		@Override
-		public void processar(Compilador compilador, Token token) {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
 				execs = new TokenExec[] { new ChaveN(), new IniParametros(), new TipoRetornoOuPontoEVirgula() };
 				compilador.setSelecionado(parent);

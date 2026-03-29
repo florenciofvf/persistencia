@@ -18,7 +18,7 @@ public class InstrucoesContexto extends Contexto {
 	}
 
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		if (token.isReservado()) {
 			if (ExpressaoConstantes.CONST.equals(token.getString())) {
 				ConstanteContexto constante = new ConstanteContexto();
@@ -81,13 +81,15 @@ public class InstrucoesContexto extends Contexto {
 		add(gotoContexto);
 	}
 
-	private void checarVazio() throws ExpressaoException {
-		if (isEmpty()) {
-			throw new ExpressaoException("erro.instrucoes.vazio");
-		}
-	}
-
 	private void configurarSaltoSe() throws ExpressaoException {
-		// TODO Auto-generated method stub
+		if (!(parent instanceof IFContexto)) {
+			throw new ExpressaoException("erro.instrucoes.sem_parent", "if");
+		}
+		checarVazio();
+		Contexto ultimo = getUltimo();
+		if (ultimo instanceof RetornoContexto) {
+			return;
+		}
+		IFContexto se = (IFContexto) parent;
 	}
 }

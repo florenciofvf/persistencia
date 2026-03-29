@@ -1,12 +1,13 @@
 package br.com.persist.plugins.expressao.compilador;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class BibliotecaContexto extends Contexto {
 	@Context("biblioteca")
 	@Doc({ "package;", "alias;", "const;", "defun;", "defun_native;" })
 	@Override
-	public void processar(Compilador compilador, Token token) {
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		if (token.isReservado()) {
 			if (ExpressaoConstantes.PACKAGE.equals(token.getString())) {
 				PacoteContexto pacote = new PacoteContexto();
