@@ -3,7 +3,7 @@ package br.com.persist.plugins.expressao.compilador;
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class ConstanteContexto extends Contexto {
-	private TokenExec[] execs = { new Chave(), new Atribuicao(), new AbreParentese(), new PontoEVirgula() };
+	private TokenExec[] execs = { new Chave(), new Atribuicao(), new AbreParentese(false), new PontoEVirgula() };
 	protected Token chave;
 
 	@Context("declaracao_constante")

@@ -62,7 +62,7 @@ public class InstrucoesContexto extends Contexto {
 		if (!(parent instanceof WhileContexto)) {
 			throw new ExpressaoException("erro.instrucoes.sem_parent", "while");
 		}
-		checarVazio();
+		checarVazioInstrucoes();
 		Contexto ultimo = getUltimo();
 		if (ultimo instanceof RetornoContexto) {
 			return;
@@ -86,7 +86,7 @@ public class InstrucoesContexto extends Contexto {
 		if (!(parent instanceof IFContexto)) {
 			throw new ExpressaoException("erro.instrucoes.sem_parent", "if");
 		}
-		checarVazio();
+		checarVazioInstrucoes();
 		Contexto ultimo = getUltimo();
 		if (ultimo instanceof RetornoContexto) {
 			return;

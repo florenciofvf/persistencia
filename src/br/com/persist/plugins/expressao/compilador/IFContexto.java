@@ -19,7 +19,7 @@ public class IFContexto extends Contexto {
 	class IniExpressao implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto();
+				ExpressaoContexto expressao = new ExpressaoContexto(true);
 				compilador.setSelecionado(expressao);
 				add(expressao);
 				selecionado = new IniInstrucao();

@@ -3,7 +3,8 @@ package br.com.persist.plugins.expressao.compilador;
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class WhileContexto extends Contexto {
-	private TokenExec[] execs = { new AbreParentese(), new AbreChave(InstrucoesContexto.LOOP), new PontoEVirgula() };
+	private TokenExec[] execs = { new AbreParentese(true), new AbreChave(InstrucoesContexto.LOOP),
+			new PontoEVirgula() };
 
 	@Context("loop_while")
 	@Doc("while expressao instrucoes;")

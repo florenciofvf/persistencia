@@ -150,16 +150,28 @@ public abstract class Contexto {
 	protected void empilharLocalPos(List<Contexto> lista) {
 	}
 
-	protected void checarVazio() throws ExpressaoException {
+	protected void checarVazioInstrucoes() throws ExpressaoException {
 		if (isEmpty()) {
 			throw new ExpressaoException("erro.instrucoes.vazio");
 		}
 	}
 
+	protected void checarVazioExpressao() throws ExpressaoException {
+		if (isEmpty()) {
+			throw new ExpressaoException("erro.expressao.vazio");
+		}
+	}
+
 	class AbreParentese implements TokenExec {
+		final boolean comSalto;
+
+		public AbreParentese(boolean comSalto) {
+			this.comSalto = comSalto;
+		}
+
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto();
+				ExpressaoContexto expressao = new ExpressaoContexto(comSalto);
 				compilador.setSelecionado(expressao);
 				add(expressao);
 				indiceEstado++;
