@@ -1,7 +1,18 @@
-package br.com.persist.plugins.expressao.compl;
+package br.com.persist.plugins.expressao.compl.funcao;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.Context;
+import br.com.persist.plugins.expressao.compl.Contexto;
+import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Token;
+import br.com.persist.plugins.expressao.compl.TokenExec;
+import br.com.persist.plugins.expressao.compl.Contexto.AbreChave;
+import br.com.persist.plugins.expressao.compl.Contexto.Chave;
+import br.com.persist.plugins.expressao.compl.Contexto.PontoEVirgula;
+import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
+import br.com.persist.plugins.expressao.compl.invocacao.ParametrosContexto;
 
 public class FuncaoContexto extends Contexto {
 	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),

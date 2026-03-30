@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.cond.biblio.BibliotecaContexto;
 import br.com.persist.plugins.expressao.processador.CacheBiblioteca;
 
 public class Compilacao {

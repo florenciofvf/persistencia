@@ -1,6 +1,9 @@
-package br.com.persist.plugins.expressao.compl;
+package br.com.persist.plugins.expressao.compl.funcao;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.Contexto;
+import br.com.persist.plugins.expressao.compl.Token;
+import br.com.persist.plugins.expressao.compl.cond.biblio.ConstanteContexto;
 
 public class FuncaoConstantesContexto extends FuncaoContexto {
 	private RetornoContexto retornoContexto = new RetornoContexto();

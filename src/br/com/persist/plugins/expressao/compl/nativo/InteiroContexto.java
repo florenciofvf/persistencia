@@ -1,8 +1,13 @@
-package br.com.persist.plugins.expressao.compl;
+package br.com.persist.plugins.expressao.compl.nativo;
 
 import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.Context;
+import br.com.persist.plugins.expressao.compl.Contexto;
+import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Token;
 
 public class InteiroContexto extends Contexto {
 	public InteiroContexto(Token token) {

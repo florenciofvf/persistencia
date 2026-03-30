@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
+import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
 
 public abstract class Contexto {
 	protected final List<Contexto> componentes;

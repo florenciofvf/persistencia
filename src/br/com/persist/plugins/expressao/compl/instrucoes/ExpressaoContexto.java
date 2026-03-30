@@ -1,8 +1,23 @@
-package br.com.persist.plugins.expressao.compl;
+package br.com.persist.plugins.expressao.compl.instrucoes;
 
 import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.Context;
+import br.com.persist.plugins.expressao.compl.Contexto;
+import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Token;
+import br.com.persist.plugins.expressao.compl.cond.IFContexto;
+import br.com.persist.plugins.expressao.compl.funcao.FuncaoContexto;
+import br.com.persist.plugins.expressao.compl.invocacao.InvocacaoContexto;
+import br.com.persist.plugins.expressao.compl.loop.WhileContexto;
+import br.com.persist.plugins.expressao.compl.nativo.ChaveContexto;
+import br.com.persist.plugins.expressao.compl.nativo.FlutuanteContexto;
+import br.com.persist.plugins.expressao.compl.nativo.InteiroContexto;
+import br.com.persist.plugins.expressao.compl.nativo.StringContexto;
+import br.com.persist.plugins.expressao.compl.operador.OperadorContexto;
+import br.com.persist.plugins.expressao.compl.salto.IFEqContexto;
 
 public class ExpressaoContexto extends Contexto {
 	private static final String ERRO_PILHA_LOCAL_VAZIO = "erro.pilhaLocal.vazio";

@@ -1,6 +1,7 @@
-package br.com.persist.plugins.expressao.compl;
+package br.com.persist.plugins.expressao.compl.salto;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.Contexto;
 
 public class GotoContexto extends Contexto {
 	public static final String GOTO = "goto";

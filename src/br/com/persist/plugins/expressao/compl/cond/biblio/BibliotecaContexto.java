@@ -1,11 +1,21 @@
-package br.com.persist.plugins.expressao.compl;
+package br.com.persist.plugins.expressao.compl.cond.biblio;
 
 import java.io.File;
 import java.util.Iterator;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.Context;
+import br.com.persist.plugins.expressao.compl.Contexto;
+import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.Token.Tipo;
+import br.com.persist.plugins.expressao.compl.funcao.FuncaoConstantesContexto;
+import br.com.persist.plugins.expressao.compl.funcao.FuncaoContexto;
+import br.com.persist.plugins.expressao.compl.funcao.FuncaoNativaContexto;
+import br.com.persist.plugins.expressao.compl.organiza.AliasContexto;
+import br.com.persist.plugins.expressao.compl.organiza.PacoteContexto;
 
 public class BibliotecaContexto extends Contexto {
 	private FuncaoConstantesContexto funcaoConstantes;
