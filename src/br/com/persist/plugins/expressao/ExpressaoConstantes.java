@@ -9,8 +9,6 @@ public class ExpressaoConstantes {
 	public static final String IGNORADOS = "ignorados";
 	public static final String VOID = "void";
 
-	public static final String FUNCAO_CONSTANTES = "$constantes";
-
 	public static final String DEFUN_NATIVE = "defun_native";
 	public static final String PACKAGE = "package";
 	public static final String RETURN = "return";

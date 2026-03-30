@@ -1,0 +1,61 @@
+package br.com.persist.plugins.expressao.compl;
+
+import java.io.File;
+import java.util.Iterator;
+
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.Token.Tipo;
+
+public class BibliotecaContexto extends Contexto {
+	private FuncaoConstantesContexto funcaoConstantes;
+	private final String nome;
+
+	public BibliotecaContexto(File file) {
+		this.nome = file.getName();
+	}
+
+	@Context("biblioteca")
+	@Doc({ "package;", "alias;", "const;", "defun;", "defun_native;" })
+	@Override
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		if (token.isReservado()) {
+			if (ExpressaoConstantes.PACKAGE.equals(token.getString())) {
+				PacoteContexto pacote = new PacoteContexto();
+				compilador.setSelecionado(pacote);
+				add(pacote);
+			} else if (ExpressaoConstantes.ALIAS.equals(token.getString())) {
+				AliasContexto alias = new AliasContexto();
+				compilador.setSelecionado(alias);
+				add(alias);
+			} else if (ExpressaoConstantes.CONST.equals(token.getString())) {
+				ConstanteContexto constante = new ConstanteContexto();
+				compilador.setSelecionado(constante);
+				add(constante);
+			} else if (ExpressaoConstantes.DEFUN.equals(token.getString())) {
+				FuncaoContexto funcao = new FuncaoContexto();
+				compilador.setSelecionado(funcao);
+				add(funcao);
+			} else if (ExpressaoConstantes.DEFUN_NATIVE.equals(token.getString())) {
+				FuncaoNativaContexto funcaoNativa = new FuncaoNativaContexto();
+				compilador.setSelecionado(funcaoNativa);
+				add(funcaoNativa);
+			} else {
+				compilador.invalidar(token);
+			}
+		} else {
+			compilador.invalidar(token);
+		}
+	}
+
+	public void transferirConstantes() throws ExpressaoException {
+		Token token = new Token(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES, Tipo.VIRTUAL, -1);
+		funcaoConstantes = new FuncaoConstantesContexto(token);
+		add(funcaoConstantes);
+		Iterator<Contexto> it = componentes.iterator();
+		while (it.hasNext()) {
+			Contexto contexto = it.next();
+			funcaoConstantes.add(contexto);
+		}
+	}
+}
