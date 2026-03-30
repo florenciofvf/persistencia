@@ -36,6 +36,11 @@ public class Token {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return string + ": " + tipo;
+	}
+
 	public boolean isPontoEVirgula() {
 		return tipo == Tipo.PONTO_E_VIRGULA;
 	}

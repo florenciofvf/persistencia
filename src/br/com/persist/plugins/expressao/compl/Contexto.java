@@ -10,6 +10,7 @@ import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
 
 public abstract class Contexto {
+	protected NegativoContexto negativoContexto;
 	protected final List<Contexto> componentes;
 	protected final List<Contexto> pilhaLocal;
 	protected int indiceEstado;
@@ -122,6 +123,12 @@ public abstract class Contexto {
 		listarPos(lista);
 	}
 
+	protected void listarNegativo(List<Contexto> lista) {
+		if (negativoContexto != null) {
+			lista.add(negativoContexto);
+		}
+	}
+
 	protected void listarPre(List<Contexto> lista) {
 	}
 
@@ -148,6 +155,12 @@ public abstract class Contexto {
 			item.empilharLocal(lista);
 		}
 		empilharLocalPos(lista);
+	}
+
+	protected void empilharLocalNegativo(List<Contexto> lista) {
+		if (negativoContexto != null) {
+			lista.add(negativoContexto);
+		}
 	}
 
 	public void empilharLocalIni() {
@@ -181,7 +194,19 @@ public abstract class Contexto {
 		indice = indexador.get();
 	}
 
+	public void indexarNegativo(Indexador indexador) {
+		if (negativoContexto != null) {
+			negativoContexto.indexar(indexador);
+		}
+	}
+
 	public void salvar(PrintWriter pw) throws ExpressaoException {
+	}
+
+	public void salvarNegativo(PrintWriter pw) throws ExpressaoException {
+		if (negativoContexto != null) {
+			negativoContexto.salvar(pw);
+		}
 	}
 
 	public void print(PrintWriter pw, String... strings) {
@@ -190,6 +215,11 @@ public abstract class Contexto {
 			pw.print(ExpressaoConstantes.ESPACO + item);
 		}
 		pw.println();
+	}
+
+	@Override
+	public String toString() {
+		return "" + token;
 	}
 
 	public class Chave implements TokenExec {
