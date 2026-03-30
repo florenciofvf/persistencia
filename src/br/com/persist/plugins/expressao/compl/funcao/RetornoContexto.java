@@ -1,5 +1,6 @@
 package br.com.persist.plugins.expressao.compl.funcao;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -9,11 +10,11 @@ import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
-import br.com.persist.plugins.expressao.compl.Contexto.PontoEVirgula;
 import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
 
 public class RetornoContexto extends Contexto {
 	private TokenExec[] execs = { new PontoEVirgulaOuAbreParentese(), new PontoEVirgula() };
+	public static final String RETURN = "return";
 
 	@Context("retorno_da_funcao")
 	@Doc({ "return;", "return expressao;" })
@@ -25,6 +26,11 @@ public class RetornoContexto extends Contexto {
 
 	@Override
 	protected void empilharLocalPos(List<Contexto> lista) {
+		lista.add(this);
+	}
+
+	@Override
+	protected void listarPos(List<Contexto> lista) {
 		lista.add(this);
 	}
 
@@ -43,5 +49,10 @@ public class RetornoContexto extends Contexto {
 				compilador.invalidar(token);
 			}
 		}
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+		print(pw, RETURN);
 	}
 }

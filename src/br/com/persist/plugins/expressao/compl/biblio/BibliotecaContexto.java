@@ -42,7 +42,7 @@ public class BibliotecaContexto extends Contexto {
 			if (ExpressaoConstantes.PACKAGE.equals(token.getString())) {
 				PacoteContexto pacote = new PacoteContexto();
 				compilador.setSelecionado(pacote);
-				add(pacote);
+				addPackage(pacote);
 			} else if (ExpressaoConstantes.ALIAS.equals(token.getString())) {
 				AliasContexto alias = new AliasContexto();
 				compilador.setSelecionado(alias);
@@ -87,4 +87,30 @@ public class BibliotecaContexto extends Contexto {
 		}
 		return lista;
 	}
+
+	protected void addPackage(PacoteContexto c) throws ExpressaoException {
+		List<PacoteContexto> lista = getListaPacote();
+		if (!lista.isEmpty()) {
+			throw new ExpressaoException("erro.package.multiplo");
+		}
+		add(c);
+	}
+
+	public void checarPackage() throws ExpressaoException {
+		List<PacoteContexto> lista = getListaPacote();
+		if (lista.isEmpty()) {
+			throw new ExpressaoException("erro.package.inexistente");
+		}
+	}
+
+	private List<PacoteContexto> getListaPacote() {
+		List<PacoteContexto> lista = new ArrayList<>();
+		for (Contexto item : componentes) {
+			if (item instanceof PacoteContexto) {
+				lista.add((PacoteContexto) item);
+			}
+		}
+		return lista;
+	}
+
 }

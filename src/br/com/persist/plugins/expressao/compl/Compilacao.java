@@ -45,11 +45,12 @@ public class Compilacao {
 		}
 
 		biblioteca.transferirConstantes();
+		biblioteca.checarPackage();
 		biblioteca.configurarSaltos();
 		File destino = getCompilado(biblioteca);
 		try (PrintWriter pw = new PrintWriter(destino, StandardCharsets.UTF_8.name())) {
-			//biblioteca.salvar(this, pw);
-			//--biblioteca.salvarEstruturas(pw);
+			// biblioteca.salvar(this, pw);
+			// --biblioteca.salvarEstruturas(pw);
 		}
 		return biblioteca;
 
@@ -72,6 +73,6 @@ public class Compilacao {
 
 	public static File getCompilado(BibliotecaContexto biblio) throws ExpressaoException {
 		return null;
-		//return CacheBiblioteca.getArquivo(biblio);
+		// return CacheBiblioteca.getArquivo(biblio);
 	}
 }
