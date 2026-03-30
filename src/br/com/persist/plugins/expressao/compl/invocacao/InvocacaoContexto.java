@@ -9,13 +9,12 @@ import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Token;
 
 public class InvocacaoContexto extends Contexto {
-	protected final Token operador;
 
-	public InvocacaoContexto(Token operador) {
-		this.operador = operador;
+	public InvocacaoContexto(Token token) {
+		super(token);
 	}
 
-	@Context("operador")
+	@Context("invocar_funcao")
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		compilador.invalidar(token);
@@ -23,6 +22,11 @@ public class InvocacaoContexto extends Contexto {
 
 	@Override
 	protected void empilharLocalPos(List<Contexto> lista) {
+		lista.add(this);
+	}
+
+	@Override
+	protected void listarPos(List<Contexto> lista) {
 		lista.add(this);
 	}
 }
