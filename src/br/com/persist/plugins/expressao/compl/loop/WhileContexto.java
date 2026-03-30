@@ -7,9 +7,6 @@ import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
-import br.com.persist.plugins.expressao.compl.Contexto.AbreChave;
-import br.com.persist.plugins.expressao.compl.Contexto.AbreParentese;
-import br.com.persist.plugins.expressao.compl.Contexto.PontoEVirgula;
 import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
 
 public class WhileContexto extends Contexto {

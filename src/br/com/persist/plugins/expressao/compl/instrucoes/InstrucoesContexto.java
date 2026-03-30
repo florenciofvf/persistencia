@@ -102,7 +102,7 @@ public class InstrucoesContexto extends Contexto {
 			return;
 		}
 		IFContexto se = (IFContexto) parent;
-		Contexto instrucoes = se.parent;
+		Contexto instrucoes = se.getParent();
 		if (!(instrucoes instanceof InstrucoesContexto)) {
 			throw new ExpressaoException("erro.if.sem_parent");
 		}
@@ -117,10 +117,10 @@ public class InstrucoesContexto extends Contexto {
 			gotoContexto.setDestino(pilha.get(0));
 			add(gotoContexto);
 		} else {
-			if (instrucoes.parent instanceof FuncaoContexto) {
+			if (instrucoes.getParent() instanceof FuncaoContexto) {
 				throw new ExpressaoException("erro.funcao.sem_retorno");
 			}
-			configurarSaltoSeAcima(instrucoes.parent);
+			configurarSaltoSeAcima(instrucoes.getParent());
 		}
 	}
 
@@ -129,7 +129,7 @@ public class InstrucoesContexto extends Contexto {
 			throw new ExpressaoException("erro.objeto.contexto.nulo");
 		}
 		if (contexto instanceof IFContexto || contexto instanceof WhileContexto) {
-			Contexto instrucoes = contexto.parent;
+			Contexto instrucoes = contexto.getParent();
 			if (!(instrucoes instanceof InstrucoesContexto)) {
 				throw new ExpressaoException("erro.estrutura.sem_parent", contexto.getClass().getName());
 			}
@@ -144,10 +144,10 @@ public class InstrucoesContexto extends Contexto {
 				gotoContexto.setDestino(pilha.get(0));
 				add(gotoContexto);
 			} else {
-				if (instrucoes.parent instanceof FuncaoContexto) {
+				if (instrucoes.getParent() instanceof FuncaoContexto) {
 					throw new ExpressaoException("erro.funcao.sem_retorno");
 				}
-				configurarSaltoSeAcima(instrucoes.parent);
+				configurarSaltoSeAcima(instrucoes.getParent());
 			}
 		} else {
 			throw new ExpressaoException("erro.estrutura.invalida");

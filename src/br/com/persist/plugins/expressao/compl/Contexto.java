@@ -31,6 +31,10 @@ public abstract class Contexto {
 		this(null);
 	}
 
+	public Token getToken() {
+		return token;
+	}
+
 	protected boolean isEmpty() {
 		return componentes.isEmpty();
 	}
@@ -39,7 +43,7 @@ public abstract class Contexto {
 		return componentes.size();
 	}
 
-	protected Contexto getParent() {
+	public Contexto getParent() {
 		return parent;
 	}
 
@@ -47,7 +51,7 @@ public abstract class Contexto {
 		return get(componentes.size() - 1);
 	}
 
-	protected Contexto getPrimeiro() {
+	public Contexto getPrimeiro() {
 		return get(0);
 	}
 
@@ -92,7 +96,7 @@ public abstract class Contexto {
 		throw new ExpressaoException("erro.contexto.nao_contem_contexto");
 	}
 
-	protected Contexto getApos(Contexto contexto) throws ExpressaoException {
+	public Contexto getApos(Contexto contexto) throws ExpressaoException {
 		int indice = getIndice(contexto);
 		if (indice + 1 < getSize()) {
 			return get(indice + 1);
@@ -140,12 +144,12 @@ public abstract class Contexto {
 		empilharLocalPos(lista);
 	}
 
-	protected void empilharLocalIni() {
+	public void empilharLocalIni() {
 		pilhaLocal.clear();
 		empilharLocal(pilhaLocal);
 	}
 
-	protected List<Contexto> getPilhaLocal() {
+	public List<Contexto> getPilhaLocal() {
 		return pilhaLocal;
 	}
 
@@ -171,7 +175,7 @@ public abstract class Contexto {
 
 	}
 
-	protected class Chave implements TokenExec {
+	public class Chave implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isChave()) {
 				Contexto.this.token = token;
@@ -201,10 +205,10 @@ public abstract class Contexto {
 		}
 	}
 
-	protected class AbreChave implements TokenExec {
+	public class AbreChave implements TokenExec {
 		final byte estrutura;
 
-		AbreChave(byte estrutura) {
+		public AbreChave(byte estrutura) {
 			this.estrutura = estrutura;
 		}
 
@@ -220,7 +224,7 @@ public abstract class Contexto {
 		}
 	}
 
-	protected class PontoEVirgula implements TokenExec {
+	public class PontoEVirgula implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
 				compilador.setSelecionado(parent);

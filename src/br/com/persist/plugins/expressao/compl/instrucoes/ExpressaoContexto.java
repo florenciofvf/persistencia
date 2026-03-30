@@ -38,7 +38,7 @@ public class ExpressaoContexto extends Contexto {
 			compilador.setSelecionado(parent);
 		} else if (token.isAbreParentese()) {
 			if (getUltimo() instanceof ChaveContexto) {
-				InvocacaoContexto invocacao = new InvocacaoContexto(excluirUltimo().token);
+				InvocacaoContexto invocacao = new InvocacaoContexto(excluirUltimo().getToken());
 				compilador.setSelecionado(invocacao);
 				add(invocacao);
 			} else {
@@ -69,7 +69,7 @@ public class ExpressaoContexto extends Contexto {
 		if (parent instanceof IFContexto || parent instanceof WhileContexto) {
 			checarVazioExpressao();
 			Contexto seOUloop = parent;
-			Contexto instrucoes = seOUloop.parent;
+			Contexto instrucoes = seOUloop.getParent();
 			if (!(instrucoes instanceof InstrucoesContexto)) {
 				throw new ExpressaoException("erro.estrutura.sem_parent", seOUloop.getClass().getName());
 			}
@@ -84,10 +84,10 @@ public class ExpressaoContexto extends Contexto {
 				ifEqContexto.setDestino(pilha.get(0));
 				add(ifEqContexto);
 			} else {
-				if (instrucoes.parent instanceof FuncaoContexto) {
+				if (instrucoes.getParent() instanceof FuncaoContexto) {
 					throw new ExpressaoException("erro.funcao.sem_retorno");
 				}
-				configurarSaltoAcima(instrucoes.parent);
+				configurarSaltoAcima(instrucoes.getParent());
 			}
 		} else {
 			throw new ExpressaoException("erro.estrutura.expressao.invalida");
@@ -99,7 +99,7 @@ public class ExpressaoContexto extends Contexto {
 			throw new ExpressaoException("erro.objeto.contexto.nulo");
 		}
 		if (contexto instanceof IFContexto || contexto instanceof WhileContexto) {
-			Contexto instrucoes = contexto.parent;
+			Contexto instrucoes = contexto.getParent();
 			if (!(instrucoes instanceof InstrucoesContexto)) {
 				throw new ExpressaoException("erro.estrutura.sem_parent", contexto.getClass().getName());
 			}
@@ -114,10 +114,10 @@ public class ExpressaoContexto extends Contexto {
 				ifEqContexto.setDestino(pilha.get(0));
 				add(ifEqContexto);
 			} else {
-				if (instrucoes.parent instanceof FuncaoContexto) {
+				if (instrucoes.getParent() instanceof FuncaoContexto) {
 					throw new ExpressaoException("erro.funcao.sem_retorno");
 				}
-				configurarSaltoAcima(instrucoes.parent);
+				configurarSaltoAcima(instrucoes.getParent());
 			}
 		} else {
 			throw new ExpressaoException("erro.estrutura.expressao.invalida");

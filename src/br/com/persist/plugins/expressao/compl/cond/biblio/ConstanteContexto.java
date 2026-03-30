@@ -7,9 +7,6 @@ import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
-import br.com.persist.plugins.expressao.compl.Contexto.AbreParentese;
-import br.com.persist.plugins.expressao.compl.Contexto.Chave;
-import br.com.persist.plugins.expressao.compl.Contexto.PontoEVirgula;
 
 public class ConstanteContexto extends Contexto {
 	private TokenExec[] execs = { new Chave(), new Atribuicao(), new AbreParentese(false), new PontoEVirgula() };
