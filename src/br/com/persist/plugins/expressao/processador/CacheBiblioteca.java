@@ -10,13 +10,16 @@ import java.util.concurrent.atomic.AtomicReference;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compl.organiza.PacoteContexto;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
 
 public class CacheBiblioteca {
 	private static final String ERRO_BIBLIO_INEXISTENTE = "erro.biblio_inexistente";
-	public static final File ROOT = new File(InstrucaoConstantes.INSTRUCAO);
+	public static final File ROOT = new File(ExpressaoConstantes.EXPRESSOES);
 	public static final File COMPILADOS = new File(ROOT, "compilados");
 	private final Map<String, Biblioteca> bibliotecas;
 
@@ -94,23 +97,18 @@ public class CacheBiblioteca {
 		return nome;
 	}
 
-	public static File getArquivo(BibliotecaContexto biblioteca) throws InstrucaoException {
+	public static File getArquivoCompilado(br.com.persist.plugins.expressao.compl.biblio.BibliotecaContexto biblioteca)
+			throws ExpressaoException {
 		if (biblioteca == null) {
-			throw new InstrucaoException("Biblioteca nula.", false);
+			throw new ExpressaoException("Biblioteca nula.", false);
 		}
-		String nome = biblioteca.getNome();
-		int pos = nome.lastIndexOf('.');
-		if (pos != -1) {
-			String name = nome.substring(pos + 1);
-			nome = nome.substring(0, pos);
-			String pack = Util.replaceAll(nome, ".", Constantes.SEPARADOR);
-			File path = new File(COMPILADOS, pack);
-			if (!path.isDirectory() && !path.mkdirs()) {
-				throw new InstrucaoException("erro.criar_diretorios", path.getPath());
-			}
-			return new File(path, name + Biblioteca.EXTENSAO);
+		PacoteContexto pacoteContexto = biblioteca.getPackage();
+		String pack = Util.replaceAll(pacoteContexto.getNomeAbsoluto(), ".", Constantes.SEPARADOR);
+		File path = new File(COMPILADOS, pack);
+		if (!path.isDirectory() && !path.mkdirs()) {
+			throw new ExpressaoException("erro.criar_diretorios", path.getPath());
 		}
-		return new File(COMPILADOS, nome + Biblioteca.EXTENSAO);
+		return new File(path, biblioteca.getNome() + Biblioteca.EXTENSAO);
 	}
 
 	public static File arquivoParaCompilar(String nome) throws InstrucaoException {

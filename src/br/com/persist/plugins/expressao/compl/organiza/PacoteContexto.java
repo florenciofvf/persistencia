@@ -34,6 +34,10 @@ public class PacoteContexto extends Contexto {
 		}
 	}
 
+	public String getNomeAbsoluto() {
+		return pacote.getString();
+	}
+
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
 		pw.println(PREFIXO_PACKAGE + pacote.getString());

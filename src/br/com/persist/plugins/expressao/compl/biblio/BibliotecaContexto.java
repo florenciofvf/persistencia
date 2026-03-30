@@ -1,8 +1,10 @@
 package br.com.persist.plugins.expressao.compl.biblio;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -10,6 +12,7 @@ import br.com.persist.plugins.expressao.compl.Compilador;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Indexador;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.Token.Tipo;
 import br.com.persist.plugins.expressao.compl.funcao.FuncaoConstantesContexto;
@@ -23,11 +26,15 @@ public class BibliotecaContexto extends Contexto {
 	private final File file;
 
 	public BibliotecaContexto(File file) {
-		this.file = file;
+		this.file = Objects.requireNonNull(file);
 	}
 
 	public File getFile() {
 		return file;
+	}
+
+	public String getNome() {
+		return file.getName();
 	}
 
 	public FuncaoConstantesContexto getFuncaoConstantes() {
@@ -101,6 +108,9 @@ public class BibliotecaContexto extends Contexto {
 		if (lista.isEmpty()) {
 			throw new ExpressaoException("erro.package.inexistente");
 		}
+		if (lista.size() > 1) {
+			throw new ExpressaoException("erro.package.multiplo");
+		}
 	}
 
 	private List<PacoteContexto> getListaPacote() {
@@ -113,4 +123,58 @@ public class BibliotecaContexto extends Contexto {
 		return lista;
 	}
 
+	private List<AliasContexto> getListaAlias() {
+		List<AliasContexto> lista = new ArrayList<>();
+		for (Contexto item : componentes) {
+			if (item instanceof AliasContexto) {
+				lista.add((AliasContexto) item);
+			}
+		}
+		return lista;
+	}
+
+	private List<Contexto> getListaFuncoes() {
+		List<Contexto> lista = new ArrayList<>();
+		for (Contexto item : componentes) {
+			if ((item instanceof FuncaoContexto) || (item instanceof FuncaoNativaContexto)) {
+				lista.add(item);
+			}
+		}
+		return lista;
+	}
+
+	public PacoteContexto getPackage() throws ExpressaoException {
+		checarPackage();
+		return getListaPacote().get(0);
+	}
+
+	public void salvarEstruturas(PrintWriter pw) throws ExpressaoException {
+		getPackage().salvar(pw);
+		pw.println();
+		for (Contexto item : getListaAlias()) {
+			item.salvar(pw);
+		}
+		pw.println();
+		for (Contexto item : getListaFuncoes()) {
+			salvarFuncao(item, pw);
+		}
+	}
+
+	private void salvarFuncao(Contexto funcao, PrintWriter pw) throws ExpressaoException {
+		pw.println();
+		funcao.salvar(pw);
+		funcao.configurarSaltos();
+
+		List<Contexto> contextos = new ArrayList<>();
+		funcao.listar(contextos);
+
+		Indexador indexador = new Indexador();
+		for (Contexto item : contextos) {
+			item.indexar(indexador);
+		}
+
+		for (Contexto item : contextos) {
+			item.indexar(indexador);
+		}
+	}
 }

@@ -26,16 +26,19 @@ public class Compilacao {
 	}
 
 	public BibliotecaContexto compilar(File file) throws IOException, ExpressaoException {
-		if (!CacheBiblioteca.COMPILADOS.isDirectory() && !CacheBiblioteca.COMPILADOS.mkdir()) {
-			throw new ExpressaoException(CacheBiblioteca.COMPILADOS.toString(), false);
+		if (file == null) {
+			throw new ExpressaoException("File null >>> Compilacao.compilar(...)");
 		}
 
 		if (!file.isFile()) {
 			throw new ExpressaoException("Inexistente >>> " + file.toString(), false);
 		}
 
-		String string = getString(file);
-		Compilador compilador = new Compilador(string);
+		if (!CacheBiblioteca.COMPILADOS.isDirectory() && !CacheBiblioteca.COMPILADOS.mkdir()) {
+			throw new ExpressaoException(CacheBiblioteca.COMPILADOS.toString(), false);
+		}
+
+		Compilador compilador = new Compilador(getString(file));
 		BibliotecaContexto biblioteca = new BibliotecaContexto(file);
 		compilador.setSelecionado(biblioteca);
 		compilador.montarHierarquia();
@@ -46,33 +49,17 @@ public class Compilacao {
 
 		biblioteca.transferirConstantes();
 		biblioteca.checarPackage();
-		biblioteca.configurarSaltos();
-		File destino = getCompilado(biblioteca);
-		try (PrintWriter pw = new PrintWriter(destino, StandardCharsets.UTF_8.name())) {
-			// biblioteca.salvar(this, pw);
-			// --biblioteca.salvarEstruturas(pw);
-		}
-		return biblioteca;
 
-//		AtomicInteger atomic = new AtomicInteger(0);
-//		biblioteca.fragmentar(atomic);
-//		while (atomic.get() > 0) {
-//			atomic.set(0);
-//			biblioteca.fragmentar(atomic);
-//		}
-//		biblioteca.estruturar();
-//		biblioteca.indexar();
-//		biblioteca.desviar();
-//		biblioteca.validar();
-//		File destino = getCompilado(biblioteca);
-//		try (PrintWriter pw = new PrintWriter(destino, StandardCharsets.UTF_8.name())) {
-//			biblioteca.salvar(this, pw);
-//		}
-//		return biblioteca;
+		File destino = getCompilado(biblioteca);
+
+		try (PrintWriter pw = new PrintWriter(destino, StandardCharsets.UTF_8.name())) {
+			biblioteca.salvarEstruturas(pw);
+		}
+
+		return biblioteca;
 	}
 
 	public static File getCompilado(BibliotecaContexto biblio) throws ExpressaoException {
-		return null;
-		// return CacheBiblioteca.getArquivo(biblio);
+		return CacheBiblioteca.getArquivoCompilado(biblio);
 	}
 }

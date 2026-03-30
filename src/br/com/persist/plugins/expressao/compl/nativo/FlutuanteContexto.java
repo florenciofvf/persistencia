@@ -38,7 +38,7 @@ public class FlutuanteContexto extends Contexto {
 	}
 
 	@Override
-	protected void listar(List<Contexto> lista) {
+	public void listar(List<Contexto> lista) {
 		lista.add(this);
 		listarNegativo(lista);
 	}

@@ -115,7 +115,7 @@ public abstract class Contexto {
 		}
 	}
 
-	protected void listar(List<Contexto> lista) {
+	public void listar(List<Contexto> lista) {
 		listarPre(lista);
 		for (Contexto item : componentes) {
 			item.listar(lista);
@@ -135,7 +135,7 @@ public abstract class Contexto {
 	protected void listarPos(List<Contexto> lista) {
 	}
 
-	protected void configurarSaltos() throws ExpressaoException {
+	public void configurarSaltos() throws ExpressaoException {
 		configurarSaltosPre();
 		for (Contexto item : componentes) {
 			item.configurarSaltos();
