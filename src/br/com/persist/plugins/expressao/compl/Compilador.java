@@ -79,7 +79,7 @@ public class Compilador {
 		}
 	}
 
-	private Token tokenOperador1(char c, int indiceBackup) throws ExpressaoException {
+	private Token tokenGrupo1(char c, int indiceBackup) throws ExpressaoException {
 		indice++;
 		switch (c) {
 		case '(':
@@ -99,7 +99,7 @@ public class Compilador {
 		}
 	}
 
-	private Token tokenOperador2(char c, int indiceBackup) throws ExpressaoException {
+	private Token tokenOperador1(char c, int indiceBackup) throws ExpressaoException {
 		switch (c) {
 		case '+':
 			invalidarSe(indice + 1, '+');
@@ -126,7 +126,7 @@ public class Compilador {
 		}
 	}
 
-	private Token tokenOperador3(char c, int indiceBackup) throws ExpressaoException {
+	private Token tokenOperador2(char c, int indiceBackup) throws ExpressaoException {
 		switch (c) {
 		case '=':
 			if (diferenteDe(indice + 1, '=')) {
@@ -194,20 +194,20 @@ public class Compilador {
 		case '}':
 		case ';':
 		case ',':
-			return tokenOperador1(c, indiceBackup);
+			return tokenGrupo1(c, indiceBackup);
 		case '+':
 		case '-':
 		case '*':
 		case '%':
 		case '^':
-			return tokenOperador2(c, indiceBackup);
+			return tokenOperador1(c, indiceBackup);
 		case '=':
 		case '!':
 		case '&':
 		case '|':
 		case '<':
 		case '>':
-			return tokenOperador3(c, indiceBackup);
+			return tokenOperador2(c, indiceBackup);
 		case '0':
 		case '1':
 		case '2':
@@ -223,8 +223,8 @@ public class Compilador {
 			return tokenString(indiceBackup);
 		case '/':
 			if (igualA(indice + 1, '/')) {
-				indice++;
-				return tokenComentarioLinha(c, indiceBackup);
+				indice += 2;
+				return tokenComentarioLinha(indiceBackup);
 			} else if (igualA(indice + 1, '*')) {
 				indice += 2;
 				return tokenComentarioMultiplasLinhas(indiceBackup);
@@ -275,9 +275,8 @@ public class Compilador {
 		return new Token(str, Tipo.CHAVEN, indiceBackup);
 	}
 
-	private Token tokenComentarioLinha(char primeiro, int indiceBackup) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(primeiro);
+	private Token tokenComentarioLinha(int indiceBackup) {
+		StringBuilder builder = new StringBuilder("//");
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c == '\n') {

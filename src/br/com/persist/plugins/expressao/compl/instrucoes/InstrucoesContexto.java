@@ -68,6 +68,12 @@ public class InstrucoesContexto extends Contexto {
 		}
 	}
 
+	private void checarVazioInstrucoes() throws ExpressaoException {
+		if (isEmpty()) {
+			throw new ExpressaoException("erro.instrucoes.vazio");
+		}
+	}
+
 	private void configurarSaltoLoop() throws ExpressaoException {
 		if (!(parent instanceof WhileContexto)) {
 			throw new ExpressaoException("erro.instrucoes.sem_parent", "while");

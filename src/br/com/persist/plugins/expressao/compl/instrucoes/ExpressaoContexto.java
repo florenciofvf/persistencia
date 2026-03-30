@@ -61,6 +61,12 @@ public class ExpressaoContexto extends Contexto {
 		}
 	}
 
+	private void checarVazioExpressao() throws ExpressaoException {
+		if (isEmpty()) {
+			throw new ExpressaoException("erro.expressao.vazio");
+		}
+	}
+
 	@Override
 	protected void configurarSaltosPos() throws ExpressaoException {
 		if (!comSalto) {

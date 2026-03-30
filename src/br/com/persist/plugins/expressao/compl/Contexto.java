@@ -178,18 +178,6 @@ public abstract class Contexto {
 	protected void empilharLocalPos(List<Contexto> lista) {
 	}
 
-	protected void checarVazioInstrucoes() throws ExpressaoException {
-		if (isEmpty()) {
-			throw new ExpressaoException("erro.instrucoes.vazio");
-		}
-	}
-
-	protected void checarVazioExpressao() throws ExpressaoException {
-		if (isEmpty()) {
-			throw new ExpressaoException("erro.expressao.vazio");
-		}
-	}
-
 	public void indexar(Indexador indexador) {
 		indice = indexador.get();
 	}
