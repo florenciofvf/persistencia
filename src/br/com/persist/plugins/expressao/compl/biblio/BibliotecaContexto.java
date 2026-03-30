@@ -1,7 +1,8 @@
-package br.com.persist.plugins.expressao.compl.cond.biblio;
+package br.com.persist.plugins.expressao.compl.biblio;
 
 import java.io.File;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -19,10 +20,18 @@ import br.com.persist.plugins.expressao.compl.organiza.PacoteContexto;
 
 public class BibliotecaContexto extends Contexto {
 	private FuncaoConstantesContexto funcaoConstantes;
-	private final String nome;
+	private final File file;
 
 	public BibliotecaContexto(File file) {
-		this.nome = file.getName();
+		this.file = file;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public FuncaoConstantesContexto getFuncaoConstantes() {
+		return funcaoConstantes;
 	}
 
 	@Context("biblioteca")
@@ -62,10 +71,20 @@ public class BibliotecaContexto extends Contexto {
 		Token token = new Token(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES, Tipo.VIRTUAL, -1);
 		funcaoConstantes = new FuncaoConstantesContexto(token);
 		add(funcaoConstantes);
-		Iterator<Contexto> it = componentes.iterator();
-		while (it.hasNext()) {
-			Contexto contexto = it.next();
-			funcaoConstantes.add(contexto);
+		List<ConstanteContexto> lista = getListaConstantes();
+		for (ConstanteContexto item : lista) {
+			remove(item);
+			funcaoConstantes.add(item);
 		}
+	}
+
+	private List<ConstanteContexto> getListaConstantes() {
+		List<ConstanteContexto> lista = new ArrayList<>();
+		for (Contexto item : componentes) {
+			if (item instanceof ConstanteContexto) {
+				lista.add((ConstanteContexto) item);
+			}
+		}
+		return lista;
 	}
 }

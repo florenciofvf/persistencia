@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.compl.cond.biblio;
+package br.com.persist.plugins.expressao.compl.biblio;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Compilador;

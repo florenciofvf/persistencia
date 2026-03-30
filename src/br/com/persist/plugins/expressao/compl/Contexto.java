@@ -23,12 +23,6 @@ public abstract class Contexto {
 		this.token = token;
 	}
 
-	protected void checarIndiceEstado(Compilador compilador, Object[] array, Token token) throws ExpressaoException {
-		if (indiceEstado >= array.length) {
-			compilador.invalidar(token);
-		}
-	}
-
 	protected Contexto() {
 		this(null);
 	}
@@ -112,6 +106,12 @@ public abstract class Contexto {
 
 	protected void processar(Compilador compilador, Token token) throws ExpressaoException {
 
+	}
+
+	protected void checarIndiceEstado(Compilador compilador, Object[] array, Token token) throws ExpressaoException {
+		if (indiceEstado >= array.length) {
+			compilador.invalidar(token);
+		}
 	}
 
 	protected void listar(List<Contexto> lista) {
