@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
@@ -14,6 +15,7 @@ public abstract class Contexto {
 	protected int indiceEstado;
 	protected Contexto parent;
 	protected Token token;
+	protected int indice;
 
 	protected Contexto(Token token) {
 		componentes = new ArrayList<>();
@@ -29,6 +31,10 @@ public abstract class Contexto {
 
 	protected Contexto() {
 		this(null);
+	}
+
+	public int getIndice() {
+		return indice;
 	}
 
 	public Token getToken() {
@@ -87,7 +93,7 @@ public abstract class Contexto {
 		}
 	}
 
-	protected int getIndice(Contexto contexto) throws ExpressaoException {
+	protected int getPosicao(Contexto contexto) throws ExpressaoException {
 		for (int i = 0; i < componentes.size(); i++) {
 			if (componentes.get(i) == contexto) {
 				return i;
@@ -97,9 +103,9 @@ public abstract class Contexto {
 	}
 
 	public Contexto getApos(Contexto contexto) throws ExpressaoException {
-		int indice = getIndice(contexto);
-		if (indice + 1 < getSize()) {
-			return get(indice + 1);
+		int posicao = getPosicao(contexto);
+		if (posicao + 1 < getSize()) {
+			return get(posicao + 1);
 		}
 		return null;
 	}
@@ -171,8 +177,19 @@ public abstract class Contexto {
 		}
 	}
 
-	protected void salvar(PrintWriter pw) throws ExpressaoException {
+	public void indexar(Indexador indexador) {
+		indice = indexador.get();
+	}
 
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+	}
+
+	public void print(PrintWriter pw, String... strings) {
+		pw.print(indice + ExpressaoConstantes.ESPACO);
+		for (String item : strings) {
+			pw.print(ExpressaoConstantes.ESPACO + item);
+		}
+		pw.println();
 	}
 
 	public class Chave implements TokenExec {

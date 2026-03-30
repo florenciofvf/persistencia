@@ -8,6 +8,7 @@ public class ExpressaoConstantes {
 	public static final String EXPRESSOES = "expressoes";
 	public static final String IGNORADOS = "ignorados";
 	public static final String VOID = "void";
+	public static final String ESPACO = " ";
 
 	public static final String DEFUN_NATIVE = "defun_native";
 	public static final String PACKAGE = "package";
