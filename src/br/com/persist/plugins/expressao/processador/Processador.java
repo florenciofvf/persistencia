@@ -3,7 +3,7 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.expressao.compl.funcao.FuncaoConstantesContexto;
+import br.com.persist.plugins.expressao.compl.FuncaoConstantesContexto;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Processador {

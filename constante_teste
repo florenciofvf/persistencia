@@ -1,0 +1,3 @@
+package br.com.teste;
+
+const nome = ('Florêncio Vieira Filho');

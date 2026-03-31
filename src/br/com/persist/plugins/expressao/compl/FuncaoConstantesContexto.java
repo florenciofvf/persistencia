@@ -1,9 +1,10 @@
-package br.com.persist.plugins.expressao.compl.funcao;
+package br.com.persist.plugins.expressao.compl;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Contexto;
-import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.biblio.ConstanteContexto;
+import br.com.persist.plugins.expressao.compl.funcao.FuncaoContexto;
+import br.com.persist.plugins.expressao.compl.funcao.ParametrosContexto;
+import br.com.persist.plugins.expressao.compl.funcao.RetornoContexto;
 
 public class FuncaoConstantesContexto extends FuncaoContexto {
 	private RetornoContexto retornoContexto = new RetornoContexto();
@@ -11,6 +12,10 @@ public class FuncaoConstantesContexto extends FuncaoContexto {
 
 	public FuncaoConstantesContexto(Token token) {
 		this.token = token;
+		retornoVoid = true;
+		ParametrosContexto parametros = new ParametrosContexto();
+		componentes.add(parametros);
+		parametros.parent = this;
 	}
 
 	@Override
@@ -18,7 +23,7 @@ public class FuncaoConstantesContexto extends FuncaoContexto {
 		if (c instanceof ConstanteContexto) {
 			remove(retornoContexto);
 			super.add(c);
-			add(retornoContexto);
+			super.add(retornoContexto);
 		} else {
 			throw new ExpressaoException("erro.inclusao.funcao_constantes");
 		}
