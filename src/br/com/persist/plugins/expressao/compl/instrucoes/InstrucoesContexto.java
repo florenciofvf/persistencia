@@ -51,7 +51,7 @@ public class InstrucoesContexto extends Contexto {
 				compilador.invalidar(token);
 			}
 		} else if (token.isChave() || token.isChave2() || token.isChaveN()) {
-			InvocacaoContexto invocacao = new InvocacaoContexto(token);
+			InvocacaoContexto invocacao = new InvocacaoContexto(token, false);
 			compilador.setSelecionado(invocacao);
 			add(invocacao);
 		} else {

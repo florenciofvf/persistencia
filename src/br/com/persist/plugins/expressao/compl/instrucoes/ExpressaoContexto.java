@@ -38,7 +38,7 @@ public class ExpressaoContexto extends Contexto {
 			compilador.setSelecionado(parent);
 		} else if (token.isAbreParentese()) {
 			if (getUltimo() instanceof ChaveContexto) {
-				InvocacaoContexto invocacao = new InvocacaoContexto(excluirUltimo().getToken());
+				InvocacaoContexto invocacao = new InvocacaoContexto(excluirUltimo().getToken(), true);
 				compilador.setSelecionado(invocacao);
 				add(invocacao);
 			} else {
