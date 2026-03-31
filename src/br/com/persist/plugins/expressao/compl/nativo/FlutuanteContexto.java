@@ -28,7 +28,6 @@ public class FlutuanteContexto extends Contexto {
 	@Override
 	public void indexar(Indexador indexador) {
 		indice = indexador.get2();
-		// indexarNegativo(indexador);
 	}
 
 	@Override
@@ -46,6 +45,5 @@ public class FlutuanteContexto extends Contexto {
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
 		print(pw, PUSH_BIG_DECIMAL, token.getString());
-		// salvarNegativo(pw);
 	}
 }

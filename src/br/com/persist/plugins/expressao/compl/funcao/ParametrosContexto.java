@@ -1,4 +1,6 @@
-package br.com.persist.plugins.expressao.compl.invocacao;
+package br.com.persist.plugins.expressao.compl.funcao;
+
+import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Compilador;
@@ -54,6 +56,13 @@ public class ParametrosContexto extends Contexto {
 			} else {
 				compilador.invalidar(token);
 			}
+		}
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+		for (Contexto item : componentes) {
+			item.salvar(pw);
 		}
 	}
 }

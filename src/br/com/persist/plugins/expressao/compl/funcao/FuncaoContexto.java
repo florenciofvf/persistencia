@@ -1,5 +1,7 @@
 package br.com.persist.plugins.expressao.compl.funcao;
 
+import java.io.PrintWriter;
+
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Compilador;
@@ -9,11 +11,12 @@ import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
 import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
-import br.com.persist.plugins.expressao.compl.invocacao.ParametrosContexto;
 
 public class FuncaoContexto extends Contexto {
 	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
 			new PontoEVirgula() };
+	public static final String PREFIXO_TIPO_VOID = "tipo_void";
+	public static final String PREFIXO_FUNCAO = "funcao ";
 	protected boolean retornoVoid;
 
 	@Context("funcao")
@@ -54,5 +57,18 @@ public class FuncaoContexto extends Contexto {
 				compilador.invalidar(token);
 			}
 		}
+	}
+
+	public ParametrosContexto getParametros() {
+		return (ParametrosContexto) getPrimeiro();
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+		pw.println(PREFIXO_FUNCAO + token.getString());
+		if (retornoVoid) {
+			pw.println(PREFIXO_TIPO_VOID);
+		}
+		getParametros().salvar(pw);
 	}
 }

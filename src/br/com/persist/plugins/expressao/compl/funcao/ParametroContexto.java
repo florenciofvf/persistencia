@@ -1,4 +1,6 @@
-package br.com.persist.plugins.expressao.compl.invocacao;
+package br.com.persist.plugins.expressao.compl.funcao;
+
+import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Compilador;
@@ -8,10 +10,10 @@ import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
 
 public class ParametroContexto extends Contexto {
-	protected final Token chave;
+	public static final String PREFIXO_PARAMETRO = "param ";
 
 	public ParametroContexto(Token chave) {
-		this.chave = chave;
+		super(chave);
 	}
 
 	@Context("parametro")
@@ -19,5 +21,10 @@ public class ParametroContexto extends Contexto {
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		compilador.invalidar(token);
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+		pw.println(PREFIXO_PARAMETRO + token.getString());
 	}
 }
