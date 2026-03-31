@@ -192,32 +192,39 @@ public class BibliotecaContexto extends Contexto {
 	public void salvarEstruturas(PrintWriter pw) throws ExpressaoException {
 		getPackage().salvar(pw);
 		pw.println();
+
 		for (Contexto item : getListaAlias()) {
 			item.salvar(pw);
+			pw.println();
 		}
-		pw.println();
+
 		Map<String, String> mapAlias = getMapaAlias();
+
 		for (Contexto item : getListaFuncoes()) {
-			item.configurarAliasInvocacao(mapAlias);
-			salvarFuncao(item, pw);
+			processarFuncao(item, mapAlias, pw);
+			pw.println();
 		}
 	}
 
-	private void salvarFuncao(Contexto funcao, PrintWriter pw) throws ExpressaoException {
-		pw.println();
-		funcao.salvar(pw);
+	private void processarFuncao(Contexto funcao, Map<String, String> mapAlias, PrintWriter pw)
+			throws ExpressaoException {
+		funcao.configurarAliasInvocacao(mapAlias);
 		funcao.configurarSaltos();
 
 		List<Contexto> contextos = new ArrayList<>();
 		funcao.listar(contextos);
+
+		/** removerDuplicados(contextos); */
 
 		Indexador indexador = new Indexador();
 		for (Contexto item : contextos) {
 			item.indexar(indexador);
 		}
 
+		funcao.salvar(pw);
+
 		for (Contexto item : contextos) {
-			item.indexar(indexador);
+			item.salvar(pw);
 		}
 	}
 }
