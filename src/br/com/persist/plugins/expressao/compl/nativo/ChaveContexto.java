@@ -25,4 +25,9 @@ public class ChaveContexto extends Contexto {
 	public void empilharLocal(List<Contexto> lista) {
 		lista.add(this);
 	}
+
+	@Override
+	public void listar(List<Contexto> lista) {
+		lista.add(this);
+	}
 }

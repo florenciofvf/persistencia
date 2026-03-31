@@ -24,16 +24,6 @@ public class RetornoContexto extends Contexto {
 		execs[indiceEstado].processar(compilador, token);
 	}
 
-	@Override
-	protected void empilharLocalPos(List<Contexto> lista) {
-		lista.add(this);
-	}
-
-	@Override
-	protected void listarPos(List<Contexto> lista) {
-		lista.add(this);
-	}
-
 	class PontoEVirgulaOuAbreParentese implements TokenExec {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
@@ -49,6 +39,16 @@ public class RetornoContexto extends Contexto {
 				compilador.invalidar(token);
 			}
 		}
+	}
+
+	@Override
+	protected void empilharLocalPos(List<Contexto> lista) {
+		lista.add(this);
+	}
+
+	@Override
+	protected void listarPos(List<Contexto> lista) {
+		lista.add(this);
 	}
 
 	@Override

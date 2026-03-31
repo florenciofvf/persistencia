@@ -1,5 +1,8 @@
 package br.com.persist.plugins.expressao.compl.biblio;
 
+import java.io.PrintWriter;
+import java.util.List;
+
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Compilador;
 import br.com.persist.plugins.expressao.compl.Context;
@@ -10,7 +13,7 @@ import br.com.persist.plugins.expressao.compl.TokenExec;
 
 public class ConstanteContexto extends Contexto {
 	private TokenExec[] execs = { new Chave(), new Atribuicao(), new AbreParentese(false), new PontoEVirgula() };
-	protected Token chave;
+	public static final String DEF_CONST = "def_const";
 
 	@Context("declaracao_constante")
 	@Doc("const chave = expressao;")
@@ -28,5 +31,20 @@ public class ConstanteContexto extends Contexto {
 				compilador.invalidar(token);
 			}
 		}
+	}
+
+	@Override
+	protected void empilharLocalPos(List<Contexto> lista) {
+		lista.add(this);
+	}
+
+	@Override
+	protected void listarPos(List<Contexto> lista) {
+		lista.add(this);
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+		print(pw, DEF_CONST, token.getString());
 	}
 }
