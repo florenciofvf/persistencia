@@ -1,0 +1,4 @@
+package br.com.teste;
+
+alias br.com.teste.Util util;
+alias br.com.teste.Mapa mapa;
