@@ -49,6 +49,7 @@ public class Compilacao {
 
 		biblioteca.transferirConstantes();
 		biblioteca.checarPackage();
+		biblioteca.checarAlias();
 
 		File destino = getCompilado(biblioteca);
 

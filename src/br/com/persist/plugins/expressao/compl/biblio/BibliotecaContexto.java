@@ -3,7 +3,9 @@ package br.com.persist.plugins.expressao.compl.biblio;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
@@ -113,6 +115,37 @@ public class BibliotecaContexto extends Contexto {
 		}
 	}
 
+	public void checarAlias() throws ExpressaoException {
+		List<AliasContexto> lista = getListaAlias();
+		for (int i = 0; i < lista.size(); i++) {
+			AliasContexto item = lista.get(i);
+			int totalBiblio = getTotal(item.getBiblioteca(), lista, true);
+			if (totalBiblio > 1) {
+				throw new ExpressaoException("erro.alias.multiplo_biblio", item.getBiblioteca());
+			}
+			int totalAlias = getTotal(item.getAlias(), lista, false);
+			if (totalAlias > 1) {
+				throw new ExpressaoException("erro.alias.multiplo_alias", item.getAlias());
+			}
+		}
+	}
+
+	private int getTotal(String procurado, List<AliasContexto> lista, boolean biblio) throws ExpressaoException {
+		int total = 0;
+		for (AliasContexto item : lista) {
+			if (biblio) {
+				if (item.getBiblioteca().equals(procurado)) {
+					total++;
+				}
+			} else {
+				if (item.getAlias().equals(procurado)) {
+					total++;
+				}
+			}
+		}
+		return total;
+	}
+
 	private List<PacoteContexto> getListaPacote() {
 		List<PacoteContexto> lista = new ArrayList<>();
 		for (Contexto item : componentes) {
@@ -131,6 +164,14 @@ public class BibliotecaContexto extends Contexto {
 			}
 		}
 		return lista;
+	}
+
+	private Map<String, String> getMapaAlias() throws ExpressaoException {
+		Map<String, String> map = new HashMap<>();
+		for (AliasContexto item : getListaAlias()) {
+			map.put(item.getAlias(), item.getBiblioteca());
+		}
+		return map;
 	}
 
 	private List<Contexto> getListaFuncoes() {
@@ -155,7 +196,9 @@ public class BibliotecaContexto extends Contexto {
 			item.salvar(pw);
 		}
 		pw.println();
+		Map<String, String> mapAlias = getMapaAlias();
 		for (Contexto item : getListaFuncoes()) {
+			item.configurarAliasInvocacao(mapAlias);
 			salvarFuncao(item, pw);
 		}
 	}

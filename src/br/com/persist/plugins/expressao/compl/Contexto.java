@@ -3,6 +3,7 @@ package br.com.persist.plugins.expressao.compl;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -113,6 +114,20 @@ public abstract class Contexto {
 		if (indiceEstado >= array.length) {
 			compilador.invalidar(token);
 		}
+	}
+
+	public void configurarAliasInvocacao(Map<String, String> mapa) throws ExpressaoException {
+		configurarAliasInvocacaoPre(mapa);
+		for (Contexto item : componentes) {
+			item.configurarAliasInvocacao(mapa);
+		}
+		configurarAliasInvocacaoPos(mapa);
+	}
+
+	protected void configurarAliasInvocacaoPre(Map<String, String> mapa) throws ExpressaoException {
+	}
+
+	protected void configurarAliasInvocacaoPos(Map<String, String> mapa) throws ExpressaoException {
 	}
 
 	public void listar(List<Contexto> lista) {

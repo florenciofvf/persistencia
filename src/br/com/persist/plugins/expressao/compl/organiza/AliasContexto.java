@@ -14,7 +14,7 @@ import br.com.persist.plugins.expressao.compl.TokenExec;
 public class AliasContexto extends Contexto {
 	private TokenExec[] execs = { new ChaveN(), new Chave(), new PontoEVirgula() };
 	public static final String PREFIXO_ALIAS = "alias ";
-	protected Token pacote;
+	protected Token biblioteca;
 	protected Token alias;
 
 	@Context("alias_para_biblioteca")
@@ -28,7 +28,7 @@ public class AliasContexto extends Contexto {
 	class ChaveN implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isChaveN()) {
-				pacote = token;
+				biblioteca = token;
 				indiceEstado++;
 			} else {
 				compilador.invalidar(token);
@@ -47,8 +47,22 @@ public class AliasContexto extends Contexto {
 		}
 	}
 
+	public String getBiblioteca() throws ExpressaoException {
+		if (biblioteca == null) {
+			throw new ExpressaoException("Biblioteca n\u00E3o definida", false);
+		}
+		return biblioteca.getString();
+	}
+
+	public String getAlias() throws ExpressaoException {
+		if (alias == null) {
+			throw new ExpressaoException("Alias n\u00E3o definido", false);
+		}
+		return alias.getString();
+	}
+
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
-		pw.println(PREFIXO_ALIAS + pacote.getString() + ExpressaoConstantes.ESPACO + alias.getString());
+		pw.println(PREFIXO_ALIAS + getBiblioteca() + ExpressaoConstantes.ESPACO + getAlias());
 	}
 }
