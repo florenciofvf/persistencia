@@ -54,6 +54,8 @@ public class InstrucoesContexto extends Contexto {
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, false);
 			compilador.setSelecionado(invocacao);
 			add(invocacao);
+		} else if (token.isFechaChave()) {
+			compilador.setSelecionado(parent);
 		} else {
 			compilador.invalidar(token);
 		}

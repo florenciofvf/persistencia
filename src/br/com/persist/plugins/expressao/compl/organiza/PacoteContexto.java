@@ -34,7 +34,10 @@ public class PacoteContexto extends Contexto {
 		}
 	}
 
-	public String getNomeAbsoluto() {
+	public String getNomeAbsoluto() throws ExpressaoException {
+		if (pacote == null) {
+			throw new ExpressaoException("Package n\u00E3o definido", false);
+		}
 		return pacote.getString();
 	}
 
