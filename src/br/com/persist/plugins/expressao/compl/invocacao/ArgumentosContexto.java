@@ -25,7 +25,7 @@ public class ArgumentosContexto extends Contexto {
 			if (token.isFechaParentese()) {
 				compilador.setSelecionado(parent);
 			} else if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto(false);
+				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.setSelecionado(expressao);
 				add(expressao);
 				selecionado = new FinalizaOuVirgula();
@@ -52,7 +52,7 @@ public class ArgumentosContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto(false);
+				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.setSelecionado(expressao);
 				add(expressao);
 				selecionado = new FinalizaOuVirgula();

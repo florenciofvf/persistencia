@@ -27,7 +27,7 @@ public class IFContexto extends Contexto {
 	class IniExpressao implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto(true);
+				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.setSelecionado(expressao);
 				add(expressao);
 				selecionado = new IniInstrucao();
@@ -40,7 +40,7 @@ public class IFContexto extends Contexto {
 	class IniInstrucao implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto(InstrucoesContexto.SE);
+				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				selecionado = new FinalizaOuElseOuElseIf();
@@ -68,7 +68,7 @@ public class IFContexto extends Contexto {
 	class IniInstrucaoElse implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto(InstrucoesContexto.SE);
+				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				selecionado = new PontoEVirgula();
@@ -76,5 +76,20 @@ public class IFContexto extends Contexto {
 				compilador.invalidar(token);
 			}
 		}
+	}
+
+	@Override
+	public Contexto getApos(Contexto contexto) throws ExpressaoException {
+		if (!(contexto instanceof ExpressaoContexto)) {
+			throw new ExpressaoException("erro.if.expressao.invalida", contexto.toString());
+		}
+		Contexto instrucoes = super.getApos(contexto);
+		if (instrucoes == null) {
+			throw new ExpressaoException("erro.if.expressao_sem_instrucao", toString());
+		}
+		if (!(instrucoes instanceof InstrucoesContexto)) {
+			throw new ExpressaoException("erro.estrutura.expressao.invalida", toString());
+		}
+		return super.getApos(instrucoes);
 	}
 }

@@ -44,13 +44,13 @@ public class FuncaoContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto(InstrucoesContexto.FUNCAO);
+				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
 				execs = new TokenExec[] { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
-						new AbreChave(InstrucoesContexto.FUNCAO), new PontoEVirgula() };
+						new AbreChave(), new PontoEVirgula() };
 				retornoVoid = true;
 				indiceEstado++;
 			} else {

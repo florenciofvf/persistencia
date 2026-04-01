@@ -1,0 +1,23 @@
+package br.com.teste;
+
+/*defun naoFazNada(a) void {
+	if(a) {
+		return;
+	};
+	return;
+};
+
+defun getRetornoPadrao(a) {
+	if(a) {
+		return (1);
+	};
+	return (0);
+};
+
+defun getValor(a) {
+	if(a) {
+		return (10);
+	} else {
+		return (20);
+	};
+};*/

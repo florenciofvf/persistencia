@@ -31,7 +31,7 @@ public class RetornoContexto extends Contexto {
 				compilador.setSelecionado(parent);
 				indiceEstado++;
 			} else if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto(false);
+				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.setSelecionado(expressao);
 				add(expressao);
 				indiceEstado++;

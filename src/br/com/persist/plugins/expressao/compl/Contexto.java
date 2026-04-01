@@ -236,16 +236,10 @@ public abstract class Contexto {
 		}
 	}
 
-	protected class AbreParentese implements TokenExec {
-		final boolean comSalto;
-
-		public AbreParentese(boolean comSalto) {
-			this.comSalto = comSalto;
-		}
-
+	public class AbreParentese implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto(comSalto);
+				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.setSelecionado(expressao);
 				add(expressao);
 				indiceEstado++;
@@ -256,15 +250,9 @@ public abstract class Contexto {
 	}
 
 	public class AbreChave implements TokenExec {
-		final byte estrutura;
-
-		public AbreChave(byte estrutura) {
-			this.estrutura = estrutura;
-		}
-
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto(estrutura);
+				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.setSelecionado(instrucoes);
 				add(instrucoes);
 				indiceEstado++;
