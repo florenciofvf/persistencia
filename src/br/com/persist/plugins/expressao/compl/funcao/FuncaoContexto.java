@@ -20,7 +20,7 @@ public class FuncaoContexto extends Contexto {
 	protected boolean retornoVoid;
 
 	@Context("funcao")
-	@Doc({ "funcao chave parametros instrucoes;", "funcao parametros void instrucoes;" })
+	@Doc({ "funcao chave parametros instrucoes;", "funcao chave parametros void instrucoes;" })
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		checarIndiceEstado(compilador, execs, token);

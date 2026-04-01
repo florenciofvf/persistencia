@@ -32,7 +32,8 @@ public class Compilador {
 	}
 
 	public void invalidar(Token token) throws ExpressaoException {
-		String detalhe = string.substring(0, token.indice);
+		int indiceFinal = token.indice + token.getString().length();
+		String detalhe = string.substring(0, indiceFinal);
 		throw new ExpressaoException(detalhe, false);
 	}
 

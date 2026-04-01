@@ -12,7 +12,7 @@ import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
 
 public class FuncaoNativaContexto extends Contexto {
-	private TokenExec[] execs = { new Chave(), new ChaveN(), new IniParametros(), new TipoRetornoOuPontoEVirgula(),
+	private TokenExec[] execs = { new ChaveN(), new Chave(), new IniParametros(), new TipoRetornoOuPontoEVirgula(),
 			new PontoEVirgula() };
 	public static final String PREFIXO_FUNCAO_NATIVA = "funcao_nativa ";
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
@@ -20,7 +20,7 @@ public class FuncaoNativaContexto extends Contexto {
 	protected Token biblioteca;
 
 	@Context("funcao_nativa")
-	@Doc({ "funcao_nativa chave biblioteca parametros;", "funcao_nativa parametros void;" })
+	@Doc({ "funcao_nativa biblioteca chave parametros;", "funcao_nativa biblioteca chave parametros void;" })
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		checarIndiceEstado(compilador, execs, token);
@@ -55,7 +55,7 @@ public class FuncaoNativaContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
-				execs = new TokenExec[] { new Chave(), new ChaveN(), new IniParametros(),
+				execs = new TokenExec[] { new ChaveN(), new Chave(), new IniParametros(),
 						new TipoRetornoOuPontoEVirgula() };
 				compilador.setSelecionado(parent);
 				indiceEstado++;
