@@ -222,7 +222,7 @@ public abstract class Contexto {
 
 	@Override
 	public String toString() {
-		return "" + token;
+		return getClass().getSimpleName() + ">>>" + token;
 	}
 
 	public class Chave implements TokenExec {

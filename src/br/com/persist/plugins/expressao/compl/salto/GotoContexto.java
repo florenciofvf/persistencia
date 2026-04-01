@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.compl.salto;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Contexto;
@@ -28,6 +29,16 @@ public class GotoContexto extends Contexto {
 	@Override
 	public void indexar(Indexador indexador) {
 		indice = indexador.get3();
+	}
+
+	@Override
+	public void empilharLocal(List<Contexto> lista) {
+		lista.add(this);
+	}
+
+	@Override
+	public void listar(List<Contexto> lista) {
+		lista.add(this);
 	}
 
 	@Override

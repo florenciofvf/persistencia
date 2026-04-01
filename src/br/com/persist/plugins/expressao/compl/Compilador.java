@@ -390,6 +390,7 @@ public class Compilador {
 	private Token tokenNumero(char primeiro, int indiceBackup) throws ExpressaoException {
 		StringBuilder builder = new StringBuilder();
 		builder.append(primeiro);
+		indice++;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (numeroOuPonto(c)) {
