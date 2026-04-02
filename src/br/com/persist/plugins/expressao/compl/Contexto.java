@@ -110,8 +110,13 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected void processar(Compilador compilador, Token token) throws ExpressaoException {
+	protected void selecionarParentDeApos(Compilador compilador, Contexto contexto) throws ExpressaoException {
+	}
 
+	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+	}
+
+	protected void processar(Compilador compilador, Token token) throws ExpressaoException {
 	}
 
 	protected void checarIndiceEstado(Compilador compilador, Object[] array, Token token) throws ExpressaoException {

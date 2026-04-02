@@ -42,6 +42,18 @@ public class Compilador {
 		throw new ExpressaoException(detalhe, false);
 	}
 
+	public void selecionarParentDe(Contexto contexto) throws ExpressaoException {
+		if (contexto == null) {
+			throw new ExpressaoException("erro.compilador.contexto_nulo_em", "selecionarParentDe");
+		}
+		Contexto parent = contexto.parent;
+		if (parent == null) {
+			throw new ExpressaoException("erro.compilador.contexto_nulo_em", "selecionarParentDe (parent nulo)");
+		}
+		selecionado = parent;
+		selecionado.selecionarParentDeApos(this, contexto);
+	}
+
 	public void setSelecionado(Contexto selecionado) {
 		this.selecionado = selecionado;
 	}
@@ -64,6 +76,7 @@ public class Compilador {
 				throw new ExpressaoException("erro.compilador.contexto_nulo");
 			}
 			if (token.tipo != Tipo.COMENTARIO) {
+				selecionado.processarPre(this, token);
 				selecionado.processar(this, token);
 			}
 		}
