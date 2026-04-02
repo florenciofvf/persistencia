@@ -1,0 +1,10 @@
+package br.com.teste;
+
+defun naoFazNada() void {
+	print(('Teste'), (1));
+	return;
+};
+
+defun print(msg) void {
+	return;
+};

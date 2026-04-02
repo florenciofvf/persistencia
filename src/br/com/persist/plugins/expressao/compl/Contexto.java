@@ -72,14 +72,18 @@ public abstract class Contexto {
 
 	protected void add(Contexto c) throws ExpressaoException {
 		if (c != null) {
-			if (c.parent != null) {
-				c.parent.remove(c);
-			}
-			componentes.add(c);
-			c.parent = this;
+			add2(c);
 		} else {
 			throw new ExpressaoException("erro.inclusao.nulo");
 		}
+	}
+
+	protected void add2(Contexto c) {
+		if (c.parent != null) {
+			c.parent.remove(c);
+		}
+		componentes.add(c);
+		c.parent = this;
 	}
 
 	protected void remove(Contexto c) {

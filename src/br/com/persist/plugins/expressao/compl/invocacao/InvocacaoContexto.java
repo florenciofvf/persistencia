@@ -8,16 +8,19 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Compilador;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
+import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
+import br.com.persist.plugins.expressao.compl.TokenExec;
 
 public class InvocacaoContexto extends Contexto {
 	public static final String INVOKE_RETR = "invoke_retr";
 	public static final String INVOKE_VOID = "invoke_void";
+	private TokenExec selecionado = new IniArgumentos();
 	public static final String THIS = "this";
 	private boolean comRetorno;
-	private String alias;
 	private String biblio;
 	private String metodo;
+	private String alias;
 
 	public InvocacaoContexto(Token token, boolean comRetorno) {
 		super(token);
@@ -25,9 +28,13 @@ public class InvocacaoContexto extends Contexto {
 		init();
 	}
 
+	public ArgumentosContexto getArgumentos() {
+		return (ArgumentosContexto) getPrimeiro();
+	}
+
 	private void init() {
 		String chamada = token.getString();
-		String[] array = chamada.split(".");
+		String[] array = chamada.split("\\.");
 		if (array.length == 1) {
 			biblio = THIS;
 			metodo = array[0];
@@ -41,6 +48,26 @@ public class InvocacaoContexto extends Contexto {
 		}
 	}
 
+	@Context("invocar_funcao")
+	@Doc({ "metodo();", "alias.mensagem(arg);", "br.com.teste.Biblioteca.mensagem(arg);" })
+	@Override
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		selecionado.processar(compilador, token);
+	}
+
+	class IniArgumentos implements TokenExec {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+			if (token.isAbreParentese()) {
+				ArgumentosContexto argumentos = new ArgumentosContexto();
+				compilador.setSelecionado(argumentos);
+				add(argumentos);
+				selecionado = new PontoEVirgula();
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
 	@Override
 	protected void configurarAliasInvocacaoPre(Map<String, String> mapa) throws ExpressaoException {
 		if (alias != null) {
@@ -49,12 +76,6 @@ public class InvocacaoContexto extends Contexto {
 				throw new ExpressaoException("erro.alias.nao_mapeado", alias);
 			}
 		}
-	}
-
-	@Context("invocar_funcao")
-	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		compilador.invalidar(token);
 	}
 
 	@Override
