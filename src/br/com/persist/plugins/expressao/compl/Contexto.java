@@ -64,13 +64,13 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected Contexto excluirUltimo() {
+	public Contexto excluirUltimo() {
 		Contexto ultimo = getUltimo();
 		remove(ultimo);
 		return ultimo;
 	}
 
-	protected void add(Contexto c) throws ExpressaoException {
+	public void add(Contexto c) throws ExpressaoException {
 		if (c != null) {
 			add2(c);
 		} else {

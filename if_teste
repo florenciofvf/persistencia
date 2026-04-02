@@ -21,3 +21,30 @@ defun getValor(a) {
 		return (20);
 	};
 };*/
+
+defun main() void {
+	if(1 < 2) {
+		print(('IF_EXTERNO'));
+		if(1) {
+			print(('if_interno'));
+		};
+	} else {
+		print(('ELSE_EXTERNO'));
+	};
+	return;
+};
+
+defun teste() void {
+	if(1) {
+		print(('um'));
+	} elseif(2) {
+		print(('dois'));
+	} else {
+		print(('três'));
+	};
+	return;
+};
+
+defun print(msg) void {
+	return;
+};
