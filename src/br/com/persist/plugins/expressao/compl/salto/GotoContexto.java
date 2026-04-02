@@ -9,6 +9,7 @@ import br.com.persist.plugins.expressao.compl.Indexador;
 
 public class GotoContexto extends Contexto {
 	public static final String GOTO = "goto";
+	private boolean dispensavel;
 	private Contexto destino;
 
 	public Contexto getDestino() {
@@ -24,6 +25,14 @@ public class GotoContexto extends Contexto {
 		if (destino == null) {
 			throw new ExpressaoException("erro.goto.ponto_salto_nulo");
 		}
+	}
+
+	public boolean isDispensavel() {
+		return dispensavel;
+	}
+
+	public void setDispensavel(boolean dispensavel) {
+		this.dispensavel = dispensavel;
 	}
 
 	@Override

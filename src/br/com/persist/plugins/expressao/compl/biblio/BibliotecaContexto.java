@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,6 +23,7 @@ import br.com.persist.plugins.expressao.compl.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.compl.funcao.FuncaoNativaContexto;
 import br.com.persist.plugins.expressao.compl.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.compl.organiza.PacoteContexto;
+import br.com.persist.plugins.expressao.compl.salto.GotoContexto;
 
 public class BibliotecaContexto extends Contexto {
 	private FuncaoConstantesContexto funcaoConstantes;
@@ -214,7 +216,7 @@ public class BibliotecaContexto extends Contexto {
 		List<Contexto> contextos = new ArrayList<>();
 		funcao.listar(contextos);
 
-		/** removerDuplicados(contextos); */
+		normalizarGoto(contextos);
 
 		Indexador indexador = new Indexador();
 		for (Contexto item : contextos) {
@@ -226,5 +228,46 @@ public class BibliotecaContexto extends Contexto {
 		for (Contexto item : contextos) {
 			item.salvar(pw);
 		}
+	}
+
+	private void normalizarGoto(List<Contexto> contextos) {
+		for (int i = 0; i < contextos.size(); i++) {
+			Contexto c = contextos.get(i);
+			if (c instanceof GotoContexto) {
+				checarSeguinte((GotoContexto) c, contextos, i + 1);
+			}
+		}
+		Iterator<Contexto> it = contextos.iterator();
+		while (it.hasNext()) {
+			Contexto c = it.next();
+			if (c instanceof GotoContexto && ((GotoContexto) c).isDispensavel()) {
+				it.remove();
+			}
+		}
+		while (penultimo(contextos)) {
+			excluirPenultimo(contextos);
+		}
+	}
+
+	private void checarSeguinte(GotoContexto gotoContexto, List<Contexto> contextos, int indice) {
+		if (indice < contextos.size()) {
+			Contexto c = contextos.get(indice);
+			if (c instanceof GotoContexto) {
+				GotoContexto proximo = (GotoContexto) c;
+				if (proximo.getDestino() == gotoContexto.getDestino()) {
+					proximo.setDispensavel(true);
+				}
+			}
+		}
+	}
+
+	private boolean penultimo(List<Contexto> contextos) {
+		int size = contextos.size();
+		return size >= 2 && contextos.get(size - 2) instanceof GotoContexto;
+	}
+
+	private void excluirPenultimo(List<Contexto> contextos) {
+		int size = contextos.size();
+		contextos.remove(size - 2);
 	}
 }
