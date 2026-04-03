@@ -7,9 +7,10 @@ import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
+import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
 
 public class WhileContexto extends Contexto {
-	private TokenExec[] execs = { new AbreParentese(), new AbreChave(), new PontoEVirgula() };
+	private TokenExec[] execs = { new AbreParentese(), new AbreChave() };
 
 	@Context("loop_while")
 	@Doc("while expressao instrucoes;")
@@ -17,5 +18,12 @@ public class WhileContexto extends Contexto {
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		checarIndiceEstado(compilador, execs, token);
 		execs[indiceEstado].processar(compilador, token);
+	}
+
+	@Override
+	protected void selecionarParentDeApos(Compilador compilador, Contexto contexto) throws ExpressaoException {
+		if (contexto instanceof InstrucoesContexto) {
+			compilador.selecionarParentDe(this);
+		}
 	}
 }
