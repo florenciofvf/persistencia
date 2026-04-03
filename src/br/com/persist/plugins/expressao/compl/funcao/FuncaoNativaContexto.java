@@ -42,7 +42,7 @@ public class FuncaoNativaContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
-				compilador.setSelecionado(parametros);
+				compilador.selecionar(parametros);
 				add(parametros);
 				indiceEstado++;
 			} else {
@@ -57,7 +57,7 @@ public class FuncaoNativaContexto extends Contexto {
 			if (token.isPontoEVirgula()) {
 				execs = new TokenExec[] { new ChaveN(), new Chave(), new IniParametros(),
 						new TipoRetornoOuPontoEVirgula() };
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(FuncaoNativaContexto.this);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
 				retornoVoid = true;

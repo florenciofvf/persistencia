@@ -40,7 +40,7 @@ public class Compilacao {
 
 		Compilador compilador = new Compilador(getString(file));
 		BibliotecaContexto biblioteca = new BibliotecaContexto(file);
-		compilador.setSelecionado(biblioteca);
+		compilador.selecionar(biblioteca);
 		compilador.montarHierarquia();
 
 		if (compilador.getSelecionado() != biblioteca) {

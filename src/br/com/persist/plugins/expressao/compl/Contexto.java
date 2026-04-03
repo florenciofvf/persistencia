@@ -249,7 +249,7 @@ public abstract class Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.setSelecionado(expressao);
+				compilador.selecionar(expressao);
 				add(expressao);
 				indiceEstado++;
 			} else {
@@ -262,7 +262,7 @@ public abstract class Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.setSelecionado(instrucoes);
+				compilador.selecionar(instrucoes);
 				add(instrucoes);
 				indiceEstado++;
 			} else {
@@ -274,7 +274,7 @@ public abstract class Contexto {
 	public class PontoEVirgula implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(Contexto.this);
 				indiceEstado++;
 			} else {
 				compilador.invalidar(token);

@@ -24,7 +24,7 @@ public class ParametrosContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isFechaParentese()) {
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(ParametrosContexto.this);
 			} else if (token.isChave()) {
 				add(new ParametroContexto(token));
 				selecionado = new FinalizaOuVirgula();
@@ -38,7 +38,7 @@ public class ParametrosContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isFechaParentese()) {
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(ParametrosContexto.this);
 			} else if (token.isVirgula()) {
 				selecionado = new Parametro();
 			} else {

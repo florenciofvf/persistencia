@@ -28,11 +28,11 @@ public class RetornoContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(RetornoContexto.this);
 				indiceEstado++;
 			} else if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.setSelecionado(expressao);
+				compilador.selecionar(expressao);
 				add(expressao);
 				indiceEstado++;
 			} else {

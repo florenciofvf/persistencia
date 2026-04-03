@@ -28,7 +28,7 @@ public class IFContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.setSelecionado(expressao);
+				compilador.selecionar(expressao);
 				add(expressao);
 				selecionado = new IniInstrucao();
 			} else {
@@ -41,7 +41,7 @@ public class IFContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.setSelecionado(instrucoes);
+				compilador.selecionar(instrucoes);
 				add(instrucoes);
 				selecionado = new FinalizaOuElseOuElseIf();
 			} else {
@@ -54,7 +54,7 @@ public class IFContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(IFContexto.this);
 			} else if (ExpressaoConstantes.ELSE.equals(token.getString())) {
 				selecionado = new IniInstrucaoElse();
 			} else if (ExpressaoConstantes.ELSEIF.equals(token.getString())) {
@@ -69,7 +69,7 @@ public class IFContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.setSelecionado(instrucoes);
+				compilador.selecionar(instrucoes);
 				add(instrucoes);
 				selecionado = new PontoEVirgula();
 			} else {

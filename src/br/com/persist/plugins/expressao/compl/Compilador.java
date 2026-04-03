@@ -54,8 +54,8 @@ public class Compilador {
 		selecionado.selecionarParentDeApos(this, contexto);
 	}
 
-	public void setSelecionado(Contexto selecionado) {
-		this.selecionado = selecionado;
+	public void selecionar(Contexto contexto) {
+		this.selecionado = contexto;
 	}
 
 	public Contexto getSelecionado() {

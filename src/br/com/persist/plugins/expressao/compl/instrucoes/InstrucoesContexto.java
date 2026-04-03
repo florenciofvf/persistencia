@@ -16,29 +16,29 @@ public class InstrucoesContexto extends Salto {
 		if (token.isReservado()) {
 			if (ExpressaoConstantes.CONST.equals(token.getString())) {
 				ConstanteContexto constante = new ConstanteContexto();
-				compilador.setSelecionado(constante);
+				compilador.selecionar(constante);
 				add(constante);
 			} else if (ExpressaoConstantes.RETURN.equals(token.getString())) {
 				RetornoContexto retorno = new RetornoContexto();
-				compilador.setSelecionado(retorno);
+				compilador.selecionar(retorno);
 				add(retorno);
 			} else if (ExpressaoConstantes.IF.equals(token.getString())) {
 				IFContexto se = new IFContexto();
-				compilador.setSelecionado(se);
+				compilador.selecionar(se);
 				add(se);
 			} else if (ExpressaoConstantes.WHILE.equals(token.getString())) {
 				WhileContexto loop = new WhileContexto();
-				compilador.setSelecionado(loop);
+				compilador.selecionar(loop);
 				add(loop);
 			} else {
 				compilador.invalidar(token);
 			}
 		} else if (token.isChave() || token.isChave2() || token.isChaveN()) {
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, false);
-			compilador.setSelecionado(invocacao);
+			compilador.selecionar(invocacao);
 			add(invocacao);
 		} else if (token.isFechaChave()) {
-			compilador.setSelecionado(parent);
+			compilador.selecionarParentDe(this);
 		} else {
 			compilador.invalidar(token);
 		}

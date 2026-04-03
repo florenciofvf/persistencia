@@ -31,7 +31,7 @@ public class FuncaoContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
-				compilador.setSelecionado(parametros);
+				compilador.selecionar(parametros);
 				add(parametros);
 				indiceEstado++;
 			} else {
@@ -45,7 +45,7 @@ public class FuncaoContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.setSelecionado(instrucoes);
+				compilador.selecionar(instrucoes);
 				add(instrucoes);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {

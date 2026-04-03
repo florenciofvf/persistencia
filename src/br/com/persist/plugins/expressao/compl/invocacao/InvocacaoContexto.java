@@ -59,7 +59,7 @@ public class InvocacaoContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ArgumentosContexto argumentos = new ArgumentosContexto();
-				compilador.setSelecionado(argumentos);
+				compilador.selecionar(argumentos);
 				add(argumentos);
 				selecionado = new PontoEVirgula();
 			} else {

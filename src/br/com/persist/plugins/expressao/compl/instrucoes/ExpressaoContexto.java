@@ -25,15 +25,15 @@ public class ExpressaoContexto extends Salto {
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		if (token.isFechaParentese()) {
 			montarArvore(compilador);
-			compilador.setSelecionado(parent);
+			compilador.selecionarParentDe(this);
 		} else if (token.isAbreParentese()) {
 			if (getUltimo() instanceof ChaveContexto) {
 				InvocacaoContexto invocacao = new InvocacaoContexto(excluirUltimo().getToken(), true);
-				compilador.setSelecionado(invocacao);
+				compilador.selecionar(invocacao);
 				add(invocacao);
 			} else {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.setSelecionado(expressao);
+				compilador.selecionar(expressao);
 				add(expressao);
 			}
 		} else if (token.isOperador()) {

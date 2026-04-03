@@ -23,10 +23,10 @@ public class ArgumentosContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isFechaParentese()) {
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(ArgumentosContexto.this);
 			} else if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.setSelecionado(expressao);
+				compilador.selecionar(expressao);
 				add(expressao);
 				selecionado = new FinalizaOuVirgula();
 			} else {
@@ -39,7 +39,7 @@ public class ArgumentosContexto extends Contexto {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isFechaParentese()) {
-				compilador.setSelecionado(parent);
+				compilador.selecionarParentDe(ArgumentosContexto.this);
 			} else if (token.isVirgula()) {
 				selecionado = new Argumento();
 			} else {
@@ -53,7 +53,7 @@ public class ArgumentosContexto extends Contexto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.setSelecionado(expressao);
+				compilador.selecionar(expressao);
 				add(expressao);
 				selecionado = new FinalizaOuVirgula();
 			} else {
