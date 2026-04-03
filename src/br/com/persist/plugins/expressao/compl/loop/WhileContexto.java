@@ -13,7 +13,7 @@ public class WhileContexto extends Contexto {
 	private TokenExec[] execs = { new AbreParentese(), new AbreChave() };
 
 	@Context("loop_while")
-	@Doc("while expressao instrucoes;")
+	@Doc("while expressao instrucoes")
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		checarIndiceEstado(compilador, execs, token);

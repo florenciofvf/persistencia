@@ -13,18 +13,24 @@ import br.com.persist.plugins.expressao.compl.TokenExec;
 import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
 
 public class FuncaoContexto extends Contexto {
-	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
-			new PontoEVirgula() };
+	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes() };
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
 	public static final String PREFIXO_FUNCAO = "funcao ";
 	protected boolean retornoVoid;
 
 	@Context("funcao")
-	@Doc({ "funcao chave parametros instrucoes;", "funcao chave parametros void instrucoes;" })
+	@Doc({ "funcao chave parametros instrucoes", "funcao chave parametros void instrucoes" })
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		checarIndiceEstado(compilador, execs, token);
 		execs[indiceEstado].processar(compilador, token);
+	}
+
+	@Override
+	protected void selecionarParentDeApos(Compilador compilador, Contexto contexto) throws ExpressaoException {
+		if (contexto instanceof InstrucoesContexto) {
+			compilador.selecionarParentDe(this);
+		}
 	}
 
 	class IniParametros implements TokenExec {
@@ -50,7 +56,7 @@ public class FuncaoContexto extends Contexto {
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
 				execs = new TokenExec[] { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
-						new AbreChave(), new PontoEVirgula() };
+						new AbreChave() };
 				retornoVoid = true;
 				indiceEstado++;
 			} else {

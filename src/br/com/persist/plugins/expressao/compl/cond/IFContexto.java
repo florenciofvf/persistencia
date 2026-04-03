@@ -15,13 +15,28 @@ public class IFContexto extends Contexto {
 	private TokenExec selecionado = new IniExpressao();
 
 	@Context("se")
-	@Doc({ "if expressao instrucoes;", "if expressao instrucoes else instrucoes;",
-			"if expressao instrucoes elseif expressao instrucoes;",
-			"if expressao instrucoes elseif expressao instrucoes else instrucoes;",
-			"if expressao instrucoes elseif expressao instrucoes elseif expressao instrucoes else instrucoes;" })
+	@Doc({ "if expressao instrucoes", "if expressao instrucoes else instrucoes",
+			"if expressao instrucoes elseif expressao instrucoes",
+			"if expressao instrucoes elseif expressao instrucoes else instrucoes",
+			"if expressao instrucoes elseif expressao instrucoes elseif expressao instrucoes else instrucoes" })
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		selecionado.processar(compilador, token);
+	}
+
+	@Override
+	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+		if (selecionado == null) {
+			compilador.selecionarParentDe(this);
+		}
+		if (selecionado instanceof ElseOuElseIf && !valido(token)) {
+			compilador.selecionarParentDe(this);
+		}
+	}
+
+	private boolean valido(Token token) {
+		return ExpressaoConstantes.ELSE.equals(token.getString())
+				|| ExpressaoConstantes.ELSEIF.equals(token.getString());
 	}
 
 	class IniExpressao implements TokenExec {
@@ -43,19 +58,17 @@ public class IFContexto extends Contexto {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.selecionar(instrucoes);
 				add(instrucoes);
-				selecionado = new FinalizaOuElseOuElseIf();
+				selecionado = new ElseOuElseIf();
 			} else {
 				compilador.invalidar(token);
 			}
 		}
 	}
 
-	class FinalizaOuElseOuElseIf implements TokenExec {
+	class ElseOuElseIf implements TokenExec {
 		@Override
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
-			if (token.isPontoEVirgula()) {
-				compilador.selecionarParentDe(IFContexto.this);
-			} else if (ExpressaoConstantes.ELSE.equals(token.getString())) {
+			if (ExpressaoConstantes.ELSE.equals(token.getString())) {
 				selecionado = new IniInstrucaoElse();
 			} else if (ExpressaoConstantes.ELSEIF.equals(token.getString())) {
 				selecionado = new IniExpressao();
@@ -71,7 +84,7 @@ public class IFContexto extends Contexto {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.selecionar(instrucoes);
 				add(instrucoes);
-				selecionado = new PontoEVirgula();
+				selecionado = null;
 			} else {
 				compilador.invalidar(token);
 			}
