@@ -1,50 +1,50 @@
 package br.com.teste;
 
-/*defun naoFazNada(a) void {
+defun naoFazNada(a) void {
 	if(a) {
 		return;
-	};
+	}
 	return;
-};
+}
 
 defun getRetornoPadrao(a) {
 	if(a) {
 		return (1);
-	};
+	}
 	return (0);
-};
+}
 
 defun getValor(a) {
 	if(a) {
 		return (10);
 	} else {
 		return (20);
-	};
-};*/
+	}
+}
 
 defun main() void {
 	if(1 < 2) {
 		print(('IF_EXTERNO'));
 		if(1) {
 			print(('if_interno'));
-		};
+		}
 	} else {
 		print(('ELSE_EXTERNO'));
-	};
+	}
 	return;
-};
+}
 
-defun teste() void {
-	if(1) {
+defun teste(a, b) void {
+	if(a) {
 		print(('um'));
-	} elseif(2) {
+	} elseif(b) {
 		print(('dois'));
 	} else {
 		print(('três'));
-	};
+	}
 	return;
-};
+}
 
 defun print(msg) void {
 	return;
-};
+}

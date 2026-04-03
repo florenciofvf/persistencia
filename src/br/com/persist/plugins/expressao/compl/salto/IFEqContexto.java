@@ -27,11 +27,6 @@ public class IFEqContexto extends Contexto {
 	}
 
 	@Override
-	public void indexar(Indexador indexador) {
-		indice = indexador.get3();
-	}
-
-	@Override
 	public void empilharLocal(List<Contexto> lista) {
 		lista.add(this);
 	}
@@ -39,6 +34,11 @@ public class IFEqContexto extends Contexto {
 	@Override
 	public void listar(List<Contexto> lista) {
 		lista.add(this);
+	}
+
+	@Override
+	public void indexar(Indexador indexador) {
+		indice = indexador.get1();
 	}
 
 	@Override

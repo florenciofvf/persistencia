@@ -34,12 +34,12 @@ public class Compilador {
 	public void invalidar(Token token) throws ExpressaoException {
 		int indiceFinal = token.indice + token.getString().length();
 		String detalhe = string.substring(0, indiceFinal);
-		throw new ExpressaoException(detalhe, false);
+		throw new ExpressaoException(detalhe + "<<<", false);
 	}
 
 	public void invalidar() throws ExpressaoException {
 		String detalhe = string.substring(0, indice);
-		throw new ExpressaoException(detalhe, false);
+		throw new ExpressaoException(detalhe + "<<<", false);
 	}
 
 	public void selecionarParentDe(Contexto contexto) throws ExpressaoException {

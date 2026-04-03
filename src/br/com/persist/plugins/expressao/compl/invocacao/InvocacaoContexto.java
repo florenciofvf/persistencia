@@ -9,6 +9,7 @@ import br.com.persist.plugins.expressao.compl.Compilador;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Indexador;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
 
@@ -88,6 +89,11 @@ public class InvocacaoContexto extends Contexto {
 	protected void listarPos(List<Contexto> lista) {
 		lista.add(this);
 		listarNegativo(lista);
+	}
+
+	@Override
+	public void indexar(Indexador indexador) {
+		indice = indexador.get2();
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import br.com.persist.plugins.expressao.compl.Compilador;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Indexador;
 import br.com.persist.plugins.expressao.compl.Token;
 
 public class ChaveContexto extends Contexto {
@@ -34,6 +35,11 @@ public class ChaveContexto extends Contexto {
 	public void listar(List<Contexto> lista) {
 		lista.add(this);
 		listarNegativo(lista);
+	}
+
+	@Override
+	public void indexar(Indexador indexador) {
+		indice = indexador.get3();
 	}
 
 	@Override

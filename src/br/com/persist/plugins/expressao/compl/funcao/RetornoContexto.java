@@ -8,6 +8,7 @@ import br.com.persist.plugins.expressao.compl.Compilador;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
+import br.com.persist.plugins.expressao.compl.Indexador;
 import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
 import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
@@ -49,6 +50,11 @@ public class RetornoContexto extends Contexto {
 	@Override
 	protected void listarPos(List<Contexto> lista) {
 		lista.add(this);
+	}
+
+	@Override
+	public void indexar(Indexador indexador) {
+		indice = indexador.get3();
 	}
 
 	@Override

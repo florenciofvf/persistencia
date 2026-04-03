@@ -3,21 +3,25 @@ package br.com.persist.plugins.expressao.compl;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Indexador {
-	private AtomicInteger atomic = new AtomicInteger(0);
+	private AtomicInteger atomic;
 
-	public int value() {
-		return atomic.get();
+	private int get(int delta) {
+		if (atomic == null) {
+			atomic = new AtomicInteger(0);
+			return atomic.get();
+		}
+		return atomic.addAndGet(delta);
 	}
 
-	public int get() {
-		return atomic.getAndIncrement();
+	public int get1() {
+		return get(1);
 	}
 
 	public int get2() {
-		return atomic.getAndAdd(2);
+		return get(2);
 	}
 
 	public int get3() {
-		return atomic.getAndAdd(3);
+		return get(3);
 	}
 }

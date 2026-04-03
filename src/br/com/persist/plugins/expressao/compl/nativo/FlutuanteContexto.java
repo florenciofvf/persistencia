@@ -26,11 +26,6 @@ public class FlutuanteContexto extends Contexto {
 	}
 
 	@Override
-	public void indexar(Indexador indexador) {
-		indice = indexador.get2();
-	}
-
-	@Override
 	public void empilharLocal(List<Contexto> lista) {
 		lista.add(this);
 		empilharLocalNegativo(lista);
@@ -40,6 +35,11 @@ public class FlutuanteContexto extends Contexto {
 	public void listar(List<Contexto> lista) {
 		lista.add(this);
 		listarNegativo(lista);
+	}
+
+	@Override
+	public void indexar(Indexador indexador) {
+		indice = indexador.get2();
 	}
 
 	@Override

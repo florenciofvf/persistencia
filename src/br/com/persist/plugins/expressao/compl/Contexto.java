@@ -203,7 +203,7 @@ public abstract class Contexto {
 	}
 
 	public void indexar(Indexador indexador) {
-		indice = indexador.get();
+		indice = indexador.get1();
 	}
 
 	public void indexarNegativo(Indexador indexador) {
