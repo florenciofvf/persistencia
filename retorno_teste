@@ -2,8 +2,8 @@ package br.com.teste;
 
 defun naoFazNada() void {
 	return;
-};
+}
 
 defun getRetornoPadrao() {
-	return (0);
-};
+	return 0;
+}

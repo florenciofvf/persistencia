@@ -10,36 +10,33 @@ import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Indexador;
 import br.com.persist.plugins.expressao.compl.Token;
-import br.com.persist.plugins.expressao.compl.TokenExec;
 import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
 
 public class RetornoContexto extends Contexto {
-	private TokenExec[] execs = { new PontoEVirgulaOuAbreParentese(), new PontoEVirgula() };
 	public static final String RETURN = "return";
+
+	@Override
+	protected void selecionarParentDeApos(Compilador compilador, Contexto contexto) throws ExpressaoException {
+		compilador.selecionarParentDe(RetornoContexto.this);
+	}
 
 	@Context("retorno_da_funcao")
 	@Doc({ "return;", "return expressao;" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		checarIndiceEstado(compilador, execs, token);
-		execs[indiceEstado].processar(compilador, token);
+	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+		if (token.isPontoEVirgula()) {
+			token.setConsumido(true);
+			compilador.selecionarParentDe(RetornoContexto.this);
+		} else {
+			ExpressaoContexto expressao = new ExpressaoContexto(";");
+			compilador.selecionar(expressao);
+			add(expressao);
+		}
 	}
 
-	class PontoEVirgulaOuAbreParentese implements TokenExec {
-		@Override
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
-			if (token.isPontoEVirgula()) {
-				compilador.selecionarParentDe(RetornoContexto.this);
-				indiceEstado++;
-			} else if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.selecionar(expressao);
-				add(expressao);
-				indiceEstado++;
-			} else {
-				compilador.invalidar(token);
-			}
-		}
+	@Override
+	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		throw new ExpressaoException("erro.processar.retorno.estado");
 	}
 
 	@Override
