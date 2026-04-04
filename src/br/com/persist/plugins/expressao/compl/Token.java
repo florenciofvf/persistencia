@@ -5,6 +5,7 @@ import java.util.Objects;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 
 public class Token {
+	private boolean consumido;
 	final String string;
 	final int indice;
 	final Tipo tipo;
@@ -13,6 +14,14 @@ public class Token {
 		this.string = Objects.requireNonNull(string);
 		this.tipo = Objects.requireNonNull(tipo);
 		this.indice = indice;
+	}
+
+	public boolean isConsumido() {
+		return consumido;
+	}
+
+	public void setConsumido(boolean consumido) {
+		this.consumido = consumido;
 	}
 
 	public String getString() {
@@ -38,7 +47,7 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return string + "[" + tipo + "]";
+		return string + ":" + tipo;
 	}
 
 	public boolean isPontoEVirgula() {

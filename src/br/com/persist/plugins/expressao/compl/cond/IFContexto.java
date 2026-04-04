@@ -27,9 +27,11 @@ public class IFContexto extends Contexto {
 	@Override
 	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
 		if (selecionado == null) {
+			token.setConsumido(true);
 			compilador.selecionarParentDe(this);
 		}
 		if (selecionado instanceof ElseOuElseIf && !valido(token)) {
+			token.setConsumido(true);
 			compilador.selecionarParentDe(this);
 		}
 	}
