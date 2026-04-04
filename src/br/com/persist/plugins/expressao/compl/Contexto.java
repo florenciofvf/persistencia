@@ -29,6 +29,22 @@ public abstract class Contexto {
 		this(null);
 	}
 
+	public NegativoContexto getNegativoContexto() {
+		return negativoContexto;
+	}
+
+	public void negativar(Token token) {
+		if (token != null && "-".equals(token.getString())) {
+			negativoContexto = new NegativoContexto();
+		}
+	}
+
+	public void setNegativoContexto(NegativoContexto negativoContexto) {
+		if (negativoContexto != null) {
+			this.negativoContexto = negativoContexto;
+		}
+	}
+
 	public int getIndice() {
 		return indice;
 	}

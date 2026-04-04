@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.compl.instrucoes;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Compilador;
@@ -8,6 +9,7 @@ import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
+import br.com.persist.plugins.expressao.compl.TokenExec;
 import br.com.persist.plugins.expressao.compl.cond.IFContexto;
 import br.com.persist.plugins.expressao.compl.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.compl.loop.WhileContexto;
@@ -18,37 +20,139 @@ import br.com.persist.plugins.expressao.compl.nativo.StringContexto;
 import br.com.persist.plugins.expressao.compl.operador.OperadorContexto;
 
 public class ExpressaoContexto extends Salto {
+	private TokenExec selecionado = new OperMOuMNativoIniExpressaoChave();
+	private final String[] finalizadores;
+	private Token tokenMOuM;
+
+	public ExpressaoContexto(String[] finalizadores) {
+		this.finalizadores = Objects.requireNonNull(finalizadores);
+	}
+
+	public ExpressaoContexto() {
+		this(new String[] { ")" });
+	}
+
 	@Context("expressao")
 	@Doc({ "(valor)", "(valor operador valor)", "(valor operador expressao)", "(expressao operador valor)",
 			"(expressao operador expressao)" })
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		if (token.isFechaParentese()) {
+		selecionado.processar(compilador, token);
+	}
+
+	@Override
+	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+		String string = token.getString();
+		boolean finalizar = false;
+		for (String item : finalizadores) {
+			if (item.equals(string)) {
+				finalizar = true;
+			}
+		}
+		if (finalizar) {
 			montarArvore(compilador);
 			compilador.selecionarParentDe(this);
-		} else if (token.isAbreParentese()) {
-			if (getUltimo() instanceof ChaveContexto) {
-				InvocacaoContexto invocacao = new InvocacaoContexto(excluirUltimo().getToken(), true);
-				compilador.selecionar(invocacao);
-				add(invocacao);
+		}
+	}
+
+	class OperMOuMNativoIniExpressaoChave implements TokenExec {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+			if (token.isOperadorMOuM()) {
+				processarOperadorMOuM(token);
+			} else if (token.isNativo()) {
+				processarNativo(compilador, token);
+			} else if (token.isAbreParentese()) {
+				processarAbreParentese(compilador, token);
+			} else if (token.chave()) {
+				processarChave(token);
 			} else {
-				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.selecionar(expressao);
-				add(expressao);
+				compilador.invalidar(token);
 			}
-		} else if (token.isOperador()) {
-			add(new OperadorContexto(token));
-		} else if (token.isString()) {
-			add(new StringContexto(token));
-		} else if (token.isInteiro()) {
-			add(new InteiroContexto(token));
-		} else if (token.isFlutuante()) {
-			add(new FlutuanteContexto(token));
-		} else if (token.isChave() || token.isChave2() || token.isChaveN()) {
-			add(new ChaveContexto(token));
-		} else {
+		}
+
+		private void processarOperadorMOuM(Token token) {
+			tokenMOuM = token;
+			selecionado = new NativoIniExpressaoChave();
+		}
+	}
+
+	class NativoIniExpressaoChave implements TokenExec {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+			if (token.isNativo()) {
+				processarNativo(compilador, token);
+			} else if (token.isAbreParentese()) {
+				processarAbreParentese(compilador, token);
+			} else if (token.chave()) {
+				processarChave(token);
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	class QQOperador implements TokenExec {
+		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+			if (token.isOperador()) {
+				OperadorContexto operador = new OperadorContexto(token);
+				add(operador);
+				selecionado = new OperMOuMNativoIniExpressaoChave();
+			} else {
+				compilador.invalidar(token);
+			}
+		}
+	}
+
+	private void processarNativo(Compilador compilador, Token token) throws ExpressaoException {
+		Contexto nativo = criarNativo(token);
+		if (tokenMOuM != null && nativo instanceof StringContexto) {
 			compilador.invalidar(token);
 		}
+		if (tokenMOuM != null) {
+			nativo.negativar(tokenMOuM);
+			tokenMOuM = null;
+		}
+		add(nativo);
+		selecionado = new QQOperador();
+	}
+
+	private Contexto criarNativo(Token token) {
+		if (token.isString()) {
+			return new StringContexto(token);
+		} else if (token.isInteiro()) {
+			return new InteiroContexto(token);
+		} else {
+			return new FlutuanteContexto(token);
+		}
+	}
+
+	private void processarAbreParentese(Compilador compilador, Token token) throws ExpressaoException {
+		if (getUltimo() instanceof ChaveContexto) {
+			Contexto ultimo = excluirUltimo();
+			InvocacaoContexto invocacao = new InvocacaoContexto(ultimo.getToken(), true);
+			invocacao.setNegativoContexto(ultimo.getNegativoContexto());
+			compilador.selecionar(invocacao);
+			add(invocacao);
+			invocacao.processar(compilador, token);
+		} else {
+			ExpressaoContexto expressao = new ExpressaoContexto();
+			compilador.selecionar(expressao);
+			if (tokenMOuM != null) {
+				expressao.negativar(tokenMOuM);
+				tokenMOuM = null;
+			}
+			add(expressao);
+		}
+		selecionado = new OperMOuMNativoIniExpressaoChave();
+	}
+
+	private void processarChave(Token token) throws ExpressaoException {
+		ChaveContexto chave = new ChaveContexto(token);
+		if (tokenMOuM != null) {
+			chave.negativar(tokenMOuM);
+			tokenMOuM = null;
+		}
+		add(chave);
+		selecionado = new OperMOuMNativoIniExpressaoChave();
 	}
 
 	@Override
@@ -90,44 +194,44 @@ public class ExpressaoContexto extends Salto {
 
 	private void montarArvore() throws ExpressaoException {
 		Iterator<Contexto> it = componentes.iterator();
-		Contexto sel = it.next();
+		Contexto contextoSel = it.next();
 		it.remove();
 
 		if (it.hasNext()) {
 			OperadorContexto operador = (OperadorContexto) it.next();
 			it.remove();
-			operador.add(sel);
+			operador.add(contextoSel);
 			Contexto c = it.next();
 			it.remove();
 			operador.add(c);
-			sel = operador;
+			contextoSel = operador;
 		}
 
 		while (it.hasNext()) {
 			OperadorContexto operador = (OperadorContexto) it.next();
 			it.remove();
 
-			OperadorContexto selecionado = (OperadorContexto) sel;
-			if (operador.possuoPrioridadeSobre(selecionado)) {
-				Contexto ultimo = selecionado.excluirUltimo();
+			OperadorContexto operadorSel = (OperadorContexto) contextoSel;
+			if (operador.possuoPrioridadeSobre(operadorSel)) {
+				Contexto ultimo = operadorSel.excluirUltimo();
 				operador.add(ultimo);
-				selecionado.add(operador);
+				operadorSel.add(operador);
 				Contexto c = it.next();
 				it.remove();
 				operador.add(c);
 			} else {
-				operador.add(selecionado);
+				operador.add(operadorSel);
 				Contexto c = it.next();
 				it.remove();
 				operador.add(c);
-				sel = operador;
+				contextoSel = operador;
 			}
 		}
 
-		if (getSize() != 0 || sel == null) {
+		if (getSize() != 0 || contextoSel == null) {
 			throw new ExpressaoException("erro.expressao_invalida");
 		}
 
-		add(sel);
+		add(contextoSel);
 	}
 }

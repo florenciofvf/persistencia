@@ -97,6 +97,18 @@ public class Token {
 		return tipo == Tipo.CHAVEN;
 	}
 
+	public boolean chave() {
+		return isChave() || isChave2() || isChaveN();
+	}
+
+	public boolean isNativo() {
+		return isString() || isInteiro() || isFlutuante();
+	}
+
+	public boolean isOperadorMOuM() {
+		return isOperador() && ("+".equals(string) || "-".equals(string));
+	}
+
 	public boolean isReservado() {
 		return ExpressaoConstantes.CONST.equals(string) || ExpressaoConstantes.DEFUN.equals(string)
 				|| ExpressaoConstantes.DEFUN_NATIVE.equals(string) || ExpressaoConstantes.IF.equals(string)
