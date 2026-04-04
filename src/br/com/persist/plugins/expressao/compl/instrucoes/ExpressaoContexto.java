@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.compl.instrucoes;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -50,6 +51,7 @@ public class ExpressaoContexto extends Salto {
 			}
 		}
 		if (finalizar) {
+			token.setConsumido(true);
 			montarArvore(compilador);
 			compilador.selecionarParentDe(this);
 		}
@@ -233,5 +235,15 @@ public class ExpressaoContexto extends Salto {
 		}
 
 		add(contextoSel);
+	}
+
+	@Override
+	protected void empilharLocalPos(List<Contexto> lista) {
+		empilharLocalNegativo(lista);
+	}
+
+	@Override
+	protected void listarPos(List<Contexto> lista) {
+		listarNegativo(lista);
 	}
 }

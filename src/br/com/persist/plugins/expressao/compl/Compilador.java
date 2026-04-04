@@ -77,10 +77,9 @@ public class Compilador {
 			}
 			if (token.tipo != Tipo.COMENTARIO) {
 				selecionado.processarPre(this, token);
-				if (token.isConsumido()) {
-					return;
+				if (!token.isConsumido()) {
+					selecionado.processar(this, token);
 				}
-				selecionado.processar(this, token);
 			}
 		}
 	}
