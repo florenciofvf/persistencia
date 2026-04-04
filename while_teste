@@ -5,11 +5,11 @@ defun naoFazNada() void {
 		return;
 	}
 	return;
-};
+}
 
 defun getRetornoPadrao() {
 	while(1) {
 		return (1);
 	}
 	return (0);
-};
+}

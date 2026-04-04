@@ -1,5 +1,5 @@
 package br.com.teste;
 
 defun getValor() {
-	return (1 == 2);
-};
+	return 1 == 2;
+}

@@ -14,6 +14,21 @@ import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
 public class IFContexto extends Contexto {
 	private TokenExec selecionado = new IniExpressaoIF();
 
+	@Override
+	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+		if (selecionado == null) {
+			compilador.selecionarParentDe(this);
+		}
+		if (selecionado instanceof ElseOuElseIf && !valido(token)) {
+			compilador.selecionarParentDe(this);
+		}
+	}
+
+	private boolean valido(Token token) {
+		return ExpressaoConstantes.ELSE.equals(token.getString())
+				|| ExpressaoConstantes.ELSEIF.equals(token.getString());
+	}
+
 	@Context("se")
 	@Doc({ "if expressao instrucoes", "if expressao instrucoes else instrucoes",
 			"if expressao instrucoes elseif expressao instrucoes",
@@ -22,23 +37,6 @@ public class IFContexto extends Contexto {
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
 		selecionado.processar(compilador, token);
-	}
-
-	@Override
-	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
-		if (selecionado == null) {
-			token.setConsumido(true);
-			compilador.selecionarParentDe(this);
-		}
-		if (selecionado instanceof ElseOuElseIf && !valido(token)) {
-			token.setConsumido(true);
-			compilador.selecionarParentDe(this);
-		}
-	}
-
-	private boolean valido(Token token) {
-		return ExpressaoConstantes.ELSE.equals(token.getString())
-				|| ExpressaoConstantes.ELSEIF.equals(token.getString());
 	}
 
 	class IniExpressaoIF implements TokenExec {
