@@ -12,7 +12,7 @@ import br.com.persist.plugins.expressao.compl.Token;
 import br.com.persist.plugins.expressao.compl.TokenExec;
 
 public class ConstanteContexto extends Contexto {
-	private TokenExec[] execs = { new Chave(), new Atribuicao(), new AbreParentese(), new PontoEVirgula() };
+	private TokenExec[] execs = { new Chave(), new Atribuicao(), new IniExpressao(), new PontoEVirgula() };
 	public static final String DEF_CONST = "def_const";
 
 	@Context("declaracao_constante")

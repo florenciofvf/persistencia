@@ -56,7 +56,7 @@ public class FuncaoContexto extends Contexto {
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
 				execs = new TokenExec[] { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
-						new AbreChave() };
+						new IniInstrucoes() };
 				retornoVoid = true;
 				indiceEstado++;
 			} else {

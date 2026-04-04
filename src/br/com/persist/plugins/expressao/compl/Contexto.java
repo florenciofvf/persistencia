@@ -261,7 +261,7 @@ public abstract class Contexto {
 		}
 	}
 
-	public class AbreParentese implements TokenExec {
+	public class IniExpressao implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
@@ -274,7 +274,7 @@ public abstract class Contexto {
 		}
 	}
 
-	public class AbreChave implements TokenExec {
+	public class IniInstrucoes implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();

@@ -12,7 +12,7 @@ import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.compl.instrucoes.InstrucoesContexto;
 
 public class IFContexto extends Contexto {
-	private TokenExec selecionado = new IniExpressao();
+	private TokenExec selecionado = new IniExpressaoIF();
 
 	@Context("se")
 	@Doc({ "if expressao instrucoes", "if expressao instrucoes else instrucoes",
@@ -41,20 +41,20 @@ public class IFContexto extends Contexto {
 				|| ExpressaoConstantes.ELSEIF.equals(token.getString());
 	}
 
-	class IniExpressao implements TokenExec {
+	class IniExpressaoIF implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.selecionar(expressao);
 				adicionar(expressao);
-				selecionado = new IniInstrucao();
+				selecionado = new IniInstrucoesIF();
 			} else {
 				compilador.invalidar(token);
 			}
 		}
 	}
 
-	class IniInstrucao implements TokenExec {
+	class IniInstrucoesIF implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
@@ -73,7 +73,7 @@ public class IFContexto extends Contexto {
 			if (ExpressaoConstantes.ELSE.equals(token.getString())) {
 				selecionado = new IniInstrucaoElse();
 			} else if (ExpressaoConstantes.ELSEIF.equals(token.getString())) {
-				selecionado = new IniExpressao();
+				selecionado = new IniExpressaoIF();
 			} else {
 				compilador.invalidar(token);
 			}
