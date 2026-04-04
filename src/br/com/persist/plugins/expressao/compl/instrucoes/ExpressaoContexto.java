@@ -29,6 +29,10 @@ public class ExpressaoContexto extends Salto {
 		this.finalizadores = Objects.requireNonNull(finalizadores);
 	}
 
+	public ExpressaoContexto(String finalizador) {
+		this(new String[] { finalizador });
+	}
+
 	public ExpressaoContexto() {
 		this(new String[] { ")" });
 	}
