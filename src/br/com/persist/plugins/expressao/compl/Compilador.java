@@ -51,7 +51,7 @@ public class Compilador {
 			throw new ExpressaoException("erro.compilador.contexto_nulo_em", "selecionarParentDe (parent nulo)");
 		}
 		selecionado = parent;
-		selecionado.selecionarParentDeApos(this, contexto);
+		selecionado.selecionadoVia(this, contexto);
 	}
 
 	public void selecionar(Contexto contexto) {

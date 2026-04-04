@@ -46,7 +46,7 @@ public class IFContexto extends Contexto {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.selecionar(expressao);
-				add(expressao);
+				adicionar(expressao);
 				selecionado = new IniInstrucao();
 			} else {
 				compilador.invalidar(token);
@@ -59,7 +59,7 @@ public class IFContexto extends Contexto {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.selecionar(instrucoes);
-				add(instrucoes);
+				adicionar(instrucoes);
 				selecionado = new ElseOuElseIf();
 			} else {
 				compilador.invalidar(token);
@@ -85,7 +85,7 @@ public class IFContexto extends Contexto {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.selecionar(instrucoes);
-				add(instrucoes);
+				adicionar(instrucoes);
 				selecionado = null;
 			} else {
 				compilador.invalidar(token);

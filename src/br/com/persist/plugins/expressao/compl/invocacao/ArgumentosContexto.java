@@ -27,7 +27,7 @@ public class ArgumentosContexto extends Contexto {
 			} else if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.selecionar(expressao);
-				add(expressao);
+				adicionar(expressao);
 				selecionado = new FinalizaOuVirgula();
 			} else {
 				compilador.invalidar(token);
@@ -54,7 +54,7 @@ public class ArgumentosContexto extends Contexto {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.selecionar(expressao);
-				add(expressao);
+				adicionar(expressao);
 				selecionado = new FinalizaOuVirgula();
 			} else {
 				compilador.invalidar(token);

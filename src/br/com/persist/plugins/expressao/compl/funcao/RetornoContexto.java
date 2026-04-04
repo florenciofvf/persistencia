@@ -16,8 +16,8 @@ public class RetornoContexto extends Contexto {
 	public static final String RETURN = "return";
 
 	@Override
-	protected void selecionarParentDeApos(Compilador compilador, Contexto contexto) throws ExpressaoException {
-		compilador.selecionarParentDe(RetornoContexto.this);
+	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+		compilador.selecionarParentDe(this);
 	}
 
 	@Context("retorno_da_funcao")
@@ -26,11 +26,11 @@ public class RetornoContexto extends Contexto {
 	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
 		if (token.isPontoEVirgula()) {
 			token.setConsumido(true);
-			compilador.selecionarParentDe(RetornoContexto.this);
+			compilador.selecionarParentDe(this);
 		} else {
 			ExpressaoContexto expressao = new ExpressaoContexto(";");
 			compilador.selecionar(expressao);
-			add(expressao);
+			adicionar(expressao);
 		}
 	}
 

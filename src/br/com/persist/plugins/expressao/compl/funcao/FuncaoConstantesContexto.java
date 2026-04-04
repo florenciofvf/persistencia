@@ -10,17 +10,17 @@ public class FuncaoConstantesContexto extends FuncaoContexto {
 	public static final String NOME_FUNCAO_CONSTANTES = "$constantes";
 
 	public FuncaoConstantesContexto(Token token) {
-		add2(new ParametrosContexto());
+		adicionar2(new ParametrosContexto());
 		this.token = token;
 		retornoVoid = true;
 	}
 
 	@Override
-	public void add(Contexto c) throws ExpressaoException {
+	public void adicionar(Contexto c) throws ExpressaoException {
 		if (c instanceof ConstanteContexto) {
 			remove(retornoContexto);
-			super.add(c);
-			super.add(retornoContexto);
+			super.adicionar(c);
+			super.adicionar(retornoContexto);
 		} else {
 			throw new ExpressaoException("erro.inclusao.funcao_constantes");
 		}

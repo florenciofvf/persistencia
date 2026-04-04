@@ -57,19 +57,19 @@ public class BibliotecaContexto extends Contexto {
 			} else if (ExpressaoConstantes.ALIAS.equals(token.getString())) {
 				AliasContexto alias = new AliasContexto();
 				compilador.selecionar(alias);
-				add(alias);
+				adicionar(alias);
 			} else if (ExpressaoConstantes.CONST.equals(token.getString())) {
 				ConstanteContexto constante = new ConstanteContexto();
 				compilador.selecionar(constante);
-				add(constante);
+				adicionar(constante);
 			} else if (ExpressaoConstantes.DEFUN.equals(token.getString())) {
 				FuncaoContexto funcao = new FuncaoContexto();
 				compilador.selecionar(funcao);
-				add(funcao);
+				adicionar(funcao);
 			} else if (ExpressaoConstantes.DEFUN_NATIVE.equals(token.getString())) {
 				FuncaoNativaContexto funcaoNativa = new FuncaoNativaContexto();
 				compilador.selecionar(funcaoNativa);
-				add(funcaoNativa);
+				adicionar(funcaoNativa);
 			} else {
 				compilador.invalidar(token);
 			}
@@ -81,11 +81,11 @@ public class BibliotecaContexto extends Contexto {
 	public void transferirConstantes() throws ExpressaoException {
 		Token token = new Token(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES, Tipo.VIRTUAL, -1);
 		funcaoConstantes = new FuncaoConstantesContexto(token);
-		add(funcaoConstantes);
+		adicionar(funcaoConstantes);
 		List<ConstanteContexto> lista = getListaConstantes();
 		for (ConstanteContexto item : lista) {
 			remove(item);
-			funcaoConstantes.add(item);
+			funcaoConstantes.adicionar(item);
 		}
 	}
 
@@ -104,7 +104,7 @@ public class BibliotecaContexto extends Contexto {
 		if (!lista.isEmpty()) {
 			throw new ExpressaoException("erro.package.multiplo");
 		}
-		add(c);
+		adicionar(c);
 	}
 
 	public void checarPackage() throws ExpressaoException {

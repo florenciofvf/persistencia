@@ -43,7 +43,7 @@ public class FuncaoNativaContexto extends Contexto {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
 				compilador.selecionar(parametros);
-				add(parametros);
+				adicionar(parametros);
 				indiceEstado++;
 			} else {
 				compilador.invalidar(token);

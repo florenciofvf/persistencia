@@ -61,7 +61,7 @@ public class InvocacaoContexto extends Contexto {
 			if (token.isAbreParentese()) {
 				ArgumentosContexto argumentos = new ArgumentosContexto();
 				compilador.selecionar(argumentos);
-				add(argumentos);
+				adicionar(argumentos);
 				selecionado = new PontoEVirgula();
 			} else {
 				compilador.invalidar(token);

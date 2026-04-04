@@ -86,15 +86,15 @@ public abstract class Contexto {
 		return ultimo;
 	}
 
-	public void add(Contexto c) throws ExpressaoException {
+	public void adicionar(Contexto c) throws ExpressaoException {
 		if (c != null) {
-			add2(c);
+			adicionar2(c);
 		} else {
 			throw new ExpressaoException("erro.inclusao.nulo");
 		}
 	}
 
-	protected void add2(Contexto c) {
+	protected void adicionar2(Contexto c) {
 		if (c.parent != null) {
 			c.parent.remove(c);
 		}
@@ -126,7 +126,7 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected void selecionarParentDeApos(Compilador compilador, Contexto contexto) throws ExpressaoException {
+	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
 	}
 
 	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
@@ -266,7 +266,7 @@ public abstract class Contexto {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
 				compilador.selecionar(expressao);
-				add(expressao);
+				adicionar(expressao);
 				indiceEstado++;
 			} else {
 				compilador.invalidar(token);
@@ -279,7 +279,7 @@ public abstract class Contexto {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.selecionar(instrucoes);
-				add(instrucoes);
+				adicionar(instrucoes);
 				indiceEstado++;
 			} else {
 				compilador.invalidar(token);

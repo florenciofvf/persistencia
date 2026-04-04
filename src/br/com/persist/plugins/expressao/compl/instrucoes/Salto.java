@@ -172,7 +172,7 @@ public abstract class Salto extends Contexto {
 		checarPilha(pilha);
 		IFEqContexto ifEqContexto = new IFEqContexto();
 		ifEqContexto.setDestino(pilha.get(0));
-		add(ifEqContexto);
+		adicionar(ifEqContexto);
 	}
 
 	private void processarGoto(Contexto contexto) throws ExpressaoException {
@@ -181,6 +181,6 @@ public abstract class Salto extends Contexto {
 		checarPilha(pilha);
 		GotoContexto gotoContexto = new GotoContexto();
 		gotoContexto.setDestino(pilha.get(0));
-		add(gotoContexto);
+		adicionar(gotoContexto);
 	}
 }

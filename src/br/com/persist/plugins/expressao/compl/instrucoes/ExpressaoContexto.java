@@ -100,7 +100,7 @@ public class ExpressaoContexto extends Salto {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isOperador()) {
 				OperadorContexto operador = new OperadorContexto(token);
-				add(operador);
+				adicionar(operador);
 				selecionado = new OperMOuMNativoIniExpressaoChave();
 			} else {
 				compilador.invalidar(token);
@@ -117,7 +117,7 @@ public class ExpressaoContexto extends Salto {
 			nativo.negativar(tokenMOuM);
 			tokenMOuM = null;
 		}
-		add(nativo);
+		adicionar(nativo);
 		selecionado = new QQOperador();
 	}
 
@@ -137,7 +137,7 @@ public class ExpressaoContexto extends Salto {
 			InvocacaoContexto invocacao = new InvocacaoContexto(ultimo.getToken(), true);
 			invocacao.setNegativoContexto(ultimo.getNegativoContexto());
 			compilador.selecionar(invocacao);
-			add(invocacao);
+			adicionar(invocacao);
 			invocacao.processar(compilador, token);
 		} else {
 			ExpressaoContexto expressao = new ExpressaoContexto();
@@ -146,7 +146,7 @@ public class ExpressaoContexto extends Salto {
 				expressao.negativar(tokenMOuM);
 				tokenMOuM = null;
 			}
-			add(expressao);
+			adicionar(expressao);
 		}
 		selecionado = new OperMOuMNativoIniExpressaoChave();
 	}
@@ -157,7 +157,7 @@ public class ExpressaoContexto extends Salto {
 			chave.negativar(tokenMOuM);
 			tokenMOuM = null;
 		}
-		add(chave);
+		adicionar(chave);
 		selecionado = new OperMOuMNativoIniExpressaoChave();
 	}
 
@@ -206,10 +206,10 @@ public class ExpressaoContexto extends Salto {
 		if (it.hasNext()) {
 			OperadorContexto operador = (OperadorContexto) it.next();
 			it.remove();
-			operador.add(contextoSel);
+			operador.adicionar(contextoSel);
 			Contexto c = it.next();
 			it.remove();
-			operador.add(c);
+			operador.adicionar(c);
 			contextoSel = operador;
 		}
 
@@ -220,16 +220,16 @@ public class ExpressaoContexto extends Salto {
 			OperadorContexto operadorSel = (OperadorContexto) contextoSel;
 			if (operador.possuoPrioridadeSobre(operadorSel)) {
 				Contexto ultimo = operadorSel.excluirUltimo();
-				operador.add(ultimo);
-				operadorSel.add(operador);
+				operador.adicionar(ultimo);
+				operadorSel.adicionar(operador);
 				Contexto c = it.next();
 				it.remove();
-				operador.add(c);
+				operador.adicionar(c);
 			} else {
-				operador.add(operadorSel);
+				operador.adicionar(operadorSel);
 				Contexto c = it.next();
 				it.remove();
-				operador.add(c);
+				operador.adicionar(c);
 				contextoSel = operador;
 			}
 		}
@@ -238,7 +238,7 @@ public class ExpressaoContexto extends Salto {
 			throw new ExpressaoException("erro.expressao_invalida");
 		}
 
-		add(contextoSel);
+		adicionar(contextoSel);
 	}
 
 	@Override

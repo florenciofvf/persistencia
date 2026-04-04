@@ -18,6 +18,13 @@ public class FuncaoContexto extends Contexto {
 	public static final String PREFIXO_FUNCAO = "funcao ";
 	protected boolean retornoVoid;
 
+	@Override
+	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+		if (contexto instanceof InstrucoesContexto) {
+			compilador.selecionarParentDe(this);
+		}
+	}
+
 	@Context("funcao")
 	@Doc({ "funcao chave parametros instrucoes", "funcao chave parametros void instrucoes" })
 	@Override
@@ -26,19 +33,12 @@ public class FuncaoContexto extends Contexto {
 		execs[indiceEstado].processar(compilador, token);
 	}
 
-	@Override
-	protected void selecionarParentDeApos(Compilador compilador, Contexto contexto) throws ExpressaoException {
-		if (contexto instanceof InstrucoesContexto) {
-			compilador.selecionarParentDe(this);
-		}
-	}
-
 	class IniParametros implements TokenExec {
 		public void processar(Compilador compilador, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
 				compilador.selecionar(parametros);
-				add(parametros);
+				adicionar(parametros);
 				indiceEstado++;
 			} else {
 				compilador.invalidar(token);
@@ -52,7 +52,7 @@ public class FuncaoContexto extends Contexto {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
 				compilador.selecionar(instrucoes);
-				add(instrucoes);
+				adicionar(instrucoes);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
 				execs = new TokenExec[] { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
