@@ -11,6 +11,7 @@ import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class ParametroContexto extends Contexto {
 	public static final String PREFIXO_PARAMETRO = "param ";
+	public static final String LOAD_PARAM = "load_param";
 
 	public ParametroContexto(Token chave) {
 		super(chave);

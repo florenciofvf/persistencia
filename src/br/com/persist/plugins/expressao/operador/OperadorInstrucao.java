@@ -1,11 +1,15 @@
-package br.com.persist.plugins.expressao.processador;
+package br.com.persist.plugins.expressao.operador;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.processador.Funcao;
+import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.InstrucaoUtil;
+import br.com.persist.plugins.expressao.processador.PilhaFuncao;
+import br.com.persist.plugins.expressao.processador.PilhaOperando;
 import br.com.persist.plugins.instrucao.biblionativo.Lista;
-import br.com.persist.plugins.instrucao.compilador.OperadorContexto;
 
 public class OperadorInstrucao {
 	private OperadorInstrucao() {
@@ -98,8 +102,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarOperando(operandoE);
@@ -137,8 +141,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarOperando(operandoE);
@@ -149,12 +153,12 @@ public class OperadorInstrucao {
 			pilhaOperando.push(lista);
 		}
 
-		private void add(Lista lista, Object obj) throws InstrucaoException {
+		private void add(Lista lista, Object obj) throws ExpressaoException {
 			if (obj instanceof Lista) {
 				try {
 					lista.addLista((Lista) obj);
 				} catch (IllegalAccessException e) {
-					throw new InstrucaoException(e);
+					throw new ExpressaoException(e);
 				}
 			} else {
 				lista.add(obj);
@@ -173,8 +177,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -206,8 +210,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -239,8 +243,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -272,8 +276,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -305,8 +309,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarNumber(operandoE);
@@ -336,8 +340,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarNumber(operandoE);
@@ -367,8 +371,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarNumber(operandoE);
@@ -394,8 +398,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarOperando(operandoE);
@@ -433,8 +437,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarOperando(operandoE);
@@ -472,8 +476,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -505,8 +509,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -538,8 +542,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
@@ -571,8 +575,8 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+		public void processar(Funcao funcao,
+				PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws ExpressaoException {
 			Object operandoD = pilhaOperando.pop();
 			Object operandoE = pilhaOperando.pop();
 			InstrucaoUtil.checarBigIntegerBigDecimal(operandoE);
