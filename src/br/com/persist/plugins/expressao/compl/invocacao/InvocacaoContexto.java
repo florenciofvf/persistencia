@@ -11,13 +11,12 @@ import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Indexador;
 import br.com.persist.plugins.expressao.compl.Token;
-import br.com.persist.plugins.expressao.compl.TokenExec;
 
 public class InvocacaoContexto extends Contexto {
-	public static final String INVOKE_RETR = "invoke_retr";
+	public static final String INVOKE_RETR = "invoke_cret";
 	public static final String INVOKE_VOID = "invoke_void";
-	private TokenExec selecionado = new IniArgumentos();
 	public static final String THIS = "this";
+	private ArgumentosContexto argumentos;
 	private boolean comRetorno;
 	private String biblio;
 	private String metodo;
@@ -27,10 +26,6 @@ public class InvocacaoContexto extends Contexto {
 		super(token);
 		this.comRetorno = comRetorno;
 		init();
-	}
-
-	public ArgumentosContexto getArgumentos() {
-		return (ArgumentosContexto) getPrimeiro();
 	}
 
 	private void init() {
@@ -49,24 +44,47 @@ public class InvocacaoContexto extends Contexto {
 		}
 	}
 
+	public ArgumentosContexto getArgumentos() {
+		return argumentos;
+	}
+
+	@Override
+	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+		if (contexto instanceof ArgumentosContexto && comRetorno) {
+			compilador.selecionarParentDe(this);
+		}
+	}
+
+	@Override
+	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+		if (token.isAbreParentese()) {
+			if (argumentos != null) {
+				compilador.invalidar(token);
+			} else {
+				argumentos = new ArgumentosContexto();
+				compilador.selecionar(argumentos);
+				token.setConsumido(true);
+				adicionar(argumentos);
+			}
+		} else if (token.isPontoEVirgula()) {
+			if (argumentos == null) {
+				compilador.invalidar(token);
+			}
+			if (comRetorno) {
+				compilador.invalidar(token);
+			}
+			token.setConsumido(true);
+			compilador.selecionarParentDe(this);
+		} else {
+			compilador.invalidar(token);
+		}
+	}
+
 	@Context("invocar_funcao")
 	@Doc({ "metodo();", "alias.mensagem(arg);", "br.com.teste.Biblioteca.mensagem(arg);" })
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		selecionado.processar(compilador, token);
-	}
-
-	class IniArgumentos implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
-			if (token.isAbreParentese()) {
-				ArgumentosContexto argumentos = new ArgumentosContexto();
-				compilador.selecionar(argumentos);
-				adicionar(argumentos);
-				selecionado = new PontoEVirgula();
-			} else {
-				compilador.invalidar(token);
-			}
-		}
+		throw new ExpressaoException("erro.processar.invocacao.estado");
 	}
 
 	@Override
