@@ -24,9 +24,9 @@ defun getValor(a) {
 
 defun main() void {
 	if(1 < 2) {
-		print(('IF_EXTERNO'));
+		print('IF_EXTERNO');
 		if(1) {
-			print(('if_interno'));
+			print('if_interno');
 		}
 	} else {
 		print(('ELSE_EXTERNO'));
@@ -40,7 +40,7 @@ defun teste(a, b) void {
 	} elseif(b) {
 		print(('dois'));
 	} else {
-		print(('três'));
+		print('três');
 	}
 	return;
 }
