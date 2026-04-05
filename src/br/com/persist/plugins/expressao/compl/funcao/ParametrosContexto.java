@@ -3,60 +3,64 @@ package br.com.persist.plugins.expressao.compl.funcao;
 import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
-import br.com.persist.plugins.expressao.compl.TokenExec;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 
 public class ParametrosContexto extends Contexto {
-	private TokenExec selecionado = new FinalizaOuParametro();
+	private static final String ERRO_EXPRESSAO_PARAMETROS_SELECIONADO_VIA = "erro.expressao.parametros.selecionado_via";
+	private static final String[] FINALIZADORES = new String[] { ",", ")" };
+
+	@Override
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
+		if (contexto instanceof ParametrosContextoHandler) {
+			ParametrosContextoHandler handler = (ParametrosContextoHandler) contexto;
+			Token finalizador = handler.getTokenFinalizador();
+			if (finalizador == null) {
+				throw new ExpressaoException(ERRO_EXPRESSAO_PARAMETROS_SELECIONADO_VIA);
+			}
+			if (handler.getToken() == null) {
+				throw new ExpressaoException(ERRO_EXPRESSAO_PARAMETROS_SELECIONADO_VIA);
+			}
+			remove(handler);
+			adicionar(new ParametroContexto(handler.getToken()));
+			if (finalizador.isVirgula()) {
+				handler = new ParametrosContextoHandler(FINALIZADORES);
+				tokenManager.selecionar(handler);
+				adicionar(handler);
+			} else if (finalizador.isFechaParentese()) {
+				tokenManager.selecionarParentDe(this);
+			} else {
+				throw new ExpressaoException(ERRO_EXPRESSAO_PARAMETROS_SELECIONADO_VIA);
+			}
+		} else {
+			throw new ExpressaoException(ERRO_EXPRESSAO_PARAMETROS_SELECIONADO_VIA);
+		}
+	}
+
+	@Override
+	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
+		if (token.isFechaParentese()) {
+			if (isEmpty()) {
+				token.setConsumido(true);
+				tokenManager.selecionarParentDe(this);
+			} else {
+				tokenManager.invalidar(token);
+			}
+		} else {
+			ParametrosContextoHandler handler = new ParametrosContextoHandler(FINALIZADORES);
+			tokenManager.selecionar(handler);
+			adicionar(handler);
+		}
+	}
 
 	@Context("parametros_da_funcao")
-	@Doc({ "()", "(chave)", "(parametros_da_funcao, chave)" })
+	@Doc({ "()", "param", "parametros_da_funcao, param" })
 	@Override
 	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-		selecionado.processar(tokenManager, token);
-	}
-
-	class FinalizaOuParametro implements TokenExec {
-		@Override
-		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-			if (token.isFechaParentese()) {
-				tokenManager.selecionarParentDe(ParametrosContexto.this);
-			} else if (token.isChave()) {
-				adicionar(new ParametroContexto(token));
-				selecionado = new FinalizaOuVirgula();
-			} else {
-				tokenManager.invalidar(token);
-			}
-		}
-	}
-
-	class FinalizaOuVirgula implements TokenExec {
-		@Override
-		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-			if (token.isFechaParentese()) {
-				tokenManager.selecionarParentDe(ParametrosContexto.this);
-			} else if (token.isVirgula()) {
-				selecionado = new Parametro();
-			} else {
-				tokenManager.invalidar(token);
-			}
-		}
-	}
-
-	class Parametro implements TokenExec {
-		@Override
-		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-			if (token.isChave()) {
-				adicionar(new ParametroContexto(token));
-				selecionado = new FinalizaOuVirgula();
-			} else {
-				tokenManager.invalidar(token);
-			}
-		}
+		throw new ExpressaoException("erro.processar.parametros.estado");
 	}
 
 	@Override
