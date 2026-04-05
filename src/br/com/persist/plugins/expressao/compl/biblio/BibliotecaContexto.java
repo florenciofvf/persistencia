@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -48,33 +48,33 @@ public class BibliotecaContexto extends Contexto {
 	@Context("biblioteca")
 	@Doc({ "package;", "alias;", "const;", "defun;", "defun_native;" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isReservado()) {
 			if (ExpressaoConstantes.PACKAGE.equals(token.getString())) {
 				PacoteContexto pacote = new PacoteContexto();
-				compilador.selecionar(pacote);
+				tokenManager.selecionar(pacote);
 				addPackage(pacote);
 			} else if (ExpressaoConstantes.ALIAS.equals(token.getString())) {
 				AliasContexto alias = new AliasContexto();
-				compilador.selecionar(alias);
+				tokenManager.selecionar(alias);
 				adicionar(alias);
 			} else if (ExpressaoConstantes.CONST.equals(token.getString())) {
 				ConstanteContexto constante = new ConstanteContexto();
-				compilador.selecionar(constante);
+				tokenManager.selecionar(constante);
 				adicionar(constante);
 			} else if (ExpressaoConstantes.DEFUN.equals(token.getString())) {
 				FuncaoContexto funcao = new FuncaoContexto();
-				compilador.selecionar(funcao);
+				tokenManager.selecionar(funcao);
 				adicionar(funcao);
 			} else if (ExpressaoConstantes.DEFUN_NATIVE.equals(token.getString())) {
 				FuncaoNativaContexto funcaoNativa = new FuncaoNativaContexto();
-				compilador.selecionar(funcaoNativa);
+				tokenManager.selecionar(funcaoNativa);
 				adicionar(funcaoNativa);
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		} else {
-			compilador.invalidar(token);
+			tokenManager.invalidar(token);
 		}
 	}
 

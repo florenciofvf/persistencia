@@ -1,7 +1,7 @@
 package br.com.persist.plugins.expressao.compl.invocacao;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -13,7 +13,7 @@ public class ArgumentosContexto extends Contexto {
 	private static final String[] FINALIZADORES = new String[] { ",", ")" };
 
 	@Override
-	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
 		if (contexto instanceof ExpressaoContexto) {
 			ExpressaoContexto expressao = (ExpressaoContexto) contexto;
 			Token token = expressao.getTokenFinalizador();
@@ -22,10 +22,10 @@ public class ArgumentosContexto extends Contexto {
 			}
 			if (token.isVirgula()) {
 				expressao = new ExpressaoContexto(FINALIZADORES);
-				compilador.selecionar(expressao);
+				tokenManager.selecionar(expressao);
 				adicionar(expressao);
 			} else if (token.isFechaParentese()) {
-				compilador.selecionarParentDe(this);
+				tokenManager.selecionarParentDe(this);
 			} else {
 				throw new ExpressaoException(ERRO_EXPRESSAO_ARGUMENTOS_SELECIONADO_VIA);
 			}
@@ -35,17 +35,17 @@ public class ArgumentosContexto extends Contexto {
 	}
 
 	@Override
-	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isFechaParentese()) {
 			if (isEmpty()) {
 				token.setConsumido(true);
-				compilador.selecionarParentDe(this);
+				tokenManager.selecionarParentDe(this);
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		} else {
 			ExpressaoContexto expressao = new ExpressaoContexto(FINALIZADORES);
-			compilador.selecionar(expressao);
+			tokenManager.selecionar(expressao);
 			adicionar(expressao);
 		}
 	}
@@ -53,7 +53,7 @@ public class ArgumentosContexto extends Contexto {
 	@Context("argumentos_da_funcao")
 	@Doc({ "()", "arg", "argumentos_da_funcao, arg" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		throw new ExpressaoException("erro.processar.argumentos.estado");
 	}
 }

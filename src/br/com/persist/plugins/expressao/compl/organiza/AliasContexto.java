@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -20,29 +20,29 @@ public class AliasContexto extends Contexto {
 	@Context("alias_para_biblioteca")
 	@Doc({ "alias chaveN chave;" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		checarIndiceEstado(compilador, execs, token);
-		execs[indiceEstado].processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		checarIndiceEstado(tokenManager, execs, token);
+		execs[indiceEstado].processar(tokenManager, token);
 	}
 
 	class ChaveN implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChaveN()) {
 				biblioteca = token;
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class Chave implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChave()) {
 				alias = token;
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
