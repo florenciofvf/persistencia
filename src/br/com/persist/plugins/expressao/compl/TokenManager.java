@@ -66,25 +66,32 @@ public class TokenManager {
 		tokens.clear();
 		indice = 0;
 		while (indice < string.length()) {
-			saltarChar32();
+			saltarCharMenorOuIgualA32();
 			if (indice >= string.length()) {
 				return;
 			}
 			Token token = proximoToken();
 			addToken(token);
-			if (selecionado == null) {
-				throw new ExpressaoException("erro.tokenManager.contexto_nulo");
-			}
-			if (token.tipo != Tipo.COMENTARIO) {
-				selecionado.processarPre(this, token);
-				if (!token.isConsumido()) {
-					selecionado.processar(this, token);
-				}
+			processar(token);
+		}
+	}
+
+	public void processar(Token token) throws ExpressaoException {
+		if (selecionado == null) {
+			throw new ExpressaoException("erro.tokenManager.contexto_nulo");
+		}
+		if (token == null) {
+			throw new ExpressaoException("erro.tokenManager.token_nulo");
+		}
+		if (token.tipo != Tipo.COMENTARIO) {
+			selecionado.processarPre(this, token);
+			if (!token.isConsumido()) {
+				selecionado.processar(this, token);
 			}
 		}
 	}
 
-	private void saltarChar32() {
+	private void saltarCharMenorOuIgualA32() {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c <= ' ') {

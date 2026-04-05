@@ -37,6 +37,9 @@ public class ParametrosContextoHandler extends Contexto {
 			}
 		}
 		if (finalizar) {
+			if (this.token == null) {
+				tokenManager.invalidar(token);
+			}
 			token.setConsumido(true);
 			tokenFinalizador = token;
 			tokenManager.selecionarParentDe(this);

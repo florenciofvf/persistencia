@@ -144,7 +144,7 @@ public class ExpressaoContexto extends Salto {
 			invocacao.setNegativoContexto(ultimo.getNegativoContexto());
 			tokenManager.selecionar(invocacao);
 			adicionar(invocacao);
-			invocacao.processar(tokenManager, token);
+			tokenManager.processar(token);
 		} else {
 			ExpressaoContexto expressao = new ExpressaoContexto();
 			tokenManager.selecionar(expressao);
