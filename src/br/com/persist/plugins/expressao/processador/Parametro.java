@@ -1,11 +1,12 @@
 package br.com.persist.plugins.expressao.processador;
 
-import br.com.persist.plugins.instrucao.compilador.ParametroContexto;
-import br.com.persist.plugins.instrucao.compilador.Token;
+import br.com.persist.plugins.expressao.compilador.Token;
+import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 
 public class Parametro extends ParametroContexto {
 	Object valor;
-	int indice;
+
+	/** int indice; */
 
 	public Parametro(Token token) {
 		super(token);
@@ -13,6 +14,6 @@ public class Parametro extends ParametroContexto {
 
 	@Override
 	public String toString() {
-		return indice + ": " + nome + "=" + valor;
+		return indice + ": " + token.getString() + "=" + valor;
 	}
 }

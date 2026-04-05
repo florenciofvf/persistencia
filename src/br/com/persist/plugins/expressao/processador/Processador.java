@@ -3,15 +3,16 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class Processador {
 	private final CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
 	private final PilhaOperando pilhaOperando = new PilhaOperando();
 	private final PilhaFuncao pilhaFuncao = new PilhaFuncao();
 
-	public List<Object> processar(String nomeAbsoluto, String nomeFuncao, Object... args) throws InstrucaoException {
+	public List<Object> processar(String nomeAbsoluto, String nomeFuncao, Object... args) throws ExpressaoException {
 		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeAbsoluto);
 
 		Funcao funcao = biblioteca.getFuncao(nomeFuncao).clonar();
@@ -48,7 +49,7 @@ public class Processador {
 				processar = true;
 			}
 			if (processar) {
-				instrucao.processar(cacheBiblioteca, funcao.getBiblioteca(), funcao, pilhaFuncao, pilhaOperando);
+				instrucao.processar(funcao, pilhaFuncao, pilhaOperando);
 				funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
 			}
 		}

@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import br.com.persist.plugins.instrucao.InstrucaoConstantes;
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.instrucao.compilador.Token;
 import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
@@ -203,7 +204,7 @@ public class Funcao {
 	public String getInterfaceInfo() {
 		StringBuilder sb = new StringBuilder(getInterface());
 		if (tipoVoid) {
-			sb.append(" : " + InstrucaoConstantes.VOID);
+			sb.append(" : " + ExpressaoConstantes.VOID);
 		}
 		if (isNativo()) {
 			sb.append(" [nativo]");
