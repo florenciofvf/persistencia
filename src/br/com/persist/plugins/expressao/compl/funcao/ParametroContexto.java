@@ -3,7 +3,7 @@ package br.com.persist.plugins.expressao.compl.funcao;
 import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -19,8 +19,8 @@ public class ParametroContexto extends Contexto {
 	@Context("parametro")
 	@Doc("chave")
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		compilador.invalidar(token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		tokenManager.invalidar(token);
 	}
 
 	@Override

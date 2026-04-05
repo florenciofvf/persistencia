@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -22,48 +22,48 @@ public class FuncaoNativaContexto extends Contexto {
 	@Context("funcao_nativa")
 	@Doc({ "funcao_nativa biblioteca chave parametros;", "funcao_nativa biblioteca chave parametros void;" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		checarIndiceEstado(compilador, execs, token);
-		execs[indiceEstado].processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		checarIndiceEstado(tokenManager, execs, token);
+		execs[indiceEstado].processar(tokenManager, token);
 	}
 
 	class ChaveN implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChaveN()) {
 				biblioteca = token;
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class IniParametros implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
-				compilador.selecionar(parametros);
+				tokenManager.selecionar(parametros);
 				adicionar(parametros);
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class TipoRetornoOuPontoEVirgula implements TokenExec {
 		@Override
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
 				execs = new TokenExec[] { new ChaveN(), new Chave(), new IniParametros(),
 						new TipoRetornoOuPontoEVirgula() };
-				compilador.selecionarParentDe(FuncaoNativaContexto.this);
+				tokenManager.selecionarParentDe(FuncaoNativaContexto.this);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
 				retornoVoid = true;
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}

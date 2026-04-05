@@ -2,7 +2,7 @@ package br.com.persist.plugins.expressao.compl.cond;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -15,12 +15,12 @@ public class IFContexto extends Contexto {
 	private TokenExec selecionado = new IniExpressaoIF();
 
 	@Override
-	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (selecionado == null) {
-			compilador.selecionarParentDe(this);
+			tokenManager.selecionarParentDe(this);
 		}
 		if (selecionado instanceof ElseOuElseIf && !valido(token)) {
-			compilador.selecionarParentDe(this);
+			tokenManager.selecionarParentDe(this);
 		}
 	}
 
@@ -35,58 +35,58 @@ public class IFContexto extends Contexto {
 			"if expressao instrucoes elseif expressao instrucoes else instrucoes",
 			"if expressao instrucoes elseif expressao instrucoes elseif expressao instrucoes else instrucoes" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		selecionado.processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		selecionado.processar(tokenManager, token);
 	}
 
 	class IniExpressaoIF implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.selecionar(expressao);
+				tokenManager.selecionar(expressao);
 				adicionar(expressao);
 				selecionado = new IniInstrucoesIF();
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class IniInstrucoesIF implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.selecionar(instrucoes);
+				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				selecionado = new ElseOuElseIf();
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class ElseOuElseIf implements TokenExec {
 		@Override
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (ExpressaoConstantes.ELSE.equals(token.getString())) {
 				selecionado = new IniInstrucaoElse();
 			} else if (ExpressaoConstantes.ELSEIF.equals(token.getString())) {
 				selecionado = new IniExpressaoIF();
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class IniInstrucaoElse implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.selecionar(instrucoes);
+				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				selecionado = null;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}

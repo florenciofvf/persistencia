@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -19,39 +19,39 @@ public class FuncaoContexto extends Contexto {
 	protected boolean retornoVoid;
 
 	@Override
-	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
 		if (contexto instanceof InstrucoesContexto) {
-			compilador.selecionarParentDe(this);
+			tokenManager.selecionarParentDe(this);
 		}
 	}
 
 	@Context("funcao")
 	@Doc({ "funcao chave parametros instrucoes", "funcao chave parametros void instrucoes" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		checarIndiceEstado(compilador, execs, token);
-		execs[indiceEstado].processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		checarIndiceEstado(tokenManager, execs, token);
+		execs[indiceEstado].processar(tokenManager, token);
 	}
 
 	class IniParametros implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ParametrosContexto parametros = new ParametrosContexto();
-				compilador.selecionar(parametros);
+				tokenManager.selecionar(parametros);
 				adicionar(parametros);
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class TipoRetornoOuIniInstrucoes implements TokenExec {
 		@Override
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.selecionar(instrucoes);
+				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
@@ -60,7 +60,7 @@ public class FuncaoContexto extends Contexto {
 				retornoVoid = true;
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}

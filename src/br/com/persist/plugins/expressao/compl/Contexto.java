@@ -126,18 +126,19 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
 	}
 
-	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 	}
 
-	protected void processar(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 	}
 
-	protected void checarIndiceEstado(Compilador compilador, Object[] array, Token token) throws ExpressaoException {
+	protected void checarIndiceEstado(TokenManager tokenManager, Object[] array, Token token)
+			throws ExpressaoException {
 		if (indiceEstado >= array.length) {
-			compilador.invalidar(token);
+			tokenManager.invalidar(token);
 		}
 	}
 
@@ -251,49 +252,49 @@ public abstract class Contexto {
 	}
 
 	public class Chave implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChave()) {
 				Contexto.this.token = token;
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	public class IniExpressao implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreParentese()) {
 				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.selecionar(expressao);
+				tokenManager.selecionar(expressao);
 				adicionar(expressao);
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	public class IniInstrucoes implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
 				InstrucoesContexto instrucoes = new InstrucoesContexto();
-				compilador.selecionar(instrucoes);
+				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	public class PontoEVirgula implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isPontoEVirgula()) {
-				compilador.selecionarParentDe(Contexto.this);
+				tokenManager.selecionarParentDe(Contexto.this);
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}

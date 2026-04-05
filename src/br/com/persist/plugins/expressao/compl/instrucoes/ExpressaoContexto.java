@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -42,12 +42,12 @@ public class ExpressaoContexto extends Salto {
 	@Doc({ "(valor)", "(valor operador valor)", "(valor operador expressao)", "(expressao operador valor)",
 			"(expressao operador expressao)" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		selecionado.processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		selecionado.processar(tokenManager, token);
 	}
 
 	@Override
-	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 		String string = token.getString();
 		boolean finalizar = false;
 		for (String item : finalizadores) {
@@ -58,8 +58,8 @@ public class ExpressaoContexto extends Salto {
 		if (finalizar) {
 			token.setConsumido(true);
 			tokenFinalizador = token;
-			montarArvore(compilador);
-			compilador.selecionarParentDe(this);
+			montarArvore(tokenManager);
+			tokenManager.selecionarParentDe(this);
 		}
 	}
 
@@ -68,17 +68,17 @@ public class ExpressaoContexto extends Salto {
 	}
 
 	class OperMOuMNativoIniExpressaoChave implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isOperadorMOuM()) {
 				processarOperadorMOuM(token);
 			} else if (token.isNativo()) {
-				processarNativo(compilador, token);
+				processarNativo(tokenManager, token);
 			} else if (token.isAbreParentese()) {
-				processarIniExpressao(compilador, token);
+				processarIniExpressao(tokenManager, token);
 			} else if (token.chave()) {
 				processarChave(token);
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 
@@ -89,35 +89,35 @@ public class ExpressaoContexto extends Salto {
 	}
 
 	class NativoIniExpressaoChave implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isNativo()) {
-				processarNativo(compilador, token);
+				processarNativo(tokenManager, token);
 			} else if (token.isAbreParentese()) {
-				processarIniExpressao(compilador, token);
+				processarIniExpressao(tokenManager, token);
 			} else if (token.chave()) {
 				processarChave(token);
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class QQOperador implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isOperador()) {
 				OperadorContexto operador = new OperadorContexto(token);
 				adicionar(operador);
 				selecionado = new OperMOuMNativoIniExpressaoChave();
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
-	private void processarNativo(Compilador compilador, Token token) throws ExpressaoException {
+	private void processarNativo(TokenManager tokenManager, Token token) throws ExpressaoException {
 		Contexto nativo = criarNativo(token);
 		if (tokenMOuM != null && nativo instanceof StringContexto) {
-			compilador.invalidar(token);
+			tokenManager.invalidar(token);
 		}
 		if (tokenMOuM != null) {
 			nativo.negativar(tokenMOuM);
@@ -137,17 +137,17 @@ public class ExpressaoContexto extends Salto {
 		}
 	}
 
-	private void processarIniExpressao(Compilador compilador, Token token) throws ExpressaoException {
+	private void processarIniExpressao(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (getUltimo() instanceof ChaveContexto) {
 			Contexto ultimo = excluirUltimo();
 			InvocacaoContexto invocacao = new InvocacaoContexto(ultimo.getToken(), true);
 			invocacao.setNegativoContexto(ultimo.getNegativoContexto());
-			compilador.selecionar(invocacao);
+			tokenManager.selecionar(invocacao);
 			adicionar(invocacao);
-			invocacao.processar(compilador, token);
+			invocacao.processar(tokenManager, token);
 		} else {
 			ExpressaoContexto expressao = new ExpressaoContexto();
-			compilador.selecionar(expressao);
+			tokenManager.selecionar(expressao);
 			if (tokenMOuM != null) {
 				expressao.negativar(tokenMOuM);
 				tokenMOuM = null;
@@ -176,29 +176,29 @@ public class ExpressaoContexto extends Salto {
 		}
 	}
 
-	private void montarArvore(Compilador compilador) throws ExpressaoException {
+	private void montarArvore(TokenManager tokenManager) throws ExpressaoException {
 		if (isEmpty()) {
 			throw new ExpressaoException("erro.expressao.vazio");
 		}
 		if (getPrimeiro() instanceof OperadorContexto) {
-			compilador.invalidar(getPrimeiro().getToken());
+			tokenManager.invalidar(getPrimeiro().getToken());
 		} else if (getUltimo() instanceof OperadorContexto) {
-			compilador.invalidar(getUltimo().getToken());
+			tokenManager.invalidar(getUltimo().getToken());
 		}
-		validarSequencia(compilador);
+		validarSequencia(tokenManager);
 		montarArvore();
 	}
 
-	private void validarSequencia(Compilador compilador) throws ExpressaoException {
+	private void validarSequencia(TokenManager tokenManager) throws ExpressaoException {
 		for (int i = 0; i < getSize(); i++) {
 			Contexto c = get(i);
 			if (i % 2 == 0) {
 				if (c instanceof OperadorContexto) {
-					compilador.invalidar(c.getToken());
+					tokenManager.invalidar(c.getToken());
 				}
 			} else {
 				if (!(c instanceof OperadorContexto)) {
-					compilador.invalidar(c.getToken());
+					tokenManager.invalidar(c.getToken());
 				}
 			}
 		}

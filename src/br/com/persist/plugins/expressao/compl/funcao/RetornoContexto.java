@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -16,26 +16,26 @@ public class RetornoContexto extends Contexto {
 	public static final String RETURN = "return";
 
 	@Override
-	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
-		compilador.selecionarParentDe(this);
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
+		tokenManager.selecionarParentDe(this);
 	}
 
 	@Context("retorno_da_funcao")
 	@Doc({ "return;", "return expressao;" })
 	@Override
-	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isPontoEVirgula()) {
 			token.setConsumido(true);
-			compilador.selecionarParentDe(this);
+			tokenManager.selecionarParentDe(this);
 		} else {
 			ExpressaoContexto expressao = new ExpressaoContexto(";");
-			compilador.selecionar(expressao);
+			tokenManager.selecionar(expressao);
 			adicionar(expressao);
 		}
 	}
 
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		throw new ExpressaoException("erro.processar.retorno.estado");
 	}
 

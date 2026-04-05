@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -17,36 +17,36 @@ public class ConstanteContexto extends Contexto {
 	private TokenExec selecionado = new Id();
 
 	@Override
-	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
-		compilador.selecionarParentDe(this);
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
+		tokenManager.selecionarParentDe(this);
 	}
 
 	@Context("declaracao_constante")
 	@Doc("const chave = expressao;")
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		selecionado.processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		selecionado.processar(tokenManager, token);
 	}
 
 	public class Id implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChave()) {
 				ConstanteContexto.this.token = token;
 				selecionado = new Atribuicao();
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}
 
 	class Atribuicao implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAtribuicao()) {
 				ExpressaoContexto expressao = new ExpressaoContexto(";");
-				compilador.selecionar(expressao);
+				tokenManager.selecionar(expressao);
 				adicionar(expressao);
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}

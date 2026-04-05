@@ -38,12 +38,12 @@ public class Compilacao {
 			throw new ExpressaoException(CacheBiblioteca.COMPILADOS.toString(), false);
 		}
 
-		Compilador compilador = new Compilador(getString(file));
+		TokenManager tokenManager = new TokenManager(getString(file));
 		BibliotecaContexto biblioteca = new BibliotecaContexto(file);
-		compilador.selecionar(biblioteca);
-		compilador.montarHierarquia();
+		tokenManager.selecionar(biblioteca);
+		tokenManager.montarHierarquia();
 
-		if (compilador.getSelecionado() != biblioteca) {
+		if (tokenManager.getSelecionado() != biblioteca) {
 			throw new ExpressaoException("erro.compilacao");
 		}
 
