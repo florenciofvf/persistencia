@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.loop;
+package br.com.persist.plugins.expressao.operador;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,12 +8,12 @@ import org.junit.Test;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 
-public class WhileTest {
+public class OperadorContextoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(new File("while_teste"));
+		compilacao.compilar(new File("operador_teste"));
 	}
 
 }
