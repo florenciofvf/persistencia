@@ -23,6 +23,7 @@ import br.com.persist.plugins.expressao.compl.operador.OperadorContexto;
 public class ExpressaoContexto extends Salto {
 	private TokenExec selecionado = new OperMOuMNativoIniExpressaoChave();
 	private final String[] finalizadores;
+	private Token tokenFinalizador;
 	private Token tokenMOuM;
 
 	public ExpressaoContexto(String[] finalizadores) {
@@ -56,9 +57,14 @@ public class ExpressaoContexto extends Salto {
 		}
 		if (finalizar) {
 			token.setConsumido(true);
+			tokenFinalizador = token;
 			montarArvore(compilador);
 			compilador.selecionarParentDe(this);
 		}
+	}
+
+	public Token getTokenFinalizador() {
+		return tokenFinalizador;
 	}
 
 	class OperMOuMNativoIniExpressaoChave implements TokenExec {
@@ -68,7 +74,7 @@ public class ExpressaoContexto extends Salto {
 			} else if (token.isNativo()) {
 				processarNativo(compilador, token);
 			} else if (token.isAbreParentese()) {
-				processarAbreParentese(compilador, token);
+				processarIniExpressao(compilador, token);
 			} else if (token.chave()) {
 				processarChave(token);
 			} else {
@@ -87,7 +93,7 @@ public class ExpressaoContexto extends Salto {
 			if (token.isNativo()) {
 				processarNativo(compilador, token);
 			} else if (token.isAbreParentese()) {
-				processarAbreParentese(compilador, token);
+				processarIniExpressao(compilador, token);
 			} else if (token.chave()) {
 				processarChave(token);
 			} else {
@@ -131,7 +137,7 @@ public class ExpressaoContexto extends Salto {
 		}
 	}
 
-	private void processarAbreParentese(Compilador compilador, Token token) throws ExpressaoException {
+	private void processarIniExpressao(Compilador compilador, Token token) throws ExpressaoException {
 		if (getUltimo() instanceof ChaveContexto) {
 			Contexto ultimo = excluirUltimo();
 			InvocacaoContexto invocacao = new InvocacaoContexto(ultimo.getToken(), true);
