@@ -1,6 +1,8 @@
-package br.com.persist.plugins.expressao.processador;
+package br.com.persist.plugins.expressao.constante;
 
 import java.util.Objects;
+
+import br.com.persist.plugins.expressao.processador.Biblioteca;
 
 public class Constante {
 	private Biblioteca biblioteca;

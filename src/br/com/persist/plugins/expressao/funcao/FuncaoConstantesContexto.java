@@ -1,9 +1,9 @@
 package br.com.persist.plugins.expressao.funcao;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.biblioteca.ConstanteContexto;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Token;
+import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 

@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.biblioteca;
+package br.com.persist.plugins.expressao.constante;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,6 +13,7 @@ import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 
 public class ConstanteContexto extends Contexto {
+	public static final String LOAD_CONST = "load_const";
 	public static final String DEF_CONST = "def_const";
 	private TokenExec selecionado = new Id();
 
