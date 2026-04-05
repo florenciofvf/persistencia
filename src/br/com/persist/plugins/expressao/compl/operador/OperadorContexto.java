@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Token;
@@ -119,8 +119,8 @@ public class OperadorContexto extends Contexto {
 
 	@Context("operador")
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		compilador.invalidar(token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		tokenManager.invalidar(token);
 	}
 
 	@Override

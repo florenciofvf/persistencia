@@ -3,7 +3,7 @@ package br.com.persist.plugins.expressao.compl.organiza;
 import java.io.PrintWriter;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -18,18 +18,18 @@ public class PacoteContexto extends Contexto {
 	@Context("pacote_da_biblioteca")
 	@Doc("package chaveN;")
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		checarIndiceEstado(compilador, execs, token);
-		execs[indiceEstado].processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		checarIndiceEstado(tokenManager, execs, token);
+		execs[indiceEstado].processar(tokenManager, token);
 	}
 
 	class ChaveN implements TokenExec {
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChaveN()) {
 				pacote = token;
 				indiceEstado++;
 			} else {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 		}
 	}

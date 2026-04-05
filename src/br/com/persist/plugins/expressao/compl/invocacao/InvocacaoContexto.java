@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -49,41 +49,41 @@ public class InvocacaoContexto extends Contexto {
 	}
 
 	@Override
-	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
 		if (contexto instanceof ArgumentosContexto && comRetorno) {
-			compilador.selecionarParentDe(this);
+			tokenManager.selecionarParentDe(this);
 		}
 	}
 
 	@Override
-	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isAbreParentese()) {
 			if (argumentos != null) {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			} else {
 				argumentos = new ArgumentosContexto();
-				compilador.selecionar(argumentos);
+				tokenManager.selecionar(argumentos);
 				token.setConsumido(true);
 				adicionar(argumentos);
 			}
 		} else if (token.isPontoEVirgula()) {
 			if (argumentos == null) {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 			if (comRetorno) {
-				compilador.invalidar(token);
+				tokenManager.invalidar(token);
 			}
 			token.setConsumido(true);
-			compilador.selecionarParentDe(this);
+			tokenManager.selecionarParentDe(this);
 		} else {
-			compilador.invalidar(token);
+			tokenManager.invalidar(token);
 		}
 	}
 
 	@Context("invocar_funcao")
 	@Doc({ "metodo();", "alias.mensagem(arg);", "br.com.teste.Biblioteca.mensagem(arg);" })
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		throw new ExpressaoException("erro.processar.invocacao.estado");
 	}
 

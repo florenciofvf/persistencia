@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 
-public class CompilacaoTest {
+public class TokenManagerTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {

@@ -1,7 +1,7 @@
 package br.com.persist.plugins.expressao.compl.loop;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.Compilador;
+import br.com.persist.plugins.expressao.compl.TokenManager;
 import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
@@ -13,17 +13,17 @@ public class WhileContexto extends Contexto {
 	private TokenExec[] execs = { new IniExpressao(), new IniInstrucoes() };
 
 	@Override
-	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {
 		if (contexto instanceof InstrucoesContexto) {
-			compilador.selecionarParentDe(this);
+			tokenManager.selecionarParentDe(this);
 		}
 	}
 
 	@Context("loop_while")
 	@Doc("while expressao instrucoes")
 	@Override
-	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		checarIndiceEstado(compilador, execs, token);
-		execs[indiceEstado].processar(compilador, token);
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		checarIndiceEstado(tokenManager, execs, token);
+		execs[indiceEstado].processar(tokenManager, token);
 	}
 }

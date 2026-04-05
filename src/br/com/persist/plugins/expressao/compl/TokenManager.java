@@ -8,13 +8,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compl.Token.Tipo;
 
-public class Compilador {
+public class TokenManager {
 	protected final String string;
 	protected List<Token> tokens;
 	private Contexto selecionado;
 	private int indice;
 
-	public Compilador(String string) {
+	public TokenManager(String string) {
 		this.string = Objects.requireNonNull(string);
 		tokens = new ArrayList<>();
 	}
@@ -44,11 +44,11 @@ public class Compilador {
 
 	public void selecionarParentDe(Contexto contexto) throws ExpressaoException {
 		if (contexto == null) {
-			throw new ExpressaoException("erro.compilador.contexto_nulo_em", "selecionarParentDe");
+			throw new ExpressaoException("erro.tokenManager.contexto_nulo_em", "selecionarParentDe");
 		}
 		Contexto parent = contexto.parent;
 		if (parent == null) {
-			throw new ExpressaoException("erro.compilador.contexto_nulo_em", "selecionarParentDe (parent nulo)");
+			throw new ExpressaoException("erro.tokenManager.contexto_nulo_em", "selecionarParentDe (parent nulo)");
 		}
 		selecionado = parent;
 		selecionado.selecionadoVia(this, contexto);
@@ -73,7 +73,7 @@ public class Compilador {
 			Token token = proximoToken();
 			addToken(token);
 			if (selecionado == null) {
-				throw new ExpressaoException("erro.compilador.contexto_nulo");
+				throw new ExpressaoException("erro.tokenManager.contexto_nulo");
 			}
 			if (token.tipo != Tipo.COMENTARIO) {
 				selecionado.processarPre(this, token);
