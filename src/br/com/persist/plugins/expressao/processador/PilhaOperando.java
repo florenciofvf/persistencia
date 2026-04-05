@@ -3,7 +3,7 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class PilhaOperando {
 	private final List<Object> operandos;
@@ -12,23 +12,23 @@ public class PilhaOperando {
 		operandos = new ArrayList<>();
 	}
 
-	private void checar() throws InstrucaoException {
+	private void checar() throws ExpressaoException {
 		if (isEmpty()) {
-			throw new InstrucaoException("PilhaOperando vazia >>> " + toString(), false);
+			throw new ExpressaoException("PilhaOperando vazia >>> " + toString(), false);
 		}
 	}
 
-	public void push(Object valor) throws InstrucaoException {
+	public void push(Object valor) throws ExpressaoException {
 		InstrucaoUtil.checarOperando(valor);
 		operandos.add(valor);
 	}
 
-	public Object peek() throws InstrucaoException {
+	public Object peek() throws ExpressaoException {
 		checar();
 		return operandos.get(operandos.size() - 1);
 	}
 
-	public Object pop() throws InstrucaoException {
+	public Object pop() throws ExpressaoException {
 		checar();
 		return operandos.remove(operandos.size() - 1);
 	}

@@ -2,7 +2,7 @@ package br.com.persist.plugins.expressao.processador;
 
 import java.util.Objects;
 
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public abstract class Instrucao {
 	protected final String nome;
@@ -35,8 +35,8 @@ public abstract class Instrucao {
 
 	public abstract Instrucao clonar();
 
-	public abstract void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException;
+	public abstract void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
+			throws ExpressaoException;
 
 	@Override
 	public String toString() {

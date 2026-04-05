@@ -3,7 +3,7 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class PilhaFuncao {
 	private final List<Funcao> funcoes;
@@ -12,23 +12,23 @@ public class PilhaFuncao {
 		funcoes = new ArrayList<>();
 	}
 
-	private void checar() throws InstrucaoException {
+	private void checar() throws ExpressaoException {
 		if (isEmpty()) {
-			throw new InstrucaoException("PilhaFuncao vazia >>> " + toString(), false);
+			throw new ExpressaoException("PilhaFuncao vazia >>> " + toString(), false);
 		}
 	}
 
-	public void push(Funcao funcao) throws InstrucaoException {
+	public void push(Funcao funcao) throws ExpressaoException {
 		InstrucaoUtil.checarFuncao(funcao);
 		funcoes.add(funcao);
 	}
 
-	public Funcao peek() throws InstrucaoException {
+	public Funcao peek() throws ExpressaoException {
 		checar();
 		return funcoes.get(funcoes.size() - 1);
 	}
 
-	public Funcao pop() throws InstrucaoException {
+	public Funcao pop() throws ExpressaoException {
 		checar();
 		return funcoes.remove(funcoes.size() - 1);
 	}
