@@ -70,25 +70,6 @@ public abstract class Salto extends Contexto {
 		}
 	}
 
-	private void expressaoIfEqAcima(Contexto contexto) throws ExpressaoException {
-		if (contexto == null) {
-			throw new ExpressaoException("erro.objeto.contexto.nulo");
-		}
-		if (contexto instanceof IFContexto || contexto instanceof WhileContexto) {
-			Contexto instrucoes = contexto.getParent();
-			checarParentInstrucoes(instrucoes);
-			Contexto contextoApos = instrucoes.getApos(contexto);
-			if (contextoApos != null) {
-				processarIfEq(contextoApos);
-			} else {
-				checarFuncaoSemRetorno(instrucoes);
-				expressaoIfEqAcima(instrucoes.getParent());
-			}
-		} else {
-			throw new ExpressaoException(ERRO_ESTRUTURA_EXPRESSAO_INVALIDA);
-		}
-	}
-
 	protected void expressaoIfEqIf() throws ExpressaoException {
 		if (!(parent instanceof IFContexto)) {
 			throw new ExpressaoException(ERRO_ESTRUTURA_EXPRESSAO_INVALIDA);
@@ -106,6 +87,25 @@ public abstract class Salto extends Contexto {
 		} else {
 			checarFuncaoSemRetorno(instrucoes);
 			expressaoIfEqAcima(instrucoes.getParent());
+		}
+	}
+
+	private void expressaoIfEqAcima(Contexto contexto) throws ExpressaoException {
+		if (contexto == null) {
+			throw new ExpressaoException("erro.objeto.contexto.nulo");
+		}
+		if (contexto instanceof IFContexto || contexto instanceof WhileContexto) {
+			Contexto instrucoes = contexto.getParent();
+			checarParentInstrucoes(instrucoes);
+			Contexto contextoApos = instrucoes.getApos(contexto);
+			if (contextoApos != null) {
+				processarIfEq(contextoApos);
+			} else {
+				checarFuncaoSemRetorno(instrucoes);
+				expressaoIfEqAcima(instrucoes.getParent());
+			}
+		} else {
+			throw new ExpressaoException(ERRO_ESTRUTURA_EXPRESSAO_INVALIDA);
 		}
 	}
 

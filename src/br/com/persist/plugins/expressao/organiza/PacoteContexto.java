@@ -12,7 +12,7 @@ import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class PacoteContexto extends Contexto {
 	private TokenExec[] execs = { new ChaveN(), new PontoEVirgula() };
-	public static final String PREFIXO_PACKAGE = "package ";
+	public static final String PREFIXO_PACKAGE = "pacote ";
 	protected Token pacote;
 
 	@Context("pacote_da_biblioteca")
