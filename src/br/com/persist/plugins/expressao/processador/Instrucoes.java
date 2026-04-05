@@ -22,6 +22,8 @@ import br.com.persist.plugins.expressao.processador.OperadorInstrucao.Rem;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.Sub;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.Xor;
 import br.com.persist.plugins.expressao.retorno.RetornoInstrucao;
+import br.com.persist.plugins.expressao.salto.GotoInstrucao;
+import br.com.persist.plugins.expressao.salto.IFEqInstrucao;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 
 public class Instrucoes {
