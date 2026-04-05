@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.processador;
+package br.com.persist.plugins.expressao.biblioteca;
 
 import java.io.File;
 import java.util.HashMap;
@@ -12,8 +12,10 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.organiza.PacoteContexto;
+import br.com.persist.plugins.expressao.processador.Funcao;
+import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.Instrucoes;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;

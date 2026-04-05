@@ -59,11 +59,11 @@ public class Instrucoes {
 		// add(new LoadFuncaoLambInstrucao());
 		add(new ParametroLoadInstrucao());
 		add(new ConstanteLoadInstrucao());
-		add(new InvocacaoExpInstrucao());
+		// ---add(new InvocacaoExpInstrucao());
 		add(new ConstanteDefineInstrucao());
 		// add(new LoadFuncaoInstrucao());
 		add(new StringPushInstrucao());
-		add(new InvocacaoInstrucao());
+		// ---add(new InvocacaoInstrucao());
 		add(new NegativoInstrucao());
 		add(new RetornoInstrucao());
 		add(new GotoInstrucao());

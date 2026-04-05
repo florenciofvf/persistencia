@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
-import br.com.persist.plugins.expressao.processador.CacheBiblioteca;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 
 public class Compilacao {
 	private String getString(File file) throws IOException {

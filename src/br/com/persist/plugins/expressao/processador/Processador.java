@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
+import br.com.persist.plugins.expressao.biblioteca.LigaBiblioteca;
 import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
 import br.com.persist.plugins.expressao.ExpressaoException;
 
@@ -33,8 +35,8 @@ public class Processador {
 		while (funcao != null) {
 			boolean processar = false;
 			Instrucao instrucao = funcao.proximaInstrucao();
-			if (instrucao instanceof ReferenciaBiblioteca) {
-				ReferenciaBiblioteca referencia = (ReferenciaBiblioteca) instrucao;
+			if (instrucao instanceof LigaBiblioteca) {
+				LigaBiblioteca referencia = (LigaBiblioteca) instrucao;
 				if (!cacheBiblioteca.contem(referencia.getNomeAbsoluto())) {
 					Biblioteca novaBiblioteca = cacheBiblioteca.getBiblioteca(referencia.getNomeAbsoluto());
 					funcaoConstantes = novaBiblioteca.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES)

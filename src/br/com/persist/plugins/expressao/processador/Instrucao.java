@@ -7,7 +7,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 public abstract class Instrucao {
 	protected final String nome;
 	protected String parametros;
-	protected int sequencia;
+	protected int indice;
 
 	protected Instrucao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
@@ -25,12 +25,12 @@ public abstract class Instrucao {
 		this.parametros = parametros;
 	}
 
-	public int getSequencia() {
-		return sequencia;
+	public int getIndice() {
+		return indice;
 	}
 
-	public void setSequencia(int sequencia) {
-		this.sequencia = sequencia;
+	public void setIndice(int indice) {
+		this.indice = indice;
 	}
 
 	public abstract Instrucao clonar();
