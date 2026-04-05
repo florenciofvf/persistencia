@@ -38,14 +38,6 @@ public class ExpressaoContexto extends Salto {
 		this(new String[] { ")" });
 	}
 
-	@Context("expressao")
-	@Doc({ "(valor)", "(valor operador valor)", "(valor operador expressao)", "(expressao operador valor)",
-			"(expressao operador expressao)" })
-	@Override
-	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-		selecionado.processar(tokenManager, token);
-	}
-
 	@Override
 	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 		String string = token.getString();
@@ -65,6 +57,14 @@ public class ExpressaoContexto extends Salto {
 
 	public Token getTokenFinalizador() {
 		return tokenFinalizador;
+	}
+
+	@Context("expressao")
+	@Doc({ "(valor)", "(valor operador valor)", "(valor operador expressao)", "(expressao operador valor)",
+			"(expressao operador expressao)" })
+	@Override
+	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+		selecionado.processar(tokenManager, token);
 	}
 
 	class OperMOuMNativoIniExpressaoChave implements TokenExec {
