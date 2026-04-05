@@ -12,7 +12,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class FlutuanteContexto extends Contexto {
-	public static final String PUSH_BIG_DECIMAL = "push_big_decimal";
+	public static final String PUSH_FLUTUANTE = "push_flutuante";
 
 	public FlutuanteContexto(Token token) {
 		super(token);
@@ -44,6 +44,6 @@ public class FlutuanteContexto extends Contexto {
 
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
-		print(pw, PUSH_BIG_DECIMAL, token.getString());
+		print(pw, PUSH_FLUTUANTE, token.getString());
 	}
 }

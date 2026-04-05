@@ -3,6 +3,9 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.persist.plugins.expressao.nativo.FlutuantePushInstrucao;
+import br.com.persist.plugins.expressao.nativo.InteiroPushInstrucao;
+import br.com.persist.plugins.expressao.nativo.StringPushInstrucao;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.Add;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.AddLista;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.And;
@@ -44,8 +47,8 @@ public class Instrucoes {
 	static {
 		add(new LoadParametroSuperInstrucao());
 		add(new InvocacaoParamExpInstrucao());
-		add(new PushBigDecimalInstrucao());
-		add(new PushBigIntegerInstrucao());
+		add(new FlutuantePushInstrucao());
+		add(new InteiroPushInstrucao());
 		add(new InvocacaoParamInstrucao());
 		add(new LoadFuncaoLambInstrucao());
 		add(new LoadParametroInstrucao());
@@ -53,7 +56,7 @@ public class Instrucoes {
 		add(new InvocacaoExpInstrucao());
 		add(new DefineConstInstrucao());
 		add(new LoadFuncaoInstrucao());
-		add(new PushStringInstrucao());
+		add(new StringPushInstrucao());
 		add(new InvocacaoInstrucao());
 		add(new NegativoInstrucao());
 		add(new RetornoInstrucao());

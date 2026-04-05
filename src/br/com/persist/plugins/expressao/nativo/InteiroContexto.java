@@ -12,7 +12,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class InteiroContexto extends Contexto {
-	public static final String PUSH_BIG_INTEGER = "push_big_integer";
+	public static final String PUSH_INTEIRO = "push_inteiro";
 
 	public InteiroContexto(Token token) {
 		super(token);
@@ -44,6 +44,6 @@ public class InteiroContexto extends Contexto {
 
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
-		print(pw, PUSH_BIG_INTEGER, token.getString());
+		print(pw, PUSH_INTEIRO, token.getString());
 	}
 }
