@@ -6,6 +6,7 @@ import java.util.Map;
 import br.com.persist.plugins.expressao.nativo.FlutuantePushInstrucao;
 import br.com.persist.plugins.expressao.nativo.InteiroPushInstrucao;
 import br.com.persist.plugins.expressao.nativo.StringPushInstrucao;
+import br.com.persist.plugins.expressao.negativo.NegativoInstrucao;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.Add;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.AddLista;
 import br.com.persist.plugins.expressao.processador.OperadorInstrucao.And;

@@ -9,6 +9,7 @@ import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
+import br.com.persist.plugins.expressao.negativo.NegativoContexto;
 
 public abstract class Contexto {
 	protected NegativoContexto negativoContexto;
