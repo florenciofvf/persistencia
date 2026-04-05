@@ -6,59 +6,54 @@ import br.com.persist.plugins.expressao.compl.Context;
 import br.com.persist.plugins.expressao.compl.Contexto;
 import br.com.persist.plugins.expressao.compl.Doc;
 import br.com.persist.plugins.expressao.compl.Token;
-import br.com.persist.plugins.expressao.compl.TokenExec;
 import br.com.persist.plugins.expressao.compl.instrucoes.ExpressaoContexto;
 
 public class ArgumentosContexto extends Contexto {
-	private TokenExec selecionado = new FinalizaOuArgumento();
+	private static final String ERRO_EXPRESSAO_ARGUMENTOS_SELECIONADO_VIA = "erro.expressao.argumentos.selecionado_via";
+	private static final String[] FINALIZADORES = new String[] { ",", ")" };
+
+	@Override
+	protected void selecionadoVia(Compilador compilador, Contexto contexto) throws ExpressaoException {
+		if (contexto instanceof ExpressaoContexto) {
+			ExpressaoContexto expressao = (ExpressaoContexto) contexto;
+			Token token = expressao.getTokenFinalizador();
+			if (token == null) {
+				throw new ExpressaoException(ERRO_EXPRESSAO_ARGUMENTOS_SELECIONADO_VIA);
+			}
+			if (token.isVirgula()) {
+				expressao = new ExpressaoContexto(FINALIZADORES);
+				compilador.selecionar(expressao);
+				adicionar(expressao);
+			} else if (token.isFechaParentese()) {
+				compilador.selecionarParentDe(this);
+			} else {
+				throw new ExpressaoException(ERRO_EXPRESSAO_ARGUMENTOS_SELECIONADO_VIA);
+			}
+		} else {
+			throw new ExpressaoException(ERRO_EXPRESSAO_ARGUMENTOS_SELECIONADO_VIA);
+		}
+	}
+
+	@Override
+	protected void processarPre(Compilador compilador, Token token) throws ExpressaoException {
+		if (token.isFechaParentese()) {
+			if (isEmpty()) {
+				token.setConsumido(true);
+				compilador.selecionarParentDe(this);
+			} else {
+				compilador.invalidar(token);
+			}
+		} else {
+			ExpressaoContexto expressao = new ExpressaoContexto(FINALIZADORES);
+			compilador.selecionar(expressao);
+			adicionar(expressao);
+		}
+	}
 
 	@Context("argumentos_da_funcao")
-	@Doc({ "()", "(expressao)", "(argumentos_da_funcao, (expressao))" })
+	@Doc({ "()", "arg", "argumentos_da_funcao, arg" })
 	@Override
 	public void processar(Compilador compilador, Token token) throws ExpressaoException {
-		selecionado.processar(compilador, token);
-	}
-
-	class FinalizaOuArgumento implements TokenExec {
-		@Override
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
-			if (token.isFechaParentese()) {
-				compilador.selecionarParentDe(ArgumentosContexto.this);
-			} else if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.selecionar(expressao);
-				adicionar(expressao);
-				selecionado = new FinalizaOuVirgula();
-			} else {
-				compilador.invalidar(token);
-			}
-		}
-	}
-
-	class FinalizaOuVirgula implements TokenExec {
-		@Override
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
-			if (token.isFechaParentese()) {
-				compilador.selecionarParentDe(ArgumentosContexto.this);
-			} else if (token.isVirgula()) {
-				selecionado = new Argumento();
-			} else {
-				compilador.invalidar(token);
-			}
-		}
-	}
-
-	class Argumento implements TokenExec {
-		@Override
-		public void processar(Compilador compilador, Token token) throws ExpressaoException {
-			if (token.isAbreParentese()) {
-				ExpressaoContexto expressao = new ExpressaoContexto();
-				compilador.selecionar(expressao);
-				adicionar(expressao);
-				selecionado = new FinalizaOuVirgula();
-			} else {
-				compilador.invalidar(token);
-			}
-		}
+		throw new ExpressaoException("erro.processar.argumentos.estado");
 	}
 }
