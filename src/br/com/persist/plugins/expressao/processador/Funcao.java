@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
+import br.com.persist.plugins.expressao.compilador.Token;
+import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.instrucao.compilador.Token;
-import br.com.persist.plugins.instrucao.compilador.Token.Tipo;
 
 public class Funcao {
-	private final Map<Integer, InstrucaoItem> instrucoes;
+	private final Map<Integer, InstrucaoItem> mapaInstrucoes;
 	private final List<Parametro> parametros;
 	private InstrucaoItem ponteiro;
 	private Biblioteca biblioteca;
@@ -26,18 +26,22 @@ public class Funcao {
 
 	public Funcao(String nome) {
 		this.nome = Objects.requireNonNull(nome);
+		mapaInstrucoes = new HashMap<>();
 		parametros = new ArrayList<>();
-		instrucoes = new HashMap<>();
 	}
 
-	public Funcao clonar() throws InstrucaoException {
+	public String getNome() {
+		return nome;
+	}
+
+	public Funcao clonar() throws ExpressaoException {
 		Funcao funcao = new Funcao(nome);
 		funcao.biblioNativa = biblioNativa;
 		funcao.biblioteca = biblioteca;
 		funcao.tipoVoid = tipoVoid;
 		funcao.parent = parent;
-		for (Parametro p : parametros) {
-			funcao.addParametro(p.getNome());
+		for (Parametro item : parametros) {
+			funcao.addParametro(item.getNome());
 		}
 		InstrucaoItem no = cabeca;
 		while (no != null) {
@@ -71,45 +75,40 @@ public class Funcao {
 		this.biblioNativa = biblioNativa;
 	}
 
-	public void setIndice(int indice) throws InstrucaoException {
-		InstrucaoItem item = instrucoes.get(indice);
+	public void setIndice(int indice) throws ExpressaoException {
+		InstrucaoItem item = mapaInstrucoes.get(indice);
 		if (item == null) {
-			throw new InstrucaoException("erro.funcao_set_indice", nome, indice, biblioteca.getNome());
+			throw new ExpressaoException("erro.funcao_set_indice", getNome(), indice, biblioteca.getNome());
 		}
 		ponteiro = item;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	Instrucao proximaInstrucao() throws InstrucaoException {
+	Instrucao proximaInstrucao() throws ExpressaoException {
 		if (ponteiro == null) {
-			throw new InstrucaoException("erro.funcao_sem_instrucao", nome, biblioteca.getNome());
+			throw new ExpressaoException("erro.funcao_sem_instrucao", getNome(), biblioteca.getNome());
 		}
 		Instrucao resp = ponteiro.instrucao;
 		ponteiro = ponteiro.proximo;
 		return resp;
 	}
 
-	public void addParametro(String nome) throws InstrucaoException {
+	public void addParametro(String nome) throws ExpressaoException {
 		InstrucaoUtil.checarParametro(nome);
 		if (contem(nome)) {
-			throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, biblioteca.getNome());
+			throw new ExpressaoException("erro.parametro_inexistente", nome, getNome(), biblioteca.getNome());
 		}
-		int pos = nome.indexOf(':');
-		Token token = new Token(nome, pos != -1 ? Tipo.LISTA : Tipo.IDENTITY);
+		Token token = new Token(nome, Tipo.VIRTUAL, -1);
 		Parametro param = new Parametro(token);
-		param.indice = parametros.size();
+		param.setIndice(parametros.size());
 		parametros.add(param);
 	}
 
-	public void setValorParametro(int indice, Object valor) throws InstrucaoException {
+	public void setValorParametro(int indice, Object valor) throws ExpressaoException {
 		InstrucaoUtil.checarOperando(valor);
 		parametros.get(indice).valor = valor;
 	}
 
-	public void setValorParametro(String nome, Object valor) throws InstrucaoException {
+	public void setValorParametro(String nome, Object valor) throws ExpressaoException {
 		int pos = getIndiceParametro(nome);
 		setValorParametro(pos, valor);
 	}
@@ -118,7 +117,7 @@ public class Funcao {
 		return parametros.get(indice).valor;
 	}
 
-	public Object getValorParametro(String nome) throws InstrucaoException {
+	public Object getValorParametro(String nome) throws ExpressaoException {
 		int pos = getIndiceParametro(nome);
 		return getValorParametro(pos);
 	}
@@ -140,25 +139,25 @@ public class Funcao {
 		return null;
 	}
 
-	private int getIndiceParametro(String nome) throws InstrucaoException {
+	private int getIndiceParametro(String nome) throws ExpressaoException {
 		for (int i = 0; i < parametros.size(); i++) {
 			Parametro item = parametros.get(i);
 			if (item.contem(nome)) {
 				return i;
 			}
 		}
-		throw new InstrucaoException("erro.parametro_inexistente", nome, this.nome, biblioteca.getNome());
+		throw new ExpressaoException("erro.parametro_inexistente", nome, getNome(), biblioteca.getNome());
 	}
 
-	public void addInstrucao(Instrucao instrucao) throws InstrucaoException {
+	public void addInstrucao(Instrucao instrucao) throws ExpressaoException {
 		if (instrucao == null) {
 			return;
 		}
 		if (isNativo()) {
-			throw new InstrucaoException("erro.funcao_nativa_add_inst", nome, biblioteca.getNome());
+			throw new ExpressaoException("erro.funcao_nativa_add_inst", nome, biblioteca.getNome());
 		}
 		InstrucaoItem no = new InstrucaoItem(instrucao);
-		instrucoes.put(instrucao.sequencia, no);
+		mapaInstrucoes.put(instrucao.indice, no);
 		if (cabeca == null) {
 			ponteiro = no;
 			cabeca = no;

@@ -17,6 +17,14 @@ public class ParametroContexto extends Contexto {
 		super(chave);
 	}
 
+	public String getNome() {
+		return token.getString();
+	}
+
+	public boolean contem(String string) {
+		return getNome().equals(string);
+	}
+
 	@Context("parametro")
 	@Doc("chave")
 	@Override

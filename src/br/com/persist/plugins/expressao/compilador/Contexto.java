@@ -50,6 +50,10 @@ public abstract class Contexto {
 		return indice;
 	}
 
+	public void setIndice(int indice) {
+		this.indice = indice;
+	}
+
 	public Token getToken() {
 		return token;
 	}

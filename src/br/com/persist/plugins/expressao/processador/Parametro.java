@@ -14,6 +14,6 @@ public class Parametro extends ParametroContexto {
 
 	@Override
 	public String toString() {
-		return indice + ": " + token.getString() + "=" + valor;
+		return indice + ": " + getNome() + "=" + valor;
 	}
 }
