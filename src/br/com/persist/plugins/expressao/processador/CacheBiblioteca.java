@@ -12,7 +12,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.compl.organiza.PacoteContexto;
+import br.com.persist.plugins.expressao.organiza.PacoteContexto;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
 import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
@@ -97,7 +97,7 @@ public class CacheBiblioteca {
 		return nome;
 	}
 
-	public static File getArquivoCompilado(br.com.persist.plugins.expressao.compl.biblio.BibliotecaContexto biblioteca)
+	public static File getArquivoCompilado(br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto biblioteca)
 			throws ExpressaoException {
 		if (biblioteca == null) {
 			throw new ExpressaoException("Biblioteca nula.", false);
