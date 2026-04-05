@@ -11,6 +11,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
+import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 
 public class FuncaoContexto extends Contexto {
 	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes() };

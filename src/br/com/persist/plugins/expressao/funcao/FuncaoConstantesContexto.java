@@ -4,6 +4,8 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.ConstanteContexto;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Token;
+import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
+import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 
 public class FuncaoConstantesContexto extends FuncaoContexto {
 	private RetornoContexto retornoContexto = new RetornoContexto();

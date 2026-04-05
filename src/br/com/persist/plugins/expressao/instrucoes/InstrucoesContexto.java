@@ -6,9 +6,9 @@ import br.com.persist.plugins.expressao.biblioteca.ConstanteContexto;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.condicional.IFContexto;
-import br.com.persist.plugins.expressao.funcao.RetornoContexto;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.loop.WhileContexto;
+import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 
 public class InstrucoesContexto extends Salto {
 	@Override

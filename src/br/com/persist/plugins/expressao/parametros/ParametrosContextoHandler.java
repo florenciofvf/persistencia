@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.funcao;
+package br.com.persist.plugins.expressao.parametros;
 
 import java.util.Objects;
 

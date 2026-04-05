@@ -10,6 +10,7 @@ import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 
 public class FuncaoNativaContexto extends Contexto {
 	private TokenExec[] execs = { new ChaveN(), new Chave(), new IniParametros(), new TipoRetornoOuPontoEVirgula(),

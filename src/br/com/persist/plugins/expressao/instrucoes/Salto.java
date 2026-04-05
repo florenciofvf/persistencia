@@ -7,8 +7,8 @@ import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.condicional.IFContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
-import br.com.persist.plugins.expressao.funcao.RetornoContexto;
 import br.com.persist.plugins.expressao.loop.WhileContexto;
+import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 import br.com.persist.plugins.expressao.salto.GotoContexto;
 import br.com.persist.plugins.expressao.salto.IFEqContexto;
 
