@@ -16,7 +16,7 @@ public class InteiroPushInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new InteiroPushInstrucao();
 	}
 

@@ -13,7 +13,7 @@ public class ConstanteDefineInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new ConstanteDefineInstrucao();
 	}
 

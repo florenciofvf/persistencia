@@ -148,16 +148,16 @@ public class CacheBiblioteca {
 	private Instrucao clonarInstrucao(int indice, String instrucao, Biblioteca biblioteca) throws ExpressaoException {
 		int pos = instrucao.indexOf(' ');
 		if (pos == -1) {
-			Instrucao clone = Instrucoes.get(instrucao, biblioteca).clonar();
-			clone.setIndice(indice);
-			return clone;
+			Instrucao novo = Instrucoes.get(instrucao, biblioteca).novo();
+			novo.setIndice(indice);
+			return novo;
 		} else {
 			String nome = instrucao.substring(0, pos);
 			String parametros = instrucao.substring(pos + 1);
-			Instrucao clone = Instrucoes.get(nome, biblioteca).clonar();
-			clone.setParametros(parametros);
-			clone.setIndice(indice);
-			return clone;
+			Instrucao novo = Instrucoes.get(nome, biblioteca).novo();
+			novo.setParametros(parametros);
+			novo.setIndice(indice);
+			return novo;
 		}
 	}
 

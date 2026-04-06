@@ -16,7 +16,7 @@ public class FlutuantePushInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new FlutuantePushInstrucao();
 	}
 

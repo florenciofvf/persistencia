@@ -25,7 +25,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new InvocacaoInstrucao(nome);
 	}
 

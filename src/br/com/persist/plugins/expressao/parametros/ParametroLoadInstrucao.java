@@ -12,7 +12,7 @@ public class ParametroLoadInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new ParametroLoadInstrucao();
 	}
 
@@ -20,9 +20,9 @@ public class ParametroLoadInstrucao extends Instrucao {
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
 		Object valor = funcao.getValorParametro(parametros);
-		/*
-		 * if (valor instanceof Funcao) { valor = ((Funcao) valor).clonar(); }
-		 */
+		if (valor instanceof Funcao) {
+			valor = ((Funcao) valor).clonar();
+		}
 		pilhaOperando.push(valor);
 	}
 }

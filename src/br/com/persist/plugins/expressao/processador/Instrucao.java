@@ -33,7 +33,7 @@ public abstract class Instrucao {
 		this.indice = indice;
 	}
 
-	public abstract Instrucao clonar();
+	public abstract Instrucao novo();
 
 	public abstract void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException;

@@ -14,7 +14,7 @@ public class GotoInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new GotoInstrucao();
 	}
 

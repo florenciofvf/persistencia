@@ -20,7 +20,7 @@ public class ConstanteLoadInstrucao extends Instrucao implements LinkBiblioteca 
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new ConstanteLoadInstrucao();
 	}
 

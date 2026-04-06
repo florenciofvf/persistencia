@@ -97,7 +97,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Add();
 		}
 
@@ -136,7 +136,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new AddLista();
 		}
 
@@ -172,7 +172,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Sub();
 		}
 
@@ -205,7 +205,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Mul();
 		}
 
@@ -238,7 +238,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Div();
 		}
 
@@ -271,7 +271,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Rem();
 		}
 
@@ -304,7 +304,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new And();
 		}
 
@@ -335,7 +335,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Or();
 		}
 
@@ -366,7 +366,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Xor();
 		}
 
@@ -393,7 +393,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Igual();
 		}
 
@@ -432,7 +432,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Diff();
 		}
 
@@ -471,7 +471,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Menor();
 		}
 
@@ -504,7 +504,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new Maior();
 		}
 
@@ -537,7 +537,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new MenorIgual();
 		}
 
@@ -570,7 +570,7 @@ public class OperadorInstrucao {
 		}
 
 		@Override
-		public Instrucao clonar() {
+		public Instrucao novo() {
 			return new MaiorIgual();
 		}
 

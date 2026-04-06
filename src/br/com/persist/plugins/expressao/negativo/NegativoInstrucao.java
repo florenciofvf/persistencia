@@ -16,7 +16,7 @@ public class NegativoInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new NegativoInstrucao();
 	}
 

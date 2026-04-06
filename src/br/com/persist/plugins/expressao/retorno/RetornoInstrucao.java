@@ -12,7 +12,7 @@ public class RetornoInstrucao extends Instrucao {
 	}
 
 	@Override
-	public Instrucao clonar() {
+	public Instrucao novo() {
 		return new RetornoInstrucao();
 	}
 
