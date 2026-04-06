@@ -1,18 +1,18 @@
 package br.com.persist.plugins.expressao.compilador;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoTest;
 
-public class TokenManagerTest {
+public class TokenManagerTest extends ExpressaoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(new File("compilacao_teste"));
+		compilacao.compilar(getFile("tokenManager", "compilacao"));
 	}
 
 }
