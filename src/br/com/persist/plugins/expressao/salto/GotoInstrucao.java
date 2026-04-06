@@ -7,7 +7,7 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class GotoInstrucao extends Instrucao {
-	private int indice;
+	private int indiceSalto;
 
 	public GotoInstrucao() {
 		super(GotoContexto.GOTO);
@@ -20,12 +20,12 @@ public class GotoInstrucao extends Instrucao {
 
 	@Override
 	public void setParametros(String string) {
-		indice = Integer.parseInt(string);
+		indiceSalto = Integer.parseInt(string);
 	}
 
 	@Override
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
-		funcao.setIndice(indice);
+		funcao.setIndice(indiceSalto);
 	}
 }

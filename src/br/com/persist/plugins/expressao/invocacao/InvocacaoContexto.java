@@ -13,7 +13,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class InvocacaoContexto extends Contexto {
-	public static final String INVOKE_RETR = "invoke_cret";
+	public static final String INVOKE_CRET = "invoke_cret";
 	public static final String INVOKE_VOID = "invoke_void";
 	public static final String THIS = "this";
 	private ArgumentosContexto argumentos;
@@ -117,7 +117,7 @@ public class InvocacaoContexto extends Contexto {
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
 		if (comRetorno) {
-			print(pw, INVOKE_RETR, biblio, metodo);
+			print(pw, INVOKE_CRET, biblio, metodo);
 		} else {
 			print(pw, INVOKE_VOID, biblio, metodo);
 		}

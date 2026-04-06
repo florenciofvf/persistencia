@@ -6,116 +6,76 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
-import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
+import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
-import br.com.persist.plugins.instrucao.InstrucaoConstantes;
-import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.compilador.InvocacaoContexto;
 
-/*
-public class InvocacaoExpInstrucao extends Invocacao {
-	public InvocacaoExpInstrucao() {
-		super(InvocacaoContexto.INVOKE_EXP);
-	}
-
-	@Override
-	public Instrucao clonar() {
-		return new InvocacaoExpInstrucao();
-	}
-}
-*/
-
-/*
-public class InvocacaoInstrucao extends Invocacao {
-	public InvocacaoInstrucao() {
-		super(InvocacaoContexto.INVOKE);
-	}
-
-	@Override
-	public Instrucao clonar() {
-		return new InvocacaoInstrucao();
-	}
-}
-*/
-public abstract class InvocacaoInstrucao extends Instrucao {
+public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
+	private boolean biblioLocal;
 	private String nomeBiblio;
 	private String nomeFuncao;
 
-	protected InvocacaoInstrucao(String nome) {
+	public InvocacaoInstrucao(String nome) {
 		super(nome);
 	}
 
 	@Override
-	public void setParametros(String string) {
-		String[] array = string.split("\\.");
-		if (array.length == 2) {
-			nomeBiblio = array[0];
-			nomeFuncao = array[1];
-		} else {
-			nomeFuncao = array[0];
-		}
+	public Instrucao clonar() {
+		return new InvocacaoInstrucao(nome);
 	}
 
 	@Override
-	public void processar(CacheBiblioteca cacheBiblioteca, Biblioteca biblioteca, Funcao funcao,
-			PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando) throws InstrucaoException {
+	public void setParametros(String string) {
+		String[] array = string.split(ExpressaoConstantes.ESPACO);
+		nomeBiblio = array[0];
+		nomeFuncao = array[1];
+		biblioLocal = InvocacaoContexto.THIS.equals(nomeBiblio);
+	}
+
+	@Override
+	public String getNomeBiblioAbsoluto() {
+		return nomeBiblio;
+	}
+
+	@Override
+	public boolean isRefLocal() {
+		return biblioLocal;
+	}
+
+	@Override
+	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
+			throws ExpressaoException {
 		Biblioteca biblio;
-		Funcao invocar;
-		if (nomeBiblio != null) {
-			biblio = cacheBiblioteca.getBiblioteca(nomeBiblio, biblioteca);
-		} else {
-			if (funcao == null) {
-				throw new InstrucaoException("erro.funcao_inexistente", "null", "null");
-			}
-			if (InstrucaoConstantes.TAILCALL.equals(nomeFuncao)) {
-				setParametros(funcao, pilhaOperando);
-				funcao.setIndice(0);
-				return;
-			}
+		if (biblioLocal) {
 			biblio = funcao.getBiblioteca();
+		} else {
+			biblio = (Biblioteca) pilhaOperando.pop();
 		}
-		invocar = biblio.getFuncao(nomeFuncao);
+		Funcao invocar = biblio.getFuncao(nomeFuncao);
 		Funcao clone = invocar.clonar();
 		if (!clone.isNativo()) {
 			try {
 				setParametros(clone, pilhaOperando);
 				pilhaFuncao.push(clone);
 			} catch (Exception ex) {
-				throw new InstrucaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
+				throw new ExpressaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
 			}
 		} else {
 			List<Object> lista = null;
-			if ("ibiblio".equals(nomeBiblio)) {
-				lista = new ArrayList<>(Arrays.asList(biblioteca));
-			}
-			AtomicBoolean atomic = new AtomicBoolean();
-			Object resp = invocarNativo(lista, clone, pilhaFuncao, pilhaOperando, atomic);
-			if (atomic.get()) {
+			AtomicBoolean pushPilhaOperando = new AtomicBoolean();
+			Object resp = invocarNativo(lista, clone, pilhaFuncao, pilhaOperando, pushPilhaOperando);
+			if (pushPilhaOperando.get()) {
 				pilhaOperando.push(resp);
 			}
 		}
 	}
 
-	public static void validar(Funcao funcao, boolean exp, int totalParam) throws InstrucaoException {
-		if (funcao == null) {
-			throw new InstrucaoException("Funcao nula.", false);
-		}
-		if (exp && funcao.isTipoVoid()) {
-			throw new InstrucaoException("erro.funcao_sem_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
-		} else if (!exp && !funcao.isTipoVoid()) {
-			throw new InstrucaoException("erro.funcao_com_retorno", funcao.getNome(), funcao.getBiblioteca().getNome());
-		}
-		if (funcao.getTotalParametro() != totalParam) {
-			throw new InstrucaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome(),
-					funcao.getTotalParametro(), totalParam, funcao.getBiblioteca().getNome());
-		}
-	}
-
-	static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws InstrucaoException {
+	private static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws ExpressaoException {
 		List<Integer> indices = indiceParametros(funcao);
 		for (int i = indices.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
@@ -132,13 +92,13 @@ public abstract class InvocacaoInstrucao extends Instrucao {
 	}
 
 	private Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
-			PilhaOperando pilhaOperando, AtomicBoolean atomic) throws InstrucaoException {
+			PilhaOperando pilhaOperando, AtomicBoolean pushPilhaOperando) throws ExpressaoException {
 		Object resposta = null;
 		Class<?> klass = null;
 		try {
 			klass = Class.forName(funcao.getBiblioNativa());
 		} catch (Exception ex) {
-			throw new InstrucaoException("erro.biblio_inexistente", funcao.getBiblioNativa());
+			throw new ExpressaoException("erro.biblio_inexistente", funcao.getBiblioNativa());
 		}
 		List<Integer> params = indiceParametros(funcao);
 		Class<?>[] tipoParametros = getTipoParametros(params);
@@ -153,17 +113,17 @@ public abstract class InvocacaoInstrucao extends Instrucao {
 			String string = returnType.getCanonicalName();
 			if (funcao.isTipoVoid()) {
 				method.invoke(klass, valorParametros);
-				atomic.set(false);
+				pushPilhaOperando.set(false);
 			} else {
 				if ("void".equals(string) || "java.lang.Void".equals(string)) {
-					throw new InstrucaoException("erro.funcao_nativa_retorno_void", funcao.getNome(),
-							funcao.getBiblioteca().getNome());
+					throw new ExpressaoException("erro.funcao_nativa_retorno_void", funcao.getNome(),
+							funcao.getBiblioteca().getNomeAbsoluto());
 				}
 				resposta = method.invoke(klass, valorParametros);
-				atomic.set(true);
+				pushPilhaOperando.set(true);
 			}
 		} catch (Exception ex) {
-			throw new InstrucaoException(stringPilhaMetodo(funcao, pilhaMetodo), ex);
+			throw new ExpressaoException(stringPilhaMetodo(funcao, pilhaMetodo), ex);
 		}
 		return resposta;
 	}
@@ -176,21 +136,21 @@ public abstract class InvocacaoInstrucao extends Instrucao {
 		return tipoParametros;
 	}
 
-	private Class<?>[] editarTipoParametros(Class<?>[] tipoParametros, List<Object> lista) {
-		List<Class<?>> resposta = new ArrayList<>(Arrays.asList(tipoParametros));
-		for (int i = 0; i < lista.size(); i++) {
-			resposta.add(Object.class);
-		}
-		return resposta.toArray(new Class<?>[0]);
-	}
-
-	private Object[] getValorParametros(PilhaOperando pilhaOperando, List<Integer> params) throws InstrucaoException {
+	private Object[] getValorParametros(PilhaOperando pilhaOperando, List<Integer> params) throws ExpressaoException {
 		Object[] valorParametros = new Object[params.size()];
 		for (int i = params.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
 			valorParametros[i] = valor;
 		}
 		return valorParametros;
+	}
+
+	private Class<?>[] editarTipoParametros(Class<?>[] tipoParametros, List<Object> lista) {
+		List<Class<?>> resposta = new ArrayList<>(Arrays.asList(tipoParametros));
+		for (int i = 0; i < lista.size(); i++) {
+			resposta.add(Object.class);
+		}
+		return resposta.toArray(new Class<?>[0]);
 	}
 
 	private Object[] editarValorParametros(Object[] valorParametros, List<Object> lista) {
@@ -201,11 +161,28 @@ public abstract class InvocacaoInstrucao extends Instrucao {
 		return resposta.toArray(new Object[0]);
 	}
 
-	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws InstrucaoException {
+	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws ExpressaoException {
 		StringBuilder sb = new StringBuilder(funcao.toString() + "\n");
 		while (!pilhaMetodo.isEmpty()) {
 			sb.append(pilhaMetodo.pop() + "\n");
 		}
 		return sb.toString();
+	}
+
+	public static void validar(Funcao funcao, boolean comRetorno, int totalParam) throws ExpressaoException {
+		if (funcao == null) {
+			throw new ExpressaoException("Funcao nula.", false);
+		}
+		if (comRetorno && funcao.isTipoVoid()) {
+			throw new ExpressaoException("erro.funcao_sem_retorno", funcao.getNome(),
+					funcao.getBiblioteca().getNomeAbsoluto());
+		} else if (!comRetorno && !funcao.isTipoVoid()) {
+			throw new ExpressaoException("erro.funcao_com_retorno", funcao.getNome(),
+					funcao.getBiblioteca().getNomeAbsoluto());
+		}
+		if (funcao.getTotalParametro() != totalParam) {
+			throw new ExpressaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome(),
+					funcao.getTotalParametro(), totalParam, funcao.getBiblioteca().getNomeAbsoluto());
+		}
 	}
 }

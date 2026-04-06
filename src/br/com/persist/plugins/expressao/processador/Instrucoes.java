@@ -6,6 +6,8 @@ import java.util.Map;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
+import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
+import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
 import br.com.persist.plugins.expressao.nativo.FlutuantePushInstrucao;
 import br.com.persist.plugins.expressao.nativo.InteiroPushInstrucao;
 import br.com.persist.plugins.expressao.nativo.StringPushInstrucao;
@@ -52,6 +54,8 @@ public class Instrucoes {
 	}
 
 	static {
+		add(new InvocacaoInstrucao(InvocacaoContexto.INVOKE_CRET));
+		add(new InvocacaoInstrucao(InvocacaoContexto.INVOKE_VOID));
 		// add(new LoadParametroSuperInstrucao());
 		// add(new InvocacaoParamExpInstrucao());
 		add(new FlutuantePushInstrucao());
@@ -60,11 +64,9 @@ public class Instrucoes {
 		// add(new LoadFuncaoLambInstrucao());
 		add(new ParametroLoadInstrucao());
 		add(new ConstanteLoadInstrucao());
-		// ---add(new InvocacaoExpInstrucao());
 		add(new ConstanteDefineInstrucao());
 		// add(new LoadFuncaoInstrucao());
 		add(new StringPushInstrucao());
-		// ---add(new InvocacaoInstrucao());
 		add(new NegativoInstrucao());
 		add(new RetornoInstrucao());
 		add(new GotoInstrucao());

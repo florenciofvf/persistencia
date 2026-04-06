@@ -8,7 +8,7 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class IFEqInstrucao extends Instrucao {
-	private int indice;
+	private int indiceSalto;
 
 	public IFEqInstrucao() {
 		super(IFEqContexto.IF_EQ);
@@ -21,7 +21,7 @@ public class IFEqInstrucao extends Instrucao {
 
 	@Override
 	public void setParametros(String string) {
-		indice = Integer.parseInt(string);
+		indiceSalto = Integer.parseInt(string);
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class IFEqInstrucao extends Instrucao {
 		InstrucaoUtil.checarNumber(operando);
 		int valor = ((Number) operando).intValue();
 		if (valor == 0) {
-			funcao.setIndice(indice);
+			funcao.setIndice(indiceSalto);
 		}
 	}
 }
