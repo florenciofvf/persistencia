@@ -11,91 +11,91 @@ import java.util.Objects;
 import br.com.persist.assistencia.MetaInfo;
 import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.processador.Funcao;
-import br.com.persist.plugins.instrucao.InstrucaoConstantes;
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class Biblioteca {
-	private final Map<String, Constante> constantes;
+	private final Map<String, Constante> mapaConstantes;
+	private final Map<String, BiblioAlias> mapaAlias;
+	private final Map<String, Funcao> mapaFuncoes;
 	public static final String EXTENSAO = ".fvf2";
-	private final Map<String, Importa> imports;
-	private final Map<String, Funcao> funcoes;
-	private String nomePackage;
+	private String nomePacote;
 	private final String nome;
 
 	public Biblioteca(File file) {
-		constantes = new LinkedHashMap<>();
-		funcoes = new LinkedHashMap<>();
+		mapaConstantes = new LinkedHashMap<>();
+		mapaFuncoes = new LinkedHashMap<>();
+		mapaAlias = new HashMap<>();
 		this.nome = file.getName();
-		imports = new HashMap<>();
 	}
 
-	public String getNome() {
-		return nomePackage != null ? nomePackage + "." + nome : nome;
+	public String getNomeAbsoluto() {
+		return nomePacote + "." + nome;
 	}
 
 	public String getNomeSimples() {
 		return nome;
 	}
 
-	public String getNomePackage() {
-		return nomePackage;
+	public String getNomePacote() {
+		return nomePacote;
 	}
 
-	public String getNomeImport(String nome) {
-		Importa obj = imports.get(nome);
-		if (obj == null) {
-			return nome;
+	public void setNomePacote(String pacote) {
+		this.nomePacote = pacote;
+	}
+
+	public String getBiblioteca(String alias) {
+		BiblioAlias obj = mapaAlias.get(alias);
+		if (obj != null) {
+			return obj.biblio;
 		}
-		return obj.biblio;
+		return null;
 	}
 
-	public void setNomePackage(String pacote) {
-		this.nomePackage = pacote;
-	}
-
-	public void addImport(String string) {
-		String[] strings = string.split(InstrucaoConstantes.ESPACO);
-		Importa obj = new Importa(strings[0], strings[1]);
-		imports.put(obj.alias, obj);
+	public void addAlias(String string) {
+		String[] strings = string.split(ExpressaoConstantes.ESPACO);
+		BiblioAlias obj = new BiblioAlias(strings[0], strings[1]);
+		mapaAlias.put(obj.alias, obj);
 	}
 
 	public void addConstante(Constante constante) {
 		if (constante != null) {
-			constantes.put(constante.getNome(), constante);
+			mapaConstantes.put(constante.getNome(), constante);
 			constante.setBiblioteca(this);
 		}
 	}
 
 	public void addFuncao(Funcao funcao) {
 		if (funcao != null) {
-			funcoes.put(funcao.getNome(), funcao);
+			mapaFuncoes.put(funcao.getNome(), funcao);
 			funcao.setBiblioteca(this);
 		}
 	}
 
 	public boolean contemFuncao(String nome) {
-		return funcoes.containsKey(nome);
+		return mapaFuncoes.containsKey(nome);
 	}
 
-	public Constante getConstante(String nome) throws InstrucaoException {
-		Constante constante = constantes.get(nome);
+	public Constante getConstante(String nome) throws ExpressaoException {
+		Constante constante = mapaConstantes.get(nome);
 		if (constante == null) {
-			throw new InstrucaoException("erro.constante_inexistente", nome, this.nome);
+			throw new ExpressaoException("erro.constante_inexistente", nome, getNomeAbsoluto());
 		}
 		return constante;
 	}
 
-	public Funcao getFuncao(String nome) throws InstrucaoException {
-		Funcao funcao = funcoes.get(nome);
+	public Funcao getFuncao(String nome) throws ExpressaoException {
+		Funcao funcao = mapaFuncoes.get(nome);
 		if (funcao == null) {
-			throw new InstrucaoException("erro.funcao_inexistente", nome, this.nome);
+			throw new ExpressaoException("erro.funcao_inexistente", nome, getNomeAbsoluto());
 		}
 		return funcao;
 	}
 
 	public List<MetaInfo> getNomeConstantes() {
 		List<MetaInfo> lista = new ArrayList<>();
-		for (String item : constantes.keySet()) {
+		for (String item : mapaConstantes.keySet()) {
 			lista.add(new MetaInfo(item, item));
 		}
 		return lista;
@@ -103,7 +103,7 @@ public class Biblioteca {
 
 	public List<MetaInfo> getNomeFuncoes() {
 		List<MetaInfo> lista = new ArrayList<>();
-		for (Funcao item : funcoes.values()) {
+		for (Funcao item : mapaFuncoes.values()) {
 			lista.add(new MetaInfo(item.getInterface(), item.getInterfaceInfo()));
 		}
 		return lista;
@@ -111,15 +111,15 @@ public class Biblioteca {
 
 	@Override
 	public String toString() {
-		return nome + " constantes:" + constantes;
+		return nome + " constantes:" + mapaConstantes;
 	}
 }
 
-class Importa {
+class BiblioAlias {
 	final String biblio;
 	final String alias;
 
-	public Importa(String biblio, String alias) {
+	public BiblioAlias(String biblio, String alias) {
 		this.biblio = Objects.requireNonNull(biblio);
 		this.alias = Objects.requireNonNull(alias);
 	}

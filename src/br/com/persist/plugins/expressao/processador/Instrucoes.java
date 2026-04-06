@@ -3,6 +3,7 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
 import br.com.persist.plugins.expressao.nativo.FlutuantePushInstrucao;
@@ -28,7 +29,7 @@ import br.com.persist.plugins.expressao.parametros.ParametroLoadInstrucao;
 import br.com.persist.plugins.expressao.retorno.RetornoInstrucao;
 import br.com.persist.plugins.expressao.salto.GotoInstrucao;
 import br.com.persist.plugins.expressao.salto.IFEqInstrucao;
-import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class Instrucoes {
 	static final Map<String, Instrucao> cache = new HashMap<>();
@@ -42,10 +43,10 @@ public class Instrucoes {
 		}
 	}
 
-	public static Instrucao get(String nome, String biblio) throws InstrucaoException {
+	public static Instrucao get(String nome, Biblioteca biblioteca) throws ExpressaoException {
 		Instrucao obj = cache.get(nome);
 		if (obj == null) {
-			throw new InstrucaoException("erro.instrucao_invalida", nome, biblio);
+			throw new ExpressaoException("erro.instrucao_invalida", nome, biblioteca.getNomeSimples());
 		}
 		return obj;
 	}
