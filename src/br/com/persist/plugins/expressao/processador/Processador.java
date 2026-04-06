@@ -15,8 +15,9 @@ public class Processador {
 	private final PilhaOperando pilhaOperando = new PilhaOperando();
 	private final PilhaFuncao pilhaFuncao = new PilhaFuncao();
 
-	public List<Object> processar(String nomeAbsoluto, String nomeFuncao, Object... args) throws ExpressaoException {
-		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeAbsoluto);
+	public List<Object> processar(String nomeBiblioAbsoluto, String nomeFuncao, Object... args)
+			throws ExpressaoException {
+		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioAbsoluto);
 
 		Funcao funcao = biblioteca.getFuncao(nomeFuncao).clonar();
 

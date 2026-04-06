@@ -10,10 +10,9 @@ import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 
 public class ChaveContexto extends Contexto {
-	public static final String LOAD_PARAM = "load_param";
-
 	public ChaveContexto(Token token) {
 		this.token = token;
 	}
@@ -44,6 +43,6 @@ public class ChaveContexto extends Contexto {
 
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
-		print(pw, LOAD_PARAM, token.getString());
+		print(pw, ParametroContexto.LOAD_PARAM, token.getString());
 	}
 }
