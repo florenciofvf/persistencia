@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.processador;
+package br.com.persist.plugins.expressao.invocacao;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -7,14 +7,45 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
+import br.com.persist.plugins.expressao.processador.Funcao;
+import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.PilhaFuncao;
+import br.com.persist.plugins.expressao.processador.PilhaOperando;
 import br.com.persist.plugins.instrucao.InstrucaoConstantes;
 import br.com.persist.plugins.instrucao.InstrucaoException;
+import br.com.persist.plugins.instrucao.compilador.InvocacaoContexto;
 
-public abstract class Invocacao extends Instrucao {
+/*
+public class InvocacaoExpInstrucao extends Invocacao {
+	public InvocacaoExpInstrucao() {
+		super(InvocacaoContexto.INVOKE_EXP);
+	}
+
+	@Override
+	public Instrucao clonar() {
+		return new InvocacaoExpInstrucao();
+	}
+}
+*/
+
+/*
+public class InvocacaoInstrucao extends Invocacao {
+	public InvocacaoInstrucao() {
+		super(InvocacaoContexto.INVOKE);
+	}
+
+	@Override
+	public Instrucao clonar() {
+		return new InvocacaoInstrucao();
+	}
+}
+*/
+public abstract class InvocacaoInstrucao extends Instrucao {
 	private String nomeBiblio;
 	private String nomeFuncao;
 
-	protected Invocacao(String nome) {
+	protected InvocacaoInstrucao(String nome) {
 		super(nome);
 	}
 

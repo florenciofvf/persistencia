@@ -78,14 +78,14 @@ public class Funcao {
 	public void setIndice(int indice) throws ExpressaoException {
 		InstrucaoItem item = mapaInstrucoes.get(indice);
 		if (item == null) {
-			throw new ExpressaoException("erro.funcao_set_indice", getNome(), indice, biblioteca.getNome());
+			throw new ExpressaoException("erro.funcao_set_indice", getNome(), indice, biblioteca.getNomeSimples());
 		}
 		ponteiro = item;
 	}
 
 	Instrucao proximaInstrucao() throws ExpressaoException {
 		if (ponteiro == null) {
-			throw new ExpressaoException("erro.funcao_sem_instrucao", getNome(), biblioteca.getNome());
+			throw new ExpressaoException("erro.funcao_sem_instrucao", getNome(), biblioteca.getNomeSimples());
 		}
 		Instrucao resp = ponteiro.instrucao;
 		ponteiro = ponteiro.proximo;
@@ -95,7 +95,7 @@ public class Funcao {
 	public void addParametro(String nome) throws ExpressaoException {
 		InstrucaoUtil.checarParametro(nome);
 		if (contem(nome)) {
-			throw new ExpressaoException("erro.parametro_inexistente", nome, getNome(), biblioteca.getNome());
+			throw new ExpressaoException("erro.parametro_inexistente", nome, getNome(), biblioteca.getNomeSimples());
 		}
 		Token token = new Token(nome, Tipo.VIRTUAL, -1);
 		Parametro param = new Parametro(token);
@@ -146,7 +146,7 @@ public class Funcao {
 				return i;
 			}
 		}
-		throw new ExpressaoException("erro.parametro_inexistente", nome, getNome(), biblioteca.getNome());
+		throw new ExpressaoException("erro.parametro_inexistente", nome, getNome(), biblioteca.getNomeSimples());
 	}
 
 	public void addInstrucao(Instrucao instrucao) throws ExpressaoException {
@@ -154,7 +154,7 @@ public class Funcao {
 			return;
 		}
 		if (isNativo()) {
-			throw new ExpressaoException("erro.funcao_nativa_add_inst", nome, biblioteca.getNome());
+			throw new ExpressaoException("erro.funcao_nativa_add_inst", nome, biblioteca.getNomeSimples());
 		}
 		InstrucaoItem no = new InstrucaoItem(instrucao);
 		mapaInstrucoes.put(instrucao.indice, no);

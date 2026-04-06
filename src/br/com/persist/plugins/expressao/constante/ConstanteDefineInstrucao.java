@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.constante;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
@@ -21,7 +22,8 @@ public class ConstanteDefineInstrucao extends Instrucao {
 			throws ExpressaoException {
 		Object valor = pilhaOperando.pop();
 		Constante constante = new Constante(parametros);
-		// biblioteca.addConstante(constante);
+		Biblioteca biblioteca = funcao.getBiblioteca();
+		biblioteca.addConstante(constante);
 		constante.setValor(valor);
 	}
 }

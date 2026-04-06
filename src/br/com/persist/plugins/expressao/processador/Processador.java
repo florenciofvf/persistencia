@@ -2,10 +2,11 @@ package br.com.persist.plugins.expressao.processador;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
-import br.com.persist.plugins.expressao.biblioteca.LigaBiblioteca;
+import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
 import br.com.persist.plugins.expressao.ExpressaoException;
 
@@ -32,25 +33,17 @@ public class Processador {
 
 		funcao = pilhaFuncao.peek();
 
+		AtomicBoolean processar = new AtomicBoolean(false);
+
 		while (funcao != null) {
-			boolean processar = false;
+			processar.set(false);
 			Instrucao instrucao = funcao.proximaInstrucao();
-			if (instrucao instanceof LigaBiblioteca) {
-				LigaBiblioteca referencia = (LigaBiblioteca) instrucao;
-				if (!cacheBiblioteca.contem(referencia.getNomeAbsoluto())) {
-					Biblioteca novaBiblioteca = cacheBiblioteca.getBiblioteca(referencia.getNomeAbsoluto());
-					funcaoConstantes = novaBiblioteca.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES)
-							.clonar();
-					funcao.setIndice(referencia.getIndice());
-					pilhaFuncao.push(funcaoConstantes);
-					funcao = pilhaFuncao.peek();
-				} else {
-					processar = true;
-				}
+			if (instrucao instanceof LinkBiblioteca) {
+				funcao = processarLink(funcao, processar, instrucao);
 			} else {
-				processar = true;
+				processar.set(true);
 			}
-			if (processar) {
+			if (processar.get()) {
 				instrucao.processar(funcao, pilhaFuncao, pilhaOperando);
 				funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
 			}
@@ -63,6 +56,28 @@ public class Processador {
 		}
 
 		return resposta;
+	}
+
+	private Funcao processarLink(Funcao funcao, AtomicBoolean processar, Instrucao instrucao)
+			throws ExpressaoException {
+		LinkBiblioteca link = (LinkBiblioteca) instrucao;
+		if (link.isRefLocal()) {
+			processar.set(true);
+		} else {
+			if (cacheBiblioteca.contem(link.getNomeBiblioAbsoluto())) {
+				Biblioteca cacheada = cacheBiblioteca.getBiblioteca(link.getNomeBiblioAbsoluto());
+				pilhaOperando.push(cacheada);
+				processar.set(true);
+			} else {
+				Biblioteca novaCacheada = cacheBiblioteca.getBiblioteca(link.getNomeBiblioAbsoluto());
+				Funcao fnConstantes = novaCacheada.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES).clonar();
+				funcao.setIndice(link.getIndice());
+				pilhaFuncao.push(fnConstantes);
+				funcao = pilhaFuncao.peek();
+				processar.set(false);
+			}
+		}
+		return funcao;
 	}
 
 	public CacheBiblioteca getCacheBiblioteca() {
