@@ -13,6 +13,7 @@ public class FuncaoConstantesContexto extends FuncaoContexto {
 
 	public FuncaoConstantesContexto(Token token) {
 		adicionar2(new ParametrosContexto());
+		adicionar2(retornoContexto);
 		this.token = token;
 		retornoVoid = true;
 	}
