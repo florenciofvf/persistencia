@@ -21,7 +21,7 @@ import br.com.persist.plugins.expressao.nativo.StringContexto;
 import br.com.persist.plugins.expressao.operador.OperadorContexto;
 
 public class ExpressaoContexto extends Salto {
-	private TokenExec selecionado = new OperMOuMNativoIniExpressaoChave();
+	private TokenExec selecionado = new OperadorMouMNativoIniExpressaoChave();
 	private final String[] finalizadores;
 	private Token tokenFinalizador;
 	private Token tokenMOuM;
@@ -67,7 +67,7 @@ public class ExpressaoContexto extends Salto {
 		selecionado.processar(tokenManager, token);
 	}
 
-	class OperMOuMNativoIniExpressaoChave implements TokenExec {
+	class OperadorMouMNativoIniExpressaoChave implements TokenExec {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isOperadorMOuM()) {
 				processarOperadorMOuM(token);
@@ -102,12 +102,38 @@ public class ExpressaoContexto extends Salto {
 		}
 	}
 
+	class QQOperadorOuIniInvocacao implements TokenExec {
+		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
+			if (token.isOperador()) {
+				new QQOperador().processar(tokenManager, token);
+			} else if (token.isAbreParentese()) {
+				processarIniInvocacao(tokenManager, token);
+			} else {
+				tokenManager.invalidar(token);
+			}
+		}
+
+		private void processarIniInvocacao(TokenManager tokenManager, Token token) throws ExpressaoException {
+			if (getUltimo() instanceof ChaveContexto) {
+				Contexto ultimo = excluirUltimo();
+				InvocacaoContexto invocacao = new InvocacaoContexto(ultimo.getToken(), true);
+				invocacao.setNegativoContexto(ultimo.getNegativoContexto());
+				tokenManager.selecionar(invocacao);
+				adicionar(invocacao);
+				tokenManager.processar(token);
+			} else {
+				tokenManager.invalidar(token);
+			}
+			selecionado = new QQOperador();
+		}
+	}
+
 	class QQOperador implements TokenExec {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isOperador()) {
 				OperadorContexto operador = new OperadorContexto(token);
 				adicionar(operador);
-				selecionado = new OperMOuMNativoIniExpressaoChave();
+				selecionado = new OperadorMouMNativoIniExpressaoChave();
 			} else {
 				tokenManager.invalidar(token);
 			}
@@ -127,24 +153,9 @@ public class ExpressaoContexto extends Salto {
 		selecionado = new QQOperador();
 	}
 
-	private Contexto criarNativo(Token token) {
-		if (token.isString()) {
-			return new StringContexto(token);
-		} else if (token.isInteiro()) {
-			return new InteiroContexto(token);
-		} else {
-			return new FlutuanteContexto(token);
-		}
-	}
-
 	private void processarIniExpressao(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (getUltimo() instanceof ChaveContexto) {
-			Contexto ultimo = excluirUltimo();
-			InvocacaoContexto invocacao = new InvocacaoContexto(ultimo.getToken(), true);
-			invocacao.setNegativoContexto(ultimo.getNegativoContexto());
-			tokenManager.selecionar(invocacao);
-			adicionar(invocacao);
-			tokenManager.processar(token);
+			tokenManager.invalidar(token);
 		} else {
 			ExpressaoContexto expressao = new ExpressaoContexto();
 			tokenManager.selecionar(expressao);
@@ -154,7 +165,7 @@ public class ExpressaoContexto extends Salto {
 			}
 			adicionar(expressao);
 		}
-		selecionado = new OperMOuMNativoIniExpressaoChave();
+		selecionado = new QQOperador();
 	}
 
 	private void processarChave(Token token) throws ExpressaoException {
@@ -164,7 +175,17 @@ public class ExpressaoContexto extends Salto {
 			tokenMOuM = null;
 		}
 		adicionar(chave);
-		selecionado = new OperMOuMNativoIniExpressaoChave();
+		selecionado = new QQOperadorOuIniInvocacao();
+	}
+
+	private Contexto criarNativo(Token token) {
+		if (token.isString()) {
+			return new StringContexto(token);
+		} else if (token.isInteiro()) {
+			return new InteiroContexto(token);
+		} else {
+			return new FlutuanteContexto(token);
+		}
 	}
 
 	@Override
