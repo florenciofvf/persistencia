@@ -49,4 +49,33 @@ public class IFTest extends ExpressaoTest {
 		result = processador.processar(biblio, "main", bi(0));
 		assertEquals("[100]", result.toString());
 	}
+
+	@Test
+	public void teste17() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("condicional", "__simples17"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__simples17";
+
+		List<Object> result;
+
+		String nomeFuncao = "diaDaSemana";
+
+		result = processador.processar(biblio, nomeFuncao, bi(1));
+		assertEquals("[FINAL DE SEMANA]", result.toString());
+
+		result = processador.processar(biblio, nomeFuncao, bi(-1));
+		assertEquals("[DIA INVÁLIDO]", result.toString());
+
+		result = processador.processar(biblio, nomeFuncao, bi(6));
+		assertEquals("[Meio da Semana]", result.toString());
+
+		result = processador.processar(biblio, nomeFuncao, bi(7));
+		assertEquals("[FINAL DE SEMANA]", result.toString());
+
+		result = processador.processar(biblio, nomeFuncao, bi(8));
+		assertEquals("[DIA INVÁLIDO]", result.toString());
+	}
 }

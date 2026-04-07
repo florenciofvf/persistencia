@@ -1,0 +1,11 @@
+package br.com.teste;
+
+defun diaDaSemana(numero) {
+	if(numero == 1 || numero == 7) {
+		return 'FINAL DE SEMANA';
+	} elseif(numero < 1 || numero > 7) {
+		return 'DIA INVÁLIDO';
+	} else {
+		return 'Meio da Semana';
+	}
+}
