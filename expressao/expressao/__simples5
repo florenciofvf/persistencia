@@ -1,0 +1,9 @@
+package br.com.teste;
+
+defun teste() {
+	return dividir(3, 7);
+}
+
+defun dividir(valor1, valor2) {
+	return valor2 / valor1;
+}

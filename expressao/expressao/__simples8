@@ -1,0 +1,9 @@
+package br.com.teste;
+
+defun igual(valor1, valor2) {
+	return valor1 == valor2;
+}
+
+defun diff(valor1, valor2) {
+	return valor1 != valor2;
+}

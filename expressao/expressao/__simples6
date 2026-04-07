@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun expressao_01(a, b, c) {
+	return a + b * c;
+}
+
+defun expressao_02(a, b, c) {
+	return (a + b) * c;
+}
+
+defun expressao_03(a, b, c) {
+	return -(a + b) * c;
+}
