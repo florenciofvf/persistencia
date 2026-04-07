@@ -15,6 +15,24 @@ import br.com.persist.plugins.expressao.processador.Processador;
 public class FuncaoTest extends ExpressaoTest {
 
 	@Test
+	public void teste0() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("funcao", "__simples0"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__simples0";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main1");
+		assertEquals("[-5]", result.toString());
+
+		result = processador.processar(biblio, "main2");
+		assertEquals("[2]", result.toString());
+	}
+
+	@Test
 	public void teste14() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
 		compilacao.compilar(getFile("funcao", "recursao14"));
