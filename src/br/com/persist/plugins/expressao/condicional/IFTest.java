@@ -31,4 +31,22 @@ public class IFTest extends ExpressaoTest {
 		result = processador.processar(biblio, "teste", bi(3), "A", "B");
 		assertEquals("[0]", result.toString());
 	}
+
+	@Test
+	public void teste12() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("condicional", "__simples12"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__simples12";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main", bi(1));
+		assertEquals("[1]", result.toString());
+
+		result = processador.processar(biblio, "main", bi(0));
+		assertEquals("[100]", result.toString());
+	}
 }

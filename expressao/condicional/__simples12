@@ -1,0 +1,15 @@
+package br.com.teste;
+
+defun main(tipo) {
+	const resposta = 0;
+
+	if(tipo) {
+		return 1;
+	} else {
+		while(resposta < 100) {
+			const resposta = resposta + 1;
+		}
+	}
+
+	return resposta;
+}
