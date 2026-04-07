@@ -22,6 +22,7 @@ import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoNativaContexto;
+import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.organiza.PacoteContexto;
 import br.com.persist.plugins.expressao.salto.GotoContexto;
@@ -150,41 +151,41 @@ public class BibliotecaContexto extends Contexto {
 	}
 
 	private List<PacoteContexto> getListaPacote() {
-		List<PacoteContexto> lista = new ArrayList<>();
+		List<PacoteContexto> resp = new ArrayList<>();
 		for (Contexto item : componentes) {
 			if (item instanceof PacoteContexto) {
-				lista.add((PacoteContexto) item);
+				resp.add((PacoteContexto) item);
 			}
 		}
-		return lista;
+		return resp;
 	}
 
 	private List<AliasContexto> getListaAlias() {
-		List<AliasContexto> lista = new ArrayList<>();
+		List<AliasContexto> resp = new ArrayList<>();
 		for (Contexto item : componentes) {
 			if (item instanceof AliasContexto) {
-				lista.add((AliasContexto) item);
+				resp.add((AliasContexto) item);
 			}
 		}
-		return lista;
+		return resp;
 	}
 
-	private Map<String, String> getMapaAlias() throws ExpressaoException {
-		Map<String, String> map = new HashMap<>();
+	private Map<String, AliasContexto> getMapaAlias() throws ExpressaoException {
+		Map<String, AliasContexto> resp = new HashMap<>();
 		for (AliasContexto item : getListaAlias()) {
-			map.put(item.getAlias(), item.getBiblioteca());
+			resp.put(item.getAlias(), item);
 		}
-		return map;
+		return resp;
 	}
 
 	private List<Contexto> getListaFuncoes() {
-		List<Contexto> lista = new ArrayList<>();
+		List<Contexto> resp = new ArrayList<>();
 		for (Contexto item : componentes) {
-			if ((item instanceof FuncaoContexto) || (item instanceof FuncaoNativaContexto)) {
-				lista.add(item);
+			if (item instanceof IFuncaoContexto) {
+				resp.add(item);
 			}
 		}
-		return lista;
+		return resp;
 	}
 
 	public PacoteContexto getPackage() throws ExpressaoException {
@@ -201,17 +202,18 @@ public class BibliotecaContexto extends Contexto {
 			pw.println();
 		}
 
-		Map<String, String> mapAlias = getMapaAlias();
+		Map<String, AliasContexto> mapaAlias = getMapaAlias();
 
 		for (Contexto item : getListaFuncoes()) {
-			processarFuncao(item, mapAlias, pw);
+			processarFuncao(item, mapaAlias, pw);
 			pw.println();
 		}
 	}
 
-	private void processarFuncao(Contexto funcao, Map<String, String> mapAlias, PrintWriter pw)
+	private void processarFuncao(Contexto funcao, Map<String, AliasContexto> mapaAlias, PrintWriter pw)
 			throws ExpressaoException {
-		funcao.configurarAliasInvocacao(mapAlias);
+		((IFuncaoContexto) funcao).configurarChaveParametro();
+		funcao.configurarLinkBiblioteca(mapaAlias);
 		funcao.configurarSaltos();
 
 		List<Contexto> contextos = new ArrayList<>();

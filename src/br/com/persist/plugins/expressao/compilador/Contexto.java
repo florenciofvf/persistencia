@@ -10,6 +10,8 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 import br.com.persist.plugins.expressao.negativo.NegativoContexto;
+import br.com.persist.plugins.expressao.organiza.AliasContexto;
+import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 
 public abstract class Contexto {
 	protected NegativoContexto negativoContexto;
@@ -147,18 +149,32 @@ public abstract class Contexto {
 		}
 	}
 
-	public void configurarAliasInvocacao(Map<String, String> mapa) throws ExpressaoException {
-		configurarAliasInvocacaoPre(mapa);
+	public void configurarLinkBiblioteca(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
+		configurarLinkBibliotecaPre(mapaAlias);
 		for (Contexto item : componentes) {
-			item.configurarAliasInvocacao(mapa);
+			item.configurarLinkBiblioteca(mapaAlias);
 		}
-		configurarAliasInvocacaoPos(mapa);
+		configurarLinkBibliotecaPos(mapaAlias);
 	}
 
-	protected void configurarAliasInvocacaoPre(Map<String, String> mapa) throws ExpressaoException {
+	protected void configurarLinkBibliotecaPre(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
 	}
 
-	protected void configurarAliasInvocacaoPos(Map<String, String> mapa) throws ExpressaoException {
+	protected void configurarLinkBibliotecaPos(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
+	}
+
+	public void configurarChaveParametro(Map<String, ParametroContexto> mapaParametros) {
+		configurarChaveParametroPre(mapaParametros);
+		for (Contexto item : componentes) {
+			item.configurarChaveParametro(mapaParametros);
+		}
+		configurarChaveParametroPos(mapaParametros);
+	}
+
+	protected void configurarChaveParametroPre(Map<String, ParametroContexto> mapaParametros) {
+	}
+
+	protected void configurarChaveParametroPos(Map<String, ParametroContexto> mapaParametros) {
 	}
 
 	public void listar(List<Contexto> lista) {

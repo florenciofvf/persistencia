@@ -96,12 +96,12 @@ public class CacheBiblioteca {
 		} else if (linha.startsWith(ParametroContexto.PREFIXO_PARAMETRO)) {
 			String nomeParametro = linha.substring(ParametroContexto.PREFIXO_PARAMETRO.length());
 			if (atomicFuncao.get() == null) {
-				throw new ExpressaoException("erro.parametro_sem_funcao", biblioteca.getNomeSimples(), nomeParametro);
+				throw new ExpressaoException("erro.parametro_sem_funcao", biblioteca.getNomeAbsoluto(), nomeParametro);
 			}
 			atomicFuncao.get().addParametro(nomeParametro);
 		} else if (linha.startsWith(FuncaoContexto.PREFIXO_TIPO_VOID)) {
 			if (atomicFuncao.get() == null) {
-				throw new ExpressaoException("erro.tipo_sem_funcao", biblioteca.getNomeSimples());
+				throw new ExpressaoException("erro.tipo_sem_funcao", biblioteca.getNomeAbsoluto());
 			}
 			atomicFuncao.get().setTipoVoid(true);
 		} else if (linhaInstrucao(linha)) {
@@ -131,7 +131,7 @@ public class CacheBiblioteca {
 
 	private void processarInstrucao(Biblioteca biblioteca, Funcao funcao, String linha) throws ExpressaoException {
 		if (funcao == null) {
-			throw new ExpressaoException("erro.instrucao_sem_funcao", biblioteca.getNomeSimples(), linha);
+			throw new ExpressaoException("erro.instrucao_sem_funcao", biblioteca.getNomeAbsoluto(), linha);
 		}
 		Instrucao instrucao = getInstrucao(linha, biblioteca);
 		funcao.addInstrucao(instrucao);

@@ -1,13 +1,17 @@
 package br.com.persist.plugins.expressao.parametros;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 
 public class ParametrosContexto extends Contexto {
 	private static final String ERRO_EXPRESSAO_PARAMETROS_SELECIONADO_VIA = "erro.expressao.parametros.selecionado_via";
@@ -38,6 +42,41 @@ public class ParametrosContexto extends Contexto {
 		} else {
 			throw new ExpressaoException(ERRO_EXPRESSAO_PARAMETROS_SELECIONADO_VIA);
 		}
+	}
+
+	@Override
+	public void adicionar(Contexto c) throws ExpressaoException {
+		if (c instanceof ParametroContexto && contemParametro((ParametroContexto) c)) {
+			IFuncaoContexto funcao = getIFuncaoContexto();
+			BibliotecaContexto biblio = funcao.getBibliotecaContexto();
+			throw new ExpressaoException("erro.parametro_duplicado", c.getToken().getString(), funcao.getNome(),
+					biblio.getNome());
+		}
+		super.adicionar(c);
+	}
+
+	private boolean contemParametro(ParametroContexto param) {
+		for (Contexto item : componentes) {
+			if (item instanceof ParametrosContexto && ((ParametroContexto) item).igual(param)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private IFuncaoContexto getIFuncaoContexto() {
+		return (IFuncaoContexto) parent;
+	}
+
+	public Map<String, ParametroContexto> getMapaParametros() {
+		Map<String, ParametroContexto> resp = new HashMap<>();
+		for (Contexto item : componentes) {
+			if (item instanceof ParametroContexto) {
+				ParametroContexto param = (ParametroContexto) item;
+				resp.put(param.getNome(), param);
+			}
+		}
+		return resp;
 	}
 
 	@Override

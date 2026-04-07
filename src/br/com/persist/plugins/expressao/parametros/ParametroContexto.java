@@ -25,6 +25,10 @@ public class ParametroContexto extends Contexto {
 		return getNome().equals(string);
 	}
 
+	public boolean igual(ParametroContexto param) {
+		return contem(param.getNome());
+	}
+
 	@Context("parametro")
 	@Doc("chave")
 	@Override

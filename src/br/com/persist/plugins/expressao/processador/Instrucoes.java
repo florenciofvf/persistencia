@@ -48,7 +48,7 @@ public class Instrucoes {
 	public static Instrucao get(String nome, Biblioteca biblioteca) throws ExpressaoException {
 		Instrucao obj = cache.get(nome);
 		if (obj == null) {
-			throw new ExpressaoException("erro.instrucao_invalida", nome, biblioteca.getNomeSimples());
+			throw new ExpressaoException("erro.instrucao_invalida", nome, biblioteca.getNomeAbsoluto());
 		}
 		return obj;
 	}

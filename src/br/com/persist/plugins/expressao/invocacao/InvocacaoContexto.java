@@ -5,14 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.organiza.AliasContexto;
 
-public class InvocacaoContexto extends Contexto {
+public class InvocacaoContexto extends Contexto implements LinkBibliotecaContexto {
 	public static final String INVOKE_CRET = "invoke_cret";
 	public static final String INVOKE_VOID = "invoke_void";
 	public static final String THIS = "this";
@@ -25,10 +27,10 @@ public class InvocacaoContexto extends Contexto {
 	public InvocacaoContexto(Token token, boolean comRetorno) {
 		super(token);
 		this.comRetorno = comRetorno;
-		init();
+		initLink();
 	}
 
-	private void init() {
+	public void initLink() {
 		String chamada = token.getString();
 		String[] array = chamada.split("\\.");
 		if (array.length == 1) {
@@ -88,12 +90,13 @@ public class InvocacaoContexto extends Contexto {
 	}
 
 	@Override
-	protected void configurarAliasInvocacaoPre(Map<String, String> mapa) throws ExpressaoException {
+	public void configurarLinkBibliotecaPre(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
 		if (alias != null) {
-			biblio = mapa.get(alias);
-			if (biblio == null) {
+			AliasContexto aliasContexto = mapaAlias.get(alias);
+			if (aliasContexto == null) {
 				throw new ExpressaoException("erro.alias.nao_mapeado", alias);
 			}
+			biblio = aliasContexto.getBiblioteca();
 		}
 	}
 

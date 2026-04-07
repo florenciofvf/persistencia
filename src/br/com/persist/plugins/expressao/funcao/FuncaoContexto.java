@@ -1,9 +1,11 @@
 package br.com.persist.plugins.expressao.funcao;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
@@ -11,9 +13,10 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
+import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 
-public class FuncaoContexto extends Contexto {
+public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes() };
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
 	public static final String PREFIXO_FUNCAO = "funcao ";
@@ -77,5 +80,25 @@ public class FuncaoContexto extends Contexto {
 			pw.println(PREFIXO_TIPO_VOID);
 		}
 		getParametros().salvar(pw);
+	}
+
+	@Override
+	public BibliotecaContexto getBibliotecaContexto() {
+		return (BibliotecaContexto) parent;
+	}
+
+	@Override
+	public String getNome() {
+		return token.getString();
+	}
+
+	@Override
+	public Map<String, ParametroContexto> getMapaParametros() {
+		return getParametros().getMapaParametros();
+	}
+
+	@Override
+	public void configurarChaveParametro() {
+		configurarChaveParametro(getMapaParametros());
 	}
 }
