@@ -1,0 +1,17 @@
+package br.com.teste;
+
+defun somar(valor1, valor2) {
+	return valor1 + valor2;
+}
+
+defun getString(/*$param*/) {
+	return 'Olá Mundo!';
+}
+
+defun pi() {
+	return 3.1415169;
+}
+
+defun mil() {
+	return 1000;
+}
