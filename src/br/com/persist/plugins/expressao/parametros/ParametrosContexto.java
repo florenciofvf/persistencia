@@ -57,7 +57,7 @@ public class ParametrosContexto extends Contexto {
 
 	private boolean contemParametro(ParametroContexto param) {
 		for (Contexto item : componentes) {
-			if (item instanceof ParametrosContexto && ((ParametroContexto) item).igual(param)) {
+			if (item instanceof ParametroContexto && ((ParametroContexto) item).igual(param)) {
 				return true;
 			}
 		}
