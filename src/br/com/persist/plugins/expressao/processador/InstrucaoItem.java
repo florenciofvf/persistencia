@@ -7,4 +7,9 @@ public class InstrucaoItem {
 	public InstrucaoItem(Instrucao instrucao) {
 		this.instrucao = instrucao;
 	}
+
+	@Override
+	public String toString() {
+		return instrucao.toString();
+	}
 }

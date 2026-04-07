@@ -1,0 +1,13 @@
+package br.com.teste;
+
+const valor = 25.7;
+
+const valor2 = 10;
+
+const valor3 = 0;
+
+const valor4 = 9;
+
+defun main() {
+	return 20 + 45 + valor;
+}

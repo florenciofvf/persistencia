@@ -29,8 +29,8 @@ public class Processador {
 
 		pilhaFuncao.clear();
 		pilhaOperando.clear();
-		pilhaFuncao.push(funcaoConstantes);
 		pilhaFuncao.push(funcao);
+		pilhaFuncao.push(funcaoConstantes);
 
 		funcao = pilhaFuncao.peek();
 
