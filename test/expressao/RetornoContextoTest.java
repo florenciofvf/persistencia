@@ -1,19 +1,18 @@
-package br.com.persist.plugins.expressao.invocacao;
+package expressao;
 
 import java.io.IOException;
 
 import org.junit.Test;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoTest;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 
-public class InvocacaoContextoTest extends ExpressaoTest {
+public class RetornoContextoTest extends ExpressaoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(getFile("invocacao", "invocacao"));
+		compilacao.compilar(getFile("retorno", "retorno"));
 	}
 
 }

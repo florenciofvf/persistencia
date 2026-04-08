@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao;
+package expressao;
 
 import java.io.File;
 import java.math.BigDecimal;

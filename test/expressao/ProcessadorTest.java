@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.processador;
+package expressao;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.junit.Test;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoTest;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
+import br.com.persist.plugins.expressao.processador.Processador;
 
 public class ProcessadorTest extends ExpressaoTest {
 

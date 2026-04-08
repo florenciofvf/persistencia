@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.instrucoes;
+package expressao;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,7 +11,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class ExpressaoTest extends br.com.persist.plugins.expressao.ExpressaoTest {
+public class ExpressaoxTest extends ExpressaoTest {
 
 	@Test
 	public void teste3() throws IOException, ExpressaoException {

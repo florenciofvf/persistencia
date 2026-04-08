@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.condicional;
+package expressao;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoTest;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
