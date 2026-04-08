@@ -1,0 +1,14 @@
+package br.com.teste;
+
+defun getIdade() {
+	const exemplo = get();
+	return idade + idade2 + exemplo;
+}
+
+const idade = 46;
+
+const idade2 = 2+2;
+
+defun get() {
+	return 1000;
+}

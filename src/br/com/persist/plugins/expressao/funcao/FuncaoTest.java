@@ -46,4 +46,19 @@ public class FuncaoTest extends ExpressaoTest {
 		result = processador.processar(biblio, "fatorial", bi(5));
 		assertEquals("[120]", result.toString());
 	}
+
+	@Test
+	public void recursaoPerform() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("funcao", "recursao_perform"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.recursao_perform";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "fatorial", bi(5));
+		assertEquals("[120]", result.toString());
+	}
 }

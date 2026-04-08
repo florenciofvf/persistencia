@@ -28,4 +28,19 @@ public class ConstanteTest extends ExpressaoTest {
 		result = processador.processar(biblio, "main");
 		assertEquals("[90.7]", result.toString());
 	}
+
+	@Test
+	public void testeConstante() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("constante", "__constante"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__constante";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "getIdade");
+		assertEquals("[1050]", result.toString());
+	}
 }
