@@ -1,0 +1,165 @@
+package br.com.teste;
+
+defun mensagem() void {
+	return;
+}
+
+defun mensagem2(s) void {
+	return;
+}
+
+defun metodo(s)void {
+	return;
+}
+
+defun outraMensagem()void{
+	return;
+}
+
+defun teste001(a) void {
+	if (a) {
+		mensagem();
+	}
+	return;
+}
+
+defun teste002(a) void {
+	if (a) {
+		mensagem();
+	} else {
+		return;
+	}
+	return;
+}
+
+defun teste003(a, b) void {
+	if (a) {
+		if (b) {
+			mensagem();
+		} else {
+			mensagem();
+		}
+		outraMensagem();
+	}
+	return;
+}
+
+defun teste004(a, b) void {
+	if (a) {
+		mensagem();
+	}
+	if (b) {
+		outraMensagem();
+	}
+	metodo('florencio vieira filho');
+	return;
+}
+
+defun teste005(a, b, c) {
+	if (a) {
+		if (b) {
+			mensagem();
+			if (c) {
+				outraMensagem();
+			}
+		}
+		if(c) {
+			return 'retorno C';
+		}
+	}
+	return 'main';
+}
+
+defun teste006(a, b, c) {
+	if (a) {
+		if (b) {
+			mensagem();
+			if (c) {
+				outraMensagem();
+			} else {
+				return 'else C';
+			}
+		} else {
+			return 'else B';
+		}
+	}
+	return 'main';
+}
+
+defun teste007(a, b, c) void {
+	if (get(a, b, c)) {
+		mensagem2('Florencio');
+	} else {
+		mensagem2('Vieira');
+	}
+	return;
+}
+
+defun get(a, b, c) {
+	if (a) {
+		return b;
+	} else {
+		return c;
+	}
+}
+
+defun teste008(a, b, c) void {
+	if (a) {
+		if (b) {
+			mensagem();
+			if (c) {
+				outraMensagem();
+				if (a) {
+					mensagem();
+					if (b) {
+						mensagem();
+						if (c) {
+							mensagem();
+						} else {
+							return;
+						}
+					}
+				}
+			} else {
+				return;
+			}
+		} else {
+			return;
+		}
+	}
+	return;
+}
+
+defun teste009(a, b, c) void {
+	if(a) {
+		if(b) {
+			mensagem();
+			if(c) {
+				outraMensagem();
+			} else {
+				return;
+			}
+		} else {
+			return;
+		}
+	}
+	return;
+}
+
+defun teste010(a, b, c) {
+	if (a) {
+		mensagem2('mensagem A');
+	} else {
+		if (b) {
+			if (c) {
+				return 'return C';
+			} else {
+				outraMensagem();
+			}
+			mensagem();
+		} else {
+			return 'return B';
+		}
+	}
+	return 'return teste010';
+}
