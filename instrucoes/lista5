@@ -1,0 +1,11 @@
+defun teste8([head:tail], texto) {
+	return retornar( [head:tail] );
+}
+
+defun retornar(lista) {
+	return lista;
+}
+
+defun teste9([head:tail]) {
+	return ilist.tail([head:tail]);
+}

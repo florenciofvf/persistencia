@@ -1,0 +1,18 @@
+defun main() {
+	return filtrar(1 : 2 : -3 : 4 : 50 : 6, par);
+}
+
+defun filtrar(lista, predicado) {
+	if(lista = []) {
+		return [];
+	}
+	if(predicado(ilist.head(lista))) {
+		return ilist.head(lista) : filtrar(ilist.tail(lista), par);
+	} else {
+		return filtrar(ilist.tail(lista), par);
+	}
+}
+
+defun par(item) {
+	return item % 2 = 0;
+}

@@ -1,0 +1,15 @@
+defun main() {
+	return filtrar(1 : 2 : 3 : 4 : 5, lamb($item){return $item <= 3;});
+}
+
+defun filtrar([h:t], f) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(f(h)) {
+		return h : filtrar(t, f);
+	} else {
+		return filtrar(t, f);
+	}
+}

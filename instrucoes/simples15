@@ -1,0 +1,16 @@
+defun main() {
+	const funcao somar(5);
+	return teste(2, funcao);
+}
+
+defun somar(valor) {
+	return proxy(lamb(e) {return e + valor;});
+}
+
+defun teste(valor, funcao) {
+	return funcao(valor);
+}
+
+defun proxy(param) {
+	return param;
+}

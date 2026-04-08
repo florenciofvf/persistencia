@@ -1,0 +1,11 @@
+defun main() {
+	return se(-5555, se(-4444, 1000, 2000), se(-3333, 3000, 4000));
+}
+
+defun se($a, $b, $c) {
+	if($a) {
+		return $b;
+	} else {
+		return $c;
+	}
+}

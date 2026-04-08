@@ -1,0 +1,10 @@
+defun main() {
+	return quickSort(46 : 1 : 2 : -3 : 4 : 50 : 6 : 0);
+}
+
+defun quickSort([h:t]) {
+	if([h:t] = []) {
+		return [];
+	}
+	return quickSort(_.filtrar(t, lamb(e){return e < h;})) : h : quickSort(_.filtrar(t, lamb(e){return e >= h;}));
+}

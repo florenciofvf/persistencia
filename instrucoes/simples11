@@ -1,0 +1,11 @@
+defun main() {
+	const total 0;
+	const cont 0;
+
+	while(cont <= 100) {
+		const total total + cont;
+		const cont cont + 1;
+	}
+
+	return total;
+}

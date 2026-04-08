@@ -1,0 +1,32 @@
+defun main() {
+    const MAPA (imap.create());
+    imap.put(MAPA, 'nome', 'florencio vieira filho');
+    return processar2(MAPA);
+}
+
+defun teste10(objeto, [objeto:cauda]) {
+    const nome ([objeto.nome]);
+    return nome;
+}
+
+
+defun processar(objeto) {
+    const nome [objeto.nome];
+    return nome;
+}
+
+defun processar2(objeto) {
+    return 'NOME=' + [objeto.nome];
+}
+
+defun exemplo(valor1, valor2) {
+    return valor1 + valor2;
+}
+
+defun exemplo2([head:tail]) {
+    return head + tail + [MAPA.nome];
+}
+
+defun exemplo3([head:tail]) {
+    return [head:tail];
+}

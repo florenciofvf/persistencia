@@ -1,0 +1,10 @@
+defun main() {
+	while(1) {
+		while(2) {
+			while(3) {
+				return -1;
+			}
+		}
+	}
+	return 0;
+}

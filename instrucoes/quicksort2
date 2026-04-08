@@ -1,0 +1,35 @@
+defun main() {
+	return quickSort(46 : 1 : 2 : -3 : 4 : 50 : 6 : 0);
+}
+
+defun quickSort([cab:cauda]) {
+	if([cab:cauda] = []) {
+		return [];
+	} else {
+		return quickSort(lt(cab, cauda)) : cab : quickSort(ge(cab, cauda));
+	}
+}
+
+defun lt(valor, [h :t]) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(h < valor) {
+		return h : lt(valor, t);
+	} else {
+		return lt(valor, t);
+	}
+}
+
+defun ge(valor, [h:t]) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(h >= valor) {
+		return h : ge(valor, t);
+	} else {
+		return ge(valor, t);
+	}
+}

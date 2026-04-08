@@ -1,0 +1,14 @@
+defun main() {
+	return concat((1:2:3:4:5), lamb(e){return 'PAR-' + e;}, lamb(e){return 'impar-' + e;});
+}
+
+defun concat([h:t], par, impar) {
+	if([h:t] = []) {
+		return [];
+	}
+	if(h % 2 = 0) {
+		return par(h) : concat(t, par, impar);
+	} else {
+		return impar(h) : concat(t, par, impar);
+	}
+}

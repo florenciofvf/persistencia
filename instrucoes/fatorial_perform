@@ -1,0 +1,11 @@
+defun fatorial($valor) {
+	return aux($valor, 1);
+}
+
+defun aux($cont, $parcial) {
+	if($cont = 1) { 
+		return $parcial; 
+	} else {
+		return aux($cont - 1, $cont * $parcial);
+	}
+}

@@ -1,0 +1,15 @@
+defun main(valor) {
+	return filtrar(1 : 2 : -3 : 4 : 50 : 6, lamb(e){return e >= valor;});
+}
+
+defun filtrar([h:t], f) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(f(h)) {
+		return h : filtrar(t, f);
+	} else {
+		return filtrar(t, f);
+	}
+}

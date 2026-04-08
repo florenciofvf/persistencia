@@ -1,0 +1,7 @@
+defun teste2() {
+	return retornar( [] );
+}
+
+defun retornar(lista) {
+	return lista;
+}

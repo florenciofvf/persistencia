@@ -1,0 +1,17 @@
+defun main() {
+	const florencio imap.create();
+	const amanda imap.create();
+	const julia imap.create();
+
+	imap.put(florencio, 'nome', 'Florêncio Vieira Filho');
+	imap.put(amanda, 'nome', 'Amanda Vieira Freire');
+	imap.put(julia, 'nome', 'Julia Vieira Freire');
+
+	const filhos (amanda : julia);
+
+	return detalhar(filhos, florencio);
+}
+
+defun detalhar([head:tail], objeto) {
+	return _.mapear([head:tail], lamb(e){return '\NPAI: ${[objeto.nome]}\N FILHO -> ${[e.nome]}';});
+}

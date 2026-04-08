@@ -1,0 +1,68 @@
+defun main0() {
+	const lista0 'Florêncio' : 'Vieira' : 'Filho';
+	return lista0;
+}
+
+defun main() {
+	const lista ilist.create();
+	ilist.add(lista, 'Florêncio');
+	ilist.add(lista, 'Vieira');
+	ilist.add(lista, 'Filho');
+	return lista;
+}
+
+defun mainItemMaior(valor) {
+	return itensMaiorQue(valor, 1:2:3:4:5:6:7);
+}
+
+defun itensMaiorQue(valor, lista) {
+	if(ilist.empty(lista)) {
+		return ilist.create();
+	} else {
+		if(ilist.head(lista) > valor) {
+			return ilist.head(lista) : itensMaiorQue(valor, ilist.tail(lista));
+		} else {
+			return itensMaiorQue(valor, ilist.tail(lista));
+		}
+	}
+}
+
+defun comprimento() {
+	return ilist.size(lista);
+}
+
+defun cabeca() {
+	return ilist.head(lista);
+}
+
+defun cauda() {
+	return ilist.tail(lista);
+}
+
+defun concatenar() {
+	return lista + lista;
+}
+
+defun comprimentoRecursivo() {
+	return size(lista);
+}
+
+defun size(lista) {
+	if(ilist.empty(lista)) {
+		return 0;
+	} else {
+		return 1 + size(ilist.tail(lista));
+	}
+}
+
+defun inverterLista() {
+	return inverter(5:4:3:2:1:0);
+}
+
+defun inverter([head:tail]) {
+	if(ilist.empty([head:tail])) {
+		return [];
+	} else {
+		return inverter(tail) : head;
+	}
+}

@@ -1,0 +1,11 @@
+defun mesmo($valor) {
+	return $valor;
+}
+
+defun mesmoNegado($valor) {
+	return -$valor;
+}
+
+defun mesmoNegado2($valor) {
+	return -($valor);
+}

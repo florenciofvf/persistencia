@@ -1,0 +1,11 @@
+defun main() {
+	return rem_ultimo(2:3:4:5:6:7:7);
+}
+
+defun rem_ultimo([a:b]) {
+	if(ilist.size([a:b]) = 1) {
+		return [];
+	}
+
+	return iutil.log('a', a) : iutil.log('rem_ultimo', rem_ultimo(b));
+}

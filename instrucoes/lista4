@@ -1,0 +1,11 @@
+defun teste5([head:tail], texto) {
+	return [head:tail] : texto;
+}
+
+defun teste6() {
+	return [] + [];
+}
+
+defun teste7() {
+	return [] : [];
+}

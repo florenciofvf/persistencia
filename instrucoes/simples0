@@ -1,0 +1,15 @@
+defun main1() {
+	return exec(-5);
+}
+
+defun exec(valor) {
+	return valor;
+}
+
+defun main2() {
+	return exec2(-5, 7);
+}
+
+defun exec2(valor1, valor2) {
+	return valor1 + valor2;
+}

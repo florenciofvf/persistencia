@@ -1,0 +1,35 @@
+defun testarQS() {
+	return quickSort(1 : 2 : -3 : 4 : 50 : 6 : 0);
+}
+
+defun quickSort(lista) {
+	if(ilist.empty(lista)) {
+		return ilist.create();
+	} else {
+		return quickSort(lt(ilist.head(lista), ilist.tail(lista))) : ilist.head(lista) : quickSort(ge(ilist.head(lista), ilist.tail(lista)));
+	}
+}
+
+defun lt(valor, lista) {
+	if(ilist.empty(lista)) {
+		return ilist.create();
+	} else {
+		if(ilist.head(lista) < valor) {
+			return ilist.head(lista) : lt(valor, ilist.tail(lista));
+		} else {
+			return lt(valor, ilist.tail(lista));
+		}
+	}
+}
+
+defun ge(valor, lista) {
+	if(ilist.empty(lista)) {
+		return ilist.create();
+	} else {
+		if(ilist.head(lista) >= valor) {
+			return ilist.head(lista) : ge(valor, ilist.tail(lista));
+		} else {
+			return ge(valor, ilist.tail(lista));
+		}
+	}
+}

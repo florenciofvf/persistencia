@@ -1,0 +1,11 @@
+defun teste3([ head : tail ]) {
+	return head;
+}
+
+defun teste4([ head : tail ]) {
+	return processar(tail);
+}
+
+defun processar(lista) {
+	return lista;
+}

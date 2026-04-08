@@ -1,0 +1,31 @@
+defun aux($n, $a, $b) {
+	if($n = 0){ 
+		return $a;
+	} elseif($n = 1) { 
+		return $b; 
+	} else { 
+		return aux($n - 1, $b, $a + $b);
+	}
+}
+
+defun fibonacci_1($n) {
+	return aux($n, 0, 1);
+}
+
+defun aux2($n, $a, $b) {
+	if($n = 0) {
+		return $a;
+	} else {
+		if($n = 1) {
+			return $b;
+		} else {
+			return tailcall($n - 1, $b, $a + $b);
+		}
+	}
+}
+
+defun fibonacci_2($n) {
+	return aux2($n, 0, 1);
+}
+
+':coment 0 1 2 3 5 8 13 21 34 55'

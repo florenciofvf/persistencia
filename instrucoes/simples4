@@ -1,0 +1,17 @@
+const PI 3.1415619;
+
+defun dobrar($valor) {
+	return $valor * 2;
+}
+
+defun quadrado($valor) {
+	return $valor * $valor;
+}
+
+defun somar($valor1, $valor2) {
+	return -$valor1 + -$valor2;
+}
+
+defun area(raio) {
+	return PI * raio * raio;
+}

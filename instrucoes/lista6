@@ -1,0 +1,15 @@
+defun main() {
+	return teste(5, 1);
+}
+
+defun teste(valor, valor2) {
+	const lista 1:2:3:4:5:6:7:8:9:10;
+
+	return _.filtrar(lista, lamb(e){
+									return e > valor & par(e, lamb(x){return x % 2 = valor2;});
+							});
+}
+
+defun par(valor, filtro) {
+	return filtro(valor);
+}

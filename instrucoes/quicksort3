@@ -1,0 +1,84 @@
+defun main() {
+	return quickSort3(46 : 1 : 2 : -3 : 4 : 50 : 6 : 0);
+}
+
+defun quickSort([cab:cauda]) {
+	if([cab:cauda] = []) {
+		return [];
+	} else {
+		return quickSort(lt(cab, cauda)) : cab : quickSort(ge(cab, cauda));
+	}
+}
+
+defun lt(valor, [h :t]) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(h < valor) {
+		return h : lt(valor, t);
+	} else {
+		return lt(valor, t);
+	}
+}
+
+defun ge(valor, [h:t]) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(h >= valor) {
+		return h : ge(valor, t);
+	} else {
+		return ge(valor, t);
+	}
+}
+
+defun quickSort2([h:t]) {
+	if([h:t] = []) {
+		return [];
+	} else {
+		return quickSort2(filtrar(t, h, menor)) : h : quickSort2(filtrar(t, h, maiorIgual));
+	}
+}
+
+defun filtrar([h:t], valor, filtro) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(filtro(valor, h)) {
+		return h : filtrar(t, valor, filtro);
+	} else {
+		return filtrar(t, valor, filtro);
+	}
+}
+
+defun maiorIgual(c, comparado) {
+	return comparado >= c;
+}
+
+defun menor(c, comparado) {
+	return comparado < c;
+}
+
+
+defun quickSort3([h:t]) {
+	if([h:t] = []) {
+		return [];
+	} else {
+		return quickSort3(filtrar3(t, lamb(e){return e < h;})) : h : quickSort3(filtrar3(t, lamb(e){return e >= h;}));
+	}
+}
+
+defun filtrar3([h:t], f) {
+	if([h:t] = []) {
+		return [];
+	}
+
+	if(f(h)) {
+		return h : filtrar3(t, f);
+	} else {
+		return filtrar3(t, f);
+	}
+}

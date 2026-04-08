@@ -1,0 +1,16 @@
+defun main() {
+	return minhaFuncao();
+}
+
+defun main2() {
+	const valor minhaFuncao:proxy;
+	return proxy(minhaFuncao);
+}
+
+defun proxy(funcao) {
+	return funcao;
+}
+
+defun minhaFuncao() {
+	return 'Minha Função';
+}

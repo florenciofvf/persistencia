@@ -1,0 +1,27 @@
+const FLORENCIO 'VIEIRA';
+
+defun main() {
+	return calcular(7, 3, getFuncao(1)) + '\N' + calcular(7, 3, getFuncao(0));
+}
+
+defun calcular(a, b, funcao) {
+	return funcao(a, b);
+}
+
+defun somar(a, b) {
+	return a + b;
+}
+
+defun subtrair(a, b) {
+	return a - b;
+}
+
+defun getFuncao(tipo) {
+	if(tipo = 1) {
+		return somar;
+	} else {
+		return subtrair;
+	}
+}
+
+const VIEIRA 'VIEIRA';
