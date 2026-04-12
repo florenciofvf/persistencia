@@ -38,7 +38,7 @@ public class TokenManager {
 	}
 
 	public void invalidar() throws ExpressaoException {
-		String detalhe = string.substring(0, indice);
+		String detalhe = string.substring(0, indice + 1);
 		throw new ExpressaoException(detalhe + "<<<", false);
 	}
 

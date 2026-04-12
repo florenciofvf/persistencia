@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun teste0(lista) {
+	return ${lista:tail};
+}
+
+defun teste1(lista) {
+	return list.tail(lista);
+}
+
+defun teste2(lista) {
+	return br.com.persist.plugins.expressao.biblionativo.List.tail(lista);
+}

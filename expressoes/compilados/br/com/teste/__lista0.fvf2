@@ -1,0 +1,28 @@
+pacote br.com.teste
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao teste0
+param lista
+0  load_param lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+5  return
+
+funcao teste1
+param lista
+0  load_param lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+5  return
+
+funcao teste2
+param lista
+0  load_param lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+5  return
+
+funcao $constantes
+tipo_void
+0  return
+
