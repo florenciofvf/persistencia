@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun teste3(lista) {
+	return ${lista:head};
+}
+
+defun teste4(lista) {
+	return processar(${lista:tail});
+}
+
+defun processar(lista) {
+	return lista;
+}

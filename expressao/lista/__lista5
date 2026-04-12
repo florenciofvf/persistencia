@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun teste8(lista, texto) {
+	return retornar( lista );
+}
+
+defun retornar(lista) {
+	return lista;
+}
+
+defun teste9(lista) {
+	return list.tail(lista);
+}

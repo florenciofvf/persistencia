@@ -15,4 +15,16 @@ public class ListaTest extends ExpressaoTest {
 		Compilacao compilacao = new Compilacao();
 		compilacao.compilar(getFile(LISTA, "__lista0"));
 	}
+
+	@Test
+	public void teste3() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "__lista3"));
+	}
+
+	@Test
+	public void teste5() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "__lista5"));
+	}
 }
