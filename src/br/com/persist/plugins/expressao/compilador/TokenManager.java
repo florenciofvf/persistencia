@@ -207,6 +207,36 @@ public class TokenManager {
 		}
 	}
 
+	private Token tokenEL(int indiceBackup) throws ExpressaoException {
+		if (diferenteDe(indiceBackup + 1, '{')) {
+			invalidar();
+		}
+		StringBuilder builder = new StringBuilder();
+		indice = indiceBackup + 2;
+		boolean finalizado = false;
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if (c == '>') {
+				builder.append(",");
+			} else if (valido1(c) || valido2(c) || c == ':') {
+				builder.append(c);
+			} else if (c == '}') {
+				finalizado = true;
+				indice++;
+				break;
+			} else if (c == ' ' || c == '\n' || c == '\r' || c == '\t') {
+				//
+			} else {
+				invalidar();
+			}
+			indice++;
+		}
+		if (!finalizado) {
+			invalidar();
+		}
+		return new Token(builder.toString(), Tipo.EL, indiceBackup);
+	}
+
 	private Token proximoToken() throws ExpressaoException {
 		char c = string.charAt(indice);
 		int indiceBackup = indice;
@@ -231,6 +261,8 @@ public class TokenManager {
 		case '<':
 		case '>':
 			return tokenOperador2(c, indiceBackup);
+		case '$':
+			return tokenEL(indiceBackup);
 		case '0':
 		case '1':
 		case '2':
@@ -442,6 +474,16 @@ public class TokenManager {
 		int total = 0;
 		for (int i = 0; i < sb.length(); i++) {
 			if (sb.charAt(i) == c) {
+				total++;
+			}
+		}
+		return total;
+	}
+
+	public static int getTotal(char c, String string) {
+		int total = 0;
+		for (char item : string.toCharArray()) {
+			if (item == c) {
 				total++;
 			}
 		}

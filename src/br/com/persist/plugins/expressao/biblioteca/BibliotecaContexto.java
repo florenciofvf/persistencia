@@ -33,6 +33,10 @@ public class BibliotecaContexto extends Contexto {
 
 	public BibliotecaContexto(File file) {
 		this.file = Objects.requireNonNull(file);
+		AliasContexto lista = AliasContexto.criar("br.com.persist.plugins.expressao.biblionativo.List", "list");
+		AliasContexto mapa = AliasContexto.criar("br.com.persist.plugins.expressao.biblionativo.Map", "map");
+		adicionar2(lista);
+		adicionar2(mapa);
 	}
 
 	public File getFile() {

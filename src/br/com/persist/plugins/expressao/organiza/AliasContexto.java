@@ -8,6 +8,7 @@ import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Token;
+import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 
@@ -64,5 +65,12 @@ public class AliasContexto extends Contexto {
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
 		pw.println(PREFIXO_ALIAS + getBiblioteca() + ExpressaoConstantes.ESPACO + getAlias());
+	}
+
+	public static AliasContexto criar(String biblioteca, String alias) {
+		AliasContexto aliasContexto = new AliasContexto();
+		aliasContexto.biblioteca = new Token(biblioteca, Tipo.VIRTUAL, -1);
+		aliasContexto.alias = new Token(alias, Tipo.VIRTUAL, -1);
+		return aliasContexto;
 	}
 }
