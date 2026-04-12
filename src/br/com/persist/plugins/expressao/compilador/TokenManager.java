@@ -128,6 +128,10 @@ public class TokenManager {
 			invalidarSe(indice + 1, '+');
 			indice++;
 			return new Token("" + c, Tipo.OPERADOR, indiceBackup);
+		case ':':
+			invalidarSe(indice + 1, ':');
+			indice++;
+			return new Token("" + c, Tipo.OPERADOR, indiceBackup);
 		case '-':
 			invalidarSe(indice + 1, '-');
 			indice++;

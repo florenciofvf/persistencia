@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblionativo.Lista;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.InstrucaoUtil;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
-import br.com.persist.plugins.instrucao.biblionativo.Lista;
 
 public class OperadorInstrucao {
 	private OperadorInstrucao() {

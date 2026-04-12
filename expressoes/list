@@ -1,0 +1,22 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List create();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List createComLista(lista, valor);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List clear(lista) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List head(lista);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List tail(lista);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List add(lista, valor) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List contains(lista, valor);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List notContains(lista, valor);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List size(lista);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.List empty(lista);
+
