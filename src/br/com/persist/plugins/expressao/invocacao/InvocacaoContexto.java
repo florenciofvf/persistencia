@@ -11,7 +11,9 @@ import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
+import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 
 public class InvocacaoContexto extends Contexto implements LinkBibliotecaContexto {
@@ -124,5 +126,76 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		} else {
 			print(pw, INVOKE_VOID, biblio, metodo);
 		}
+	}
+
+	public static InvocacaoContexto criarComEL(TokenManager tokenManager, String string) throws ExpressaoException {
+		if (string.contains(":")) {
+			Token token = null;
+			if (string.endsWith("head")) {
+				token = new Token("list.head", Tipo.VIRTUAL, -1);
+			} else if (string.endsWith("tail")) {
+				token = new Token("list.tail", Tipo.VIRTUAL, -1);
+			} else {
+				tokenManager.invalidar();
+			}
+			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
+			ArgumentosContexto argumentos = ArgumentosContexto.criar(getArg(string, ':'));
+			invocacao.adicionar(argumentos);
+			return invocacao;
+		} else if (string.contains(".")) {
+			Token token = new Token("map.get", Tipo.VIRTUAL, -1);
+			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
+			ArgumentosContexto argumentos = ArgumentosContexto.criar();
+			invocacao.adicionar(argumentos);
+			ExpressaoContexto mapa = ExpressaoContexto.criar(getArg(string, '.'));
+			argumentos.adicionar(mapa);
+			ExpressaoContexto campo = ExpressaoContexto.criar(getArg2(string, '.'));
+			argumentos.adicionar(campo);
+			return invocacao;
+		} else {
+			tokenManager.invalidar();
+		}
+		return null;
+	}
+
+	private static String getArg(String string, char c) {
+		int pos = string.indexOf(c);
+		return string.substring(0, pos).trim();
+	}
+
+	private static String getArg2(String string, char c) {
+		int pos = string.indexOf(c);
+		return string.substring(pos + 1).trim();
+	}
+
+	public static InvocacaoContexto criarComEL(TokenManager tokenManager, String string, InvocacaoContexto argumento)
+			throws ExpressaoException {
+		if (string.contains(":")) {
+			Token token = null;
+			if (string.endsWith("head")) {
+				token = new Token("list.head", Tipo.VIRTUAL, -1);
+			} else if (string.endsWith("tail")) {
+				token = new Token("list.tail", Tipo.VIRTUAL, -1);
+			} else {
+				tokenManager.invalidar();
+			}
+			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
+			ArgumentosContexto argumentos = ArgumentosContexto.criar(argumento);
+			invocacao.adicionar(argumentos);
+			return invocacao;
+		} else if (string.contains(".")) {
+			Token token = new Token("map.get", Tipo.VIRTUAL, -1);
+			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
+			ArgumentosContexto argumentos = ArgumentosContexto.criar();
+			invocacao.adicionar(argumentos);
+			ExpressaoContexto mapa = ExpressaoContexto.criar(argumento);
+			argumentos.adicionar(mapa);
+			ExpressaoContexto campo = ExpressaoContexto.criar(getArg2(string, '.'));
+			argumentos.adicionar(campo);
+			return invocacao;
+		} else {
+			tokenManager.invalidar();
+		}
+		return null;
 	}
 }

@@ -56,4 +56,22 @@ public class ArgumentosContexto extends Contexto {
 	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		throw new ExpressaoException("erro.processar.argumentos.estado");
 	}
+
+	public static ArgumentosContexto criar(String string) throws ExpressaoException {
+		ArgumentosContexto argumentosContexto = criar();
+		ExpressaoContexto expressaoContexto = ExpressaoContexto.criar(string);
+		argumentosContexto.adicionar(expressaoContexto);
+		return argumentosContexto;
+	}
+
+	public static ArgumentosContexto criar(Contexto contexto) throws ExpressaoException {
+		ArgumentosContexto argumentosContexto = criar();
+		ExpressaoContexto expressaoContexto = ExpressaoContexto.criar(contexto);
+		argumentosContexto.adicionar(expressaoContexto);
+		return argumentosContexto;
+	}
+
+	public static ArgumentosContexto criar() {
+		return new ArgumentosContexto();
+	}
 }

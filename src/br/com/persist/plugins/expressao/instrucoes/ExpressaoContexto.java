@@ -9,6 +9,7 @@ import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Token;
+import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.condicional.IFContexto;
@@ -77,6 +78,8 @@ public class ExpressaoContexto extends Salto {
 				processarIniExpressao(tokenManager, token);
 			} else if (token.chave()) {
 				processarChave(token);
+			} else if (token.isEL()) {
+				processarEL(tokenManager, token);
 			} else {
 				tokenManager.invalidar(token);
 			}
@@ -96,6 +99,8 @@ public class ExpressaoContexto extends Salto {
 				processarIniExpressao(tokenManager, token);
 			} else if (token.chave()) {
 				processarChave(token);
+			} else if (token.isEL()) {
+				processarEL(tokenManager, token);
 			} else {
 				tokenManager.invalidar(token);
 			}
@@ -176,6 +181,71 @@ public class ExpressaoContexto extends Salto {
 		}
 		adicionar(chave);
 		selecionado = new QQOperadorOuIniInvocacao();
+	}
+
+	public static ExpressaoContexto criar(String string) throws ExpressaoException {
+		Token token = new Token(string, Tipo.VIRTUAL, -1);
+		ChaveContexto chave = new ChaveContexto(token);
+		return criar(chave);
+	}
+
+	public static ExpressaoContexto criar(Contexto contexto) throws ExpressaoException {
+		ExpressaoContexto expressaoContexto = new ExpressaoContexto();
+		expressaoContexto.adicionar(contexto);
+		return expressaoContexto;
+	}
+
+	private void processarEL(TokenManager tokenManager, Token token) throws ExpressaoException {
+		if (tokenMOuM != null) {
+			tokenManager.invalidar(token);
+		}
+		String el = token.getString();
+		String[] array = el.split(",");
+		if (array.length == 0) {
+			tokenManager.invalidar(token);
+		}
+		for (String item : array) {
+			item = item.trim();
+			if (item.isEmpty()) {
+				tokenManager.invalidar(token);
+			}
+			checarExistencia(tokenManager, token, item);
+			checarExtremos(tokenManager, token, item);
+			checarTotal(tokenManager, token, item);
+		}
+		String item = array[0].trim();
+		adicionar(InvocacaoContexto.criarComEL(tokenManager, item));
+		for (int i = 1; i < array.length; i++) {
+			item = item.trim();
+			Contexto ultimo = excluirUltimo();
+			InvocacaoContexto invocacao = InvocacaoContexto.criarComEL(tokenManager, item, (InvocacaoContexto) ultimo);
+			adicionar(invocacao);
+		}
+		selecionado = new QQOperadorOuIniInvocacao();
+	}
+
+	private void checarExistencia(TokenManager tokenManager, Token token, String item) throws ExpressaoException {
+		if (item.contains(".") && item.contains(":")) {
+			tokenManager.invalidar(token);
+		}
+		if (!item.contains(".") && !item.contains(":")) {
+			tokenManager.invalidar(token);
+		}
+	}
+
+	private void checarExtremos(TokenManager tokenManager, Token token, String item) throws ExpressaoException {
+		if (item.startsWith(".") || item.endsWith(".") || item.startsWith(":") || item.endsWith(":")) {
+			tokenManager.invalidar(token);
+		}
+	}
+
+	private void checarTotal(TokenManager tokenManager, Token token, String item) throws ExpressaoException {
+		if (item.contains(".") && TokenManager.getTotal('.', item) != 1) {
+			tokenManager.invalidar(token);
+		}
+		if (item.contains(":") && TokenManager.getTotal(':', item) != 1) {
+			tokenManager.invalidar(token);
+		}
 	}
 
 	private Contexto criarNativo(Token token) {
