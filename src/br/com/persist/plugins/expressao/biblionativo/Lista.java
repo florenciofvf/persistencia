@@ -1,0 +1,233 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+import java.math.BigInteger;
+import java.util.Objects;
+
+public class Lista {
+	private BigInteger comprimento;
+	private No cabeca;
+	private No cauda;
+
+	public Lista() {
+		clear();
+	}
+
+	public BigInteger clear() {
+		comprimento = BigInteger.valueOf(0);
+		cabeca = null;
+		cauda = null;
+		return createTrue();
+	}
+
+	private BigInteger createFalse() {
+		return BigInteger.valueOf(0);
+	}
+
+	private BigInteger createTrue() {
+		return BigInteger.valueOf(1);
+	}
+
+	private void checkVazio() throws IllegalAccessException {
+		if (comprimento.intValue() == 0) {
+			throw new IllegalAccessException("Lista Vazia.");
+		}
+	}
+
+	public Object head() throws IllegalAccessException {
+		checkVazio();
+		return cabeca.valor;
+	}
+
+	public Lista tail() throws IllegalAccessException {
+		checkVazio();
+		Lista resposta = new Lista();
+		if (comprimento.intValue() == 1) {
+			return resposta;
+		}
+		No no = cabeca.proximo;
+		while (no != null) {
+			resposta.add(no.valor);
+			no = no.proximo;
+		}
+		return resposta;
+	}
+
+	public Object add(Object o) {
+		No no = new No(o);
+		if (cabeca == null) {
+			cabeca = no;
+		}
+		if (cauda != null) {
+			cauda.proximo = no;
+		}
+		cauda = no;
+		comprimento = comprimento.add(BigInteger.valueOf(1));
+		return o;
+	}
+
+	public void addLista(Lista lista) throws IllegalAccessException {
+		if (lista != null) {
+			long size = lista.size().longValue();
+			for (long i = 0; i < size; i++) {
+				Object o = lista.get(i);
+				add(o);
+			}
+		}
+	}
+
+	public BigInteger contains(Object o) {
+		if (comprimento.intValue() == 0) {
+			return createFalse();
+		}
+		No no = cabeca;
+		if (o == null) {
+			while (no != null) {
+				if (no.valor == null) {
+					return createTrue();
+				}
+				no = no.proximo;
+			}
+		} else {
+			while (no != null) {
+				if (o.equals(no.valor)) {
+					return createTrue();
+				}
+				no = no.proximo;
+			}
+		}
+		return createFalse();
+	}
+
+	public BigInteger notContains(Object o) {
+		BigInteger respo = contains(o);
+		BigInteger falso = createFalse();
+		BigInteger verda = createTrue();
+		return respo.equals(verda) ? falso : verda;
+	}
+
+	public BigInteger size() {
+		return comprimento;
+	}
+
+	public BigInteger empty() {
+		return comprimento.intValue() == 0 ? createTrue() : createFalse();
+	}
+
+	private No getNo(long indice) throws IllegalAccessException {
+		checkIndice(indice);
+		long c = 0;
+		No no = cabeca;
+		while (c < indice) {
+			no = no.proximo;
+			c++;
+		}
+		return no;
+	}
+
+	private void checkIndice(long indice) throws IllegalAccessException {
+		if (indice < 0 || indice >= comprimento.longValue()) {
+			throw new IllegalAccessException("indice=" + indice + ", size=" + comprimento);
+		}
+	}
+
+	public Object get(long indice) throws IllegalAccessException {
+		return getNo(indice).valor;
+	}
+
+	public Object set(long indice, Object valor) throws IllegalAccessException {
+		getNo(indice).valor = valor;
+		return valor;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		No no = cabeca;
+		while (no != null) {
+			if (sb.length() > 0) {
+				sb.append(", ");
+			}
+			sb.append(no.valor);
+			no = no.proximo;
+		}
+		sb.insert(0, "[");
+		sb.insert(sb.length(), "]");
+		return sb.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = 1;
+		No no = cabeca;
+		while (no != null) {
+			hashCode = 31 * hashCode + no.hashCode();
+			no = no.proximo;
+		}
+		return hashCode;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		} else if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		if (obj instanceof Lista) {
+			Lista other = (Lista) obj;
+			if (!comprimento.equals(other.comprimento)) {
+				return false;
+			}
+			No no = cabeca;
+			No noOther = other.cabeca;
+			while (no != null && noOther != null) {
+				if (!no.equals(noOther)) {
+					return false;
+				}
+				noOther = noOther.proximo;
+				no = no.proximo;
+			}
+			return no == null && noOther == null;
+		}
+		return false;
+	}
+
+	private class No {
+		Object valor;
+		No proximo;
+
+		private No(Object valor, No proximo) {
+			this.proximo = proximo;
+			this.valor = valor;
+		}
+
+		private No(Object valor) {
+			this(valor, null);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(valor);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			} else if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			if (obj instanceof No) {
+				No other = (No) obj;
+				return Objects.equals(valor, other.valor);
+			}
+			return false;
+		}
+	}
+}
