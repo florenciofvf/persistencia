@@ -57,9 +57,16 @@ public class ArgumentosContexto extends Contexto {
 		throw new ExpressaoException("erro.processar.argumentos.estado");
 	}
 
-	public static ArgumentosContexto criar(String string) throws ExpressaoException {
+	public static ArgumentosContexto criarComString(String string) throws ExpressaoException {
 		ArgumentosContexto argumentosContexto = criar();
-		ExpressaoContexto expressaoContexto = ExpressaoContexto.criar(string);
+		ExpressaoContexto expressaoContexto = ExpressaoContexto.criarComString(string);
+		argumentosContexto.adicionar(expressaoContexto);
+		return argumentosContexto;
+	}
+
+	public static ArgumentosContexto criarComChave(String string) throws ExpressaoException {
+		ArgumentosContexto argumentosContexto = criar();
+		ExpressaoContexto expressaoContexto = ExpressaoContexto.criarComChave(string);
 		argumentosContexto.adicionar(expressaoContexto);
 		return argumentosContexto;
 	}

@@ -1,0 +1,33 @@
+pacote br.com.teste
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao teste0
+param lista
+0  load_param lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+5  push_string nome
+7  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map get
+10  return
+
+funcao teste1
+param pessoa
+0  load_param pessoa
+3  push_string nome
+5  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map get
+8  return
+
+funcao teste2
+param pessoa
+0  load_param pessoa
+3  push_string salarios
+5  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map get
+7  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+10  return
+
+funcao $constantes
+tipo_void
+0  return
+

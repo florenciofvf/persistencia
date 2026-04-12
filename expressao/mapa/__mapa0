@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun teste0(lista) {
+	return ${lista:head > pessoa.nome};
+}
+
+defun teste1(pessoa) {
+	return ${pessoa.nome};
+}
+
+defun teste2(pessoa) {
+	return ${pessoa.salarios > primeiro:head};
+}
