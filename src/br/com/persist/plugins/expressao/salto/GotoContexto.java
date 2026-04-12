@@ -7,7 +7,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 
-public class GotoContexto extends Contexto {
+public class GotoContexto extends Contexto implements CheckSalto {
 	public static final String GOTO = "goto";
 	private boolean dispensavel;
 	private Contexto destino;
@@ -21,7 +21,7 @@ public class GotoContexto extends Contexto {
 		checkDestino();
 	}
 
-	private void checkDestino() throws ExpressaoException {
+	public void checkDestino() throws ExpressaoException {
 		if (destino == null) {
 			throw new ExpressaoException("erro.goto.ponto_salto_nulo");
 		}

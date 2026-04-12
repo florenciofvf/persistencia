@@ -12,11 +12,12 @@ import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
 public class IFTest extends ExpressaoTest {
+	private static final String CONDICIONAL = "condicional";
 
 	@Test
 	public void teste10() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(getFile("condicional", "__simples10"));
+		compilacao.compilar(getFile(CONDICIONAL, "__simples10"));
 
 		Processador processador = new Processador();
 
@@ -34,7 +35,7 @@ public class IFTest extends ExpressaoTest {
 	@Test
 	public void teste12() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(getFile("condicional", "__simples12"));
+		compilacao.compilar(getFile(CONDICIONAL, "__simples12"));
 
 		Processador processador = new Processador();
 
@@ -52,7 +53,7 @@ public class IFTest extends ExpressaoTest {
 	@Test
 	public void teste17() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(getFile("condicional", "__simples17"));
+		compilacao.compilar(getFile(CONDICIONAL, "__simples17"));
 
 		Processador processador = new Processador();
 

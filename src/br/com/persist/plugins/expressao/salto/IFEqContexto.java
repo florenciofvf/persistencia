@@ -7,7 +7,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 
-public class IFEqContexto extends Contexto {
+public class IFEqContexto extends Contexto implements CheckSalto {
 	public static final String IF_EQ = "ifeq";
 	private Contexto destino;
 
@@ -20,7 +20,7 @@ public class IFEqContexto extends Contexto {
 		checkDestino();
 	}
 
-	private void checkDestino() throws ExpressaoException {
+	public void checkDestino() throws ExpressaoException {
 		if (destino == null) {
 			throw new ExpressaoException("erro.ifeq.ponto_salto_nulo");
 		}

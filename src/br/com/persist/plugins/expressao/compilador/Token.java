@@ -32,7 +32,7 @@ public class Token {
 		CHAVE("[a-z][A-Z][0-9]"), CHAVE2("chave.chave"), CHAVEN("chave.chave.chave"), PONTO_E_VIRGULA(";"),
 		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_CHAVE("{"), FECHA_CHAVE("}"), ATRIBUICAO("="), VIRGULA(","),
 		OPERADOR(""), STRING("'xyz'"), INTEIRO("[0-9]"), FLUTUANTE("[0-9].[0-9]"), COMENTARIO("// ou /*cmt*/"),
-		VIRTUAL("");
+		VIRTUAL(""), EL("${lista:head > pessoa.nome}");
 
 		private String desc;
 
@@ -104,6 +104,10 @@ public class Token {
 
 	public boolean isChaveN() {
 		return tipo == Tipo.CHAVEN;
+	}
+
+	public boolean isEL() {
+		return tipo == Tipo.EL;
 	}
 
 	public boolean chave() {
