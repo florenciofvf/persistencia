@@ -60,7 +60,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		Funcao clone = invocar.clonar();
 		if (!clone.isNativo()) {
 			try {
-				setParametros(clone, pilhaOperando);
+				setArgumentos(clone, pilhaOperando);
 				pilhaFuncao.push(clone);
 			} catch (Exception ex) {
 				throw new ExpressaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
@@ -75,7 +75,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		}
 	}
 
-	private static void setParametros(Funcao funcao, PilhaOperando pilhaOperando) throws ExpressaoException {
+	private static void setArgumentos(Funcao funcao, PilhaOperando pilhaOperando) throws ExpressaoException {
 		List<Integer> indices = indiceParametros(funcao);
 		for (int i = indices.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();

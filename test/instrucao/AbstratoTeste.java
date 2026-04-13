@@ -11,7 +11,7 @@ import br.com.persist.plugins.instrucao.compilador.Compilador;
 import br.com.persist.plugins.instrucao.processador.Processador;
 
 public abstract class AbstratoTeste {
-	private static final File ROOT = new File("instrucoes");
+	private static final File ROOT = new File("instrucoes_test");
 	protected BibliotecaContexto bibliotecaContexto;
 	protected Processador processador;
 	protected Compilador compilador;
