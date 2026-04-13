@@ -1,0 +1,33 @@
+package br.com.teste;
+
+defun main() {
+    const MAPA = map.create();
+    map.put(MAPA, 'nome', 'florencio vieira filho');
+    return processar2(MAPA);
+}
+
+defun teste10(objeto, pessoa) {
+    const nome = ${pessoa.nome};
+    return nome;
+}
+
+defun processar(objeto) {
+    const nome = ${objeto.nome};
+    return nome;
+}
+
+defun processar2(objeto) {
+    return 'NOME=' + ${objeto.nome};
+}
+
+defun exemplo(valor1, valor2) {
+    return valor1 + valor2;
+}
+
+defun exemplo2(lista) {
+    return ${lista:head} + ${lista:tail} + ${MAPA.nome};
+}
+
+defun exemplo3(lista) {
+    return lista;
+}
