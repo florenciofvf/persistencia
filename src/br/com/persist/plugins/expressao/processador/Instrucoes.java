@@ -3,6 +3,7 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
@@ -15,6 +16,7 @@ import br.com.persist.plugins.expressao.negativo.NegativoInstrucao;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Add;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.AddLista;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.And;
+import br.com.persist.plugins.expressao.operador.OperadorInstrucao.CreateLista1;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Diff;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Div;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Igual;
@@ -31,7 +33,6 @@ import br.com.persist.plugins.expressao.parametros.ParametroLoadInstrucao;
 import br.com.persist.plugins.expressao.retorno.RetornoInstrucao;
 import br.com.persist.plugins.expressao.salto.GotoInstrucao;
 import br.com.persist.plugins.expressao.salto.IFEqInstrucao;
-import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class Instrucoes {
 	static final Map<String, Instrucao> cache = new HashMap<>();
@@ -71,6 +72,7 @@ public class Instrucoes {
 		add(new RetornoInstrucao());
 		add(new GotoInstrucao());
 		add(new IFEqInstrucao());
+		add(new CreateLista1());
 		add(new MaiorIgual());
 		add(new MenorIgual());
 		add(new AddLista());

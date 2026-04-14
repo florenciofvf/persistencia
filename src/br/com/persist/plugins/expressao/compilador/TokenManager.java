@@ -109,6 +109,10 @@ public class TokenManager {
 			return new Token("" + c, Tipo.ABRE_PARENTESE, indiceBackup);
 		case ')':
 			return new Token("" + c, Tipo.FECHA_PARENTESE, indiceBackup);
+		case '[':
+			return new Token("" + c, Tipo.ABRE_COLCHETE, indiceBackup);
+		case ']':
+			return new Token("" + c, Tipo.FECHA_COLCHETE, indiceBackup);
 		case '{':
 			return new Token("" + c, Tipo.ABRE_CHAVE, indiceBackup);
 		case '}':
@@ -249,6 +253,8 @@ public class TokenManager {
 		case ')':
 		case '{':
 		case '}':
+		case '[':
+		case ']':
 		case ';':
 		case ',':
 			return tokenGrupo1(c, indiceBackup);
