@@ -10,6 +10,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class OperadorContexto extends Contexto {
+	public static final String CREATE_LISTA1 = "create_lista1";
 	public static final String ADD_LISTA = "add_lista";
 	public static final String ADD = "add";
 	public static final String SUB = "sub";
@@ -54,7 +55,7 @@ public class OperadorContexto extends Contexto {
 		throw new ExpressaoException("Operador >>> " + token.getString(), false);
 	}
 
-	public String getInstrucao() throws ExpressaoException {
+	private String matematicos() {
 		if (igual("%")) {
 			return REM;
 		}
@@ -69,6 +70,14 @@ public class OperadorContexto extends Contexto {
 		}
 		if (igual("-")) {
 			return SUB;
+		}
+		return null;
+	}
+
+	public String getInstrucao() throws ExpressaoException {
+		String resp = matematicos();
+		if (resp != null) {
+			return resp;
 		}
 		if (igual("==")) {
 			return IGUAL;
@@ -99,6 +108,9 @@ public class OperadorContexto extends Contexto {
 		}
 		if (igual(":")) {
 			return ADD_LISTA;
+		}
+		if (igual(CREATE_LISTA1)) {
+			return CREATE_LISTA1;
 		}
 		throw new ExpressaoException("Operador >>> " + token.getString(), false);
 	}

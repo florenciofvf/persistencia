@@ -64,7 +64,7 @@ public abstract class Contexto {
 		return componentes.isEmpty();
 	}
 
-	protected int getSize() {
+	public int getSize() {
 		return componentes.size();
 	}
 
@@ -85,6 +85,12 @@ public abstract class Contexto {
 			return componentes.get(indice);
 		}
 		return null;
+	}
+
+	public Contexto excluirPrimeiro() {
+		Contexto primeiro = getPrimeiro();
+		remove(primeiro);
+		return primeiro;
 	}
 
 	public Contexto excluirUltimo() {

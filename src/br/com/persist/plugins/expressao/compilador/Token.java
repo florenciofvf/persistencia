@@ -30,9 +30,9 @@ public class Token {
 
 	public enum Tipo {
 		CHAVE("[a-z][A-Z][0-9]"), CHAVE2("chave.chave"), CHAVEN("chave.chave.chave"), PONTO_E_VIRGULA(";"),
-		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_CHAVE("{"), FECHA_CHAVE("}"), ATRIBUICAO("="), VIRGULA(","),
-		OPERADOR(""), STRING("'xyz'"), INTEIRO("[0-9]"), FLUTUANTE("[0-9].[0-9]"), COMENTARIO("// ou /*cmt*/"),
-		VIRTUAL(""), EL("${lista:head > pessoa.nome}");
+		ABRE_PARENTESE("("), FECHA_PARENTESE(")"), ABRE_COLCHETE("["), FECHA_COLCHETE("]"), ABRE_CHAVE("{"),
+		FECHA_CHAVE("}"), ATRIBUICAO("="), VIRGULA(","), OPERADOR(""), STRING("'xyz'"), INTEIRO("[0-9]"),
+		FLUTUANTE("[0-9].[0-9]"), COMENTARIO("// ou /*cmt*/"), VIRTUAL(""), EL("${lista:head > pessoa.nome}");
 
 		private String desc;
 
@@ -60,6 +60,14 @@ public class Token {
 
 	public boolean isFechaParentese() {
 		return tipo == Tipo.FECHA_PARENTESE;
+	}
+
+	public boolean isAbreColchete() {
+		return tipo == Tipo.ABRE_COLCHETE;
+	}
+
+	public boolean isFechaColchete() {
+		return tipo == Tipo.FECHA_COLCHETE;
 	}
 
 	public boolean isAbreChave() {

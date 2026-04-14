@@ -166,6 +166,27 @@ public class OperadorInstrucao {
 		}
 	}
 
+	public static class CreateLista1 extends Instrucao {
+		public CreateLista1() {
+			super(OperadorContexto.CREATE_LISTA1);
+		}
+
+		@Override
+		public Instrucao novo() {
+			return new CreateLista1();
+		}
+
+		@Override
+		public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
+				throws ExpressaoException {
+			Object operando = pilhaOperando.pop();
+			InstrucaoUtil.checarOperando(operando);
+			Lista lista = new Lista();
+			lista.add(operando);
+			pilhaOperando.push(lista);
+		}
+	}
+
 	public static class Sub extends Instrucao {
 		public Sub() {
 			super(OperadorContexto.SUB);
