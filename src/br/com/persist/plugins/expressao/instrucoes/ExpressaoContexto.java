@@ -16,6 +16,7 @@ import br.com.persist.plugins.expressao.condicional.IFContexto;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.lista.ListaContexto;
 import br.com.persist.plugins.expressao.loop.WhileContexto;
+import br.com.persist.plugins.expressao.mapa.MapaContexto;
 import br.com.persist.plugins.expressao.nativo.ChaveContexto;
 import br.com.persist.plugins.expressao.nativo.FlutuanteContexto;
 import br.com.persist.plugins.expressao.nativo.InteiroContexto;
@@ -79,6 +80,8 @@ public class ExpressaoContexto extends Salto {
 				processarIniExpressao(tokenManager, token);
 			} else if (token.isAbreColchete()) {
 				processarIniLista(tokenManager, token);
+			} else if (token.isAbreChave()) {
+				processarIniMapa(tokenManager, token);
 			} else if (token.chave()) {
 				processarChave(token);
 			} else if (token.isEL()) {
@@ -102,6 +105,8 @@ public class ExpressaoContexto extends Salto {
 				processarIniExpressao(tokenManager, token);
 			} else if (token.isAbreColchete()) {
 				processarIniLista(tokenManager, token);
+			} else if (token.isAbreChave()) {
+				processarIniMapa(tokenManager, token);
 			} else if (token.chave()) {
 				processarChave(token);
 			} else if (token.isEL()) {
@@ -188,6 +193,20 @@ public class ExpressaoContexto extends Salto {
 			ListaContexto lista = new ListaContexto();
 			tokenManager.selecionar(lista);
 			adicionar(lista);
+		}
+		selecionado = new QQOperador();
+	}
+
+	private void processarIniMapa(TokenManager tokenManager, Token token) throws ExpressaoException {
+		if (tokenMOuM != null) {
+			tokenManager.invalidar(token);
+		}
+		if (getUltimo() instanceof ChaveContexto) {
+			tokenManager.invalidar(token);
+		} else {
+			MapaContexto mapa = new MapaContexto();
+			tokenManager.selecionar(mapa);
+			adicionar(mapa);
 		}
 		selecionado = new QQOperador();
 	}

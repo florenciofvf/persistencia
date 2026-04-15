@@ -63,7 +63,7 @@ public class ListaContexto extends Contexto {
 	@Doc({ "[]", "[1]", "[...]" })
 	@Override
 	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-		throw new ExpressaoException("erro.processar.argumentos.estado");
+		throw new ExpressaoException("erro.processar.lista.estado");
 	}
 
 	private void montarArvore(TokenManager tokenManager) throws ExpressaoException {
