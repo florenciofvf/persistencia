@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun teste1() {
+	return {};
+}
+
+defun teste2() {
+	return {'valor':3};
+}
+
+defun teste3() {
+	return {'idade':48, 'sigla':'fvf'};
+}

@@ -34,4 +34,19 @@ public class MapaTest extends ExpressaoTest {
 		result = processador.processar(biblio, "main");
 		assertEquals("[NOME=florencio vieira filho]", result.toString());
 	}
+
+	@Test
+	public void mapa1() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(MAPA, "__mapa1"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__mapa1";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "teste1");
+		assertEquals("[{}]", result.toString());
+	}
 }

@@ -1,0 +1,28 @@
+pacote br.com.teste
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao teste1
+0  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map create
+3  return
+
+funcao teste2
+0  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map create
+2  push_inteiro 3
+3  put_item_mapa valor
+6  return
+
+funcao teste3
+0  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map create
+2  push_inteiro 48
+3  put_item_mapa idade
+6  push_string fvf
+7  put_item_mapa sigla
+10  return
+
+funcao $constantes
+tipo_void
+0  return
+

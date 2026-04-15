@@ -259,14 +259,15 @@ public class TokenManager {
 		switch (c) {
 		case '(':
 		case ')':
-		case '{':
-		case '}':
 		case '[':
 		case ']':
+		case '{':
+		case '}':
 		case ';':
 		case ',':
 			return tokenGrupo1(c, indiceBackup);
 		case '+':
+		case ':':
 		case '-':
 		case '*':
 		case '%':
@@ -276,6 +277,7 @@ public class TokenManager {
 		case '!':
 		case '&':
 		case '|':
+		case '.':
 		case '<':
 		case '>':
 			return tokenOperador2(c, indiceBackup);
