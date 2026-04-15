@@ -9,6 +9,8 @@ import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
+import br.com.persist.plugins.expressao.lista.AddItemListaInstrucao;
+import br.com.persist.plugins.expressao.mapa.PutItemMapaInstrucao;
 import br.com.persist.plugins.expressao.nativo.FlutuantePushInstrucao;
 import br.com.persist.plugins.expressao.nativo.InteiroPushInstrucao;
 import br.com.persist.plugins.expressao.nativo.StringPushInstrucao;
@@ -67,6 +69,8 @@ public class Instrucoes {
 		add(new ConstanteLoadInstrucao());
 		add(new ConstanteDefineInstrucao());
 		// add(new LoadFuncaoInstrucao());
+		add(new AddItemListaInstrucao());
+		add(new PutItemMapaInstrucao());
 		add(new StringPushInstrucao());
 		add(new NegativoInstrucao());
 		add(new RetornoInstrucao());

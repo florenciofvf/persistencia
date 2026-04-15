@@ -192,6 +192,14 @@ public class TokenManager {
 			invalidarSe(indice + 1, '|');
 			indice++;
 			return new Token("||", Tipo.OPERADOR, indiceBackup);
+		case '.':
+			if (diferenteDe(indice + 1, '.')) {
+				invalidar();
+			}
+			indice++;
+			invalidarSe(indice + 1, '.');
+			indice++;
+			return new Token("..", Tipo.OPERADOR, indiceBackup);
 		case '<':
 			if (diferenteDe(indice + 1, '=')) {
 				indice++;

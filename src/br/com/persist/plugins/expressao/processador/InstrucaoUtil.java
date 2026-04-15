@@ -2,9 +2,10 @@ package br.com.persist.plugins.expressao.processador;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.instrucao.biblionativo.Lista;
+import br.com.persist.plugins.expressao.biblionativo.Lista;
 
 public class InstrucaoUtil {
 	private InstrucaoUtil() {
@@ -37,6 +38,12 @@ public class InstrucaoUtil {
 	public static void checarLista(Object obj) throws ExpressaoException {
 		if (!(obj instanceof Lista)) {
 			throw new ExpressaoException("erro.valor_nao_lista", obj);
+		}
+	}
+
+	public static void checarMapa(Object obj) throws ExpressaoException {
+		if (!(obj instanceof Map<?, ?>)) {
+			throw new ExpressaoException("erro.valor_nao_mapa", obj);
 		}
 	}
 
