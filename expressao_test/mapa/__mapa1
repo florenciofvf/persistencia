@@ -1,5 +1,15 @@
 package br.com.teste;
 
+const ESTADOS = {
+	'PA': 'Pará',
+	'GO': 'Goiás',
+	'TO': 'Tocantins'
+};
+
+defun main() {
+	return ESTADOS;
+}
+
 defun teste1() {
 	return {};
 }
@@ -10,4 +20,16 @@ defun teste2() {
 
 defun teste3() {
 	return {'idade':48, 'sigla':'fvf'};
+}
+
+defun teste4() {
+	return {'att1': somar(2,2), 'att2': dobrar(3) + somar(1,2)};
+}
+
+defun somar(a, b) {
+	return a + b;
+}
+
+defun dobrar(valor) {
+	return valor * 2;
 }

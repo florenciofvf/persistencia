@@ -11,3 +11,15 @@ defun teste2() {
 defun teste3() {
 	return [7, 'fvf'];
 }
+
+defun teste4() {
+	return [somar(2,2), dobrar(3) + somar(1,2)];
+}
+
+defun somar(a, b) {
+	return a + b;
+}
+
+defun dobrar(valor) {
+	return valor * 2;
+}
