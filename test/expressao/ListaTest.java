@@ -46,4 +46,21 @@ public class ListaTest extends ExpressaoTest {
 		Compilacao compilacao = new Compilacao();
 		compilacao.compilar(getFile(LISTA, "__lista5"));
 	}
+
+	@Test
+	public void listaAlgorit() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "listaAlgorit"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.listaAlgorit";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "getMapa");
+		log(result);
+		//assertEquals("[[]]", result.toString());
+	}
+
 }

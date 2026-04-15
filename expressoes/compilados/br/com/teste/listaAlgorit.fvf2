@@ -1,0 +1,89 @@
+pacote br.com.teste
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao inverter
+0  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+2  push_inteiro 1
+3  add_item_lista
+5  push_inteiro 2
+6  add_item_lista
+8  push_inteiro 3
+9  add_item_lista
+11  push_inteiro 4
+12  add_item_lista
+14  push_inteiro 5
+15  add_item_lista
+17  invoke_cret this inverterLista
+20  return
+
+funcao getLista
+0  push_inteiro 10
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+4  push_inteiro 20
+5  add_item_lista
+7  push_inteiro 30
+8  add_item_lista
+10  push_inteiro 40
+11  add_item_lista
+13  push_inteiro 50
+14  add_item_lista
+15  concat_lista
+18  return
+
+funcao getLista2
+0  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+2  push_inteiro 1
+3  add_item_lista
+5  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+7  push_inteiro 2
+8  add_item_lista
+10  push_inteiro 3
+11  add_item_lista
+12  add_item_lista
+14  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map create
+16  push_flutuante 1.2
+17  put_item_mapa valor
+18  add_item_lista
+21  return
+
+funcao getMapa
+0  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map create
+3  push_string Teste
+4  put_item_mapa nome
+6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+8  push_inteiro 1000
+9  add_item_lista
+11  push_inteiro 30000
+12  add_item_lista
+14  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map create
+16  push_flutuante 1.2
+17  put_item_mapa valor
+18  add_item_lista
+19  put_item_mapa valores
+22  return
+
+funcao inverterLista
+param lista
+0  load_param lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+3  eq
+4  ifeq 12
+6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+9  return
+12  load_param lista
+14  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+16  invoke_cret this inverterLista
+18  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+21  load_param lista
+23  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+24  add_item_lista
+25  concat_lista
+28  return
+
+funcao $constantes
+tipo_void
+0  return
+

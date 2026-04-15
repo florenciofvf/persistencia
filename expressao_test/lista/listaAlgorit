@@ -1,0 +1,31 @@
+package br.com.teste;
+
+defun inverter() {
+	return inverterLista([1, 2, 3, 4, 5]);
+}
+
+defun getLista() {
+	return 10 .. [20, 30, 40, 50];
+}
+
+defun getLista2() {
+	return [
+		1,
+		[2,3],
+		{'valor':1.2}
+	];
+}
+
+defun getMapa() {
+	return {
+		'nome': 'Teste',
+		'valores': [1000, 30000, {'valor':1.2}]
+	};
+}
+
+defun inverterLista(lista) {
+	if(lista == []) {
+		return [];
+	}
+	return inverterLista(${lista:tail}) .. [${lista:head}];
+}
