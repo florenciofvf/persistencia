@@ -44,7 +44,7 @@ public class ListaContexto extends Contexto {
 	@Override
 	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isFechaColchete()) {
-			if (isEmpty()) {
+			if (getSize() == 1) {
 				token.setConsumido(true);
 				tokenManager.selecionarParentDe(this);
 			} else {

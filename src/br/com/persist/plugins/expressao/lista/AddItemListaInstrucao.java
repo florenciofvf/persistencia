@@ -21,12 +21,12 @@ public class AddItemListaInstrucao extends Instrucao {
 	@Override
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
-		Object operandoD = pilhaOperando.pop();
-		Object operandoE = pilhaOperando.pop();
-		InstrucaoUtil.checarLista(operandoD);
-		InstrucaoUtil.checarOperando(operandoE);
-		Lista lista = (Lista) operandoD;
-		lista.add(operandoE);
+		Object item = pilhaOperando.pop();
+		Object objLista = pilhaOperando.pop();
+		InstrucaoUtil.checarLista(objLista);
+		InstrucaoUtil.checarOperando(item);
+		Lista lista = (Lista) objLista;
+		lista.add(item);
 		pilhaOperando.push(lista);
 	}
 }

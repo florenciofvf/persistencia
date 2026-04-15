@@ -23,12 +23,12 @@ public class PutItemMapaInstrucao extends Instrucao {
 	@SuppressWarnings("unchecked")
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
-		Object operandoD = pilhaOperando.pop();
-		Object operandoE = pilhaOperando.pop();
-		InstrucaoUtil.checarMapa(operandoD);
-		InstrucaoUtil.checarOperando(operandoE);
-		Map<Object, Object> mapa = (Map<Object, Object>) operandoD;
-		mapa.put(parametros, operandoE);
+		Object item = pilhaOperando.pop();
+		Object objMapa = pilhaOperando.pop();
+		InstrucaoUtil.checarMapa(objMapa);
+		InstrucaoUtil.checarOperando(item);
+		Map<Object, Object> mapa = (Map<Object, Object>) objMapa;
+		mapa.put(parametros, item);
 		pilhaOperando.push(mapa);
 	}
 }
