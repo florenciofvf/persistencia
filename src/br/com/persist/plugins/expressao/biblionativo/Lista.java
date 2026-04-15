@@ -65,7 +65,7 @@ public class Lista {
 		return o;
 	}
 
-	public void addLista(Lista lista) throws IllegalAccessException {
+	public void concat(Lista lista) throws IllegalAccessException {
 		if (lista != null) {
 			long size = lista.size().longValue();
 			for (long i = 0; i < size; i++) {

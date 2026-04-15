@@ -16,7 +16,7 @@ import br.com.persist.plugins.expressao.negativo.NegativoInstrucao;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Add;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.AddLista;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.And;
-import br.com.persist.plugins.expressao.operador.OperadorInstrucao.CreateLista1;
+import br.com.persist.plugins.expressao.operador.OperadorInstrucao.ConcatLista;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Diff;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Div;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Igual;
@@ -72,7 +72,7 @@ public class Instrucoes {
 		add(new RetornoInstrucao());
 		add(new GotoInstrucao());
 		add(new IFEqInstrucao());
-		add(new CreateLista1());
+		add(new ConcatLista());
 		add(new MaiorIgual());
 		add(new MenorIgual());
 		add(new AddLista());

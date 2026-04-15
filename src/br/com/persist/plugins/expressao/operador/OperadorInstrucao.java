@@ -148,6 +148,30 @@ public class OperadorInstrucao {
 			InstrucaoUtil.checarOperando(operandoE);
 			InstrucaoUtil.checarOperando(operandoD);
 			Lista lista = new Lista();
+			lista.add(operandoE);
+			lista.add(operandoD);
+			pilhaOperando.push(lista);
+		}
+	}
+
+	public static class ConcatLista extends Instrucao {
+		public ConcatLista() {
+			super(OperadorContexto.CONCAT_LISTA);
+		}
+
+		@Override
+		public Instrucao novo() {
+			return new ConcatLista();
+		}
+
+		@Override
+		public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
+				throws ExpressaoException {
+			Object operandoD = pilhaOperando.pop();
+			Object operandoE = pilhaOperando.pop();
+			InstrucaoUtil.checarOperando(operandoE);
+			InstrucaoUtil.checarOperando(operandoD);
+			Lista lista = new Lista();
 			add(lista, operandoE);
 			add(lista, operandoD);
 			pilhaOperando.push(lista);
@@ -156,34 +180,13 @@ public class OperadorInstrucao {
 		private void add(Lista lista, Object obj) throws ExpressaoException {
 			if (obj instanceof Lista) {
 				try {
-					lista.addLista((Lista) obj);
+					lista.concat((Lista) obj);
 				} catch (IllegalAccessException e) {
 					throw new ExpressaoException(e);
 				}
 			} else {
 				lista.add(obj);
 			}
-		}
-	}
-
-	public static class CreateLista1 extends Instrucao {
-		public CreateLista1() {
-			super(OperadorContexto.CREATE_LISTA1);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new CreateLista1();
-		}
-
-		@Override
-		public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
-				throws ExpressaoException {
-			Object operando = pilhaOperando.pop();
-			InstrucaoUtil.checarOperando(operando);
-			Lista lista = new Lista();
-			lista.add(operando);
-			pilhaOperando.push(lista);
 		}
 	}
 

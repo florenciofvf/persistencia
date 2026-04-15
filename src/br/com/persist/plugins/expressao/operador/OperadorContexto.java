@@ -10,7 +10,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class OperadorContexto extends Contexto {
-	public static final String CREATE_LISTA1 = "create_lista1";
+	public static final String CONCAT_LISTA = "concat_lista";
 	public static final String ADD_LISTA = "add_lista";
 	public static final String ADD = "add";
 	public static final String SUB = "sub";
@@ -52,6 +52,9 @@ public class OperadorContexto extends Contexto {
 		if (igual(":")) {
 			return 400;
 		}
+		if (igual("..")) {
+			return 500;
+		}
 		throw new ExpressaoException("Operador >>> " + token.getString(), false);
 	}
 
@@ -74,11 +77,7 @@ public class OperadorContexto extends Contexto {
 		return null;
 	}
 
-	public String getInstrucao() throws ExpressaoException {
-		String resp = matematicos();
-		if (resp != null) {
-			return resp;
-		}
+	private String comparacao() {
 		if (igual("==")) {
 			return IGUAL;
 		}
@@ -97,6 +96,10 @@ public class OperadorContexto extends Contexto {
 		if (igual(">=")) {
 			return MAIOR_IGUAL;
 		}
+		return null;
+	}
+
+	private String logicos() {
 		if (igual("&&")) {
 			return AND;
 		}
@@ -106,11 +109,27 @@ public class OperadorContexto extends Contexto {
 		if (igual("^")) {
 			return XOR;
 		}
+		return null;
+	}
+
+	public String getInstrucao() throws ExpressaoException {
+		String resp = matematicos();
+		if (resp != null) {
+			return resp;
+		}
+		resp = comparacao();
+		if (resp != null) {
+			return resp;
+		}
+		resp = logicos();
+		if (resp != null) {
+			return resp;
+		}
 		if (igual(":")) {
 			return ADD_LISTA;
 		}
-		if (igual(CREATE_LISTA1)) {
-			return CREATE_LISTA1;
+		if (igual("..")) {
+			return CONCAT_LISTA;
 		}
 		throw new ExpressaoException("Operador >>> " + token.getString(), false);
 	}

@@ -12,7 +12,7 @@ public class List {
 	@Biblio(2)
 	public static Lista createComLista(Object lista, Object valor) throws IllegalAccessException {
 		Lista nova = create();
-		nova.addLista((Lista) lista);
+		nova.concat((Lista) lista);
 		nova.add(valor);
 		return nova;
 	}
