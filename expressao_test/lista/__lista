@@ -1,0 +1,70 @@
+package br.com.teste;
+
+defun main0() {
+	const lista0 = ['Florêncio', 'Vieira', 'Filho'];
+	return lista0;
+}
+
+defun main() {
+	const lista = list.create();
+	list.add(lista, 'Florêncio');
+	list.add(lista, 'Vieira');
+	list.add(lista, 'Filho');
+	return lista;
+}
+
+defun mainItemMaior(valor) {
+	return itensMaiorQue(valor, [1,2,3,4,5,6,7]);
+}
+
+defun itensMaiorQue(valor, lista) {
+	if(list.empty(lista)) {
+		return list.create();
+	} else {
+		if(list.head(lista) > valor) {
+			return list.head(lista) .. itensMaiorQue(valor, list.tail(lista));
+		} else {
+			return itensMaiorQue(valor, list.tail(lista));
+		}
+	}
+}
+
+defun comprimento() {
+	return list.size(lista);
+}
+
+defun cabeca() {
+	return list.head(lista);
+}
+
+defun cauda() {
+	return list.tail(lista);
+}
+
+defun concatenar() {
+	return lista + lista;
+}
+
+defun comprimentoRecursivo() {
+	return size(lista);
+}
+
+defun size(lista) {
+	if(list.empty(lista)) {
+		return 0;
+	} else {
+		return 1 + size(list.tail(lista));
+	}
+}
+
+defun inverterLista() {
+	return inverter([5,4,3,2,1,0]);
+}
+
+defun inverter(lista) {
+	if(list.empty(lista)) {
+		return [];
+	} else {
+		return inverter(${lista:tail}) .. ${lista:head};
+	}
+}

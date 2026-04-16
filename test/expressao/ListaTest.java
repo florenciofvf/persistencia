@@ -63,4 +63,42 @@ public class ListaTest extends ExpressaoTest {
 		//assertEquals("[[]]", result.toString());
 	}
 
+	@Test
+	public void lista() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "__lista"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__lista";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main0");
+		assertEquals("[[Florêncio, Vieira, Filho]]", result.toString());
+
+		result = processador.processar(biblio, "main");
+		assertEquals("[[Florêncio, Vieira, Filho]]", result.toString());
+
+		result = processador.processar(biblio, "comprimento");
+		assertEquals("[3]", result.toString());
+
+		result = processador.processar(biblio, "comprimentoRecursivo");
+		assertEquals("[3]", result.toString());
+
+		result = processador.processar(biblio, "cabeca");
+		assertEquals("[Florêncio]", result.toString());
+
+		result = processador.processar(biblio, "cauda");
+		assertEquals("[[Vieira, Filho]]", result.toString());
+
+		result = processador.processar(biblio, "concatenar");
+		assertEquals("[[Florêncio, Vieira, Filho][Florêncio, Vieira, Filho]]", result.toString());
+
+		result = processador.processar(biblio, "mainItemMaior", bi(5));
+		assertEquals("[[6, 7]]", result.toString());
+
+		result = processador.processar(biblio, "inverterLista");
+		assertEquals("[[0, 1, 2, 3, 4, 5]]", result.toString());
+	}
 }

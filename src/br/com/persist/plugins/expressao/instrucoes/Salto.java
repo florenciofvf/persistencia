@@ -135,6 +135,9 @@ public abstract class Salto extends Contexto {
 		if (ultimo instanceof RetornoContexto) {
 			return;
 		}
+		if (ultimo.retornoGarantido()) {
+			return;
+		}
 		IFContexto se = (IFContexto) parent;
 		Contexto instrucoes = se.getParent();
 		checarParentInstrucoes(instrucoes);
