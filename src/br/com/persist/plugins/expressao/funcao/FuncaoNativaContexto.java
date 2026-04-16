@@ -20,6 +20,7 @@ public class FuncaoNativaContexto extends Contexto implements IFuncaoContexto {
 			new PontoEVirgula() };
 	public static final String PREFIXO_FUNCAO_NATIVA = "funcao_nativa ";
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
+	public static final String DEFUN_NATIVE = "defun_native";
 	protected boolean retornoVoid;
 	protected Token biblioteca;
 
@@ -63,7 +64,7 @@ public class FuncaoNativaContexto extends Contexto implements IFuncaoContexto {
 						new TipoRetornoOuPontoEVirgula() };
 				tokenManager.selecionarParentDe(FuncaoNativaContexto.this);
 				indiceEstado++;
-			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
+			} else if (VOID.equals(token.getString())) {
 				retornoVoid = true;
 				indiceEstado++;
 			} else {

@@ -9,16 +9,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
+import br.com.persist.plugins.expressao.funcao.FuncaoNativaContexto;
 
 public class GeraBiblio {
 	private static final String PACKAGE = "br.com.persist.plugins.expressao.biblionativo;";
 	private static final String PACOTE = "br.com.persist.plugins.expressao.biblionativo.";
-	private static final String PREFIXO = ExpressaoConstantes.DEFUN_NATIVE;
+	private static final String PREFIXO = FuncaoNativaContexto.DEFUN_NATIVE;
 	private static final String ROOT = "expressoes" + File.separator;
 
 	public static void main(String[] args) throws Exception {

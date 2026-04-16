@@ -2,7 +2,14 @@ package br.com.persist.plugins.expressao.compilador;
 
 import java.util.Objects;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.condicional.IFContexto;
+import br.com.persist.plugins.expressao.constante.ConstanteContexto;
+import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
+import br.com.persist.plugins.expressao.funcao.FuncaoNativaContexto;
+import br.com.persist.plugins.expressao.loop.WhileContexto;
+import br.com.persist.plugins.expressao.organiza.AliasContexto;
+import br.com.persist.plugins.expressao.organiza.PacoteContexto;
+import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 
 public class Token {
 	private boolean consumido;
@@ -131,11 +138,10 @@ public class Token {
 	}
 
 	public boolean isReservado() {
-		return ExpressaoConstantes.CONST.equals(string) || ExpressaoConstantes.DEFUN.equals(string)
-				|| ExpressaoConstantes.DEFUN_NATIVE.equals(string) || ExpressaoConstantes.IF.equals(string)
-				|| ExpressaoConstantes.WHILE.equals(string) || ExpressaoConstantes.ELSEIF.equals(string)
-				|| ExpressaoConstantes.ELSE.equals(string) || ExpressaoConstantes.RETURN.equals(string)
-				|| ExpressaoConstantes.PACKAGE.equals(string) || ExpressaoConstantes.ALIAS.equals(string)
-				|| ExpressaoConstantes.LAMB.equals(string);
+		return ConstanteContexto.CONST.equals(string) || FuncaoNativaContexto.DEFUN_NATIVE.equals(string)
+				|| RetornoContexto.RETURN.equals(string) || PacoteContexto.PACKAGE.equals(string)
+				|| FuncaoContexto.DEFUN.equals(string) || WhileContexto.WHILE.equals(string)
+				|| IFContexto.ELSEIF.equals(string) || IFContexto.ELSE.equals(string) || IFContexto.IF.equals(string)
+				|| AliasContexto.ALIAS.equals(string);
 	}
 }

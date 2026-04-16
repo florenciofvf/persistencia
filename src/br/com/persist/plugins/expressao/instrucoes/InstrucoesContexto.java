@@ -1,6 +1,5 @@
 package br.com.persist.plugins.expressao.instrucoes;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
@@ -20,19 +19,19 @@ public class InstrucoesContexto extends Salto {
 	@Override
 	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isReservado()) {
-			if (ExpressaoConstantes.CONST.equals(token.getString())) {
+			if (ConstanteContexto.CONST.equals(token.getString())) {
 				ConstanteContexto constante = new ConstanteContexto();
 				tokenManager.selecionar(constante);
 				adicionar(constante);
-			} else if (ExpressaoConstantes.RETURN.equals(token.getString())) {
+			} else if (RetornoContexto.RETURN.equals(token.getString())) {
 				RetornoContexto retorno = new RetornoContexto();
 				tokenManager.selecionar(retorno);
 				adicionar(retorno);
-			} else if (ExpressaoConstantes.IF.equals(token.getString())) {
+			} else if (IFContexto.IF.equals(token.getString())) {
 				IFContexto se = new IFContexto();
 				tokenManager.selecionar(se);
 				adicionar(se);
-			} else if (ExpressaoConstantes.WHILE.equals(token.getString())) {
+			} else if (WhileContexto.WHILE.equals(token.getString())) {
 				WhileContexto loop = new WhileContexto();
 				tokenManager.selecionar(loop);
 				adicionar(loop);

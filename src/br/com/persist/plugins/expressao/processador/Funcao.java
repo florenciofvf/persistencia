@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.Token.Tipo;
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
-import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 
 public class Funcao {
 	private final Map<Integer, InstrucaoItem> mapaInstrucoes;
@@ -203,7 +203,7 @@ public class Funcao {
 	public String getInterfaceInfo() {
 		StringBuilder sb = new StringBuilder(getInterface());
 		if (tipoVoid) {
-			sb.append(" : " + ExpressaoConstantes.VOID);
+			sb.append(" : " + IFuncaoContexto.VOID);
 		}
 		if (isNativo()) {
 			sb.append(" [nativo]");

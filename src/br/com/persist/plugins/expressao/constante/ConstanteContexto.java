@@ -15,6 +15,7 @@ import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 public class ConstanteContexto extends Contexto {
 	public static final String LOAD_CONST = "load_const";
 	public static final String DEF_CONST = "def_const";
+	public static final String CONST = "const";
 	private TokenExec selecionado = new Id();
 
 	@Override

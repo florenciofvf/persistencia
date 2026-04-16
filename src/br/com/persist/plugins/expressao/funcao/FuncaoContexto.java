@@ -3,7 +3,6 @@ package br.com.persist.plugins.expressao.funcao;
 import java.io.PrintWriter;
 import java.util.Map;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.compilador.Context;
@@ -20,6 +19,7 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes() };
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
 	public static final String PREFIXO_FUNCAO = "funcao ";
+	public static final String DEFUN = "defun";
 	protected boolean retornoVoid;
 
 	@Override
@@ -58,7 +58,7 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				indiceEstado++;
-			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
+			} else if (VOID.equals(token.getString())) {
 				execs = new TokenExec[] { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
 						new IniInstrucoes(true) };
 				retornoVoid = true;

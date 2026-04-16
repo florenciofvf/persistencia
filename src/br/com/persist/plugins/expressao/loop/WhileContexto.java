@@ -11,6 +11,7 @@ import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 
 public class WhileContexto extends Contexto {
 	private TokenExec[] execs = { new IniExpressao(), new IniInstrucoes(false) };
+	public static final String WHILE = "while";
 
 	@Override
 	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {

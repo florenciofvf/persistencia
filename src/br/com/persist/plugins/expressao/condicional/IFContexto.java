@@ -1,6 +1,5 @@
 package br.com.persist.plugins.expressao.condicional;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
@@ -13,6 +12,9 @@ import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 
 public class IFContexto extends Contexto {
 	private TokenExec selecionado = new IniExpressaoIF();
+	public static final String ELSEIF = "elseif";
+	public static final String ELSE = "else";
+	public static final String IF = "if";
 
 	@Override
 	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
@@ -25,8 +27,7 @@ public class IFContexto extends Contexto {
 	}
 
 	private boolean valido(Token token) {
-		return ExpressaoConstantes.ELSE.equals(token.getString())
-				|| ExpressaoConstantes.ELSEIF.equals(token.getString());
+		return ELSE.equals(token.getString()) || ELSEIF.equals(token.getString());
 	}
 
 	@Context("se")
@@ -68,9 +69,9 @@ public class IFContexto extends Contexto {
 	class ElseOuElseIf implements TokenExec {
 		@Override
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-			if (ExpressaoConstantes.ELSE.equals(token.getString())) {
+			if (ELSE.equals(token.getString())) {
 				selecionado = new IniInstrucaoElse();
-			} else if (ExpressaoConstantes.ELSEIF.equals(token.getString())) {
+			} else if (ELSEIF.equals(token.getString())) {
 				selecionado = new IniExpressaoIF();
 			} else {
 				tokenManager.invalidar(token);

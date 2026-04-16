@@ -9,15 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
-import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.compilador.Token.Tipo;
+import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
@@ -56,23 +55,23 @@ public class BibliotecaContexto extends Contexto {
 	@Override
 	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isReservado()) {
-			if (ExpressaoConstantes.PACKAGE.equals(token.getString())) {
+			if (PacoteContexto.PACKAGE.equals(token.getString())) {
 				PacoteContexto pacote = new PacoteContexto();
 				tokenManager.selecionar(pacote);
 				addPackage(pacote);
-			} else if (ExpressaoConstantes.ALIAS.equals(token.getString())) {
+			} else if (AliasContexto.ALIAS.equals(token.getString())) {
 				AliasContexto alias = new AliasContexto();
 				tokenManager.selecionar(alias);
 				adicionar(alias);
-			} else if (ExpressaoConstantes.CONST.equals(token.getString())) {
+			} else if (ConstanteContexto.CONST.equals(token.getString())) {
 				ConstanteContexto constante = new ConstanteContexto();
 				tokenManager.selecionar(constante);
 				adicionar(constante);
-			} else if (ExpressaoConstantes.DEFUN.equals(token.getString())) {
+			} else if (FuncaoContexto.DEFUN.equals(token.getString())) {
 				FuncaoContexto funcao = new FuncaoContexto();
 				tokenManager.selecionar(funcao);
 				adicionar(funcao);
-			} else if (ExpressaoConstantes.DEFUN_NATIVE.equals(token.getString())) {
+			} else if (FuncaoNativaContexto.DEFUN_NATIVE.equals(token.getString())) {
 				FuncaoNativaContexto funcaoNativa = new FuncaoNativaContexto();
 				tokenManager.selecionar(funcaoNativa);
 				adicionar(funcaoNativa);

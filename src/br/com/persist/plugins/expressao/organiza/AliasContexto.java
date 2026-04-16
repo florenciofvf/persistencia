@@ -15,8 +15,9 @@ import br.com.persist.plugins.expressao.compilador.TokenManager;
 public class AliasContexto extends Contexto {
 	private TokenExec[] execs = { new ChaveN(), new Chave(), new PontoEVirgula() };
 	public static final String PREFIXO_ALIAS = "alias ";
+	public static final String ALIAS = "alias";
 	protected Token biblioteca;
-	protected Token alias;
+	protected Token tokenAlias;
 
 	@Context("alias_para_biblioteca")
 	@Doc({ "alias chaveN chave;" })
@@ -40,7 +41,7 @@ public class AliasContexto extends Contexto {
 	class Chave implements TokenExec {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChave()) {
-				alias = token;
+				tokenAlias = token;
 				indiceEstado++;
 			} else {
 				tokenManager.invalidar(token);
@@ -56,10 +57,10 @@ public class AliasContexto extends Contexto {
 	}
 
 	public String getAlias() throws ExpressaoException {
-		if (alias == null) {
+		if (tokenAlias == null) {
 			throw new ExpressaoException("Alias n\u00E3o definido", false);
 		}
-		return alias.getString();
+		return tokenAlias.getString();
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class AliasContexto extends Contexto {
 	public static AliasContexto criar(String biblioteca, String alias) {
 		AliasContexto aliasContexto = new AliasContexto();
 		aliasContexto.biblioteca = new Token(biblioteca, Tipo.VIRTUAL, -1);
-		aliasContexto.alias = new Token(alias, Tipo.VIRTUAL, -1);
+		aliasContexto.tokenAlias = new Token(alias, Tipo.VIRTUAL, -1);
 		return aliasContexto;
 	}
 }
