@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun teste5(lista, texto) {
+	return lista + texto;
+}
+
+defun teste6() {
+	return [] + [];
+}
+
+defun teste7() {
+	return [] .. [];
+}

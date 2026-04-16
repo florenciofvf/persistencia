@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblionativo.Lista;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
@@ -60,7 +61,7 @@ public class ListaTest extends ExpressaoTest {
 
 		result = processador.processar(biblio, "getMapa");
 		log(result);
-		//assertEquals("[[]]", result.toString());
+		// assertEquals("[[]]", result.toString());
 	}
 
 	@Test
@@ -100,5 +101,41 @@ public class ListaTest extends ExpressaoTest {
 
 		result = processador.processar(biblio, "inverterLista");
 		assertEquals("[[0, 1, 2, 3, 4, 5]]", result.toString());
+	}
+
+	@Test
+	public void lista2() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "__lista2"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__lista2";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "teste2");
+		assertEquals("[[]]", result.toString());
+	}
+
+	@Test
+	public void lista4() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "__lista4"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.__lista4";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "teste5", new Lista(), "escola");
+		assertEquals("[[]escola]", result.toString());
+
+		result = processador.processar(biblio, "teste6");
+		assertEquals("[[][]]", result.toString());
+
+		result = processador.processar(biblio, "teste7");
+		assertEquals("[[]]", result.toString());
 	}
 }
