@@ -148,6 +148,10 @@ public abstract class Contexto {
 	protected void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 	}
 
+	public boolean retornoGarantido() throws ExpressaoException {
+		return false;
+	}
+
 	protected void checarIndiceEstado(TokenManager tokenManager, Object[] array, Token token)
 			throws ExpressaoException {
 		if (indiceEstado >= array.length) {
@@ -303,9 +307,15 @@ public abstract class Contexto {
 	}
 
 	public class IniInstrucoes implements TokenExec {
+		private final boolean incondicional;
+
+		public IniInstrucoes(boolean incondicional) {
+			this.incondicional = incondicional;
+		}
+
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(incondicional);
 				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				indiceEstado++;

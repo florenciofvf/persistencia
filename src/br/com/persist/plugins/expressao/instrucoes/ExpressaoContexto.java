@@ -391,4 +391,10 @@ public class ExpressaoContexto extends Salto {
 	protected void listarPos(List<Contexto> lista) {
 		listarNegativo(lista);
 	}
+
+	@Override
+	public String toString() {
+		Contexto c = get(0);
+		return c == null ? "(empty)" : "(" + c + ")";
+	}
 }

@@ -55,7 +55,7 @@ public class IFContexto extends Contexto {
 	class IniInstrucoesIF implements TokenExec {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(false);
 				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				selecionado = new ElseOuElseIf();
@@ -81,7 +81,7 @@ public class IFContexto extends Contexto {
 	class IniInstrucaoElse implements TokenExec {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(true);
 				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				selecionado = null;
@@ -104,5 +104,10 @@ public class IFContexto extends Contexto {
 			throw new ExpressaoException("erro.estrutura.expressao.invalida", toString());
 		}
 		return super.getApos(instrucoes);
+	}
+
+	@Override
+	public boolean retornoGarantido() throws ExpressaoException {
+		return getUltimo().retornoGarantido();
 	}
 }

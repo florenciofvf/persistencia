@@ -40,6 +40,11 @@ public class RetornoContexto extends Contexto {
 	}
 
 	@Override
+	public boolean retornoGarantido() {
+		return true;
+	}
+
+	@Override
 	protected void empilharLocalPos(List<Contexto> lista) {
 		lista.add(this);
 	}

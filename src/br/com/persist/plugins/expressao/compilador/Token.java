@@ -47,7 +47,7 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return string + ":" + tipo;
+		return string + "@" + tipo;
 	}
 
 	public boolean isPontoEVirgula() {

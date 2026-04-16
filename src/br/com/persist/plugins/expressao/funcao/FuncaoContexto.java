@@ -54,13 +54,13 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		@Override
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isAbreChave()) {
-				InstrucoesContexto instrucoes = new InstrucoesContexto();
+				InstrucoesContexto instrucoes = new InstrucoesContexto(true);
 				tokenManager.selecionar(instrucoes);
 				adicionar(instrucoes);
 				indiceEstado++;
 			} else if (ExpressaoConstantes.VOID.equals(token.getString())) {
 				execs = new TokenExec[] { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes(),
-						new IniInstrucoes() };
+						new IniInstrucoes(true) };
 				retornoVoid = true;
 				indiceEstado++;
 			} else {

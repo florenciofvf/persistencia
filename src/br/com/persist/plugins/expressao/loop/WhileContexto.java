@@ -10,7 +10,7 @@ import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 
 public class WhileContexto extends Contexto {
-	private TokenExec[] execs = { new IniExpressao(), new IniInstrucoes() };
+	private TokenExec[] execs = { new IniExpressao(), new IniInstrucoes(false) };
 
 	@Override
 	protected void selecionadoVia(TokenManager tokenManager, Contexto contexto) throws ExpressaoException {

@@ -11,6 +11,12 @@ import br.com.persist.plugins.expressao.loop.WhileContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 
 public class InstrucoesContexto extends Salto {
+	private final boolean incondicional;
+
+	public InstrucoesContexto(boolean incondicional) {
+		this.incondicional = incondicional;
+	}
+
 	@Override
 	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		if (token.isReservado()) {
@@ -51,5 +57,13 @@ public class InstrucoesContexto extends Salto {
 		} else if (parent instanceof IFContexto) {
 			instrucoesGotoIf();
 		}
+	}
+
+	@Override
+	public boolean retornoGarantido() throws ExpressaoException {
+		if (isEmpty()) {
+			throw new ExpressaoException("erro.instrucoes.vazio");
+		}
+		return incondicional && getUltimo().retornoGarantido();
 	}
 }
