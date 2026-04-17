@@ -1,0 +1,37 @@
+package br.com.teste;
+
+defun main() {
+	return quickSort([46, 1, 2, -3, 4, 50, 6, 0]);
+}
+
+defun quickSort(lista) {
+	if(lista == []) {
+		return [];
+	} else {
+		return quickSort(lt(${lista:head}, ${lista:tail})) .. ${lista:head} .. quickSort(ge(${lista:head}, ${lista:tail}));
+	}
+}
+
+defun lt(valor, lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(${lista:head} < valor) {
+		return ${lista:head} .. lt(valor, ${lista:tail});
+	} else {
+		return lt(valor, ${lista:tail});
+	}
+}
+
+defun ge(valor, lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(${lista:head} >= valor) {
+		return ${lista:head} .. ge(valor, ${lista:tail});
+	} else {
+		return ge(valor, ${lista:tail});
+	}
+}
