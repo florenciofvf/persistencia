@@ -1,0 +1,30 @@
+pacote br.com.teste
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao main
+0  push_inteiro 2
+2  invoke_cret this getInterna
+3  def_const interna
+5  push_inteiro 2
+7  invoke_cret this interna
+10  return
+
+funcao getInterna
+param valor
+0  load_const this getInterna$somar_0
+3  return
+
+funcao getInterna$somar_0
+param x
+0  load_const this valor
+3  load_param x
+4  add
+7  return
+
+funcao $constantes
+tipo_void
+0  return
+

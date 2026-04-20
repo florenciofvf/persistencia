@@ -13,6 +13,7 @@ import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.condicional.IFContexto;
+import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.lista.ListaContexto;
 import br.com.persist.plugins.expressao.loop.WhileContexto;
@@ -74,6 +75,8 @@ public class ExpressaoContexto extends Salto {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isOperadorMOuM()) {
 				processarOperadorMOuM(token);
+			} else if (token.isReservado()) {
+				processarReservado(tokenManager, token);
 			} else if (token.isNativo()) {
 				processarNativo(tokenManager, token);
 			} else if (token.isAbreParentese()) {
@@ -99,7 +102,9 @@ public class ExpressaoContexto extends Salto {
 
 	class NativoIniExpressaoChave implements TokenExec {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
-			if (token.isNativo()) {
+			if (token.isReservado()) {
+				processarReservado(tokenManager, token);
+			} else if (token.isNativo()) {
 				processarNativo(tokenManager, token);
 			} else if (token.isAbreParentese()) {
 				processarIniExpressao(tokenManager, token);
@@ -219,6 +224,20 @@ public class ExpressaoContexto extends Salto {
 		}
 		adicionar(chave);
 		selecionado = new QQOperadorOuIniInvocacao();
+	}
+
+	private void processarReservado(TokenManager tokenManager, Token token) throws ExpressaoException {
+		if (tokenMOuM != null) {
+			tokenManager.invalidar(token);
+		}
+		if (FuncaoContexto.DEFUN.equals(token.getString())) {
+			FuncaoContexto funcao = new FuncaoContexto();
+			tokenManager.selecionar(funcao);
+			adicionar(funcao);
+			selecionado = new QQOperador();
+		} else {
+			tokenManager.invalidar(token);
+		}
 	}
 
 	public static ExpressaoContexto criarComString(String string) throws ExpressaoException {

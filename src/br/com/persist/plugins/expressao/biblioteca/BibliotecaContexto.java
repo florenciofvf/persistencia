@@ -205,9 +205,17 @@ public class BibliotecaContexto extends Contexto {
 			pw.println();
 		}
 
+		Indexador indexador = new Indexador();
+		for (Contexto item : getListaFuncoes()) {
+			item.prepararFuncoesInternas(indexador);
+		}
+
 		Map<String, AliasContexto> mapaAlias = getMapaAlias();
 
-		for (Contexto item : getListaFuncoes()) {
+		List<Contexto> funcoes = new ArrayList<>();
+		listarFuncoes(funcoes);
+
+		for (Contexto item : funcoes) {
 			processarFuncao(item, mapaAlias, pw);
 			pw.println();
 		}
@@ -216,6 +224,7 @@ public class BibliotecaContexto extends Contexto {
 	private void processarFuncao(Contexto funcao, Map<String, AliasContexto> mapaAlias, PrintWriter pw)
 			throws ExpressaoException {
 		((IFuncaoContexto) funcao).configurarChaveParametro();
+		((IFuncaoContexto) funcao).setRefFuncaoInterna(null);
 		funcao.configurarLinkBiblioteca(mapaAlias);
 		funcao.configurarSaltos();
 

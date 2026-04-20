@@ -260,7 +260,35 @@ public abstract class Contexto {
 		}
 	}
 
+	public void prepararFuncoesInternas(Indexador indexador) {
+		prepararFuncoesInternasPre(indexador);
+		for (Contexto item : componentes) {
+			item.prepararFuncoesInternas(indexador);
+		}
+		prepararFuncoesInternasPos(indexador);
+	}
+
+	protected void prepararFuncoesInternasPre(Indexador indexador) {
+	}
+
+	protected void prepararFuncoesInternasPos(Indexador indexador) {
+	}
+
 	public void salvar(PrintWriter pw) throws ExpressaoException {
+	}
+
+	public void listarFuncoes(List<Contexto> lista) {
+		listarFuncoesPre(lista);
+		for (Contexto item : componentes) {
+			item.listarFuncoes(lista);
+		}
+		listarFuncoesPos(lista);
+	}
+
+	public void listarFuncoesPre(List<Contexto> lista) {
+	}
+
+	protected void listarFuncoesPos(List<Contexto> lista) {
 	}
 
 	public void salvarNegativo(PrintWriter pw) throws ExpressaoException {

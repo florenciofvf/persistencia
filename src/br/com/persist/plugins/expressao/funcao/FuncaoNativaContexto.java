@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.funcao;
 
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
@@ -12,6 +13,7 @@ import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.nativo.ChaveContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 
@@ -23,6 +25,16 @@ public class FuncaoNativaContexto extends Contexto implements IFuncaoContexto {
 	public static final String DEFUN_NATIVE = "defun_native";
 	protected boolean retornoVoid;
 	protected Token biblioteca;
+
+	@Override
+	public void setRefFuncaoInterna(ChaveContexto refFuncaoInterna) {
+		//
+	}
+
+	@Override
+	public void listarFuncoesPre(List<Contexto> lista) {
+		lista.add(this);
+	}
 
 	@Context("funcao_nativa")
 	@Doc({ "funcao_nativa biblioteca chave parametros;", "funcao_nativa biblioteca chave parametros void;" })

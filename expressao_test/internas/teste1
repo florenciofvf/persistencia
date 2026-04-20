@@ -1,0 +1,12 @@
+package br.com.teste;
+
+defun main() {
+	const interna = getInterna(2);
+	return interna(2);
+}
+
+defun getInterna(valor) {
+	return defun somar(x) {
+		return valor + x;
+	};
+}
