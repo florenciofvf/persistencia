@@ -181,6 +181,15 @@ public class BibliotecaContexto extends Contexto {
 		return resp;
 	}
 
+	public IFuncaoContexto getFuncao(String nome) {
+		for (IFuncaoContexto item : getListaFuncoes()) {
+			if (item.getNome().equals(nome)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
 	private List<IFuncaoContexto> getListaFuncoes() {
 		List<IFuncaoContexto> resp = new ArrayList<>();
 		for (Contexto item : componentes) {

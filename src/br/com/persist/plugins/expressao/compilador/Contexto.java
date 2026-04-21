@@ -406,7 +406,7 @@ public abstract class Contexto {
 		return builder.toString();
 	}
 
-	protected List<String> checarSeEhInvocacaoDeParametro(String invocacao, AtomicBoolean sucesso) {
+	protected List<String> checarSeEhParametroDeFuncao(String string, AtomicBoolean sucesso) {
 		List<String> lista = new ArrayList<>();
 		Contexto c = this;
 		sucesso.set(false);
@@ -414,7 +414,7 @@ public abstract class Contexto {
 			if (c instanceof FuncaoContexto) {
 				FuncaoContexto funcao = (FuncaoContexto) c;
 				lista.add(funcao.getNome());
-				if (funcao.getParametros().contem(invocacao)) {
+				if (funcao.getParametros().contem(string)) {
 					sucesso.set(true);
 					break;
 				}

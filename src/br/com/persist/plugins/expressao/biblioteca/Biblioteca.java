@@ -93,6 +93,10 @@ public class Biblioteca {
 		return funcao;
 	}
 
+	public Funcao getFuncao2(String nome) {
+		return mapaFuncoes.get(nome);
+	}
+
 	public List<MetaInfo> getNomeConstantes() {
 		List<MetaInfo> lista = new ArrayList<>();
 		for (String item : mapaConstantes.keySet()) {

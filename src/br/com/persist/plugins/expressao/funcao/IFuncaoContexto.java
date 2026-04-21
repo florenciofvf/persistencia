@@ -17,7 +17,8 @@ import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 public interface IFuncaoContexto {
 	public static final String VOID = "void";
 
-	public void ajusteChavesEInvocacoesIni(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache);
+	public void ajusteChavesEInvocacoesIni(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
+			throws ExpressaoException;
 
 	public void setRefFuncaoInterna(ChaveContexto refFuncaoInterna);
 
@@ -36,6 +37,8 @@ public interface IFuncaoContexto {
 	public void listarIni(List<Contexto> lista);
 
 	public ParametrosContexto getParametros();
+
+	public boolean isRetornoVoid();
 
 	public String getNome();
 }

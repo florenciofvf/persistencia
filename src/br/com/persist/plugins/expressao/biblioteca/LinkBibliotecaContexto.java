@@ -11,5 +11,5 @@ public interface LinkBibliotecaContexto {
 	void processarChave2(String chamada, String[] array, Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
 			throws ExpressaoException;
 
-	void processarChaveN(String chamada, String[] array);
+	void processarChaveN(String chamada, String[] array, CacheBiblioteca cache) throws ExpressaoException;
 }

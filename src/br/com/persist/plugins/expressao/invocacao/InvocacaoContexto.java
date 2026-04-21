@@ -38,7 +38,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		String[] array = chamada.split("\\.");
 		processarChave(chamada, array);
 		processarChave2(chamada, array, mapaAlias, cache);
-		processarChaveN(chamada, array);
+		processarChaveN(chamada, array, cache);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			return;
 		}
 		AtomicBoolean sucesso = new AtomicBoolean();
-		List<String> lista = checarSeEhInvocacaoDeParametro(chamada, sucesso);
+		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
 		if (sucesso.get()) {
 			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
 			setBiblio(montarString(lista));
@@ -70,13 +70,12 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		if (aliasContexto == null) {
 			throw new ExpressaoException("erro.alias.nao_mapeado", alias);
 		}
-		setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
-		setBiblio(aliasContexto.getBiblioteca());
-		setMetodo(array[1]);
+		String string = aliasContexto.getBiblioteca() + "." + array[1];
+		processarChaveN(string, string.split("\\."), cache);
 	}
 
 	@Override
-	public void processarChaveN(String chamada, String[] array) {
+	public void processarChaveN(String chamada, String[] array, CacheBiblioteca cache) {
 		if (array.length < 3) {
 			return;
 		}

@@ -35,7 +35,13 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 	protected boolean retornoVoid;
 
 	@Override
-	public void ajusteChavesEInvocacoesIni(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+	public boolean isRetornoVoid() {
+		return retornoVoid;
+	}
+
+	@Override
+	public void ajusteChavesEInvocacoesIni(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
+			throws ExpressaoException {
 		ajusteChavesEInvocacoes(mapaAlias, cache);
 	}
 
