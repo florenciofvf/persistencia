@@ -12,7 +12,7 @@ import br.com.persist.plugins.expressao.biblionativo.Lista;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class ListaTest extends ExpressaoTest {
+public class ListaTest extends AbstratoTest {
 	private static final String LISTA = "lista";
 
 	@Test

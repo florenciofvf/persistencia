@@ -11,7 +11,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class WhileTest extends ExpressaoTest {
+public class WhileTest extends AbstratoTest {
 
 	@Test
 	public void teste11() throws IOException, ExpressaoException {

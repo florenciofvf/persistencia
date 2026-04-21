@@ -11,7 +11,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class MapaTest extends ExpressaoTest {
+public class MapaTest extends AbstratoTest {
 	private static final String MAPA = "mapa";
 
 	@Test

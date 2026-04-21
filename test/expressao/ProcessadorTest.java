@@ -9,7 +9,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class ProcessadorTest extends ExpressaoTest {
+public class ProcessadorTest extends AbstratoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {

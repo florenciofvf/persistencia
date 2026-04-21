@@ -11,7 +11,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class RetornoInstrucaoTest extends ExpressaoTest {
+public class RetornoInstrucaoTest extends AbstratoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {

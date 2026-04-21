@@ -11,7 +11,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class ConstanteTest extends ExpressaoTest {
+public class ConstanteTest extends AbstratoTest {
 
 	@Test
 	public void teste16() throws IOException, ExpressaoException {

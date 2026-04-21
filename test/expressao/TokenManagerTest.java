@@ -7,7 +7,7 @@ import org.junit.Test;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 
-public class TokenManagerTest extends ExpressaoTest {
+public class TokenManagerTest extends AbstratoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {

@@ -7,7 +7,7 @@ import org.junit.Test;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 
-public class ComentarioTest extends ExpressaoTest {
+public class ComentarioTest extends AbstratoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
