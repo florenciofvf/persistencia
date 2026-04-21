@@ -395,11 +395,11 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected String montarString(List<String> lista) {
+	protected String montarString(List<String> lista, char separador) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = lista.size() - 1; i >= 0; i--) {
 			if (builder.length() > 0) {
-				builder.append("$");
+				builder.append(separador);
 			}
 			builder.append(lista.get(i));
 		}

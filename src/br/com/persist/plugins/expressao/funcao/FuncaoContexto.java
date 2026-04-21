@@ -106,7 +106,7 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 			return;
 		}
 		List<String> lista = montarLista(indexador);
-		String string = montarString(lista);
+		String string = montarString(lista, ':');
 		token = new Token(string, Tipo.VIRTUAL, -1);
 		refFuncaoInterna = new ChaveContexto(token);
 		refFuncaoInterna.setPrefixo(retornoVoid ? LOAD_FUNCTION_INNER_VOID : LOAD_FUNCTION_INNER_CRET);
