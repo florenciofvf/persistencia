@@ -44,7 +44,7 @@ public abstract class Contexto {
 	}
 
 	public void setPrefixo(String prefixo) {
-		this.prefixo = prefixo + " ";
+		this.prefixo = prefixo;
 	}
 
 	protected String getBiblio() {
