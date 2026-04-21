@@ -56,7 +56,7 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 			} else {
 				setPrefixo(ConstanteContexto.LOAD_CONST);
 			}
-			setBiblio(null);
+			setBiblio(THIS);
 		}
 	}
 
