@@ -1,7 +1,6 @@
 pacote br.com.teste
 
 alias br.com.persist.plugins.expressao.biblionativo.List list
-
 alias br.com.persist.plugins.expressao.biblionativo.Map map
 
 funcao main
@@ -14,15 +13,24 @@ funcao main
 
 funcao getInterna
 param valor
-0  load_const this getInterna$somar_0
+0  load_function_inner_cret this getInterna:somar_0
 3  return
 
-funcao getInterna$somar_0
+funcao getInterna:somar_0
 param x
-0  load_const this valor
+0  load_param getInterna$getInterna:somar_0 valor
 3  load_param x
 4  add
 7  return
+
+funcao teste
+param funcao
+0  load_function_inner_cret this teste:inner_1
+3  return
+
+funcao teste:inner_1
+0  invoke_param_cret teste$teste:inner_1 funcao
+3  return
 
 funcao $constantes
 tipo_void
