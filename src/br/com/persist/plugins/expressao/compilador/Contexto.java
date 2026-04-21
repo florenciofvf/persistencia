@@ -4,11 +4,13 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
+import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 import br.com.persist.plugins.expressao.negativo.NegativoContexto;
@@ -23,6 +25,7 @@ public abstract class Contexto {
 	protected Contexto parent;
 	protected String prefixo;
 	protected String biblio;
+	protected String metodo;
 	protected Token token;
 	protected int indice;
 
@@ -50,6 +53,14 @@ public abstract class Contexto {
 
 	public void setBiblio(String biblio) {
 		this.biblio = biblio;
+	}
+
+	public String getMetodo() {
+		return metodo;
+	}
+
+	public void setMetodo(String metodo) {
+		this.metodo = metodo;
 	}
 
 	public NegativoContexto getNegativoContexto() {
@@ -266,7 +277,8 @@ public abstract class Contexto {
 	protected void ajusteFuncoesInternasPos(Indexador indexador) {
 	}
 
-	protected void ajusteChavesEInvocacoes(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+	protected void ajusteChavesEInvocacoes(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
+			throws ExpressaoException {
 		ajusteChavesEInvocacoesPre(mapaAlias, cache);
 		for (Contexto item : componentes) {
 			item.ajusteChavesEInvocacoes(mapaAlias, cache);
@@ -274,10 +286,12 @@ public abstract class Contexto {
 		ajusteChavesEInvocacoesPos(mapaAlias, cache);
 	}
 
-	protected void ajusteChavesEInvocacoesPre(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+	protected void ajusteChavesEInvocacoesPre(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
+			throws ExpressaoException {
 	}
 
-	protected void ajusteChavesEInvocacoesPos(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+	protected void ajusteChavesEInvocacoesPos(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
+			throws ExpressaoException {
 	}
 
 	public void salvar(PrintWriter pw) throws ExpressaoException {
@@ -390,5 +404,23 @@ public abstract class Contexto {
 			builder.append(lista.get(i));
 		}
 		return builder.toString();
+	}
+
+	protected List<String> checarSeEhInvocacaoDeParametro(String invocacao, AtomicBoolean sucesso) {
+		List<String> lista = new ArrayList<>();
+		Contexto c = this;
+		sucesso.set(false);
+		while (c != null) {
+			if (c instanceof FuncaoContexto) {
+				FuncaoContexto funcao = (FuncaoContexto) c;
+				lista.add(funcao.getNome());
+				if (funcao.getParametros().contem(invocacao)) {
+					sucesso.set(true);
+					break;
+				}
+			}
+			c = c.getParent();
+		}
+		return lista;
 	}
 }

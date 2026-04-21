@@ -3,8 +3,10 @@ package br.com.persist.plugins.expressao.invocacao;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
@@ -17,35 +19,71 @@ import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 
 public class InvocacaoContexto extends Contexto implements LinkBibliotecaContexto {
+	public static final String INVOKE_PARAM_CRET = "invoke_param_cret";
+	public static final String INVOKE_PARAM_VOID = "invoke_param_void";
 	public static final String INVOKE_CRET = "invoke_cret";
 	public static final String INVOKE_VOID = "invoke_void";
-	public static final String THIS = "this";
 	private ArgumentosContexto argumentos;
 	private boolean comRetorno;
-	private String biblio;
-	private String metodo;
-	private String alias;
 
 	public InvocacaoContexto(Token token, boolean comRetorno) {
 		super(token);
 		this.comRetorno = comRetorno;
-		initLink();
 	}
 
-	public void initLink() {
+	@Override
+	public void ajusteChavesEInvocacoesPre(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
+			throws ExpressaoException {
 		String chamada = token.getString();
 		String[] array = chamada.split("\\.");
-		if (array.length == 1) {
-			biblio = THIS;
-			metodo = array[0];
-		} else if (array.length == 2) {
-			alias = array[0];
-			metodo = array[1];
-		} else {
-			int pos = chamada.lastIndexOf(".");
-			biblio = chamada.substring(0, pos);
-			metodo = chamada.substring(pos + 1);
+		processarChave(chamada, array);
+		processarChave2(chamada, array, mapaAlias, cache);
+		processarChaveN(chamada, array);
+	}
+
+	@Override
+	public void processarChave(String chamada, String[] array) {
+		if (array.length != 1) {
+			return;
 		}
+		AtomicBoolean sucesso = new AtomicBoolean();
+		List<String> lista = checarSeEhInvocacaoDeParametro(chamada, sucesso);
+		if (sucesso.get()) {
+			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
+			setBiblio(montarString(lista));
+			setMetodo(chamada);
+		} else {
+			setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
+			setBiblio(THIS);
+			setMetodo(array[0]);
+		}
+	}
+
+	@Override
+	public void processarChave2(String chamada, String[] array, Map<String, AliasContexto> mapaAlias,
+			CacheBiblioteca cache) throws ExpressaoException {
+		if (array.length != 2) {
+			return;
+		}
+		String alias = array[0];
+		AliasContexto aliasContexto = mapaAlias.get(alias);
+		if (aliasContexto == null) {
+			throw new ExpressaoException("erro.alias.nao_mapeado", alias);
+		}
+		setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
+		setBiblio(aliasContexto.getBiblioteca());
+		setMetodo(array[1]);
+	}
+
+	@Override
+	public void processarChaveN(String chamada, String[] array) {
+		if (array.length < 3) {
+			return;
+		}
+		setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
+		int pos = chamada.lastIndexOf(".");
+		setBiblio(chamada.substring(0, pos));
+		setMetodo(chamada.substring(pos + 1));
 	}
 
 	public ArgumentosContexto getArgumentos() {
@@ -92,17 +130,6 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 	}
 
 	@Override
-	public void configurarLinkBibliotecaPre(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
-		if (alias != null) {
-			AliasContexto aliasContexto = mapaAlias.get(alias);
-			if (aliasContexto == null) {
-				throw new ExpressaoException("erro.alias.nao_mapeado", alias);
-			}
-			biblio = aliasContexto.getBiblioteca();
-		}
-	}
-
-	@Override
 	protected void empilharLocalPos(List<Contexto> lista) {
 		lista.add(this);
 		empilharLocalNegativo(lista);
@@ -121,11 +148,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
-		if (comRetorno) {
-			print(pw, INVOKE_CRET, biblio, metodo);
-		} else {
-			print(pw, INVOKE_VOID, biblio, metodo);
-		}
+		print(pw, getPrefixo(), getBiblio(), getMetodo());
 	}
 
 	public static InvocacaoContexto criarComEL(TokenManager tokenManager, String string) throws ExpressaoException {

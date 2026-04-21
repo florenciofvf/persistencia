@@ -6,7 +6,10 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 
 public interface LinkBibliotecaContexto {
-	public void configurarLinkBibliotecaPre(Map<String, AliasContexto> mapaAlias) throws ExpressaoException;
+	void processarChave(String chamada, String[] array);
 
-	public void initLink();
+	void processarChave2(String chamada, String[] array, Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
+			throws ExpressaoException;
+
+	void processarChaveN(String chamada, String[] array);
 }
