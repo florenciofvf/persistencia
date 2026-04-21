@@ -181,11 +181,11 @@ public class BibliotecaContexto extends Contexto {
 		return resp;
 	}
 
-	private List<Contexto> getListaFuncoes() {
-		List<Contexto> resp = new ArrayList<>();
+	private List<IFuncaoContexto> getListaFuncoes() {
+		List<IFuncaoContexto> resp = new ArrayList<>();
 		for (Contexto item : componentes) {
 			if (item instanceof IFuncaoContexto) {
-				resp.add(item);
+				resp.add((IFuncaoContexto) item);
 			}
 		}
 		return resp;
@@ -200,36 +200,36 @@ public class BibliotecaContexto extends Contexto {
 		getPackage().salvar(pw);
 		pw.println();
 
-		for (Contexto item : getListaAlias()) {
+		for (AliasContexto item : getListaAlias()) {
 			item.salvar(pw);
-			pw.println();
 		}
+		pw.println();
 
 		Indexador indexador = new Indexador();
-		for (Contexto item : getListaFuncoes()) {
-			item.prepararFuncoesInternas(indexador);
+		for (IFuncaoContexto item : getListaFuncoes()) {
+			item.ajusteFuncoesInternasIni(indexador);
 		}
 
 		Map<String, AliasContexto> mapaAlias = getMapaAlias();
+		CacheBiblioteca cache = new CacheBiblioteca();
 
 		List<Contexto> funcoes = new ArrayList<>();
 		listarFuncoes(funcoes);
 
 		for (Contexto item : funcoes) {
-			processarFuncao(item, mapaAlias, pw);
+			processarFuncao((IFuncaoContexto) item, mapaAlias, cache, pw);
 			pw.println();
 		}
 	}
 
-	private void processarFuncao(Contexto funcao, Map<String, AliasContexto> mapaAlias, PrintWriter pw)
-			throws ExpressaoException {
-		((IFuncaoContexto) funcao).configurarChaveParametro();
-		((IFuncaoContexto) funcao).setRefFuncaoInterna(null);
-		funcao.configurarLinkBiblioteca(mapaAlias);
-		funcao.configurarSaltos();
+	private void processarFuncao(IFuncaoContexto funcao, Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache,
+			PrintWriter pw) throws ExpressaoException {
+		funcao.setRefFuncaoInterna(null);
+		funcao.ajusteChavesEInvocacoesIni(mapaAlias, cache);
+		funcao.configurarSaltosIni();
 
 		List<Contexto> contextos = new ArrayList<>();
-		funcao.listar(contextos);
+		funcao.listarIni(contextos);
 
 		normalizarGoto(contextos);
 

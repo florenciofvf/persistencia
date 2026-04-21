@@ -6,14 +6,16 @@ import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
+import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.nativo.ChaveContexto;
+import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 
@@ -27,13 +29,56 @@ public class FuncaoNativaContexto extends Contexto implements IFuncaoContexto {
 	protected Token biblioteca;
 
 	@Override
+	public void ajusteChavesEInvocacoesIni(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+		ajusteChavesEInvocacoes(mapaAlias, cache);
+	}
+
+	@Override
 	public void setRefFuncaoInterna(ChaveContexto refFuncaoInterna) {
 		//
 	}
 
 	@Override
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+		pw.println(PREFIXO_FUNCAO_NATIVA + biblioteca.getString() + ExpressaoConstantes.ESPACO + token.getString());
+		if (retornoVoid) {
+			pw.println(PREFIXO_TIPO_VOID);
+		}
+		getParametros().salvar(pw);
+	}
+
+	@Override
+	public void configurarSaltosIni() throws ExpressaoException {
+		configurarSaltos();
+	}
+
+	@Override
+	public Map<String, ParametroContexto> getMapaParametros() {
+		return getParametros().getMapaParametros();
+	}
+
+	@Override
+	public void ajusteFuncoesInternasIni(Indexador indexador) {
+		ajusteFuncoesInternas(indexador);
+	}
+
+	@Override
 	public void listarFuncoesPre(List<Contexto> lista) {
 		lista.add(this);
+	}
+
+	@Override
+	public void listarIni(List<Contexto> lista) {
+		listar(lista);
+	}
+
+	public ParametrosContexto getParametros() {
+		return (ParametrosContexto) getPrimeiro();
+	}
+
+	@Override
+	public String getNome() {
+		return token.getString();
 	}
 
 	@Context("funcao_nativa")
@@ -83,38 +128,5 @@ public class FuncaoNativaContexto extends Contexto implements IFuncaoContexto {
 				tokenManager.invalidar(token);
 			}
 		}
-	}
-
-	public ParametrosContexto getParametros() {
-		return (ParametrosContexto) getPrimeiro();
-	}
-
-	@Override
-	public void salvar(PrintWriter pw) throws ExpressaoException {
-		pw.println(PREFIXO_FUNCAO_NATIVA + biblioteca.getString() + ExpressaoConstantes.ESPACO + token.getString());
-		if (retornoVoid) {
-			pw.println(PREFIXO_TIPO_VOID);
-		}
-		getParametros().salvar(pw);
-	}
-
-	@Override
-	public BibliotecaContexto getBibliotecaContexto() {
-		return (BibliotecaContexto) parent;
-	}
-
-	@Override
-	public String getNome() {
-		return token.getString();
-	}
-
-	@Override
-	public Map<String, ParametroContexto> getMapaParametros() {
-		return getParametros().getMapaParametros();
-	}
-
-	@Override
-	public void configurarChaveParametro() {
-		configurarChaveParametro(getMapaParametros());
 	}
 }

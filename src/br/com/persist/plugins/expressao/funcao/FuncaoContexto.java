@@ -7,6 +7,7 @@ import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Context;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Doc;
@@ -17,23 +18,57 @@ import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 import br.com.persist.plugins.expressao.nativo.ChaveContexto;
+import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 
 public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 	private TokenExec[] execs = { new Chave(), new IniParametros(), new TipoRetornoOuIniInstrucoes() };
+	public static final String LOAD_FUNCTION_INNER_CRET = "load_function_inner_cret";
+	public static final String LOAD_FUNCTION_INNER_VOID = "load_function_inner_void";
+	public static final String LOAD_FUNCTION_CRET = "load_function_cret";
+	public static final String LOAD_FUNCTION_VOID = "load_function_void";
 	public static final String PREFIXO_TIPO_VOID = "tipo_void";
 	public static final String PREFIXO_FUNCAO = "funcao ";
 	public static final String DEFUN = "defun";
 	private ChaveContexto refFuncaoInterna;
 	protected boolean retornoVoid;
 
-	public ChaveContexto getRefFuncaoInterna() {
-		return refFuncaoInterna;
+	@Override
+	public void ajusteChavesEInvocacoesIni(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+		ajusteChavesEInvocacoes(mapaAlias, cache);
 	}
 
 	public void setRefFuncaoInterna(ChaveContexto refFuncaoInterna) {
 		this.refFuncaoInterna = refFuncaoInterna;
+	}
+
+	@Override
+	public void salvar(PrintWriter pw) throws ExpressaoException {
+		if (refFuncaoInterna != null) {
+			refFuncaoInterna.salvar(pw);
+			return;
+		}
+		pw.println(PREFIXO_FUNCAO + token.getString());
+		if (retornoVoid) {
+			pw.println(PREFIXO_TIPO_VOID);
+		}
+		getParametros().salvar(pw);
+	}
+
+	@Override
+	public void configurarSaltosIni() throws ExpressaoException {
+		configurarSaltos();
+	}
+
+	@Override
+	public Map<String, ParametroContexto> getMapaParametros() {
+		return getParametros().getMapaParametros();
+	}
+
+	@Override
+	public void ajusteFuncoesInternasIni(Indexador indexador) {
+		ajusteFuncoesInternas(indexador);
 	}
 
 	@Override
@@ -42,10 +77,37 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 	}
 
 	@Override
-	protected void prepararFuncoesInternasPre(Indexador indexador) {
+	public void listarIni(List<Contexto> lista) {
+		listar(lista);
+	}
+
+	public ParametrosContexto getParametros() {
+		return (ParametrosContexto) getPrimeiro();
+	}
+
+	@Override
+	public String getNome() {
+		return token.getString();
+	}
+
+	public ChaveContexto getRefFuncaoInterna() {
+		return refFuncaoInterna;
+	}
+
+	@Override
+	protected void ajusteFuncoesInternasPre(Indexador indexador) {
 		if (parent instanceof BibliotecaContexto) {
 			return;
 		}
+		List<String> lista = montarLista(indexador);
+		String string = montarString(lista);
+		token = new Token(string, Tipo.VIRTUAL, -1);
+		refFuncaoInterna = new ChaveContexto(token);
+		refFuncaoInterna.setPrefixo(retornoVoid ? LOAD_FUNCTION_INNER_VOID : LOAD_FUNCTION_INNER_CRET);
+		refFuncaoInterna.setBiblio(THIS);
+	}
+
+	private List<String> montarLista(Indexador indexador) {
 		List<String> lista = new ArrayList<>();
 		lista.add(token.getString() + "_" + indexador.get1());
 		Contexto c = parent;
@@ -55,15 +117,7 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 			}
 			c = c.getParent();
 		}
-		StringBuilder builder = new StringBuilder();
-		for (int i = lista.size() - 1; i >= 0; i--) {
-			if (builder.length() > 0) {
-				builder.append("$");
-			}
-			builder.append(lista.get(i));
-		}
-		token = new Token(builder.toString(), Tipo.VIRTUAL, -1);
-		refFuncaoInterna = new ChaveContexto(token);
+		return lista;
 	}
 
 	@Override
@@ -113,10 +167,6 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		}
 	}
 
-	public ParametrosContexto getParametros() {
-		return (ParametrosContexto) getPrimeiro();
-	}
-
 	@Override
 	public void empilharLocal(List<Contexto> lista) {
 		if (refFuncaoInterna != null) {
@@ -140,38 +190,5 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		if (refFuncaoInterna != null) {
 			refFuncaoInterna.indexar(indexador);
 		}
-	}
-
-	@Override
-	public void salvar(PrintWriter pw) throws ExpressaoException {
-		if (refFuncaoInterna != null) {
-			refFuncaoInterna.salvar(pw);
-			return;
-		}
-		pw.println(PREFIXO_FUNCAO + token.getString());
-		if (retornoVoid) {
-			pw.println(PREFIXO_TIPO_VOID);
-		}
-		getParametros().salvar(pw);
-	}
-
-	@Override
-	public BibliotecaContexto getBibliotecaContexto() {
-		return (BibliotecaContexto) parent;
-	}
-
-	@Override
-	public String getNome() {
-		return token.getString();
-	}
-
-	@Override
-	public Map<String, ParametroContexto> getMapaParametros() {
-		return getParametros().getMapaParametros();
-	}
-
-	@Override
-	public void configurarChaveParametro() {
-		configurarChaveParametro(getMapaParametros());
 	}
 }

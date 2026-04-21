@@ -10,6 +10,7 @@ import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
+import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
@@ -34,7 +35,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		String[] array = string.split(ExpressaoConstantes.ESPACO);
 		nomeBiblio = array[0];
 		nomeFuncao = array[1];
-		biblioLocal = InvocacaoContexto.THIS.equals(nomeBiblio);
+		biblioLocal = Contexto.THIS.equals(nomeBiblio);
 	}
 
 	@Override

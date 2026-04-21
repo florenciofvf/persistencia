@@ -64,6 +64,15 @@ public class ParametrosContexto extends Contexto {
 		return false;
 	}
 
+	public boolean contem(String nome) {
+		for (Contexto item : componentes) {
+			if (item instanceof ParametroContexto && ((ParametroContexto) item).contem(nome)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private IFuncaoContexto getIFuncaoContexto() {
 		return (IFuncaoContexto) parent;
 	}

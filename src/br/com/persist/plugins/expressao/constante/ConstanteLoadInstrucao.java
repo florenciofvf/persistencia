@@ -4,7 +4,7 @@ import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
-import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
+import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
@@ -29,7 +29,7 @@ public class ConstanteLoadInstrucao extends Instrucao implements LinkBiblioteca 
 		String[] array = string.split(ExpressaoConstantes.ESPACO);
 		nomeBiblioteca = array[0];
 		nomeConstante = array[1];
-		biblioLocal = InvocacaoContexto.THIS.equals(nomeBiblioteca);
+		biblioLocal = Contexto.THIS.equals(nomeBiblioteca);
 	}
 
 	@Override

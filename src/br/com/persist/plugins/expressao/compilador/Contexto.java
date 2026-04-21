@@ -7,18 +7,22 @@ import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 import br.com.persist.plugins.expressao.negativo.NegativoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
-import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 
 public abstract class Contexto {
 	protected NegativoContexto negativoContexto;
 	protected final List<Contexto> componentes;
 	protected final List<Contexto> pilhaLocal;
+	public static final String THIS = "this";
 	protected int indiceEstado;
 	protected Contexto parent;
+	protected String prefixo;
+	protected String biblio;
 	protected Token token;
 	protected int indice;
 
@@ -30,6 +34,22 @@ public abstract class Contexto {
 
 	protected Contexto() {
 		this(null);
+	}
+
+	protected String getPrefixo() {
+		return prefixo;
+	}
+
+	public void setPrefixo(String prefixo) {
+		this.prefixo = prefixo + " ";
+	}
+
+	protected String getBiblio() {
+		return biblio;
+	}
+
+	public void setBiblio(String biblio) {
+		this.biblio = biblio;
 	}
 
 	public NegativoContexto getNegativoContexto() {
@@ -64,7 +84,7 @@ public abstract class Contexto {
 		return componentes.isEmpty();
 	}
 
-	public int getSize() {
+	protected int getSize() {
 		return componentes.size();
 	}
 
@@ -87,7 +107,7 @@ public abstract class Contexto {
 		return null;
 	}
 
-	public Contexto excluirPrimeiro() {
+	protected Contexto excluirPrimeiro() {
 		Contexto primeiro = getPrimeiro();
 		remove(primeiro);
 		return primeiro;
@@ -159,46 +179,12 @@ public abstract class Contexto {
 		}
 	}
 
-	public void configurarLinkBiblioteca(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
-		configurarLinkBibliotecaPre(mapaAlias);
-		for (Contexto item : componentes) {
-			item.configurarLinkBiblioteca(mapaAlias);
-		}
-		configurarLinkBibliotecaPos(mapaAlias);
-	}
-
-	protected void configurarLinkBibliotecaPre(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
-	}
-
-	protected void configurarLinkBibliotecaPos(Map<String, AliasContexto> mapaAlias) throws ExpressaoException {
-	}
-
-	public void configurarChaveParametro(Map<String, ParametroContexto> mapaParametros) {
-		configurarChaveParametroPre(mapaParametros);
-		for (Contexto item : componentes) {
-			item.configurarChaveParametro(mapaParametros);
-		}
-		configurarChaveParametroPos(mapaParametros);
-	}
-
-	protected void configurarChaveParametroPre(Map<String, ParametroContexto> mapaParametros) {
-	}
-
-	protected void configurarChaveParametroPos(Map<String, ParametroContexto> mapaParametros) {
-	}
-
-	public void listar(List<Contexto> lista) {
+	protected void listar(List<Contexto> lista) {
 		listarPre(lista);
 		for (Contexto item : componentes) {
 			item.listar(lista);
 		}
 		listarPos(lista);
-	}
-
-	protected void listarNegativo(List<Contexto> lista) {
-		if (negativoContexto != null) {
-			lista.add(negativoContexto);
-		}
 	}
 
 	protected void listarPre(List<Contexto> lista) {
@@ -207,7 +193,13 @@ public abstract class Contexto {
 	protected void listarPos(List<Contexto> lista) {
 	}
 
-	public void configurarSaltos() throws ExpressaoException {
+	protected void listarNegativo(List<Contexto> lista) {
+		if (negativoContexto != null) {
+			lista.add(negativoContexto);
+		}
+	}
+
+	protected void configurarSaltos() throws ExpressaoException {
 		configurarSaltosPre();
 		for (Contexto item : componentes) {
 			item.configurarSaltos();
@@ -229,6 +221,12 @@ public abstract class Contexto {
 		empilharLocalPos(lista);
 	}
 
+	protected void empilharLocalPre(List<Contexto> lista) {
+	}
+
+	protected void empilharLocalPos(List<Contexto> lista) {
+	}
+
 	protected void empilharLocalNegativo(List<Contexto> lista) {
 		if (negativoContexto != null) {
 			lista.add(negativoContexto);
@@ -244,12 +242,6 @@ public abstract class Contexto {
 		return pilhaLocal;
 	}
 
-	protected void empilharLocalPre(List<Contexto> lista) {
-	}
-
-	protected void empilharLocalPos(List<Contexto> lista) {
-	}
-
 	public void indexar(Indexador indexador) {
 		indice = indexador.get1();
 	}
@@ -260,24 +252,38 @@ public abstract class Contexto {
 		}
 	}
 
-	public void prepararFuncoesInternas(Indexador indexador) {
-		prepararFuncoesInternasPre(indexador);
+	protected void ajusteFuncoesInternas(Indexador indexador) {
+		ajusteFuncoesInternasPre(indexador);
 		for (Contexto item : componentes) {
-			item.prepararFuncoesInternas(indexador);
+			item.ajusteFuncoesInternas(indexador);
 		}
-		prepararFuncoesInternasPos(indexador);
+		ajusteFuncoesInternasPos(indexador);
 	}
 
-	protected void prepararFuncoesInternasPre(Indexador indexador) {
+	protected void ajusteFuncoesInternasPre(Indexador indexador) {
 	}
 
-	protected void prepararFuncoesInternasPos(Indexador indexador) {
+	protected void ajusteFuncoesInternasPos(Indexador indexador) {
+	}
+
+	protected void ajusteChavesEInvocacoes(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+		ajusteChavesEInvocacoesPre(mapaAlias, cache);
+		for (Contexto item : componentes) {
+			item.ajusteChavesEInvocacoes(mapaAlias, cache);
+		}
+		ajusteChavesEInvocacoesPos(mapaAlias, cache);
+	}
+
+	protected void ajusteChavesEInvocacoesPre(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
+	}
+
+	protected void ajusteChavesEInvocacoesPos(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache) {
 	}
 
 	public void salvar(PrintWriter pw) throws ExpressaoException {
 	}
 
-	public void listarFuncoes(List<Contexto> lista) {
+	protected void listarFuncoes(List<Contexto> lista) {
 		listarFuncoesPre(lista);
 		for (Contexto item : componentes) {
 			item.listarFuncoes(lista);
@@ -285,7 +291,7 @@ public abstract class Contexto {
 		listarFuncoesPos(lista);
 	}
 
-	public void listarFuncoesPre(List<Contexto> lista) {
+	protected void listarFuncoesPre(List<Contexto> lista) {
 	}
 
 	protected void listarFuncoesPos(List<Contexto> lista) {
@@ -362,5 +368,27 @@ public abstract class Contexto {
 				tokenManager.invalidar(token);
 			}
 		}
+	}
+
+	public BibliotecaContexto getBibliotecaContexto() {
+		Contexto c = this;
+		while (c != null) {
+			if (c instanceof BibliotecaContexto) {
+				return (BibliotecaContexto) c;
+			}
+			c = c.parent;
+		}
+		return null;
+	}
+
+	protected String montarString(List<String> lista) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = lista.size() - 1; i >= 0; i--) {
+			if (builder.length() > 0) {
+				builder.append("$");
+			}
+			builder.append(lista.get(i));
+		}
+		return builder.toString();
 	}
 }
