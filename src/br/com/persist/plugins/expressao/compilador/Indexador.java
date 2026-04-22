@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Indexador {
 	private AtomicInteger atomic;
 
-	private int get(int delta) {
+	private synchronized int get(int delta) {
 		if (atomic == null) {
 			atomic = new AtomicInteger(0);
 			return atomic.get();

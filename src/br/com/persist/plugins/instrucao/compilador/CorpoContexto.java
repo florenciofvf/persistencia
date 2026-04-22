@@ -42,7 +42,7 @@ public class CorpoContexto extends Container {
 		} else if (InstrucaoConstantes.RETURN.equals(token.getString())) {
 			RetornoContexto retornoContexto = new RetornoContexto();
 			compilador.setContexto(retornoContexto.getExpressao());
-			adicionarImpl(compilador, token, (Container) retornoContexto);
+			adicionarImpl(compilador, token, retornoContexto);
 		} else if (InstrucaoConstantes.IF.equals(token.getString())) {
 			compilador.setContexto(new IFContexto());
 			adicionarImpl(compilador, token, (Container) compilador.getContexto());

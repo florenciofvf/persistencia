@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
@@ -55,11 +56,30 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 			refFuncaoInterna.salvar(pw);
 			return;
 		}
-		pw.println(PREFIXO_FUNCAO + token.getString());
+		if (parent instanceof BibliotecaContexto) {
+			pw.println(PREFIXO_FUNCAO + token.getString());
+		} else {
+			List<String> lista = montarLista();
+			String absoluto = montarString(lista);
+			pw.println(PREFIXO_FUNCAO + token.getString() + ExpressaoConstantes.ESPACO + absoluto);
+		}
 		if (retornoVoid) {
 			pw.println(PREFIXO_TIPO_VOID);
 		}
 		getParametros().salvar(pw);
+	}
+
+	private List<String> montarLista() {
+		List<String> lista = new ArrayList<>();
+		lista.add(token.getString());
+		Contexto c = this;
+		while (c != null) {
+			if (c instanceof FuncaoContexto) {
+				lista.add(c.getToken().getString());
+			}
+			c = c.getParent();
+		}
+		return lista;
 	}
 
 	@Override
@@ -105,25 +125,11 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		if (parent instanceof BibliotecaContexto) {
 			return;
 		}
-		List<String> lista = montarLista(indexador);
-		String string = montarString(lista, ':');
+		String string = indexador.get1() + "_" + token.getString();
 		token = new Token(string, Tipo.VIRTUAL, -1);
 		refFuncaoInterna = new ChaveContexto(token);
 		refFuncaoInterna.setPrefixo(retornoVoid ? LOAD_FUNCTION_INNER_VOID : LOAD_FUNCTION_INNER_CRET);
 		refFuncaoInterna.setBiblio(THIS);
-	}
-
-	private List<String> montarLista(Indexador indexador) {
-		List<String> lista = new ArrayList<>();
-		lista.add(token.getString() + "_" + indexador.get1());
-		Contexto c = parent;
-		while (c != null) {
-			if (c instanceof FuncaoContexto) {
-				lista.add(c.getToken().getString());
-			}
-			c = c.getParent();
-		}
-		return lista;
 	}
 
 	@Override

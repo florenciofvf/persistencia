@@ -12,7 +12,9 @@ defun getInterna(valor) {
 }
 
 defun teste(funcao) {
-	return defun inner() {
-		return funcao();
+	return defun inner(param) {
+		return defun outra() {
+			return funcao();
+		};
 	};
 }
