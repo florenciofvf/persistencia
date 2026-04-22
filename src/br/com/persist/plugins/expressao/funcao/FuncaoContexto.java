@@ -60,8 +60,8 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 			pw.println(PREFIXO_FUNCAO + getNome());
 		} else {
 			List<String> lista = listarHierarquia();
-			String absoluto = montarString(lista);
-			pw.println(PREFIXO_FUNCAO + getNome() + ExpressaoConstantes.ESPACO + absoluto);
+			String origem = montarString(lista);
+			pw.println(PREFIXO_FUNCAO + getNome() + ExpressaoConstantes.ESPACO + origem);
 		}
 		if (retornoVoid) {
 			pw.println(PREFIXO_TIPO_VOID);
@@ -71,7 +71,6 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 
 	private List<String> listarHierarquia() {
 		List<String> lista = new ArrayList<>();
-		lista.add(getNome());
 		Contexto c = parent;
 		while (c != null) {
 			if (c instanceof FuncaoContexto) {
