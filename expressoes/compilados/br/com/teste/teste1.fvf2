@@ -13,23 +13,28 @@ funcao main
 
 funcao getInterna
 param valor
-0  load_function_inner_cret this getInterna:somar_0
+0  load_function_inner_cret this 0_somar
 3  return
 
-funcao getInterna:somar_0
+funcao 0_somar getInterna$0_somar
 param x
-0  load_param getInterna$getInterna:somar_0 valor
+0  load_param getInterna$0_somar valor
 3  load_param x
 4  add
 7  return
 
 funcao teste
 param funcao
-0  load_function_inner_cret this teste:inner_1
+0  load_function_inner_cret this 1_inner
 3  return
 
-funcao teste:inner_1
-0  invoke_param_cret teste$teste:inner_1 funcao
+funcao 1_inner teste$1_inner
+param param
+0  load_function_inner_cret this 2_outra
+3  return
+
+funcao 2_outra teste$1_inner$2_outra
+0  invoke_param_cret teste$1_inner$2_outra funcao
 3  return
 
 funcao $constantes

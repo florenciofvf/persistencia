@@ -57,11 +57,11 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 			return;
 		}
 		if (parent instanceof BibliotecaContexto) {
-			pw.println(PREFIXO_FUNCAO + token.getString());
+			pw.println(PREFIXO_FUNCAO + getNome());
 		} else {
-			List<String> lista = montarLista();
+			List<String> lista = listarHierarquia();
 			String absoluto = montarString(lista);
-			pw.println(PREFIXO_FUNCAO + token.getString() + ExpressaoConstantes.ESPACO + absoluto);
+			pw.println(PREFIXO_FUNCAO + getNome() + ExpressaoConstantes.ESPACO + absoluto);
 		}
 		if (retornoVoid) {
 			pw.println(PREFIXO_TIPO_VOID);
@@ -69,13 +69,14 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		getParametros().salvar(pw);
 	}
 
-	private List<String> montarLista() {
+	private List<String> listarHierarquia() {
 		List<String> lista = new ArrayList<>();
-		lista.add(token.getString());
-		Contexto c = this;
+		lista.add(getNome());
+		Contexto c = parent;
 		while (c != null) {
 			if (c instanceof FuncaoContexto) {
-				lista.add(c.getToken().getString());
+				FuncaoContexto funcao = (FuncaoContexto) c;
+				lista.add(funcao.getNome());
 			}
 			c = c.getParent();
 		}
