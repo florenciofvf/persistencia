@@ -8,7 +8,7 @@ funcao main
 2  invoke_cret this getInterna
 3  def_const interna
 5  push_inteiro 2
-7  invoke_cret this interna
+7  invoke_const this interna
 10  return
 
 funcao getInterna
