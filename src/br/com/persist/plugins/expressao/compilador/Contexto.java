@@ -395,13 +395,22 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected String montarString(List<String> lista) {
+	protected String montarString(List<String> lista, boolean reverso) {
 		StringBuilder builder = new StringBuilder();
-		for (int i = lista.size() - 1; i >= 0; i--) {
-			if (builder.length() > 0) {
-				builder.append("$");
+		if (reverso) {
+			for (int i = lista.size() - 1; i >= 0; i--) {
+				if (builder.length() > 0) {
+					builder.append("$");
+				}
+				builder.append(lista.get(i));
 			}
-			builder.append(lista.get(i));
+		} else {
+			for (String item : lista) {
+				if (builder.length() > 0) {
+					builder.append("$");
+				}
+				builder.append(item);
+			}
 		}
 		return builder.toString();
 	}

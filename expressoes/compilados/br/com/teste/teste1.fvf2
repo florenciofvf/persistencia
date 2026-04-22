@@ -18,7 +18,7 @@ param valor
 
 funcao 0_somar getInterna
 param x
-0  load_param getInterna$0_somar valor
+0  load_param 0_somar$getInterna valor
 3  load_param x
 4  add
 7  return
@@ -34,7 +34,7 @@ param param
 3  return
 
 funcao 2_outra teste$1_inner
-0  invoke_param_cret teste$1_inner$2_outra funcao
+0  invoke_param_cret 2_outra$1_inner$teste funcao
 3  return
 
 funcao $constantes

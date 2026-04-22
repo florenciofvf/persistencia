@@ -60,7 +60,7 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 			pw.println(PREFIXO_FUNCAO + getNome());
 		} else {
 			List<String> lista = listarHierarquia();
-			String origem = montarString(lista);
+			String origem = montarString(lista, true);
 			pw.println(PREFIXO_FUNCAO + getNome() + ExpressaoConstantes.ESPACO + origem);
 		}
 		if (retornoVoid) {

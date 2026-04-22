@@ -52,7 +52,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
 		if (sucesso.get()) {
 			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
-			setBiblio(montarString(lista));
+			setBiblio(montarString(lista, false));
 			setMetodo(chamada);
 		} else {
 			IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
