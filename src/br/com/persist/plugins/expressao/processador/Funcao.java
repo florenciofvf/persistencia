@@ -15,8 +15,9 @@ import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 public class Funcao {
 	private final Map<Integer, InstrucaoItem> mapaInstrucoes;
 	private final List<Parametro> parametros;
+	private final Biblioteca biblioteca;
+	private final List<Funcao> funcoes;
 	private InstrucaoItem ponteiro;
-	private Biblioteca biblioteca;
 	private InstrucaoItem cabeca;
 	private String biblioNativa;
 	private InstrucaoItem cauda;
@@ -24,10 +25,38 @@ public class Funcao {
 	private boolean tipoVoid;
 	private Funcao parent;
 
-	public Funcao(String nome) {
+	public Funcao(Biblioteca biblioteca, String nome) {
+		this.biblioteca = Objects.requireNonNull(biblioteca);
 		this.nome = Objects.requireNonNull(nome);
 		mapaInstrucoes = new HashMap<>();
 		parametros = new ArrayList<>();
+		funcoes = new ArrayList<>();
+	}
+
+	public void add(Funcao funcao) {
+		if (funcao != null) {
+			if (funcao.parent != null) {
+				funcao.parent.remove(funcao);
+			}
+			funcoes.add(funcao);
+			funcao.parent = this;
+		}
+	}
+
+	public void remove(Funcao funcao) {
+		if (funcao != null && funcao.parent == this) {
+			funcoes.remove(funcao);
+			funcao.parent = null;
+		}
+	}
+
+	public Funcao getFuncao(String nome) throws ExpressaoException {
+		for (Funcao item : funcoes) {
+			if (item.getNome().equals(nome)) {
+				return item;
+			}
+		}
+		throw new ExpressaoException("erro.funcao_inexistente", nome, biblioteca.getNomeAbsoluto());
 	}
 
 	public String getNome() {
@@ -35,9 +64,8 @@ public class Funcao {
 	}
 
 	public Funcao clonar() throws ExpressaoException {
-		Funcao funcao = new Funcao(nome);
+		Funcao funcao = new Funcao(biblioteca, nome);
 		funcao.biblioNativa = biblioNativa;
-		funcao.biblioteca = biblioteca;
 		funcao.tipoVoid = tipoVoid;
 		funcao.parent = parent;
 		for (Parametro item : parametros) {
@@ -55,16 +83,8 @@ public class Funcao {
 		return parent;
 	}
 
-	public void setParent(Funcao parent) {
-		this.parent = parent;
-	}
-
 	public Biblioteca getBiblioteca() {
 		return biblioteca;
-	}
-
-	public void setBiblioteca(Biblioteca biblioteca) {
-		this.biblioteca = biblioteca;
 	}
 
 	public String getBiblioNativa() {

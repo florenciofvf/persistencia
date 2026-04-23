@@ -67,9 +67,8 @@ public class Biblioteca {
 	}
 
 	public void addFuncao(Funcao funcao) {
-		if (funcao != null) {
+		if (funcao != null && funcao.getBiblioteca() == this) {
 			mapaFuncoes.put(funcao.getNome(), funcao);
-			funcao.setBiblioteca(this);
 		}
 	}
 

@@ -6,8 +6,6 @@ import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 public class Parametro extends ParametroContexto {
 	Object valor;
 
-	/** int indice; */
-
 	public Parametro(Token token) {
 		super(token);
 	}

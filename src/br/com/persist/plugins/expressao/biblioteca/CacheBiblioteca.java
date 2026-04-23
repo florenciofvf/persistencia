@@ -53,11 +53,11 @@ public class CacheBiblioteca {
 			return null;
 		}
 		Biblioteca biblioteca = new Biblioteca(new File(COMPILADOS, converter(nomeBiblioAbsoluto)));
-		AtomicReference<Funcao> atomicFuncao = new AtomicReference<>();
+		AtomicReference<Funcao> funcaoSelecionada = new AtomicReference<>();
 		Iterator<String> it = arquivo.iterator();
 		while (it.hasNext()) {
 			String linha = it.next();
-			processar(biblioteca, atomicFuncao, linha);
+			processar(biblioteca, funcaoSelecionada, linha);
 		}
 		return biblioteca;
 	}
@@ -77,16 +77,16 @@ public class CacheBiblioteca {
 		}
 	}
 
-	private void processar(Biblioteca biblioteca, AtomicReference<Funcao> atomicFuncao, String linha)
+	private void processar(Biblioteca biblioteca, AtomicReference<Funcao> funcaoSelecionada, String linha)
 			throws ExpressaoException {
 		if (linha.startsWith(FuncaoContexto.PREFIXO_FUNCAO)) {
-			Funcao funcao = criarFuncao(linha);
+			Funcao funcao = criarFuncao(biblioteca, linha);
 			biblioteca.addFuncao(funcao);
-			atomicFuncao.set(funcao);
+			funcaoSelecionada.set(funcao);
 		} else if (linha.startsWith(FuncaoNativaContexto.PREFIXO_FUNCAO_NATIVA)) {
-			Funcao funcao = criarFuncaoNativa(linha);
+			Funcao funcao = criarFuncaoNativa(biblioteca, linha);
 			biblioteca.addFuncao(funcao);
-			atomicFuncao.set(funcao);
+			funcaoSelecionada.set(funcao);
 		} else if (linha.startsWith(PacoteContexto.PREFIXO_PACKAGE)) {
 			String string = linha.substring(PacoteContexto.PREFIXO_PACKAGE.length());
 			biblioteca.setNomePacote(string);
@@ -95,31 +95,41 @@ public class CacheBiblioteca {
 			biblioteca.addAlias(string);
 		} else if (linha.startsWith(ParametroContexto.PREFIXO_PARAMETRO)) {
 			String nomeParametro = linha.substring(ParametroContexto.PREFIXO_PARAMETRO.length());
-			if (atomicFuncao.get() == null) {
+			if (funcaoSelecionada.get() == null) {
 				throw new ExpressaoException("erro.parametro_sem_funcao", biblioteca.getNomeAbsoluto(), nomeParametro);
 			}
-			atomicFuncao.get().addParametro(nomeParametro);
+			funcaoSelecionada.get().addParametro(nomeParametro);
 		} else if (linha.startsWith(FuncaoContexto.PREFIXO_TIPO_VOID)) {
-			if (atomicFuncao.get() == null) {
+			if (funcaoSelecionada.get() == null) {
 				throw new ExpressaoException("erro.tipo_sem_funcao", biblioteca.getNomeAbsoluto());
 			}
-			atomicFuncao.get().setTipoVoid(true);
+			funcaoSelecionada.get().setTipoVoid(true);
 		} else if (linhaInstrucao(linha)) {
-			processarInstrucao(biblioteca, atomicFuncao.get(), linha);
+			processarInstrucao(biblioteca, funcaoSelecionada.get(), linha);
 		}
 	}
 
-	private Funcao criarFuncao(String linha) {
-		linha = linha.substring(FuncaoContexto.PREFIXO_FUNCAO.length());
-		return new Funcao(linha);
+	private Funcao criarFuncao(Biblioteca biblioteca, String linha) throws ExpressaoException {
+		String nomeEParametros = linha.substring(FuncaoContexto.PREFIXO_FUNCAO.length());
+		int pos = nomeEParametros.indexOf(' ');
+		if (pos == -1) {
+			return new Funcao(biblioteca, nomeEParametros);
+		}
+		String nome = nomeEParametros.substring(0, pos);
+		String parametros = nomeEParametros.substring(pos + 1);
+		String[] array = parametros.split("$");
+		Funcao funcaoParent = biblioteca.getFuncao(array[array.length - 1]);
+		Funcao funcao = new Funcao(biblioteca, nome);
+		funcaoParent.add(funcao);
+		return funcao;
 	}
 
-	private Funcao criarFuncaoNativa(String linha) {
+	private Funcao criarFuncaoNativa(Biblioteca biblioteca, String linha) {
 		linha = linha.substring(FuncaoNativaContexto.PREFIXO_FUNCAO_NATIVA.length());
 		int pos = linha.indexOf(' ');
 		String biblioNativa = linha.substring(0, pos);
-		String nomeFuncao = linha.substring(pos + 1);
-		Funcao funcao = new Funcao(nomeFuncao);
+		String nome = linha.substring(pos + 1);
+		Funcao funcao = new Funcao(biblioteca, nome);
 		funcao.setBiblioNativa(biblioNativa);
 		return funcao;
 	}
