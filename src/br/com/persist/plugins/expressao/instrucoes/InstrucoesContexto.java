@@ -5,6 +5,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.condicional.IFContexto;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
+import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.loop.WhileContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
@@ -43,6 +44,9 @@ public class InstrucoesContexto extends Salto {
 			tokenManager.selecionar(invocacao);
 			adicionar(invocacao);
 		} else if (token.isFechaChave()) {
+			if ((parent instanceof FuncaoContexto) && !retornoGarantido()) {
+				throw new ExpressaoException("erro.funcao.sem_retorno");
+			}
 			tokenManager.selecionarParentDe(this);
 		} else {
 			tokenManager.invalidar(token);

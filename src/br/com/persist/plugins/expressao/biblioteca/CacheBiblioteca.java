@@ -117,7 +117,7 @@ public class CacheBiblioteca {
 		}
 		String nome = nomeEParametros.substring(0, pos);
 		String parametros = nomeEParametros.substring(pos + 1);
-		String[] array = parametros.split("$");
+		String[] array = parametros.split(Instrucao.CIFRAO);
 		Funcao funcaoParent = biblioteca.getFuncao(array[array.length - 1]);
 		Funcao funcao = new Funcao(biblioteca, nome);
 		funcaoParent.add(funcao);
