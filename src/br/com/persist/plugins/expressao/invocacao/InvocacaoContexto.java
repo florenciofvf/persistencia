@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
 import br.com.persist.plugins.expressao.compilador.Context;
@@ -18,6 +19,7 @@ import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
+import br.com.persist.plugins.expressao.processador.Funcao;
 
 public class InvocacaoContexto extends Contexto implements LinkBibliotecaContexto {
 	public static final String INVOKE_PARAM_CRET = "invoke_param_cret";
@@ -82,14 +84,22 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 	}
 
 	@Override
-	public void processarChaveN(String chamada, String[] array, CacheBiblioteca cache) {
+	public void processarChaveN(String chamada, String[] array, CacheBiblioteca cache) throws ExpressaoException {
 		if (array.length < 3) {
 			return;
 		}
-		setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
 		int pos = chamada.lastIndexOf(".");
-		setBiblio(chamada.substring(0, pos));
-		setMetodo(chamada.substring(pos + 1));
+		String nomeAbsoluto = chamada.substring(0, pos);
+		String chave = chamada.substring(pos + 1);
+		Biblioteca biblioteca = cache.getBiblioteca(nomeAbsoluto);
+		Funcao funcao = biblioteca.getFuncao(chave);
+		boolean comRetornoFuncao = !funcao.isTipoVoid();
+		if (comRetornoFuncao != comRetorno) {
+			throw new ExpressaoException("erro.invocacao.retorno", chamada, (funcao.isTipoVoid() ? "VOID" : "VALOR"));
+		}
+		setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
+		setBiblio(nomeAbsoluto);
+		setMetodo(chave);
 	}
 
 	public ArgumentosContexto getArgumentos() {
