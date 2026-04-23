@@ -24,6 +24,8 @@ import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 
 public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
+	private boolean processado;
+
 	public ChaveContexto(Token token) {
 		super(token);
 	}
@@ -31,11 +33,15 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 	@Override
 	protected void ajusteChavesEInvocacoes(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
 			throws ExpressaoException {
+		if (processado) {
+			return;
+		}
 		String chamada = token.getString();
 		String[] array = chamada.split("\\.");
 		processarChave(chamada, array);
 		processarChave2(chamada, array, mapaAlias, cache);
 		processarChaveN(chamada, array, cache);
+		processado = true;
 	}
 
 	@Override
