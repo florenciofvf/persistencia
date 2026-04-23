@@ -47,7 +47,7 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
 		if (sucesso.get()) {
 			setPrefixo(ParametroContexto.LOAD_PARAM);
-			setBiblio(lista.size() > 1 ? montarString(lista, false) : null);
+			setBiblio(montarString(lista, false));
 		} else {
 			IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
 			if (funcao != null) {
@@ -120,10 +120,6 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 
 	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
-		if (getBiblio() != null) {
-			print(pw, getPrefixo(), getBiblio(), token.getString());
-		} else {
-			print(pw, getPrefixo(), token.getString());
-		}
+		print(pw, getPrefixo(), getBiblio(), token.getString());
 	}
 }
