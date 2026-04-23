@@ -5,6 +5,7 @@ import java.util.Objects;
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public abstract class Instrucao {
+	public static final String CIFRAO = "\\$";
 	protected final String nome;
 	protected String parametros;
 	protected int indice;
