@@ -1,7 +1,6 @@
 pacote br.com.teste
 
 alias br.com.persist.plugins.expressao.biblionativo.List list
-
 alias br.com.persist.plugins.expressao.biblionativo.Map map
 
 funcao teste2
@@ -11,7 +10,7 @@ funcao teste2
 
 funcao retornar
 param lista
-0  load_param lista
+0  load_param retornar lista
 3  return
 
 funcao $constantes

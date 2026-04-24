@@ -1,7 +1,6 @@
 pacote br.com.teste
 
 alias br.com.persist.plugins.expressao.biblionativo.List list
-
 alias br.com.persist.plugins.expressao.biblionativo.Map map
 
 funcao inverter
@@ -67,17 +66,17 @@ funcao getMapa
 
 funcao inverterLista
 param lista
-0  load_param lista
+0  load_param inverterLista lista
 2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 3  eq
 4  ifeq 12
 6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 9  return
-12  load_param lista
+12  load_param inverterLista lista
 14  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 16  invoke_cret this inverterLista
 18  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
-21  load_param lista
+21  load_param inverterLista lista
 23  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
 24  add_item_lista
 25  concat_lista

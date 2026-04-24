@@ -1,7 +1,6 @@
 pacote br.com.teste
 
 alias br.com.persist.plugins.expressao.biblionativo.List list
-
 alias br.com.persist.plugins.expressao.biblionativo.Map map
 
 funcao main
@@ -28,24 +27,24 @@ funcao main
 
 funcao quickSort
 param lista
-0  load_param lista
+0  load_param quickSort lista
 2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 3  eq
 4  ifeq 12
 6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 9  return
-12  load_param lista
+12  load_param quickSort lista
 14  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
-17  load_param lista
+17  load_param quickSort lista
 19  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 21  invoke_cret this lt
 23  invoke_cret this quickSort
-26  load_param lista
+26  load_param quickSort lista
 28  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
 29  concat_lista
-32  load_param lista
+32  load_param quickSort lista
 34  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
-37  load_param lista
+37  load_param quickSort lista
 39  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 41  invoke_cret this ge
 43  invoke_cret this quickSort
@@ -55,27 +54,27 @@ param lista
 funcao lt
 param valor
 param lista
-0  load_param lista
+0  load_param lt lista
 2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 3  eq
 4  ifeq 12
 6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 9  return
-12  load_param lista
+12  load_param lt lista
 14  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
-17  load_param valor
+17  load_param lt valor
 18  lt
 19  ifeq 41
-22  load_param lista
+22  load_param lt lista
 24  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
-27  load_param valor
-30  load_param lista
+27  load_param lt valor
+30  load_param lt lista
 32  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 34  invoke_cret this lt
 35  concat_lista
 38  return
-41  load_param valor
-44  load_param lista
+41  load_param lt valor
+44  load_param lt lista
 46  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 48  invoke_cret this lt
 51  return
@@ -83,27 +82,27 @@ param lista
 funcao ge
 param valor
 param lista
-0  load_param lista
+0  load_param ge lista
 2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 3  eq
 4  ifeq 12
 6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
 9  return
-12  load_param lista
+12  load_param ge lista
 14  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
-17  load_param valor
+17  load_param ge valor
 18  ge
 19  ifeq 41
-22  load_param lista
+22  load_param ge lista
 24  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
-27  load_param valor
-30  load_param lista
+27  load_param ge valor
+30  load_param ge lista
 32  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 34  invoke_cret this ge
 35  concat_lista
 38  return
-41  load_param valor
-44  load_param lista
+41  load_param ge valor
+44  load_param ge lista
 46  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 48  invoke_cret this ge
 51  return

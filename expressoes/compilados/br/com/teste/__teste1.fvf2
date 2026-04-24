@@ -1,7 +1,6 @@
 pacote br.com.teste
 
 alias br.com.persist.plugins.expressao.biblionativo.List list
-
 alias br.com.persist.plugins.expressao.biblionativo.Map map
 
 funcao main
@@ -18,7 +17,7 @@ funcao main
 funcao teste10
 param objeto
 param pessoa
-0  load_param pessoa
+0  load_param teste10 pessoa
 3  push_string nome
 5  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map get
 6  def_const nome
@@ -27,7 +26,7 @@ param pessoa
 
 funcao processar
 param objeto
-0  load_param objeto
+0  load_param processar objeto
 3  push_string nome
 5  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map get
 6  def_const nome
@@ -37,7 +36,7 @@ param objeto
 funcao processar2
 param objeto
 0  push_string NOME=
-3  load_param objeto
+3  load_param processar2 objeto
 6  push_string nome
 8  invoke_cret br.com.persist.plugins.expressao.biblionativo.Map get
 9  add
@@ -46,16 +45,16 @@ param objeto
 funcao exemplo
 param valor1
 param valor2
-0  load_param valor1
-3  load_param valor2
+0  load_param exemplo valor1
+3  load_param exemplo valor2
 4  add
 7  return
 
 funcao exemplo2
 param lista
-0  load_param lista
+0  load_param exemplo2 lista
 2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
-5  load_param lista
+5  load_param exemplo2 lista
 7  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
 8  add
 11  load_const this MAPA
@@ -66,7 +65,7 @@ param lista
 
 funcao exemplo3
 param lista
-0  load_param lista
+0  load_param exemplo3 lista
 3  return
 
 funcao $constantes
