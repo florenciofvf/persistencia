@@ -6,6 +6,7 @@ import java.util.Map;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
+import br.com.persist.plugins.expressao.constante.ConstanteInvokeInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
 import br.com.persist.plugins.expressao.funcao.FuncaoLoadInstrucao;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
@@ -62,6 +63,7 @@ public class Instrucoes {
 		add(new InvocacaoParamInstrucao(true));
 		add(new ConstanteDefineInstrucao());
 		add(new FuncaoLoadInstrucao(false));
+		add(new ConstanteInvokeInstrucao());
 		add(new FuncaoLoadInstrucao(true));
 		add(new InvocacaoInstrucao(false));
 		add(new InvocacaoInstrucao(true));
