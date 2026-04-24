@@ -10,20 +10,20 @@ import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class LoadFuncaoInstrucao extends Instrucao implements LinkBiblioteca {
+public class FuncaoLoadInstrucao extends Instrucao implements LinkBiblioteca {
 	private final boolean tipoVoid;
 	private String nomeBiblioteca;
 	private boolean biblioLocal;
 	private String nomeFuncao;
 
-	public LoadFuncaoInstrucao(boolean tipoVoid) {
+	public FuncaoLoadInstrucao(boolean tipoVoid) {
 		super(tipoVoid ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET);
 		this.tipoVoid = tipoVoid;
 	}
 
 	@Override
 	public Instrucao novo() {
-		return new LoadFuncaoInstrucao(tipoVoid);
+		return new FuncaoLoadInstrucao(tipoVoid);
 	}
 
 	@Override
