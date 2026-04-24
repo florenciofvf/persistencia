@@ -45,7 +45,8 @@ public class InstrucoesContexto extends Salto {
 			adicionar(invocacao);
 		} else if (token.isFechaChave()) {
 			if ((parent instanceof FuncaoContexto) && !retornoGarantido()) {
-				throw new ExpressaoException("erro.funcao.sem_retorno");
+				FuncaoContexto fn = (FuncaoContexto) parent;
+				throw new ExpressaoException("erro.funcao.sem_retorno", fn.getNome());
 			}
 			tokenManager.selecionarParentDe(this);
 		} else {

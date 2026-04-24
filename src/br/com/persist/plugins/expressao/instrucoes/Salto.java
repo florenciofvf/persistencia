@@ -25,7 +25,8 @@ public abstract class Salto extends Contexto {
 
 	private void checarFuncaoSemRetorno(Contexto contexto) throws ExpressaoException {
 		if (contexto.getParent() instanceof FuncaoContexto) {
-			throw new ExpressaoException("erro.funcao.sem_retorno");
+			FuncaoContexto fn = (FuncaoContexto) contexto.getParent();
+			throw new ExpressaoException("erro.funcao.sem_retorno", fn.getNome());
 		}
 	}
 
