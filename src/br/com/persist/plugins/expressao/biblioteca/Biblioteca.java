@@ -126,4 +126,9 @@ class BiblioAlias {
 		this.biblio = Objects.requireNonNull(biblio);
 		this.alias = Objects.requireNonNull(alias);
 	}
+
+	@Override
+	public String toString() {
+		return biblio + " " + alias;
+	}
 }
