@@ -7,8 +7,9 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
-import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
+import br.com.persist.plugins.expressao.funcao.FuncaoLoadInstrucao;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
+import br.com.persist.plugins.expressao.invocacao.InvocacaoParamInstrucao;
 import br.com.persist.plugins.expressao.lista.AddItemListaInstrucao;
 import br.com.persist.plugins.expressao.mapa.PutItemMapaInstrucao;
 import br.com.persist.plugins.expressao.nativo.FlutuantePushInstrucao;
@@ -57,20 +58,19 @@ public class Instrucoes {
 	}
 
 	static {
-		add(new InvocacaoInstrucao(InvocacaoContexto.INVOKE_CRET));
-		add(new InvocacaoInstrucao(InvocacaoContexto.INVOKE_VOID));
-		// add(new LoadParametroSuperInstrucao());
-		// add(new InvocacaoParamExpInstrucao());
-		add(new FlutuantePushInstrucao());
-		add(new InteiroPushInstrucao());
-		// add(new InvocacaoParamInstrucao());
-		// add(new LoadFuncaoLambInstrucao());
+		add(new InvocacaoParamInstrucao(false));
+		add(new InvocacaoParamInstrucao(true));
+		add(new ConstanteDefineInstrucao());
+		add(new FuncaoLoadInstrucao(false));
+		add(new FuncaoLoadInstrucao(true));
+		add(new InvocacaoInstrucao(false));
+		add(new InvocacaoInstrucao(true));
 		add(new ParametroLoadInstrucao());
 		add(new ConstanteLoadInstrucao());
-		add(new ConstanteDefineInstrucao());
-		// add(new LoadFuncaoInstrucao());
+		add(new FlutuantePushInstrucao());
 		add(new AddItemListaInstrucao());
 		add(new PutItemMapaInstrucao());
+		add(new InteiroPushInstrucao());
 		add(new StringPushInstrucao());
 		add(new NegativoInstrucao());
 		add(new RetornoInstrucao());

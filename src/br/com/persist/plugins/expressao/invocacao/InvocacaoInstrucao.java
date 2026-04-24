@@ -78,7 +78,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		}
 	}
 
-	private static void setArgumentos(Funcao funcao, PilhaOperando pilhaOperando) throws ExpressaoException {
+	public static void setArgumentos(Funcao funcao, PilhaOperando pilhaOperando) throws ExpressaoException {
 		List<Integer> indices = indiceParametros(funcao);
 		for (int i = indices.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
@@ -172,7 +172,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		return sb.toString();
 	}
 
-	public static void validar(Funcao funcao, boolean comRetorno, int totalParam) throws ExpressaoException {
+	public static void validar(Funcao funcao, boolean comRetorno/* , int totalParam */) throws ExpressaoException {
 		if (funcao == null) {
 			throw new ExpressaoException("Funcao nula.", false);
 		}
@@ -183,9 +183,11 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 			throw new ExpressaoException("erro.funcao_com_retorno", funcao.getNome(),
 					funcao.getBiblioteca().getNomeAbsoluto());
 		}
-		if (funcao.getTotalParametro() != totalParam) {
-			throw new ExpressaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome(),
-					funcao.getTotalParametro(), totalParam, funcao.getBiblioteca().getNomeAbsoluto());
-		}
+		/*
+		 * if (funcao.getTotalParametro() != totalParam) { throw new
+		 * ExpressaoException("erro.divergencia_qtd_decl_invocacao", funcao.getNome(),
+		 * funcao.getTotalParametro(), totalParam,
+		 * funcao.getBiblioteca().getNomeAbsoluto()); }
+		 */
 	}
 }

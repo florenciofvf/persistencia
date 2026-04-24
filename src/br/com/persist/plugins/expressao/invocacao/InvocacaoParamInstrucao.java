@@ -1,4 +1,4 @@
-package br.com.persist.plugins.expressao.parametros;
+package br.com.persist.plugins.expressao.invocacao;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.processador.Funcao;
@@ -6,24 +6,26 @@ import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class ParametroLoadInstrucao extends Instrucao {
+public class InvocacaoParamInstrucao extends Instrucao {
+	private final boolean comRetorno;
 	private String[] nomeFuncoes;
-	private String nomeParametro;
+	private String nomeFuncao;
 
-	public ParametroLoadInstrucao() {
-		super(ParametroContexto.LOAD_PARAM);
+	public InvocacaoParamInstrucao(boolean comRetorno) {
+		super(comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID);
+		this.comRetorno = comRetorno;
 	}
 
 	@Override
 	public Instrucao novo() {
-		return new ParametroLoadInstrucao();
+		return new InvocacaoParamInstrucao(comRetorno);
 	}
 
 	@Override
 	public void setParametros(String parametros) {
 		int pos = parametros.indexOf(' ');
 		nomeFuncoes = parametros.substring(0, pos).split(CIFRAO);
-		nomeParametro = parametros.substring(pos + 1);
+		nomeFuncao = parametros.substring(pos + 1);
 	}
 
 	@Override
@@ -48,7 +50,20 @@ public class ParametroLoadInstrucao extends Instrucao {
 			throw new ExpressaoException("Funcao Alvo nula", false);
 		}
 
-		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
-		pilhaOperando.push(valor);
+		Object valor = funcaoAlvo.getValorParametro(nomeFuncao);
+
+		if (valor == null) {
+			throw new ExpressaoException("erro.valor_param", nomeFuncao);
+		}
+
+		if (!(valor instanceof Funcao)) {
+			throw new ExpressaoException("erro.valor_param_nao_funcao", nomeFuncao, funcao.getNome(), valor.toString(),
+					funcao.getBiblioteca().getNomeAbsoluto());
+		}
+
+		Funcao funcaoParam = (Funcao) valor;
+		InvocacaoInstrucao.validar(funcaoParam, comRetorno);
+		InvocacaoInstrucao.setArgumentos(funcaoParam, pilhaOperando);
+		pilhaFuncao.push(funcaoParam);
 	}
 }
