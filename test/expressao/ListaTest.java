@@ -60,8 +60,7 @@ public class ListaTest extends AbstratoTest {
 		List<Object> result;
 
 		result = processador.processar(biblio, "getMapa");
-		log(result);
-		// assertEquals("[[]]", result.toString());
+		assertEquals("[{nome=Teste, valores=[1000, 30000, {valor=1.2}]}]", result.toString());
 	}
 
 	@Test

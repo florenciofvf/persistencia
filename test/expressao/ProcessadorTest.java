@@ -1,5 +1,7 @@
 package expressao;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class ProcessadorTest extends AbstratoTest {
 		compilacao.compilar(getFile("processador", "processador"));
 
 		Processador processador = new Processador();
-		List<Object> resp = processador.processar("br.com.teste.processador", "get");
-		log(resp);
+		List<Object> result = processador.processar("br.com.teste.processador", "get");
+		assertEquals("[Hello, World!]", result.toString());
 	}
 
 }
