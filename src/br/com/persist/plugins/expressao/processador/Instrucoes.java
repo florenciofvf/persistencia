@@ -8,6 +8,7 @@ import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteInvokeInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
+import br.com.persist.plugins.expressao.funcao.FuncaoLoadInnerInstrucao;
 import br.com.persist.plugins.expressao.funcao.FuncaoLoadInstrucao;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoParamInstrucao;
@@ -59,6 +60,8 @@ public class Instrucoes {
 	}
 
 	static {
+		add(new FuncaoLoadInnerInstrucao(false));
+		add(new FuncaoLoadInnerInstrucao(true));
 		add(new InvocacaoParamInstrucao(false));
 		add(new InvocacaoParamInstrucao(true));
 		add(new ConstanteDefineInstrucao());

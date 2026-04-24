@@ -19,7 +19,7 @@ param valor
 funcao 0_somar getInterna
 param x
 0  load_param 0_somar$getInterna valor
-3  load_param x
+3  load_param 0_somar x
 4  add
 7  return
 
