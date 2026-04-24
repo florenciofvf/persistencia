@@ -17,17 +17,19 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
+	private final boolean comRetorno;
 	private boolean biblioLocal;
 	private String nomeBiblio;
 	private String nomeFuncao;
 
-	public InvocacaoInstrucao(String nome) {
-		super(nome);
+	public InvocacaoInstrucao(boolean comRetorno) {
+		super(comRetorno ? InvocacaoContexto.INVOKE_CRET : InvocacaoContexto.INVOKE_VOID);
+		this.comRetorno = comRetorno;
 	}
 
 	@Override
 	public Instrucao novo() {
-		return new InvocacaoInstrucao(nome);
+		return new InvocacaoInstrucao(comRetorno);
 	}
 
 	@Override
