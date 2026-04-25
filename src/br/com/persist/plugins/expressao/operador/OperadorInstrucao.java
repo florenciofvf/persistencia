@@ -92,13 +92,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Add extends Instrucao {
-		public Add() {
-			super(OperadorContexto.ADD);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Add();
+		public Add(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.ADD);
 		}
 
 		@Override
@@ -131,13 +126,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class AddLista extends Instrucao {
-		public AddLista() {
-			super(OperadorContexto.ADD_LISTA);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new AddLista();
+		public AddLista(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.ADD_LISTA);
 		}
 
 		@Override
@@ -155,13 +145,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class ConcatLista extends Instrucao {
-		public ConcatLista() {
-			super(OperadorContexto.CONCAT_LISTA);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new ConcatLista();
+		public ConcatLista(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.CONCAT_LISTA);
 		}
 
 		@Override
@@ -191,13 +176,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Sub extends Instrucao {
-		public Sub() {
-			super(OperadorContexto.SUB);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Sub();
+		public Sub(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.SUB);
 		}
 
 		@Override
@@ -224,13 +204,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Mul extends Instrucao {
-		public Mul() {
-			super(OperadorContexto.MUL);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Mul();
+		public Mul(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.MUL);
 		}
 
 		@Override
@@ -257,13 +232,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Div extends Instrucao {
-		public Div() {
-			super(OperadorContexto.DIV);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Div();
+		public Div(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.DIV);
 		}
 
 		@Override
@@ -290,13 +260,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Rem extends Instrucao {
-		public Rem() {
-			super(OperadorContexto.REM);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Rem();
+		public Rem(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.REM);
 		}
 
 		@Override
@@ -323,13 +288,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class And extends Instrucao {
-		public And() {
-			super(OperadorContexto.AND);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new And();
+		public And(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.AND);
 		}
 
 		@Override
@@ -354,13 +314,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Or extends Instrucao {
-		public Or() {
-			super(OperadorContexto.OR);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Or();
+		public Or(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.OR);
 		}
 
 		@Override
@@ -385,13 +340,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Xor extends Instrucao {
-		public Xor() {
-			super(OperadorContexto.XOR);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Xor();
+		public Xor(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.XOR);
 		}
 
 		@Override
@@ -412,13 +362,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Igual extends Instrucao {
-		public Igual() {
-			super(OperadorContexto.IGUAL);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Igual();
+		public Igual(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.IGUAL);
 		}
 
 		@Override
@@ -451,13 +396,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Diff extends Instrucao {
-		public Diff() {
-			super(OperadorContexto.DIFF);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Diff();
+		public Diff(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.DIFF);
 		}
 
 		@Override
@@ -490,13 +430,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Menor extends Instrucao {
-		public Menor() {
-			super(OperadorContexto.MENOR);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Menor();
+		public Menor(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.MENOR);
 		}
 
 		@Override
@@ -523,13 +458,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class Maior extends Instrucao {
-		public Maior() {
-			super(OperadorContexto.MAIOR);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new Maior();
+		public Maior(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.MAIOR);
 		}
 
 		@Override
@@ -556,13 +486,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class MenorIgual extends Instrucao {
-		public MenorIgual() {
-			super(OperadorContexto.MENOR_IGUAL);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new MenorIgual();
+		public MenorIgual(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.MENOR_IGUAL);
 		}
 
 		@Override
@@ -589,13 +514,8 @@ public class OperadorInstrucao {
 	}
 
 	public static class MaiorIgual extends Instrucao {
-		public MaiorIgual() {
-			super(OperadorContexto.MAIOR_IGUAL);
-		}
-
-		@Override
-		public Instrucao novo() {
-			return new MaiorIgual();
+		public MaiorIgual(int indice) throws ExpressaoException {
+			super(indice, OperadorContexto.MAIOR_IGUAL);
 		}
 
 		@Override
