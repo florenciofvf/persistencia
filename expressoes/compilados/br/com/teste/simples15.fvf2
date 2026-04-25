@@ -1,0 +1,43 @@
+pacote br.com.teste
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao main
+0  push_inteiro 5
+2  invoke_cret this somar
+3  def_const funcao
+5  push_inteiro 2
+8  load_const this funcao
+10  invoke_cret this teste
+13  return
+
+funcao somar
+param valor
+0  load_function_inner_cret this 0_inner
+2  invoke_cret this proxy
+5  return
+
+funcao 0_inner somar
+param e
+0  load_param 0_inner e
+3  load_param 0_inner$somar valor
+4  add
+7  return
+
+funcao teste
+param valor
+param funcao
+0  load_param teste valor
+2  invoke_param_cret teste funcao
+5  return
+
+funcao proxy
+param param
+0  load_param proxy param
+3  return
+
+funcao $constantes
+tipo_void
+0  return
+

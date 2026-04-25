@@ -11,24 +11,21 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
 
-public class InternaTest extends AbstratoTest {
+public class FuncionalTest extends AbstratoTest {
 
 	@Test
-	public void teste1() throws IOException, ExpressaoException {
+	public void teste0() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(getFile("internas", "teste1"));
+		compilacao.compilar(getFile("funcional", "simples15"));
 
 		Processador processador = new Processador();
 
-		String biblio = "br.com.teste.teste1";
+		String biblio = "br.com.teste.simples15";
 
 		List<Object> result;
 
 		result = processador.processar(biblio, "main");
-		assertEquals("[4]", result.toString());
-
-		//result = processador.processar(biblio, "fatorial", bi(5));
-		//assertEquals("[120]", result.toString());
+		assertEquals("[7]", result.toString());
 	}
 
 }

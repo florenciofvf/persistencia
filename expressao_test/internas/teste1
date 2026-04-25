@@ -18,3 +18,14 @@ defun teste(funcao) {
 		};
 	};
 }
+
+/*defun fatorial(numero) {
+	const exec = defun calcular(valor) {
+					if(valor == 0) {
+						return 1;
+					} else {
+						return valor * calcular(valor - 1);
+					}
+				};
+	return exec(numero);
+}*/
