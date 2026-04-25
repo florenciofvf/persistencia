@@ -71,22 +71,14 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 	}
 
 	public static void setArgumentos(Funcao funcao, PilhaOperando pilhaOperando) throws ExpressaoException {
-		List<Integer> indices = indiceParametros(funcao);
+		List<Integer> indices = funcao.getIndiceParametros();
 		for (int i = indices.size() - 1; i >= 0; i--) {
 			Object valor = pilhaOperando.pop();
 			funcao.setValorParametro(indices.get(i), valor);
 		}
 	}
 
-	private static List<Integer> indiceParametros(Funcao funcao) {
-		List<Integer> resp = new ArrayList<>();
-		for (int i = 0; i < funcao.getTotalParametro(); i++) {
-			resp.add(i);
-		}
-		return resp;
-	}
-
-	private Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
+	private static Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
 			AtomicBoolean pushPilhaOperando) throws ExpressaoException {
 		Object resposta = null;
 		Class<?> klass = null;
@@ -95,9 +87,8 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		} catch (Exception ex) {
 			throw new ExpressaoException("erro.biblio_inexistente", funcao.getBiblioNativa());
 		}
-		List<Integer> indices = indiceParametros(funcao);
-		Class<?>[] tipoParametros = getTipoParametros(indices);
-		Object[] valorParametros = getValorParametros(funcao, indices);
+		Class<?>[] tipoParametros = funcao.getTipoParametros();
+		Object[] valorParametros = funcao.getValorParametros();
 		if (lista != null) {
 			tipoParametros = editarTipoParametros(tipoParametros, lista);
 			valorParametros = editarValorParametros(valorParametros, lista);
@@ -105,12 +96,16 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		try {
 			Method method = klass.getDeclaredMethod(funcao.getNome(), tipoParametros);
 			Class<?> returnType = method.getReturnType();
-			String string = returnType.getCanonicalName();
+			String canonicalName = returnType.getCanonicalName();
 			if (funcao.isTipoVoid()) {
+				if (!isVoid(canonicalName)) {
+					throw new ExpressaoException("erro.funcao_nativa_retorno_cret", funcao.getNome(),
+							funcao.getBiblioteca().getNomeAbsoluto());
+				}
 				method.invoke(klass, valorParametros);
 				pushPilhaOperando.set(false);
 			} else {
-				if ("void".equals(string) || "java.lang.Void".equals(string)) {
+				if (isVoid(canonicalName)) {
 					throw new ExpressaoException("erro.funcao_nativa_retorno_void", funcao.getNome(),
 							funcao.getBiblioteca().getNomeAbsoluto());
 				}
@@ -123,37 +118,24 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		return resposta;
 	}
 
-	private Class<?>[] getTipoParametros(List<Integer> params) {
-		Class<?>[] tipoParametros = new Class<?>[params.size()];
-		for (int i = 0; i < params.size(); i++) {
-			tipoParametros[i] = Object.class;
-		}
-		return tipoParametros;
-	}
-
-	private Object[] getValorParametros(Funcao funcao, List<Integer> indices) {
-		Object[] valorParametros = new Object[indices.size()];
-		for (int i = 0; i < indices.size(); i++) {
-			Object valor = funcao.getValorParametro(i);
-			valorParametros[i] = valor;
-		}
-		return valorParametros;
-	}
-
-	private Class<?>[] editarTipoParametros(Class<?>[] tipoParametros, List<Object> lista) {
-		List<Class<?>> resposta = new ArrayList<>(Arrays.asList(tipoParametros));
+	private static Class<?>[] editarTipoParametros(Class<?>[] tipoParametros, List<Object> lista) {
+		List<Class<?>> resp = new ArrayList<>(Arrays.asList(tipoParametros));
 		for (int i = 0; i < lista.size(); i++) {
-			resposta.add(Object.class);
+			resp.add(Object.class);
 		}
-		return resposta.toArray(new Class<?>[0]);
+		return resp.toArray(new Class<?>[0]);
 	}
 
-	private Object[] editarValorParametros(Object[] valorParametros, List<Object> lista) {
-		List<Object> resposta = new ArrayList<>(Arrays.asList(valorParametros));
+	private static Object[] editarValorParametros(Object[] valorParametros, List<Object> lista) {
+		List<Object> resp = new ArrayList<>(Arrays.asList(valorParametros));
 		for (Object item : lista) {
-			resposta.add(item);
+			resp.add(item);
 		}
-		return resposta.toArray(new Object[0]);
+		return resp.toArray(new Object[0]);
+	}
+
+	private static boolean isVoid(String string) {
+		return "void".equals(string) || "java.lang.Void".equals(string);
 	}
 
 	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws ExpressaoException {

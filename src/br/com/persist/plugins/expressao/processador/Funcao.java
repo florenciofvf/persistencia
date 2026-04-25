@@ -146,6 +146,31 @@ public class Funcao {
 		parametros.add(param);
 	}
 
+	public Class<?>[] getTipoParametros() {
+		Class<?>[] resp = new Class<?>[getTotalParametro()];
+		for (int i = 0; i < resp.length; i++) {
+			resp[i] = Object.class;
+		}
+		return resp;
+	}
+
+	public Object[] getValorParametros() {
+		Object[] resp = new Object[getTotalParametro()];
+		for (int i = 0; i < resp.length; i++) {
+			Object valor = getValorParametro(i);
+			resp[i] = valor;
+		}
+		return resp;
+	}
+
+	public List<Integer> getIndiceParametros() {
+		List<Integer> resp = new ArrayList<>();
+		for (Parametro item : parametros) {
+			resp.add(item.getIndice());
+		}
+		return resp;
+	}
+
 	public void setValorParametro(int indice, Object valor) throws ExpressaoException {
 		InstrucaoUtil.checarOperando(valor);
 		parametros.get(indice).valor = valor;
