@@ -122,7 +122,8 @@ public class Funcao {
 	public void addParametro(Parametro param) throws ExpressaoException {
 		InstrucaoUtil.checarParametro(param.nome);
 		if (contem(param.nome)) {
-			throw new ExpressaoException("erro.parametro_existente", param.nome, getNome(), biblioteca.getNomeAbsoluto());
+			throw new ExpressaoException("erro.parametro_existente", param.nome, getNome(),
+					biblioteca.getNomeAbsoluto());
 		}
 		parametros.add(param);
 	}

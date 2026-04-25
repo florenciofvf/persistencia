@@ -143,32 +143,25 @@ public class CacheBiblioteca {
 		if (funcao == null) {
 			throw new ExpressaoException("erro.instrucao_sem_funcao", biblioteca.getNomeAbsoluto(), linha);
 		}
-		Instrucao instrucao = getInstrucao(linha, biblioteca);
+		Instrucao instrucao = criarInstrucao(linha, biblioteca);
 		funcao.addInstrucao(instrucao);
 	}
 
-	private Instrucao getInstrucao(String linha, Biblioteca biblioteca) throws ExpressaoException {
+	private Instrucao criarInstrucao(String linha, Biblioteca biblioteca) throws ExpressaoException {
 		String espacos = ExpressaoConstantes.ESPACO + ExpressaoConstantes.ESPACO;
 		int pos = linha.indexOf(espacos);
 		int indice = Integer.parseInt(linha.substring(0, pos));
-		String stringInstrucao = linha.substring(pos + espacos.length());
-		return clonarInstrucao(indice, stringInstrucao, biblioteca);
-	}
-
-	private Instrucao clonarInstrucao(int indice, String instrucao, Biblioteca biblioteca) throws ExpressaoException {
-		int pos = instrucao.indexOf(' ');
+		String string = linha.substring(pos + espacos.length());
+		pos = string.indexOf(' ');
+		String parametros = null;
+		String nome = null;
 		if (pos == -1) {
-			Instrucao novo = Instrucoes.get(instrucao, biblioteca).novo();
-			novo.setIndice(indice);
-			return novo;
+			nome = string;
 		} else {
-			String nome = instrucao.substring(0, pos);
-			String parametros = instrucao.substring(pos + 1);
-			Instrucao novo = Instrucoes.get(nome, biblioteca).novo();
-			novo.setParametros(parametros);
-			novo.setIndice(indice);
-			return novo;
+			nome = string.substring(0, pos);
+			parametros = string.substring(pos + 1);
 		}
+		return Instrucoes.criar(biblioteca, indice, nome, parametros);
 	}
 
 	public static File getArquivoCompilado(BibliotecaContexto biblioteca) throws ExpressaoException {
