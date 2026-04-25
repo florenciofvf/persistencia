@@ -19,13 +19,13 @@ public class Processador {
 			throws ExpressaoException {
 		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioAbsoluto);
 
-		Funcao funcao = biblioteca.getFuncao(nomeFuncao).clonar();
+		Funcao funcao = biblioteca.getFuncao(nomeFuncao);
 
 		for (int i = 0; i < args.length; i++) {
 			funcao.setValorParametro(i, args[i]);
 		}
 
-		Funcao funcaoConstantes = biblioteca.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES).clonar();
+		Funcao funcaoConstantes = biblioteca.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES);
 
 		pilhaFuncao.clear();
 		pilhaOperando.clear();
@@ -71,9 +71,9 @@ public class Processador {
 				processar.set(true);
 			} else {
 				Biblioteca novaCacheada = cacheBiblioteca.getBiblioteca(link.getNomeBiblioAbsoluto());
-				Funcao fnConstantes = novaCacheada.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES).clonar();
+				Funcao funcaoConstantes = novaCacheada.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES);
 				funcao.setIndice(link.getIndice());
-				pilhaFuncao.push(fnConstantes);
+				pilhaFuncao.push(funcaoConstantes);
 				funcao = pilhaFuncao.peek();
 				processar.set(false);
 			}
