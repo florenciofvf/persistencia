@@ -28,4 +28,19 @@ public class FuncionalTest extends AbstratoTest {
 		assertEquals("[7]", result.toString());
 	}
 
+	@Test
+	public void teste3() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("funcional", "teste3"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.teste3";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "testar");
+		assertEquals("[Java2]", result.toString());
+	}
+
 }

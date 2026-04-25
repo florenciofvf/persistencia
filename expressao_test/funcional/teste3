@@ -1,0 +1,23 @@
+package br.com.teste;
+
+defun teste1() {
+	return 'Java';
+}
+
+defun teste2() {
+	return 2;
+}
+
+defun testar() {
+	invocaFuncao(teste1);
+	return proxy(teste1) + teste2();
+}
+
+defun proxy(funcao) {
+	return funcao();
+}
+
+defun invocaFuncao(funcao) void {
+	//funcao();
+	return;
+}
