@@ -9,13 +9,8 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class AddItemListaInstrucao extends Instrucao {
-	public AddItemListaInstrucao() {
-		super(AddItemListaContexto.ADD_ITEM_LISTA);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new AddItemListaInstrucao();
+	public AddItemListaInstrucao(int indice) throws ExpressaoException {
+		super(indice, AddItemListaContexto.ADD_ITEM_LISTA);
 	}
 
 	@Override

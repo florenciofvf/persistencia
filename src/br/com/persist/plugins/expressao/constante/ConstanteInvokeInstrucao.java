@@ -17,18 +17,9 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 	private String nomeConstante;
 	private boolean biblioLocal;
 
-	public ConstanteInvokeInstrucao() {
-		super(InvocacaoContexto.INVOKE_CONST);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new ConstanteInvokeInstrucao();
-	}
-
-	@Override
-	public void setParametros(String string) {
-		String[] array = string.split(ExpressaoConstantes.ESPACO);
+	public ConstanteInvokeInstrucao(int indice, String parametros) throws ExpressaoException {
+		super(indice, InvocacaoContexto.INVOKE_CONST);
+		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeBiblioteca = array[0];
 		nomeConstante = array[1];
 		biblioLocal = Contexto.THIS.equals(nomeBiblioteca);

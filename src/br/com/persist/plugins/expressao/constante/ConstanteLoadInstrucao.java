@@ -15,18 +15,9 @@ public class ConstanteLoadInstrucao extends Instrucao implements LinkBiblioteca 
 	private String nomeConstante;
 	private boolean biblioLocal;
 
-	public ConstanteLoadInstrucao() {
-		super(ConstanteContexto.LOAD_CONST);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new ConstanteLoadInstrucao();
-	}
-
-	@Override
-	public void setParametros(String string) {
-		String[] array = string.split(ExpressaoConstantes.ESPACO);
+	public ConstanteLoadInstrucao(int indice, String parametros) throws ExpressaoException {
+		super(indice, ConstanteContexto.LOAD_CONST);
+		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeBiblioteca = array[0];
 		nomeConstante = array[1];
 		biblioLocal = Contexto.THIS.equals(nomeBiblioteca);

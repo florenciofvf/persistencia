@@ -10,13 +10,11 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class PutItemMapaInstrucao extends Instrucao {
-	public PutItemMapaInstrucao() {
-		super(PutItemMapaContexto.PUT_ITEM_MAPA);
-	}
+	private final String chave;
 
-	@Override
-	public Instrucao novo() {
-		return new PutItemMapaInstrucao();
+	public PutItemMapaInstrucao(int indice, String parametros) throws ExpressaoException {
+		super(indice, PutItemMapaContexto.PUT_ITEM_MAPA);
+		chave = parametros;
 	}
 
 	@Override
@@ -28,7 +26,7 @@ public class PutItemMapaInstrucao extends Instrucao {
 		InstrucaoUtil.checarMapa(objMapa);
 		InstrucaoUtil.checarOperando(item);
 		Map<Object, Object> mapa = (Map<Object, Object>) objMapa;
-		mapa.put(parametros, item);
+		mapa.put(chave, item);
 		pilhaOperando.push(mapa);
 	}
 }

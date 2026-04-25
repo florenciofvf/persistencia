@@ -8,20 +8,18 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class ConstanteDefineInstrucao extends Instrucao {
-	public ConstanteDefineInstrucao() {
-		super(ConstanteContexto.DEF_CONST);
-	}
+	private final String nomeConstante;
 
-	@Override
-	public Instrucao novo() {
-		return new ConstanteDefineInstrucao();
+	public ConstanteDefineInstrucao(int indice, String parametros) throws ExpressaoException {
+		super(indice, ConstanteContexto.DEF_CONST);
+		nomeConstante = parametros;
 	}
 
 	@Override
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
 		Object valor = pilhaOperando.pop();
-		Constante constante = new Constante(parametros);
+		Constante constante = new Constante(nomeConstante);
 		Biblioteca biblioteca = funcao.getBiblioteca();
 		biblioteca.addConstante(constante);
 		constante.setValor(valor);
