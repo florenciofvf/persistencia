@@ -1,5 +1,7 @@
 package expressao;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class InternaTest extends AbstratoTest {
 		List<Object> result;
 
 		result = processador.processar(biblio, "main");
-		log(result);
+		assertEquals("[4]", result.toString());
 	}
 
 }
