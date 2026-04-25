@@ -1,40 +1,30 @@
 package br.com.persist.plugins.expressao.processador;
 
-import java.util.Objects;
-
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public abstract class Instrucao {
 	public static final String CIFRAO = "\\$";
 	protected final String nome;
-	protected String parametros;
-	protected int indice;
+	protected final int indice;
 
-	protected Instrucao(String nome) {
-		this.nome = Objects.requireNonNull(nome);
+	protected Instrucao(int indice, String nome) throws ExpressaoException {
+		if (indice < 0) {
+			throw new ExpressaoException("\u00CDndice negativo (Instru\u00E7\u00E3o)");
+		}
+		if (nome == null || nome.trim().isEmpty()) {
+			throw new ExpressaoException("Nome de instru\u00E7\u00E3o inv\u00E1lido");
+		}
+		this.indice = indice;
+		this.nome = nome;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	public String getParametros() {
-		return parametros;
-	}
-
-	public void setParametros(String parametros) {
-		this.parametros = parametros;
-	}
-
 	public int getIndice() {
 		return indice;
 	}
-
-	public void setIndice(int indice) {
-		this.indice = indice;
-	}
-
-	public abstract Instrucao novo();
 
 	public abstract void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException;
@@ -47,6 +37,6 @@ public abstract class Instrucao {
 
 	@Override
 	public String toString() {
-		return nome + (parametros != null ? " " + parametros : "");
+		return indice + ": " + nome;
 	}
 }

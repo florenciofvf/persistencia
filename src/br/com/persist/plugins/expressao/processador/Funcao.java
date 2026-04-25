@@ -8,8 +8,6 @@ import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
-import br.com.persist.plugins.expressao.compilador.Token;
-import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 
 public class Funcao {
@@ -115,11 +113,17 @@ public class Funcao {
 	public void addParametro(String nome) throws ExpressaoException {
 		InstrucaoUtil.checarParametro(nome);
 		if (contem(nome)) {
-			throw new ExpressaoException("erro.parametro_inexistente", nome, getNome(), biblioteca.getNomeAbsoluto());
+			throw new ExpressaoException("erro.parametro_existente", nome, getNome(), biblioteca.getNomeAbsoluto());
 		}
-		Token token = new Token(nome, Tipo.VIRTUAL, -1);
-		Parametro param = new Parametro(token);
-		param.setIndice(parametros.size());
+		Parametro param = new Parametro(parametros.size(), nome);
+		parametros.add(param);
+	}
+
+	public void addParametro(Parametro param) throws ExpressaoException {
+		InstrucaoUtil.checarParametro(param.nome);
+		if (contem(param.nome)) {
+			throw new ExpressaoException("erro.parametro_existente", param.nome, getNome(), biblioteca.getNomeAbsoluto());
+		}
 		parametros.add(param);
 	}
 
@@ -152,7 +156,7 @@ public class Funcao {
 
 	public Parametro getParametro(String string) {
 		for (Parametro item : parametros) {
-			if (item.contem(string)) {
+			if (item.nome.equals(string)) {
 				return item;
 			}
 		}
@@ -162,7 +166,7 @@ public class Funcao {
 	private int getIndiceParametro(String nome) throws ExpressaoException {
 		for (int i = 0; i < parametros.size(); i++) {
 			Parametro item = parametros.get(i);
-			if (item.contem(nome)) {
+			if (item.nome.equals(nome)) {
 				return i;
 			}
 		}
