@@ -10,17 +10,8 @@ public class ParametroLoadInstrucao extends Instrucao {
 	private String[] nomeFuncoes;
 	private String nomeParametro;
 
-	public ParametroLoadInstrucao() {
-		super(ParametroContexto.LOAD_PARAM);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new ParametroLoadInstrucao();
-	}
-
-	@Override
-	public void setParametros(String parametros) {
+	public ParametroLoadInstrucao(int indice, String parametros) throws ExpressaoException {
+		super(indice, ParametroContexto.LOAD_PARAM);
 		int pos = parametros.indexOf(' ');
 		nomeFuncoes = parametros.substring(0, pos).split(CIFRAO);
 		nomeParametro = parametros.substring(pos + 1);

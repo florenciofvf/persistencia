@@ -11,9 +11,9 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
 public class FlutuantePushInstrucao extends Instrucao {
 	private final BigDecimal bigDecimal;
 
-	public FlutuantePushInstrucao(int indice, String string) throws ExpressaoException {
+	public FlutuantePushInstrucao(int indice, String parametros) throws ExpressaoException {
 		super(indice, FlutuanteContexto.PUSH_FLUTUANTE);
-		bigDecimal = new BigDecimal(string);
+		bigDecimal = new BigDecimal(parametros);
 	}
 
 	@Override

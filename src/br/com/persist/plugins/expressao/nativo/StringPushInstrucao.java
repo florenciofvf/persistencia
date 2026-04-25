@@ -10,12 +10,12 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
 public class StringPushInstrucao extends Instrucao {
 	private String string;
 
-	public StringPushInstrucao(int indice, String string) throws ExpressaoException {
+	public StringPushInstrucao(int indice, String parametros) throws ExpressaoException {
 		super(indice, StringContexto.PUSH_STRING);
-		if (string == null) {
-			string = "";
+		if (parametros == null) {
+			parametros = "";
 		}
-		this.string = Util.replaceAll(string, "\\R", "\r");
+		this.string = Util.replaceAll(parametros, "\\R", "\r");
 		this.string = Util.replaceAll(this.string, "\\N", "\n");
 		this.string = Util.replaceAll(this.string, "\\T", "\t");
 	}

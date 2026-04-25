@@ -11,9 +11,9 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
 public class InteiroPushInstrucao extends Instrucao {
 	private final BigInteger bigInteger;
 
-	public InteiroPushInstrucao(int indice, String string) throws ExpressaoException {
+	public InteiroPushInstrucao(int indice, String parametros) throws ExpressaoException {
 		super(indice, InteiroContexto.PUSH_INTEIRO);
-		bigInteger = new BigInteger(string);
+		bigInteger = new BigInteger(parametros);
 	}
 
 	@Override
