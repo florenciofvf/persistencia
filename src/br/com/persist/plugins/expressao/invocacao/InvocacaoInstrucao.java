@@ -51,11 +51,11 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
 		Funcao invocar = biblio.getFuncao(nomeFuncao);
+		setArgumentos(invocar, pilhaOperando);
 		Funcao clone = Funcao.clonarVertical(invocar);
 		validar(clone, comRetorno);
 		if (!clone.isNativo()) {
 			try {
-				setArgumentos(clone, pilhaOperando);
 				pilhaFuncao.push(clone);
 			} catch (Exception ex) {
 				throw new ExpressaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
@@ -63,7 +63,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		} else {
 			List<Object> lista = null;
 			AtomicBoolean pushPilhaOperando = new AtomicBoolean();
-			Object resp = invocarNativo(lista, clone, pilhaFuncao, pilhaOperando, pushPilhaOperando);
+			Object resp = invocarNativo(lista, clone, pilhaFuncao, pushPilhaOperando);
 			if (pushPilhaOperando.get()) {
 				pilhaOperando.push(resp);
 			}
@@ -87,7 +87,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 	}
 
 	private Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
-			PilhaOperando pilhaOperando, AtomicBoolean pushPilhaOperando) throws ExpressaoException {
+			AtomicBoolean pushPilhaOperando) throws ExpressaoException {
 		Object resposta = null;
 		Class<?> klass = null;
 		try {
@@ -95,9 +95,9 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		} catch (Exception ex) {
 			throw new ExpressaoException("erro.biblio_inexistente", funcao.getBiblioNativa());
 		}
-		List<Integer> params = indiceParametros(funcao);
-		Class<?>[] tipoParametros = getTipoParametros(params);
-		Object[] valorParametros = getValorParametros(pilhaOperando, params);
+		List<Integer> indices = indiceParametros(funcao);
+		Class<?>[] tipoParametros = getTipoParametros(indices);
+		Object[] valorParametros = getValorParametros(funcao, indices);
 		if (lista != null) {
 			tipoParametros = editarTipoParametros(tipoParametros, lista);
 			valorParametros = editarValorParametros(valorParametros, lista);
@@ -131,10 +131,10 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		return tipoParametros;
 	}
 
-	private Object[] getValorParametros(PilhaOperando pilhaOperando, List<Integer> params) throws ExpressaoException {
-		Object[] valorParametros = new Object[params.size()];
-		for (int i = params.size() - 1; i >= 0; i--) {
-			Object valor = pilhaOperando.pop();
+	private Object[] getValorParametros(Funcao funcao, List<Integer> indices) {
+		Object[] valorParametros = new Object[indices.size()];
+		for (int i = 0; i < indices.size(); i++) {
+			Object valor = funcao.getValorParametro(i);
 			valorParametros[i] = valor;
 		}
 		return valorParametros;

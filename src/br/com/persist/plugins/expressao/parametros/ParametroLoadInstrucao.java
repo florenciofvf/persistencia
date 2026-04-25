@@ -40,6 +40,13 @@ public class ParametroLoadInstrucao extends Instrucao {
 		}
 
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
+
+		if (valor instanceof Funcao) {
+			Funcao invocar = (Funcao) valor;
+			Funcao clone = Funcao.clonarVertical(invocar);
+			valor = clone;
+		}
+
 		pilhaOperando.push(valor);
 	}
 }
