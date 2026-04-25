@@ -1,0 +1,17 @@
+package br.com.teste;
+
+defun main() {
+	return filtrar([1, 2, 3, 4, 5], defun lamb(item){return item <= 3;});
+}
+
+defun filtrar(lista, f) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(f(${lista:head})) {
+		return ${lista:head} .. filtrar(${lista:tail}, f);
+	} else {
+		return filtrar(${lista:tail}, f);
+	}
+}

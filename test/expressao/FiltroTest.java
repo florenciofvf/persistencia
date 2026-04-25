@@ -29,4 +29,19 @@ public class FiltroTest extends AbstratoTest {
 		assertEquals("[[2, 4, 50, 6]]", result.toString());
 	}
 
+	@Test
+	public void lamb_filtro0() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(FILTRO, "lamb_filtro0"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.lamb_filtro0";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main");
+		assertEquals("[[1, 2, 3]]", result.toString());
+	}
+
 }
