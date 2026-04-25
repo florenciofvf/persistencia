@@ -50,7 +50,7 @@ public class Funcao {
 
 	public Funcao getFuncao(String nome) throws ExpressaoException {
 		for (Funcao item : funcoes) {
-			if (item.getNome().equals(nome)) {
+			if (item.nome.equals(nome)) {
 				return item;
 			}
 		}
@@ -61,20 +61,38 @@ public class Funcao {
 		return nome;
 	}
 
-	public Funcao clonar() throws ExpressaoException {
-		Funcao funcao = new Funcao(biblioteca, nome);
-		funcao.biblioNativa = biblioNativa;
-		funcao.tipoVoid = tipoVoid;
-		funcao.parent = parent;
+	protected Funcao clonarSemParent() throws ExpressaoException {
+		Funcao clone = new Funcao(biblioteca, nome);
+		clone.biblioNativa = biblioNativa;
+		clone.tipoVoid = tipoVoid;
 		for (Parametro item : parametros) {
-			funcao.addParametro(item.getNome());
+			clone.addParametro(item.clonar());
 		}
 		InstrucaoItem no = cabeca;
 		while (no != null) {
-			funcao.addInstrucao(no.instrucao);
+			clone.addInstrucao(no.instrucao);
 			no = no.proximo;
 		}
-		return funcao;
+		return clone;
+	}
+
+	public static Funcao clonarVertical(Funcao funcao) throws ExpressaoException {
+		if (funcao == null) {
+			throw new ExpressaoException("Funcao.clonarVertical(Funcao funcao) >>> funcao nula", false);
+		}
+		List<Funcao> lista = new ArrayList<>();
+		while (funcao != null) {
+			lista.add(funcao.clonarSemParent());
+			funcao = funcao.parent;
+		}
+		for (int i = lista.size() - 1; i >= 0; i--) {
+			Funcao funcaoPai = lista.get(i);
+			if (i - 1 >= 0) {
+				Funcao funcaoFilho = lista.get(i - 1);
+				funcaoPai.add(funcaoFilho);
+			}
+		}
+		return lista.get(0);
 	}
 
 	public Funcao getParent() {
@@ -112,7 +130,7 @@ public class Funcao {
 
 	public void addParametro(String nome) throws ExpressaoException {
 		InstrucaoUtil.checarParametro(nome);
-		if (contem(nome)) {
+		if (contemParametro(nome)) {
 			throw new ExpressaoException("erro.parametro_existente", nome, getNome(), biblioteca.getNomeAbsoluto());
 		}
 		Parametro param = new Parametro(parametros.size(), nome);
@@ -121,7 +139,7 @@ public class Funcao {
 
 	public void addParametro(Parametro param) throws ExpressaoException {
 		InstrucaoUtil.checarParametro(param.nome);
-		if (contem(param.nome)) {
+		if (contemParametro(param.nome)) {
 			throw new ExpressaoException("erro.parametro_existente", param.nome, getNome(),
 					biblioteca.getNomeAbsoluto());
 		}
@@ -151,7 +169,7 @@ public class Funcao {
 		return parametros.size();
 	}
 
-	public boolean contem(String string) {
+	public boolean contemParametro(String string) {
 		return getParametro(string) != null;
 	}
 

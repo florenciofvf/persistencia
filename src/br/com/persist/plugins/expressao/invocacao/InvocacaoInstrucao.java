@@ -51,7 +51,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
 		Funcao invocar = biblio.getFuncao(nomeFuncao);
-		Funcao clone = invocar.clonar();
+		Funcao clone = Funcao.clonarVertical(invocar);
 		validar(clone, comRetorno);
 		if (!clone.isNativo()) {
 			try {
