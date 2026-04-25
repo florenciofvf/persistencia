@@ -7,19 +7,10 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class GotoInstrucao extends Instrucao {
-	private int indiceSalto;
+	private final int indiceSalto;
 
-	public GotoInstrucao() {
-		super(GotoContexto.GOTO);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new GotoInstrucao();
-	}
-
-	@Override
-	public void setParametros(String string) {
+	public GotoInstrucao(int indice, String string) throws ExpressaoException {
+		super(indice, GotoContexto.GOTO);
 		indiceSalto = Integer.parseInt(string);
 	}
 

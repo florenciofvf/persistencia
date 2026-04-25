@@ -7,13 +7,8 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class RetornoInstrucao extends Instrucao {
-	public RetornoInstrucao() {
-		super(RetornoContexto.RETURN);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new RetornoInstrucao();
+	public RetornoInstrucao(int indice) throws ExpressaoException {
+		super(indice, RetornoContexto.RETURN);
 	}
 
 	@Override

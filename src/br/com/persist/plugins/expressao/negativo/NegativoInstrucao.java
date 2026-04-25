@@ -11,13 +11,8 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class NegativoInstrucao extends Instrucao {
-	public NegativoInstrucao() {
-		super(NegativoContexto.NEG);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new NegativoInstrucao();
+	public NegativoInstrucao(int indice) throws ExpressaoException {
+		super(indice, NegativoContexto.NEG);
 	}
 
 	@Override

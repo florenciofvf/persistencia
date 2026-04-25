@@ -8,28 +8,21 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class StringPushInstrucao extends Instrucao {
-	public StringPushInstrucao() {
-		super(StringContexto.PUSH_STRING);
-	}
+	private String string;
 
-	@Override
-	public Instrucao novo() {
-		return new StringPushInstrucao();
-	}
-
-	@Override
-	public void setParametros(String parametros) {
-		if (parametros == null) {
-			parametros = "";
+	public StringPushInstrucao(int indice, String string) throws ExpressaoException {
+		super(indice, StringContexto.PUSH_STRING);
+		if (string == null) {
+			string = "";
 		}
-		this.parametros = Util.replaceAll(parametros, "\\R", "\r");
-		this.parametros = Util.replaceAll(this.parametros, "\\N", "\n");
-		this.parametros = Util.replaceAll(this.parametros, "\\T", "\t");
+		this.string = Util.replaceAll(string, "\\R", "\r");
+		this.string = Util.replaceAll(this.string, "\\N", "\n");
+		this.string = Util.replaceAll(this.string, "\\T", "\t");
 	}
 
 	@Override
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
-		pilhaOperando.push(getParametros());
+		pilhaOperando.push(string);
 	}
 }

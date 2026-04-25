@@ -9,19 +9,10 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class FlutuantePushInstrucao extends Instrucao {
-	private BigDecimal bigDecimal;
+	private final BigDecimal bigDecimal;
 
-	public FlutuantePushInstrucao() {
-		super(FlutuanteContexto.PUSH_FLUTUANTE);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new FlutuantePushInstrucao();
-	}
-
-	@Override
-	public void setParametros(String string) {
+	public FlutuantePushInstrucao(int indice, String string) throws ExpressaoException {
+		super(indice, FlutuanteContexto.PUSH_FLUTUANTE);
 		bigDecimal = new BigDecimal(string);
 	}
 

@@ -9,19 +9,10 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class InteiroPushInstrucao extends Instrucao {
-	private BigInteger bigInteger;
+	private final BigInteger bigInteger;
 
-	public InteiroPushInstrucao() {
-		super(InteiroContexto.PUSH_INTEIRO);
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new InteiroPushInstrucao();
-	}
-
-	@Override
-	public void setParametros(String string) {
+	public InteiroPushInstrucao(int indice, String string) throws ExpressaoException {
+		super(indice, InteiroContexto.PUSH_INTEIRO);
 		bigInteger = new BigInteger(string);
 	}
 
