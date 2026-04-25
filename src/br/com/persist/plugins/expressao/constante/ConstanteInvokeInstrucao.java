@@ -5,7 +5,6 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
-import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
@@ -18,7 +17,7 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 	private boolean biblioLocal;
 
 	public ConstanteInvokeInstrucao(int indice, String parametros) throws ExpressaoException {
-		super(indice, InvocacaoContexto.INVOKE_CONST);
+		super(indice, ConstanteContexto.INVOKE_CONST);
 		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeBiblioteca = array[0];
 		nomeConstante = array[1];

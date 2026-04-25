@@ -22,19 +22,10 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 	private String nomeBiblio;
 	private String nomeFuncao;
 
-	public InvocacaoInstrucao(boolean comRetorno) {
-		super(comRetorno ? InvocacaoContexto.INVOKE_CRET : InvocacaoContexto.INVOKE_VOID);
+	public InvocacaoInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+		super(indice, comRetorno ? InvocacaoContexto.INVOKE_CRET : InvocacaoContexto.INVOKE_VOID);
 		this.comRetorno = comRetorno;
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new InvocacaoInstrucao(comRetorno);
-	}
-
-	@Override
-	public void setParametros(String string) {
-		String[] array = string.split(ExpressaoConstantes.ESPACO);
+		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeBiblio = array[0];
 		nomeFuncao = array[1];
 		biblioLocal = Contexto.THIS.equals(nomeBiblio);
@@ -61,6 +52,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		}
 		Funcao invocar = biblio.getFuncao(nomeFuncao);
 		Funcao clone = invocar.clonar();
+		validar(clone, comRetorno);
 		if (!clone.isNativo()) {
 			try {
 				setArgumentos(clone, pilhaOperando);

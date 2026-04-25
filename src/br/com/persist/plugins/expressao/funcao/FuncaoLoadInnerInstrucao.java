@@ -16,19 +16,10 @@ public class FuncaoLoadInnerInstrucao extends Instrucao implements LinkBibliotec
 	private boolean biblioLocal;
 	private String nomeFuncao;
 
-	public FuncaoLoadInnerInstrucao(boolean tipoVoid) {
-		super(tipoVoid ? FuncaoContexto.LOAD_FUNCTION_INNER_VOID : FuncaoContexto.LOAD_FUNCTION_INNER_CRET);
+	public FuncaoLoadInnerInstrucao(boolean tipoVoid, int indice, String parametros) throws ExpressaoException {
+		super(indice, tipoVoid ? FuncaoContexto.LOAD_FUNCTION_INNER_VOID : FuncaoContexto.LOAD_FUNCTION_INNER_CRET);
 		this.tipoVoid = tipoVoid;
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new FuncaoLoadInnerInstrucao(tipoVoid);
-	}
-
-	@Override
-	public void setParametros(String string) {
-		String[] array = string.split(ExpressaoConstantes.ESPACO);
+		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeBiblioteca = array[0];
 		nomeFuncao = array[1];
 		biblioLocal = Contexto.THIS.equals(nomeBiblioteca);

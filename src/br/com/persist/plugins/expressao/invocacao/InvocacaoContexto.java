@@ -17,6 +17,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
@@ -24,7 +25,6 @@ import br.com.persist.plugins.expressao.processador.Funcao;
 public class InvocacaoContexto extends Contexto implements LinkBibliotecaContexto {
 	public static final String INVOKE_PARAM_CRET = "invoke_param_cret";
 	public static final String INVOKE_PARAM_VOID = "invoke_param_void";
-	public static final String INVOKE_CONST = "invoke_const";
 	public static final String INVOKE_CRET = "invoke_cret";
 	public static final String INVOKE_VOID = "invoke_void";
 	private ArgumentosContexto argumentos;
@@ -61,7 +61,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			if (funcao != null) {
 				setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
 			} else {
-				setPrefixo(INVOKE_CONST);
+				setPrefixo(ConstanteContexto.INVOKE_CONST);
 			}
 			setBiblio(THIS);
 			setMetodo(array[0]);

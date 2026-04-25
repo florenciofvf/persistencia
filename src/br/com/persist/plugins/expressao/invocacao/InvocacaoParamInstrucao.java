@@ -11,18 +11,9 @@ public class InvocacaoParamInstrucao extends Instrucao {
 	private String[] nomeFuncoes;
 	private String nomeFuncao;
 
-	public InvocacaoParamInstrucao(boolean comRetorno) {
-		super(comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID);
+	public InvocacaoParamInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+		super(indice, comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID);
 		this.comRetorno = comRetorno;
-	}
-
-	@Override
-	public Instrucao novo() {
-		return new InvocacaoParamInstrucao(comRetorno);
-	}
-
-	@Override
-	public void setParametros(String parametros) {
 		int pos = parametros.indexOf(' ');
 		nomeFuncoes = parametros.substring(0, pos).split(CIFRAO);
 		nomeFuncao = parametros.substring(pos + 1);
