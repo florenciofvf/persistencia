@@ -84,4 +84,20 @@ public class FuncaoTest extends AbstratoTest {
 		// result = processador.processar(biblio, "fibonacci_2", bi(9));
 		// assertEquals("[34]", result.toString());
 	}
+
+	@Test
+	public void funcoes1() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("funcao", "funcoes1"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.funcoes1";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main");
+		assertEquals("[10\n4]", result.toString());
+	}
+
 }
