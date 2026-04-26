@@ -8,7 +8,7 @@ defun quickSort(lista) {
 	if(lista == []) {
 		return [];
 	} else {
-		return quickSort(lt(${lista:head}, ${lista:tail})) : cab : quickSort(ge(${lista:head}, ${lista:tail}));
+		return quickSort(lt(${lista:head}, ${lista:tail})) .. ${lista:head} .. quickSort(ge(${lista:head}, ${lista:tail}));
 	}
 }
 
