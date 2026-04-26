@@ -29,6 +29,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 	public static final String INVOKE_VOID = "invoke_void";
 	private ArgumentosContexto argumentos;
 	private boolean comRetorno;
+	private boolean processado;
 
 	public InvocacaoContexto(Token token, boolean comRetorno) {
 		super(token);
@@ -38,11 +39,15 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 	@Override
 	public void ajusteChavesEInvocacoesPre(Map<String, AliasContexto> mapaAlias, CacheBiblioteca cache)
 			throws ExpressaoException {
+		if (processado) {
+			return;
+		}
 		String chamada = token.getString();
 		String[] array = chamada.split("\\.");
 		processarChave(chamada, array);
 		processarChave2(chamada, array, mapaAlias, cache);
 		processarChaveN(chamada, array, cache);
+		processado = true;
 	}
 
 	@Override

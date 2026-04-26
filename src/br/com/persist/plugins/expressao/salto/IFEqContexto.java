@@ -9,6 +9,7 @@ import br.com.persist.plugins.expressao.compilador.Indexador;
 
 public class IFEqContexto extends Contexto implements CheckSalto {
 	public static final String IF_EQ = "ifeq";
+	private boolean dispensavel;
 	private Contexto destino;
 
 	public Contexto getDestino() {
@@ -24,6 +25,14 @@ public class IFEqContexto extends Contexto implements CheckSalto {
 		if (destino == null) {
 			throw new ExpressaoException("erro.ifeq.ponto_salto_nulo");
 		}
+	}
+
+	public boolean isDispensavel() {
+		return dispensavel;
+	}
+
+	public void setDispensavel(boolean dispensavel) {
+		this.dispensavel = dispensavel;
 	}
 
 	@Override

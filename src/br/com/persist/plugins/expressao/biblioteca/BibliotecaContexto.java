@@ -25,6 +25,7 @@ import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.organiza.PacoteContexto;
 import br.com.persist.plugins.expressao.salto.GotoContexto;
+import br.com.persist.plugins.expressao.salto.IFEqContexto;
 
 public class BibliotecaContexto extends Contexto {
 	private FuncaoConstantesContexto funcaoConstantes;
@@ -241,6 +242,7 @@ public class BibliotecaContexto extends Contexto {
 		funcao.listarIni(contextos);
 
 		normalizarGoto(contextos);
+		normalizarIFEq(contextos);
 
 		Indexador indexador = new Indexador();
 		for (Contexto item : contextos) {
@@ -273,12 +275,40 @@ public class BibliotecaContexto extends Contexto {
 		}
 	}
 
+	private void normalizarIFEq(List<Contexto> contextos) {
+		for (int i = 0; i < contextos.size(); i++) {
+			Contexto c = contextos.get(i);
+			if (c instanceof IFEqContexto) {
+				checarSeguinte((IFEqContexto) c, contextos, i + 1);
+			}
+		}
+		Iterator<Contexto> it = contextos.iterator();
+		while (it.hasNext()) {
+			Contexto c = it.next();
+			if (c instanceof IFEqContexto && ((IFEqContexto) c).isDispensavel()) {
+				it.remove();
+			}
+		}
+	}
+
 	private void checarSeguinte(GotoContexto gotoContexto, List<Contexto> contextos, int indice) {
 		if (indice < contextos.size()) {
 			Contexto c = contextos.get(indice);
 			if (c instanceof GotoContexto) {
 				GotoContexto proximo = (GotoContexto) c;
 				if (proximo.getDestino() == gotoContexto.getDestino()) {
+					proximo.setDispensavel(true);
+				}
+			}
+		}
+	}
+
+	private void checarSeguinte(IFEqContexto ifEqContexto, List<Contexto> contextos, int indice) {
+		if (indice < contextos.size()) {
+			Contexto c = contextos.get(indice);
+			if (c instanceof IFEqContexto) {
+				IFEqContexto proximo = (IFEqContexto) c;
+				if (proximo.getDestino() == ifEqContexto.getDestino()) {
 					proximo.setDispensavel(true);
 				}
 			}
