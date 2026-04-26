@@ -11,6 +11,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
+import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 import br.com.persist.plugins.expressao.negativo.NegativoContexto;
@@ -431,5 +432,19 @@ public abstract class Contexto {
 			c = c.getParent();
 		}
 		return lista;
+	}
+
+	protected IFuncaoContexto getFuncaoNomeOriginal(String nome) {
+		Contexto c = this;
+		while (c != null) {
+			if (c instanceof IFuncaoContexto) {
+				IFuncaoContexto funcao = (IFuncaoContexto) c;
+				if (funcao.isNomeOriginal(nome)) {
+					return funcao;
+				}
+			}
+			c = c.getParent();
+		}
+		return null;
 	}
 }

@@ -45,6 +45,11 @@ public class FuncaoNativaContexto extends Contexto implements IFuncaoContexto {
 	}
 
 	@Override
+	public boolean isNomeOriginal(String nome) {
+		return false;
+	}
+
+	@Override
 	public void salvar(PrintWriter pw) throws ExpressaoException {
 		pw.println(PREFIXO_FUNCAO_NATIVA + biblioteca.getString() + ExpressaoConstantes.ESPACO + token.getString());
 		if (retornoVoid) {

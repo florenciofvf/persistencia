@@ -27,9 +27,8 @@ public class InternaTest extends AbstratoTest {
 		result = processador.processar(biblio, "main");
 		assertEquals("[4]", result.toString());
 
-		// result = processador.processar(biblio, "fatorial", bi(5));
-		// assertEquals("[120]", result.toString());
-		// ERRO
+		result = processador.processar(biblio, "fatorial", bi(5));
+		assertEquals("[120]", result.toString());
 	}
 
 }

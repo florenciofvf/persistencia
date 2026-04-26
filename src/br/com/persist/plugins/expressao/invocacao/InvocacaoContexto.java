@@ -61,13 +61,22 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
 			setBiblio(montarString(lista, false));
 			setMetodo(chamada);
+			return;
+		}
+		IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
+		if (funcao != null) {
+			setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
+			setBiblio(THIS);
+			setMetodo(array[0]);
+			return;
+		}
+		funcao = getFuncaoNomeOriginal(chamada);
+		if (funcao != null) {
+			setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
+			setBiblio(THIS);
+			setMetodo(funcao.getNome());
 		} else {
-			IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
-			if (funcao != null) {
-				setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
-			} else {
-				setPrefixo(ConstanteContexto.INVOKE_CONST);
-			}
+			setPrefixo(ConstanteContexto.INVOKE_CONST);
 			setBiblio(THIS);
 			setMetodo(array[0]);
 		}

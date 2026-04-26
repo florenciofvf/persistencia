@@ -34,6 +34,7 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 	public static final String DEFUN = "defun";
 	private ChaveContexto refFuncaoInterna;
 	protected boolean retornoVoid;
+	private String nomeOriginal;
 
 	@Override
 	public boolean isRetornoVoid() {
@@ -125,11 +126,16 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		if (parent instanceof BibliotecaContexto) {
 			return;
 		}
+		nomeOriginal = token.getString();
 		String string = indexador.get1() + "_" + token.getString();
 		token = new Token(string, Tipo.VIRTUAL, -1);
 		refFuncaoInterna = new ChaveContexto(token);
 		refFuncaoInterna.setPrefixo(retornoVoid ? LOAD_FUNCTION_INNER_VOID : LOAD_FUNCTION_INNER_CRET);
 		refFuncaoInterna.setBiblio(THIS);
+	}
+
+	public boolean isNomeOriginal(String string) {
+		return nomeOriginal != null && nomeOriginal.equals(string);
 	}
 
 	@Override

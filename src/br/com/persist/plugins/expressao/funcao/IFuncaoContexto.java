@@ -36,6 +36,8 @@ public interface IFuncaoContexto {
 
 	public void listarIni(List<Contexto> lista);
 
+	public boolean isNomeOriginal(String nome);
+
 	public ParametrosContexto getParametros();
 
 	public boolean isRetornoVoid();

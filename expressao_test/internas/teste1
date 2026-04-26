@@ -19,7 +19,7 @@ defun teste(funcao) {
 	};
 }
 
-/*defun fatorial(numero) {
+defun fatorial(numero) {
 	const exec = defun calcular(valor) {
 					if(valor == 0) {
 						return 1;
@@ -28,4 +28,4 @@ defun teste(funcao) {
 					}
 				};
 	return exec(numero);
-}*/
+}
