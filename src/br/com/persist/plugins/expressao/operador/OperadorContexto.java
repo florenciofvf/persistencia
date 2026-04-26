@@ -12,6 +12,7 @@ import br.com.persist.plugins.expressao.compilador.TokenManager;
 public class OperadorContexto extends Contexto {
 	public static final String CONCAT_LISTA = "concat_lista";
 	public static final String ADD_LISTA = "add_lista";
+
 	public static final String ADD = "add";
 	public static final String SUB = "sub";
 	public static final String MUL = "mul";
