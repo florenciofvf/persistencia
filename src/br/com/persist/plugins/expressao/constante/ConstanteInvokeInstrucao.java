@@ -46,6 +46,7 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 		Constante constante = biblio.getConstante(nomeConstante);
 		Funcao funcaoParam = (Funcao) constante.getValor();
 		InvocacaoInstrucao.setArgumentos(funcaoParam, pilhaOperando);
-		pilhaFuncao.push(funcaoParam);
+		Funcao clone = Funcao.clonarVertical(funcaoParam);
+		pilhaFuncao.push(clone);
 	}
 }
