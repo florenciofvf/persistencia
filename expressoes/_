@@ -1,0 +1,56 @@
+package br.com.persist.plugins.expressao.filtro;
+
+defun filtrar(lista, f) {
+	if(lista == []) {
+		return [];
+	}
+	if(f(${lista:head})) {
+		return ${lista:head} .. filtrar(${lista:tail}, f);
+	} else {
+		return filtrar(${lista:tail}, f);
+	}
+}
+
+defun mapear(lista, f) {
+	if(lista == []) {
+		return [];
+	}
+	return f(${lista:head}) .. mapear(${lista:tail}, f);
+}
+
+defun reduzirD(lista, f, resp) {
+	if(lista == []) {
+		return resp;
+	}
+	return f(${lista:head}, reduzirD(${lista:tail}, f, resp));
+}
+
+defun reduzirE(lista, f, resp) {
+	if(lista == []) {
+		return resp;
+	}
+	return reduzirE(${lista:tail}, f, f(${lista:head}, resp));
+}
+
+defun reduzir(lista, f, resp) {
+	return reduzirE(lista, f, resp);
+}
+
+defun find(lista, f, default) {
+	if(lista == []) {
+		return default;
+	}
+	if(f(${lista:head})) {
+		return ${lista:head};
+	}
+	return find(${lista:tail}, f, default);
+}
+
+defun forEach(lista, f) void {
+	if(lista == []) {
+		return;
+	}
+	f(${lista:head});
+	forEach(${lista:tail}, f);
+	return;
+}

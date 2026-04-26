@@ -1,0 +1,147 @@
+pacote br.com.persist.plugins.expressao.filtro
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao filtrar
+param lista
+param f
+0  load_param filtrar lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+3  eq
+4  ifeq 12
+6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+9  return
+12  load_param filtrar lista
+14  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+16  invoke_param_cret filtrar f
+17  ifeq 39
+20  load_param filtrar lista
+22  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+25  load_param filtrar lista
+27  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+30  load_param filtrar f
+32  invoke_cret this filtrar
+33  concat_lista
+36  return
+39  load_param filtrar lista
+41  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+44  load_param filtrar f
+46  invoke_cret this filtrar
+49  return
+
+funcao mapear
+param lista
+param f
+0  load_param mapear lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+3  eq
+4  ifeq 12
+6  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+9  return
+12  load_param mapear lista
+14  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+16  invoke_param_cret mapear f
+19  load_param mapear lista
+21  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+24  load_param mapear f
+26  invoke_cret this mapear
+27  concat_lista
+30  return
+
+funcao reduzirD
+param lista
+param f
+param resp
+0  load_param reduzirD lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+3  eq
+4  ifeq 13
+7  load_param reduzirD resp
+10  return
+13  load_param reduzirD lista
+15  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+18  load_param reduzirD lista
+20  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+23  load_param reduzirD f
+26  load_param reduzirD resp
+28  invoke_cret this reduzirD
+30  invoke_param_cret reduzirD f
+33  return
+
+funcao reduzirE
+param lista
+param f
+param resp
+0  load_param reduzirE lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+3  eq
+4  ifeq 13
+7  load_param reduzirE resp
+10  return
+13  load_param reduzirE lista
+15  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+18  load_param reduzirE f
+21  load_param reduzirE lista
+23  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+26  load_param reduzirE resp
+28  invoke_param_cret reduzirE f
+30  invoke_cret this reduzirE
+33  return
+
+funcao reduzir
+param lista
+param f
+param resp
+0  load_param reduzir lista
+3  load_param reduzir f
+6  load_param reduzir resp
+8  invoke_cret this reduzirE
+11  return
+
+funcao find
+param lista
+param f
+param default
+0  load_param find lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+3  eq
+4  ifeq 13
+7  load_param find default
+10  return
+13  load_param find lista
+15  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+17  invoke_param_cret find f
+18  ifeq 29
+21  load_param find lista
+23  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+26  return
+29  load_param find lista
+31  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+34  load_param find f
+37  load_param find default
+39  invoke_cret this find
+42  return
+
+funcao forEach
+tipo_void
+param lista
+param f
+0  load_param forEach lista
+2  invoke_cret br.com.persist.plugins.expressao.biblionativo.List create
+3  eq
+4  ifeq 10
+7  return
+10  load_param forEach lista
+12  invoke_cret br.com.persist.plugins.expressao.biblionativo.List head
+14  invoke_param_void forEach f
+17  load_param forEach lista
+19  invoke_cret br.com.persist.plugins.expressao.biblionativo.List tail
+22  load_param forEach f
+24  invoke_void this forEach
+27  return
+
+funcao $constantes
+tipo_void
+0  return
+
