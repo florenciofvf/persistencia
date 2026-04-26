@@ -43,4 +43,22 @@ public class FuncionalTest extends AbstratoTest {
 		assertEquals("[Java2]", result.toString());
 	}
 
+	@Test
+	public void funcional() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile("funcional", "funcional"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.funcional";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main");
+		assertEquals("[Minha Função]", result.toString());
+
+		result = processador.processar(biblio, "main2");
+		assertEquals("[minhaFuncao([])]", result.toString());
+	}
+
 }

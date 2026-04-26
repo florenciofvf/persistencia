@@ -17,6 +17,7 @@ public class Processador {
 
 	public List<Object> processar(String nomeBiblioAbsoluto, String nomeFuncao, Object... args)
 			throws ExpressaoException {
+		boolean carregado = cacheBiblioteca.contem(nomeBiblioAbsoluto);
 		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioAbsoluto);
 
 		Funcao funcao = biblioteca.getFuncao(nomeFuncao);
@@ -25,12 +26,13 @@ public class Processador {
 			funcao.setValorParametro(i, args[i]);
 		}
 
-		Funcao funcaoConstantes = biblioteca.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES);
-
 		pilhaFuncao.clear();
 		pilhaOperando.clear();
 		pilhaFuncao.push(funcao);
-		pilhaFuncao.push(funcaoConstantes);
+
+		if (!carregado) {
+			pilhaFuncao.push(biblioteca.getFuncao(FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES));
+		}
 
 		funcao = pilhaFuncao.peek();
 
