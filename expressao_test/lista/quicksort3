@@ -1,0 +1,88 @@
+package br.com.teste;
+
+defun main() {
+	return quickSort3([46, 1, 2, -3, 4, 50, 6, 0]);
+}
+
+defun quickSort(lista) {
+	if(lista == []) {
+		return [];
+	} else {
+		return quickSort(lt(${lista:head}, ${lista:tail})) : cab : quickSort(ge(${lista:head}, ${lista:tail}));
+	}
+}
+
+defun lt(valor, lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(${lista:head} < valor) {
+		return ${lista:head} .. lt(valor, ${lista:tail});
+	} else {
+		return lt(valor, ${lista:tail});
+	}
+}
+
+defun ge(valor, lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(${lista:head} >= valor) {
+		return ${lista:head} .. ge(valor, ${lista:tail});
+	} else {
+		return ge(valor, ${lista:tail});
+	}
+}
+
+defun quickSort2(lista) {
+	if(lista == []) {
+		return [];
+	} else {
+		return quickSort2(filtrar(${lista:tail}, ${lista:head}, menor)) .. ${lista:head} .. quickSort2(filtrar(${lista:tail}, ${lista:head}, maiorIgual));
+	}
+}
+
+defun filtrar(lista, valor, filtro) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(filtro(valor, ${lista:head})) {
+		return ${lista:head} .. filtrar(${lista:tail}, valor, filtro);
+	} else {
+		return filtrar(${lista:tail}, valor, filtro);
+	}
+}
+
+defun maiorIgual(c, comparado) {
+	return comparado >= c;
+}
+
+defun menor(c, comparado) {
+	return comparado < c;
+}
+
+
+defun quickSort3(lista) {
+	if(lista == []) {
+		return [];
+	} else {
+		return quickSort3(filtrar3(${lista:tail}, defun teste(e){return e < ${lista:head};})) 
+				.. ${lista:head} .. 
+			   quickSort3(filtrar3(${lista:tail}, defun lamb(e){return e >= ${lista:head};}));
+	}
+}
+
+defun filtrar3(lista, f) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(f(${lista:head})) {
+		return ${lista:head} .. filtrar3(${lista:tail}, f);
+	} else {
+		return filtrar3(${lista:tail}, f);
+	}
+}

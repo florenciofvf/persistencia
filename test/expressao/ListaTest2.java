@@ -43,4 +43,35 @@ public class ListaTest2 extends AbstratoTest {
 		result = processador.processar(biblio, "main");
 		assertEquals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
 	}
+
+	@Test
+	public void quicksort3() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "quicksort3"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.quicksort3";
+
+		List<Object> result;
+
+		//result = processador.processar(biblio, "main");
+		//assertEquals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
+		//ERRO
+	}
+
+	@Test
+	public void quicksort4() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "quicksort4"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.quicksort2";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main");
+		assertEquals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
+	}
 }

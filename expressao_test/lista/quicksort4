@@ -1,0 +1,16 @@
+package br.com.teste;
+
+alias br.com.persist.plugins.expressao.filtro._ _;
+
+defun main() {
+	return quickSort([46, 1, 2, -3, 4, 50, 6, 0]);
+}
+
+defun quickSort(lista) {
+	if(lista == []) {
+		return [];
+	}
+	return quickSort(_.filtrar(${lista:tail}, defun lamb(e){return e < ${lista:head};})) 
+							.. ${lista:head} .. 
+		   quickSort(_.filtrar(${lista:tail}, defun lamb(e){return e >= ${lista:head};}));
+}
