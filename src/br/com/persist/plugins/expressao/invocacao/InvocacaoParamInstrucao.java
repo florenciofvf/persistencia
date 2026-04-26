@@ -55,6 +55,7 @@ public class InvocacaoParamInstrucao extends Instrucao {
 		Funcao funcaoParam = (Funcao) valor;
 		InvocacaoInstrucao.validar(funcaoParam, comRetorno);
 		InvocacaoInstrucao.setArgumentos(funcaoParam, pilhaOperando);
-		pilhaFuncao.push(funcaoParam);
+		Funcao clone = Funcao.clonarVertical(funcaoParam);
+		pilhaFuncao.push(clone);
 	}
 }
