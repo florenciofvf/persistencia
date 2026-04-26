@@ -1,0 +1,20 @@
+package br.com.teste;
+
+defun main() {
+	return resposta('par -> ', 'impar -> ');
+}
+
+defun resposta(textoPar, textoImpar) {
+	return concat([1,2,3,4,5], defun lamb(e){return textoPar + e;}, defun lamb(e){return textoImpar + e;});
+}
+
+defun concat(lista, par, impar) {
+	if(lista == []) {
+		return [];
+	}
+	if(${lista:head} % 2 == 0) {
+		return par(${lista:head}) .. concat(${lista:tail}, par, impar);
+	} else {
+		return impar(${lista:head}) .. concat(${lista:tail}, par, impar);
+	}
+}

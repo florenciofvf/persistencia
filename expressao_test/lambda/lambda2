@@ -1,0 +1,24 @@
+package br.com.teste;
+
+alias br.com.persist.plugins.expressao.filtro._ _;
+
+defun main() {
+	const florencio = map.create();
+	const amanda = map.create();
+	const julia = map.create();
+
+	map.put(florencio, 'nome', 'Florêncio Vieira Filho');
+	map.put(amanda, 'nome', 'Amanda Vieira Freire');
+	map.put(julia, 'nome', 'Julia Vieira Freire');
+
+	const filhos = [amanda, julia];
+
+	return detalhar(filhos, florencio);
+}
+
+defun detalhar(lista, objeto) {
+	return _.mapear(lista, defun lamb(e){
+									return '\NPAI: ' + ${objeto.nome} + '\N FILHO -> ' + ${e.nome};
+								}
+					);
+}
