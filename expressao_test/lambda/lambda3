@@ -1,0 +1,7 @@
+package br.com.teste;
+
+alias br.com.persist.plugins.expressao.filtro._ _;
+
+defun main() {
+	return _.reduzir([1,2], defun lamb(e, resp){return e + resp;}, 0);
+}

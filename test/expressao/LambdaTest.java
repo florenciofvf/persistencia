@@ -61,4 +61,19 @@ public class LambdaTest extends AbstratoTest {
 				result.toString());
 	}
 
+	@Test
+	public void lambda3() throws IOException, ExpressaoException {
+		Compilacao compilacao = new Compilacao();
+		compilacao.compilar(getFile(LAMBDA, "lambda3"));
+
+		Processador processador = new Processador();
+
+		String biblio = "br.com.teste.lambda3";
+
+		List<Object> result;
+
+		result = processador.processar(biblio, "main");
+		assertEquals("[3]", result.toString());
+	}
+
 }
