@@ -1,0 +1,21 @@
+package br.com.teste;
+
+defun main() {
+	return filtrar([1, 2, -3, 4, 50, 6], par);
+}
+
+defun filtrar(lista, predicado) {
+	if(lista == []) {
+		return [];
+	} 
+
+	if(predicado(list.head(lista))) {
+		return list.head(lista) .. filtrar(list.tail(lista), par);
+	} else {
+		return filtrar(list.tail(lista), par);
+	}
+}
+
+defun par(item) {
+	return item % 2 == 0;
+}
