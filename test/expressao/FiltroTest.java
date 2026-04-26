@@ -15,7 +15,7 @@ public class FiltroTest extends AbstratoTest {
 	private static final String FILTRO = "filtro";
 
 	@Test
-	public void teste1() throws IOException, ExpressaoException {
+	public void lista_filtro() throws IOException, ExpressaoException {
 		Compilacao compilacao = new Compilacao();
 		compilacao.compilar(getFile(FILTRO, "lista_filtro"));
 

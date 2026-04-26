@@ -50,6 +50,7 @@ public class FuncaoLoadInstrucao extends Instrucao implements LinkBiblioteca {
 			throw new ExpressaoException("erro.invocacao.retorno", chamada,
 					(funcaoLoad.isTipoVoid() ? "VOID" : "VALOR"));
 		}
-		pilhaOperando.push(funcaoLoad);
+		Funcao clone = Funcao.clonarVertical(funcaoLoad);
+		pilhaOperando.push(clone);
 	}
 }

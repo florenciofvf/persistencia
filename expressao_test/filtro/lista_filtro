@@ -12,7 +12,7 @@ defun filtrar(lista, predicado) {
 	if(predicado(list.head(lista))) {
 		return list.head(lista) .. filtrar(list.tail(lista), predicado);
 	} else {
-		return filtrar(list.tail(lista), predicado);
+		return filtrar(list.tail(lista), par);
 	}
 }
 
