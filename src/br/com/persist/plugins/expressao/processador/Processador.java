@@ -20,7 +20,7 @@ public class Processador {
 		boolean carregado = cacheBiblioteca.contem(nomeBiblioAbsoluto);
 		Biblioteca biblioteca = cacheBiblioteca.getBiblioteca(nomeBiblioAbsoluto);
 
-		Funcao funcao = biblioteca.getFuncao(nomeFuncao);
+		Funcao funcao = biblioteca.getFuncao(nomeFuncao).clonarSemParent();
 
 		for (int i = 0; i < args.length; i++) {
 			funcao.setValorParametro(i, args[i]);
