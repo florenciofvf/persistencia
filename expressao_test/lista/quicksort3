@@ -4,6 +4,7 @@ defun main() {
 	return quickSort3([46, 1, 2, -3, 4, 50, 6, 0]);
 }
 
+//---------------------------------------------------------------\\
 defun quickSort(lista) {
 	if(lista == []) {
 		return [];
@@ -35,7 +36,10 @@ defun ge(valor, lista) {
 		return ge(valor, ${lista:tail});
 	}
 }
+//---------------------------------------------------------------\\
 
+
+//---------------------------------------------------------------\\
 defun quickSort2(lista) {
 	if(lista == []) {
 		return [];
@@ -63,26 +67,29 @@ defun maiorIgual(c, comparado) {
 defun menor(c, comparado) {
 	return comparado < c;
 }
+//---------------------------------------------------------------\\
 
 
+//---------------------------------------------------------------\\
 defun quickSort3(lista) {
 	if(lista == []) {
 		return [];
 	} else {
-		return quickSort3(filtrar3(${lista:tail}, defun teste(e){return e < ${lista:head};})) 
+		return quickSort3(filtrar3(${lista:tail}, defun lamb(e, valor){return e < valor;}, ${lista:head})) 
 				.. ${lista:head} .. 
-			   quickSort3(filtrar3(${lista:tail}, defun lamb(e){return e >= ${lista:head};}));
+			   quickSort3(filtrar3(${lista:tail}, defun lamb(e, valor){return e >= valor;}, ${lista:head}));
 	}
 }
 
-defun filtrar3(lista, f) {
+defun filtrar3(lista, f, valor) {
 	if(lista == []) {
 		return [];
 	}
 
-	if(f(${lista:head})) {
-		return ${lista:head} .. filtrar3(${lista:tail}, f);
+	if(f(${lista:head}, valor)) {
+		return ${lista:head} .. filtrar3(${lista:tail}, f, valor);
 	} else {
-		return filtrar3(${lista:tail}, f);
+		return filtrar3(${lista:tail}, f, valor);
 	}
 }
+//---------------------------------------------------------------\\

@@ -55,9 +55,8 @@ public class ListaTest2 extends AbstratoTest {
 
 		List<Object> result;
 
-		// result = processador.processar(biblio, "main");
-		// assertEquals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
-		// ERRO
+		result = processador.processar(biblio, "main");
+		assertEquals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
 	}
 
 	@Test
