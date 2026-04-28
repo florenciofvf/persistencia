@@ -19,8 +19,9 @@ public class ComentarioTest extends AbstratoTest {
 	@Test
 	public void compilarAPIFiltro() throws IOException, ExpressaoException {
 		File raiz = new File("expressoes");
+		File filtro = new File(raiz, "filtro");
 		Compilacao compilacao = new Compilacao();
-		compilacao.compilar(new File(raiz, "_"));
+		compilacao.compilar(new File(filtro, "_"));
 	}
 
 }

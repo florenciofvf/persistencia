@@ -4,4 +4,4 @@ defun somar(valor1, valor2) {
 	return valor1 + valor2 + upper('Java');
 }
 
-defun_native br.com.persist.plugins.expressao.biblionativo.StringUtil upper(string);
+defun_native br.com.persist.plugins.expressao.biblionativo.NString upper(string);
