@@ -33,6 +33,8 @@ public class ExpressaoCor {
 			}
 			if (token.isReservado()) {
 				set(doc, token, RED);
+			} else if (token.isEL()) {
+				set(doc, token, GREEN2);
 			} else if (token.isString()) {
 				set(doc, token, BLUE);
 			} else if (token.isComentario()) {
