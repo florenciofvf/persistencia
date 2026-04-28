@@ -44,7 +44,7 @@ public class ExpressaoCor {
 				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 2, BLUE, true);
 			} else if (token.isComentario()) {
 				set(doc, token, GRAY);
-			} else if (token.isEspecial()) {
+			} else if (token.isOperador() || token.isEspecial()) {
 				set(doc, token, BOLD);
 			} else if (token.isInteiro() || token.isFlutuante()) {
 				set(doc, token, RED2);
