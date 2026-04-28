@@ -29,15 +29,19 @@ public class GeraBiblio {
 		}
 	}
 
-	private static void processarBiblioteca(Class<?> klass) throws IOException, ExpressaoException {
-		gerarBiblioteca(klass);
+	private static void processarBiblioteca(Class<?> classe) throws IOException, ExpressaoException {
+		gerarBiblioteca(classe);
 		Compilacao compilacao = new Compilacao();
-		String nomeBiblioteca = klass.getSimpleName();
+		String nomeBiblioteca = getNomeBiblio(classe);
 		File biblioteca = new File(ROOT + nomeBiblioteca);
 		compilacao.compilar(biblioteca);
 		CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
 		Biblioteca biblio = cacheBiblioteca.getBiblioteca(PACOTE + nomeBiblioteca);
 		Logger.getGlobal().info("PROCESSADO >>> " + biblio.getNomeAbsoluto());
+	}
+
+	private static String getNomeBiblio(Class<?> classe) {
+		return classe.getSimpleName().substring(1);
 	}
 
 	private static void gerarBiblioteca(Class<?> classe) throws IOException {
@@ -50,7 +54,7 @@ public class GeraBiblio {
 			}
 		}
 		itens.sort((o1, o2) -> o1.ordem - o2.ordem);
-		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName(), StandardCharsets.UTF_8.name());
+		PrintWriter pw = new PrintWriter(ROOT + getNomeBiblio(classe), StandardCharsets.UTF_8.name());
 		pw.println("package " + PACKAGE);
 		pw.println();
 		for (Item item : itens) {

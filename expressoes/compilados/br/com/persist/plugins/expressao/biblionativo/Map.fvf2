@@ -1,0 +1,32 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NMap create
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NMap createOf
+param lista
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NMap put
+tipo_void
+param mapa
+param chave
+param valor
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NMap get
+param mapa
+param chave
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NMap getOr
+param mapa
+param chave
+param padrao
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NMap size
+param mapa
+
+funcao $constantes
+tipo_void
+0  return
+

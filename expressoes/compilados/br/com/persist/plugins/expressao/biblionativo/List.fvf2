@@ -1,0 +1,44 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList create
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList createComLista
+param lista
+param valor
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList clear
+tipo_void
+param lista
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList head
+param lista
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList tail
+param lista
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList add
+tipo_void
+param lista
+param valor
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList contains
+param lista
+param valor
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList notContains
+param lista
+param valor
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList size
+param lista
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NList empty
+param lista
+
+funcao $constantes
+tipo_void
+0  return
+
