@@ -54,6 +54,7 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 		if (sucesso.get()) {
 			setPrefixo(ParametroContexto.LOAD_PARAM);
 			setBiblio(montarString(lista, false));
+			token.setStyle(Token.PARAMETRO);
 		} else {
 			IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
 			if (funcao != null) {
@@ -61,6 +62,7 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 						funcao.isRetornoVoid() ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET);
 			} else {
 				setPrefixo(ConstanteContexto.LOAD_CONST);
+				token.setStyle(Token.CONSTANTE);
 			}
 			setBiblio(THIS);
 		}
@@ -95,6 +97,7 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 			setPrefixo(funcao.isTipoVoid() ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET);
 		} else {
 			setPrefixo(ConstanteContexto.LOAD_CONST);
+			token.setStyle(Token.CONSTANTE);
 		}
 		setBiblio(nomeAbsoluto);
 		token = new Token(chave, Tipo.VIRTUAL, -1);

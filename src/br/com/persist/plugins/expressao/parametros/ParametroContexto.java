@@ -15,6 +15,7 @@ public class ParametroContexto extends Contexto {
 
 	public ParametroContexto(Token chave) {
 		super(chave);
+		token.setStyle(Token.PARAMETRO);
 	}
 
 	public String getNome() {
