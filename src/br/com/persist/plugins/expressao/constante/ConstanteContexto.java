@@ -35,6 +35,7 @@ public class ConstanteContexto extends Contexto {
 		public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 			if (token.isChave()) {
 				ConstanteContexto.this.token = token;
+				token.setStyle(Token.CONSTANTE);
 				selecionado = new Atribuicao();
 			} else {
 				tokenManager.invalidar(token);
