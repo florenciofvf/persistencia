@@ -16,6 +16,7 @@ public class Token {
 	final String string;
 	final int indice;
 	final Tipo tipo;
+	int totalScape;
 
 	public Token(String string, Tipo tipo, int indice) {
 		this.string = Objects.requireNonNull(string);
@@ -37,6 +38,14 @@ public class Token {
 
 	public String getString() {
 		return string;
+	}
+
+	public int getTotalScape() {
+		return totalScape;
+	}
+
+	public void setTotalScape(int totalScape) {
+		this.totalScape = totalScape;
 	}
 
 	public enum Tipo {

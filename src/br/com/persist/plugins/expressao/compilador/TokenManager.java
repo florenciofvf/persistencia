@@ -234,6 +234,7 @@ public class TokenManager {
 		StringBuilder builder = new StringBuilder();
 		indice = indiceBackup + 2;
 		boolean finalizado = false;
+		int scape = 0;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c == '>') {
@@ -245,7 +246,7 @@ public class TokenManager {
 				indice++;
 				break;
 			} else if (c == ' ' || c == '\n' || c == '\r' || c == '\t') {
-				//
+				scape++;
 			} else {
 				invalidar();
 			}
@@ -254,7 +255,9 @@ public class TokenManager {
 		if (!finalizado) {
 			invalidar();
 		}
-		return new Token(builder.toString(), Tipo.EL, indiceBackup);
+		Token token = new Token(builder.toString(), Tipo.EL, indiceBackup);
+		token.setTotalScape(scape);
+		return token;
 	}
 
 	private Token proximoToken() throws ExpressaoException {
