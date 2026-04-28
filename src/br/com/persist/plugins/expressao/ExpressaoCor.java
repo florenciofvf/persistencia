@@ -39,7 +39,7 @@ public class ExpressaoCor {
 				set(doc, token, RED);
 			} else if (token.isEL()) {
 				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 3 + token.getTotalScape(),
-						GREEN3, true);
+						MAGENTA, true);
 			} else if (token.isString()) {
 				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 2, BLUE, true);
 			} else if (token.isComentario()) {
