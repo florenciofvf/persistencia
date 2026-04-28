@@ -1,5 +1,6 @@
 package br.com.persist.plugins.expressao;
 
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
@@ -8,12 +9,24 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,23 +36,30 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JScrollPane;
+import javax.swing.Icon;
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.TextUI;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Caret;
+import javax.swing.text.Document;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import br.com.persist.arquivo.Arquivo;
-import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.arquivo.ArquivoModelo;
 import br.com.persist.arquivo.ArquivoTree;
 import br.com.persist.arquivo.ArquivoTreeListener;
 import br.com.persist.arquivo.ArquivoTreeUtil;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -47,6 +67,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
+import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -56,6 +77,11 @@ import br.com.persist.painel.Root;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
+import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
+import br.com.persist.plugins.expressao.compilador.Compilacao;
+import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.processador.Processador;
 
 class ExpressaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
@@ -271,16 +297,18 @@ class ExpressaoSplit extends SplitPane {
 	};
 }
 
-class Editor extends TextEditor {
+class Editor extends TextEditor implements MetaDialogoListener {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 
 	Editor() {
 		addFocusListener(focusListenerInner);
+		addKeyListener(keyListenerInner);
 	}
 
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
 		@Override
-		public void focusGained(java.awt.event.FocusEvent e) {
+		public void focusGained(FocusEvent e) {
 			Component c = getParent();
 			while (c != null) {
 				if (c instanceof Fichario) {
@@ -291,13 +319,89 @@ class Editor extends TextEditor {
 			}
 		}
 	};
+
+	private transient KeyListener keyListenerInner = new KeyAdapter() {
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+				processar();
+			}
+		}
+
+		private void processar() {
+			Caret caret = getCaret();
+			if (caret == null) {
+				return;
+			}
+			int dot = caret.getDot() - 1;
+			if (dot < 0) {
+				return;
+			}
+			TextUI textUI = getUI();
+			Rectangle r = null;
+			try {
+				r = textUI.modelToView(Editor.this, dot);
+			} catch (BadLocationException ex) {
+				return;
+			}
+			Point point = getLocationOnScreen();
+			point.x += r.x + 5;
+			point.y += r.y;
+			String string = getString(dot);
+			if (Util.isEmpty(string)) {
+				return;
+			}
+			string = Util.trim(string, '.', false);
+			string = Util.trim(string, '.', true);
+			if (Util.isEmpty(string)) {
+				return;
+			}
+			try {
+				ExpressaoMetadados.abrir(Editor.this, string, Editor.this, point);
+			} catch (ExpressaoException ex) {
+				LOG.warning(ex.getMessage());
+			}
+		}
+
+		private String getString(int dot) {
+			StringBuilder sb = new StringBuilder();
+			String string = getText();
+			char c = string.charAt(dot);
+			while (TokenManager.valido3(c)) {
+				sb.insert(0, c);
+				dot--;
+				if (dot >= 0) {
+					c = string.charAt(dot);
+				} else {
+					break;
+				}
+			}
+			return sb.toString();
+		}
+	};
+
+	@Override
+	public void setFragmento(String string) {
+		Document doc = getDocument();
+		if (doc != null) {
+			try {
+				int selectionEnd = getSelectionEnd();
+				doc.insertString(selectionEnd, string, null);
+			} catch (BadLocationException e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
+	}
 }
 
 class Aba extends Transferivel {
+	private final PainelResultado painelResultado = new PainelResultado();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private transient BibliotecaContexto biblio;
 	private final Editor editor = new Editor();
 	final transient Arquivo arquivo;
+	private ScrollPane scrollPane;
 
 	Aba(Arquivo arquivo) {
 		this.arquivo = Objects.requireNonNull(arquivo);
@@ -340,24 +444,92 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		JScrollPane scrollPane = new JScrollPane(editor);
-		scrollPane.setRowHeaderView(new TextEditorLine(editor));
-		Panel panelScroll = new Panel();
-		panelScroll.add(BorderLayout.CENTER, scrollPane);
-		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
+		split.setOneTouchExpandable(true);
+		split.setContinuousLayout(true);
+		add(BorderLayout.CENTER, split);
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
+	}
+
+	private Panel criarPanel() {
+		Panel panel = new Panel();
+		Panel panelArea = new Panel();
+		panelArea.add(BorderLayout.CENTER, editor);
+		scrollPane = new ScrollPane(panelArea);
+		panel.add(BorderLayout.CENTER, scrollPane);
+		scrollPane.setRowHeaderView(new TextEditorLine(editor));
+		return panel;
+	}
+
+	private Panel criarPanelResultado() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.CENTER, painelResultado);
+		return panel;
+	}
+
+	private int getValueScrollPane() {
+		return scrollPane.getVerticalScrollBar().getValue();
+	}
+
+	private void setValueScrollPane(int value) {
+		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+	}
+
+	private class PainelResultado extends Panel {
+		private TextEditor textEditor = new TextEditor();
+		private static final long serialVersionUID = 1L;
+
+		private PainelResultado() {
+			ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
+			add(BorderLayout.NORTH, toolbarPesquisa);
+			ScrollPane scrollPane2 = new ScrollPane(textEditor);
+			scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane2);
+			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		}
+
+		private void setText(String string) {
+			textEditor.setText(string);
+			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+		}
 	}
 
 	private void abrir() {
 		editor.limpar();
 		if (arquivo.getFile().exists()) {
 			try {
-				editor.setText(ArquivoUtil.getString(arquivo.getFile()));
+				int value = getValueScrollPane();
+				editor.setText(conteudo(arquivo.getFile()));
+				setValueScrollPane(value);
+				ExpressaoCor.clearAttr(editor.getStyledDocument());
+				String texto = editor.getText().trim();
+				if (texto.startsWith("/*abrir_compilar*/")) {
+					SwingUtilities.invokeLater(toolbar::atualizar);
+				}
+				toolbar.executarAcao.setEnabled(!texto.startsWith("/*montar_arquivo*/"));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
 		}
+	}
+
+	public static String conteudo(File file) throws IOException {
+		if (file != null && file.exists()) {
+			StringBuilder sb = new StringBuilder();
+			try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+				int i = reader.read();
+				while (i != -1) {
+					sb.append((char) i);
+					i = reader.read();
+				}
+			}
+			return sb.toString();
+		}
+		return "";
 	}
 
 	@Override
@@ -368,12 +540,19 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
+		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini() {
-			super.ini(new Nil(), LIMPAR, BAIXAR, SALVAR, COPIAR, COLAR);
+			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
+			atualizarAcao.text(ExpressaoMensagens.getString("label.compilar_arquivo"));
+			compiladoAcao.setActionListener(e -> verCompilado());
+			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
+			addButton(compiladoAcao);
+			addButton(executarAcao);
 			add(txtPesquisa);
 			add(label);
 		}
@@ -381,6 +560,58 @@ class Aba extends Transferivel {
 		public void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
+		}
+
+		Action acaoIcon(String chave, Icon icon) {
+			return Action.acaoIcon(ExpressaoMensagens.getString(chave), icon);
+		}
+
+		private void verCompilado() {
+			try {
+				File file = Compilacao.getCompilado(biblio);
+				if (!file.exists()) {
+					throw new IOException("Arquivo inexistente! " + file);
+				}
+				Util.conteudo(Aba.this, file, StandardCharsets.UTF_8);
+			} catch (Exception e) {
+				Util.mensagem(Aba.this, e.getMessage());
+			}
+		}
+
+		private void executar() {
+			if (biblio == null) {
+				painelResultado.setText(ExpressaoMensagens.getString("msg.nao_compilado"));
+				return;
+			}
+			try {
+				Processador processador = new Processador();
+				List<Object> resposta = processador.processar(biblio.getNome(), "main");
+				painelResultado.setText(resposta.toString());
+			} catch (ExpressaoException ex) {
+				painelResultado.setText(Util.getStackTrace(ExpressaoConstantes.PAINEL_EXPRESSAO, ex));
+			}
+		}
+
+		@Override
+		protected void atualizar() {
+			try {
+				Compilacao compilador = new Compilacao();
+				boolean colorir = false;
+				if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
+					biblio = compilador.compilar(criarArquivo(editor.getText()));
+				} else {
+					biblio = compilador.compilar(arquivo.getFile());
+					colorir = true;
+				}
+				boolean resp = biblio != null;
+				painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado")
+						: ExpressaoMensagens.getString("msg.nao_compilado"));
+				if (resp && colorir) {
+					ExpressaoCor.processar(editor.getStyledDocument(), compilador.getTokens());
+				}
+			} catch (IOException | ExpressaoException ex) {
+				painelResultado.setText(Util.getStackTrace(ExpressaoConstantes.PAINEL_EXPRESSAO, ex));
+			}
 		}
 
 		@Override
@@ -432,6 +663,39 @@ class Aba extends Transferivel {
 			} else {
 				label.limpar();
 			}
+		}
+
+		private File criarArquivo(String string) throws IOException, ExpressaoException {
+			List<String> nomes = listar(string, "gerar_arquivo{", "}");
+			if (nomes.size() != 1) {
+				throw new ExpressaoException("Erro no param arquivo{}. Total -> " + nomes.size(), false);
+			}
+			File file = CacheBiblioteca.arquivoParaCompilar(nomes.get(0));
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
+				List<String> arquivosIncluir = listar(string, "incluir{", "}");
+				for (String strIncluir : arquivosIncluir) {
+					File fileIncluir = CacheBiblioteca.arquivoParaCompilar(strIncluir);
+					String fragmento = conteudo(fileIncluir);
+					pw.write(fragmento);
+				}
+			}
+			return file;
+		}
+
+		private List<String> listar(String string, String prefixo, String sufixo) {
+			List<String> resp = new ArrayList<>();
+			int pos = string.indexOf(prefixo);
+			while (pos != -1) {
+				int pos2 = string.indexOf(sufixo, pos + prefixo.length());
+				if (pos2 != -1) {
+					String fragmento = string.substring(pos + prefixo.length(), pos2);
+					resp.add(fragmento.trim());
+					pos = string.indexOf(prefixo, pos2 + sufixo.length());
+				} else {
+					break;
+				}
+			}
+			return resp;
 		}
 	}
 }

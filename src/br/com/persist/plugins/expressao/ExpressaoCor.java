@@ -31,27 +31,20 @@ public class ExpressaoCor {
 			if (token.isVirtual()) {
 				continue;
 			}
-			/*
-			 * if (token.isReservado()) { set(doc, token, RED); } else if
-			 * (token.isConstante()) { set(doc, token, BLUE2); } else if
-			 * (token.isParametro() || token.isLista()) { set(doc, token, GREEN2); } else if
-			 * (token.isMapa()) { set(doc, token, GREEN3); } else if (token.isFuncao()) {
-			 * set(doc, token, MAGENTA); } else if (token.isString()) { set(doc, token,
-			 * BLUE); } else if (token.isComentario()) { set(doc, token, GRAY); } else if
-			 * (token.isEspecial()) { set(doc, token, BOLD); } else if (token.isNumero()) {
-			 * set(doc, token, RED2); }
-			 */
+			if (token.isReservado()) {
+				set(doc, token, RED);
+			} else if (token.isString()) {
+				set(doc, token, BLUE);
+			} else if (token.isComentario()) {
+				set(doc, token, GRAY);
+			} else if (token.isInteiro() || token.isFlutuante()) {
+				set(doc, token, RED2);
+			}
 		}
 	}
 
 	static void set(StyledDocument doc, Token token, MutableAttributeSet att) {
-		/*
-		 * if (token.getIndice2() > token.getIndice()) {
-		 * doc.setCharacterAttributes(token.getIndice(), token.getIndice2() -
-		 * token.getIndice(), att, true); } else {
-		 * doc.setCharacterAttributes(token.getIndice(), token.getString().length(),
-		 * att, true); }
-		 */
+		doc.setCharacterAttributes(token.getIndice(), token.getString().length(), att, true);
 	}
 
 	public static void clearAttr(StyledDocument doc) {

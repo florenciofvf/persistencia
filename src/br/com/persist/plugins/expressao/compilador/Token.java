@@ -23,6 +23,10 @@ public class Token {
 		this.indice = indice;
 	}
 
+	public int getIndice() {
+		return indice;
+	}
+
 	public boolean isConsumido() {
 		return consumido;
 	}
@@ -83,6 +87,10 @@ public class Token {
 
 	public boolean isFechaChave() {
 		return tipo == Tipo.FECHA_CHAVE;
+	}
+
+	public boolean isComentario() {
+		return tipo == Tipo.COMENTARIO;
 	}
 
 	public boolean isAtribuicao() {

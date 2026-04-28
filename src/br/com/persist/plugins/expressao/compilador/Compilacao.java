@@ -6,12 +6,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 
 public class Compilacao {
+	private final List<Token> tokens = new ArrayList<>();
+
+	public List<Token> getTokens() {
+		return tokens;
+	}
+
 	private String getString(File file) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try (FileInputStream fis = new FileInputStream(file)) {
@@ -56,6 +64,9 @@ public class Compilacao {
 		try (PrintWriter pw = new PrintWriter(destino, StandardCharsets.UTF_8.name())) {
 			biblioteca.salvarEstruturas(pw);
 		}
+
+		tokens.clear();
+		tokens.addAll(tokenManager.getTokens());
 
 		return biblioteca;
 	}

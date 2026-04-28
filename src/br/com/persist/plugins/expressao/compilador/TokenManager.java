@@ -19,6 +19,10 @@ public class TokenManager {
 		tokens = new ArrayList<>();
 	}
 
+	public List<Token> getTokens() {
+		return tokens;
+	}
+
 	public void addToken(Token token) {
 		if (token != null) {
 			tokens.add(token);
@@ -317,6 +321,10 @@ public class TokenManager {
 
 	private static boolean valido2(char c) {
 		return (c >= '0' && c <= '9') || c == '.';
+	}
+
+	public static boolean valido3(char c) {
+		return valido1(c) || valido2(c);
 	}
 
 	private Token tokenChave(int indiceBackup) throws ExpressaoException {
