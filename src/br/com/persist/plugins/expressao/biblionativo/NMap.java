@@ -2,8 +2,8 @@ package br.com.persist.plugins.expressao.biblionativo;
 
 import java.util.LinkedHashMap;
 
-public class Map {
-	private Map() {
+public class NMap {
+	private NMap() {
 	}
 
 	@Biblio(1)

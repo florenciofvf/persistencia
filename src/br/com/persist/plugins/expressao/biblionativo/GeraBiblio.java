@@ -22,7 +22,7 @@ public class GeraBiblio {
 	private static final String PREFIXO = FuncaoNativaContexto.DEFUN_NATIVE;
 
 	public static void main(String[] args) throws Exception {
-		Class<?>[] classes = { List.class, Map.class };
+		Class<?>[] classes = { NList.class, NMap.class, NString.class };
 
 		for (Class<?> item : classes) {
 			processarBiblioteca(item);
@@ -32,7 +32,7 @@ public class GeraBiblio {
 	private static void processarBiblioteca(Class<?> klass) throws IOException, ExpressaoException {
 		gerarBiblioteca(klass);
 		Compilacao compilacao = new Compilacao();
-		String nomeBiblioteca = klass.getSimpleName().toLowerCase();
+		String nomeBiblioteca = klass.getSimpleName();
 		File biblioteca = new File(ROOT + nomeBiblioteca);
 		compilacao.compilar(biblioteca);
 		CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
@@ -50,7 +50,7 @@ public class GeraBiblio {
 			}
 		}
 		itens.sort((o1, o2) -> o1.ordem - o2.ordem);
-		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName().toLowerCase(), StandardCharsets.UTF_8.name());
+		PrintWriter pw = new PrintWriter(ROOT + classe.getSimpleName(), StandardCharsets.UTF_8.name());
 		pw.println("package " + PACKAGE);
 		pw.println();
 		for (Item item : itens) {

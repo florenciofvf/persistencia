@@ -1,7 +1,7 @@
 package br.com.persist.plugins.expressao.biblionativo;
 
-public class List {
-	private List() {
+public class NList {
+	private NList() {
 	}
 
 	@Biblio(1)
