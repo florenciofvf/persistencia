@@ -523,7 +523,10 @@ class Aba extends Transferivel {
 			try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
 				int i = reader.read();
 				while (i != -1) {
-					sb.append((char) i);
+					char c = (char) i;
+					if (c != '\r') {
+						sb.append(c);
+					}
 					i = reader.read();
 				}
 			}
