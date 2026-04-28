@@ -1,8 +1,10 @@
 package br.com.persist.plugins.expressao;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -19,8 +21,9 @@ import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 
-//		<menu classeFabrica="br.com.persist.plugins.expressao.ExpressaoFabrica" ativo="true" />
 public class ExpressaoFabrica extends AbstratoFabricaContainer {
 	@Override
 	public void inicializar() {
@@ -51,6 +54,46 @@ public class ExpressaoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private class ExpressaoServico extends AbstratoServico {
+		@Override
+		public void processar(Formulario formulario, Map<String, Object> args) {
+			if (args.get(ExpressaoEvento.BIBLIO_PARA_OBJETO_REQUEST) == null) {
+				return;
+			}
+			List<String> lista = listarNomeBiblio();
+			if (lista.isEmpty()) {
+				return;
+			}
+			StringBuilder sb = new StringBuilder();
+			for (String item : lista) {
+				if (sb.length() > 0) {
+					sb.append(",");
+				}
+				sb.append(item);
+			}
+			args.put(ExpressaoEvento.BIBLIO_PARA_OBJETO_RESPONSE, sb.toString());
+		}
+
+		private List<String> listarNomeBiblio() {
+			final String paraObjeto = "paraObjeto";
+			List<String> lista = new ArrayList<>();
+			File file = new File(CacheBiblioteca.COMPILADOS, paraObjeto);
+			if (file.isDirectory()) {
+				File[] files = file.listFiles();
+				if (files != null) {
+					for (File item : files) {
+						lista.add(paraObjeto + "." + get(item.getName()));
+					}
+				}
+			}
+			return lista;
+		}
+
+		private String get(String name) {
+			if (name.endsWith(Biblioteca.EXTENSAO)) {
+				name = name.substring(0, name.length() - Biblioteca.EXTENSAO.length());
+			}
+			return name;
+		}
 	}
 
 	@Override
