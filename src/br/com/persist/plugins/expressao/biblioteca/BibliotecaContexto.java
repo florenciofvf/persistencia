@@ -47,6 +47,11 @@ public class BibliotecaContexto extends Contexto {
 		return file.getName();
 	}
 
+	public String getNomeAbsoluto() throws ExpressaoException {
+		PacoteContexto pacoteContexto = getPackage();
+		return pacoteContexto.getNomeAbsoluto() + "." + getNome();
+	}
+
 	public FuncaoConstantesContexto getFuncaoConstantes() {
 		return funcaoConstantes;
 	}
