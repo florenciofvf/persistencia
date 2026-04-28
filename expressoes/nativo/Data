@@ -1,0 +1,12 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NData getAnoAtual();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NData getMesAtual();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NData getMesAtualFmt();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NData getDiaAtual();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NData getDiaAtualFmt();
+

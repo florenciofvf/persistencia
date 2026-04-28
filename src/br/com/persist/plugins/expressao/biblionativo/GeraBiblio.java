@@ -22,7 +22,8 @@ public class GeraBiblio {
 	private static final String PREFIXO = FuncaoNativaContexto.DEFUN_NATIVE;
 
 	public static void main(String[] args) throws Exception {
-		Class<?>[] classes = { NList.class, NMap.class, NString.class };
+		Class<?>[] classes = { NList.class, NMap.class, NString.class, NData.class, NDesktop.class, NDir.class,
+				NSystem.class };
 
 		for (Class<?> item : classes) {
 			processarBiblioteca(item);

@@ -1,0 +1,10 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NSystem timeMillis();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NSystem nanoTime();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NSystem properties();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NSystem environment();
+

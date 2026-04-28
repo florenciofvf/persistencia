@@ -1,0 +1,17 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NSystem timeMillis
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NSystem nanoTime
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NSystem properties
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NSystem environment
+
+funcao $constantes
+tipo_void
+0  return
+

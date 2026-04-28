@@ -1,0 +1,6 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDesktop open(absoluto) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDesktop edit(absoluto) void;
+
