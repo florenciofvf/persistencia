@@ -31,15 +31,21 @@ public class ExpressaoCor {
 			if (token.isVirtual()) {
 				continue;
 			}
-			if (token.isReservado()) {
+			if (token.isStyle(Token.CONSTANTE)) {
+				set(doc, token, BLUE2);
+			} else if (token.isStyle(Token.PARAMETRO)) {
+				set(doc, token, GREEN2);
+			} else if (token.isReservado()) {
 				set(doc, token, RED);
 			} else if (token.isEL()) {
 				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 3 + token.getTotalScape(),
-						GREEN2, true);
+						GREEN3, true);
 			} else if (token.isString()) {
 				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 2, BLUE, true);
 			} else if (token.isComentario()) {
 				set(doc, token, GRAY);
+			} else if (token.isEspecial()) {
+				set(doc, token, BOLD);
 			} else if (token.isInteiro() || token.isFlutuante()) {
 				set(doc, token, RED2);
 			}

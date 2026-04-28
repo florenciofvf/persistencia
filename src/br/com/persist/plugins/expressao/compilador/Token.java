@@ -12,11 +12,14 @@ import br.com.persist.plugins.expressao.organiza.PacoteContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 
 public class Token {
+	public static final int CONSTANTE = 1;
+	public static final int PARAMETRO = 2;
 	private boolean consumido;
 	final String string;
 	final int indice;
 	final Tipo tipo;
 	int totalScape;
+	int style;
 
 	public Token(String string, Tipo tipo, int indice) {
 		this.string = Objects.requireNonNull(string);
@@ -38,6 +41,14 @@ public class Token {
 
 	public String getString() {
 		return string;
+	}
+
+	public boolean isStyle(int tipo) {
+		return style == tipo;
+	}
+
+	public void setStyle(int style) {
+		this.style = style;
 	}
 
 	public int getTotalScape() {
@@ -63,6 +74,11 @@ public class Token {
 		public String getDesc() {
 			return desc;
 		}
+	}
+
+	public boolean isEspecial() {
+		return isAbreChave() || isFechaChave() || isAbreParentese() || isFechaParentese() || isAbreColchete()
+				|| isFechaColchete();
 	}
 
 	@Override
