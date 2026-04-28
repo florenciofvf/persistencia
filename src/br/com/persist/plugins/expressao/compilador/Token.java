@@ -109,6 +109,10 @@ public class Token {
 		return tipo == Tipo.STRING;
 	}
 
+	public boolean isVirtual() {
+		return tipo == Tipo.VIRTUAL;
+	}
+
 	public boolean isChave() {
 		return tipo == Tipo.CHAVE;
 	}
