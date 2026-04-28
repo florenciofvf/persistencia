@@ -16,10 +16,10 @@ import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.funcao.FuncaoNativaContexto;
 
 public class GeraBiblio {
+	private static final String ROOT = "expressoes" + File.separator + "nativo" + File.separator;
 	private static final String PACKAGE = "br.com.persist.plugins.expressao.biblionativo;";
 	private static final String PACOTE = "br.com.persist.plugins.expressao.biblionativo.";
 	private static final String PREFIXO = FuncaoNativaContexto.DEFUN_NATIVE;
-	private static final String ROOT = "expressoes" + File.separator;
 
 	public static void main(String[] args) throws Exception {
 		Class<?>[] classes = { List.class, Map.class };
@@ -84,8 +84,8 @@ public class GeraBiblio {
 	}
 
 	private static void checarTipo(Parameter[] parameters, Method m) {
-		for (Parameter p : parameters) {
-			Class<?> type = p.getType();
+		for (Parameter item : parameters) {
+			Class<?> type = item.getType();
 			if (!"java.lang.Object".equals(type.getCanonicalName())) {
 				throw new IllegalStateException("Param >>> " + type.getSimpleName() + " Function >>> " + m);
 			}
@@ -95,11 +95,11 @@ public class GeraBiblio {
 	private static String getArgs(Method m) {
 		StringBuilder sb = new StringBuilder();
 		Parameter[] parametros = m.getParameters();
-		for (Parameter p : parametros) {
+		for (Parameter item : parametros) {
 			if (sb.length() > 0) {
 				sb.append(", ");
 			}
-			sb.append(p.getName());
+			sb.append(item.getName());
 		}
 		return sb.toString();
 	}
