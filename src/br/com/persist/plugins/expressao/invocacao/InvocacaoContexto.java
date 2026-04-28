@@ -60,6 +60,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		if (sucesso.get()) {
 			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
 			setBiblio(montarString(lista, false));
+			token.setStyle(Token.PARAMETRO);
 			setMetodo(chamada);
 			return;
 		}
@@ -77,6 +78,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			setMetodo(funcao.getNome());
 		} else {
 			setPrefixo(ConstanteContexto.INVOKE_CONST);
+			token.setStyle(Token.CONSTANTE);
 			setBiblio(THIS);
 			setMetodo(array[0]);
 		}
