@@ -1,0 +1,6 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NPath get(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NPath absolute(object);
+

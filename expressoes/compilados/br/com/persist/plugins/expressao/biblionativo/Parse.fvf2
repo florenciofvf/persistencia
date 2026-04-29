@@ -1,0 +1,18 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NParse createBigInteger
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NParse createBigDecimal
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NParse dateUS
+param stringUS
+
+funcao $constantes
+tipo_void
+0  return
+

@@ -1,0 +1,15 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NPath get
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NPath absolute
+param object
+
+funcao $constantes
+tipo_void
+0  return
+

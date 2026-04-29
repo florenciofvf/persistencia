@@ -1,0 +1,8 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NParse createBigInteger(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NParse createBigDecimal(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NParse dateUS(stringUS);
+
