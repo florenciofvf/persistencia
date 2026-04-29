@@ -1,0 +1,65 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle init
+tipo_void
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle getPool
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle none
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle noneUnderline
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle info
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle infoUnderline
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle warn
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle warnUnderline
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle erro
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle erroUnderline
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle nota
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle notaUnderline
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle show
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle showUnderline
+tipo_void
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NStyle ordenar
+tipo_void
+
+funcao $constantes
+tipo_void
+0  return
+

@@ -1,0 +1,6 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NHttp get(param);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NHttp post(param);
+

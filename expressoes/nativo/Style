@@ -1,0 +1,32 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle init() void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle getPool();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle none(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle noneUnderline(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle info(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle infoUnderline(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle warn(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle warnUnderline(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle erro(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle erroUnderline(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle nota(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle notaUnderline(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle show(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle showUnderline(object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NStyle ordenar() void;
+

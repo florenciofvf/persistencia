@@ -1,0 +1,18 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NFormat date
+param date
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NFormat time
+param date
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NFormat dateTime
+param date
+
+funcao $constantes
+tipo_void
+0  return
+
