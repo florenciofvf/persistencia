@@ -923,7 +923,7 @@ class Aba extends Transferivel {
 			}
 			try {
 				Processador processador = new Processador();
-				List<Object> resposta = processador.processar(biblio.getNome(), "main");
+				List<Object> resposta = processador.processar(biblio.getNomeAbsoluto(), "main");
 				painelResultado.setResposta(resposta, true);
 			} catch (ExpressaoException ex) {
 				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);
