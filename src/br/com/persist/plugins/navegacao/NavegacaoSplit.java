@@ -106,17 +106,18 @@ import br.com.persist.painel.Root;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
-import br.com.persist.plugins.instrucao.InstrucaoCor;
-import br.com.persist.plugins.instrucao.InstrucaoException;
-import br.com.persist.plugins.instrucao.InstrucaoMensagens;
-import br.com.persist.plugins.instrucao.InstrucaoMetadados;
-import br.com.persist.plugins.instrucao.MetaDialogoListener;
-import br.com.persist.plugins.instrucao.biblionativo.HttpResult;
-import br.com.persist.plugins.instrucao.biblionativo.HttpUtil;
-import br.com.persist.plugins.instrucao.compilador.BibliotecaContexto;
-import br.com.persist.plugins.instrucao.compilador.Compilador;
-import br.com.persist.plugins.instrucao.processador.CacheBiblioteca;
-import br.com.persist.plugins.instrucao.processador.Processador;
+import br.com.persist.plugins.expressao.ExpressaoCor;
+import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoMensagens;
+import br.com.persist.plugins.expressao.ExpressaoMetadados;
+import br.com.persist.plugins.expressao.MetaDialogoListener;
+import br.com.persist.plugins.expressao.biblionativo.HttpResult;
+import br.com.persist.plugins.expressao.biblionativo.HttpUtil;
+import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
+import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
+import br.com.persist.plugins.expressao.compilador.Compilacao;
+import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.processador.Processador;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.requisicao.RequisicaoMensagens;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHeader;
@@ -397,8 +398,8 @@ class Editor extends TextEditor implements MetaDialogoListener {
 				return;
 			}
 			try {
-				InstrucaoMetadados.abrir(Editor.this, string, Editor.this, point);
-			} catch (InstrucaoException ex) {
+				ExpressaoMetadados.abrir(Editor.this, string, Editor.this, point);
+			} catch (ExpressaoException ex) {
 				LOG.warning(ex.getMessage());
 			}
 		}
@@ -407,7 +408,7 @@ class Editor extends TextEditor implements MetaDialogoListener {
 			StringBuilder sb = new StringBuilder();
 			String string = getText();
 			char c = string.charAt(dot);
-			while (Compilador.valido3(c)) {
+			while (TokenManager.valido3(c)) {
 				sb.insert(0, c);
 				dot--;
 				if (dot >= 0) {
@@ -758,7 +759,7 @@ class Aba extends Transferivel {
 					List<Object> resposta = processador.processar("navegacao.processarLink", "main", base + aux,
 							complemento);
 					setResposta(resposta, false);
-				} catch (InstrucaoException ex) {
+				} catch (ExpressaoException ex) {
 					setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), false);
 				}
 			}
@@ -784,7 +785,7 @@ class Aba extends Transferivel {
 				int value = getValueScrollPane();
 				editor.setText(conteudo(arquivo.getFile()));
 				setValueScrollPane(value);
-				InstrucaoCor.clearAttr(editor.getStyledDocument());
+				ExpressaoCor.clearAttr(editor.getStyledDocument());
 				String texto = editor.getText().trim();
 				if (texto.startsWith("/*abrir_compilar*/")) {
 					SwingUtilities.invokeLater(toolbar::atualizar);
@@ -835,7 +836,7 @@ class Aba extends Transferivel {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, SALVAR, ATUALIZAR);
 			chkCertificados.addActionListener(e -> HttpUtil.setCertificados(!chkCertificados.isSelected()));
 			chkCertificados.setToolTipText(Mensagens.getString("label.sem_certificados"));
-			atualizarAcao.text(InstrucaoMensagens.getString("label.compilar_arquivo"));
+			atualizarAcao.text(ExpressaoMensagens.getString("label.compilar_arquivo"));
 			executarAnterioresAcao.setActionListener(e -> executarAnteriores());
 			vAccessTokenAcao.setActionListener(e -> atualizarVar());
 			compiladoAcao.setActionListener(e -> verCompilado());
@@ -861,7 +862,7 @@ class Aba extends Transferivel {
 		}
 
 		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
+			return Action.acaoIcon(ExpressaoMensagens.getString(chave), icon);
 		}
 
 		private void atualizarVar() {
@@ -877,7 +878,7 @@ class Aba extends Transferivel {
 
 		private void verCompilado() {
 			try {
-				File file = Compilador.getCompilado(biblio);
+				File file = Compilacao.getCompilado(biblio);
 				if (!file.exists()) {
 					throw new IOException("Arquivo inexistente! " + file);
 				}
@@ -917,14 +918,14 @@ class Aba extends Transferivel {
 
 		private void executar() {
 			if (biblio == null) {
-				painelResultado.setText(InstrucaoMensagens.getString("msg.nao_compilado"), true);
+				painelResultado.setText(ExpressaoMensagens.getString("msg.nao_compilado"), true);
 				return;
 			}
 			try {
 				Processador processador = new Processador();
 				List<Object> resposta = processador.processar(biblio.getNome(), "main");
 				painelResultado.setResposta(resposta, true);
-			} catch (InstrucaoException ex) {
+			} catch (ExpressaoException ex) {
 				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);
 			}
 		}
@@ -932,7 +933,7 @@ class Aba extends Transferivel {
 		@Override
 		protected void atualizar() {
 			try {
-				Compilador compilador = new Compilador();
+				Compilacao compilador = new Compilacao();
 				boolean colorir = false;
 				if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
 					biblio = compilador.compilar(criarArquivo(editor.getText()));
@@ -941,12 +942,12 @@ class Aba extends Transferivel {
 					colorir = true;
 				}
 				boolean resp = biblio != null;
-				painelResultado.setText(resp ? InstrucaoMensagens.getString("msg.compilado")
-						: InstrucaoMensagens.getString("msg.nao_compilado"), true);
+				painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado")
+						: ExpressaoMensagens.getString("msg.nao_compilado"), true);
 				if (resp && colorir) {
-					InstrucaoCor.processar(editor.getStyledDocument(), compilador.getTokens());
+					ExpressaoCor.processar(editor.getStyledDocument(), compilador.getTokens());
 				}
-			} catch (IOException | InstrucaoException ex) {
+			} catch (IOException | ExpressaoException ex) {
 				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);
 			}
 		}
@@ -1002,10 +1003,10 @@ class Aba extends Transferivel {
 			}
 		}
 
-		private File criarArquivo(String string) throws IOException, InstrucaoException {
+		private File criarArquivo(String string) throws IOException, ExpressaoException {
 			List<String> nomes = listar(string, "gerar_arquivo{", "}");
 			if (nomes.size() != 1) {
-				throw new InstrucaoException("Erro no param arquivo{}. Total -> " + nomes.size(), false);
+				throw new ExpressaoException("Erro no param arquivo{}. Total -> " + nomes.size(), false);
 			}
 			File file = CacheBiblioteca.arquivoParaCompilar(nomes.get(0));
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
