@@ -1,0 +1,6 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NClass forName(absoluto);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NClass nameAbsolute(objeto);
+
