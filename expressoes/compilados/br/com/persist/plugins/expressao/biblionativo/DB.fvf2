@@ -1,0 +1,33 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB getConnection
+param driver
+param url
+param usuario
+param senha
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB getConexao
+param nome
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB getConnectionProvedor
+param conexao
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB closeConnection
+tipo_void
+param conexao
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB select
+param conexao
+param consulta
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB createPreparedStatement
+param conexao
+param instrucao
+
+funcao $constantes
+tipo_void
+0  return
+

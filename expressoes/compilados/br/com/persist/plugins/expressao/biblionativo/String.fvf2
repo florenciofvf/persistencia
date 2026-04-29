@@ -3,11 +3,31 @@ pacote br.com.persist.plugins.expressao.biblionativo
 alias br.com.persist.plugins.expressao.biblionativo.List list
 alias br.com.persist.plugins.expressao.biblionativo.Map map
 
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString createStringPool
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString append
+tipo_void
+param stringPool
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString empty
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString trim
+param object
+
 funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString lower
 param object
 
 funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString upper
 param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString size
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NString contains
+param string
+param procurado
 
 funcao $constantes
 tipo_void

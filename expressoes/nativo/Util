@@ -1,0 +1,20 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil getFalse();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil getTrue();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil isNull(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil isNotNull(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil toString(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil log(desc, object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil replaceAll(string, atual, novo);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil getContentTransfered();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NUtil setContentTransfered(string) void;
+

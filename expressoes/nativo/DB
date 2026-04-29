@@ -1,0 +1,14 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDB getConnection(driver, url, usuario, senha);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDB getConexao(nome);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDB getConnectionProvedor(conexao);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDB closeConnection(conexao) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDB select(conexao, consulta);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NDB createPreparedStatement(conexao, instrucao);
+

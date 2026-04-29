@@ -1,0 +1,37 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil getFalse
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil getTrue
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil isNull
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil isNotNull
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil toString
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil log
+param desc
+param object
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil replaceAll
+param string
+param atual
+param novo
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil getContentTransfered
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NUtil setContentTransfered
+tipo_void
+param string
+
+funcao $constantes
+tipo_void
+0  return
+

@@ -1,6 +1,18 @@
 package br.com.persist.plugins.expressao.biblionativo;
 
+defun_native br.com.persist.plugins.expressao.biblionativo.NString createStringPool();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NString append(stringPool, object) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NString empty(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NString trim(object);
+
 defun_native br.com.persist.plugins.expressao.biblionativo.NString lower(object);
 
 defun_native br.com.persist.plugins.expressao.biblionativo.NString upper(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NString size(object);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NString contains(string, procurado);
 

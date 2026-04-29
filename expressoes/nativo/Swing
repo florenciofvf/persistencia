@@ -1,0 +1,6 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NSwing mensagem(string) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NSwing getString(string);
+
