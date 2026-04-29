@@ -3,7 +3,7 @@ package br.com.persist.plugins.navegacao;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.plugins.instrucao.biblionativo.HttpResult;
+import br.com.persist.plugins.expressao.biblionativo.HttpResult;
 
 public class NavegacaoUtil {
 	private static final String HEADER_RESPONSE = "headerResponse";
