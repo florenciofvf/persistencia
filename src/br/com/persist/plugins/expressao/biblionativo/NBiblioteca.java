@@ -16,7 +16,7 @@ public class NBiblioteca {
 	}
 
 	@Biblio(2)
-	public static String simpleName(Object biblio) {
+	public static String nameSimple(Object biblio) {
 		if (biblio instanceof Biblioteca) {
 			String nome = ((Biblioteca) biblio).getNomeSimples();
 			return getNome(nome);
@@ -29,7 +29,7 @@ public class NBiblioteca {
 		if (apartir == null) {
 			return "";
 		}
-		String nome = simpleName(biblio);
+		String nome = nameSimple(biblio);
 		String strAPartir = apartir.toString();
 		int pos = nome.indexOf(strAPartir);
 		if (pos != -1) {
@@ -43,7 +43,7 @@ public class NBiblioteca {
 		if (apos == null) {
 			return "";
 		}
-		String nome = simpleName(biblio);
+		String nome = nameSimple(biblio);
 		String strApos = apos.toString();
 		int pos = nome.indexOf(strApos);
 		if (pos != -1) {
