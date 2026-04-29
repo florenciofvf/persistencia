@@ -62,6 +62,9 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 			}
 		} else {
 			List<Object> lista = null;
+			if ("br.com.persist.plugins.expressao.biblionativo.Biblioteca".equals(nomeBiblio)) {
+				lista = new ArrayList<>(Arrays.asList(biblio));
+			}
 			AtomicBoolean pushPilhaOperando = new AtomicBoolean();
 			Object resp = invocarNativo(lista, clone, pilhaFuncao, pushPilhaOperando);
 			if (pushPilhaOperando.get()) {
