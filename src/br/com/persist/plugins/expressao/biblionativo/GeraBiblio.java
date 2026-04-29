@@ -23,7 +23,7 @@ public class GeraBiblio {
 
 	public static void main(String[] args) throws Exception {
 		Class<?>[] classes = { NList.class, NMap.class, NString.class, NData.class, NDesktop.class, NDir.class,
-				NSystem.class };
+				NSystem.class, NVar.class, NSwing.class, NUtil.class, NDB.class, NRuntime.class };
 
 		for (Class<?> item : classes) {
 			processarBiblioteca(item);

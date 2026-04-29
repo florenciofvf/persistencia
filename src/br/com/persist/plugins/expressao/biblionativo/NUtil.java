@@ -1,0 +1,66 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+import java.math.BigInteger;
+
+import br.com.persist.assistencia.Util;
+
+public class NUtil {
+	public static final BigInteger FALSE = BigInteger.valueOf(0);
+	public static final BigInteger TRUE = BigInteger.valueOf(1);
+
+	private NUtil() {
+	}
+
+	@Biblio(1)
+	public static BigInteger getFalse() {
+		return FALSE;
+	}
+
+	@Biblio(2)
+	public static BigInteger getTrue() {
+		return TRUE;
+	}
+
+	@Biblio(3)
+	public static BigInteger isNull(Object object) {
+		return object == null ? TRUE : FALSE;
+	}
+
+	@Biblio(4)
+	public static BigInteger isNotNull(Object object) {
+		return object != null ? TRUE : FALSE;
+	}
+
+	@Biblio(5)
+	public static String toString(Object object) {
+		return object == null ? "" : object.toString();
+	}
+
+	@Biblio(6)
+	public static Object log(Object desc, Object object) {
+		System.out.println(desc + " " + object);
+		return object;
+	}
+
+	@Biblio(7)
+	public static Object replaceAll(Object string, Object atual, Object novo) {
+		return Util.replaceAll(string.toString(), atual.toString(), novo.toString());
+	}
+
+	@Biblio(8)
+	public static String getContentTransfered() {
+		String string = Util.getContentTransfered();
+		if (string == null) {
+			string = "";
+		}
+		return string;
+	}
+
+	@Biblio(9)
+	public static void setContentTransfered(Object string) {
+		if (string == null) {
+			string = "";
+		}
+		Util.setContentTransfered(string.toString());
+	}
+}
