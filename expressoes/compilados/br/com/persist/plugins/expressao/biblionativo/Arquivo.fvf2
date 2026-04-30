@@ -1,0 +1,38 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo getSeparador
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo existe
+param absoluto
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo getLinhas
+param arquivo
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo criarArquivo
+param absoluto
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo salvarArquivo
+tipo_void
+param arquivo
+param charset
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo salvarLinhas
+tipo_void
+param absoluto
+param lista
+param charset
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo criarStringReader
+param absoluto
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NArquivo copiar
+param absolutoOrigem
+param absolutoDestino
+
+funcao $constantes
+tipo_void
+0  return
+

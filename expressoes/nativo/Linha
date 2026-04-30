@@ -1,0 +1,14 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NLinha getString(linha);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NLinha setString(linha, string) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NLinha getStringEntre(linha, ini, fim);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NLinha setStringEntre(linha, ini, fim, nova) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NLinha getLinhasQueContem(arquivo, strProcurado);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NLinha getLinhasQueContemExtremos(arquivo, ini, fim);
+

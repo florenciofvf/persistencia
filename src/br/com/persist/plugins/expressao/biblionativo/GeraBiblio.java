@@ -25,7 +25,7 @@ public class GeraBiblio {
 		Class<?>[] classes = { NList.class, NMap.class, NString.class, NData.class, NDesktop.class, NDir.class,
 				NSystem.class, NVar.class, NSwing.class, NUtil.class, NDB.class, NRuntime.class, NStyle.class,
 				NFormat.class, NHttp.class, NBiblioteca.class, NMethod.class, NParse.class, NPath.class, NClass.class,
-				NPsmt.class };
+				NPsmt.class, NLinha.class, NArquivo.class };
 
 		for (Class<?> item : classes) {
 			processarBiblioteca(item);

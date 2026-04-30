@@ -1,0 +1,18 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo getSeparador();
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo existe(absoluto);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo getLinhas(arquivo);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo criarArquivo(absoluto);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo salvarArquivo(arquivo, charset) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo salvarLinhas(absoluto, lista, charset) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo criarStringReader(absoluto);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NArquivo copiar(absolutoOrigem, absolutoDestino);
+

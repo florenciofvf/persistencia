@@ -1,0 +1,38 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NLinha getString
+param linha
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NLinha setString
+tipo_void
+param linha
+param string
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NLinha getStringEntre
+param linha
+param ini
+param fim
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NLinha setStringEntre
+tipo_void
+param linha
+param ini
+param fim
+param nova
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NLinha getLinhasQueContem
+param arquivo
+param strProcurado
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NLinha getLinhasQueContemExtremos
+param arquivo
+param ini
+param fim
+
+funcao $constantes
+tipo_void
+0  return
+
