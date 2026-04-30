@@ -162,6 +162,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 			painelConfiguracao.windowOpenedHandler(window);
 			buttonDestacar.estadoFormulario();
 			txtPesquisa.setText(formulario.getTag());
+			actionPerformed(null);
 		}
 
 		@Override
@@ -169,6 +170,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 			painelConfiguracao.dialogOpenedHandler(dialog);
 			buttonDestacar.estadoDialogo();
 			txtPesquisa.setText(formulario.getTag());
+			actionPerformed(null);
 		}
 
 		void adicionadoAoFichario() {
