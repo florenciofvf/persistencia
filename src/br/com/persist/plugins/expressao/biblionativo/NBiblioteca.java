@@ -9,8 +9,7 @@ public class NBiblioteca {
 	@Biblio(1)
 	public static String nameAbsolute(Object biblio) {
 		if (biblio instanceof Biblioteca) {
-			String nome = ((Biblioteca) biblio).getNomeAbsoluto();
-			return getNome(nome);
+			return ((Biblioteca) biblio).getNomeAbsoluto();
 		}
 		return "";
 	}
@@ -18,8 +17,7 @@ public class NBiblioteca {
 	@Biblio(2)
 	public static String nameSimple(Object biblio) {
 		if (biblio instanceof Biblioteca) {
-			String nome = ((Biblioteca) biblio).getNomeSimples();
-			return getNome(nome);
+			return ((Biblioteca) biblio).getNomeSimples();
 		}
 		return "";
 	}
@@ -50,10 +48,5 @@ public class NBiblioteca {
 			return nome.substring(pos + strApos.length());
 		}
 		return "";
-	}
-
-	private static String getNome(String string) {
-		int pos = string.lastIndexOf(".");
-		return pos != -1 ? string.substring(0, pos) : string;
 	}
 }
