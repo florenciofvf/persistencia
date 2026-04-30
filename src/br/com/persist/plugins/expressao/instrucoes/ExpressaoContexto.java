@@ -44,6 +44,9 @@ public class ExpressaoContexto extends Salto {
 
 	@Override
 	protected void processarPre(TokenManager tokenManager, Token token) throws ExpressaoException {
+		if (token.isString()) {
+			return;
+		}
 		String string = token.getString();
 		boolean finalizar = false;
 		for (String item : finalizadores) {
