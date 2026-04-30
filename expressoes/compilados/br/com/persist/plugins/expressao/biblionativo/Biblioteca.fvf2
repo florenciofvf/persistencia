@@ -4,18 +4,14 @@ alias br.com.persist.plugins.expressao.biblionativo.List list
 alias br.com.persist.plugins.expressao.biblionativo.Map map
 
 funcao_nativa br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameAbsolute
-param biblio
 
 funcao_nativa br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameSimple
-param biblio
 
 funcao_nativa br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameAPartir
 param apartir
-param biblio
 
 funcao_nativa br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameApos
 param apos
-param biblio
 
 funcao $constantes
 tipo_void

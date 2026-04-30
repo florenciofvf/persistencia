@@ -1,10 +1,10 @@
 package br.com.persist.plugins.expressao.biblionativo;
 
-defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameAbsolute(biblio);
+defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameAbsolute();
 
-defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameSimple(biblio);
+defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameSimple();
 
-defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameAPartir(apartir, biblio);
+defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameAPartir(apartir);
 
-defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameApos(apos, biblio);
+defun_native br.com.persist.plugins.expressao.biblionativo.NBiblioteca nameApos(apos);
 
