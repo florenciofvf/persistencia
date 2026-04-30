@@ -1,0 +1,35 @@
+pacote br.com.persist.plugins.expressao.biblionativo
+
+alias br.com.persist.plugins.expressao.biblionativo.List list
+alias br.com.persist.plugins.expressao.biblionativo.Map map
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NPsmt setInt
+tipo_void
+param psmt
+param indice
+param valor
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NPsmt setString
+tipo_void
+param psmt
+param indice
+param valor
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NPsmt setCharacterStream
+tipo_void
+param psmt
+param indice
+param reader
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NPsmt executeUpdate
+tipo_void
+param psmt
+
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NPsmt closePsmt
+tipo_void
+param psmt
+
+funcao $constantes
+tipo_void
+0  return
+

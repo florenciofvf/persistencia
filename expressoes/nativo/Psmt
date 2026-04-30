@@ -1,0 +1,12 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NPsmt setInt(psmt, indice, valor) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NPsmt setString(psmt, indice, valor) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NPsmt setCharacterStream(psmt, indice, reader) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NPsmt executeUpdate(psmt) void;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NPsmt closePsmt(psmt) void;
+
