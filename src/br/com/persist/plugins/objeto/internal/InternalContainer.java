@@ -170,6 +170,7 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalContainer extends Panel
 		implements ItemListener, Pagina, WindowHandler, WindowInternalHandler, PluginBasico {
+	private transient ScrollHorizontalListener scrollHorizontalListener = new ScrollHorizontalListener();
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
@@ -429,6 +430,8 @@ public class InternalContainer extends Panel
 	}
 
 	private class ScrollHorizontalListener extends ComponentAdapter {
+		private boolean ativo = true;
+
 		@Override
 		public void componentResized(ComponentEvent e) {
 			set(true);
@@ -451,7 +454,9 @@ public class InternalContainer extends Panel
 
 		private void set(boolean b) {
 			scrollHorizontalVisivel = b;
-			configurarAltura();
+			if (ativo) {
+				configurarAltura();
+			}
 		}
 	}
 
@@ -556,7 +561,7 @@ public class InternalContainer extends Panel
 		if (scrollPane.getViewport().getView() == null) {
 			remove(panelAguardando);
 			scrollPane.getViewport().setView(tabelaPersistencia);
-			scrollPane.getHorizontalScrollBar().addComponentListener(new ScrollHorizontalListener());
+			scrollPane.getHorizontalScrollBar().addComponentListener(scrollHorizontalListener);
 			add(BorderLayout.CENTER, scrollPane);
 			Util.updateComponentTreeUI(InternalContainer.this);
 		}
