@@ -431,25 +431,26 @@ public class InternalContainer extends Panel
 	private class ScrollHorizontalListener extends ComponentAdapter {
 		@Override
 		public void componentResized(ComponentEvent e) {
-			scrollHorizontalVisivel = true;
-			configurarAltura();
+			set(true);
 		}
 
 		@Override
 		public void componentHidden(ComponentEvent e) {
-			scrollHorizontalVisivel = false;
-			configurarAltura();
+			set(false);
 		}
 
 		@Override
 		public void componentShown(ComponentEvent e) {
-			scrollHorizontalVisivel = true;
-			configurarAltura();
+			set(true);
 		}
 
 		@Override
 		public void componentMoved(ComponentEvent e) {
-			scrollHorizontalVisivel = true;
+			set(true);
+		}
+
+		private void set(boolean b) {
+			scrollHorizontalVisivel = b;
 			configurarAltura();
 		}
 	}
