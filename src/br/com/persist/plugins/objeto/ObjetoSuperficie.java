@@ -145,7 +145,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 			if (item instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) item;
 				if (interno.getInternalContainer().scrollVisivel()) {
-					interno.checarRedimensionamento();
+					interno.getInternalContainer().configurarAltura();
 				}
 			}
 		}

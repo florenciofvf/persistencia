@@ -711,7 +711,7 @@ public class InternalContainer extends Panel
 		}
 	}
 
-	private void configurarAltura() {
+	public void configurarAltura() {
 		if (objeto.isAjusteAutoForm() && configuraAlturaListener != null) {
 			configuraAlturaListener.configurarAltura(ConfiguraAlturaSemRegistros.SCROLL_NORTE, false);
 		}
