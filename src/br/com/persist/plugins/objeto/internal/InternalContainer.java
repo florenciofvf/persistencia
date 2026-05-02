@@ -430,24 +430,36 @@ public class InternalContainer extends Panel
 	}
 
 	private class ScrollHorizontalListener implements ComponentListener {
+		private boolean isSet;
+
 		@Override
 		public void componentResized(ComponentEvent e) {
-			scrollHorizontalVisivel = true;
+			set(true);
 		}
 
 		@Override
 		public void componentHidden(ComponentEvent e) {
-			scrollHorizontalVisivel = false;
+			set(false);
 		}
 
 		@Override
 		public void componentMoved(ComponentEvent e) {
-			scrollHorizontalVisivel = true;
+			set(true);
 		}
 
 		@Override
 		public void componentShown(ComponentEvent e) {
-			scrollHorizontalVisivel = true;
+			set(true);
+		}
+
+		private void set(boolean b) {
+			scrollHorizontalVisivel = b;
+			if (scrollHorizontalVisivel && !isSet) {
+				isSet = true;
+				if (visibilidadeListener != null) {
+					visibilidadeListener.reChecarRedimensionamento();
+				}
+			}
 		}
 	}
 
