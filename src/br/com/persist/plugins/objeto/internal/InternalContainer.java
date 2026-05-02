@@ -431,6 +431,7 @@ public class InternalContainer extends Panel
 
 	private class ScrollHorizontalListener extends ComponentAdapter {
 		private boolean ativo = true;
+		private long ultimo;
 
 		@Override
 		public void componentResized(ComponentEvent e) {
@@ -455,6 +456,16 @@ public class InternalContainer extends Panel
 		private void set(boolean b) {
 			scrollHorizontalVisivel = b;
 			if (ativo) {
+				if (ultimo == 0) {
+					ultimo = System.currentTimeMillis();
+				} else {
+					long agora = System.currentTimeMillis();
+					long tempo = agora - ultimo;
+					if (tempo > 99) {
+						ativo = false;
+						return;
+					}
+				}
 				configurarAltura();
 			}
 		}
