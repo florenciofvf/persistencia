@@ -44,6 +44,7 @@ import javax.swing.InputMap;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -847,6 +848,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		objetoSuperficie.setAjusteAutoLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutoEmpilhaForm.setSelected(coletor.getAjusteAutoForm().get());
 		toolbar.compararRegistros(coletor.getCompararRegistros().get());
+		SwingUtilities.invokeLater(objetoSuperficie::reChecarRedimensionamento);
 		objetoSuperficie.configurarLargura(getSize());
 	}
 

@@ -140,6 +140,17 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		}
 	}
 
+	public void reChecarRedimensionamento() {
+		for (JInternalFrame item : getAllFrames()) {
+			if (item instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) item;
+				if (interno.getInternalContainer().scrollVisivel()) {
+					interno.checarRedimensionamento();
+				}
+			}
+		}
+	}
+
 	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
