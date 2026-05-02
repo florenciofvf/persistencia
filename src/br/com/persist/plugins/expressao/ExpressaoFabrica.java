@@ -21,6 +21,7 @@ import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.plugins.expressao.biblionativo.NPath;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 
@@ -74,14 +75,16 @@ public class ExpressaoFabrica extends AbstratoFabricaContainer {
 		}
 
 		private List<String> listarNomeBiblio() {
-			final String paraObjeto = "paraObjeto";
+			String path = NPath.get("objetos/br/com/objetos/lista");
+			File file = new File(CacheBiblioteca.COMPILADOS, path);
 			List<String> lista = new ArrayList<>();
-			File file = new File(CacheBiblioteca.COMPILADOS, paraObjeto);
 			if (file.isDirectory()) {
 				File[] files = file.listFiles();
 				if (files != null) {
 					for (File item : files) {
-						lista.add(paraObjeto + "." + get(item.getName()));
+						String parent = item.getParentFile().getAbsolutePath();
+						parent = Util.replaceAll(parent, File.separator, ".");
+						lista.add(parent + "." + get(item.getName()));
 					}
 				}
 			}
