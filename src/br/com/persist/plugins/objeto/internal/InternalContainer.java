@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -196,6 +197,7 @@ public class InternalContainer extends Panel
 	private static final long serialVersionUID = 1L;
 	private transient InternalConfig internalConfig;
 	private final JComboBox<Conexao> comboConexao;
+	private boolean scrollHorizontalVisivel;
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
 	static final String WHERE = " WHERE ";
@@ -426,7 +428,29 @@ public class InternalContainer extends Panel
 	}
 
 	public boolean scrollVisivel() {
-		return tabelaPersistencia.getPreferredSize().width > scrollPane.getViewport().getWidth();
+		return scrollHorizontalVisivel;
+	}
+
+	private class ScrollHorizontalListener implements ComponentListener {
+		@Override
+		public void componentResized(ComponentEvent e) {
+			scrollHorizontalVisivel = true;
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e) {
+			scrollHorizontalVisivel = false;
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			scrollHorizontalVisivel = true;
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+			scrollHorizontalVisivel = true;
+		}
 	}
 
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, String consultaAlter) {
@@ -530,6 +554,7 @@ public class InternalContainer extends Panel
 		if (scrollPane.getViewport().getView() == null) {
 			remove(panelAguardando);
 			scrollPane.getViewport().setView(tabelaPersistencia);
+			scrollPane.getHorizontalScrollBar().addComponentListener(new ScrollHorizontalListener());
 			add(BorderLayout.CENTER, scrollPane);
 			Util.updateComponentTreeUI(InternalContainer.this);
 		}
