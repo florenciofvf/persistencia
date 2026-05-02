@@ -54,7 +54,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -415,8 +414,7 @@ public class InternalContainer extends Panel
 	}
 
 	public int getAlturaScrollHorizontal() {
-		JScrollBar horizontalScrollBar = scrollPane.getHorizontalScrollBar();
-		if (horizontalScrollBar.isVisible()) {
+		if (scrollVisivel()) {
 			Variavel varScroll = VariavelProvedor
 					.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SCROLL_HOR_VISIVEL);
 			if (varScroll == null) {
