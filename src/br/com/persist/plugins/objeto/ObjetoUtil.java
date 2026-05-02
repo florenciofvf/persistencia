@@ -17,7 +17,7 @@ import br.com.persist.assistencia.TextPool;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.plugins.instrucao.biblionativo.Lista;
+import br.com.persist.plugins.expressao.biblionativo.Lista;
 import br.com.persist.plugins.objeto.vinculo.ArquivoVinculo;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
