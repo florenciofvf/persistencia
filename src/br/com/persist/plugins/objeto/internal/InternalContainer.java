@@ -24,7 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -429,33 +428,26 @@ public class InternalContainer extends Panel
 		return scrollHorizontalVisivel;
 	}
 
-	private class ScrollHorizontalListener implements ComponentListener {
-		private boolean isSet;
-
-		@Override
-		public void componentResized(ComponentEvent e) {
-			set(true);
-		}
+	private class ScrollHorizontalListener extends ComponentAdapter {
+		private boolean isHidden;
+		private boolean isShow;
 
 		@Override
 		public void componentHidden(ComponentEvent e) {
-			set(false);
-		}
-
-		@Override
-		public void componentMoved(ComponentEvent e) {
-			set(true);
+			scrollHorizontalVisivel = false;
+			if (!isHidden) {
+				isHidden = true;
+				if (visibilidadeListener != null) {
+					visibilidadeListener.reChecarRedimensionamento();
+				}
+			}
 		}
 
 		@Override
 		public void componentShown(ComponentEvent e) {
-			set(true);
-		}
-
-		private void set(boolean b) {
-			scrollHorizontalVisivel = b;
-			if (scrollHorizontalVisivel && !isSet) {
-				isSet = true;
+			scrollHorizontalVisivel = true;
+			if (!isShow) {
+				isShow = true;
 				if (visibilidadeListener != null) {
 					visibilidadeListener.reChecarRedimensionamento();
 				}
