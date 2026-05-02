@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import br.com.persist.abstrato.AbstratoInternalFrame;
@@ -510,14 +509,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			checarDesktop();
 			if (desktop != null) {
 				desktop.limparOutros(invocador);
-			}
-		}
-
-		public void reChecarRedimensionamento() {
-			checarDesktop();
-			if (desktop instanceof ObjetoSuperficie) {
-				ObjetoSuperficie superficie = (ObjetoSuperficie) desktop;
-				SwingUtilities.invokeLater(superficie::reChecarRedimensionamento);
 			}
 		}
 	};

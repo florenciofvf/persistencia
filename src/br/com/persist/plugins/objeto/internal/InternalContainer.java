@@ -429,29 +429,28 @@ public class InternalContainer extends Panel
 	}
 
 	private class ScrollHorizontalListener extends ComponentAdapter {
-		private boolean isHidden;
-		private boolean isShow;
+		@Override
+		public void componentResized(ComponentEvent e) {
+			scrollHorizontalVisivel = true;
+			configurarAltura();
+		}
 
 		@Override
 		public void componentHidden(ComponentEvent e) {
 			scrollHorizontalVisivel = false;
-			if (!isHidden) {
-				isHidden = true;
-				if (visibilidadeListener != null) {
-					visibilidadeListener.reChecarRedimensionamento();
-				}
-			}
+			configurarAltura();
 		}
 
 		@Override
 		public void componentShown(ComponentEvent e) {
 			scrollHorizontalVisivel = true;
-			if (!isShow) {
-				isShow = true;
-				if (visibilidadeListener != null) {
-					visibilidadeListener.reChecarRedimensionamento();
-				}
-			}
+			configurarAltura();
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			scrollHorizontalVisivel = true;
+			configurarAltura();
 		}
 	}
 
@@ -703,7 +702,7 @@ public class InternalContainer extends Panel
 		}
 	}
 
-	public void configurarAltura() {
+	private void configurarAltura() {
 		if (objeto.isAjusteAutoForm() && configuraAlturaListener != null) {
 			configuraAlturaListener.configurarAltura(ConfiguraAlturaSemRegistros.SCROLL_NORTE, false);
 		}
