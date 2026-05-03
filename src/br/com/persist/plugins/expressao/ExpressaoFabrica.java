@@ -76,15 +76,14 @@ public class ExpressaoFabrica extends AbstratoFabricaContainer {
 
 		private List<String> listarNomeBiblio() {
 			String path = NPath.get("objetos/br/com/objetos/lista");
+			String pack = Util.replaceAll(path, File.separator, ".");
 			File file = new File(CacheBiblioteca.COMPILADOS, path);
 			List<String> lista = new ArrayList<>();
 			if (file.isDirectory()) {
 				File[] files = file.listFiles();
 				if (files != null) {
 					for (File item : files) {
-						String parent = item.getParentFile().getAbsolutePath();
-						parent = Util.replaceAll(parent, File.separator, ".");
-						lista.add(parent + "." + get(item.getName()));
+						lista.add(pack + "." + get(item.getName()));
 					}
 				}
 			}
