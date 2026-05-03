@@ -187,6 +187,14 @@ public class BibliotecaContexto extends Contexto {
 		return resp;
 	}
 
+	public Map<String, String> getAlias() throws ExpressaoException {
+		Map<String, String> map = new HashMap<>();
+		for (Map.Entry<String, AliasContexto> entry : getMapaAlias().entrySet()) {
+			map.put(entry.getKey(), entry.getValue().getBiblioteca());
+		}
+		return map;
+	}
+
 	public IFuncaoContexto getFuncao(String nome) {
 		for (IFuncaoContexto item : getListaFuncoes()) {
 			if (item.getNome().equals(nome)) {

@@ -33,34 +33,30 @@ import br.com.persist.assistencia.MetaInfo;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
-import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 
 public class ExpressaoMetadados {
 	private ExpressaoMetadados() {
 	}
 
-	public static void abrir(Component comp, String biblioteca, MetaDialogoListener listener, Point location)
-			throws ExpressaoException {
-		CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
-		Biblioteca biblio = cacheBiblioteca.getBiblioteca(biblioteca);
-		MetaProvedor.init(biblio);
+	public static void abrir(Component comp, Biblioteca biblioteca, MetaDialogoListener listener, Point location) {
+		MetaProvedor.init(biblioteca);
 		MetaDialogo.criar(Util.getViewParentFrame(comp), listener, location);
 	}
 }
 
-interface MetaListener {
+interface MetaContainerListener {
 	void setFragmento(String string);
 
 	void dispose();
 }
 
 class MetaContainer extends Panel {
-	private final transient MetaListener metaListener;
+	private final transient MetaContainerListener metaContainerListener;
 	private static final long serialVersionUID = 1L;
 	private JList<MetaInfo> lista;
 
-	public MetaContainer(MetaListener metaListener) {
-		this.metaListener = Objects.requireNonNull(metaListener);
+	public MetaContainer(MetaContainerListener metaContainerListener) {
+		this.metaContainerListener = Objects.requireNonNull(metaContainerListener);
 		lista = new JList<>(new MetaModelo());
 		montarLayout();
 		configurar();
@@ -93,8 +89,8 @@ class MetaContainer extends Panel {
 		int indice = lista.getSelectedIndex();
 		if (indice != -1) {
 			MetaInfo fragmento = lista.getSelectedValue();
-			metaListener.setFragmento(fragmento.getMeta());
-			metaListener.dispose();
+			metaContainerListener.setFragmento(fragmento.getMeta());
+			metaContainerListener.dispose();
 		}
 	}
 
@@ -105,14 +101,14 @@ class MetaContainer extends Panel {
 	}
 }
 
-class MetaDialogo extends JWindow implements MetaListener {
-	private final transient MetaDialogoListener listener;
+class MetaDialogo extends JWindow implements MetaContainerListener {
+	private final transient MetaDialogoListener metaDialogolistener;
 	private static final long serialVersionUID = 1L;
 	private final MetaContainer container;
 
-	private MetaDialogo(Frame frame, MetaDialogoListener listener) {
+	private MetaDialogo(Frame frame, MetaDialogoListener metaDialogoListener) {
 		super(frame);
-		this.listener = Objects.requireNonNull(listener);
+		this.metaDialogolistener = Objects.requireNonNull(metaDialogoListener);
 		container = new MetaContainer(this);
 		montarLayout();
 		setActionESC();
@@ -161,7 +157,7 @@ class MetaDialogo extends JWindow implements MetaListener {
 
 	@Override
 	public void setFragmento(String string) {
-		listener.setFragmento(string);
+		metaDialogolistener.setFragmento(string);
 	}
 }
 

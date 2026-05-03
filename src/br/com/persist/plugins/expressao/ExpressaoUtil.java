@@ -1,0 +1,32 @@
+package br.com.persist.plugins.expressao;
+
+import br.com.persist.assistencia.Util;
+
+public class ExpressaoUtil {
+	private ExpressaoUtil() {
+	}
+
+	public static String[] getArray(String string) {
+		if (string == null) {
+			return new String[0];
+		}
+		string = Util.trim(string, '.', false);
+		string = Util.trim(string, '.', true);
+		if (Util.isEmpty(string)) {
+			return new String[0];
+		}
+		return string.split("\\.");
+	}
+
+	public static String get(String[] array) {
+		if (array == null || array.length == 0) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder(array[0]);
+		for (int i = 1; i < array.length; i++) {
+			sb.append(".");
+			sb.append(array[i]);
+		}
+		return sb.toString();
+	}
+}
