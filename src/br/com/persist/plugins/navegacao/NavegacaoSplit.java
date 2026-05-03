@@ -110,9 +110,11 @@ import br.com.persist.plugins.expressao.ExpressaoCor;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.ExpressaoMensagens;
 import br.com.persist.plugins.expressao.ExpressaoMetadados;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.MetaDialogoListener;
 import br.com.persist.plugins.expressao.biblionativo.HttpResult;
 import br.com.persist.plugins.expressao.biblionativo.HttpUtil;
+import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
@@ -338,9 +340,12 @@ class NavegacaoSplit extends SplitPane {
 	};
 }
 
-class Editor extends TextEditor implements MetaDialogoListener {
+class Editor extends TextEditor {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+	transient BibliotecaContexto bibliotecaContexto;
+	transient CacheBiblioteca cacheBiblioteca;
+	private Point point;
 
 	Editor() {
 		addFocusListener(focusListenerInner);
@@ -385,22 +390,18 @@ class Editor extends TextEditor implements MetaDialogoListener {
 			} catch (BadLocationException ex) {
 				return;
 			}
-			Point point = getLocationOnScreen();
+			point = getLocationOnScreen();
 			point.x += r.x + 5;
 			point.y += r.y;
 			String string = getString(dot);
 			if (Util.isEmpty(string)) {
 				return;
 			}
-			string = Util.trim(string, '.', false);
-			string = Util.trim(string, '.', true);
-			if (Util.isEmpty(string)) {
-				return;
-			}
-			try {
-				ExpressaoMetadados.abrir(Editor.this, string, Editor.this, point);
-			} catch (ExpressaoException ex) {
-				LOG.warning(ex.getMessage());
+			String[] array = ExpressaoUtil.getArray(string);
+			if (array.length == 1) {
+				processarAlias(array[0]);
+			} else if (array.length > 2) {
+				processarBiblio(ExpressaoUtil.get(array));
 			}
 		}
 
@@ -419,23 +420,58 @@ class Editor extends TextEditor implements MetaDialogoListener {
 			}
 			return sb.toString();
 		}
-	};
 
-	@Override
-	public void setFragmento(String string) {
-		Document doc = getDocument();
-		if (doc != null) {
+		private void processarAlias(String alias) {
+			if (bibliotecaContexto == null) {
+				LOG.warning(ExpressaoMensagens.getString("erro.compile_arquivo_alias"));
+				return;
+			}
 			try {
-				int selectionEnd = getSelectionEnd();
-				doc.insertString(selectionEnd, string, null);
-			} catch (BadLocationException e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				String biblioteca = bibliotecaContexto.getAlias().get(alias);
+				processarBiblio(biblioteca);
+			} catch (ExpressaoException ex) {
+				LOG.warning(ex.getMessage());
 			}
 		}
-	}
+
+		private void processarBiblio(String biblio) {
+			if (cacheBiblioteca == null || biblio == null) {
+				return;
+			}
+			Biblioteca biblioteca = null;
+			try {
+				biblioteca = cacheBiblioteca.getBiblioteca(biblio);
+			} catch (ExpressaoException ex) {
+				LOG.warning(ex.getMessage());
+				return;
+			}
+			ExpressaoMetadados.abrir(Editor.this, biblioteca, metaDialogoListener, point);
+		}
+	};
+
+	private transient MetaDialogoListener metaDialogoListener = new MetaDialogoListener() {
+		@Override
+		public void setFragmento(String string) {
+			Document doc = getDocument();
+			if (doc != null) {
+				try {
+					int selectionEnd = getSelectionEnd();
+					doc.insertString(selectionEnd, string, null);
+				} catch (BadLocationException e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
+			}
+		}
+
+		@Override
+		public String getDestino() {
+			return "Editor";
+		}
+	};
 }
 
 class Aba extends Transferivel {
+	private transient CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
 	private final PainelResultado painelResultado = new PainelResultado();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -492,6 +528,7 @@ class Aba extends Transferivel {
 		add(BorderLayout.CENTER, split);
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
+		editor.cacheBiblioteca = cacheBiblioteca;
 	}
 
 	private Panel criarPanel() {
@@ -942,6 +979,7 @@ class Aba extends Transferivel {
 					colorir = true;
 				}
 				boolean resp = biblio != null;
+				editor.bibliotecaContexto = biblio;
 				painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado")
 						: ExpressaoMensagens.getString("msg.nao_compilado"), true);
 				if (resp && colorir) {
