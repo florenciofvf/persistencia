@@ -19,4 +19,9 @@ public class GotoInstrucao extends Instrucao {
 			throws ExpressaoException {
 		funcao.setIndice(indiceSalto);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + indiceSalto;
+	}
 }

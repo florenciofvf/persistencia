@@ -157,4 +157,9 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 					funcao.getBiblioteca().getNomeAbsoluto());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + nomeBiblio + "." + nomeFuncao;
+	}
 }

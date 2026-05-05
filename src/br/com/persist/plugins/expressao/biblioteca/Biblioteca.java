@@ -114,7 +114,7 @@ public class Biblioteca {
 
 	@Override
 	public String toString() {
-		return nome + " constantes:" + mapaConstantes;
+		return nome;
 	}
 }
 

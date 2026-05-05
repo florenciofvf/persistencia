@@ -58,4 +58,9 @@ public class InvocacaoParamInstrucao extends Instrucao {
 		Funcao clone = Funcao.clonarVertical(funcaoParam);
 		pilhaFuncao.push(clone);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + get(nomeFuncoes) + "." + nomeFuncao;
+	}
 }

@@ -49,4 +49,9 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 		Funcao clone = Funcao.clonarVertical(funcaoParam);
 		pilhaFuncao.push(clone);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + nomeBiblioteca + "." + nomeConstante;
+	}
 }

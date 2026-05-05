@@ -26,6 +26,17 @@ public abstract class Instrucao {
 		return indice;
 	}
 
+	protected String get(String[] array) {
+		StringBuilder builder = new StringBuilder();
+		for (String item : array) {
+			if (builder.length() > 0) {
+				builder.append("$");
+			}
+			builder.append(item);
+		}
+		return builder.toString();
+	}
+
 	public abstract void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException;
 

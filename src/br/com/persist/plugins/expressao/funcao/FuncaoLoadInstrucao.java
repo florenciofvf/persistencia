@@ -53,4 +53,9 @@ public class FuncaoLoadInstrucao extends Instrucao implements LinkBiblioteca {
 		Funcao clone = Funcao.clonarVertical(funcaoLoad);
 		pilhaOperando.push(clone);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + nomeBiblioteca + "." + nomeFuncao;
+	}
 }

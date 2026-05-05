@@ -25,4 +25,9 @@ public class IFEqInstrucao extends Instrucao {
 			funcao.setIndice(indiceSalto);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + indiceSalto;
+	}
 }

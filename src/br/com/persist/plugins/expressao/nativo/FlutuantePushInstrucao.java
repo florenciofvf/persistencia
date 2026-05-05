@@ -21,4 +21,9 @@ public class FlutuantePushInstrucao extends Instrucao {
 			throws ExpressaoException {
 		pilhaOperando.push(bigDecimal);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + bigDecimal;
+	}
 }

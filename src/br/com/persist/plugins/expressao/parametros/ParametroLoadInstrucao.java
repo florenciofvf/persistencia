@@ -49,4 +49,9 @@ public class ParametroLoadInstrucao extends Instrucao {
 
 		pilhaOperando.push(valor);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + get(nomeFuncoes) + "." + nomeParametro;
+	}
 }

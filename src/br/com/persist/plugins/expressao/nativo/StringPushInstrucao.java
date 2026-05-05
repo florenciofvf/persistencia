@@ -25,4 +25,9 @@ public class StringPushInstrucao extends Instrucao {
 			throws ExpressaoException {
 		pilhaOperando.push(string);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + string;
+	}
 }

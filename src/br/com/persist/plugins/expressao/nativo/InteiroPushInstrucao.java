@@ -21,4 +21,9 @@ public class InteiroPushInstrucao extends Instrucao {
 			throws ExpressaoException {
 		pilhaOperando.push(bigInteger);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + bigInteger;
+	}
 }

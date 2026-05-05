@@ -24,4 +24,9 @@ public class ConstanteDefineInstrucao extends Instrucao {
 		biblioteca.addConstante(constante);
 		constante.setValor(valor);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + nomeConstante;
+	}
 }
