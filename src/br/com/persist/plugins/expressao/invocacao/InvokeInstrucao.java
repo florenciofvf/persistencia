@@ -12,17 +12,24 @@ import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
-import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
+/**
+ * <pre>
+ * defun main() {
+ * 	procedimento();
+ * 	return funcao();
+ * }
+ * </pre>
+ **/
+public class InvokeInstrucao extends Invoke implements LinkBiblioteca {
 	private final boolean comRetorno;
 	private boolean biblioLocal;
 	private String nomeBiblio;
 	private String nomeFuncao;
 
-	public InvocacaoInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+	public InvokeInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
 		super(indice, comRetorno ? InvocacaoContexto.INVOKE_CRET : InvocacaoContexto.INVOKE_VOID);
 		this.comRetorno = comRetorno;
 		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
@@ -50,10 +57,10 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		} else {
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
-		Funcao invocar = biblio.getFuncao(nomeFuncao);
-		setArgumentos(invocar, pilhaOperando);
-		Funcao clone = Funcao.clonarVertical(invocar);
-		validar(clone, comRetorno);
+		Funcao funcaoValor = biblio.getFuncao(nomeFuncao);
+		validar(funcaoValor, comRetorno);
+		Funcao clone = funcaoValor.clonarSemParent();
+		pilhaOperando.setArgumentos(clone);
 		if (clone.isNativo()) {
 			List<Object> lista = null;
 			if ("br.com.persist.plugins.expressao.biblionativo.Biblioteca".equals(nomeBiblio)) {
@@ -69,15 +76,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		}
 	}
 
-	public static void setArgumentos(Funcao funcao, PilhaOperando pilhaOperando) throws ExpressaoException {
-		List<Integer> indices = funcao.getIndiceParametros();
-		for (int i = indices.size() - 1; i >= 0; i--) {
-			Object valor = pilhaOperando.pop();
-			funcao.setValorParametro(indices.get(i), valor);
-		}
-	}
-
-	private static Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
+	private Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
 			AtomicBoolean pushPilhaOperando) throws ExpressaoException {
 		Object resposta = null;
 		Class<?> klass = null;
@@ -131,31 +130,6 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 			resp.add(item);
 		}
 		return resp.toArray(new Object[0]);
-	}
-
-	private static boolean isVoid(String string) {
-		return "void".equals(string) || "java.lang.Void".equals(string);
-	}
-
-	private static String stringPilhaMetodo(Funcao funcao, PilhaFuncao pilhaMetodo) throws ExpressaoException {
-		StringBuilder sb = new StringBuilder(funcao.toString() + "\n");
-		while (!pilhaMetodo.isEmpty()) {
-			sb.append(pilhaMetodo.pop() + "\n");
-		}
-		return sb.toString();
-	}
-
-	public static void validar(Funcao funcao, boolean comRetorno) throws ExpressaoException {
-		if (funcao == null) {
-			throw new ExpressaoException("Funcao nula.", false);
-		}
-		if (comRetorno && funcao.isTipoVoid()) {
-			throw new ExpressaoException("erro.funcao_sem_retorno", funcao.getNome(),
-					funcao.getBiblioteca().getNomeAbsoluto());
-		} else if (!comRetorno && !funcao.isTipoVoid()) {
-			throw new ExpressaoException("erro.funcao_com_retorno", funcao.getNome(),
-					funcao.getBiblioteca().getNomeAbsoluto());
-		}
 	}
 
 	@Override

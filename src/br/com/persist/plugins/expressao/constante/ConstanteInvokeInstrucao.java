@@ -5,12 +5,25 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
-import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
+/**
+ * <pre>
+*defun fatorial(numero) {
+*	const exec = defun calcular(valor) {
+*					if(valor == 0) {
+*						return 1;
+*					} else {
+*						return valor * calcular(valor - 1);
+*					}
+*				};
+*	return exec(numero);
+*}
+ * </pre>
+ */
 public class ConstanteInvokeInstrucao extends Instrucao implements LinkBiblioteca {
 	private String nomeBiblioteca;
 	private String nomeConstante;
@@ -44,9 +57,10 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
 		Constante constante = biblio.getConstante(nomeConstante);
-		Funcao funcaoParam = (Funcao) constante.getValor();
-		InvocacaoInstrucao.setArgumentos(funcaoParam, pilhaOperando);
-		Funcao clone = Funcao.clonarVertical(funcaoParam);
+		Funcao funcaoValor = (Funcao) constante.getValor();
+		Funcao clone = funcaoValor.clonarSemParent();
+		pilhaOperando.setArgumentos(clone);
+		clone.setParent(funcao);
 		pilhaFuncao.push(clone);
 	}
 

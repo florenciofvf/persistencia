@@ -1,17 +1,30 @@
-package br.com.persist.plugins.expressao.invocacao;
+package br.com.persist.plugins.expressao.parametros;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
+import br.com.persist.plugins.expressao.invocacao.Invoke;
 import br.com.persist.plugins.expressao.processador.Funcao;
-import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class InvocacaoParamInstrucao extends Instrucao {
+/**
+ * <pre>
+*defun proxy(funcao) {
+*	return funcao();
+*}
+*
+*defun invocaFuncao(funcao) void {
+*	funcao();
+*	return;
+*}
+ * </pre>
+ **/
+public class ParametroInvokeInstrucao extends Invoke {
 	private final boolean comRetorno;
 	private String[] nomeFuncoes;
 	private String nomeFuncao;
 
-	public InvocacaoParamInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+	public ParametroInvokeInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
 		super(indice, comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID);
 		this.comRetorno = comRetorno;
 		int pos = parametros.indexOf(' ');
@@ -52,10 +65,11 @@ public class InvocacaoParamInstrucao extends Instrucao {
 					funcao.getBiblioteca().getNomeAbsoluto());
 		}
 
-		Funcao funcaoParam = (Funcao) valor;
-		InvocacaoInstrucao.validar(funcaoParam, comRetorno);
-		InvocacaoInstrucao.setArgumentos(funcaoParam, pilhaOperando);
-		Funcao clone = Funcao.clonarVertical(funcaoParam);
+		Funcao funcaoValor = (Funcao) valor;
+		validar(funcaoValor, comRetorno);
+		Funcao clone = funcaoValor.clonarSemParent();
+		pilhaOperando.setArgumentos(clone);
+		clone.setParent(funcao);
 		pilhaFuncao.push(clone);
 	}
 

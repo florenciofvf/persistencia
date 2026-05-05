@@ -45,6 +45,13 @@ public class PilhaOperando {
 		operandos.clear();
 	}
 
+	public void setArgumentos(Funcao funcao) throws ExpressaoException {
+		List<Integer> indices = funcao.getIndiceParametros();
+		for (int i = indices.size() - 1; i >= 0; i--) {
+			funcao.setValorParametro(indices.get(i), pop());
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "PilhaOperando=" + operandos.toString();

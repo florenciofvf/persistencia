@@ -10,8 +10,7 @@ import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoLoadInnerInstrucao;
 import br.com.persist.plugins.expressao.funcao.FuncaoLoadInstrucao;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
-import br.com.persist.plugins.expressao.invocacao.InvocacaoInstrucao;
-import br.com.persist.plugins.expressao.invocacao.InvocacaoParamInstrucao;
+import br.com.persist.plugins.expressao.invocacao.InvokeInstrucao;
 import br.com.persist.plugins.expressao.lista.AddItemListaContexto;
 import br.com.persist.plugins.expressao.lista.AddItemListaInstrucao;
 import br.com.persist.plugins.expressao.mapa.PutItemMapaContexto;
@@ -41,6 +40,7 @@ import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Or;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Rem;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Sub;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Xor;
+import br.com.persist.plugins.expressao.parametros.ParametroInvokeInstrucao;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroLoadInstrucao;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
@@ -114,13 +114,13 @@ public class Instrucoes {
 
 	private static Instrucao criarInvocacao(int indice, String nome, String parametros) throws ExpressaoException {
 		if (InvocacaoContexto.INVOKE_CRET.equals(nome)) {
-			return new InvocacaoInstrucao(true, indice, parametros);
+			return new InvokeInstrucao(true, indice, parametros);
 		} else if (InvocacaoContexto.INVOKE_VOID.equals(nome)) {
-			return new InvocacaoInstrucao(false, indice, parametros);
+			return new InvokeInstrucao(false, indice, parametros);
 		} else if (InvocacaoContexto.INVOKE_PARAM_CRET.equals(nome)) {
-			return new InvocacaoParamInstrucao(true, indice, parametros);
+			return new ParametroInvokeInstrucao(true, indice, parametros);
 		} else if (InvocacaoContexto.INVOKE_PARAM_VOID.equals(nome)) {
-			return new InvocacaoParamInstrucao(false, indice, parametros);
+			return new ParametroInvokeInstrucao(false, indice, parametros);
 		}
 		return null;
 	}

@@ -109,19 +109,16 @@ public class CacheBiblioteca {
 		}
 	}
 
-	private Funcao criarFuncao(Biblioteca biblioteca, String linha) throws ExpressaoException {
+	private Funcao criarFuncao(Biblioteca biblioteca, String linha) {
 		String nomeEParametros = linha.substring(FuncaoContexto.PREFIXO_FUNCAO.length());
 		int pos = nomeEParametros.indexOf(' ');
 		if (pos == -1) {
-			return new Funcao(biblioteca, nomeEParametros);
+			return new Funcao(biblioteca, nomeEParametros, null);
 		}
 		String nome = nomeEParametros.substring(0, pos);
 		String parametros = nomeEParametros.substring(pos + 1);
-		String[] array = parametros.split(Instrucao.CIFRAO);
-		Funcao funcaoParent = biblioteca.getFuncao(array[array.length - 1]);
-		Funcao funcao = new Funcao(biblioteca, nome);
-		funcaoParent.add(funcao);
-		return funcao;
+		String[] origem = parametros.split(Instrucao.CIFRAO);
+		return new Funcao(biblioteca, nome, origem);
 	}
 
 	private Funcao criarFuncaoNativa(Biblioteca biblioteca, String linha) {
@@ -129,7 +126,7 @@ public class CacheBiblioteca {
 		int pos = linha.indexOf(' ');
 		String biblioNativa = linha.substring(0, pos);
 		String nome = linha.substring(pos + 1);
-		Funcao funcao = new Funcao(biblioteca, nome);
+		Funcao funcao = new Funcao(biblioteca, nome, null);
 		funcao.setBiblioNativa(biblioNativa);
 		return funcao;
 	}

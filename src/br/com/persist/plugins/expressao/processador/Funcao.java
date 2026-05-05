@@ -14,8 +14,8 @@ public class Funcao {
 	private final Map<Integer, InstrucaoItem> mapaInstrucoes;
 	private final List<Parametro> parametros;
 	private final Biblioteca biblioteca;
-	private final List<Funcao> funcoes;
 	private InstrucaoItem ponteiro;
+	private final String[] origem;
 	private InstrucaoItem cabeca;
 	private String biblioNativa;
 	private InstrucaoItem cauda;
@@ -23,46 +23,24 @@ public class Funcao {
 	private boolean tipoVoid;
 	private Funcao parent;
 
-	public Funcao(Biblioteca biblioteca, String nome) {
+	public Funcao(Biblioteca biblioteca, String nome, String[] origem) {
 		this.biblioteca = Objects.requireNonNull(biblioteca);
 		this.nome = Objects.requireNonNull(nome);
-		mapaInstrucoes = new HashMap<>();
-		parametros = new ArrayList<>();
-		funcoes = new ArrayList<>();
+		this.mapaInstrucoes = new HashMap<>();
+		this.parametros = new ArrayList<>();
+		this.origem = origem;
 	}
 
-	public void add(Funcao funcao) {
-		if (funcao != null) {
-			if (funcao.parent != null) {
-				funcao.parent.remove(funcao);
-			}
-			funcoes.add(funcao);
-			funcao.parent = this;
-		}
-	}
-
-	public void remove(Funcao funcao) {
-		if (funcao != null && funcao.parent == this) {
-			funcoes.remove(funcao);
-			funcao.parent = null;
-		}
-	}
-
-	public Funcao getFuncao(String nome) throws ExpressaoException {
-		for (Funcao item : funcoes) {
-			if (item.nome.equals(nome)) {
-				return item;
-			}
-		}
-		throw new ExpressaoException("erro.funcao_inexistente", nome, biblioteca.getNomeAbsoluto());
+	public String[] getOrigem() {
+		return origem;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	protected Funcao clonarSemParent() throws ExpressaoException {
-		Funcao clone = new Funcao(biblioteca, nome);
+	public Funcao clonarSemParent() throws ExpressaoException {
+		Funcao clone = new Funcao(biblioteca, nome, origem);
 		clone.biblioNativa = biblioNativa;
 		clone.tipoVoid = tipoVoid;
 		for (Parametro item : parametros) {
@@ -76,27 +54,12 @@ public class Funcao {
 		return clone;
 	}
 
-	public static Funcao clonarVertical(Funcao funcao) throws ExpressaoException {
-		if (funcao == null) {
-			throw new ExpressaoException("Funcao.clonarVertical(Funcao funcao) >>> funcao nula", false);
-		}
-		List<Funcao> lista = new ArrayList<>();
-		while (funcao != null) {
-			lista.add(funcao.clonarSemParent());
-			funcao = funcao.parent;
-		}
-		for (int i = lista.size() - 1; i >= 0; i--) {
-			Funcao funcaoPai = lista.get(i);
-			if (i - 1 >= 0) {
-				Funcao funcaoFilho = lista.get(i - 1);
-				funcaoPai.add(funcaoFilho);
-			}
-		}
-		return lista.get(0);
-	}
-
 	public Funcao getParent() {
 		return parent;
+	}
+
+	public void setParent(Funcao parent) {
+		this.parent = parent;
 	}
 
 	public Biblioteca getBiblioteca() {
