@@ -37,6 +37,6 @@ public class Parametro {
 
 	@Override
 	public String toString() {
-		return indice + ": " + nome + "=" + valor;
+		return nome + "=" + valor;
 	}
 }
