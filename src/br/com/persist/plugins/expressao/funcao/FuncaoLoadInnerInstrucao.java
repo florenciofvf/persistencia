@@ -6,11 +6,10 @@ import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
-import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class FuncaoLoadInnerInstrucao extends Instrucao implements LinkBiblioteca {
+public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements LinkBiblioteca {
 	private final boolean tipoVoid;
 	private String nomeBiblioteca;
 	private boolean biblioLocal;
@@ -45,13 +44,8 @@ public class FuncaoLoadInnerInstrucao extends Instrucao implements LinkBibliotec
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
 		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao);
-		if (tipoVoid != funcaoLoad.isTipoVoid()) {
-			String chamada = nomeBiblioteca + "." + nomeFuncao;
-			throw new ExpressaoException("erro.invocacao.retorno", chamada,
-					(funcaoLoad.isTipoVoid() ? "VOID" : "VALOR"));
-		}
-		Funcao clone = Funcao.clonarVertical(funcaoLoad);
-		pilhaOperando.push(clone);
+		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
+		pilhaOperando.push(funcaoLoad);
 	}
 
 	@Override
