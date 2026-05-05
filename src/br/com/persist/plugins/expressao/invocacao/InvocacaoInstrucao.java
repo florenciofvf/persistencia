@@ -54,13 +54,7 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 		setArgumentos(invocar, pilhaOperando);
 		Funcao clone = Funcao.clonarVertical(invocar);
 		validar(clone, comRetorno);
-		if (!clone.isNativo()) {
-			try {
-				pilhaFuncao.push(clone);
-			} catch (Exception ex) {
-				throw new ExpressaoException(stringPilhaMetodo(clone, pilhaFuncao), ex);
-			}
-		} else {
+		if (clone.isNativo()) {
 			List<Object> lista = null;
 			if ("br.com.persist.plugins.expressao.biblionativo.Biblioteca".equals(nomeBiblio)) {
 				lista = new ArrayList<>(Arrays.asList(funcao.getBiblioteca()));
@@ -70,6 +64,8 @@ public class InvocacaoInstrucao extends Instrucao implements LinkBiblioteca {
 			if (pushPilhaOperando.get()) {
 				pilhaOperando.push(resp);
 			}
+		} else {
+			pilhaFuncao.push(clone);
 		}
 	}
 
