@@ -396,26 +396,6 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected String montarString(List<String> lista, boolean reverso) {
-		StringBuilder builder = new StringBuilder();
-		if (reverso) {
-			for (int i = lista.size() - 1; i >= 0; i--) {
-				if (builder.length() > 0) {
-					builder.append("$");
-				}
-				builder.append(lista.get(i));
-			}
-		} else {
-			for (String item : lista) {
-				if (builder.length() > 0) {
-					builder.append("$");
-				}
-				builder.append(item);
-			}
-		}
-		return builder.toString();
-	}
-
 	protected List<String> checarSeEhParametroDeFuncao(String string, AtomicBoolean sucesso) {
 		List<String> lista = new ArrayList<>();
 		Contexto c = this;
@@ -434,6 +414,19 @@ public abstract class Contexto {
 		return lista;
 	}
 
+	protected List<String> listarHierarquiaFuncao() {
+		List<String> lista = new ArrayList<>();
+		Contexto c = parent;
+		while (c != null) {
+			if (c instanceof FuncaoContexto) {
+				FuncaoContexto funcao = (FuncaoContexto) c;
+				lista.add(funcao.getNome());
+			}
+			c = c.getParent();
+		}
+		return lista;
+	}
+
 	protected IFuncaoContexto getFuncaoNomeOriginal(String nome) {
 		Contexto c = this;
 		while (c != null) {
@@ -446,5 +439,16 @@ public abstract class Contexto {
 			c = c.getParent();
 		}
 		return null;
+	}
+
+	protected String montarString(List<String> lista) {
+		StringBuilder builder = new StringBuilder();
+		for (String item : lista) {
+			if (builder.length() > 0) {
+				builder.append("$");
+			}
+			builder.append(item);
+		}
+		return builder.toString();
 	}
 }

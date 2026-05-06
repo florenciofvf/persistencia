@@ -30,7 +30,7 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 			} else {
 				funcaoAlvo = funcaoAlvo.getParent();
 				if (funcaoAlvo == null) {
-					throw new ExpressaoException("Funcao Parent nula", false);
+					throw new ExpressaoException("Funcao Parent nula: " + item, false);
 				}
 				checarNome(item, funcaoAlvo);
 			}

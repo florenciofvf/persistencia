@@ -59,7 +59,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
 		if (sucesso.get()) {
 			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
-			setBiblio(montarString(lista, false));
+			setBiblio(montarString(lista));
 			token.setStyle(Token.PARAMETRO);
 			setMetodo(chamada);
 			return;

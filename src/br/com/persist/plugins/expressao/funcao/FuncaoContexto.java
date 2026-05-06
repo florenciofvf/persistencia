@@ -1,7 +1,6 @@
 package br.com.persist.plugins.expressao.funcao;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,27 +59,14 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		if (parent instanceof BibliotecaContexto) {
 			pw.println(PREFIXO_FUNCAO + getNome());
 		} else {
-			List<String> lista = listarHierarquia();
-			String origem = montarString(lista, true);
+			List<String> lista = listarHierarquiaFuncao();
+			String origem = montarString(lista);
 			pw.println(PREFIXO_FUNCAO + getNome() + ExpressaoConstantes.ESPACO + origem);
 		}
 		if (retornoVoid) {
 			pw.println(PREFIXO_TIPO_VOID);
 		}
 		getParametros().salvar(pw);
-	}
-
-	private List<String> listarHierarquia() {
-		List<String> lista = new ArrayList<>();
-		Contexto c = parent;
-		while (c != null) {
-			if (c instanceof FuncaoContexto) {
-				FuncaoContexto funcao = (FuncaoContexto) c;
-				lista.add(funcao.getNome());
-			}
-			c = c.getParent();
-		}
-		return lista;
 	}
 
 	@Override

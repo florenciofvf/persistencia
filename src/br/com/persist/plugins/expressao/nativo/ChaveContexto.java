@@ -53,7 +53,7 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
 		if (sucesso.get()) {
 			setPrefixo(ParametroContexto.LOAD_PARAM);
-			setBiblio(montarString(lista, false));
+			setBiblio(montarString(lista));
 			token.setStyle(Token.PARAMETRO);
 		} else {
 			IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
