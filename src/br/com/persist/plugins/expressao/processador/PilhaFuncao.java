@@ -56,6 +56,12 @@ public class PilhaFuncao {
 
 	@Override
 	public String toString() {
-		return "PilhaFuncao=" + funcoes.toString();
+		StringBuilder builder = new StringBuilder("PilhaFuncao=");
+		if (funcoes.isEmpty()) {
+			builder.append("<<<vazio>>>");
+		} else {
+			builder.append(funcoes.toString());
+		}
+		return builder.toString();
 	}
 }

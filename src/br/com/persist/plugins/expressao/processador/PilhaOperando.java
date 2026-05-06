@@ -54,6 +54,12 @@ public class PilhaOperando {
 
 	@Override
 	public String toString() {
-		return "PilhaOperando=" + operandos.toString();
+		StringBuilder builder = new StringBuilder("PilhaOperando=");
+		if (operandos.isEmpty()) {
+			builder.append("<<<vazio>>>");
+		} else {
+			builder.append(operandos.toString());
+		}
+		return builder.toString();
 	}
 }
