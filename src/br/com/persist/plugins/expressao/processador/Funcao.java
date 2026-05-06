@@ -78,6 +78,13 @@ public class Funcao {
 		return clone;
 	}
 
+	public Funcao clonarComParent() throws ExpressaoException {
+		Funcao funcaoParent = parent;
+		Funcao clone = clonarSemParent();
+		clone.setParent(funcaoParent);
+		return clone;
+	}
+
 	public Funcao getParent() {
 		return parent;
 	}

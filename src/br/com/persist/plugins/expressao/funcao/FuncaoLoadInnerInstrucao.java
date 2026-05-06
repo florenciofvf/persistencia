@@ -37,6 +37,7 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad {
 		Biblioteca biblio = funcao.getBiblioteca();
 		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonarSemParent();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
+		funcaoLoad.setParent(funcao);
 		pilhaOperando.push(funcaoLoad);
 	}
 

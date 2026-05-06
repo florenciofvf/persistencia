@@ -27,7 +27,7 @@ public class PilhaFuncao {
 		}
 		if (funcoes.isEmpty()) {
 			funcao.setParent(null);
-		} else {
+		} else if (funcao.getParent() == null) {
 			funcao.setParent(peek());
 		}
 		funcoes.add(funcao);
