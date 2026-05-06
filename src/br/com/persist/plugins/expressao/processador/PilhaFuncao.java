@@ -65,7 +65,7 @@ public class PilhaFuncao {
 		if (funcoes.isEmpty()) {
 			builder.append("<<<empty>>>");
 		} else {
-			builder.append(funcoes.toString());
+			builder.append(ExpressaoUtil.toString(funcoes));
 		}
 		return builder.toString();
 	}

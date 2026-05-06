@@ -1,5 +1,7 @@
 package br.com.persist.plugins.expressao;
 
+import java.util.List;
+
 import br.com.persist.assistencia.Util;
 
 public class ExpressaoUtil {
@@ -32,5 +34,16 @@ public class ExpressaoUtil {
 
 	public static void print(String string, Object object) {
 		System.out.println(string + object);
+	}
+
+	public static String toString(List<?> lista) {
+		StringBuilder builder = new StringBuilder();
+		for (Object item : lista) {
+			if (builder.length() > 0) {
+				builder.append(", ");
+			}
+			builder.append(item);
+		}
+		return builder.toString();
 	}
 }

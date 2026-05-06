@@ -67,7 +67,7 @@ public class PilhaOperando {
 		if (operandos.isEmpty()) {
 			builder.append("<<<empty>>>");
 		} else {
-			builder.append(operandos.toString());
+			builder.append(ExpressaoUtil.toString(operandos));
 		}
 		return builder.toString();
 	}

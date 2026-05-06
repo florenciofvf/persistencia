@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 
@@ -248,7 +249,7 @@ public class Funcao {
 		}
 		builder.append((isNativo() ? "nativo " + biblioNativa + " " : ""));
 		builder.append(nome);
-		builder.append("(" + parametros + ")");
+		builder.append("(" + ExpressaoUtil.toString(parametros) + ")");
 		return builder.toString();
 	}
 
