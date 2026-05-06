@@ -29,4 +29,8 @@ public class ExpressaoUtil {
 		}
 		return sb.toString();
 	}
+
+	public static void print(String string, Object object) {
+		System.out.println(string + object);
+	}
 }

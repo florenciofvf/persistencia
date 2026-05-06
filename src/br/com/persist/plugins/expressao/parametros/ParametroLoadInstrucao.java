@@ -1,6 +1,8 @@
 package br.com.persist.plugins.expressao.parametros;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.Load;
@@ -41,6 +43,9 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 		}
 
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
+		if (ExpressaoConstantes.DEBUG) {
+			ExpressaoUtil.print("######### (funcao alvo) #########", funcaoAlvo);
+		}
 		pilhaOperando.push(valor);
 	}
 

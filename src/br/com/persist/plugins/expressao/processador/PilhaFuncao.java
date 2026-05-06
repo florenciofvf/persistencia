@@ -3,7 +3,9 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 
 public class PilhaFuncao {
 	private final List<Funcao> funcoes;
@@ -20,6 +22,9 @@ public class PilhaFuncao {
 
 	public void push(Funcao funcao) throws ExpressaoException {
 		InstrucaoUtil.checarFuncao(funcao);
+		if (ExpressaoConstantes.DEBUG) {
+			ExpressaoUtil.print("PUSH: ", funcao);
+		}
 		funcoes.add(funcao);
 	}
 
@@ -30,7 +35,11 @@ public class PilhaFuncao {
 
 	public Funcao pop() throws ExpressaoException {
 		checar();
-		return funcoes.remove(funcoes.size() - 1);
+		Funcao funcao = funcoes.remove(funcoes.size() - 1);
+		if (ExpressaoConstantes.DEBUG) {
+			ExpressaoUtil.print("POP: ", funcao);
+		}
+		return funcao;
 	}
 
 	public int size() {

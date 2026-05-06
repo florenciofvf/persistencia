@@ -237,7 +237,8 @@ public class Funcao {
 
 	@Override
 	public String toString() {
-		return (isNativo() ? "nativo " + biblioNativa + " " : "") + nome + "(" + parametros + ")";
+		return Integer.toHexString(hashCode()).toUpperCase() + ":" + (isNativo() ? "nativo " + biblioNativa + " " : "")
+				+ nome + "(" + parametros + ")";
 	}
 
 	public String getInterface() {
