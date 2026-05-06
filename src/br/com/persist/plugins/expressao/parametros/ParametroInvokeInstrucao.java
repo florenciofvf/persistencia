@@ -66,11 +66,10 @@ public class ParametroInvokeInstrucao extends Invoke {
 		}
 
 		Funcao funcaoValor = (Funcao) valor;
-		validar(funcaoValor, comRetorno);
-		Funcao clone = funcaoValor.clonarSemParent();
-		pilhaOperando.setArgumentos(clone);
-		clone.setParent(funcao);
-		pilhaFuncao.push(clone);
+		Funcao funcaoLoad = funcaoValor.clonarSemParent();
+		validar(funcaoLoad, comRetorno);
+		pilhaOperando.setArgumentos(funcaoLoad);
+		pilhaFuncao.push(funcaoLoad);
 	}
 
 	@Override
