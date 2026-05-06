@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,9 +16,9 @@ public class Simples10Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "se", bi(3), "IF", "ELSE");
-		assertEquals("[ELSE]", result.toString());
+		equals("[ELSE]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), "teste", bi(3), "A", "B");
-		assertEquals("[0]", result.toString());
+		equals("[0]", result.toString());
 	}
 }

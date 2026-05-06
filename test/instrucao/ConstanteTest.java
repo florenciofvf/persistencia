@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,6 +16,6 @@ public class ConstanteTest extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "getIdade");
-		assertEquals("[1050]", result.toString());
+		equals("[1050]", result.toString());
 	}
 }

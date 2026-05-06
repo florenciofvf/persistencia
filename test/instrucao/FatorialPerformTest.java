@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,6 +16,6 @@ public class FatorialPerformTest extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "fatorial", bi(5));
-		assertEquals("[120]", result.toString());
+		equals("[120]", result.toString());
 	}
 }

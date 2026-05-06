@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,12 +16,12 @@ public class Simples6Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "expressao_01", bi(3), bi(4), bi(5));
-		assertEquals("[23]", result.toString());
+		equals("[23]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), "expressao_02", bi(3), bi(4), bi(5));
-		assertEquals("[35]", result.toString());
+		equals("[35]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), "expressao_03", bi(3), bi(4), bi(5));
-		assertEquals("[-35]", result.toString());
+		equals("[-35]", result.toString());
 	}
 }

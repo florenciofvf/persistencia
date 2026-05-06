@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,6 +16,6 @@ public class Lambda0Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main");
-		assertEquals("[[impar-1, PAR-2, impar-3, PAR-4, impar-5]]", result.toString());
+		equals("[[impar-1, PAR-2, impar-3, PAR-4, impar-5]]", result.toString());
 	}
 }

@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,9 +16,9 @@ public class Lista4Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "teste6");
-		assertEquals("[[][]]", result.toString());
+		equals("[[][]]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), "teste7");
-		assertEquals("[[]]", result.toString());
+		equals("[[]]", result.toString());
 	}
 }

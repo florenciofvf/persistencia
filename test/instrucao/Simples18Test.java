@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,6 +16,6 @@ public class Simples18Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main");
-		assertEquals("[[2, 3, 4, 5, 6, 7]]", result.toString());
+		equals("[[2, 3, 4, 5, 6, 7]]", result.toString());
 	}
 }

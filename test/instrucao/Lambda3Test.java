@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,6 +16,6 @@ public class Lambda3Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main");
-		assertEquals("[3]", result.toString());
+		equals("[3]", result.toString());
 	}
 }

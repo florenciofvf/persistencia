@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,6 +16,6 @@ public class ListaFiltro2Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main");
-		assertEquals("[[2, 4, 50, 6]]", result.toString());
+		equals("[[2, 4, 50, 6]]", result.toString());
 	}
 }

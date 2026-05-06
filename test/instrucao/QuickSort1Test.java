@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,6 +16,6 @@ public class QuickSort1Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "testarQS");
-		assertEquals("[[-3, 0, 1, 2, 4, 6, 50]]", result.toString());
+		equals("[[-3, 0, 1, 2, 4, 6, 50]]", result.toString());
 	}
 }

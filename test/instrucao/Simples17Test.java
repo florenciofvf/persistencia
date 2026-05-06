@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -20,18 +18,18 @@ public class Simples17Test extends AbstratoTeste {
 		String nomeFuncao = "diaDaSemana";
 
 		result = processador.processar(bibliotecaContexto.getNome(), nomeFuncao, bi(1));
-		assertEquals("[FINAL DE SEMANA]", result.toString());
+		equals("[FINAL DE SEMANA]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), nomeFuncao, bi(-1));
-		assertEquals("[DIA INVÁLIDO]", result.toString());
+		equals("[DIA INVÁLIDO]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), nomeFuncao, bi(6));
-		assertEquals("[Meio da semana]", result.toString());
+		equals("[Meio da semana]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), nomeFuncao, bi(7));
-		assertEquals("[FINAL DE SEMANA]", result.toString());
+		equals("[FINAL DE SEMANA]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), nomeFuncao, bi(8));
-		assertEquals("[DIA INVÁLIDO]", result.toString());
+		equals("[DIA INVÁLIDO]", result.toString());
 	}
 }

@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -17,6 +15,6 @@ public class Simples2Test extends AbstratoTeste {
 	public void test() throws IOException, InstrucaoException {
 		compilar();
 
-		assertNotNull(bibliotecaContexto);
+		notNull(bibliotecaContexto);
 	}
 }

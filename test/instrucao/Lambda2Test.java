@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,7 +16,7 @@ public class Lambda2Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main");
-		assertEquals(
+		equals(
 				"[[\nPAI: Florêncio Vieira Filho\n FILHO -> Amanda Vieira Freire, \nPAI: Florêncio Vieira Filho\n FILHO -> Julia Vieira Freire]]",
 				result.toString());
 	}

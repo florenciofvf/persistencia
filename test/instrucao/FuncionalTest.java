@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,9 +16,9 @@ public class FuncionalTest extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main");
-		assertEquals("[Minha Função]", result.toString());
+		equals("[Minha Função]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main2");
-		assertEquals("[minhaFuncao([])]", result.toString());
+		equals("[minhaFuncao([])]", result.toString());
 	}
 }

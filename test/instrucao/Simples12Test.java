@@ -1,7 +1,5 @@
 package instrucao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,9 +16,9 @@ public class Simples12Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main", bi(1));
-		assertEquals("[1]", result.toString());
+		equals("[1]", result.toString());
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main", bi(0));
-		assertEquals("[100]", result.toString());
+		equals("[100]", result.toString());
 	}
 }

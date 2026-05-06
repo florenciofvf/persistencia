@@ -1,5 +1,8 @@
 package instrucao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -30,5 +33,13 @@ public abstract class AbstratoTeste {
 
 	public static BigInteger bi(int i) {
 		return new BigInteger("" + i);
+	}
+
+	protected void equals(String expected, String actual) {
+		assertEquals(expected, actual);
+	}
+
+	protected void notNull(Object object) {
+		assertNotNull(object);
 	}
 }
