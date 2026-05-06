@@ -25,6 +25,11 @@ public class PilhaFuncao {
 		if (ExpressaoConstantes.DEBUG) {
 			ExpressaoUtil.print("PILHA-FUNCAO-PUSH: ", funcao);
 		}
+		if (funcoes.isEmpty()) {
+			funcao.setParent(null);
+		} else {
+			funcao.setParent(peek());
+		}
 		funcoes.add(funcao);
 	}
 
@@ -39,6 +44,7 @@ public class PilhaFuncao {
 		if (ExpressaoConstantes.DEBUG) {
 			ExpressaoUtil.print("PILHA-FUNCAO-POP: ", funcao);
 		}
+		funcao.setParent(null);
 		return funcao;
 	}
 

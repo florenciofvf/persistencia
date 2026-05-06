@@ -60,7 +60,6 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 		Funcao funcaoValor = (Funcao) constante.getValor();
 		Funcao clone = funcaoValor.clonarSemParent();
 		pilhaOperando.setArgumentos(clone);
-		clone.setParent(funcao);
 		pilhaFuncao.push(clone);
 	}
 
