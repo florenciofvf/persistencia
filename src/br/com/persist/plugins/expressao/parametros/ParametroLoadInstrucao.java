@@ -44,7 +44,7 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
 		if (ExpressaoConstantes.DEBUG) {
-			ExpressaoUtil.print("######### (funcao alvo) #########", funcaoAlvo);
+			ExpressaoUtil.print("LOAD-PARAM-######### (funcao alvo) #########", funcaoAlvo);
 		}
 		pilhaOperando.push(valor);
 	}

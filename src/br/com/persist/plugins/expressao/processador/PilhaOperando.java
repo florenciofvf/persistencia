@@ -56,7 +56,7 @@ public class PilhaOperando {
 	public String toString() {
 		StringBuilder builder = new StringBuilder("PilhaOperando=");
 		if (operandos.isEmpty()) {
-			builder.append("<<<vazio>>>");
+			builder.append("<<<empty>>>");
 		} else {
 			builder.append(operandos.toString());
 		}

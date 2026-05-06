@@ -23,7 +23,7 @@ public class PilhaFuncao {
 	public void push(Funcao funcao) throws ExpressaoException {
 		InstrucaoUtil.checarFuncao(funcao);
 		if (ExpressaoConstantes.DEBUG) {
-			ExpressaoUtil.print("PUSH: ", funcao);
+			ExpressaoUtil.print("PILHA-FUNCAO-PUSH: ", funcao);
 		}
 		funcoes.add(funcao);
 	}
@@ -37,7 +37,7 @@ public class PilhaFuncao {
 		checar();
 		Funcao funcao = funcoes.remove(funcoes.size() - 1);
 		if (ExpressaoConstantes.DEBUG) {
-			ExpressaoUtil.print("POP: ", funcao);
+			ExpressaoUtil.print("PILHA-FUNCAO-POP: ", funcao);
 		}
 		return funcao;
 	}
@@ -58,7 +58,7 @@ public class PilhaFuncao {
 	public String toString() {
 		StringBuilder builder = new StringBuilder("PilhaFuncao=");
 		if (funcoes.isEmpty()) {
-			builder.append("<<<vazio>>>");
+			builder.append("<<<empty>>>");
 		} else {
 			builder.append(funcoes.toString());
 		}
