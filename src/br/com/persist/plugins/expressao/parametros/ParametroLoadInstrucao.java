@@ -28,6 +28,12 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 		if (ExpressaoConstantes.DEBUG) {
 			ExpressaoUtil.print("LOAD-PARAM-######### (funcao alvo) #########", funcaoAlvo);
 		}
+		if (valor instanceof Funcao) {
+			Funcao funcaoValor = ((Funcao) valor);
+			if (funcaoValor.getParent() == null) {
+				funcaoValor.setParent(funcao);
+			}
+		}
 		pilhaOperando.push(valor);
 	}
 
