@@ -3,7 +3,9 @@ package br.com.persist.plugins.expressao.processador;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 
 public class PilhaOperando {
 	private final List<Object> operandos;
@@ -20,6 +22,9 @@ public class PilhaOperando {
 
 	public void push(Object valor) throws ExpressaoException {
 		InstrucaoUtil.checarOperando(valor);
+		if (ExpressaoConstantes.DEBUG_PILHA) {
+			ExpressaoUtil.print("PILHA-OPERANDO-PUSH: ", valor);
+		}
 		operandos.add(valor);
 	}
 
@@ -30,7 +35,11 @@ public class PilhaOperando {
 
 	public Object pop() throws ExpressaoException {
 		checar();
-		return operandos.remove(operandos.size() - 1);
+		Object valor = operandos.remove(operandos.size() - 1);
+		if (ExpressaoConstantes.DEBUG_PILHA) {
+			ExpressaoUtil.print("PILHA-OPERANDO-POP: ", valor);
+		}
+		return valor;
 	}
 
 	public int size() {

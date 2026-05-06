@@ -66,7 +66,7 @@ public class ListaTest2 extends AbstratoTest {
 
 		Processador processador = new Processador();
 
-		String biblio = "br.com.teste.quicksort2";
+		String biblio = "br.com.teste.quicksort4";
 
 		List<Object> result;
 

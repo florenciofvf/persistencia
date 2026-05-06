@@ -10,7 +10,7 @@ defun quickSort(lista) {
 	if(lista == []) {
 		return [];
 	}
-	return quickSort(_.filtrar(${lista:tail}, defun lamb(e){return e < ${lista:head};})) 
-							.. ${lista:head} .. 
+	return quickSort(_.filtrar(${lista:tail}, defun lamb(e){return e < ${lista:head};}))
+							.. ${lista:head} ..
 		   quickSort(_.filtrar(${lista:tail}, defun lamb(e){return e >= ${lista:head};}));
 }

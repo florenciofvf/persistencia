@@ -48,7 +48,7 @@ public class Funcao {
 		return null;
 	}
 
-	public void checarHierarquia() throws ExpressaoException {
+	protected void checarHierarquia() throws ExpressaoException {
 		if (origem == null) {
 			return;
 		}
