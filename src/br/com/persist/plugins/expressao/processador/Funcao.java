@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
@@ -241,8 +242,14 @@ public class Funcao {
 
 	@Override
 	public String toString() {
-		return Integer.toHexString(hashCode()).toUpperCase() + ":" + (isNativo() ? "nativo " + biblioNativa + " " : "")
-				+ nome + "(" + parametros + ")";
+		StringBuilder builder = new StringBuilder();
+		if (ExpressaoConstantes.DEBUG) {
+			builder.append(Integer.toHexString(hashCode()).toUpperCase() + ":");
+		}
+		builder.append((isNativo() ? "nativo " + biblioNativa + " " : ""));
+		builder.append(nome);
+		builder.append("(" + parametros + ")");
+		return builder.toString();
 	}
 
 	public String getInterface() {
