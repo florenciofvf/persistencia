@@ -23,25 +23,7 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 	@Override
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
-		Funcao funcaoAlvo = null;
-
-		for (String item : nomeFuncoes) {
-			if (funcaoAlvo == null) {
-				checarNome(item, funcao);
-				funcaoAlvo = funcao;
-			} else {
-				funcaoAlvo = funcaoAlvo.getParent();
-				if (funcaoAlvo == null) {
-					throw new ExpressaoException("Funcao Parent nula: " + item, false);
-				}
-				checarNome(item, funcaoAlvo);
-			}
-		}
-
-		if (funcaoAlvo == null) {
-			throw new ExpressaoException("Funcao Alvo nula", false);
-		}
-
+		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
 		if (ExpressaoConstantes.DEBUG) {
 			ExpressaoUtil.print("LOAD-PARAM-######### (funcao alvo) #########", funcaoAlvo);

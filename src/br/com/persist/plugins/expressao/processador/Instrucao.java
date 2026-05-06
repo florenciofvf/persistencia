@@ -40,10 +40,37 @@ public abstract class Instrucao {
 	public abstract void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException;
 
-	protected void checarNome(String nome, Funcao funcao) throws ExpressaoException {
-		if (!nome.equals(funcao.getNome())) {
-			throw new ExpressaoException("erro.nomes.funcao", nome, funcao.getNome());
+	protected Funcao getFuncaoAlvo(Funcao origem, String[] nomeFuncoes) throws ExpressaoException {
+		if (origem == null) {
+			throw new ExpressaoException("getFuncaoAlvo(): Origem null.", false);
 		}
+		if (nomeFuncoes == null) {
+			throw new ExpressaoException("getFuncaoAlvo(): nomeFuncoes null.", false);
+		}
+		if (nomeFuncoes.length == 0) {
+			throw new ExpressaoException("getFuncaoAlvo(): nomeFuncoes length == 0.", false);
+		}
+		int i = 0;
+		String nomeFuncao = nomeFuncoes[i];
+		Funcao resposta = getFuncao(origem, nomeFuncao);
+		i++;
+		while (i < nomeFuncoes.length) {
+			nomeFuncao = nomeFuncoes[i];
+			resposta = getFuncao(resposta.getParent(), nomeFuncao);
+			i++;
+		}
+		return resposta;
+	}
+
+	private Funcao getFuncao(Funcao origem, String nome) throws ExpressaoException {
+		Funcao funcao = origem;
+		while (funcao != null) {
+			if (nome.equals(funcao.getNome())) {
+				return funcao;
+			}
+			funcao = funcao.getParent();
+		}
+		throw new ExpressaoException("getFuncaoAlvo(): Funcao inexistente na hierarquia: " + nome, false);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package br.com.persist.plugins.expressao.parametros;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.invocacao.Invoke;
 import br.com.persist.plugins.expressao.processador.Funcao;
@@ -35,36 +37,18 @@ public class ParametroInvokeInstrucao extends Invoke {
 	@Override
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
-		Funcao funcaoAlvo = null;
-
-		for (String item : nomeFuncoes) {
-			if (funcaoAlvo == null) {
-				checarNome(item, funcao);
-				funcaoAlvo = funcao;
-			} else {
-				funcaoAlvo = funcaoAlvo.getParent();
-				if (funcaoAlvo == null) {
-					throw new ExpressaoException("Funcao Parent nula", false);
-				}
-				checarNome(item, funcaoAlvo);
-			}
-		}
-
-		if (funcaoAlvo == null) {
-			throw new ExpressaoException("Funcao Alvo nula", false);
-		}
-
+		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomeFuncao);
-
+		if (ExpressaoConstantes.DEBUG) {
+			ExpressaoUtil.print("INVOKE-PARAM-######### (funcao alvo) #########", funcaoAlvo);
+		}
 		if (valor == null) {
 			throw new ExpressaoException("erro.valor_param", nomeFuncao);
 		}
-
 		if (!(valor instanceof Funcao)) {
 			throw new ExpressaoException("erro.valor_param_nao_funcao", nomeFuncao, funcao.getNome(), valor.toString(),
 					funcao.getBiblioteca().getNomeAbsoluto());
 		}
-
 		Funcao funcaoValor = (Funcao) valor;
 		Funcao funcaoLoad = funcaoValor.clonarSemParent();
 		validar(funcaoLoad, comRetorno);
