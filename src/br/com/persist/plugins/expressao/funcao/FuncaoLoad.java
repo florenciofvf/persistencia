@@ -3,8 +3,9 @@ package br.com.persist.plugins.expressao.funcao;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.Load;
 
-public abstract class FuncaoLoad extends Instrucao {
+public abstract class FuncaoLoad extends Instrucao implements Load {
 	protected FuncaoLoad(int indice, String nome) throws ExpressaoException {
 		super(indice, nome);
 	}

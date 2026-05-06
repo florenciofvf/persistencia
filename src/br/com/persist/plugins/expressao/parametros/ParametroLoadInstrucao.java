@@ -3,10 +3,11 @@ package br.com.persist.plugins.expressao.parametros;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.Load;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class ParametroLoadInstrucao extends Instrucao {
+public class ParametroLoadInstrucao extends Instrucao implements Load {
 	private String[] nomeFuncoes;
 	private String nomeParametro;
 
@@ -40,7 +41,6 @@ public class ParametroLoadInstrucao extends Instrucao {
 		}
 
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
-
 		pilhaOperando.push(valor);
 	}
 

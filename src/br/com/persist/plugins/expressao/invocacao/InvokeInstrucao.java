@@ -57,22 +57,21 @@ public class InvokeInstrucao extends Invoke implements LinkBiblioteca {
 		} else {
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
-		Funcao funcaoValor = biblio.getFuncao(nomeFuncao);
-		validar(funcaoValor, comRetorno);
-		Funcao clone = funcaoValor.clonarSemParent();
-		pilhaOperando.setArgumentos(clone);
-		if (clone.isNativo()) {
+		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonarSemParent();
+		validar(funcaoLoad, comRetorno);
+		pilhaOperando.setArgumentos(funcaoLoad);
+		if (funcaoLoad.isNativo()) {
 			List<Object> lista = null;
 			if ("br.com.persist.plugins.expressao.biblionativo.Biblioteca".equals(nomeBiblio)) {
 				lista = new ArrayList<>(Arrays.asList(funcao.getBiblioteca()));
 			}
 			AtomicBoolean pushPilhaOperando = new AtomicBoolean();
-			Object resp = invocarNativo(lista, clone, pilhaFuncao, pushPilhaOperando);
+			Object resp = invocarNativo(lista, funcaoLoad, pilhaFuncao, pushPilhaOperando);
 			if (pushPilhaOperando.get()) {
 				pilhaOperando.push(resp);
 			}
 		} else {
-			pilhaFuncao.push(clone);
+			pilhaFuncao.push(funcaoLoad);
 		}
 	}
 
