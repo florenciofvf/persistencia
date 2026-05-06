@@ -26,7 +26,9 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
 		if (ExpressaoConstantes.DEBUG) {
-			ExpressaoUtil.print("LOAD-PARAM-######### (funcao alvo) #########", funcaoAlvo);
+			String string = ExpressaoUtil.completar("[LOAD-PARAM-" + get(nomeFuncoes) + "." + nomeParametro
+					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
+			ExpressaoUtil.print(string, pilhaOperando);
 		}
 		if (valor instanceof Funcao) {
 			Funcao funcaoValor = ((Funcao) valor);

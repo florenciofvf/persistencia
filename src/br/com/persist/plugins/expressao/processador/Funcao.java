@@ -245,7 +245,7 @@ public class Funcao {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		if (ExpressaoConstantes.DEBUG) {
-			builder.append(Integer.toHexString(hashCode()).toUpperCase() + ":");
+			builder.append(Integer.toHexString(hashCode()).toUpperCase() + "@");
 		}
 		builder.append((isNativo() ? "nativo " + biblioNativa + " " : ""));
 		builder.append(nome);

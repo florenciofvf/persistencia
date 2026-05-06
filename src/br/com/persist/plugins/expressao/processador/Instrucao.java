@@ -75,6 +75,6 @@ public abstract class Instrucao {
 
 	@Override
 	public String toString() {
-		return indice + ": " + nome;
+		return "[" + indice + ": " + nome + "]";
 	}
 }

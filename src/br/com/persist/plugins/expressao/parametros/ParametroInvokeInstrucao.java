@@ -40,7 +40,9 @@ public class ParametroInvokeInstrucao extends Invoke {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomeFuncao);
 		if (ExpressaoConstantes.DEBUG) {
-			ExpressaoUtil.print("INVOKE-PARAM-######### (funcao alvo) #########", funcaoAlvo);
+			String string = ExpressaoUtil.completar("[INVOKE-PARAM-" + get(nomeFuncoes) + "." + nomeFuncao
+					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
+			ExpressaoUtil.print(string, pilhaOperando);
 		}
 		if (valor == null) {
 			throw new ExpressaoException("erro.valor_param", nomeFuncao);

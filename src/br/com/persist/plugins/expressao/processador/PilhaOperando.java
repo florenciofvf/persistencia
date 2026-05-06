@@ -23,7 +23,7 @@ public class PilhaOperando {
 	public void push(Object valor) throws ExpressaoException {
 		InstrucaoUtil.checarOperando(valor);
 		if (ExpressaoConstantes.DEBUG_PILHA) {
-			ExpressaoUtil.print("PILHA-OPERANDO-PUSH: ", valor);
+			ExpressaoUtil.print("[PILHA-OPERANDO-PUSH] ", valor);
 		}
 		operandos.add(valor);
 	}
@@ -37,7 +37,7 @@ public class PilhaOperando {
 		checar();
 		Object valor = operandos.remove(operandos.size() - 1);
 		if (ExpressaoConstantes.DEBUG_PILHA) {
-			ExpressaoUtil.print("PILHA-OPERANDO-POP: ", valor);
+			ExpressaoUtil.print("[PILHA-OPERANDO-POP] ", valor);
 		}
 		return valor;
 	}

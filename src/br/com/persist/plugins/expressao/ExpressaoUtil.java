@@ -46,4 +46,13 @@ public class ExpressaoUtil {
 		}
 		return builder.toString();
 	}
+
+	public static String completar(String string) {
+		int total = 153;
+		StringBuilder builder = new StringBuilder(string);
+		while (builder.length() < total) {
+			builder.append(' ');
+		}
+		return builder.toString();
+	}
 }
