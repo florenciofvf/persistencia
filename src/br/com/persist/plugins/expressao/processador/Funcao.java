@@ -39,6 +39,30 @@ public class Funcao {
 		return nome;
 	}
 
+	public String getNomeOriginal() {
+		char c = nome.charAt(0);
+		if (c >= '0' && c <= '9') {
+			int pos = nome.indexOf('_');
+			return nome.substring(pos + 1);
+		}
+		return null;
+	}
+
+	public void checarHierarquia() throws ExpressaoException {
+		if (origem == null) {
+			return;
+		}
+		if (parent == null) {
+			throw new ExpressaoException("erro.funcao_sem_parent", nome, biblioteca.getNomeAbsoluto());
+		}
+		String nomeFuncaoParent = origem[0];
+		boolean valido = nomeFuncaoParent.equals(parent.getNome()) || nomeFuncaoParent.equals(parent.getNomeOriginal());
+		if (!valido) {
+			throw new ExpressaoException("erro.funcao_checar_hierarquia", parent.getNome(), nome,
+					biblioteca.getNomeAbsoluto());
+		}
+	}
+
 	public Funcao clonarSemParent() throws ExpressaoException {
 		Funcao clone = new Funcao(biblioteca, nome, origem);
 		clone.biblioNativa = biblioNativa;

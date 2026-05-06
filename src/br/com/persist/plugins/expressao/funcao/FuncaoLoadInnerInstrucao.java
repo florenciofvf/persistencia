@@ -3,16 +3,13 @@ package br.com.persist.plugins.expressao.funcao;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
-import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
-import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements LinkBiblioteca {
+public class FuncaoLoadInnerInstrucao extends FuncaoLoad {
 	private final boolean tipoVoid;
 	private String nomeBiblioteca;
-	private boolean biblioLocal;
 	private String nomeFuncao;
 
 	public FuncaoLoadInnerInstrucao(boolean tipoVoid, int indice, String parametros) throws ExpressaoException {
@@ -21,30 +18,16 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements LinkBibliote
 		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeBiblioteca = array[0];
 		nomeFuncao = array[1];
-		biblioLocal = Contexto.THIS.equals(nomeBiblioteca);
-	}
-
-	@Override
-	public String getNomeBiblioAbsoluto() {
-		return nomeBiblioteca;
-	}
-
-	@Override
-	public boolean isRefLocal() {
-		return biblioLocal;
 	}
 
 	@Override
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
-		Biblioteca biblio;
-		if (biblioLocal) {
-			biblio = funcao.getBiblioteca();
-		} else {
-			biblio = (Biblioteca) pilhaOperando.pop();
-		}
-		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao);
+		Biblioteca biblio = funcao.getBiblioteca();
+		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonarSemParent();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
+		funcaoLoad.setParent(funcao);
+		funcaoLoad.checarHierarquia();
 		pilhaOperando.push(funcaoLoad);
 	}
 
