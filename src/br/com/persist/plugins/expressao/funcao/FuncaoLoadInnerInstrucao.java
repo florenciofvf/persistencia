@@ -7,6 +7,17 @@ import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
+/**
+ * <pre>
+*defun teste(funcao) {
+*	return defun inner(param) {
+*		return defun outra() {
+*			return funcao();
+*		};
+*	};
+*}
+ * </pre>
+ */
 public class FuncaoLoadInnerInstrucao extends FuncaoLoad {
 	private final boolean tipoVoid;
 	private String nomeBiblioteca;

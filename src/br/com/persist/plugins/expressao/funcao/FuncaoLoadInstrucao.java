@@ -43,7 +43,7 @@ public class FuncaoLoadInstrucao extends FuncaoLoad implements LinkBiblioteca {
 		} else {
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
-		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao);
+		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonarSemParent();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
 		pilhaOperando.push(funcaoLoad);
 	}
