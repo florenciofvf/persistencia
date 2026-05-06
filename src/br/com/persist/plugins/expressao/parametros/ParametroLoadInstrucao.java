@@ -30,9 +30,7 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 		}
 		if (valor instanceof Funcao) {
 			Funcao funcaoValor = ((Funcao) valor);
-			if (funcaoValor.getParent() == null) {
-				funcaoValor.setParent(funcao);
-			}
+			funcaoValor.setParent(funcao);
 		}
 		pilhaOperando.push(valor);
 	}

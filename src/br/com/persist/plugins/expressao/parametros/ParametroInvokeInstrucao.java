@@ -50,7 +50,7 @@ public class ParametroInvokeInstrucao extends Invoke {
 					funcao.getBiblioteca().getNomeAbsoluto());
 		}
 		Funcao funcaoValor = (Funcao) valor;
-		Funcao funcaoLoad = funcaoValor.clonarSemParent();
+		Funcao funcaoLoad = funcaoValor.clonar();
 		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		pilhaFuncao.push(funcaoLoad);

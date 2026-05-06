@@ -57,7 +57,7 @@ public class InvokeInstrucao extends Invoke implements LinkBiblioteca {
 		} else {
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
-		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonarSemParent();
+		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonar();
 		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		if (funcaoLoad.isNativo()) {

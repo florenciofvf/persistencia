@@ -35,9 +35,8 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad {
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
 		Biblioteca biblio = funcao.getBiblioteca();
-		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonarSemParent();
+		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonar();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
-		funcaoLoad.setParent(funcao);
 		pilhaOperando.push(funcaoLoad);
 	}
 

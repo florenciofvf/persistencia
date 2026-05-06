@@ -63,10 +63,11 @@ public class Funcao {
 		}
 	}
 
-	public Funcao clonarSemParent() throws ExpressaoException {
+	public Funcao clonar() throws ExpressaoException {
 		Funcao clone = new Funcao(biblioteca, nome, origem);
 		clone.biblioNativa = biblioNativa;
 		clone.tipoVoid = tipoVoid;
+		clone.parent = parent;
 		for (Parametro item : parametros) {
 			clone.addParametro(item.clonar());
 		}
@@ -78,18 +79,14 @@ public class Funcao {
 		return clone;
 	}
 
-	public Funcao clonarComParent() throws ExpressaoException {
-		Funcao funcaoParent = parent;
-		Funcao clone = clonarSemParent();
-		clone.setParent(funcaoParent);
-		return clone;
-	}
-
 	public Funcao getParent() {
 		return parent;
 	}
 
 	public void setParent(Funcao parent) {
+		if (this.parent != null || parent == null) {
+			return;
+		}
 		this.parent = parent;
 	}
 

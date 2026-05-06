@@ -28,7 +28,7 @@ public class Processador {
 			funcao.setValorParametro(i, args[i]);
 		}
 
-		funcao = funcao.clonarSemParent();
+		funcao = funcao.clonar();
 
 		pilhaFuncao.clear();
 		pilhaOperando.clear();
