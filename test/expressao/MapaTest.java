@@ -1,9 +1,6 @@
 package expressao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -16,37 +13,33 @@ public class MapaTest extends AbstratoTest {
 
 	@Test
 	public void teste0() throws IOException, ExpressaoException {
-		Compilacao compilacao = new Compilacao();
+		compilacao = new Compilacao();
 		compilacao.compilar(getFile(MAPA, "__mapa0"));
 	}
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
-		Compilacao compilacao = new Compilacao();
+		compilacao = new Compilacao();
 		compilacao.compilar(getFile(MAPA, "__teste1"));
 
-		Processador processador = new Processador();
+		processador = new Processador();
 
 		String biblio = "br.com.teste.__teste1";
 
-		List<Object> result;
-
 		result = processador.processar(biblio, "main");
-		assertEquals("[NOME=florencio vieira filho]", result.toString());
+		equals("[NOME=florencio vieira filho]", result.toString());
 	}
 
 	@Test
 	public void mapa1() throws IOException, ExpressaoException {
-		Compilacao compilacao = new Compilacao();
+		compilacao = new Compilacao();
 		compilacao.compilar(getFile(MAPA, "__mapa1"));
 
-		Processador processador = new Processador();
+		processador = new Processador();
 
 		String biblio = "br.com.teste.__mapa1";
 
-		List<Object> result;
-
 		result = processador.processar(biblio, "teste1");
-		assertEquals("[{}]", result.toString());
+		equals("[{}]", result.toString());
 	}
 }
