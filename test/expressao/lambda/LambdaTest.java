@@ -18,8 +18,7 @@ public class LambdaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LAMBDA, "lambda0"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lambda0";
+		biblio = "br.com.teste.lambda0";
 
 		result = processador.processar(biblio, "main");
 		equals("[[impar-1, PAR-2, impar-3, PAR-4, impar-5]]", result.toString());
@@ -31,8 +30,7 @@ public class LambdaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LAMBDA, "lambda1"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lambda1";
+		biblio = "br.com.teste.lambda1";
 
 		result = processador.processar(biblio, "main");
 		equals("[[impar -> 1, par -> 2, impar -> 3, par -> 4, impar -> 5]]", result.toString());
@@ -44,8 +42,7 @@ public class LambdaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LAMBDA, "lambda2"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lambda2";
+		biblio = "br.com.teste.lambda2";
 
 		result = processador.processar(biblio, "main");
 		equals("[[\nPAI: Florêncio Vieira Filho\n FILHO -> Amanda Vieira Freire, \nPAI: Florêncio Vieira Filho\n FILHO -> Julia Vieira Freire]]",
@@ -58,8 +55,7 @@ public class LambdaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LAMBDA, "lambda3"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lambda3";
+		biblio = "br.com.teste.lambda3";
 
 		result = processador.processar(biblio, "main");
 		equals("[3]", result.toString());

@@ -13,14 +13,22 @@ public class InternaTest extends AbstratoTest {
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("internas", "teste1"));
+		compilacao.compilar(getFile("internas", "inner"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.teste1";
+		biblio = "br.com.teste.inner";
 
 		result = processador.processar(biblio, "main");
 		equals("[4]", result.toString());
+	}
+
+	@Test
+	public void teste2() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile("internas", "inner2"));
+
+		processador = new Processador();
+		biblio = "br.com.teste.inner2";
 
 		result = processador.processar(biblio, "fatorial", bi(5));
 		equals("[120]", result.toString());
