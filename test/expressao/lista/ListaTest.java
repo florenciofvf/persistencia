@@ -1,4 +1,4 @@
-package expressao;
+package expressao.lista;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblionativo.Lista;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
+import expressao.AbstratoTest;
 
 public class ListaTest extends AbstratoTest {
 	private static final String LISTA = "lista";

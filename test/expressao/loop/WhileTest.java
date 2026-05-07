@@ -1,4 +1,4 @@
-package expressao;
+package expressao.loop;
 
 import java.io.IOException;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
 import br.com.persist.plugins.expressao.processador.Processador;
+import expressao.AbstratoTest;
 
 public class WhileTest extends AbstratoTest {
 	@Test

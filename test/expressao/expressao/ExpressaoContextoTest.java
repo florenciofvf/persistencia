@@ -1,4 +1,4 @@
-package expressao;
+package expressao.expressao;
 
 import java.io.IOException;
 
@@ -6,11 +6,12 @@ import org.junit.Test;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Compilacao;
+import expressao.AbstratoTest;
 
-public class ConstanteContextoTest extends AbstratoTest {
+public class ExpressaoContextoTest extends AbstratoTest {
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("constante", "constante"));
+		compilacao.compilar(getFile("expressao", "expressao"));
 	}
 }
