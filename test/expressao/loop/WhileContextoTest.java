@@ -12,6 +12,6 @@ public class WhileContextoTest extends AbstratoTest {
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("loop", "while_teste"));
+		compilacao.compilar(getFile("loop", "loop"));
 	}
 }

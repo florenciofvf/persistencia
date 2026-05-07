@@ -11,26 +11,24 @@ import expressao.AbstratoTest;
 
 public class WhileTest extends AbstratoTest {
 	@Test
-	public void teste11() throws IOException, ExpressaoException {
+	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("loop", "__simples11"));
+		compilacao.compilar(getFile("loop", "loop2"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples11";
+		biblio = "br.com.teste.loop2";
 
 		result = processador.processar(biblio, "main");
 		equals("[5050]", result.toString());
 	}
 
 	@Test
-	public void teste13() throws IOException, ExpressaoException {
+	public void teste2() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("loop", "__simples13"));
+		compilacao.compilar(getFile("loop", "loop3"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples13";
+		biblio = "br.com.teste.loop3";
 
 		result = processador.processar(biblio, "main");
 		equals("[-12345]", result.toString());
