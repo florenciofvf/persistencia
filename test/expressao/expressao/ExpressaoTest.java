@@ -18,7 +18,7 @@ public class ExpressaoTest extends AbstratoTest {
 		compilacao.compilar(getFile(EXPRESSAO, "expressao2"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.expressao2";
+		biblio = "br.com.teste.expressao2";
 
 		result = processador.processar(biblio, "mesmo", bi(30));
 		equals("[30]", result.toString());
@@ -36,7 +36,7 @@ public class ExpressaoTest extends AbstratoTest {
 		compilacao.compilar(getFile(EXPRESSAO, "expressao3"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.expressao3";
+		biblio = "br.com.teste.expressao3";
 
 		result = processador.processar(biblio, "dobrar", bi(30));
 		equals("[60]", result.toString());
@@ -57,7 +57,7 @@ public class ExpressaoTest extends AbstratoTest {
 		compilacao.compilar(getFile(EXPRESSAO, "expressao4"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.expressao4";
+		biblio = "br.com.teste.expressao4";
 
 		result = processador.processar(biblio, "teste");
 		equals("[2]", result.toString());
@@ -72,7 +72,7 @@ public class ExpressaoTest extends AbstratoTest {
 		compilacao.compilar(getFile(EXPRESSAO, "expressao5"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.expressao5";
+		biblio = "br.com.teste.expressao5";
 
 		result = processador.processar(biblio, "expressao_01", bi(3), bi(4), bi(5));
 		equals("[23]", result.toString());
@@ -90,7 +90,7 @@ public class ExpressaoTest extends AbstratoTest {
 		compilacao.compilar(getFile(EXPRESSAO, "expressao6"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.expressao6";
+		biblio = "br.com.teste.expressao6";
 
 		result = processador.processar(biblio, EXPRESSAO);
 		equals("[14]", result.toString());
@@ -102,7 +102,7 @@ public class ExpressaoTest extends AbstratoTest {
 		compilacao.compilar(getFile(EXPRESSAO, "expressao7"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.expressao7";
+		biblio = "br.com.teste.expressao7";
 
 		result = processador.processar(biblio, "igual", bi(3), bi(3));
 		equals("[1]", result.toString());
@@ -117,7 +117,7 @@ public class ExpressaoTest extends AbstratoTest {
 		compilacao.compilar(getFile(EXPRESSAO, "expressao8"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.expressao8";
+		biblio = "br.com.teste.expressao8";
 
 		result = processador.processar(biblio, "main");
 		equals("[1000]", result.toString());

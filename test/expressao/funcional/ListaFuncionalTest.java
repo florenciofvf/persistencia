@@ -16,8 +16,7 @@ public class ListaFuncionalTest extends AbstratoTest {
 		compilacao.compilar(getFile("funcional", "lista6"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lista6";
+		biblio = "br.com.teste.lista6";
 
 		result = processador.processar(biblio, "main");
 		equals("[[7, 9]]", result.toString());

@@ -18,7 +18,7 @@ public class IFTest extends AbstratoTest {
 		compilacao.compilar(getFile(CONDICIONAL, "cond2"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.cond2";
+		biblio = "br.com.teste.cond2";
 
 		result = processador.processar(biblio, "se", bi(3), "IF", "ELSE");
 		equals("[ELSE]", result.toString());
@@ -33,7 +33,7 @@ public class IFTest extends AbstratoTest {
 		compilacao.compilar(getFile(CONDICIONAL, "cond3"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.cond3";
+		biblio = "br.com.teste.cond3";
 
 		result = processador.processar(biblio, "main", bi(1));
 		equals("[1]", result.toString());
@@ -48,7 +48,7 @@ public class IFTest extends AbstratoTest {
 		compilacao.compilar(getFile(CONDICIONAL, "cond4"));
 
 		processador = new Processador();
-		String biblio = "br.com.teste.cond4";
+		biblio = "br.com.teste.cond4";
 
 		String nomeFuncao = "diaDaSemana";
 

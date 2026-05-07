@@ -19,8 +19,7 @@ public class ListaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LISTA, LISTA));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lista";
+		biblio = "br.com.teste.lista";
 
 		result = processador.processar(biblio, "main0");
 		equals("[[Florêncio, Vieira, Filho]]", result.toString());
@@ -62,8 +61,7 @@ public class ListaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LISTA, "lista1"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lista1";
+		biblio = "br.com.teste.lista1";
 
 		result = processador.processar(biblio, "teste1");
 		equals("[[]]", result.toString());
@@ -75,8 +73,7 @@ public class ListaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LISTA, "lista2"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lista2";
+		biblio = "br.com.teste.lista2";
 
 		result = processador.processar(biblio, "teste2");
 		equals("[[]]", result.toString());
@@ -94,8 +91,7 @@ public class ListaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LISTA, "lista4"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.lista4";
+		biblio = "br.com.teste.lista4";
 
 		result = processador.processar(biblio, "teste5", new Lista(), "escola");
 		equals("[[]escola]", result.toString());
@@ -119,8 +115,7 @@ public class ListaTest extends AbstratoTest {
 		compilacao.compilar(getFile(LISTA, "listaAlgorit"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.listaAlgorit";
+		biblio = "br.com.teste.listaAlgorit";
 
 		result = processador.processar(biblio, "getMapa");
 		equals("[{nome=Teste, valores=[1000, 30000, {valor=1.2}]}]", result.toString());

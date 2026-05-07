@@ -33,7 +33,7 @@ public class OrdenacaoTest extends AbstratoTest {
 		biblio = "br.com.teste.quicksort2";
 
 		result = processador.processar(biblio, "main");
-		equals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
+		equals("[[-3, 0, 1, 2, 4, 6, 46, 50, 55]]", result.toString());
 	}
 
 	@Test
