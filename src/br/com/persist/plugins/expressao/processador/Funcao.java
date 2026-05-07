@@ -86,10 +86,12 @@ public class Funcao {
 	}
 
 	public void setParent(Funcao parent) {
-		if (this.parent != null || parent == null) {
+		if (origem == null || parent == null) {
 			return;
 		}
-		this.parent = parent;
+		if (this.parent == null) {
+			this.parent = parent;
+		}
 	}
 
 	public Biblioteca getBiblioteca() {
