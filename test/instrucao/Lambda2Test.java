@@ -16,8 +16,7 @@ public class Lambda2Test extends AbstratoTeste {
 		compilar();
 
 		result = processador.processar(bibliotecaContexto.getNome(), "main");
-		equals(
-				"[[\nPAI: Florêncio Vieira Filho\n FILHO -> Amanda Vieira Freire, \nPAI: Florêncio Vieira Filho\n FILHO -> Julia Vieira Freire]]",
+		equals("[[\nPAI: Florêncio Vieira Filho\n FILHO -> Amanda Vieira Freire, \nPAI: Florêncio Vieira Filho\n FILHO -> Julia Vieira Freire]]",
 				result.toString());
 	}
 }
