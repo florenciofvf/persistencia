@@ -12,6 +12,6 @@ public class IFContextoTest extends AbstratoTest {
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("condicional", "if_teste"));
+		compilacao.compilar(getFile("condicional", "cond"));
 	}
 }
