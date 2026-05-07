@@ -49,6 +49,6 @@ public class FuncionalTest extends AbstratoTest {
 		equals("[Minha Função]", result.toString());
 
 		result = processador.processar(biblio, "main2");
-		equals("[minhaFuncao([])]", result.toString());
+		equals("[minhaFuncao()]", result.toString());
 	}
 }
