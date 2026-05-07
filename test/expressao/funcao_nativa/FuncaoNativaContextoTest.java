@@ -1,4 +1,4 @@
-package expressao.funcao;
+package expressao.funcao_nativa;
 
 import java.io.IOException;
 

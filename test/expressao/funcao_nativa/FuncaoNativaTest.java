@@ -1,4 +1,4 @@
-package expressao.funcao;
+package expressao.funcao_nativa;
 
 import java.io.IOException;
 
@@ -13,11 +13,10 @@ public class FuncaoNativaTest extends AbstratoTest {
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("funcao_nativa", "__simples2"));
+		compilacao.compilar(getFile("funcao_nativa", "funcao2"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples2";
+		biblio = "br.com.teste.funcao2";
 
 		result = processador.processar(biblio, "somar", bi(2), bi(2));
 		equals("[4JAVA]", result.toString());
