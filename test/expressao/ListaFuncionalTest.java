@@ -1,9 +1,6 @@
 package expressao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -16,17 +13,14 @@ public class ListaFuncionalTest extends AbstratoTest {
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
-		Compilacao compilacao = new Compilacao();
+		compilacao = new Compilacao();
 		compilacao.compilar(getFile(LISTA, "lista6"));
 
-		Processador processador = new Processador();
+		processador = new Processador();
 
 		String biblio = "br.com.teste.lista6";
 
-		List<Object> result;
-
 		result = processador.processar(biblio, "main");
-		assertEquals("[[7, 9]]", result.toString());
+		equals("[[7, 9]]", result.toString());
 	}
-
 }
