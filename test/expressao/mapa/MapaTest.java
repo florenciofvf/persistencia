@@ -13,32 +13,30 @@ public class MapaTest extends AbstratoTest {
 	private static final String MAPA = "mapa";
 
 	@Test
-	public void teste0() throws IOException, ExpressaoException {
-		compilacao = new Compilacao();
-		compilacao.compilar(getFile(MAPA, "__mapa0"));
-	}
-
-	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(MAPA, "__teste1"));
+		compilacao.compilar(getFile(MAPA, "mapa"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__teste1";
+		biblio = "br.com.teste.mapa";
 
 		result = processador.processar(biblio, "main");
 		equals("[NOME=florencio vieira filho]", result.toString());
 	}
 
 	@Test
-	public void mapa1() throws IOException, ExpressaoException {
+	public void teste2() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(MAPA, "__mapa1"));
+		compilacao.compilar(getFile(MAPA, "mapa2"));
+	}
+
+	@Test
+	public void teste3() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(MAPA, "mapa3"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__mapa1";
+		biblio = "br.com.teste.mapa3";
 
 		result = processador.processar(biblio, "teste1");
 		equals("[{}]", result.toString());

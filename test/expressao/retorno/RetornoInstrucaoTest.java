@@ -13,11 +13,10 @@ public class RetornoInstrucaoTest extends AbstratoTest {
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("retorno", "__simples1"));
+		compilacao.compilar(getFile("retorno", "retorno2"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples1";
+		biblio = "br.com.teste.retorno2";
 
 		result = processador.processar(biblio, "getString");
 		equals("[Olá Mundo!]", result.toString());
