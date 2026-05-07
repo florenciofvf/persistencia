@@ -14,57 +14,13 @@ public class ListaTest extends AbstratoTest {
 	private static final String LISTA = "lista";
 
 	@Test
-	public void teste0() throws IOException, ExpressaoException {
-		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "__lista0"));
-	}
-
-	@Test
-	public void teste1() throws IOException, ExpressaoException {
-		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "__lista1"));
-
-		processador = new Processador();
-
-		String biblio = "br.com.teste.__lista1";
-
-		result = processador.processar(biblio, "teste1");
-		equals("[[]]", result.toString());
-	}
-
-	@Test
-	public void teste3() throws IOException, ExpressaoException {
-		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "__lista3"));
-	}
-
-	@Test
-	public void teste5() throws IOException, ExpressaoException {
-		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "__lista5"));
-	}
-
-	@Test
-	public void listaAlgorit() throws IOException, ExpressaoException {
-		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "listaAlgorit"));
-
-		processador = new Processador();
-
-		String biblio = "br.com.teste.listaAlgorit";
-
-		result = processador.processar(biblio, "getMapa");
-		equals("[{nome=Teste, valores=[1000, 30000, {valor=1.2}]}]", result.toString());
-	}
-
-	@Test
 	public void lista() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "__lista"));
+		compilacao.compilar(getFile(LISTA, LISTA));
 
 		processador = new Processador();
 
-		String biblio = "br.com.teste.__lista";
+		String biblio = "br.com.teste.lista";
 
 		result = processador.processar(biblio, "main0");
 		equals("[[Florêncio, Vieira, Filho]]", result.toString());
@@ -95,26 +51,51 @@ public class ListaTest extends AbstratoTest {
 	}
 
 	@Test
-	public void lista2() throws IOException, ExpressaoException {
+	public void teste0() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "__lista2"));
+		compilacao.compilar(getFile(LISTA, "lista0"));
+	}
+
+	@Test
+	public void teste1() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "lista1"));
 
 		processador = new Processador();
 
-		String biblio = "br.com.teste.__lista2";
+		String biblio = "br.com.teste.lista1";
+
+		result = processador.processar(biblio, "teste1");
+		equals("[[]]", result.toString());
+	}
+
+	@Test
+	public void lista2() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "lista2"));
+
+		processador = new Processador();
+
+		String biblio = "br.com.teste.lista2";
 
 		result = processador.processar(biblio, "teste2");
 		equals("[[]]", result.toString());
 	}
 
 	@Test
+	public void teste3() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "lista3"));
+	}
+
+	@Test
 	public void lista4() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "__lista4"));
+		compilacao.compilar(getFile(LISTA, "lista4"));
 
 		processador = new Processador();
 
-		String biblio = "br.com.teste.__lista4";
+		String biblio = "br.com.teste.lista4";
 
 		result = processador.processar(biblio, "teste5", new Lista(), "escola");
 		equals("[[]escola]", result.toString());
@@ -124,5 +105,24 @@ public class ListaTest extends AbstratoTest {
 
 		result = processador.processar(biblio, "teste7");
 		equals("[[]]", result.toString());
+	}
+
+	@Test
+	public void teste5() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "lista5"));
+	}
+
+	@Test
+	public void listaAlgorit() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(LISTA, "listaAlgorit"));
+
+		processador = new Processador();
+
+		String biblio = "br.com.teste.listaAlgorit";
+
+		result = processador.processar(biblio, "getMapa");
+		equals("[{nome=Teste, valores=[1000, 30000, {valor=1.2}]}]", result.toString());
 	}
 }
