@@ -13,13 +13,12 @@ public class IFTest extends AbstratoTest {
 	private static final String CONDICIONAL = "condicional";
 
 	@Test
-	public void teste10() throws IOException, ExpressaoException {
+	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(CONDICIONAL, "__simples10"));
+		compilacao.compilar(getFile(CONDICIONAL, "cond2"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples10";
+		String biblio = "br.com.teste.cond2";
 
 		result = processador.processar(biblio, "se", bi(3), "IF", "ELSE");
 		equals("[ELSE]", result.toString());
@@ -29,13 +28,12 @@ public class IFTest extends AbstratoTest {
 	}
 
 	@Test
-	public void teste12() throws IOException, ExpressaoException {
+	public void teste2() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(CONDICIONAL, "__simples12"));
+		compilacao.compilar(getFile(CONDICIONAL, "cond3"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples12";
+		String biblio = "br.com.teste.cond3";
 
 		result = processador.processar(biblio, "main", bi(1));
 		equals("[1]", result.toString());
@@ -45,13 +43,12 @@ public class IFTest extends AbstratoTest {
 	}
 
 	@Test
-	public void teste17() throws IOException, ExpressaoException {
+	public void teste3() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(CONDICIONAL, "__simples17"));
+		compilacao.compilar(getFile(CONDICIONAL, "cond4"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples17";
+		String biblio = "br.com.teste.cond4";
 
 		String nomeFuncao = "diaDaSemana";
 
