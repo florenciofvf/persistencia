@@ -1,9 +1,6 @@
 package expressao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -15,50 +12,43 @@ public class FuncionalTest extends AbstratoTest {
 
 	@Test
 	public void teste0() throws IOException, ExpressaoException {
-		Compilacao compilacao = new Compilacao();
+		compilacao = new Compilacao();
 		compilacao.compilar(getFile("funcional", "simples15"));
 
-		Processador processador = new Processador();
+		processador = new Processador();
 
 		String biblio = "br.com.teste.simples15";
 
-		List<Object> result;
-
 		result = processador.processar(biblio, "main");
-		assertEquals("[7]", result.toString());
+		equals("[7]", result.toString());
 	}
 
 	@Test
 	public void teste3() throws IOException, ExpressaoException {
-		Compilacao compilacao = new Compilacao();
+		compilacao = new Compilacao();
 		compilacao.compilar(getFile("funcional", "teste3"));
 
-		Processador processador = new Processador();
+		processador = new Processador();
 
 		String biblio = "br.com.teste.teste3";
 
-		List<Object> result;
-
 		result = processador.processar(biblio, "testar");
-		assertEquals("[Java2]", result.toString());
+		equals("[Java2]", result.toString());
 	}
 
 	@Test
 	public void funcional() throws IOException, ExpressaoException {
-		Compilacao compilacao = new Compilacao();
+		compilacao = new Compilacao();
 		compilacao.compilar(getFile("funcional", "funcional"));
 
-		Processador processador = new Processador();
+		processador = new Processador();
 
 		String biblio = "br.com.teste.funcional";
 
-		List<Object> result;
-
 		result = processador.processar(biblio, "main");
-		assertEquals("[Minha Função]", result.toString());
+		equals("[Minha Função]", result.toString());
 
 		result = processador.processar(biblio, "main2");
-		assertEquals("[minhaFuncao([])]", result.toString());
+		equals("[minhaFuncao([])]", result.toString());
 	}
-
 }
