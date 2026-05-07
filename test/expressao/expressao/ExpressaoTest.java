@@ -10,14 +10,15 @@ import br.com.persist.plugins.expressao.processador.Processador;
 import expressao.AbstratoTest;
 
 public class ExpressaoTest extends AbstratoTest {
+	private static final String EXPRESSAO = "expressao";
+
 	@Test
-	public void teste3() throws IOException, ExpressaoException {
+	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("expressao", "__simples3"));
+		compilacao.compilar(getFile(EXPRESSAO, "expressao2"));
 
-		Processador processador = new Processador();
-
-		String biblio = "br.com.teste.__simples3";
+		processador = new Processador();
+		String biblio = "br.com.teste.expressao2";
 
 		result = processador.processar(biblio, "mesmo", bi(30));
 		equals("[30]", result.toString());
@@ -30,13 +31,12 @@ public class ExpressaoTest extends AbstratoTest {
 	}
 
 	@Test
-	public void teste4() throws IOException, ExpressaoException {
+	public void teste2() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("expressao", "__simples4"));
+		compilacao.compilar(getFile(EXPRESSAO, "expressao3"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples4";
+		String biblio = "br.com.teste.expressao3";
 
 		result = processador.processar(biblio, "dobrar", bi(30));
 		equals("[60]", result.toString());
@@ -52,13 +52,12 @@ public class ExpressaoTest extends AbstratoTest {
 	}
 
 	@Test
-	public void teste5() throws IOException, ExpressaoException {
+	public void teste3() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("expressao", "__simples5"));
+		compilacao.compilar(getFile(EXPRESSAO, "expressao4"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples5";
+		String biblio = "br.com.teste.expressao4";
 
 		result = processador.processar(biblio, "teste");
 		equals("[2]", result.toString());
@@ -68,13 +67,12 @@ public class ExpressaoTest extends AbstratoTest {
 	}
 
 	@Test
-	public void teste6() throws IOException, ExpressaoException {
+	public void teste4() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("expressao", "__simples6"));
+		compilacao.compilar(getFile(EXPRESSAO, "expressao5"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples6";
+		String biblio = "br.com.teste.expressao5";
 
 		result = processador.processar(biblio, "expressao_01", bi(3), bi(4), bi(5));
 		equals("[23]", result.toString());
@@ -87,26 +85,24 @@ public class ExpressaoTest extends AbstratoTest {
 	}
 
 	@Test
-	public void teste7() throws IOException, ExpressaoException {
+	public void teste5() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("expressao", "__simples7"));
+		compilacao.compilar(getFile(EXPRESSAO, "expressao6"));
 
 		processador = new Processador();
+		String biblio = "br.com.teste.expressao6";
 
-		String biblio = "br.com.teste.__simples7";
-
-		result = processador.processar(biblio, "expressao");
+		result = processador.processar(biblio, EXPRESSAO);
 		equals("[14]", result.toString());
 	}
 
 	@Test
-	public void teste8() throws IOException, ExpressaoException {
+	public void teste6() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("expressao", "__simples8"));
+		compilacao.compilar(getFile(EXPRESSAO, "expressao7"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples8";
+		String biblio = "br.com.teste.expressao7";
 
 		result = processador.processar(biblio, "igual", bi(3), bi(3));
 		equals("[1]", result.toString());
@@ -116,13 +112,12 @@ public class ExpressaoTest extends AbstratoTest {
 	}
 
 	@Test
-	public void teste9() throws IOException, ExpressaoException {
+	public void teste7() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("expressao", "__simples9"));
+		compilacao.compilar(getFile(EXPRESSAO, "expressao8"));
 
 		processador = new Processador();
-
-		String biblio = "br.com.teste.__simples9";
+		String biblio = "br.com.teste.expressao8";
 
 		result = processador.processar(biblio, "main");
 		equals("[1000]", result.toString());
