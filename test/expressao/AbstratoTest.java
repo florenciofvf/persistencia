@@ -19,6 +19,7 @@ public abstract class AbstratoTest {
 	protected Processador processador;
 	protected Compilacao compilacao;
 	protected List<Object> result;
+	protected String biblio;
 
 	protected File getFile(String funcionalidade, String arquivo) {
 		File subDir = new File(root, funcionalidade);
