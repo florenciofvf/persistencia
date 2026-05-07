@@ -10,12 +10,10 @@ import br.com.persist.plugins.expressao.processador.Processador;
 import expressao.AbstratoTest;
 
 public class ListaFuncionalTest extends AbstratoTest {
-	private static final String LISTA = "lista";
-
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(LISTA, "lista6"));
+		compilacao.compilar(getFile("funcional", "lista6"));
 
 		processador = new Processador();
 
