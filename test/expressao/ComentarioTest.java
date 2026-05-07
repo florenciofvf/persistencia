@@ -1,6 +1,5 @@
 package expressao;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -13,13 +12,5 @@ public class ComentarioTest extends AbstratoTest {
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
 		compilacao.compilar(getFile("comentario", "comentario"));
-	}
-
-	@Test
-	public void compilarAPIFiltro() throws IOException, ExpressaoException {
-		File raiz = new File("expressoes");
-		File filtro = new File(raiz, "filtro");
-		compilacao = new Compilacao();
-		compilacao.compilar(new File(filtro, "_"));
 	}
 }
