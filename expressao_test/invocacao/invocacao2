@@ -1,0 +1,9 @@
+package br.com.teste.invocacao;
+
+alias br.com.teste.invocacao v;
+
+
+defun concatenar() {
+	const valor = v.concatenar([], 'Exemplo', '-001');
+	return valor;
+}

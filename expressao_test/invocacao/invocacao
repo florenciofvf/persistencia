@@ -13,3 +13,7 @@ defun naoFazNada2() void {
 defun print(msg) void {
 	return;
 }
+
+defun concatenar(objeto, string1, string2) {
+	return objeto + string1 + string2;
+}
