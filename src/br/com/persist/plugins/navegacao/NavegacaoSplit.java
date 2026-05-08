@@ -793,7 +793,7 @@ class Aba extends Transferivel {
 				try {
 					String aux = auxiliar(base, complemento);
 					Processador processador = new Processador();
-					List<Object> resposta = processador.processar("navegacao.br.com.processarLink.ProcessarLink",
+					List<Object> resposta = processador.processar("plugin_navegacao.br.com.processarLink.ProcessarLink",
 							"main", base + aux, complemento);
 					setResposta(resposta, false);
 				} catch (ExpressaoException ex) {

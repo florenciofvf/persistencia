@@ -22,7 +22,7 @@ public class PilhaFuncao {
 
 	public void push(Funcao funcao) throws ExpressaoException {
 		InstrucaoUtil.checarFuncao(funcao);
-		if (ExpressaoConstantes.DEBUG) {
+		if (ExpressaoConstantes.DEBUG_PILHA_FUNCAO) {
 			ExpressaoUtil.print("[PILHA-FUNCAO-PUSH] ", funcao);
 		}
 		if (funcoes.isEmpty()) {
@@ -41,7 +41,7 @@ public class PilhaFuncao {
 	public Funcao pop() throws ExpressaoException {
 		checar();
 		Funcao funcao = funcoes.remove(funcoes.size() - 1);
-		if (ExpressaoConstantes.DEBUG) {
+		if (ExpressaoConstantes.DEBUG_PILHA_FUNCAO) {
 			ExpressaoUtil.print("[PILHA-FUNCAO-POP] ", funcao);
 		}
 		return funcao;

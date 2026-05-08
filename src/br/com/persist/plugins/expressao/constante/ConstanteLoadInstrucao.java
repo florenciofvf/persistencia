@@ -44,7 +44,7 @@ public class ConstanteLoadInstrucao extends Instrucao implements LinkBiblioteca 
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
 		Constante constante = biblio.getConstante(nomeConstante);
-		if (ExpressaoConstantes.DEBUG) {
+		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
 			String string = ExpressaoUtil.completar("[LOAD-CONST-" + nomeBiblioteca + "." + nomeConstante
 					+ "] ######### (const load) ######### " + constante);
 			ExpressaoUtil.print(string, pilhaOperando);

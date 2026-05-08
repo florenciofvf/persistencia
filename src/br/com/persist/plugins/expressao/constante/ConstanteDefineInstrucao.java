@@ -25,7 +25,7 @@ public class ConstanteDefineInstrucao extends Instrucao {
 		Biblioteca biblioteca = funcao.getBiblioteca();
 		biblioteca.addConstante(constante);
 		constante.setValor(valor);
-		if (ExpressaoConstantes.DEBUG) {
+		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
 			String string = ExpressaoUtil
 					.completar("[DEF-CONST-" + nomeConstante + "] ######### (def const) ######### " + constante);
 			ExpressaoUtil.print(string, pilhaOperando);

@@ -75,7 +75,7 @@ public class ExpressaoFabrica extends AbstratoFabricaContainer {
 		}
 
 		private List<String> listarNomeBiblio() {
-			String path = NPath.get("objetos/br/com/objetos/lista");
+			String path = NPath.get("plugin_objeto/br/com/objeto/lista");
 			String pack = Util.replaceAll(path, File.separator, ".");
 			File file = new File(CacheBiblioteca.COMPILADOS, path);
 			List<String> lista = new ArrayList<>();

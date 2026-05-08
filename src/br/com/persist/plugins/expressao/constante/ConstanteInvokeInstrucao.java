@@ -61,7 +61,7 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 		Funcao funcaoValor = (Funcao) constante.getValor();
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
-		if (ExpressaoConstantes.DEBUG) {
+		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
 			String string = ExpressaoUtil.completar("[INVOKE-CONST-" + nomeBiblioteca + "." + nomeConstante
 					+ "] ######### (funcao valor) ######### " + clone);
 			ExpressaoUtil.print(string, pilhaOperando);

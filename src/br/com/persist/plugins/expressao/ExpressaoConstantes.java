@@ -7,9 +7,12 @@ public class ExpressaoConstantes {
 	public static final String EXPRESSOES = "expressoes";
 	public static final String EXPRESSAO = "expressao";
 	public static final String IGNORADOS = "ignorados";
+
+	public static final boolean DEBUG_PILHA_OPERANDO = false;
+	public static final boolean DEBUG_PILHA_FUNCAO = false;
+	public static final boolean DEBUG_PROCESSADOR = false;
+	public static final boolean DEBUG_INSTRUCAO = false;
 	public static final boolean DEBUG_ENDERECO = false;
-	public static final boolean DEBUG_PILHA = false;
-	public static final boolean DEBUG = false;
 	public static final String ESPACO = " ";
 
 	private ExpressaoConstantes() {

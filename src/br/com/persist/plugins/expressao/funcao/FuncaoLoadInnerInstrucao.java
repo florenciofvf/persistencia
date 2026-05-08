@@ -39,7 +39,7 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad {
 		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonar();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
 		funcaoLoad.setParent(funcao);
-		if (ExpressaoConstantes.DEBUG) {
+		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
 			String string = ExpressaoUtil.completar("[LOAD-FUNCTION-INNER-" + nomeBiblioteca + "." + nomeFuncao
 					+ "] ######### (funcao inner load) ######### " + funcaoLoad);
 			ExpressaoUtil.print(string, pilhaOperando);
