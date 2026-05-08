@@ -2,6 +2,7 @@ package br.com.persist.plugins.expressao.funcao;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
@@ -45,6 +46,11 @@ public class FuncaoLoadInstrucao extends FuncaoLoad implements LinkBiblioteca {
 		}
 		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonar();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
+		if (ExpressaoConstantes.DEBUG) {
+			String string = ExpressaoUtil.completar("[LOAD-FUNCTION-" + nomeBiblioteca + "." + nomeFuncao
+					+ "] ######### (funcao load) ######### " + funcaoLoad);
+			ExpressaoUtil.print(string, pilhaOperando);
+		}
 		pilhaOperando.push(funcaoLoad);
 	}
 
