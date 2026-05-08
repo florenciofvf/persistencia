@@ -53,7 +53,8 @@ public class Processador {
 			if (processar.get()) {
 				instrucao.processar(funcao, pilhaFuncao, pilhaOperando);
 				if (ExpressaoConstantes.DEBUG) {
-					String string = ExpressaoUtil.completar(funcao.getBiblioteca() + "." + funcao + " -> " + instrucao);
+					String string = ExpressaoUtil.completar(
+							"[INSTRUCAO-EXEC] " + funcao.getBiblioteca() + "." + funcao + " -> " + instrucao);
 					ExpressaoUtil.print(string, pilhaOperando);
 				}
 				funcao = pilhaFuncao.isEmpty() ? null : pilhaFuncao.peek();
