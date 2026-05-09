@@ -38,10 +38,9 @@ public class ExpressaoCor {
 			} else if (token.isReservado()) {
 				set(doc, token, RED);
 			} else if (token.isEL()) {
-				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + token.getTotalScape(),
-						MAGENTA, true);
+				setOriginal(doc, token, MAGENTA);
 			} else if (token.isString()) {
-				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 2, BLUE, true);
+				setOriginal(doc, token, BLUE);
 			} else if (token.isComentario()) {
 				set(doc, token, GRAY);
 			} else if (token.isOperador() || token.isEspecial()) {
@@ -50,6 +49,10 @@ public class ExpressaoCor {
 				set(doc, token, RED2);
 			}
 		}
+	}
+
+	static void setOriginal(StyledDocument doc, Token token, MutableAttributeSet att) {
+		doc.setCharacterAttributes(token.getIndice(), token.getOriginal().length(), att, true);
 	}
 
 	static void set(StyledDocument doc, Token token, MutableAttributeSet att) {

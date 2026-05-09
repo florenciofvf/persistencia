@@ -36,7 +36,7 @@ public class TokenManager {
 	}
 
 	public void invalidar(Token token) throws ExpressaoException {
-		int indiceFinal = token.indice + token.getString().length();
+		int indiceFinal = token.indice + token.getOriginal().length();
 		String detalhe = string.substring(0, indiceFinal);
 		throw new ExpressaoException(detalhe + "<<<", false);
 	}
@@ -231,12 +231,13 @@ public class TokenManager {
 		if (diferenteDe(indiceBackup + 1, '{')) {
 			invalidar();
 		}
+		StringBuilder original = new StringBuilder("${");
 		StringBuilder builder = new StringBuilder();
 		indice = indiceBackup + 2;
 		boolean finalizado = false;
-		int scape = 3;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
+			original.append(c);
 			if (c == '>') {
 				builder.append(",");
 			} else if (valido1(c) || valido2(c) || c == ':') {
@@ -246,7 +247,7 @@ public class TokenManager {
 				indice++;
 				break;
 			} else if (c == ' ' || c == '\n' || c == '\r' || c == '\t') {
-				scape++;
+				//
 			} else {
 				invalidar();
 			}
@@ -256,7 +257,7 @@ public class TokenManager {
 			invalidar();
 		}
 		Token token = new Token(builder.toString(), Tipo.EL, indiceBackup);
-		token.setTotalScape(scape);
+		token.setOriginal(original.toString());
 		return token;
 	}
 
@@ -398,10 +399,12 @@ public class TokenManager {
 	private Token tokenString(int indiceBackup) throws ExpressaoException {
 		AtomicBoolean encerrado = new AtomicBoolean(false);
 		AtomicBoolean escapar = new AtomicBoolean(false);
+		StringBuilder original = new StringBuilder("'");
 		StringBuilder builder = new StringBuilder();
 		indice++;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
+			original.append(c);
 			switch (c) {
 			case '\'':
 				apostrofe(builder, c, escapar, encerrado);
@@ -424,7 +427,9 @@ public class TokenManager {
 		if (!encerrado.get()) {
 			invalidar();
 		}
-		return new Token(builder.toString(), Tipo.STRING, indiceBackup);
+		Token token = new Token(builder.toString(), Tipo.STRING, indiceBackup);
+		token.setOriginal(original.toString());
+		return token;
 	}
 
 	private void apostrofe(StringBuilder builder, char c, AtomicBoolean escapar, AtomicBoolean encerrado) {

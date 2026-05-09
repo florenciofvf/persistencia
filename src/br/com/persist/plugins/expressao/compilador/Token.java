@@ -17,8 +17,8 @@ public class Token {
 	private boolean consumido;
 	final String string;
 	final int indice;
+	String original;
 	final Tipo tipo;
-	int totalScape;
 	int style;
 
 	public Token(String string, Tipo tipo, int indice) {
@@ -39,6 +39,14 @@ public class Token {
 		this.consumido = consumido;
 	}
 
+	public void setOriginal(String original) {
+		this.original = original;
+	}
+
+	public String getOriginal() {
+		return original != null ? original : string;
+	}
+
 	public String getString() {
 		return string;
 	}
@@ -49,14 +57,6 @@ public class Token {
 
 	public void setStyle(int style) {
 		this.style = style;
-	}
-
-	public int getTotalScape() {
-		return totalScape;
-	}
-
-	public void setTotalScape(int totalScape) {
-		this.totalScape = totalScape;
 	}
 
 	public enum Tipo {
