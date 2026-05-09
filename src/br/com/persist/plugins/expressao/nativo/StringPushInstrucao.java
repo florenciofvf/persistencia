@@ -15,9 +15,16 @@ public class StringPushInstrucao extends Instrucao {
 		if (parametros == null) {
 			parametros = "";
 		}
-		this.string = Util.replaceAll(parametros, "\\R", "\r");
-		this.string = Util.replaceAll(this.string, "\\N", "\n");
-		this.string = Util.replaceAll(this.string, "\\T", "\t");
+		this.string = normalizar(parametros);
+	}
+
+	public static String normalizar(String string) {
+		if (string != null) {
+			string = Util.replaceAll(string, "\\R", "\r");
+			string = Util.replaceAll(string, "\\N", "\n");
+			string = Util.replaceAll(string, "\\T", "\t");
+		}
+		return string;
 	}
 
 	@Override
