@@ -234,7 +234,7 @@ public class TokenManager {
 		StringBuilder builder = new StringBuilder();
 		indice = indiceBackup + 2;
 		boolean finalizado = false;
-		int scape = 0;
+		int scape = 3;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c == '>') {

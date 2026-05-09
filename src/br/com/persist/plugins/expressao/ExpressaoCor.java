@@ -38,7 +38,7 @@ public class ExpressaoCor {
 			} else if (token.isReservado()) {
 				set(doc, token, RED);
 			} else if (token.isEL()) {
-				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 3 + token.getTotalScape(),
+				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + token.getTotalScape(),
 						MAGENTA, true);
 			} else if (token.isString()) {
 				doc.setCharacterAttributes(token.getIndice(), token.getString().length() + 2, BLUE, true);
