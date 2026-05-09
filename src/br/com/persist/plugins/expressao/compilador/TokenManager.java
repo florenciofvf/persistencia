@@ -38,7 +38,7 @@ public class TokenManager {
 	public void invalidar(Token token) throws ExpressaoException {
 		int indiceFinal = token.indice + token.getOriginal().length();
 		String detalhe = string.substring(0, indiceFinal);
-		throw new ExpressaoException(detalhe + "<<<TOKEN REJEITADO", false);
+		throw new ExpressaoException(detalhe + "<<<TOKEN REJEITADO [" + token.getOriginal() + "]", false);
 	}
 
 	public void invalidar(String msg) throws ExpressaoException {
