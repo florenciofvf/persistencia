@@ -41,6 +41,11 @@ public class TokenManager {
 		throw new ExpressaoException(detalhe + "<<<", false);
 	}
 
+	public void invalidar(String msg) throws ExpressaoException {
+		String detalhe = string.substring(0, indice + 1);
+		throw new ExpressaoException(detalhe + "<<<" + msg, false);
+	}
+
 	public void invalidar() throws ExpressaoException {
 		String detalhe = string.substring(0, indice + 1);
 		throw new ExpressaoException(detalhe + "<<<", false);
@@ -254,7 +259,8 @@ public class TokenManager {
 			indice++;
 		}
 		if (!finalizado) {
-			invalidar();
+			indice--;
+			invalidar("EL NAO FINALIZADA");
 		}
 		Token token = new Token(builder.toString(), Tipo.EL, indiceBackup);
 		token.setOriginal(original.toString());
@@ -425,7 +431,8 @@ public class TokenManager {
 			}
 		}
 		if (!encerrado.get()) {
-			invalidar();
+			indice--;
+			invalidar("STRING NAO FINALIZADA");
 		}
 		Token token = new Token(builder.toString(), Tipo.STRING, indiceBackup);
 		token.setOriginal(original.toString());
