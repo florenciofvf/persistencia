@@ -328,11 +328,13 @@ class Editor extends TextEditor {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
-				processar();
+				processar(false);
+			} else if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_SPACE) {
+				processar(true);
 			}
 		}
 
-		private void processar() {
+		private void processar(boolean local) {
 			Caret caret = getCaret();
 			if (caret == null) {
 				return;
@@ -351,6 +353,10 @@ class Editor extends TextEditor {
 			point = getLocationOnScreen();
 			point.x += r.x + 5;
 			point.y += r.y;
+			if (local) {
+				processarLocal();
+				return;
+			}
 			String string = getString(dot);
 			if (Util.isEmpty(string)) {
 				return;
@@ -360,6 +366,18 @@ class Editor extends TextEditor {
 				processarAlias(array[0]);
 			} else if (array.length > 2) {
 				processarBiblio(ExpressaoUtil.get(array));
+			}
+		}
+
+		private void processarLocal() {
+			if (bibliotecaContexto == null) {
+				LOG.warning(ExpressaoMensagens.getString("erro.compile_arquivo_alias"));
+				return;
+			}
+			try {
+				processarBiblio(bibliotecaContexto.getNomeAbsoluto());
+			} catch (ExpressaoException ex) {
+				LOG.warning(ex.getMessage());
 			}
 		}
 
