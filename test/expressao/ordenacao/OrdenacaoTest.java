@@ -64,10 +64,10 @@ public class OrdenacaoTest extends AbstratoTest {
 	public void quicksort5() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
 		compilacao.compilar(getFile(ORDENACAO, "quicksort5"));
-		
+
 		processador = new Processador();
 		biblio = "br.com.teste.quicksort5";
-		
+
 		result = processador.processar(biblio, "main");
 		equals("[[-9, -3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
 	}
