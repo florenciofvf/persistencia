@@ -10,6 +10,7 @@ import java.util.Objects;
 
 import br.com.persist.assistencia.MetaInfo;
 import br.com.persist.plugins.expressao.constante.Constante;
+import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -107,6 +108,9 @@ public class Biblioteca {
 	public List<MetaInfo> getNomeFuncoes() {
 		List<MetaInfo> lista = new ArrayList<>();
 		for (Funcao item : mapaFuncoes.values()) {
+			if (FuncaoConstantesContexto.NOME_FUNCAO_CONSTANTES.equals(item.getNome())) {
+				continue;
+			}
 			lista.add(new MetaInfo(item.getInterface(), item.getInterfaceInfo()));
 		}
 		return lista;

@@ -22,8 +22,8 @@ import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JList;
-import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
@@ -101,7 +101,7 @@ class MetaContainer extends Panel {
 	}
 }
 
-class MetaDialogo extends JWindow implements MetaContainerListener {
+class MetaDialogo extends JDialog implements MetaContainerListener {
 	private final transient MetaDialogoListener metaDialogolistener;
 	private static final long serialVersionUID = 1L;
 	private final MetaContainer container;
@@ -150,6 +150,7 @@ class MetaDialogo extends JWindow implements MetaContainerListener {
 
 	public static MetaDialogo criar(Frame frame, MetaDialogoListener listener, Point location) {
 		MetaDialogo form = new MetaDialogo(frame, listener);
+		location.y -= 25;
 		form.setLocation(location);
 		form.setVisible(true);
 		return form;
