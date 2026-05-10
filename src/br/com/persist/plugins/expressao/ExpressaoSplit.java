@@ -36,6 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
@@ -302,13 +303,27 @@ class Editor extends TextEditor {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	transient BibliotecaContexto bibliotecaContexto;
+	transient javax.swing.Action compilarAction;
 	transient CacheBiblioteca cacheBiblioteca;
 	private Point point;
 
 	Editor() {
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_P), "compilar");
+		getActionMap().put("compilar", actionCompilar);
 		addFocusListener(focusListenerInner);
 		addKeyListener(keyListenerInner);
 	}
+
+	private transient javax.swing.Action actionCompilar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (compilarAction != null) {
+				compilarAction.actionPerformed(e);
+			}
+		}
+	};
 
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
 		@Override
@@ -507,7 +522,17 @@ class Aba extends Transferivel {
 		add(BorderLayout.CENTER, split);
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
+		editor.compilarAction = new CompilarAction();
 		editor.cacheBiblioteca = cacheBiblioteca;
+	}
+
+	private class CompilarAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			toolbar.atualizar();
+		}
 	}
 
 	private Panel criarPanel() {

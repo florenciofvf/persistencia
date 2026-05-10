@@ -109,7 +109,7 @@ public class TextEditor extends TextPane {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
 
-	private InputMap inputMap() {
+	protected InputMap inputMap() {
 		return getInputMap(WHEN_FOCUSED);
 	}
 
