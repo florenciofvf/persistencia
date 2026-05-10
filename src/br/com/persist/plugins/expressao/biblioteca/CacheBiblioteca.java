@@ -30,6 +30,10 @@ public class CacheBiblioteca {
 		mapaBibliotecas = new HashMap<>();
 	}
 
+	public void clear() {
+		mapaBibliotecas.clear();
+	}
+
 	public boolean contem(String nomeBiblioAbsoluto) {
 		return mapaBibliotecas.get(nomeBiblioAbsoluto) != null;
 	}

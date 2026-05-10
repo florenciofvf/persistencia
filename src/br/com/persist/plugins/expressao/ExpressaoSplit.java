@@ -374,6 +374,9 @@ class Editor extends TextEditor {
 				LOG.warning(ExpressaoMensagens.getString("erro.compile_arquivo_alias"));
 				return;
 			}
+			if (cacheBiblioteca != null) {
+				cacheBiblioteca.clear();
+			}
 			try {
 				processarBiblio(bibliotecaContexto.getNomeAbsoluto());
 			} catch (ExpressaoException ex) {
