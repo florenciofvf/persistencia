@@ -14,6 +14,7 @@ import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 public class Token {
 	public static final int CONSTANTE = 1;
 	public static final int PARAMETRO = 2;
+	public static final int DEC_LOCAL = 3;
 	private boolean consumido;
 	final String string;
 	final int indice;

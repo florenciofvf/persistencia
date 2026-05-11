@@ -24,9 +24,9 @@ public class Biblioteca {
 	private final String nome;
 
 	public Biblioteca(File file) {
-		mapaConstantes = new LinkedHashMap<>();
-		mapaFuncoes = new LinkedHashMap<>();
-		mapaAlias = new HashMap<>();
+		this.mapaConstantes = new LinkedHashMap<>();
+		this.mapaFuncoes = new LinkedHashMap<>();
+		this.mapaAlias = new HashMap<>();
 		this.nome = file.getName();
 	}
 

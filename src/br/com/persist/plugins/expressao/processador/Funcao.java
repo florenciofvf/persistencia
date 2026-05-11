@@ -2,6 +2,7 @@ package br.com.persist.plugins.expressao.processador;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10,10 +11,12 @@ import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
+import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 
 public class Funcao {
 	private final Map<Integer, InstrucaoItem> mapaInstrucoes;
+	private final Map<String, Constante> mapaConstantes;
 	private final List<Parametro> parametros;
 	private final Biblioteca biblioteca;
 	private InstrucaoItem ponteiro;
@@ -27,6 +30,7 @@ public class Funcao {
 
 	public Funcao(Biblioteca biblioteca, String nome, String[] origem) {
 		this.biblioteca = Objects.requireNonNull(biblioteca);
+		this.mapaConstantes = new LinkedHashMap<>();
 		this.nome = Objects.requireNonNull(nome);
 		this.mapaInstrucoes = new HashMap<>();
 		this.parametros = new ArrayList<>();
@@ -48,6 +52,20 @@ public class Funcao {
 			return nome.substring(pos + 1);
 		}
 		return null;
+	}
+
+	public void addConstante(Constante constante) {
+		if (constante != null) {
+			mapaConstantes.put(constante.getNome(), constante);
+		}
+	}
+
+	public Constante getConstante(String nome) throws ExpressaoException {
+		Constante constante = mapaConstantes.get(nome);
+		if (constante == null) {
+			throw new ExpressaoException("erro.constante_inexistente_funcao", nome, getNome());
+		}
+		return constante;
 	}
 
 	protected void checarHierarquia() throws ExpressaoException {
