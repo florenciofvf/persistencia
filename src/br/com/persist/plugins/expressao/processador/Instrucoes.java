@@ -13,6 +13,10 @@ import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.invocacao.InvokeInstrucao;
 import br.com.persist.plugins.expressao.lista.AddItemListaContexto;
 import br.com.persist.plugins.expressao.lista.AddItemListaInstrucao;
+import br.com.persist.plugins.expressao.local.LocalContexto;
+import br.com.persist.plugins.expressao.local.LocalDefineInstrucao;
+import br.com.persist.plugins.expressao.local.LocalInvokeInstrucao;
+import br.com.persist.plugins.expressao.local.LocalLoadInstrucao;
 import br.com.persist.plugins.expressao.mapa.PutItemMapaContexto;
 import br.com.persist.plugins.expressao.mapa.PutItemMapaInstrucao;
 import br.com.persist.plugins.expressao.nativo.FlutuanteContexto;
@@ -40,8 +44,8 @@ import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Or;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Rem;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Sub;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Xor;
-import br.com.persist.plugins.expressao.parametros.ParametroInvokeInstrucao;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
+import br.com.persist.plugins.expressao.parametros.ParametroInvokeInstrucao;
 import br.com.persist.plugins.expressao.parametros.ParametroLoadInstrucao;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoInstrucao;
@@ -78,6 +82,11 @@ public class Instrucoes {
 			return resp;
 		}
 
+		resp = criarLocal(indice, nome, parametros);
+		if (resp != null) {
+			return resp;
+		}
+
 		resp = criarNativo(indice, nome, parametros);
 		if (resp != null) {
 			return resp;
@@ -108,6 +117,17 @@ public class Instrucoes {
 			return new ConstanteLoadInstrucao(indice, parametros);
 		} else if (ConstanteContexto.INVOKE_CONST.equals(nome)) {
 			return new ConstanteInvokeInstrucao(indice, parametros);
+		}
+		return null;
+	}
+
+	private static Instrucao criarLocal(int indice, String nome, String parametros) throws ExpressaoException {
+		if (LocalContexto.DEF_LOCAL.equals(nome)) {
+			return new LocalDefineInstrucao(indice, parametros);
+		} else if (LocalContexto.LOAD_LOCAL.equals(nome)) {
+			return new LocalLoadInstrucao(indice, parametros);
+		} else if (LocalContexto.INVOKE_LOCAL.equals(nome)) {
+			return new LocalInvokeInstrucao(indice, parametros);
 		}
 		return null;
 	}
