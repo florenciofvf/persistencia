@@ -1,0 +1,18 @@
+package br.com.teste;
+
+alias br.com.persist.plugins.expressao.filtro._ _;
+
+defun main() {
+	return quickSort([46, 1, 2, -3, 4, 50, 6, 0, -90]);
+}
+
+defun quickSort(lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	local menores = _.filtrar(${lista:tail}, defun lamb(e){return e < ${lista:head};});
+	local maiores = _.filtrar(${lista:tail}, defun lamb(e){return e >= ${lista:head};});
+
+	return quickSort(menores) .. ${lista:head} .. quickSort(maiores);
+}

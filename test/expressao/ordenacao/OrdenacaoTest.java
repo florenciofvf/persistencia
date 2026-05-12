@@ -71,4 +71,16 @@ public class OrdenacaoTest extends AbstratoTest {
 		result = processador.processar(biblio, "main");
 		equals("[[-9, -3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
 	}
+
+	@Test
+	public void quicksort6() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(ORDENACAO, "quicksort6"));
+
+		processador = new Processador();
+		biblio = "br.com.teste.quicksort6";
+
+		result = processador.processar(biblio, "main");
+		equals("[[-90, -3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
+	}
 }
