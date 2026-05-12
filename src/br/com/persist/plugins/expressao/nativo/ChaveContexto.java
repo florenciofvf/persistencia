@@ -19,6 +19,7 @@ import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
+import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
@@ -50,22 +51,31 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 			return;
 		}
 		AtomicBoolean sucesso = new AtomicBoolean();
+
 		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
 		if (sucesso.get()) {
 			setPrefixo(ParametroContexto.LOAD_PARAM);
 			setBiblio(montarString(lista));
 			token.setStyle(Token.PARAMETRO);
-		} else {
-			IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
-			if (funcao != null) {
-				setPrefixo(
-						funcao.isRetornoVoid() ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET);
-			} else {
-				setPrefixo(ConstanteContexto.LOAD_CONST);
-				token.setStyle(Token.CONSTANTE);
-			}
-			setBiblio(THIS);
+			return;
 		}
+
+		lista = checarSeEhLocalDeFuncao(chamada, sucesso);
+		if (sucesso.get()) {
+			setPrefixo(LocalContexto.LOAD_LOCAL);
+			setBiblio(montarString(lista));
+			token.setStyle(Token.DEC_LOCAL);
+			return;
+		}
+
+		IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
+		if (funcao != null) {
+			setPrefixo(funcao.isRetornoVoid() ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET);
+		} else {
+			setPrefixo(ConstanteContexto.LOAD_CONST);
+			token.setStyle(Token.CONSTANTE);
+		}
+		setBiblio(THIS);
 	}
 
 	@Override

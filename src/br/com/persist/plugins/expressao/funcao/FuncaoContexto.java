@@ -171,6 +171,15 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		}
 	}
 
+	public InstrucoesContexto getInstrucoesContexto() {
+		for (Contexto item : componentes) {
+			if (item instanceof InstrucoesContexto) {
+				return (InstrucoesContexto) item;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public void empilharLocal(List<Contexto> lista) {
 		if (refFuncaoInterna != null) {

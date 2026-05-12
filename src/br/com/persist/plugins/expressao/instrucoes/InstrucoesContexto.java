@@ -1,12 +1,14 @@
 package br.com.persist.plugins.expressao.instrucoes;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.condicional.IFContexto;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
+import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.loop.WhileContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 
@@ -24,6 +26,10 @@ public class InstrucoesContexto extends Salto {
 				ConstanteContexto constante = new ConstanteContexto();
 				tokenManager.selecionar(constante);
 				adicionar(constante);
+			} else if (LocalContexto.LOCAL.equals(token.getString())) {
+				LocalContexto local = new LocalContexto();
+				tokenManager.selecionar(local);
+				adicionar(local);
 			} else if (RetornoContexto.RETURN.equals(token.getString())) {
 				RetornoContexto retorno = new RetornoContexto();
 				tokenManager.selecionar(retorno);
@@ -69,5 +75,14 @@ public class InstrucoesContexto extends Salto {
 			throw new ExpressaoException("erro.instrucoes.vazio");
 		}
 		return incondicional && getUltimo().retornoGarantido();
+	}
+
+	public LocalContexto getLocalContexto(String nome) {
+		for (Contexto item : componentes) {
+			if (item instanceof LocalContexto && item.getToken().getString().equals(nome)) {
+				return (LocalContexto) item;
+			}
+		}
+		return null;
 	}
 }

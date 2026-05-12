@@ -14,6 +14,7 @@ import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
+import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.negativo.NegativoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 
@@ -405,6 +406,26 @@ public abstract class Contexto {
 				FuncaoContexto funcao = (FuncaoContexto) c;
 				lista.add(funcao.getNome());
 				if (funcao.getParametros().contem(string)) {
+					sucesso.set(true);
+					break;
+				}
+			}
+			c = c.getParent();
+		}
+		return lista;
+	}
+
+	protected List<String> checarSeEhLocalDeFuncao(String string, AtomicBoolean sucesso) {
+		List<String> lista = new ArrayList<>();
+		Contexto c = this;
+		sucesso.set(false);
+		while (c != null) {
+			if (c instanceof FuncaoContexto) {
+				FuncaoContexto funcao = (FuncaoContexto) c;
+				lista.add(funcao.getNome());
+				InstrucoesContexto instrucoes = funcao.getInstrucoesContexto();
+				LocalContexto localContx = instrucoes.getLocalContexto(string);
+				if (localContx != null) {
 					sucesso.set(true);
 					break;
 				}
