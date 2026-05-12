@@ -22,15 +22,15 @@ public class PilhaFuncao {
 
 	public void push(Funcao funcao) throws ExpressaoException {
 		InstrucaoUtil.checarFuncao(funcao);
-		if (ExpressaoConstantes.DEBUG_PILHA_FUNCAO) {
-			ExpressaoUtil.print("[PILHA-FUNCAO-PUSH] ", funcao);
-		}
 		if (funcoes.isEmpty()) {
 			funcao.setParent(null);
 		} else {
 			funcao.setParent(peek());
 		}
 		funcoes.add(funcao);
+		if (ExpressaoConstantes.DEBUG_PILHA_FUNCAO) {
+			ExpressaoUtil.print("[PILHA-FUNCAO-PUSH] ", funcao);
+		}
 	}
 
 	public Funcao peek() throws ExpressaoException {

@@ -22,10 +22,10 @@ public class PilhaOperando {
 
 	public void push(Object valor) throws ExpressaoException {
 		InstrucaoUtil.checarOperando(valor);
+		operandos.add(valor);
 		if (ExpressaoConstantes.DEBUG_PILHA_OPERANDO) {
 			ExpressaoUtil.print("[PILHA-OPERANDO-PUSH] ", valor);
 		}
-		operandos.add(valor);
 	}
 
 	public Object peek() throws ExpressaoException {
