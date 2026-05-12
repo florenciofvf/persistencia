@@ -42,7 +42,7 @@ public abstract class Salto extends Contexto {
 		}
 	}
 
-	private void checarVazioInstrucoes() throws ExpressaoException {
+	protected void checarVazioInstrucoes() throws ExpressaoException {
 		if (isEmpty()) {
 			throw new ExpressaoException("erro.instrucoes.vazio");
 		}

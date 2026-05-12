@@ -54,6 +54,7 @@ public class InstrucoesContexto extends Salto {
 				FuncaoContexto fn = (FuncaoContexto) parent;
 				throw new ExpressaoException("erro.funcao.sem_retorno", fn.getNome());
 			}
+			checarVazioInstrucoes();
 			tokenManager.selecionarParentDe(this);
 		} else {
 			tokenManager.invalidar(token);
