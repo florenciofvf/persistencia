@@ -46,12 +46,12 @@ public class FuncaoLoadInstrucao extends FuncaoLoad implements LinkBiblioteca {
 		}
 		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonar();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
+		pilhaOperando.push(funcaoLoad);
 		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
 			String string = ExpressaoUtil.completar("[LOAD-FUNCTION-" + nomeBiblioteca + "." + nomeFuncao
 					+ "] ######### (funcao load) ######### " + funcaoLoad);
 			ExpressaoUtil.print(string, pilhaOperando);
 		}
-		pilhaOperando.push(funcaoLoad);
 	}
 
 	@Override

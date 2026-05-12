@@ -25,16 +25,16 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 			throws ExpressaoException {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[LOAD-PARAM-" + get(nomeFuncoes) + "." + nomeParametro
-					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
 		if (valor instanceof Funcao) {
 			Funcao funcaoValor = ((Funcao) valor);
 			funcaoValor.setParent(funcao);
 		}
 		pilhaOperando.push(valor);
+		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
+			String string = ExpressaoUtil.completar("[LOAD-PARAM-" + get(nomeFuncoes) + "." + nomeParametro
+					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
+			ExpressaoUtil.print(string, pilhaOperando);
+		}
 	}
 
 	@Override

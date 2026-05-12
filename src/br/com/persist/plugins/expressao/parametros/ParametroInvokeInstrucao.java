@@ -39,11 +39,6 @@ public class ParametroInvokeInstrucao extends Invoke {
 			throws ExpressaoException {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomeFuncao);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[INVOKE-PARAM-" + get(nomeFuncoes) + "." + nomeFuncao
-					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
 		if (valor == null) {
 			throw new ExpressaoException("erro.valor_param", nomeFuncao);
 		}
@@ -56,6 +51,11 @@ public class ParametroInvokeInstrucao extends Invoke {
 		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		pilhaFuncao.push(funcaoLoad);
+		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
+			String string = ExpressaoUtil.completar("[INVOKE-PARAM-" + get(nomeFuncoes) + "." + nomeFuncao
+					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
+			ExpressaoUtil.print(string, pilhaOperando);
+		}
 	}
 
 	@Override

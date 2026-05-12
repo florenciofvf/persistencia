@@ -25,12 +25,12 @@ public class LocalLoadInstrucao extends Instrucao {
 			throws ExpressaoException {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Constante constante = funcaoAlvo.getConstante(nomeLocal);
+		pilhaOperando.push(constante.getValor());
 		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
 			String string = ExpressaoUtil.completar("[LOAD-LOCAL-" + get(nomeFuncoes) + "." + nomeLocal
 					+ "] ######### (local load) ######### " + constante);
 			ExpressaoUtil.print(string, pilhaOperando);
 		}
-		pilhaOperando.push(constante.getValor());
 	}
 
 	@Override
