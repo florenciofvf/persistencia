@@ -37,12 +37,24 @@ public class OrdenacaoTest extends AbstratoTest {
 	}
 
 	@Test
-	public void quicksort3() throws IOException, ExpressaoException {
+	public void quicksort32() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(ORDENACAO, "quicksort3"));
+		compilacao.compilar(getFile(ORDENACAO, "quicksort3_2"));
 
 		processador = new Processador();
-		biblio = "br.com.teste.quicksort3";
+		biblio = "br.com.teste.quicksort3_2";
+
+		result = processador.processar(biblio, "main");
+		equals("[[-3, 0, 1, 2, 4, 5, 6, 46, 50]]", result.toString());
+	}
+
+	@Test
+	public void quicksort33() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(ORDENACAO, "quicksort3_3"));
+
+		processador = new Processador();
+		biblio = "br.com.teste.quicksort3_3";
 
 		result = processador.processar(biblio, "main");
 		equals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());

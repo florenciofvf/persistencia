@@ -1,0 +1,27 @@
+package br.com.teste;
+
+defun main() {
+	return quickSort3([46, 1, 2, -3, 4, 50, 6, 0]);
+}
+
+defun quickSort3(lista) {
+	if(lista == []) {
+		return [];
+	} else {
+		return quickSort3(filtrar3(${lista:tail}, defun lamb(e, valor){return e < valor;}, ${lista:head}))
+				.. ${lista:head} .. 
+			   quickSort3(filtrar3(${lista:tail}, defun lamb(e, valor){return e >= valor;}, ${lista:head}));
+	}
+}
+
+defun filtrar3(lista, f, valor) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(f(${lista:head}, valor)) {
+		return ${lista:head} .. filtrar3(${lista:tail}, f, valor);
+	} else {
+		return filtrar3(${lista:tail}, f, valor);
+	}
+}

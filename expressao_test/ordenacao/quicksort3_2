@@ -1,0 +1,33 @@
+package br.com.teste;
+
+defun main() {
+	return quickSort2([46, 1, 2, -3, 4, 50, 6, 0, 5]);
+}
+
+defun quickSort2(lista) {
+	if(lista == []) {
+		return [];
+	} else {
+		return quickSort2(filtrar(${lista:tail}, ${lista:head}, menor)) .. ${lista:head} .. quickSort2(filtrar(${lista:tail}, ${lista:head}, maiorIgual));
+	}
+}
+
+defun filtrar(lista, valor, filtro) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(filtro(valor, ${lista:head})) {
+		return ${lista:head} .. filtrar(${lista:tail}, valor, filtro);
+	} else {
+		return filtrar(${lista:tail}, valor, filtro);
+	}
+}
+
+defun maiorIgual(c, comparado) {
+	return comparado >= c;
+}
+
+defun menor(c, comparado) {
+	return comparado < c;
+}
