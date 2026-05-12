@@ -15,6 +15,7 @@ public class ExpressaoCor {
 	private static final MutableAttributeSet GREEN2 = new SimpleAttributeSet();
 	private static final MutableAttributeSet GREEN3 = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE2 = new SimpleAttributeSet();
+	private static final MutableAttributeSet BLUE3 = new SimpleAttributeSet();
 	private static final MutableAttributeSet GRAY = new SimpleAttributeSet();
 	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE = new SimpleAttributeSet();
@@ -33,6 +34,8 @@ public class ExpressaoCor {
 			}
 			if (token.isStyle(Token.CONSTANTE)) {
 				set(doc, token, BLUE2);
+			} else if (token.isStyle(Token.DEC_LOCAL)) {
+				set(doc, token, BLUE3);
 			} else if (token.isStyle(Token.PARAMETRO)) {
 				set(doc, token, GREEN2);
 			} else if (token.isReservado()) {
@@ -67,6 +70,7 @@ public class ExpressaoCor {
 		StyleConstants.setForeground(GRAY, new Color(192, 192, 192));
 		StyleConstants.setForeground(GREEN3, new Color(45, 100, 47));
 		StyleConstants.setBackground(TAG, new Color(225, 225, 225));
+		StyleConstants.setForeground(BLUE3, new Color(69, 10, 247));
 		StyleConstants.setForeground(GREEN2, new Color(0, 125, 0));
 		StyleConstants.setForeground(BLUE2, new Color(0, 0, 125));
 		StyleConstants.setForeground(RED, new Color(130, 0, 83));
@@ -77,6 +81,7 @@ public class ExpressaoCor {
 		StyleConstants.setBold(GREEN2, true);
 		StyleConstants.setBold(GREEN3, true);
 		StyleConstants.setBold(BLUE2, true);
+		StyleConstants.setBold(BLUE3, true);
 		StyleConstants.setBold(GRAY, true);
 		StyleConstants.setBold(BLUE, true);
 		StyleConstants.setBold(BOLD, true);
