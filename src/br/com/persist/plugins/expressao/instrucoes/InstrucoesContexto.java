@@ -26,7 +26,7 @@ public class InstrucoesContexto extends Salto {
 				ConstanteContexto constante = new ConstanteContexto();
 				tokenManager.selecionar(constante);
 				adicionar(constante);
-			} else if (LocalContexto.LOCAL.equals(token.getString())) {
+			} else if (LocalContexto.LOCAL.equals(token.getString()) && parent instanceof FuncaoContexto) {
 				LocalContexto local = new LocalContexto();
 				tokenManager.selecionar(local);
 				adicionar(local);
