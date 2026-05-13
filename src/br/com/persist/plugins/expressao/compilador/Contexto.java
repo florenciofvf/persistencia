@@ -181,6 +181,10 @@ public abstract class Contexto {
 	protected void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 	}
 
+	public boolean isDeclaracaoFuncao() throws ExpressaoException {
+		return false;
+	}
+
 	public boolean retornoGarantido() throws ExpressaoException {
 		return false;
 	}

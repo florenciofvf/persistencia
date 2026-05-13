@@ -10,6 +10,7 @@ import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 
 public class ConstanteContexto extends Contexto {
@@ -29,6 +30,12 @@ public class ConstanteContexto extends Contexto {
 	@Override
 	public void processar(TokenManager tokenManager, Token token) throws ExpressaoException {
 		selecionado.processar(tokenManager, token);
+	}
+
+	@Override
+	public boolean isDeclaracaoFuncao() throws ExpressaoException {
+		Contexto expressao = getPrimeiro();
+		return expressao != null && expressao.getPrimeiro() instanceof FuncaoContexto;
 	}
 
 	public class Id implements TokenExec {
