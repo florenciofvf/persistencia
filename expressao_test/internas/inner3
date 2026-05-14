@@ -1,0 +1,15 @@
+package br.com.teste;
+
+defun main() {
+	const inner = teste(defun ex() {return 'Exemplo';});
+	const outra = inner('param');
+	return outra();
+}
+
+defun teste(funcao) {
+	return defun inner(param) {
+		return defun outra() {
+			return funcao();
+		};
+	};
+}

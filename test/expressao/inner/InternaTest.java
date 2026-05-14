@@ -10,10 +10,12 @@ import br.com.persist.plugins.expressao.processador.Processador;
 import expressao.AbstratoTest;
 
 public class InternaTest extends AbstratoTest {
+	private static final String INTERNAS = "internas";
+
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("internas", "inner"));
+		compilacao.compilar(getFile(INTERNAS, "inner"));
 
 		processador = new Processador();
 		biblio = "br.com.teste.inner";
@@ -25,12 +27,24 @@ public class InternaTest extends AbstratoTest {
 	@Test
 	public void teste2() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile("internas", "inner2"));
+		compilacao.compilar(getFile(INTERNAS, "inner2"));
 
 		processador = new Processador();
 		biblio = "br.com.teste.inner2";
 
 		result = processador.processar(biblio, "fatorial", bi(5));
 		equals("[120]", result.toString());
+	}
+
+	@Test
+	public void teste3() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(INTERNAS, "inner3"));
+
+		processador = new Processador();
+		biblio = "br.com.teste.inner3";
+
+		result = processador.processar(biblio, "main");
+		equals("[Exemplo]", result.toString());
 	}
 }

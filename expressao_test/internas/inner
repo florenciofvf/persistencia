@@ -10,11 +10,3 @@ defun getInterna(valor) {
 		return valor + x;
 	};
 }
-
-defun teste(funcao) {
-	return defun inner(param) {
-		return defun outra() {
-			return funcao();
-		};
-	};
-}
