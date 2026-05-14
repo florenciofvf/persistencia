@@ -1,7 +1,9 @@
 package br.com.teste;
 
+alias br.com.persist.plugins.expressao.filtro._ _;
+
 defun main() {
-	return quickSort([46, 1, 2, -3, 4, 50, 6, 0, 55]);
+	return quickSort([46, 1, 2, -3, 4, 50, 6, 0, -90]);
 }
 
 defun quickSort(lista) {
@@ -9,32 +11,8 @@ defun quickSort(lista) {
 		return [];
 	}
 
-	local menores = lt(${lista:head}, ${lista:tail});
-	local maiores = ge(${lista:head}, ${lista:tail});
+	local menores = _.filtrar(${lista:tail}, defun lamb(e){return e < ${lista:head};});
+	local maiores = _.filtrar(${lista:tail}, defun lamb(e){return e >= ${lista:head};});
 
 	return quickSort(menores) .. ${lista:head} .. quickSort(maiores);
-}
-
-defun lt(valor, lista) {
-	if(lista == []) {
-		return [];
-	}
-
-	if(${lista:head} < valor) {
-		return ${lista:head} .. lt(valor, ${lista:tail});
-	} else {
-		return lt(valor, ${lista:tail});
-	}
-}
-
-defun ge(valor, lista) {
-	if(lista == []) {
-		return [];
-	}
-
-	if(${lista:head} >= valor) {
-		return ${lista:head} .. ge(valor, ${lista:tail});
-	} else {
-		return ge(valor, ${lista:tail});
-	}
 }

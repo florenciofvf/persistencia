@@ -3,44 +3,14 @@ package br.com.teste;
 alias br.com.persist.plugins.expressao.filtro._ _;
 
 defun main() {
-	return quickSort([46, 1, 2, -3, 4, 50, 6, 0, -9]);
+	return quickSort([46, 1, 2, -3, 4, 50, 6, 0]);
 }
 
 defun quickSort(lista) {
 	if(lista == []) {
 		return [];
 	}
-
-	const menor = getMenor();
-	const maior = getMaior();
-
-	return quickSort(menor(${lista:tail}, ${lista:head}))
+	return quickSort(_.filtrar(${lista:tail}, defun lamb(e){return e < ${lista:head};}))
 							.. ${lista:head} ..
-		   quickSort(maior(${lista:tail}, ${lista:head}));
-}
-
-defun getMenor() {
-	return defun lt(lista, valor) {
-		if(lista == []) {
-			return [];
-		}
-		if(${lista:head} < valor) {
-			return ${lista:head} .. lt(${lista:tail}, valor);
-		} else {
-			return lt(${lista:tail}, valor);
-		}
-	};
-}
-
-defun getMaior() {
-	return defun ge(lista, valor) {
-		if(lista == []) {
-			return [];
-		}
-		if(${lista:head} >= valor) {
-			return ${lista:head} .. ge(${lista:tail}, valor);
-		} else {
-			return ge(${lista:tail}, valor);
-		}
-	};
+		   quickSort(_.filtrar(${lista:tail}, defun lamb(e){return e >= ${lista:head};}));
 }

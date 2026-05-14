@@ -37,27 +37,15 @@ public class OrdenacaoTest extends AbstratoTest {
 	}
 
 	@Test
-	public void quicksort32() throws IOException, ExpressaoException {
+	public void quicksort3() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(ORDENACAO, "quicksort3_2"));
+		compilacao.compilar(getFile(ORDENACAO, "quicksort3"));
 
 		processador = new Processador();
-		biblio = "br.com.teste.quicksort3_2";
+		biblio = "br.com.teste.quicksort3";
 
 		result = processador.processar(biblio, "main");
 		equals("[[-3, 0, 1, 2, 4, 5, 6, 46, 50]]", result.toString());
-	}
-
-	@Test
-	public void quicksort33() throws IOException, ExpressaoException {
-		compilacao = new Compilacao();
-		compilacao.compilar(getFile(ORDENACAO, "quicksort3_3"));
-
-		processador = new Processador();
-		biblio = "br.com.teste.quicksort3_3";
-
-		result = processador.processar(biblio, "main");
-		equals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
 	}
 
 	@Test
@@ -81,7 +69,7 @@ public class OrdenacaoTest extends AbstratoTest {
 		biblio = "br.com.teste.quicksort5";
 
 		result = processador.processar(biblio, "main");
-		equals("[[-9, -3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
+		equals("[[-3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
 	}
 
 	@Test
@@ -93,7 +81,7 @@ public class OrdenacaoTest extends AbstratoTest {
 		biblio = "br.com.teste.quicksort6";
 
 		result = processador.processar(biblio, "main");
-		equals("[[-90, -3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
+		equals("[[-9, -3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
 	}
 
 	@Test
@@ -103,6 +91,18 @@ public class OrdenacaoTest extends AbstratoTest {
 
 		processador = new Processador();
 		biblio = "br.com.teste.quicksort7";
+
+		result = processador.processar(biblio, "main");
+		equals("[[-90, -3, 0, 1, 2, 4, 6, 46, 50]]", result.toString());
+	}
+
+	@Test
+	public void quicksort8() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(ORDENACAO, "quicksort8"));
+
+		processador = new Processador();
+		biblio = "br.com.teste.quicksort8";
 
 		result = processador.processar(biblio, "main");
 		equals("[[-3, 0, 1, 2, 4, 6, 46, 50, 55]]", result.toString());
