@@ -1,0 +1,39 @@
+package br.com.teste;
+
+alias br.com.persist.plugins.expressao.filtro._ _;
+
+defun main() {
+	return quickSort([46, 1, 2, -3, 4, 50, 6, 0, -48]);
+}
+
+defun quickSort(lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	local menor = defun lt(lista, valor) {
+		if(lista == []) {
+			return [];
+		}
+		if(${lista:head} < valor) {
+			return ${lista:head} .. lt(${lista:tail}, valor);
+		} else {
+			return lt(${lista:tail}, valor);
+		}
+	};
+
+	local maior = defun ge(lista, valor) {
+		if(lista == []) {
+			return [];
+		}
+		if(${lista:head} >= valor) {
+			return ${lista:head} .. ge(${lista:tail}, valor);
+		} else {
+			return ge(${lista:tail}, valor);
+		}
+	};
+
+	return quickSort(menor(${lista:tail}, ${lista:head}))
+							.. ${lista:head} ..
+		   quickSort(maior(${lista:tail}, ${lista:head}));
+}

@@ -175,7 +175,12 @@ public abstract class Salto extends Contexto {
 		List<Contexto> pilha = contexto.getPilhaLocal();
 		checarPilha(pilha);
 		IFEqContexto ifEqContexto = new IFEqContexto();
-		ifEqContexto.setDestino(pilha.get(0));
+		if (contexto.isDeclaracaoFuncao()) {
+			FuncaoContexto funcao = (FuncaoContexto) pilha.get(0);
+			ifEqContexto.setDestino(funcao.getRefFuncaoInterna());
+		} else {
+			ifEqContexto.setDestino(pilha.get(0));
+		}
 		adicionar(ifEqContexto);
 	}
 
@@ -184,7 +189,12 @@ public abstract class Salto extends Contexto {
 		List<Contexto> pilha = contexto.getPilhaLocal();
 		checarPilha(pilha);
 		GotoContexto gotoContexto = new GotoContexto();
-		gotoContexto.setDestino(pilha.get(0));
+		if (contexto.isDeclaracaoFuncao()) {
+			FuncaoContexto funcao = (FuncaoContexto) pilha.get(0);
+			gotoContexto.setDestino(funcao.getRefFuncaoInterna());
+		} else {
+			gotoContexto.setDestino(pilha.get(0));
+		}
 		adicionar(gotoContexto);
 	}
 }

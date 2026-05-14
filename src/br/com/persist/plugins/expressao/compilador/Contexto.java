@@ -166,6 +166,11 @@ public abstract class Contexto {
 
 	public Contexto getApos(Contexto contexto) throws ExpressaoException {
 		int posicao = getPosicao(contexto);
+		return getApos(posicao);
+	}
+
+	public Contexto getApos2(Contexto contexto) throws ExpressaoException {
+		int posicao = getPosicao(contexto);
 		Contexto apos = getApos(posicao);
 		while (apos != null) {
 			if (apos.isDeclaracaoFuncao()) {
