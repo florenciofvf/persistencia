@@ -49,12 +49,12 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		pilhaFuncao.push(funcaoLoad);
-		log("[INVOKE-PARAM-" + get(nomeFuncoes) + "." + nomeFuncao + "] ######### (funcao alvo) ######### "
-				+ funcaoAlvo, pilhaOperando);
+		log("[INVOKE-PARAM-" + get(nomeFuncoes, nomeFuncao) + "] ######### (funcao alvo) ######### " + funcaoAlvo,
+				pilhaOperando);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + get(nomeFuncoes) + "." + nomeFuncao;
+		return super.toString() + " " + get(nomeFuncoes, nomeFuncao);
 	}
 }

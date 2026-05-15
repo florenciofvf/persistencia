@@ -28,7 +28,7 @@ public abstract class Instrucao {
 		return indice;
 	}
 
-	protected String get(String[] array) {
+	protected String get(String[] array, String string) {
 		StringBuilder builder = new StringBuilder();
 		for (String item : array) {
 			if (builder.length() > 0) {
@@ -36,6 +36,8 @@ public abstract class Instrucao {
 			}
 			builder.append(item);
 		}
+		builder.append(".");
+		builder.append(string);
 		return builder.toString();
 	}
 

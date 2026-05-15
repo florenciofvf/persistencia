@@ -25,12 +25,12 @@ public class LocalLoadInstrucao extends Instrucao implements Load {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Constante constante = funcaoAlvo.getConstante(nomeLocal);
 		pilhaOperando.push(constante.getValor());
-		log("[LOAD-LOCAL-" + get(nomeFuncoes) + "." + nomeLocal + "] ######### (local load) ######### " + constante,
+		log("[LOAD-LOCAL-" + get(nomeFuncoes, nomeLocal) + "] ######### (local load) ######### " + constante,
 				pilhaOperando);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + get(nomeFuncoes) + "." + nomeLocal;
+		return super.toString() + " " + get(nomeFuncoes, nomeLocal);
 	}
 }
