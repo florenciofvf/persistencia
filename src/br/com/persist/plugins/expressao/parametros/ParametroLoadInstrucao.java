@@ -1,8 +1,6 @@
 package br.com.persist.plugins.expressao.parametros;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.Load;
@@ -30,11 +28,8 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 			funcaoValor.setParent(funcao);
 		}
 		pilhaOperando.push(valor);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[LOAD-PARAM-" + get(nomeFuncoes) + "." + nomeParametro
-					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[LOAD-PARAM-" + get(nomeFuncoes) + "." + nomeParametro + "] ######### (funcao alvo) ######### "
+				+ funcaoAlvo, pilhaOperando);
 	}
 
 	@Override

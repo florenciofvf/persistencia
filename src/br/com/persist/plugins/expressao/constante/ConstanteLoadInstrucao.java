@@ -2,7 +2,6 @@ package br.com.persist.plugins.expressao.constante;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
@@ -46,11 +45,8 @@ public class ConstanteLoadInstrucao extends Instrucao implements LinkBiblioteca,
 		}
 		Constante constante = biblio.getConstante(nomeConstante);
 		pilhaOperando.push(constante.getValor());
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[LOAD-CONST-" + nomeBiblioteca + "." + nomeConstante
-					+ "] ######### (const load) ######### " + constante);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[LOAD-CONST-" + nomeBiblioteca + "." + nomeConstante + "] ######### (const load) ######### " + constante,
+				pilhaOperando);
 	}
 
 	@Override

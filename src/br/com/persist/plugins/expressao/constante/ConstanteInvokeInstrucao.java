@@ -2,7 +2,6 @@ package br.com.persist.plugins.expressao.constante;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
@@ -63,11 +62,8 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[INVOKE-CONST-" + nomeBiblioteca + "." + nomeConstante
-					+ "] ######### (funcao valor) ######### " + clone);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[INVOKE-CONST-" + nomeBiblioteca + "." + nomeConstante + "] ######### (funcao valor) ######### " + clone,
+				pilhaOperando);
 	}
 
 	@Override

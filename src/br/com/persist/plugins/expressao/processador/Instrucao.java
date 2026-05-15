@@ -1,6 +1,8 @@
 package br.com.persist.plugins.expressao.processador;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 
 public abstract class Instrucao {
 	public static final String CIFRAO = "\\$";
@@ -35,6 +37,13 @@ public abstract class Instrucao {
 			builder.append(item);
 		}
 		return builder.toString();
+	}
+
+	protected void log(String string, PilhaOperando pilhaOperando) {
+		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
+			string = ExpressaoUtil.completar(string);
+			ExpressaoUtil.print(string, pilhaOperando);
+		}
 	}
 
 	public abstract void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)

@@ -1,8 +1,6 @@
 package br.com.persist.plugins.expressao.local;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
@@ -27,11 +25,8 @@ public class LocalLoadInstrucao extends Instrucao implements Load {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Constante constante = funcaoAlvo.getConstante(nomeLocal);
 		pilhaOperando.push(constante.getValor());
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[LOAD-LOCAL-" + get(nomeFuncoes) + "." + nomeLocal
-					+ "] ######### (local load) ######### " + constante);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[LOAD-LOCAL-" + get(nomeFuncoes) + "." + nomeLocal + "] ######### (local load) ######### " + constante,
+				pilhaOperando);
 	}
 
 	@Override

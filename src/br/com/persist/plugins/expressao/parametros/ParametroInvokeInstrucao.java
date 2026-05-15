@@ -1,8 +1,6 @@
 package br.com.persist.plugins.expressao.parametros;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.invocacao.Invoke;
 import br.com.persist.plugins.expressao.processador.Funcao;
@@ -51,11 +49,8 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		pilhaFuncao.push(funcaoLoad);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[INVOKE-PARAM-" + get(nomeFuncoes) + "." + nomeFuncao
-					+ "] ######### (funcao alvo) ######### " + funcaoAlvo);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[INVOKE-PARAM-" + get(nomeFuncoes) + "." + nomeFuncao + "] ######### (funcao alvo) ######### "
+				+ funcaoAlvo, pilhaOperando);
 	}
 
 	@Override

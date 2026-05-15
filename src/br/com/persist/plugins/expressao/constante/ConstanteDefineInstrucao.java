@@ -1,8 +1,6 @@
 package br.com.persist.plugins.expressao.constante;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.processador.Def;
 import br.com.persist.plugins.expressao.processador.Funcao;
@@ -26,11 +24,7 @@ public class ConstanteDefineInstrucao extends Instrucao implements Def {
 		Biblioteca biblioteca = funcao.getBiblioteca();
 		biblioteca.addConstante(constante);
 		constante.setValor(valor);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil
-					.completar("[DEF-CONST-" + nomeConstante + "] ######### (def const) ######### " + constante);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[DEF-CONST-" + nomeConstante + "] ######### (def const) ######### " + constante, pilhaOperando);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package br.com.persist.plugins.expressao.funcao;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Load;
@@ -41,11 +40,8 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements Load {
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
 		funcaoLoad.setParent(funcao);
 		pilhaOperando.push(funcaoLoad);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[LOAD-FUNCTION-INNER-" + nomeBiblioteca + "." + nomeFuncao
-					+ "] ######### (funcao inner load) ######### " + funcaoLoad);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[LOAD-FUNCTION-INNER-" + nomeBiblioteca + "." + nomeFuncao + "] ######### (funcao inner load) ######### "
+				+ funcaoLoad, pilhaOperando);
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package br.com.persist.plugins.expressao.local;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.processador.Def;
 import br.com.persist.plugins.expressao.processador.Funcao;
@@ -25,11 +23,7 @@ public class LocalDefineInstrucao extends Instrucao implements Def {
 		Constante constante = new Constante(nomeLocal);
 		funcao.addConstante(constante);
 		constante.setValor(valor);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil
-					.completar("[DEF-LOCAL-" + nomeLocal + "] ######### (def local) ######### " + constante);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[DEF-LOCAL-" + nomeLocal + "] ######### (def local) ######### " + constante, pilhaOperando);
 	}
 
 	@Override

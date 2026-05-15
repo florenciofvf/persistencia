@@ -1,8 +1,6 @@
 package br.com.persist.plugins.expressao.local;
 
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
@@ -44,11 +42,8 @@ public class LocalInvokeInstrucao extends Instrucao implements Invoke {
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
-			String string = ExpressaoUtil.completar("[INVOKE-LOCAL-" + get(nomeFuncoes) + "." + nomeLocal
-					+ "] ######### (funcao valor) ######### " + clone);
-			ExpressaoUtil.print(string, pilhaOperando);
-		}
+		log("[INVOKE-LOCAL-" + get(nomeFuncoes) + "." + nomeLocal + "] ######### (funcao valor) ######### " + clone,
+				pilhaOperando);
 	}
 
 	@Override
