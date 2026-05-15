@@ -6,6 +6,7 @@ import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.Invoke;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
@@ -23,7 +24,7 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
 *}
  * </pre>
  */
-public class LocalInvokeInstrucao extends Instrucao {
+public class LocalInvokeInstrucao extends Instrucao implements Invoke {
 	private String[] nomeFuncoes;
 	private String nomeLocal;
 

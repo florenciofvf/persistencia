@@ -4,12 +4,13 @@ import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
+import br.com.persist.plugins.expressao.processador.Def;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class ConstanteDefineInstrucao extends Instrucao {
+public class ConstanteDefineInstrucao extends Instrucao implements Def {
 	private final String nomeConstante;
 
 	public ConstanteDefineInstrucao(int indice, String parametros) throws ExpressaoException {

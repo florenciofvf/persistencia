@@ -6,10 +6,11 @@ import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.Load;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class LocalLoadInstrucao extends Instrucao {
+public class LocalLoadInstrucao extends Instrucao implements Load {
 	private String[] nomeFuncoes;
 	private String nomeLocal;
 

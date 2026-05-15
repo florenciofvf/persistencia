@@ -5,6 +5,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.processador.Funcao;
+import br.com.persist.plugins.expressao.processador.Load;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
@@ -19,7 +20,7 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
 *}
  * </pre>
  */
-public class FuncaoLoadInnerInstrucao extends FuncaoLoad {
+public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements Load {
 	private final boolean tipoVoid;
 	private String nomeBiblioteca;
 	private String nomeFuncao;

@@ -7,10 +7,11 @@ import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
+import br.com.persist.plugins.expressao.processador.Load;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class FuncaoLoadInstrucao extends FuncaoLoad implements LinkBiblioteca {
+public class FuncaoLoadInstrucao extends FuncaoLoad implements LinkBiblioteca, Load {
 	private final boolean tipoVoid;
 	private String nomeBiblioteca;
 	private boolean biblioLocal;

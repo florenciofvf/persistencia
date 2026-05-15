@@ -21,7 +21,7 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
 *}
  * </pre>
  **/
-public class ParametroInvokeInstrucao extends Invoke {
+public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.plugins.expressao.processador.Invoke {
 	private final boolean comRetorno;
 	private String[] nomeFuncoes;
 	private String nomeFuncao;

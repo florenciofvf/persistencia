@@ -4,12 +4,13 @@ import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.constante.Constante;
+import br.com.persist.plugins.expressao.processador.Def;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class LocalDefineInstrucao extends Instrucao {
+public class LocalDefineInstrucao extends Instrucao implements Def {
 	private final String nomeLocal;
 
 	public LocalDefineInstrucao(int indice, String parametros) throws ExpressaoException {

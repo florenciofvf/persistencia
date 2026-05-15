@@ -7,8 +7,9 @@ import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.InstrucaoUtil;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
+import br.com.persist.plugins.expressao.processador.Push;
 
-public class AddItemListaInstrucao extends Instrucao {
+public class AddItemListaInstrucao extends Instrucao implements Push {
 	public AddItemListaInstrucao(int indice) throws ExpressaoException {
 		super(indice, AddItemListaContexto.ADD_ITEM_LISTA);
 	}

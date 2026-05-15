@@ -23,7 +23,8 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
  * }
  * </pre>
  **/
-public class InvokeInstrucao extends Invoke implements LinkBiblioteca {
+public class InvokeInstrucao extends Invoke
+		implements LinkBiblioteca, br.com.persist.plugins.expressao.processador.Invoke {
 	private final boolean comRetorno;
 	private boolean biblioLocal;
 	private String nomeBiblio;

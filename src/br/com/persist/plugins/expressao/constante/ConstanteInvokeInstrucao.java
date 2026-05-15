@@ -8,6 +8,7 @@ import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.Invoke;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
@@ -25,7 +26,7 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
 *}
  * </pre>
  */
-public class ConstanteInvokeInstrucao extends Instrucao implements LinkBiblioteca {
+public class ConstanteInvokeInstrucao extends Instrucao implements LinkBiblioteca, Invoke {
 	private String nomeBiblioteca;
 	private String nomeConstante;
 	private boolean biblioLocal;
