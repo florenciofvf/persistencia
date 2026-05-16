@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoMensagens;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
@@ -217,7 +218,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			invocacao.adicionar(argumentos);
 			ExpressaoContexto mapa = ExpressaoContexto.criarComChave(getArg(string, '.'));
 			argumentos.adicionar(mapa);
-			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(string, '.'));
+			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, string, '.'));
 			argumentos.adicionar(campo);
 			return invocacao;
 		} else {
@@ -231,9 +232,16 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		return string.substring(0, pos).trim();
 	}
 
-	private static String getArg2(String string, char c) {
+	private static String getArg2(TokenManager tokenManager, String string, char c) {
 		int pos = string.indexOf(c);
-		return string.substring(pos + 1).trim();
+		String resp = string.substring(pos + 1).trim();
+		if (c == '.' && "head".equals(resp)) {
+			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_head", string));
+		}
+		if (c == '.' && resp.length() == 1) {
+			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_minimo", string));
+		}
+		return resp;
 	}
 
 	public static InvocacaoContexto criarComEL(TokenManager tokenManager, String string, InvocacaoContexto argumento)
@@ -258,7 +266,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			invocacao.adicionar(argumentos);
 			ExpressaoContexto mapa = ExpressaoContexto.criar(argumento);
 			argumentos.adicionar(mapa);
-			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(string, '.'));
+			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, string, '.'));
 			argumentos.adicionar(campo);
 			return invocacao;
 		} else {

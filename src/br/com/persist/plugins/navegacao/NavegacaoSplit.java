@@ -970,20 +970,21 @@ class Aba extends Transferivel {
 		@Override
 		protected void atualizar() {
 			try {
-				Compilacao compilador = new Compilacao();
+				Compilacao compilacao = new Compilacao();
 				boolean colorir = false;
 				if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
-					biblio = compilador.compilar(criarArquivo(editor.getText()));
+					biblio = compilacao.compilar(criarArquivo(editor.getText()));
 				} else {
-					biblio = compilador.compilar(arquivo.getFile());
+					biblio = compilacao.compilar(arquivo.getFile());
 					colorir = true;
 				}
 				boolean resp = biblio != null;
 				editor.bibliotecaContexto = biblio;
-				painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado")
-						: ExpressaoMensagens.getString("msg.nao_compilado"), true);
+				painelResultado
+						.setText(resp ? ExpressaoMensagens.getString("msg.compilado") + compilacao.getStringAlerta()
+								: ExpressaoMensagens.getString("msg.nao_compilado"), true);
 				if (resp && colorir) {
-					ExpressaoCor.processar(editor.getStyledDocument(), compilador.getTokens());
+					ExpressaoCor.processar(editor.getStyledDocument(), compilacao.getTokens());
 				}
 			} catch (IOException | ExpressaoException ex) {
 				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);

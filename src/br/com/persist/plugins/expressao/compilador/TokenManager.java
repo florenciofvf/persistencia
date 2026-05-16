@@ -9,6 +9,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 
 public class TokenManager {
+	private final List<String> alertas;
 	protected final String string;
 	protected List<Token> tokens;
 	private Contexto selecionado;
@@ -16,7 +17,18 @@ public class TokenManager {
 
 	public TokenManager(String string) {
 		this.string = Objects.requireNonNull(string);
+		alertas = new ArrayList<>();
 		tokens = new ArrayList<>();
+	}
+
+	public List<String> getAlertas() {
+		return alertas;
+	}
+
+	public void addAlerta(String string) {
+		if (string != null) {
+			alertas.add("ALERTA: " + string);
+		}
 	}
 
 	public List<Token> getTokens() {

@@ -14,7 +14,26 @@ import br.com.persist.plugins.expressao.biblioteca.BibliotecaContexto;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 
 public class Compilacao {
+	private final List<String> alertas = new ArrayList<>();
 	private final List<Token> tokens = new ArrayList<>();
+
+	public List<String> getAlertas() {
+		return alertas;
+	}
+
+	public String getStringAlerta() {
+		if (alertas.isEmpty()) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		for (String item : alertas) {
+			if (builder.length() > 0) {
+				builder.append("\n");
+			}
+			builder.append(item);
+		}
+		return builder.toString();
+	}
 
 	public List<Token> getTokens() {
 		return tokens;
@@ -67,6 +86,9 @@ public class Compilacao {
 
 		tokens.clear();
 		tokens.addAll(tokenManager.getTokens());
+
+		alertas.clear();
+		alertas.addAll(tokenManager.getAlertas());
 
 		return biblioteca;
 	}
