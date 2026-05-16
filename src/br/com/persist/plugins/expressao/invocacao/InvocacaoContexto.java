@@ -197,7 +197,8 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		print(pw, getPrefixo(), getBiblio(), getMetodo());
 	}
 
-	public static InvocacaoContexto criarComEL(TokenManager tokenManager, String string) throws ExpressaoException {
+	public static InvocacaoContexto criarComEL(TokenManager tokenManager, Token origem, String string)
+			throws ExpressaoException {
 		if (string.contains(":")) {
 			Token token = null;
 			if (string.endsWith("head")) {
@@ -208,7 +209,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 				tokenManager.invalidar();
 			}
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
-			ArgumentosContexto argumentos = ArgumentosContexto.criarComChave(getArg(tokenManager, string, ':'));
+			ArgumentosContexto argumentos = ArgumentosContexto.criarComChave(getArg(tokenManager, origem, string, ':'));
 			invocacao.adicionar(argumentos);
 			return invocacao;
 		} else if (string.contains(".")) {
@@ -216,9 +217,9 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
 			ArgumentosContexto argumentos = ArgumentosContexto.criar();
 			invocacao.adicionar(argumentos);
-			ExpressaoContexto mapa = ExpressaoContexto.criarComChave(getArg(tokenManager, string, '.'));
+			ExpressaoContexto mapa = ExpressaoContexto.criarComChave(getArg(tokenManager, origem, string, '.'));
 			argumentos.adicionar(mapa);
-			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, string, '.'));
+			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, origem, string, '.'));
 			argumentos.adicionar(campo);
 			return invocacao;
 		} else {
@@ -227,33 +228,33 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		return null;
 	}
 
-	private static String getArg(TokenManager tokenManager, String string, char c) {
+	private static String getArg(TokenManager tokenManager, Token token, String string, char c) {
 		int pos = string.indexOf(c);
 		String prefixo = string.substring(0, pos).trim();
 		if (c == ':' && prefixo.length() == 1) {
-			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.lista.prefixo_minimo", string));
+			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.lista.prefixo_minimo", token.getOriginal()));
 		}
 		return prefixo;
 	}
 
-	private static String getArg2(TokenManager tokenManager, String string, char c) {
+	private static String getArg2(TokenManager tokenManager, Token token, String string, char c) {
 		int pos = string.indexOf(c);
 		String prefixo = string.substring(0, pos).trim();
 		String sufixo = string.substring(pos + 1).trim();
 		if (c == '.' && "head".equals(sufixo)) {
-			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_head", string));
+			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_head", token.getOriginal()));
 		}
 		if (c == '.' && "tail".equals(sufixo)) {
-			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_tail", string));
+			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_tail", token.getOriginal()));
 		}
 		if (c == '.' && prefixo.length() == 1) {
-			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.prefixo_minimo", string));
+			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.prefixo_minimo", token.getOriginal()));
 		}
 		return sufixo;
 	}
 
-	public static InvocacaoContexto criarComEL(TokenManager tokenManager, String string, InvocacaoContexto argumento)
-			throws ExpressaoException {
+	public static InvocacaoContexto criarComEL(TokenManager tokenManager, Token origem, String string,
+			InvocacaoContexto argumento) throws ExpressaoException {
 		if (string.contains(":")) {
 			Token token = null;
 			if (string.endsWith("head")) {
@@ -274,7 +275,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			invocacao.adicionar(argumentos);
 			ExpressaoContexto mapa = ExpressaoContexto.criar(argumento);
 			argumentos.adicionar(mapa);
-			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, string, '.'));
+			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, origem, string, '.'));
 			argumentos.adicionar(campo);
 			return invocacao;
 		} else {

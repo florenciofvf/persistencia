@@ -32,6 +32,7 @@ public class Compilacao {
 			}
 			builder.append(item);
 		}
+		builder.insert(0, '\n');
 		return builder.toString();
 	}
 

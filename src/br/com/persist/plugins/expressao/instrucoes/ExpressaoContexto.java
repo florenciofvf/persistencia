@@ -280,11 +280,12 @@ public class ExpressaoContexto extends Salto {
 			checarTotal(tokenManager, token, item);
 		}
 		String item = array[0].trim();
-		adicionar(InvocacaoContexto.criarComEL(tokenManager, item));
+		adicionar(InvocacaoContexto.criarComEL(tokenManager, token, item));
 		for (int i = 1; i < array.length; i++) {
 			item = array[i].trim();
 			Contexto ultimo = excluirUltimo();
-			InvocacaoContexto invocacao = InvocacaoContexto.criarComEL(tokenManager, item, (InvocacaoContexto) ultimo);
+			InvocacaoContexto invocacao = InvocacaoContexto.criarComEL(tokenManager, token, item,
+					(InvocacaoContexto) ultimo);
 			adicionar(invocacao);
 		}
 		selecionado = new QQOperadorOuIniInvocacao();
