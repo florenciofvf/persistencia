@@ -42,12 +42,12 @@ public class LocalInvokeInstrucao extends Instrucao implements Invoke {
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[" + LocalContexto.INVOKE_LOCAL + " " + get(nomeFuncoes, nomeLocal)
-				+ "] ######### (funcao valor) ######### " + clone, pilhaOperando);
+		log("[" + LocalContexto.INVOKE_LOCAL + get(nomeFuncoes, nomeLocal) + "] ######### (funcao valor) ######### "
+				+ clone, pilhaOperando);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + get(nomeFuncoes, nomeLocal);
+		return super.toString() + get(nomeFuncoes, nomeLocal);
 	}
 }

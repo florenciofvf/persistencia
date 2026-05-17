@@ -80,7 +80,7 @@ public class InvokeInstrucao extends Invoke
 	}
 
 	private String getA(String nomeBiblioteca, String nomeFuncao) {
-		return "[" + (comRetorno ? InvocacaoContexto.INVOKE_CRET : InvocacaoContexto.INVOKE_VOID) + " "
+		return "[" + (comRetorno ? InvocacaoContexto.INVOKE_CRET : InvocacaoContexto.INVOKE_VOID)
 				+ get(nomeBiblioteca, nomeFuncao);
 	}
 
@@ -142,6 +142,6 @@ public class InvokeInstrucao extends Invoke
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + nomeBiblio + "." + nomeFuncao;
+		return super.toString() + get(nomeBiblio, nomeFuncao);
 	}
 }

@@ -46,11 +46,11 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements Load {
 
 	private String getA(String nomeBiblioteca, String nomeFuncao) {
 		return "[" + (tipoVoid ? FuncaoContexto.LOAD_FUNCTION_INNER_VOID : FuncaoContexto.LOAD_FUNCTION_INNER_CRET)
-				+ " " + get(nomeBiblioteca, nomeFuncao);
+				+ get(nomeBiblioteca, nomeFuncao);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + nomeBiblioteca + "." + nomeFuncao;
+		return super.toString() + get(nomeBiblioteca, nomeFuncao);
 	}
 }

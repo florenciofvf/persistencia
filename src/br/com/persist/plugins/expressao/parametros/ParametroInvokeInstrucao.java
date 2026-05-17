@@ -59,6 +59,6 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + get(nomeFuncoes, nomeFuncao);
+		return super.toString() + get(nomeFuncoes, nomeFuncao);
 	}
 }

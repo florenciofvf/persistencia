@@ -51,12 +51,12 @@ public class FuncaoLoadInstrucao extends FuncaoLoad implements LinkBiblioteca, L
 	}
 
 	private String getA(String nomeBiblioteca, String nomeFuncao) {
-		return "[" + (tipoVoid ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET) + " "
+		return "[" + (tipoVoid ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET)
 				+ get(nomeBiblioteca, nomeFuncao);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + nomeBiblioteca + "." + nomeFuncao;
+		return super.toString() + get(nomeBiblioteca, nomeFuncao);
 	}
 }

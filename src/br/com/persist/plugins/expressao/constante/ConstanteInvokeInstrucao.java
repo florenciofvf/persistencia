@@ -62,12 +62,12 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[" + ConstanteContexto.INVOKE_CONST + " " + get(nomeBiblioteca, nomeConstante)
+		log("[" + ConstanteContexto.INVOKE_CONST + get(nomeBiblioteca, nomeConstante)
 				+ "] ######### (funcao valor) ######### " + clone, pilhaOperando);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + " " + get(nomeBiblioteca, nomeConstante);
+		return super.toString() + get(nomeBiblioteca, nomeConstante);
 	}
 }

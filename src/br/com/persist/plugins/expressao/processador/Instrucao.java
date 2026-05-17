@@ -36,13 +36,15 @@ public abstract class Instrucao {
 			}
 			builder.append(item);
 		}
+		builder.insert(0, " ");
 		builder.append(" ");
 		builder.append(string);
 		return builder.toString();
 	}
 
 	protected String get(String biblio, String string) {
-		StringBuilder builder = new StringBuilder(biblio);
+		StringBuilder builder = new StringBuilder(" ");
+		builder.append(biblio);
 		builder.append(" ");
 		builder.append(string);
 		return builder.toString();
