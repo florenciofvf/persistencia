@@ -461,7 +461,7 @@ public class InternalContainer extends Panel
 				} else {
 					long agora = System.currentTimeMillis();
 					long tempo = agora - ultimo;
-					if (tempo > 99) {
+					if (tempo > 500) {
 						ativo = false;
 						return;
 					}
