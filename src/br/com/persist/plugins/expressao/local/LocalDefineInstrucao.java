@@ -23,7 +23,8 @@ public class LocalDefineInstrucao extends Instrucao implements Def {
 		Constante constante = new Constante(nomeLocal);
 		funcao.addConstante(constante);
 		constante.setValor(valor);
-		log("[DEF-LOCAL-" + nomeLocal + "] ######### (def local) ######### " + constante, pilhaOperando);
+		log("[" + LocalContexto.DEF_LOCAL + " " + nomeLocal + "] ######### (def local) ######### " + constante,
+				pilhaOperando);
 	}
 
 	@Override

@@ -15,6 +15,6 @@ public class RetornoInstrucao extends Instrucao {
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
 		pilhaFuncao.pop();
-		log("[RETURN] ", pilhaOperando);
+		log("[" + RetornoContexto.RETURN + "] ", pilhaOperando);
 	}
 }

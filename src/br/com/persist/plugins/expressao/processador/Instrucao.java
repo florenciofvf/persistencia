@@ -41,6 +41,13 @@ public abstract class Instrucao {
 		return builder.toString();
 	}
 
+	protected String get(String biblio, String string) {
+		StringBuilder builder = new StringBuilder(biblio);
+		builder.append(" ");
+		builder.append(string);
+		return builder.toString();
+	}
+
 	protected void log(String string, PilhaOperando pilhaOperando) {
 		if (ExpressaoConstantes.LOGGER_INSTRUCAO) {
 			string = ExpressaoUtil.completar(string);

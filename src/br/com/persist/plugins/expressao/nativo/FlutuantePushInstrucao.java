@@ -21,7 +21,7 @@ public class FlutuantePushInstrucao extends Instrucao implements Push {
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
 		pilhaOperando.push(bigDecimal);
-		log("[PUSH-FLUTUANTE] ######### (flutuante) ######### " + bigDecimal, pilhaOperando);
+		log("[" + FlutuanteContexto.PUSH_FLUTUANTE + "] ######### (flutuante) ######### " + bigDecimal, pilhaOperando);
 	}
 
 	@Override

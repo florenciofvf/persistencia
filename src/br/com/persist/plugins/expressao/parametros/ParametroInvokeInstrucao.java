@@ -54,7 +54,7 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 	}
 
 	private String get() {
-		return "[" + (comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID) + " ";
+		return "[" + (comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID);
 	}
 
 	@Override

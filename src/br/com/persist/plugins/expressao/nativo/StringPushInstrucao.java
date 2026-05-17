@@ -32,7 +32,7 @@ public class StringPushInstrucao extends Instrucao implements Push {
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
 		pilhaOperando.push(string);
-		log("[PUSH-STRING] ######### (string) ######### " + string, pilhaOperando);
+		log("[" + StringContexto.PUSH_STRING + "] ######### (string) ######### " + string, pilhaOperando);
 	}
 
 	@Override
