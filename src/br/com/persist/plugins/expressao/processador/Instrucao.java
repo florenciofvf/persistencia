@@ -36,7 +36,7 @@ public abstract class Instrucao {
 			}
 			builder.append(item);
 		}
-		builder.append(".");
+		builder.append(" ");
 		builder.append(string);
 		return builder.toString();
 	}

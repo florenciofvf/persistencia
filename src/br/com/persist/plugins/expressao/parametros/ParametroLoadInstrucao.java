@@ -28,8 +28,8 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 			funcaoValor.setParent(funcao);
 		}
 		pilhaOperando.push(valor);
-		log("[LOAD-PARAM-" + get(nomeFuncoes, nomeParametro) + "] ######### (funcao alvo) ######### " + funcaoAlvo,
-				pilhaOperando);
+		log("[" + ParametroContexto.LOAD_PARAM + " " + get(nomeFuncoes, nomeParametro)
+				+ "] ######### (funcao alvo) ######### " + funcaoAlvo, pilhaOperando);
 	}
 
 	@Override

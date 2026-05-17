@@ -42,8 +42,8 @@ public class LocalInvokeInstrucao extends Instrucao implements Invoke {
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[INVOKE-LOCAL-" + get(nomeFuncoes, nomeLocal) + "] ######### (funcao valor) ######### " + clone,
-				pilhaOperando);
+		log("[" + LocalContexto.INVOKE_LOCAL + " " + get(nomeFuncoes, nomeLocal)
+				+ "] ######### (funcao valor) ######### " + clone, pilhaOperando);
 	}
 
 	@Override
