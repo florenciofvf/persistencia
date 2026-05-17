@@ -42,7 +42,7 @@ public abstract class Instrucao {
 	}
 
 	protected void log(String string, PilhaOperando pilhaOperando) {
-		if (ExpressaoConstantes.DEBUG_INSTRUCAO) {
+		if (ExpressaoConstantes.LOGGER_INSTRUCAO) {
 			string = ExpressaoUtil.completar(string);
 			ExpressaoUtil.print(string, pilhaOperando);
 		}

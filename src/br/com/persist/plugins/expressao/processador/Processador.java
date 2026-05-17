@@ -52,7 +52,7 @@ public class Processador {
 			}
 			if (processar.get()) {
 				instrucao.processar(funcao, pilhaFuncao, pilhaOperando);
-				if (ExpressaoConstantes.DEBUG_PROCESSADOR) {
+				if (ExpressaoConstantes.LOGGER_PROCESSADOR) {
 					String string = ExpressaoUtil.completar(
 							"[INSTRUCAO-EXEC] " + funcao.getBiblioteca() + "." + funcao + " -> " + instrucao);
 					ExpressaoUtil.print(string, pilhaOperando);

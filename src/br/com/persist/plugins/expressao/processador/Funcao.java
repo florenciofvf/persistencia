@@ -264,7 +264,7 @@ public class Funcao {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		if (ExpressaoConstantes.DEBUG_ENDERECO) {
+		if (ExpressaoConstantes.LOGGER_ENDERECO) {
 			builder.append(Integer.toHexString(hashCode()).toUpperCase() + "@");
 		}
 		builder.append((isNativo() ? "nativo " + biblioNativa + " " : ""));

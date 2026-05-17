@@ -28,7 +28,7 @@ public class PilhaFuncao {
 			funcao.setParent(peek());
 		}
 		funcoes.add(funcao);
-		if (ExpressaoConstantes.DEBUG_PILHA_FUNCAO) {
+		if (ExpressaoConstantes.LOGGER_PILHA_FUNCAO) {
 			ExpressaoUtil.print("[PILHA-FUNCAO-PUSH] ", funcao);
 		}
 	}
@@ -41,7 +41,7 @@ public class PilhaFuncao {
 	public Funcao pop() throws ExpressaoException {
 		checar();
 		Funcao funcao = funcoes.remove(funcoes.size() - 1);
-		if (ExpressaoConstantes.DEBUG_PILHA_FUNCAO) {
+		if (ExpressaoConstantes.LOGGER_PILHA_FUNCAO) {
 			ExpressaoUtil.print("[PILHA-FUNCAO-POP] ", funcao);
 		}
 		return funcao;
