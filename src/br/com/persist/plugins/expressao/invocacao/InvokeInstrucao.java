@@ -71,16 +71,17 @@ public class InvokeInstrucao extends Invoke
 			if (pushPilhaOperando.get()) {
 				pilhaOperando.push(resp);
 			}
-			log(get(nomeFuncao) + "] ######### (funcao native invoke) ######### " + funcaoLoad, pilhaOperando);
+			log(get(nomeBiblio, nomeFuncao) + "] ######### (funcao native invoke) ######### " + funcaoLoad,
+					pilhaOperando);
 		} else {
 			pilhaFuncao.push(funcaoLoad);
-			log(get(nomeFuncao) + "] ######### (funcao invoke) ######### " + funcaoLoad, pilhaOperando);
+			log(get(nomeBiblio, nomeFuncao) + "] ######### (funcao invoke) ######### " + funcaoLoad, pilhaOperando);
 		}
 	}
 
-	private String get(String nomeFuncao) {
+	private String get(String nomeBiblioteca, String nomeFuncao) {
 		return "[" + (comRetorno ? InvocacaoContexto.INVOKE_CRET.toUpperCase()
-				: InvocacaoContexto.INVOKE_VOID.toUpperCase()) + "-" + nomeFuncao;
+				: InvocacaoContexto.INVOKE_VOID.toUpperCase()) + "-" + nomeBiblioteca + "." + nomeFuncao;
 	}
 
 	private Object invocarNativo(List<Object> lista, Funcao funcao, PilhaFuncao pilhaMetodo,
