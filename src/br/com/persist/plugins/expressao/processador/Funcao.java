@@ -109,6 +109,9 @@ public class Funcao {
 		}
 		if (this.parent == null) {
 			this.parent = parent;
+			if (ExpressaoConstantes.LOGGER_PARENT_FUNCAO) {
+				ExpressaoUtil.print(nome + ".setParent(", parent.nome + ")");
+			}
 		}
 	}
 

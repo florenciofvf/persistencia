@@ -2,6 +2,7 @@ package br.com.persist.plugins.expressao;
 
 public class ExpressaoConstantes {
 	public static final boolean LOGGER_PILHA_OPERANDO = get("logger_pilha_operando");
+	public static final boolean LOGGER_PARENT_FUNCAO = get("logger_parent_funcao");
 	public static final boolean LOGGER_PILHA_FUNCAO = get("logger_pilha_funcao");
 	public static final boolean LOGGER_PROCESSADOR = get("logger_processador");
 	public static final boolean LOGGER_INSTRUCAO = get("logger_instrucao");
