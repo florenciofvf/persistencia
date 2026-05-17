@@ -21,6 +21,7 @@ public class InteiroPushInstrucao extends Instrucao implements Push {
 	public void processar(Funcao funcao, PilhaFuncao pilhaFuncao, PilhaOperando pilhaOperando)
 			throws ExpressaoException {
 		pilhaOperando.push(bigInteger);
+		log("[PUSH-INTEIRO] ######### (inteiro) ######### " + bigInteger, pilhaOperando);
 	}
 
 	@Override
