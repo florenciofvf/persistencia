@@ -49,8 +49,8 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		pilhaFuncao.push(funcaoLoad);
-		log(get() + get(nomeFuncoes, nomeFuncao) + "] ######### (funcao alvo) ######### " + funcaoAlvo
-				+ " ######### (valor) ######### " + funcaoLoad, pilhaOperando);
+		log(get() + get(nomeFuncoes, nomeFuncao) + "] [funcao_alvo->" + funcaoAlvo + "] [valor->" + funcaoLoad + "]",
+				pilhaOperando);
 	}
 
 	private String get() {

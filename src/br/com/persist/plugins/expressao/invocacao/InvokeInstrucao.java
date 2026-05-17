@@ -71,11 +71,10 @@ public class InvokeInstrucao extends Invoke
 			if (pushPilhaOperando.get()) {
 				pilhaOperando.push(resp);
 			}
-			log(getA(nomeBiblio, nomeFuncao) + "] ######### (funcao native invoke) ######### " + funcaoLoad,
-					pilhaOperando);
+			log(getA(nomeBiblio, nomeFuncao) + "] [funcao_nativa_invocada->" + funcaoLoad + "]", pilhaOperando);
 		} else {
 			pilhaFuncao.push(funcaoLoad);
-			log(getA(nomeBiblio, nomeFuncao) + "] ######### (funcao invoke) ######### " + funcaoLoad, pilhaOperando);
+			log(getA(nomeBiblio, nomeFuncao) + "] [funcao_invocada->" + funcaoLoad + "]", pilhaOperando);
 		}
 	}
 

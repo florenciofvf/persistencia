@@ -47,7 +47,7 @@ public class FuncaoLoadInstrucao extends FuncaoLoad implements LinkBiblioteca, L
 		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonar();
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
 		pilhaOperando.push(funcaoLoad);
-		log(getA(nomeBiblioteca, nomeFuncao) + "] ######### (funcao load) ######### " + funcaoLoad, pilhaOperando);
+		log(getA(nomeBiblioteca, nomeFuncao) + "] [funcao_carregada->" + funcaoLoad + "]", pilhaOperando);
 	}
 
 	private String getA(String nomeBiblioteca, String nomeFuncao) {

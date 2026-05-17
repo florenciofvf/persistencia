@@ -25,8 +25,8 @@ public class LocalLoadInstrucao extends Instrucao implements Load {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Constante constante = funcaoAlvo.getConstante(nomeLocal);
 		pilhaOperando.push(constante.getValor());
-		log("[" + LocalContexto.LOAD_LOCAL + get(nomeFuncoes, nomeLocal) + "] ######### (local load) ######### "
-				+ constante, pilhaOperando);
+		log("[" + LocalContexto.LOAD_LOCAL + get(nomeFuncoes, nomeLocal) + "] [local_carregada->" + constante + "]",
+				pilhaOperando);
 	}
 
 	@Override

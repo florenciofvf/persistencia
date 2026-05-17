@@ -40,8 +40,7 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements Load {
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
 		funcaoLoad.setParent(funcao);
 		pilhaOperando.push(funcaoLoad);
-		log(getA(nomeBiblioteca, nomeFuncao) + "] ######### (funcao inner load) ######### " + funcaoLoad,
-				pilhaOperando);
+		log(getA(nomeBiblioteca, nomeFuncao) + "] [funcao_inner_carregada->" + funcaoLoad + "]", pilhaOperando);
 	}
 
 	private String getA(String nomeBiblioteca, String nomeFuncao) {

@@ -24,7 +24,7 @@ public class ConstanteDefineInstrucao extends Instrucao implements Def {
 		Biblioteca biblioteca = funcao.getBiblioteca();
 		biblioteca.addConstante(constante);
 		constante.setValor(valor);
-		log("[" + ConstanteContexto.DEF_CONST + " " + nomeConstante + "] ######### (def const) ######### " + constante,
+		log("[" + ConstanteContexto.DEF_CONST + " " + nomeConstante + "] [constane_definida->" + constante + "]",
 				pilhaOperando);
 	}
 
