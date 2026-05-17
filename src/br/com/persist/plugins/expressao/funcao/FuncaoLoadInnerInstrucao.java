@@ -40,8 +40,14 @@ public class FuncaoLoadInnerInstrucao extends FuncaoLoad implements Load {
 		checarTipo(tipoVoid, funcaoLoad, nomeBiblioteca, nomeFuncao);
 		funcaoLoad.setParent(funcao);
 		pilhaOperando.push(funcaoLoad);
-		log("[LOAD-FUNCTION-INNER-" + nomeBiblioteca + "." + nomeFuncao + "] ######### (funcao inner load) ######### "
-				+ funcaoLoad, pilhaOperando);
+		log(get(nomeBiblioteca, nomeFuncao) + "] ######### (funcao inner load) ######### " + funcaoLoad, pilhaOperando);
+	}
+
+	private String get(String nomeBiblioteca, String nomeFuncao) {
+		return "["
+				+ (tipoVoid ? FuncaoContexto.LOAD_FUNCTION_INNER_VOID.toUpperCase()
+						: FuncaoContexto.LOAD_FUNCTION_INNER_CRET.toUpperCase())
+				+ "-" + nomeBiblioteca + "." + nomeFuncao;
 	}
 
 	@Override

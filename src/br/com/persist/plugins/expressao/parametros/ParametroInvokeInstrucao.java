@@ -49,8 +49,13 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		pilhaFuncao.push(funcaoLoad);
-		log("[INVOKE-PARAM-" + get(nomeFuncoes, nomeFuncao) + "] ######### (funcao alvo) ######### " + funcaoAlvo,
-				pilhaOperando);
+		log(get() + get(nomeFuncoes, nomeFuncao) + "] ######### (funcao alvo) ######### " + funcaoAlvo
+				+ " ######### (valor) ######### " + funcaoLoad, pilhaOperando);
+	}
+
+	private String get() {
+		return "[" + (comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET.toUpperCase()
+				: InvocacaoContexto.INVOKE_PARAM_VOID.toUpperCase()) + "-";
 	}
 
 	@Override
