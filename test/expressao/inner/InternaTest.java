@@ -10,12 +10,12 @@ import br.com.persist.plugins.expressao.processador.Processador;
 import expressao.AbstratoTest;
 
 public class InternaTest extends AbstratoTest {
-	private static final String INTERNAS = "internas";
+	private static final String INTERNAS = "inner";
 
 	@Test
 	public void teste1() throws IOException, ExpressaoException {
 		compilacao = new Compilacao();
-		compilacao.compilar(getFile(INTERNAS, "inner"));
+		compilacao.compilar(getFile(INTERNAS, INTERNAS));
 
 		processador = new Processador();
 		biblio = "br.com.teste.inner";
