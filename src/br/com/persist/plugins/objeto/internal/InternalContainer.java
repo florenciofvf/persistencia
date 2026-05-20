@@ -2869,6 +2869,8 @@ public class InternalContainer extends Panel
 					} else {
 						txtComplemento.setText(montar(chaves, "MAX", conexao));
 					}
+					scrollHorizontalListener.ultimo = 0;
+					scrollHorizontalListener.ativo = true;
 					actionListenerInner.actionPerformed(null);
 				}
 
