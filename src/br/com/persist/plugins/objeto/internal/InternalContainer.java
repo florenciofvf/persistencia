@@ -430,8 +430,17 @@ public class InternalContainer extends Panel
 	}
 
 	private class ScrollHorizontalListener extends ComponentAdapter {
-		private boolean ativo = true;
+		private boolean ativo;
 		private long ultimo;
+
+		ScrollHorizontalListener() {
+			init();
+		}
+
+		void init() {
+			ativo = true;
+			ultimo = 0;
+		}
 
 		@Override
 		public void componentResized(ComponentEvent e) {
@@ -2869,8 +2878,7 @@ public class InternalContainer extends Panel
 					} else {
 						txtComplemento.setText(montar(chaves, "MAX", conexao));
 					}
-					scrollHorizontalListener.ultimo = 0;
-					scrollHorizontalListener.ativo = true;
+					scrollHorizontalListener.init();
 					actionListenerInner.actionPerformed(null);
 				}
 
