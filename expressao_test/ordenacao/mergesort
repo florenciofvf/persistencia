@@ -1,0 +1,73 @@
+package br.com.teste;
+
+defun main() {
+	return mergeSort([3, 4, 1, 2]);
+}
+
+defun mergeSort(lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(list.size(lista) == 1) {
+		return lista;
+	}
+
+	local tamanho = size(lista) / 2;
+	local comeco = take(lista, tamanho);
+	local fim = drop(lista, tamanho);
+
+	if(tamanho >= 1) {
+		return merge(mergeSort(comeco), mergeSort(fim));
+	}
+
+	return [];
+}
+
+defun size(lista) {
+	if(lista == []) {
+		return 0;
+	}
+	return 1 + size(${lista:tail});
+}
+
+defun merge(listaA, listaB) {
+	if(listaA == []) {
+		return listaB;
+	}
+	if(listaB == []) {
+		return listaA;
+	}
+
+	if(${listaA:head} <= ${listaB:head}) {
+		return ${listaA:head} .. merge(${listaA:tail}, listaB);
+	} elseif(${listaA:head} > ${listaB:head}) {
+		return ${listaB:head} .. merge(listaA, ${listaB:tail});
+	}
+
+	return [];
+}
+
+defun take(lista, n) {
+	if(lista == [] || n == 0) {
+		return [];
+	}
+
+	if(n > list.size(lista)) {
+		return lista;
+	}
+
+	return ${lista:head} .. take(${lista:tail}, n-1);
+}
+
+defun drop(lista, n) {
+	if(n <= 0) {
+		return lista;
+	}
+
+	if(n > size(lista)) {
+		return [];
+	}
+
+	return drop(${lista:tail}, n-1);
+}

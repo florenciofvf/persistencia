@@ -1,0 +1,38 @@
+package br.com.teste;
+
+defun main() {
+	return ordenar([1, -3, 7, 9]);
+}
+
+defun ordenar(lista) {
+	if(lista == []) {
+		return lista;
+	}
+
+	local m = minimo(lista);
+	return m .. ordenar(remove(m, lista));
+}
+
+defun remove(valor, lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(${lista:head} == valor) {
+		return ${lista:tail};
+	} else {
+		return ${lista:head} .. remove(valor, ${lista:tail});
+	}
+}
+
+defun minimo(lista) {
+	if(list.size(lista) == 1) {
+		return ${lista:head};
+	}
+
+	if(${lista:head} < minimo(${lista:tail})) {
+		return ${lista:head};
+	} else {
+		return minimo(${lista:tail});
+	}
+}

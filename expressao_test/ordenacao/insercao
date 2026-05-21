@@ -1,0 +1,42 @@
+package br.com.teste;
+
+defun main() {
+	return ordenar([4, 3, 67, 23, 5]);
+}
+
+defun ordenar(lista) {
+	if(lista == []) {
+		return [];
+	}
+
+	return inserir(${lista:head}, ordenar(${lista:tail}));
+}
+
+defun inserir(item, lista) {
+	return takeWhile(lista, defun lamb(e) {return e <= item;}) .. item ..
+		   dropWhile(lista, defun lamb(e) {return e <= item;});
+}
+
+defun takeWhile(lista, predicado) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(predicado(${lista:head})) {
+		return ${lista:head} .. takeWhile(${lista:tail}, predicado);
+	}
+
+	return [];
+}
+
+defun dropWhile(lista, predicado) {
+	if(lista == []) {
+		return [];
+	}
+
+	if(predicado(${lista:head})) {
+		return dropWhile(${lista:tail}, predicado);
+	} else {
+		return lista;
+	}
+}
