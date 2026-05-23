@@ -78,6 +78,15 @@ public class InstrucoesContexto extends Salto {
 		return incondicional && getUltimo().retornoGarantido();
 	}
 
+	public ConstanteContexto getConstanteContexto(String nome) {
+		for (Contexto item : componentes) {
+			if (item instanceof ConstanteContexto && item.getToken().getString().equals(nome)) {
+				return (ConstanteContexto) item;
+			}
+		}
+		return null;
+	}
+
 	public LocalContexto getLocalContexto(String nome) {
 		for (Contexto item : componentes) {
 			if (item instanceof LocalContexto && item.getToken().getString().equals(nome)) {

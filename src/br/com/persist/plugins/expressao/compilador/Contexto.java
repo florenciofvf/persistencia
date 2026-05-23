@@ -203,6 +203,10 @@ public abstract class Contexto {
 		return false;
 	}
 
+	public boolean isDeclaracaoMapa() throws ExpressaoException {
+		return false;
+	}
+
 	public boolean retornoGarantido() throws ExpressaoException {
 		return false;
 	}

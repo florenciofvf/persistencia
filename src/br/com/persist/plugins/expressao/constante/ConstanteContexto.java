@@ -12,6 +12,7 @@ import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
+import br.com.persist.plugins.expressao.mapa.MapaContexto;
 
 public class ConstanteContexto extends Contexto {
 	public static final String INVOKE_CONST = "invoke_const";
@@ -36,6 +37,12 @@ public class ConstanteContexto extends Contexto {
 	public boolean isDeclaracaoFuncao() throws ExpressaoException {
 		Contexto expressao = getPrimeiro();
 		return expressao != null && expressao.getPrimeiro() instanceof FuncaoContexto;
+	}
+
+	@Override
+	public boolean isDeclaracaoMapa() throws ExpressaoException {
+		Contexto expressao = getPrimeiro();
+		return expressao != null && expressao.getPrimeiro() instanceof MapaContexto;
 	}
 
 	public class Id implements TokenExec {
