@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -14,7 +13,6 @@ import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
-import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.negativo.NegativoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 
@@ -423,43 +421,26 @@ public abstract class Contexto {
 		return null;
 	}
 
-	/*protected List<String> checarSeEhParametroDeFuncao(String string, AtomicBoolean sucesso) {
+	protected List<String> getHierarquiaParametro(String nomeParametro) {
 		List<String> lista = new ArrayList<>();
+		boolean encontrado = false;
 		Contexto c = this;
-		sucesso.set(false);
 		while (c != null) {
 			if (c instanceof FuncaoContexto) {
 				FuncaoContexto funcao = (FuncaoContexto) c;
 				lista.add(funcao.getNome());
-				if (funcao.getParametros().contem(string)) {
-					sucesso.set(true);
+				if (funcao.getParametros().contem(nomeParametro)) {
+					encontrado = true;
 					break;
 				}
 			}
 			c = c.getParent();
+		}
+		if (!encontrado) {
+			lista.clear();
 		}
 		return lista;
 	}
-
-	protected List<String> checarSeEhLocalDeFuncao(String string, AtomicBoolean sucesso) {
-		List<String> lista = new ArrayList<>();
-		Contexto c = this;
-		sucesso.set(false);
-		while (c != null) {
-			if (c instanceof FuncaoContexto) {
-				FuncaoContexto funcao = (FuncaoContexto) c;
-				lista.add(funcao.getNome());
-				InstrucoesContexto instrucoes = funcao.getInstrucoesContexto();
-				LocalContexto localContx = instrucoes.getLocalContexto(string);
-				if (localContx != null) {
-					sucesso.set(true);
-					break;
-				}
-			}
-			c = c.getParent();
-		}
-		return lista;
-	}*/
 
 	protected List<String> listarHierarquiaFuncao() {
 		List<String> lista = new ArrayList<>();

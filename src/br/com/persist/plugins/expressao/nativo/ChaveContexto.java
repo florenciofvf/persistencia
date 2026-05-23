@@ -3,9 +3,9 @@ package br.com.persist.plugins.expressao.nativo;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
@@ -50,31 +50,33 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 		if (array.length != 1) {
 			return;
 		}
-		AtomicBoolean sucesso = new AtomicBoolean();
+		FuncaoContexto funcaoContexto = ExpressaoUtil.getFuncaoContexto(this);
 
-		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
-		if (sucesso.get()) {
+		LocalContexto localContexto = funcaoContexto.getLocalContexto(chamada);
+		if (localContexto != null) {
+			setPrefixo(LocalContexto.LOAD_LOCAL);
+			setBiblio(funcaoContexto.getNome());
+			token.setStyle(Token.DEC_LOCAL);
+			return;
+		}
+
+		List<String> lista = getHierarquiaParametro(chamada);
+		if (!lista.isEmpty()) {
 			setPrefixo(ParametroContexto.LOAD_PARAM);
 			setBiblio(montarString(lista));
 			token.setStyle(Token.PARAMETRO);
 			return;
 		}
 
-		lista = checarSeEhLocalDeFuncao(chamada, sucesso);
-		if (sucesso.get()) {
-			setPrefixo(LocalContexto.LOAD_LOCAL);
-			setBiblio(montarString(lista));
-			token.setStyle(Token.DEC_LOCAL);
-			return;
-		}
-
 		IFuncaoContexto funcao = getBibliotecaContexto().getFuncao(chamada);
 		if (funcao != null) {
 			setPrefixo(funcao.isRetornoVoid() ? FuncaoContexto.LOAD_FUNCTION_VOID : FuncaoContexto.LOAD_FUNCTION_CRET);
-		} else {
-			setPrefixo(ConstanteContexto.LOAD_CONST);
-			token.setStyle(Token.CONSTANTE);
+			setBiblio(THIS);
+			return;
 		}
+
+		setPrefixo(ConstanteContexto.LOAD_CONST);
+		token.setStyle(Token.CONSTANTE);
 		setBiblio(THIS);
 	}
 

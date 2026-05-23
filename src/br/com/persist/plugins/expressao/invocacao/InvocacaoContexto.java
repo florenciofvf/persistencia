@@ -3,10 +3,10 @@ package br.com.persist.plugins.expressao.invocacao;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.ExpressaoMensagens;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
@@ -16,9 +16,10 @@ import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.Token.Tipo;
-import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
+import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
+import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
@@ -57,22 +58,22 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		if (array.length != 1) {
 			return;
 		}
-		AtomicBoolean sucesso = new AtomicBoolean();
+		FuncaoContexto funcaoContexto = ExpressaoUtil.getFuncaoContexto(this);
 
-		List<String> lista = checarSeEhParametroDeFuncao(chamada, sucesso);
-		if (sucesso.get()) {
-			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
-			setBiblio(montarString(lista));
-			token.setStyle(Token.PARAMETRO);
+		LocalContexto localContexto = funcaoContexto.getLocalContexto(chamada);
+		if (localContexto != null) {
+			setPrefixo(LocalContexto.INVOKE_LOCAL);
+			setBiblio(funcaoContexto.getNome());
+			token.setStyle(Token.DEC_LOCAL);
 			setMetodo(chamada);
 			return;
 		}
 
-		lista = checarSeEhLocalDeFuncao(chamada, sucesso);
-		if (sucesso.get()) {
-			setPrefixo(LocalContexto.INVOKE_LOCAL);
+		List<String> lista = getHierarquiaParametro(chamada);
+		if (!lista.isEmpty()) {
+			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
 			setBiblio(montarString(lista));
-			token.setStyle(Token.DEC_LOCAL);
+			token.setStyle(Token.PARAMETRO);
 			setMetodo(chamada);
 			return;
 		}
@@ -90,12 +91,13 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			setPrefixo(comRetorno ? INVOKE_CRET : INVOKE_VOID);
 			setBiblio(THIS);
 			setMetodo(funcao.getNome());
-		} else {
-			setPrefixo(ConstanteContexto.INVOKE_CONST);
-			token.setStyle(Token.CONSTANTE);
-			setBiblio(THIS);
-			setMetodo(array[0]);
+			return;
 		}
+
+		setPrefixo(ConstanteContexto.INVOKE_CONST);
+		token.setStyle(Token.CONSTANTE);
+		setBiblio(THIS);
+		setMetodo(array[0]);
 	}
 
 	@Override
