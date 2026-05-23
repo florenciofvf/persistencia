@@ -14,9 +14,11 @@ import br.com.persist.plugins.expressao.compilador.Doc;
 import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.Token.Tipo;
+import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
+import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.nativo.ChaveContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
@@ -203,5 +205,13 @@ public class FuncaoContexto extends Contexto implements IFuncaoContexto {
 		if (refFuncaoInterna != null) {
 			refFuncaoInterna.indexar(indexador);
 		}
+	}
+
+	public ConstanteContexto getConstanteContexto(String nome) {
+		return getInstrucoesContexto().getConstanteContexto(nome);
+	}
+
+	public LocalContexto getLocalContexto(String nome) {
+		return getInstrucoesContexto().getLocalContexto(nome);
 	}
 }

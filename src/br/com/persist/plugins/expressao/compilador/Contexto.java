@@ -423,7 +423,7 @@ public abstract class Contexto {
 		return null;
 	}
 
-	protected List<String> checarSeEhParametroDeFuncao(String string, AtomicBoolean sucesso) {
+	/*protected List<String> checarSeEhParametroDeFuncao(String string, AtomicBoolean sucesso) {
 		List<String> lista = new ArrayList<>();
 		Contexto c = this;
 		sucesso.set(false);
@@ -459,7 +459,7 @@ public abstract class Contexto {
 			c = c.getParent();
 		}
 		return lista;
-	}
+	}*/
 
 	protected List<String> listarHierarquiaFuncao() {
 		List<String> lista = new ArrayList<>();
