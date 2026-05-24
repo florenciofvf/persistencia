@@ -1,0 +1,12 @@
+package br.com.teste;
+
+defun main() {
+	local objeto = {
+		'nome': 'Francisco da Silva',
+		'getNome': defun get() {
+			return ${objeto.nome};
+		}
+	};
+
+	return objeto.getNome();
+}

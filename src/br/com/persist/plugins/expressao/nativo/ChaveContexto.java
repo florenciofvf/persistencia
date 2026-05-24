@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
@@ -50,17 +49,15 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 		if (array.length != 1) {
 			return;
 		}
-		FuncaoContexto funcaoContexto = ExpressaoUtil.getFuncaoContexto(this);
-
-		LocalContexto localContexto = funcaoContexto.getLocalContexto(chamada);
-		if (localContexto != null) {
+		List<String> lista = getHierarquiaLocalContexto(chamada);
+		if (!lista.isEmpty()) {
 			setPrefixo(LocalContexto.LOAD_LOCAL);
-			setBiblio(funcaoContexto.getNome());
+			setBiblio(montarString(lista));
 			token.setStyle(Token.DEC_LOCAL);
 			return;
 		}
 
-		List<String> lista = getHierarquiaParametro(chamada);
+		lista = getHierarquiaParametro(chamada);
 		if (!lista.isEmpty()) {
 			setPrefixo(ParametroContexto.LOAD_PARAM);
 			setBiblio(montarString(lista));

@@ -13,6 +13,7 @@ import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
+import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.negativo.NegativoContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 
@@ -430,6 +431,28 @@ public abstract class Contexto {
 				FuncaoContexto funcao = (FuncaoContexto) c;
 				lista.add(funcao.getNome());
 				if (funcao.getParametros().contem(nomeParametro)) {
+					encontrado = true;
+					break;
+				}
+			}
+			c = c.getParent();
+		}
+		if (!encontrado) {
+			lista.clear();
+		}
+		return lista;
+	}
+
+	protected List<String> getHierarquiaLocalContexto(String nomeLocal) {
+		List<String> lista = new ArrayList<>();
+		boolean encontrado = false;
+		Contexto c = this;
+		while (c != null) {
+			if (c instanceof FuncaoContexto) {
+				FuncaoContexto funcao = (FuncaoContexto) c;
+				lista.add(funcao.getNome());
+				LocalContexto localContexto = funcao.getLocalContexto(nomeLocal);
+				if (localContexto != null) {
 					encontrado = true;
 					break;
 				}
