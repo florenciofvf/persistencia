@@ -1,0 +1,16 @@
+package br.com.teste;
+
+defun main() {
+	local objeto = {
+		'nome': 'Maria da Silva',
+		'getNome': defun get() {
+			return ${objeto.nome};
+		}
+	};
+
+	local inner = defun exec() {
+		return objeto.getNome(); 
+	};
+
+	return inner();
+}
