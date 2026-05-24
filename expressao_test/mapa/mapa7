@@ -1,0 +1,13 @@
+package br.com.teste;
+
+defun main() {
+	local teste = defun get() {
+		return 'Escola';
+	};
+
+	local inner = defun exec() {
+		return teste(); 
+	};
+
+	return inner();
+}
