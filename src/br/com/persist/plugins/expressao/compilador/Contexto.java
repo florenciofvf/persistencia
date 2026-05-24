@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.plugins.expressao.ExpressaoConstantes;
 import br.com.persist.plugins.expressao.ExpressaoException;
@@ -443,7 +444,7 @@ public abstract class Contexto {
 		return lista;
 	}
 
-	protected List<String> getHierarquiaLocalContexto(String nomeLocal) {
+	protected List<String> getHierarquiaLocalContexto(String nomeLocal, AtomicReference<LocalContexto> ref) {
 		List<String> lista = new ArrayList<>();
 		boolean encontrado = false;
 		Contexto c = this;
@@ -453,6 +454,9 @@ public abstract class Contexto {
 				lista.add(funcao.getNome());
 				LocalContexto localContexto = funcao.getLocalContexto(nomeLocal);
 				if (localContexto != null) {
+					if (ref != null) {
+						ref.set(localContexto);
+					}
 					encontrado = true;
 					break;
 				}

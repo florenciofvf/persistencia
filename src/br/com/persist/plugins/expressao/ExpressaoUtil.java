@@ -3,8 +3,6 @@ package br.com.persist.plugins.expressao;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.expressao.compilador.Contexto;
-import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 
 public class ExpressaoUtil {
 	private ExpressaoUtil() {
@@ -56,15 +54,5 @@ public class ExpressaoUtil {
 			builder.append(' ');
 		}
 		return builder.toString();
-	}
-
-	public static FuncaoContexto getFuncaoContexto(Contexto c) {
-		while (c != null) {
-			if (c instanceof FuncaoContexto) {
-				return (FuncaoContexto) c;
-			}
-			c = c.getParent();
-		}
-		return null;
 	}
 }

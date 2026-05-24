@@ -49,7 +49,7 @@ public class ChaveContexto extends Contexto implements LinkBibliotecaContexto {
 		if (array.length != 1) {
 			return;
 		}
-		List<String> lista = getHierarquiaLocalContexto(chamada);
+		List<String> lista = getHierarquiaLocalContexto(chamada, null);
 		if (!lista.isEmpty()) {
 			setPrefixo(LocalContexto.LOAD_LOCAL);
 			setBiblio(montarString(lista));

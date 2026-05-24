@@ -3,10 +3,10 @@ package br.com.persist.plugins.expressao.invocacao;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.ExpressaoMensagens;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBibliotecaContexto;
@@ -18,7 +18,6 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.Token.Tipo;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
-import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.local.LocalContexto;
@@ -58,18 +57,16 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		if (array.length != 1) {
 			return;
 		}
-		FuncaoContexto funcaoContexto = ExpressaoUtil.getFuncaoContexto(this);
-
-		LocalContexto localContexto = funcaoContexto.getLocalContexto(chamada);
-		if (localContexto != null) {
+		List<String> lista = getHierarquiaLocalContexto(chamada, null);
+		if (!lista.isEmpty()) {
 			setPrefixo(LocalContexto.INVOKE_LOCAL);
-			setBiblio(funcaoContexto.getNome());
+			setBiblio(montarString(lista));
 			token.setStyle(Token.DEC_LOCAL);
 			setMetodo(chamada);
 			return;
 		}
 
-		List<String> lista = getHierarquiaParametro(chamada);
+		lista = getHierarquiaParametro(chamada);
 		if (!lista.isEmpty()) {
 			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
 			setBiblio(montarString(lista));
@@ -108,15 +105,19 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		}
 		String alias = array[0];
 		String metodo = array[1];
-		FuncaoContexto funcaoContexto = ExpressaoUtil.getFuncaoContexto(this);
 
-		LocalContexto localContexto = funcaoContexto.getLocalContexto(alias);
-		if (localContexto != null && localContexto.isDeclaracaoMapa()) {
-			setPrefixo(LocalContexto.INVOKE_LOCAL_MAPA);
-			setBiblio(alias);
-			token.setStyle(Token.DEC_LOCAL);
-			setMetodo(metodo);
-			return;
+		AtomicReference<LocalContexto> ref = new AtomicReference<>();
+		List<String> lista = getHierarquiaLocalContexto(alias, ref);
+		if (!lista.isEmpty()) {
+			LocalContexto localContexto = ref.get();
+			if (localContexto.isDeclaracaoMapa()) {
+				setPrefixo(LocalContexto.INVOKE_LOCAL_MAPA);
+				lista.add(alias);
+				setBiblio(montarString(lista));
+				token.setStyle(Token.DEC_LOCAL);
+				setMetodo(metodo);
+				return;
+			}
 		}
 
 		ConstanteContexto constanteContexto = getBibliotecaContexto().getConstanteContexto(alias);
