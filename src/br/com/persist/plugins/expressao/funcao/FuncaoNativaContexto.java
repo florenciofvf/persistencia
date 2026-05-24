@@ -14,6 +14,8 @@ import br.com.persist.plugins.expressao.compilador.Indexador;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenExec;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
+import br.com.persist.plugins.expressao.constante.ConstanteContexto;
+import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.nativo.ChaveContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
@@ -42,6 +44,16 @@ public class FuncaoNativaContexto extends Contexto implements IFuncaoContexto {
 	@Override
 	public void setRefFuncaoInterna(ChaveContexto refFuncaoInterna) {
 		//
+	}
+
+	@Override
+	public ConstanteContexto getConstanteContexto(String nome) {
+		return null;
+	}
+
+	@Override
+	public LocalContexto getLocalContexto(String nome) {
+		return null;
 	}
 
 	@Override

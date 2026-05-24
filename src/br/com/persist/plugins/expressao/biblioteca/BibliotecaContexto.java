@@ -214,6 +214,16 @@ public class BibliotecaContexto extends Contexto {
 		return resp;
 	}
 
+	public ConstanteContexto getConstanteContexto(String nome) {
+		for (IFuncaoContexto item : getListaFuncoes()) {
+			ConstanteContexto cc = item.getConstanteContexto(nome);
+			if (cc != null) {
+				return cc;
+			}
+		}
+		return null;
+	}
+
 	public PacoteContexto getPackage() throws ExpressaoException {
 		checarPackage();
 		return getListaPacote().get(0);

@@ -107,11 +107,32 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			return;
 		}
 		String alias = array[0];
+		String metodo = array[1];
+		FuncaoContexto funcaoContexto = ExpressaoUtil.getFuncaoContexto(this);
+
+		LocalContexto localContexto = funcaoContexto.getLocalContexto(alias);
+		if (localContexto != null && localContexto.isDeclaracaoMapa()) {
+			setPrefixo(LocalContexto.INVOKE_LOCAL_MAPA);
+			setBiblio(alias);
+			token.setStyle(Token.DEC_LOCAL);
+			setMetodo(metodo);
+			return;
+		}
+
+		ConstanteContexto constanteContexto = getBibliotecaContexto().getConstanteContexto(alias);
+		if (constanteContexto != null && constanteContexto.isDeclaracaoMapa()) {
+			setPrefixo(ConstanteContexto.INVOKE_CONST_MAPA);
+			setBiblio(alias);
+			token.setStyle(Token.CONSTANTE);
+			setMetodo(metodo);
+			return;
+		}
+
 		AliasContexto aliasContexto = mapaAlias.get(alias);
 		if (aliasContexto == null) {
 			throw new ExpressaoException("erro.alias.nao_mapeado", alias);
 		}
-		String string = aliasContexto.getBiblioteca() + "." + array[1];
+		String string = aliasContexto.getBiblioteca() + "." + metodo;
 		processarChaveN(string, string.split("\\."), cache);
 	}
 
