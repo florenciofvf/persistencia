@@ -138,7 +138,7 @@ public abstract class Contexto {
 		}
 	}
 
-	protected void adicionar2(Contexto c) {
+	public void adicionar2(Contexto c) {
 		if (c.parent != null) {
 			c.parent.remove(c);
 		}
@@ -146,7 +146,7 @@ public abstract class Contexto {
 		c.parent = this;
 	}
 
-	protected void remove(Contexto c) {
+	public void remove(Contexto c) {
 		if (c != null && c.parent == this) {
 			componentes.remove(c);
 			c.parent = null;

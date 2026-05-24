@@ -4,16 +4,19 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.compilador.Contexto;
 import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
+import br.com.persist.plugins.expressao.instrucoes.InstrucoesContexto;
 import br.com.persist.plugins.expressao.parametros.ParametrosContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 
 public class FuncaoConstantesContexto extends FuncaoContexto {
-	private RetornoContexto retornoContexto = new RetornoContexto();
+	private InstrucoesContexto instrucoes = new InstrucoesContexto(true);
 	public static final String NOME_FUNCAO_CONSTANTES = "$constantes";
+	private RetornoContexto retornoContexto = new RetornoContexto();
 
 	public FuncaoConstantesContexto(Token token) {
 		adicionar2(new ParametrosContexto());
-		adicionar2(retornoContexto);
+		adicionar2(instrucoes);
+		instrucoes.adicionar2(retornoContexto);
 		this.token = token;
 		retornoVoid = true;
 	}
@@ -21,9 +24,9 @@ public class FuncaoConstantesContexto extends FuncaoContexto {
 	@Override
 	public void adicionar(Contexto c) throws ExpressaoException {
 		if (c instanceof ConstanteContexto) {
-			remove(retornoContexto);
-			super.adicionar(c);
-			super.adicionar(retornoContexto);
+			instrucoes.remove(retornoContexto);
+			instrucoes.adicionar(c);
+			instrucoes.adicionar(retornoContexto);
 		} else {
 			throw new ExpressaoException("erro.inclusao.funcao_constantes");
 		}

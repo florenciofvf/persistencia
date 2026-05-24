@@ -41,4 +41,16 @@ public class MapaTest extends AbstratoTest {
 		result = processador.processar(biblio, "teste1");
 		equals("[{}]", result.toString());
 	}
+
+	@Test
+	public void teste4() throws IOException, ExpressaoException {
+		compilacao = new Compilacao();
+		compilacao.compilar(getFile(MAPA, "mapa4"));
+
+		processador = new Processador();
+		biblio = "br.com.teste.mapa4";
+
+		result = processador.processar(biblio, "main");
+		equals("[Francisco da Silva]", result.toString());
+	}
 }

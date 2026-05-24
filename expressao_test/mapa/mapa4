@@ -1,0 +1,12 @@
+package br.com.teste;
+
+const objeto = {
+	'nome': 'Francisco da Silva',
+	'getNome': defun get() {
+		return ${objeto.nome};
+	}
+};
+
+defun main() {
+	return objeto.getNome();
+}
