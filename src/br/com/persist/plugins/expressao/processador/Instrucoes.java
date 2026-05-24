@@ -5,6 +5,7 @@ import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.constante.ConstanteContexto;
 import br.com.persist.plugins.expressao.constante.ConstanteDefineInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteInvokeInstrucao;
+import br.com.persist.plugins.expressao.constante.ConstanteInvokeMapaInstrucao;
 import br.com.persist.plugins.expressao.constante.ConstanteLoadInstrucao;
 import br.com.persist.plugins.expressao.funcao.FuncaoContexto;
 import br.com.persist.plugins.expressao.funcao.FuncaoLoadInnerInstrucao;
@@ -16,6 +17,7 @@ import br.com.persist.plugins.expressao.lista.AddItemListaInstrucao;
 import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.local.LocalDefineInstrucao;
 import br.com.persist.plugins.expressao.local.LocalInvokeInstrucao;
+import br.com.persist.plugins.expressao.local.LocalInvokeMapaInstrucao;
 import br.com.persist.plugins.expressao.local.LocalLoadInstrucao;
 import br.com.persist.plugins.expressao.mapa.PutItemMapaContexto;
 import br.com.persist.plugins.expressao.mapa.PutItemMapaInstrucao;
@@ -117,6 +119,8 @@ public class Instrucoes {
 			return new ConstanteLoadInstrucao(indice, parametros);
 		} else if (ConstanteContexto.INVOKE_CONST.equals(nome)) {
 			return new ConstanteInvokeInstrucao(indice, parametros);
+		} else if (ConstanteContexto.INVOKE_CONST_MAPA.equals(nome)) {
+			return new ConstanteInvokeMapaInstrucao(indice, parametros);
 		}
 		return null;
 	}
@@ -128,6 +132,8 @@ public class Instrucoes {
 			return new LocalLoadInstrucao(indice, parametros);
 		} else if (LocalContexto.INVOKE_LOCAL.equals(nome)) {
 			return new LocalInvokeInstrucao(indice, parametros);
+		} else if (LocalContexto.INVOKE_LOCAL_MAPA.equals(nome)) {
+			return new LocalInvokeMapaInstrucao(indice, parametros);
 		}
 		return null;
 	}
