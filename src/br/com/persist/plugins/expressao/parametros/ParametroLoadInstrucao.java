@@ -23,10 +23,6 @@ public class ParametroLoadInstrucao extends Instrucao implements Load {
 			throws ExpressaoException {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomeParametro);
-		if (valor instanceof Funcao) {
-			Funcao funcaoValor = ((Funcao) valor);
-			funcaoValor.setParent(funcao);
-		}
 		pilhaOperando.push(valor);
 		log("[" + ParametroContexto.LOAD_PARAM + get(nomeFuncoes, nomeParametro) + "] [funcao_alvo->" + funcaoAlvo
 				+ "] [valor->" + valor + "]", pilhaOperando);
