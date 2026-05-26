@@ -1345,6 +1345,7 @@ public class InternalContainer extends Panel
 						txtComplemento.setText(Util.concatenar(s, complemento));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+						scrollHorizontalListener.init();
 						actionListenerInner.actionPerformed(null);
 					}
 				}
