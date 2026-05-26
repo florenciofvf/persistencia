@@ -1345,7 +1345,6 @@ public class InternalContainer extends Panel
 						txtComplemento.setText(Util.concatenar(s, complemento));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
-						scrollHorizontalListener.init();
 						actionListenerInner.actionPerformed(null);
 					}
 				}
@@ -2879,7 +2878,6 @@ public class InternalContainer extends Panel
 					} else {
 						txtComplemento.setText(montar(chaves, "MAX", conexao));
 					}
-					scrollHorizontalListener.init();
 					actionListenerInner.actionPerformed(null);
 				}
 
@@ -4299,6 +4297,7 @@ public class InternalContainer extends Panel
 	protected class ActionListenerInner implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			scrollHorizontalListener.init();
 			processar(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro, null);
 		}
