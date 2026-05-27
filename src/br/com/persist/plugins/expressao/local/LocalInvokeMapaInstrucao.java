@@ -36,6 +36,7 @@ public class LocalInvokeMapaInstrucao extends Instrucao implements Invoke, Mapa 
 		Constante constante = funcaoAlvo.getConstante(nomeConstante);
 		Map<Object, Object> mapa = (Map<Object, Object>) constante.getValor();
 		Funcao funcaoValor = (Funcao) mapa.get(nomeMetodo);
+		validar(funcaoValor, comRetorno);
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);

@@ -33,6 +33,7 @@ public class ConstanteInvokeMapaInstrucao extends Instrucao implements Invoke, M
 		Constante constante = biblio.getConstante(nomeConstante);
 		Map<Object, Object> mapa = (Map<Object, Object>) constante.getValor();
 		Funcao funcaoValor = (Funcao) mapa.get(nomeMetodo);
+		validar(funcaoValor, comRetorno);
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
