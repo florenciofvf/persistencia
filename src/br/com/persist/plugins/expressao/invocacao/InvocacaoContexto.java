@@ -110,7 +110,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		if (!lista.isEmpty()) {
 			LocalContexto localContexto = ref.get();
 			if (localContexto.isDeclaracaoMapa()) {
-				setPrefixo(LocalContexto.INVOKE_LOCAL_MAPA);
+				setPrefixo(comRetorno ? LocalContexto.INVOKE_LOCAL_MAPA_CRET : LocalContexto.INVOKE_LOCAL_MAPA_VOID);
 				lista.add(alias);
 				setBiblio(montarString(lista));
 				token.setStyle(Token.DEC_LOCAL);
@@ -121,7 +121,8 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 
 		lista = getHierarquiaParametro(alias);
 		if (!lista.isEmpty()) {
-			setPrefixo(ParametroContexto.INVOKE_PARAM_MAPA);
+			setPrefixo(
+					comRetorno ? ParametroContexto.INVOKE_PARAM_MAPA_CRET : ParametroContexto.INVOKE_PARAM_MAPA_VOID);
 			lista.add(alias);
 			setBiblio(montarString(lista));
 			token.setStyle(Token.PARAMETRO);
@@ -131,7 +132,8 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 
 		ConstanteContexto constanteContexto = getBibliotecaContexto().getConstanteContexto(alias);
 		if (constanteContexto != null && constanteContexto.isDeclaracaoMapa()) {
-			setPrefixo(ConstanteContexto.INVOKE_CONST_MAPA);
+			setPrefixo(
+					comRetorno ? ConstanteContexto.INVOKE_CONST_MAPA_CRET : ConstanteContexto.INVOKE_CONST_MAPA_VOID);
 			setBiblio(alias);
 			token.setStyle(Token.CONSTANTE);
 			setMetodo(metodo);

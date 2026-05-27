@@ -13,12 +13,14 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class LocalInvokeMapaInstrucao extends Instrucao implements Invoke, Mapa {
+	private final boolean comRetorno;
 	private String[] nomeFuncoes;
 	private String nomeConstante;
 	private String nomeMetodo;
 
-	public LocalInvokeMapaInstrucao(int indice, String parametros) throws ExpressaoException {
-		super(indice, LocalContexto.INVOKE_LOCAL_MAPA);
+	public LocalInvokeMapaInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+		super(indice, comRetorno ? LocalContexto.INVOKE_LOCAL_MAPA_CRET : LocalContexto.INVOKE_LOCAL_MAPA_VOID);
+		this.comRetorno = comRetorno;
 		int pos = parametros.indexOf(' ');
 		String[] hierarquia = parametros.substring(0, pos).split(CIFRAO);
 		nomeFuncoes = Arrays.copyOf(hierarquia, hierarquia.length - 1);
@@ -37,8 +39,11 @@ public class LocalInvokeMapaInstrucao extends Instrucao implements Invoke, Mapa 
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[" + LocalContexto.INVOKE_LOCAL_MAPA + get(nomeConstante, nomeMetodo) + "] [funcao_valor->" + clone + "]",
-				pilhaOperando);
+		log(get() + get(nomeConstante, nomeMetodo) + "] [funcao_valor->" + clone + "]", pilhaOperando);
+	}
+
+	private String get() {
+		return "[" + (comRetorno ? LocalContexto.INVOKE_LOCAL_MAPA_CRET : LocalContexto.INVOKE_LOCAL_MAPA_VOID);
 	}
 
 	@Override

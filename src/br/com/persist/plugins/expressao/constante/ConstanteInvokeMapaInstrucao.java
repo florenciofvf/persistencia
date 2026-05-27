@@ -13,11 +13,13 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class ConstanteInvokeMapaInstrucao extends Instrucao implements Invoke, Mapa {
+	private final boolean comRetorno;
 	private String nomeConstante;
 	private String nomeMetodo;
 
-	public ConstanteInvokeMapaInstrucao(int indice, String parametros) throws ExpressaoException {
-		super(indice, ConstanteContexto.INVOKE_CONST_MAPA);
+	public ConstanteInvokeMapaInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+		super(indice, comRetorno ? ConstanteContexto.INVOKE_CONST_MAPA_CRET : ConstanteContexto.INVOKE_CONST_MAPA_VOID);
+		this.comRetorno = comRetorno;
 		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeConstante = array[0];
 		nomeMetodo = array[1];
@@ -34,8 +36,11 @@ public class ConstanteInvokeMapaInstrucao extends Instrucao implements Invoke, M
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[" + ConstanteContexto.INVOKE_CONST_MAPA + get(nomeConstante, nomeMetodo) + "] [funcao_valor->" + clone
-				+ "]", pilhaOperando);
+		log(get() + get(nomeConstante, nomeMetodo) + "] [funcao_valor->" + clone + "]", pilhaOperando);
+	}
+
+	private String get() {
+		return "[" + (comRetorno ? ConstanteContexto.INVOKE_CONST_MAPA_CRET : ConstanteContexto.INVOKE_CONST_MAPA_VOID);
 	}
 
 	@Override

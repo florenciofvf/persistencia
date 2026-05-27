@@ -15,7 +15,8 @@ import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.mapa.MapaContexto;
 
 public class LocalContexto extends Contexto {
-	public static final String INVOKE_LOCAL_MAPA = "invoke_local_mapa";
+	public static final String INVOKE_LOCAL_MAPA_CRET = "invoke_local_mapa_cret";
+	public static final String INVOKE_LOCAL_MAPA_VOID = "invoke_local_mapa_void";
 	public static final String INVOKE_LOCAL = "invoke_local";
 	public static final String LOAD_LOCAL = "load_local";
 	public static final String DEF_LOCAL = "def_local";

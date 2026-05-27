@@ -121,8 +121,10 @@ public class Instrucoes {
 			return new ParametroInvokeInstrucao(true, indice, parametros);
 		} else if (ParametroContexto.INVOKE_PARAM_VOID.equals(nome)) {
 			return new ParametroInvokeInstrucao(false, indice, parametros);
-		} else if (ParametroContexto.INVOKE_PARAM_MAPA.equals(nome)) {
-			return new ParametroInvokeMapaInstrucao(indice, parametros);
+		} else if (ParametroContexto.INVOKE_PARAM_MAPA_CRET.equals(nome)) {
+			return new ParametroInvokeMapaInstrucao(true, indice, parametros);
+		} else if (ParametroContexto.INVOKE_PARAM_MAPA_VOID.equals(nome)) {
+			return new ParametroInvokeMapaInstrucao(false, indice, parametros);
 		}
 		return null;
 	}
@@ -134,8 +136,10 @@ public class Instrucoes {
 			return new ConstanteLoadInstrucao(indice, parametros);
 		} else if (ConstanteContexto.INVOKE_CONST.equals(nome)) {
 			return new ConstanteInvokeInstrucao(indice, parametros);
-		} else if (ConstanteContexto.INVOKE_CONST_MAPA.equals(nome)) {
-			return new ConstanteInvokeMapaInstrucao(indice, parametros);
+		} else if (ConstanteContexto.INVOKE_CONST_MAPA_CRET.equals(nome)) {
+			return new ConstanteInvokeMapaInstrucao(true, indice, parametros);
+		} else if (ConstanteContexto.INVOKE_CONST_MAPA_VOID.equals(nome)) {
+			return new ConstanteInvokeMapaInstrucao(false, indice, parametros);
 		}
 		return null;
 	}
@@ -147,8 +151,10 @@ public class Instrucoes {
 			return new LocalLoadInstrucao(indice, parametros);
 		} else if (LocalContexto.INVOKE_LOCAL.equals(nome)) {
 			return new LocalInvokeInstrucao(indice, parametros);
-		} else if (LocalContexto.INVOKE_LOCAL_MAPA.equals(nome)) {
-			return new LocalInvokeMapaInstrucao(indice, parametros);
+		} else if (LocalContexto.INVOKE_LOCAL_MAPA_CRET.equals(nome)) {
+			return new LocalInvokeMapaInstrucao(true, indice, parametros);
+		} else if (LocalContexto.INVOKE_LOCAL_MAPA_VOID.equals(nome)) {
+			return new LocalInvokeMapaInstrucao(false, indice, parametros);
 		}
 		return null;
 	}

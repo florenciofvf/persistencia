@@ -12,12 +12,14 @@ import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
 public class ParametroInvokeMapaInstrucao extends Instrucao implements Invoke, Mapa {
+	private final boolean comRetorno;
 	private String[] nomeFuncoes;
 	private String nomParametro;
 	private String nomeMetodo;
 
-	public ParametroInvokeMapaInstrucao(int indice, String parametros) throws ExpressaoException {
-		super(indice, ParametroContexto.INVOKE_PARAM_MAPA);
+	public ParametroInvokeMapaInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+		super(indice, comRetorno ? ParametroContexto.INVOKE_PARAM_MAPA_CRET : ParametroContexto.INVOKE_PARAM_MAPA_VOID);
+		this.comRetorno = comRetorno;
 		int pos = parametros.indexOf(' ');
 		String[] hierarquia = parametros.substring(0, pos).split(CIFRAO);
 		nomeFuncoes = Arrays.copyOf(hierarquia, hierarquia.length - 1);
@@ -36,8 +38,11 @@ public class ParametroInvokeMapaInstrucao extends Instrucao implements Invoke, M
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[" + ParametroContexto.INVOKE_PARAM_MAPA + get(nomParametro, nomeMetodo) + "] [funcao_valor->" + clone
-				+ "]", pilhaOperando);
+		log(get() + get(nomParametro, nomeMetodo) + "] [funcao_valor->" + clone + "]", pilhaOperando);
+	}
+
+	private String get() {
+		return "[" + (comRetorno ? ParametroContexto.INVOKE_PARAM_MAPA_CRET : ParametroContexto.INVOKE_PARAM_MAPA_VOID);
 	}
 
 	@Override
