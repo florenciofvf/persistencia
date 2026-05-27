@@ -26,8 +26,6 @@ import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 
 public class InvocacaoContexto extends Contexto implements LinkBibliotecaContexto {
-	public static final String INVOKE_PARAM_CRET = "invoke_param_cret";
-	public static final String INVOKE_PARAM_VOID = "invoke_param_void";
 	public static final String INVOKE_CRET = "invoke_cret";
 	public static final String INVOKE_VOID = "invoke_void";
 	private ArgumentosContexto argumentos;
@@ -69,7 +67,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 
 		lista = getHierarquiaParametro(chamada);
 		if (!lista.isEmpty()) {
-			setPrefixo(comRetorno ? INVOKE_PARAM_CRET : INVOKE_PARAM_VOID);
+			setPrefixo(comRetorno ? ParametroContexto.INVOKE_PARAM_CRET : ParametroContexto.INVOKE_PARAM_VOID);
 			setBiblio(montarString(lista));
 			token.setStyle(Token.PARAMETRO);
 			setMetodo(chamada);

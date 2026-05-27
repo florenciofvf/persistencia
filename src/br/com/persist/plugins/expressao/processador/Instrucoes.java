@@ -71,15 +71,12 @@ public class Instrucoes {
 			return new RetornoInstrucao(indice);
 		}
 
-		if (ParametroContexto.LOAD_PARAM.equals(nome)) {
-			return new ParametroLoadInstrucao(indice, parametros);
+		Instrucao resp = criarParametro(indice, nome, parametros);
+		if (resp != null) {
+			return resp;
 		}
 
-		if (ParametroContexto.INVOKE_PARAM_MAPA.equals(nome)) {
-			return new ParametroInvokeMapaInstrucao(indice, parametros);
-		}
-
-		Instrucao resp = criarConstante(indice, nome, parametros);
+		resp = criarConstante(indice, nome, parametros);
 		if (resp != null) {
 			return resp;
 		}
@@ -117,6 +114,19 @@ public class Instrucoes {
 		throw new ExpressaoException("erro.instrucao_invalida", nome, biblioteca.getNomeAbsoluto());
 	}
 
+	private static Instrucao criarParametro(int indice, String nome, String parametros) throws ExpressaoException {
+		if (ParametroContexto.LOAD_PARAM.equals(nome)) {
+			return new ParametroLoadInstrucao(indice, parametros);
+		} else if (ParametroContexto.INVOKE_PARAM_CRET.equals(nome)) {
+			return new ParametroInvokeInstrucao(true, indice, parametros);
+		} else if (ParametroContexto.INVOKE_PARAM_VOID.equals(nome)) {
+			return new ParametroInvokeInstrucao(false, indice, parametros);
+		} else if (ParametroContexto.INVOKE_PARAM_MAPA.equals(nome)) {
+			return new ParametroInvokeMapaInstrucao(indice, parametros);
+		}
+		return null;
+	}
+
 	private static Instrucao criarConstante(int indice, String nome, String parametros) throws ExpressaoException {
 		if (ConstanteContexto.DEF_CONST.equals(nome)) {
 			return new ConstanteDefineInstrucao(indice, parametros);
@@ -148,10 +158,6 @@ public class Instrucoes {
 			return new InvokeInstrucao(true, indice, parametros);
 		} else if (InvocacaoContexto.INVOKE_VOID.equals(nome)) {
 			return new InvokeInstrucao(false, indice, parametros);
-		} else if (InvocacaoContexto.INVOKE_PARAM_CRET.equals(nome)) {
-			return new ParametroInvokeInstrucao(true, indice, parametros);
-		} else if (InvocacaoContexto.INVOKE_PARAM_VOID.equals(nome)) {
-			return new ParametroInvokeInstrucao(false, indice, parametros);
 		}
 		return null;
 	}

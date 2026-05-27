@@ -1,7 +1,6 @@
 package br.com.persist.plugins.expressao.parametros;
 
 import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.invocacao.InvocacaoContexto;
 import br.com.persist.plugins.expressao.invocacao.Invoke;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
@@ -25,7 +24,7 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 	private String nomeFuncao;
 
 	public ParametroInvokeInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
-		super(indice, comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID);
+		super(indice, comRetorno ? ParametroContexto.INVOKE_PARAM_CRET : ParametroContexto.INVOKE_PARAM_VOID);
 		this.comRetorno = comRetorno;
 		int pos = parametros.indexOf(' ');
 		nomeFuncoes = parametros.substring(0, pos).split(CIFRAO);
@@ -54,7 +53,7 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 	}
 
 	private String get() {
-		return "[" + (comRetorno ? InvocacaoContexto.INVOKE_PARAM_CRET : InvocacaoContexto.INVOKE_PARAM_VOID);
+		return "[" + (comRetorno ? ParametroContexto.INVOKE_PARAM_CRET : ParametroContexto.INVOKE_PARAM_VOID);
 	}
 
 	@Override
