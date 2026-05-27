@@ -93,10 +93,13 @@ public class TextEditor extends TextPane {
 			return;
 		}
 		int size = font.getSize();
-		if (size <= 8 || size >= 50) {
-			return;
-		}
 		size += delta;
+		if (size < 8) {
+			size = 8;
+		}
+		if (size > 50) {
+			size = 50;
+		}
 		font = new Font(font.getName(), font.getStyle(), size);
 		setFont(font);
 	}
