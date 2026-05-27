@@ -23,11 +23,13 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
  * </pre>
  */
 public class LocalInvokeInstrucao extends Instrucao implements Invoke {
+	private final boolean comRetorno;
 	private String[] nomeFuncoes;
 	private String nomeLocal;
 
-	public LocalInvokeInstrucao(int indice, String parametros) throws ExpressaoException {
-		super(indice, LocalContexto.INVOKE_LOCAL);
+	public LocalInvokeInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+		super(indice, comRetorno ? LocalContexto.INVOKE_LOCAL_CRET : LocalContexto.INVOKE_LOCAL_VOID);
+		this.comRetorno = comRetorno;
 		int pos = parametros.indexOf(' ');
 		nomeFuncoes = parametros.substring(0, pos).split(CIFRAO);
 		nomeLocal = parametros.substring(pos + 1);
@@ -39,11 +41,15 @@ public class LocalInvokeInstrucao extends Instrucao implements Invoke {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Constante constante = funcaoAlvo.getConstante(nomeLocal);
 		Funcao funcaoValor = (Funcao) constante.getValor();
+		validar(funcaoValor, comRetorno);
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[" + LocalContexto.INVOKE_LOCAL + get(nomeFuncoes, nomeLocal) + "] [funcao_valor->" + clone + "]",
-				pilhaOperando);
+		log(get() + get(nomeFuncoes, nomeLocal) + "] [funcao_valor->" + clone + "]", pilhaOperando);
+	}
+
+	private String get() {
+		return "[" + (comRetorno ? LocalContexto.INVOKE_LOCAL_CRET : LocalContexto.INVOKE_LOCAL_VOID);
 	}
 
 	@Override

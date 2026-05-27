@@ -58,7 +58,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		}
 		List<String> lista = getHierarquiaLocalContexto(chamada, null);
 		if (!lista.isEmpty()) {
-			setPrefixo(LocalContexto.INVOKE_LOCAL);
+			setPrefixo(comRetorno ? LocalContexto.INVOKE_LOCAL_CRET : LocalContexto.INVOKE_LOCAL_VOID);
 			setBiblio(montarString(lista));
 			token.setStyle(Token.DEC_LOCAL);
 			setMetodo(chamada);
@@ -90,7 +90,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			return;
 		}
 
-		setPrefixo(ConstanteContexto.INVOKE_CONST);
+		setPrefixo(comRetorno ? ConstanteContexto.INVOKE_CONST_CRET : ConstanteContexto.INVOKE_CONST_VOID);
 		token.setStyle(Token.CONSTANTE);
 		setBiblio(THIS);
 		setMetodo(array[0]);

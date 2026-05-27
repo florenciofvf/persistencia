@@ -26,12 +26,14 @@ import br.com.persist.plugins.expressao.processador.PilhaOperando;
  * </pre>
  */
 public class ConstanteInvokeInstrucao extends Instrucao implements LinkBiblioteca, Invoke {
+	private final boolean comRetorno;
 	private String nomeBiblioteca;
 	private String nomeConstante;
 	private boolean biblioLocal;
 
-	public ConstanteInvokeInstrucao(int indice, String parametros) throws ExpressaoException {
-		super(indice, ConstanteContexto.INVOKE_CONST);
+	public ConstanteInvokeInstrucao(boolean comRetorno, int indice, String parametros) throws ExpressaoException {
+		super(indice, comRetorno ? ConstanteContexto.INVOKE_CONST_CRET : ConstanteContexto.INVOKE_CONST_VOID);
+		this.comRetorno = comRetorno;
 		String[] array = parametros.split(ExpressaoConstantes.ESPACO);
 		nomeBiblioteca = array[0];
 		nomeConstante = array[1];
@@ -59,11 +61,15 @@ public class ConstanteInvokeInstrucao extends Instrucao implements LinkBibliotec
 		}
 		Constante constante = biblio.getConstante(nomeConstante);
 		Funcao funcaoValor = (Funcao) constante.getValor();
+		validar(funcaoValor, comRetorno);
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
-		log("[" + ConstanteContexto.INVOKE_CONST + get(nomeBiblioteca, nomeConstante) + "] [funcao_valor->" + clone
-				+ "]", pilhaOperando);
+		log(get() + get(nomeBiblioteca, nomeConstante) + "] [funcao_valor->" + clone + "]", pilhaOperando);
+	}
+
+	private String get() {
+		return "[" + (comRetorno ? ConstanteContexto.INVOKE_CONST_CRET : ConstanteContexto.INVOKE_CONST_VOID);
 	}
 
 	@Override

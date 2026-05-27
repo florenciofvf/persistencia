@@ -17,7 +17,8 @@ import br.com.persist.plugins.expressao.mapa.MapaContexto;
 public class ConstanteContexto extends Contexto {
 	public static final String INVOKE_CONST_MAPA_CRET = "invoke_const_mapa_cret";
 	public static final String INVOKE_CONST_MAPA_VOID = "invoke_const_mapa_void";
-	public static final String INVOKE_CONST = "invoke_const";
+	public static final String INVOKE_CONST_CRET = "invoke_const_cret";
+	public static final String INVOKE_CONST_VOID = "invoke_const_void";
 	public static final String LOAD_CONST = "load_const";
 	public static final String DEF_CONST = "def_const";
 	public static final String CONST = "const";

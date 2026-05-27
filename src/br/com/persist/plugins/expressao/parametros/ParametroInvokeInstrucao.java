@@ -44,8 +44,8 @@ public class ParametroInvokeInstrucao extends Invoke implements br.com.persist.p
 					funcao.getBiblioteca().getNomeAbsoluto());
 		}
 		Funcao funcaoValor = (Funcao) valor;
+		validar(funcaoValor, comRetorno);
 		Funcao funcaoLoad = funcaoValor.clonar();
-		validar(funcaoLoad, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		pilhaFuncao.push(funcaoLoad);
 		log(get() + get(nomeFuncoes, nomeFuncao) + "] [funcao_alvo->" + funcaoAlvo + "] [valor->" + funcaoLoad + "]",
