@@ -8,10 +8,11 @@ import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.Invoke;
+import br.com.persist.plugins.expressao.processador.Mapa;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class ConstanteInvokeMapaInstrucao extends Instrucao implements Invoke {
+public class ConstanteInvokeMapaInstrucao extends Instrucao implements Invoke, Mapa {
 	private String nomeConstante;
 	private String nomeMetodo;
 

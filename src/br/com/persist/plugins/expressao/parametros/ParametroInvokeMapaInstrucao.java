@@ -7,10 +7,11 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
 import br.com.persist.plugins.expressao.processador.Invoke;
+import br.com.persist.plugins.expressao.processador.Mapa;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
 import br.com.persist.plugins.expressao.processador.PilhaOperando;
 
-public class ParametroInvokeMapaInstrucao extends Instrucao implements Invoke {
+public class ParametroInvokeMapaInstrucao extends Instrucao implements Invoke, Mapa {
 	private String[] nomeFuncoes;
 	private String nomParametro;
 	private String nomeMetodo;
