@@ -10,6 +10,7 @@ import br.com.persist.plugins.expressao.compilador.Token;
 import br.com.persist.plugins.expressao.compilador.TokenManager;
 
 public class ParametroContexto extends Contexto {
+	public static final String INVOKE_PARAM_MAPA = "invoke_param_mapa";
 	public static final String PREFIXO_PARAMETRO = "param ";
 	public static final String LOAD_PARAM = "load_param";
 

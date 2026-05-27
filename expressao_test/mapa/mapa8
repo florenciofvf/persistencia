@@ -1,0 +1,15 @@
+package br.com.teste;
+
+defun main() {
+	return exec({
+			'nome': 'Escola',
+			'getNome': defun get() {
+				return 'Escola';
+			}
+		}
+	);
+}
+
+defun exec(objeto) {
+	return objeto.getNome();
+}

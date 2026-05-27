@@ -48,6 +48,7 @@ import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Sub;
 import br.com.persist.plugins.expressao.operador.OperadorInstrucao.Xor;
 import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.parametros.ParametroInvokeInstrucao;
+import br.com.persist.plugins.expressao.parametros.ParametroInvokeMapaInstrucao;
 import br.com.persist.plugins.expressao.parametros.ParametroLoadInstrucao;
 import br.com.persist.plugins.expressao.retorno.RetornoContexto;
 import br.com.persist.plugins.expressao.retorno.RetornoInstrucao;
@@ -72,6 +73,10 @@ public class Instrucoes {
 
 		if (ParametroContexto.LOAD_PARAM.equals(nome)) {
 			return new ParametroLoadInstrucao(indice, parametros);
+		}
+
+		if (ParametroContexto.INVOKE_PARAM_MAPA.equals(nome)) {
+			return new ParametroInvokeMapaInstrucao(indice, parametros);
 		}
 
 		Instrucao resp = criarConstante(indice, nome, parametros);

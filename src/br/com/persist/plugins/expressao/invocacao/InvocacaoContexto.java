@@ -22,6 +22,7 @@ import br.com.persist.plugins.expressao.funcao.IFuncaoContexto;
 import br.com.persist.plugins.expressao.instrucoes.ExpressaoContexto;
 import br.com.persist.plugins.expressao.local.LocalContexto;
 import br.com.persist.plugins.expressao.organiza.AliasContexto;
+import br.com.persist.plugins.expressao.parametros.ParametroContexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
 
 public class InvocacaoContexto extends Contexto implements LinkBibliotecaContexto {
@@ -118,6 +119,16 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 				setMetodo(metodo);
 				return;
 			}
+		}
+
+		lista = getHierarquiaParametro(alias);
+		if (!lista.isEmpty()) {
+			setPrefixo(ParametroContexto.INVOKE_PARAM_MAPA);
+			lista.add(alias);
+			setBiblio(montarString(lista));
+			token.setStyle(Token.PARAMETRO);
+			setMetodo(metodo);
+			return;
 		}
 
 		ConstanteContexto constanteContexto = getBibliotecaContexto().getConstanteContexto(alias);
