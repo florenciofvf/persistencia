@@ -60,13 +60,13 @@ public class TextEditor extends TextPane {
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_S), "salvar_conteudo");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_B), "baixar_conteudo");
-		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_UP), "fonte_menor");
-		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), "fonte_maior");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_UP), "fonte_maior");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), "fonte_menor");
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
 		getActionMap().put("salvar_conteudo", actionSalvarConteudo);
 		getActionMap().put("baixar_conteudo", actionBaixarConteudo);
-		getActionMap().put("fonte_menor", actionFonteMenor);
 		getActionMap().put("fonte_maior", actionFonteMaior);
+		getActionMap().put("fonte_menor", actionFonteMenor);
 	}
 
 	private transient javax.swing.Action actionFonteMenor = new AbstractAction() {
