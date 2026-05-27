@@ -1,6 +1,7 @@
 package br.com.persist.componente;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -59,9 +60,45 @@ public class TextEditor extends TextPane {
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_S), "salvar_conteudo");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_B), "baixar_conteudo");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_UP), "fonte_menor");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), "fonte_maior");
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
 		getActionMap().put("salvar_conteudo", actionSalvarConteudo);
 		getActionMap().put("baixar_conteudo", actionBaixarConteudo);
+		getActionMap().put("fonte_menor", actionFonteMenor);
+		getActionMap().put("fonte_maior", actionFonteMaior);
+	}
+
+	private transient javax.swing.Action actionFonteMenor = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			alterarFonte(-2);
+		}
+	};
+
+	private transient javax.swing.Action actionFonteMaior = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			alterarFonte(2);
+		}
+	};
+
+	private void alterarFonte(int delta) {
+		Font font = getFont();
+		if (font == null) {
+			return;
+		}
+		int size = font.getSize();
+		if (size <= 8 || size >= 50) {
+			return;
+		}
+		size += delta;
+		font = new Font(font.getName(), font.getStyle(), size);
+		setFont(font);
 	}
 
 	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
