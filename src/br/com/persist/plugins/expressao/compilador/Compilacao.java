@@ -1,10 +1,11 @@
 package br.com.persist.plugins.expressao.compilador;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +41,22 @@ public class Compilacao {
 		return tokens;
 	}
 
-	private String getString(File file) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try (FileInputStream fis = new FileInputStream(file)) {
-			byte[] bloco = new byte[512];
-			int i = fis.read(bloco);
-			while (i > 0) {
-				baos.write(bloco, 0, i);
-				i = fis.read(bloco);
+	public static String conteudo(File file) throws IOException {
+		if (file != null && file.exists()) {
+			StringBuilder sb = new StringBuilder();
+			try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+				int i = reader.read();
+				while (i != -1) {
+					char c = (char) i;
+					if (c != '\r') {
+						sb.append(c);
+					}
+					i = reader.read();
+				}
 			}
+			return sb.toString();
 		}
-		return new String(baos.toByteArray());
+		return "";
 	}
 
 	public BibliotecaContexto compilar(File file) throws IOException, ExpressaoException {
@@ -66,7 +72,7 @@ public class Compilacao {
 			throw new ExpressaoException(CacheBiblioteca.COMPILADOS.toString(), false);
 		}
 
-		TokenManager tokenManager = new TokenManager(getString(file));
+		TokenManager tokenManager = new TokenManager(conteudo(file));
 		BibliotecaContexto biblioteca = new BibliotecaContexto(file);
 		tokenManager.selecionar(biblioteca);
 		tokenManager.montarHierarquia();

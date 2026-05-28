@@ -20,11 +20,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -585,7 +582,7 @@ class Aba extends Transferivel {
 		if (arquivo.getFile().exists()) {
 			try {
 				int value = getValueScrollPane();
-				editor.setText(conteudo(arquivo.getFile()));
+				editor.setText(Compilacao.conteudo(arquivo.getFile()));
 				setValueScrollPane(value);
 				ExpressaoCor.clearAttr(editor.getStyledDocument());
 				String texto = editor.getText().trim();
@@ -597,24 +594,6 @@ class Aba extends Transferivel {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
 		}
-	}
-
-	public static String conteudo(File file) throws IOException {
-		if (file != null && file.exists()) {
-			StringBuilder sb = new StringBuilder();
-			try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
-				int i = reader.read();
-				while (i != -1) {
-					char c = (char) i;
-					if (c != '\r') {
-						sb.append(c);
-					}
-					i = reader.read();
-				}
-			}
-			return sb.toString();
-		}
-		return "";
 	}
 
 	@Override
@@ -762,7 +741,7 @@ class Aba extends Transferivel {
 				List<String> arquivosIncluir = listar(string, "incluir{", "}");
 				for (String strIncluir : arquivosIncluir) {
 					File fileIncluir = CacheBiblioteca.arquivoParaCompilar(strIncluir);
-					String fragmento = conteudo(fileIncluir);
+					String fragmento = Compilacao.conteudo(fileIncluir);
 					pw.write(fragmento);
 				}
 			}
