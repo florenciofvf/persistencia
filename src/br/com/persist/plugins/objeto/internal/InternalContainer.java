@@ -2372,6 +2372,7 @@ public class InternalContainer extends Panel
 						if (configuraAlturaListener != null) {
 							configuraAlturaListener.configurarAltura(ConfiguraAlturaSemRegistros.SCROLL_SUL, false);
 						}
+						scrollHorizontalListener.init();
 					}
 				}
 			}
