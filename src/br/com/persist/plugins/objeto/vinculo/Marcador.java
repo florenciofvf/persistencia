@@ -33,6 +33,11 @@ public class Marcador {
 		return BorderFactory.createLineBorder(getColorVinculo(), 3);
 	}
 
+	public static Border criarBordaTitulo(String titulo) {
+		Border border = criarBorda();
+		return BorderFactory.createTitledBorder(border, titulo);
+	}
+
 	public static Color getColorVinculo() {
 		return Color.MAGENTA;
 	}

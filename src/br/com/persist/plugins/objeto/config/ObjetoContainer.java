@@ -873,12 +873,12 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				panelIcone.borda();
 			}
 			if (!Util.isEmpty(para.getInternalFormX())) {
-				panelFormX.setBorder(Marcador.criarBorda());
+				panelFormX.setBorder(Marcador.criarBordaTitulo(para.getInternalFormX()));
 			} else {
 				panelFormX.borda();
 			}
 			if (!Util.isEmpty(para.getInternalFormL())) {
-				panelFormL.setBorder(Marcador.criarBorda());
+				panelFormL.setBorder(Marcador.criarBordaTitulo(para.getInternalFormL()));
 			} else {
 				panelFormL.borda();
 			}
