@@ -467,6 +467,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private final PanelCenter panelIcone;
 		private final PanelBloco panelFormX;
 		private final PanelBloco panelFormL;
+		private LabelFormX labelFormX;
+		private LabelFormL labelFormL;
 
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
@@ -511,8 +513,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				labelIcone.setToolTipText(objeto.getIcone());
 				labelIcone.setIcon(objeto.getIcon());
 			}
-			panelFormX = new PanelBloco(new PanelCenter(new LabelFormX(true)), new PanelCenter(new LabelFormX(false)));
-			panelFormL = new PanelBloco(new PanelCenter(new LabelFormL(true)), new PanelCenter(new LabelFormL(false)));
+			labelFormX = new LabelFormX(true);
+			panelFormX = new PanelBloco(new PanelCenter(labelFormX), new PanelCenter(new LabelFormX(false)));
+			labelFormL = new LabelFormL(true);
+			panelFormL = new PanelBloco(new PanelCenter(labelFormL), new PanelCenter(new LabelFormL(false)));
 			panelIcone = new PanelCenter(labelIcone);
 			panelFormX.borda();
 			panelFormL.borda();
@@ -873,14 +877,18 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				panelIcone.borda();
 			}
 			if (!Util.isEmpty(para.getInternalFormX())) {
-				panelFormX.setBorder(Marcador.criarBordaTitulo(para.getInternalFormX()));
+				panelFormX.setBorder(Marcador.criarBorda());
+				labelFormX.atualizarTitulo(para.getInternalFormX());
 			} else {
 				panelFormX.borda();
+				labelFormX.atualizarTitulo(null);
 			}
 			if (!Util.isEmpty(para.getInternalFormL())) {
-				panelFormL.setBorder(Marcador.criarBordaTitulo(para.getInternalFormL()));
+				panelFormL.setBorder(Marcador.criarBorda());
+				labelFormL.atualizarTitulo(para.getInternalFormL());
 			} else {
 				panelFormL.borda();
+				labelFormL.atualizarTitulo(null);
 			}
 			txtIdTempForm.setText(para.getIdTempForm());
 			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
@@ -2013,11 +2021,22 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 
 	private class LabelFormX extends Label {
 		private static final long serialVersionUID = 1L;
+		private boolean incluir;
 
 		private LabelFormX(boolean incluir) {
 			super(ObjetoMensagens.getString(incluir ? "msg.associar_form_x" : "msg.associar_form_x_x"), false);
 			addMouseListener(new FormXListener(incluir));
+			this.incluir = incluir;
 			modoLink(null);
+		}
+
+		void atualizarTitulo(String string) {
+			String texto = ObjetoMensagens.getString(incluir ? "msg.associar_form_x" : "msg.associar_form_x_x");
+			if (string != null) {
+				setText(texto + " [" + string + "]");
+			} else {
+				setText(texto);
+			}
 		}
 
 		private class FormXListener extends MouseAdapter {
@@ -2085,11 +2104,22 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 
 	private class LabelFormL extends Label {
 		private static final long serialVersionUID = 1L;
+		private boolean incluir;
 
 		private LabelFormL(boolean incluir) {
 			super(ObjetoMensagens.getString(incluir ? "msg.associar_form_l" : "msg.associar_form_l_x"), false);
 			addMouseListener(new FormLListener(incluir));
+			this.incluir = incluir;
 			modoLink(null);
+		}
+
+		void atualizarTitulo(String string) {
+			String texto = ObjetoMensagens.getString(incluir ? "msg.associar_form_l" : "msg.associar_form_l_x");
+			if (string != null) {
+				setText(texto + " [" + string + "]");
+			} else {
+				setText(texto);
+			}
 		}
 
 		private class FormLListener extends MouseAdapter {
