@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.swing.Icon;
 
-import br.com.persist.assistencia.Icones;
 import br.com.persist.arquivo.Arquivo;
+import br.com.persist.assistencia.Icones;
 
 public class MapaSufixos {
 	private static final List<ChaveIcone> lista = new ArrayList<>();

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
+import br.com.persist.plugins.expressao.ExpressaoUtil;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.biblioteca.CacheBiblioteca;
 import br.com.persist.plugins.expressao.biblioteca.LinkBiblioteca;
 import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
-import br.com.persist.plugins.expressao.ExpressaoException;
-import br.com.persist.plugins.expressao.ExpressaoUtil;
 
 public class Processador {
 	private final CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();

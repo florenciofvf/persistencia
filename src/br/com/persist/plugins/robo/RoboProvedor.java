@@ -1,5 +1,7 @@
 package br.com.persist.plugins.robo;
 
+import static java.lang.Integer.parseInt;
+
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -9,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Preferencias;
-
-import static java.lang.Integer.parseInt;
 
 public class RoboProvedor {
 	private static final List<Robo> lista = new ArrayList<>();

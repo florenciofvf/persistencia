@@ -3,10 +3,10 @@ package br.com.persist.plugins.requisicao;
 import java.util.Objects;
 
 import br.com.persist.data.Array;
+import br.com.persist.data.DataUtil;
 import br.com.persist.data.Objeto;
 import br.com.persist.data.Texto;
 import br.com.persist.data.Tipo;
-import br.com.persist.data.DataUtil;
 
 public class Requisicao {
 	private final Tipo tipo;

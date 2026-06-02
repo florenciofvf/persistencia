@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.assistencia.MetaInfo;
+import br.com.persist.plugins.expressao.ExpressaoConstantes;
+import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.constante.Constante;
 import br.com.persist.plugins.expressao.funcao.FuncaoConstantesContexto;
 import br.com.persist.plugins.expressao.processador.Funcao;
-import br.com.persist.plugins.expressao.ExpressaoConstantes;
-import br.com.persist.plugins.expressao.ExpressaoException;
 
 public class Biblioteca {
 	private final Map<String, Constante> mapaConstantes;
