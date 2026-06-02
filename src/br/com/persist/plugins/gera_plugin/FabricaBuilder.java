@@ -20,13 +20,15 @@ public class FabricaBuilder extends Builder {
 		arquivo.addImport("java.util.List").newLine();
 		arquivo.addImport("javax.swing.JMenu");
 		arquivo.addImport("javax.swing.JMenuItem").newLine();
+		if (config.comConfiguracao) {
+			arquivo.addImport("br.com.persist.abstrato.AbstratoConfiguracao");
+		}
 		arquivo.addImport("br.com.persist.abstrato.AbstratoFabricaContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoServico");
 		arquivo.addImport("br.com.persist.abstrato.Servico");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		if (config.comConfiguracao) {
-			arquivo.addImport("br.com.persist.abstrato.AbstratoConfiguracao");
 			arquivo.addImport("br.com.persist.assistencia.Preferencias");
 		}
 		if (config.comRecurso()) {
