@@ -380,6 +380,9 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private static final String ERRO_FRAGMENTO_INEXISTENTE = "erro.fragmento_inexistente";
+		private static final String ERRO_ARQUIVO_INEXISTENTE = "erro.arquivo_inexistente";
+		private static final String ERRO_INICIO_GE_FIM = "erro.inicio_ge_fim";
 		private TextField txtArquivo = new TextField(25);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
@@ -400,6 +403,11 @@ class Aba extends Transferivel {
 					Icones.SINCRONIZAR);
 			lerArquivoAction.setActionListener(e -> lerArquivo());
 			addButton(lerArquivoAction);
+
+			Action lerFragmentoAction = Action.acaoMenu(ProjetoMensagens.getString("label.ler_fragmento"),
+					Icones.ATUALIZAR);
+			lerFragmentoAction.setActionListener(e -> lerFragmento());
+			addButton(lerFragmentoAction);
 		}
 
 		public void ini(String arqAbsoluto) {
@@ -425,7 +433,7 @@ class Aba extends Transferivel {
 			}
 			File file = new File(txtArquivo.getText().trim());
 			if (!file.isFile()) {
-				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.arquivo_inexistente"));
+				Util.mensagem(Aba.this, ProjetoMensagens.getString(ERRO_ARQUIVO_INEXISTENTE, file.getAbsolutePath()));
 				return;
 			}
 			try {
@@ -433,6 +441,112 @@ class Aba extends Transferivel {
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
+		}
+
+		private void lerFragmento() {
+			String conteudo = editor.getText();
+			if (Util.isEmpty(conteudo)) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.editor_vazio"));
+				return;
+			}
+			String fragmentoArquivo = "fragmento_arquivo";
+			String fragmentoInicio = "fragmento_inicio";
+			String fragmentoFinal = "fragmento_final";
+
+			File arquivoFragmento = null;
+			try {
+				arquivoFragmento = getArquivo(conteudo, fragmentoArquivo);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				return;
+			}
+
+			int inicio = -1;
+			try {
+				inicio = getInteiro(conteudo, fragmentoInicio);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				return;
+			}
+
+			int fim = -1;
+			try {
+				fim = getInteiro(conteudo, fragmentoFinal);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				return;
+			}
+
+			if (inicio >= fim) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString(ERRO_INICIO_GE_FIM));
+				return;
+			}
+
+			try {
+				String string = ArquivoUtil.getString(arquivoFragmento);
+				String fragmento = string.substring(inicio, fim);
+				StringBuilder builder = new StringBuilder();
+				append(builder, fragmentoArquivo, arquivoFragmento.getAbsolutePath());
+				append(builder, fragmentoInicio, inicio + "");
+				append(builder, fragmentoFinal, fim + "");
+				builder.append(Constantes.QL + fragmento);
+				editor.setText(builder.toString());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+			}
+		}
+
+		private void append(StringBuilder builder, String fragmento, String valor) {
+			builder.append(fragmento + ">" + valor + "<" + fragmento + Constantes.QL);
+		}
+
+		private File getArquivo(String conteudo, String tag) throws ProjetoException {
+			String string = tag + ">";
+			int posIni = conteudo.indexOf(string);
+			if (posIni == -1) {
+				throw new ProjetoException(ERRO_FRAGMENTO_INEXISTENTE, string);
+			}
+			string = "<" + tag;
+			int posFim = conteudo.indexOf(string);
+			if (posFim == -1) {
+				throw new ProjetoException(ERRO_FRAGMENTO_INEXISTENTE, string);
+			}
+			if (posIni >= posFim) {
+				throw new ProjetoException(ERRO_INICIO_GE_FIM);
+			}
+			String absoluto = conteudo.substring(posIni + string.length(), posFim).trim();
+			File file = new File(absoluto);
+			if (!file.isFile()) {
+				throw new ProjetoException(ERRO_ARQUIVO_INEXISTENTE, file.getAbsolutePath());
+			}
+			return file;
+		}
+
+		private int getInteiro(String conteudo, String tag) throws ProjetoException {
+			String string = tag + ">";
+			int posIni = conteudo.indexOf(string);
+			if (posIni == -1) {
+				throw new ProjetoException(ERRO_FRAGMENTO_INEXISTENTE, string);
+			}
+			string = "<" + tag;
+			int posFim = conteudo.indexOf(string);
+			if (posFim == -1) {
+				throw new ProjetoException(ERRO_FRAGMENTO_INEXISTENTE, string);
+			}
+			if (posIni >= posFim) {
+				throw new ProjetoException(ERRO_INICIO_GE_FIM);
+			}
+			String valor = conteudo.substring(posIni + string.length(), posFim).trim();
+			int resp = -1;
+			try {
+				resp = Integer.parseInt(valor);
+			} catch (Exception ex) {
+				throw new ProjetoException("erro.conversao_valor", valor);
+			}
+			if (resp < 0) {
+				throw new ProjetoException("erro.indice_negativo", resp);
+			}
+			return resp;
 		}
 
 		@Override
