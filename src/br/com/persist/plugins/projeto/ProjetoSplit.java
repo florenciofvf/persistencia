@@ -383,6 +383,9 @@ class Aba extends Transferivel {
 		private static final String ERRO_FRAGMENTO_INEXISTENTE = "erro.fragmento_inexistente";
 		private static final String ERRO_ARQUIVO_INEXISTENTE = "erro.arquivo_inexistente";
 		private static final String ERRO_INICIO_GE_FIM = "erro.inicio_ge_fim";
+		private String fragmentoArquivo = "fragmento_arquivo";
+		private String fragmentoInicio = "fragmento_inicio";
+		private String fragmentoFinal = "fragmento_final";
 		private TextField txtArquivo = new TextField(25);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
@@ -449,10 +452,6 @@ class Aba extends Transferivel {
 				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.editor_vazio"));
 				return;
 			}
-
-			String fragmentoArquivo = "fragmento_arquivo";
-			String fragmentoInicio = "fragmento_inicio";
-			String fragmentoFinal = "fragmento_final";
 
 			File arquivoFragmento = null;
 			try {
@@ -578,6 +577,15 @@ class Aba extends Transferivel {
 		@Override
 		protected void limpar() {
 			editor.limpar();
+			if (Util.isEmpty(txtArquivo.getText())) {
+				return;
+			}
+			StringBuilder builder = new StringBuilder();
+			append(builder, fragmentoArquivo, txtArquivo.getText().trim());
+			append(builder, fragmentoInicio, "0");
+			append(builder, fragmentoFinal, "0");
+			builder.append(Constantes.QL);
+			editor.setText(builder.toString());
 		}
 
 		@Override
