@@ -619,8 +619,8 @@ class Aba extends Transferivel {
 			}
 			StringBuilder builder = new StringBuilder();
 			append(builder, fragmentoArquivo, txtArquivo.getText().trim());
-			append(builder, fragmentoInicio, "0");
-			append(builder, fragmentoFinal, "0");
+			append(builder, fragmentoInicio, "1");
+			append(builder, fragmentoFinal, "1");
 			builder.append(Constantes.QL);
 			editor.setText(builder.toString());
 		}
