@@ -528,7 +528,7 @@ class Aba extends Transferivel {
 
 			try {
 				List<Linha> linhas = new ArrayList<>();
-				for (int i = inicio; i <= fim; i++) {
+				for (int i = inicio - 1; i < fim; i++) {
 					linhas.add((Linha) lista.get(i));
 				}
 				StringBuilder builder = new StringBuilder();
@@ -598,8 +598,8 @@ class Aba extends Transferivel {
 			} catch (Exception ex) {
 				throw new ProjetoException("erro.conversao_valor", valor);
 			}
-			if (resp < 0) {
-				throw new ProjetoException("erro.indice_negativo", resp);
+			if (resp < 1) {
+				throw new ProjetoException("erro.indice_inferior_invalido", resp);
 			}
 			return resp;
 		}
