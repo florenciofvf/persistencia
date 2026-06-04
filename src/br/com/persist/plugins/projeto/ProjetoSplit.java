@@ -14,6 +14,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +63,9 @@ import br.com.persist.painel.Root;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.SeparadorException;
 import br.com.persist.painel.Transferivel;
+import br.com.persist.plugins.expressao.biblionativo.Linha;
+import br.com.persist.plugins.expressao.biblionativo.Lista;
+import br.com.persist.plugins.expressao.biblionativo.NArquivo;
 
 class ProjetoSplit extends SplitPane {
 	private Action sufixosAct = Action.acaoMenu(ProjetoMensagens.getString("label.sufixos"), null);
@@ -382,6 +388,7 @@ class Aba extends Transferivel {
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final String ERRO_FRAGMENTO_INEXISTENTE = "erro.fragmento_inexistente";
 		private static final String ERRO_ARQUIVO_INEXISTENTE = "erro.arquivo_inexistente";
+		private static final String ERRO_INICIO_GT_FIM = "erro.inicio_gt_fim";
 		private static final String ERRO_INICIO_GE_FIM = "erro.inicio_ge_fim";
 		private String fragmentoArquivo = "fragmento_arquivo";
 		private String fragmentoInicio = "fragmento_inicio";
@@ -477,41 +484,55 @@ class Aba extends Transferivel {
 				return;
 			}
 
-			if (inicio >= fim) {
-				Util.mensagem(Aba.this, ProjetoMensagens.getString(ERRO_INICIO_GE_FIM));
+			if (inicio > fim) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString(ERRO_INICIO_GT_FIM));
 				return;
 			}
 
-			String conteudoArquivo = null;
+			Lista lista = null;
 			try {
-				conteudoArquivo = ArquivoUtil.getString(arquivoFragmento);
+				br.com.persist.plugins.expressao.biblionativo.Arquivo nArquivo = NArquivo
+						.criarArquivo(arquivoFragmento.getAbsolutePath());
+				lista = nArquivo.getLista();
 			} catch (Exception ex) {
-				Util.mensagem(Aba.this, ex.getMessage());
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 				return;
 			}
 
-			if (Util.isEmpty(conteudoArquivo)) {
+			if (lista.size().longValue() == 0) {
 				Util.mensagem(Aba.this,
 						ProjetoMensagens.getString("erro.arquivo_sem_conteudo", arquivoFragmento.getAbsolutePath()));
 				return;
 			}
 
-			if (fim > conteudoArquivo.length()) {
+			if (fim > lista.size().longValue()) {
 				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.fim_maior_conteudo", String.valueOf(fim)));
 				return;
 			}
 
 			try {
-				String fragmento = conteudoArquivo.substring(inicio, fim);
+				List<Linha> linhas = new ArrayList<>();
+				for (int i = inicio; i <= fim; i++) {
+					linhas.add((Linha) lista.get(i));
+				}
 				StringBuilder builder = new StringBuilder();
 				append(builder, fragmentoArquivo, arquivoFragmento.getAbsolutePath());
 				append(builder, fragmentoInicio, inicio + "");
 				append(builder, fragmentoFinal, fim + "");
-				builder.append(Constantes.QL + fragmento);
+				builder.append(Constantes.QL + getString(linhas));
 				editor.setText(builder.toString());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
+		}
+
+		private String getString(List<Linha> linhas) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			for (Linha item : linhas) {
+				item.print(pw);
+			}
+			return sw.toString();
 		}
 
 		private void append(StringBuilder builder, String fragmento, String valor) {
