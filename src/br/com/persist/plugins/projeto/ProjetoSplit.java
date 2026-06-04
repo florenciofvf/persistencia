@@ -444,36 +444,37 @@ class Aba extends Transferivel {
 		}
 
 		private void lerFragmento() {
-			String conteudo = editor.getText();
-			if (Util.isEmpty(conteudo)) {
+			String conteudoEditor = editor.getText();
+			if (Util.isEmpty(conteudoEditor)) {
 				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.editor_vazio"));
 				return;
 			}
+
 			String fragmentoArquivo = "fragmento_arquivo";
 			String fragmentoInicio = "fragmento_inicio";
 			String fragmentoFinal = "fragmento_final";
 
 			File arquivoFragmento = null;
 			try {
-				arquivoFragmento = getArquivo(conteudo, fragmentoArquivo);
+				arquivoFragmento = getArquivo(conteudoEditor, fragmentoArquivo);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				Util.mensagem(Aba.this, ex.getMessage());
 				return;
 			}
 
 			int inicio = -1;
 			try {
-				inicio = getInteiro(conteudo, fragmentoInicio);
+				inicio = getInteiro(conteudoEditor, fragmentoInicio);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				Util.mensagem(Aba.this, ex.getMessage());
 				return;
 			}
 
 			int fim = -1;
 			try {
-				fim = getInteiro(conteudo, fragmentoFinal);
+				fim = getInteiro(conteudoEditor, fragmentoFinal);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				Util.mensagem(Aba.this, ex.getMessage());
 				return;
 			}
 
@@ -482,9 +483,27 @@ class Aba extends Transferivel {
 				return;
 			}
 
+			String conteudoArquivo = null;
 			try {
-				String string = ArquivoUtil.getString(arquivoFragmento);
-				String fragmento = string.substring(inicio, fim);
+				conteudoArquivo = ArquivoUtil.getString(arquivoFragmento);
+			} catch (Exception ex) {
+				Util.mensagem(Aba.this, ex.getMessage());
+				return;
+			}
+
+			if (Util.isEmpty(conteudoArquivo)) {
+				Util.mensagem(Aba.this,
+						ProjetoMensagens.getString("erro.arquivo_sem_conteudo", arquivoFragmento.getAbsolutePath()));
+				return;
+			}
+
+			if (fim > conteudoArquivo.length()) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.fim_maior_conteudo", fim));
+				return;
+			}
+
+			try {
+				String fragmento = conteudoArquivo.substring(inicio, fim);
 				StringBuilder builder = new StringBuilder();
 				append(builder, fragmentoArquivo, arquivoFragmento.getAbsolutePath());
 				append(builder, fragmentoInicio, inicio + "");
