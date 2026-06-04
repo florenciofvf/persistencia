@@ -498,7 +498,7 @@ class Aba extends Transferivel {
 			}
 
 			if (fim > conteudoArquivo.length()) {
-				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.fim_maior_conteudo", fim));
+				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.fim_maior_conteudo", String.valueOf(fim)));
 				return;
 			}
 
