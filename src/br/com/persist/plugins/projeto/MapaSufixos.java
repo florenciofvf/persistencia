@@ -45,6 +45,7 @@ public class MapaSufixos {
 
 	static {
 		lista.add(new ChaveIcone("exception", Icones.EXCEPTION));
+		lista.add(new ChaveIcone("endpoint", Icones.URL));
 		lista.add(new ChaveIcone("estados", Icones.ESTRELA));
 		lista.add(new ChaveIcone("service", Icones.CONFIG));
 		lista.add(new ChaveIcone("refresh", Icones.ATUALIZAR));
