@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -36,6 +37,7 @@ import br.com.persist.arquivo.ArquivoTreeListener;
 import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
@@ -48,6 +50,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
+import br.com.persist.componente.TextField;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -377,6 +380,7 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private TextField txtArquivo = new TextField(25);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
@@ -385,11 +389,50 @@ class Aba extends Transferivel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+			add(txtArquivo);
+			txtArquivo.setToolTipText(ProjetoMensagens.getString("label.tooltip_txt_arquivo"));
+
+			Action selArquivoAction = Action.acaoMenu(Mensagens.getString("label.arquivo"), Icones.ABRIR);
+			selArquivoAction.setActionListener(e -> selArquivo());
+			addButton(selArquivoAction);
+
+			Action lerArquivoAction = Action.acaoMenu(ProjetoMensagens.getString("label.ler_arquivo"),
+					Icones.SINCRONIZAR);
+			lerArquivoAction.setActionListener(e -> lerArquivo());
+			addButton(lerArquivoAction);
 		}
 
 		public void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
+		}
+
+		private void selArquivo() {
+			JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtArquivo.getText()));
+			int i = fileChooser.showOpenDialog(Aba.this);
+			if (i == JFileChooser.APPROVE_OPTION) {
+				File sel = fileChooser.getSelectedFile();
+				if (sel != null) {
+					txtArquivo.setText(sel.getAbsolutePath());
+				}
+			}
+		}
+
+		private void lerArquivo() {
+			if (Util.isEmpty(txtArquivo.getText())) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.arquivo_vazio"));
+				return;
+			}
+			File file = new File(txtArquivo.getText().trim());
+			if (!file.isFile()) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.arquivo_inexistente"));
+				return;
+			}
+			try {
+				editor.setText(ArquivoUtil.getString(file));
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+			}
 		}
 
 		@Override
