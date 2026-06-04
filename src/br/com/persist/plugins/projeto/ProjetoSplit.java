@@ -436,9 +436,25 @@ class Aba extends Transferivel {
 			}
 		}
 
-		private void lerArquivo() {
+		private void checarInputArquivo() {
 			if (Util.isEmpty(txtArquivo.getText())) {
-				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.arquivo_vazio"));
+				String conteudoEditor = editor.getText();
+				if (Util.isEmpty(conteudoEditor)) {
+					return;
+				}
+				try {
+					File arquivoFragmento = getArquivo(conteudoEditor, fragmentoArquivo);
+					txtArquivo.setText(arquivoFragmento.getAbsolutePath());
+				} catch (Exception ex) {
+					//
+				}
+			}
+		}
+
+		private void lerArquivo() {
+			checarInputArquivo();
+			if (Util.isEmpty(txtArquivo.getText())) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.input_arquivo_vazio"));
 				return;
 			}
 			File file = new File(txtArquivo.getText().trim());
