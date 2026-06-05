@@ -17,9 +17,13 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 		if (value instanceof Arquivo) {
 			Arquivo arquivo = (Arquivo) value;
-			Icon icon = MapaSufixos.getIcon(arquivo);
-			if (icon != null) {
-				setIcon(icon);
+			if (arquivo.getName().endsWith("Rest")) {
+				setForeground(ProjetoPreferencia.getCorElementoFinalRest());
+			} else {
+				Icon icon = MapaSufixos.getIcon(arquivo);
+				if (icon != null) {
+					setIcon(icon);
+				}
 			}
 		}
 		return this;
