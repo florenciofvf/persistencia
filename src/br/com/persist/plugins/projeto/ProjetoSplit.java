@@ -464,7 +464,12 @@ class Aba extends Transferivel {
 				return;
 			}
 			try {
-				editor.setText(ArquivoUtil.getString(file));
+				String conteudo = ArquivoUtil.getString(file);
+				if (Util.confirmar(this, ProjetoMensagens.getString("msg.arquivo_no_editor"), false)) {
+					editor.setText(conteudo);
+				} else {
+					Util.mensagemFormulario(Aba.this, conteudo);
+				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
