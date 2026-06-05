@@ -13,6 +13,7 @@ import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
@@ -22,6 +23,7 @@ import br.com.persist.formulario.Formulario;
 public class ProjetoFabrica extends AbstratoFabricaContainer {
 	@Override
 	public void inicializar() {
+		Preferencias.addOutraPreferencia(ProjetoPreferencia.class);
 		Util.criarDiretorio(ProjetoConstantes.PROJETOS);
 	}
 
