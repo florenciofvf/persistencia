@@ -49,6 +49,8 @@ public class MapaSufixos {
 		lista.add(new ChaveIcone("estados", Icones.ESTRELA));
 		lista.add(new ChaveIcone("service", Icones.CONFIG));
 		lista.add(new ChaveIcone("refresh", Icones.ATUALIZAR));
+		lista.add(new ChaveIcone("usuario", Icones.USUARIO));
+		lista.add(new ChaveIcone("pessoas", Icones.PESSOAS));
 		lista.add(new ChaveIcone("parent", Icones.MODULO));
 		lista.add(new ChaveIcone("target", Icones.TARGET));
 		lista.add(new ChaveIcone("pessoa", Icones.PESSOA));
@@ -66,6 +68,7 @@ public class MapaSufixos {
 		lista.add(new ChaveIcone("file", Icones.NOVO));
 		lista.add(new ChaveIcone("down", Icones.BAIXAR));
 		lista.add(new ChaveIcone("html", Icones.ELEMENTO));
+		lista.add(new ChaveIcone("boss", Icones.BOSS));
 		lista.add(new ChaveIcone("url", Icones.URL));
 		lista.add(new ChaveIcone("xml", Icones.ELEMENTO));
 		lista.add(new ChaveIcone("up", Icones.UPDATE));

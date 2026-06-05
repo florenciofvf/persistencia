@@ -44,6 +44,8 @@ public class Icones {
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon CONFIG2 = criarImagem("config2");
 	public static final Icon TAG2 = criarImagem("tag_yellow");
+	public static final Icon USUARIO = criarImagem("usuario");
+	public static final Icon PESSOAS = criarImagem("pessoas");
 	public static final Icon SALVARC = criarImagem("saveas");
 	public static final Icon BAIXAR2 = criarImagem("bottom");
 	public static final Icon CRIAR2 = criarImagem("create2");
@@ -95,6 +97,7 @@ public class Icones {
 	public static final Icon SAIR = criarImagem("sair");
 	public static final Icon SETA = criarImagem("seta");
 	public static final Icon SOMA = criarImagem("soma");
+	public static final Icon BOSS = criarImagem("boss");
 	public static final Icon PKEY = criarImagem("pkey");
 	public static final Icon OLHO = criarImagem("eye");
 	public static final Icon MAO = criarImagem("mao");
