@@ -45,8 +45,8 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
-		muro.camada(Muro.panelGridBorderBottom(criarLabelTitulo("label.titulo_painel_elemento_final_rest"),
-				new PainelElementoFinalRest()));
+		muro.camada(Muro.panelGridBorderBottom(criarLabelTitulo("label.titulo_painel_elemento_final_rest_view"),
+				new PainelElementoFinalRestView()));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		add(BorderLayout.CENTER, muro);
 	}
@@ -56,18 +56,24 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 				.addActionListener(e -> ProjetoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 	}
 
-	private class PainelElementoFinalRest extends Panel {
-		private Label labelCorAtual = new Label(ProjetoMensagens.getString("label.cor_atual"), false);
+	private class PainelElementoFinalRestView extends Panel {
+		private Label labelCorAtualRest = new Label(ProjetoMensagens.getString("label.cor_atual_rest"), false);
+		private Label labelCorAtualView = new Label(ProjetoMensagens.getString("label.cor_atual_view"), false);
 		private transient MouseInner mouseInner = new MouseInner();
 		private static final long serialVersionUID = 1L;
 
-		private PainelElementoFinalRest() {
-			super(new GridLayout(0, 1));
-			add(labelCorAtual);
-			labelCorAtual.setForeground(ProjetoPreferencia.getCorElementoFinalRest());
-			labelCorAtual.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			labelCorAtual.setHorizontalAlignment(SwingConstants.CENTER);
-			labelCorAtual.addMouseListener(mouseInner);
+		private PainelElementoFinalRestView() {
+			super(new GridLayout(0, 2));
+			add(labelCorAtualRest);
+			add(labelCorAtualView);
+			labelCorAtualRest.setForeground(ProjetoPreferencia.getCorElementoFinalRest());
+			labelCorAtualView.setForeground(ProjetoPreferencia.getCorElementoFinalView());
+			labelCorAtualRest.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+			labelCorAtualView.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+			labelCorAtualRest.setHorizontalAlignment(SwingConstants.CENTER);
+			labelCorAtualView.setHorizontalAlignment(SwingConstants.CENTER);
+			labelCorAtualRest.addMouseListener(mouseInner);
+			labelCorAtualView.addMouseListener(mouseInner);
 		}
 
 		private class MouseInner extends MouseAdapter {
@@ -80,7 +86,11 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 					return;
 				}
 				label.setForeground(color);
-				ProjetoPreferencia.setCorElementoFinalRest(color);
+				if (label == labelCorAtualRest) {
+					ProjetoPreferencia.setCorElementoFinalRest(color);
+				} else if (label == labelCorAtualView) {
+					ProjetoPreferencia.setCorElementoFinalView(color);
+				}
 			}
 		}
 	}
