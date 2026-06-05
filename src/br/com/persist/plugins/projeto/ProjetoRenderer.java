@@ -19,6 +19,8 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			Arquivo arquivo = (Arquivo) value;
 			if (arquivo.getName().endsWith("Rest")) {
 				setForeground(ProjetoPreferencia.getCorElementoFinalRest());
+			} else if (arquivo.getName().endsWith("View")) {
+				setForeground(ProjetoPreferencia.getCorElementoFinalView());
 			} else {
 				Icon icon = MapaSufixos.getIcon(arquivo);
 				if (icon != null) {
