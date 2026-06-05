@@ -542,7 +542,11 @@ class Aba extends Transferivel {
 				append(builder, fragmentoInicio, inicio + "");
 				append(builder, fragmentoFinal, fim + "");
 				builder.append(Constantes.QL + getString(linhas));
-				editor.setText(builder.toString());
+				if (Util.confirmar(this, ProjetoMensagens.getString("msg.arquivo_no_editor"), false)) {
+					editor.setText(builder.toString());
+				} else {
+					Util.mensagemFormulario(Aba.this, builder.toString());
+				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
