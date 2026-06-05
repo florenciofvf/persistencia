@@ -209,10 +209,10 @@ public class ArquivoUtil {
 		if (Util.isMac()) {
 			Runtime.getRuntime().exec("open -R " + file.getAbsolutePath());
 		} else {
-			File parent = file.getParentFile();
-			if (parent != null) {
+			File diretorio = getDiretorioValido(file.getAbsolutePath());
+			if (diretorio != null) {
 				Desktop desktop = Desktop.getDesktop();
-				desktop.open(parent);
+				desktop.open(diretorio);
 			}
 		}
 	}
@@ -307,5 +307,19 @@ public class ArquivoUtil {
 			existe = file.exists();
 		}
 		return file;
+	}
+
+	public static File getDiretorioValido(String string) {
+		if (string == null) {
+			return null;
+		}
+		File valido = getValido(string);
+		while (valido != null) {
+			if (valido.isDirectory()) {
+				break;
+			}
+			valido = getValido(valido.getParent());
+		}
+		return valido;
 	}
 }
