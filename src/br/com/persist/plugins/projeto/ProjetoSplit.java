@@ -548,7 +548,7 @@ class Aba extends Transferivel {
 			for (Linha item : linhas) {
 				item.print(pw);
 			}
-			return sw.toString();
+			return Util.replaceCR(sw.toString());
 		}
 
 		private void append(StringBuilder builder, String fragmento, String valor) {
