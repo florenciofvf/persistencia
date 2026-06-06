@@ -6,6 +6,8 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.GridLayout;
 
+import javax.swing.SwingConstants;
+
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -63,9 +65,10 @@ class SufixoDialogo extends AbstratoDialogo {
 		private static final long serialVersionUID = 1L;
 
 		public PanelSufixos() {
-			super(new GridLayout(0, 1, 10, 10));
+			super(new GridLayout(10, 0));
 			for (ChaveIcone item : MapaSufixos.getLista()) {
 				Label label = new Label(item.chave, false);
+				label.setHorizontalAlignment(SwingConstants.CENTER);
 				label.setIcon(item.icone);
 				add(label);
 			}
