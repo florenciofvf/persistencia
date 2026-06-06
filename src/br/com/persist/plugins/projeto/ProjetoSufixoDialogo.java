@@ -73,6 +73,7 @@ class SufixoDialogo extends AbstratoDialogo {
 				add(label);
 			}
 			Label label = new Label("isFile", false);
+			label.setHorizontalAlignment(SwingConstants.CENTER);
 			label.setIcon(Icones.TEXTO);
 			add(label);
 		}
