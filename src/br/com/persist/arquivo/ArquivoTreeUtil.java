@@ -12,7 +12,7 @@ public class ArquivoTreeUtil {
 	private ArquivoTreeUtil() {
 	}
 
-	private static TreePath getTreePath(Arquivo arquivo) {
+	static TreePath getTreePath(Arquivo arquivo) {
 		List<Arquivo> caminho = new ArrayList<>();
 		Arquivo o = arquivo;
 		while (o != null) {

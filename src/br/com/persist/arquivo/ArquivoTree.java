@@ -97,6 +97,14 @@ public class ArquivoTree extends Tree {
 		return null;
 	}
 
+	public boolean isExpandido(Arquivo arquivo) {
+		if (arquivo != null) {
+			TreePath path = ArquivoTreeUtil.getTreePath(arquivo);
+			return isExpanded(path);
+		}
+		return false;
+	}
+
 	public void selecionarArquivo(Arquivo arquivo) {
 		if (arquivo != null) {
 			ArquivoTreeUtil.selecionarObjeto(this, arquivo);
