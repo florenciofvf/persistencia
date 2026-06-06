@@ -4,26 +4,35 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
+import br.com.persist.componente.TextField;
 import br.com.persist.formulario.Formulario;
 
 public class ProjetoConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
+	private final Button btnDirPadraoSelArquivos = new Button("label.diretorio");
+	private final TextField txtDirPadraoSelArquivos = new TextField();
 	private static final long serialVersionUID = 1L;
 
 	private final transient NomeValor[] posicoes = {
@@ -40,9 +49,12 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, ProjetoPreferencia.getProjetoPosicaoAbaFichario());
+		txtDirPadraoSelArquivos.setText(ProjetoPreferencia.getDirPadraoSelecaoArquivos());
 		chkExibirArqIgnorados.setSelected(ProjetoPreferencia.isExibirArqIgnorados());
 
 		Muro muro = new Muro();
+		muro.camada(Muro.panelGrid(new PanelCenter(criarLabel("label.dir_padrao_arquivos"), btnDirPadraoSelArquivos)));
+		muro.camada(txtDirPadraoSelArquivos);
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
 		muro.camada(Muro.panelGridBorderBottom(criarLabelTitulo("label.titulo_painel_elemento_final_rest_view"),
@@ -54,6 +66,24 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 	private void configurar() {
 		chkExibirArqIgnorados
 				.addActionListener(e -> ProjetoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
+		txtDirPadraoSelArquivos.addActionListener(
+				e -> ProjetoPreferencia.setDirPadraoSelecaoArquivos(txtDirPadraoSelArquivos.getText()));
+		txtDirPadraoSelArquivos.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				ProjetoPreferencia.setDirPadraoSelecaoArquivos(txtDirPadraoSelArquivos.getText());
+			}
+		});
+		btnDirPadraoSelArquivos.addActionListener(e -> {
+			JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtDirPadraoSelArquivos.getText()));
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int i = fileChooser.showOpenDialog(ProjetoConfiguracao.this);
+			if (i == JFileChooser.APPROVE_OPTION) {
+				File sel = fileChooser.getSelectedFile();
+				txtDirPadraoSelArquivos.setText(sel.getAbsolutePath());
+				ProjetoPreferencia.setDirPadraoSelecaoArquivos(txtDirPadraoSelArquivos.getText());
+			}
+		});
 	}
 
 	private class PainelElementoFinalRestView extends Panel {

@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 import br.com.persist.formulario.Formulario;
 
 public class ProjetoPreferencia {
+	private static String dirPadraoSelecaoArquivos;
 	private static int projetoPosicaoAbaFichario;
 	private static boolean exibirArqIgnorados;
 	private static Color corElementoFinalRest;
@@ -18,18 +19,20 @@ public class ProjetoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		projetoPosicaoAbaFichario = pref.getInt("projeto_posicao_aba_fichario", SwingConstants.TOP);
-		exibirArqIgnorados = pref.getBoolean("projeto_exibir_arq_ignorados", false);
 		corElementoFinalRest = new Color(pref.getInt("cor_elemento_final_rest", Color.BLACK.getRGB()));
 		corElementoFinalView = new Color(pref.getInt("cor_elemento_final_view", Color.BLACK.getRGB()));
+		projetoPosicaoAbaFichario = pref.getInt("projeto_posicao_aba_fichario", SwingConstants.TOP);
+		exibirArqIgnorados = pref.getBoolean("projeto_exibir_arq_ignorados", false);
+		dirPadraoSelecaoArquivos = pref.get("projeto_dir_padrao_sel_arquivos", "");
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putInt("projeto_posicao_aba_fichario", projetoPosicaoAbaFichario);
-		pref.putBoolean("projeto_exibir_arq_ignorados", exibirArqIgnorados);
 		pref.putInt("cor_elemento_final_rest", corElementoFinalRest.getRGB());
 		pref.putInt("cor_elemento_final_view", corElementoFinalView.getRGB());
+		pref.put("projeto_dir_padrao_sel_arquivos", dirPadraoSelecaoArquivos);
+		pref.putBoolean("projeto_exibir_arq_ignorados", exibirArqIgnorados);
 	}
 
 	public static int getProjetoPosicaoAbaFichario() {
@@ -65,5 +68,13 @@ public class ProjetoPreferencia {
 
 	public static void setCorElementoFinalView(Color corElementoFinalView) {
 		ProjetoPreferencia.corElementoFinalView = corElementoFinalView;
+	}
+
+	public static String getDirPadraoSelecaoArquivos() {
+		return dirPadraoSelecaoArquivos;
+	}
+
+	public static void setDirPadraoSelecaoArquivos(String dirPadraoSelecaoArquivos) {
+		ProjetoPreferencia.dirPadraoSelecaoArquivos = dirPadraoSelecaoArquivos;
 	}
 }
