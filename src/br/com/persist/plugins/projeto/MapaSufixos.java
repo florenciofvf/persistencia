@@ -51,6 +51,7 @@ public class MapaSufixos {
 		lista.add(new ChaveIcone("refresh", Icones.ATUALIZAR));
 		lista.add(new ChaveIcone("usuario", Icones.USUARIO));
 		lista.add(new ChaveIcone("pessoas", Icones.PESSOAS));
+		lista.add(new ChaveIcone("target2", Icones.TARGET2));
 		lista.add(new ChaveIcone("parent", Icones.MODULO));
 		lista.add(new ChaveIcone("target", Icones.TARGET));
 		lista.add(new ChaveIcone("pessoa", Icones.PESSOA));
