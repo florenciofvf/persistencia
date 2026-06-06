@@ -428,6 +428,9 @@ class Aba extends Transferivel {
 
 		private void selArquivo() {
 			checarInputArquivo();
+			if (Util.isEmpty(txtArquivo.getText())) {
+				txtArquivo.setText(ProjetoPreferencia.getDirPadraoSelecaoArquivos());
+			}
 			JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtArquivo.getText()));
 			int i = fileChooser.showOpenDialog(Aba.this);
 			if (i == JFileChooser.APPROVE_OPTION) {
