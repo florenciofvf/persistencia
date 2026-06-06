@@ -64,8 +64,8 @@ public abstract class BarraButton extends JToolBar
 	protected final CheckBox chkPsqConteudo = new CheckBox();
 	protected Action salvarAcao = Action.actionIconSalvar();
 	protected Action baixarAcao = Action.actionIconBaixar();
+	protected Action limparAcao = Action.actionIconLimpar();
 	protected ButtonColar buttonColar = new ButtonColar();
-	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
 	private Action excluirAcao = actionIconExcluir();
 	private static final long serialVersionUID = 1L;

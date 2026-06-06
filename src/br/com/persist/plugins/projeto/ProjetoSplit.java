@@ -399,6 +399,7 @@ class Aba extends Transferivel {
 
 		public void ini() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, SALVAR, COPIAR, COLAR);
+			limparAcao.text(ProjetoMensagens.getString("label.limpar_inicializar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
@@ -623,6 +624,7 @@ class Aba extends Transferivel {
 
 		@Override
 		protected void limpar() {
+			String string = editor.getText();
 			editor.limpar();
 			if (Util.isEmpty(txtArquivo.getText())) {
 				return;
@@ -632,6 +634,10 @@ class Aba extends Transferivel {
 			append(builder, fragmentoInicio, "1");
 			append(builder, fragmentoFinal, "1");
 			builder.append(Constantes.QL);
+			if (!Util.isEmpty(string)
+					&& Util.confirmar(this, ProjetoMensagens.getString("msg.manter_conteudo_editor"), false)) {
+				builder.append(string);
+			}
 			editor.setText(builder.toString());
 		}
 
