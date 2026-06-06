@@ -40,12 +40,12 @@ class SufixoDialogo extends AbstratoDialogo {
 	private final Toolbar toolbar = new Toolbar();
 
 	SufixoDialogo(Frame frame) {
-		super(frame, "Sufixos");
+		super(frame, "Sufixos [" + MapaSufixos.getLista().size() + "]");
 		init();
 	}
 
 	SufixoDialogo(Dialog dialog) {
-		super(dialog, "Sufixos");
+		super(dialog, "Sufixos [" + MapaSufixos.getLista().size() + "]");
 		init();
 	}
 
