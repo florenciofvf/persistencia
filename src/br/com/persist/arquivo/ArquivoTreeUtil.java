@@ -26,6 +26,7 @@ public class ArquivoTreeUtil {
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
 		arquivoTree.getModelo().treeStructureChanged(event);
+		SwingUtilities.updateComponentTreeUI(arquivoTree);
 	}
 
 	public static void refreshEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
