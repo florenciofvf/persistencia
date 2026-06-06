@@ -166,9 +166,10 @@ class AnotacaoSplit extends SplitPane {
 		public void renomearArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null) {
+				boolean expandido = arquivoTree.isExpandido(arquivo);
 				String nome = ArquivoUtil.getNome(AnotacaoSplit.this, arquivo.getName());
 				if (nome != null && arquivo.renomear(nome)) {
-					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
+					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo, expandido);
 					panel.renomear();
 				}
 			}

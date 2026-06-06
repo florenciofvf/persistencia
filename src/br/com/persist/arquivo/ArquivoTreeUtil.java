@@ -23,10 +23,17 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void atualizarEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
+		atualizarEstrutura(arquivoTree, arquivo, false);
+	}
+
+	public static void atualizarEstrutura(ArquivoTree arquivoTree, Arquivo arquivo, boolean expandido) {
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
 		arquivoTree.getModelo().treeStructureChanged(event);
 		SwingUtilities.updateComponentTreeUI(arquivoTree);
+		if (expandido) {
+			arquivoTree.expandPath(path);
+		}
 	}
 
 	public static void refreshEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
