@@ -36,8 +36,8 @@ public class Arquivo {
 		return ignorados;
 	}
 
-	public void reiniciar() {
-		processado = true;
+	private void reiniciar() {
+		processado = false;
 		filhos.clear();
 		inflar();
 	}
@@ -73,6 +73,7 @@ public class Arquivo {
 			boolean resp = file.renameTo(destino);
 			if (resp) {
 				file = destino;
+				reiniciar();
 			}
 			return resp;
 		} catch (Exception e) {

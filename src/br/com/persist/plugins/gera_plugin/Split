@@ -168,7 +168,7 @@ class ###nameCap###Split extends SplitPane {
 			if (arquivo != null) {
 				String nome = ArquivoUtil.getNome(###nameCap###Split.this, arquivo.getName());
 				if (nome != null && arquivo.renomear(nome)) {
-					ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
+					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
 					panel.renomear();
 				}
 			}

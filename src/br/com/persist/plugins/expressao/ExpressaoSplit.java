@@ -193,7 +193,7 @@ class ExpressaoSplit extends SplitPane {
 			if (arquivo != null) {
 				String nome = ArquivoUtil.getNome(ExpressaoSplit.this, arquivo.getName());
 				if (nome != null && arquivo.renomear(nome)) {
-					ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
+					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
 					panel.renomear();
 				}
 			}

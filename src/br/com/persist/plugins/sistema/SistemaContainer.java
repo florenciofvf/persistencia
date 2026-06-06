@@ -271,7 +271,7 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 		if (arquivo != null) {
 			String nome = ArquivoUtil.getNome(SistemaContainer.this, arquivo.getName());
 			if (nome != null && arquivo.renomear(nome)) {
-				ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
+				ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
 			}
 		}
 	}
