@@ -624,19 +624,19 @@ class Aba extends Transferivel {
 
 		@Override
 		protected void limpar() {
-			String string = editor.getText();
-			editor.limpar();
 			if (Util.isEmpty(txtArquivo.getText())) {
+				editor.limpar();
 				return;
 			}
+			String conteudo = editor.getText();
 			StringBuilder builder = new StringBuilder();
 			append(builder, fragmentoArquivo, txtArquivo.getText().trim());
 			append(builder, fragmentoInicio, "1");
 			append(builder, fragmentoFinal, "1");
 			builder.append(Constantes.QL);
-			if (!Util.isEmpty(string)
+			if (!Util.isEmpty(conteudo)
 					&& Util.confirmar(this, ProjetoMensagens.getString("msg.manter_conteudo_editor"), false)) {
-				builder.append(string);
+				builder.append(conteudo);
 			}
 			editor.setText(builder.toString());
 		}
