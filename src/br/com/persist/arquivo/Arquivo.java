@@ -85,6 +85,9 @@ public class Arquivo {
 
 	public List<TreePath> atualizarPaths(List<TreePath> lista) {
 		List<TreePath> resposta = new ArrayList<>();
+		if (lista == null || lista.isEmpty()) {
+			return resposta;
+		}
 		TreePath meuPath = ArquivoTreeUtil.getTreePath(this);
 		resposta.add(meuPath);
 		for (TreePath item : lista) {
