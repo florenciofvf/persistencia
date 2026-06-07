@@ -36,6 +36,7 @@ public class ArquivoTreeUtil {
 			for (TreePath item : paths) {
 				arquivoTree.expandPath(item);
 			}
+			arquivoTree.setSelectionPath(path);
 		}
 	}
 
