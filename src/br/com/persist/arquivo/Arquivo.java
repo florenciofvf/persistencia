@@ -14,6 +14,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.tree.TreePath;
+
 import br.com.persist.assistencia.Util;
 
 public class Arquivo {
@@ -79,6 +81,48 @@ public class Arquivo {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public List<TreePath> atualizarPaths(List<TreePath> lista) {
+		List<TreePath> resposta = new ArrayList<>();
+		TreePath meuPath = ArquivoTreeUtil.getTreePath(this);
+		resposta.add(meuPath);
+		for (TreePath item : lista) {
+			TreePath resp = atualizar(meuPath, item);
+			if (resp != null) {
+				resposta.add(resp);
+			}
+		}
+		return resposta;
+	}
+
+	private TreePath atualizar(TreePath meuPath, TreePath item) {
+		Object[] meuArray = meuPath.getPath();
+		Object[] outArray = item.getPath();
+		if (outArray.length <= meuArray.length) {
+			return null;
+		}
+		Arquivo ultimo = getUltimo(outArray, meuArray.length);
+		if (ultimo != null) {
+			return ArquivoTreeUtil.getTreePath(ultimo);
+		}
+		return null;
+	}
+
+	private Arquivo getUltimo(Object[] array, int indice) {
+		Object obj = array[indice];
+		Arquivo arq = getFilho(obj.toString());
+		if (arq == null) {
+			return null;
+		}
+		for (int i = indice + 1; i < array.length; i++) {
+			obj = array[i];
+			arq = arq.getFilho(obj.toString());
+			if (arq == null) {
+				return null;
+			}
+		}
+		return arq;
 	}
 
 	public void listar(List<Arquivo> lista) {
@@ -174,6 +218,15 @@ public class Arquivo {
 			Arquivo a = m.getArquivo(file);
 			if (a != null) {
 				return a;
+			}
+		}
+		return null;
+	}
+
+	private Arquivo getFilho(String nome) {
+		for (Arquivo item : filhos) {
+			if (item.getName().equals(nome)) {
+				return item;
 			}
 		}
 		return null;
@@ -297,16 +350,20 @@ public class Arquivo {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Arquivo other = (Arquivo) obj;
 		if (file == null) {
-			if (other.file != null)
+			if (other.file != null) {
 				return false;
+			}
 		} else if (!file.equals(other.file)) {
 			return false;
 		}

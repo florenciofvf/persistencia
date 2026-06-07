@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
 
@@ -97,12 +98,18 @@ public class ArquivoTree extends Tree {
 		return null;
 	}
 
-	public boolean isExpandido(Arquivo arquivo) {
+	public List<TreePath> getExpandidos(Arquivo arquivo) {
+		List<TreePath> lista = new ArrayList<>();
 		if (arquivo != null) {
 			TreePath path = ArquivoTreeUtil.getTreePath(arquivo);
-			return isExpanded(path);
+			Enumeration<TreePath> enumeration = getExpandedDescendants(path);
+			if (enumeration != null) {
+				while (enumeration.hasMoreElements()) {
+					lista.add(enumeration.nextElement());
+				}
+			}
 		}
-		return false;
+		return lista;
 	}
 
 	public void selecionarArquivo(Arquivo arquivo) {
