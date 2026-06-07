@@ -45,22 +45,29 @@ public class MapaSufixos {
 
 	static {
 		lista.add(new ChaveIcone("exception", Icones.EXCEPTION));
+		lista.add(new ChaveIcone("database", Icones.DATABASE));
 		lista.add(new ChaveIcone("endpoint", Icones.URL));
+		lista.add(new ChaveIcone("question", Icones.QUESTION));
 		lista.add(new ChaveIcone("estados", Icones.ESTRELA));
 		lista.add(new ChaveIcone("service", Icones.CONFIG));
 		lista.add(new ChaveIcone("refresh", Icones.ATUALIZAR));
 		lista.add(new ChaveIcone("usuario", Icones.USUARIO));
 		lista.add(new ChaveIcone("pessoas", Icones.PESSOAS));
 		lista.add(new ChaveIcone("target2", Icones.TARGET2));
+		lista.add(new ChaveIcone("target3", Icones.TARGET3));
 		lista.add(new ChaveIcone("parent", Icones.MODULO));
 		lista.add(new ChaveIcone("target", Icones.TARGET));
 		lista.add(new ChaveIcone("pessoa", Icones.PESSOA));
+		lista.add(new ChaveIcone("server", Icones.SERVER));
+		lista.add(new ChaveIcone("cifrao", Icones.CIFRAO));
 		lista.add(new ChaveIcone("empty", Icones.VAZIO));
 		lista.add(new ChaveIcone("timer", Icones.TIMER));
 		lista.add(new ChaveIcone("anexo", Icones.ANEXO));
 		lista.add(new ChaveIcone("start", Icones.START));
 		lista.add(new ChaveIcone("check", Icones.SUCESSO));
 		lista.add(new ChaveIcone("xhtml", Icones.ELEMENTO));
+		lista.add(new ChaveIcone("queue", Icones.QUEUE));
+		lista.add(new ChaveIcone("email", Icones.EMAIL));
 		lista.add(new ChaveIcone("auto", Icones.CONFIG2));
 		lista.add(new ChaveIcone("exec", Icones.EXECUTAR));
 		lista.add(new ChaveIcone("info", Icones.INFO));
@@ -73,6 +80,8 @@ public class MapaSufixos {
 		lista.add(new ChaveIcone("boss", Icones.BOSS));
 		lista.add(new ChaveIcone("url", Icones.URL));
 		lista.add(new ChaveIcone("xml", Icones.ELEMENTO));
+		lista.add(new ChaveIcone("bug", Icones.BUG));
+		lista.add(new ChaveIcone("css", Icones.CSS));
 		lista.add(new ChaveIcone("up", Icones.UPDATE));
 		lista.add(new ChaveIcone("js", Icones.JS));
 	}

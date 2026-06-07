@@ -34,6 +34,8 @@ public class Icones {
 	public static final Icon ATUALIZAR = criarImagem("refresh");
 	public static final Icon UM_PIXEL = criarImagem("um_pixel");
 	public static final Icon FRAGMENTO = criarImagem("feature");
+	public static final Icon DATABASE = criarImagem("database");
+	public static final Icon QUESTION = criarImagem("question");
 	public static final Icon SINCRONIZAR = criarImagem("sync");
 	public static final Icon ELEMENTO = criarImagem("element");
 	public static final Icon ARRASTAR = criarImagem("synonym");
@@ -47,6 +49,7 @@ public class Icones {
 	public static final Icon USUARIO = criarImagem("usuario");
 	public static final Icon PESSOAS = criarImagem("pessoas");
 	public static final Icon TARGET2 = criarImagem("target2");
+	public static final Icon TARGET3 = criarImagem("target3");
 	public static final Icon SALVARC = criarImagem("saveas");
 	public static final Icon BAIXAR2 = criarImagem("bottom");
 	public static final Icon CRIAR2 = criarImagem("create2");
@@ -69,6 +72,8 @@ public class Icones {
 	public static final Icon REGION = criarImagem("region");
 	public static final Icon BACKUP = criarImagem("backup");
 	public static final Icon PESSOA = criarImagem("pessoa");
+	public static final Icon CIFRAO = criarImagem("cifrao");
+	public static final Icon SERVER = criarImagem("server");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon FECHAR = criarImagem("close");
@@ -84,6 +89,8 @@ public class Icones {
 	public static final Icon TIMER = criarImagem("timer");
 	public static final Icon VAZIO = criarImagem("empty");
 	public static final Icon CLONAR = criarImagem("copy");
+	public static final Icon EMAIL = criarImagem("email");
+	public static final Icon QUEUE = criarImagem("queue");
 	public static final Icon COPIA = criarImagem("copy");
 	public static final Icon ABRIR = criarImagem("open");
 	public static final Icon TEXTO = criarImagem("text");
@@ -109,6 +116,8 @@ public class Icones {
 	public static final Icon KEY = criarImagem("key");
 	public static final Icon TAG = criarImagem("tag");
 	public static final Icon URL = criarImagem("url");
+	public static final Icon BUG = criarImagem("bug");
+	public static final Icon CSS = criarImagem("css");
 	public static final Icon JS = criarImagem("js");
 
 	private Icones() {
