@@ -60,6 +60,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
+import javax.swing.tree.TreePath;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -235,10 +236,10 @@ class NavegacaoSplit extends SplitPane {
 		public void renomearArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null) {
-				boolean expandido = arquivoTree.isExpandido(arquivo);
+				List<TreePath> expandidos = arquivoTree.getExpandidos(arquivo);
 				String nome = ArquivoUtil.getNome(NavegacaoSplit.this, arquivo.getName());
 				if (nome != null && arquivo.renomear(nome)) {
-					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo, expandido);
+					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo, expandidos);
 					panel.renomear();
 				}
 			}

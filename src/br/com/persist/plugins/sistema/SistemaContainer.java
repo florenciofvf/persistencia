@@ -15,12 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
+import javax.swing.tree.TreePath;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -269,10 +271,10 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 	public void renomearArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			boolean expandido = arquivoTree.isExpandido(arquivo);
+			List<TreePath> expandidos = arquivoTree.getExpandidos(arquivo);
 			String nome = ArquivoUtil.getNome(SistemaContainer.this, arquivo.getName());
 			if (nome != null && arquivo.renomear(nome)) {
-				ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo, expandido);
+				ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo, expandidos);
 			}
 		}
 	}
