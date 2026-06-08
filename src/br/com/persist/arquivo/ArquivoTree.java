@@ -156,8 +156,10 @@ public class ArquivoTree extends Tree {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				mouseListenerInner
-						.mouseClicked(new MouseEvent(ArquivoTree.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+				/**
+				 * mouseListenerInner .mouseClicked(new MouseEvent(ArquivoTree.this, 0, 0, 0, 0,
+				 * 0, Constantes.DOIS, false));
+				 */
 			}
 		}
 	};
