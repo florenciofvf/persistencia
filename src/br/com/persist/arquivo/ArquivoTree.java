@@ -155,7 +155,7 @@ public class ArquivoTree extends Tree {
 	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
 		@Override
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				processarArquivo();
 			}
 		}

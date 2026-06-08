@@ -37,6 +37,8 @@ public class ArquivoTreeUtil {
 				arquivoTree.expandPath(item);
 			}
 		}
+		arquivoTree.requestFocus();
+		arquivoTree.setSelectionPath(path);
 	}
 
 	public static void refreshEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
