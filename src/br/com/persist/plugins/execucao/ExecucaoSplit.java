@@ -256,8 +256,8 @@ class ExecucaoSplit extends SplitPane {
 				if (novo != null) {
 					arquivo.ordenar();
 					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
-					requestFocus();
 					ArquivoTreeUtil.selecionarObjeto(arquivoTree, novo);
+					arquivoTree.requestFocus();
 					arquivoTree.repaint();
 				}
 			}

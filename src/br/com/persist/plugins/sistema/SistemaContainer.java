@@ -307,8 +307,8 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 			if (novo != null) {
 				arquivo.ordenar();
 				ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
-				requestFocus();
 				ArquivoTreeUtil.selecionarObjeto(arquivoTree, novo);
+				arquivoTree.requestFocus();
 				arquivoTree.repaint();
 			}
 		}
