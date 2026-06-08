@@ -79,9 +79,10 @@ public class ArquivoTreeExt extends ArquivoTree {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				popupTrigger = false;
-				mouseListenerInner
-						.mouseClicked(new MouseEvent(ArquivoTreeExt.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+				/**
+				 * popupTrigger = false; mouseListenerInner .mouseClicked(new
+				 * MouseEvent(ArquivoTreeExt.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+				 */
 			}
 		}
 	};
