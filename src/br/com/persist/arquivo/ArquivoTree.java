@@ -156,10 +156,7 @@ public class ArquivoTree extends Tree {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				/**
-				 * mouseListenerInner .mouseClicked(new MouseEvent(ArquivoTree.this, 0, 0, 0, 0,
-				 * 0, Constantes.DOIS, false));
-				 */
+				processarArquivo();
 			}
 		}
 	};
@@ -225,18 +222,22 @@ public class ArquivoTree extends Tree {
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {
-				Arquivo arquivo = getObjetoSelecionado();
-				if (arquivo == null) {
-					return;
-				}
-				if (arquivo.isFile()) {
-					ouvintes.forEach(o -> o.abrirArquivo(ArquivoTree.this));
-				} else if (arquivo.isDirectory()) {
-					ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this));
-				}
+				processarArquivo();
 			}
 		}
 	};
+
+	private void processarArquivo() {
+		Arquivo arquivo = getObjetoSelecionado();
+		if (arquivo == null) {
+			return;
+		}
+		if (arquivo.isFile()) {
+			ouvintes.forEach(o -> o.abrirArquivo(ArquivoTree.this));
+		} else if (arquivo.isDirectory()) {
+			ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this));
+		}
+	}
 
 	public class ArquivoPopup extends Popup {
 		private Action novoDiretorioAcao = actionMenu("label.novo_diretorio", Icones.ABRIR);

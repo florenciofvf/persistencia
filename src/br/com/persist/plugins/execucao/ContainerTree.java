@@ -61,10 +61,7 @@ public class ContainerTree extends Tree {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				/**
-				 * mouseListenerInner .mouseClicked(new MouseEvent(ContainerTree.this, 0, 0, 0,
-				 * 0, 0, Constantes.DOIS, false));
-				 */
+				processarContainer();
 			}
 		}
 	};
@@ -126,14 +123,18 @@ public class ContainerTree extends Tree {
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {
-				Container arquivo = getObjetoSelecionado();
-				if (arquivo == null) {
-					return;
-				}
-				ouvintes.forEach(o -> o.executar(ContainerTree.this, true));
+				processarContainer();
 			}
 		}
 	};
+
+	private void processarContainer() {
+		Container arquivo = getObjetoSelecionado();
+		if (arquivo == null) {
+			return;
+		}
+		ouvintes.forEach(o -> o.executar(ContainerTree.this, true));
+	}
 
 	private class ContainerPopup extends Popup {
 		private Action executarMemoriaAcao = Action.acaoMenu(ExecucaoMensagens.getString("label.executar_memoria"),

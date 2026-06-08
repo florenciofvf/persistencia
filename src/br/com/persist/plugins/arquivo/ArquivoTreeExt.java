@@ -79,10 +79,7 @@ public class ArquivoTreeExt extends ArquivoTree {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				/**
-				 * popupTrigger = false; mouseListenerInner .mouseClicked(new
-				 * MouseEvent(ArquivoTreeExt.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
-				 */
+				processarArquivoExt();
 			}
 		}
 	};
@@ -149,10 +146,7 @@ public class ArquivoTreeExt extends ArquivoTree {
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {
-				Arquivo arquivo = getObjetoSelecionado();
-				if (arquivo != null && arquivo.isFile()) {
-					ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTreeExt.this));
-				}
+				processarArquivoExt();
 			} else {
 				Arquivo arquivo = (Arquivo) clicado.getLastPathComponent();
 				if (arquivo == null || !arquivo.isFile()) {
@@ -163,6 +157,13 @@ public class ArquivoTreeExt extends ArquivoTree {
 			}
 		}
 	};
+
+	private void processarArquivoExt() {
+		Arquivo arquivo = getObjetoSelecionado();
+		if (arquivo != null && arquivo.isFile()) {
+			ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTreeExt.this));
+		}
+	}
 
 	private class ArquivoPopup extends Popup {
 		private Action fecharAcao = actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);

@@ -110,10 +110,7 @@ public class AnexoTree extends Tree {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				/**
-				 * mouseListenerInner.mouseClicked(new MouseEvent(AnexoTree.this, 0, 0, 0, 0, 0,
-				 * Constantes.DOIS, false));
-				 */
+				processarAnexo();
 			}
 		}
 	};
@@ -175,22 +172,26 @@ public class AnexoTree extends Tree {
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {
-				Anexo anexo = getObjetoSelecionado();
-				if (anexo == null) {
-					return;
-				}
-				if (anexo.isFile()) {
-					if (anexo.isPadraoAbrir()) {
-						ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this));
-					} else {
-						ouvintes.forEach(o -> o.editarAnexo(AnexoTree.this));
-					}
-				} else if (anexo.isDirectory()) {
-					ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this));
-				}
+				processarAnexo();
 			}
 		}
 	};
+
+	private void processarAnexo() {
+		Anexo anexo = getObjetoSelecionado();
+		if (anexo == null) {
+			return;
+		}
+		if (anexo.isFile()) {
+			if (anexo.isPadraoAbrir()) {
+				ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this));
+			} else {
+				ouvintes.forEach(o -> o.editarAnexo(AnexoTree.this));
+			}
+		} else if (anexo.isDirectory()) {
+			ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this));
+		}
+	}
 
 	private class AnexoPopup extends Popup {
 		private CheckBoxItem chkPadraoAbrir = new CheckBoxItem("label.padrao_desktop_open", Icones.EXECUTAR);
