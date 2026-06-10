@@ -85,11 +85,11 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 			painelConfiguracao.addConfiguracao(configuracao);
 		}
 		List<FabricaContainer> lista = formulario.getFabricas();
-		for (FabricaContainer fabricaContainer : lista) {
-			if (fabricaContainer instanceof FormularioFabrica) {
+		for (FabricaContainer item : lista) {
+			if (item instanceof FormularioFabrica) {
 				continue;
 			}
-			AbstratoConfiguracao configuracao = fabricaContainer.getConfiguracao(formulario);
+			AbstratoConfiguracao configuracao = item.getConfiguracao(formulario);
 			painelConfiguracao.addConfiguracao(configuracao);
 		}
 		add(BorderLayout.NORTH, toolbar);

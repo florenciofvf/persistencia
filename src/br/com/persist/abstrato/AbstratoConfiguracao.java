@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.swing.BorderFactory;
+import javax.swing.JTable;
 import javax.swing.border.Border;
+import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
 import br.com.persist.formulario.Formulario;
@@ -70,7 +73,68 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 		}
 	}
 
-	public List<Atalho> getAtalhos() {
+	protected List<Atalho> getAtalhos() {
 		return Collections.emptyList();
+	}
+
+	protected Panel getPanelAtalhos() {
+		List<Atalho> atalhos = getAtalhos();
+		if (atalhos == null || atalhos.isEmpty()) {
+			return null;
+		}
+		Panel panel = new Panel();
+		panel.add(new ScrollPane(new JTable(new AtalhoModelo(atalhos))));
+		return panel;
+	}
+}
+
+class AtalhoModelo extends AbstractTableModel {
+	private static final String[] COLUNAS = { "TECLAS", "FUNCIONALIDADE" };
+	private static final long serialVersionUID = 1L;
+	private final transient List<Atalho> atalhos;
+
+	public AtalhoModelo(List<Atalho> atalhos) {
+		this.atalhos = Objects.requireNonNull(atalhos);
+	}
+
+	@Override
+	public int getRowCount() {
+		return atalhos.size();
+	}
+
+	@Override
+	public int getColumnCount() {
+		return COLUNAS.length;
+	}
+
+	@Override
+	public String getColumnName(int columnIndex) {
+		return COLUNAS[columnIndex];
+	}
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return String.class;
+	}
+
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return true;
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Atalho item = atalhos.get(rowIndex);
+		if (columnIndex == 0) {
+			return item.getTeclas();
+		} else if (columnIndex == 1) {
+			return item.getDescricao();
+		}
+		return null;
+	}
+
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		//
 	}
 }
