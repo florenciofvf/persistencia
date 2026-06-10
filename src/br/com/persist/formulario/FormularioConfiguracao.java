@@ -136,7 +136,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		}
 		muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.pref_fonte_editores"),
 				new PanelCenter(criarLabel("label.fonte"), comboFontes, criarLabel("label.tamanho"), comboSize)));
-		muro.camada(getPanelAtalhos());
+		muro.camada(getPanelAtalhos(60));
 		add(BorderLayout.CENTER, muro);
 	}
 

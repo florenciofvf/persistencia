@@ -2,6 +2,7 @@ package br.com.persist.abstrato;
 
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
@@ -77,12 +78,13 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 		return Collections.emptyList();
 	}
 
-	protected Panel getPanelAtalhos() {
+	protected Panel getPanelAtalhos(int altura) {
 		List<Atalho> atalhos = getAtalhos();
 		if (atalhos == null || atalhos.isEmpty()) {
 			return null;
 		}
 		Panel panel = new Panel();
+		panel.setPreferredSize(new Dimension(0, altura));
 		panel.add(new ScrollPane(new JTable(new AtalhoModelo(atalhos))));
 		return panel;
 	}
