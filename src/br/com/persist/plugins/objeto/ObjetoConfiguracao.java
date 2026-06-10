@@ -9,7 +9,9 @@ import java.awt.Window;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -20,6 +22,7 @@ import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.abstrato.Atalho;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.CheckBox;
@@ -121,6 +124,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				.panelGridBorderTop(new PanelCenter(criarLabel("label.nivel_transparencia"), cmbNivelTransparencia)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
+		muro.camada(getPanelAtalhos(120));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -308,5 +312,17 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	@Override
 	public void adicionadoAoFichario() {
 		checkPesquisa();
+	}
+
+	@Override
+	protected List<Atalho> getAtalhos() {
+		List<Atalho> atalhos = new ArrayList<>();
+		atalhos.add(Atalho.ctrl('T', ObjetoMensagens.getString("label.ativar_thread")));
+		atalhos.add(Atalho.ctrl('Y', ObjetoMensagens.getString("label.desativar_thread")));
+		atalhos.add(Atalho.ctrl('N', ObjetoMensagens.getString("label.listar_macro")));
+		atalhos.add(Atalho.ctrl('M', ObjetoMensagens.getString("label.executar_macro")));
+		atalhos.add(Atalho.ctrl('X', ObjetoMensagens.getString("label.zoom_mais")));
+		atalhos.add(Atalho.ctrl('Z', ObjetoMensagens.getString("label.zoom_menos")));
+		return atalhos;
 	}
 }
