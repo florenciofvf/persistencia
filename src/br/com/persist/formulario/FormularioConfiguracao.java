@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -20,6 +22,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.abstrato.Atalho;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
@@ -133,6 +136,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		}
 		muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.pref_fonte_editores"),
 				new PanelCenter(criarLabel("label.fonte"), comboFontes, criarLabel("label.tamanho"), comboSize)));
+		muro.camada(getPanelAtalhos());
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -358,5 +362,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				}
 			});
 		}
+	}
+
+	@Override
+	protected List<Atalho> getAtalhos() {
+		List<Atalho> atalhos = new ArrayList<>();
+		atalhos.add(Atalho.ctrl('Q', FormularioMensagens.getString("label.excluir_pagina")));
+		return atalhos;
 	}
 }

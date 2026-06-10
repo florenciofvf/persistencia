@@ -16,4 +16,8 @@ public class Atalho {
 	public String getDescricao() {
 		return descricao;
 	}
+
+	public static Atalho ctrl(char c, String desc) {
+		return new Atalho("CTRL + " + c, desc);
+	}
 }
