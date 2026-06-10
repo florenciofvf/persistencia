@@ -3,6 +3,8 @@ package br.com.persist.abstrato;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import javax.swing.BorderFactory;
@@ -66,5 +68,9 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 		} else {
 			setBorder(BorderFactory.createTitledBorder(Objects.requireNonNull(titulo)));
 		}
+	}
+
+	public List<Atalho> getAtalhos() {
+		return Collections.emptyList();
 	}
 }
