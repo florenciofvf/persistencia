@@ -2,12 +2,15 @@ package br.com.persist.plugins.expressao;
 
 import java.awt.BorderLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.abstrato.Atalho;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.CheckBox;
@@ -39,6 +42,7 @@ public class ExpressaoConfiguracao extends AbstratoConfiguracao {
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
+		muro.camada(getPanelAtalhos(40));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -104,5 +108,12 @@ public class ExpressaoConfiguracao extends AbstratoConfiguracao {
 				}
 			});
 		}
+	}
+
+	@Override
+	protected List<Atalho> getAtalhos() {
+		List<Atalho> atalhos = new ArrayList<>();
+		atalhos.add(Atalho.ctrl('P', ExpressaoMensagens.getString("label.compilar")));
+		return atalhos;
 	}
 }
