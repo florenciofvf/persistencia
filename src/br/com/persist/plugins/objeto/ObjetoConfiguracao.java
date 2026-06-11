@@ -124,7 +124,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				.panelGridBorderTop(new PanelCenter(criarLabel("label.nivel_transparencia"), cmbNivelTransparencia)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
-		muro.camada(getPanelAtalhos(160));
+		muro.camada(getPanelAtalhos(200));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -325,6 +325,14 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		atalhos.add(Atalho.ctrl('M', ObjetoMensagens.getString("label.executar_macro")));
 		atalhos.add(Atalho.ctrl('X', ObjetoMensagens.getString("label.zoom_mais")));
 		atalhos.add(Atalho.ctrl('Z', ObjetoMensagens.getString("label.zoom_menos")));
+		atalhos.add(Atalho.ctrl('D', ObjetoMensagens.getString("label.excluir_objetos")));
+		atalhos.add(Atalho.ctrl('S', ObjetoMensagens.getString("label.salvar_arquivo")));
+		atalhos.add(Atalho.ctrl('C', ObjetoMensagens.getString("label.copiar")));
+		atalhos.add(Atalho.ctrl('V', ObjetoMensagens.getString("label.colar")));
+		atalhos.add(Atalho.ctrl("RIGHT", ObjetoMensagens.getString("label.mover_para_direita")));
+		atalhos.add(Atalho.ctrl("LEFT", ObjetoMensagens.getString("label.mover_para_esquerda")));
+		atalhos.add(Atalho.ctrl("UP", ObjetoMensagens.getString("label.mover_para_cima")));
+		atalhos.add(Atalho.ctrl("DOWN", ObjetoMensagens.getString("label.mover_para_baixo")));
 		return atalhos;
 	}
 }
