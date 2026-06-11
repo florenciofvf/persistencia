@@ -124,7 +124,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				.panelGridBorderTop(new PanelCenter(criarLabel("label.nivel_transparencia"), cmbNivelTransparencia)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
-		muro.camada(getPanelAtalhos(120));
+		muro.camada(getPanelAtalhos(160));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -317,6 +317,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	@Override
 	protected List<Atalho> getAtalhos() {
 		List<Atalho> atalhos = new ArrayList<>();
+		atalhos.add(Atalho.ctrl('F', ObjetoMensagens.getString("label.abrir_no_formulario")));
+		atalhos.add(Atalho.ctrl('A', ObjetoMensagens.getString("label.abrir_no_fichario")));
 		atalhos.add(Atalho.ctrl('T', ObjetoMensagens.getString("label.ativar_thread")));
 		atalhos.add(Atalho.ctrl('Y', ObjetoMensagens.getString("label.desativar_thread")));
 		atalhos.add(Atalho.ctrl('N', ObjetoMensagens.getString("label.listar_macro")));
