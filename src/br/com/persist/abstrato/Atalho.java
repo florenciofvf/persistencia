@@ -24,4 +24,8 @@ public class Atalho {
 	public static Atalho ctrl(String string, String desc) {
 		return new Atalho("CTRL + " + string, desc);
 	}
+
+	public static Atalho shift(String string, String desc) {
+		return new Atalho("SHIFT + " + string, desc);
+	}
 }

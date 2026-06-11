@@ -323,6 +323,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		atalhos.add(Atalho.ctrl('Y', ObjetoMensagens.getString("label.desativar_thread")));
 		atalhos.add(Atalho.ctrl('N', ObjetoMensagens.getString("label.listar_macro")));
 		atalhos.add(Atalho.ctrl('M', ObjetoMensagens.getString("label.executar_macro")));
+		atalhos.add(Atalho.ctrl('D', ObjetoMensagens.getString("label.excluir_macro")));
 		atalhos.add(Atalho.ctrl('X', ObjetoMensagens.getString("label.zoom_mais")));
 		atalhos.add(Atalho.ctrl('Z', ObjetoMensagens.getString("label.zoom_menos")));
 		atalhos.add(Atalho.ctrl('D', ObjetoMensagens.getString("label.excluir_objetos")));
@@ -333,6 +334,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		atalhos.add(Atalho.ctrl("LEFT", ObjetoMensagens.getString("label.mover_para_esquerda")));
 		atalhos.add(Atalho.ctrl("UP", ObjetoMensagens.getString("label.mover_para_cima")));
 		atalhos.add(Atalho.ctrl("DOWN", ObjetoMensagens.getString("label.mover_para_baixo")));
+		atalhos.add(Atalho.shift("ENTER", ObjetoMensagens.getString("label.pesquisar")));
 		return atalhos;
 	}
 }
