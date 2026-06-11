@@ -366,13 +366,15 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 
 	@Override
 	protected List<Atalho> getAtalhos() {
+		String editor = "Editor";
 		List<Atalho> atalhos = new ArrayList<>();
-		atalhos.add(Atalho.ctrl('Q', FormularioMensagens.getString("label.excluir_pagina")));
-		atalhos.add(Atalho.ctrl('F', FormularioMensagens.getString("label.pesquisar")));
-		atalhos.add(Atalho.ctrl('S', FormularioMensagens.getString("label.salvar_conteudo")));
-		atalhos.add(Atalho.ctrl('B', FormularioMensagens.getString("label.baixar_conteudo")));
-		atalhos.add(Atalho.ctrl("UP", FormularioMensagens.getString("label.aumentar_fonte")));
-		atalhos.add(Atalho.ctrl("DOWN", FormularioMensagens.getString("label.diminuir_fonte")));
+		String formulario = FormularioMensagens.getString("label.formulario");
+		atalhos.add(Atalho.ctrl('Q', FormularioMensagens.getString("label.excluir_pagina"), formulario));
+		atalhos.add(Atalho.ctrl('F', FormularioMensagens.getString("label.pesquisar"), editor));
+		atalhos.add(Atalho.ctrl('S', FormularioMensagens.getString("label.salvar_conteudo"), editor));
+		atalhos.add(Atalho.ctrl('B', FormularioMensagens.getString("label.baixar_conteudo"), editor));
+		atalhos.add(Atalho.ctrl("UP", FormularioMensagens.getString("label.aumentar_fonte"), editor));
+		atalhos.add(Atalho.ctrl("DOWN", FormularioMensagens.getString("label.diminuir_fonte"), editor));
 		return atalhos;
 	}
 }

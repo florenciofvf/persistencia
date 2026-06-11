@@ -91,7 +91,7 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 }
 
 class AtalhoModelo extends AbstractTableModel {
-	private static final String[] COLUNAS = { "TECLAS", "FUNCIONALIDADE" };
+	private static final String[] COLUNAS = { "TECLAS", "FUNCIONALIDADE", "CONTEXTO" };
 	private static final long serialVersionUID = 1L;
 	private final transient List<Atalho> atalhos;
 
@@ -131,6 +131,8 @@ class AtalhoModelo extends AbstractTableModel {
 			return item.getTeclas();
 		} else if (columnIndex == 1) {
 			return item.getDescricao();
+		} else if (columnIndex == 2) {
+			return item.getContexto();
 		}
 		return null;
 	}

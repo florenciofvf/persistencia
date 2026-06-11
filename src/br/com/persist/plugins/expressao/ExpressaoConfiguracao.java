@@ -113,7 +113,7 @@ public class ExpressaoConfiguracao extends AbstratoConfiguracao {
 	@Override
 	protected List<Atalho> getAtalhos() {
 		List<Atalho> atalhos = new ArrayList<>();
-		atalhos.add(Atalho.ctrl('P', ExpressaoMensagens.getString("label.compilar")));
+		atalhos.add(Atalho.ctrl('P', ExpressaoMensagens.getString("label.compilar"), "Editor"));
 		return atalhos;
 	}
 }

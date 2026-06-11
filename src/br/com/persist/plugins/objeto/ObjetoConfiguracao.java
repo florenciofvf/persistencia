@@ -317,24 +317,27 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	@Override
 	protected List<Atalho> getAtalhos() {
 		List<Atalho> atalhos = new ArrayList<>();
-		atalhos.add(Atalho.ctrl('F', ObjetoMensagens.getString("label.abrir_no_formulario")));
-		atalhos.add(Atalho.ctrl('A', ObjetoMensagens.getString("label.abrir_no_fichario")));
-		atalhos.add(Atalho.ctrl('T', ObjetoMensagens.getString("label.ativar_thread")));
-		atalhos.add(Atalho.ctrl('Y', ObjetoMensagens.getString("label.desativar_thread")));
-		atalhos.add(Atalho.ctrl('N', ObjetoMensagens.getString("label.listar_macro")));
-		atalhos.add(Atalho.ctrl('M', ObjetoMensagens.getString("label.executar_macro")));
-		atalhos.add(Atalho.ctrl('D', ObjetoMensagens.getString("label.excluir_macro")));
-		atalhos.add(Atalho.ctrl('X', ObjetoMensagens.getString("label.zoom_mais")));
-		atalhos.add(Atalho.ctrl('Z', ObjetoMensagens.getString("label.zoom_menos")));
-		atalhos.add(Atalho.ctrl('D', ObjetoMensagens.getString("label.excluir_objetos")));
-		atalhos.add(Atalho.ctrl('S', ObjetoMensagens.getString("label.salvar_arquivo")));
-		atalhos.add(Atalho.ctrl('C', ObjetoMensagens.getString("label.copiar")));
-		atalhos.add(Atalho.ctrl('V', ObjetoMensagens.getString("label.colar")));
-		atalhos.add(Atalho.ctrl("RIGHT", ObjetoMensagens.getString("label.mover_para_direita")));
-		atalhos.add(Atalho.ctrl("LEFT", ObjetoMensagens.getString("label.mover_para_esquerda")));
-		atalhos.add(Atalho.ctrl("UP", ObjetoMensagens.getString("label.mover_para_cima")));
-		atalhos.add(Atalho.ctrl("DOWN", ObjetoMensagens.getString("label.mover_para_baixo")));
-		atalhos.add(Atalho.shift("ENTER", ObjetoMensagens.getString("label.pesquisar")));
+		String formulario = ObjetoMensagens.getString("label.formulario");
+		String superficie = ObjetoMensagens.getString("label.superficie");
+		String dialogoMacro = ObjetoMensagens.getString("label.dialogo_macro");
+		atalhos.add(Atalho.ctrl('F', ObjetoMensagens.getString("label.abrir_no_formulario"), formulario));
+		atalhos.add(Atalho.ctrl('A', ObjetoMensagens.getString("label.abrir_no_fichario"), formulario));
+		atalhos.add(Atalho.ctrl('T', ObjetoMensagens.getString("label.ativar_thread"), superficie));
+		atalhos.add(Atalho.ctrl('Y', ObjetoMensagens.getString("label.desativar_thread"), superficie));
+		atalhos.add(Atalho.ctrl('N', ObjetoMensagens.getString("label.listar_macro"), superficie));
+		atalhos.add(Atalho.ctrl('M', ObjetoMensagens.getString("label.executar_macro"), superficie));
+		atalhos.add(Atalho.ctrl('D', ObjetoMensagens.getString("label.excluir_macro"), dialogoMacro));
+		atalhos.add(Atalho.ctrl('X', ObjetoMensagens.getString("label.zoom_mais"), superficie));
+		atalhos.add(Atalho.ctrl('Z', ObjetoMensagens.getString("label.zoom_menos"), superficie));
+		atalhos.add(Atalho.ctrl('D', ObjetoMensagens.getString("label.excluir_objetos"), superficie));
+		atalhos.add(Atalho.ctrl('S', ObjetoMensagens.getString("label.salvar_arquivo"), superficie));
+		atalhos.add(Atalho.ctrl('C', ObjetoMensagens.getString("label.copiar"), superficie));
+		atalhos.add(Atalho.ctrl('V', ObjetoMensagens.getString("label.colar"), superficie));
+		atalhos.add(Atalho.ctrl("RIGHT", ObjetoMensagens.getString("label.mover_para_direita"), superficie));
+		atalhos.add(Atalho.ctrl("LEFT", ObjetoMensagens.getString("label.mover_para_esquerda"), superficie));
+		atalhos.add(Atalho.ctrl("UP", ObjetoMensagens.getString("label.mover_para_cima"), superficie));
+		atalhos.add(Atalho.ctrl("DOWN", ObjetoMensagens.getString("label.mover_para_baixo"), superficie));
+		atalhos.add(Atalho.shift("ENTER", ObjetoMensagens.getString("label.pesquisar"), "Input complemento"));
 		return atalhos;
 	}
 }

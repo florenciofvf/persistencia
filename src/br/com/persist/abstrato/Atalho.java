@@ -3,10 +3,12 @@ package br.com.persist.abstrato;
 public class Atalho {
 	private final String teclas;
 	private final String descricao;
+	private final String contexto;
 
-	public Atalho(String teclas, String descricao) {
+	public Atalho(String teclas, String descricao, String contexto) {
 		this.teclas = teclas;
 		this.descricao = descricao;
+		this.contexto = contexto;
 	}
 
 	public String getTeclas() {
@@ -17,15 +19,19 @@ public class Atalho {
 		return descricao;
 	}
 
-	public static Atalho ctrl(char c, String desc) {
-		return ctrl("" + c, desc);
+	public String getContexto() {
+		return contexto;
 	}
 
-	public static Atalho ctrl(String string, String desc) {
-		return new Atalho("CTRL + " + string, desc);
+	public static Atalho ctrl(char c, String desc, String contexto) {
+		return ctrl("" + c, desc, contexto);
 	}
 
-	public static Atalho shift(String string, String desc) {
-		return new Atalho("SHIFT + " + string, desc);
+	public static Atalho ctrl(String string, String desc, String contexto) {
+		return new Atalho("CTRL + " + string, desc, contexto);
+	}
+
+	public static Atalho shift(String string, String desc, String contexto) {
+		return new Atalho("SHIFT + " + string, desc, contexto);
 	}
 }
