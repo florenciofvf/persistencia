@@ -24,8 +24,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,8 +53,8 @@ public class Formulario extends JFrame implements PluginBasico {
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 	private static final long serialVersionUID = 1L;
-	private Set<String> treeSet = new TreeSet<>();
 	private OuvinteFormulario ouvinteFormulario;
+	private Collection<String> collection;
 	private String tag;
 
 	public Formulario(GraphicsConfiguration gc) {
@@ -83,18 +81,18 @@ public class Formulario extends JFrame implements PluginBasico {
 		configurar();
 	}
 
-	public void limparTreeSet() {
-		treeSet.clear();
-	}
-
-	public void addEmTreeSet(Collection<String> collection) {
+	public void limparCollection() {
 		if (collection != null) {
-			treeSet.addAll(collection);
+			collection.clear();
 		}
 	}
 
-	public Set<String> getTreeSet() {
-		return treeSet;
+	public void setCollection(Collection<String> collection) {
+		this.collection = collection;
+	}
+
+	public Collection<String> getCollection() {
+		return collection;
 	}
 
 	public void setHintTitlePagina(int indice, String hint, String title) {
