@@ -156,8 +156,16 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
+		checarNivelTransparencia(args);
 		checarSelecionarConexao(args);
 		checarConexaoInfo(args);
+	}
+
+	private void checarNivelTransparencia(Map<String, Object> args) {
+		Object valor = args.get(ObjetoEvento.NIVEL_TRANSPARENCIA_FORMULARIO);
+		if (valor instanceof Float) {
+			ObjetoSuperficieUtil.setTransparenciaInternalFormulario(objetoSuperficie, (float) valor);
+		}
 	}
 
 	private void checarSelecionarConexao(Map<String, Object> args) {

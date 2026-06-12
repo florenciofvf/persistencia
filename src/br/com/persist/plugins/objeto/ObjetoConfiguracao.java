@@ -11,7 +11,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -190,6 +192,9 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			if (ItemEvent.SELECTED == e.getStateChange()) {
 				float nivel = Float.parseFloat(cmbNivelTransparencia.getSelectedItem().toString());
 				ObjetoPreferencia.setNivelTransparencia(nivel);
+				Map<String, Object> args = new HashMap<>();
+				args.put(ObjetoEvento.NIVEL_TRANSPARENCIA_FORMULARIO, ObjetoPreferencia.getNivelTransparencia());
+				formulario.processar(args);
 			}
 		});
 	}
