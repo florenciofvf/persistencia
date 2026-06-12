@@ -92,6 +92,9 @@ public class Formulario extends JFrame implements PluginBasico {
 	}
 
 	public Collection<String> getCollection() {
+		if (collection == null) {
+			collection = new ArrayList<>();
+		}
 		return collection;
 	}
 

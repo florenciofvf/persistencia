@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -1334,8 +1335,15 @@ class SuperficiePopup2 extends Popup {
 
 		Collection<String> collection = null;
 
-		if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.objetos_com_tabela_confirmar_duplicados"),
-				false)) {
+		List<String> lst = new ArrayList<>();
+		Set<String> set = new TreeSet<>();
+		for (String item : coletor.getLista()) {
+			lst.add(item);
+			set.add(item);
+		}
+
+		if (lst.size() != set.size() && Util.confirmar(superficie,
+				ObjetoMensagens.getString("msg.objetos_com_tabela_confirmar_duplicados"), false)) {
 			collection = new ArrayList<>();
 		} else {
 			collection = new TreeSet<>();
@@ -1347,9 +1355,9 @@ class SuperficiePopup2 extends Popup {
 
 		if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.salvar_tree_set_formulario"), false)) {
 			if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.salvar_tree_set_formulario_limpar"), false)) {
-				superficie.getFormulario().limparTreeSet();
+				superficie.getFormulario().limparCollection();
 			}
-			superficie.getFormulario().addEmTreeSet(collection);
+			superficie.getFormulario().setCollection(collection);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -1366,14 +1374,17 @@ class SuperficiePopup2 extends Popup {
 
 	private void visualizarTreeSet() {
 		StringBuilder sb = new StringBuilder();
-		for (String item : superficie.getFormulario().getTreeSet()) {
+		Collection<String> collection = superficie.getFormulario().getCollection();
+		for (String item : collection) {
 			if (sb.length() > 0) {
 				sb.append(Constantes.QL);
 			}
 			sb.append(item);
 		}
-		sb.append(Constantes.QL);
-		sb.append("TOTAL - " + superficie.getFormulario().getTreeSet().size());
+		if (!collection.isEmpty()) {
+			sb.append(Constantes.QL);
+		}
+		sb.append("TOTAL - " + collection.size());
 		Util.mensagem(superficie, sb.toString());
 	}
 
