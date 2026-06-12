@@ -1149,7 +1149,9 @@ class SuperficiePopup2 extends Popup {
 		this.superficie = superficie;
 		addMenuItem(processarObjetosAcao);
 		addMenuItem(objetosComTabelaAcao);
-		addMenuItem(objetosComTabelaTreeSetAcao);
+		String hintTreeSet = "Usado pelo item acima: "
+				+ ObjetoMensagens.getString(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
+		addMenuItem(objetosComTabelaTreeSetAcao, hintTreeSet);
 		addMenuItem(true, criarObjetoAcao);
 		addMenuItem(true, colarAcao);
 		add(true, superficie.getMenuAjustar());
