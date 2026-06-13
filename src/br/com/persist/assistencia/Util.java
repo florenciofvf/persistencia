@@ -1159,6 +1159,40 @@ public class Util {
 		return s != null && s.startsWith("Mac OS");
 	}
 
+	public static String clonarEm(Component parent, File file, AtomicReference<File> ref) throws IOException {
+		if (file == null) {
+			throw new IOException("ARQUIVO NULL");
+		}
+		if (!file.isFile()) {
+			throw new IOException("NAO EH ARQUIVO: " + file.getAbsolutePath());
+		}
+		Object resp = getValorInputDialog(parent, "label.nome_diretorio",
+				Mensagens.getString("label.endereco_absoluto_diretorio_destino"), "");
+		if (resp == null || Util.isEmpty(resp.toString())) {
+			throw new IOException("NOME NAO DEFINIDO (processo abortado)");
+		}
+		File destino = new File(file.getAbsolutePath());
+		if (!file.isDirectory()) {
+			throw new IOException("NAO EH DIRETORIO VALIDO: " + destino.getAbsolutePath());
+		}
+		destino = new File(destino, file.getName());
+		if (destino.equals(file)) {
+			throw new IOException("ORIGEM E DESTINO IGUAIS: " + destino.getAbsolutePath());
+		}
+		try (FileInputStream fis = new FileInputStream(file)) {
+			try (FileOutputStream fos = new FileOutputStream(destino)) {
+				FileChannel fci = fis.getChannel();
+				FileChannel fco = fos.getChannel();
+				String string = destino.getAbsolutePath() + "\nTOTAL COPIADO(s): "
+						+ fci.transferTo(0, file.length(), fco);
+				if (ref != null) {
+					ref.set(destino);
+				}
+				return string;
+			}
+		}
+	}
+
 	public static String clonar(Component parent, File file, AtomicReference<File> ref) throws IOException {
 		if (file == null) {
 			return "ARQUIVO NULL";

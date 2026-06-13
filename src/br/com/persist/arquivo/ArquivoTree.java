@@ -245,6 +245,7 @@ public class ArquivoTree extends Tree {
 		private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
 		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);
 		private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
+		private Action clonarEmAcao = Action.actionMenuClonarEm();
 		private Action excluirAcao = Action.actionMenuExcluir();
 		private Action clonarAcao = Action.actionMenuClonar();
 		private static final long serialVersionUID = 1L;
@@ -258,9 +259,11 @@ public class ArquivoTree extends Tree {
 			addMenuItem(abrirAcao);
 			addSeparator();
 			addMenuItem(clonarAcao);
+			addMenuItem(clonarEmAcao);
 			novoDiretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoDiretorio(ArquivoTree.this)));
 			diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(ArquivoTree.this)));
+			clonarEmAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarEmArquivo(ArquivoTree.this)));
 			novoArquivoAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoArquivo(ArquivoTree.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTree.this)));
 			clonarAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarArquivo(ArquivoTree.this)));

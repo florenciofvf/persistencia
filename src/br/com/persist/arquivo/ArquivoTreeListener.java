@@ -7,6 +7,8 @@ public interface ArquivoTreeListener {
 
 	public void renomearArquivo(ArquivoTree arquivoTree);
 
+	public void clonarEmArquivo(ArquivoTree arquivoTree);
+
 	public void excluirArquivo(ArquivoTree arquivoTree);
 
 	public void novoDiretorio(ArquivoTree arquivoTree);

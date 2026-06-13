@@ -85,6 +85,10 @@ public class Action extends Acao {
 		return Action.actionMenu("label.clonar", Icones.CLONAR);
 	}
 
+	public static Action actionMenuClonarEm() {
+		return Action.actionMenu("label.clonar_em", Icones.CLONAR);
+	}
+
 	public static Action actionMenuCopiar() {
 		return Action.actionMenu("label.copiar", Icones.COPIA);
 	}
