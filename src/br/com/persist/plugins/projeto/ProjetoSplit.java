@@ -209,6 +209,22 @@ class ProjetoSplit extends SplitPane {
 		}
 
 		@Override
+		public void clonarEmArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null) {
+				try {
+					AtomicReference<File> ref = new AtomicReference<>();
+					String resp = Util.clonarEm(ProjetoSplit.this, arquivo.getFile(), ref);
+					if (Preferencias.isExibirTotalBytesClonados()) {
+						Util.mensagem(ProjetoSplit.this, resp);
+					}
+				} catch (IOException e) {
+					Util.mensagem(ProjetoSplit.this, e.getMessage());
+				}
+			}
+		}
+
+		@Override
 		public void clonarArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null) {
