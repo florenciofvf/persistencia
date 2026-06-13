@@ -244,6 +244,7 @@ public class ArquivoTree extends Tree {
 		private Action novoArquivoAcao = actionMenu("label.novo_arquivo", Icones.PANEL4);
 		private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
 		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);
+		private Action enderecoAcao = actionMenu("label.endereco_absoluto");
 		private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
 		private Action clonarEmAcao = Action.actionMenuClonarEm();
 		private Action excluirAcao = Action.actionMenuExcluir();
@@ -260,6 +261,7 @@ public class ArquivoTree extends Tree {
 			addSeparator();
 			addMenuItem(clonarAcao);
 			addMenuItem(clonarEmAcao);
+			addMenuItem(true, enderecoAcao);
 			novoDiretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoDiretorio(ArquivoTree.this)));
 			diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(ArquivoTree.this)));
@@ -268,6 +270,7 @@ public class ArquivoTree extends Tree {
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTree.this)));
 			clonarAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarArquivo(ArquivoTree.this)));
 			abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(ArquivoTree.this)));
+			enderecoAcao.setActionListener(e -> exibirEnderecoAbsoluto());
 		}
 
 		private void preShow(Arquivo arquivo) {
@@ -291,6 +294,13 @@ public class ArquivoTree extends Tree {
 			excluirAcao.setEnabled(both);
 			clonarAcao.setEnabled(file);
 			abrirAcao.setEnabled(file);
+		}
+
+		private void exibirEnderecoAbsoluto() {
+			Arquivo arquivo = getObjetoSelecionado();
+			if (arquivo != null) {
+				Util.mensagem(ArquivoTree.this, arquivo.getAbsolutePath());
+			}
 		}
 	}
 }

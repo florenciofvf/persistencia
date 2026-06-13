@@ -318,6 +318,10 @@ public class Arquivo {
 		return pai;
 	}
 
+	public String getAbsolutePath() {
+		return file.getAbsolutePath();
+	}
+
 	public String getName() {
 		return file.getName();
 	}
