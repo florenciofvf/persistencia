@@ -1172,7 +1172,7 @@ public class Util {
 			throw new IOException("NOME NAO DEFINIDO (processo abortado)");
 		}
 		File destino = new File(resp.toString().trim());
-		if (!file.isDirectory()) {
+		if (!destino.isDirectory()) {
 			throw new IOException("NAO EH DIRETORIO VALIDO: " + destino.getAbsolutePath());
 		}
 		destino = new File(destino, file.getName());
