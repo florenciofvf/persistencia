@@ -1176,7 +1176,7 @@ public class Util {
 			throw new IOException("NAO EH DIRETORIO VALIDO: " + destino.getAbsolutePath());
 		}
 		destino = new File(destino, file.getName());
-		if (destino.equals(file)) {
+		if (destino.getAbsolutePath().equalsIgnoreCase(file.getAbsolutePath())) {
 			throw new IOException("ORIGEM E DESTINO IGUAIS: " + destino.getAbsolutePath());
 		}
 		try (FileInputStream fis = new FileInputStream(file)) {
