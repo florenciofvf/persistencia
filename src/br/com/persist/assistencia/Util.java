@@ -1171,7 +1171,7 @@ public class Util {
 		if (resp == null || Util.isEmpty(resp.toString())) {
 			throw new IOException("NOME NAO DEFINIDO (processo abortado)");
 		}
-		File destino = new File(file.getAbsolutePath());
+		File destino = new File(resp.toString().trim());
 		if (!file.isDirectory()) {
 			throw new IOException("NAO EH DIRETORIO VALIDO: " + destino.getAbsolutePath());
 		}
