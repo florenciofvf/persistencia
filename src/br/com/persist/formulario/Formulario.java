@@ -230,7 +230,7 @@ public class Formulario extends JFrame implements PluginBasico {
 					enderecosAbsolutos.clear();
 					File file = new File("enderecosAbsolutos");
 					if (file.exists() && file.canRead()) {
-						List<String> list = ArquivoUtil.lerArquivo(file, false);
+						List<String> list = ArquivoUtil.lerArquivo(file, true);
 						enderecosAbsolutos.addAll(list);
 					}
 				} catch (Exception e) {
