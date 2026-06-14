@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -55,6 +56,7 @@ import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -330,12 +332,14 @@ class Editor extends TextEditor {
 }
 
 class Aba extends Transferivel {
+	private final JComboBox<String> comboEnderecosAbsolutos;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Editor editor = new Editor();
 	final transient Arquivo arquivo;
 
 	Aba(Arquivo arquivo) {
+		comboEnderecosAbsolutos = Formulario.criarComboEnderecosAbsolutos();
 		this.arquivo = Objects.requireNonNull(arquivo);
 		toolbar.ini();
 		montarLayout();
@@ -345,6 +349,7 @@ class Aba extends Transferivel {
 	Aba(File file) {
 		toolbar.ini(Mensagens.getString("msg.arquivo_inexistente") + " " + file.getAbsolutePath());
 		add(BorderLayout.NORTH, toolbar);
+		comboEnderecosAbsolutos = null;
 		this.arquivo = null;
 	}
 
@@ -383,6 +388,7 @@ class Aba extends Transferivel {
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
+		add(BorderLayout.SOUTH, comboEnderecosAbsolutos);
 	}
 
 	private void abrir() {
