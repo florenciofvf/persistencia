@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -331,7 +333,7 @@ class Editor extends TextEditor {
 	};
 }
 
-class Aba extends Transferivel {
+class Aba extends Transferivel implements ItemListener {
 	private final JComboBox<String> comboEnderecosAbsolutos;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -341,6 +343,7 @@ class Aba extends Transferivel {
 	Aba(Arquivo arquivo) {
 		comboEnderecosAbsolutos = Formulario.criarComboEnderecosAbsolutos();
 		this.arquivo = Objects.requireNonNull(arquivo);
+		comboEnderecosAbsolutos.addItemListener(this);
 		toolbar.ini();
 		montarLayout();
 		abrir();
@@ -389,6 +392,16 @@ class Aba extends Transferivel {
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
 		add(BorderLayout.SOUTH, comboEnderecosAbsolutos);
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if (ItemEvent.SELECTED == e.getStateChange()) {
+			Object selecionado = comboEnderecosAbsolutos.getSelectedItem();
+			if (selecionado instanceof String) {
+				toolbar.txtArquivo.setText(selecionado.toString());
+			}
+		}
 	}
 
 	private void abrir() {
