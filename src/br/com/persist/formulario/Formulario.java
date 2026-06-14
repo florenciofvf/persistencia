@@ -35,6 +35,7 @@ import javax.swing.SwingUtilities;
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.abstrato.Servico;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
@@ -48,6 +49,7 @@ import br.com.persist.plugins.ouvinte.OuvinteFormulario;
 
 public class Formulario extends JFrame implements PluginBasico {
 	private final transient Map<String, FabricaContainer> fabricas = new HashMap<>();
+	private static final List<String> enderecosAbsolutos = new ArrayList<>();
 	private final transient List<Servico> servicos = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private static final Logger LOG = Logger.getGlobal();
@@ -65,6 +67,10 @@ public class Formulario extends JFrame implements PluginBasico {
 	public Formulario() {
 		super(Mensagens.getTituloAplicacao());
 		ini();
+	}
+
+	public static List<String> getEnderecosabsolutos() {
+		return enderecosAbsolutos;
 	}
 
 	public void atualizarTitulo() {
@@ -209,7 +215,21 @@ public class Formulario extends JFrame implements PluginBasico {
 				}
 				fichario.windowOpenedHandler(Formulario.this);
 				fichario.ativarNavegacao();
+				lerEnderecosAbsolutos();
 				iconeBandeja();
+			}
+
+			private void lerEnderecosAbsolutos() {
+				try {
+					enderecosAbsolutos.clear();
+					File file = new File("enderecosAbsolutos");
+					if (file.exists() && file.canRead()) {
+						List<String> list = ArquivoUtil.lerArquivo(file, false);
+						enderecosAbsolutos.addAll(list);
+					}
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
 			}
 
 			@Override
