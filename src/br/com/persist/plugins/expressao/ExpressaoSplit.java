@@ -221,7 +221,23 @@ class ExpressaoSplit extends SplitPane {
 			if (arquivo != null) {
 				try {
 					AtomicReference<File> ref = new AtomicReference<>();
-					String resp = Util.clonarEm(ExpressaoSplit.this, arquivo.getFile(), ref);
+					String resp = Util.clonarEm(ExpressaoSplit.this, arquivo.getFile(), ref, false);
+					if (Preferencias.isExibirTotalBytesClonados()) {
+						Util.mensagem(ExpressaoSplit.this, resp);
+					}
+				} catch (IOException e) {
+					Util.mensagem(ExpressaoSplit.this, e.getMessage());
+				}
+			}
+		}
+
+		@Override
+		public void moverParaArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null) {
+				try {
+					AtomicReference<File> ref = new AtomicReference<>();
+					String resp = Util.clonarEm(ExpressaoSplit.this, arquivo.getFile(), ref, true);
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(ExpressaoSplit.this, resp);
 					}

@@ -265,7 +265,23 @@ class NavegacaoSplit extends SplitPane {
 			if (arquivo != null) {
 				try {
 					AtomicReference<File> ref = new AtomicReference<>();
-					String resp = Util.clonarEm(NavegacaoSplit.this, arquivo.getFile(), ref);
+					String resp = Util.clonarEm(NavegacaoSplit.this, arquivo.getFile(), ref, false);
+					if (Preferencias.isExibirTotalBytesClonados()) {
+						Util.mensagem(NavegacaoSplit.this, resp);
+					}
+				} catch (IOException e) {
+					Util.mensagem(NavegacaoSplit.this, e.getMessage());
+				}
+			}
+		}
+
+		@Override
+		public void moverParaArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null) {
+				try {
+					AtomicReference<File> ref = new AtomicReference<>();
+					String resp = Util.clonarEm(NavegacaoSplit.this, arquivo.getFile(), ref, true);
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(NavegacaoSplit.this, resp);
 					}

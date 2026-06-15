@@ -221,7 +221,23 @@ class InstrucaoSplit extends SplitPane {
 			if (arquivo != null) {
 				try {
 					AtomicReference<File> ref = new AtomicReference<>();
-					String resp = Util.clonarEm(InstrucaoSplit.this, arquivo.getFile(), ref);
+					String resp = Util.clonarEm(InstrucaoSplit.this, arquivo.getFile(), ref, false);
+					if (Preferencias.isExibirTotalBytesClonados()) {
+						Util.mensagem(InstrucaoSplit.this, resp);
+					}
+				} catch (IOException e) {
+					Util.mensagem(InstrucaoSplit.this, e.getMessage());
+				}
+			}
+		}
+
+		@Override
+		public void moverParaArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null) {
+				try {
+					AtomicReference<File> ref = new AtomicReference<>();
+					String resp = Util.clonarEm(InstrucaoSplit.this, arquivo.getFile(), ref, true);
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(InstrucaoSplit.this, resp);
 					}
