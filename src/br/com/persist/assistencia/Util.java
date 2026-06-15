@@ -1183,22 +1183,22 @@ public class Util {
 		if (destino.getAbsolutePath().equalsIgnoreCase(file.getAbsolutePath())) {
 			throw new IOException("ORIGEM E DESTINO IGUAIS: " + destino.getAbsolutePath());
 		}
+		String string = null;
 		try (FileInputStream fis = new FileInputStream(file)) {
 			try (FileOutputStream fos = new FileOutputStream(destino)) {
 				FileChannel fci = fis.getChannel();
 				FileChannel fco = fos.getChannel();
-				String string = destino.getAbsolutePath() + "\nTOTAL COPIADO(s): "
-						+ fci.transferTo(0, file.length(), fco);
+				string = destino.getAbsolutePath() + "\nTOTAL COPIADO(s): " + fci.transferTo(0, file.length(), fco);
 				if (ref != null) {
 					ref.set(destino);
 				}
-				if (excluirOrigem) {
-					Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
-					Files.delete(path);
-				}
-				return string;
 			}
 		}
+		if (excluirOrigem) {
+			Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
+			Files.delete(path);
+		}
+		return string;
 	}
 
 	public static String clonar(Component parent, File file, AtomicReference<File> ref) throws IOException {
