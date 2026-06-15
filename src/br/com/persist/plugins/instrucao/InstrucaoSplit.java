@@ -206,12 +206,16 @@ class InstrucaoSplit extends SplitPane {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null && Util.confirmar(InstrucaoSplit.this, "msg.confirma_exclusao")) {
 				arquivo.excluir();
-				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
-				try {
-					panel.excluir(arquivo);
-				} catch (InstrucaoException | SeparadorException ex) {
-					Util.mensagem(InstrucaoSplit.this, ex.getMessage());
-				}
+				excluir(arquivoTree, arquivo);
+			}
+		}
+
+		private void excluir(ArquivoTree arquivoTree, Arquivo arquivo) {
+			ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
+			try {
+				panel.excluir(arquivo);
+			} catch (InstrucaoException | SeparadorException ex) {
+				Util.mensagem(InstrucaoSplit.this, ex.getMessage());
 			}
 		}
 
@@ -238,6 +242,7 @@ class InstrucaoSplit extends SplitPane {
 				try {
 					AtomicReference<File> ref = new AtomicReference<>();
 					String resp = Util.clonarEm(InstrucaoSplit.this, arquivo.getFile(), ref, true);
+					excluir(arquivoTree, arquivo);
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(InstrucaoSplit.this, resp);
 					}

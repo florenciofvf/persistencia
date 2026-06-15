@@ -337,6 +337,7 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 			try {
 				AtomicReference<File> ref = new AtomicReference<>();
 				String resp = Util.clonarEm(SistemaContainer.this, arquivo.getFile(), ref, true);
+				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
 				if (Preferencias.isExibirTotalBytesClonados()) {
 					Util.mensagem(SistemaContainer.this, resp);
 				}
