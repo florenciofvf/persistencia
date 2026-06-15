@@ -456,6 +456,10 @@ class Aba extends Transferivel implements ItemListener {
 					Icones.ATUALIZAR);
 			lerFragmentoAction.setActionListener(e -> lerFragmento());
 			addButton(lerFragmentoAction);
+
+			Action renomearAction = Action.acaoMenu(ProjetoMensagens.getString("label.renomear"), Icones.RULE);
+			renomearAction.setActionListener(e -> renomear());
+			addButton(renomearAction);
 		}
 
 		public void ini(String arqAbsoluto) {
@@ -604,6 +608,32 @@ class Aba extends Transferivel implements ItemListener {
 
 		private void append(StringBuilder builder, String fragmento, String valor) {
 			builder.append(fragmento + ">" + valor + "<" + fragmento + Constantes.QL);
+		}
+
+		private void renomear() {
+			String conteudoEditor = editor.getText();
+			if (Util.isEmpty(conteudoEditor)) {
+				Util.mensagem(Aba.this, ProjetoMensagens.getString("erro.editor_vazio"));
+				return;
+			}
+
+			File arquivoFragmento = null;
+			try {
+				arquivoFragmento = getArquivo(conteudoEditor, fragmentoArquivo);
+			} catch (Exception ex) {
+				Util.mensagem(Aba.this, ex.getMessage());
+				return;
+			}
+
+			String nome = ArquivoUtil.getNome(Aba.this, arquivoFragmento.getName());
+			if (nome != null && arquivo != null && arquivo.renomear(nome)) {
+				Fichario fichario = getFichario();
+				if (fichario != null) {
+					Map<String, Object> map = new HashMap<>();
+					map.put(Transferivel.RENOMEAR, null);
+					fichario.processar(map);
+				}
+			}
 		}
 
 		private File getArquivo(String conteudo, String tag) throws ProjetoException {

@@ -1,5 +1,6 @@
 package br.com.persist.painel;
 
+import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -94,6 +95,17 @@ public abstract class Transferivel extends Panel implements Transferable {
 	}
 
 	public void processar(Fichario fichario, int indice, Map<String, Object> map) {
+	}
+
+	protected Fichario getFichario() {
+		Component c = this;
+		while (c != null) {
+			if (c instanceof Fichario) {
+				return (Fichario) c;
+			}
+			c = c.getParent();
+		}
+		return null;
 	}
 
 	public void salvar(XMLUtil util) {
