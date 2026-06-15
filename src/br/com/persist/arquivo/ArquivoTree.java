@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -51,6 +52,19 @@ public class ArquivoTree extends Tree {
 			ouvintes.forEach(o -> o.focusInputPesquisar(ArquivoTree.this));
 		}
 	};
+
+	public void atualizarEstrutura(File file) {
+		Arquivo arquivo = getRaiz().getArquivo(file.getParentFile());
+		if (arquivo != null) {
+			List<TreePath> expandidos = getExpandidos(arquivo);
+			arquivo.atualizarEstrutura();
+			ArquivoTreeUtil.atualizarEstrutura(this, arquivo, expandidos);
+			arquivo = arquivo.getArquivo(file);
+			if (arquivo != null) {
+				ArquivoTreeUtil.selecionarObjeto(this, arquivo);
+			}
+		}
+	}
 
 	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);

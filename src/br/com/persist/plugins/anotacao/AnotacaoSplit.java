@@ -201,6 +201,7 @@ class AnotacaoSplit extends SplitPane {
 				try {
 					AtomicReference<File> ref = new AtomicReference<>();
 					String resp = Util.clonarEm(AnotacaoSplit.this, arquivo.getFile(), ref, false);
+					arquivoTree.atualizarEstrutura(ref.get());
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(AnotacaoSplit.this, resp);
 					}
@@ -218,6 +219,7 @@ class AnotacaoSplit extends SplitPane {
 					AtomicReference<File> ref = new AtomicReference<>();
 					String resp = Util.clonarEm(AnotacaoSplit.this, arquivo.getFile(), ref, true);
 					excluir(arquivoTree, arquivo);
+					arquivoTree.atualizarEstrutura(ref.get());
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(AnotacaoSplit.this, resp);
 					}

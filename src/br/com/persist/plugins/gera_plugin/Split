@@ -158,7 +158,7 @@ class ###nameCap###Split extends SplitPane {
 	private transient ArquivoTreeListener treeListener = new ArquivoTreeListener() {
 		@Override
 		public void focusInputPesquisar(ArquivoTree arquivoTree) {
-			if(container != null) {
+			if (container != null) {
 				container.focusInputPesquisarTree();
 			}
 		}
@@ -201,6 +201,7 @@ class ###nameCap###Split extends SplitPane {
 				try {
 					AtomicReference<File> ref = new AtomicReference<>();
 					String resp = Util.clonarEm(###nameCap###Split.this, arquivo.getFile(), ref, false);
+					arquivoTree.atualizarEstrutura(ref.get());
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(###nameCap###Split.this, resp);
 					}
@@ -218,6 +219,7 @@ class ###nameCap###Split extends SplitPane {
 					AtomicReference<File> ref = new AtomicReference<>();
 					String resp = Util.clonarEm(###nameCap###Split.this, arquivo.getFile(), ref, true);
 					excluir(arquivoTree, arquivo);
+					arquivoTree.atualizarEstrutura(ref.get());
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(###nameCap###Split.this, resp);
 					}

@@ -193,6 +193,7 @@ class ExecucaoSplit extends SplitPane {
 				try {
 					AtomicReference<File> ref = new AtomicReference<>();
 					String resp = Util.clonarEm(ExecucaoSplit.this, arquivo.getFile(), ref, false);
+					arquivoTree.atualizarEstrutura(ref.get());
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(ExecucaoSplit.this, resp);
 					}
@@ -210,6 +211,7 @@ class ExecucaoSplit extends SplitPane {
 					AtomicReference<File> ref = new AtomicReference<>();
 					String resp = Util.clonarEm(ExecucaoSplit.this, arquivo.getFile(), ref, true);
 					excluir(arquivoTree, arquivo);
+					arquivoTree.atualizarEstrutura(ref.get());
 					if (Preferencias.isExibirTotalBytesClonados()) {
 						Util.mensagem(ExecucaoSplit.this, resp);
 					}

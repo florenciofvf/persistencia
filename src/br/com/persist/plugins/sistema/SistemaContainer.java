@@ -321,6 +321,7 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 			try {
 				AtomicReference<File> ref = new AtomicReference<>();
 				String resp = Util.clonarEm(SistemaContainer.this, arquivo.getFile(), ref, false);
+				arquivoTree.atualizarEstrutura(ref.get());
 				if (Preferencias.isExibirTotalBytesClonados()) {
 					Util.mensagem(SistemaContainer.this, resp);
 				}
@@ -338,6 +339,7 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 				AtomicReference<File> ref = new AtomicReference<>();
 				String resp = Util.clonarEm(SistemaContainer.this, arquivo.getFile(), ref, true);
 				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
+				arquivoTree.atualizarEstrutura(ref.get());
 				if (Preferencias.isExibirTotalBytesClonados()) {
 					Util.mensagem(SistemaContainer.this, resp);
 				}
