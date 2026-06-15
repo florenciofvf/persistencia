@@ -246,6 +246,7 @@ public class ArquivoTree extends Tree {
 		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);
 		private Action enderecoAcao = actionMenu("label.endereco_absoluto");
 		private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
+		private Action moverParaAcao = Action.actionMenuMoverPara();
 		private Action clonarEmAcao = Action.actionMenuClonarEm();
 		private Action excluirAcao = Action.actionMenuExcluir();
 		private Action clonarAcao = Action.actionMenuClonar();
@@ -264,6 +265,7 @@ public class ArquivoTree extends Tree {
 			addMenuItem(true, enderecoAcao);
 			novoDiretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoDiretorio(ArquivoTree.this)));
 			diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
+			moverParaAcao.setActionListener(e -> ouvintes.forEach(o -> o.moverParaArquivo(ArquivoTree.this)));
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(ArquivoTree.this)));
 			clonarEmAcao.setActionListener(e -> ouvintes.forEach(o -> o.clonarEmArquivo(ArquivoTree.this)));
 			novoArquivoAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoArquivo(ArquivoTree.this)));
@@ -278,7 +280,9 @@ public class ArquivoTree extends Tree {
 				diretorioAcao.setEnabled(arquivo.pathValido());
 				novoDiretorioAcao.setEnabled(true);
 				novoArquivoAcao.setEnabled(true);
+				moverParaAcao.setEnabled(false);
 				renomearAcao.setEnabled(false);
+				clonarEmAcao.setEnabled(false);
 				excluirAcao.setEnabled(false);
 				clonarAcao.setEnabled(false);
 				abrirAcao.setEnabled(false);
@@ -290,7 +294,9 @@ public class ArquivoTree extends Tree {
 			diretorioAcao.setEnabled(both && arquivo.pathValido());
 			novoDiretorioAcao.setEnabled(dir);
 			novoArquivoAcao.setEnabled(dir);
+			moverParaAcao.setEnabled(file);
 			renomearAcao.setEnabled(both);
+			clonarEmAcao.setEnabled(file);
 			excluirAcao.setEnabled(both);
 			clonarAcao.setEnabled(file);
 			abrirAcao.setEnabled(file);

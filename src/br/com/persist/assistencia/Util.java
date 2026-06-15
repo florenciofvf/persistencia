@@ -30,6 +30,9 @@ import java.lang.reflect.Method;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
@@ -1159,7 +1162,8 @@ public class Util {
 		return s != null && s.startsWith("Mac OS");
 	}
 
-	public static String clonarEm(Component parent, File file, AtomicReference<File> ref) throws IOException {
+	public static String clonarEm(Component parent, File file, AtomicReference<File> ref, boolean excluirOrigem)
+			throws IOException {
 		if (file == null) {
 			throw new IOException("ARQUIVO NULL");
 		}
@@ -1187,6 +1191,10 @@ public class Util {
 						+ fci.transferTo(0, file.length(), fco);
 				if (ref != null) {
 					ref.set(destino);
+				}
+				if (excluirOrigem) {
+					Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
+					Files.delete(path);
 				}
 				return string;
 			}
