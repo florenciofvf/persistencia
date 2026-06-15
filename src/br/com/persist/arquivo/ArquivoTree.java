@@ -262,6 +262,7 @@ public class ArquivoTree extends Tree {
 			addSeparator();
 			addMenuItem(clonarAcao);
 			addMenuItem(clonarEmAcao);
+			addMenuItem(moverParaAcao);
 			addMenuItem(true, enderecoAcao);
 			novoDiretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoDiretorio(ArquivoTree.this)));
 			diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
