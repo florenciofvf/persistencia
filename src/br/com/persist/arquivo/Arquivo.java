@@ -83,6 +83,10 @@ public class Arquivo {
 		}
 	}
 
+	public void atualizarEstrutura() {
+		reiniciar();
+	}
+
 	public List<TreePath> atualizarPaths(List<TreePath> lista) {
 		List<TreePath> resposta = new ArrayList<>();
 		if (lista == null || lista.isEmpty()) {

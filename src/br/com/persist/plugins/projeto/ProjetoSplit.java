@@ -73,7 +73,8 @@ import br.com.persist.plugins.expressao.biblionativo.Lista;
 import br.com.persist.plugins.expressao.biblionativo.NArquivo;
 
 class ProjetoSplit extends SplitPane {
-	private Action sufixosAct = Action.acaoMenu(ProjetoMensagens.getString("label.sufixos"), null);
+	private Action atualizarAction = Action.acaoMenu(ProjetoMensagens.getString("label.atualizar"), Icones.ATUALIZAR);
+	private Action sufixosAction = Action.acaoMenu(ProjetoMensagens.getString("label.sufixos"), null);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final File fileRoot;
@@ -93,8 +94,10 @@ class ProjetoSplit extends SplitPane {
 		ArquivoUtil.arquivoIgnorado(ignorados, ProjetoPreferencia.isExibirArqIgnorados());
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
-		tree.getArquivoPopup().addMenuItem(sufixosAct);
-		sufixosAct.setActionListener(this::sufixos);
+		tree.getArquivoPopup().addMenuItem(atualizarAction);
+		atualizarAction.setActionListener(this::atualizar);
+		tree.getArquivoPopup().addMenuItem(sufixosAction);
+		sufixosAction.setActionListener(this::sufixos);
 		tree.setCellRenderer(new ProjetoRenderer());
 		setLeftComponent(new ScrollPane(tree));
 		tree.adicionarOuvinte(treeListener);
@@ -102,6 +105,15 @@ class ProjetoSplit extends SplitPane {
 		setRightComponent(panel);
 		panel.tree = tree;
 		abrir();
+	}
+
+	private void atualizar(ActionEvent e) {
+		Arquivo arquivo = tree.getObjetoSelecionado();
+		if (arquivo != null) {
+			List<TreePath> expandidos = tree.getExpandidos(arquivo);
+			arquivo.atualizarEstrutura();
+			ArquivoTreeUtil.atualizarEstrutura(tree, arquivo, expandidos);
+		}
 	}
 
 	private void sufixos(ActionEvent e) {
