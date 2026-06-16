@@ -516,6 +516,16 @@ public class Util {
 		return view;
 	}
 
+	public static Window getWindowParent(Component c) {
+		while (c != null) {
+			if (c instanceof Window) {
+				return (Window) c;
+			}
+			c = c.getParent();
+		}
+		return null;
+	}
+
 	public static Frame getViewParentFrame(Component componente) {
 		Component view = componente;
 		while (view != null) {
@@ -716,6 +726,7 @@ public class Util {
 
 		pane.selectInitialValue();
 		dialog.setSize(Constantes.SIZE2.width, 200);
+		dialog.setLocationRelativeTo(getWindowParent(parent));
 		dialog.setVisible(true);
 		dialog.dispose();
 
