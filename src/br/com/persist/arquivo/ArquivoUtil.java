@@ -274,7 +274,7 @@ public class ArquivoUtil {
 	}
 
 	public static String getNome(Component c, String padrao, boolean arquivo) {
-		Object resp = Util.getValorInputDialog(c, "label.id",
+		Object resp = Util.getValorInputDialog3(c, "label.id",
 				arquivo ? Mensagens.getString("label.nome_arquivo") : Mensagens.getString("label.nome_diretorio"),
 				padrao);
 		if (resp == null || Util.isEmpty(resp.toString())) {

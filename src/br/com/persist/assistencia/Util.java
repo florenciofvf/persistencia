@@ -705,6 +705,29 @@ public class Util {
 				JOptionPane.INFORMATION_MESSAGE, null, null, valorPadrao);
 	}
 
+	public static Object getValorInputDialog3(Component parent, String chaveTitulo, String mensagem,
+			String valorPadrao) {
+
+		JOptionPane pane = new JOptionPane(mensagem, JOptionPane.INFORMATION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+		pane.setWantsInput(true);
+		pane.setInitialSelectionValue(valorPadrao);
+
+		JDialog dialog = pane.createDialog(parent, Mensagens.getString(chaveTitulo));
+
+		pane.selectInitialValue();
+		dialog.setSize(Constantes.SIZE2.width, 200);
+		dialog.setVisible(true);
+		dialog.dispose();
+
+		Object value = pane.getInputValue();
+
+		if (value == JOptionPane.UNINITIALIZED_VALUE) {
+			return null;
+		}
+
+		return value;
+	}
+
 	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem, String valorPadrao,
 			String[] opcoes) {
 		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),
@@ -1170,7 +1193,7 @@ public class Util {
 		if (!file.isFile()) {
 			throw new IOException("NAO EH ARQUIVO: " + file.getAbsolutePath());
 		}
-		Object resp = getValorInputDialog(parent, "label.nome_diretorio",
+		Object resp = getValorInputDialog3(parent, "label.nome_diretorio",
 				Mensagens.getString("label.endereco_absoluto_diretorio_destino"), "");
 		if (resp == null || Util.isEmpty(resp.toString())) {
 			throw new IOException("NOME NAO DEFINIDO (processo abortado)");
@@ -1209,8 +1232,8 @@ public class Util {
 			return "NAO EH ARQUIVO: " + file.getAbsolutePath();
 		}
 		File destino = gerarFileDestino(file);
-		Object resp = getValorInputDialog(parent, "label.nome_arquivo", Mensagens.getString("label.edite_nome_arquivo"),
-				destino.getName());
+		Object resp = getValorInputDialog3(parent, "label.nome_arquivo",
+				Mensagens.getString("label.edite_nome_arquivo"), destino.getName());
 		if (resp == null || Util.isEmpty(resp.toString())) {
 			return "NOME NAO DEFINIDO (processo abortado)";
 		}
