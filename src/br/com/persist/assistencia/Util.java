@@ -708,7 +708,7 @@ public class Util {
 	public static Object getValorInputDialog3(Component parent, String chaveTitulo, String mensagem,
 			String valorPadrao) {
 
-		JOptionPane pane = new JOptionPane(mensagem, JOptionPane.INFORMATION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+		JOptionPane pane = new JOptionPane(mensagem, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
 		pane.setWantsInput(true);
 		pane.setInitialSelectionValue(valorPadrao);
 
