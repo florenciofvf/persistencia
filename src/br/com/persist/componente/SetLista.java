@@ -372,6 +372,7 @@ class SetListaDialogo extends AbstratoDialogo {
 		private Action criarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private final CheckBox chkTodos = new CheckBox("label.todos");
 		private static final long serialVersionUID = 1L;
+		private int indiceInicioPesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
@@ -454,22 +455,26 @@ class SetListaDialogo extends AbstratoDialogo {
 		public void actionPerformed(ActionEvent e) {
 			selecionar(false);
 			if (!Util.isEmpty(txtPesquisa.getText())) {
-				Item pesquisado = pesquisar(txtPesquisa.getText().toUpperCase(), chkPorParte.isSelected());
+				Item pesquisado = pesquisar(txtPesquisa.getText().toUpperCase(), chkPorParte.isSelected(),
+						indiceInicioPesquisa);
 				if (pesquisado != null) {
 					pesquisado.setSelecionado(true);
 					int index = pesquisado.getTag();
+					indiceInicioPesquisa = index + 1;
 					Rectangle rect = lista.getCellBounds(index, index);
 					if (rect != null) {
 						lista.scrollRectToVisible(rect);
 					}
 					lista.repaint();
+				} else {
+					indiceInicioPesquisa = 0;
 				}
 			}
 		}
 
-		private Item pesquisar(String string, boolean porParte) {
+		private Item pesquisar(String string, boolean porParte, int inicioPesquisa) {
 			ListModel<Item> model = lista.getModel();
-			for (int i = 0; i < model.getSize(); i++) {
+			for (int i = inicioPesquisa; i < model.getSize(); i++) {
 				Item item = model.getElementAt(i);
 				if (item.getRotulo() == null) {
 					continue;
