@@ -177,6 +177,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
+	public abstract int getMargemDireitaForm();
+
 	public abstract void empilharFormulariosImpl();
 
 	public abstract void nivelTransparenciaFormsIgnorados();
@@ -265,7 +267,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 
 		public void configurar(DesktopLargura larguraEnum, JInternalFrame internal) {
-			int largura = getSize().width - 33;
+			int largura = getSize().width - getMargemDireitaForm();
 			if (internal != null) {
 				for (JInternalFrame frame : getAllFrames()) {
 					if (frame.isVisible() && frame == internal && ajustarLargura(frame)) {

@@ -60,6 +60,7 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final ScrollPane scrollPane;
+	private final boolean extensao;
 
 	public Desktop(Formulario formulario, boolean extensao) {
 		super(formulario);
@@ -68,6 +69,7 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 		}
 		new DropTarget(this, dropTargetListener);
 		scrollPane = new ScrollPane(this);
+		this.extensao = extensao;
 	}
 
 	public void configurarLargura(Dimension dimension) {
@@ -120,6 +122,11 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 	@Override
 	public void nivelTransparenciaFormsIgnorados() {
 		LOG.log(Level.FINEST, "nivelTransparenciaFormsIgnorados");
+	}
+
+	@Override
+	public int getMargemDireitaForm() {
+		return extensao ? 20 : 33;
 	}
 
 	@Override
