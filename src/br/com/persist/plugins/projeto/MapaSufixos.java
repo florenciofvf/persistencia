@@ -16,10 +16,20 @@ public class MapaSufixos {
 
 	public static Icon getIcon(Arquivo arquivo) {
 		String nome = arquivo.getName();
-		int pos = nome.lastIndexOf('_');
-		if (pos != -1) {
-			nome = nome.substring(pos);
-			ChaveIcone chaveIcone = get(nome);
+		int posUnder = nome.lastIndexOf('_');
+		int posDot = nome.lastIndexOf('.');
+		if (posUnder != -1 && posDot != -1) {
+			ChaveIcone chaveIcone = get(nome, posUnder, posDot);
+			if (chaveIcone != null) {
+				return chaveIcone.icone;
+			}
+		} else if (posUnder != -1) {
+			ChaveIcone chaveIcone = get(nome, posUnder, -1);
+			if (chaveIcone != null) {
+				return chaveIcone.icone;
+			}
+		} else if (posDot != -1) {
+			ChaveIcone chaveIcone = get(nome, -1, posDot);
 			if (chaveIcone != null) {
 				return chaveIcone.icone;
 			}
@@ -28,6 +38,10 @@ public class MapaSufixos {
 			return Icones.TEXTO;
 		}
 		return null;
+	}
+
+	private static ChaveIcone get(String string, int pos1, int pos2) {
+		return pos1 > pos2 ? get(string.substring(pos1)) : get(string.substring(pos2));
 	}
 
 	private static ChaveIcone get(String string) {
