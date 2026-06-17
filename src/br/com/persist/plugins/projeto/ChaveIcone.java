@@ -7,7 +7,7 @@ public class ChaveIcone {
 	final Icon icone;
 
 	public ChaveIcone(String chave, Icon icone) {
-		this.chave = "_" + chave;
+		this.chave = chave;
 		this.icone = icone;
 	}
 }

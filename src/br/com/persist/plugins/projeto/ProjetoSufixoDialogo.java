@@ -67,7 +67,7 @@ class SufixoDialogo extends AbstratoDialogo {
 		public PanelSufixos() {
 			super(new GridLayout(10, 0));
 			for (ChaveIcone item : MapaSufixos.getLista()) {
-				Label label = new Label(item.chave, false);
+				Label label = new Label("_" + item.chave, false);
 				label.setHorizontalAlignment(SwingConstants.CENTER);
 				label.setIcon(item.icone);
 				add(label);

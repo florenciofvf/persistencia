@@ -41,7 +41,7 @@ public class MapaSufixos {
 	}
 
 	private static ChaveIcone get(String string, int pos1, int pos2) {
-		return pos1 > pos2 ? get(string.substring(pos1)) : get(string.substring(pos2));
+		return pos1 > pos2 ? get(string.substring(pos1 + 1)) : get(string.substring(pos2 + 1));
 	}
 
 	private static ChaveIcone get(String string) {
