@@ -265,7 +265,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 
 		public void configurar(DesktopLargura larguraEnum, JInternalFrame internal) {
-			int largura = getSize().width - 20;
+			int largura = getSize().width - 30;
 			if (internal != null) {
 				for (JInternalFrame frame : getAllFrames()) {
 					if (frame.isVisible() && frame == internal && ajustarLargura(frame)) {

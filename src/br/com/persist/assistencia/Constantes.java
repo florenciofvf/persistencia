@@ -31,7 +31,7 @@ public class Constantes {
 	public static final String GC_O_FORMULARIO = "GC_O_FORMULARIO";
 	public static final Dimension SIZE2 = new Dimension(900, 700);
 	public static final Dimension SIZE3 = new Dimension(400, 400);
-	public static final Dimension SIZE = new Dimension(1100, 700);
+	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
 	public static final Stroke STROKE_CDADOS = new BasicStroke(3);
 	public static final String LABEL_EXECUTAR = "label.executar";
