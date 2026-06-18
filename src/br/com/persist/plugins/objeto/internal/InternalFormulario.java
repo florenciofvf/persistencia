@@ -214,7 +214,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (desktop != null) {
 			desktop.getAjuste().empilharFormularios();
 			desktop.getAjuste().aproximarObjetoFormulario(true, updateTree, null);
-			desktop.getAjustar().usarFormularios(false);
+			desktop.getDimensao().usarFormularios(false);
 		}
 	}
 

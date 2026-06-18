@@ -405,7 +405,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			if (chkAjusteAutoEmpilhaForm.isSelected()) {
 				objetoSuperficie.getAjuste().empilharFormularios();
 				objetoSuperficie.getAjuste().aproximarObjetoFormulario(true, true, null);
-				objetoSuperficie.getAjustar().usarFormularios(false);
+				objetoSuperficie.getDimensao().usarFormularios(false);
 			}
 		}
 

@@ -25,7 +25,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	protected final transient MenuAjustar menuAjustar = new MenuAjustar();
 	protected final transient MenuAjuste menuAjuste = new MenuAjuste();
 	protected final transient Larguras larguras = new Larguras();
-	protected final transient Ajustar ajustar = new Ajustar();
+	protected final transient Dimensao dimensao = new Dimensao();
 	protected final transient Ajuste ajuste = new Ajuste();
 	private static final long serialVersionUID = 1L;
 	private boolean ajusteAutoEmpilhaForm;
@@ -58,7 +58,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			int altura = Constantes.TREZENTOS_QUARENTA_UM;
 			distribuir(largura, altura);
 			alinhamento.centralizar();
-			ajustar.usarFormularios(true);
+			dimensao.usarFormularios(true);
 		}
 
 		private void distribuir(int largura, int altura) {
@@ -313,9 +313,9 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			addMenuItem(dimensaoManualAcao);
 			addMenuItem(usarFormularioAcao);
 			addMenuItem(retirarRolagemAcao);
-			usarFormularioAcao.setActionListener(e -> ajustar.usarFormularios(true));
-			retirarRolagemAcao.setActionListener(e -> ajustar.retirarRolagem());
-			dimensaoManualAcao.setActionListener(e -> ajustar.ajusteManual());
+			usarFormularioAcao.setActionListener(e -> dimensao.usarFormularios(true));
+			retirarRolagemAcao.setActionListener(e -> dimensao.retirarRolagem());
+			dimensaoManualAcao.setActionListener(e -> dimensao.ajusteManual());
 		}
 
 		public void habilitar(boolean b) {
@@ -323,7 +323,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public class Ajustar {
+	public class Dimensao {
 		public void ajusteManual() {
 			String string = getWidth() + "," + getHeight();
 			Object resp = Util.getValorInputDialog(AbstratoDesktop.this, "label.largura_altura", string, string);
@@ -406,7 +406,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			ajuste.aproximarObjetoFormulario(false, false, null);
 			ajuste.empilharFormularios();
 			ajuste.aproximarObjetoFormulario(true, true, null);
-			ajustar.usarFormularios(false);
+			dimensao.usarFormularios(false);
 			repaint();
 		}
 
@@ -452,8 +452,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		return larguras;
 	}
 
-	public Ajustar getAjustar() {
-		return ajustar;
+	public Dimensao getDimensao() {
+		return dimensao;
 	}
 
 	public Ajuste getAjuste() {

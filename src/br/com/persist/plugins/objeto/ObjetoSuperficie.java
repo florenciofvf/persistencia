@@ -1607,7 +1607,7 @@ class SuperficiePopup extends Popup {
 			superficie.getAjuste().aproximarObjetoFormulario(false, false, null);
 			superficie.getAjuste().empilharFormularios();
 			superficie.getAjuste().aproximarObjetoFormulario(true, true, null);
-			superficie.getAjustar().usarFormularios(false);
+			superficie.getDimensao().usarFormularios(false);
 			superficie.repaint();
 		}
 	}

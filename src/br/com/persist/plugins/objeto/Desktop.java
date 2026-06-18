@@ -548,7 +548,7 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
 		getLarguras().configurar(DesktopLargura.TOTAL);
-		getAjustar().usarFormularios(true);
+		getDimensao().usarFormularios(true);
 		getAjuste().empilharFormularios();
 	}
 
