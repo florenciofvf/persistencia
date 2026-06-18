@@ -1155,7 +1155,7 @@ class SuperficiePopup2 extends Popup {
 		addMenuItem(objetosComTabelaTreeSetAcao, hintTreeSet);
 		addMenuItem(true, criarObjetoAcao);
 		addMenuItem(true, colarAcao);
-		add(true, superficie.getMenuAjustar());
+		add(true, superficie.getMenuDimensao());
 		addMenuItem(true, formulariosComExcecaoAcaoMsg);
 		addMenuItem(formulariosComExcecaoAcaoOuv);
 		addMenuItem(true, formulariosInvisiveisAcao);
@@ -1209,8 +1209,8 @@ class SuperficiePopup2 extends Popup {
 		formulariosComExcecaoAcaoOuv.setEnabled(contemFrames);
 		colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
 		limparFormulariosFiltroAcao.setEnabled(contemFrames);
+		superficie.getMenuDimensao().habilitar(contemFrames);
 		superficie.getMenuLargura().habilitar(contemFrames);
-		superficie.getMenuAjustar().habilitar(contemFrames);
 		superficie.getMenuAjuste().habilitar(contemFrames);
 		formulariosInvisiveisAcao.setEnabled(contemFrames);
 		atualizarFormulariosAcao.setEnabled(contemFrames);

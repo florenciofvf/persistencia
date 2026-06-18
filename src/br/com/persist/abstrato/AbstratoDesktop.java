@@ -19,11 +19,12 @@ import br.com.persist.fichario.FicharioHandler;
 import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoDesktop extends JDesktopPane implements WindowHandler, FicharioHandler {
+	protected final transient MenuDimensao menuDimensao = new MenuDimensao();
+	protected final transient MenuLargura menuLargura = new MenuLargura();
+	protected final transient MenuAjuste menuAjuste = new MenuAjuste();
+
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
-	protected final transient MenuLargura menuLargura = new MenuLargura();
-	protected final transient MenuAjustar menuAjustar = new MenuAjustar();
-	protected final transient MenuAjuste menuAjuste = new MenuAjuste();
 	protected final transient Larguras larguras = new Larguras();
 	protected final transient Dimensao dimensao = new Dimensao();
 	protected final transient Ajuste ajuste = new Ajuste();
@@ -44,8 +45,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		return menuLargura;
 	}
 
-	public MenuAjustar getMenuAjustar() {
-		return menuAjustar;
+	public MenuDimensao getMenuDimensao() {
+		return menuDimensao;
 	}
 
 	public MenuAjuste getMenuAjuste() {
@@ -302,13 +303,13 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public class MenuAjustar extends Menu {
+	public class MenuDimensao extends Menu {
 		private Action usarFormularioAcao = acaoMenu("label.usar_formularios");
 		private Action dimensaoManualAcao = acaoMenu("label.dimensao_manual");
 		private Action retirarRolagemAcao = acaoMenu("label.retirar_rolagem");
 		private static final long serialVersionUID = 1L;
 
-		protected MenuAjustar() {
+		protected MenuDimensao() {
 			super(AbstratoMensagens.getString("label.ajustar"), false, Icones.RECT);
 			addMenuItem(dimensaoManualAcao);
 			addMenuItem(usarFormularioAcao);

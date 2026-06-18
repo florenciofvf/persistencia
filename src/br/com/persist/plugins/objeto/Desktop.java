@@ -435,7 +435,7 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 		private static final long serialVersionUID = 1L;
 
 		private DesktopPopup() {
-			add(menuAjustar);
+			add(menuDimensao);
 			add(true, menuLargura);
 			add(true, menuAjuste);
 		}
