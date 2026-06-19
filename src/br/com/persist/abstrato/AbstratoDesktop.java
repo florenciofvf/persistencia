@@ -310,7 +310,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public MenuLarguras getMenuLargura() {
+	public MenuLarguras getMenuLarguras() {
 		return menuLarguras;
 	}
 
