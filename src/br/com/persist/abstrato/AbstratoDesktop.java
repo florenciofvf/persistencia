@@ -172,7 +172,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 					frame.setLocation(x, frame.getY());
 				}
 			}
-			alinhamento.centralizar();
 		}
 
 		private void direito(JInternalFrame ref) {
