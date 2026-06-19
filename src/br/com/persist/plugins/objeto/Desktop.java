@@ -436,12 +436,12 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 
 		private DesktopPopup() {
 			add(menuDimensao);
-			add(true, menuLargura);
+			add(true, menuLarguras);
 			add(true, menuAjuste);
 		}
 
 		private void preShow() {
-			menuLargura.setTotalDireitoAuto(isAjusteAutoLarguraForm());
+			menuLarguras.setTotalDireitoAuto(isAjusteAutoLarguraForm());
 			menuAjuste.setNivelTranspFormsIgnorados(false);
 		}
 	}

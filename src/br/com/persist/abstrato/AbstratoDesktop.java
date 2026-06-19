@@ -22,13 +22,13 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	protected final transient MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
 	protected final transient MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 	protected final transient MenuDimensao menuDimensao = new MenuDimensao();
-	protected final transient MenuLargura menuLargura = new MenuLargura();
+	protected final transient MenuLarguras menuLarguras = new MenuLarguras();
 	protected final transient MenuAjuste menuAjuste = new MenuAjuste();
 
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
-	protected final transient Larguras larguras = new Larguras();
 	protected final transient Dimensao dimensao = new Dimensao();
+	protected final transient Larguras larguras = new Larguras();
 	protected final transient Ajuste ajuste = new Ajuste();
 	private static final long serialVersionUID = 1L;
 	private boolean ajusteAutoEmpilhaForm;
@@ -43,8 +43,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		return formulario;
 	}
 
-	public MenuLargura getMenuLargura() {
-		return menuLargura;
+	public MenuLarguras getMenuLargura() {
+		return menuLarguras;
 	}
 
 	public MenuDimensao getMenuDimensao() {
@@ -69,6 +69,14 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			distribuirAcao.setEnabled(b);
 			setEnabled(b);
 		}
+	}
+
+	public MenuDistribuicao getMenuDistribuicao() {
+		return menuDistribuicao;
+	}
+
+	public Distribuicao getDistribuicao() {
+		return distribuicao;
 	}
 
 	public class Distribuicao {
@@ -232,14 +240,14 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	public void addTotalDireitoAuto() {
-		menuLargura.addTotalDireitoAuto();
+		menuLarguras.addTotalDireitoAuto();
 	}
 
 	public void setTotalDireitoAuto(boolean b) {
-		menuLargura.setTotalDireitoAuto(b);
+		menuLarguras.setTotalDireitoAuto(b);
 	}
 
-	public class MenuLargura extends Menu {
+	public class MenuLarguras extends Menu {
 		private Action direitoAutoAcao = acaoMenu("label.total_direito_auto", Icones.ALINHA_DIREITO);
 		private Action esquerdoAcao = acaoMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = acaoMenu("label.total_direito", Icones.ALINHA_DIREITO);
@@ -247,7 +255,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		private static final long serialVersionUID = 1L;
 		private JCheckBoxMenuItem checkDireitoAuto;
 
-		protected MenuLargura() {
+		protected MenuLarguras() {
 			super(AbstratoMensagens.getString("label.largura"), false, Icones.RECT);
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
@@ -465,10 +473,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		public void aproximarObjetoFormulario(boolean objetoAoFormulario, boolean updateTree, JInternalFrame frame) {
 			aproximarObjetoFormularioImpl(objetoAoFormulario, updateTree, frame);
 		}
-	}
-
-	public Distribuicao getDistribuicao() {
-		return distribuicao;
 	}
 
 	public Alinhamento getAlinhamento() {
