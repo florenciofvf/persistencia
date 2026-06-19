@@ -1211,6 +1211,8 @@ class SuperficiePopup2 extends Popup {
 		formulariosComExcecaoAcaoOuv.setEnabled(contemFrames);
 		colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
 		limparFormulariosFiltroAcao.setEnabled(contemFrames);
+		superficie.getMenuDistribuicao().habilitar(contemFrames);
+		superficie.getMenuAlinhamento().habilitar(contemFrames);
 		superficie.getMenuDimensao().habilitar(contemFrames);
 		superficie.getMenuLarguras().habilitar(contemFrames);
 		superficie.getMenuAjuste().habilitar(contemFrames);
