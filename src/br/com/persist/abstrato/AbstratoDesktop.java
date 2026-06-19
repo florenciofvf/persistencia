@@ -75,7 +75,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			if (frames == null || frames.length == 0) {
 				return;
 			}
-			int altura = alturaContainer / frames.length;
+			int altura = (alturaContainer / frames.length) - 20;
 			if (altura < 25) {
 				altura = 25;
 			}
