@@ -468,6 +468,30 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		return total;
 	}
 
+	public boolean isAjusteAutoEmpilhaForm() {
+		return ajusteAutoEmpilhaForm;
+	}
+
+	public void setAjusteAutoEmpilhaForm(boolean ajusteAutoEmpilhaForm) {
+		this.ajusteAutoEmpilhaForm = ajusteAutoEmpilhaForm;
+	}
+
+	public boolean isAjusteAutoLarguraForm() {
+		return ajusteAutoLarguraForm;
+	}
+
+	public void setAjusteAutoLarguraForm(boolean ajusteAutoLarguraForm) {
+		this.ajusteAutoLarguraForm = ajusteAutoLarguraForm;
+	}
+
+	public void addTotalDireitoAuto() {
+		menuLarguras.addTotalDireitoAuto();
+	}
+
+	public void setTotalDireitoAuto(boolean b) {
+		menuLarguras.setTotalDireitoAuto(b);
+	}
+
 	public abstract int getMargemDireitaForm();
 
 	public abstract void empilharFormulariosImpl();
@@ -487,14 +511,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		return acaoMenu(chave, null);
 	}
 
-	public void addTotalDireitoAuto() {
-		menuLarguras.addTotalDireitoAuto();
-	}
-
-	public void setTotalDireitoAuto(boolean b) {
-		menuLarguras.setTotalDireitoAuto(b);
-	}
-
 	@Override
 	public void tabActivatedHandler(Fichario fichario) {
 	}
@@ -509,21 +525,5 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 	@Override
 	public void windowOpenedHandler(Window window) {
-	}
-
-	public boolean isAjusteAutoEmpilhaForm() {
-		return ajusteAutoEmpilhaForm;
-	}
-
-	public void setAjusteAutoEmpilhaForm(boolean ajusteAutoEmpilhaForm) {
-		this.ajusteAutoEmpilhaForm = ajusteAutoEmpilhaForm;
-	}
-
-	public boolean isAjusteAutoLarguraForm() {
-		return ajusteAutoLarguraForm;
-	}
-
-	public void setAjusteAutoLarguraForm(boolean ajusteAutoLarguraForm) {
-		this.ajusteAutoLarguraForm = ajusteAutoLarguraForm;
 	}
 }
