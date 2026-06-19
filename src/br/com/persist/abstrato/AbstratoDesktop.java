@@ -43,18 +43,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		return formulario;
 	}
 
-	public MenuLarguras getMenuLargura() {
-		return menuLarguras;
-	}
-
-	public MenuDimensao getMenuDimensao() {
-		return menuDimensao;
-	}
-
-	public MenuAjuste getMenuAjuste() {
-		return menuAjuste;
-	}
-
 	public class MenuDistribuicao extends Menu {
 		private static final long serialVersionUID = 1L;
 		private Action distribuirAcao = actionMenu("label.distribuir", Icones.CENTRALIZAR);
@@ -100,36 +88,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public int getTotalFormsInvisiveis() {
-		int total = 0;
-		for (JInternalFrame frame : getAllFrames()) {
-			if (!frame.isVisible()) {
-				total++;
-			}
-		}
-		return total;
-	}
-
-	public int getTotalFormsMinimizados() {
-		int total = 0;
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame.isIcon()) {
-				total++;
-			}
-		}
-		return total;
-	}
-
-	public int getTotalFormsMaximizados() {
-		int total = 0;
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame.isMaximum()) {
-				total++;
-			}
-		}
-		return total;
-	}
-
 	public class MenuAlinhamento extends Menu {
 		private static final long serialVersionUID = 1L;
 		private Action centralizarAcao = actionMenu("label.centralizar", Icones.LARGURA);
@@ -144,6 +102,14 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			centralizarAcao.setEnabled(b);
 			setEnabled(b);
 		}
+	}
+
+	public MenuAlinhamento getMenuAlinhamento() {
+		return menuAlinhamento;
+	}
+
+	public Alinhamento getAlinhamento() {
+		return alinhamento;
 	}
 
 	public class Alinhamento {
@@ -220,31 +186,80 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public abstract int getMargemDireitaForm();
+	public class MenuDimensao extends Menu {
+		private Action usarFormularioAcao = acaoMenu("label.usar_formularios");
+		private Action dimensaoManualAcao = acaoMenu("label.dimensao_manual");
+		private Action retirarRolagemAcao = acaoMenu("label.retirar_rolagem");
+		private static final long serialVersionUID = 1L;
 
-	public abstract void empilharFormulariosImpl();
+		protected MenuDimensao() {
+			super(AbstratoMensagens.getString("label.ajustar"), false, Icones.RECT);
+			addMenuItem(dimensaoManualAcao);
+			addMenuItem(usarFormularioAcao);
+			addMenuItem(retirarRolagemAcao);
+			usarFormularioAcao.setActionListener(e -> dimensao.usarFormularios(true));
+			retirarRolagemAcao.setActionListener(e -> dimensao.retirarRolagem());
+			dimensaoManualAcao.setActionListener(e -> dimensao.ajusteManual());
+		}
 
-	public abstract void nivelTransparenciaFormsIgnorados();
-
-	public abstract boolean ajustarLargura(JInternalFrame frame);
-
-	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree,
-			JInternalFrame frame);
-
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
+		public void habilitar(boolean b) {
+			usarFormularioAcao.setEnabled(b);
+		}
 	}
 
-	static Action acaoMenu(String chave) {
-		return acaoMenu(chave, null);
+	public MenuDimensao getMenuDimensao() {
+		return menuDimensao;
 	}
 
-	public void addTotalDireitoAuto() {
-		menuLarguras.addTotalDireitoAuto();
+	public Dimensao getDimensao() {
+		return dimensao;
 	}
 
-	public void setTotalDireitoAuto(boolean b) {
-		menuLarguras.setTotalDireitoAuto(b);
+	public class Dimensao {
+		public void ajusteManual() {
+			String string = getWidth() + "," + getHeight();
+			Object resp = Util.getValorInputDialog(AbstratoDesktop.this, "label.largura_altura", string, string);
+			if (resp != null && !Util.isEmpty(resp.toString())) {
+				ajustarManual(resp);
+			}
+		}
+
+		private void ajustarManual(Object resp) {
+			String[] strings = resp.toString().split(",");
+			if (strings != null && strings.length == 2) {
+				int largura = Integer.parseInt(strings[0].trim());
+				int altura = Integer.parseInt(strings[1].trim());
+				setPreferredSize(new Dimension(largura, altura));
+				Util.updateComponentTreeUI(getParent());
+			}
+		}
+
+		public void retirarRolagem() {
+			setPreferredSize(new Dimension(1, 1));
+			Util.updateComponentTreeUI(getParent());
+		}
+
+		public void usarFormularios(boolean updateTree) {
+			int largura = 0;
+			int altura = 0;
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame.isVisible()) {
+					int xl = frame.getX() + frame.getWidth();
+					int ya = frame.getY() + frame.getHeight();
+					if (xl > largura) {
+						largura = xl;
+					}
+					if (ya > altura) {
+						altura = ya;
+					}
+					frame.moveToFront();
+				}
+			}
+			setPreferredSize(new Dimension(largura, altura + Constantes.QUARENTA_UM));
+			if (updateTree) {
+				Util.updateComponentTreeUI(getParent());
+			}
+		}
 	}
 
 	public class MenuLarguras extends Menu {
@@ -293,6 +308,14 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			totalAcao.setEnabled(b);
 			setEnabled(b);
 		}
+	}
+
+	public MenuLarguras getMenuLargura() {
+		return menuLarguras;
+	}
+
+	public Larguras getLarguras() {
+		return larguras;
 	}
 
 	public class Larguras {
@@ -345,74 +368,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public class MenuDimensao extends Menu {
-		private Action usarFormularioAcao = acaoMenu("label.usar_formularios");
-		private Action dimensaoManualAcao = acaoMenu("label.dimensao_manual");
-		private Action retirarRolagemAcao = acaoMenu("label.retirar_rolagem");
-		private static final long serialVersionUID = 1L;
-
-		protected MenuDimensao() {
-			super(AbstratoMensagens.getString("label.ajustar"), false, Icones.RECT);
-			addMenuItem(dimensaoManualAcao);
-			addMenuItem(usarFormularioAcao);
-			addMenuItem(retirarRolagemAcao);
-			usarFormularioAcao.setActionListener(e -> dimensao.usarFormularios(true));
-			retirarRolagemAcao.setActionListener(e -> dimensao.retirarRolagem());
-			dimensaoManualAcao.setActionListener(e -> dimensao.ajusteManual());
-		}
-
-		public void habilitar(boolean b) {
-			usarFormularioAcao.setEnabled(b);
-		}
-	}
-
-	public class Dimensao {
-		public void ajusteManual() {
-			String string = getWidth() + "," + getHeight();
-			Object resp = Util.getValorInputDialog(AbstratoDesktop.this, "label.largura_altura", string, string);
-			if (resp != null && !Util.isEmpty(resp.toString())) {
-				ajustarManual(resp);
-			}
-		}
-
-		private void ajustarManual(Object resp) {
-			String[] strings = resp.toString().split(",");
-			if (strings != null && strings.length == 2) {
-				int largura = Integer.parseInt(strings[0].trim());
-				int altura = Integer.parseInt(strings[1].trim());
-				setPreferredSize(new Dimension(largura, altura));
-				Util.updateComponentTreeUI(getParent());
-			}
-		}
-
-		public void retirarRolagem() {
-			setPreferredSize(new Dimension(1, 1));
-			Util.updateComponentTreeUI(getParent());
-		}
-
-		public void usarFormularios(boolean updateTree) {
-			int largura = 0;
-			int altura = 0;
-			for (JInternalFrame frame : getAllFrames()) {
-				if (frame.isVisible()) {
-					int xl = frame.getX() + frame.getWidth();
-					int ya = frame.getY() + frame.getHeight();
-					if (xl > largura) {
-						largura = xl;
-					}
-					if (ya > altura) {
-						altura = ya;
-					}
-					frame.moveToFront();
-				}
-			}
-			setPreferredSize(new Dimension(largura, altura + Constantes.QUARENTA_UM));
-			if (updateTree) {
-				Util.updateComponentTreeUI(getParent());
-			}
-		}
-	}
-
 	public class MenuAjuste extends Menu {
 		private Action aproximarEmpilharUsarFormsAcao = acaoMenu("label.aproximar_empilhar_usar_forms");
 		private Action nivelTranspFormsIgnorados = acaoMenu("label.nivel_transp_forms_ignorados");
@@ -461,6 +416,14 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
+	public MenuAjuste getMenuAjuste() {
+		return menuAjuste;
+	}
+
+	public Ajuste getAjuste() {
+		return ajuste;
+	}
+
 	public class Ajuste {
 		public void nivelTranspFormsIgnorados() {
 			nivelTransparenciaFormsIgnorados();
@@ -475,20 +438,61 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public Alinhamento getAlinhamento() {
-		return alinhamento;
+	public int getTotalFormsInvisiveis() {
+		int total = 0;
+		for (JInternalFrame frame : getAllFrames()) {
+			if (!frame.isVisible()) {
+				total++;
+			}
+		}
+		return total;
 	}
 
-	public Larguras getLarguras() {
-		return larguras;
+	public int getTotalFormsMinimizados() {
+		int total = 0;
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame.isIcon()) {
+				total++;
+			}
+		}
+		return total;
 	}
 
-	public Dimensao getDimensao() {
-		return dimensao;
+	public int getTotalFormsMaximizados() {
+		int total = 0;
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame.isMaximum()) {
+				total++;
+			}
+		}
+		return total;
 	}
 
-	public Ajuste getAjuste() {
-		return ajuste;
+	public abstract int getMargemDireitaForm();
+
+	public abstract void empilharFormulariosImpl();
+
+	public abstract void nivelTransparenciaFormsIgnorados();
+
+	public abstract boolean ajustarLargura(JInternalFrame frame);
+
+	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree,
+			JInternalFrame frame);
+
+	static Action acaoMenu(String chave, Icon icon) {
+		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
+	}
+
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
+	}
+
+	public void addTotalDireitoAuto() {
+		menuLarguras.addTotalDireitoAuto();
+	}
+
+	public void setTotalDireitoAuto(boolean b) {
+		menuLarguras.setTotalDireitoAuto(b);
 	}
 
 	@Override
