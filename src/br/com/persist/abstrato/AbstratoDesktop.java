@@ -20,6 +20,7 @@ import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoDesktop extends JDesktopPane implements WindowHandler, FicharioHandler {
 	protected final transient MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
+	protected final transient MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 	protected final transient MenuDimensao menuDimensao = new MenuDimensao();
 	protected final transient MenuLargura menuLargura = new MenuLargura();
 	protected final transient MenuAjuste menuAjuste = new MenuAjuste();
@@ -119,6 +120,22 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			}
 		}
 		return total;
+	}
+
+	public class MenuAlinhamento extends Menu {
+		private static final long serialVersionUID = 1L;
+		private Action centralizarAcao = actionMenu("label.centralizar", Icones.LARGURA);
+
+		protected MenuAlinhamento() {
+			super(AbstratoMensagens.getString("label.alinhamento"), false, Icones.RECT);
+			addMenuItem(centralizarAcao);
+			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
+		}
+
+		public void habilitar(boolean b) {
+			centralizarAcao.setEnabled(b);
+			setEnabled(b);
+		}
 	}
 
 	public class Alinhamento {
@@ -393,7 +410,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		private Action nivelTranspFormsIgnorados = acaoMenu("label.nivel_transp_forms_ignorados");
 		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
 		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
-		private Action centralizarAcao = actionMenu("label.centralizar", Icones.LARGURA);
 		private Action empilharAcao = acaoMenu("label.empilhar_formularios");
 		private static final long serialVersionUID = 1L;
 
@@ -404,12 +420,10 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			addMenuItem(aproximarObjetoAoFormAcao);
 			addMenuItem(true, aproximarEmpilharUsarFormsAcao);
 			addMenuItem(empilharAcao);
-			addMenuItem(centralizarAcao);
 			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false, null));
 			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false, null));
 			nivelTranspFormsIgnorados.setActionListener(e -> ajuste.nivelTranspFormsIgnorados());
 			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
-			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			aproximarEmpilharUsarFormsAcao.setActionListener(e -> aproximarEmpilharUsarForms());
 			aproximarEmpilharUsarFormsAcao.hint(AbstratoMensagens.getString("label.aproximar_form_ao_objeto") + " > "
 					+ AbstratoMensagens.getString("label.empilhar_formularios") + " > "
@@ -430,7 +444,6 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			nivelTranspFormsIgnorados.setEnabled(b);
 			aproximarFormAoObjetoAcao.setEnabled(b);
 			aproximarObjetoAoFormAcao.setEnabled(b);
-			centralizarAcao.setEnabled(b);
 			empilharAcao.setEnabled(b);
 			setEnabled(b);
 		}
