@@ -50,7 +50,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		protected MenuDistribuicao() {
 			super(AbstratoMensagens.getString("label.distribuicao"), false, Icones.RECT);
 			addMenuItem(distribuirAcao);
-			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
+			distribuirAcao.setActionListener(e -> distribuicao.distribuir());
 		}
 
 		public void habilitar(boolean b) {
@@ -68,9 +68,17 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	public class Distribuicao {
-		public void distribuir(int delta) {
-			int largura = (getSize().width - 20) + delta;
-			int altura = Constantes.TREZENTOS_QUARENTA_UM;
+		public void distribuir() {
+			int largura = getSize().width - getMargemDireitaForm();
+			int alturaContainer = getSize().height;
+			JInternalFrame[] frames = getAllFrames();
+			if (frames == null || frames.length == 0) {
+				return;
+			}
+			int altura = alturaContainer / frames.length;
+			if (altura < 25) {
+				altura = 25;
+			}
 			distribuir(largura, altura);
 			alinhamento.centralizar();
 			dimensao.usarFormularios(true);
@@ -164,6 +172,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 					frame.setLocation(x, frame.getY());
 				}
 			}
+			alinhamento.centralizar();
 		}
 
 		private void direito(JInternalFrame ref) {
