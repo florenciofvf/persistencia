@@ -5455,11 +5455,13 @@ public class InternalContainer extends Panel
 class InstrucaoCampo {
 	private static final String HAVING_COUNT_1 = "\nHAVING COUNT(*) > 1";
 	private static final String HAVING_COUNT = "\n    HAVING COUNT(";
+	private static final String HAVING_COUNT_2 = "\nHAVING COUNT(";
 	private static final String FROM_SELECT = "\nFROM (SELECT ";
 	private static final String GROUP_BY = "\n    GROUP BY ";
 	private static final String FROM = "\n    FROM ";
 	private static final String COUNT = ", COUNT(";
 	private static final String FROM2 = "\nFROM ";
+	private static final String END1 = ") > 1";
 	final Conexao conexao;
 	final Objeto objeto;
 	final String campo;
@@ -5479,11 +5481,12 @@ class InstrucaoCampo {
 	}
 
 	String valorAgrupado() {
-		StringBuilder sb = new StringBuilder(Constantes.SELECT + objeto.comApelido(campo) + ", COUNT(*)");
+		StringBuilder sb = new StringBuilder(
+				Constantes.SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ")");
 		sb.append(fromTabela());
 		sb.append("\nWHERE " + objeto.comApelido(campo) + " IS NOT NULL");
 		sb.append(groupBy());
-		sb.append(HAVING_COUNT_1);
+		sb.append(HAVING_COUNT_2 + objeto.comApelido(campo) + END1);
 		return sb.toString();
 	}
 
@@ -5513,7 +5516,7 @@ class InstrucaoCampo {
 		sb.append(FROM_SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ") AS TOTAL");
 		sb.append(FROM + objeto.getTabelaEsquema(conexao));
 		sb.append(GROUP_BY + objeto.comApelido(campo));
-		sb.append(HAVING_COUNT + objeto.comApelido(campo) + ") > 1");
+		sb.append(HAVING_COUNT + objeto.comApelido(campo) + END1);
 		sb.append("\n) tabela");
 		return sb.toString();
 	}
@@ -5523,7 +5526,7 @@ class InstrucaoCampo {
 		sb.append(FROM_SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ") AS TOTAL");
 		sb.append(FROM + objeto.getTabelaEsquema(conexao));
 		sb.append(GROUP_BY + objeto.comApelido(campo));
-		sb.append(HAVING_COUNT + objeto.comApelido(campo) + ") > 1");
+		sb.append(HAVING_COUNT + objeto.comApelido(campo) + END1);
 		sb.append("\n) tabela");
 		return sb.toString();
 	}

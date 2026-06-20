@@ -468,8 +468,6 @@ public class TabelaPersistencia extends JTable {
 			private MenuTotalRepetidos totalRepetidos = new MenuTotalRepetidos();
 			private MenuRepetidoComQtd repetidoComQtd = new MenuRepetidoComQtd();
 			private Action importaDeAcao = acaoMenu("label.campo_importado_de");
-			private MenuSelectDistinct distinct = new MenuSelectDistinct();
-			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
 			private Action infoColunaAcao = actionMenu("label.info");
 			private static final long serialVersionUID = 1L;
 			private MenuItem menuItemInfoColuna;
@@ -486,8 +484,8 @@ public class TabelaPersistencia extends JTable {
 				add(menorLengthString);
 				add(repetidoComQtd);
 				addSeparator();
-				add(distinct);
-				add(groupBy);
+				add(new MenuGroupBy());
+				add(new MenuDistinct());
 				addSeparator();
 				add(new MenuMenorMaior(TabelaMensagens.getString("label.primeiro_registro"), "MIN"));
 				add(new MenuMenorMaior(TabelaMensagens.getString("label.ultimo_registro"), "MAX"));
@@ -619,10 +617,10 @@ public class TabelaPersistencia extends JTable {
 				}
 			}
 
-			private class MenuSelectDistinct extends MenuPadrao3 {
+			private class MenuDistinct extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
 
-				private MenuSelectDistinct() {
+				private MenuDistinct() {
 					super(TabelaMensagens.getString("label.select_distinct"), false, null);
 					formularioAcao.setActionListener(e -> abrirSelect(true));
 					dialogoAcao.setActionListener(e -> abrirSelect(false));
@@ -636,10 +634,10 @@ public class TabelaPersistencia extends JTable {
 				}
 			}
 
-			private class MenuSelectGroupBy extends MenuPadrao3 {
+			private class MenuGroupBy extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
 
-				private MenuSelectGroupBy() {
+				private MenuGroupBy() {
 					super(TabelaMensagens.getString("label.select_group_by"), false, null);
 					formularioAcao.setActionListener(e -> abrirSelect(true));
 					dialogoAcao.setActionListener(e -> abrirSelect(false));
