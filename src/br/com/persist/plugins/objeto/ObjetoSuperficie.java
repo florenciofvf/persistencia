@@ -1468,6 +1468,8 @@ class SuperficiePopup2 extends Popup {
 class SuperficiePopup extends Popup {
 	private Action objetosComTabelaAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
 	private Action processarObjetosAcao = ObjetoSuperficie.acaoMenu(ObjetoSuperficie.LABEL_PROCESSAR_OBJETOS);
+	private Action dadosComAlterAcao = ObjetoSuperficie.acaoMenu("label.dados_com_alter", Icones.TABELA);
+	private Action dadosSemAlterAcao = ObjetoSuperficie.acaoMenu("label.dados_sem_alter", Icones.TABELA);
 	private Action excluirAcao = ObjetoSuperficie.acaoMenu("label.excluir_selecionado", Icones.EXCLUIR);
 	private Action criarRelacaoAcao = ObjetoSuperficie.acaoMenu("label.criar_relacao", Icones.SETA);
 	private Action copiarIconeAcao = ObjetoSuperficie.acaoMenu("label.copiar_icone", Icones.COPIA);
@@ -1477,14 +1479,14 @@ class SuperficiePopup extends Popup {
 	private Action relacoesAcao = actionMenu("label.relacoes", Icones.SETA);
 	private MenuMestreDetalhe menuMestreDetalhe = new MenuMestreDetalhe();
 	private Action copiarAcao = actionMenu("label.copiar", Icones.COPIA);
-	private Action dadosAcao = actionMenu("label.dados", Icones.TABELA);
+	private MenuItem itemDadosComAlter = new MenuItem(dadosComAlterAcao);
+	private MenuItem itemDadosSemAlter = new MenuItem(dadosSemAlterAcao);
 	private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
 	private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 	private MenuArqVinculo menuArqVinculo = new MenuArqVinculo();
 	private MenuItem itemPartir = new MenuItem(new PartirAcao());
 	private MenuDestacar menuDestacar = new MenuDestacar();
 	private MenuCircular menuCircular = new MenuCircular();
-	private MenuItem itemDados = new MenuItem(dadosAcao);
 	private MenuIgnorar menuIgnorar = new MenuIgnorar();
 	private static final long serialVersionUID = 1L;
 	final ObjetoSuperficieExt superficie;
@@ -1505,7 +1507,8 @@ class SuperficiePopup extends Popup {
 		addMenuItem(true, excluirAcao);
 		add(true, menuArqVinculo);
 		add(true, itemPartir);
-		add(true, itemDados);
+		add(true, itemDadosComAlter);
+		add(itemDadosSemAlter);
 		addMenuItem(true, relacoesAcao);
 		addMenuItem(exportacoesAcao);
 		addMenuItem(criarRelacaoAcao);
@@ -1827,10 +1830,16 @@ class SuperficiePopup extends Popup {
 	}
 
 	private void eventos() {
-		dadosAcao.setActionListener(e -> {
-			Object object = itemDados.getObject();
+		dadosComAlterAcao.setActionListener(e -> {
+			Object object = itemDadosComAlter.getObject();
 			if (object instanceof Objeto) {
-				abrirObjeto((Objeto) object);
+				abrirObjeto((Objeto) object, false);
+			}
+		});
+		dadosSemAlterAcao.setActionListener(e -> {
+			Object object = itemDadosSemAlter.getObject();
+			if (object instanceof Objeto) {
+				abrirObjeto((Objeto) object, true);
 			}
 		});
 		excluirAcao.setActionListener(e -> ObjetoSuperficieUtil.excluirSelecionados(superficie));
@@ -1968,8 +1977,11 @@ class SuperficiePopup extends Popup {
 		}
 	}
 
-	private void abrirObjeto(Objeto objeto) {
+	private void abrirObjeto(Objeto objeto, boolean cloneSemJoinsEAlternativos) {
 		Conexao conexao = superficie.container.getConexaoPadrao();
+		if (cloneSemJoinsEAlternativos) {
+			objeto = objeto.cloneSemJoinsEAlternativos();
+		}
 		ObjetoSuperficieUtil.criarExternalFormulario(superficie, conexao, objeto);
 	}
 
@@ -2007,13 +2019,15 @@ class SuperficiePopup extends Popup {
 		String nomeTabela = objeto != null ? objeto.getTabela() : null;
 		boolean comTabela = objetoSelecionado && objeto != null && !Util.isEmpty(nomeTabela);
 		relacoesAcao.setEnabled(objetoSelecionado && selecionados.size() == Constantes.UM);
-		itemDados.setEnabled(comTabela && selecionados.size() == Constantes.UM);
+		itemDadosComAlter.setEnabled(comTabela && selecionados.size() == Constantes.UM);
+		itemDadosSemAlter.setEnabled(comTabela && selecionados.size() == Constantes.UM);
+		itemDadosComAlter.setObject(itemDadosComAlter.isEnabled() ? objeto : null);
+		itemDadosSemAlter.setObject(itemDadosSemAlter.isEnabled() ? objeto : null);
 		copiarIconeAcao.setEnabled(checarCopiarColarIcone(true, selecionados));
 		copiarIconeAcao.setObject(copiarIconeAcao.isEnabled() ? objeto : null);
 		colarIconeAcao.setEnabled(checarCopiarColarIcone(false, selecionados));
 		colarIconeAcao.setObject(colarIconeAcao.isEnabled() ? objeto : null);
 		criarRelacaoAcao.setEnabled(selecionados.size() == Constantes.DOIS);
-		itemDados.setObject(itemDados.isEnabled() ? objeto : null);
 		menuDistribuicao.setEnabled(objetoSelecionado);
 		menuArqVinculo.setEnabled(!objetoSelecionado);
 		itemPartir.setEnabled(!objetoSelecionado);

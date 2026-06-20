@@ -155,6 +155,23 @@ public class Objeto implements Runnable {
 		this.y = y;
 	}
 
+	public Objeto cloneSemJoinsEAlternativos() {
+		Objeto clone = null;
+		try {
+			clone = clonar();
+			final String string = "";
+			clone.esquemaAlternativo = string;
+			clone.tabelaAlternativo = string;
+			clone.selectAlternativo = string;
+			clone.apelidoParaJoins = string;
+			clone.tabelas = string;
+			clone.joins = string;
+		} catch (AssistenciaException e) {
+			//
+		}
+		return clone;
+	}
+
 	public Objeto clonar() throws AssistenciaException {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.referenciaPesquisa = referenciaPesquisa;
