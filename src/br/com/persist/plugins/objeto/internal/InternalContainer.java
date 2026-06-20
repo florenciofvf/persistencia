@@ -4525,11 +4525,12 @@ public class InternalContainer extends Panel
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
-		public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+		public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form,
+				String titulo) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
-				String instrucao = instrucaoCampo.totalValoresQueRepetem();
+				String instrucao = instrucaoCampo.totalValoresQueRepetem(titulo);
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
@@ -4537,11 +4538,12 @@ public class InternalContainer extends Panel
 		}
 
 		@Override
-		public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+		public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form,
+				String titulo) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
-				String instrucao = instrucaoCampo.totalDoValorMaisRepetido();
+				String instrucao = instrucaoCampo.totalDoValorMaisRepetido(titulo);
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
@@ -5472,8 +5474,8 @@ class InstrucaoCampo {
 		return sb.toString();
 	}
 
-	String totalDoValorMaisRepetido() {
-		StringBuilder sb = new StringBuilder("SELECT MAX(tabela.TOTAL)");
+	String totalDoValorMaisRepetido(String titulo) {
+		StringBuilder sb = new StringBuilder("--" + titulo + "\nSELECT MAX(tabela.TOTAL)");
 		sb.append(FROM_SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ") AS TOTAL");
 		sb.append(FROM + objeto.getTabelaEsquema(conexao));
 		sb.append(GROUP_BY + objeto.comApelido(campo));
@@ -5482,8 +5484,8 @@ class InstrucaoCampo {
 		return sb.toString();
 	}
 
-	String totalValoresQueRepetem() {
-		StringBuilder sb = new StringBuilder("SELECT COUNT(*)");
+	String totalValoresQueRepetem(String titulo) {
+		StringBuilder sb = new StringBuilder("--" + titulo + "\nSELECT COUNT(*)");
 		sb.append(FROM_SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ") AS TOTAL");
 		sb.append(FROM + objeto.getTabelaEsquema(conexao));
 		sb.append(GROUP_BY + objeto.comApelido(campo));

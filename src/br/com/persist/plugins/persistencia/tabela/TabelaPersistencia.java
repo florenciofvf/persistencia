@@ -462,8 +462,6 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuMetadados extends Menu {
 			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
-			private MenuTotalQueRepetem totalQueRepetem = new MenuTotalQueRepetem();
-			private MenuTotalRepetidos totalRepetidos = new MenuTotalRepetidos();
 			private Action importaDeAcao = acaoMenu("label.campo_importado_de");
 			private Action infoColunaAcao = actionMenu("label.info");
 			private static final long serialVersionUID = 1L;
@@ -474,20 +472,16 @@ public class TabelaPersistencia extends JTable {
 				menuItemInfoColuna = addMenuItem(infoColunaAcao);
 				addMenuItem(true, exportaParaAcao);
 				addMenuItem(true, importaDeAcao);
-				addSeparator();
-				add(totalQueRepetem);
-				add(totalRepetidos);
-				addSeparator();
+				add(true, new MenuTotalRepetidos());
+				add(new MenuTotalQueRepetem());
+				add(true,
+						new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_maior_length_string"), "MAX"));
 				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_menor_length_string"), "MIN"));
-				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_maior_length_string"), "MAX"));
-				addSeparator();
-				add(new MenuGroupBy());
+				add(true, new MenuGroupBy());
 				add(new MenuDistinct());
-				addSeparator();
-				add(new MenuMenorMaior(TabelaMensagens.getString("label.primeiro_registro"), "MIN"));
+				add(true, new MenuMenorMaior(TabelaMensagens.getString("label.primeiro_registro"), "MIN"));
 				add(new MenuMenorMaior(TabelaMensagens.getString("label.ultimo_registro"), "MAX"));
-				addSeparator();
-				add(new MenuAgregacao("SUM"));
+				add(true, new MenuAgregacao("SUM"));
 				add(new MenuAgregacao("AVG"));
 				add(new MenuAgregacao("MAX"));
 				add(new MenuAgregacao("MIN"));
@@ -541,7 +535,7 @@ public class TabelaPersistencia extends JTable {
 				private void abrirSelect(boolean abrirEmForm) {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectTotalValoresQueRepetem(TabelaPersistencia.this, coluna, abrirEmForm);
+						listener.selectTotalValoresQueRepetem(TabelaPersistencia.this, coluna, abrirEmForm, getText());
 					}
 				}
 			}
@@ -558,7 +552,7 @@ public class TabelaPersistencia extends JTable {
 				private void abrirSelect(boolean abrirEmForm) {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectTotalValorMaisRepetido(TabelaPersistencia.this, coluna, abrirEmForm);
+						listener.selectTotalValorMaisRepetido(TabelaPersistencia.this, coluna, abrirEmForm, getText());
 					}
 				}
 			}

@@ -13,9 +13,11 @@ public interface TabelaPersistenciaListener {
 
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) throws ObjetoException;
 
-	public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
+	public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form,
+			String titulo);
 
-	public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
+	public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form,
+			String titulo);
 
 	public void menorMaior(TabelaPersistencia tabelaPersistencia, String coluna, String funcao, boolean form);
 
