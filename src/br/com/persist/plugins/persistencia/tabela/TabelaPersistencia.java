@@ -472,8 +472,6 @@ public class TabelaPersistencia extends JTable {
 			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
 			private Action infoColunaAcao = actionMenu("label.info");
 			private static final long serialVersionUID = 1L;
-			private MenuMinimo minimo = new MenuMinimo();
-			private MenuMaximo maximo = new MenuMaximo();
 			private MenuItem menuItemInfoColuna;
 
 			private MenuMetadados() {
@@ -491,8 +489,8 @@ public class TabelaPersistencia extends JTable {
 				add(distinct);
 				add(groupBy);
 				addSeparator();
-				add(minimo);
-				add(maximo);
+				add(new MenuMenorMaior(TabelaMensagens.getString("label.primeiro_registro"), "MIN"));
+				add(new MenuMenorMaior(TabelaMensagens.getString("label.ultimo_registro"), "MAX"));
 				addSeparator();
 				add(new MenuAgregacao("SUM"));
 				add(new MenuAgregacao("AVG"));
@@ -655,11 +653,13 @@ public class TabelaPersistencia extends JTable {
 				}
 			}
 
-			private class MenuMinimo extends MenuPadrao3 {
+			private class MenuMenorMaior extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
+				private final String funcao;
 
-				private MenuMinimo() {
-					super("label.minimo", Icones.VAR);
+				private MenuMenorMaior(String titulo, String funcao) {
+					super(titulo, false, null);
+					this.funcao = funcao;
 					formularioAcao.setActionListener(e -> abrirSelect(true));
 					dialogoAcao.setActionListener(e -> abrirSelect(false));
 				}
@@ -667,24 +667,7 @@ public class TabelaPersistencia extends JTable {
 				private void abrirSelect(boolean abrirEmForm) {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectMinimo(TabelaPersistencia.this, coluna, abrirEmForm);
-					}
-				}
-			}
-
-			private class MenuMaximo extends MenuPadrao3 {
-				private static final long serialVersionUID = 1L;
-
-				private MenuMaximo() {
-					super("label.maximo", Icones.VAR);
-					formularioAcao.setActionListener(e -> abrirSelect(true));
-					dialogoAcao.setActionListener(e -> abrirSelect(false));
-				}
-
-				private void abrirSelect(boolean abrirEmForm) {
-					if (listener != null) {
-						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectMaximo(TabelaPersistencia.this, coluna, abrirEmForm);
+						listener.menorMaior(TabelaPersistencia.this, coluna, funcao, abrirEmForm);
 					}
 				}
 			}

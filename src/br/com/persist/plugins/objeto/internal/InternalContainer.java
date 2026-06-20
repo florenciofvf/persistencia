@@ -4620,21 +4620,10 @@ public class InternalContainer extends Panel
 		}
 
 		@Override
-		public void selectMinimo(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+		public void menorMaior(TabelaPersistencia tabelaPersistencia, String coluna, String funcao, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
-				String instrucao = new Filter(conexao, new String[] { nome }, "MIN", objeto).gerarCompleto();
-				if (!Util.isEmpty(instrucao)) {
-					toolbar.selectFormDialog(form, conexao, instrucao);
-				}
-			}
-		}
-
-		@Override
-		public void selectMaximo(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
-			Conexao conexao = getConexao();
-			if (conexao != null) {
-				String instrucao = new Filter(conexao, new String[] { nome }, "MAX", objeto).gerarCompleto();
+				String instrucao = new Filter(conexao, new String[] { coluna }, funcao, objeto).gerarCompleto();
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
