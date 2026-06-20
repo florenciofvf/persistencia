@@ -4561,18 +4561,6 @@ public class InternalContainer extends Panel
 		}
 
 		@Override
-		public void selectValorRepetidoComSuaQtd(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
-			Conexao conexao = getConexao();
-			if (conexao != null) {
-				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
-				String instrucao = instrucaoCampo.valorRepetidoComESuaQtd();
-				if (!Util.isEmpty(instrucao)) {
-					toolbar.selectFormDialog(form, conexao, instrucao);
-				}
-			}
-		}
-
-		@Override
 		public void selectDistinct(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
@@ -5441,7 +5429,6 @@ public class InternalContainer extends Panel
 }
 
 class InstrucaoCampo {
-	private static final String HAVING_COUNT_1 = "\nHAVING COUNT(*) > 1";
 	private static final String HAVING_COUNT = "\n    HAVING COUNT(";
 	private static final String HAVING_COUNT_2 = "\nHAVING COUNT(";
 	private static final String FROM_SELECT = "\nFROM (SELECT ";
@@ -5482,20 +5469,6 @@ class InstrucaoCampo {
 		StringBuilder sb = new StringBuilder("SELECT DISTINCT " + objeto.comApelido(campo));
 		sb.append(fromTabela());
 		sb.append("\nORDER BY " + objeto.comApelido(campo));
-		return sb.toString();
-	}
-
-	String valorRepetidoComESuaQtd() {
-		StringBuilder sb = new StringBuilder(
-				Constantes.SELECT + objeto.comApelido(campo) + COUNT + objeto.comApelido(campo) + ")");
-		sb.append(fromTabela());
-		sb.append("\nWHERE EXISTS (SELECT " + campo + ", COUNT(*)");
-		sb.append(FROM + objeto.getTabelaEsquema2(conexao));
-		sb.append(GROUP_BY + campo);
-		sb.append("\n    HAVING COUNT(*) > 1");
-		sb.append("\n)");
-		sb.append(HAVING_COUNT_1);
-		sb.append(groupBy());
 		return sb.toString();
 	}
 

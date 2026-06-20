@@ -464,7 +464,6 @@ public class TabelaPersistencia extends JTable {
 			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
 			private MenuTotalQueRepetem totalQueRepetem = new MenuTotalQueRepetem();
 			private MenuTotalRepetidos totalRepetidos = new MenuTotalRepetidos();
-			private MenuRepetidoComQtd repetidoComQtd = new MenuRepetidoComQtd();
 			private Action importaDeAcao = acaoMenu("label.campo_importado_de");
 			private Action infoColunaAcao = actionMenu("label.info");
 			private static final long serialVersionUID = 1L;
@@ -478,7 +477,6 @@ public class TabelaPersistencia extends JTable {
 				addSeparator();
 				add(totalQueRepetem);
 				add(totalRepetidos);
-				add(repetidoComQtd);
 				addSeparator();
 				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_menor_length_string"), "MIN"));
 				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_maior_length_string"), "MAX"));
@@ -580,23 +578,6 @@ public class TabelaPersistencia extends JTable {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 						listener.menorMaiorLength(TabelaPersistencia.this, coluna, funcao, abrirEmForm);
-					}
-				}
-			}
-
-			private class MenuRepetidoComQtd extends MenuPadrao3 {
-				private static final long serialVersionUID = 1L;
-
-				private MenuRepetidoComQtd() {
-					super(TabelaMensagens.getString("label.valor_repetido_com_qtd"), false, null);
-					formularioAcao.setActionListener(e -> abrirSelect(true));
-					dialogoAcao.setActionListener(e -> abrirSelect(false));
-				}
-
-				private void abrirSelect(boolean abrirEmForm) {
-					if (listener != null) {
-						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectValorRepetidoComSuaQtd(TabelaPersistencia.this, coluna, abrirEmForm);
 					}
 				}
 			}
