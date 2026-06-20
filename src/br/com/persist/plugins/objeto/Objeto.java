@@ -1382,12 +1382,12 @@ public class Objeto implements Runnable {
 	}
 
 	public void inverterPosicao(Objeto outro) {
-		int xBkp = x;
-		int yBkp = y;
+		int bkpX = x;
+		int bkpY = y;
 		x = outro.x;
 		y = outro.y;
-		outro.x = xBkp;
-		outro.y = yBkp;
+		outro.x = bkpX;
+		outro.y = bkpY;
 	}
 
 	public long getTotalRegistros() {

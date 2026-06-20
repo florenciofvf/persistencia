@@ -130,6 +130,11 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 	}
 
 	@Override
+	public int getMargemEsquerdaForm() {
+		return 25;
+	}
+
+	@Override
 	public void empilharFormulariosImpl() {
 		JInternalFrame[] frames = getAllFrames();
 		if (frames.length > 0) {

@@ -166,7 +166,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 
 		private void esquerda() {
-			int x = 10;
+			int x = getMargemEsquerdaForm();
 			for (JInternalFrame frame : getAllFrames()) {
 				if (frame.isVisible()) {
 					frame.setLocation(x, frame.getY());
@@ -529,6 +529,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	public abstract int getMargemDireitaForm();
+
+	public abstract int getMargemEsquerdaForm();
 
 	public abstract void empilharFormulariosImpl();
 
