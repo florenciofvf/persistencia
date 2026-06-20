@@ -493,6 +493,11 @@ public class TabelaPersistencia extends JTable {
 				addSeparator();
 				add(minimo);
 				add(maximo);
+				addSeparator();
+				add(new MenuAgregacao("SUM"));
+				add(new MenuAgregacao("AVG"));
+				add(new MenuAgregacao("MAX"));
+				add(new MenuAgregacao("MIN"));
 				exportaParaAcao.setActionListener(e -> importarExportarInfo(true));
 				importaDeAcao.setActionListener(e -> importarExportarInfo(false));
 				addMouseListener(new MouseAdapter() {
@@ -680,6 +685,25 @@ public class TabelaPersistencia extends JTable {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 						listener.selectMaximo(TabelaPersistencia.this, coluna, abrirEmForm);
+					}
+				}
+			}
+
+			private class MenuAgregacao extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+				private final String funcao;
+
+				private MenuAgregacao(String funcao) {
+					super(funcao, false, null);
+					this.funcao = funcao;
+					formularioAcao.setActionListener(e -> abrirSelect(true));
+					dialogoAcao.setActionListener(e -> abrirSelect(false));
+				}
+
+				private void abrirSelect(boolean abrirEmForm) {
+					if (listener != null) {
+						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+						listener.agregacao(TabelaPersistencia.this, coluna, funcao, abrirEmForm);
 					}
 				}
 			}

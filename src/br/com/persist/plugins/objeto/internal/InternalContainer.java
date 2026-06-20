@@ -4609,6 +4609,17 @@ public class InternalContainer extends Panel
 		}
 
 		@Override
+		public void agregacao(TabelaPersistencia tabelaPersistencia, String coluna, String funcao, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				String instrucao = new Filter(conexao, new String[] { coluna }, funcao, objeto).gerarAgregacao();
+				if (!Util.isEmpty(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		@Override
 		public void selectMinimo(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
@@ -5564,6 +5575,13 @@ class Filter {
 			sb.append(Constantes.QL);
 			sb.append(conexao.getLimite());
 		}
+		return sb.toString();
+	}
+
+	String gerarAgregacao() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT " + funcao + "(" + campos[0] + ") FROM ");
+		sb.append(obj.getTabelaEsquema(conexao));
 		return sb.toString();
 	}
 
