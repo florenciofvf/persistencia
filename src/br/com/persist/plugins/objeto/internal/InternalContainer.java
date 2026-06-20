@@ -4549,23 +4549,11 @@ public class InternalContainer extends Panel
 		}
 
 		@Override
-		public void selectTotalMaiorLengthString(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+		public void menorMaiorLength(TabelaPersistencia tabelaPersistencia, String nome, String funcao, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
-				String instrucao = instrucaoCampo.totalDoMaiorLengthString();
-				if (!Util.isEmpty(instrucao)) {
-					toolbar.selectFormDialog(form, conexao, instrucao);
-				}
-			}
-		}
-
-		@Override
-		public void selectTotalMenorLengthString(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
-			Conexao conexao = getConexao();
-			if (conexao != null) {
-				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
-				String instrucao = instrucaoCampo.totalDoMenorLengthString();
+				String instrucao = instrucaoCampo.totalMenorMaiorLength(funcao);
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
@@ -5531,14 +5519,8 @@ class InstrucaoCampo {
 		return sb.toString();
 	}
 
-	String totalDoMaiorLengthString() {
-		StringBuilder sb = new StringBuilder("SELECT MAX(LENGTH(" + objeto.comApelido(campo) + "))");
-		sb.append(FROM2 + objeto.getTabelaEsquema(conexao));
-		return sb.toString();
-	}
-
-	String totalDoMenorLengthString() {
-		StringBuilder sb = new StringBuilder("SELECT MIN(LENGTH(" + objeto.comApelido(campo) + "))");
+	String totalMenorMaiorLength(String funcao) {
+		StringBuilder sb = new StringBuilder("SELECT " + funcao + "(LENGTH(" + objeto.comApelido(campo) + "))");
 		sb.append(FROM2 + objeto.getTabelaEsquema(conexao));
 		return sb.toString();
 	}

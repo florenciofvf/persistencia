@@ -461,8 +461,6 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuMetadados extends Menu {
-			private MenuTotalLengthString2 menorLengthString = new MenuTotalLengthString2();
-			private MenuTotalLengthString maiorLengthString = new MenuTotalLengthString();
 			private Action exportaParaAcao = acaoMenu("label.campo_exportado_para");
 			private MenuTotalQueRepetem totalQueRepetem = new MenuTotalQueRepetem();
 			private MenuTotalRepetidos totalRepetidos = new MenuTotalRepetidos();
@@ -480,9 +478,10 @@ public class TabelaPersistencia extends JTable {
 				addSeparator();
 				add(totalQueRepetem);
 				add(totalRepetidos);
-				add(maiorLengthString);
-				add(menorLengthString);
 				add(repetidoComQtd);
+				addSeparator();
+				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_menor_length_string"), "MIN"));
+				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_maior_length_string"), "MAX"));
 				addSeparator();
 				add(new MenuGroupBy());
 				add(new MenuDistinct());
@@ -566,11 +565,13 @@ public class TabelaPersistencia extends JTable {
 				}
 			}
 
-			private class MenuTotalLengthString extends MenuPadrao3 {
+			private class MenuMenorMaiorLength extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
+				private final String funcao;
 
-				private MenuTotalLengthString() {
-					super(TabelaMensagens.getString("label.total_maior_length_string"), false, null);
+				private MenuMenorMaiorLength(String titulo, String funcao) {
+					super(titulo, false, null);
+					this.funcao = funcao;
 					formularioAcao.setActionListener(e -> abrirSelect(true));
 					dialogoAcao.setActionListener(e -> abrirSelect(false));
 				}
@@ -578,24 +579,7 @@ public class TabelaPersistencia extends JTable {
 				private void abrirSelect(boolean abrirEmForm) {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectTotalMaiorLengthString(TabelaPersistencia.this, coluna, abrirEmForm);
-					}
-				}
-			}
-
-			private class MenuTotalLengthString2 extends MenuPadrao3 {
-				private static final long serialVersionUID = 1L;
-
-				private MenuTotalLengthString2() {
-					super(TabelaMensagens.getString("label.total_menor_length_string"), false, null);
-					formularioAcao.setActionListener(e -> abrirSelect(true));
-					dialogoAcao.setActionListener(e -> abrirSelect(false));
-				}
-
-				private void abrirSelect(boolean abrirEmForm) {
-					if (listener != null) {
-						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectTotalMenorLengthString(TabelaPersistencia.this, coluna, abrirEmForm);
+						listener.menorMaiorLength(TabelaPersistencia.this, coluna, funcao, abrirEmForm);
 					}
 				}
 			}

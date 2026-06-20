@@ -7,6 +7,8 @@ public interface TabelaPersistenciaListener {
 	public void colocarNomeColunaAtalho(TabelaPersistencia tabelaPersistencia, String nome, boolean concat,
 			Coluna coluna);
 
+	public void menorMaiorLength(TabelaPersistencia tabelaPersistencia, String coluna, String funcao, boolean form);
+
 	public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
 
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) throws ObjetoException;
@@ -14,10 +16,6 @@ public interface TabelaPersistenciaListener {
 	public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
 	public void selectTotalValorMaisRepetido(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
-
-	public void selectTotalMaiorLengthString(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
-
-	public void selectTotalMenorLengthString(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
 	public void selectValorRepetidoComSuaQtd(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
 
