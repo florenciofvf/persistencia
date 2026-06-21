@@ -163,7 +163,6 @@ public class Objeto implements Runnable {
 			clone.esquemaAlternativo = string;
 			clone.tabelaAlternativo = string;
 			clone.selectAlternativo = string;
-			clone.apelidoParaJoins = string;
 			clone.tabelas = string;
 			clone.joins = string;
 		} catch (AssistenciaException e) {
