@@ -183,8 +183,6 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 		private final TextEditor textEditor = new TextEditor();
 		private TextField txtDeslocXDesc = new TextField();
 		private TextField txtDeslocYDesc = new TextField();
-		private TextField txtDeltaXQuebr = new TextField();
-		private TextField txtDeltaYQuebr = new TextField();
 		private CheckBox chkDesenharDesc = new CheckBox();
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
@@ -192,18 +190,12 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 		private PanelDescricao() {
 			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
 			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
-			txtDeltaXQuebr.setText(Constantes.VAZIO + relacao.getDeltaXQuebrado());
-			txtDeltaYQuebr.setText(Constantes.VAZIO + relacao.getDeltaYQuebrado());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
 			txtDeslocXDesc.addFocusListener(focusListenerInner);
 			txtDeslocYDesc.addFocusListener(focusListenerInner);
-			txtDeltaXQuebr.addFocusListener(focusListenerInner);
-			txtDeltaYQuebr.addFocusListener(focusListenerInner);
 			chkDesenharDesc.addActionListener(this);
 			txtDeslocXDesc.addActionListener(this);
 			txtDeslocYDesc.addActionListener(this);
-			txtDeltaXQuebr.addActionListener(this);
-			txtDeltaYQuebr.addActionListener(this);
 			textEditor.setText(relacao.getDescricao());
 			textEditor.addFocusListener(focusListenerDesc);
 			textEditor.addKeyListener(keyListenerInner);
@@ -215,8 +207,6 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 			Box container = Box.createVerticalBox();
 			container.add(criarLinhaRotulo("label.desloc_x_desc", txtDeslocXDesc));
 			container.add(criarLinhaRotulo("label.desloc_y_desc", txtDeslocYDesc));
-			container.add(criarLinhaRotulo("label.delta_x_quebr", txtDeltaXQuebr));
-			container.add(criarLinhaRotulo("label.delta_y_quebr", txtDeltaYQuebr));
 			container.add(criarLinha("label.desenhar_desc", true, chkDesenharDesc));
 			add(BorderLayout.SOUTH, container);
 			add(BorderLayout.NORTH, toolbar);
@@ -248,10 +238,6 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setDesenharDescricao(chk.isSelected());
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
-			} else if (txtDeltaXQuebr == e.getSource()) {
-				relacao.setDeltaXQuebrado(Util.getInt(txtDeltaXQuebr.getText(), relacao.getDeltaXQuebrado()));
-			} else if (txtDeltaYQuebr == e.getSource()) {
-				relacao.setDeltaYQuebrado(Util.getInt(txtDeltaYQuebr.getText(), relacao.getDeltaYQuebrado()));
 			}
 			objetoSuperficie.repaint();
 		}
@@ -543,17 +529,28 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 	private class PanelGeral extends Panel implements ActionListener {
 		private Button btnParaFrente = new Button("label.para_frente");
 		private CheckBox chkQuebrado = new CheckBox("label.quebrado");
+		private TextField txtDeslocamento = new TextField();
 		private static final long serialVersionUID = 1L;
 
 		private PanelGeral() throws AssistenciaException {
+			txtDeslocamento.setText(Constantes.VAZIO + relacao.getDeslocamentoQuebrado());
+			txtDeslocamento.addFocusListener(focusListenerInner);
+			txtDeslocamento.addActionListener(this);
 			btnParaFrente.addActionListener(this);
 			chkQuebrado.addActionListener(this);
-			add(BorderLayout.NORTH, new PanelCenter(chkQuebrado, btnParaFrente));
+			add(BorderLayout.NORTH, new PanelCenter(chkQuebrado, txtDeslocamento, btnParaFrente));
 			chkQuebrado.setSelected(relacao.isQuebrado());
 			add(BorderLayout.CENTER, new ScrollPane(new PanelLados()));
 			chkQuebrado.setMargin(new Insets(5, 10, 5, 5));
 			Marcador.aplicarBordaMacro(chkQuebrado);
 		}
+
+		private transient FocusListener focusListenerInner = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				actionPerformed(new ActionEvent(e.getSource(), 0, null));
+			}
+		};
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -563,6 +560,9 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 				MacroProvedor.linhaQuebrada(chk.isSelected());
 			} else if (btnParaFrente == e.getSource()) {
 				ObjetoSuperficieUtil.paraFrente(objetoSuperficie, relacao);
+			} else if (txtDeslocamento == e.getSource()) {
+				relacao.setDeslocamentoQuebrado(
+						Util.getInt(txtDeslocamento.getText(), relacao.getDeslocamentoQuebrado()));
 			}
 			objetoSuperficie.repaint();
 		}
