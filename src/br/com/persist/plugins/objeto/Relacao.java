@@ -364,21 +364,21 @@ public class Relacao implements Runnable {
 			int offset = 10;
 			if (x1 < x2) {
 				if (y1 < y2) {
-					desenharCurvaAsc(g2, x1, y1, x2, y2, offset);
+					desenharCurvaL(g2, x1 + deltaXQuebrado, y1, x2, y2 - deltaXQuebrado, offset);
 				} else {
-					desenharCurvaDes(g2, x1, y1, x2, y2, offset);
+					desenharCurvaF(g2, x1, y1, x2, y2, offset);
 				}
 			} else {
 				if (y1 < y2) {
-					desenharCurvaDes(g2, x2, y2, x1, y1, offset);
+					desenharCurvaF(g2, x2, y2, x1, y1, offset);
 				} else {
-					desenharCurvaAsc(g2, x2, y2, x1, y1, offset);
+					desenharCurvaL(g2, x2 + deltaXQuebrado, y2, x1, y1 - deltaXQuebrado, offset);
 				}
 			}
 		}
 	}
 
-	private void desenharCurvaAsc(Graphics2D g2, int superiorX, int superiorY, int inferiorX, int inferiorY,
+	private void desenharCurvaL(Graphics2D g2, int superiorX, int superiorY, int inferiorX, int inferiorY,
 			int offset) {
 		int lado = offset + offset;
 		g2.drawLine(superiorX, superiorY, superiorX, inferiorY - offset);
@@ -386,7 +386,7 @@ public class Relacao implements Runnable {
 		g2.drawArc(superiorX, inferiorY - lado, lado, lado, 180, 90);
 	}
 
-	private void desenharCurvaDes(Graphics2D g2, int inferiorX, int inferiorY, int superiorX, int superiorY,
+	private void desenharCurvaF(Graphics2D g2, int inferiorX, int inferiorY, int superiorX, int superiorY,
 			int offset) {
 		int lado = offset + offset;
 		g2.drawLine(inferiorX, inferiorY, inferiorX, superiorY + offset);
