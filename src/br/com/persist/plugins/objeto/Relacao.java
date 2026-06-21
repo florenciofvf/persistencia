@@ -591,6 +591,22 @@ public class Relacao implements Runnable {
 		this.deslocamentoYDesc += delta;
 	}
 
+	public int getDeltaXQuebrado() {
+		return deltaXQuebrado;
+	}
+
+	public void setDeltaXQuebrado(int deltaXQuebrado) {
+		this.deltaXQuebrado = deltaXQuebrado;
+	}
+
+	public int getDeltaYQuebrado() {
+		return deltaYQuebrado;
+	}
+
+	public void setDeltaYQuebrado(int deltaYQuebrado) {
+		this.deltaYQuebrado = deltaYQuebrado;
+	}
+
 	public String getChaveDestino() {
 		if (Util.isEmpty(chaveDestino)) {
 			chaveDestino = Constantes.VAZIO;
@@ -643,6 +659,8 @@ public class Relacao implements Runnable {
 		setDesenharDescricao(relacao.desenharDescricao);
 		setDeslocamentoXDesc(relacao.deslocamentoXDesc);
 		setDeslocamentoYDesc(relacao.deslocamentoYDesc);
+		setDeltaXQuebrado(relacao.deltaXQuebrado);
+		setDeltaYQuebrado(relacao.deltaYQuebrado);
 		setPontoDestino(relacao.pontoDestino);
 		setChaveDestino(relacao.chaveDestino);
 		setPontoOrigem(relacao.pontoOrigem);
