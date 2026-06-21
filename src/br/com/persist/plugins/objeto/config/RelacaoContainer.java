@@ -183,6 +183,8 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 		private final TextEditor textEditor = new TextEditor();
 		private TextField txtDeslocXDesc = new TextField();
 		private TextField txtDeslocYDesc = new TextField();
+		private TextField txtDeltaXQuebr = new TextField();
+		private TextField txtDeltaYQuebr = new TextField();
 		private CheckBox chkDesenharDesc = new CheckBox();
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
@@ -190,12 +192,18 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 		private PanelDescricao() {
 			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
 			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
+			txtDeltaXQuebr.setText(Constantes.VAZIO + relacao.getDeltaXQuebrado());
+			txtDeltaYQuebr.setText(Constantes.VAZIO + relacao.getDeltaYQuebrado());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
 			txtDeslocXDesc.addFocusListener(focusListenerInner);
 			txtDeslocYDesc.addFocusListener(focusListenerInner);
+			txtDeltaXQuebr.addFocusListener(focusListenerInner);
+			txtDeltaYQuebr.addFocusListener(focusListenerInner);
 			chkDesenharDesc.addActionListener(this);
 			txtDeslocXDesc.addActionListener(this);
 			txtDeslocYDesc.addActionListener(this);
+			txtDeltaXQuebr.addActionListener(this);
+			txtDeltaYQuebr.addActionListener(this);
 			textEditor.setText(relacao.getDescricao());
 			textEditor.addFocusListener(focusListenerDesc);
 			textEditor.addKeyListener(keyListenerInner);
@@ -207,6 +215,8 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 			Box container = Box.createVerticalBox();
 			container.add(criarLinhaRotulo("label.desloc_x_desc", txtDeslocXDesc));
 			container.add(criarLinhaRotulo("label.desloc_y_desc", txtDeslocYDesc));
+			container.add(criarLinhaRotulo("label.delta_x_quebr", txtDeltaXQuebr));
+			container.add(criarLinhaRotulo("label.delta_y_quebr", txtDeltaYQuebr));
 			container.add(criarLinha("label.desenhar_desc", true, chkDesenharDesc));
 			add(BorderLayout.SOUTH, container);
 			add(BorderLayout.NORTH, toolbar);
@@ -238,6 +248,10 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setDesenharDescricao(chk.isSelected());
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
+			} else if (txtDeltaXQuebr == e.getSource()) {
+				relacao.setDeltaXQuebrado(Util.getInt(txtDeltaXQuebr.getText(), relacao.getDeltaXQuebrado()));
+			} else if (txtDeltaYQuebr == e.getSource()) {
+				relacao.setDeltaYQuebrado(Util.getInt(txtDeltaYQuebr.getText(), relacao.getDeltaYQuebrado()));
 			}
 			objetoSuperficie.repaint();
 		}
