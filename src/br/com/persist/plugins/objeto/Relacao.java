@@ -366,7 +366,7 @@ public class Relacao implements Runnable {
 				if (y1 < y2) {
 					desenharCurvaL(g2, x1 + deltaXQuebrado, y1, x2, y2 - deltaXQuebrado, offset);
 				} else {
-					desenharCurvaF(g2, x1, y1, x2, y2, offset);
+					desenharCurvaF(g2, x1 + deltaXQuebrado, y1, x2, y2 + deltaXQuebrado, offset);
 				}
 			} else {
 				if (y1 < y2) {
