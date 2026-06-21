@@ -529,7 +529,7 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 	private class PanelGeral extends Panel implements ActionListener {
 		private Button btnParaFrente = new Button("label.para_frente");
 		private CheckBox chkQuebrado = new CheckBox("label.quebrado");
-		private TextField txtDeslocamento = new TextField();
+		private TextField txtDeslocamento = new TextField(5);
 		private static final long serialVersionUID = 1L;
 
 		private PanelGeral() throws AssistenciaException {
@@ -538,7 +538,8 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 			txtDeslocamento.addActionListener(this);
 			btnParaFrente.addActionListener(this);
 			chkQuebrado.addActionListener(this);
-			add(BorderLayout.NORTH, new PanelCenter(chkQuebrado, txtDeslocamento, btnParaFrente));
+			add(BorderLayout.NORTH, new PanelCenter(chkQuebrado,
+					new Label(ObjetoMensagens.getString("label.deslocamento"), false), txtDeslocamento, btnParaFrente));
 			chkQuebrado.setSelected(relacao.isQuebrado());
 			add(BorderLayout.CENTER, new ScrollPane(new PanelLados()));
 			chkQuebrado.setMargin(new Insets(5, 10, 5, 5));
