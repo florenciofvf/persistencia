@@ -22,6 +22,7 @@ public class Relacao implements Runnable {
 	private int deslocamentoYDesc = -5;
 	private boolean desenharDescricao;
 	private RelacaoListener listener;
+	private int deslocamentoQuebrado;
 	private static int diametro = 6;
 	private Color cor = COR_PADRAO;
 	private final Objeto destino;
@@ -31,8 +32,6 @@ public class Relacao implements Runnable {
 	private String chaveDestino;
 	private final Objeto origem;
 	private boolean selecionado;
-	private int deltaXQuebrado;
-	private int deltaYQuebrado;
 	private String chaveOrigem;
 	private Objeto objetoTemp;
 	private boolean processar;
@@ -282,10 +281,9 @@ public class Relacao implements Runnable {
 
 	public void aplicar(Attributes attr) {
 		desenharDescricao = Boolean.parseBoolean(attr.getValue("desenharDescricao"));
+		deslocamentoQuebrado = Util.getInt(attr.getValue("desloc_quebrado"), 0);
 		deslocamentoXDesc = Integer.parseInt(attr.getValue("desloc_x_desc"));
 		deslocamentoYDesc = Integer.parseInt(attr.getValue("desloc_y_desc"));
-		deltaXQuebrado = Util.getInt(attr.getValue("delta_x_quebrado"), 0);
-		deltaYQuebrado = Util.getInt(attr.getValue("delta_y_quebrado"), 0);
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		quebrado = Boolean.parseBoolean(attr.getValue("quebrado"));
@@ -301,10 +299,9 @@ public class Relacao implements Runnable {
 		util.atributoCheck("chaveOrigem", getChaveOrigem());
 		util.atributoCheck("chaveDestino", getChaveDestino());
 		util.atributoCheck("desenharDescricao", desenharDescricao);
+		util.atributo("desloc_quebrado", deslocamentoQuebrado);
 		util.atributo("desloc_x_desc", deslocamentoXDesc);
 		util.atributo("desloc_y_desc", deslocamentoYDesc);
-		util.atributo("delta_x_quebrado", deltaXQuebrado);
-		util.atributo("delta_y_quebrado", deltaYQuebrado);
 		util.atributo("corFonte", corFonte.getRGB());
 		util.atributoCheck("pontoDestino", pontoDestino);
 		util.atributoCheck("pontoOrigem", pontoOrigem);
@@ -364,15 +361,15 @@ public class Relacao implements Runnable {
 			int offset = 10;
 			if (x1 < x2) {
 				if (y1 < y2) {
-					desenharCurvaL(g2, x1 + deltaXQuebrado, y1, x2, y2 - deltaXQuebrado, offset);
+					desenharCurvaL(g2, x1 + deslocamentoQuebrado, y1, x2, y2 - deslocamentoQuebrado, offset);
 				} else {
-					desenharCurvaF(g2, x1 + deltaXQuebrado, y1, x2, y2 + deltaXQuebrado, offset);
+					desenharCurvaF(g2, x1 + deslocamentoQuebrado, y1, x2, y2 + deslocamentoQuebrado, offset);
 				}
 			} else {
 				if (y1 < y2) {
-					desenharCurvaF(g2, x2 + deltaXQuebrado, y2, x1, y1 + deltaXQuebrado, offset);
+					desenharCurvaF(g2, x2 + deslocamentoQuebrado, y2, x1, y1 + deslocamentoQuebrado, offset);
 				} else {
-					desenharCurvaL(g2, x2 + deltaXQuebrado, y2, x1, y1 - deltaXQuebrado, offset);
+					desenharCurvaL(g2, x2 + deslocamentoQuebrado, y2, x1, y1 - deslocamentoQuebrado, offset);
 				}
 			}
 		}
@@ -589,20 +586,12 @@ public class Relacao implements Runnable {
 		this.deslocamentoYDesc += delta;
 	}
 
-	public int getDeltaXQuebrado() {
-		return deltaXQuebrado;
+	public int getDeslocamentoQuebrado() {
+		return deslocamentoQuebrado;
 	}
 
-	public void setDeltaXQuebrado(int deltaXQuebrado) {
-		this.deltaXQuebrado = deltaXQuebrado;
-	}
-
-	public int getDeltaYQuebrado() {
-		return deltaYQuebrado;
-	}
-
-	public void setDeltaYQuebrado(int deltaYQuebrado) {
-		this.deltaYQuebrado = deltaYQuebrado;
+	public void setDeslocamentoQuebrado(int deslocamentoQuebrado) {
+		this.deslocamentoQuebrado = deslocamentoQuebrado;
 	}
 
 	public String getChaveDestino() {
@@ -637,6 +626,7 @@ public class Relacao implements Runnable {
 
 	public RelacaoVinculo criarRelacaoVinculo() throws ObjetoException {
 		RelacaoVinculo relacao = new RelacaoVinculo(origem.getId(), pontoOrigem, destino.getId(), pontoDestino);
+		relacao.setDeslocamentoQuebrado(deslocamentoQuebrado);
 		relacao.setDesenharDescricao(desenharDescricao);
 		relacao.setDeslocamentoXDesc(deslocamentoXDesc);
 		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
@@ -654,11 +644,10 @@ public class Relacao implements Runnable {
 		if (relacao == null) {
 			return;
 		}
+		setDeslocamentoQuebrado(relacao.deslocamentoQuebrado);
 		setDesenharDescricao(relacao.desenharDescricao);
 		setDeslocamentoXDesc(relacao.deslocamentoXDesc);
 		setDeslocamentoYDesc(relacao.deslocamentoYDesc);
-		setDeltaXQuebrado(relacao.deltaXQuebrado);
-		setDeltaYQuebrado(relacao.deltaYQuebrado);
 		setPontoDestino(relacao.pontoDestino);
 		setChaveDestino(relacao.chaveDestino);
 		setPontoOrigem(relacao.pontoOrigem);

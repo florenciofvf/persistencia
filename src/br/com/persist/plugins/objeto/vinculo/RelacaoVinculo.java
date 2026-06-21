@@ -19,6 +19,7 @@ public class RelacaoVinculo {
 	private int deslocamentoXDesc = -5;
 	private int deslocamentoYDesc = -5;
 	private boolean desenharDescricao;
+	private int deslocamentoQuebrado;
 	private final String destino;
 	private boolean pontoDestino;
 	private boolean pontoOrigem;
@@ -142,6 +143,7 @@ public class RelacaoVinculo {
 
 	public void aplicar(Attributes attr) {
 		desenharDescricao = Boolean.parseBoolean(attr.getValue("desenharDescricao"));
+		deslocamentoQuebrado = Util.getInt(attr.getValue("desloc_quebrado"), 0);
 		deslocamentoXDesc = Integer.parseInt(attr.getValue("desloc_x_desc"));
 		deslocamentoYDesc = Integer.parseInt(attr.getValue("desloc_y_desc"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
@@ -159,6 +161,7 @@ public class RelacaoVinculo {
 		util.atributoCheck("chaveOrigem", getChaveOrigem());
 		util.atributoCheck("chaveDestino", getChaveDestino());
 		util.atributoCheck("desenharDescricao", desenharDescricao);
+		util.atributo("desloc_quebrado", deslocamentoQuebrado);
 		util.atributo("desloc_x_desc", deslocamentoXDesc);
 		util.atributo("desloc_y_desc", deslocamentoYDesc);
 		util.atributo("corFonte", corFonte.getRGB());
@@ -185,6 +188,7 @@ public class RelacaoVinculo {
 			return null;
 		}
 		Relacao relacao = new Relacao(objOrigem, pontoOrigem, objDestino, pontoDestino);
+		relacao.setDeslocamentoQuebrado(deslocamentoQuebrado);
 		relacao.setDesenharDescricao(desenharDescricao);
 		relacao.setDeslocamentoXDesc(deslocamentoXDesc);
 		relacao.setDeslocamentoYDesc(deslocamentoYDesc);
@@ -202,6 +206,7 @@ public class RelacaoVinculo {
 		if (relacao == null) {
 			return;
 		}
+		setDeslocamentoQuebrado(relacao.getDeslocamentoQuebrado());
 		setDeslocamentoXDesc(relacao.getDeslocamentoXDesc());
 		setDeslocamentoYDesc(relacao.getDeslocamentoYDesc());
 		setDesenharDescricao(relacao.isDesenharDescricao());
@@ -241,6 +246,14 @@ public class RelacaoVinculo {
 
 	public void setProcessar(boolean processar) {
 		this.processar = processar;
+	}
+
+	public int getDeslocamentoQuebrado() {
+		return deslocamentoQuebrado;
+	}
+
+	public void setDeslocamentoQuebrado(int deslocamentoQuebrado) {
+		this.deslocamentoQuebrado = deslocamentoQuebrado;
 	}
 
 	public int getDeslocamentoXDesc() {
