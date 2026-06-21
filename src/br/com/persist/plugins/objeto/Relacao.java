@@ -31,6 +31,8 @@ public class Relacao implements Runnable {
 	private String chaveDestino;
 	private final Objeto origem;
 	private boolean selecionado;
+	private int deltaXQuebrado;
+	private int deltaYQuebrado;
 	private String chaveOrigem;
 	private Objeto objetoTemp;
 	private boolean processar;
@@ -282,6 +284,8 @@ public class Relacao implements Runnable {
 		desenharDescricao = Boolean.parseBoolean(attr.getValue("desenharDescricao"));
 		deslocamentoXDesc = Integer.parseInt(attr.getValue("desloc_x_desc"));
 		deslocamentoYDesc = Integer.parseInt(attr.getValue("desloc_y_desc"));
+		deltaXQuebrado = Util.getInt(attr.getValue("delta_x_quebrado"), 0);
+		deltaYQuebrado = Util.getInt(attr.getValue("delta_y_quebrado"), 0);
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		quebrado = Boolean.parseBoolean(attr.getValue("quebrado"));
@@ -299,6 +303,8 @@ public class Relacao implements Runnable {
 		util.atributoCheck("desenharDescricao", desenharDescricao);
 		util.atributo("desloc_x_desc", deslocamentoXDesc);
 		util.atributo("desloc_y_desc", deslocamentoYDesc);
+		util.atributo("delta_x_quebrado", deltaXQuebrado);
+		util.atributo("delta_y_quebrado", deltaYQuebrado);
 		util.atributo("corFonte", corFonte.getRGB());
 		util.atributoCheck("pontoDestino", pontoDestino);
 		util.atributoCheck("pontoOrigem", pontoOrigem);
