@@ -175,7 +175,6 @@ public class InternalContainer extends Panel
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
-	private static final String LABEL_NOME_PESQUISA = "label.nome_pesquisa";
 	private transient TabelaListener tabelaListener = new TabelaListener();
 	private transient InternalListener.RelacaoObjeto relacaoObjetoListener;
 	private transient InternalListener.Visibilidade visibilidadeListener;
@@ -191,7 +190,6 @@ public class InternalContainer extends Panel
 	private transient InternalListener.Titulo tituloListener;
 	private final transient Toolbar toolbar = new Toolbar();
 	private static final Logger LOG = Logger.getGlobal();
-	private static final String DESCRICAO = "DESCRICAO";
 	private ScrollPane scrollPane = new ScrollPane();
 	private static final long serialVersionUID = 1L;
 	private transient InternalConfig internalConfig;
@@ -1581,7 +1579,7 @@ public class InternalContainer extends Panel
 						try {
 							Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						}
 					}
 
@@ -1683,7 +1681,7 @@ public class InternalContainer extends Panel
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
 						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1720,7 +1718,7 @@ public class InternalContainer extends Panel
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
 						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1751,7 +1749,7 @@ public class InternalContainer extends Panel
 							try {
 								vinculoListener.preencherVinculacao(vinculacao);
 							} catch (Exception ex) {
-								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+								Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 								return;
 							}
 							Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1772,7 +1770,7 @@ public class InternalContainer extends Panel
 							try {
 								vinculoListener.preencherVinculacao(vinculacao);
 							} catch (Exception ex) {
-								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+								Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 								return;
 							}
 							Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1806,7 +1804,7 @@ public class InternalContainer extends Panel
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
 						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1822,7 +1820,7 @@ public class InternalContainer extends Panel
 									vinculoListener.salvarVinculacao(vinculacao);
 								}
 							} catch (ObjetoException ex) {
-								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+								Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							}
 						}
 					}
@@ -1838,7 +1836,7 @@ public class InternalContainer extends Panel
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
 						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1866,7 +1864,7 @@ public class InternalContainer extends Panel
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
 						Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1906,7 +1904,7 @@ public class InternalContainer extends Panel
 								pesquisaMemoria.copiarVisibilidade(pesquisaArquivo);
 								vinculoListener.salvarVinculacao(vinculacao);
 							} catch (ObjetoException ex) {
-								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+								Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							}
 						}
 					}
@@ -1923,7 +1921,7 @@ public class InternalContainer extends Panel
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1946,7 +1944,7 @@ public class InternalContainer extends Panel
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -1962,7 +1960,7 @@ public class InternalContainer extends Panel
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
 						} catch (ObjetoException ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						}
 					}
 				}
@@ -2002,7 +2000,7 @@ public class InternalContainer extends Panel
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -2064,7 +2062,7 @@ public class InternalContainer extends Panel
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -2110,7 +2108,7 @@ public class InternalContainer extends Panel
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
@@ -2151,7 +2149,7 @@ public class InternalContainer extends Panel
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 					List<Pesquisa> pesquisas = vinculacao.getPesquisas(objeto);
@@ -2170,7 +2168,7 @@ public class InternalContainer extends Panel
 					try {
 						vinculoListener.preencherVinculacao(vinculacao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 					List<Pesquisa> pesquisas = vinculacao.getPesquisas(objeto);
@@ -2226,7 +2224,7 @@ public class InternalContainer extends Panel
 							}
 						}
 					} catch (ObjetoException | AssistenciaException ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 					}
 				}
 
@@ -2968,7 +2966,7 @@ public class InternalContainer extends Panel
 					String descricao = ObjetoUtil.getDescricao(objeto.getPesquisaAdicaoHierarquico());
 					Util.mensagem(InternalContainer.this, descricao);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+					Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 				}
 			}
 
@@ -2985,7 +2983,7 @@ public class InternalContainer extends Panel
 					try {
 						conn = ConexaoProvedor.getConnection(conexao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 						return;
 					}
 				}
@@ -3028,7 +3026,7 @@ public class InternalContainer extends Panel
 						Util.mensagem(InternalContainer.this, string);
 					}
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+					Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 				}
 			}
 
@@ -3942,7 +3940,7 @@ public class InternalContainer extends Panel
 						try {
 							vinculoListener.preencherVinculacao(vinculacao);
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 							return;
 						}
 						if (objeto.getPesquisas(false).isEmpty()) {
@@ -3958,7 +3956,7 @@ public class InternalContainer extends Panel
 						Coletor coletor = new Coletor();
 						Config config = new SetLista.Config(true, true);
 						config.setCriar(true);
-						SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA),
+						SetLista.view(objeto.getId() + ObjetoMensagens.getString(ObjetoConstantes.LABEL_NOME_PESQUISA),
 								Arrays.asList(pesquisa.getNome()), coletor, InternalContainer.this, config);
 						if (coletor.size() == 1) {
 							adicionar(mapaRef, vinculacao, coletor.get(0));
@@ -3973,8 +3971,8 @@ public class InternalContainer extends Panel
 						Coletor coletor = new Coletor();
 						Config config = new SetLista.Config(true, true);
 						config.setCriar(true);
-						SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA), nomes, coletor,
-								InternalContainer.this, config);
+						SetLista.view(objeto.getId() + ObjetoMensagens.getString(ObjetoConstantes.LABEL_NOME_PESQUISA),
+								nomes, coletor, InternalContainer.this, config);
 						if (coletor.size() == 1 && !contem(pesquisas, coletor.get(0))) {
 							adicionar(mapaRef, vinculacao, coletor.get(0));
 							vinculoListener.salvarVinculacao(vinculacao);
@@ -4647,7 +4645,7 @@ public class InternalContainer extends Panel
 				tabelaPersistencia.configClasseBiblio(classe, coluna);
 				checkSalvarVinculacao(classe);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+				Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 			}
 		}
 
@@ -4691,8 +4689,8 @@ public class InternalContainer extends Panel
 			Coletor coletor = new Coletor();
 			Config config = new SetLista.Config(true, true);
 			config.setCriar(true);
-			SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA), nomes, coletor,
-					InternalContainer.this, config);
+			SetLista.view(objeto.getId() + ObjetoMensagens.getString(ObjetoConstantes.LABEL_NOME_PESQUISA), nomes,
+					coletor, InternalContainer.this, config);
 			return coletor;
 		}
 
@@ -4751,7 +4749,7 @@ public class InternalContainer extends Panel
 			try {
 				vinculoListener.preencherVinculacao(vinculacao);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+				Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
 				return;
 			}
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa,

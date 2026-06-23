@@ -17,6 +17,7 @@ public class ObjetoConstantes {
 	public static final Font FONT_HORAS = new Font(Font.MONOSPACED, Font.BOLD, 90);
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_VINCULO = "label.aplicar_arq_vinculo";
+	public static final String LABEL_NOME_PESQUISA = "label.nome_pesquisa";
 	public static final String PESQUISA_INVERTIDO = "pesquisa_invertido";
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
 	public static final int TIPO_DESTAC_FORM_VISIBILIDADE = 0;
@@ -27,6 +28,7 @@ public class ObjetoConstantes {
 	public static final int TIPO_CONTAINER_DIALOGO = 4;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
+	public static final String DESCRICAO = "DESCRICAO";
 	public static final String INVISIVEL = "invisivel";
 	public static final String PESQUISA = "pesquisa";
 	public static final String ERROR = "error";
