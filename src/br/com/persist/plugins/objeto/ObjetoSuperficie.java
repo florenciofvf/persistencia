@@ -1608,7 +1608,8 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void moverObjeto(Objeto objeto, Objeto alvo, boolean antes) {
-			
+			objeto.mover(alvo, antes);
+			superficie.localizarInternalFormulario(objeto);
 		}
 
 		private void inverterPosicao() {

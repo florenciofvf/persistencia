@@ -1406,6 +1406,10 @@ public class Objeto implements Runnable {
 		outro.y = bkpY;
 	}
 
+	public void mover(Objeto alvo, boolean antes) {
+		y = antes ? alvo.y - 10 : alvo.y + 10;
+	}
+
 	public long getTotalRegistros() {
 		return totalRegistros;
 	}
