@@ -1596,8 +1596,8 @@ class SuperficiePopup extends Popup {
 				Coletor coletor = new Coletor();
 				SetLista.Config config = new SetLista.Config(true, true);
 				String id = superficie.getSelecionadoObjeto().getId();
-				String mensagem = antes ? ObjetoMensagens.getString("label.sel_outro_obj_mover_antes", id)
-						: ObjetoMensagens.getString("label.sel_outro_obj_mover_apos", id);
+				String mensagem = antes ? ObjetoMensagens.getString("label.sel_outro_obj_mover_apos", id)
+						: ObjetoMensagens.getString("label.sel_outro_obj_mover_antes", id);
 				config.setMensagem(mensagem);
 				SetLista.view(superficie.getSelecionadoObjeto().getId(), list, coletor, superficie, config);
 				if (coletor.size() == 1) {
