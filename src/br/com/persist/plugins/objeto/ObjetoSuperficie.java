@@ -1554,6 +1554,8 @@ class SuperficiePopup extends Popup {
 	}
 
 	private class MenuDistribuicao extends Menu {
+		Action moverAntesAcao = ObjetoSuperficie.acaoMenu("label.mover_para_antes_objeto");
+		Action moverAposAcao = ObjetoSuperficie.acaoMenu("label.mover_para_apos_objeto");
 		Action inverterAcao2 = ObjetoSuperficie.acaoMenu("label.inverter_posicao2");
 		Action inverterAcao = ObjetoSuperficie.acaoMenu("label.inverter_posicao");
 		Acao distribuicaoHorAcao = new DistribuicaoAcao(true, "label.horizontal");
@@ -1566,15 +1568,47 @@ class SuperficiePopup extends Popup {
 			add(new MenuItem(distribuicaoVerAcao));
 			addMenuItem(true, inverterAcao);
 			addMenuItem(inverterAcao2);
+			addMenuItem(true, moverAntesAcao);
+			addMenuItem(moverAposAcao);
 			inverterAcao2.setActionListener(e -> inverterPosicao2());
+			moverAntesAcao.setActionListener(e -> moverObjeto(true));
+			moverAposAcao.setActionListener(e -> moverObjeto(false));
 			inverterAcao.setActionListener(e -> inverterPosicao());
 		}
 
 		private void preShow(List<Objeto> selecionados) {
-			inverterAcao.setEnabled(selecionados.size() == Constantes.UM);
-			inverterAcao2.setEnabled(selecionados.size() == Constantes.DOIS);
 			distribuicaoHorAcao.setEnabled(selecionados.size() > Constantes.DOIS);
 			distribuicaoVerAcao.setEnabled(selecionados.size() > Constantes.DOIS);
+			moverAposAcao.setEnabled(selecionados.size() == Constantes.DOIS);
+			inverterAcao2.setEnabled(selecionados.size() == Constantes.DOIS);
+			moverAntesAcao.setEnabled(selecionados.size() == Constantes.UM);
+			inverterAcao.setEnabled(selecionados.size() == Constantes.UM);
+		}
+
+		private void moverObjeto(boolean antes) {
+			if (superficie.getSelecionadoObjeto() != null) {
+				List<String> list = ObjetoSuperficieUtil.getListaStringIds(superficie);
+				list.remove(superficie.getSelecionadoObjeto().getId());
+				if (list.isEmpty()) {
+					return;
+				}
+				list.sort(Collator.getInstance());
+				Coletor coletor = new Coletor();
+				SetLista.Config config = new SetLista.Config(true, true);
+				String id = superficie.getSelecionadoObjeto().getId();
+				String mensagem = antes ? ObjetoMensagens.getString("label.sel_outro_obj_mover_antes", id)
+						: ObjetoMensagens.getString("label.sel_outro_obj_mover_apos", id);
+				config.setMensagem(mensagem);
+				SetLista.view(superficie.getSelecionadoObjeto().getId(), list, coletor, superficie, config);
+				if (coletor.size() == 1) {
+					moverObjeto(superficie.getSelecionadoObjeto(),
+							ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0)), antes);
+				}
+			}
+		}
+
+		private void moverObjeto(Objeto objeto, Objeto alvo, boolean antes) {
+			
 		}
 
 		private void inverterPosicao() {
