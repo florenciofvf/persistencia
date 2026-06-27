@@ -2028,9 +2028,14 @@ public class InternalContainer extends Panel
 						return;
 					}
 					if (Util.confirmar(InternalContainer.this,
-							ObjetoMensagens.getString("msg.confirmar_mover_elemento", ref.toString()), false)
-							&& arquivo.remove(ref) && pesquisa.remove(ref) && arquivo2.add(ref) && pesquisa2.add(ref)) {
-						vinculoListener.salvarVinculacao(vinculacao);
+							ObjetoMensagens.getString("msg.confirmar_mover_elemento", ref.toString()), false)) {
+						if (arquivo.remove(ref) && pesquisa.remove(ref) && arquivo2.add(ref) && pesquisa2.add(ref)) {
+							vinculoListener.salvarVinculacao(vinculacao);
+							Util.mensagem(InternalContainer.this, ObjetoMensagens.getString("msg.arq_vinculo_salvo"));
+						} else {
+							Util.mensagem(InternalContainer.this,
+									ObjetoMensagens.getString("msg.arq_vinculo_nao_salvo"));
+						}
 					}
 				}
 
