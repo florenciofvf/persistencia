@@ -1463,6 +1463,7 @@ public class InternalContainer extends Panel
 				private Action ordenarManualAcao = actionMenu("label.ordenar_manual", Icones.ASC_TEXTO);
 				private Action excluirReferenciaAcao = actionMenu("label.excluir_referencia");
 				private Action renomearPesquisaAcao = actionMenu("label.renomear_pesquisa");
+				private Action moverReferenciaAcao = actionMenu("label.mover_referencia");
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private Action excluirPesquisaAcao = actionMenu("label.excluir_pesquisa");
 				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
@@ -1490,6 +1491,7 @@ public class InternalContainer extends Panel
 					addMenuItem(ordenarArrastoAcao);
 					addMenuItem(true, excluirPesquisaAcao);
 					addMenuItem(excluirReferenciaAcao);
+					addMenuItem(moverReferenciaAcao);
 					addSeparator();
 					add(menuInfo);
 					addSeparator();
@@ -1499,6 +1501,7 @@ public class InternalContainer extends Panel
 					renomearPesquisaAcao.setActionListener(e -> renomearPesquisa());
 					limparItensAcao.setActionListener(e -> grupo.clearSelection());
 					nomeIconeReferAcao.setActionListener(e -> preNomeIconeRefer());
+					moverReferenciaAcao.setActionListener(e -> moverReferencia());
 					excluirPesquisaAcao.setActionListener(e -> excluirPesquisa());
 					ordenarArrastoAcao.setActionListener(e -> ordenarArrasto());
 					ordenarManualAcao.setActionListener(e -> ordenarManual());
@@ -1974,6 +1977,91 @@ public class InternalContainer extends Panel
 						return pesquisa.get(coletor.get(0));
 					}
 					return null;
+				}
+
+				private void moverReferencia() {
+					try {
+						checarProcesso(ArquivoVinculo.OBRIGATORIO);
+					} catch (ObjetoException ex) {
+						Util.mensagem(InternalContainer.this, ex.getMessage());
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
+					List<Pesquisa> pesquisas = objeto.getPesquisas(false);
+					if (pesquisas.size() < 2) {
+						Util.mensagem(InternalContainer.this, ObjetoMensagens.getString("erro.mover_ref_list_size"));
+						return;
+					}
+					Pesquisa arquivo = vinculacao.getPesquisa(pesquisa);
+					if (arquivo != null) {
+						try {
+							Referencia ref = selecionarRef(arquivo);
+							if (ref != null) {
+								moverReferencia(vinculacao, ref, arquivo);
+							}
+						} catch (ObjetoException ex) {
+							Util.stackTraceAndMessage(ObjetoConstantes.DESCRICAO, ex, InternalContainer.this);
+						}
+					}
+				}
+
+				private void moverReferencia(Vinculacao vinculacao, Referencia ref, Pesquisa arquivo)
+						throws ObjetoException {
+					List<Pesquisa> pesquisas = objeto.getPesquisas(false);
+					List<Pesquisa> outras = filtrar(pesquisas, arquivo);
+					Coletor coletor = getNomePesquisa(outras);
+					if (coletor.size() != 1) {
+						return;
+					}
+					Pesquisa pesquisa2 = sel(outras, coletor.get(0));
+					if (pesquisa2 == null) {
+						return;
+					}
+					Pesquisa arquivo2 = vinculacao.getPesquisa(pesquisa2);
+					if (arquivo2 == null) {
+						return;
+					}
+					if (Util.confirmar(InternalContainer.this,
+							ObjetoMensagens.getString("msg.confirmar_mover_elemento", ref.toString()), false)
+							&& arquivo.remove(ref) && pesquisa.remove(ref) && arquivo2.add(ref) && pesquisa2.add(ref)) {
+						vinculoListener.salvarVinculacao(vinculacao);
+					}
+				}
+
+				private Pesquisa sel(List<Pesquisa> pesquisas, String nomeEcampo) {
+					for (Pesquisa item : pesquisas) {
+						if (item.getNomeParaMenuItem().equals(nomeEcampo)) {
+							return item;
+						}
+					}
+					return null;
+				}
+
+				private Coletor getNomePesquisa(List<Pesquisa> pesquisas) {
+					List<String> nomes = pesquisas.stream().map(Pesquisa::getNomeParaMenuItem)
+							.collect(Collectors.toList());
+					Coletor coletor = new Coletor();
+					Config config = new SetLista.Config(true, true);
+					SetLista.view(objeto.getId() + ObjetoMensagens.getString(ObjetoConstantes.LABEL_NOME_PESQUISA),
+							nomes, coletor, InternalContainer.this, config);
+					return coletor;
+				}
+
+				private List<Pesquisa> filtrar(List<Pesquisa> pesquisas, Pesquisa arquivo) {
+					List<Pesquisa> lista = new ArrayList<>();
+					for (Pesquisa item : pesquisas) {
+						if (item.equals(arquivo) || item.equals(pesquisa)) {
+							continue;
+						}
+						lista.add(item);
+					}
+					return lista;
 				}
 
 				private void nomeIconeRefer() throws AssistenciaException {
