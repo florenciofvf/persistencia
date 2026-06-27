@@ -351,8 +351,12 @@ public class InternalContainer extends Panel
 
 		private void processFocus() {
 			String string = getText();
-			if (string != null && string.endsWith("''")) {
-				setCaretPosition(string.length() - 1);
+			if (string != null) {
+				if (string.endsWith("''") || string.endsWith("()")) {
+					setCaretPosition(string.length() - 1);
+				} else if (string.endsWith("('')")) {
+					setCaretPosition(string.length() - 2);
+				}
 			}
 			requestFocus();
 		}
