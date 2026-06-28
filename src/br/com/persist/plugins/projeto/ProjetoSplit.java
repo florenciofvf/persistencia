@@ -519,16 +519,20 @@ class Aba extends Transferivel implements ItemListener {
 
 		private void checarInputArquivo() {
 			if (Util.isEmpty(txtArquivo.getText())) {
-				String conteudoEditor = editor.getText();
-				if (Util.isEmpty(conteudoEditor)) {
-					return;
-				}
-				try {
-					File arquivoFragmento = getArquivo(conteudoEditor, fragmentoArquivo);
-					txtArquivo.setText(arquivoFragmento.getAbsolutePath());
-				} catch (Exception ex) {
-					//
-				}
+				checarEditor();
+			}
+		}
+
+		private void checarEditor() {
+			String conteudoEditor = editor.getText();
+			if (Util.isEmpty(conteudoEditor)) {
+				return;
+			}
+			try {
+				File arquivoFragmento = getArquivo(conteudoEditor, fragmentoArquivo);
+				txtArquivo.setText(arquivoFragmento.getAbsolutePath());
+			} catch (Exception ex) {
+				//
 			}
 		}
 
@@ -730,6 +734,7 @@ class Aba extends Transferivel implements ItemListener {
 		@Override
 		protected void limpar() {
 			if (Util.isEmpty(txtArquivo.getText())) {
+				checarEditor();
 				editor.limpar();
 				return;
 			}
