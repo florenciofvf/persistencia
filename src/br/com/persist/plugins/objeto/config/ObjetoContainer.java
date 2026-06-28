@@ -1039,8 +1039,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 					ObjetoMensagens.getString("hint.chaveamento")));
 			container.add(
 					criarLinhaCopiar("label.mapeamento", txtMapeamento, ObjetoMensagens.getString("hint.mapeamento")));
-			container.add(
-					criarLinhaCopiar("label.metodo_set", txtMetodoSet, ObjetoMensagens.getString("hint.metodo_set")));
+			container.add(criarLinhaComLinkCopiar("label.metodo_set", txtMetodoSet,
+					ObjetoMensagens.getString("hint.metodo_set"), PanelBanco.this::mensagemMetodoSet));
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
 			container.add(criarLinhaCopiar("label.class_biblio", txtClassBiblio));
 			container.add(criarLinhaCopiar("label.campos_destac", txtDestacaveis,
@@ -1167,6 +1167,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			}
 			sb.append("SELECT " + seq + " FROM DUAL;");
 			Util.mensagem(ObjetoContainer.this, sb.toString());
+		}
+
+		private void mensagemMetodoSet(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.metodo_set"));
 		}
 
 		private void mensagemSANE(Label label) {
