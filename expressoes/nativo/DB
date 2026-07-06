@@ -12,3 +12,5 @@ defun_native br.com.persist.plugins.expressao.biblionativo.NDB select(conexao, c
 
 defun_native br.com.persist.plugins.expressao.biblionativo.NDB createPreparedStatement(conexao, instrucao);
 
+defun_native br.com.persist.plugins.expressao.biblionativo.NDB executeUpdate(conexao, instrucao) void;
+

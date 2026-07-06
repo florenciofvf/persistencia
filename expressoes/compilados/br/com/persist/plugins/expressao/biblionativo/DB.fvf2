@@ -27,6 +27,11 @@ funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB createPreparedSt
 param conexao
 param instrucao
 
+funcao_nativa br.com.persist.plugins.expressao.biblionativo.NDB executeUpdate
+tipo_void
+param conexao
+param instrucao
+
 funcao $constantes
 tipo_void
 0  return
