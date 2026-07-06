@@ -93,4 +93,13 @@ public class NDB {
 		}
 		return null;
 	}
+
+	@Biblio(7)
+	public static void executeUpdate(Object conexao, Object instrucao) throws SQLException {
+		if (conexao instanceof Connection) {
+			try (Statement st = ((Connection) conexao).createStatement()) {
+				st.executeUpdate((String) instrucao);
+			}
+		}
+	}
 }
