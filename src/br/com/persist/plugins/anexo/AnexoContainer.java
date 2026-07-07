@@ -199,7 +199,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		public void baixar() {
 			AnexoModelo modelo = new AnexoModelo();
 			anexoTree.setModel(modelo);
-			Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexos().entrySet();
+			Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexosConfigurados().entrySet();
 			Iterator<Entry<String, Anexo>> iterator = entrySet.iterator();
 			boolean removido = false;
 			while (iterator.hasNext()) {
@@ -221,7 +221,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		public void salvar() {
 			if (Util.confirmaSalvar(AnexoContainer.this)) {
 				try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo, StandardCharsets.UTF_8.name())) {
-					Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexos().entrySet();
+					Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexosConfigurados().entrySet();
 					for (Entry<String, Anexo> entry : entrySet) {
 						Anexo anexo = entry.getValue();
 						pw.println(entry.getKey());

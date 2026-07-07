@@ -217,7 +217,7 @@ public class Anexo {
 	}
 
 	private void config(StringBuilder sb) {
-		Anexo ane = AnexoModelo.getAnexos().get(criarChave(sb).toString());
+		Anexo ane = AnexoModelo.getAnexosConfigurados().get(criarChave(sb).toString());
 		if (ane != null) {
 			setIcone(ane.getIcone(), ane.getNomeIcone());
 			setAbrirVisivel(ane.isAbrirVisivel());

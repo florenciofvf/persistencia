@@ -25,9 +25,9 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Imagens;
 
 public class AnexoModelo implements TreeModel {
+	private static final Map<String, Anexo> anexosConfigurados = new HashMap<>();
 	private static final File anexosRaiz = new File(AnexoConstantes.ANEXOS);
 	private final EventListenerList listenerList = new EventListenerList();
-	private static final Map<String, Anexo> anexos = new HashMap<>();
 	public static final File anexosInfo = new File(anexosRaiz, "A");
 	private static final Logger LOG = Logger.getGlobal();
 	private final Anexo raiz;
@@ -47,7 +47,7 @@ public class AnexoModelo implements TreeModel {
 	}
 
 	private void inicializar() {
-		anexos.clear();
+		anexosConfigurados.clear();
 		iniIgnorados();
 		if (anexosInfo.isFile()) {
 			try (BufferedReader br = new BufferedReader(
@@ -57,7 +57,7 @@ public class AnexoModelo implements TreeModel {
 				while (linha != null) {
 					if (linha.startsWith(Constantes.SEP)) {
 						selecionado = new Anexo(new File(linha));
-						anexos.put(linha.toLowerCase(), selecionado);
+						anexosConfigurados.put(linha.toLowerCase(), selecionado);
 					} else {
 						configurar(selecionado, linha);
 					}
@@ -93,13 +93,13 @@ public class AnexoModelo implements TreeModel {
 		}
 	}
 
-	public static Map<String, Anexo> getAnexos() {
-		return anexos;
+	public static Map<String, Anexo> getAnexosConfigurados() {
+		return anexosConfigurados;
 	}
 
 	public static void putAnexo(Anexo anexo) {
 		if (anexo != null) {
-			anexos.put(anexo.criarChave(new StringBuilder()).toString(), anexo);
+			anexosConfigurados.put(anexo.criarChave(new StringBuilder()).toString(), anexo);
 		}
 	}
 
