@@ -6,6 +6,7 @@ import java.util.Map;
 import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.InstrucaoUtil;
 import br.com.persist.plugins.expressao.processador.Invoke;
 import br.com.persist.plugins.expressao.processador.Mapa;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
@@ -33,6 +34,7 @@ public class ParametroInvokeMapaInstrucao extends Instrucao implements Invoke, M
 			throws ExpressaoException {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Object valor = funcaoAlvo.getValorParametro(nomParametro);
+		InstrucaoUtil.checarValorMapa(valor);
 		Map<Object, Object> mapa = (Map<Object, Object>) valor;
 		Funcao funcaoValor = (Funcao) mapa.get(nomeMetodo);
 		validar(funcaoValor, comRetorno);

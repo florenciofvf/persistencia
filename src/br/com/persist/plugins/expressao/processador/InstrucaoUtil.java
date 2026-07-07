@@ -43,6 +43,12 @@ public class InstrucaoUtil {
 
 	public static void checarMapa(Object obj) throws ExpressaoException {
 		if (!(obj instanceof Map<?, ?>)) {
+			throw new ExpressaoException("erro.valor_nao_mapa_op", obj);
+		}
+	}
+
+	public static void checarValorMapa(Object obj) throws ExpressaoException {
+		if (!(obj instanceof Map<?, ?>)) {
 			throw new ExpressaoException("erro.valor_nao_mapa", obj);
 		}
 	}
