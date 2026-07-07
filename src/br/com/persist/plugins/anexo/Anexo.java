@@ -232,7 +232,8 @@ public class Anexo {
 		sb.append(Constantes.SEP);
 		Anexo ane = this;
 		while (ane != null) {
-			sb.append(ane.file.getName() + Constantes.SEP);
+			String name = ane.file.getName();
+			sb.append(name.toLowerCase() + Constantes.SEP);
 			ane = ane.getPai();
 		}
 		return sb;
