@@ -57,7 +57,7 @@ public class AnexoModelo implements TreeModel {
 				while (linha != null) {
 					if (linha.startsWith(Constantes.SEP)) {
 						selecionado = new Anexo(new File(linha));
-						anexos.put(linha, selecionado);
+						anexos.put(linha.toLowerCase(), selecionado);
 					} else {
 						configurar(selecionado, linha);
 					}
