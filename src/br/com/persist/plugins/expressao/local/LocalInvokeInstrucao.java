@@ -41,7 +41,7 @@ public class LocalInvokeInstrucao extends Instrucao implements Invoke {
 		Funcao funcaoAlvo = getFuncaoAlvo(funcao, nomeFuncoes);
 		Constante constante = funcaoAlvo.getConstante(nomeLocal);
 		Funcao funcaoValor = (Funcao) constante.getValor();
-		validar(funcaoValor, comRetorno);
+		validar(funcaoValor, nomeLocal, comRetorno);
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);

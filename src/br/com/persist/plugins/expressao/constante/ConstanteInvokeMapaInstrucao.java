@@ -7,6 +7,7 @@ import br.com.persist.plugins.expressao.ExpressaoException;
 import br.com.persist.plugins.expressao.biblioteca.Biblioteca;
 import br.com.persist.plugins.expressao.processador.Funcao;
 import br.com.persist.plugins.expressao.processador.Instrucao;
+import br.com.persist.plugins.expressao.processador.InstrucaoUtil;
 import br.com.persist.plugins.expressao.processador.Invoke;
 import br.com.persist.plugins.expressao.processador.Mapa;
 import br.com.persist.plugins.expressao.processador.PilhaFuncao;
@@ -31,9 +32,10 @@ public class ConstanteInvokeMapaInstrucao extends Instrucao implements Invoke, M
 			throws ExpressaoException {
 		Biblioteca biblio = funcao.getBiblioteca();
 		Constante constante = biblio.getConstante(nomeConstante);
+		InstrucaoUtil.checarValorMapa(constante.getValor());
 		Map<Object, Object> mapa = (Map<Object, Object>) constante.getValor();
 		Funcao funcaoValor = (Funcao) mapa.get(nomeMetodo);
-		validar(funcaoValor, comRetorno);
+		validar(funcaoValor, nomeMetodo, comRetorno);
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);

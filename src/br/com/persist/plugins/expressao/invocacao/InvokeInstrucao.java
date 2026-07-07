@@ -59,7 +59,7 @@ public class InvokeInstrucao extends Invoke
 			biblio = (Biblioteca) pilhaOperando.pop();
 		}
 		Funcao funcaoLoad = biblio.getFuncao(nomeFuncao).clonar();
-		validar(funcaoLoad, comRetorno);
+		validar(funcaoLoad, nomeFuncao, comRetorno);
 		pilhaOperando.setArgumentos(funcaoLoad);
 		if (funcaoLoad.isNativo()) {
 			List<Object> lista = null;

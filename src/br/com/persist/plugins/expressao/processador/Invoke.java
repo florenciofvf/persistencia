@@ -3,9 +3,9 @@ package br.com.persist.plugins.expressao.processador;
 import br.com.persist.plugins.expressao.ExpressaoException;
 
 public interface Invoke {
-	default void validar(Funcao funcao, boolean comRetorno) throws ExpressaoException {
+	default void validar(Funcao funcao, String nome, boolean comRetorno) throws ExpressaoException {
 		if (funcao == null) {
-			throw new ExpressaoException("Funcao nula.", false);
+			throw new ExpressaoException("Funcao nula ou inexistente >>> " + nome, false);
 		}
 		if (comRetorno && funcao.isTipoVoid()) {
 			throw new ExpressaoException("erro.funcao_sem_retorno", funcao.getNome(),

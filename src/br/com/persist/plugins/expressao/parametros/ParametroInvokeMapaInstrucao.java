@@ -37,7 +37,7 @@ public class ParametroInvokeMapaInstrucao extends Instrucao implements Invoke, M
 		InstrucaoUtil.checarValorMapa(valor);
 		Map<Object, Object> mapa = (Map<Object, Object>) valor;
 		Funcao funcaoValor = (Funcao) mapa.get(nomeMetodo);
-		validar(funcaoValor, comRetorno);
+		validar(funcaoValor, nomeMetodo, comRetorno);
 		Funcao clone = funcaoValor.clonar();
 		pilhaOperando.setArgumentos(clone);
 		pilhaFuncao.push(clone);
