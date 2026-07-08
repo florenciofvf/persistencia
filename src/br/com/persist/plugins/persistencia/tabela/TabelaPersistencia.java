@@ -2,7 +2,9 @@ package br.com.persist.plugins.persistencia.tabela;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.FontMetrics;
+import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,6 +19,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
@@ -39,6 +43,9 @@ import br.com.persist.componente.MenuPadrao3;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.TextEditor;
+import br.com.persist.data.DataDialogo;
+import br.com.persist.data.DataListener;
+import br.com.persist.data.Tipo;
 import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
 import br.com.persist.plugins.objeto.ObjetoException;
@@ -48,6 +55,7 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class TabelaPersistencia extends JTable {
 	private transient TabelaPersistenciaListener listener;
+	private static final Logger LOG = Logger.getGlobal();
 	private PopupHeader popupHeader = new PopupHeader();
 	private static final long serialVersionUID = 1L;
 	private Map<String, List<String>> chaveamento;
@@ -861,14 +869,17 @@ public class TabelaPersistencia extends JTable {
 		private class MenuExibirLinhas extends Menu {
 			private Action msgPadraoAcao = acaoMenu("label.msg_padrao");
 			private Action msgOptionAcao = acaoMenu("label.msg_option");
+			private Action msgJsonAcao = acaoMenu("label.msg_json");
 			private static final long serialVersionUID = 1L;
 
 			private MenuExibirLinhas() {
 				super(TabelaMensagens.getString("label.exibir_valores"), false, null);
 				addMenuItem(msgPadraoAcao);
 				addMenuItem(msgOptionAcao);
+				addMenuItem(msgJsonAcao);
 				msgPadraoAcao.setActionListener(e -> exibirValores(false));
 				msgOptionAcao.setActionListener(e -> exibirValores(true));
+				msgJsonAcao.setActionListener(e -> exibirValoresJson());
 			}
 
 			private void exibirValores(boolean option) {
@@ -882,6 +893,48 @@ public class TabelaPersistencia extends JTable {
 				}
 				Util.mensagem(TabelaPersistencia.this, string);
 				TextEditor.setPaintERT(paintERT);
+			}
+
+			private void exibirValoresJson() {
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
+				String string = Util.getStringLista(lista, Constantes.QL2, true, false);
+				DataListenerInner dataListener = new DataListenerInner(string);
+				Component comp = Util.getViewParent(TabelaPersistencia.this);
+				DataDialogo form = null;
+				if (comp instanceof Frame) {
+					form = DataDialogo.criar((Frame) comp, dataListener);
+					Util.configSizeLocation((Frame) comp, form, TabelaPersistencia.this);
+					form.setVisible(true);
+				} else if (comp instanceof Dialog) {
+					form = DataDialogo.criar((Dialog) comp, dataListener);
+					Util.configSizeLocation((Dialog) comp, form, TabelaPersistencia.this);
+					form.setVisible(true);
+				}
+			}
+		}
+
+		private class DataListenerInner implements DataListener {
+			private final String json;
+
+			private DataListenerInner(String json) {
+				this.json = json;
+			}
+
+			public void setParserTipo(Tipo tipo) {
+				LOG.log(Level.FINEST, "setParserTipo");
+			}
+
+			public boolean somenteModelo() {
+				return true;
+			}
+
+			public String getModelo() {
+				return json;
+			}
+
+			@Override
+			public String getTitle() {
+				return "JSON";
 			}
 		}
 
