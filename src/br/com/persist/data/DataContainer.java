@@ -16,6 +16,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 
@@ -40,7 +41,9 @@ public class DataContainer extends Panel {
 			fichario.addTab("label.modelo", areaEdicao);
 			setString(areaEdicao, listener.getModelo());
 		}
-		fichario.addTab("label.modelo", areaModelo);
+		Panel panelModelo = new Panel();
+		panelModelo.add(BorderLayout.CENTER, areaModelo);
+		fichario.addTab("label.modelo", new ScrollPane(panelModelo));
 		setString(areaModelo, listener.getModelo());
 	}
 
