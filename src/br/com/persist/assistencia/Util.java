@@ -72,6 +72,8 @@ import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.mensagem.MensagemDialogo;
 import br.com.persist.mensagem.MensagemFormulario;
@@ -264,6 +266,26 @@ public class Util {
 		SeparadorDialogo.criar(table, titulo, table, sel.indiceModel, comAspas, null);
 	}
 
+	public static void salvarComoXML(JTable table, List<String> colunas, List<Integer> indices, File file)
+			throws XMLException {
+		if (table == null || indices == null) {
+			return;
+		}
+		TableModel model = table.getModel();
+		if (model == null || model.getColumnCount() < 1 || model.getRowCount() < 1) {
+			return;
+		}
+		Coletor coletor = new Coletor();
+		JTableHeader tableHeader = table.getTableHeader();
+		TableColumnModel columnModel = tableHeader.getColumnModel();
+		SetLista.view("Colunas", colunas == null ? nomeColunas(columnModel) : colunas, coletor, table,
+				new SetLista.Config(true, false));
+		if (coletor.estaVazio()) {
+			return;
+		}
+		salvarComoXML(columnModel, model, indices, coletor, table, file);
+	}
+
 	public static TransferidorTabular criarTransferidorTabular(JTable table, List<String> colunas,
 			List<Integer> indices) {
 		if (table == null || indices == null) {
@@ -298,6 +320,20 @@ public class Util {
 		conteudo(html, tabular, pipe, barra, model, indices, selecionadas);
 		finalizar(html, tabular);
 		return new TransferidorTabular(html.toString(), tabular.toString(), pipe.toString(), barra.toString());
+	}
+
+	private static void salvarComoXML(TableColumnModel columnModel, TableModel model, List<Integer> indices,
+			Coletor coletor, JTable table, File file) throws XMLException {
+		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2("dados");
+		if (confirmar(table, "msg.com_cabecalho")) {
+			colunasXML(util, columnModel, selecionadas);
+		}
+		dadosXML(util, model, indices, selecionadas);
+		util.finalizarTag("dados");
+		util.close();
 	}
 
 	private static void iniciar(StringBuilder html) {
@@ -368,6 +404,18 @@ public class Util {
 		pipe.append(Constantes.QL);
 	}
 
+	private static void colunasXML(XMLUtil util, TableColumnModel columnModel, List<ColunaSel> selecionadas) {
+		util.abrirTag2("head");
+		for (ColunaSel item : selecionadas) {
+			TableColumn column = columnModel.getColumn(item.indiceHeader);
+			String coluna = nomeColuna(column);
+			util.abrirTag2("cell");
+			util.conteudo(coluna);
+			util.finalizarTag("cell");
+		}
+		util.finalizarTag("head");
+	}
+
 	private static void conteudo(StringBuilder html, StringBuilder tabular, StringBuilder pipe, StringBuilder barra,
 			TableModel model, List<Integer> indices, List<ColunaSel> selecionadas) {
 		for (Integer i : indices) {
@@ -394,6 +442,20 @@ public class Util {
 			tabular.deleteCharAt(tabular.length() - 1);
 			tabular.append(Constantes.QL);
 			pipe.append(Constantes.QL);
+		}
+	}
+
+	private static void dadosXML(XMLUtil util, TableModel model, List<Integer> indices, List<ColunaSel> selecionadas) {
+		for (Integer i : indices) {
+			util.abrirTag2("row");
+			for (ColunaSel item : selecionadas) {
+				Object obj = model.getValueAt(i, item.indiceModel);
+				String val = obj == null ? Constantes.VAZIO : obj.toString();
+				util.abrirTag2("cell");
+				util.conteudo(val);
+				util.finalizarTag("cell");
+			}
+			util.finalizarTag("row");
 		}
 	}
 
