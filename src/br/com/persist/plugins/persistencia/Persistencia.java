@@ -1,5 +1,6 @@
 package br.com.persist.plugins.persistencia;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -16,6 +17,8 @@ import java.util.Map;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 
 public class Persistencia {
@@ -312,6 +315,12 @@ public class Persistencia {
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
+	}
+
+	public static PersistenciaModelo criarPersistenciaModelo(File file) throws XMLException {
+		PersistenciaXMLHandler handler = new PersistenciaXMLHandler();
+		XML.processar(file, handler);
+		return new PersistenciaModelo(handler.getColunas(), handler.getRegistros(), null, null);
 	}
 
 	private static PersistenciaModelo criarPersistenciaModelo(ResultSet rs, List<Coluna> colunas,
