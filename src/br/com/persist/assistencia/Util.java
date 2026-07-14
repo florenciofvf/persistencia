@@ -408,12 +408,11 @@ public class Util {
 		util.abrirTag2("head");
 		for (ColunaSel item : selecionadas) {
 			TableColumn column = columnModel.getColumn(item.indiceHeader);
-			String coluna = nomeColuna(column);
-			util.abrirTag2("cell");
-			util.conteudo("<![CDATA[").ql();
-			util.tab().conteudo(coluna).ql();
-			util.conteudo("]]>").ql();
-			util.finalizarTag("cell");
+			String nome = nomeColuna(column);
+			util.abrirTag("column");
+			util.atributo("nome", nome);
+			util.atributo("indice", item.indiceHeader);
+			util.fecharTag(-1);
 		}
 		util.finalizarTag("head");
 	}
@@ -454,9 +453,9 @@ public class Util {
 				Object obj = model.getValueAt(i, item.indiceModel);
 				String val = obj == null ? Constantes.VAZIO : obj.toString();
 				util.abrirTag2("cell");
-				util.conteudo("<![CDATA[").ql();
-				util.tab().conteudo(val).ql();
-				util.conteudo("]]>").ql();
+				util.conteudo("<![CDATA[");
+				util.print(val);
+				util.print("]]>").ql();
 				util.finalizarTag("cell");
 			}
 			util.finalizarTag("row");
