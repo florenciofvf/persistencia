@@ -3397,6 +3397,7 @@ public class InternalContainer extends Panel
 				private Action salvarComoXMLAcao = actionMenu("label.salvar_como_xml");
 				private Action transferidorAcao = actionMenu("label.transferidor");
 				private Action nomeColunasAcao = actionMenu("label.nome_colunas");
+				private Action abrirXMLAcao = actionMenu("label.abrir_xml");
 				private Action tabularAcao = actionMenu("label.tabular");
 				private Action htmlAcao = actionMenu("label.html");
 				private Action pipeAcao = actionMenu("label.pipe");
@@ -3410,6 +3411,7 @@ public class InternalContainer extends Panel
 					addMenuItem(true, tabularAcao);
 					addMenuItem(true, transferidorAcao);
 					addMenuItem(true, salvarComoXMLAcao);
+					addMenuItem(abrirXMLAcao);
 					addMenuItem(true, nomeColunasDestacAcao);
 					addMenuItem(nomeColunasAcao);
 					addMenuItem(true, umaColunaSemAcao);
@@ -3421,6 +3423,7 @@ public class InternalContainer extends Panel
 					transferidorAcao.setActionListener(e -> processar(0));
 					nomeColunasAcao.setActionListener(e -> nomeColunas());
 					tabularAcao.setActionListener(e -> processar(1));
+					abrirXMLAcao.setActionListener(e -> abrirXML());
 					htmlAcao.setActionListener(e -> processar(2));
 					pipeAcao.setActionListener(e -> processar(3));
 				}
@@ -3486,6 +3489,29 @@ public class InternalContainer extends Panel
 								Util.salvarComoXML(tabelaPersistencia, getNomeColunas(), indices, file);
 								Util.mensagem(InternalContainer.this,
 										ObjetoMensagens.getString("msg.salvo_xml_sucesso"));
+							} catch (Exception ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
+							}
+						}
+					}
+				}
+
+				private void abrirXML() {
+					JFileChooser fileChooser = Util.criarFileChooser(null, false);
+					int opcao = fileChooser.showOpenDialog(InternalContainer.this);
+					if (opcao == JFileChooser.APPROVE_OPTION) {
+						File file = fileChooser.getSelectedFile();
+						if (file != null) {
+							try {
+								PersistenciaModelo persistenciaModelo = Persistencia.criarPersistenciaModelo(file);
+								OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(persistenciaModelo);
+								tabelaPersistencia.setModel(modeloOrdenacao);
+								checarScrollPane();
+								atualizarTitulo();
+								Util.ajustar(tabelaPersistencia, getGraphics());
+								destacarColunas();
+								larguraRotulos();
+								configurarAltura();
 							} catch (Exception ex) {
 								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
