@@ -3508,6 +3508,7 @@ public class InternalContainer extends Panel
 								tabelaPersistencia.setModel(modeloOrdenacao);
 								checarScrollPane();
 								atualizarTitulo();
+								configurarCabecalhoTabela(modeloOrdenacao, null);
 								Util.ajustar(tabelaPersistencia, getGraphics());
 								destacarColunas();
 								larguraRotulos();
