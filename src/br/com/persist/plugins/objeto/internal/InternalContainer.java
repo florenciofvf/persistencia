@@ -3506,6 +3506,7 @@ public class InternalContainer extends Panel
 							try {
 								PersistenciaModelo persistenciaModelo = Persistencia.criarPersistenciaModelo(file);
 								OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(persistenciaModelo);
+								configurarCompararRegistroAntes();
 								tabelaPersistencia.setModel(modeloOrdenacao);
 								checarScrollPane();
 								atualizarTitulo();
