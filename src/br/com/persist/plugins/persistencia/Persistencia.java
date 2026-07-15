@@ -320,7 +320,7 @@ public class Persistencia {
 	public static PersistenciaModelo criarPersistenciaModelo(File file) throws XMLException {
 		PersistenciaXMLHandler handler = new PersistenciaXMLHandler();
 		XML.processar(file, handler);
-		return new PersistenciaModelo(handler.getColunas(), handler.getRegistros(), null, null);
+		return new PersistenciaModelo(handler.getColunas(), handler.getRegistros(), handler.getTabela(), null);
 	}
 
 	private static PersistenciaModelo criarPersistenciaModelo(ResultSet rs, List<Coluna> colunas,

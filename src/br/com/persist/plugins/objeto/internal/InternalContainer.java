@@ -3486,7 +3486,8 @@ public class InternalContainer extends Panel
 						if (file != null) {
 							List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
 							try {
-								Util.salvarComoXML(tabelaPersistencia, getNomeColunas(), indices, file);
+								Util.salvarComoXML(tabelaPersistencia, getNomeColunas(), indices, file,
+										objeto.getTabela());
 								Util.mensagem(InternalContainer.this,
 										ObjetoMensagens.getString("msg.salvo_xml_sucesso"));
 							} catch (Exception ex) {

@@ -267,8 +267,8 @@ public class Util {
 		SeparadorDialogo.criar(table, titulo, table, sel.indiceModel, comAspas, null);
 	}
 
-	public static void salvarComoXML(JTable table, List<String> colunas, List<Integer> indices, File file)
-			throws XMLException {
+	public static void salvarComoXML(JTable table, List<String> colunas, List<Integer> indices, File file,
+			String tabela) throws XMLException {
 		if (table == null || indices == null) {
 			return;
 		}
@@ -284,7 +284,7 @@ public class Util {
 		if (coletor.estaVazio()) {
 			return;
 		}
-		salvarComoXML(columnModel, model, indices, coletor, table, file);
+		salvarComoXML(columnModel, model, indices, coletor, table, file, tabela);
 	}
 
 	public static TransferidorTabular criarTransferidorTabular(JTable table, List<String> colunas,
@@ -324,11 +324,13 @@ public class Util {
 	}
 
 	private static void salvarComoXML(TableColumnModel columnModel, TableModel model, List<Integer> indices,
-			Coletor coletor, JTable table, File file) throws XMLException {
+			Coletor coletor, JTable table, File file, String tabela) throws XMLException {
 		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2("dados");
+		util.abrirTag("dados");
+		util.atributo("tabela", tabela);
+		util.fecharTag();
 		if (confirmar(table, "msg.com_cabecalho")) {
 			colunasXML(util, columnModel, selecionadas);
 		}

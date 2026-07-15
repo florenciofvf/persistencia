@@ -13,11 +13,16 @@ public class PersistenciaXMLHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
 	private List<Object> registro;
 	private List<Coluna> colunas;
+	private String tabela;
 
 	private void limpar() {
 		if (builder.length() > 0) {
 			builder.delete(0, builder.length());
 		}
+	}
+
+	public String getTabela() {
+		return tabela;
 	}
 
 	public List<Coluna> getColunas() {
@@ -30,7 +35,9 @@ public class PersistenciaXMLHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if ("column".equals(qName)) {
+		if ("dados".equals(qName)) {
+			tabela = attributes.getValue("tabela");
+		} else if ("column".equals(qName)) {
 			String nome = attributes.getValue("nome");
 			String tipo = attributes.getValue("tipo");
 			String chave = attributes.getValue("chave");
