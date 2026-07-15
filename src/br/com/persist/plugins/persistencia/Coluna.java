@@ -31,6 +31,10 @@ public class Coluna {
 		this(nome, indice, false, false, false, null, new Config(-1, null, false, false, false, null));
 	}
 
+	public Coluna(String nome, int indice, boolean numero, boolean chave) {
+		this(nome, indice, numero, chave, false, null, new Config(-1, null, false, false, false, null));
+	}
+
 	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, Config config) {
 		this.autoInc = config.autoIncremento;
 		this.colunaInfo = config.colunaInfo;

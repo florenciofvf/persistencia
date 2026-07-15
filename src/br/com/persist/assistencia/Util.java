@@ -77,6 +77,7 @@ import br.com.persist.marca.XMLUtil;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.mensagem.MensagemDialogo;
 import br.com.persist.mensagem.MensagemFormulario;
+import br.com.persist.plugins.persistencia.tabela.CabecalhoColuna;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
@@ -362,7 +363,14 @@ public class Util {
 			TableColumn column = columnModel.getColumn(i);
 			String coluna = nomeColuna(column);
 			if (coletor.contem(coluna)) {
-				selecionadas.add(new ColunaSel(i, column.getModelIndex()));
+				ColunaSel colunaSel = new ColunaSel(i, column.getModelIndex());
+				TableCellRenderer renderer = column.getHeaderRenderer();
+				if (renderer instanceof CabecalhoColuna) {
+					CabecalhoColuna cabecalho = (CabecalhoColuna) renderer;
+					colunaSel.numero = cabecalho.getColuna().isNumero();
+					colunaSel.chave = cabecalho.getColuna().isChave();
+				}
+				selecionadas.add(colunaSel);
 			}
 		}
 		return selecionadas;
@@ -371,6 +379,8 @@ public class Util {
 	private static class ColunaSel {
 		final int indiceHeader;
 		final int indiceModel;
+		boolean numero;
+		boolean chave;
 
 		private ColunaSel(int indiceHeader, int indice) {
 			this.indiceHeader = indiceHeader;
@@ -412,6 +422,8 @@ public class Util {
 			util.abrirTag("column");
 			util.atributo("nome", nome);
 			util.atributo("indice", item.indiceHeader);
+			util.atributo("numero", item.numero);
+			util.atributo("chave", item.chave);
 			util.fecharTag(-1);
 		}
 		util.finalizarTag("head");
