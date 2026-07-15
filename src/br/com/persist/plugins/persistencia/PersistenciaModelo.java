@@ -271,7 +271,7 @@ public class PersistenciaModelo implements TableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		List<Object> registro = registros.get(rowIndex);
-		if (contemChaves()) {
+		if (conexao != null && tabela != null && contemChaves()) {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
