@@ -68,6 +68,9 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
 				setForeground(Color.BLACK);
 				setBackground(Color.ORANGE);
+			} else {
+				setForeground(null);
+				setBackground(null);
 			}
 		}
 
