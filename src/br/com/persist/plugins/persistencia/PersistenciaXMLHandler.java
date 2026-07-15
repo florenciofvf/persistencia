@@ -32,11 +32,12 @@ public class PersistenciaXMLHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("column".equals(qName)) {
 			String nome = attributes.getValue("nome");
+			String tipo = attributes.getValue("tipo");
 			String chave = attributes.getValue("chave");
 			String indice = attributes.getValue("indice");
 			String numero = attributes.getValue("numero");
 			Coluna coluna = new Coluna(nome, Integer.parseInt(indice), Boolean.parseBoolean(numero),
-					Boolean.parseBoolean(chave));
+					Boolean.parseBoolean(chave), tipo);
 			colunas.add(coluna);
 		} else if ("head".equals(qName)) {
 			colunas = new ArrayList<>();

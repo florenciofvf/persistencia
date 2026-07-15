@@ -369,6 +369,7 @@ public class Util {
 					CabecalhoColuna cabecalho = (CabecalhoColuna) renderer;
 					colunaSel.numero = cabecalho.getColuna().isNumero();
 					colunaSel.chave = cabecalho.getColuna().isChave();
+					colunaSel.tipo = cabecalho.getColuna().getTipo();
 				}
 				selecionadas.add(colunaSel);
 			}
@@ -381,6 +382,7 @@ public class Util {
 		final int indiceModel;
 		boolean numero;
 		boolean chave;
+		String tipo;
 
 		private ColunaSel(int indiceHeader, int indice) {
 			this.indiceHeader = indiceHeader;
@@ -424,6 +426,7 @@ public class Util {
 			util.atributo("indice", item.indiceHeader);
 			util.atributo("numero", item.numero);
 			util.atributo("chave", item.chave);
+			util.atributo("tipo", item.tipo);
 			util.fecharTag(-1);
 		}
 		util.finalizarTag("head");
