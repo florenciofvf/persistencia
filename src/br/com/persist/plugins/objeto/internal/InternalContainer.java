@@ -952,7 +952,7 @@ public class InternalContainer extends Panel
 		}
 
 		private void exceptionMsg() {
-			Util.mensagem(InternalContainer.this, msgException);
+			Util.mensagem(InternalContainer.this, detalhesExcecao());
 		}
 
 		private void habilitarUpdateExcluir(boolean b) {
