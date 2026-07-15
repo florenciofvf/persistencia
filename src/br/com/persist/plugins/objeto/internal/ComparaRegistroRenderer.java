@@ -50,8 +50,8 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 			setForeground(Color.WHITE);
 			setBackground(Color.BLUE);
 		} else {
-			String strModelo = modelo.getValueAt(0, colunaModelo.getIndice()).toString();
-			String strBackup = backup.getValueAt(0, colunaBackup.getIndice()).toString();
+			String strModelo = modelo.getValueAt(row, colunaModelo.getIndice()).toString();
+			String strBackup = backup.getValueAt(row, colunaBackup.getIndice()).toString();
 			if (!Util.isEmpty(strModelo) && Util.isEmpty(strBackup)) {
 				colunaModelo.setStringComparaRegistro("Novo valor em:[" + nomeColuna + valor(strModelo) + "]");
 				toolbar.exceptionEnable(colunaModelo.getStringComparaRegistro());
