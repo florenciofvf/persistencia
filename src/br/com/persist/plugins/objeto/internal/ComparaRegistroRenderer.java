@@ -70,7 +70,7 @@ public class ComparaRegistroRenderer extends DefaultTableCellRenderer {
 				setBackground(Color.ORANGE);
 			} else {
 				setForeground(null);
-				setBackground(null);
+				setBackground(isSelected ? table.getSelectionBackground() : null);
 			}
 		}
 
