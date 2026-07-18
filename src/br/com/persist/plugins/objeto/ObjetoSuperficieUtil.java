@@ -764,6 +764,13 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
+	public static void ignorado(ObjetoSuperficie superficie, boolean b) {
+		for (Relacao item : superficie.getRelacoes()) {
+			item.setIgnorado(b);
+		}
+		superficie.repaint();
+	}
+
 	public static int getIndiceId(ObjetoSuperficie superficie, Objeto obj) {
 		if (obj != null) {
 			for (int i = 0; i < superficie.getObjetos().length; i++) {

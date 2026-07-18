@@ -37,6 +37,7 @@ public class Relacao implements Runnable {
 	private boolean processar;
 	private boolean quebrado;
 	private String descricao;
+	private boolean ignorado;
 	private Thread thread;
 
 	public Relacao(Objeto origem, Objeto destino) throws ObjetoException {
@@ -320,7 +321,7 @@ public class Relacao implements Runnable {
 	}
 
 	public void desenhar(Graphics2D g2, Stroke stroke) {
-		if (!origem.visivel || !destino.visivel) {
+		if (ignorado || !origem.visivel || !destino.visivel) {
 			return;
 		}
 		int raio = Objeto.DIAMETRO / 2;
@@ -657,5 +658,13 @@ public class Relacao implements Runnable {
 		setQuebrado(relacao.quebrado);
 		setCorFonte(relacao.corFonte);
 		setCor(relacao.cor);
+	}
+
+	public boolean isIgnorado() {
+		return ignorado;
+	}
+
+	public void setIgnorado(boolean ignorado) {
+		this.ignorado = ignorado;
 	}
 }

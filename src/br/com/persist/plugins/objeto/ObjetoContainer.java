@@ -602,6 +602,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			private Action pontoDestinoAcao = acaoMenu("label.ponto_destino", Icones.RECT);
 			private Action desenharIdAcao = actionMenu("label.desenhar_id", Icones.LABEL);
 			private Action pontoOrigemAcao = acaoMenu("label.ponto_origem", Icones.RECT);
+			private Action ignoradoAcao = actionMenu("label.ignorado", Icones.RECT);
 			private Action ignorarAcao = actionMenu("label.ignorar", Icones.RECT);
 			private Action reiniciarAction = acaoMenu("label.reiniciar_horas");
 			private JCheckBoxMenuItem checkBoxComparaRegistro = new JCheckBoxMenuItem(compararRegistroAcao);
@@ -624,6 +625,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 				addMenuItem(deslocamentoZeroAcao);
 				addSeparator();
 				addItem(new JCheckBoxMenuItem(ignorarAcao));
+				addItem(new JCheckBoxMenuItem(ignoradoAcao));
 				addSeparator();
 				addMenuItem(reiniciarAction);
 				addItem(somarHorasAcao);
@@ -654,6 +656,8 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 				reiniciarAction.setActionListener(e -> reiniciarHoras());
 				gradeAction.setActionListener(e -> objetoSuperficie.setTotalArrastado(1));
 				ignorarAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorar(objetoSuperficie,
+						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				ignoradoAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorado(objetoSuperficie,
 						((JCheckBoxMenuItem) e.getSource()).isSelected()));
 			}
 
