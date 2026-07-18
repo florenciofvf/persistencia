@@ -171,6 +171,12 @@ public class Objeto implements Runnable {
 		return clone;
 	}
 
+	public Objeto clonarSemSequencia() throws AssistenciaException {
+		Objeto clone = clonar();
+		retroSequencia();
+		return clone;
+	}
+
 	public Objeto clonar() throws AssistenciaException {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.referenciaPesquisa = referenciaPesquisa;
@@ -399,6 +405,12 @@ public class Objeto implements Runnable {
 
 	public static long novaSequencia() {
 		return ++sequencia;
+	}
+
+	public static void retroSequencia() {
+		if (sequencia > 0) {
+			sequencia--;
+		}
 	}
 
 	public static long getSequencia() {

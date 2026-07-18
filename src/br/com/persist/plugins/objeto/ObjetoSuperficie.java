@@ -1079,10 +1079,11 @@ class CopiarColar {
 		return !copiados.isEmpty();
 	}
 
-	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {
+	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) throws AssistenciaException {
 		ObjetoSuperficieUtil.limparSelecao(superficie);
 		Objeto colado = null;
-		for (Objeto clone : copiados) {
+		for (Objeto item : copiados) {
+			Objeto clone = item.clonarSemSequencia();
 			normalizar(clone, clone.getId(), superficie);
 			superficie.addObjeto(clone);
 			clone.setSelecionado(true);
