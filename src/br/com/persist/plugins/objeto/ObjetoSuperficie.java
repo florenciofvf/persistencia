@@ -1079,11 +1079,11 @@ class CopiarColar {
 		return !copiados.isEmpty();
 	}
 
-	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) throws AssistenciaException {
+	public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {
 		ObjetoSuperficieUtil.limparSelecao(superficie);
 		Objeto colado = null;
-		for (Objeto item : copiados) {
-			Objeto clone = get(item, superficie);
+		for (Objeto clone : copiados) {
+			normalizar(clone, clone.getId(), superficie);
 			superficie.addObjeto(clone);
 			clone.setSelecionado(true);
 			colado = clone;
@@ -1109,13 +1109,10 @@ class CopiarColar {
 		return copiados.isEmpty();
 	}
 
-	private static Objeto get(Objeto objeto, ObjetoSuperficie superficie) throws AssistenciaException {
-		Objeto clone = objeto.clonar();
+	private static void normalizar(Objeto clone, String id, ObjetoSuperficie superficie) {
 		clone.deltaX(Objeto.DIAMETRO);
 		clone.deltaY(Objeto.DIAMETRO);
-		clone.setId(objeto.getId());
-		ObjetoSuperficieUtil.checagemId(superficie, clone, objeto.getId(), "-");
-		return clone;
+		ObjetoSuperficieUtil.checagemId(superficie, clone, id, "-");
 	}
 }
 
