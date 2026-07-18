@@ -286,6 +286,13 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
+	public static void deslocamentoZero(ObjetoSuperficie superficie) {
+		for (Relacao item : superficie.getRelacoes()) {
+			item.setDeslocamentoQuebrado(0);
+		}
+		superficie.repaint();
+	}
+
 	public static boolean contem(ObjetoSuperficie superficie, Objeto obj) {
 		return getIndice(superficie, obj) >= 0;
 	}
