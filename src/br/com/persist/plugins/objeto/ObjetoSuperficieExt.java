@@ -526,6 +526,9 @@ public class ObjetoSuperficieExt extends ObjetoSuperficie {
 
 		private void abrirArquivo(Conexao conexao, Objeto objeto, InternalFormulario interno) throws ObjetoException {
 			setComplemento(conexao, objeto);
+			if (conexao == null) {
+				throw new ObjetoException("conexao nula.");
+			}
 			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela());
 			config.setGraphics(getGraphics());
 			if (interno != null) {
