@@ -1114,11 +1114,7 @@ class CopiarColar {
 		clone.deltaX(Objeto.DIAMETRO);
 		clone.deltaY(Objeto.DIAMETRO);
 		clone.setId(objeto.getId());
-		boolean contem = ObjetoSuperficieUtil.contem(superficie, clone);
-		while (contem) {
-			clone.setId(objeto.getId() + "-" + Objeto.novaSequencia());
-			contem = ObjetoSuperficieUtil.contem(superficie, clone);
-		}
+		ObjetoSuperficieUtil.checagemId(superficie, clone, objeto.getId(), "-");
 		return clone;
 	}
 }
