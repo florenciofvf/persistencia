@@ -383,7 +383,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 			}
 		}
 		novo.setId(id);
-		ObjetoSuperficieUtil.checagemId(this, novo, id, "-");
+		ObjetoSuperficieUtil.processarIDObjeto(this, novo, id, "-");
 		addObjeto(novo);
 		repaint();
 		return true;
@@ -399,7 +399,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 
 	public void criarNovoObjeto(int x, int y) throws AssistenciaException {
 		Objeto novo = new Objeto(x, y);
-		ObjetoSuperficieUtil.checagemId(this, novo, Constantes.VAZIO, Constantes.VAZIO);
+		ObjetoSuperficieUtil.processarIDObjeto(this, novo, Constantes.VAZIO, Constantes.VAZIO);
 		addObjeto(novo);
 		ObjetoSuperficieUtil.limparSelecao(this);
 		repaint();
@@ -699,7 +699,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		if (ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo();
 			objeto.setId(id);
-			ObjetoSuperficieUtil.checagemId(this, objeto, id, Constantes.SEP2);
+			ObjetoSuperficieUtil.processarIDObjeto(this, objeto, id, Constantes.SEP2);
 			objeto.setGrupo(tabelaRef.getNomeCampo());
 		} else {
 			objeto.setId(nomeTabela);
@@ -711,7 +711,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		if (ObjetoSuperficieUtil.contemObjetoComTabela(this, nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + tabela.getDescricao();
 			objeto.setId(id);
-			ObjetoSuperficieUtil.checagemId(this, objeto, id, Constantes.SEP2);
+			ObjetoSuperficieUtil.processarIDObjeto(this, objeto, id, Constantes.SEP2);
 			objeto.setGrupo(tabela.getDescricao());
 		} else {
 			objeto.setId(nomeTabela);
@@ -968,7 +968,7 @@ class ThreadTotal extends ThreadComparacao {
 
 	private void incluir(Objeto info) {
 		String id = info.getId();
-		ObjetoSuperficieUtil.checagemId(superficie, info, id, Constantes.SEP2);
+		ObjetoSuperficieUtil.processarIDObjeto(superficie, info, id, Constantes.SEP2);
 		Objeto origem = info.associado;
 		superficie.excluir(origem.associado);
 		superficie.addObjeto(info);
@@ -1056,7 +1056,7 @@ class ThreadRecente extends ThreadComparacao {
 
 	private void incluir(Objeto info) {
 		String id = info.getId();
-		ObjetoSuperficieUtil.checagemId(superficie, info, id, Constantes.SEP2);
+		ObjetoSuperficieUtil.processarIDObjeto(superficie, info, id, Constantes.SEP2);
 		Objeto origem = info.associado;
 		superficie.excluir(origem.associado);
 		superficie.addObjeto(info);
@@ -1113,7 +1113,7 @@ class CopiarColar {
 	private static void normalizar(Objeto clone, String id, ObjetoSuperficie superficie) {
 		clone.deltaX(Objeto.DIAMETRO);
 		clone.deltaY(Objeto.DIAMETRO);
-		ObjetoSuperficieUtil.checagemId(superficie, clone, id, "-");
+		ObjetoSuperficieUtil.processarIDObjeto(superficie, clone, id, "-");
 	}
 }
 
@@ -2098,7 +2098,7 @@ class SuperficiePopup extends Popup {
 					Objeto novo = superficie.getSelecionadoRelacao().criarObjetoMeio();
 					Objeto destino = superficie.getSelecionadoRelacao().getDestino();
 					Objeto origem = superficie.getSelecionadoRelacao().getOrigem();
-					ObjetoSuperficieUtil.checagemId(superficie, novo, Constantes.VAZIO, Constantes.VAZIO);
+					ObjetoSuperficieUtil.processarIDObjeto(superficie, novo, Constantes.VAZIO, Constantes.VAZIO);
 					superficie.addObjeto(novo);
 					superficie.getSelecionadoRelacao().setSelecionado(false);
 					superficie.excluir(superficie.getSelecionadoRelacao());
@@ -2495,7 +2495,7 @@ class Exportacao {
 
 	private void criarEAdicionarObjeto() throws AssistenciaException {
 		Objeto obj = new Objeto(0, 0);
-		ObjetoSuperficieUtil.checagemId(superficie, obj, obj.getId(), Constantes.SEP2);
+		ObjetoSuperficieUtil.processarIDObjeto(superficie, obj, obj.getId(), Constantes.SEP2);
 		this.objeto = obj;
 		superficie.addObjeto(obj);
 	}
@@ -2709,7 +2709,7 @@ class ExportacaoImportacao {
 		if (ObjetoSuperficieUtil.contemObjetoComTabela(superficie, nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + campoProcessado.getDescricao();
 			objeto.setId(id);
-			ObjetoSuperficieUtil.checagemId(superficie, objeto, id, Constantes.SEP2);
+			ObjetoSuperficieUtil.processarIDObjeto(superficie, objeto, id, Constantes.SEP2);
 			objeto.setGrupo(campoProcessado.getDescricao());
 		} else {
 			objeto.setId(nomeTabela);

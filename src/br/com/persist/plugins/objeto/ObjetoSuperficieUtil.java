@@ -136,7 +136,7 @@ public class ObjetoSuperficieUtil {
 		}
 	}
 
-	public static void checagemId(ObjetoSuperficie superficie, Objeto objeto, String id, String sep) {
+	public static void processarIDObjeto(ObjetoSuperficie superficie, Objeto objeto, String id, String sep) {
 		boolean contem = ObjetoSuperficieUtil.contemId(superficie, objeto);
 		while (contem) {
 			objeto.setId(id + sep + Objeto.novaSequencia());
