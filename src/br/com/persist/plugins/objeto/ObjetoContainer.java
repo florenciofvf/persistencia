@@ -583,7 +583,11 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 
 		@Override
 		protected void colar0() {
-			CopiarColar.colar(objetoSuperficie, false, 0, 0);
+			try {
+				CopiarColar.colar(objetoSuperficie, false, 0, 0);
+			} catch (AssistenciaException ex) {
+				Util.mensagem(ObjetoContainer.this, ex.getMessage());
+			}
 		}
 
 		private class ButtonStatus extends ButtonPopup {
