@@ -868,6 +868,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		}
 		objeto.mover(alvo, antes);
 		localizarInternalFormulario(objeto);
+		repaint();
 	}
 }
 
