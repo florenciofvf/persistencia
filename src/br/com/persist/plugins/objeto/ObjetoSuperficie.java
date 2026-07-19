@@ -1615,7 +1615,7 @@ class SuperficiePopup extends Popup {
 		private void moverPosicionamento() {
 			if (superficie.getSelecionadoObjeto() != null) {
 				Objeto selecionado = superficie.getSelecionadoObjeto();
-				String posicionamento = selecionado.getPosicionamento().toUpperCase();
+				String posicionamento = selecionado.getPosicionamento();
 				String antesDe = getIdObjeto(posicionamento, "ANTESDE:");
 				if (antesDe != null) {
 					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, antesDe);
@@ -1631,7 +1631,8 @@ class SuperficiePopup extends Popup {
 		}
 
 		private String getIdObjeto(String string, String prefixo) {
-			if (string.startsWith(prefixo)) {
+			String string2 = string.toUpperCase();
+			if (string2.startsWith(prefixo)) {
 				String id = string.substring(prefixo.length());
 				if (id.trim().isEmpty()) {
 					return null;
