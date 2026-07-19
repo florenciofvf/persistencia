@@ -831,6 +831,18 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 			ObjetoSuperficieUtil.setTransparenciaInternalFormulario(this, Float.parseFloat(resp.toString().trim()));
 		}
 	}
+
+	static String getIdObjeto(String string, String prefixo) {
+		String string2 = string.toUpperCase();
+		if (string2.startsWith(prefixo.toUpperCase())) {
+			String id = string.substring(prefixo.length());
+			if (id.trim().isEmpty()) {
+				return null;
+			}
+			return id;
+		}
+		return null;
+	}
 }
 
 abstract class ThreadComparacao extends Thread {
@@ -1616,30 +1628,18 @@ class SuperficiePopup extends Popup {
 			if (superficie.getSelecionadoObjeto() != null) {
 				Objeto selecionado = superficie.getSelecionadoObjeto();
 				String posicionamento = selecionado.getPosicionamento();
-				String antesDe = getIdObjeto(posicionamento, "ANTESDE:");
+				String antesDe = ObjetoSuperficie.getIdObjeto(posicionamento, ObjetoConstantes.ANTES_DE);
 				if (antesDe != null) {
 					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, antesDe);
 					moverObjeto(selecionado, outro, true);
 					return;
 				}
-				String depoisDe = getIdObjeto(posicionamento, "DEPOISDE:");
+				String depoisDe = ObjetoSuperficie.getIdObjeto(posicionamento, ObjetoConstantes.DEPOIS_DE);
 				if (depoisDe != null) {
 					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, depoisDe);
 					moverObjeto(selecionado, outro, false);
 				}
 			}
-		}
-
-		private String getIdObjeto(String string, String prefixo) {
-			String string2 = string.toUpperCase();
-			if (string2.startsWith(prefixo)) {
-				String id = string.substring(prefixo.length());
-				if (id.trim().isEmpty()) {
-					return null;
-				}
-				return id;
-			}
-			return null;
 		}
 
 		private void inverterPosicao() {
