@@ -832,7 +832,25 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		}
 	}
 
-	static String getIdObjeto(String string, String prefixo) {
+	public void moverPosicionamento(Objeto objeto) {
+		if (objeto == null) {
+			return;
+		}
+		String posicionamento = objeto.getPosicionamento();
+		String antesDe = getIdObjeto(posicionamento, "AntesDE:");
+		if (antesDe != null) {
+			Objeto outro = ObjetoSuperficieUtil.getObjeto(this, antesDe);
+			moverObjeto(objeto, outro, true);
+			return;
+		}
+		String depoisDe = getIdObjeto(posicionamento, "DepoisDE:");
+		if (depoisDe != null) {
+			Objeto outro = ObjetoSuperficieUtil.getObjeto(this, depoisDe);
+			moverObjeto(objeto, outro, false);
+		}
+	}
+
+	private String getIdObjeto(String string, String prefixo) {
 		String string2 = string.toUpperCase();
 		if (string2.startsWith(prefixo.toUpperCase())) {
 			String id = string.substring(prefixo.length());
@@ -842,6 +860,14 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 			return id;
 		}
 		return null;
+	}
+
+	void moverObjeto(Objeto objeto, Objeto alvo, boolean antes) {
+		if (objeto == null || alvo == null || objeto == alvo) {
+			return;
+		}
+		objeto.mover(alvo, antes);
+		localizarInternalFormulario(objeto);
 	}
 }
 
@@ -1596,68 +1622,51 @@ class SuperficiePopup extends Popup {
 
 		private void moverObjeto(boolean antes) {
 			if (superficie.getSelecionadoObjeto() != null) {
+				Objeto selecionado = superficie.getSelecionadoObjeto();
 				List<String> list = ObjetoSuperficieUtil.getListaStringIds(superficie);
-				list.remove(superficie.getSelecionadoObjeto().getId());
+				list.remove(selecionado.getId());
 				if (list.isEmpty()) {
 					return;
 				}
 				list.sort(Collator.getInstance());
 				Coletor coletor = new Coletor();
 				SetLista.Config config = new SetLista.Config(true, true);
-				String id = superficie.getSelecionadoObjeto().getId();
-				String mensagem = antes ? ObjetoMensagens.getString("label.sel_outro_obj_mover_apos", id)
-						: ObjetoMensagens.getString("label.sel_outro_obj_mover_antes", id);
+				String idSel = selecionado.getId();
+				String mensagem = antes ? ObjetoMensagens.getString("label.sel_outro_obj_mover_apos", idSel)
+						: ObjetoMensagens.getString("label.sel_outro_obj_mover_antes", idSel);
 				config.setMensagem(mensagem);
-				SetLista.view(superficie.getSelecionadoObjeto().getId(), list, coletor, superficie, config);
+				SetLista.view(idSel, list, coletor, superficie, config);
 				if (coletor.size() == 1) {
-					moverObjeto(superficie.getSelecionadoObjeto(),
-							ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0)), antes);
+					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0));
+					superficie.moverObjeto(selecionado, outro, antes);
 				}
 			}
-		}
-
-		private void moverObjeto(Objeto objeto, Objeto alvo, boolean antes) {
-			if (objeto == null || alvo == null || objeto == alvo) {
-				return;
-			}
-			objeto.mover(alvo, antes);
-			superficie.localizarInternalFormulario(objeto);
 		}
 
 		private void moverPosicionamento() {
 			if (superficie.getSelecionadoObjeto() != null) {
 				Objeto selecionado = superficie.getSelecionadoObjeto();
-				String posicionamento = selecionado.getPosicionamento();
-				String antesDe = ObjetoSuperficie.getIdObjeto(posicionamento, ObjetoConstantes.ANTES_DE);
-				if (antesDe != null) {
-					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, antesDe);
-					moverObjeto(selecionado, outro, true);
-					return;
-				}
-				String depoisDe = ObjetoSuperficie.getIdObjeto(posicionamento, ObjetoConstantes.DEPOIS_DE);
-				if (depoisDe != null) {
-					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, depoisDe);
-					moverObjeto(selecionado, outro, false);
-				}
+				superficie.moverPosicionamento(selecionado);
 			}
 		}
 
 		private void inverterPosicao() {
 			if (superficie.getSelecionadoObjeto() != null) {
+				Objeto selecionado = superficie.getSelecionadoObjeto();
 				List<String> list = ObjetoSuperficieUtil.getListaStringIds(superficie);
-				list.remove(superficie.getSelecionadoObjeto().getId());
+				list.remove(selecionado.getId());
 				if (list.isEmpty()) {
 					return;
 				}
 				list.sort(Collator.getInstance());
 				Coletor coletor = new Coletor();
 				SetLista.Config config = new SetLista.Config(true, true);
-				config.setMensagem(ObjetoMensagens.getString("label.sel_outro_obj_para_trocar_pos_com",
-						superficie.getSelecionadoObjeto().getId()));
-				SetLista.view(superficie.getSelecionadoObjeto().getId(), list, coletor, superficie, config);
+				String idSel = selecionado.getId();
+				config.setMensagem(ObjetoMensagens.getString("label.sel_outro_obj_para_trocar_pos_com", idSel));
+				SetLista.view(idSel, list, coletor, superficie, config);
 				if (coletor.size() == 1) {
-					inverter(superficie.getSelecionadoObjeto(),
-							ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0)));
+					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, coletor.get(0));
+					inverter(selecionado, outro);
 				}
 			}
 		}
@@ -1672,7 +1681,7 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void inverter(Objeto objeto1, Objeto objeto2) {
-			if (objeto1 == null || objeto2 == null) {
+			if (objeto1 == null || objeto2 == null || objeto1 == objeto2) {
 				return;
 			}
 			objeto1.inverterPosicao(objeto2);

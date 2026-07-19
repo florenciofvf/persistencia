@@ -28,10 +28,8 @@ public class ObjetoConstantes {
 	public static final int TIPO_CONTAINER_DIALOGO = 4;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
-	public static final String DEPOIS_DE = "DEPOISDE:";
 	public static final String DESCRICAO = "DESCRICAO";
 	public static final String INVISIVEL = "invisivel";
-	public static final String ANTES_DE = "ANTESDE:";
 	public static final String PESQUISA = "pesquisa";
 	public static final String ERROR = "error";
 	public static final byte ARRASTO = 1;
