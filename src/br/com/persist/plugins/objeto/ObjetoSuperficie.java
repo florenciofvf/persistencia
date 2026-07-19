@@ -1623,6 +1623,7 @@ class SuperficiePopup extends Popup {
 		private void preShow(List<Objeto> selecionados) {
 			distribuicaoHorAcao.setEnabled(selecionados.size() > Constantes.DOIS);
 			distribuicaoVerAcao.setEnabled(selecionados.size() > Constantes.DOIS);
+			moverPosicaoAcao.setEnabled(selecionados.size() == Constantes.UM);
 			inverterAcao2.setEnabled(selecionados.size() == Constantes.DOIS);
 			moverAntesAcao.setEnabled(selecionados.size() == Constantes.UM);
 			moverAposAcao.setEnabled(selecionados.size() == Constantes.UM);
