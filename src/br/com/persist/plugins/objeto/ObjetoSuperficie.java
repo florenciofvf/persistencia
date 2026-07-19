@@ -1506,7 +1506,7 @@ class SuperficiePopup2 extends Popup {
 		StringBuilder builderPosicionamento = new StringBuilder();
 		for (Objeto item : superficie.getObjetos()) {
 			if (!Util.isEmpty(item.getPosicionamento())) {
-				builderPosicionamento.append(item.getId() + Constantes.QL);
+				builderPosicionamento.append(item.getId() + ">>>" + item.getPosicionamento() + Constantes.QL);
 			}
 		}
 		if (builderPosicionamento.length() > 0) {
