@@ -1476,33 +1476,44 @@ class SuperficiePopup2 extends Popup {
 	}
 
 	private void propriedades() {
-		StringBuilder sbi = new StringBuilder();
+		StringBuilder builderID = new StringBuilder();
 		int invisiveis = 0;
 		int visiveis = 0;
-		for (Objeto objeto : superficie.getObjetos()) {
-			if (objeto.visivel) {
+		for (Objeto item : superficie.getObjetos()) {
+			if (item.visivel) {
 				visiveis++;
 			} else {
-				sbi.append(objeto.getId() + Constantes.QL);
+				builderID.append(item.getId() + Constantes.QL);
 				invisiveis++;
 			}
 		}
-		StringBuilder sb = new StringBuilder();
-		sb.append(ObjetoMensagens.getString("label.total_objetos") + " " + (visiveis + invisiveis) + Constantes.QL);
-		sb.append(ObjetoMensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
-		sb.append(ObjetoMensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
-		if (sbi.length() > 0) {
-			sb.append(sbi);
+		StringBuilder builder = new StringBuilder();
+		builder.append(
+				ObjetoMensagens.getString("label.total_objetos") + " " + (visiveis + invisiveis) + Constantes.QL);
+		builder.append(ObjetoMensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
+		builder.append(ObjetoMensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
+		if (builderID.length() > 0) {
+			builder.append(builderID);
 		}
 		File file = superficie.container.getArquivo();
 		if (file != null) {
-			sb.append("------------------" + Constantes.QL);
-			sb.append(ObjetoMensagens.getString("label.local_absoluto_arquivo") + " " + file.getAbsolutePath()
+			builder.append("------------------" + Constantes.QL);
+			builder.append(ObjetoMensagens.getString("label.local_absoluto_arquivo") + " " + file.getAbsolutePath()
 					+ Constantes.QL);
-			sb.append(ObjetoMensagens.getString("label.local_relativo_arquivo") + " "
+			builder.append(ObjetoMensagens.getString("label.local_relativo_arquivo") + " "
 					+ ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
 		}
-		Util.mensagem(superficie.getFormulario(), sb.toString());
+		StringBuilder builderPosicionamento = new StringBuilder();
+		for (Objeto item : superficie.getObjetos()) {
+			if (!Util.isEmpty(item.getPosicionamento())) {
+				builderPosicionamento.append(item.getId() + Constantes.QL);
+			}
+		}
+		if (builderPosicionamento.length() > 0) {
+			builder.append("------------------Objeto(s) com posicionamento definido---------" + Constantes.QL);
+			builder.append(builderPosicionamento);
+		}
+		Util.mensagem(superficie.getFormulario(), builder.toString());
 	}
 }
 
