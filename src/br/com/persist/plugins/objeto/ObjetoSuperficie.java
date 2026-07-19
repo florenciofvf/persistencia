@@ -1497,6 +1497,7 @@ class SuperficiePopup2 extends Popup {
 		}
 		File file = superficie.container.getArquivo();
 		if (file != null) {
+			builder.append(Constantes.QL);
 			builder.append("------------------" + Constantes.QL);
 			builder.append(ObjetoMensagens.getString("label.local_absoluto_arquivo") + " " + file.getAbsolutePath()
 					+ Constantes.QL);
@@ -1510,6 +1511,7 @@ class SuperficiePopup2 extends Popup {
 			}
 		}
 		if (builderPosicionamento.length() > 0) {
+			builder.append(Constantes.QL);
 			builder.append("------------------Objeto(s) com posicionamento definido---------" + Constantes.QL);
 			builder.append(builderPosicionamento);
 		}
