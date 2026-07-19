@@ -343,6 +343,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				para.setLarConteudo(compChave.getText(), marcador);
 			} else if ("CHECAR_REGISTRO".equals(compChave.chave)) {
 				para.setBiblioChecagem(compChave.getText(), marcador);
+			} else if ("POSICIONAMENTO".equals(compChave.chave)) {
+				para.setPosicionamento(compChave.getText(), marcador);
 			} else if ("CLASSBIBLIO".equals(compChave.chave)) {
 				para.setClassBiblio(compChave.getText(), marcador);
 			} else if ("FINAL_CONSULTA".equals(compChave.chave)) {
@@ -447,6 +449,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 
 	private class PanelGeral extends Panel implements ActionListener {
 		private TextField txtBiblioChecagem = new TextField();
+		private TextField txtPosicionamento = new TextField();
 		private TextField txtMargemInferior = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
@@ -477,6 +480,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
 			chkCopiarDestac.setSelected(objeto.isClonarAoDestacar());
 			txtBiblioChecagem.setText(objeto.getBiblioChecagem());
+			txtPosicionamento.setText(objeto.getPosicionamento());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtIntervalo.setText(VAZIO + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
@@ -487,6 +491,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			txtIdSub.setText(objeto.getIdSub());
 			txtId.setText(objeto.getId());
 			txtBiblioChecagem.addFocusListener(focusListenerInner);
+			txtPosicionamento.addFocusListener(focusListenerInner);
 			txtMargemInferior.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
@@ -497,6 +502,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
 			txtBiblioChecagem.addActionListener(this);
+			txtPosicionamento.addActionListener(this);
 			txtMargemInferior.addActionListener(this);
 			chkTransparente.addActionListener(this);
 			chkCopiarDestac.addActionListener(this);
@@ -548,6 +554,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 					PanelGeral.this::mensagemPropriedadeArquivo));
 			container.add(criarLinhaComLinkCopiar("label.checar_reg", txtBiblioChecagem,
 					ObjetoMensagens.getString("hint.checar_reg"), PanelGeral.this::mensagemBiblioChecagem));
+			container.add(criarLinhaComLinkCopiar("label.posicionamento", txtPosicionamento,
+					ObjetoMensagens.getString("hint.posicionamento"), PanelGeral.this::mensagemPosicionamento));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinhaRotulo("label.copiar_destacado", chkCopiarDestac));
@@ -589,6 +597,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private void vincular() {
 			vinculados.add(new CompChave(txtBiblioChecagem, "CHECAR_REGISTRO"));
 			vinculados.add(new CompChave(txtMargemInferior, "MARGEM_INFERIOR"));
+			vinculados.add(new CompChave(txtPosicionamento, "POSICIONAMENTO"));
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
 			vinculados.add(new CompChave(txtIdTempForm, "ID_TEMP_FORM"));
@@ -605,6 +614,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			vinculados.add(new CompChave(txtY, "Y"));
 
 			txtBiblioChecagem.addMouseListener(listenerVinculado);
+			txtPosicionamento.addMouseListener(listenerVinculado);
 			txtMargemInferior.addMouseListener(listenerVinculado);
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
@@ -767,6 +777,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.biblio_checagem"));
 		}
 
+		private void mensagemPosicionamento(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.posicionamento"));
+		}
+
 		private void mensagemAddInstrucao(Label label) {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.add_instrucao"));
 		}
@@ -854,6 +868,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
 			} else if (txtBiblioChecagem == e.getSource()) {
 				objeto.setBiblioChecagem(txtBiblioChecagem.getText());
+			} else if (txtPosicionamento == e.getSource()) {
+				objeto.setPosicionamento(txtPosicionamento.getText());
 			}
 			actionPerformedCont2(e);
 		}
@@ -891,9 +907,9 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				labelFormL.atualizarTitulo(null);
 			}
 			txtIdTempForm.setText(para.getIdTempForm());
-			marcarVinculados(para, txtBiblioChecagem, chkTransparente, chkCopiarDestac, chkDesenharId, txtDeslocXId,
-					txtDeslocYId, txtInstrucao, txtIntervalo, txtMargemInferior, txtArquivo, txtFiltro, txtId, txtIdSub,
-					txtIdTempForm, txtX, txtY);
+			marcarVinculados(para, txtBiblioChecagem, txtPosicionamento, chkTransparente, chkCopiarDestac,
+					chkDesenharId, txtDeslocXId, txtDeslocYId, txtInstrucao, txtIntervalo, txtMargemInferior,
+					txtArquivo, txtFiltro, txtId, txtIdSub, txtIdTempForm, txtX, txtY);
 		}
 
 		public void idParaTabelaAlterado() {
