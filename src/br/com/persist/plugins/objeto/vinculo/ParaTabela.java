@@ -23,6 +23,7 @@ public class ParaTabela {
 	private static final String BIBLIO_CHECAGEM = "biblioChecagem";
 	private static final String LARGURA_ROTULOS = "larguraRotulos";
 	private static final String AJUSTAR_LARGURA = "ajustarLargura";
+	private static final String POSICIONAMENTO = "posicionamento";
 	private static final String STR_TRANSPARENTE = "transparente";
 	private static final String INTERNAL_FORM_X = "internalFormX";
 	private static final String INTERNAL_FORM_L = "internalFormL";
@@ -69,6 +70,7 @@ public class ParaTabela {
 	private String clonarAoDestacar;
 	private String larguraRotulos;
 	private String biblioChecagem;
+	private String posicionamento;
 	private String ajustarLargura;
 	private String margemInferior;
 	private String ajustarAltura;
@@ -217,6 +219,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(biblioChecagem)) {
 			objeto.setBiblioChecagem(biblioChecagem);
 		}
+		if (!Util.isEmpty(posicionamento)) {
+			objeto.setPosicionamento(posicionamento);
+		}
 		config2(objeto);
 	}
 
@@ -346,6 +351,7 @@ public class ParaTabela {
 		setLarguraRotulos(attributes.getValue(LARGURA_ROTULOS), null);
 		setBiblioChecagem(attributes.getValue(BIBLIO_CHECAGEM), null);
 		setAjustarLargura(attributes.getValue(AJUSTAR_LARGURA), null);
+		setPosicionamento(attributes.getValue(POSICIONAMENTO), null);
 		setTransparente(attributes.getValue(STR_TRANSPARENTE), null);
 		setInternalFormX(attributes.getValue(INTERNAL_FORM_X), null);
 		setInternalFormL(attributes.getValue(INTERNAL_FORM_L), null);
@@ -410,6 +416,7 @@ public class ParaTabela {
 		atributoValor(util, LARGURA_ROTULOS, larguraRotulos);
 		atributoValor(util, BIBLIO_CHECAGEM, biblioChecagem);
 		atributoValor(util, AJUSTAR_LARGURA, ajustarLargura);
+		atributoValor(util, POSICIONAMENTO, posicionamento);
 		atributoValor(util, INTERNAL_FORM_X, internalFormX);
 		atributoValor(util, INTERNAL_FORM_L, internalFormL);
 		atributoValor(util, STR_TRANSPARENTE, transparente);
@@ -471,6 +478,7 @@ public class ParaTabela {
 		util.tab().atributo(CLONAR_AO_DESTACAR, true).ql();
 		util.tab().atributo(LARGURA_ROTULOS, false).ql();
 		util.tab().atributo(BIBLIO_CHECAGEM, "").ql();
+		util.tab().atributo(POSICIONAMENTO, "").ql();
 		util.tab().atributo(AJUSTAR_LARGURA, true).ql();
 		util.tab().atributo(INTERNAL_FORM_X, "").ql();
 		util.tab().atributo(INTERNAL_FORM_L, "").ql();
@@ -1036,6 +1044,10 @@ public class ParaTabela {
 		return biblioChecagem;
 	}
 
+	public String getPosicionamento() {
+		return posicionamento;
+	}
+
 	public void setTransparente(String transparente, Marcador marcador) {
 		if (marcador != null) {
 			marcador.aplicarIf(this.transparente);
@@ -1050,6 +1062,14 @@ public class ParaTabela {
 			return;
 		}
 		this.biblioChecagem = biblioChecagem;
+	}
+
+	public void setPosicionamento(String posicionamento, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.posicionamento);
+			return;
+		}
+		this.posicionamento = posicionamento;
 	}
 
 	public String getDesenharId() {

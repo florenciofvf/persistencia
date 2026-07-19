@@ -75,6 +75,7 @@ public class Objeto implements Runnable {
 	private boolean larguraRotulos;
 	private Color cor = COR_PADRAO;
 	private String biblioChecagem;
+	private String posicionamento;
 	private boolean checarLargura;
 	private static long sequencia;
 	private boolean buscaAutoTemp;
@@ -192,6 +193,7 @@ public class Objeto implements Runnable {
 		o.ajustarLargura = ajustarLargura;
 		o.larguraRotulos = larguraRotulos;
 		o.biblioChecagem = biblioChecagem;
+		o.posicionamento = posicionamento;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
 		o.addInstrucoes(instrucoes);
@@ -251,6 +253,7 @@ public class Objeto implements Runnable {
 		sane = Boolean.parseBoolean(attr.getValue("sane"));
 		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
 		biblioChecagem = attr.getValue("biblioChecagem");
+		posicionamento = attr.getValue("posicionamento");
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
@@ -302,6 +305,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("tabelaAlternativo", getTabelaAlternativo());
 		util.atributoCheck("apelidoParaJoins", getApelidoParaJoins());
 		util.atributoCheck("biblioChecagem", getBiblioChecagem());
+		util.atributoCheck("posicionamento", getPosicionamento());
 		util.atributoCheck("orderBy", getOrderBy());
 		util.atributoCheck("ajusteAutoForm", ajusteAutoForm);
 		util.atributoCheck("ajustarLargura", ajustarLargura);
@@ -1012,8 +1016,19 @@ public class Objeto implements Runnable {
 		return biblioChecagem;
 	}
 
+	public String getPosicionamento() {
+		if (Util.isEmpty(posicionamento)) {
+			posicionamento = Constantes.VAZIO;
+		}
+		return posicionamento;
+	}
+
 	public void setBiblioChecagem(String biblioChecagem) {
 		this.biblioChecagem = biblioChecagem;
+	}
+
+	public void setPosicionamento(String posicionamento) {
+		this.posicionamento = posicionamento;
 	}
 
 	public String getChaveamento() {
