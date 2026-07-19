@@ -1548,6 +1548,7 @@ class SuperficiePopup extends Popup {
 	}
 
 	private class MenuDistribuicao extends Menu {
+		Action moverPosicaoAcao = ObjetoSuperficie.acaoMenu("label.mover_posicao_objeto_att");
 		Action moverAntesAcao = ObjetoSuperficie.acaoMenu("label.mover_para_antes_objeto");
 		Action moverAposAcao = ObjetoSuperficie.acaoMenu("label.mover_para_apos_objeto");
 		Action inverterAcao2 = ObjetoSuperficie.acaoMenu("label.inverter_posicao2");
@@ -1564,6 +1565,8 @@ class SuperficiePopup extends Popup {
 			addMenuItem(inverterAcao2);
 			addMenuItem(true, moverAntesAcao);
 			addMenuItem(moverAposAcao);
+			addMenuItem(true, moverPosicaoAcao);
+			moverPosicaoAcao.setActionListener(e -> moverPosicionamento());
 			inverterAcao2.setActionListener(e -> inverterPosicao2());
 			moverAntesAcao.setActionListener(e -> moverObjeto(true));
 			moverAposAcao.setActionListener(e -> moverObjeto(false));
@@ -1602,8 +1605,40 @@ class SuperficiePopup extends Popup {
 		}
 
 		private void moverObjeto(Objeto objeto, Objeto alvo, boolean antes) {
+			if (objeto == null || alvo == null || objeto == alvo) {
+				return;
+			}
 			objeto.mover(alvo, antes);
 			superficie.localizarInternalFormulario(objeto);
+		}
+
+		private void moverPosicionamento() {
+			if (superficie.getSelecionadoObjeto() != null) {
+				Objeto selecionado = superficie.getSelecionadoObjeto();
+				String posicionamento = selecionado.getPosicionamento().toUpperCase();
+				String antesDe = getIdObjeto(posicionamento, "ANTESDE:");
+				if (antesDe != null) {
+					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, antesDe);
+					moverObjeto(selecionado, outro, true);
+					return;
+				}
+				String depoisDe = getIdObjeto(posicionamento, "DEPOISDE:");
+				if (depoisDe != null) {
+					Objeto outro = ObjetoSuperficieUtil.getObjeto(superficie, depoisDe);
+					moverObjeto(selecionado, outro, false);
+				}
+			}
+		}
+
+		private String getIdObjeto(String string, String prefixo) {
+			if (string.startsWith(prefixo)) {
+				String id = string.substring(prefixo.length());
+				if (id.trim().isEmpty()) {
+					return null;
+				}
+				return id;
+			}
+			return null;
 		}
 
 		private void inverterPosicao() {
