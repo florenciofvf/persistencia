@@ -1168,6 +1168,7 @@ class SuperficiePopup2 extends Popup {
 	private Action limparFormulariosAcao = ObjetoSuperficie.acaoMenu("label.limpar_formularios", Icones.NOVO);
 	private Action formulariosComExcecaoAcaoMsg = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_msg");
 	private Action formulariosComExcecaoAcaoOuv = ObjetoSuperficie.acaoMenu("label.forms_com_excecao_ouv");
+	private Action moverPosicaoAcao = ObjetoSuperficie.acaoMenu("label.mover_posicoes_objetos_att");
 	private Action formulariosInvisiveisAcao = ObjetoSuperficie.acaoMenu("label.forms_invisiveis");
 	private Action criarObjetoAcao = ObjetoSuperficie.acaoMenu("label.criar_objeto", Icones.CRIAR);
 	private Action propriedadesAcao = actionMenu("label.propriedades");
@@ -1185,6 +1186,7 @@ class SuperficiePopup2 extends Popup {
 		String hintTreeSet = "Usado pelo item acima: "
 				+ ObjetoMensagens.getString(ObjetoSuperficie.LABEL_OBJETOS_COM_TABELA);
 		addMenuItem(objetosComTabelaTreeSetAcao, hintTreeSet);
+		addMenuItem(true, moverPosicaoAcao);
 		addMenuItem(true, criarObjetoAcao);
 		addMenuItem(true, colarAcao);
 		addMenuItem(true, formulariosComExcecaoAcaoMsg);
@@ -1215,9 +1217,16 @@ class SuperficiePopup2 extends Popup {
 		limparFormulariosAcao.setActionListener(e -> superficie.limpar2());
 		objetosComTabelaAcao.setActionListener(e -> objetosComTabela());
 		processarObjetosAcao.setActionListener(e -> processarObjetos());
+		moverPosicaoAcao.setActionListener(e -> moverPosicionamentos());
 		criarObjetoAcao.setActionListener(e -> criarNovoObjeto());
 		propriedadesAcao.setActionListener(e -> propriedades());
 		colarAcao.setActionListener(e -> colar());
+	}
+
+	private void moverPosicionamentos() {
+		for (Objeto item : superficie.getObjetos()) {
+			superficie.moverPosicionamento(item);
+		}
 	}
 
 	private void colar() {
