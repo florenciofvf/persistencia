@@ -870,6 +870,17 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		localizarInternalFormulario(objeto);
 		repaint();
 	}
+
+	protected void margemParaInternalFormulario(Objeto objeto) {
+		InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormularioIntersecao(this, objeto);
+		if (interno != null) {
+			Objeto objetoInterno = interno.getInternalContainer().getObjeto();
+			objetoInterno.setMargemInferior(Constantes.QUARENTA);
+			interno.setMargemInferior(objetoInterno.getMargemInferior());
+			aproximarEmpilharUsarForms();
+			objeto.setTemp(objetoInterno);
+		}
+	}
 }
 
 abstract class ThreadComparacao extends Thread {
@@ -1133,14 +1144,7 @@ class CopiarColar {
 			}
 		}
 		if (copiados.size() == 1 && colado != null) {
-			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormularioIntersecao(superficie, colado);
-			if (interno != null) {
-				Objeto objeto = interno.getInternalContainer().getObjeto();
-				objeto.setMargemInferior(Constantes.QUARENTA);
-				interno.setMargemInferior(objeto.getMargemInferior());
-				superficie.aproximarEmpilharUsarForms();
-				colado.setTemp(objeto);
-			}
+			superficie.margemParaInternalFormulario(colado);
 		}
 		superficie.repaint();
 	}

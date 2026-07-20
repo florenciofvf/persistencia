@@ -447,7 +447,12 @@ public class ObjetoSuperficieExt extends ObjetoSuperficie {
 					objeto.y += (Constantes.GRADE - restoY);
 				}
 			}
-			localizarInternalFormulario(objeto);
+			InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(ObjetoSuperficieExt.this, objeto);
+			if (interno != null) {
+				localizarInternalFormulario(objeto);
+			} else {
+				margemParaInternalFormulario(objeto);
+			}
 		}
 
 		@Override
