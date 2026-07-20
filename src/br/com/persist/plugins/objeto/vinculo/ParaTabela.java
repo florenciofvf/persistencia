@@ -26,6 +26,7 @@ public class ParaTabela {
 	private static final String POSICIONAMENTO = "posicionamento";
 	private static final String STR_TRANSPARENTE = "transparente";
 	private static final String INTERNAL_FORM_X = "internalFormX";
+	private static final String INTERNAL_FORM_Y = "internalFormY";
 	private static final String INTERNAL_FORM_L = "internalFormL";
 	private static final String FINAL_CONSULTA = "finalConsulta";
 	private static final String AJUSTAR_ALTURA = "ajustarAltura";
@@ -76,6 +77,7 @@ public class ParaTabela {
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String internalFormX;
+	private String internalFormY;
 	private String internalFormL;
 	private String transparente;
 	private String complemento;
@@ -278,6 +280,9 @@ public class ParaTabela {
 		if (!Util.isEmpty(internalFormX)) {
 			objeto.setInternalFormX(internalFormX);
 		}
+		if (!Util.isEmpty(internalFormY)) {
+			objeto.setInternalFormY(internalFormY);
+		}
 		if (!Util.isEmpty(internalFormL)) {
 			objeto.setInternalFormL(internalFormL);
 		}
@@ -354,6 +359,7 @@ public class ParaTabela {
 		setPosicionamento(attributes.getValue(POSICIONAMENTO), null);
 		setTransparente(attributes.getValue(STR_TRANSPARENTE), null);
 		setInternalFormX(attributes.getValue(INTERNAL_FORM_X), null);
+		setInternalFormY(attributes.getValue(INTERNAL_FORM_Y), null);
 		setInternalFormL(attributes.getValue(INTERNAL_FORM_L), null);
 		setFinalConsulta(attributes.getValue(FINAL_CONSULTA), null);
 		setAjustarAltura(attributes.getValue(AJUSTAR_ALTURA), null);
@@ -418,6 +424,7 @@ public class ParaTabela {
 		atributoValor(util, AJUSTAR_LARGURA, ajustarLargura);
 		atributoValor(util, POSICIONAMENTO, posicionamento);
 		atributoValor(util, INTERNAL_FORM_X, internalFormX);
+		atributoValor(util, INTERNAL_FORM_Y, internalFormY);
 		atributoValor(util, INTERNAL_FORM_L, internalFormL);
 		atributoValor(util, STR_TRANSPARENTE, transparente);
 		atributoValor(util, FINAL_CONSULTA, finalConsulta);
@@ -481,6 +488,7 @@ public class ParaTabela {
 		util.tab().atributo(POSICIONAMENTO, "").ql();
 		util.tab().atributo(AJUSTAR_LARGURA, true).ql();
 		util.tab().atributo(INTERNAL_FORM_X, "").ql();
+		util.tab().atributo(INTERNAL_FORM_Y, "").ql();
 		util.tab().atributo(INTERNAL_FORM_L, "").ql();
 		util.tab().atributo(STR_TRANSPARENTE, false).ql();
 		util.tab().atributo(FINAL_CONSULTA, "").ql();
@@ -1016,12 +1024,24 @@ public class ParaTabela {
 		return internalFormX;
 	}
 
+	public String getInternalFormY() {
+		return internalFormY;
+	}
+
 	public void setInternalFormX(String internalFormX, Marcador marcador) {
 		if (marcador != null) {
 			marcador.aplicarIf(this.internalFormX);
 			return;
 		}
 		this.internalFormX = internalFormX;
+	}
+
+	public void setInternalFormY(String internalFormY, Marcador marcador) {
+		if (marcador != null) {
+			marcador.aplicarIf(this.internalFormY);
+			return;
+		}
+		this.internalFormY = internalFormY;
 	}
 
 	public String getInternalFormL() {

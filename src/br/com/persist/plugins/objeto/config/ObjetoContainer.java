@@ -469,8 +469,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private Label labelIcone = new Label();
 		private final PanelCenter panelIcone;
 		private final PanelBloco panelFormX;
+		private final PanelBloco panelFormY;
 		private final PanelBloco panelFormL;
 		private LabelFormX labelFormX;
+		private LabelFormY labelFormY;
 		private LabelFormL labelFormL;
 
 		private PanelGeral() {
@@ -521,10 +523,13 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			}
 			labelFormX = new LabelFormX(true);
 			panelFormX = new PanelBloco(new PanelCenter(labelFormX), new PanelCenter(new LabelFormX(false)));
+			labelFormY = new LabelFormY(true);
+			panelFormY = new PanelBloco(new PanelCenter(labelFormY), new PanelCenter(new LabelFormY(false)));
 			labelFormL = new LabelFormL(true);
 			panelFormL = new PanelBloco(new PanelCenter(labelFormL), new PanelCenter(new LabelFormL(false)));
 			panelIcone = new PanelCenter(labelIcone);
 			panelFormX.borda();
+			panelFormY.borda();
 			panelFormL.borda();
 			panelIcone.borda();
 			panelIcone.addMouseListener(new IconeListener(true, objeto, panelIcone, labelIcone));
@@ -532,6 +537,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
 			container.add(criarLinha("label.formx", panelFormX));
+			container.add(criarLinha("label.formy", panelFormY));
 			container.add(criarLinha("label.forml", panelFormL));
 			Panel panel = criarLinhaCopiarRotulo("label.id", txtId);
 			configHora(panel);
@@ -898,6 +904,13 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			} else {
 				panelFormX.borda();
 				labelFormX.atualizarTitulo(null);
+			}
+			if (!Util.isEmpty(para.getInternalFormY())) {
+				panelFormY.setBorder(Marcador.criarBorda());
+				labelFormY.atualizarTitulo(para.getInternalFormY());
+			} else {
+				panelFormY.borda();
+				labelFormY.atualizarTitulo(null);
 			}
 			if (!Util.isEmpty(para.getInternalFormL())) {
 				panelFormL.setBorder(Marcador.criarBorda());
@@ -2060,6 +2073,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		}
 
 		private class FormXListener extends MouseAdapter {
+			private static final String MSG_SEM_FORM_ASSOCIADO_OBJETO = "msg.sem_form_associado_objeto";
 			private final boolean incluir;
 
 			private FormXListener(boolean incluir) {
@@ -2103,7 +2117,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
 				if (interno == null && incluir) {
 					Util.mensagem(ObjetoContainer.this,
-							ObjetoMensagens.getString("msg.sem_form_associado_objeto", objeto.getId()));
+							ObjetoMensagens.getString(MSG_SEM_FORM_ASSOCIADO_OBJETO, objeto.getId()));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();
@@ -2116,6 +2130,90 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 					para.setInternalFormX("" + interno.getX(), null);
 				} else {
 					para.setInternalFormX("", null);
+				}
+				salvarVinculacao(vinculacao);
+			}
+		}
+	}
+
+	private class LabelFormY extends Label {
+		private static final long serialVersionUID = 1L;
+		private boolean incluir;
+
+		private LabelFormY(boolean incluir) {
+			super(ObjetoMensagens.getString(incluir ? "msg.associar_form_y" : "msg.associar_form_y_y"), false);
+			addMouseListener(new FormYListener(incluir));
+			this.incluir = incluir;
+			modoLink(null);
+		}
+
+		void atualizarTitulo(String string) {
+			String texto = ObjetoMensagens.getString(incluir ? "msg.associar_form_y" : "msg.associar_form_y_y");
+			if (string != null) {
+				setText(texto + " [" + string + "]");
+			} else {
+				setText(texto);
+			}
+		}
+
+		private class FormYListener extends MouseAdapter {
+			private static final String MSG_SEM_FORM_ASSOCIADO_OBJETO = "msg.sem_form_associado_objeto";
+			private final boolean incluir;
+
+			private FormYListener(boolean incluir) {
+				this.incluir = incluir;
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() < Constantes.DOIS) {
+					return;
+				}
+				preFormY();
+			}
+
+			private void preFormY() {
+				if (Util.confirmar(LabelFormY.this, Constantes.LABEL_CONFIRMA_SALVAR)) {
+					try {
+						formY();
+					} catch (ObjetoException ex) {
+						Util.mensagem(ObjetoContainer.this, ex.getMessage());
+					}
+				}
+			}
+
+			private void formY() throws ObjetoException {
+				if (Util.isEmpty(txtTabela.getText())) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(CHAVE_MENSAGEM));
+					return;
+				}
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = ObjetoSuperficieUtil.getVinculacao(objetoSuperficie);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("VINCULAR EM FORM_Y", ex, ObjetoContainer.this);
+					return;
+				}
+				if (vinculacao == null) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString(ObjetoConstantes.CHAVE_MENSAGEM_VI));
+					return;
+				}
+				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
+				if (interno == null && incluir) {
+					Util.mensagem(ObjetoContainer.this,
+							ObjetoMensagens.getString(MSG_SEM_FORM_ASSOCIADO_OBJETO, objeto.getId()));
+					return;
+				}
+				String tabela = txtTabela.getText().trim();
+				ParaTabela para = vinculacao.getParaTabela(tabela);
+				if (para == null) {
+					para = new ParaTabela(tabela);
+					vinculacao.putParaTabela(para);
+				}
+				if (incluir) {
+					para.setInternalFormY("" + interno.getY(), null);
+				} else {
+					para.setInternalFormY("", null);
 				}
 				salvarVinculacao(vinculacao);
 			}
@@ -2143,6 +2241,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		}
 
 		private class FormLListener extends MouseAdapter {
+			private static final String MSG_SEM_FORM_ASSOCIADO_OBJETO = "msg.sem_form_associado_objeto";
 			private final boolean incluir;
 
 			private FormLListener(boolean incluir) {
@@ -2186,7 +2285,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				InternalFormulario interno = ObjetoSuperficieUtil.getInternalFormulario(objetoSuperficie, objeto);
 				if (interno == null && incluir) {
 					Util.mensagem(ObjetoContainer.this,
-							ObjetoMensagens.getString("msg.sem_form_associado_objeto", objeto.getId()));
+							ObjetoMensagens.getString(MSG_SEM_FORM_ASSOCIADO_OBJETO, objeto.getId()));
 					return;
 				}
 				String tabela = txtTabela.getText().trim();

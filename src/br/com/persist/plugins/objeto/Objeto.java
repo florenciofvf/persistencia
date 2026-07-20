@@ -82,6 +82,7 @@ public class Objeto implements Runnable {
 	private String finalConsulta;
 	private boolean transparente;
 	private String internalFormX;
+	private String internalFormY;
 	private String internalFormL;
 	private boolean selecionado;
 	private boolean ccsc = true;
@@ -686,6 +687,14 @@ public class Objeto implements Runnable {
 
 	public void setInternalFormX(String internalFormX) {
 		this.internalFormX = internalFormX;
+	}
+
+	public String getInternalFormY() {
+		return internalFormY;
+	}
+
+	public void setInternalFormY(String internalFormY) {
+		this.internalFormY = internalFormY;
 	}
 
 	public String getInternalFormL() {

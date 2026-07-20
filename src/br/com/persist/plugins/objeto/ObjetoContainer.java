@@ -913,7 +913,9 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 						new Dimension(l, formItem.getAltura()));
 				int x = Util.isEmpty(instancia.getInternalFormX()) ? formItem.getX()
 						: Integer.parseInt(instancia.getInternalFormX());
-				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(x, formItem.getY()), true, config);
+				int y = Util.isEmpty(instancia.getInternalFormY()) ? formItem.getY()
+						: Integer.parseInt(instancia.getInternalFormY());
+				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(x, y), true, config);
 			}
 		}
 	}
