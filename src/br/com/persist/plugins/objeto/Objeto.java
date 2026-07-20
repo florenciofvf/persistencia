@@ -84,7 +84,6 @@ public class Objeto implements Runnable {
 	private String internalFormX;
 	private String internalFormY;
 	private String internalFormL;
-	private boolean selecionado;
 	private boolean ccsc = true;
 	private boolean sane = true;
 	private long totalRegistros;
@@ -121,6 +120,7 @@ public class Objeto implements Runnable {
 	private String turma;
 	private Color corTmp;
 	private String idSub;
+	boolean selecionado;
 	private Objeto temp;
 	private Icon icon;
 	private String id;

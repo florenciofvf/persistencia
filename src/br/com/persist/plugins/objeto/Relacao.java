@@ -23,6 +23,7 @@ public class Relacao implements Runnable {
 	private boolean desenharDescricao;
 	private RelacaoListener listener;
 	private int deslocamentoQuebrado;
+	private boolean somenteObjetoSel;
 	private static int diametro = 6;
 	private Color cor = COR_PADRAO;
 	private final Objeto destino;
@@ -322,6 +323,9 @@ public class Relacao implements Runnable {
 
 	public void desenhar(Graphics2D g2, Stroke stroke) {
 		if (ignorado || !origem.visivel || !destino.visivel) {
+			return;
+		}
+		if (somenteObjetoSel && !origem.selecionado && !destino.selecionado) {
 			return;
 		}
 		int raio = Objeto.DIAMETRO / 2;
@@ -658,6 +662,14 @@ public class Relacao implements Runnable {
 		setQuebrado(relacao.quebrado);
 		setCorFonte(relacao.corFonte);
 		setCor(relacao.cor);
+	}
+
+	public boolean isSomenteObjetoSel() {
+		return somenteObjetoSel;
+	}
+
+	public void setSomenteObjetoSel(boolean somenteObjetoSel) {
+		this.somenteObjetoSel = somenteObjetoSel;
 	}
 
 	public boolean isIgnorado() {
