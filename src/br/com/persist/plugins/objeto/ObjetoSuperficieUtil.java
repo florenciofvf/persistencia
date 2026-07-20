@@ -771,6 +771,13 @@ public class ObjetoSuperficieUtil {
 		superficie.repaint();
 	}
 
+	public static void somenteObjetoSel(ObjetoSuperficie superficie, boolean b) {
+		for (Relacao item : superficie.getRelacoes()) {
+			item.setSomenteObjetoSel(b);
+		}
+		superficie.repaint();
+	}
+
 	public static int getIndiceId(ObjetoSuperficie superficie, Objeto obj) {
 		if (obj != null) {
 			for (int i = 0; i < superficie.getObjetos().length; i++) {
