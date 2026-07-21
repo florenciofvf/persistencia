@@ -607,6 +607,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			private Action ignorarAcao = actionMenu("label.ignorar", Icones.RECT);
 			private Action reiniciarAction = acaoMenu("label.reiniciar_horas");
 			private JCheckBoxMenuItem checkBoxComparaRegistro = new JCheckBoxMenuItem(compararRegistroAcao);
+			private JCheckBoxMenuItem checkBoxSomObjetoSel = new JCheckBoxMenuItem(somObjetoSelAcao);
 			private JCheckBoxMenuItem checkBoxSelecaoGeral = new JCheckBoxMenuItem(selecaoGeralAcao);
 			private Action gradeAction = acaoMenu("label.grade");
 			private static final long serialVersionUID = 1L;
@@ -627,7 +628,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 				addSeparator();
 				addItem(new JCheckBoxMenuItem(ignorarAcao));
 				addItem(new JCheckBoxMenuItem(ignoradoAcao));
-				addItem(new JCheckBoxMenuItem(somObjetoSelAcao));
+				addItem(checkBoxSomObjetoSel);
 				addSeparator();
 				addMenuItem(reiniciarAction);
 				addItem(somarHorasAcao);
@@ -698,6 +699,15 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 
 		boolean isCompararRegistros() {
 			return buttonStatus.checkBoxComparaRegistro.isSelected();
+		}
+
+		void somenteObjetoSel(boolean b) {
+			buttonStatus.checkBoxSomObjetoSel.setSelected(b);
+			ObjetoSuperficieUtil.somenteObjetoSel(objetoSuperficie, b);
+		}
+
+		boolean isSomenteObjetoSel() {
+			return buttonStatus.checkBoxSomObjetoSel.isSelected();
 		}
 
 		private class ButtonInfo extends ButtonPopup {
@@ -866,11 +876,16 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		objetoSuperficie.setAjusteAutoLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutoEmpilhaForm.setSelected(coletor.getAjusteAutoForm().get());
 		toolbar.compararRegistros(coletor.getCompararRegistros().get());
+		toolbar.somenteObjetoSel(coletor.getSomenteObjetoSel().get());
 		objetoSuperficie.configurarLargura(getSize());
 	}
 
 	boolean isCompararRegistros() {
 		return toolbar.isCompararRegistros();
+	}
+
+	boolean isSomenteObjetoSel() {
+		return toolbar.isSomenteObjetoSel();
 	}
 
 	private Conexao selecionarConexao(ObjetoColetor coletor, InternalConfig config) {
