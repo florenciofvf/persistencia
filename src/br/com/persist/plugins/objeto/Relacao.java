@@ -326,7 +326,9 @@ public class Relacao implements Runnable {
 			return;
 		}
 		if (somenteObjetoSel && !origem.selecionado && !destino.selecionado) {
-			return;
+			if (objetoTemp == null || objetoTemp.corTemp == null) {
+				return;
+			}
 		}
 		int raio = Objeto.DIAMETRO / 2;
 		int meta = raio / 2;
