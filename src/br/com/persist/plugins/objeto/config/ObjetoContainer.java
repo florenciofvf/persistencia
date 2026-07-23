@@ -451,6 +451,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private TextField txtBiblioChecagem = new TextField();
 		private TextField txtPosicionamento = new TextField();
 		private TextField txtMargemInferior = new TextField();
+		private TextField txtDeltaFormX = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
 		private TextField txtIdTempForm = new TextField();
@@ -478,6 +479,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
 			txtMargemInferior.setText(VAZIO + objeto.getMargemInferior());
+			txtDeltaFormX.setText(VAZIO + objeto.getDeltaIntnalFormX());
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
 			chkCopiarDestac.setSelected(objeto.isClonarAoDestacar());
@@ -495,6 +497,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			txtBiblioChecagem.addFocusListener(focusListenerInner);
 			txtPosicionamento.addFocusListener(focusListenerInner);
 			txtMargemInferior.addFocusListener(focusListenerInner);
+			txtDeltaFormX.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
@@ -509,6 +512,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			chkTransparente.addActionListener(this);
 			chkCopiarDestac.addActionListener(this);
 			chkDesenharId.addActionListener(this);
+			txtDeltaFormX.addActionListener(this);
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
 			txtIntervalo.addActionListener(this);
@@ -555,6 +559,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 					PanelGeral.this::mensagemPropriedadeMargemInferior));
 			container.add(criarLinhaComLinkCopiar("label.intervalo", txtIntervalo,
 					ObjetoMensagens.getString("hint.intervalo"), PanelGeral.this::mensagemPropriedadeIntervalo));
+			container.add(criarLinhaComLinkCopiar("label.deltaInternalFormX", txtDeltaFormX,
+					ObjetoMensagens.getString("hint.deltaInternalFormX"), PanelGeral.this::mensagemDeltaInternalFormX));
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
 					ObjetoMensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
@@ -775,6 +781,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 					ObjetoMensagens.getString("msg.propriedade_intervalo", Constantes.QUATROCENTOS));
 		}
 
+		private void mensagemDeltaInternalFormX(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.deltaInternalFormX"));
+		}
+
 		private void mensagemPropriedadeArquivo(Label label) {
 			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.propriedade_arquivo"));
 		}
@@ -829,6 +839,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			} else if (txtIntervalo == e.getSource()) {
 				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
 				MacroProvedor.intervalo(objeto.getIntervalo());
+			} else if (txtDeltaFormX == e.getSource()) {
+				objeto.setDeltaIntnalFormX(Util.getInt(txtDeltaFormX.getText(), objeto.getDeltaIntnalFormX()));
 			} else if (txtMargemInferior == e.getSource()) {
 				objeto.setMargemInferior(Util.getInt(txtMargemInferior.getText(), objeto.getMargemInferior()));
 				MacroProvedor.margemInferior(objeto.getMargemInferior());

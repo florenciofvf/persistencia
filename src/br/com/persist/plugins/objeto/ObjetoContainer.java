@@ -934,6 +934,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 						: Integer.parseInt(instancia.getInternalFormX());
 				int y = Util.isEmpty(instancia.getInternalFormY()) ? formItem.getY()
 						: Integer.parseInt(instancia.getInternalFormY());
+				x += instancia.getDeltaIntnalFormX();
 				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(x, y), true, config);
 			}
 		}

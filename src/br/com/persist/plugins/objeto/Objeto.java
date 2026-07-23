@@ -82,6 +82,7 @@ public class Objeto implements Runnable {
 	private String finalConsulta;
 	private boolean transparente;
 	private String internalFormX;
+	private int deltaIntnalFormX;
 	private String internalFormY;
 	private String internalFormL;
 	private boolean ccsc = true;
@@ -187,6 +188,7 @@ public class Objeto implements Runnable {
 		o.selectAlternativo = selectAlternativo;
 		o.clonarAoDestacar = clonarAoDestacar;
 		o.apelidoParaJoins = apelidoParaJoins;
+		o.deltaIntnalFormX = deltaIntnalFormX;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.ajusteAutoForm = ajusteAutoForm;
@@ -284,6 +286,10 @@ public class Objeto implements Runnable {
 		if (!Util.isEmpty(strIntervalo)) {
 			intervalo = Integer.parseInt(strIntervalo);
 		}
+		String deltaIntFormX = attr.getValue("deltaInternalFormX");
+		if (!Util.isEmpty(deltaIntFormX)) {
+			deltaIntnalFormX = Integer.parseInt(deltaIntFormX);
+		}
 		String strMargemInf = attr.getValue("margemInferior");
 		if (!Util.isEmpty(strMargemInf)) {
 			margemInferior = Integer.parseInt(strMargemInf);
@@ -320,6 +326,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("sequencias", getSequencias());
 		util.atributoCheck("metodoSet", getMetodoSet());
 		util.atributo("intervalo", getIntervalo());
+		util.atributo("deltaInternalFormX", getDeltaIntnalFormX());
 		util.atributoCheck("desenharId", desenharId);
 		util.atributoCheck("colunaInfo", colunaInfo);
 		util.atributoCheck("arquivo", getArquivo());
@@ -687,6 +694,14 @@ public class Objeto implements Runnable {
 
 	public void setInternalFormX(String internalFormX) {
 		this.internalFormX = internalFormX;
+	}
+
+	public int getDeltaIntnalFormX() {
+		return deltaIntnalFormX;
+	}
+
+	public void setDeltaIntnalFormX(int deltaIntnalFormX) {
+		this.deltaIntnalFormX = deltaIntnalFormX;
 	}
 
 	public String getInternalFormY() {
