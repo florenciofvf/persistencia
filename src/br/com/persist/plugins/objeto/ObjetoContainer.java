@@ -882,9 +882,10 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		}
 		toolbar.chkAbortarArrastoIntForm.setSelected(coletor.getAbortarArrastoForm().get());
 		toolbar.chkAjusteAutoLarguraForm.setSelected(coletor.getAjusteLarguraForm().get());
-		objetoSuperficie.setAjusteAutoEmpilhaForm(coletor.getAjusteAutoForm().get());
-		objetoSuperficie.setAjusteAutoLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutoEmpilhaForm.setSelected(coletor.getAjusteAutoForm().get());
+		objetoSuperficie.setAjusteAutoLarguraForm(coletor.getAjusteLarguraForm().get());
+		objetoSuperficie.setAbortarArrastoForm(coletor.getAbortarArrastoForm().get());
+		objetoSuperficie.setAjusteAutoEmpilhaForm(coletor.getAjusteAutoForm().get());
 		toolbar.compararRegistros(coletor.getCompararRegistros().get());
 		toolbar.somenteObjetoSel(coletor.getSomenteObjetoSel().get());
 		objetoSuperficie.configurarLargura(getSize());
