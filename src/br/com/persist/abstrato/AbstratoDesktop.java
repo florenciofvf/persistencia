@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Window;
 
+import javax.swing.DefaultDesktopManager;
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 
@@ -20,11 +22,11 @@ import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoDesktop extends JDesktopPane implements WindowHandler, FicharioHandler {
 	protected final transient MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
+	private final DesktopManagerInner desktopManagerInner = new DesktopManagerInner();
 	protected final transient MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 	protected final transient MenuDimensao menuDimensao = new MenuDimensao();
 	protected final transient MenuLarguras menuLarguras = new MenuLarguras();
 	protected final transient MenuAjuste menuAjuste = new MenuAjuste();
-
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
 	protected final transient Dimensao dimensao = new Dimensao();
@@ -36,11 +38,29 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	protected final Formulario formulario;
 
 	protected AbstratoDesktop(Formulario formulario) {
+		setDesktopManager(desktopManagerInner);
 		this.formulario = formulario;
 	}
 
 	public Formulario getFormulario() {
 		return formulario;
+	}
+
+	private class DesktopManagerInner extends DefaultDesktopManager {
+		private static final long serialVersionUID = 1L;
+		private boolean abortarArrasto;
+
+		@Override
+		public void dragFrame(JComponent f, int newX, int newY) {
+			if (abortarArrasto) {
+				return;
+			}
+			super.dragFrame(f, newX, newY);
+		}
+	}
+
+	public void abortarArrasto(boolean b) {
+		desktopManagerInner.abortarArrasto = b;
 	}
 
 	public class MenuDistribuicao extends Menu {
