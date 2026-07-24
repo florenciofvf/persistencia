@@ -211,6 +211,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		private Action criarObjetoAcao = acaoIcon("label.criar_objeto", Icones.CRIAR);
 		private CheckBox chkAjusteAutoEmpilhaForm = new CheckBox();
 		private CheckBox chkAjusteAutoLarguraForm = new CheckBox();
+		private CheckBox chkAbortarArrastoIntForm = new CheckBox();
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(20);
 		private TextField txtDestacaObjeto = new TextField(10);
@@ -233,6 +234,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			add(true, buttonStatus);
 			add(true, chkAjusteAutoEmpilhaForm);
 			add(chkAjusteAutoLarguraForm);
+			add(chkAbortarArrastoIntForm);
 			add(true, comboConexao);
 			add(true, buttonInfo);
 			add(labelStatus);
@@ -255,6 +257,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			removeAction(salvarComoAcao);
 			remove(chkAjusteAutoEmpilhaForm);
 			remove(chkAjusteAutoLarguraForm);
+			remove(chkAbortarArrastoIntForm);
 			remove(comboConexao);
 			remove(buttonInfo);
 			remove(txtPrefixoNomeTabela);
@@ -276,6 +279,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		}
 
 		private void configurar() {
+			chkAbortarArrastoIntForm.setToolTipText(ObjetoMensagens.getString("label.abortar_arrasto_form"));
 			chkAjusteAutoLarguraForm.setToolTipText(ObjetoMensagens.getString("label.ajuste_largura_form"));
 			chkAjusteAutoEmpilhaForm.setToolTipText(ObjetoMensagens.getString("label.ajuste_automatico"));
 			txtDestacaObjeto.setToolTipText(ObjetoMensagens.getStringHtml("label.destacar_objetos"));
@@ -300,6 +304,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			modeloMemoriaAcao.setActionListener(e -> objetoSuperficie.modeloMemoriaAlternarVisao());
 			chkAjusteAutoEmpilhaForm.addActionListener(e -> setAjusteAutoEmpilhaForm());
 			chkAjusteAutoLarguraForm.addActionListener(e -> setAjusteAutoLarguraForm());
+			chkAbortarArrastoIntForm.addActionListener(e -> setAbortarArrastoIntForm());
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
 			criarObjetoAcao.setActionListener(e -> preCriarObjeto());
@@ -398,6 +403,10 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			if (chkAjusteAutoLarguraForm.isSelected()) {
 				objetoSuperficie.configurarLargura(getSize());
 			}
+		}
+
+		private void setAbortarArrastoIntForm() {
+			objetoSuperficie.setAbortarArrastoForm(chkAbortarArrastoIntForm.isSelected());
 		}
 
 		private void setAjusteAutoEmpilhaForm() {
@@ -871,6 +880,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
 			adicionarInternalFormulario(conexao, coletor, config);
 		}
+		toolbar.chkAbortarArrastoIntForm.setSelected(coletor.getAbortarArrastoForm().get());
 		toolbar.chkAjusteAutoLarguraForm.setSelected(coletor.getAjusteLarguraForm().get());
 		objetoSuperficie.setAjusteAutoEmpilhaForm(coletor.getAjusteAutoForm().get());
 		objetoSuperficie.setAjusteAutoLarguraForm(coletor.getAjusteLarguraForm().get());

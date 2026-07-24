@@ -59,8 +59,12 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		}
 	}
 
-	public void abortarArrasto(boolean b) {
+	public void setAbortarArrastoForm(boolean b) {
 		desktopManagerInner.abortarArrasto = b;
+	}
+
+	public boolean isAbortarArrastoForm() {
+		return desktopManagerInner.abortarArrasto;
 	}
 
 	public class MenuDistribuicao extends Menu {
