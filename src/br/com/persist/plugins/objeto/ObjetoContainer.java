@@ -928,27 +928,29 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 	}
 
 	private void adicionarInternalFormulario(Conexao conexao, ObjetoColetor coletor, InternalConfig config) {
-		for (InternalForm formItem : coletor.getForms()) {
-			Objeto instancia = null;
-			for (Objeto objItem : coletor.getObjetos()) {
-				if (formItem.getIdObjeto().equals(objItem.getId())
-						|| formItem.getIdObjeto().equals(objItem.getIdTempForm())) {
-					instancia = objItem;
-				}
-			}
-			if (instancia != null) {
-				int l = Util.isEmpty(instancia.getInternalFormL()) ? formItem.getLargura()
-						: Integer.parseInt(instancia.getInternalFormL());
-				Object[] array = InternalTransferidor.criarArray(conexao, instancia,
-						new Dimension(l, formItem.getAltura()));
-				int x = Util.isEmpty(instancia.getInternalFormX()) ? formItem.getX()
-						: Integer.parseInt(instancia.getInternalFormX());
-				int y = Util.isEmpty(instancia.getInternalFormY()) ? formItem.getY()
-						: Integer.parseInt(instancia.getInternalFormY());
-				x += instancia.getDeltaIntnalFormX();
+		for (InternalForm item : coletor.getForms()) {
+			Objeto objeto = getObjeto(coletor, item);
+			if (objeto != null) {
+				int l = Util.isEmpty(objeto.getInternalFormL()) ? item.getLargura()
+						: Integer.parseInt(objeto.getInternalFormL());
+				Object[] array = InternalTransferidor.criarArray(conexao, objeto, new Dimension(l, item.getAltura()));
+				int x = Util.isEmpty(objeto.getInternalFormX()) ? item.getX()
+						: Integer.parseInt(objeto.getInternalFormX());
+				int y = Util.isEmpty(objeto.getInternalFormY()) ? item.getY()
+						: Integer.parseInt(objeto.getInternalFormY());
+				x += objeto.getDeltaIntnalFormX();
 				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(x, y), true, config);
 			}
 		}
+	}
+
+	private Objeto getObjeto(ObjetoColetor coletor, InternalForm formItem) {
+		for (Objeto item : coletor.getObjetos()) {
+			if (formItem.getIdObjeto().equals(item.getId()) || formItem.getIdObjeto().equals(item.getIdTempForm())) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	private class ArrastoAcao extends Acao {
