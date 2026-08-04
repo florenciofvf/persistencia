@@ -16,13 +16,13 @@ public class NDir {
 		}
 		File file = new File(absoluto.toString());
 		if (file.isDirectory()) {
-			return "Existente";
+			return "Existente: " + absoluto.toString();
 		}
 		Path path = Paths.get(absoluto.toString());
 		try {
 			Path resp = Files.createDirectories(path);
 			if (resp.toFile().isDirectory()) {
-				return "Sucesso";
+				return "CRIADO: " + resp.toString();
 			}
 			return "Erro ao criar >>> " + resp.toString();
 		} catch (Exception ex) {
