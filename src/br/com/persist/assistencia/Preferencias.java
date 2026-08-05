@@ -33,14 +33,12 @@ public class Preferencias {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final String LA_500_300 = "500,300";
 	private static boolean exibirTotalBytesClonados;
-	private static boolean exibiuMensagemConnection;
 	private static boolean desenharEspacoRetornoTab;
 	private static boolean fecharComESCFormulario;
 	private static boolean abrirFormularioDireita;
 	private static boolean abrirFormularioAbaixo;
 	private static boolean fecharComESCInternal;
 	private static int porcHorizontalLocalForm;
-	private static boolean erroCriarConnection;
 	private static boolean fecharComESCDialogo;
 	private static boolean monitorPreferencial;
 	private static boolean ficharioComRolagem;
@@ -269,22 +267,6 @@ public class Preferencias {
 
 	public static void setTituloAbaMin(boolean tituloAbaMin) {
 		Preferencias.tituloAbaMin = tituloAbaMin;
-	}
-
-	public static boolean isErroCriarConnection() {
-		return erroCriarConnection;
-	}
-
-	public static void setErroCriarConnection(boolean erroCriarConnection) {
-		Preferencias.erroCriarConnection = erroCriarConnection;
-	}
-
-	public static boolean isExibiuMensagemConnection() {
-		return exibiuMensagemConnection;
-	}
-
-	public static void setExibiuMensagemConnection(boolean exibiuMensagemConnection) {
-		Preferencias.exibiuMensagemConnection = exibiuMensagemConnection;
 	}
 
 	public static int getPorcHorizontalLocalForm() {

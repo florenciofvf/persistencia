@@ -13,6 +13,8 @@ import br.com.persist.marca.XMLUtil;
 
 public class Conexao {
 	private Map<String, String> mapaTiposFuncoes;
+	private boolean exibiuMensagemConnection;
+	private boolean erroCriarConnection;
 	private String tiposFuncoes;
 	private final String nome;
 	private String constraint;
@@ -36,13 +38,13 @@ public class Conexao {
 
 	Connection getConnection() throws ConexaoException {
 		if (!isAtivo()) {
-			throw new ConexaoException(ConexaoMensagens.getString("msg.conexao_desativada", nome));
+			throw new ConexaoException(this, ConexaoMensagens.getString("msg.conexao_desativada", nome));
 		}
 		try {
 			Class.forName(getDriver());
 			return DriverManager.getConnection(getUrlBanco(), getUsuario(), getSenha());
 		} catch (Exception ex) {
-			throw new ConexaoException(ex);
+			throw new ConexaoException(this, ex);
 		}
 	}
 
@@ -242,5 +244,21 @@ public class Conexao {
 
 	public boolean isAtivo() {
 		return Boolean.parseBoolean(ativo);
+	}
+
+	public boolean isErroCriarConnection() {
+		return erroCriarConnection;
+	}
+
+	public void setErroCriarConnection(boolean erroCriarConnection) {
+		this.erroCriarConnection = erroCriarConnection;
+	}
+
+	public boolean isExibiuMensagemConnection() {
+		return exibiuMensagemConnection;
+	}
+
+	public void setExibiuMensagemConnection(boolean exibiuMensagemConnection) {
+		this.exibiuMensagemConnection = exibiuMensagemConnection;
 	}
 }

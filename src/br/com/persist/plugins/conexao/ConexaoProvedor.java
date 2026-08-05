@@ -15,7 +15,6 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
@@ -152,11 +151,11 @@ public class ConexaoProvedor {
 				conn = conexao.getConnection();
 				CONEXOES.put(conexao, conn);
 			}
-			Preferencias.setErroCriarConnection(false);
+			conexao.setErroCriarConnection(false);
 			return conn;
 		} catch (Exception ex) {
-			Preferencias.setErroCriarConnection(true);
-			throw new ConexaoException(ex);
+			conexao.setErroCriarConnection(true);
+			throw new ConexaoException(conexao, ex);
 		}
 	}
 
@@ -164,7 +163,7 @@ public class ConexaoProvedor {
 		Connection conn = CONEXOES.get(conexao);
 		if (conn != null) {
 			try {
-				fecharConexao(conn);
+				fecharConexao(conexao, conn);
 				CONEXOES.put(conexao, null);
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
@@ -173,19 +172,19 @@ public class ConexaoProvedor {
 		return getConnection(conexao);
 	}
 
-	private static void fecharConexao(Connection conn) throws ConexaoException {
+	private static void fecharConexao(Conexao conexao, Connection conn) throws ConexaoException {
 		try {
 			if (conn != null && conn.isValid(1000) && !conn.isClosed()) {
 				conn.close();
 			}
 		} catch (Exception ex) {
-			throw new ConexaoException(ex);
+			throw new ConexaoException(conexao, ex);
 		}
 	}
 
 	public static void fecharConexoes() throws ConexaoException {
 		for (Connection conn : CONEXOES.values()) {
-			fecharConexao(conn);
+			fecharConexao(null, conn);
 		}
 	}
 
@@ -193,7 +192,7 @@ public class ConexaoProvedor {
 		Connection conn = CONEXOES.get(conexao);
 		if (conn != null) {
 			try {
-				fecharConexao(conn);
+				fecharConexao(conexao, conn);
 				CONEXOES.put(conexao, null);
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);

@@ -105,6 +105,7 @@ import br.com.persist.icone.IconeContainer;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.IconeListener;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.conexao.ConexaoException;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
 import br.com.persist.plugins.consulta.ConsultaFormulario;
@@ -704,16 +705,27 @@ public class InternalContainer extends Panel
 			cabecalho, null);
 
 	private void mensagemException(Exception ex) {
-		if (Preferencias.isErroCriarConnection()) {
-			if (!Preferencias.isExibiuMensagemConnection()) {
-				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela()
-						+ objeto.getTabela(), ex, this);
-				Preferencias.setExibiuMensagemConnection(true);
+		if (ex instanceof ConexaoException) {
+			ConexaoException exception = (ConexaoException) ex;
+			Conexao conexao = exception.getConexao();
+			if (conexao == null) {
+				Util.stackTraceAndMessage(ObjetoConstantes.PAINEL_OBJETO + objeto.getId() + " -> "
+						+ objeto.getPrefixoNomeTabela() + objeto.getTabela(), ex, this);
+				return;
+			}
+			if (conexao.isErroCriarConnection()) {
+				if (!conexao.isExibiuMensagemConnection()) {
+					Util.stackTraceAndMessage(ObjetoConstantes.PAINEL_OBJETO + objeto.getId() + " -> "
+							+ objeto.getPrefixoNomeTabela() + objeto.getTabela(), ex, this);
+					conexao.setExibiuMensagemConnection(true);
+				}
+			} else {
+				Util.stackTraceAndMessage(ObjetoConstantes.PAINEL_OBJETO + objeto.getId() + " -> "
+						+ objeto.getPrefixoNomeTabela() + objeto.getTabela(), ex, this);
 			}
 		} else {
-			Util.stackTraceAndMessage(
-					"PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela() + objeto.getTabela(),
-					ex, this);
+			Util.stackTraceAndMessage(ObjetoConstantes.PAINEL_OBJETO + objeto.getId() + " -> "
+					+ objeto.getPrefixoNomeTabela() + objeto.getTabela(), ex, this);
 		}
 	}
 
