@@ -25,6 +25,7 @@ public class Conexao {
 	private String senha;
 	private String grupo;
 	private String limit;
+	private String ativo;
 
 	public Conexao(String nome) throws ArgumentoException {
 		if (Util.isEmpty(nome)) {
@@ -34,6 +35,9 @@ public class Conexao {
 	}
 
 	Connection getConnection() throws ConexaoException {
+		if (!isAtivo()) {
+			throw new ConexaoException(ConexaoMensagens.getString("msg.conexao_desativada", nome));
+		}
 		try {
 			Class.forName(getDriver());
 			return DriverManager.getConnection(getUrlBanco(), getUsuario(), getSenha());
@@ -95,6 +99,7 @@ public class Conexao {
 		c.senha = senha;
 		c.grupo = grupo;
 		c.limit = limit;
+		c.ativo = ativo;
 		return c;
 	}
 
@@ -110,6 +115,7 @@ public class Conexao {
 		senha = attr.getValue("senha");
 		grupo = attr.getValue("grupo");
 		limit = attr.getValue("limit");
+		ativo = attr.getValue("ativo");
 	}
 
 	public void salvar(XMLUtil util) {
@@ -123,6 +129,7 @@ public class Conexao {
 		util.atributo("catalogo", catalogo);
 		util.atributo("esquema", esquema);
 		util.atributo("driver", driver);
+		util.atributo("ativo", ativo);
 		util.atributoCheck("grupo", grupo);
 		util.atributoCheck("limit", limit);
 		util.atributo("tiposFuncoes", tiposFuncoes);
@@ -223,5 +230,17 @@ public class Conexao {
 
 	public String getLimite() {
 		return getLimit();
+	}
+
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
+
+	public boolean isAtivo() {
+		return Boolean.parseBoolean(ativo);
 	}
 }

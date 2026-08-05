@@ -9,7 +9,7 @@ import br.com.persist.assistencia.Constantes;
 
 public class ConexaoModelo extends AbstractTableModel implements BuscaConteudo {
 	private static final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "SELECT CONSTRAINT",
-			"FILTRO", "ESQUEMA", "CATALOGO", "TIPO=FUNCAO;TIPO=FUNCAO", "GRUPO", "LIMIT" };
+			"FILTRO", "ESQUEMA", "CATALOGO", "TIPO=FUNCAO;TIPO=FUNCAO", "GRUPO", "LIMIT", "ATIVO" };
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -65,6 +65,8 @@ public class ConexaoModelo extends AbstractTableModel implements BuscaConteudo {
 			return c.getGrupo();
 		case 12:
 			return c.getLimit();
+		case 13:
+			return c.getAtivo();
 		default:
 			return null;
 		}
@@ -113,6 +115,9 @@ public class ConexaoModelo extends AbstractTableModel implements BuscaConteudo {
 			break;
 		case 12:
 			c.setLimit(valor);
+			break;
+		case 13:
+			c.setAtivo(valor);
 			break;
 		default:
 		}

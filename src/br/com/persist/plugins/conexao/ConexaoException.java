@@ -6,4 +6,8 @@ public class ConexaoException extends Exception {
 	public ConexaoException(Throwable cause) {
 		super(cause);
 	}
+
+	public ConexaoException(String message) {
+		super(message);
+	}
 }
