@@ -591,6 +591,16 @@ public class InternalContainer extends Panel
 		}
 	}
 
+	private void mensagemLayout(Conexao conexao) {
+		if (scrollPane.getViewport().getView() == null && !conexao.isAtivo()
+				&& panelAguardando.getComponentCount() > 0) {
+			Component c = panelAguardando.getComponent(0);
+			if (c instanceof Label) {
+				((Label) c).setText(ObjetoMensagens.getString("label.conexao_desativada", conexao.getNome()));
+			}
+		}
+	}
+
 	private StringBuilder getConsulta(Conexao conexao, String complemento) {
 		StringBuilder builder = new StringBuilder();
 		objeto.select(builder, conexao);
@@ -713,6 +723,7 @@ public class InternalContainer extends Panel
 						+ objeto.getPrefixoNomeTabela() + objeto.getTabela(), ex, this);
 				return;
 			}
+			mensagemLayout(conexao);
 			if (conexao.isErroCriarConnection()) {
 				if (!conexao.isExibiuMensagemConnection()) {
 					Util.stackTraceAndMessage(ObjetoConstantes.PAINEL_OBJETO + objeto.getId() + " -> "
