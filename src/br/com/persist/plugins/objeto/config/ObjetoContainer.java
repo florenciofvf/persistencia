@@ -2238,7 +2238,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 
 		private LabelFormL(boolean incluir) {
 			super(ObjetoMensagens.getString(incluir ? "msg.associar_form_l" : "msg.associar_form_l_x"), false);
+			String prefixo = ObjetoMensagens.getString("hint.label_form_L_sobreposto");
+			String complemento = ObjetoMensagens.getString("label.ajuste_larg_form");
 			addMouseListener(new FormLListener(incluir));
+			setToolTipText(prefixo + " " + complemento);
 			this.incluir = incluir;
 			modoLink(null);
 		}
