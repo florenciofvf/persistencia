@@ -266,8 +266,18 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 	private static String getArg(TokenManager tokenManager, Token token, String string, char c) {
 		int pos = string.indexOf(c);
 		String prefixo = string.substring(0, pos).trim();
+		String sufixo = string.substring(pos + 1).trim();
 		if (c == ':' && prefixo.length() == 1) {
-			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.lista.prefixo_minimo", token.getOriginal()));
+			if ("head".equals(sufixo)) {
+				tokenManager.addAlerta(
+						ExpressaoMensagens.getString("alerta.lista.prefixo_minimo_head", token.getOriginal()));
+			} else if ("tail".equals(sufixo)) {
+				tokenManager.addAlerta(
+						ExpressaoMensagens.getString("alerta.lista.prefixo_minimo_tail", token.getOriginal()));
+			} else {
+				tokenManager
+						.addAlerta(ExpressaoMensagens.getString("alerta.lista.prefixo_minimo", token.getOriginal()));
+			}
 		}
 		return prefixo;
 	}
@@ -276,14 +286,14 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		int pos = string.indexOf(c);
 		String prefixo = string.substring(0, pos).trim();
 		String sufixo = string.substring(pos + 1).trim();
+		if (c == '.' && prefixo.length() == 1) {
+			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.prefixo_minimo", token.getOriginal()));
+		}
 		if (c == '.' && "head".equals(sufixo)) {
 			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_head", token.getOriginal()));
 		}
 		if (c == '.' && "tail".equals(sufixo)) {
 			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.sufixo_tail", token.getOriginal()));
-		}
-		if (c == '.' && prefixo.length() == 1) {
-			tokenManager.addAlerta(ExpressaoMensagens.getString("alerta.mapa.prefixo_minimo", token.getOriginal()));
 		}
 		return sufixo;
 	}
