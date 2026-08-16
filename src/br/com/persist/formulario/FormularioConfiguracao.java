@@ -47,6 +47,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkAbrirFormularioAbaixo = criarCheckBox("label.abrir_formulario_abaixo");
 	private final CheckBox chkFecharComESCInternal = criarCheckBox("label.fechar_com_esc_internal");
 	private final JSpinner txtTotalConfirmacao = new JSpinner(new SpinnerNumberModel(0, 0, 10, 1));
+	private final JSpinner txtSegundosMensagem = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
 	private final CheckBox chkFecharComESCDialogo = criarCheckBox("label.fechar_com_esc_dialogo");
 	private final CheckBox chkMonitorPreferencial = criarCheckBox("label.monitor_preferencial");
 	private final Button buttonAplicarLA = criarButton("label.aplicar_largura_altura");
@@ -97,6 +98,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtTotalConfirmacao.setValue(Preferencias.getTotalConfirmacao());
+		txtSegundosMensagem.setValue(Preferencias.getSegundosMensagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		txtDimensaoMensagem.setText(Preferencias.getDimensaoMensagem());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
@@ -117,7 +119,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
 						new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
 						new PanelCenter(criarLabel("label.dimensao_mensagem"), txtDimensaoMensagem),
-						new PanelCenter(criarLabel("label.total_confirmacao"), txtTotalConfirmacao)));
+						new PanelCenter(criarLabel("label.total_confirmacao"), txtTotalConfirmacao),
+						new PanelCenter(criarLabel("label.segundos_mensagem"), txtSegundosMensagem)));
 		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(buttonAplicarLA)));
@@ -157,6 +160,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
 		txtDimensaoMensagem.addActionListener(e -> Preferencias.setDimensaoMensagem(txtDimensaoMensagem.getText()));
 		txtTotalConfirmacao.addChangeListener(e -> Preferencias.setTotalConfirmacao(getTotalConfirmacao()));
+		txtSegundosMensagem.addChangeListener(e -> Preferencias.setSegundosMensagem(getSegundosMensagem()));
 		chkFecharComESCDialogo
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
 		chkMonitorPreferencial
@@ -192,6 +196,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				Preferencias.setTotalConfirmacao(getTotalConfirmacao());
 			}
 		});
+		txtSegundosMensagem.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Preferencias.setSegundosMensagem(getSegundosMensagem());
+			}
+		});
 		txtFormDialogo.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -219,6 +229,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 
 	private int getTotalConfirmacao() {
 		return Util.getInt(txtTotalConfirmacao.getValue().toString(), Preferencias.getTotalConfirmacao());
+	}
+
+	private int getSegundosMensagem() {
+		return Util.getInt(txtSegundosMensagem.getValue().toString(), Preferencias.getSegundosMensagem());
 	}
 
 	private void alterarFonteNome(ItemEvent e) {
