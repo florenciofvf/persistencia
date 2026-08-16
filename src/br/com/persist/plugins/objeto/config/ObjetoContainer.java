@@ -1076,8 +1076,8 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			container.add(criarLinhaCopiarRotulo("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinhaComLinkCopiar("label.sequencias", txtSequencias,
 					ObjetoMensagens.getString("hint.sequencias"), PanelBanco.this::mensagemSequencia));
-			container.add(criarLinhaCopiar("label.chaveamento", txtChaveamento,
-					ObjetoMensagens.getString("hint.chaveamento")));
+			container.add(criarLinhaComLinkCopiar("label.chaveamento", txtChaveamento,
+					ObjetoMensagens.getString("hint.chaveamento"), PanelBanco.this::mensagemChaveamento));
 			container.add(
 					criarLinhaCopiar("label.mapeamento", txtMapeamento, ObjetoMensagens.getString("hint.mapeamento")));
 			container.add(criarLinhaComLinkCopiar("label.metodo_set", txtMetodoSet,
@@ -1208,6 +1208,10 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			}
 			sb.append("SELECT " + seq + " FROM DUAL;");
 			Util.mensagem(ObjetoContainer.this, sb.toString());
+		}
+
+		private void mensagemChaveamento(Label label) {
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.chaveamento"));
 		}
 
 		private void mensagemMetodoSet(Label label) {
