@@ -2828,7 +2828,8 @@ public class InternalContainer extends Panel
 									new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
 								checarColunaInsertAlternativo(modelo, coletor);
-								String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor);
+								String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
+										conexao);
 								if (!Util.isEmpty(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 								}
@@ -3685,7 +3686,7 @@ public class InternalContainer extends Panel
 											: tabelaPersistencia.getListaNomeColunas(true),
 									coletor, InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
-								String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela(), coletor);
+								String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela(), coletor, conexao);
 								if (!Util.isEmpty(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 								}

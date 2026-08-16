@@ -281,12 +281,12 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getDelete(prefixoNomeTabela, comWhere, conexao);
 	}
 
-	public String getInsert(int rowIndex, String prefixoNomeTabela, Coletor coletor) {
-		return model.getInsert(linhas[rowIndex].indice, prefixoNomeTabela, coletor);
+	public String getInsert(int rowIndex, String prefixoNomeTabela, Coletor coletor, Conexao conexao) {
+		return model.getInsert(linhas[rowIndex].indice, prefixoNomeTabela, coletor, conexao);
 	}
 
-	public String getInsert(String prefixoNomeTabela, Coletor coletor) {
-		return model.getInsert(prefixoNomeTabela, coletor);
+	public String getInsert(String prefixoNomeTabela, Coletor coletor, Conexao conexao) {
+		return model.getInsert(prefixoNomeTabela, coletor, conexao);
 	}
 
 	public List<IndiceValor> getValoresChaves(int rowIndex) {

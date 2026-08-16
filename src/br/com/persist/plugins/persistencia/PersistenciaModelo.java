@@ -358,13 +358,13 @@ public class PersistenciaModelo implements TableModel {
 		return null;
 	}
 
-	public String getInsert(int rowIndex, String prefixoNomeTabela, Coletor coletor) {
+	public String getInsert(int rowIndex, String prefixoNomeTabela, Coletor coletor, Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
-		return gerarInsert(registro, prefixoNomeTabela, coletor);
+		return gerarInsert(registro, prefixoNomeTabela, coletor, conexao);
 	}
 
-	public String getInsert(String prefixoNomeTabela, Coletor coletor) {
-		return gerarInsert(null, prefixoNomeTabela, coletor);
+	public String getInsert(String prefixoNomeTabela, Coletor coletor, Conexao conexao) {
+		return gerarInsert(null, prefixoNomeTabela, coletor, conexao);
 	}
 
 	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao,
@@ -532,7 +532,7 @@ public class PersistenciaModelo implements TableModel {
 		return atomic.get();
 	}
 
-	private String gerarInsert(List<Object> registro, String prefixoNomeTabela, Coletor coletor) {
+	private String gerarInsert(List<Object> registro, String prefixoNomeTabela, Coletor coletor, Conexao conexao) {
 		if (colunas.isEmpty()) {
 			return null;
 		}
