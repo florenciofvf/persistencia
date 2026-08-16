@@ -710,9 +710,13 @@ class Aba extends Transferivel {
 				}
 				boolean resp = biblio != null;
 				editor.bibliotecaContexto = biblio;
-				painelResultado
-						.setText(resp ? ExpressaoMensagens.getString("msg.compilado") + compilacao.getStringAlerta()
-								: ExpressaoMensagens.getString("msg.nao_compilado"));
+				String alertas = compilacao.getStringAlerta();
+				if (resp && alertas.isEmpty()) {
+					labelTextTemp.mensagem(ExpressaoMensagens.getString("msg.compilado"));
+				} else {
+					painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado") + alertas
+							: ExpressaoMensagens.getString("msg.nao_compilado"));
+				}
 				if (resp && colorir) {
 					ExpressaoCor.processar(editor.getStyledDocument(), compilacao.getTokens());
 				}
