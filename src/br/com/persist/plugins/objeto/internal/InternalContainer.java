@@ -3073,6 +3073,7 @@ public class InternalContainer extends Panel
 				addMenuItem(new EsquemaAcao());
 				addMenu(true, new MenuDML());
 				addMenu(true, new MenuCopiar());
+				addMenu(true, new MenuXML());
 				addMenu(true, menuAlinhamento);
 				addMenu(true, menuTemp);
 				scriptAdicaoHierAcao.setActionListener(e -> descrever(objeto));
@@ -3413,14 +3414,70 @@ public class InternalContainer extends Panel
 				}
 			}
 
+			private class MenuXML extends Menu {
+				private Action salvarXMLAcao = actionMenu("label.salvar_xml");
+				private Action abrirXMLAcao = actionMenu("label.abrir_xml");
+				private static final long serialVersionUID = 1L;
+
+				private MenuXML() {
+					super("label.xml", Icones.ELEMENTO);
+					addMenuItem(salvarXMLAcao);
+					addMenuItem(true, abrirXMLAcao);
+					salvarXMLAcao.setActionListener(e -> salvarXML());
+					abrirXMLAcao.setActionListener(e -> abrirXML());
+				}
+
+				private void salvarXML() {
+					JFileChooser fileChooser = Util.criarFileChooser(null, false);
+					int opcao = fileChooser.showSaveDialog(InternalContainer.this);
+					if (opcao == JFileChooser.APPROVE_OPTION) {
+						File file = fileChooser.getSelectedFile();
+						if (file != null) {
+							List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
+							try {
+								Util.salvarComoXML(tabelaPersistencia, getNomeColunas(), indices, file,
+										objeto.getTabela());
+								Util.mensagem(InternalContainer.this,
+										ObjetoMensagens.getString("msg.salvo_xml_sucesso"));
+							} catch (Exception ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
+							}
+						}
+					}
+				}
+
+				private void abrirXML() {
+					JFileChooser fileChooser = Util.criarFileChooser(null, false);
+					int opcao = fileChooser.showOpenDialog(InternalContainer.this);
+					if (opcao == JFileChooser.APPROVE_OPTION) {
+						File file = fileChooser.getSelectedFile();
+						if (file != null) {
+							try {
+								PersistenciaModelo persistenciaModelo = Persistencia.criarPersistenciaModelo(file);
+								OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(persistenciaModelo);
+								configurarCompararRegistroAntes();
+								tabelaPersistencia.setModel(modeloOrdenacao);
+								checarScrollPane();
+								atualizarTitulo();
+								configurarCabecalhoTabela(modeloOrdenacao, null);
+								Util.ajustar(tabelaPersistencia, tabelaPersistencia.getGraphics());
+								destacarColunas();
+								larguraRotulos();
+								configurarAltura();
+							} catch (Exception ex) {
+								Util.mensagem(InternalContainer.this, ex.getMessage());
+							}
+						}
+					}
+				}
+			}
+
 			private class MenuCopiar extends Menu {
 				private Action nomeColunasDestacAcao = actionMenu("label.nome_colunas_destac");
 				private Action umaColunaSemAcao = actionMenu("label.uma_coluna_sem_aspas");
 				private Action umaColunaComAcao = actionMenu("label.uma_coluna_com_aspas");
-				private Action salvarComoXMLAcao = actionMenu("label.salvar_como_xml");
 				private Action transferidorAcao = actionMenu("label.transferidor");
 				private Action nomeColunasAcao = actionMenu("label.nome_colunas");
-				private Action abrirXMLAcao = actionMenu("label.abrir_xml");
 				private Action tabularAcao = actionMenu("label.tabular");
 				private Action htmlAcao = actionMenu("label.html");
 				private Action pipeAcao = actionMenu("label.pipe");
@@ -3433,20 +3490,16 @@ public class InternalContainer extends Panel
 					addMenuItem(true, htmlAcao);
 					addMenuItem(true, tabularAcao);
 					addMenuItem(true, transferidorAcao);
-					addMenuItem(true, salvarComoXMLAcao);
-					addMenuItem(abrirXMLAcao);
 					addMenuItem(true, nomeColunasDestacAcao);
 					addMenuItem(nomeColunasAcao);
 					addMenuItem(true, umaColunaSemAcao);
 					addMenuItem(umaColunaComAcao);
 					nomeColunasDestacAcao.setActionListener(e -> nomeColunasDestac());
-					salvarComoXMLAcao.setActionListener(e -> salvarComoXML());
 					umaColunaSemAcao.setActionListener(e -> umaColuna(false));
 					umaColunaComAcao.setActionListener(e -> umaColuna(true));
 					transferidorAcao.setActionListener(e -> processar(0));
 					nomeColunasAcao.setActionListener(e -> nomeColunas());
 					tabularAcao.setActionListener(e -> processar(1));
-					abrirXMLAcao.setActionListener(e -> abrirXML());
 					htmlAcao.setActionListener(e -> processar(2));
 					pipeAcao.setActionListener(e -> processar(3));
 				}
@@ -3497,50 +3550,6 @@ public class InternalContainer extends Panel
 							Util.setContentTransfered(transferidor.getHtml());
 						} else if (tipo == 3) {
 							Util.setContentTransfered(transferidor.getPipe());
-						}
-					}
-				}
-
-				private void salvarComoXML() {
-					JFileChooser fileChooser = Util.criarFileChooser(null, false);
-					int opcao = fileChooser.showSaveDialog(InternalContainer.this);
-					if (opcao == JFileChooser.APPROVE_OPTION) {
-						File file = fileChooser.getSelectedFile();
-						if (file != null) {
-							List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-							try {
-								Util.salvarComoXML(tabelaPersistencia, getNomeColunas(), indices, file,
-										objeto.getTabela());
-								Util.mensagem(InternalContainer.this,
-										ObjetoMensagens.getString("msg.salvo_xml_sucesso"));
-							} catch (Exception ex) {
-								Util.mensagem(InternalContainer.this, ex.getMessage());
-							}
-						}
-					}
-				}
-
-				private void abrirXML() {
-					JFileChooser fileChooser = Util.criarFileChooser(null, false);
-					int opcao = fileChooser.showOpenDialog(InternalContainer.this);
-					if (opcao == JFileChooser.APPROVE_OPTION) {
-						File file = fileChooser.getSelectedFile();
-						if (file != null) {
-							try {
-								PersistenciaModelo persistenciaModelo = Persistencia.criarPersistenciaModelo(file);
-								OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(persistenciaModelo);
-								configurarCompararRegistroAntes();
-								tabelaPersistencia.setModel(modeloOrdenacao);
-								checarScrollPane();
-								atualizarTitulo();
-								configurarCabecalhoTabela(modeloOrdenacao, null);
-								Util.ajustar(tabelaPersistencia, tabelaPersistencia.getGraphics());
-								destacarColunas();
-								larguraRotulos();
-								configurarAltura();
-							} catch (Exception ex) {
-								Util.mensagem(InternalContainer.this, ex.getMessage());
-							}
 						}
 					}
 				}
