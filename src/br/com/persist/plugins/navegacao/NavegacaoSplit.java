@@ -663,7 +663,7 @@ class Aba extends Transferivel {
 			if (limpar) {
 				fichario.removeAll();
 			}
-			if (NavegacaoPreferencia.isExibirMetadados()) {
+			if (NavegacaoPreferencia.isExibirMetadados() || HttpUtil.responseException(result)) {
 				addTab(new PainelMetadados(result));
 			}
 			observadores(result.getRequest(), result.getResponse());

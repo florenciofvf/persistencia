@@ -29,6 +29,7 @@ public class HttpUtil {
 	private static final String HEADER_RESPONSE = "headerResponse";
 	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
+	private static final String EXCEPTION = "exception";
 	private static CookieManager cookieManager;
 	private static boolean checarTruster;
 
@@ -83,9 +84,21 @@ public class HttpUtil {
 			putHeaderResponse(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
-			result.getResponse().put("exception", Util.getStackTrace("GET", ex));
+			result.getResponse().put(EXCEPTION, Util.getStackTrace("GET", ex));
 		}
 		return result;
+	}
+
+	public static boolean responseException(HttpResult result) {
+		if (result == null) {
+			return false;
+		}
+		Object object = result.getResponse().get(EXCEPTION);
+		if (object == null) {
+			return false;
+		}
+		String string = object.toString();
+		return string != null && !string.trim().isEmpty();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -112,7 +125,7 @@ public class HttpUtil {
 			putHeaderResponse(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
-			result.getResponse().put("exception", Util.getStackTrace("POST", ex));
+			result.getResponse().put(EXCEPTION, Util.getStackTrace("POST", ex));
 		}
 		return result;
 	}
