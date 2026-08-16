@@ -1,5 +1,6 @@
 package br.com.persist.componente;
 
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +13,11 @@ import br.com.persist.assistencia.Preferencias;
 public class LabelTextTemp extends JLabel implements Runnable {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+
+	public LabelTextTemp() {
+		setForeground(Color.BLUE);
+		setOpaque(true);
+	}
 
 	public void mensagemChave(String chave) {
 		mensagem(Mensagens.getString(chave));
