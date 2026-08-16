@@ -16,6 +16,7 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
 public class NavegacaoConfiguracao extends AbstratoConfiguracao {
+	private final CheckBox chkExibirRequisicaoAnt = criarCheckBox("label.exibir_requisicao_anterior");
 	private final CheckBox chkExibirConteudoPlano = criarCheckBox("label.exibir_conteudo_plano");
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 	private final CheckBox chkExibirMetadados = criarCheckBox("label.exibir_metadados");
@@ -35,6 +36,7 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, NavegacaoPreferencia.getNavegacaoPosicaoAbaFichario());
+		chkExibirRequisicaoAnt.setSelected(NavegacaoPreferencia.isExibirRequisicaoAnt());
 		chkExibirConteudoPlano.setSelected(NavegacaoPreferencia.isExibirConteudoPlano());
 		chkExibirArqIgnorados.setSelected(NavegacaoPreferencia.isExibirArqIgnorados());
 		chkExibirMetadados.setSelected(NavegacaoPreferencia.isExibirMetadados());
@@ -42,6 +44,7 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
+		muro.camada(Muro.panelGrid(chkExibirRequisicaoAnt));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		muro.camada(Muro.panelGrid(chkExibirConteudoPlano));
 		muro.camada(Muro.panelGrid(chkExibirMetadados));
@@ -49,6 +52,8 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void configurar() {
+		chkExibirRequisicaoAnt.addActionListener(
+				e -> NavegacaoPreferencia.setExibirRequisicaoAnt(chkExibirRequisicaoAnt.isSelected()));
 		chkExibirArqIgnorados
 				.addActionListener(e -> NavegacaoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 		chkExibirMetadados

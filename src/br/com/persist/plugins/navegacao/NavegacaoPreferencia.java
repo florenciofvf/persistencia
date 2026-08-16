@@ -8,6 +8,7 @@ import br.com.persist.formulario.Formulario;
 
 public class NavegacaoPreferencia {
 	private static int navegacaoPosicaoAbaFichario;
+	private static boolean exibirRequisicaoAnt;
 	private static boolean exibirConteudoPlano;
 	private static boolean exibirArqIgnorados;
 	private static boolean exibirMetadados;
@@ -18,6 +19,7 @@ public class NavegacaoPreferencia {
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		navegacaoPosicaoAbaFichario = pref.getInt("navegacao_posicao_aba_fichario", SwingConstants.TOP);
+		exibirRequisicaoAnt = pref.getBoolean("navegacao_exibir_requisicao_anterior", false);
 		exibirConteudoPlano = pref.getBoolean("navegacao_exibir_conteudo_plano", false);
 		exibirArqIgnorados = pref.getBoolean("navegacao_exibir_arq_ignorados", false);
 		exibirMetadados = pref.getBoolean("navegacao_exibir_metadados", false);
@@ -26,6 +28,7 @@ public class NavegacaoPreferencia {
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putInt("navegacao_posicao_aba_fichario", navegacaoPosicaoAbaFichario);
+		pref.putBoolean("navegacao_exibir_requisicao_anterior", exibirRequisicaoAnt);
 		pref.putBoolean("navegacao_exibir_conteudo_plano", exibirConteudoPlano);
 		pref.putBoolean("navegacao_exibir_arq_ignorados", exibirArqIgnorados);
 		pref.putBoolean("navegacao_exibir_metadados", exibirMetadados);
@@ -64,5 +67,13 @@ public class NavegacaoPreferencia {
 
 	public static void setExibirMetadados(boolean exibirMetadados) {
 		NavegacaoPreferencia.exibirMetadados = exibirMetadados;
+	}
+
+	public static boolean isExibirRequisicaoAnt() {
+		return exibirRequisicaoAnt;
+	}
+
+	public static void setExibirRequisicaoAnt(boolean exibirRequisicaoAnt) {
+		NavegacaoPreferencia.exibirRequisicaoAnt = exibirRequisicaoAnt;
 	}
 }
