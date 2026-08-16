@@ -7,11 +7,11 @@ import javax.swing.JLabel;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 
 public class LabelTextTemp extends JLabel implements Runnable {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
-	private int atraso = 500;
 
 	public void mensagemChave(String chave) {
 		mensagem(Mensagens.getString(chave));
@@ -22,21 +22,10 @@ public class LabelTextTemp extends JLabel implements Runnable {
 		new Thread(this).start();
 	}
 
-	public int getAtraso() {
-		return atraso;
-	}
-
-	public void setAtraso(int atraso) {
-		if (atraso < 0) {
-			return;
-		}
-		this.atraso = atraso;
-	}
-
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(atraso);
+			Thread.sleep(Preferencias.getSegundosMensagem() * 1000L);
 		} catch (InterruptedException e) {
 			LOG.log(Level.FINEST, "run()", e);
 			Thread.currentThread().interrupt();

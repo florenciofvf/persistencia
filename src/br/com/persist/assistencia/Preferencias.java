@@ -51,6 +51,7 @@ public class Preferencias {
 	private static boolean tituloAbaMin;
 	private static boolean desconectado;
 	private static int totalConfirmacao;
+	private static int segundosMensagem;
 	private static String formDialogo;
 	private static Color corCopiado;
 
@@ -84,6 +85,7 @@ public class Preferencias {
 		getObjetosBanco = pref.get("get_objetos_banco", "TABLE");
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		totalConfirmacao = pref.getInt("total_confirmacao", 1);
+		segundosMensagem = pref.getInt("segundos_mensagem", 1);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		if (Util.isEmpty(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
@@ -127,6 +129,7 @@ public class Preferencias {
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.putInt("total_confirmacao", totalConfirmacao);
+		pref.putInt("segundos_mensagem", segundosMensagem);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
 		pref.put("get_objetos_banco", getObjetosBanco);
@@ -291,6 +294,17 @@ public class Preferencias {
 
 	public static void setTotalConfirmacao(int totalConfirmacao) {
 		Preferencias.totalConfirmacao = totalConfirmacao;
+	}
+
+	public static int getSegundosMensagem() {
+		if (segundosMensagem < 0) {
+			segundosMensagem = 1;
+		}
+		return segundosMensagem;
+	}
+
+	public static void setSegundosMensagem(int segundosMensagem) {
+		Preferencias.segundosMensagem = segundosMensagem;
 	}
 
 	public static boolean isAplicarLarguraAoAbrirArquivoObjeto() {
