@@ -2812,11 +2812,11 @@ public class InternalContainer extends Panel
 
 				private MenuInsert() {
 					super(Constantes.LABEL_INSERT, Icones.CRIAR);
-					formularioAcao.setActionListener(e -> abrirUpdate(true));
-					dialogoAcao.setActionListener(e -> abrirUpdate(false));
+					formularioAcao.setActionListener(e -> abrirInsert(true));
+					dialogoAcao.setActionListener(e -> abrirInsert(false));
 				}
 
-				private void abrirUpdate(boolean abrirEmForm) {
+				private void abrirInsert(boolean abrirEmForm) {
 					Conexao conexao = getConexao();
 					if (conexao != null) {
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -3671,12 +3671,12 @@ public class InternalContainer extends Panel
 					private MenuInsert(boolean camposObrigatorios) {
 						super(camposObrigatorios ? Constantes.LABEL_INSERT_CMP_OBRIG : Constantes.LABEL_INSERT,
 								Icones.CRIAR);
-						formularioAcao.setActionListener(e -> abrirUpdate(true));
-						dialogoAcao.setActionListener(e -> abrirUpdate(false));
+						formularioAcao.setActionListener(e -> abrirInsert(true));
+						dialogoAcao.setActionListener(e -> abrirInsert(false));
 						this.camposObrigatorios = camposObrigatorios;
 					}
 
-					private void abrirUpdate(boolean abrirEmForm) {
+					private void abrirInsert(boolean abrirEmForm) {
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
