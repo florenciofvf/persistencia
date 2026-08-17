@@ -531,11 +531,15 @@ public class InternalContainer extends Panel
 			objeto.setBuscaAutoTemp(false);
 			buscaAuto = true;
 		}
+		habilitarPesquisas();
+		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
+		configurarAltura();
+	}
+
+	private void habilitarPesquisas() {
 		int count = tabelaPersistencia.getModel().getRowCount();
 		objeto.setCorTemp(count > 0 ? Color.CYAN : Color.WHITE);
 		toolbar.buttonPesquisa.habilitar(count > 0 && buscaAuto);
-		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
-		configurarAltura();
 	}
 
 	private OrdenacaoModelo consultarEModeloOrdenacao(Conexao conexao, Parametros param) throws PersistenciaException {
@@ -3465,6 +3469,7 @@ public class InternalContainer extends Panel
 								destacarColunas();
 								larguraRotulos();
 								configurarAltura();
+								habilitarPesquisas();
 							} catch (Exception ex) {
 								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
