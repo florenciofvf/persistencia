@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
+import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.event.CaretEvent;
 import javax.swing.plaf.TextUI;
@@ -39,6 +40,8 @@ import br.com.persist.assistencia.Util;
 public class TextEditor extends TextPane {
 	public static final Color COLOR_SEL = new Color(230, 240, 250);
 	private final TextEditorPopup popup = new TextEditorPopup();
+	private static final String FONTE_MAIOR = "fonte_maior";
+	private static final String FONTE_MENOR = "fonte_menor";
 	public static final Color COLOR_TAB = Color.LIGHT_GRAY;
 	public static final Color COLOR_RET = Color.LIGHT_GRAY;
 	private static final Logger LOG = Logger.getGlobal();
@@ -60,13 +63,13 @@ public class TextEditor extends TextPane {
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_S), "salvar_conteudo");
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_B), "baixar_conteudo");
-		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_UP), "fonte_maior");
-		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), "fonte_menor");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_UP), FONTE_MAIOR);
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), FONTE_MENOR);
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
 		getActionMap().put("salvar_conteudo", actionSalvarConteudo);
 		getActionMap().put("baixar_conteudo", actionBaixarConteudo);
-		getActionMap().put("fonte_maior", actionFonteMaior);
-		getActionMap().put("fonte_menor", actionFonteMenor);
+		getActionMap().put(FONTE_MAIOR, actionFonteMaior);
+		getActionMap().put(FONTE_MENOR, actionFonteMenor);
 	}
 
 	private transient javax.swing.Action actionFonteMenor = new AbstractAction() {
@@ -102,6 +105,50 @@ public class TextEditor extends TextPane {
 		}
 		font = new Font(font.getName(), font.getStyle(), size);
 		setFont(font);
+	}
+
+	public static void alterarTamanhoFonte(JTextPane textPane) {
+		if (textPane == null) {
+			return;
+		}
+		InputMap inputMap = textPane.getInputMap(WHEN_FOCUSED);
+		inputMap.put(getKeyStrokeCtrl(KeyEvent.VK_UP), FONTE_MAIOR);
+		inputMap.put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), FONTE_MENOR);
+		textPane.getActionMap().put(FONTE_MAIOR, new TamanhoFonteAction(textPane, 2));
+		textPane.getActionMap().put(FONTE_MENOR, new TamanhoFonteAction(textPane, -2));
+	}
+
+	static class TamanhoFonteAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private final JTextPane textPane;
+		private final int delta;
+
+		TamanhoFonteAction(JTextPane textPane, int delta) {
+			this.textPane = textPane;
+			this.delta = delta;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			alterarFonte(delta);
+		}
+
+		private void alterarFonte(int delta) {
+			Font font = textPane.getFont();
+			if (font == null) {
+				return;
+			}
+			int size = font.getSize();
+			size += delta;
+			if (size < 8) {
+				size = 8;
+			}
+			if (size > 50) {
+				size = 50;
+			}
+			font = new Font(font.getName(), font.getStyle(), size);
+			textPane.setFont(font);
+		}
 	}
 
 	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
