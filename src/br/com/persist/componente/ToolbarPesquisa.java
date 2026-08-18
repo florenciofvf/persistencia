@@ -25,6 +25,9 @@ public class ToolbarPesquisa extends BarraButton implements ActionListener, Font
 		txtPesquisa.addActionListener(this);
 		add(txtPesquisa);
 		add(label);
+		if (textPane instanceof TextEditor) {
+			((TextEditor) textPane).setFontListener(this);
+		}
 	}
 
 	@Override
