@@ -14,7 +14,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 
-public class ToolbarPesquisa extends BarraButton implements ActionListener {
+public class ToolbarPesquisa extends BarraButton implements ActionListener, FontListener {
 	private static final long serialVersionUID = 1L;
 	private transient Selecao selecao;
 	private final JTextPane textPane;
@@ -53,5 +53,10 @@ public class ToolbarPesquisa extends BarraButton implements ActionListener {
 		} else {
 			label.limpar();
 		}
+	}
+
+	@Override
+	public void alteradoPara(int tamanho) {
+		label.setText("" + tamanho);
 	}
 }

@@ -1411,7 +1411,7 @@ abstract class Visualizador extends Panel implements IVisualizador {
 
 	protected BarraButton criarToolbarPesquisa(JTextPane textPane, TextEditor textEditor) {
 		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
-		TextEditor.alterarTamanhoFonte(textPane);
+		TextEditor.alterarTamanhoFonte(textPane, toolbarPesquisa);
 		if (textEditor != null) {
 			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 		}
