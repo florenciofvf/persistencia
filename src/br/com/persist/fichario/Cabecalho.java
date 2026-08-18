@@ -24,6 +24,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.Label;
@@ -128,7 +129,7 @@ class Cabecalho extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int i = fichario.indexOfTabComponent(Cabecalho.this);
-			if (i != -1) {
+			if (i != -1 && Util.confirmar(Cabecalho.this, "msg.confirmar_excluir_aba")) {
 				fichario.excluirPagina(i);
 			}
 		}
