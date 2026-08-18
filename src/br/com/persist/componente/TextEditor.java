@@ -47,6 +47,7 @@ public class TextEditor extends TextPane {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private transient TextEditorListener listener;
+	private transient FontListener fontListener;
 	private static boolean paintERT;
 	final Rectangle caretRect;
 
@@ -105,25 +106,30 @@ public class TextEditor extends TextPane {
 		}
 		font = new Font(font.getName(), font.getStyle(), size);
 		setFont(font);
+		if (fontListener != null) {
+			fontListener.alteradoPara(size);
+		}
 	}
 
-	public static void alterarTamanhoFonte(JTextPane textPane) {
+	public static void alterarTamanhoFonte(JTextPane textPane, FontListener fontListener) {
 		if (textPane == null) {
 			return;
 		}
 		InputMap inputMap = textPane.getInputMap(WHEN_FOCUSED);
 		inputMap.put(getKeyStrokeCtrl(KeyEvent.VK_UP), FONTE_MAIOR);
 		inputMap.put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), FONTE_MENOR);
-		textPane.getActionMap().put(FONTE_MAIOR, new TamanhoFonteAction(textPane, 2));
-		textPane.getActionMap().put(FONTE_MENOR, new TamanhoFonteAction(textPane, -2));
+		textPane.getActionMap().put(FONTE_MAIOR, new TamanhoFonteAction(textPane, 2, fontListener));
+		textPane.getActionMap().put(FONTE_MENOR, new TamanhoFonteAction(textPane, -2, fontListener));
 	}
 
 	static class TamanhoFonteAction extends AbstractAction {
+		private final transient FontListener fontListener;
 		private static final long serialVersionUID = 1L;
 		private final JTextPane textPane;
 		private final int delta;
 
-		TamanhoFonteAction(JTextPane textPane, int delta) {
+		TamanhoFonteAction(JTextPane textPane, int delta, FontListener fontListener) {
+			this.fontListener = fontListener;
 			this.textPane = textPane;
 			this.delta = delta;
 		}
@@ -148,6 +154,9 @@ public class TextEditor extends TextPane {
 			}
 			font = new Font(font.getName(), font.getStyle(), size);
 			textPane.setFont(font);
+			if (fontListener != null) {
+				fontListener.alteradoPara(size);
+			}
 		}
 	}
 
@@ -206,6 +215,14 @@ public class TextEditor extends TextPane {
 
 	public void setListener(TextEditorListener listener) {
 		this.listener = listener;
+	}
+
+	public FontListener getFontListener() {
+		return fontListener;
+	}
+
+	public void setFontListener(FontListener fontListener) {
+		this.fontListener = fontListener;
 	}
 
 	public static boolean isPaintERT() {
