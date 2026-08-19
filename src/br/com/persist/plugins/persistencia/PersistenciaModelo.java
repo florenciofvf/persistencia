@@ -538,14 +538,15 @@ public class PersistenciaModelo implements TableModel {
 		}
 		StringBuilder resposta = new StringBuilder("INSERT INTO "
 				+ prefixarEsquema(conexao, prefixoNomeTabela, tabela, Constantes.VAZIO) + " (" + Constantes.QL);
-		StringBuilder campo = new StringBuilder();
-		StringBuilder valor = new StringBuilder("VALUES (" + Constantes.QL);
+		StringBuilder builderCampo = new StringBuilder();
+		StringBuilder builderValor = new StringBuilder("VALUES (" + Constantes.QL);
 		int i = 0;
 		Coluna coluna = null;
 		for (; i < colunas.size(); i++) {
 			coluna = colunas.get(i);
 			if (coletor.contem(coluna.getNome())) {
-				appendCampoValor(Constantes.VAZIO, campo, valor, coluna, registro, prefixoNomeTabela, conexao);
+				appendCampoValor(Constantes.VAZIO, builderCampo, builderValor, coluna, registro, prefixoNomeTabela,
+						conexao);
 				i++;
 				break;
 			}
@@ -556,26 +557,27 @@ public class PersistenciaModelo implements TableModel {
 				continue;
 			}
 			if (coletor.contem(coluna.getNome())) {
-				appendCampoValor(", ", campo, valor, coluna, registro, prefixoNomeTabela, conexao);
+				appendCampoValor(", ", builderCampo, builderValor, coluna, registro, prefixoNomeTabela, conexao);
 			}
 		}
-		campo.append(")" + Constantes.QL);
-		valor.append(")" + Constantes.QL);
-		return resposta.append(campo).append(valor).toString();
+		builderCampo.append(")" + Constantes.QL);
+		builderValor.append(")" + Constantes.QL);
+		return resposta.append(builderCampo).append(builderValor).toString();
 	}
 
-	private void appendCampoValor(String string, StringBuilder campo, StringBuilder valor, Coluna coluna,
+	private void appendCampoValor(String string, StringBuilder builderCampo, StringBuilder builderValor, Coluna coluna,
 			List<Object> registro, String prefixoNomeTabela, Conexao conexao) {
-		campo.append(Constantes.TAB + string + coluna.getNome() + Constantes.QL);
+		builderCampo.append(Constantes.TAB + string + coluna.getNome() + Constantes.QL);
 		if (Util.isEmpty(coluna.getSequencia())) {
 			if (registro != null) {
-				Object valoR = registro.get(coluna.getIndice());
-				valor.append(Constantes.TAB + string + getValor(coluna, coluna.get(valoR, conexao)) + Constantes.QL);
+				Object valor = registro.get(coluna.getIndice());
+				builderValor
+						.append(Constantes.TAB + string + getValor(coluna, coluna.get(valor, conexao)) + Constantes.QL);
 			} else {
-				valor.append(Constantes.TAB + string + coluna.get(coluna.getNome(), conexao) + Constantes.QL);
+				builderValor.append(Constantes.TAB + string + coluna.get(coluna.getNome(), conexao) + Constantes.QL);
 			}
 		} else {
-			valor.append(Constantes.TAB + string
+			builderValor.append(Constantes.TAB + string
 					+ prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia(), Constantes.VAZIO)
 					+ Constantes.QL);
 		}
