@@ -23,29 +23,38 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
-import javax.swing.text.JTextComponent;
 import javax.swing.text.Utilities;
 
-public class TextEditorLine extends JPanel implements CaretListener, DocumentListener, PropertyChangeListener {
+public class TextEditorLine extends JPanel
+		implements CaretListener, DocumentListener, PropertyChangeListener, FontListener {
 	private static final long serialVersionUID = 8960786613762153802L;
-	private JTextComponent component;
+	private TextEditor textEditor;
 	private int ultimaLargura;
+	private int tamanhoFonte;
 	private int ultimaAltura;
 	private int ultimaLinha;
 
-	public TextEditorLine(JTextComponent component) {
-		setFont(component.getFont());
+	public TextEditorLine(TextEditor textEditor) {
+		setFont(textEditor.getFont());
+		this.textEditor = textEditor;
 		setBackground(Color.WHITE);
-		this.component = component;
 		configLargura();
 		configBorda();
-		component.getDocument().addDocumentListener(this);
-		component.addPropertyChangeListener("font", this);
-		component.addCaretListener(this);
+		textEditor.getDocument().addDocumentListener(this);
+		textEditor.addPropertyChangeListener("font", this);
+		textEditor.addCaretListener(this);
+		if (textEditor.getFontListener() == null) {
+			textEditor.setFontListener(this);
+		}
+	}
+
+	@Override
+	public void alteradoPara(int tamanho) {
+		tamanhoFonte = tamanho;
 	}
 
 	private void configLargura() {
-		Element root = component.getDocument().getDefaultRootElement();
+		Element root = textEditor.getDocument().getDefaultRootElement();
 		int total = root.getElementCount();
 		int largura = Math.max(String.valueOf(total).length(), 3);
 
@@ -73,13 +82,13 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		FontMetrics fontMetrics = component.getFontMetrics(component.getFont());
+		FontMetrics fontMetrics = textEditor.getFontMetrics(textEditor.getFont());
 		Insets insets = getInsets();
 		int larguraTotal = getSize().width - insets.left - insets.right;
 
 		Rectangle clip = g.getClipBounds();
-		int menor = component.viewToModel(new Point(0, clip.y));
-		int maior = component.viewToModel(new Point(0, clip.y + clip.height));
+		int menor = textEditor.viewToModel(new Point(0, clip.y));
+		int maior = textEditor.viewToModel(new Point(0, clip.y + clip.height));
 
 		while (menor <= maior) {
 			try {
@@ -89,26 +98,31 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 				int y = calcularY(menor, fontMetrics);
 				if (ehLinhaAtual(menor)) {
 					g.setColor(TextEditor.COLOR_SEL);
-					Rectangle r = component.modelToView(menor);
+					Rectangle r = textEditor.modelToView(menor);
 					g.fillRect(0, r.y, getWidth(), r.height);
 				}
 				g.setColor(Color.LIGHT_GRAY);
 				g.drawString(numero, x, y);
-				menor = Utilities.getRowEnd(component, menor) + 1;
+				menor = Utilities.getRowEnd(textEditor, menor) + 1;
 			} catch (Exception e) {
 				break;
 			}
 		}
+
+		if (tamanhoFonte != 0) {
+			g.setColor(Color.BLUE);
+			g.drawString("" + tamanhoFonte, 1, 10);
+		}
 	}
 
 	private boolean ehLinhaAtual(int row) {
-		int caretPos = component.getCaretPosition();
-		Element root = component.getDocument().getDefaultRootElement();
+		int caretPos = textEditor.getCaretPosition();
+		Element root = textEditor.getDocument().getDefaultRootElement();
 		return root.getElementIndex(row) == root.getElementIndex(caretPos);
 	}
 
 	private String stringNumero(int row) {
-		Element root = component.getDocument().getDefaultRootElement();
+		Element root = textEditor.getDocument().getDefaultRootElement();
 		int index = root.getElementIndex(row);
 		Element line = root.getElement(index);
 		return line.getStartOffset() == row ? String.valueOf(index + 1) : "";
@@ -119,7 +133,7 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 	}
 
 	private int calcularY(int row, FontMetrics fontMetrics) throws BadLocationException {
-		Rectangle r = component.modelToView(row);
+		Rectangle r = textEditor.modelToView(row);
 		int descent = fontMetrics.getDescent();
 		int y = r.y + r.height;
 		return y - descent;
@@ -127,8 +141,8 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 
 	@Override
 	public void caretUpdate(CaretEvent e) {
-		int caretPos = component.getCaretPosition();
-		Element root = component.getDocument().getDefaultRootElement();
+		int caretPos = textEditor.getCaretPosition();
+		Element root = textEditor.getDocument().getDefaultRootElement();
 		int linha = root.getElementIndex(caretPos);
 		if (ultimaLinha != linha) {
 			ultimaLinha = linha;
@@ -154,8 +168,8 @@ public class TextEditorLine extends JPanel implements CaretListener, DocumentLis
 	private void documentChanged() {
 		SwingUtilities.invokeLater(() -> {
 			try {
-				int length = component.getDocument().getLength();
-				Rectangle r = component.modelToView(length);
+				int length = textEditor.getDocument().getLength();
+				Rectangle r = textEditor.modelToView(length);
 				if (r != null && ultimaAltura != r.y) {
 					configLargura();
 					getParent().repaint();
