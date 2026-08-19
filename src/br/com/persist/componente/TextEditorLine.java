@@ -89,6 +89,7 @@ public class TextEditorLine extends JPanel
 		Rectangle clip = g.getClipBounds();
 		int menor = textEditor.viewToModel(new Point(0, clip.y));
 		int maior = textEditor.viewToModel(new Point(0, clip.y + clip.height));
+		int yMenor = -1;
 
 		while (menor <= maior) {
 			try {
@@ -96,6 +97,9 @@ public class TextEditorLine extends JPanel
 				int largura = fontMetrics.stringWidth(numero);
 				int x = calgularX(larguraTotal, largura) + insets.left;
 				int y = calcularY(menor, fontMetrics);
+				if (yMenor == -1) {
+					yMenor = y;
+				}
 				if (ehLinhaAtual(menor)) {
 					g.setColor(TextEditor.COLOR_SEL);
 					Rectangle r = textEditor.modelToView(menor);
@@ -109,9 +113,9 @@ public class TextEditorLine extends JPanel
 			}
 		}
 
-		if (tamanhoFonte != 0) {
+		if (tamanhoFonte != 0 && yMenor != -1) {
 			g.setColor(Color.BLUE);
-			g.drawString("" + tamanhoFonte, 1, 10);
+			g.drawString("" + tamanhoFonte, 1, yMenor);
 		}
 	}
 
