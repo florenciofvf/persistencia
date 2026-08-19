@@ -678,9 +678,13 @@ class Aba extends Transferivel {
 
 				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
 				textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
+
 				add(BorderLayout.NORTH, toolbarPesquisa);
 				ScrollPane scrollPane2 = new ScrollPane(textEditor);
-				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
+				TextEditorLine editorLine = new TextEditorLine(textEditor);
+				textEditor.setFontListener(editorLine);
+				scrollPane2.setRowHeaderView(editorLine);
+
 				Panel panelScroll = new Panel();
 				panelScroll.add(BorderLayout.CENTER, scrollPane2);
 				add(BorderLayout.CENTER, new ScrollPane(panelScroll));
@@ -715,9 +719,13 @@ class Aba extends Transferivel {
 
 				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
 				textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
+
 				add(BorderLayout.NORTH, toolbarPesquisa);
 				ScrollPane scrollPane2 = new ScrollPane(textEditor);
-				scrollPane2.setRowHeaderView(new TextEditorLine(textEditor));
+				TextEditorLine editorLine = new TextEditorLine(textEditor);
+				textEditor.setFontListener(editorLine);
+				scrollPane2.setRowHeaderView(editorLine);
+
 				Panel panelScroll = new Panel();
 				panelScroll.add(BorderLayout.CENTER, scrollPane2);
 				add(BorderLayout.CENTER, new ScrollPane(panelScroll));
@@ -1449,12 +1457,23 @@ class VisualizadorConteudo extends Visualizador {
 	protected VisualizadorConteudo(byte[] bytes, String string) {
 		super(bytes, string);
 
-		JTextPane textPane = new JTextPane();
-		textPane.setText(string);
+		TextEditor textEditor = new TextEditor();
+		textEditor.setText(string);
 
-		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, null));
-		add(BorderLayout.CENTER, new ScrollPane(textPane));
-		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
+
+		add(BorderLayout.NORTH, toolbarPesquisa);
+		ScrollPane scrollPane2 = new ScrollPane(textEditor);
+		TextEditorLine editorLine = new TextEditorLine(textEditor);
+		textEditor.setFontListener(editorLine);
+		scrollPane2.setRowHeaderView(editorLine);
+
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane2);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+
+		SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 	}
 
 	@Override
@@ -1567,21 +1586,27 @@ class VisualizadorJSON extends Visualizador {
 	protected VisualizadorJSON(byte[] bytes, String string) {
 		super(bytes, string);
 		try {
-			JTextPane textPane = new JTextPane();
+			TextEditor textEditor = new TextEditor();
 			Tipo json = parser.parse(string);
-			setText(json, textPane);
+			setText(json, textEditor);
 
 			AccessToken.processar(json);
 
-			Panel panelTextPane = new Panel();
-			panelTextPane.add(BorderLayout.CENTER, textPane);
+			ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
+			config(toolbarPesquisa, json, textEditor);
 
-			BarraButton barraButton = criarToolbarPesquisa(textPane, null);
-			config(barraButton, json, textPane);
+			add(BorderLayout.NORTH, toolbarPesquisa);
+			ScrollPane scrollPane2 = new ScrollPane(textEditor);
+			TextEditorLine editorLine = new TextEditorLine(textEditor);
+			textEditor.setFontListener(editorLine);
+			scrollPane2.setRowHeaderView(editorLine);
 
-			add(BorderLayout.NORTH, barraButton);
-			add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
-			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane2);
+			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+
+			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 		} catch (Exception e) {
 			//
 		}
