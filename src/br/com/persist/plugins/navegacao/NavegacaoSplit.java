@@ -934,6 +934,7 @@ class Aba extends Transferivel {
 			add(chkCertificados);
 			addButton(executarAnterioresAcao);
 			addButton(executarAcao);
+			add(labelTempAvulso);
 			add(txtPesquisa);
 			add(label);
 		}
@@ -1031,7 +1032,7 @@ class Aba extends Transferivel {
 				editor.bibliotecaContexto = biblio;
 				String alertas = compilacao.getStringAlerta();
 				if (resp && alertas.isEmpty()) {
-					labelTextTemp.mensagem(ExpressaoMensagens.getString("msg.compilado"));
+					labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.compilado"));
 				} else {
 					painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado") + alertas
 							: ExpressaoMensagens.getString("msg.nao_compilado"), true);
