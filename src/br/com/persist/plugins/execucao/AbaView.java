@@ -9,7 +9,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
@@ -23,6 +22,7 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
@@ -140,7 +140,11 @@ class PanelLog extends Panel {
 		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(editor);
 		editor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 		add(BorderLayout.NORTH, toolbarPesquisa);
-		add(BorderLayout.CENTER, new JScrollPane(editor));
+		ScrollPane scrollPane2 = new ScrollPane(editor);
+		scrollPane2.setRowHeaderView(new TextEditorLine(editor));
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane2);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 	}
 
 	void processar(Container container, boolean confirmar, Component comp) {
