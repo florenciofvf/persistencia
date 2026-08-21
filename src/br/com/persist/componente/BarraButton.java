@@ -55,17 +55,18 @@ public abstract class BarraButton extends JToolBar
 	protected Action colar0Acao = actionIcon("label.colar", Icones.COLAR);
 	private Action colar2Acao = actionIcon("label.colar2", Icones.COLAR);
 	private Action novoAcao = actionIcon("label.novo", Icones.PANEL4);
-	protected LabelTextTemp labelTextTempSalvo = new LabelTextTemp();
 	protected Action atualizarAcao = Action.actionIconAtualizar();
-	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
-	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
 	protected final TextField txtPesquisa = new TextField(25);
 	protected final CheckBox chkPorParte = new CheckBox(true);
 	protected final CheckBox chkPsqConteudo = new CheckBox();
 	protected Action salvarAcao = Action.actionIconSalvar();
 	protected Action baixarAcao = Action.actionIconBaixar();
 	protected Action limparAcao = Action.actionIconLimpar();
+	protected LabelTemp labelTempCopiar2 = new LabelTemp();
 	protected ButtonColar buttonColar = new ButtonColar();
+	protected LabelTemp labelTempCopiar = new LabelTemp();
+	protected LabelTemp labelTempAvulso = new LabelTemp();
+	protected LabelTemp labelTempSalvo = new LabelTemp();
 	protected transient ButtonDestacar buttonDestacar;
 	private Action excluirAcao = actionIconExcluir();
 	private static final long serialVersionUID = 1L;
@@ -133,7 +134,7 @@ public abstract class BarraButton extends JToolBar
 
 	public Action addCopiar2() {
 		addButton(copiar2Acao);
-		add(labelTextTemp2);
+		add(labelTempCopiar2);
 		return copiar2Acao;
 	}
 
@@ -203,7 +204,7 @@ public abstract class BarraButton extends JToolBar
 	private void configCopiar(BarraButtonEnum... enuns) {
 		if (contem(COPIAR, enuns)) {
 			addButton(copiarAcao);
-			add(labelTextTemp);
+			add(labelTempCopiar);
 			copiarAcao.setActionListener(e -> copiar());
 		}
 	}
@@ -246,7 +247,7 @@ public abstract class BarraButton extends JToolBar
 	private void configSalvar(BarraButtonEnum... enuns) {
 		if (contem(SALVAR, enuns)) {
 			addButton(salvarAcao);
-			add(labelTextTempSalvo);
+			add(labelTempSalvo);
 			salvarAcao.setActionListener(e -> salvar());
 		}
 	}
@@ -404,17 +405,17 @@ public abstract class BarraButton extends JToolBar
 
 	protected void copiarMensagem(String string) {
 		if (!Util.isEmpty(string)) {
-			labelTextTemp.mensagemChave("msg.copiado");
+			labelTempCopiar.mensagemChave("msg.copiado");
 		}
 	}
 
 	protected void salvoMensagem() {
-		labelTextTempSalvo.mensagemChave("msg.salvo");
+		labelTempSalvo.mensagemChave("msg.salvo");
 	}
 
 	public void copiar2Mensagem(String string) {
 		if (!Util.isEmpty(string)) {
-			labelTextTemp2.mensagemChave("msg.copiado");
+			labelTempCopiar2.mensagemChave("msg.copiado");
 		}
 	}
 

@@ -57,7 +57,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.LabelLinkListener;
-import br.com.persist.componente.LabelTextTemp;
+import br.com.persist.componente.LabelTemp;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelBloco;
@@ -1563,14 +1563,14 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 	private class PanelCopiarColar extends Panel {
 		private final Action copiar = Action.actionIcon("label.copiar", Icones.COPIA);
 		private final ButtonColar buttonColar = new ButtonColar();
-		private LabelTextTemp lblMsg = new LabelTextTemp();
+		private LabelTemp labelTempMsg = new LabelTemp();
 		private static final long serialVersionUID = 1L;
 		private final TextField textField;
 
 		private PanelCopiarColar(TextField textField) {
 			this.textField = textField;
 			add(BorderLayout.WEST, new Button(copiar));
-			add(BorderLayout.CENTER, lblMsg);
+			add(BorderLayout.CENTER, labelTempMsg);
 			add(BorderLayout.EAST, buttonColar);
 			copiar.setActionListener(e -> copiar());
 		}
@@ -1588,7 +1588,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 				} else {
 					Util.setContentTransfered(string);
 				}
-				lblMsg.mensagemChave("msg.copiado");
+				labelTempMsg.mensagemChave("msg.copiado");
 			}
 		}
 
