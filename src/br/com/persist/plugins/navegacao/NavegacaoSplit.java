@@ -48,6 +48,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -80,6 +81,7 @@ import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
@@ -705,6 +707,11 @@ class Aba extends Transferivel {
 			public Icon getIcone() {
 				return Icones.NOVO;
 			}
+
+			@Override
+			public void salvar() {
+				//
+			}
 		}
 
 		private class PainelMetadados extends Panel implements IVisualizador {
@@ -765,6 +772,11 @@ class Aba extends Transferivel {
 			@Override
 			public Icon getIcone() {
 				return Icones.NOVO;
+			}
+
+			@Override
+			public void salvar() {
+				//
 			}
 		}
 
@@ -1403,6 +1415,8 @@ interface IVisualizador {
 	public String getTitulo();
 
 	public Icon getIcone();
+
+	public void salvar();
 }
 
 interface VisualizadorListener {
@@ -1411,6 +1425,7 @@ interface VisualizadorListener {
 
 abstract class Visualizador extends Panel implements IVisualizador {
 	protected transient VisualizadorListener visualizadorListener;
+	protected Button buttonSalvar = new Button("label.salvar");
 	private static final long serialVersionUID = 1L;
 	protected final String string;
 	protected final byte[] bytes;
@@ -1419,6 +1434,23 @@ abstract class Visualizador extends Panel implements IVisualizador {
 	protected Visualizador(byte[] bytes, String string) {
 		this.string = string;
 		this.bytes = bytes;
+		buttonSalvar.addActionListener(e -> salvar());
+	}
+
+	public void salvar() {
+		JFileChooser fileChooser = Util.criarFileChooser(null, false);
+		int opcao = fileChooser.showSaveDialog(this);
+		if (opcao == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			if (file != null) {
+				try {
+					Util.salvar(file, bytes);
+					Util.mensagem(this, "Sucesso!");
+				} catch (IOException e) {
+					Util.mensagem(this, e.getMessage());
+				}
+			}
+		}
 	}
 }
 
@@ -1431,6 +1463,7 @@ class VisualizadorImagem extends Visualizador {
 		Label label = new Label();
 		label.setIcon(new ImageIcon(bytes));
 
+		add(BorderLayout.WEST, buttonSalvar);
 		add(BorderLayout.CENTER, new ScrollPane(label));
 		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
 	}
@@ -1456,6 +1489,7 @@ class VisualizadorConteudo extends Visualizador {
 		textEditor.setText(string);
 
 		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+		toolbarPesquisa.add(buttonSalvar);
 		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 
 		add(BorderLayout.NORTH, toolbarPesquisa);
@@ -1492,6 +1526,7 @@ class VisualizadorPDF extends Visualizador {
 			Object objeto = klass.newInstance();
 			JComponent comp = (JComponent) objeto;
 			load(klass, objeto, bytes);
+			add(BorderLayout.WEST, buttonSalvar);
 			add(BorderLayout.CENTER, comp);
 			SwingUtilities.invokeLater(() -> comp.scrollRectToVisible(new Rectangle()));
 		} catch (Exception e) {
@@ -1533,6 +1568,7 @@ class VisualizadorHTML extends Visualizador {
 		Panel panelTextPane = new Panel();
 		panelTextPane.add(BorderLayout.CENTER, textPane);
 		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
+		toolbarPesquisa.add(buttonSalvar);
 		TextPane.alterarTamanhoFonte(textPane, toolbarPesquisa);
 
 		add(BorderLayout.NORTH, toolbarPesquisa);
@@ -1592,6 +1628,7 @@ class VisualizadorJSON extends Visualizador {
 			ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
 			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
 			config(toolbarPesquisa, json, textEditor);
+			toolbarPesquisa.add(buttonSalvar);
 
 			add(BorderLayout.NORTH, toolbarPesquisa);
 			ScrollPane scrollPane2 = new ScrollPane(textEditor);
