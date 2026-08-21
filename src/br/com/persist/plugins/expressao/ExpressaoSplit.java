@@ -742,7 +742,9 @@ class Aba extends Transferivel {
 		protected void copiar() {
 			String string = Util.getString(editor);
 			Util.setContentTransfered(string);
-			copiarMensagem(string);
+			if (!Util.isEmpty(string)) {
+				labelTempAvulso.mensagemChave("msg.copiado");
+			}
 			editor.requestFocus();
 		}
 
@@ -761,7 +763,7 @@ class Aba extends Transferivel {
 		private void salvarArquivo(File file) {
 			try {
 				ArquivoUtil.salvar(editor, file);
-				salvoMensagem();
+				labelTempAvulso.mensagemChave("msg.salvo");
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
