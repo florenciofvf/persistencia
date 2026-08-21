@@ -90,6 +90,7 @@ import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
+import br.com.persist.componente.TextPane;
 import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.data.Array;
 import br.com.persist.data.ContainerDocument;
@@ -1419,15 +1420,6 @@ abstract class Visualizador extends Panel implements IVisualizador {
 		this.string = string;
 		this.bytes = bytes;
 	}
-
-	protected BarraButton criarToolbarPesquisa(JTextPane textPane, TextEditor textEditor) {
-		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
-		TextEditor.alterarTamanhoFonte(textPane, toolbarPesquisa);
-		if (textEditor != null) {
-			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
-		}
-		return toolbarPesquisa;
-	}
 }
 
 class VisualizadorImagem extends Visualizador {
@@ -1540,8 +1532,10 @@ class VisualizadorHTML extends Visualizador {
 
 		Panel panelTextPane = new Panel();
 		panelTextPane.add(BorderLayout.CENTER, textPane);
+		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
+		TextPane.alterarTamanhoFonte(textPane, toolbarPesquisa);
 
-		add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, null));
+		add(BorderLayout.NORTH, toolbarPesquisa);
 		add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
 		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 	}

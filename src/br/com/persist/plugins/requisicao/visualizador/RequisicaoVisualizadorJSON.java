@@ -17,7 +17,10 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextEditor;
+import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
+import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.data.Array;
 import br.com.persist.data.ContainerDocument;
 import br.com.persist.data.DataParser;
@@ -32,22 +35,29 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	@Override
 	public Component exibidor(Component parent, byte[] bytes, Tipo parametros) {
 		try {
-			JTextPane textPane = new JTextPane();
+			TextEditor textEditor = new TextEditor();
 			String string = Util.getString(bytes);
 			Tipo json = parser.parse(string);
-			setText(json, textPane);
+			setText(json, textEditor);
 			String accessToken = getAccessToken(json);
 			setAccesToken(accessToken);
 
-			Panel panelTextPane = new Panel();
-			panelTextPane.add(BorderLayout.CENTER, textPane);
+			ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+			textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
+			config(toolbarPesquisa, json, textEditor);
 
 			Panel panel = new Panel();
-			BarraButton barraButton = criarToolbarPesquisa(textPane, null);
-			config(barraButton, json, textPane);
-			panel.add(BorderLayout.NORTH, barraButton);
-			panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
-			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+			panel.add(BorderLayout.NORTH, toolbarPesquisa);
+			ScrollPane scrollPane2 = new ScrollPane(textEditor);
+			TextEditorLine editorLine = new TextEditorLine(textEditor);
+			textEditor.setFontListener(editorLine);
+			scrollPane2.setRowHeaderView(editorLine);
+
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane2);
+			panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+
+			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 
 			return panel;
 		} catch (Exception e) {

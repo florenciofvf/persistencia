@@ -1,7 +1,6 @@
 package br.com.persist.componente;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,6 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
-import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.event.CaretEvent;
 import javax.swing.plaf.TextUI;
@@ -37,11 +35,11 @@ import javax.swing.text.ViewFactory;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 
-public class TextEditor extends TextPane {
+public class TextEditor extends TextPane implements FontListener {
 	public static final Color COLOR_SEL = new Color(230, 240, 250);
 	private final TextEditorPopup popup = new TextEditorPopup();
-	private static final String FONTE_MAIOR = "fonte_maior";
-	private static final String FONTE_MENOR = "fonte_menor";
+	protected static final String FONTE_MAIOR = "fonte_maior";
+	protected static final String FONTE_MENOR = "fonte_menor";
 	public static final Color COLOR_TAB = Color.LIGHT_GRAY;
 	public static final Color COLOR_RET = Color.LIGHT_GRAY;
 	private static final Logger LOG = Logger.getGlobal();
@@ -69,94 +67,14 @@ public class TextEditor extends TextPane {
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
 		getActionMap().put("salvar_conteudo", actionSalvarConteudo);
 		getActionMap().put("baixar_conteudo", actionBaixarConteudo);
-		getActionMap().put(FONTE_MAIOR, actionFonteMaior);
-		getActionMap().put(FONTE_MENOR, actionFonteMenor);
+		getActionMap().put(FONTE_MAIOR, new TamanhoFonteAction(this, 2, this));
+		getActionMap().put(FONTE_MENOR, new TamanhoFonteAction(this, -2, this));
 	}
 
-	private transient javax.swing.Action actionFonteMenor = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			alterarFonte(-2);
-		}
-	};
-
-	private transient javax.swing.Action actionFonteMaior = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			alterarFonte(2);
-		}
-	};
-
-	private void alterarFonte(int delta) {
-		Font font = getFont();
-		if (font == null) {
-			return;
-		}
-		int size = font.getSize();
-		size += delta;
-		if (size < 8) {
-			size = 8;
-		}
-		if (size > 50) {
-			size = 50;
-		}
-		font = new Font(font.getName(), font.getStyle(), size);
-		setFont(font);
+	@Override
+	public void alteradoPara(int tamanho) {
 		if (fontListener != null) {
-			fontListener.alteradoPara(size);
-		}
-	}
-
-	public static void alterarTamanhoFonte(JTextPane textPane, FontListener fontListener) {
-		if (textPane == null) {
-			return;
-		}
-		InputMap inputMap = textPane.getInputMap(WHEN_FOCUSED);
-		inputMap.put(getKeyStrokeCtrl(KeyEvent.VK_UP), FONTE_MAIOR);
-		inputMap.put(getKeyStrokeCtrl(KeyEvent.VK_DOWN), FONTE_MENOR);
-		textPane.getActionMap().put(FONTE_MAIOR, new TamanhoFonteAction(textPane, 2, fontListener));
-		textPane.getActionMap().put(FONTE_MENOR, new TamanhoFonteAction(textPane, -2, fontListener));
-	}
-
-	static class TamanhoFonteAction extends AbstractAction {
-		private final transient FontListener fontListener;
-		private static final long serialVersionUID = 1L;
-		private final JTextPane textPane;
-		private final int delta;
-
-		TamanhoFonteAction(JTextPane textPane, int delta, FontListener fontListener) {
-			this.fontListener = fontListener;
-			this.textPane = textPane;
-			this.delta = delta;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			alterarFonte(delta);
-		}
-
-		private void alterarFonte(int delta) {
-			Font font = textPane.getFont();
-			if (font == null) {
-				return;
-			}
-			int size = font.getSize();
-			size += delta;
-			if (size < 8) {
-				size = 8;
-			}
-			if (size > 50) {
-				size = 50;
-			}
-			font = new Font(font.getName(), font.getStyle(), size);
-			textPane.setFont(font);
-			if (fontListener != null) {
-				fontListener.alteradoPara(size);
-			}
+			fontListener.alteradoPara(tamanho);
 		}
 	}
 

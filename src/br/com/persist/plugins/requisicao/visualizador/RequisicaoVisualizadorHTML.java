@@ -16,6 +16,8 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextPane;
+import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 import br.com.persist.plugins.requisicao.RequisicaoUtil;
@@ -35,9 +37,11 @@ public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 
 			Panel panelTextPane = new Panel();
 			panelTextPane.add(BorderLayout.CENTER, textPane);
+			ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textPane);
+			TextPane.alterarTamanhoFonte(textPane, toolbarPesquisa);
 
 			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, null));
+			panel.add(BorderLayout.NORTH, toolbarPesquisa);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
 			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 
