@@ -44,6 +44,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -388,13 +389,41 @@ class Editor extends TextEditor {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	transient BibliotecaContexto bibliotecaContexto;
+	transient javax.swing.Action compilarAction;
+	transient javax.swing.Action executarAction;
 	transient CacheBiblioteca cacheBiblioteca;
 	private Point point;
 
 	Editor() {
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_P), "compilar");
+		getActionMap().put("compilar", actionCompilar);
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_E), "executar");
+		getActionMap().put("executar", actionExecutar);
 		addFocusListener(focusListenerInner);
 		addKeyListener(keyListenerInner);
 	}
+
+	private transient javax.swing.Action actionCompilar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (compilarAction != null) {
+				compilarAction.actionPerformed(e);
+			}
+		}
+	};
+
+	private transient javax.swing.Action actionExecutar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (executarAction != null) {
+				executarAction.actionPerformed(e);
+			}
+		}
+	};
 
 	private transient FocusListener focusListenerInner = new FocusAdapter() {
 		@Override
@@ -572,7 +601,27 @@ class Aba extends Transferivel {
 		add(BorderLayout.CENTER, split);
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
+		editor.compilarAction = new CompilarAction();
+		editor.executarAction = new ExecutarAction();
 		editor.cacheBiblioteca = cacheBiblioteca;
+	}
+
+	private class CompilarAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			toolbar.atualizar();
+		}
+	}
+
+	private class ExecutarAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			toolbar.executar();
+		}
 	}
 
 	private Panel criarPanel() {

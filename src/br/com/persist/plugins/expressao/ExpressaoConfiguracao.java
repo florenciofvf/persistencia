@@ -114,6 +114,7 @@ public class ExpressaoConfiguracao extends AbstratoConfiguracao {
 	protected List<Atalho> getAtalhos() {
 		List<Atalho> atalhos = new ArrayList<>();
 		atalhos.add(Atalho.ctrl('P', ExpressaoMensagens.getString("label.compilar"), "Editor"));
+		atalhos.add(Atalho.ctrl('E', ExpressaoMensagens.getString("label.executar"), "Editor"));
 		return atalhos;
 	}
 }
