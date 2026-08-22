@@ -247,6 +247,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 		private static final long serialVersionUID = 1L;
 		private final List<AbstratoConfiguracao> lista;
 		private final Muro muro = new Muro();
+		private int espacamento = 100;
 
 		private PainelConfiguracao() {
 			lista = new ArrayList<>();
@@ -258,6 +259,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 				totalConfiguracoes++;
 				lista.add(configuracao);
 				muro.camada(configuracao);
+				muro.camada(Muro.novoEspacamento(espacamento));
 			}
 		}
 
@@ -299,6 +301,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 					break;
 				}
 				total += item.getHeight();
+				total += espacamento;
 			}
 			return total;
 		}

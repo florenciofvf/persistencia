@@ -19,10 +19,14 @@ public class Muro extends Box {
 
 	public void camada(Component... comp) {
 		Box box = Box.createHorizontalBox();
-		for (Component c : comp) {
-			box.add(c);
+		for (Component item : comp) {
+			box.add(item);
 		}
 		add(box);
+	}
+
+	public static Component novoEspacamento(int altura) {
+		return Box.createVerticalStrut(altura);
 	}
 
 	public static Panel panelGrid(int borderTop, int borderBottom, Component... comps) {
