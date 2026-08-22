@@ -42,7 +42,7 @@ public class ExpressaoConfiguracao extends AbstratoConfiguracao {
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
-		muro.camada(getPanelAtalhos(40));
+		muro.camada(getPanelAtalhos(60));
 		add(BorderLayout.CENTER, muro);
 	}
 

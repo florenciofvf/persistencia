@@ -51,6 +51,7 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		muro.camada(Muro.panelGrid(chkExibirConteudoPlano));
 		muro.camada(Muro.panelGrid(chkExibirMetadados));
+		muro.camada(getPanelAtalhos(60));
 		add(BorderLayout.CENTER, muro);
 	}
 
