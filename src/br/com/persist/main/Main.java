@@ -46,6 +46,7 @@ public class Main {
 
 	private static void abrirForm() {
 		Formulario form = criarFormulario(getGC());
+		form.setPreferenciaNomePlugin(Preferencias.getString(Constantes.PREFERENCIA_NOME_PLUGIN));
 		String string = System.getProperty("form_location_deltaX");
 		if (string != null && !string.trim().isEmpty()) {
 			Point location = form.getLocation();
