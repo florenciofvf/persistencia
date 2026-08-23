@@ -81,6 +81,42 @@ public class NavegacaoUtil {
 		return getStringOuNull(list);
 	}
 
+	@SuppressWarnings("unchecked")
+	public static String getStatus(Map<String, Object> mapa) {
+		if (mapa != null) {
+			Object header = mapa.get(HEADER_RESPONSE);
+			if (header instanceof Map) {
+				return status((Map<String, List<String>>) header);
+			}
+		}
+		return null;
+	}
+
+	private static String status(Map<String, List<String>> header) {
+		for (Map.Entry<String, List<String>> entry : header.entrySet()) {
+			String chave = entry.getKey();
+			Object valor = entry.getValue();
+			if (chave == null) {
+				String resp = getHttpStatus(valor);
+				if (resp != null) {
+					return resp;
+				}
+			}
+		}
+		return "";
+	}
+
+	private static String getHttpStatus(Object valor) {
+		if (valor == null) {
+			return null;
+		}
+		String string = valor.toString();
+		if (string.contains("HTTP") && string.contains("/")) {
+			return string;
+		}
+		return null;
+	}
+
 	private static String getStringOuNull(List<String> list) {
 		if (list != null) {
 			StringBuilder builder = new StringBuilder();

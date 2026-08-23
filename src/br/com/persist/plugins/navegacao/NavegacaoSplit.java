@@ -45,6 +45,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -649,14 +650,15 @@ class Aba extends Transferivel {
 		private static final long serialVersionUID = 1L;
 
 		private ContainerRequisicao() {
-			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tabelaRequisicao, ficharioRequisicao);
+			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tabelaRequisicao),
+					ficharioRequisicao);
 			SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 			split.setOneTouchExpandable(true);
 			split.setContinuousLayout(true);
 			add(BorderLayout.CENTER, split);
 		}
 
-		void requisicaoSelecionada(Requisicao requisicao) {
+		private void requisicaoSelecionada(Requisicao requisicao) {
 			ficharioRequisicao.setRequisicao(requisicao);
 		}
 
@@ -668,16 +670,15 @@ class Aba extends Transferivel {
 
 			Map<String, Object> mapaResponse = result.getResponse();
 			Map<String, Object> mapaRequest = result.getRequest();
+			String status = NavegacaoUtil.getStatus(mapaResponse);
+			String mimes = NavegacaoUtil.getMimes(mapaResponse);
 
-			Requisicao requisicao = new Requisicao(mapaRequest.get("url"), "fvf");
+			Requisicao requisicao = new Requisicao(mapaRequest.get("url"), mimes, status);
 			tabelaRequisicao.adicionar(requisicao, limpar);
 
 			if (NavegacaoPreferencia.isExibirMetadados()) {
 				requisicao.add(new VisualizadorMetadados(result));
 			}
-
-			String location = NavegacaoUtil.getLocation(mapaResponse);
-			String mimes = NavegacaoUtil.getMimes(mapaResponse);
 
 			if (Util.isEmpty(mimes)) {
 				return;
@@ -693,6 +694,7 @@ class Aba extends Transferivel {
 				}
 
 				Cookie.processar(mapaResponse);
+				String location = NavegacaoUtil.getLocation(mapaResponse);
 				processarVisualizadores(requisicao, NavegacaoUtil.getBase(mapaRequest.get("url")), location, mimes,
 						bytes, string);
 			}
@@ -752,9 +754,10 @@ class Aba extends Transferivel {
 
 		private FicharioRequisicao() {
 			setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			setBorder(BorderFactory.createEmptyBorder());
 		}
 
-		void setRequisicao(Requisicao requisicao) {
+		private void setRequisicao(Requisicao requisicao) {
 			if (requisicao != null) {
 				removeAll();
 				for (Visualizador item : requisicao.getVisualizadores()) {
@@ -793,12 +796,14 @@ class Aba extends Transferivel {
 		private static final long serialVersionUID = 1L;
 		private final List<Visualizador> visualizadores;
 		private final String status;
+		private final String mime;
 		private final String url;
 
-		private Requisicao(Object url, String status) {
+		private Requisicao(Object url, String mime, String status) {
 			this.url = url == null ? "" : url.toString();
 			visualizadores = new ArrayList<>();
 			this.status = status;
+			this.mime = mime;
 		}
 
 		private List<Visualizador> getVisualizadores() {
@@ -811,17 +816,21 @@ class Aba extends Transferivel {
 			}
 		}
 
-		public String getStatus() {
+		private String getStatus() {
 			return status;
 		}
 
-		public String getUrl() {
+		private String getMime() {
+			return mime;
+		}
+
+		private String getUrl() {
 			return url;
 		}
 	}
 
 	private class RequisicaoModelo extends AbstractTableModel {
-		private final String[] colunas = { "URL", "STATUS" };
+		private final String[] colunas = { "URL", "MIME", "STATUS" };
 		private static final long serialVersionUID = 1L;
 		private final List<Requisicao> requisicoes;
 
@@ -875,6 +884,8 @@ class Aba extends Transferivel {
 			case 0:
 				return item.getUrl();
 			case 1:
+				return item.getMime();
+			case 2:
 				return item.getStatus();
 			default:
 				return null;
