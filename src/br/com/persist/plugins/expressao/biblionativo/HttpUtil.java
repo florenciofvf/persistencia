@@ -26,7 +26,7 @@ import javax.net.ssl.X509TrustManager;
 import br.com.persist.assistencia.Util;
 
 public class HttpUtil {
-	private static final String PUT_CONTENT_TYPE_HEADER_RESPONSE = "putContentTypeHeaderResponse";
+	private static final String SET_CONTENT_TYPE = "setContentType";
 	private static final String HEADER_RESPONSE = "headerResponse";
 	private static final String HEADER_REQUEST = "headerRequest";
 	private static SSLSocketFactory defaultSSLSocketFactory;
@@ -83,7 +83,7 @@ public class HttpUtil {
 			configHeader(param, conn);
 			conn.connect();
 			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
-			putHeaderResponse(result, param);
+			setContentType(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("GET", ex));
@@ -124,7 +124,7 @@ public class HttpUtil {
 			conn.connect();
 			writer(param, conn);
 			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
-			putHeaderResponse(result, param);
+			setContentType(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("POST", ex));
@@ -133,8 +133,8 @@ public class HttpUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void putHeaderResponse(HttpResult result, Map<String, Object> param) {
-		String string = (String) param.get(PUT_CONTENT_TYPE_HEADER_RESPONSE);
+	private static void setContentType(HttpResult result, Map<String, Object> param) {
+		String string = (String) param.get(SET_CONTENT_TYPE);
 		if (string == null) {
 			return;
 		}
@@ -148,7 +148,7 @@ public class HttpUtil {
 
 	@SuppressWarnings("unchecked")
 	private static void writer(Map<String, Object> param, URLConnection conn) throws IOException {
-		Map<String, String> parametros = (Map<String, String>) param.get("parametros");
+		Map<String, String> parametros = (Map<String, String>) param.get("body");
 		if (parametros != null) {
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 			osw.write(montarParametros(parametros));
