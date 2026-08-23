@@ -770,6 +770,7 @@ class Aba extends Transferivel {
 
 		private TabelaRequisicao() {
 			addMouseListener(mouseListenerInner);
+			setModel(modelo);
 		}
 
 		private void adicionar(Requisicao requisicao, boolean limpar) {
