@@ -106,6 +106,7 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 			args.put(FormularioEvento.FECHAR_CONEXOES, fecharConexao);
 			args.put(FormularioEvento.FECHAR_FORMULARIO, true);
 			formulario.salvarMonitorFormComoPreferencial();
+			formulario.salvarPreferenciaNomePlugin();
 			formulario.processar(args);
 			System.exit(0);
 		}

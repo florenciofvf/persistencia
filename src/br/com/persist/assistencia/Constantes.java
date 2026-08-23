@@ -7,6 +7,7 @@ import java.io.File;
 
 public class Constantes {
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
+	public static final String PREFERENCIA_NOME_PLUGIN = "PREFERENCIA_NOME_PLUGIN";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_INSERT_CMP_OBRIG = "label.insert_cmp_obrig";
 	public static final String LABEL_CONFIRMA_SALVAR = "label.confirma_salvar";

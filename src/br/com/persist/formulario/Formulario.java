@@ -59,7 +59,7 @@ public class Formulario extends JFrame implements PluginBasico {
 	private static final long serialVersionUID = 1L;
 	private OuvinteFormulario ouvinteFormulario;
 	private Collection<String> collection;
-	private String tag;
+	private String preferenciaNomePlugin;
 
 	public Formulario(GraphicsConfiguration gc) {
 		super(Mensagens.getTituloAplicacao(), gc);
@@ -393,6 +393,12 @@ public class Formulario extends JFrame implements PluginBasico {
 		}
 	}
 
+	public void salvarPreferenciaNomePlugin() {
+		if (preferenciaNomePlugin != null) {
+			Preferencias.setString(Constantes.PREFERENCIA_NOME_PLUGIN, preferenciaNomePlugin);
+		}
+	}
+
 	public void salvarMonitorComoPreferencial() {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
 		if (device != null) {
@@ -416,11 +422,11 @@ public class Formulario extends JFrame implements PluginBasico {
 		this.ouvinteFormulario = ouvinteFormulario;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getPreferenciaNomePlugin() {
+		return preferenciaNomePlugin;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setPreferenciaNomePlugin(String preferenciaNomePlugin) {
+		this.preferenciaNomePlugin = preferenciaNomePlugin;
 	}
 }
