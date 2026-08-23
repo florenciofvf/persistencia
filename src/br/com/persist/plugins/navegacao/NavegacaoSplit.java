@@ -19,6 +19,9 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -653,6 +656,10 @@ class Aba extends Transferivel {
 			add(BorderLayout.CENTER, split);
 		}
 
+		void requisicaoSelecionada(Requisicao requisicao) {
+			ficharioRequisicao.setRequisicao(requisicao);
+		}
+
 		private void processar(HttpResult result, boolean limpar) {
 			if (HttpUtil.responseException(result)) {
 				Util.mensagem(Aba.this, result.getDetalhes());
@@ -746,6 +753,15 @@ class Aba extends Transferivel {
 		private FicharioRequisicao() {
 			setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		}
+
+		void setRequisicao(Requisicao requisicao) {
+			if (requisicao != null) {
+				removeAll();
+				for (Visualizador item : requisicao.getVisualizadores()) {
+					addTab(item.getTitulo(), item.getIcone(), item);
+				}
+			}
+		}
 	}
 
 	private class TabelaRequisicao extends JTable {
@@ -753,11 +769,23 @@ class Aba extends Transferivel {
 		private static final long serialVersionUID = 1L;
 
 		private TabelaRequisicao() {
+			addMouseListener(mouseListenerInner);
 		}
 
 		private void adicionar(Requisicao requisicao, boolean limpar) {
 			modelo.add(requisicao, limpar);
 		}
+
+		private transient MouseListener mouseListenerInner = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int linhaClicada = rowAtPoint(e.getPoint());
+				if (linhaClicada != -1) {
+					Requisicao item = modelo.getItem(linhaClicada);
+					containerRequisicao.requisicaoSelecionada(item);
+				}
+			}
+		};
 	}
 
 	private class Requisicao extends Panel {
@@ -770,6 +798,10 @@ class Aba extends Transferivel {
 			this.url = url == null ? "" : url.toString();
 			visualizadores = new ArrayList<>();
 			this.status = status;
+		}
+
+		private List<Visualizador> getVisualizadores() {
+			return visualizadores;
 		}
 
 		private void add(Visualizador item) {
@@ -809,6 +841,10 @@ class Aba extends Transferivel {
 		@Override
 		public int getRowCount() {
 			return requisicoes.size();
+		}
+
+		Requisicao getItem(int rowIndex) {
+			return requisicoes.get(rowIndex);
 		}
 
 		@Override
