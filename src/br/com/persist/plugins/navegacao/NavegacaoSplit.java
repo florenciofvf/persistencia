@@ -652,9 +652,9 @@ class Aba extends Transferivel {
 		private ContainerRequisicao() {
 			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tabelaRequisicao),
 					ficharioRequisicao);
-			SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 			split.setOneTouchExpandable(true);
 			split.setContinuousLayout(true);
+			split.setDividerLocation(100);
 			add(BorderLayout.CENTER, split);
 		}
 
