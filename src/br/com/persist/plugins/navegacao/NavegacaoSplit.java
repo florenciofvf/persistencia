@@ -1028,7 +1028,11 @@ class Aba extends Transferivel {
 				editor.bibliotecaContexto = biblio;
 				String alertas = compilacao.getStringAlerta();
 				if (resp) {
-					Util.mensagem(Aba.this, ExpressaoMensagens.getString("msg.compilado") + alertas);
+					if (alertas.isEmpty()) {
+						labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.compilado"));
+					} else {
+						Util.mensagem(Aba.this, ExpressaoMensagens.getString("msg.compilado") + alertas);
+					}
 				} else {
 					labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.nao_compilado"));
 				}
