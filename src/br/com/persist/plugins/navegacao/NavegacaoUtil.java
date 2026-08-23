@@ -94,4 +94,32 @@ public class NavegacaoUtil {
 		}
 		return null;
 	}
+
+	public static String getBase(Object obj) {
+		if (obj == null) {
+			return null;
+		}
+		String string = obj.toString();
+		int pos = string.indexOf("://");
+		if (pos == -1) {
+			return null;
+		}
+		pos = string.indexOf("/", pos + 3);
+		if (pos == -1) {
+			return string;
+		}
+		return string.substring(0, pos);
+	}
+
+	public static String normalBarra(String base, String complemento) {
+		if (base == null || complemento == null) {
+			return "";
+		}
+		base = base.trim();
+		complemento = complemento.trim();
+		if (base.endsWith("/") || complemento.startsWith("/")) {
+			return "";
+		}
+		return "/";
+	}
 }

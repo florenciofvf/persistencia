@@ -19,9 +19,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,11 +49,13 @@ import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.plaf.TextUI;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
@@ -87,7 +86,6 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
@@ -544,8 +542,8 @@ class Editor extends TextEditor {
 }
 
 class Aba extends Transferivel {
+	private final ContainerRequisicao containerRequisicao = new ContainerRequisicao();
 	private transient CacheBiblioteca cacheBiblioteca = new CacheBiblioteca();
-	private final PainelResultado painelResultado = new PainelResultado();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private transient BibliotecaContexto biblio;
@@ -594,7 +592,7 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), containerRequisicao);
 		SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(true);
@@ -634,12 +632,6 @@ class Aba extends Transferivel {
 		return panel;
 	}
 
-	private Panel criarPanelResultado() {
-		Panel panel = new Panel();
-		panel.add(BorderLayout.CENTER, painelResultado);
-		return panel;
-	}
-
 	private int getValueScrollPane() {
 		return scrollPane.getVerticalScrollBar().getValue();
 	}
@@ -648,281 +640,213 @@ class Aba extends Transferivel {
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
-	private class PainelResultado extends Panel {
-		private final PopupFichario popupFichario = new PopupFichario();
-		private final JTabbedPane fichario = new JTabbedPane();
+	private class ContainerRequisicao extends Panel {
+		private FicharioRequisicao ficharioRequisicao = new FicharioRequisicao();
+		private TabelaRequisicao tabelaRequisicao = new TabelaRequisicao();
 		private static final long serialVersionUID = 1L;
 
-		private PainelResultado() {
-			fichario.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-			fichario.addMouseListener(mouseListenerFichario);
-			add(BorderLayout.CENTER, fichario);
-		}
-
-		private class PopupFichario extends Popup {
-			private Action fechar = actionMenu("label.fechar");
-			private static final long serialVersionUID = 1L;
-
-			PopupFichario() {
-				addMenuItem(fechar);
-				fechar.setActionListener(e -> fechar());
-			}
-
-			private void fechar() {
-				int indice = fichario.getSelectedIndex();
-				if (indice != -1) {
-					fichario.removeTabAt(indice);
-				}
-			}
-		}
-
-		private transient MouseListener mouseListenerFichario = new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				processar(e);
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				processar(e);
-			}
-
-			private void processar(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					popupFichario.show(fichario, e.getX(), e.getY());
-				}
-			}
-		};
-
-		private void setResposta(List<Object> resposta, boolean limpar) {
-			if (NavegacaoUtil.isHttpResult(resposta)) {
-				HttpResult result = (HttpResult) resposta.get(0);
-				processar(result, limpar);
-			} else {
-				String string = ObjetoUtil.getStringResposta(resposta);
-				setText(string, limpar);
-			}
-		}
-
-		private void setText(String string, boolean limpar) {
-			if (limpar) {
-				fichario.removeAll();
-			}
-			addTab(new PainelDados(string));
+		private ContainerRequisicao() {
+			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tabelaRequisicao, ficharioRequisicao);
+			SwingUtilities.invokeLater(() -> split.setResizeWeight(.5D));
+			split.setOneTouchExpandable(true);
+			split.setContinuousLayout(true);
+			add(BorderLayout.CENTER, split);
 		}
 
 		private void processar(HttpResult result, boolean limpar) {
-			if (limpar) {
-				fichario.removeAll();
-			}
-			if (NavegacaoPreferencia.isExibirMetadados() || HttpUtil.responseException(result)) {
-				addTab(new PainelMetadados(result));
-			}
-			observadores(result.getRequest(), result.getResponse());
-		}
-
-		private class PainelDados extends Panel implements IVisualizador {
-			private static final long serialVersionUID = 1L;
-			private TextEditor textEditor = new TextEditor();
-
-			PainelDados(String string) {
-				setText(string);
-
-				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
-				textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
-
-				add(BorderLayout.NORTH, toolbarPesquisa);
-				ScrollPane scrollPane2 = new ScrollPane(textEditor);
-				TextEditorLine editorLine = new TextEditorLine(textEditor);
-				textEditor.setFontListener(editorLine);
-				scrollPane2.setRowHeaderView(editorLine);
-
-				Panel panelScroll = new Panel();
-				panelScroll.add(BorderLayout.CENTER, scrollPane2);
-				add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+			if (HttpUtil.responseException(result)) {
+				Util.mensagem(Aba.this, result.getDetalhes());
+				return;
 			}
 
-			private void setText(String string) {
-				textEditor.setText(string);
-				SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+			Map<String, Object> mapaResponse = result.getResponse();
+			Map<String, Object> mapaRequest = result.getRequest();
+
+			Requisicao requisicao = new Requisicao(mapaRequest.get("url"), "fvf");
+			tabelaRequisicao.adicionar(requisicao, limpar);
+
+			if (NavegacaoPreferencia.isExibirMetadados()) {
+				requisicao.add(new VisualizadorMetadados(result));
 			}
 
-			@Override
-			public String getTitulo() {
-				return "Dados";
-			}
-
-			@Override
-			public Icon getIcone() {
-				return Icones.NOVO;
-			}
-
-			@Override
-			public void salvar() {
-				//
-			}
-		}
-
-		private class PainelMetadados extends Panel implements IVisualizador {
-			private static final long serialVersionUID = 1L;
-			private TextEditor textEditor = new TextEditor();
-
-			PainelMetadados(HttpResult result) {
-				StringBuilder builder = new StringBuilder();
-				info("Request", builder, result.getRequest());
-				builder.append(Constantes.QL2);
-				info("Response", builder, result.getResponse());
-				setText(builder.toString());
-
-				ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
-				textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
-
-				add(BorderLayout.NORTH, toolbarPesquisa);
-				ScrollPane scrollPane2 = new ScrollPane(textEditor);
-				TextEditorLine editorLine = new TextEditorLine(textEditor);
-				textEditor.setFontListener(editorLine);
-				scrollPane2.setRowHeaderView(editorLine);
-
-				Panel panelScroll = new Panel();
-				panelScroll.add(BorderLayout.CENTER, scrollPane2);
-				add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-			}
-
-			private void info(String titulo, StringBuilder builder, Map<String, Object> mapa) {
-				builder.append(titulo + Constantes.QL);
-				builder.append(Util.completar("", titulo.length(), '-') + Constantes.QL);
-				append(0, builder, mapa);
-			}
-
-			@SuppressWarnings("unchecked")
-			private void append(int tab, StringBuilder builder, Map<String, Object> mapa) {
-				for (Map.Entry<String, Object> entry : mapa.entrySet()) {
-					String chave = entry.getKey();
-					Object valor = entry.getValue();
-					if (valor instanceof Map) {
-						builder.append(Util.completar("", tab, '\t') + chave + ":" + Constantes.QL);
-						append(tab + 1, builder, (Map<String, Object>) valor);
-					} else {
-						builder.append(Util.completar("", tab, '\t') + chave + ": " + valor + Constantes.QL);
-					}
-				}
-			}
-
-			private void setText(String string) {
-				textEditor.setText(string);
-				SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
-			}
-
-			@Override
-			public String getTitulo() {
-				return "Metadados";
-			}
-
-			@Override
-			public Icon getIcone() {
-				return Icones.NOVO;
-			}
-
-			@Override
-			public void salvar() {
-				//
-			}
-		}
-
-		private void observadores(Map<String, Object> mapaRequest, Map<String, Object> mapaResponse) {
 			String location = NavegacaoUtil.getLocation(mapaResponse);
 			String mimes = NavegacaoUtil.getMimes(mapaResponse);
+
 			if (Util.isEmpty(mimes)) {
 				return;
 			}
+
 			Object conteudo = mapaResponse.get("bytesResponse");
 			if (conteudo instanceof byte[]) {
 				byte[] bytes = (byte[]) conteudo;
 				String string = new String(bytes);
+
+				if (NavegacaoPreferencia.isExibirConteudoPlano()) {
+					requisicao.add(new VisualizadorTexto(bytes, string));
+				}
+
 				Cookie.processar(mapaResponse);
-				notificar(getBase(mapaRequest.get("url")), location, mimes, bytes, string);
+				processarVisualizadores(requisicao, NavegacaoUtil.getBase(mapaRequest.get("url")), location, mimes,
+						bytes, string);
 			}
 		}
 
-		private String getBase(Object obj) {
-			if (obj == null) {
-				return null;
+		private void processarVisualizadores(Requisicao requisicao, String base, String location, String mimes,
+				byte[] bytes, String string) {
+			if (mimes.contains("image/")) {
+				requisicao.add(new VisualizadorImagem(bytes, string));
 			}
-			String string = obj.toString();
-			int pos = string.indexOf("://");
-			if (pos == -1) {
-				return null;
-			}
-			pos = string.indexOf("/", pos + 3);
-			if (pos == -1) {
-				return string;
-			}
-			return string.substring(0, pos);
-		}
 
-		private void notificar(String base, String location, String mimes, byte[] bytes, String string) {
+			if (mimes.contains("application/json")) {
+				requisicao.add(new VisualizadorJSON(bytes, string));
+			}
+
+			if (mimes.contains("application/pdf")) {
+				requisicao.add(new VisualizadorPDF(bytes, string));
+			}
+
+			if (mimes.contains("text/html") || mimes.contains("text/javascript")) {
+				VisualizadorHTML visualizador = new VisualizadorHTML(bytes, string);
+				visualizador.visualizadorListener = new VisualizadorListenerImpl();
+				visualizador.base = base;
+				requisicao.add(visualizador);
+			}
+
 			if (!Util.isEmpty(location)) {
 				String complemento = null;
 				if (location.startsWith("http://") || location.startsWith("https://")) {
-					base = " ";
+					base = "";
 					complemento = location;
 				} else {
 					complemento = location.startsWith("/") ? location : "/" + location;
 				}
-				new InnerVisualizadorListener().processarLink(base, complemento);
-				return;
+				new VisualizadorListenerImpl().processarLink(base, complemento);
 			}
-			if (NavegacaoPreferencia.isExibirConteudoPlano()) {
-				addTab(new VisualizadorConteudo(bytes, string));
+		}
+	}
+
+	private class VisualizadorListenerImpl implements VisualizadorListener {
+		@Override
+		public void processarLink(String base, String complemento) {
+			try {
+				Processador processador = new Processador();
+				String normal = NavegacaoUtil.normalBarra(base, complemento);
+				List<Object> resposta = processador.processar("plugin_navegacao.br.com.processarLink.ProcessarLink",
+						"main", base + normal, complemento);
+				toolbar.setResposta(resposta, false);
+			} catch (ExpressaoException ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
-			if (mimes.contains("image/")) {
-				addTab(new VisualizadorImagem(bytes, string));
-			}
-			if (mimes.contains("text/html") || mimes.contains("text/javascript")) {
-				VisualizadorHTML visualizador = new VisualizadorHTML(bytes, string);
-				visualizador.visualizadorListener = new InnerVisualizadorListener();
-				visualizador.base = base;
-				addTab(visualizador);
-			}
-			if (mimes.contains("application/json")) {
-				addTab(new VisualizadorJSON(bytes, string));
-			}
-			if (mimes.contains("application/pdf")) {
-				addTab(new VisualizadorPDF(bytes, string));
+		}
+	}
+
+	private class FicharioRequisicao extends JTabbedPane {
+		private static final long serialVersionUID = 1L;
+
+		private FicharioRequisicao() {
+			setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		}
+	}
+
+	private class TabelaRequisicao extends JTable {
+		private RequisicaoModelo modelo = new RequisicaoModelo();
+		private static final long serialVersionUID = 1L;
+
+		private TabelaRequisicao() {
+		}
+
+		private void adicionar(Requisicao requisicao, boolean limpar) {
+			modelo.add(requisicao, limpar);
+		}
+	}
+
+	private class Requisicao extends Panel {
+		private static final long serialVersionUID = 1L;
+		private final List<Visualizador> visualizadores;
+		private final String status;
+		private final String url;
+
+		private Requisicao(Object url, String status) {
+			this.url = url == null ? "" : url.toString();
+			visualizadores = new ArrayList<>();
+			this.status = status;
+		}
+
+		private void add(Visualizador item) {
+			if (item != null) {
+				visualizadores.add(item);
 			}
 		}
 
-		private void addTab(IVisualizador visualizador) {
-			fichario.addTab(visualizador.getTitulo(), visualizador.getIcone(), (Component) visualizador);
-			int ultimoIndice = fichario.getTabCount() - 1;
-			fichario.setSelectedIndex(ultimoIndice);
+		public String getStatus() {
+			return status;
 		}
 
-		private class InnerVisualizadorListener implements VisualizadorListener {
-			@Override
-			public void processarLink(String base, String complemento) {
-				try {
-					String aux = auxiliar(base, complemento);
-					Processador processador = new Processador();
-					List<Object> resposta = processador.processar("plugin_navegacao.br.com.processarLink.ProcessarLink",
-							"main", base + aux, complemento);
-					setResposta(resposta, false);
-				} catch (ExpressaoException ex) {
-					setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), false);
-				}
-			}
+		public String getUrl() {
+			return url;
+		}
+	}
 
-			private String auxiliar(String base, String complemento) {
-				if (base == null || complemento == null) {
-					return "";
+	private class RequisicaoModelo extends AbstractTableModel {
+		private final String[] colunas = { "URL", "STATUS" };
+		private static final long serialVersionUID = 1L;
+		private final List<Requisicao> requisicoes;
+
+		private RequisicaoModelo() {
+			requisicoes = new ArrayList<>();
+		}
+
+		void add(Requisicao item, boolean limpar) {
+			if (item != null) {
+				if (limpar) {
+					requisicoes.clear();
 				}
-				base = base.trim();
-				complemento = complemento.trim();
-				if (base.endsWith("/") || complemento.startsWith("/")) {
-					return "";
-				}
-				return "/";
+				requisicoes.add(item);
+				fireTableDataChanged();
 			}
+		}
+
+		@Override
+		public int getRowCount() {
+			return requisicoes.size();
+		}
+
+		@Override
+		public int getColumnCount() {
+			return colunas.length;
+		}
+
+		@Override
+		public String getColumnName(int columnIndex) {
+			return colunas[columnIndex];
+		}
+
+		@Override
+		public Class<?> getColumnClass(int columnIndex) {
+			return String.class;
+		}
+
+		@Override
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			return true;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			Requisicao item = requisicoes.get(rowIndex);
+			switch (columnIndex) {
+			case 0:
+				return item.getUrl();
+			case 1:
+				return item.getStatus();
+			default:
+				return null;
+			}
+		}
+
+		@Override
+		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+			//
 		}
 	}
 
@@ -1067,15 +991,25 @@ class Aba extends Transferivel {
 
 		private void executar() {
 			if (biblio == null) {
-				painelResultado.setText(ExpressaoMensagens.getString("msg.nao_compilado"), true);
+				labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.nao_compilado"));
 				return;
 			}
 			try {
 				Processador processador = new Processador();
 				List<Object> resposta = processador.processar(biblio.getNomeAbsoluto(), "main");
-				painelResultado.setResposta(resposta, !NavegacaoPreferencia.isExibirRequisicaoAnt());
+				setResposta(resposta, !NavegacaoPreferencia.isExibirRequisicaoAnt());
 			} catch (ExpressaoException ex) {
-				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+			}
+		}
+
+		private void setResposta(List<Object> resposta, boolean limpar) {
+			if (NavegacaoUtil.isHttpResult(resposta)) {
+				HttpResult result = (HttpResult) resposta.get(0);
+				containerRequisicao.processar(result, limpar);
+			} else {
+				String string = ObjetoUtil.getStringResposta(resposta);
+				Util.mensagem(Aba.this, string);
 			}
 		}
 
@@ -1093,17 +1027,16 @@ class Aba extends Transferivel {
 				boolean resp = biblio != null;
 				editor.bibliotecaContexto = biblio;
 				String alertas = compilacao.getStringAlerta();
-				if (resp && alertas.isEmpty()) {
-					labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.compilado"));
+				if (resp) {
+					Util.mensagem(Aba.this, ExpressaoMensagens.getString("msg.compilado") + alertas);
 				} else {
-					painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado") + alertas
-							: ExpressaoMensagens.getString("msg.nao_compilado"), true);
+					labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.nao_compilado"));
 				}
 				if (resp && colorir) {
 					ExpressaoCor.processar(editor.getStyledDocument(), compilacao.getTokens());
 				}
 			} catch (IOException | ExpressaoException ex) {
-				painelResultado.setText(Util.getStackTrace(NavegacaoConstantes.PAINEL_NAVEGACAO, ex), true);
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
 			}
 		}
 
@@ -1503,35 +1436,47 @@ abstract class Visualizador extends Panel implements IVisualizador {
 	}
 }
 
-class VisualizadorImagem extends Visualizador {
+class VisualizadorMetadados extends Visualizador {
 	private static final long serialVersionUID = 1L;
 
-	protected VisualizadorImagem(byte[] bytes, String string) {
-		super(bytes, string);
+	protected VisualizadorMetadados(HttpResult result) {
+		super(result.getDetalhes().getBytes(), result.getDetalhes());
 
-		Label label = new Label();
-		label.setIcon(new ImageIcon(bytes));
+		TextEditor textEditor = new TextEditor();
+		textEditor.setText(string);
 
-		add(BorderLayout.WEST, buttonSalvar);
-		add(BorderLayout.CENTER, new ScrollPane(label));
-		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
+		ToolbarPesquisa toolbarPesquisa = new ToolbarPesquisa(textEditor);
+		toolbarPesquisa.add(buttonSalvar);
+		textEditor.setListener(TextEditor.newTextEditorAdapter(toolbarPesquisa::focusInputPesquisar));
+
+		add(BorderLayout.NORTH, toolbarPesquisa);
+		ScrollPane scrollPane2 = new ScrollPane(textEditor);
+		TextEditorLine editorLine = new TextEditorLine(textEditor);
+		textEditor.setFontListener(editorLine);
+		scrollPane2.setRowHeaderView(editorLine);
+
+		Panel panelScroll = new Panel();
+		panelScroll.add(BorderLayout.CENTER, scrollPane2);
+		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+
+		SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 	}
 
 	@Override
 	public String getTitulo() {
-		return "Imagem";
+		return "Metadados";
 	}
 
 	@Override
 	public Icon getIcone() {
-		return Icones.ICON;
+		return Icones.NOVO;
 	}
 }
 
-class VisualizadorConteudo extends Visualizador {
+class VisualizadorTexto extends Visualizador {
 	private static final long serialVersionUID = 1L;
 
-	protected VisualizadorConteudo(byte[] bytes, String string) {
+	protected VisualizadorTexto(byte[] bytes, String string) {
 		super(bytes, string);
 
 		TextEditor textEditor = new TextEditor();
@@ -1562,6 +1507,31 @@ class VisualizadorConteudo extends Visualizador {
 	@Override
 	public Icon getIcone() {
 		return Icones.TEXTO;
+	}
+}
+
+class VisualizadorImagem extends Visualizador {
+	private static final long serialVersionUID = 1L;
+
+	protected VisualizadorImagem(byte[] bytes, String string) {
+		super(bytes, string);
+
+		Label label = new Label();
+		label.setIcon(new ImageIcon(bytes));
+
+		add(BorderLayout.WEST, buttonSalvar);
+		add(BorderLayout.CENTER, new ScrollPane(label));
+		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
+	}
+
+	@Override
+	public String getTitulo() {
+		return "Imagem";
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.ICON;
 	}
 }
 

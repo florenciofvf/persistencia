@@ -26,7 +26,9 @@ import javax.net.ssl.X509TrustManager;
 import br.com.persist.assistencia.Util;
 
 public class HttpUtil {
+	private static final String PUT_CONTENT_TYPE_HEADER_RESPONSE = "putContentTypeHeaderResponse";
 	private static final String HEADER_RESPONSE = "headerResponse";
+	private static final String HEADER_REQUEST = "headerRequest";
 	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
 	private static final String EXCEPTION = "exception";
@@ -103,7 +105,7 @@ public class HttpUtil {
 
 	@SuppressWarnings("unchecked")
 	private static void configHeader(Map<String, Object> param, URLConnection conn) {
-		Map<String, Object> header = (Map<String, Object>) param.get("headerRequest");
+		Map<String, Object> header = (Map<String, Object>) param.get(HEADER_REQUEST);
 		if (header != null) {
 			for (Map.Entry<String, Object> entry : header.entrySet()) {
 				conn.setRequestProperty(entry.getKey(), entry.getValue().toString());
@@ -132,7 +134,7 @@ public class HttpUtil {
 
 	@SuppressWarnings("unchecked")
 	private static void putHeaderResponse(HttpResult result, Map<String, Object> param) {
-		String string = (String) param.get("putContentTypeHeaderResponse");
+		String string = (String) param.get(PUT_CONTENT_TYPE_HEADER_RESPONSE);
 		if (string == null) {
 			return;
 		}
