@@ -90,6 +90,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
@@ -1597,7 +1598,7 @@ class VisualizadorPDF extends Visualizador {
 			Object objeto = klass.newInstance();
 			JComponent comp = (JComponent) objeto;
 			load(klass, objeto, bytes);
-			add(BorderLayout.WEST, buttonSalvar);
+			add(BorderLayout.NORTH, new PanelLeft(buttonSalvar));
 			add(BorderLayout.CENTER, comp);
 			SwingUtilities.invokeLater(() -> comp.scrollRectToVisible(new Rectangle()));
 		} catch (Exception e) {
