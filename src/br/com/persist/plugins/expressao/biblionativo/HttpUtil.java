@@ -10,6 +10,7 @@ import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ public class HttpUtil {
 	private static final String FORCE_CONTENT_TYPE = "forceContentType";
 	private static final String HEADER_RESPONSE = "headerResponse";
 	private static final String HEADER_REQUEST = "headerRequest";
+	private static final String BYTES_RESPONSE = "bytesResponse";
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
@@ -83,9 +85,9 @@ public class HttpUtil {
 			URLConnection conn = url.openConnection();
 			configHeaderRequest(param, conn);
 			conn.connect();
-			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
+			result.getResponse().put(HEADER_RESPONSE, copiar(conn.getHeaderFields()));
 			checkForceContentType(result, param);
-			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
+			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("GET", ex));
 		}
@@ -124,9 +126,9 @@ public class HttpUtil {
 			conn.setDoOutput(true);
 			conn.connect();
 			writer(param, conn);
-			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
+			result.getResponse().put(HEADER_RESPONSE, copiar(conn.getHeaderFields()));
 			checkForceContentType(result, param);
-			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
+			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("POST", ex));
 		}
@@ -178,6 +180,28 @@ public class HttpUtil {
 
 	public static void setChecarTruster(boolean checarTruster) {
 		HttpUtil.checarTruster = checarTruster;
+	}
+
+	private static Map<String, List<String>> copiar(Map<String, List<String>> mapa) {
+		Map<String, List<String>> resp = new LinkedHashMap<>();
+		if (mapa != null) {
+			for (Map.Entry<String, List<String>> entry : mapa.entrySet()) {
+				String chave = entry.getKey();
+				List<String> valor = entry.getValue();
+				resp.put(chave, copy(valor));
+			}
+		}
+		return resp;
+	}
+
+	private static List<String> copy(List<String> lista) {
+		List<String> resp = new ArrayList<>();
+		if (lista != null) {
+			for (String item : lista) {
+				resp.add(item);
+			}
+		}
+		return resp;
 	}
 
 	static {
