@@ -26,9 +26,10 @@ import javax.net.ssl.X509TrustManager;
 import br.com.persist.assistencia.Util;
 
 public class HttpUtil {
-	private static final String SET_CONTENT_TYPE = "setContentType";
+	private static final String FORCE_CONTENT_TYPE = "forceContentType";
 	private static final String HEADER_RESPONSE = "headerResponse";
 	private static final String HEADER_REQUEST = "headerRequest";
+	private static final String CONTENT_TYPE = "Content-Type";
 	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
 	private static final String EXCEPTION = "exception";
@@ -80,10 +81,10 @@ public class HttpUtil {
 		try {
 			URL url = new URL((String) param.get("url"));
 			URLConnection conn = url.openConnection();
-			configHeader(param, conn);
+			configHeaderRequest(param, conn);
 			conn.connect();
 			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
-			setContentType(result, param);
+			checkForceContentType(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("GET", ex));
@@ -104,7 +105,7 @@ public class HttpUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void configHeader(Map<String, Object> param, URLConnection conn) {
+	private static void configHeaderRequest(Map<String, Object> param, URLConnection conn) {
 		Map<String, Object> header = (Map<String, Object>) param.get(HEADER_REQUEST);
 		if (header != null) {
 			for (Map.Entry<String, Object> entry : header.entrySet()) {
@@ -119,12 +120,12 @@ public class HttpUtil {
 		try {
 			URL url = new URL((String) param.get("url"));
 			URLConnection conn = url.openConnection();
-			configHeader(param, conn);
+			configHeaderRequest(param, conn);
 			conn.setDoOutput(true);
 			conn.connect();
 			writer(param, conn);
 			result.getResponse().put(HEADER_RESPONSE, conn.getHeaderFields());
-			setContentType(result, param);
+			checkForceContentType(result, param);
 			result.getResponse().put("bytesResponse", Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("POST", ex));
@@ -133,8 +134,8 @@ public class HttpUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void setContentType(HttpResult result, Map<String, Object> param) {
-		String string = (String) param.get(SET_CONTENT_TYPE);
+	private static void checkForceContentType(HttpResult result, Map<String, Object> param) {
+		String string = (String) param.get(FORCE_CONTENT_TYPE);
 		if (string == null) {
 			return;
 		}
@@ -142,7 +143,9 @@ public class HttpUtil {
 		if (map == null || map.isEmpty()) {
 			map = new LinkedHashMap<>();
 			result.getResponse().put(HEADER_RESPONSE, map);
-			map.put("Content-Type", Arrays.asList(string));
+			map.put(CONTENT_TYPE, Arrays.asList(string));
+		} else {
+			map.put(CONTENT_TYPE, Arrays.asList(string));
 		}
 	}
 
