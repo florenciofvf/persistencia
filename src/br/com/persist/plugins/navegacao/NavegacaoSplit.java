@@ -1572,7 +1572,7 @@ class VisualizadorImagem extends Visualizador {
 		Label label = new Label();
 		label.setIcon(new ImageIcon(bytes));
 
-		add(BorderLayout.WEST, buttonSalvar);
+		add(BorderLayout.NORTH, new PanelLeft(buttonSalvar));
 		add(BorderLayout.CENTER, new ScrollPane(label));
 		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
 	}
