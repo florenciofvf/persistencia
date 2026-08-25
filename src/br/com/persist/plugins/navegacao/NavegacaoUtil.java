@@ -131,7 +131,7 @@ public class NavegacaoUtil {
 		return null;
 	}
 
-	public static String getBase(Object obj) {
+	public static String getProtocoloAndHost(Object obj) {
 		if (obj == null) {
 			return null;
 		}
@@ -147,15 +147,38 @@ public class NavegacaoUtil {
 		return string.substring(0, pos);
 	}
 
-	public static String normalBarra(String base, String complemento) {
-		if (base == null || complemento == null) {
+	public static String getUrl(String protocoloAndHost, String location) {
+		if (protocoloAndHost == null && location == null) {
 			return "";
 		}
-		base = base.trim();
-		complemento = complemento.trim();
-		if (base.endsWith("/") || complemento.startsWith("/")) {
+		if (location != null && (location.startsWith("http://") || location.startsWith("https://"))) {
+			return location;
+		}
+		if (protocoloAndHost != null
+				&& (protocoloAndHost.startsWith("http://") || protocoloAndHost.startsWith("https://"))) {
+			return montarUrl(protocoloAndHost, location);
+		}
+		return "";
+	}
+
+	private static String montarUrl(String protocoloAndHost, String location) {
+		if (location == null) {
+			return protocoloAndHost;
+		}
+		if (protocoloAndHost.endsWith("/")) {
+			return protocoloAndHost + leftTrim(location, '/');
+		}
+		String string = leftTrim(location, '/');
+		return protocoloAndHost + (string.isEmpty() ? "" : "/" + string);
+	}
+
+	private static String leftTrim(String string, char c) {
+		if (string == null) {
 			return "";
 		}
-		return "/";
+		while (string.startsWith("" + c)) {
+			string = string.substring(1);
+		}
+		return string;
 	}
 }

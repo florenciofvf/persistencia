@@ -673,8 +673,9 @@ class Aba extends Transferivel {
 			Map<String, Object> mapaRequest = result.getRequest();
 			String status = NavegacaoUtil.getStatus(mapaResponse);
 			String mimes = NavegacaoUtil.getMimes(mapaResponse);
+			Object url = mapaRequest.get("url");
 
-			Requisicao requisicao = new Requisicao(mapaRequest.get("url"), mimes, status);
+			Requisicao requisicao = new Requisicao(url, mimes, status);
 			tabelaRequisicao.adicionar(requisicao, limpar);
 
 			if (NavegacaoPreferencia.isExibirMetadados()) {
@@ -695,14 +696,13 @@ class Aba extends Transferivel {
 				}
 
 				Cookie.processar(mapaResponse);
-				String location = NavegacaoUtil.getLocation(mapaResponse);
-				processarVisualizadores(requisicao, NavegacaoUtil.getBase(mapaRequest.get("url")), location, mimes,
-						bytes, string);
+				processarVisualizadores(requisicao, NavegacaoUtil.getProtocoloAndHost(url),
+						NavegacaoUtil.getLocation(mapaResponse), mimes, bytes, string);
 			}
 		}
 
-		private void processarVisualizadores(Requisicao requisicao, String base, String location, String mimes,
-				byte[] bytes, String string) {
+		private void processarVisualizadores(Requisicao requisicao, String protocoloAndHost, String location,
+				String mimes, byte[] bytes, String string) {
 			if (mimes.contains("image/")) {
 				requisicao.add(new VisualizadorImagem(bytes, string));
 			}
@@ -718,31 +718,24 @@ class Aba extends Transferivel {
 			if (mimes.contains("text/html") || mimes.contains("text/javascript")) {
 				VisualizadorHTML visualizador = new VisualizadorHTML(bytes, string);
 				visualizador.visualizadorListener = new VisualizadorListenerImpl();
-				visualizador.base = base;
+				visualizador.protocoloAndHost = protocoloAndHost;
 				requisicao.add(visualizador);
 			}
 
 			if (!Util.isEmpty(location)) {
-				String complemento = null;
-				if (location.startsWith("http://") || location.startsWith("https://")) {
-					base = "";
-					complemento = location;
-				} else {
-					complemento = location.startsWith("/") ? location : "/" + location;
-				}
-				new VisualizadorListenerImpl().processarLink(base, complemento);
+				new VisualizadorListenerImpl().processarLink(protocoloAndHost, location);
 			}
 		}
 	}
 
 	private class VisualizadorListenerImpl implements VisualizadorListener {
 		@Override
-		public void processarLink(String base, String complemento) {
+		public void processarLink(String protocoloAndHost, String location) {
 			try {
 				Processador processador = new Processador();
-				String normal = NavegacaoUtil.normalBarra(base, complemento);
+				String url = NavegacaoUtil.getUrl(protocoloAndHost, location);
 				List<Object> resposta = processador.processar("plugin_navegacao.br.com.processarLink.ProcessarLink",
-						"main", base + normal, complemento);
+						"main", url, "");
 				toolbar.setResposta(resposta, false);
 			} catch (ExpressaoException ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
@@ -1455,16 +1448,16 @@ interface IVisualizador {
 }
 
 interface VisualizadorListener {
-	public void processarLink(String base, String complemento);
+	public void processarLink(String protocoloAndHost, String location);
 }
 
 abstract class Visualizador extends Panel implements IVisualizador {
 	protected transient VisualizadorListener visualizadorListener;
 	protected Button buttonSalvar = new Button("label.salvar");
 	private static final long serialVersionUID = 1L;
+	protected String protocoloAndHost;
 	protected final String string;
 	protected final byte[] bytes;
-	protected String base;
 
 	protected Visualizador(byte[] bytes, String string) {
 		this.string = string;
@@ -1658,8 +1651,8 @@ class VisualizadorHTML extends Visualizador {
 					return;
 				}
 				String desc = e.getDescription();
-				if (!Util.isEmpty(base) && !Util.isEmpty(desc) && visualizadorListener != null) {
-					visualizadorListener.processarLink(base, desc);
+				if (!Util.isEmpty(protocoloAndHost) && !Util.isEmpty(desc) && visualizadorListener != null) {
+					visualizadorListener.processarLink(protocoloAndHost, desc);
 				}
 			}
 		}
