@@ -241,7 +241,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int indice = getSelectedIndex();
-			if (indice != -1) {
+			if (indice != -1 && Util.confirmar(Fichario.this, "msg.confirmar_excluir_aba")) {
 				excluirPagina(indice);
 			}
 		}
