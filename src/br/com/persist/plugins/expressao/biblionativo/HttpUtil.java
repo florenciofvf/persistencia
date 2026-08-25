@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.CookieHandler;
 import java.net.CookieManager;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.GeneralSecurityException;
@@ -83,15 +84,24 @@ public class HttpUtil {
 		try {
 			URL url = new URL((String) param.get("url"));
 			URLConnection conn = url.openConnection();
+			configConnectionRedirects(conn);
 			configHeaderRequest(param, conn);
 			conn.connect();
-			result.getResponse().put(HEADER_RESPONSE, copiar(conn.getHeaderFields()));
-			checkForceContentType(result, param);
+			String forceContentType = getForceContentType(param);
+			result.getResponse().put(HEADER_RESPONSE,
+					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
+			checkForceContentType(result, forceContentType);
 			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("GET", ex));
 		}
 		return result;
+	}
+
+	private static void configConnectionRedirects(URLConnection conn) {
+		if (conn instanceof HttpURLConnection) {
+			((HttpURLConnection) conn).setInstanceFollowRedirects(false);
+		}
 	}
 
 	public static boolean responseException(HttpResult result) {
@@ -126,8 +136,10 @@ public class HttpUtil {
 			conn.setDoOutput(true);
 			conn.connect();
 			writer(param, conn);
-			result.getResponse().put(HEADER_RESPONSE, copiar(conn.getHeaderFields()));
-			checkForceContentType(result, param);
+			String forceContentType = getForceContentType(param);
+			result.getResponse().put(HEADER_RESPONSE,
+					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
+			checkForceContentType(result, forceContentType);
 			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("POST", ex));
@@ -135,19 +147,22 @@ public class HttpUtil {
 		return result;
 	}
 
+	private static String getForceContentType(Map<String, Object> param) {
+		return (String) param.get(FORCE_CONTENT_TYPE);
+	}
+
 	@SuppressWarnings("unchecked")
-	private static void checkForceContentType(HttpResult result, Map<String, Object> param) {
-		String string = (String) param.get(FORCE_CONTENT_TYPE);
-		if (string == null) {
+	private static void checkForceContentType(HttpResult result, String forceContentType) {
+		if (forceContentType == null) {
 			return;
 		}
 		Map<String, List<String>> map = (Map<String, List<String>>) result.getResponse().get(HEADER_RESPONSE);
 		if (map == null || map.isEmpty()) {
 			map = new LinkedHashMap<>();
 			result.getResponse().put(HEADER_RESPONSE, map);
-			map.put(CONTENT_TYPE, Arrays.asList(string));
+			map.put(CONTENT_TYPE, Arrays.asList(forceContentType));
 		} else {
-			map.put(CONTENT_TYPE, Arrays.asList(string));
+			map.put(CONTENT_TYPE, Arrays.asList(forceContentType));
 		}
 	}
 
@@ -182,7 +197,10 @@ public class HttpUtil {
 		HttpUtil.checarTruster = checarTruster;
 	}
 
-	private static Map<String, List<String>> copiar(Map<String, List<String>> mapa) {
+	private static Map<String, List<String>> getHeaderFields(Map<String, List<String>> mapa, boolean copiar) {
+		if (!copiar) {
+			return mapa;
+		}
 		Map<String, List<String>> resp = new LinkedHashMap<>();
 		if (mapa != null) {
 			for (Map.Entry<String, List<String>> entry : mapa.entrySet()) {
