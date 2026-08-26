@@ -91,6 +91,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelLeft;
+import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
@@ -762,6 +763,7 @@ class Aba extends Transferivel {
 	}
 
 	private class TabelaRequisicao extends JTable {
+		private final PopupTabela popupTabela = new PopupTabela();
 		private RequisicaoModelo modelo = new RequisicaoModelo();
 		private static final long serialVersionUID = 1L;
 
@@ -774,7 +776,49 @@ class Aba extends Transferivel {
 			modelo.add(requisicao, limpar);
 		}
 
+		private class PopupTabela extends Popup {
+			private Action excluirSelecionados = acaoMenu("label.excluir_selecionados");
+			private Action excluirTodos = acaoMenu("label.excluir_todos");
+			private static final long serialVersionUID = 1L;
+
+			private PopupTabela() {
+				addMenuItem(excluirSelecionados);
+				addMenuItem(excluirTodos);
+				excluirSelecionados.setActionListener(e -> excluirSelecionados());
+				excluirTodos.setActionListener(e -> modelo.limpar());
+			}
+
+			private void excluirSelecionados() {
+				int[] linhas = getSelectedRows();
+				if (linhas != null) {
+					List<Requisicao> lista = new ArrayList<>();
+					for (int item : linhas) {
+						lista.add(modelo.getItem(item));
+					}
+					for (Requisicao item : lista) {
+						modelo.excluirItem(item);
+					}
+				}
+			}
+		}
+
 		private transient MouseListener mouseListenerInner = new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				processar(e);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				processar(e);
+			}
+
+			private void processar(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					popupTabela.show(TabelaRequisicao.this, e.getX(), e.getY());
+				}
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int linhaClicada = rowAtPoint(e.getPoint());
@@ -784,6 +828,10 @@ class Aba extends Transferivel {
 				}
 			}
 		};
+	}
+
+	static Action acaoMenu(String chave) {
+		return Action.acaoMenu(NavegacaoMensagens.getString(chave), null);
 	}
 
 	private class Requisicao extends Panel {
@@ -840,6 +888,21 @@ class Aba extends Transferivel {
 				requisicoes.add(item);
 				fireTableDataChanged();
 			}
+		}
+
+		void excluirItem(Requisicao item) {
+			for (int i = 0; i < requisicoes.size(); i++) {
+				if (requisicoes.get(i) == item) {
+					requisicoes.remove(i);
+					fireTableDataChanged();
+					break;
+				}
+			}
+		}
+
+		void limpar() {
+			requisicoes.clear();
+			fireTableDataChanged();
 		}
 
 		@Override
