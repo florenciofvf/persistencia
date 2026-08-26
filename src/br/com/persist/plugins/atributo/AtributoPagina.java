@@ -2142,6 +2142,7 @@ class PainelTest3 extends AbstratoTest {
 		toolbar.add(txtNomeClasse);
 		Action newObjetoAcao = Action.acaoMenu(AtributoMensagens.getString("label.novo_objeto"), Icones.CRIAR);
 		txtNomeClasse.setToolTipText(AtributoMensagens.getString("label.test3_tooltip_txt_nome_classe"));
+		txtNomeClasse.addActionListener(e -> novoObjeto());
 		newObjetoAcao.setActionListener(e -> novoObjeto());
 		toolbar.add(chkSetText);
 		toolbar.addButton(newObjetoAcao);
@@ -2150,6 +2151,7 @@ class PainelTest3 extends AbstratoTest {
 	private void novoObjeto() {
 		if (Util.isEmpty(txtNomeClasse.getText())) {
 			Util.mensagem(PainelTest3.this, AtributoMensagens.getString("label.nome_classe"));
+			txtNomeClasse.requestFocus();
 			return;
 		}
 		gerarFragmento(txtNomeClasse.getText().trim());
