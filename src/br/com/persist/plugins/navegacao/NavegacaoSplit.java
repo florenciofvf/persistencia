@@ -256,7 +256,7 @@ class NavegacaoSplit extends SplitPane {
 		@Override
 		public void excluirArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-			if (arquivo != null && Util.confirmar(NavegacaoSplit.this, "msg.confirma_exclusao")) {
+			if (arquivo != null && Util.confirmar(NavegacaoSplit.this, NavegacaoConstantes.MSG_CONFIRMA_EXCLUSAO)) {
 				arquivo.excluir();
 				excluir(arquivoTree, arquivo);
 			}
@@ -794,7 +794,8 @@ class Aba extends Transferivel {
 
 			private void excluirSelecionados() {
 				int[] linhas = getSelectedRows();
-				if (linhas != null) {
+				if (linhas != null
+						&& Util.confirmar(TabelaRequisicao.this, NavegacaoConstantes.MSG_CONFIRMA_EXCLUSAO)) {
 					List<Requisicao> lista = new ArrayList<>();
 					for (int item : linhas) {
 						lista.add(modelo.getItem(item));
@@ -809,8 +810,10 @@ class Aba extends Transferivel {
 			}
 
 			private void excluirTodos() {
-				modelo.limpar();
-				containerRequisicao.ficharioRequisicao.limpar();
+				if (Util.confirmar(TabelaRequisicao.this, NavegacaoConstantes.MSG_CONFIRMA_EXCLUSAO)) {
+					modelo.limpar();
+					containerRequisicao.ficharioRequisicao.limpar();
+				}
 			}
 		}
 
