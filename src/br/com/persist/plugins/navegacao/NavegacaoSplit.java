@@ -754,11 +754,15 @@ class Aba extends Transferivel {
 
 		private void setRequisicao(Requisicao requisicao) {
 			if (requisicao != null) {
-				removeAll();
+				limpar();
 				for (Visualizador item : requisicao.getVisualizadores()) {
 					addTab(item.getTitulo(), item.getIcone(), item);
 				}
 			}
+		}
+
+		private void limpar() {
+			removeAll();
 		}
 	}
 
@@ -785,7 +789,7 @@ class Aba extends Transferivel {
 				addMenuItem(excluirSelecionados);
 				addMenuItem(excluirTodos);
 				excluirSelecionados.setActionListener(e -> excluirSelecionados());
-				excluirTodos.setActionListener(e -> modelo.limpar());
+				excluirTodos.setActionListener(e -> excluirTodos());
 			}
 
 			private void excluirSelecionados() {
@@ -798,7 +802,15 @@ class Aba extends Transferivel {
 					for (Requisicao item : lista) {
 						modelo.excluirItem(item);
 					}
+					if (modelo.isEmpty()) {
+						containerRequisicao.ficharioRequisicao.limpar();
+					}
 				}
+			}
+
+			private void excluirTodos() {
+				modelo.limpar();
+				containerRequisicao.ficharioRequisicao.limpar();
 			}
 		}
 
@@ -903,6 +915,10 @@ class Aba extends Transferivel {
 		void limpar() {
 			requisicoes.clear();
 			fireTableDataChanged();
+		}
+
+		boolean isEmpty() {
+			return requisicoes.isEmpty();
 		}
 
 		@Override
