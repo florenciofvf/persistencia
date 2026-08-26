@@ -746,6 +746,7 @@ class Aba extends Transferivel {
 
 	private class FicharioRequisicao extends JTabbedPane {
 		private static final long serialVersionUID = 1L;
+		private Requisicao selecionado;
 
 		private FicharioRequisicao() {
 			setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -755,9 +756,17 @@ class Aba extends Transferivel {
 		private void setRequisicao(Requisicao requisicao) {
 			if (requisicao != null) {
 				limpar();
+				selecionado = requisicao;
 				for (Visualizador item : requisicao.getVisualizadores()) {
 					addTab(item.getTitulo(), item.getIcone(), item);
 				}
+			}
+		}
+
+		private void excluido(Requisicao requisicao) {
+			if (requisicao != null && requisicao == selecionado) {
+				selecionado = null;
+				limpar();
 			}
 		}
 
@@ -784,6 +793,7 @@ class Aba extends Transferivel {
 			private Action excluirSelecionados = acaoMenu("label.excluir_selecionados");
 			private Action excluirTodos = acaoMenu("label.excluir_todos");
 			private static final long serialVersionUID = 1L;
+			private int[] selecionados;
 
 			private PopupTabela() {
 				addMenuItem(excluirSelecionados);
@@ -792,16 +802,24 @@ class Aba extends Transferivel {
 				excluirTodos.setActionListener(e -> excluirTodos());
 			}
 
+			private void preShow(int total, int[] sel) {
+				excluirSelecionados.setEnabled(sel != null && sel.length > 0);
+				excluirTodos.setEnabled(total > 0);
+				selecionados = sel;
+			}
+
 			private void excluirSelecionados() {
-				int[] linhas = getSelectedRows();
-				if (linhas != null
-						&& Util.confirmar(TabelaRequisicao.this, NavegacaoConstantes.MSG_CONFIRMA_EXCLUSAO)) {
+				if (selecionados == null || selecionados.length == 0) {
+					return;
+				}
+				if (Util.confirmar(TabelaRequisicao.this, NavegacaoConstantes.MSG_CONFIRMA_EXCLUSAO)) {
 					List<Requisicao> lista = new ArrayList<>();
-					for (int item : linhas) {
+					for (int item : selecionados) {
 						lista.add(modelo.getItem(item));
 					}
 					for (Requisicao item : lista) {
 						modelo.excluirItem(item);
+						containerRequisicao.ficharioRequisicao.excluido(item);
 					}
 					if (modelo.isEmpty()) {
 						containerRequisicao.ficharioRequisicao.limpar();
@@ -810,6 +828,9 @@ class Aba extends Transferivel {
 			}
 
 			private void excluirTodos() {
+				if (modelo.isEmpty()) {
+					return;
+				}
 				if (Util.confirmar(TabelaRequisicao.this, NavegacaoConstantes.MSG_CONFIRMA_EXCLUSAO)) {
 					modelo.limpar();
 					containerRequisicao.ficharioRequisicao.limpar();
@@ -830,6 +851,7 @@ class Aba extends Transferivel {
 
 			private void processar(MouseEvent e) {
 				if (e.isPopupTrigger()) {
+					popupTabela.preShow(modelo.getRowCount(), getSelectedRows());
 					popupTabela.show(TabelaRequisicao.this, e.getX(), e.getY());
 				}
 			}
