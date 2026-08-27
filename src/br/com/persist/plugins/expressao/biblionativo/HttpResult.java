@@ -1,14 +1,28 @@
 package br.com.persist.plugins.expressao.biblionativo;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
 public class HttpResult {
-	private Map<String, Object> request;
 	private Map<String, Object> response;
+	private Map<String, Object> request;
+	private List<Object> cookies;
+
+	public List<Object> getCookies() {
+		if (cookies == null) {
+			cookies = new ArrayList<>();
+		}
+		return cookies;
+	}
+
+	public void setCookies(List<Object> cookies) {
+		this.cookies = cookies;
+	}
 
 	public Map<String, Object> getRequest() {
 		if (request == null) {

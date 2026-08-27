@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.CookieHandler;
 import java.net.CookieManager;
+import java.net.CookieStore;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.GeneralSecurityException;
@@ -33,6 +36,7 @@ public class HttpUtil {
 	private static final String HEADER_REQUEST = "headerRequest";
 	private static final String BYTES_RESPONSE = "bytesResponse";
 	private static final String CONTENT_TYPE = "Content-Type";
+	private static final String CLEAR_COOKIE = "clearCookie";
 	private static SSLSocketFactory defaultSSLSocketFactory;
 	protected static final Logger LOG = Logger.getGlobal();
 	private static final String EXCEPTION = "exception";
@@ -88,14 +92,25 @@ public class HttpUtil {
 			configHeaderRequest(param, conn);
 			conn.connect();
 			String forceContentType = getForceContentType(param);
+			String clearCookie = getClearCookie(param);
 			result.getResponse().put(HEADER_RESPONSE,
 					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
 			checkForceContentType(result, forceContentType);
+			checkClearCookie(clearCookie);
 			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
+			configCookies(url, result);
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("GET", ex));
 		}
 		return result;
+	}
+
+	private static void configCookies(URL url, HttpResult result) throws URISyntaxException {
+		CookieStore cookieStore = cookieManager.getCookieStore();
+		List<HttpCookie> list = cookieStore.get(url.toURI());
+		for (HttpCookie item : list) {
+			result.getCookies().add(item);
+		}
 	}
 
 	private static void configConnectionRedirects(URLConnection conn) {
@@ -137,10 +152,13 @@ public class HttpUtil {
 			conn.connect();
 			writer(param, conn);
 			String forceContentType = getForceContentType(param);
+			String clearCookie = getClearCookie(param);
 			result.getResponse().put(HEADER_RESPONSE,
 					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
 			checkForceContentType(result, forceContentType);
+			checkClearCookie(clearCookie);
 			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
+			configCookies(url, result);
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("POST", ex));
 		}
@@ -149,6 +167,10 @@ public class HttpUtil {
 
 	private static String getForceContentType(Map<String, Object> param) {
 		return (String) param.get(FORCE_CONTENT_TYPE);
+	}
+
+	private static String getClearCookie(Map<String, Object> param) {
+		return (String) param.get(CLEAR_COOKIE);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -163,6 +185,13 @@ public class HttpUtil {
 			map.put(CONTENT_TYPE, Arrays.asList(forceContentType));
 		} else {
 			map.put(CONTENT_TYPE, Arrays.asList(forceContentType));
+		}
+	}
+
+	private static void checkClearCookie(String clearCookie) {
+		if (clearCookie != null) {
+			CookieStore cookieStore = cookieManager.getCookieStore();
+			cookieStore.removeAll();
 		}
 	}
 
