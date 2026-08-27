@@ -85,6 +85,11 @@ public class HttpUtil {
 	public static HttpResult get(Map<String, Object> param) {
 		HttpResult result = new HttpResult();
 		result.setRequest(param);
+		String clearCookie = getClearCookie(param);
+		if ("true".equals(clearCookie)) {
+			removeAllCookie();
+			return result;
+		}
 		try {
 			URL url = new URL((String) param.get("url"));
 			URLConnection conn = url.openConnection();
@@ -92,11 +97,9 @@ public class HttpUtil {
 			configHeaderRequest(param, conn);
 			conn.connect();
 			String forceContentType = getForceContentType(param);
-			String clearCookie = getClearCookie(param);
 			result.getResponse().put(HEADER_RESPONSE,
 					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
 			checkForceContentType(result, forceContentType);
-			checkClearCookie(clearCookie);
 			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
 			configCookies(url, result);
 		} catch (Exception ex) {
@@ -144,6 +147,11 @@ public class HttpUtil {
 	public static HttpResult post(Map<String, Object> param) {
 		HttpResult result = new HttpResult();
 		result.setRequest(param);
+		String clearCookie = getClearCookie(param);
+		if ("true".equals(clearCookie)) {
+			removeAllCookie();
+			return result;
+		}
 		try {
 			URL url = new URL((String) param.get("url"));
 			URLConnection conn = url.openConnection();
@@ -152,11 +160,9 @@ public class HttpUtil {
 			conn.connect();
 			writer(param, conn);
 			String forceContentType = getForceContentType(param);
-			String clearCookie = getClearCookie(param);
 			result.getResponse().put(HEADER_RESPONSE,
 					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
 			checkForceContentType(result, forceContentType);
-			checkClearCookie(clearCookie);
 			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
 			configCookies(url, result);
 		} catch (Exception ex) {
@@ -188,11 +194,9 @@ public class HttpUtil {
 		}
 	}
 
-	private static void checkClearCookie(String clearCookie) {
-		if (clearCookie != null) {
-			CookieStore cookieStore = cookieManager.getCookieStore();
-			cookieStore.removeAll();
-		}
+	private static void removeAllCookie() {
+		CookieStore cookieStore = cookieManager.getCookieStore();
+		cookieStore.removeAll();
 	}
 
 	@SuppressWarnings("unchecked")

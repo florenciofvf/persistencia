@@ -51,6 +51,8 @@ public class HttpResult {
 		HttpResult.detalhar("Request", builder, getRequest());
 		builder.append(Constantes.QL2);
 		HttpResult.detalhar("Response", builder, getResponse());
+		builder.append(Constantes.QL2);
+		HttpResult.detalhar("Cookie", builder, getCookies());
 		return builder.toString();
 	}
 
@@ -73,6 +75,23 @@ public class HttpResult {
 				append(tab + 1, builder, (Map<String, Object>) valor);
 			} else {
 				builder.append(Util.completar("", tab, '\t') + chave + ": " + valor + Constantes.QL);
+			}
+		}
+	}
+
+	public static void detalhar(String titulo, StringBuilder builder, List<Object> lista) {
+		if (titulo == null || builder == null || lista == null) {
+			return;
+		}
+		builder.append(titulo + Constantes.QL);
+		builder.append(Util.completar("", titulo.length(), '-') + Constantes.QL);
+		append(0, builder, lista);
+	}
+
+	private static void append(int tab, StringBuilder builder, List<Object> lista) {
+		for (Object item : lista) {
+			if (item != null) {
+				builder.append(Util.completar("", tab, '\t') + item.toString() + Constantes.QL);
 			}
 		}
 	}
