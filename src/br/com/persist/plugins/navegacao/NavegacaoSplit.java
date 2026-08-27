@@ -696,7 +696,8 @@ class Aba extends Transferivel {
 					requisicao.add(new VisualizadorTexto(bytes, string));
 				}
 
-				Cookie.processar(mapaResponse);
+				Cookie.processar(mapaResponse, result.getCookies());
+
 				processarVisualizadores(requisicao, NavegacaoUtil.getProtocoloAndHost(url),
 						NavegacaoUtil.getLocation(mapaResponse), mimes, bytes, string);
 			}
@@ -1459,8 +1460,11 @@ class Cookie {
 	private Cookie() {
 	}
 
-	static void processar(Map<String, Object> mapa) {
+	static void processar(Map<String, Object> mapa, List<Object> lista) {
 		String valor = NavegacaoUtil.getCookie(mapa);
+		if (Util.isEmpty(valor)) {
+			valor = NavegacaoUtil.getCookie(lista);
+		}
 		if (Util.isEmpty(valor)) {
 			return;
 		}

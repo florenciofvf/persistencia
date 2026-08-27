@@ -1,5 +1,6 @@
 package br.com.persist.plugins.navegacao;
 
+import java.net.HttpCookie;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,21 @@ public class NavegacaoUtil {
 			list = header.get("SET-COOKIE");
 		}
 		return getStringOuNull(list);
+	}
+
+	public static String getCookie(List<Object> lista) {
+		StringBuilder builder = new StringBuilder();
+		if (lista != null) {
+			for (Object item : lista) {
+				if (item instanceof HttpCookie) {
+					if (builder.length() > 0) {
+						builder.append(", ");
+					}
+					builder.append(item.toString());
+				}
+			}
+		}
+		return builder.toString();
 	}
 
 	@SuppressWarnings("unchecked")
