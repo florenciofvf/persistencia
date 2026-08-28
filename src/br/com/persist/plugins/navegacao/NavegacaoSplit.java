@@ -1689,6 +1689,7 @@ class VisualizadorImagem extends Visualizador {
 		add(BorderLayout.NORTH, criarPanelControles());
 		add(BorderLayout.CENTER, new ScrollPane(labelImagem));
 
+		fieldZoom.setToolTipText(NavegacaoMensagens.getString("label.aplica_zoom_imagem"));
 		fieldZoom.addActionListener(e -> aplicar());
 		fieldZoom.ignorarEspaco();
 		aplicar();
