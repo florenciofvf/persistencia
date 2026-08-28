@@ -1670,13 +1670,11 @@ class VisualizadorTexto extends Visualizador {
 
 class VisualizadorImagem extends Visualizador {
 	private final TextField fieldZoom = new TextField("0.1");
-	private final transient ByteArrayInputStream bais;
 	private static final long serialVersionUID = 1L;
 	private final Label labelImagem = new Label();
 
 	protected VisualizadorImagem(byte[] bytes, String string) {
 		super(bytes, string);
-		bais = new ByteArrayInputStream(bytes);
 
 		add(BorderLayout.NORTH, criarPanelControles());
 		add(BorderLayout.CENTER, new ScrollPane(labelImagem));
@@ -1716,7 +1714,7 @@ class VisualizadorImagem extends Visualizador {
 
 	private BufferedImage getOriginal() {
 		try {
-			return ImageIO.read(bais);
+			return ImageIO.read(new ByteArrayInputStream(bytes));
 		} catch (Exception ex) {
 			return new BufferedImage(1, 1, 1);
 		}
