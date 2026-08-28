@@ -22,6 +22,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +47,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -1665,17 +1669,65 @@ class VisualizadorTexto extends Visualizador {
 }
 
 class VisualizadorImagem extends Visualizador {
+	private final TextField fieldZoom = new TextField("0.1");
+	private final transient ByteArrayInputStream bais;
 	private static final long serialVersionUID = 1L;
+	private final Label labelImagem = new Label();
 
 	protected VisualizadorImagem(byte[] bytes, String string) {
 		super(bytes, string);
+		bais = new ByteArrayInputStream(bytes);
 
-		Label label = new Label();
-		label.setIcon(new ImageIcon(bytes));
+		add(BorderLayout.NORTH, criarPanelControles());
+		add(BorderLayout.CENTER, new ScrollPane(labelImagem));
 
-		add(BorderLayout.NORTH, new PanelLeft(buttonSalvar));
-		add(BorderLayout.CENTER, new ScrollPane(label));
-		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
+		fieldZoom.addActionListener(e -> aplicar());
+		fieldZoom.ignorarEspaco();
+		aplicar();
+	}
+
+	private Panel criarPanelControles() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.WEST, buttonSalvar);
+		panel.add(BorderLayout.EAST, fieldZoom);
+		return panel;
+	}
+
+	private void aplicar() {
+		BufferedImage buffered = criarBuffered();
+		labelImagem.setIcon(new ImageIcon(buffered));
+	}
+
+	private BufferedImage criarBuffered() {
+		BufferedImage original = getOriginal();
+
+		double zoom = getZoom();
+		int largura = (int) (original.getWidth() * zoom);
+		int altura = (int) (original.getHeight() * zoom);
+
+		AffineTransform transform = new AffineTransform();
+		transform.scale(zoom, zoom);
+
+		AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+		BufferedImage bufferedImage = new BufferedImage(largura, altura, original.getType());
+
+		return transformOp.filter(original, bufferedImage);
+	}
+
+	private BufferedImage getOriginal() {
+		try {
+			return ImageIO.read(bais);
+		} catch (Exception ex) {
+			return new BufferedImage(1, 1, 1);
+		}
+	}
+
+	private double getZoom() {
+		try {
+			return Double.parseDouble(fieldZoom.getText());
+		} catch (Exception ex) {
+			return 0.1;
+		}
 	}
 
 	@Override
