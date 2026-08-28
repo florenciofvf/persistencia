@@ -696,14 +696,24 @@ class Aba extends Transferivel {
 				byte[] bytes = (byte[]) conteudo;
 				String string = new String(bytes);
 
-				if (NavegacaoPreferencia.isExibirConteudoPlano()) {
-					requisicao.add(new VisualizadorTexto(bytes, string));
-				}
-
+				processarConteudoPlano(requisicao, mimes, bytes, string);
 				Cookie.processar(mapaResponse, result.getCookies());
-
 				processarVisualizadores(requisicao, NavegacaoUtil.getProtocoloAndHost(url),
 						NavegacaoUtil.getLocation(mapaResponse), mimes, bytes, string);
+			}
+		}
+
+		private void processarConteudoPlano(Requisicao requisicao, String mimes, byte[] bytes, String string) {
+			if (NavegacaoPreferencia.isExibirConteudoPlano()) {
+				boolean confirmado = true;
+				if (mimes.contains("image/")) {
+					String aba = NavegacaoMensagens.getString("label.conteudo");
+					String mensagem = NavegacaoMensagens.getString("msg.confirmar_exibir_conteudo_plano", aba, mimes);
+					confirmado = Util.confirmar(Aba.this, mensagem, false);
+				}
+				if (confirmado) {
+					requisicao.add(new VisualizadorTexto(bytes, string));
+				}
 			}
 		}
 
