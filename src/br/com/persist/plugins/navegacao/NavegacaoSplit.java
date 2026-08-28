@@ -1721,10 +1721,15 @@ class VisualizadorImagem extends Visualizador {
 	}
 
 	private double getZoom() {
+		double minimo = 0.1;
 		try {
-			return Double.parseDouble(fieldZoom.getText());
+			double d = Double.parseDouble(fieldZoom.getText());
+			if (d < minimo) {
+				return minimo;
+			}
+			return d;
 		} catch (Exception ex) {
-			return 0.1;
+			return minimo;
 		}
 	}
 
