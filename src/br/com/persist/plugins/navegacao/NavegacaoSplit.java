@@ -399,6 +399,7 @@ class Editor extends TextEditor {
 	transient BibliotecaContexto bibliotecaContexto;
 	transient javax.swing.Action compilarAction;
 	transient javax.swing.Action executarAction;
+	transient javax.swing.Action execTudoAction;
 	transient CacheBiblioteca cacheBiblioteca;
 	private Point point;
 
@@ -407,6 +408,8 @@ class Editor extends TextEditor {
 		getActionMap().put("compilar", actionCompilar);
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_E), "executar");
 		getActionMap().put("executar", actionExecutar);
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_T), "execTudo");
+		getActionMap().put("execTudo", actionExecTudo);
 		addFocusListener(focusListenerInner);
 		addKeyListener(keyListenerInner);
 	}
@@ -429,6 +432,17 @@ class Editor extends TextEditor {
 		public void actionPerformed(ActionEvent e) {
 			if (executarAction != null) {
 				executarAction.actionPerformed(e);
+			}
+		}
+	};
+
+	private transient javax.swing.Action actionExecTudo = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (execTudoAction != null) {
+				execTudoAction.actionPerformed(e);
 			}
 		}
 	};
@@ -611,6 +625,7 @@ class Aba extends Transferivel {
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
 		editor.compilarAction = new CompilarAction();
 		editor.executarAction = new ExecutarAction();
+		editor.execTudoAction = new ExecTudoAction();
 		editor.cacheBiblioteca = cacheBiblioteca;
 	}
 
@@ -629,6 +644,15 @@ class Aba extends Transferivel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			toolbar.executar();
+		}
+	}
+
+	private class ExecTudoAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			toolbar.execTudo();
 		}
 	}
 

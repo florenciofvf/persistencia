@@ -51,7 +51,7 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		muro.camada(Muro.panelGrid(chkExibirConteudoPlano));
 		muro.camada(Muro.panelGrid(chkExibirMetadados));
-		muro.camada(getPanelAtalhos(60));
+		muro.camada(getPanelAtalhos(80));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -127,9 +127,11 @@ public class NavegacaoConfiguracao extends AbstratoConfiguracao {
 
 	@Override
 	protected List<Atalho> getAtalhos() {
+		final String local = "Editor";
 		List<Atalho> atalhos = new ArrayList<>();
-		atalhos.add(Atalho.ctrl('P', NavegacaoMensagens.getString("label.compilar"), "Editor"));
-		atalhos.add(Atalho.ctrl('E', NavegacaoMensagens.getString("label.executar"), "Editor"));
+		atalhos.add(Atalho.ctrl('P', NavegacaoMensagens.getString("label.compilar"), local));
+		atalhos.add(Atalho.ctrl('E', NavegacaoMensagens.getString("label.executar"), local));
+		atalhos.add(Atalho.ctrl('T', NavegacaoMensagens.getString("label.exec_tudo"), local));
 		return atalhos;
 	}
 }
