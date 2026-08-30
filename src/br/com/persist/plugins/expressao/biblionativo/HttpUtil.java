@@ -1,6 +1,7 @@
 package br.com.persist.plugins.expressao.biblionativo;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -82,6 +83,12 @@ public class HttpUtil {
 		}
 	}
 
+	private static byte[] getArrayBytes(InputStream is) throws IOException {
+		byte[] bytes = Util.getArrayBytes(is);
+		is.close();
+		return bytes;
+	}
+
 	public static HttpResult get(Map<String, Object> param) {
 		HttpResult result = new HttpResult();
 		result.setRequest(param);
@@ -100,7 +107,7 @@ public class HttpUtil {
 			result.getResponse().put(HEADER_RESPONSE,
 					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
 			checkForceContentType(result, forceContentType);
-			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
+			result.getResponse().put(BYTES_RESPONSE, getArrayBytes(conn.getInputStream()));
 			configCookies(url, result);
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("GET", ex));
@@ -163,7 +170,7 @@ public class HttpUtil {
 			result.getResponse().put(HEADER_RESPONSE,
 					getHeaderFields(conn.getHeaderFields(), forceContentType != null));
 			checkForceContentType(result, forceContentType);
-			result.getResponse().put(BYTES_RESPONSE, Util.getArrayBytes(conn.getInputStream()));
+			result.getResponse().put(BYTES_RESPONSE, getArrayBytes(conn.getInputStream()));
 			configCookies(url, result);
 		} catch (Exception ex) {
 			result.getResponse().put(EXCEPTION, Util.getStackTrace("POST", ex));
