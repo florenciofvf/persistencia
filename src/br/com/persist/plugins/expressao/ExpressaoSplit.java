@@ -343,6 +343,7 @@ class Editor extends TextEditor {
 	transient BibliotecaContexto bibliotecaContexto;
 	transient javax.swing.Action compilarAction;
 	transient javax.swing.Action executarAction;
+	transient javax.swing.Action execTudoAction;
 	transient CacheBiblioteca cacheBiblioteca;
 	private Point point;
 
@@ -351,6 +352,8 @@ class Editor extends TextEditor {
 		getActionMap().put("compilar", actionCompilar);
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_E), "executar");
 		getActionMap().put("executar", actionExecutar);
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_T), "execTudo");
+		getActionMap().put("execTudo", actionExecTudo);
 		addFocusListener(focusListenerInner);
 		addKeyListener(keyListenerInner);
 	}
@@ -373,6 +376,17 @@ class Editor extends TextEditor {
 		public void actionPerformed(ActionEvent e) {
 			if (executarAction != null) {
 				executarAction.actionPerformed(e);
+			}
+		}
+	};
+
+	private transient javax.swing.Action actionExecTudo = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (execTudoAction != null) {
+				execTudoAction.actionPerformed(e);
 			}
 		}
 	};
@@ -576,6 +590,7 @@ class Aba extends Transferivel {
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
 		editor.compilarAction = new CompilarAction();
 		editor.executarAction = new ExecutarAction();
+		editor.execTudoAction = new ExecTudoAction();
 		editor.cacheBiblioteca = cacheBiblioteca;
 	}
 
@@ -594,6 +609,15 @@ class Aba extends Transferivel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			toolbar.executar();
+		}
+	}
+
+	private class ExecTudoAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			toolbar.execTudo();
 		}
 	}
 
@@ -669,6 +693,7 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action execTudoAcao = acaoIcon("label.exec_tudo", Icones.SINCRONIZAR);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private static final long serialVersionUID = 1L;
@@ -679,9 +704,11 @@ class Aba extends Transferivel {
 			atualizarAcao.text(ExpressaoMensagens.getString("label.compilar_arquivo"));
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
+			execTudoAcao.setActionListener(e -> execTudo());
 			txtPesquisa.addActionListener(this);
 			addButton(compiladoAcao);
 			addButton(executarAcao);
+			addButton(execTudoAcao);
 			add(labelTempAvulso);
 			add(txtPesquisa);
 			add(label);
@@ -722,31 +749,54 @@ class Aba extends Transferivel {
 			}
 		}
 
+		private void execTudo() {
+			try {
+				ArquivoUtil.salvar(editor, arquivo.getFile());
+				labelTempAvulso.mensagemChave("msg.salvo");
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				return;
+			}
+
+			try {
+				compilar();
+			} catch (IOException | ExpressaoException ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				return;
+			}
+
+			executar();
+		}
+
 		@Override
 		protected void atualizar() {
 			try {
-				Compilacao compilacao = new Compilacao();
-				boolean colorir = false;
-				if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
-					biblio = compilacao.compilar(criarArquivo(editor.getText()));
-				} else {
-					biblio = compilacao.compilar(arquivo.getFile());
-					colorir = true;
-				}
-				boolean resp = biblio != null;
-				editor.bibliotecaContexto = biblio;
-				String alertas = compilacao.getStringAlerta();
-				if (resp && alertas.isEmpty()) {
-					labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.compilado"));
-				} else {
-					painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado") + alertas
-							: ExpressaoMensagens.getString("msg.nao_compilado"));
-				}
-				if (resp && colorir) {
-					ExpressaoCor.processar(editor.getStyledDocument(), compilacao.getTokens());
-				}
+				compilar();
 			} catch (IOException | ExpressaoException ex) {
 				painelResultado.setText(Util.getStackTrace(ExpressaoConstantes.PAINEL_EXPRESSAO, ex));
+			}
+		}
+
+		private void compilar() throws IOException, ExpressaoException {
+			Compilacao compilacao = new Compilacao();
+			boolean colorir = false;
+			if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
+				biblio = compilacao.compilar(criarArquivo(editor.getText()));
+			} else {
+				biblio = compilacao.compilar(arquivo.getFile());
+				colorir = true;
+			}
+			boolean resp = biblio != null;
+			editor.bibliotecaContexto = biblio;
+			String alertas = compilacao.getStringAlerta();
+			if (resp && alertas.isEmpty()) {
+				labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.compilado"));
+			} else {
+				painelResultado.setText(resp ? ExpressaoMensagens.getString("msg.compilado") + alertas
+						: ExpressaoMensagens.getString("msg.nao_compilado"));
+			}
+			if (resp && colorir) {
+				ExpressaoCor.processar(editor.getStyledDocument(), compilacao.getTokens());
 			}
 		}
 
