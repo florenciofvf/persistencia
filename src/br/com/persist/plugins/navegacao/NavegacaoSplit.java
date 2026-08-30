@@ -1059,6 +1059,7 @@ class Aba extends Transferivel {
 	private class Toolbar extends BarraButton implements ActionListener {
 		private Action executarAnterioresAcao = acaoIcon("label.executar_anteriores", Icones.EXECUTAR);
 		private Action vAccessTokenAcao = acaoMenu("label.atualizar_access_token_var");
+		private Action execTudoAcao = acaoIcon("label.exec_tudo", Icones.SINCRONIZAR);
 		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private Action compiladoAcao = acaoIcon("label.compilado", Icones.ABRIR);
 		private final CheckBox chkCertificados = new CheckBox();
@@ -1074,6 +1075,7 @@ class Aba extends Transferivel {
 			vAccessTokenAcao.setActionListener(e -> atualizarVar());
 			compiladoAcao.setActionListener(e -> verCompilado());
 			executarAcao.setActionListener(e -> executar());
+			execTudoAcao.setActionListener(e -> execTudo());
 			txtPesquisa.addActionListener(this);
 			buttonColar.addSeparator();
 			buttonColar.addItem(vAccessTokenAcao);
@@ -1081,6 +1083,7 @@ class Aba extends Transferivel {
 			add(chkCertificados);
 			addButton(executarAnterioresAcao);
 			addButton(executarAcao);
+			addButton(execTudoAcao);
 			add(labelTempAvulso);
 			add(txtPesquisa);
 			add(label);
@@ -1164,6 +1167,25 @@ class Aba extends Transferivel {
 			}
 		}
 
+		private void execTudo() {
+			try {
+				ArquivoUtil.salvar(editor, arquivo.getFile());
+				labelTempAvulso.mensagemChave("msg.salvo");
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				return;
+			}
+
+			try {
+				compilar();
+			} catch (IOException | ExpressaoException ex) {
+				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				return;
+			}
+
+			executar();
+		}
+
 		private void setResposta(List<Object> resposta, boolean limpar) {
 			if (NavegacaoUtil.isHttpResult(resposta)) {
 				HttpResult result = (HttpResult) resposta.get(0);
@@ -1177,31 +1199,35 @@ class Aba extends Transferivel {
 		@Override
 		protected void atualizar() {
 			try {
-				Compilacao compilacao = new Compilacao();
-				boolean colorir = false;
-				if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
-					biblio = compilacao.compilar(criarArquivo(editor.getText()));
-				} else {
-					biblio = compilacao.compilar(arquivo.getFile());
-					colorir = true;
-				}
-				boolean resp = biblio != null;
-				editor.bibliotecaContexto = biblio;
-				String alertas = compilacao.getStringAlerta();
-				if (resp) {
-					if (alertas.isEmpty()) {
-						labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.compilado"));
-					} else {
-						Util.mensagem(Aba.this, ExpressaoMensagens.getString("msg.compilado") + alertas);
-					}
-				} else {
-					labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.nao_compilado"));
-				}
-				if (resp && colorir) {
-					ExpressaoCor.processar(editor.getStyledDocument(), compilacao.getTokens());
-				}
+				compilar();
 			} catch (IOException | ExpressaoException ex) {
 				Util.stackTraceAndMessage("Aba", ex, Aba.this);
+			}
+		}
+
+		private void compilar() throws IOException, ExpressaoException {
+			Compilacao compilacao = new Compilacao();
+			boolean colorir = false;
+			if (editor.getText().trim().startsWith("/*montar_arquivo*/")) {
+				biblio = compilacao.compilar(criarArquivo(editor.getText()));
+			} else {
+				biblio = compilacao.compilar(arquivo.getFile());
+				colorir = true;
+			}
+			boolean resp = biblio != null;
+			editor.bibliotecaContexto = biblio;
+			String alertas = compilacao.getStringAlerta();
+			if (resp) {
+				if (alertas.isEmpty()) {
+					labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.compilado"));
+				} else {
+					Util.mensagem(Aba.this, ExpressaoMensagens.getString("msg.compilado") + alertas);
+				}
+			} else {
+				labelTempAvulso.mensagem(ExpressaoMensagens.getString("msg.nao_compilado"));
+			}
+			if (resp && colorir) {
+				ExpressaoCor.processar(editor.getStyledDocument(), compilacao.getTokens());
 			}
 		}
 
