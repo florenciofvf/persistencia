@@ -42,7 +42,7 @@ public class ExpressaoConfiguracao extends AbstratoConfiguracao {
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
 		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
-		muro.camada(getPanelAtalhos(60));
+		muro.camada(getPanelAtalhos(80));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -112,9 +112,11 @@ public class ExpressaoConfiguracao extends AbstratoConfiguracao {
 
 	@Override
 	protected List<Atalho> getAtalhos() {
+		final String local = "Editor";
 		List<Atalho> atalhos = new ArrayList<>();
-		atalhos.add(Atalho.ctrl('P', ExpressaoMensagens.getString("label.compilar"), "Editor"));
-		atalhos.add(Atalho.ctrl('E', ExpressaoMensagens.getString("label.executar"), "Editor"));
+		atalhos.add(Atalho.ctrl('P', ExpressaoMensagens.getString("label.compilar"), local));
+		atalhos.add(Atalho.ctrl('E', ExpressaoMensagens.getString("label.executar"), local));
+		atalhos.add(Atalho.ctrl('T', ExpressaoMensagens.getString("label.exec_tudo"), local));
 		return atalhos;
 	}
 }
