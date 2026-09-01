@@ -1,0 +1,8 @@
+package br.com.persist.plugins.expressao.biblionativo;
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NBase64 encode(string);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NBase64 decode(string);
+
+defun_native br.com.persist.plugins.expressao.biblionativo.NBase64 encodeFileName(string);
+
