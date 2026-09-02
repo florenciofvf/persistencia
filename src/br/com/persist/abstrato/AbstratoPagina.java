@@ -7,6 +7,7 @@ import java.util.Map;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
 import br.com.persist.fichario.Pagina;
+import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoPagina implements Pagina, FicharioHandler {
@@ -28,6 +29,20 @@ public abstract class AbstratoPagina implements Pagina, FicharioHandler {
 
 	@Override
 	public void tabActivatedHandler(Fichario fichario) {
+	}
+
+	@Override
+	public String getTituloString() {
+		String resp = "Desconhecido";
+		Titulo titulo = getTitulo();
+		if (titulo == null) {
+			return resp;
+		}
+		String string = titulo.getTitulo();
+		if (string == null) {
+			return resp;
+		}
+		return string;
 	}
 
 	@Override

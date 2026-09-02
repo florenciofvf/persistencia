@@ -5496,6 +5496,11 @@ public class InternalContainer extends Panel
 	}
 
 	@Override
+	public String getTituloString() {
+		return null;
+	}
+
+	@Override
 	public File getFile() {
 		return null;
 	}

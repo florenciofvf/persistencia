@@ -641,6 +641,11 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 	}
 
 	@Override
+	public String getTituloString() {
+		return null;
+	}
+
+	@Override
 	public File getFile() {
 		return null;
 	}

@@ -47,6 +47,7 @@ import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
@@ -241,8 +242,13 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int indice = getSelectedIndex();
-			if (indice != -1 && Util.confirmar(Fichario.this, "msg.confirmar_excluir_aba")) {
-				excluirPagina(indice);
+			Pagina pagina = getPagina(indice);
+			if (pagina == null) {
+				return;
+			}
+			String mensagem = Mensagens.getString("msg.confirmar_excluir_aba", pagina.getTituloString());
+			if (Util.confirmar(Fichario.this, mensagem, false)) {
+				excluirPagina(pagina);
 			}
 		}
 	};

@@ -129,7 +129,8 @@ class Cabecalho extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int i = fichario.indexOfTabComponent(Cabecalho.this);
-			if (i != -1 && Util.confirmar(Cabecalho.this, "msg.confirmar_excluir_aba")) {
+			String mensagem = Mensagens.getString("msg.confirmar_excluir_aba", pagina.getTituloString());
+			if (i != -1 && Util.confirmar(Cabecalho.this, mensagem, false)) {
 				fichario.excluirPagina(i);
 			}
 		}

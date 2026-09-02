@@ -21,6 +21,8 @@ public interface Pagina extends FicharioHandler {
 
 	public Component getComponent();
 
+	public String getTituloString();
+
 	public Titulo getTitulo();
 
 	public File getFile();

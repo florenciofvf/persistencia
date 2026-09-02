@@ -37,6 +37,11 @@ public class SeparadorArquivo extends AbstratoPagina {
 			public boolean isAtivo() {
 				return false;
 			}
+
+			@Override
+			public String getTitulo() {
+				return "X";
+			}
 		};
 	}
 }

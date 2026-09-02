@@ -73,4 +73,9 @@ public abstract class AbstratoContainer extends Panel implements Pagina, WindowH
 	@Override
 	public void windowOpenedHandler(Window window) {
 	}
+
+	@Override
+	public String getTituloString() {
+		return null;
+	}
 }
