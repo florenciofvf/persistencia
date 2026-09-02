@@ -9,6 +9,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
+import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoContainer extends Panel implements Pagina, WindowHandler, DialogHandler {
@@ -76,6 +77,15 @@ public abstract class AbstratoContainer extends Panel implements Pagina, WindowH
 
 	@Override
 	public String getTituloString() {
-		return null;
+		String resp = "ContainerDesconhecido";
+		Titulo titulo = getTitulo();
+		if (titulo == null) {
+			return resp;
+		}
+		String string = titulo.getTitulo();
+		if (string == null) {
+			return resp;
+		}
+		return string;
 	}
 }

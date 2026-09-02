@@ -33,7 +33,7 @@ public abstract class AbstratoPagina implements Pagina, FicharioHandler {
 
 	@Override
 	public String getTituloString() {
-		String resp = "Desconhecido";
+		String resp = "PaginaDesconhecida";
 		Titulo titulo = getTitulo();
 		if (titulo == null) {
 			return resp;
