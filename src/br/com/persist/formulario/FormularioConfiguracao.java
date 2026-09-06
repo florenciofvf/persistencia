@@ -3,6 +3,7 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.awt.Point;
@@ -34,6 +35,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.TextField;
+import br.com.persist.main.Main;
 
 public class FormularioConfiguracao extends AbstratoConfiguracao {
 	protected static final String[] TAMANHOS = { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "18",
@@ -314,16 +316,19 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private class PainelMonitorPreferencial extends Panel {
+		private Button buttonIdentificarEste = new Button("label.idt_este_monitor");
+		private Button buttonMntPreferencial = new Button("label.mnt_preferencial");
 		private Button buttonNaoPreferencial = new Button("label.nao_preferencial");
 		private Button buttonNaoPrefFormular = new Button("label.nao_pref_formula");
-		private Button buttonMntPreferencial = new Button("label.mnt_preferencial");
 		private static final long serialVersionUID = 1L;
 
 		private PainelMonitorPreferencial(String pref, String form) {
 			super(new FlowLayout());
+			add(buttonIdentificarEste);
 			add(buttonMntPreferencial);
 			add(buttonNaoPreferencial);
 			add(buttonNaoPrefFormular);
+			buttonIdentificarEste.addActionListener(e -> identificarEsteMonitor());
 			buttonMntPreferencial.addActionListener(e -> salvarMonitorComoPreferencial());
 			buttonNaoPreferencial.addActionListener(e -> formulario.excluirMonitorComoPreferencial());
 			buttonNaoPrefFormular.addActionListener(e -> formulario.excluirMonitorFormComoPreferencial());
@@ -333,6 +338,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			if (!Util.isEmpty(form)) {
 				buttonNaoPrefFormular.setText(buttonNaoPrefFormular.getText() + "[" + form + "]");
 			}
+		}
+
+		private void identificarEsteMonitor() {
+			GraphicsDevice device = getGraphicsConfiguration().getDevice();
+			String string = Main.getStringGCId(device);
+			buttonIdentificarEste.setText(string);
 		}
 
 		private void salvarMonitorComoPreferencial() {

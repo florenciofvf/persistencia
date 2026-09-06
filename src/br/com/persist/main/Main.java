@@ -121,4 +121,25 @@ public class Main {
 		}
 		return builder.toString();
 	}
+
+	public static String getStringGCId(GraphicsDevice gd) {
+		if (gd == null) {
+			return "";
+		}
+		GraphicsConfiguration[] gcs = gd.getConfigurations();
+		if (gcs == null) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		for (GraphicsConfiguration item : gcs) {
+			GraphicsDevice device = item.getDevice();
+			if (device != null) {
+				if (builder.length() > 0) {
+					builder.append(", ");
+				}
+				builder.append(device.getIDstring());
+			}
+		}
+		return builder.toString();
+	}
 }
