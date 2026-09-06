@@ -399,11 +399,14 @@ public class Formulario extends JFrame implements PluginBasico {
 		}
 	}
 
-	public void salvarMonitorComoPreferencial() {
+	public String salvarMonitorComoPreferencial() {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
 		if (device != null) {
-			Preferencias.setString(Constantes.GC_PREFERENCIAL, Main.getStringGC(device));
+			String string = Main.getStringGC(device);
+			Preferencias.setString(Constantes.GC_PREFERENCIAL, string);
+			return string;
 		}
+		return "";
 	}
 
 	public void excluirMonitorComoPreferencial() {

@@ -316,15 +316,15 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private class PainelMonitorPreferencial extends Panel {
 		private Button buttonNaoPreferencial = new Button("label.nao_preferencial");
 		private Button buttonNaoPrefFormular = new Button("label.nao_pref_formula");
-		private Button buttonPreferencial = new Button("label.preferencial");
+		private Button buttonMntPreferencial = new Button("label.mnt_preferencial");
 		private static final long serialVersionUID = 1L;
 
 		private PainelMonitorPreferencial(String pref, String form) {
 			super(new FlowLayout());
-			add(buttonPreferencial);
+			add(buttonMntPreferencial);
 			add(buttonNaoPreferencial);
 			add(buttonNaoPrefFormular);
-			buttonPreferencial.addActionListener(e -> formulario.salvarMonitorComoPreferencial());
+			buttonMntPreferencial.addActionListener(e -> salvarMonitorComoPreferencial());
 			buttonNaoPreferencial.addActionListener(e -> formulario.excluirMonitorComoPreferencial());
 			buttonNaoPrefFormular.addActionListener(e -> formulario.excluirMonitorFormComoPreferencial());
 			if (!Util.isEmpty(pref)) {
@@ -333,6 +333,11 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			if (!Util.isEmpty(form)) {
 				buttonNaoPrefFormular.setText(buttonNaoPrefFormular.getText() + "[" + form + "]");
 			}
+		}
+
+		private void salvarMonitorComoPreferencial() {
+			String string = formulario.salvarMonitorComoPreferencial();
+			buttonMntPreferencial.setText(Mensagens.getString("label.mnt_preferencial") + "[" + string + "]");
 		}
 	}
 
