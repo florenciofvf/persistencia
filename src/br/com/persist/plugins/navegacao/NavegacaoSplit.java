@@ -617,7 +617,7 @@ class Aba extends Transferivel {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), containerRequisicao);
-		split.setResizeWeight(.5D);
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
