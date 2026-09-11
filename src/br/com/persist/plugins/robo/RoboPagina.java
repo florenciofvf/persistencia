@@ -36,6 +36,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.formulario.Formulario;
@@ -61,10 +62,8 @@ public class RoboPagina extends Panel implements Aba {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
-		split.setOneTouchExpandable(true);
-		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 		textEditor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));

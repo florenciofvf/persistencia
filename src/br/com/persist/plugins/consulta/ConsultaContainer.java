@@ -56,6 +56,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.fichario.Fichario;
@@ -120,10 +121,8 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 	private void montarLayout() {
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, criarPanelTabela());
+		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, criarPanelTabela());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
-		split.setOneTouchExpandable(true);
-		split.setContinuousLayout(true);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
 		add(BorderLayout.SOUTH, labelStatus);

@@ -678,10 +678,8 @@ class Aba extends Transferivel {
 		private static final long serialVersionUID = 1L;
 
 		private ContainerRequisicao() {
-			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tabelaRequisicao),
+			SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tabelaRequisicao),
 					ficharioRequisicao);
-			split.setOneTouchExpandable(true);
-			split.setContinuousLayout(true);
 			split.setDividerLocation(100);
 			add(BorderLayout.CENTER, split);
 		}

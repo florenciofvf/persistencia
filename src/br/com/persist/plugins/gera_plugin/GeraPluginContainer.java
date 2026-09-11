@@ -43,6 +43,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
@@ -196,10 +197,8 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, muro, scrollPane);
+		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, muro, scrollPane);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
-		split.setOneTouchExpandable(true);
-		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 
 		buttonGerar.setIcon(Icones.EXECUTAR);

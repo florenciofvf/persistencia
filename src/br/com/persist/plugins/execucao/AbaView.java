@@ -21,6 +21,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.ToolbarPesquisa;
@@ -48,9 +49,7 @@ public class AbaView extends Panel implements ContainerTreeListener {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tree), log);
-		split.setOneTouchExpandable(true);
-		split.setContinuousLayout(true);
+		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tree), log);
 		add(BorderLayout.CENTER, split);
 	}
 

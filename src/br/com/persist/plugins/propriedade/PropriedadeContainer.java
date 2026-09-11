@@ -38,6 +38,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
@@ -93,10 +94,8 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
-		split.setOneTouchExpandable(true);
-		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 	}
 

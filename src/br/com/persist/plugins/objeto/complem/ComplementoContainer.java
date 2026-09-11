@@ -33,6 +33,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
@@ -57,12 +58,10 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelTextArea(), criarPanelLista());
+		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelTextArea(), criarPanelLista());
 		listaComplementos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listaComplementos.setCellRenderer(new ComplementoCellRenderer());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
-		split.setOneTouchExpandable(true);
-		split.setContinuousLayout(true);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
 	}

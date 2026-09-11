@@ -57,6 +57,7 @@ import br.com.persist.componente.OrdemTable;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.data.Array;
@@ -87,7 +88,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private final RequisicaoFichario fichario;
 	private ScrollPane scrollPane;
 	private int indicePagina;
-	private JSplitPane split;
+	private SplitPane split;
 	private final File file;
 	private int sleep;
 
@@ -310,10 +311,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void montarLayout() {
-		split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
-		split.setOneTouchExpandable(true);
-		split.setContinuousLayout(true);
 		add(BorderLayout.CENTER, split);
 		textEditorReq.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
