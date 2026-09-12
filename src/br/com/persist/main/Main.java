@@ -47,13 +47,21 @@ public class Main {
 	private static void abrirForm() {
 		Formulario form = criarFormulario(getGC());
 		form.setPreferenciaNomePlugin(Preferencias.getString(Constantes.PREFERENCIA_NOME_PLUGIN));
-		String string = System.getProperty("form_location_deltaX");
-		if (string != null && !string.trim().isEmpty()) {
+		String string = getFormLocationDeltaX();
+		if (string != null) {
 			Point location = form.getLocation();
-			location.x += Integer.parseInt(string.trim());
+			location.x += Integer.parseInt(string);
 			form.setLocation(location);
 		}
 		form.setVisible(true);
+	}
+
+	public static String getFormLocationDeltaX() {
+		String string = System.getProperty("form_location_deltaX");
+		if (string == null || string.trim().isEmpty()) {
+			return null;
+		}
+		return string.trim();
 	}
 
 	private static Formulario criarFormulario(GraphicsConfiguration gc) {
