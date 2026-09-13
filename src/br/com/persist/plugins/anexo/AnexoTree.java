@@ -21,7 +21,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
-import br.com.persist.componente.CheckBoxItem;
+import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.Menu;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
@@ -193,9 +193,13 @@ public class AnexoTree extends Tree {
 		}
 	}
 
+	public static String getString(String chave) {
+		return AnexoMensagens.getString(chave);
+	}
+
 	private class AnexoPopup extends Popup {
-		private CheckBoxItem chkPadraoAbrir = new CheckBoxItem("label.padrao_desktop_open", Icones.EXECUTAR);
-		private CheckBoxItem chkAbrirVisivel = new CheckBoxItem("label.abrir_visivel", Icones.HIERARQUIA);
+		private CheckBoxMenuItem chkPadraoAbrir = new CheckBoxMenuItem(getString("label.padrao_desktop_open"), Icones.EXECUTAR);
+		private CheckBoxMenuItem chkAbrirVisivel = new CheckBoxMenuItem(getString("label.abrir_visivel"), Icones.HIERARQUIA);
 		private Action copiarAcao = actionMenu("label.copiar_atributos", Icones.COPIA);
 		private Action colarAcao = actionMenu("label.colar_atributos", Icones.COLAR);
 		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);

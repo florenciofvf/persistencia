@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.Icon;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -41,6 +40,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -1994,15 +1994,15 @@ class PainelTest2 extends AbstratoTest {
 	}
 
 	private class ButtonOpcoes extends ButtonPopup {
-		private final JCheckBoxMenuItem chkConstrutor = new JCheckBoxMenuItem(
+		private final CheckBoxMenuItem chkConstrutor = new CheckBoxMenuItem(
 				AtributoMensagens.getString("label.construtor"));
-		private final JCheckBoxMenuItem chkMockito = new JCheckBoxMenuItem(
+		private final CheckBoxMenuItem chkMockito = new CheckBoxMenuItem(
 				AtributoMensagens.getString("label.mockito"));
-		private final JCheckBoxMenuItem chkOutros = new JCheckBoxMenuItem(AtributoMensagens.getString("label.outros"));
-		private final JCheckBoxMenuItem chkSetUp = new JCheckBoxMenuItem(AtributoMensagens.getString("label.setup"));
-		private final JCheckBoxMenuItem chkGet = new JCheckBoxMenuItem(AtributoMensagens.getString("label.get"));
-		private final JCheckBoxMenuItem chkSet = new JCheckBoxMenuItem(AtributoMensagens.getString("label.set"));
-		private final JCheckBoxMenuItem chkIs = new JCheckBoxMenuItem(AtributoMensagens.getString("label.is"));
+		private final CheckBoxMenuItem chkOutros = new CheckBoxMenuItem(AtributoMensagens.getString("label.outros"));
+		private final CheckBoxMenuItem chkSetUp = new CheckBoxMenuItem(AtributoMensagens.getString("label.setup"));
+		private final CheckBoxMenuItem chkGet = new CheckBoxMenuItem(AtributoMensagens.getString("label.get"));
+		private final CheckBoxMenuItem chkSet = new CheckBoxMenuItem(AtributoMensagens.getString("label.set"));
+		private final CheckBoxMenuItem chkIs = new CheckBoxMenuItem(AtributoMensagens.getString("label.is"));
 		private static final long serialVersionUID = 1L;
 
 		private ButtonOpcoes() {

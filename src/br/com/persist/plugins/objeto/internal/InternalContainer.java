@@ -49,7 +49,6 @@ import java.util.stream.Collectors;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -85,6 +84,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Menu;
@@ -1498,9 +1498,9 @@ public class InternalContainer extends Panel
 				private Action moverReferenciaAcao = actionMenu("label.mover_referencia");
 				private Action nomeIconeReferAcao = acaoMenu("label.nome_icone_apontado");
 				private Action excluirPesquisaAcao = actionMenu("label.excluir_pesquisa");
-				private JCheckBoxMenuItem chkPesqEmMemoria = new JCheckBoxMenuItem(
+				private CheckBoxMenuItem chkPesqEmMemoria = new CheckBoxMenuItem(
 						ObjetoMensagens.getString("label.pesquisa_em_forms"));
-				private JCheckBoxMenuItem chkSomenteTotal = new JCheckBoxMenuItem(
+				private CheckBoxMenuItem chkSomenteTotal = new CheckBoxMenuItem(
 						ObjetoMensagens.getString("label.somente_total_reg"));
 				private Action limparItensAcao = acaoMenu("label.limpar_itens");
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
@@ -2936,9 +2936,9 @@ public class InternalContainer extends Panel
 		private class ButtonFuncoes extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private TotalizarRegistrosAcao totalRegistroAcao = new TotalizarRegistrosAcao(true);
-			private JCheckBoxMenuItem chkSubsTotalComparacao = new JCheckBoxMenuItem(
+			private CheckBoxMenuItem chkSubsTotalComparacao = new CheckBoxMenuItem(
 					ObjetoMensagens.getString("label.subs_total_comparacao"));
-			private JCheckBoxMenuItem chkExibirInstrucao = new JCheckBoxMenuItem(
+			private CheckBoxMenuItem chkExibirInstrucao = new CheckBoxMenuItem(
 					ObjetoMensagens.getString("label.exibir_instrucao"));
 
 			private ButtonFuncoes() {

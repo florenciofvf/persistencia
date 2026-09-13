@@ -23,7 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -36,6 +35,7 @@ import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Valor;
 import br.com.persist.componente.Action;
+import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao2;
@@ -409,7 +409,7 @@ public class TabelaPersistencia extends JTable {
 	}
 
 	private class PopupHeader extends Popup {
-		private JCheckBoxMenuItem inativoTempCheck = new JCheckBoxMenuItem(getString("label.inativo_temp"));
+		private CheckBoxMenuItem inativoTempCheck = new CheckBoxMenuItem(getString("label.inativo_temp"));
 		private Action pesquisaApartirColunaAcao = acaoMenu("label.pesquisa_a_partir_coluna");
 		private Action mapearApartirBiblioAcao = acaoMenu("label.mapear_a_partir_biblio");
 		private Action copiarNomeColunaAcao = acaoMenu("label.copiar_nome_coluna");
@@ -1007,7 +1007,7 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuIN extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private JCheckBoxMenuItem chkConcatTransf = new JCheckBoxMenuItem(
+			private CheckBoxMenuItem chkConcatTransf = new CheckBoxMenuItem(
 					TabelaMensagens.getString("label.concat_transfer"));
 
 			private MenuIN() {
@@ -1040,7 +1040,7 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuItemChaveamento extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private JCheckBoxMenuItem chkConcatTransf = new JCheckBoxMenuItem(
+			private CheckBoxMenuItem chkConcatTransf = new CheckBoxMenuItem(
 					TabelaMensagens.getString("label.concat_transfer"));
 			private final String nomeColuna;
 

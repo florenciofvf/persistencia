@@ -1,7 +1,6 @@
 package br.com.persist.componente;
 
 import javax.swing.Icon;
-import javax.swing.JCheckBoxMenuItem;
 
 public class MenuPadrao2 extends Menu {
 	protected Action comAspasAcao = Action.actionMenuComAspas();
@@ -23,7 +22,7 @@ public class MenuPadrao2 extends Menu {
 		comAspasAcao.setEnabled(b);
 	}
 
-	protected void addItem(JCheckBoxMenuItem item) {
+	protected void addItem(CheckBoxMenuItem item) {
 		add(item);
 	}
 }

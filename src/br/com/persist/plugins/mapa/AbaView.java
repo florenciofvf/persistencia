@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -31,6 +30,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
+import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.plugins.mapa.organiza.Organizador;
@@ -128,12 +128,12 @@ public class AbaView extends Panel {
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);
-				addItem(new JCheckBoxMenuItem(desenharObjetoCentroAcao));
-				addItem(new JCheckBoxMenuItem(desenharAssociacaoAcao));
-				addItem(new JCheckBoxMenuItem(desenharAtributoAcao));
-				addItem(new JCheckBoxMenuItem(desenharGrade2Acao));
-				addItem(new JCheckBoxMenuItem(desenharGradeAcao));
-				addItem(new JCheckBoxMenuItem(girarAcao));
+				addItem(new CheckBoxMenuItem(desenharObjetoCentroAcao));
+				addItem(new CheckBoxMenuItem(desenharAssociacaoAcao));
+				addItem(new CheckBoxMenuItem(desenharAtributoAcao));
+				addItem(new CheckBoxMenuItem(desenharGrade2Acao));
+				addItem(new CheckBoxMenuItem(desenharGradeAcao));
+				addItem(new CheckBoxMenuItem(girarAcao));
 				addMenuItem(velocidadeAcao);
 				eventos();
 			}
@@ -178,7 +178,7 @@ public class AbaView extends Panel {
 			}
 
 			private boolean isSelected(ActionEvent e) {
-				return ((JCheckBoxMenuItem) e.getSource()).isSelected();
+				return ((CheckBoxMenuItem) e.getSource()).isSelected();
 			}
 		}
 	}
