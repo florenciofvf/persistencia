@@ -198,8 +198,10 @@ public class AnexoTree extends Tree {
 	}
 
 	private class AnexoPopup extends Popup {
-		private CheckBoxMenuItem chkPadraoAbrir = new CheckBoxMenuItem(getString("label.padrao_desktop_open"), Icones.EXECUTAR);
-		private CheckBoxMenuItem chkAbrirVisivel = new CheckBoxMenuItem(getString("label.abrir_visivel"), Icones.HIERARQUIA);
+		private CheckBoxMenuItem chkPadraoAbrir = new CheckBoxMenuItem(getString("label.padrao_desktop_open"),
+				Icones.EXECUTAR);
+		private CheckBoxMenuItem chkAbrirVisivel = new CheckBoxMenuItem(getString("label.abrir_visivel"),
+				Icones.HIERARQUIA);
 		private Action copiarAcao = actionMenu("label.copiar_atributos", Icones.COPIA);
 		private Action colarAcao = actionMenu("label.colar_atributos", Icones.COLAR);
 		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);

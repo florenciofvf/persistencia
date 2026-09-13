@@ -1996,8 +1996,7 @@ class PainelTest2 extends AbstratoTest {
 	private class ButtonOpcoes extends ButtonPopup {
 		private final CheckBoxMenuItem chkConstrutor = new CheckBoxMenuItem(
 				AtributoMensagens.getString("label.construtor"));
-		private final CheckBoxMenuItem chkMockito = new CheckBoxMenuItem(
-				AtributoMensagens.getString("label.mockito"));
+		private final CheckBoxMenuItem chkMockito = new CheckBoxMenuItem(AtributoMensagens.getString("label.mockito"));
 		private final CheckBoxMenuItem chkOutros = new CheckBoxMenuItem(AtributoMensagens.getString("label.outros"));
 		private final CheckBoxMenuItem chkSetUp = new CheckBoxMenuItem(AtributoMensagens.getString("label.setup"));
 		private final CheckBoxMenuItem chkGet = new CheckBoxMenuItem(AtributoMensagens.getString("label.get"));
