@@ -41,7 +41,6 @@ import javax.swing.ActionMap;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.InputMap;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
@@ -58,6 +57,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.MenuItem;
@@ -600,7 +600,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		}
 
 		private class ButtonStatus extends ButtonPopup {
-			private JCheckBoxMenuItem somarHorasAcao = new JCheckBoxMenuItem(
+			private CheckBoxMenuItem somarHorasAcao = new CheckBoxMenuItem(
 					ObjetoMensagens.getString("label.somar_em_horas"));
 			private Action compararRegistroAcao = acaoMenu("label.comparar_registro", Icones.OLHO);
 			private Action deslocamentoZeroAcao = acaoMenu("label.deslocamento_zero", Icones.RECT);
@@ -615,9 +615,9 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			private Action ignoradoAcao = actionMenu("label.ignorado", Icones.RECT);
 			private Action ignorarAcao = actionMenu("label.ignorar", Icones.RECT);
 			private Action reiniciarAction = acaoMenu("label.reiniciar_horas");
-			private JCheckBoxMenuItem checkBoxComparaRegistro = new JCheckBoxMenuItem(compararRegistroAcao);
-			private JCheckBoxMenuItem checkBoxSomObjetoSel = new JCheckBoxMenuItem(somObjetoSelAcao);
-			private JCheckBoxMenuItem checkBoxSelecaoGeral = new JCheckBoxMenuItem(selecaoGeralAcao);
+			private CheckBoxMenuItem checkBoxComparaRegistro = new CheckBoxMenuItem(compararRegistroAcao);
+			private CheckBoxMenuItem checkBoxSomObjetoSel = new CheckBoxMenuItem(somObjetoSelAcao);
+			private CheckBoxMenuItem checkBoxSelecaoGeral = new CheckBoxMenuItem(selecaoGeralAcao);
 			private Action gradeAction = acaoMenu("label.grade");
 			private static final long serialVersionUID = 1L;
 
@@ -628,15 +628,15 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 				addItem(checkBoxComparaRegistro);
 				addSeparator();
 				addItem(checkBoxSelecaoGeral);
-				addItem(new JCheckBoxMenuItem(desenharDescAcao));
-				addItem(new JCheckBoxMenuItem(desenharIdAcao));
-				addItem(new JCheckBoxMenuItem(transparenteAcao));
-				addItem(new JCheckBoxMenuItem(pontoOrigemAcao));
-				addItem(new JCheckBoxMenuItem(pontoDestinoAcao));
+				addItem(new CheckBoxMenuItem(desenharDescAcao));
+				addItem(new CheckBoxMenuItem(desenharIdAcao));
+				addItem(new CheckBoxMenuItem(transparenteAcao));
+				addItem(new CheckBoxMenuItem(pontoOrigemAcao));
+				addItem(new CheckBoxMenuItem(pontoDestinoAcao));
 				addMenuItem(deslocamentoZeroAcao);
 				addSeparator();
-				addItem(new JCheckBoxMenuItem(ignorarAcao));
-				addItem(new JCheckBoxMenuItem(ignoradoAcao));
+				addItem(new CheckBoxMenuItem(ignorarAcao));
+				addItem(new CheckBoxMenuItem(ignoradoAcao));
 				addItem(checkBoxSomObjetoSel);
 				addSeparator();
 				addMenuItem(reiniciarAction);
@@ -650,29 +650,29 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 				deslocamentoZeroAcao.setActionListener(e -> ObjetoSuperficieUtil.deslocamentoZero(objetoSuperficie));
 				todosIconesParaTabelaAcao.setActionListener(e -> todosIconesParaArquivoVinculado());
 				compararRegistroAcao.setActionListener(e -> ObjetoSuperficieUtil.compararRegistro(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				selecaoGeralAcao.setActionListener(e -> ObjetoSuperficieUtil.selecaoGeral(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				desenharDescAcao.setActionListener(e -> ObjetoSuperficieUtil.desenharDesc(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				transparenteAcao.setActionListener(e -> ObjetoSuperficieUtil.transparente(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				pontoDestinoAcao.setActionListener(e -> ObjetoSuperficieUtil.pontoDestino(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				pontoOrigemAcao.setActionListener(e -> ObjetoSuperficieUtil.pontoOrigem(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				desenharIdAcao.setActionListener(e -> ObjetoSuperficieUtil.desenharIds(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				somarHorasAcao.addActionListener(e -> objetoSuperficie.getThreadManager()
-						.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						.somarHoras(((CheckBoxMenuItem) e.getSource()).isSelected()));
 				reiniciarAction.setActionListener(e -> reiniciarHoras());
 				gradeAction.setActionListener(e -> objetoSuperficie.setTotalArrastado(1));
 				ignorarAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorar(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				ignoradoAcao.setActionListener(e -> ObjetoSuperficieUtil.ignorado(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 				somObjetoSelAcao.setActionListener(e -> ObjetoSuperficieUtil.somenteObjetoSel(objetoSuperficie,
-						((JCheckBoxMenuItem) e.getSource()).isSelected()));
+						((CheckBoxMenuItem) e.getSource()).isSelected()));
 			}
 
 			private void reiniciarHoras() {

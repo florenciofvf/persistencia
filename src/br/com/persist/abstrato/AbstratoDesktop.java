@@ -6,7 +6,6 @@ import java.awt.Window;
 
 import javax.swing.DefaultDesktopManager;
 import javax.swing.Icon;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -15,6 +14,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
+import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.Menu;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
@@ -328,20 +328,20 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		private Action direitoAcao = acaoMenu("label.total_direito", Icones.ALINHA_DIREITO);
 		private Action totalAcao = actionMenu("label.total", Icones.LARGURA);
 		private static final long serialVersionUID = 1L;
-		private JCheckBoxMenuItem checkDireitoAuto;
+		private CheckBoxMenuItem checkDireitoAuto;
 
 		protected MenuLarguras() {
 			super(AbstratoMensagens.getString("label.largura"), false, Icones.RECT);
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
 			addMenuItem(esquerdoAcao);
-			direitoAutoAcao.setActionListener(e -> ajusteLarguraForm((JCheckBoxMenuItem) e.getSource()));
+			direitoAutoAcao.setActionListener(e -> ajusteLarguraForm((CheckBoxMenuItem) e.getSource()));
 			esquerdoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_ESQUERDA));
 			direitoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_DIREITA));
 			totalAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL));
 		}
 
-		private void ajusteLarguraForm(JCheckBoxMenuItem check) {
+		private void ajusteLarguraForm(CheckBoxMenuItem check) {
 			setAjusteAutoLarguraForm(check.isSelected());
 			if (check.isSelected()) {
 				larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
@@ -350,7 +350,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 		public void addTotalDireitoAuto() {
 			if (checkDireitoAuto == null) {
-				checkDireitoAuto = new JCheckBoxMenuItem(direitoAutoAcao);
+				checkDireitoAuto = new CheckBoxMenuItem(direitoAutoAcao);
 				add(true, checkDireitoAuto);
 			}
 		}
