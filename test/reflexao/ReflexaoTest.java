@@ -27,6 +27,15 @@ public class ReflexaoTest {
 		ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
 	}
 
+	@Test(expected = ReflexaoException.class)
+	public void valorInvalido() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setMesParaFerias");
+		builder.append("%%%");
+		builder.append("java.lang.Double@@@FEVEREIRO");
+		ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+	}
+
 	@Test
 	public void criandoEConfigurando() throws ReflexaoException {
 		StringBuilder builder = new StringBuilder();
