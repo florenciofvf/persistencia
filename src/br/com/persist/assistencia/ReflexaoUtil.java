@@ -6,29 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * setNome 
- * $$$
- * java.lang.String @@@ Novo nome 
+ * <pre>
+ * setNome %%% java.lang.String @@@ Novo nome
  * 
- * ### 
+ * ###
  * 
- * metodoQQ 
+ * metodoQQ
  * 
- * $$$ 
- * java.lang.Long @@@ 48
+ * %%% java.lang.Long @@@ 48
  * 
- * $$$ 
- * br.com.teste.MesesEnum @@@ JANEIRO
+ * %%% br.com.teste.MesesEnum @@@ JANEIRO
+ * </pre>
  */
 public class ReflexaoUtil {
-	private static final String SEPARADOR_PARAMETROS = "$$$";
+	private static final String SEPARADOR_PARAMETROS = "%%%";
 	private static final String SEPARADOR_METODOS = "###";
 	private static final String SEPARADOR_VALOR = "@@@";
 
 	private ReflexaoUtil() {
 	}
 
-	public static void processar(String classe, String construtorID, String metodos) throws ReflexaoException {
+	public static Object processar(String classe, String construtorID, String metodos) throws ReflexaoException {
 		Class<?> klass = getKlass(classe);
 		Objeto id = criarObjeto(construtorID);
 		Object object = getObject(klass, id);
@@ -38,6 +36,8 @@ public class ReflexaoUtil {
 		for (Metodo item : listaMetodo) {
 			item.processar(object);
 		}
+
+		return object;
 	}
 
 	private static Class<?> getKlass(String classe) throws ReflexaoException {
