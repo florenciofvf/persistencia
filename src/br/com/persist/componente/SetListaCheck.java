@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
-import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
@@ -63,7 +62,7 @@ class ItemCheck {
 	}
 }
 
-class ItemCheckRenderer extends JCheckBox implements ListCellRenderer<ItemCheck> {
+class ItemCheckRenderer extends CheckBox implements ListCellRenderer<ItemCheck> {
 	private static final long serialVersionUID = 1L;
 
 	@Override

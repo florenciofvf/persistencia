@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
-import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
@@ -220,7 +219,7 @@ class Item implements Comparable<Item> {
 	}
 }
 
-class ItemRenderer extends JCheckBox implements ListCellRenderer<Item> {
+class ItemRenderer extends CheckBox implements ListCellRenderer<Item> {
 	private static final long serialVersionUID = 1L;
 
 	@Override
