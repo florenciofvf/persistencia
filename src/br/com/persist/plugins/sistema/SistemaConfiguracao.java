@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
@@ -13,6 +12,7 @@ import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.PanelCenter;
+import br.com.persist.componente.RadioButton;
 import br.com.persist.formulario.Formulario;
 
 public class SistemaConfiguracao extends AbstratoConfiguracao {
@@ -91,7 +91,7 @@ public class SistemaConfiguracao extends AbstratoConfiguracao {
 		return panel;
 	}
 
-	private class RadioPosicao extends JRadioButton {
+	private class RadioPosicao extends RadioButton {
 		private static final long serialVersionUID = 1L;
 		private final transient NomeValor nomeValor;
 

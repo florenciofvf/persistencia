@@ -15,7 +15,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
@@ -33,6 +32,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
+import br.com.persist.componente.RadioButton;
 import br.com.persist.componente.TextField;
 import br.com.persist.main.Main;
 
@@ -411,7 +411,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		return panel;
 	}
 
-	private class RadioPosicao extends JRadioButton {
+	private class RadioPosicao extends RadioButton {
 		private static final long serialVersionUID = 1L;
 		private final transient NomeValor nomeValor;
 

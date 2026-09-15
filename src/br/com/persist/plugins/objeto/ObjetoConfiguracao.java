@@ -20,7 +20,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
@@ -31,6 +30,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
+import br.com.persist.componente.RadioButton;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
@@ -225,7 +225,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		}
 	}
 
-	private class RadioPosicao extends JRadioButton {
+	private class RadioPosicao extends RadioButton {
 		private static final long serialVersionUID = 1L;
 		private final transient NomeValor nomeValor;
 
