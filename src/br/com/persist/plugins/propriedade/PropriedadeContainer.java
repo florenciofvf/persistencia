@@ -22,7 +22,6 @@ import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
-import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -94,7 +93,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 	}
 
 	private void montarLayout() {
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 	}

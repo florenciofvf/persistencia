@@ -32,7 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
@@ -311,7 +310,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void montarLayout() {
-		split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.CENTER, split);
 		textEditorReq.setListener(

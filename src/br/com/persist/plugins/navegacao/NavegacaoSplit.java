@@ -55,7 +55,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
@@ -616,7 +615,7 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), containerRequisicao);
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), containerRequisicao);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 		editor.setListener(
@@ -678,8 +677,7 @@ class Aba extends Transferivel {
 		private static final long serialVersionUID = 1L;
 
 		private ContainerRequisicao() {
-			SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tabelaRequisicao),
-					ficharioRequisicao);
+			SplitPane split = new SplitPane(SplitPane.VERTICAL, new ScrollPane(tabelaRequisicao), ficharioRequisicao);
 			split.setDividerLocation(100);
 			add(BorderLayout.CENTER, split);
 		}

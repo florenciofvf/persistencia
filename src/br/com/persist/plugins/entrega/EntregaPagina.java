@@ -16,7 +16,6 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
@@ -52,7 +51,7 @@ public class EntregaPagina extends Panel implements Aba {
 	}
 
 	private void montarLayout() {
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
 		add(BorderLayout.CENTER, split);
 		textEditor.setListener(

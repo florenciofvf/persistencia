@@ -9,7 +9,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import org.xml.sax.Attributes;
@@ -49,7 +48,7 @@ public class AbaView extends Panel implements ContainerTreeListener {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tree), log);
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, new ScrollPane(tree), log);
 		add(BorderLayout.CENTER, split);
 	}
 

@@ -14,14 +14,13 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
-import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.SplitPane;
 import br.com.persist.marca.XMLUtil;
 
-public class Separador extends JSplitPane implements FicharioListener {
+public class Separador extends SplitPane implements FicharioListener {
 	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_7);
 	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_7);
 	private transient Setor oes = new Setor(Setor.OESTE, Setor.ALPHA_7);
@@ -32,9 +31,6 @@ public class Separador extends JSplitPane implements FicharioListener {
 	public Separador(int orientation, Component left, Component right) {
 		super(orientation, get(left), get(right));
 		new DropTarget(this, dropTargetListener);
-		setBorder(BorderFactory.createEmptyBorder());
-		setOneTouchExpandable(true);
-		setContinuousLayout(true);
 		SwingUtilities.invokeLater(() -> setDividerLocation(0.5));
 	}
 

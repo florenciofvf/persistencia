@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JList;
-import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
 import br.com.persist.abstrato.PluginBasico;
@@ -58,7 +57,7 @@ public class ComplementoContainer extends Panel implements PluginBasico {
 	}
 
 	private void montarLayout() {
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelTextArea(), criarPanelLista());
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanelTextArea(), criarPanelLista());
 		listaComplementos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listaComplementos.setCellRenderer(new ComplementoCellRenderer());
 		split.setDividerLocation(Constantes.SIZE.height / 2);

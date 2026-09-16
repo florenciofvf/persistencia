@@ -29,7 +29,6 @@ import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
@@ -121,7 +120,7 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 	private void montarLayout() {
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, criarPanelTabela());
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, scrollPane, criarPanelTabela());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);

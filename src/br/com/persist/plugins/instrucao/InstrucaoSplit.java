@@ -37,7 +37,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
@@ -484,7 +483,7 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 		editor.setListener(

@@ -25,7 +25,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
-import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -197,7 +196,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, muro, scrollPane);
+		SplitPane split = new SplitPane(SplitPane.VERTICAL, muro, scrollPane);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 

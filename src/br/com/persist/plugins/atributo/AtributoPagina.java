@@ -24,7 +24,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -88,7 +87,7 @@ public class AtributoPagina extends Panel implements Aba {
 	}
 
 	private void montarLayout() {
-		SplitPane split = new SplitPane(JSplitPane.HORIZONTAL_SPLIT, painelAtributo, painelFichario);
+		SplitPane split = new SplitPane(SplitPane.HORIZONTAL, painelAtributo, painelFichario);
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.33));
 		add(BorderLayout.CENTER, split);
 	}
@@ -142,7 +141,7 @@ public class AtributoPagina extends Panel implements Aba {
 		}
 
 		private void montarLayout() {
-			SplitPane split = new SplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelTextArea(), criarPanelTabela());
+			SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanelTextArea(), criarPanelTabela());
 			SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
 			add(BorderLayout.NORTH, toolbar);
 			add(BorderLayout.CENTER, split);

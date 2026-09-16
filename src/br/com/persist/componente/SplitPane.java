@@ -6,6 +6,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JSplitPane;
 
 public class SplitPane extends JSplitPane {
+	public static final int HORIZONTAL = JSplitPane.HORIZONTAL_SPLIT;
+	public static final int VERTICAL = JSplitPane.VERTICAL_SPLIT;
 	private static final long serialVersionUID = 1L;
 
 	public SplitPane(int orientacao) {
