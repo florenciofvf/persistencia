@@ -46,4 +46,73 @@ public class ReflexaoTest {
 		System.out.println(obj);
 		assertNotNull(obj);
 	}
+
+	@Test
+	public void semMes() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setMesParaFerias");
+		builder.append("%%%");
+		builder.append("reflexao.Mes@@@NULL");
+		Object obj = ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+		assertNotNull(obj);
+	}
+
+	@Test
+	public void comValor() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setValor");
+		builder.append("%%%");
+		builder.append("java.lang.Double@@@5.01");
+		Object obj = ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+		assertNotNull(obj);
+	}
+
+	@Test
+	public void semValor() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setValor");
+		builder.append("%%%");
+		builder.append("java.lang.Double@@@NULL");
+		Object obj = ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+		assertNotNull(obj);
+	}
+
+	@Test
+	public void comData() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setAgendamento");
+		builder.append("%%%");
+		builder.append("java.util.Date@@@25/02/1978");
+		Object obj = ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+		assertNotNull(obj);
+	}
+
+	@Test
+	public void comDataEHora() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setAgendamento");
+		builder.append("%%%");
+		builder.append("java.util.Date@@@25/02/1978 10:13:01");
+		Object obj = ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+		assertNotNull(obj);
+	}
+
+	@Test(expected = ReflexaoException.class)
+	public void comExcecao() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setAgendamento");
+		builder.append("%%%");
+		builder.append("java.util.Date@@@ABC");
+		ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+	}
+
+	@Test
+	public void semData() throws ReflexaoException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("setAgendamento");
+		builder.append("%%%");
+		builder.append("java.util.Date@@@null");
+		Object obj = ReflexaoUtil.processar("reflexao.Pessoa", "java.lang.String@@@Francisco", builder.toString());
+		assertNotNull(obj);
+	}
 }

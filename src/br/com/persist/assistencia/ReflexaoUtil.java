@@ -2,7 +2,10 @@ package br.com.persist.assistencia;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +25,7 @@ public class ReflexaoUtil {
 	private static final String SEPARADOR_PARAMETROS = "%%%";
 	private static final String SEPARADOR_METODOS = "###";
 	private static final String SEPARADOR_VALOR = "@@@";
+	public static final String VALOR_NULL = "NULL";
 
 	private ReflexaoUtil() {
 	}
@@ -58,6 +62,8 @@ public class ReflexaoUtil {
 
 		if (klasse.isEnum()) {
 			objeto = new ObjetoEnum();
+		} else if (Date.class.equals(klasse)) {
+			objeto = new ObjetoDate();
 		} else {
 			objeto = new ObjetoComum();
 		}
@@ -68,7 +74,7 @@ public class ReflexaoUtil {
 
 	private static Object getObject(Class<?> klass, Objeto id) throws ReflexaoException {
 		try {
-			/** para ambiente JPA: return entityManaget.finClass(klass, id.valor); */
+			/** para ambiente JPA: return entityManaget.find(klass, id.valor); */
 			Constructor<?> constructor = klass.getConstructor(id.klass);
 			return constructor.newInstance(id.valor);
 		} catch (Exception ex) {
@@ -157,19 +163,16 @@ abstract class Objeto {
 class ObjetoEnum extends Objeto {
 	@Override
 	public void set(Class<?> klass, String parametro) throws ReflexaoException {
-		if (!klass.isEnum()) {
+		this.klass = klass;
+		if (ReflexaoUtil.VALOR_NULL.equalsIgnoreCase(parametro)) {
+			valor = null;
 			return;
 		}
-		try {
-			this.klass = klass;
-			Object[] array = klass.getEnumConstants();
-			for (Object item : array) {
-				if (parametro.equals(item.toString())) {
-					valor = item;
-				}
+		Object[] array = klass.getEnumConstants();
+		for (Object item : array) {
+			if (parametro.equals(item.toString())) {
+				valor = item;
 			}
-		} catch (Exception ex) {
-			throw new ReflexaoException("Erro em ObjetoEnum.set ->" + klass + "->" + parametro);
 		}
 	}
 }
@@ -177,15 +180,35 @@ class ObjetoEnum extends Objeto {
 class ObjetoComum extends Objeto {
 	@Override
 	public void set(Class<?> klass, String parametro) throws ReflexaoException {
-		if (klass.isEnum()) {
-			return;
-		}
 		try {
 			this.klass = klass;
+			if (ReflexaoUtil.VALOR_NULL.equalsIgnoreCase(parametro)) {
+				valor = null;
+				return;
+			}
 			Constructor<?> constructor = klass.getConstructor(String.class);
 			valor = constructor.newInstance(parametro);
 		} catch (Exception ex) {
 			throw new ReflexaoException("Erro em ObjetoComum.set ->" + klass + "->" + parametro);
+		}
+	}
+}
+
+class ObjetoDate extends Objeto {
+	@Override
+	public void set(Class<?> klass, String parametro) throws ReflexaoException {
+		try {
+			this.klass = klass;
+			if (ReflexaoUtil.VALOR_NULL.equalsIgnoreCase(parametro)) {
+				valor = null;
+				return;
+			}
+			boolean contemHora = parametro.indexOf(':') != -1;
+			DateFormat format = contemHora ? new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+					: new SimpleDateFormat("dd/MM/yyyy");
+			valor = format.parse(parametro);
+		} catch (Exception ex) {
+			throw new ReflexaoException("Erro em ObjetoDate.set ->" + klass + "->" + parametro);
 		}
 	}
 }
