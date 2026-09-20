@@ -38,7 +38,6 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JComboBox;
@@ -55,6 +54,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Acao;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
@@ -130,7 +130,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 	}
 
 	private void montarLayout() {
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGrupo grupo = new ButtonGrupo();
 		add(BorderLayout.CENTER, new ScrollPane(objetoSuperficie));
 		add(BorderLayout.NORTH, toolbar);
 		grupo.add(btnRotulos);

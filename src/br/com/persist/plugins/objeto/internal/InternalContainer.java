@@ -47,7 +47,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
@@ -82,6 +81,7 @@ import br.com.persist.componente.Acao;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
@@ -1505,7 +1505,7 @@ public class InternalContainer extends Panel
 				private Action limparItensAcao = acaoMenu("label.limpar_itens");
 				private Action nomeReferAcao = acaoMenu("label.nome_apontado");
 				private static final long serialVersionUID = 1L;
-				private ButtonGroup grupo = new ButtonGroup();
+				private ButtonGrupo grupo = new ButtonGrupo();
 				private MenuInfo menuInfo = new MenuInfo();
 				private MenuUtil menuUtil = new MenuUtil();
 				private final transient Pesquisa pesquisa;

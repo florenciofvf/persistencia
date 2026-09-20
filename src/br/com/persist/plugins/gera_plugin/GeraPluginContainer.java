@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
@@ -36,6 +35,7 @@ import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
@@ -171,7 +171,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGrupo grupo = new ButtonGrupo();
 		grupo.add(chkBasico);
 		grupo.add(chkArquivo);
 		grupo.add(chkTabela);

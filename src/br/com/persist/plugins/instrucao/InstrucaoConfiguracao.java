@@ -3,12 +3,12 @@ package br.com.persist.plugins.instrucao;
 import java.awt.BorderLayout;
 import java.awt.Insets;
 
-import javax.swing.ButtonGroup;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.PanelCenter;
@@ -80,7 +80,7 @@ public class InstrucaoConfiguracao extends AbstratoConfiguracao {
 
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
 		PanelCenter panel = new PanelCenter();
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGrupo grupo = new ButtonGrupo();
 		for (int i = 0; i < nomeValores.length; i++) {
 			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
 			radio.setSelected(radio.nomeValor.valor == padrao);

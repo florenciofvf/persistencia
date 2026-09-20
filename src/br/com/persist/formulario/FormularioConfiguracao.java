@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -28,6 +27,7 @@ import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -400,7 +400,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
 		PanelCenter panel = new PanelCenter();
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGrupo grupo = new ButtonGrupo();
 		for (int i = 0; i < nomeValores.length; i++) {
 			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
 			radio.setSelected(radio.nomeValor.valor == padrao);

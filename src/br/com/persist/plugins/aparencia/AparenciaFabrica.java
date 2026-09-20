@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
@@ -18,6 +17,7 @@ import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.formulario.Formulario;
 
 public class AparenciaFabrica extends AbstratoFabricaContainer {
@@ -41,7 +41,7 @@ public class AparenciaFabrica extends AbstratoFabricaContainer {
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		List<JMenuItem> lista = new ArrayList<>();
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGrupo grupo = new ButtonGrupo();
 		for (LookAndFeelInfo info : installedLookAndFeels) {
 			ItemLAF item = new ItemLAF(formulario, info);
 			grupo.add(item);

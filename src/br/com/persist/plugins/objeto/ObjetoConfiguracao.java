@@ -17,7 +17,6 @@ import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
@@ -26,6 +25,7 @@ import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.Atalho;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -51,8 +51,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			false);
 	private final CheckBox chkMoverTopoFormOrigemPesquisa = new CheckBox(
 			ObjetoMensagens.getString("label.mover_topo_form_origem_pesquisa"), false);
-	private final ButtonGroup grupoTiposDestacForm = new ButtonGroup();
-	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
+	private final ButtonGrupo grupoTiposDestacForm = new ButtonGrupo();
+	private final ButtonGrupo grupoTiposContainer = new ButtonGrupo();
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.5", 5, NomeValor.INTERVALO_COMPARA),
@@ -156,7 +156,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
 		PanelCenter panel = new PanelCenter();
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGrupo grupo = new ButtonGrupo();
 		for (int i = 0; i < nomeValores.length; i++) {
 			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
 			radio.setSelected(radio.nomeValor.valor == padrao);

@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
@@ -21,6 +20,7 @@ import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -164,7 +164,7 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
 		PanelCenter panel = new PanelCenter();
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGrupo grupo = new ButtonGrupo();
 		for (int i = 0; i < nomeValores.length; i++) {
 			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
 			radio.setSelected(radio.nomeValor.valor == padrao);
