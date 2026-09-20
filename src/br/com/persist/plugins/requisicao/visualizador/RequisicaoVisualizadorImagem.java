@@ -6,9 +6,9 @@ import java.awt.Rectangle;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -24,7 +24,7 @@ public class RequisicaoVisualizadorImagem extends AbstratoRequisicaoVisualizador
 
 			Panel panel = new Panel();
 			panel.add(BorderLayout.CENTER, new ScrollPane(label));
-			SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
 
 			return panel;
 		} catch (Exception e) {

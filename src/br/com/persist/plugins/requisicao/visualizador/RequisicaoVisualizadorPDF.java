@@ -9,9 +9,9 @@ import java.lang.reflect.Method;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.data.Tipo;
 
@@ -23,7 +23,7 @@ public class RequisicaoVisualizadorPDF extends AbstratoRequisicaoVisualizador {
 			Object objeto = klass.newInstance();
 			JComponent comp = (JComponent) objeto;
 			load(klass, objeto, bytes);
-			SwingUtilities.invokeLater(() -> comp.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> comp.scrollRectToVisible(new Rectangle()));
 			return comp;
 		} catch (Exception e) {
 			Util.mensagem(parent, e.getMessage());

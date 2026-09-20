@@ -21,7 +21,6 @@ import java.awt.event.ItemEvent;
 import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -30,6 +29,7 @@ import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -94,7 +94,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 
 	private void montarLayout() {
 		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 	}
 
@@ -158,7 +158,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 
 		private void setText(String string) {
 			textEditor.setText(string);
-			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 		}
 
 		void setFontTextArea(Font font) {

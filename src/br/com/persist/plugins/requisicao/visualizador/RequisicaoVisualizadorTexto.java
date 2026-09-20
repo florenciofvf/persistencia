@@ -5,9 +5,9 @@ import java.awt.Component;
 import java.awt.Rectangle;
 
 import javax.swing.Icon;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -37,7 +37,7 @@ public class RequisicaoVisualizadorTexto extends AbstratoRequisicaoVisualizador 
 			panelScroll.add(BorderLayout.CENTER, scrollPane2);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 
-			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 
 			return panel;
 		} catch (Exception e) {

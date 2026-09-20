@@ -6,12 +6,12 @@ import java.awt.Rectangle;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -57,7 +57,7 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 			panelScroll.add(BorderLayout.CENTER, scrollPane2);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 
-			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 
 			return panel;
 		} catch (Exception e) {

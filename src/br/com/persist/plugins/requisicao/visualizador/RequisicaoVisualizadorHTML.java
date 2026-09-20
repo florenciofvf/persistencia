@@ -8,11 +8,11 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.JEditorPane;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -43,7 +43,7 @@ public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 			Panel panel = new Panel();
 			panel.add(BorderLayout.NORTH, toolbarPesquisa);
 			panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
-			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 
 			return panel;
 		} catch (Exception e) {

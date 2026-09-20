@@ -33,7 +33,6 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ArgumentoException;
@@ -45,6 +44,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.RequestResult;
 import br.com.persist.assistencia.RequestUtil;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Aba;
 import br.com.persist.componente.Action;
@@ -339,7 +339,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void setValueScrollPane(int value) {
-		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
 	static Action acaoMenu(String chave) {
@@ -555,7 +555,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 		if (checarModo && RequisicaoPreferencia.isAbrirModoTabela() && !ehArquivoReservadoMimes()
 				&& !ehArquivoReservadoIgnorados()) {
-			SwingUtilities.invokeLater(() -> {
+			SwingUtilitario.invokeLater(() -> {
 				toolbar.modoTabelaHandler(true);
 				toolbar.chkModoTabela.setSelected(true);
 			});
@@ -872,7 +872,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 	public void associarMimeVisualizador(String mime, RequisicaoVisualizador visualizador) {
 		poolVisualizador.associar(this, mime, visualizador);
-		SwingUtilities.invokeLater(() -> {
+		SwingUtilitario.invokeLater(() -> {
 			int indice = tabbedPane.getSelectedIndex();
 			if (indice != -1) {
 				tabbedPane.setTitleAt(indice, visualizador.getTitulo());
