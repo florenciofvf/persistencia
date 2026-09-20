@@ -37,7 +37,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.SwingUtilities;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
@@ -58,6 +57,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -147,7 +147,7 @@ class InstrucaoSplit extends SplitPane {
 				panel.setRoot(fichario);
 			}
 		}
-		SwingUtilities.updateComponentTreeUI(panel);
+		SwingUtilitario.updateComponentTreeUI(panel);
 	}
 
 	public void contemConteudo(Set<String> set, String string, boolean porParte) {
@@ -484,7 +484,7 @@ class Aba extends Transferivel {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
@@ -511,7 +511,7 @@ class Aba extends Transferivel {
 	}
 
 	private void setValueScrollPane(int value) {
-		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
 	private class PainelResultado extends Panel {
@@ -531,7 +531,7 @@ class Aba extends Transferivel {
 
 		private void setText(String string) {
 			textEditor.setText(string);
-			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 		}
 	}
 
@@ -545,7 +545,7 @@ class Aba extends Transferivel {
 				InstrucaoCor.clearAttr(editor.getStyledDocument());
 				String texto = editor.getText().trim();
 				if (texto.startsWith("/*abrir_compilar*/")) {
-					SwingUtilities.invokeLater(toolbar::atualizar);
+					SwingUtilitario.invokeLater(toolbar::atualizar);
 				}
 				toolbar.executarAcao.setEnabled(!texto.startsWith("/*montar_arquivo*/"));
 			} catch (Exception ex) {

@@ -17,11 +17,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Aba;
 import br.com.persist.componente.BarraButton;
@@ -52,7 +52,7 @@ public class EntregaPagina extends Panel implements Aba {
 
 	private void montarLayout() {
 		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
+		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.99));
 		add(BorderLayout.CENTER, split);
 		textEditor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
@@ -82,7 +82,7 @@ public class EntregaPagina extends Panel implements Aba {
 	}
 
 	private void setValueScrollPane(int value) {
-		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {

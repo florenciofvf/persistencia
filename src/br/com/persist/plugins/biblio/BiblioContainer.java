@@ -17,13 +17,13 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -157,7 +157,7 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 			if (linhas != null && linhas.length == 1) {
 				int indice = linhas[0];
 				BiblioProvedor.adicionar(biblio, indice);
-				SwingUtilities.invokeLater(() -> tabela.setRowSelectionInterval(indice, indice));
+				SwingUtilitario.invokeLater(() -> tabela.setRowSelectionInterval(indice, indice));
 			} else {
 				BiblioProvedor.adicionar(biblio);
 			}
