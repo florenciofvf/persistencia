@@ -149,6 +149,7 @@ public class SetLista {
 class Item implements Comparable<Item> {
 	private final String rotulo;
 	private boolean selecionado;
+	boolean ascendente;
 	private int tag;
 
 	public Item(String rotulo, boolean sel) {
@@ -214,7 +215,7 @@ class Item implements Comparable<Item> {
 
 	@Override
 	public int compareTo(Item o) {
-		return rotulo.compareTo(o.rotulo);
+		return ascendente ? rotulo.compareTo(o.rotulo) : o.rotulo.compareTo(rotulo);
 	}
 }
 
@@ -397,6 +398,9 @@ class SetListaDialogo extends AbstratoDialogo {
 
 		private void ordenar() {
 			List<Item> listaItem = ((SetListaModelo) lista.getModel()).getListaItem();
+			for (Item item : listaItem) {
+				item.ascendente = !item.ascendente;
+			}
 			Collections.sort(listaItem);
 			lista.setModel(new SetListaModelo(listaItem, config));
 		}
