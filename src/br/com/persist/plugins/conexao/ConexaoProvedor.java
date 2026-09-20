@@ -10,12 +10,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JComboBox;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
@@ -204,13 +204,13 @@ public class ConexaoProvedor {
 		return CONEXOES.get(conexao);
 	}
 
-	public static JComboBox<Conexao> criarComboConexao(Conexao padrao) {
+	public static ComboBox<Conexao> criarComboConexao(Conexao padrao) {
 		Combo combo = new Combo(new ConexaoComboModelo(lista));
 		combo.setSelectedItem(padrao);
 		return combo;
 	}
 
-	private static class Combo extends JComboBox<Conexao> implements PopupMenuListener {
+	private static class Combo extends ComboBox<Conexao> implements PopupMenuListener {
 		private static final long serialVersionUID = 1L;
 		private int total;
 

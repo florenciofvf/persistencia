@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
@@ -43,6 +42,7 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.StringComboModelo;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.main.Main;
@@ -75,8 +75,8 @@ public class Formulario extends JFrame implements PluginBasico {
 		return enderecosAbsolutos;
 	}
 
-	public static JComboBox<String> criarComboEnderecosAbsolutos() {
-		return new JComboBox<>(new StringComboModelo(enderecosAbsolutos));
+	public static ComboBox<String> criarComboEnderecosAbsolutos() {
+		return new ComboBox<>(new StringComboModelo(enderecosAbsolutos));
 	}
 
 	public void atualizarTitulo() {

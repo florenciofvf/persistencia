@@ -49,7 +49,6 @@ import java.util.stream.Collectors;
 
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
@@ -85,6 +84,7 @@ import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Menu;
@@ -195,7 +195,7 @@ public class InternalContainer extends Panel
 	private ScrollPane scrollPane = new ScrollPane();
 	private static final long serialVersionUID = 1L;
 	private transient InternalConfig internalConfig;
-	private final JComboBox<Conexao> comboConexao;
+	private final ComboBox<Conexao> comboConexao;
 	private boolean scrollHorizontalVisivel;
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;

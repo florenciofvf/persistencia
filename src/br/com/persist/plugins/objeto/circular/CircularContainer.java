@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JComboBox;
-
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Vetor;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -31,12 +30,12 @@ public class CircularContainer extends Panel implements PluginBasico {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
-	private final JComboBox<Objeto> comboObjeto;
-	private final JComboBox<Tipo> comboTipo;
+	private final ComboBox<Objeto> comboObjeto;
+	private final ComboBox<Tipo> comboTipo;
 
 	public CircularContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Tipo tipo) {
 		comboObjeto = ObjetoSuperficieUtil.criarComboObjetosSel(objetoSuperficie);
-		comboTipo = new JComboBox<>(Tipo.values());
+		comboTipo = new ComboBox<>(Tipo.values());
 		this.objetoSuperficie = objetoSuperficie;
 		comboTipo.setSelectedItem(tipo);
 		toolbar.ini(janela);

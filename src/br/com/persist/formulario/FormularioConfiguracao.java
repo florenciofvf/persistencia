@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
@@ -29,6 +28,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
@@ -55,8 +55,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkFicharioScroll = criarCheckBox("label.fichario_scroll");
 	private final CheckBox chkDesenharERTEditor = criarCheckBox("label.desenhar_ERT");
 	private final CheckBox chkTituloAbaMin = criarCheckBox("label.titulo_aba_min");
-	private JComboBox<String> comboSize = new JComboBox<>(TAMANHOS);
-	private JComboBox<String> comboFontes = new JComboBox<>(FONTES);
+	private ComboBox<String> comboSize = new ComboBox<>(TAMANHOS);
+	private ComboBox<String> comboFontes = new ComboBox<>(FONTES);
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDimensaoMensagem = new TextField();
 	private final TextField txtDefinirLargura = new TextField();

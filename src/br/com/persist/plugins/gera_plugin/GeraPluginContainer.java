@@ -20,7 +20,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
@@ -37,6 +36,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -51,7 +51,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class GeraPluginContainer extends AbstratoContainer implements PluginBasico {
-	private JComboBox<Icone> cmbIconePlugin = new JComboBox<>(arrayObjetoIcone());
+	private ComboBox<Icone> comboIconePlugin = new ComboBox<>(arrayObjetoIcone());
 	private CheckBox chkComConfiguracao = criarCheckBox("label.com_configuracao");
 	private CheckBox chkComClasseUtil = criarCheckBox("label.com_classe_util");
 	private CheckBox chkComException = criarCheckBox("label.com_exception");
@@ -80,7 +80,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 
 	public GeraPluginContainer(Janela janela, Formulario formulario) {
 		super(formulario);
-		cmbIconePlugin.setRenderer(new ItemRenderer());
+		comboIconePlugin.setRenderer(new ItemRenderer());
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -188,7 +188,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		muro.camada(Muro.panelGrid(labelTextField("label.nome_min_plugin", txtMinimPlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.pacote_plugin", txtPacotePlugin)));
 		muro.camada(Muro.panelGrid(labelTextField("label.diretorio_recursos", txtDiretorioRecursos)));
-		muro.camada(Muro.panelGrid(labelComboBox("label.icone_plugin", cmbIconePlugin)));
+		muro.camada(Muro.panelGrid(labelComboBox("label.icone_plugin", comboIconePlugin)));
 		muro.camada(criarCamada(chkComConfiguracao, chkComClasseUtil, chkComException));
 		muro.camada(criarCamada(chkComProvedor, chkComListener, chkComDialogo));
 		muro.camada(criarCamada(chkComHandler, chkComModelo));
@@ -232,7 +232,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		return panel;
 	}
 
-	private Panel labelComboBox(String chaveRotulo, JComboBox<?> combo) {
+	private Panel labelComboBox(String chaveRotulo, ComboBox<?> combo) {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.WEST, criarLabel(chaveRotulo));
 		panel.add(BorderLayout.CENTER, combo);
@@ -465,7 +465,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		config.nameDecap = nome.substring(0, 1).toLowerCase() + nome.substring(1);
 		config.nameUpper = nome.toUpperCase();
 		config.nameLower = nome.toLowerCase();
-		Icone icone = (Icone) cmbIconePlugin.getSelectedItem();
+		Icone icone = (Icone) comboIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.comConfiguracao = chkComConfiguracao.isSelected();
 		config.comDialogo = chkComDialogo.isSelected();

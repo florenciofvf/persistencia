@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.Icon;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
@@ -48,6 +47,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
@@ -76,7 +76,7 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
 	private final Label labelStatus = new Label();
-	private final JComboBox<Conexao> comboConexao;
+	private final ComboBox<Conexao> comboConexao;
 	private ConsultaDialogo consultaDialogo;
 	private final File fileParent;
 	private final File file;
