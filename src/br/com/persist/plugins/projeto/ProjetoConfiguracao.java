@@ -13,12 +13,12 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
-import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
@@ -36,10 +36,10 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
 
 	private final transient NomeValor[] posicoes = {
-			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
-			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
-			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
-			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
+			new NomeValor("label.acima", SwingConstantes.TOP, NomeValor.POSICAO_ABA),
+			new NomeValor("label.esquerdo", SwingConstantes.LEFT, NomeValor.POSICAO_ABA),
+			new NomeValor("label.abaixo", SwingConstantes.BOTTOM, NomeValor.POSICAO_ABA),
+			new NomeValor("label.direito", SwingConstantes.RIGHT, NomeValor.POSICAO_ABA) };
 
 	public ProjetoConfiguracao(Formulario formulario) {
 		super(formulario, ProjetoMensagens.getString("label.plugin_projeto"));
@@ -100,8 +100,8 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 			labelCorAtualView.setForeground(ProjetoPreferencia.getCorElementoFinalView());
 			labelCorAtualRest.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			labelCorAtualView.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			labelCorAtualRest.setHorizontalAlignment(SwingConstants.CENTER);
-			labelCorAtualView.setHorizontalAlignment(SwingConstants.CENTER);
+			labelCorAtualRest.setHorizontalAlignment(SwingConstantes.CENTER);
+			labelCorAtualView.setHorizontalAlignment(SwingConstantes.CENTER);
 			labelCorAtualRest.addMouseListener(mouseInner);
 			labelCorAtualView.addMouseListener(mouseInner);
 		}
@@ -131,13 +131,13 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String chaveRotulo) {
 		Label label = new Label(ProjetoMensagens.getString(chaveRotulo), false);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setHorizontalAlignment(SwingConstantes.CENTER);
 		return label;
 	}
 
 	private Label criarLabelTitulo(String rotulo, boolean chaveRotulo) {
 		Label label = new Label(rotulo, chaveRotulo);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setHorizontalAlignment(SwingConstantes.CENTER);
 		return label;
 	}
 

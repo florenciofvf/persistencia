@@ -2,8 +2,7 @@ package br.com.persist.plugins.mapa;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class MapaPreferencia {
@@ -15,7 +14,7 @@ public class MapaPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		mapaPosicaoAbaFichario = pref.getInt("mapa_posicao_aba_fichario", SwingConstants.TOP);
+		mapaPosicaoAbaFichario = pref.getInt("mapa_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("mapa_exibir_arq_ignorados", false);
 	}
 

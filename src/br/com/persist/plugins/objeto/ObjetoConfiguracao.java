@@ -18,12 +18,12 @@ import java.util.Map;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
-import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.Atalho;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.ComboBox;
@@ -201,7 +201,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String chaveRotulo) {
 		Label label = new Label(ObjetoMensagens.getString(chaveRotulo), false);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setHorizontalAlignment(SwingConstantes.CENTER);
 		return label;
 	}
 
@@ -276,9 +276,9 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			labelBuscarTotal.setForeground(ObjetoPreferencia.getCorTotalAtual());
 			labelComparacao.setForeground(ObjetoPreferencia.getCorComparaRec());
-			labelAntesProcessar.setHorizontalAlignment(SwingConstants.CENTER);
-			labelBuscarTotal.setHorizontalAlignment(SwingConstants.CENTER);
-			labelComparacao.setHorizontalAlignment(SwingConstants.CENTER);
+			labelAntesProcessar.setHorizontalAlignment(SwingConstantes.CENTER);
+			labelBuscarTotal.setHorizontalAlignment(SwingConstantes.CENTER);
+			labelComparacao.setHorizontalAlignment(SwingConstantes.CENTER);
 			labelAntesProcessar.addMouseListener(mouseInner);
 			labelBuscarTotal.addMouseListener(mouseInner);
 			labelComparacao.addMouseListener(mouseInner);

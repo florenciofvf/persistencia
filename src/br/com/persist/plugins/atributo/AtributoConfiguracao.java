@@ -7,12 +7,12 @@ import java.awt.event.FocusEvent;
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
@@ -29,10 +29,10 @@ public class AtributoConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
 
 	private final transient NomeValor[] posicoes = {
-			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
-			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
-			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
-			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
+			new NomeValor("label.acima", SwingConstantes.TOP, NomeValor.POSICAO_ABA),
+			new NomeValor("label.esquerdo", SwingConstantes.LEFT, NomeValor.POSICAO_ABA),
+			new NomeValor("label.abaixo", SwingConstantes.BOTTOM, NomeValor.POSICAO_ABA),
+			new NomeValor("label.direito", SwingConstantes.RIGHT, NomeValor.POSICAO_ABA) };
 
 	public AtributoConfiguracao(Formulario formulario) {
 		super(formulario, AtributoMensagens.getString("label.plugin_atributo"));
@@ -83,7 +83,7 @@ public class AtributoConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String rotulo, boolean chaveRotulo) {
 		Label label = new Label(rotulo, chaveRotulo);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setHorizontalAlignment(SwingConstantes.CENTER);
 		return label;
 	}
 

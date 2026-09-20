@@ -2,8 +2,7 @@ package br.com.persist.plugins.robo;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class RoboPreferencia {
@@ -15,7 +14,7 @@ public class RoboPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		roboPosicaoAbaFichario = pref.getInt("robo_posicao_aba_fichario", SwingConstants.TOP);
+		roboPosicaoAbaFichario = pref.getInt("robo_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("robo_exibir_arq_ignorados", false);
 	}
 

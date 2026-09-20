@@ -32,7 +32,6 @@ import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -43,6 +42,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -264,7 +264,7 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 		private Box criarLinha(String rotulo, boolean chaveRotulo, JComponent componente) {
 			Box box = Box.createHorizontalBox();
 			Label label = new Label(rotulo, chaveRotulo);
-			label.setHorizontalAlignment(SwingConstants.RIGHT);
+			label.setHorizontalAlignment(SwingConstantes.RIGHT);
 			label.setPreferredSize(new Dimension(160, 0));
 			label.setMinimumSize(new Dimension(160, 0));
 			box.add(label);

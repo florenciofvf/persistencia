@@ -3,8 +3,7 @@ package br.com.persist.plugins.projeto;
 import java.awt.Color;
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class ProjetoPreferencia {
@@ -21,7 +20,7 @@ public class ProjetoPreferencia {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		corElementoFinalRest = new Color(pref.getInt("cor_elemento_final_rest", Color.BLACK.getRGB()));
 		corElementoFinalView = new Color(pref.getInt("cor_elemento_final_view", Color.BLACK.getRGB()));
-		projetoPosicaoAbaFichario = pref.getInt("projeto_posicao_aba_fichario", SwingConstants.TOP);
+		projetoPosicaoAbaFichario = pref.getInt("projeto_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("projeto_exibir_arq_ignorados", false);
 		dirPadraoSelecaoArquivos = pref.get("projeto_dir_padrao_sel_arquivos", "");
 	}

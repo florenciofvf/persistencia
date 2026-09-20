@@ -3,11 +3,10 @@ package br.com.persist.plugins.sistema;
 import java.awt.BorderLayout;
 import java.awt.Insets;
 
-import javax.swing.SwingConstants;
-
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
@@ -20,10 +19,10 @@ public class SistemaConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
 
 	private final transient NomeValor[] posicoes = {
-			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
-			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
-			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
-			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
+			new NomeValor("label.acima", SwingConstantes.TOP, NomeValor.POSICAO_ABA),
+			new NomeValor("label.esquerdo", SwingConstantes.LEFT, NomeValor.POSICAO_ABA),
+			new NomeValor("label.abaixo", SwingConstantes.BOTTOM, NomeValor.POSICAO_ABA),
+			new NomeValor("label.direito", SwingConstantes.RIGHT, NomeValor.POSICAO_ABA) };
 
 	public SistemaConfiguracao(Formulario formulario) {
 		super(formulario, SistemaMensagens.getString("label.plugin_sistema"));
@@ -53,7 +52,7 @@ public class SistemaConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String rotulo, boolean chaveRotulo) {
 		Label label = new Label(rotulo, chaveRotulo);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setHorizontalAlignment(SwingConstantes.CENTER);
 		return label;
 	}
 

@@ -15,7 +15,6 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import br.com.persist.componente.TextEditor;
@@ -70,8 +69,8 @@ public class Preferencias {
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
 		desenharEspacoRetornoTab = pref.getBoolean("desenhar_espaco_retorno_tab", false);
 		TextEditor.setPaintERT(desenharEspacoRetornoTab);
+		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", SwingConstantes.TOP);
 		fecharComESCFormulario = pref.getBoolean("fechar_com_ESC_formulario", false);
-		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", SwingConstants.TOP);
 		abrirFormularioDireita = pref.getBoolean("abrir_formulario_direita", false);
 		abrirFormularioAbaixo = pref.getBoolean("abrir_formulario_abaixo", false);
 		fecharComESCInternal = pref.getBoolean("fechar_com_ESC_internal", false);

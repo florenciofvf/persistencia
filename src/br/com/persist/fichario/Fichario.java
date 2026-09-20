@@ -36,7 +36,6 @@ import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -88,7 +87,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		addChangeListener(navegacaoListener);
 	}
 
-	public class Navegacao extends BasicArrowButton implements UIResource, SwingConstants {
+	public class Navegacao extends BasicArrowButton implements UIResource {
 		private static final long serialVersionUID = 1L;
 		final int tipo;
 

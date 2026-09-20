@@ -2,8 +2,7 @@ package br.com.persist.plugins.execucao;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class ExecucaoPreferencia {
@@ -15,7 +14,7 @@ public class ExecucaoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		execucaoPosicaoAbaFichario = pref.getInt("execucao_posicao_aba_fichario", SwingConstants.TOP);
+		execucaoPosicaoAbaFichario = pref.getInt("execucao_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("execucao_exibir_arq_ignorados", false);
 	}
 

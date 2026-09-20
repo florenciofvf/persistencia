@@ -2,8 +2,7 @@ package br.com.persist.plugins.anotacao;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class AnotacaoPreferencia {
@@ -15,7 +14,7 @@ public class AnotacaoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		anotacaoPosicaoAbaFichario = pref.getInt("anotacao_posicao_aba_fichario", SwingConstants.TOP);
+		anotacaoPosicaoAbaFichario = pref.getInt("anotacao_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("anotacao_exibir_arq_ignorados", false);
 	}
 

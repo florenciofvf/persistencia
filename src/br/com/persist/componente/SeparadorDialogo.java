@@ -8,12 +8,12 @@ import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.assistencia.Util;
 
 public class SeparadorDialogo extends AbstratoDialogo {
@@ -85,7 +85,7 @@ class SeparadorContainer extends Panel {
 
 	private void montarLayout() {
 		Label label = new Label("label.separador");
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		label.setHorizontalAlignment(SwingConstantes.RIGHT);
 		setLayout(new GridLayout(1, 0));
 		btnCopiar.setIcon(Icones.COPIA);
 		label.setIcon(Icones.SEPARADOR);

@@ -2,8 +2,7 @@ package br.com.persist.plugins.atributo;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class AtributoPreferencia {
@@ -16,7 +15,7 @@ public class AtributoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		atributoPosicaoAbaFichario = pref.getInt("atributo_posicao_aba_fichario", SwingConstants.TOP);
+		atributoPosicaoAbaFichario = pref.getInt("atributo_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("atributo_exibir_arq_ignorados", false);
 		dirPadraoSelecaoArquivos = pref.get("atributo_dir_padrao_sel_arquivos", "");
 	}

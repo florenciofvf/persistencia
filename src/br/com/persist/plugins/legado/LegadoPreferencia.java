@@ -2,8 +2,7 @@ package br.com.persist.plugins.legado;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class LegadoPreferencia {
@@ -15,7 +14,7 @@ public class LegadoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		legadoPosicaoAbaFichario = pref.getInt("legado_posicao_aba_fichario", SwingConstants.TOP);
+		legadoPosicaoAbaFichario = pref.getInt("legado_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("legado_exibir_arq_ignorados", false);
 	}
 

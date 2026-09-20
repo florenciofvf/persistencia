@@ -16,7 +16,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.Atalho;
@@ -24,6 +23,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
@@ -65,10 +65,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final TextField txtFormDialogo = new TextField();
 	private static final long serialVersionUID = 1L;
 	private final transient NomeValor[] posicoes = {
-			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
-			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
-			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
-			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
+			new NomeValor("label.acima", SwingConstantes.TOP, NomeValor.POSICAO_ABA),
+			new NomeValor("label.esquerdo", SwingConstantes.LEFT, NomeValor.POSICAO_ABA),
+			new NomeValor("label.abaixo", SwingConstantes.BOTTOM, NomeValor.POSICAO_ABA),
+			new NomeValor("label.direito", SwingConstantes.RIGHT, NomeValor.POSICAO_ABA) };
 
 	public FormularioConfiguracao(Formulario formulario) {
 		super(formulario, Mensagens.getTituloAplicacao());
@@ -302,7 +302,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String rotulo, boolean chaveRotulo) {
 		Label label = new Label(rotulo, chaveRotulo);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setHorizontalAlignment(SwingConstantes.CENTER);
 		return label;
 	}
 

@@ -2,8 +2,7 @@ package br.com.persist.plugins.sistema;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class SistemaPreferencia {
@@ -15,7 +14,7 @@ public class SistemaPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		sistemaPosicaoAbaFichario = pref.getInt("sistema_posicao_aba_fichario", SwingConstants.TOP);
+		sistemaPosicaoAbaFichario = pref.getInt("sistema_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("sistema_exibir_arq_ignorados", false);
 	}
 

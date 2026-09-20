@@ -6,11 +6,10 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.GridLayout;
 
-import javax.swing.SwingConstants;
-
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Label;
@@ -68,12 +67,12 @@ class SufixoDialogo extends AbstratoDialogo {
 			super(new GridLayout(10, 0));
 			for (ChaveIcone item : MapaSufixos.getLista()) {
 				Label label = new Label("_" + item.chave, false);
-				label.setHorizontalAlignment(SwingConstants.CENTER);
+				label.setHorizontalAlignment(SwingConstantes.CENTER);
 				label.setIcon(item.icone);
 				add(label);
 			}
 			Label label = new Label("isFile", false);
-			label.setHorizontalAlignment(SwingConstants.CENTER);
+			label.setHorizontalAlignment(SwingConstantes.CENTER);
 			label.setIcon(Icones.TEXTO);
 			add(label);
 		}

@@ -2,8 +2,7 @@ package ###package###;
 
 import java.util.prefs.Preferences;
 
-import javax.swing.SwingConstants;
-
+import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.formulario.Formulario;
 
 public class ###nameCap###Preferencia {
@@ -15,7 +14,7 @@ public class ###nameCap###Preferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		###nameLower###PosicaoAbaFichario = pref.getInt("###nameLower###_posicao_aba_fichario", SwingConstants.TOP);
+		###nameLower###PosicaoAbaFichario = pref.getInt("###nameLower###_posicao_aba_fichario", SwingConstantes.TOP);
 		exibirArqIgnorados = pref.getBoolean("###nameLower###_exibir_arq_ignorados", false);
 	}
 
