@@ -9,12 +9,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import br.com.persist.assistencia.ArgumentoException;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
@@ -62,7 +61,7 @@ public class AbaView extends Panel implements ContainerTreeListener {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(ExecucaoConstantes.PAINEL_EXECUCAO, ex, AbaView.this);
 		}
-		SwingUtilities.updateComponentTreeUI(this);
+		SwingUtilitario.updateComponentTreeUI(this);
 	}
 
 	@Override

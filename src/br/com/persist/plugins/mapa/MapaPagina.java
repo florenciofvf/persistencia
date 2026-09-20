@@ -17,11 +17,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Aba;
 import br.com.persist.componente.BarraButton;
@@ -84,7 +84,7 @@ public class MapaPagina extends Panel implements Aba {
 		}
 
 		void setValueScrollPane(int value) {
-			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+			SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 		}
 
 		String getConteudo() {

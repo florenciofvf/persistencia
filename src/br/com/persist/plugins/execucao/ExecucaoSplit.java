@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.TreePath;
 
@@ -32,6 +31,7 @@ import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -115,7 +115,7 @@ class ExecucaoSplit extends SplitPane {
 				panel.setRoot(fichario);
 			}
 		}
-		SwingUtilities.updateComponentTreeUI(panel);
+		SwingUtilitario.updateComponentTreeUI(panel);
 	}
 
 	public void contemConteudo(Set<String> set, String string, boolean porParte) {

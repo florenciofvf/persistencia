@@ -23,7 +23,6 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -31,6 +30,7 @@ import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
@@ -197,7 +197,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		ScrollPane scrollPane = new ScrollPane(textEditor);
 		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
 		SplitPane split = new SplitPane(SplitPane.VERTICAL, muro, scrollPane);
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 
 		buttonGerar.setIcon(Icones.EXECUTAR);

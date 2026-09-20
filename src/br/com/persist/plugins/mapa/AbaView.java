@@ -22,10 +22,10 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -69,7 +69,7 @@ public class AbaView extends Panel {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, AbaView.this);
 		}
-		SwingUtilities.updateComponentTreeUI(this);
+		SwingUtilitario.updateComponentTreeUI(this);
 	}
 
 	private void configuracoes() {

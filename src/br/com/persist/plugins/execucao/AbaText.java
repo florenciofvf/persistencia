@@ -12,12 +12,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
@@ -54,7 +54,7 @@ public class AbaText extends Panel {
 	}
 
 	void setValueScrollPane(int value) {
-		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
 	String getConteudo() {
