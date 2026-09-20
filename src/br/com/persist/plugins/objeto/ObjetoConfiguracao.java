@@ -18,7 +18,6 @@ import java.util.Map;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
@@ -27,6 +26,7 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
@@ -34,7 +34,7 @@ import br.com.persist.componente.RadioButton;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
-	private final JComboBox<String> cmbNivelTransparencia = new JComboBox<>(ObjetoConstantes.NIVEIS_TRANSPARENCIA_FORM);
+	private final ComboBox<String> cmbNivelTransparencia = new ComboBox<>(ObjetoConstantes.NIVEIS_TRANSPARENCIA_FORM);
 	private final CheckBox chkMouseWheelTitleFormInternalTopDown = new CheckBox(
 			ObjetoMensagens.getString("label.mouseWheelTitleFormInternalTopDown"), false);
 	private final CheckBox chkExibirTotalColunasTabela = new CheckBox(

@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.swing.Icon;
-import javax.swing.JComboBox;
 import javax.swing.JProgressBar;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -40,6 +39,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
@@ -61,11 +61,11 @@ import br.com.persist.plugins.persistencia.PersistenciaException;
 
 public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener, PluginArquivo {
 	private static final File file = new File(MetadadoConstantes.METADADOS);
-	private final JComboBox<Conexao> comboConexaoDireita;
+	private final ComboBox<Conexao> comboConexaoDireita;
 	private static final long serialVersionUID = 1L;
 	private MetadadoFormulario metadadoFormulario;
 	private final Toolbar toolbar = new Toolbar();
-	private final JComboBox<Conexao> comboConexao;
+	private final ComboBox<Conexao> comboConexao;
 	private final MetadadoTree metadadoTree;
 	private MetadadoDialogo metadadoDialogo;
 

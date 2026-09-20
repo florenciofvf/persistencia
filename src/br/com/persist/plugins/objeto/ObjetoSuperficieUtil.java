@@ -11,11 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Label;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
@@ -250,8 +250,8 @@ public class ObjetoSuperficieUtil {
 		return resp;
 	}
 
-	public static JComboBox<Objeto> criarComboObjetosSel(ObjetoSuperficie superficie) {
-		return new JComboBox<>(new ObjetoComboModelo(ObjetoSuperficieUtil.getSelecionados(superficie)));
+	public static ComboBox<Objeto> criarComboObjetosSel(ObjetoSuperficie superficie) {
+		return new ComboBox<>(new ObjetoComboModelo(ObjetoSuperficieUtil.getSelecionados(superficie)));
 	}
 
 	public static ArquivoVinculo criarArquivoVinculo(ObjetoSuperficie superficie) {

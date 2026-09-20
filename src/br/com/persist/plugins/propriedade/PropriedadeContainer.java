@@ -21,7 +21,6 @@ import java.awt.event.ItemEvent;
 import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -34,6 +33,7 @@ import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -190,7 +190,7 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 	}
 
 	protected class Toolbar extends BarraButton implements ActionListener {
-		private JComboBox<String> comboFontes = new JComboBox<>(PropriedadeConstantes.FONTES);
+		private ComboBox<String> comboFontes = new ComboBox<>(PropriedadeConstantes.FONTES);
 		private Action gerarAcao = acaoIcon("label.gerar_conteudo", Icones.EXECUTAR);
 		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;

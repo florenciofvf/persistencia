@@ -40,7 +40,6 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.Icon;
 import javax.swing.InputMap;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -58,6 +57,7 @@ import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.MenuItem;
@@ -91,7 +91,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 	private final ObjetoSuperficieExt objetoSuperficie;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
-	private final JComboBox<Conexao> comboConexao;
+	private final ComboBox<Conexao> comboConexao;
 	private ObjetoFormulario objetoFormulario;
 	private ObjetoDialogo objetoDialogo;
 	private String tituloTemporario;

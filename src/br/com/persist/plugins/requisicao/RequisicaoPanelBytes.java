@@ -9,13 +9,13 @@ import java.io.InputStream;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
 
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.data.Tipo;
@@ -70,7 +70,7 @@ public class RequisicaoPanelBytes extends Panel {
 	}
 
 	private class BarraInfo extends JToolBar {
-		private JComboBox<RequisicaoVisualizador> cmbVisualizador = new JComboBox<>();
+		private ComboBox<RequisicaoVisualizador> cmbVisualizador = new ComboBox<>();
 		private Label labelVisualizador = new Label("label.visualizador");
 		private Button btnBaixar = new Button("label.baixar");
 		private static final long serialVersionUID = 1L;

@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.Icon;
-import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -43,6 +42,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -66,7 +66,7 @@ public class UpdateContainer extends AbstratoContainer implements PluginBasico {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Label labelStatus = new Label();
-	private final JComboBox<Conexao> comboConexao;
+	private final ComboBox<Conexao> comboConexao;
 	private UpdateFormulario updateFormulario;
 	private UpdateDialogo updateDialogo;
 	private final File fileParent;

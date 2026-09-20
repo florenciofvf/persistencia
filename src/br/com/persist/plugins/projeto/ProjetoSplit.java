@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -51,6 +50,7 @@ import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -369,7 +369,7 @@ class Editor extends TextEditor {
 }
 
 class Aba extends Transferivel implements ItemListener {
-	private final JComboBox<String> comboEnderecosAbsolutos;
+	private final ComboBox<String> comboEnderecosAbsolutos;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Editor editor = new Editor();
