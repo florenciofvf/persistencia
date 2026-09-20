@@ -8,7 +8,6 @@ import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -16,6 +15,7 @@ import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.formulario.Formulario;
@@ -70,7 +70,7 @@ class ItemLAF extends JRadioButtonMenuItem {
 	private void processar() {
 		try {
 			UIManager.setLookAndFeel(classe);
-			SwingUtilities.updateComponentTreeUI(formulario);
+			SwingUtilitario.updateComponentTreeUI(formulario);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(getClass().getName(), ex, formulario);
 		}

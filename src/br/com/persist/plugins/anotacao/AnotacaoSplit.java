@@ -24,7 +24,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
 
 import org.xml.sax.Attributes;
@@ -40,6 +39,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
@@ -123,7 +123,7 @@ class AnotacaoSplit extends SplitPane {
 				panel.setRoot(fichario);
 			}
 		}
-		SwingUtilities.updateComponentTreeUI(panel);
+		SwingUtilitario.updateComponentTreeUI(panel);
 	}
 
 	public void contemConteudo(Set<String> set, String string, boolean porParte) {

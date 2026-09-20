@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.PluginBasico;
@@ -41,6 +40,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.StringComboModelo;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ComboBox;
 import br.com.persist.fichario.Fichario;
@@ -270,7 +270,7 @@ public class Formulario extends JFrame implements PluginBasico {
 					add(m.criarMenu(Formulario.this));
 				}
 				Collections.sort(servicos, (o1, o2) -> o1.getOrdem() - o2.getOrdem());
-				SwingUtilities.updateComponentTreeUI(this);
+				SwingUtilitario.updateComponentTreeUI(this);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("CARREGAR MENU: " + file.getAbsolutePath(), ex, Formulario.this);
 			}

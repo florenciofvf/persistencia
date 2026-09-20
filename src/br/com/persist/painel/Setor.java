@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.dnd.DropTargetDropEvent;
 
-import javax.swing.SwingUtilities;
+import br.com.persist.assistencia.SwingUtilitario;
 
 class Setor {
 	int lado = 20;
@@ -114,7 +114,7 @@ class Setor {
 			posParent(parent, Separador.horizontal(objeto, dropTarget));
 		}
 		dropTarget = null;
-		SwingUtilities.updateComponentTreeUI(parent);
+		SwingUtilitario.updateComponentTreeUI(parent);
 	}
 
 	void preParent(Container parent, Component dropTarget) throws SeparadorException {

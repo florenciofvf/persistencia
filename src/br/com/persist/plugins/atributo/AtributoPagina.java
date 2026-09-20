@@ -26,13 +26,13 @@ import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.StringPool;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Aba;
 import br.com.persist.componente.Action;
@@ -88,7 +88,7 @@ public class AtributoPagina extends Panel implements Aba {
 
 	private void montarLayout() {
 		SplitPane split = new SplitPane(SplitPane.HORIZONTAL, painelAtributo, painelFichario);
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.33));
+		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.33));
 		add(BorderLayout.CENTER, split);
 	}
 
@@ -142,7 +142,7 @@ public class AtributoPagina extends Panel implements Aba {
 
 		private void montarLayout() {
 			SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanelTextArea(), criarPanelTabela());
-			SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+			SwingUtilitario.invokeLater(() -> split.setDividerLocation(.5));
 			add(BorderLayout.NORTH, toolbar);
 			add(BorderLayout.CENTER, split);
 		}
@@ -173,7 +173,7 @@ public class AtributoPagina extends Panel implements Aba {
 		}
 
 		private void setValueScrollPane(int value) {
-			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+			SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 		}
 
 		private class Toolbar extends BarraButton implements ActionListener {
@@ -285,7 +285,7 @@ public class AtributoPagina extends Panel implements Aba {
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(AtributoConstantes.PAINEL_ATRIBUTO, ex, this);
 				}
-				SwingUtilities.updateComponentTreeUI(this);
+				SwingUtilitario.updateComponentTreeUI(this);
 			}
 
 			private void lerArquivo() {

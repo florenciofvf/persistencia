@@ -3,9 +3,10 @@ package br.com.persist.plugins.anexo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
+
+import br.com.persist.assistencia.SwingUtilitario;
 
 public class AnexoTreeUtil {
 	private AnexoTreeUtil() {
@@ -44,7 +45,7 @@ public class AnexoTreeUtil {
 		}
 		modelo.treeNodesRemoved(event);
 		anexoTree.setSelectionPath(null);
-		SwingUtilities.updateComponentTreeUI(anexoTree);
+		SwingUtilitario.updateComponentTreeUI(anexoTree);
 	}
 
 	public static void selecionarObjeto(AnexoTree anexoTree, Anexo anexo) {
@@ -53,6 +54,6 @@ public class AnexoTreeUtil {
 		anexoTree.makeVisible(path);
 		anexoTree.setSelectionPath(path);
 		anexoTree.scrollPathToVisible(path);
-		SwingUtilities.updateComponentTreeUI(anexoTree);
+		SwingUtilitario.updateComponentTreeUI(anexoTree);
 	}
 }

@@ -14,8 +14,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.Map;
 
-import javax.swing.SwingUtilities;
-
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.marca.XMLUtil;
@@ -31,7 +30,7 @@ public class Separador extends SplitPane implements FicharioListener {
 	public Separador(int orientation, Component left, Component right) {
 		super(orientation, get(left), get(right));
 		new DropTarget(this, dropTargetListener);
-		SwingUtilities.invokeLater(() -> setDividerLocation(0.5));
+		SwingUtilitario.invokeLater(() -> setDividerLocation(0.5));
 	}
 
 	private static Component get(Component c) {
@@ -45,11 +44,11 @@ public class Separador extends SplitPane implements FicharioListener {
 	}
 
 	public static Separador horizontal(Component left, Component right) {
-		return new Separador(HORIZONTAL_SPLIT, left, right);
+		return new Separador(SplitPane.HORIZONTAL, left, right);
 	}
 
 	public static Separador vertical(Component left, Component right) {
-		return new Separador(VERTICAL_SPLIT, left, right);
+		return new Separador(SplitPane.VERTICAL, left, right);
 	}
 
 	@Override
@@ -181,7 +180,7 @@ public class Separador extends SplitPane implements FicharioListener {
 			parent.remove(this);
 			parent.add(novo);
 		}
-		SwingUtilities.updateComponentTreeUI(parent);
+		SwingUtilitario.updateComponentTreeUI(parent);
 	}
 
 	@Override
