@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
 
 import org.xml.sax.Attributes;
@@ -47,6 +46,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -157,7 +157,7 @@ class ProjetoSplit extends SplitPane {
 				panel.setRoot(fichario);
 			}
 		}
-		SwingUtilities.updateComponentTreeUI(panel);
+		SwingUtilitario.updateComponentTreeUI(panel);
 	}
 
 	public void contemConteudo(Set<String> set, String string, boolean porParte) {

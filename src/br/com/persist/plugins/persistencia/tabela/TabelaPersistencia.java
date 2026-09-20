@@ -24,13 +24,13 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Valor;
@@ -279,7 +279,7 @@ public class TabelaPersistencia extends JTable {
 		CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
 		if (cabecalho != null) {
 			destacar(cabecalho, inverter);
-			SwingUtilities.updateComponentTreeUI(this);
+			SwingUtilitario.updateComponentTreeUI(this);
 			tornarVisivel(0, coluna);
 		}
 	}
@@ -289,7 +289,7 @@ public class TabelaPersistencia extends JTable {
 		CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
 		if (cabecalho != null) {
 			inativar(cabecalho, inativo);
-			SwingUtilities.updateComponentTreeUI(this);
+			SwingUtilitario.updateComponentTreeUI(this);
 			tornarVisivel(0, coluna);
 		}
 	}

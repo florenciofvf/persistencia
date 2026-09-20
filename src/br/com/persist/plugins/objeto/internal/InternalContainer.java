@@ -56,7 +56,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -73,6 +72,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.TextPool;
 import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
@@ -348,7 +348,7 @@ public class InternalContainer extends Panel
 		}
 
 		private void focus() {
-			SwingUtilities.invokeLater(this::processFocus);
+			SwingUtilitario.invokeLater(this::processFocus);
 		}
 
 		private void processFocus() {
@@ -618,7 +618,7 @@ public class InternalContainer extends Panel
 	private boolean continuar(String complemento, Conexao conexao) {
 		if (objeto.isSane() && todosVazio(complemento, conexao)) {
 			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela());
-			SwingUtilities.invokeLater(() -> Util.mensagem(InternalContainer.this, msg));
+			SwingUtilitario.invokeLater(() -> Util.mensagem(InternalContainer.this, msg));
 			return false;
 		}
 		if (!Util.isEmpty(txtComplemento.getText()) || !Util.isEmpty(complemento)
@@ -1454,7 +1454,7 @@ public class InternalContainer extends Panel
 							Thread.sleep(ObjetoPreferencia.getIntervaloPesquisaAuto());
 							contadorAuto++;
 							itemAtualizarAuto.setText(titulo + " " + contadorAuto);
-							SwingUtilities.invokeLater(() -> actionListenerInner.actionPerformed(null));
+							SwingUtilitario.invokeLater(() -> actionListenerInner.actionPerformed(null));
 						} catch (InterruptedException e) {
 							Thread.currentThread().interrupt();
 						}
@@ -2377,7 +2377,7 @@ public class InternalContainer extends Panel
 
 				private void setViewPosition(JViewport viewPort, Point point) {
 					if (viewPort != null) {
-						SwingUtilities.invokeLater(() -> viewPort.setViewPosition(point));
+						SwingUtilitario.invokeLater(() -> viewPort.setViewPosition(point));
 					}
 				}
 
@@ -2472,8 +2472,8 @@ public class InternalContainer extends Panel
 					if (pesquisa.isProcessado()) {
 						vinculoListener.pesquisarApos(objeto, pesquisa);
 					}
-					SwingUtilities.invokeLater(() -> processarColunaInfo(coluna));
-					SwingUtilities.invokeLater(InternalContainer.this::atualizar);
+					SwingUtilitario.invokeLater(() -> processarColunaInfo(coluna));
+					SwingUtilitario.invokeLater(InternalContainer.this::atualizar);
 				}
 
 				private void pesquisarFinalArray() {
@@ -2481,7 +2481,7 @@ public class InternalContainer extends Panel
 					if (pesquisa.isProcessado()) {
 						vinculoListener.pesquisarApos(objeto, pesquisa);
 					}
-					SwingUtilities.invokeLater(InternalContainer.this::atualizar);
+					SwingUtilitario.invokeLater(InternalContainer.this::atualizar);
 				}
 
 				private void processarColunaInfo(int coluna) {
@@ -4267,7 +4267,7 @@ public class InternalContainer extends Panel
 
 		private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
 			if (abrirEmForm) {
-				SwingUtilities.invokeLater(() -> {
+				SwingUtilitario.invokeLater(() -> {
 					Formulario frame = getFormulario();
 					ConsultaFormulario form = ConsultaFormulario.criar2(frame, conexao, instrucao);
 					Formulario.posicionarJanela(frame, form);
@@ -4286,7 +4286,7 @@ public class InternalContainer extends Panel
 
 		private void updateFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
 			if (abrirEmForm) {
-				SwingUtilities.invokeLater(() -> {
+				SwingUtilitario.invokeLater(() -> {
 					Formulario formulario = getFormulario();
 					UpdateFormulario form = UpdateFormulario.criar2(formulario, conexao, instrucao);
 					Formulario.posicionarJanela(formulario, form);
@@ -4553,13 +4553,13 @@ public class InternalContainer extends Panel
 
 	private void largurConteudo() {
 		if (!Util.isEmpty(objeto.getLarConteudo())) {
-			SwingUtilities.invokeLater(() -> tabelaPersistencia.larguraConteudo(objeto.getLarConteudo()));
+			SwingUtilitario.invokeLater(() -> tabelaPersistencia.larguraConteudo(objeto.getLarConteudo()));
 		}
 	}
 
 	private void larguraRotulos() {
 		if (objeto.isLarguraRotulos()) {
-			SwingUtilities.invokeLater(() -> {
+			SwingUtilitario.invokeLater(() -> {
 				tabelaPersistencia.larguraTituloTodos();
 				largurConteudo();
 			});
@@ -5507,7 +5507,7 @@ public class InternalContainer extends Panel
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		SwingUtilities.invokeLater(() -> processar(fichario.getGraphics()));
+		SwingUtilitario.invokeLater(() -> processar(fichario.getGraphics()));
 	}
 
 	@Override
@@ -5527,7 +5527,7 @@ public class InternalContainer extends Panel
 
 	@Override
 	public void tabActivatedHandler(Fichario fichario) {
-		SwingUtilities.invokeLater(() -> Util.ajustar(tabelaPersistencia, getGraphics()));
+		SwingUtilitario.invokeLater(() -> Util.ajustar(tabelaPersistencia, getGraphics()));
 	}
 
 	@Override
@@ -5542,7 +5542,7 @@ public class InternalContainer extends Panel
 	@Override
 	public void windowInternalActivatedHandler(JInternalFrame internal) {
 		if (ObjetoPreferencia.isPesquisaFormInternalLazy()) {
-			SwingUtilities.invokeLater(InternalContainer.this::windowInternalActivated);
+			SwingUtilitario.invokeLater(InternalContainer.this::windowInternalActivated);
 		} else {
 			windowInternalActivated();
 		}

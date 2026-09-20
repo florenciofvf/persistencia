@@ -13,11 +13,11 @@ import java.awt.event.WindowListener;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellRenderer;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -160,7 +160,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					filtro.filtroString = textField.getText();
-					SwingUtilities.invokeLater(() -> listener.filtrar(CabecalhoColuna.this, filtro.filtroString));
+					SwingUtilitario.invokeLater(() -> listener.filtrar(CabecalhoColuna.this, filtro.filtroString));
 					dispose();
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					dispose();

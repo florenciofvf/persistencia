@@ -40,7 +40,6 @@ import javax.swing.Icon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoMensagens;
 import br.com.persist.abstrato.DesktopLargura;
@@ -50,6 +49,7 @@ import br.com.persist.assistencia.HoraUtil;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.TextPool;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Vetor;
@@ -916,7 +916,7 @@ abstract class ThreadComparacao extends Thread {
 	}
 
 	void setText(String string) {
-		SwingUtilities.invokeLater(() -> label.setText(string));
+		SwingUtilitario.invokeLater(() -> label.setText(string));
 	}
 
 	String getString(String chave, Object... args) {
@@ -1356,7 +1356,7 @@ class SuperficiePopup2 extends Popup {
 
 	private void atualizarFormsAndOuvir() {
 		superficie.atualizarFormularios();
-		SwingUtilities.invokeLater(this::formulariosComExcecaoOuv);
+		SwingUtilitario.invokeLater(this::formulariosComExcecaoOuv);
 	}
 
 	private void getStringExcecao(StringBuilder builder) {

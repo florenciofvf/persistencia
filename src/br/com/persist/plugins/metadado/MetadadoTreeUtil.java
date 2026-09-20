@@ -3,8 +3,9 @@ package br.com.persist.plugins.metadado;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
+
+import br.com.persist.assistencia.SwingUtilitario;
 
 public class MetadadoTreeUtil {
 	private MetadadoTreeUtil() {
@@ -26,6 +27,6 @@ public class MetadadoTreeUtil {
 		metadadoTree.makeVisible(path);
 		metadadoTree.setSelectionPath(path);
 		metadadoTree.scrollPathToVisible(path);
-		SwingUtilities.updateComponentTreeUI(metadadoTree);
+		SwingUtilitario.updateComponentTreeUI(metadadoTree);
 	}
 }

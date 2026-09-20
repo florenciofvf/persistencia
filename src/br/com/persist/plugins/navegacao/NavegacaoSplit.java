@@ -58,7 +58,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.plaf.TextUI;
@@ -85,6 +84,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Selecao;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -203,7 +203,7 @@ class NavegacaoSplit extends SplitPane {
 				panel.setRoot(fichario);
 			}
 		}
-		SwingUtilities.updateComponentTreeUI(panel);
+		SwingUtilitario.updateComponentTreeUI(panel);
 	}
 
 	public void contemConteudo(Set<String> set, String string, boolean porParte) {
@@ -616,7 +616,7 @@ class Aba extends Transferivel {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), containerRequisicao);
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.5));
+		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 		editor.setListener(
 				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, toolbar::salvar, toolbar::baixar));
@@ -668,7 +668,7 @@ class Aba extends Transferivel {
 	}
 
 	private void setValueScrollPane(int value) {
-		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
 	private class ContainerRequisicao extends Panel {
@@ -1039,7 +1039,7 @@ class Aba extends Transferivel {
 				ExpressaoCor.clearAttr(editor.getStyledDocument());
 				String texto = editor.getText().trim();
 				if (texto.startsWith("/*abrir_compilar*/")) {
-					SwingUtilities.invokeLater(toolbar::atualizar);
+					SwingUtilitario.invokeLater(toolbar::atualizar);
 				}
 				toolbar.executarAcao.setEnabled(!texto.startsWith("/*montar_arquivo*/"));
 			} catch (Exception ex) {
@@ -1671,7 +1671,7 @@ class VisualizadorMetadados extends Visualizador {
 		panelScroll.add(BorderLayout.CENTER, scrollPane2);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 
-		SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+		SwingUtilitario.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 	}
 
 	@Override
@@ -1708,7 +1708,7 @@ class VisualizadorTexto extends Visualizador {
 		panelScroll.add(BorderLayout.CENTER, scrollPane2);
 		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 
-		SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+		SwingUtilitario.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 	}
 
 	@Override
@@ -1811,7 +1811,7 @@ class VisualizadorPDF extends Visualizador {
 			load(klass, objeto, bytes);
 			add(BorderLayout.NORTH, new PanelLeft(buttonSalvar));
 			add(BorderLayout.CENTER, comp);
-			SwingUtilities.invokeLater(() -> comp.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> comp.scrollRectToVisible(new Rectangle()));
 		} catch (Exception e) {
 			//
 		}
@@ -1856,7 +1856,7 @@ class VisualizadorHTML extends Visualizador {
 
 		add(BorderLayout.NORTH, toolbarPesquisa);
 		add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
-		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+		SwingUtilitario.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 	}
 
 	private class Listener implements HyperlinkListener {
@@ -1923,7 +1923,7 @@ class VisualizadorJSON extends Visualizador {
 			panelScroll.add(BorderLayout.CENTER, scrollPane2);
 			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
 
-			SwingUtilities.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
+			SwingUtilitario.invokeLater(() -> textEditor.scrollRectToVisible(new Rectangle()));
 		} catch (Exception e) {
 			//
 		}
