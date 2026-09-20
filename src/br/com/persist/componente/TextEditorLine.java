@@ -12,7 +12,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -24,6 +23,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import javax.swing.text.Utilities;
+
+import br.com.persist.assistencia.SwingUtilitario;
 
 public class TextEditorLine extends JPanel
 		implements CaretListener, DocumentListener, PropertyChangeListener, FontListener {
@@ -172,7 +173,7 @@ public class TextEditorLine extends JPanel
 	}
 
 	private void documentChanged() {
-		SwingUtilities.invokeLater(() -> {
+		SwingUtilitario.invokeLater(() -> {
 			try {
 				int length = textEditor.getDocument().getLength();
 				Rectangle r = textEditor.modelToView(length);

@@ -11,9 +11,9 @@ import java.awt.Dimension;
 import java.awt.Frame;
 
 import javax.swing.JScrollBar;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetValor.Valor;
 
@@ -98,7 +98,7 @@ class SetValorDialogo extends AbstratoDialogo {
 		if (scrollBar.isVisible()) {
 			Dimension size = getSize();
 			setSize(size.width, size.height + 10);
-			SwingUtilities.invokeLater(SetValorDialogo.this::checarVisivelScrollVertical);
+			SwingUtilitario.invokeLater(SetValorDialogo.this::checarVisivelScrollVertical);
 		} else {
 			checarVisivelScrollHorizontal();
 		}
@@ -109,7 +109,7 @@ class SetValorDialogo extends AbstratoDialogo {
 		if (scrollBar.isVisible()) {
 			Dimension size = getSize();
 			setSize(size.width + 10, size.height);
-			SwingUtilities.invokeLater(SetValorDialogo.this::checarVisivelScrollHorizontal);
+			SwingUtilitario.invokeLater(SetValorDialogo.this::checarVisivelScrollHorizontal);
 		}
 	}
 

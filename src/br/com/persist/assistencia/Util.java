@@ -53,7 +53,6 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -93,7 +92,7 @@ public class Util {
 	}
 
 	public static void updateComponentTreeUI(Component c) {
-		SwingUtilities.updateComponentTreeUI(c);
+		SwingUtilitario.updateComponentTreeUI(c);
 	}
 
 	public static boolean isMensagemHtml() {
@@ -1787,7 +1786,7 @@ public class Util {
 	}
 
 	public static void beep() {
-		SwingUtilities.invokeLater(() -> Toolkit.getDefaultToolkit().beep());
+		SwingUtilitario.invokeLater(() -> Toolkit.getDefaultToolkit().beep());
 	}
 
 	public static List<String> listarEntradas(File file) throws IOException {

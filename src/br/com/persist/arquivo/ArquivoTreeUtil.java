@@ -4,9 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
+
+import br.com.persist.assistencia.SwingUtilitario;
 
 public class ArquivoTreeUtil {
 	private ArquivoTreeUtil() {
@@ -30,7 +31,7 @@ public class ArquivoTreeUtil {
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
 		arquivoTree.getModelo().treeStructureChanged(event);
-		SwingUtilities.updateComponentTreeUI(arquivoTree);
+		SwingUtilitario.updateComponentTreeUI(arquivoTree);
 		if (expandidos != null) {
 			List<TreePath> paths = arquivo.atualizarPaths(expandidos);
 			for (TreePath item : paths) {
@@ -55,7 +56,7 @@ public class ArquivoTreeUtil {
 		}
 		arquivoTree.getModelo().treeNodesRemoved(event);
 		arquivoTree.setSelectionPath(null);
-		SwingUtilities.updateComponentTreeUI(arquivoTree);
+		SwingUtilitario.updateComponentTreeUI(arquivoTree);
 	}
 
 	public static void selecionarObjeto(ArquivoTree arquivoTree, Arquivo arquivo) {
@@ -64,7 +65,7 @@ public class ArquivoTreeUtil {
 		arquivoTree.makeVisible(path);
 		arquivoTree.setSelectionPath(path);
 		arquivoTree.scrollPathToVisible(path);
-		SwingUtilities.updateComponentTreeUI(arquivoTree);
+		SwingUtilitario.updateComponentTreeUI(arquivoTree);
 	}
 
 	public static void reiniciarEstrutura(ArquivoTree arquivoTree) {
