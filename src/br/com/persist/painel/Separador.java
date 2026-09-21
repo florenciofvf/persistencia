@@ -43,11 +43,11 @@ public class Separador extends SplitPane implements FicharioListener {
 		return c;
 	}
 
-	public static Separador horizontal(Component left, Component right) {
+	public static Separador newHorizontal(Component left, Component right) {
 		return new Separador(SplitPane.HORIZONTAL, left, right);
 	}
 
-	public static Separador vertical(Component left, Component right) {
+	public static Separador newVertical(Component left, Component right) {
 		return new Separador(SplitPane.VERTICAL, left, right);
 	}
 

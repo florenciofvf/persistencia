@@ -105,13 +105,13 @@ class Setor {
 		Container parent = dropTarget.getParent();
 		preParent(parent, dropTarget);
 		if (local == NORTE) {
-			posParent(parent, Separador.vertical(objeto, dropTarget));
+			posParent(parent, Separador.newVertical(objeto, dropTarget));
 		} else if (local == SUL) {
-			posParent(parent, Separador.vertical(dropTarget, objeto));
+			posParent(parent, Separador.newVertical(dropTarget, objeto));
 		} else if (local == LESTE) {
-			posParent(parent, Separador.horizontal(dropTarget, objeto));
+			posParent(parent, Separador.newHorizontal(dropTarget, objeto));
 		} else if (local == OESTE) {
-			posParent(parent, Separador.horizontal(objeto, dropTarget));
+			posParent(parent, Separador.newHorizontal(objeto, dropTarget));
 		}
 		dropTarget = null;
 		SwingUtilitario.updateComponentTreeUI(parent);
