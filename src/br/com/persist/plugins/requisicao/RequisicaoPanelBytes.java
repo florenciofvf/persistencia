@@ -9,13 +9,13 @@ import java.io.InputStream;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
-import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
 
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ComboBox;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.data.Tipo;
@@ -127,9 +127,9 @@ public class RequisicaoPanelBytes extends Panel {
 		}
 
 		private void baixar() {
-			JFileChooser fileChooser = Util.criarFileChooser(null, false);
+			FileChooser fileChooser = Util.criarFileChooser(null, false);
 			int opcao = fileChooser.showSaveDialog(this);
-			if (opcao == JFileChooser.APPROVE_OPTION) {
+			if (opcao == FileChooser.APPROVE) {
 				File file = fileChooser.getSelectedFile();
 				if (file != null) {
 					try {

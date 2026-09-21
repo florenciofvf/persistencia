@@ -16,7 +16,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.JFileChooser;
 import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -27,6 +26,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -249,19 +249,19 @@ class PanelQuebraLog extends Panel {
 		});
 		btnLimpar.addActionListener(e -> inicializar());
 		btnOrigem.addActionListener(e -> {
-			JFileChooser fileChooser = new JFileChooser();
+			FileChooser fileChooser = new FileChooser();
 			int i = fileChooser.showOpenDialog(PanelQuebraLog.this);
-			if (i == JFileChooser.APPROVE_OPTION) {
+			if (i == FileChooser.APPROVE) {
 				File sel = fileChooser.getSelectedFile();
 				txtOrigem.setText(sel.getAbsolutePath());
 				info(sel);
 			}
 		});
 		btnDestino.addActionListener(e -> {
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setFileSelectionMode(FileChooser.DIRECTORIES);
 			int i = fileChooser.showOpenDialog(PanelQuebraLog.this);
-			if (i == JFileChooser.APPROVE_OPTION) {
+			if (i == FileChooser.APPROVE) {
 				File sel = fileChooser.getSelectedFile();
 				txtDestino.setText(sel.getAbsolutePath());
 			}

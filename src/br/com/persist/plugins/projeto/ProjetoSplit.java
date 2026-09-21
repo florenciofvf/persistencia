@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JFileChooser;
 import javax.swing.tree.TreePath;
 
 import org.xml.sax.Attributes;
@@ -50,6 +49,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ComboBox;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -506,9 +506,9 @@ class Aba extends Transferivel implements ItemListener {
 			if (Util.isEmpty(txtArquivo.getText())) {
 				txtArquivo.setText(ProjetoPreferencia.getDirPadraoSelecaoArquivos());
 			}
-			JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtArquivo.getText()));
+			FileChooser fileChooser = new FileChooser(ArquivoUtil.getValido(txtArquivo.getText()));
 			int i = fileChooser.showOpenDialog(Aba.this);
-			if (i == JFileChooser.APPROVE_OPTION) {
+			if (i == FileChooser.APPROVE) {
 				File sel = fileChooser.getSelectedFile();
 				if (sel != null) {
 					txtArquivo.setText(sel.getAbsolutePath());

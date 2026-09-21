@@ -85,6 +85,7 @@ import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.ComboBox;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Menu;
@@ -3433,9 +3434,9 @@ public class InternalContainer extends Panel
 				}
 
 				private void salvarXML() {
-					JFileChooser fileChooser = Util.criarFileChooser(null, false);
+					FileChooser fileChooser = Util.criarFileChooser(null, false);
 					int opcao = fileChooser.showSaveDialog(InternalContainer.this);
-					if (opcao == JFileChooser.APPROVE_OPTION) {
+					if (opcao == FileChooser.APPROVE) {
 						File file = fileChooser.getSelectedFile();
 						if (file != null) {
 							List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);

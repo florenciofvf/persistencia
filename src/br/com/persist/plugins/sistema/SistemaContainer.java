@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Icon;
-import javax.swing.JFileChooser;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -41,6 +40,7 @@ import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
@@ -116,10 +116,10 @@ public class SistemaContainer extends AbstratoContainer implements ArquivoTreeLi
 			add(btnDiretorio);
 			add(btnTotalArquivos);
 			btnDiretorio.addActionListener(e -> {
-				JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtNovaRaiz.getText()));
-				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				FileChooser fileChooser = new FileChooser(ArquivoUtil.getValido(txtNovaRaiz.getText()));
+				fileChooser.setFileSelectionMode(FileChooser.DIRECTORIES);
 				int i = fileChooser.showOpenDialog(SistemaContainer.this);
-				if (i == JFileChooser.APPROVE_OPTION) {
+				if (i == FileChooser.APPROVE) {
 					File sel = fileChooser.getSelectedFile();
 					txtNovaRaiz.setText(sel.getAbsolutePath());
 					atualizarArvore(txtNovaRaiz.getText());
