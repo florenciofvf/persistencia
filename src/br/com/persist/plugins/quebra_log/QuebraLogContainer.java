@@ -17,7 +17,6 @@ import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -31,6 +30,7 @@ import br.com.persist.componente.Button;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -228,7 +228,7 @@ class PanelQuebraLog extends Panel {
 		panelNorte.add(panelControle);
 
 		add(BorderLayout.NORTH, panelNorte);
-		add(BorderLayout.CENTER, new JScrollPane(table));
+		add(BorderLayout.CENTER, new ScrollPane(table));
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
 		labelStatus.modoCopiar();

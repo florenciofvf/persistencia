@@ -29,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
-import javax.swing.JScrollPane;
 import javax.swing.tree.TreePath;
 
 import org.xml.sax.Attributes;
@@ -419,7 +418,7 @@ class Aba extends Transferivel implements ItemListener {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		JScrollPane scrollPane = new JScrollPane(editor);
+		ScrollPane scrollPane = new ScrollPane(editor);
 		scrollPane.setRowHeaderView(new TextEditorLine(editor));
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);

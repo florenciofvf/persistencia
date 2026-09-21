@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.JScrollPane;
-
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
@@ -31,7 +29,7 @@ public class AbaText extends Panel {
 	private final Editor editor = new Editor();
 	private final transient Arquivo arquivo;
 	final Toolbar toolbar = new Toolbar();
-	private JScrollPane scrollPane;
+	private ScrollPane scrollPane;
 
 	AbaText(Arquivo arquivo) {
 		this.arquivo = arquivo;
@@ -40,7 +38,7 @@ public class AbaText extends Panel {
 
 	void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		scrollPane = new JScrollPane(editor);
+		scrollPane = new ScrollPane(editor);
 		scrollPane.setRowHeaderView(new TextEditorLine(editor));
 		Panel panelScroll = new Panel();
 		panelScroll.add(BorderLayout.CENTER, scrollPane);
