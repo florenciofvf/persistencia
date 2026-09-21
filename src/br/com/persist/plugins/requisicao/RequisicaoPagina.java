@@ -32,7 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JTabbedPane;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ArgumentoException;
@@ -57,6 +56,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.data.Array;
@@ -78,7 +78,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	public final TextEditorReq textEditorReq = new TextEditorReq();
 	private final List<String> requisicoes = new ArrayList<>();
 	private String chaveMensagem = "msg.sem_linha_tabela_sel";
-	private final JTabbedPane tabbedPane = new JTabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane();
 	private final transient RequisicaoRota requisicaoRota;
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
@@ -93,8 +93,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 	public RequisicaoPagina(RequisicaoFichario fichario, RequisicaoPoolVisualizador poolVisualizador,
 			RequisicaoRota requisicaoRota, File file) {
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.addMouseListener(mouseListenerFichario);
+		tabbedPane.setTabLayoutPolicy(TabbedPane.SCROLL);
 		this.poolVisualizador = poolVisualizador;
 		this.requisicaoRota = requisicaoRota;
 		this.fichario = fichario;

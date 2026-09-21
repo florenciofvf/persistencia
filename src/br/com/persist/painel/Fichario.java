@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
-import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -36,9 +35,10 @@ import javax.swing.event.ChangeListener;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.Popup;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.marca.XMLUtil;
 
-public class Fichario extends JTabbedPane implements ChangeListener {
+public class Fichario extends TabbedPane implements ChangeListener {
 	private final transient Border borderDnD = BorderFactory.createEmptyBorder(0, 16, 16, 16);
 	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_3);
 	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_3);
@@ -54,7 +54,7 @@ public class Fichario extends JTabbedPane implements ChangeListener {
 	private static Fichario selecionado;
 
 	public Fichario() {
-		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		setTabLayoutPolicy(TabbedPane.SCROLL);
 		new DropTarget(this, dropTargetListener);
 		addMouseListener(mouseListenerFichario);
 		addChangeListener(changeListenerInner);

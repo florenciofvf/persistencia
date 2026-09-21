@@ -24,7 +24,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import br.com.persist.arquivo.ArquivoUtil;
@@ -44,6 +43,7 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
@@ -461,11 +461,11 @@ public class AtributoPagina extends Panel implements Aba {
 	}
 }
 
-class PainelFichario extends JTabbedPane {
+class PainelFichario extends TabbedPane {
 	private static final long serialVersionUID = 1L;
 
 	PainelFichario(AtributoPagina pagina) {
-		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		setTabLayoutPolicy(TabbedPane.SCROLL);
 		addAba(new PainelView(pagina));
 		addAba(new PainelValidarJS(pagina));
 		addAba(new PainelFilterJS(pagina));

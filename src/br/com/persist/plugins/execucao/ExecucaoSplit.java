@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.TreePath;
 
@@ -36,6 +35,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
@@ -327,7 +327,7 @@ class Editor extends TextEditor {
 }
 
 class Aba extends Transferivel {
-	private final JTabbedPane tabbedPane = new JTabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane();
 	private static final long serialVersionUID = 1L;
 	final transient Arquivo arquivo;
 	private final AbaText abaText;

@@ -49,13 +49,11 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.event.HyperlinkEvent;
@@ -97,6 +95,7 @@ import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
@@ -777,13 +776,12 @@ class Aba extends Transferivel {
 		}
 	}
 
-	private class FicharioRequisicao extends JTabbedPane {
+	private class FicharioRequisicao extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 		private Requisicao selecionado;
 
 		private FicharioRequisicao() {
-			setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-			setBorder(BorderFactory.createEmptyBorder());
+			setTabLayoutPolicy(TabbedPane.SCROLL);
 		}
 
 		private void setRequisicao(Requisicao requisicao) {

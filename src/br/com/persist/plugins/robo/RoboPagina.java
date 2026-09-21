@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
-import javax.swing.JTabbedPane;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
@@ -36,12 +35,13 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.formulario.Formulario;
 
 public class RoboPagina extends Panel implements Aba {
-	private final JTabbedPane tabbedPane = new JTabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane();
 	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -52,7 +52,7 @@ public class RoboPagina extends Panel implements Aba {
 	private int indice;
 
 	public RoboPagina(RoboFichario fichario, File file, Formulario formulario) {
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabbedPane.setTabLayoutPolicy(TabbedPane.SCROLL);
 		this.formulario = formulario;
 		this.fichario = fichario;
 		this.file = file;

@@ -16,8 +16,6 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.JTabbedPane;
-
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
@@ -29,11 +27,12 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
 public class EntregaPagina extends Panel implements Aba {
-	private final JTabbedPane tabbedPane = new JTabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane();
 	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -43,7 +42,7 @@ public class EntregaPagina extends Panel implements Aba {
 	private int indice;
 
 	public EntregaPagina(EntregaFichario fichario, File file) {
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabbedPane.setTabLayoutPolicy(TabbedPane.SCROLL);
 		this.fichario = fichario;
 		this.file = file;
 		montarLayout();
