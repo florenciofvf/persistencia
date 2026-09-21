@@ -54,6 +54,7 @@ public class Fichario extends TabbedPane implements ChangeListener {
 	private static Fichario selecionado;
 
 	public Fichario() {
+		super(false);
 		setTabLayoutPolicy(TabbedPane.SCROLL);
 		new DropTarget(this, dropTargetListener);
 		addMouseListener(mouseListenerFichario);

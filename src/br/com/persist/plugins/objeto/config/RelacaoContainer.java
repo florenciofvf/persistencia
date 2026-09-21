@@ -700,6 +700,7 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 		private static final long serialVersionUID = 1L;
 
 		private Fichario() throws AssistenciaException {
+			super(true);
 			addTab("label.geral", new PanelGeral());
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor_fundo", new PanelCorFundo());

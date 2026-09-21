@@ -41,7 +41,7 @@ import br.com.persist.componente.TextEditorLine;
 import br.com.persist.formulario.Formulario;
 
 public class RoboPagina extends Panel implements Aba {
-	private final TabbedPane tabbedPane = new TabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane(false);
 	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();

@@ -781,6 +781,7 @@ class Aba extends Transferivel {
 		private Requisicao selecionado;
 
 		private FicharioRequisicao() {
+			super(false);
 			setTabLayoutPolicy(TabbedPane.SCROLL);
 		}
 

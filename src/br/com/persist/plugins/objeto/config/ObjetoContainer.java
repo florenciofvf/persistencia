@@ -2355,6 +2355,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		private final PanelCorFonte corFonte = new PanelCorFonte();
 
 		private Fichario() {
+			super(true);
 			addTab("label.geral", geral);
 			addTab("label.banco", banco);
 			addTab("label.descricao", new PanelDescricao());

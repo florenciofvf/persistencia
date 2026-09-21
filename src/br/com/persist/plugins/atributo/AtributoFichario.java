@@ -14,6 +14,7 @@ public class AtributoFichario extends AbstratoFichario {
 	private final AtributoContainer container;
 
 	public AtributoFichario(AtributoContainer container) {
+		super(false);
 		setTabPlacement(AtributoPreferencia.getAtributoPosicaoAbaFichario());
 		this.container = container;
 	}

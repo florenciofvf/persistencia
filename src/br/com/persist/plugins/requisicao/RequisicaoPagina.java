@@ -76,9 +76,9 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final PopupFichario popupFichario = new PopupFichario();
 	public final TextEditorReq textEditorReq = new TextEditorReq();
+	private final TabbedPane tabbedPane = new TabbedPane(false);
 	private final List<String> requisicoes = new ArrayList<>();
 	private String chaveMensagem = "msg.sem_linha_tabela_sel";
-	private final TabbedPane tabbedPane = new TabbedPane();
 	private final transient RequisicaoRota requisicaoRota;
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;

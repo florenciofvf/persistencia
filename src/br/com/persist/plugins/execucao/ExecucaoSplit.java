@@ -327,7 +327,7 @@ class Editor extends TextEditor {
 }
 
 class Aba extends Transferivel {
-	private final TabbedPane tabbedPane = new TabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane(false);
 	private static final long serialVersionUID = 1L;
 	final transient Arquivo arquivo;
 	private final AbaText abaText;

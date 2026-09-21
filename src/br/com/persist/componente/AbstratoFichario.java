@@ -13,7 +13,8 @@ public abstract class AbstratoFichario extends TabbedPane {
 	private transient AbstratoFicharioListener listener;
 	private static final long serialVersionUID = 1L;
 
-	protected AbstratoFichario() {
+	protected AbstratoFichario(boolean chaveProperty) {
+		super(chaveProperty);
 		configurar();
 	}
 

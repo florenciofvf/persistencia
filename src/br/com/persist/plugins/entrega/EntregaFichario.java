@@ -14,6 +14,7 @@ public class EntregaFichario extends AbstratoFichario {
 	private final EntregaContainer container;
 
 	public EntregaFichario(EntregaContainer container) {
+		super(false);
 		setTabPlacement(EntregaPreferencia.getEntregaPosicaoAbaFichario());
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 		this.container = container;

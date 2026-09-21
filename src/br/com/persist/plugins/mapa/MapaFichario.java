@@ -14,6 +14,7 @@ public class MapaFichario extends AbstratoFichario {
 	private final MapaContainer container;
 
 	public MapaFichario(MapaContainer container) {
+		super(false);
 		setTabPlacement(MapaPreferencia.getMapaPosicaoAbaFichario());
 		this.container = container;
 	}

@@ -31,7 +31,7 @@ import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
 public class MapaPagina extends Panel implements Aba {
-	private final TabbedPane tabbedPane = new TabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane(false);
 	private static final long serialVersionUID = 1L;
 	private final MapaFichario fichario;
 	private final AbaText abaText;

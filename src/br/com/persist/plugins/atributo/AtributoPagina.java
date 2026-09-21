@@ -465,6 +465,7 @@ class PainelFichario extends TabbedPane {
 	private static final long serialVersionUID = 1L;
 
 	PainelFichario(AtributoPagina pagina) {
+		super(false);
 		setTabLayoutPolicy(TabbedPane.SCROLL);
 		addAba(new PainelView(pagina));
 		addAba(new PainelValidarJS(pagina));

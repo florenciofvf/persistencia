@@ -86,6 +86,10 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 
 	private class FicharioInner extends TabbedPane {
 		private static final long serialVersionUID = 1L;
+
+		FicharioInner() {
+			super(true);
+		}
 	}
 
 	@Override

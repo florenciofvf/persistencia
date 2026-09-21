@@ -14,6 +14,7 @@ public class LegadoFichario extends AbstratoFichario {
 	private final LegadoContainer container;
 
 	public LegadoFichario(LegadoContainer container) {
+		super(false);
 		setTabPlacement(LegadoPreferencia.getLegadoPosicaoAbaFichario());
 		this.container = container;
 	}

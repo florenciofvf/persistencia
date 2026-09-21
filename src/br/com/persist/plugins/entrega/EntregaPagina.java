@@ -32,7 +32,7 @@ import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
 public class EntregaPagina extends Panel implements Aba {
-	private final TabbedPane tabbedPane = new TabbedPane();
+	private final TabbedPane tabbedPane = new TabbedPane(false);
 	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();

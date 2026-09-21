@@ -14,6 +14,7 @@ public class RoboFichario extends AbstratoFichario {
 	private final RoboContainer container;
 
 	public RoboFichario(RoboContainer container) {
+		super(false);
 		setTabPlacement(RoboPreferencia.getRoboPosicaoAbaFichario());
 		this.container = container;
 	}

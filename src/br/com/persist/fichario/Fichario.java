@@ -70,6 +70,7 @@ public class Fichario extends TabbedPane implements WindowHandler {
 	private int ultY;
 
 	public Fichario() {
+		super(false);
 		navegacaoListener = new NavegacaoListener();
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 		new DropTarget(this, listenerSoltar);

@@ -112,6 +112,10 @@ public class PropriedadeContainer extends AbstratoContainer implements PluginBas
 	private class FicharioInner extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 
+		FicharioInner() {
+			super(true);
+		}
+
 		void init() {
 			Aba aba = new Aba(0, fileProper, listener);
 			aba.montarLayout();

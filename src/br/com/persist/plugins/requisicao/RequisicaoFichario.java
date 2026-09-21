@@ -14,6 +14,7 @@ public class RequisicaoFichario extends AbstratoFichario {
 	private final RequisicaoContainer container;
 
 	public RequisicaoFichario(RequisicaoContainer container) {
+		super(false);
 		this.container = container;
 	}
 
