@@ -349,6 +349,10 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		se.addInstrucao("clonar(arquivoTree, arquivo)");
 
 		classe.addOverride(true);
+		funcao = classe.criarFuncaoPublica("void", "moverParaArquivo", parametros);
+		funcao.addComentario("Impl");
+
+		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "clonarEmArquivo", parametros);
 		funcao.addComentario("Impl");
 
