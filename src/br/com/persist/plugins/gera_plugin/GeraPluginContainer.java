@@ -21,7 +21,6 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JList;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -37,6 +36,7 @@ import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.ComboBox;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -242,10 +242,10 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 	private Button criarButtonDir() {
 		Button button = new Button("label.diretorio");
 		button.addActionListener(e -> {
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setFileSelectionMode(FileChooser.DIRECTORIES);
 			int i = fileChooser.showOpenDialog(GeraPluginContainer.this);
-			if (i == JFileChooser.APPROVE_OPTION) {
+			if (i == FileChooser.APPROVE) {
 				File sel = fileChooser.getSelectedFile();
 				txtDiretorioDestino.setText(sel.getAbsolutePath());
 			}

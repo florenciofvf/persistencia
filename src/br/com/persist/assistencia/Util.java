@@ -50,7 +50,6 @@ import java.util.zip.ZipInputStream;
 
 import javax.swing.Icon;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
@@ -68,6 +67,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.arquivo.ArquivoUtil;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
@@ -1015,8 +1015,8 @@ public class Util {
 		return sb.toString();
 	}
 
-	public static JFileChooser criarFileChooser(File arquivo, boolean multiSelection) {
-		JFileChooser fileChooser = new JFileChooser(".");
+	public static FileChooser criarFileChooser(File arquivo, boolean multiSelection) {
+		FileChooser fileChooser = new FileChooser(".");
 		fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
 		fileChooser.setMultiSelectionEnabled(multiSelection);
 		if (arquivo != null) {

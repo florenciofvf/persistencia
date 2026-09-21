@@ -53,7 +53,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.event.HyperlinkEvent;
@@ -88,6 +87,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -1631,9 +1631,9 @@ abstract class Visualizador extends Panel implements IVisualizador {
 	}
 
 	public void salvar() {
-		JFileChooser fileChooser = Util.criarFileChooser(null, false);
+		FileChooser fileChooser = Util.criarFileChooser(null, false);
 		int opcao = fileChooser.showSaveDialog(this);
-		if (opcao == JFileChooser.APPROVE_OPTION) {
+		if (opcao == FileChooser.APPROVE) {
 			File file = fileChooser.getSelectedFile();
 			if (file != null) {
 				try {

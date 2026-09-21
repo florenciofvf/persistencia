@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.Icon;
-import javax.swing.JFileChooser;
 import javax.swing.JTable;
 
 import br.com.persist.arquivo.ArquivoUtil;
@@ -39,6 +38,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -289,10 +289,10 @@ public class AtributoPagina extends Panel implements Aba {
 			}
 
 			private void lerArquivo() {
-				JFileChooser fileChooser = new JFileChooser(
+				FileChooser fileChooser = new FileChooser(
 						ArquivoUtil.getValido(AtributoPreferencia.getDirPadraoSelecaoArquivos()));
 				int i = fileChooser.showOpenDialog(AtributoPagina.this);
-				if (i == JFileChooser.APPROVE_OPTION) {
+				if (i == FileChooser.APPROVE) {
 					File sel = fileChooser.getSelectedFile();
 					lerArquivo(sel);
 				}
@@ -2020,10 +2020,10 @@ class PainelTest2 extends AbstratoTest {
 	}
 
 	private void lerArquivo() {
-		JFileChooser fileChooser = new JFileChooser(
+		FileChooser fileChooser = new FileChooser(
 				ArquivoUtil.getValido(AtributoPreferencia.getDirPadraoSelecaoArquivos()));
 		int i = fileChooser.showOpenDialog(PainelTest2.this);
-		if (i == JFileChooser.APPROVE_OPTION) {
+		if (i == FileChooser.APPROVE) {
 			File sel = fileChooser.getSelectedFile();
 			lerArquivo(sel);
 		}

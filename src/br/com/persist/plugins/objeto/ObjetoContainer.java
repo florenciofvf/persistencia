@@ -40,7 +40,6 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.Icon;
 import javax.swing.InputMap;
-import javax.swing.JFileChooser;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -58,6 +57,7 @@ import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
 import br.com.persist.componente.ComboBox;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.MenuItem;
@@ -567,9 +567,9 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 
 		@Override
 		protected void salvarComo() {
-			JFileChooser fileChooser = Util.criarFileChooser(arquivo, false);
+			FileChooser fileChooser = Util.criarFileChooser(arquivo, false);
 			int opcao = fileChooser.showSaveDialog(formulario);
-			if (opcao == JFileChooser.APPROVE_OPTION) {
+			if (opcao == FileChooser.APPROVE) {
 				File file = fileChooser.getSelectedFile();
 				if (file != null) {
 					salvar(file);

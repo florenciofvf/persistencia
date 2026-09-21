@@ -16,4 +16,8 @@ public class FileChooser extends JFileChooser {
 	public FileChooser(File currentDirectory) {
 		super(currentDirectory);
 	}
+
+	public FileChooser() {
+		super();
+	}
 }

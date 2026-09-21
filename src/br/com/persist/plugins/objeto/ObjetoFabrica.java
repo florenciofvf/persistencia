@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Action;
-import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
@@ -25,6 +24,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -278,9 +278,9 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		}
 
 		private File[] getSelectedFiles(Formulario formulario, boolean multiSelection) {
-			JFileChooser fileChooser = Util.criarFileChooser(ObjetoProvedor.getParentFile(), multiSelection);
+			FileChooser fileChooser = Util.criarFileChooser(ObjetoProvedor.getParentFile(), multiSelection);
 			int opcao = fileChooser.showOpenDialog(formulario);
-			if (opcao != JFileChooser.APPROVE_OPTION) {
+			if (opcao != FileChooser.APPROVE) {
 				return new File[0];
 			}
 			return fileChooser.getSelectedFiles();
