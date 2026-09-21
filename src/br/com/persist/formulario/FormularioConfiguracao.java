@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
@@ -33,6 +32,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.RadioButton;
+import br.com.persist.componente.Spinner;
 import br.com.persist.componente.TextField;
 import br.com.persist.main.Main;
 
@@ -47,9 +47,9 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkAbrirFormularioDireita = criarCheckBox("label.abrir_formulario_direita");
 	private final CheckBox chkAbrirFormularioAbaixo = criarCheckBox("label.abrir_formulario_abaixo");
 	private final CheckBox chkFecharComESCInternal = criarCheckBox("label.fechar_com_esc_internal");
-	private final JSpinner txtTotalConfirmacao = new JSpinner(new SpinnerNumberModel(0, 0, 10, 1));
-	private final JSpinner txtSegundosMensagem = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
 	private final CheckBox chkFecharComESCDialogo = criarCheckBox("label.fechar_com_esc_dialogo");
+	private final Spinner txtTotalConfirmacao = new Spinner(new SpinnerNumberModel(0, 0, 10, 1));
+	private final Spinner txtSegundosMensagem = new Spinner(new SpinnerNumberModel(1, 1, 30, 1));
 	private final CheckBox chkMonitorPreferencial = criarCheckBox("label.monitor_preferencial");
 	private final Button buttonAplicarLA = criarButton("label.aplicar_largura_altura");
 	private final CheckBox chkFicharioScroll = criarCheckBox("label.fichario_scroll");

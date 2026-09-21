@@ -6,12 +6,12 @@ import javax.swing.JComboBox;
 public class ComboBox<E> extends JComboBox<E> {
 	private static final long serialVersionUID = 3731076329837849730L;
 
-	public ComboBox(ComboBoxModel<E> aModel) {
-		super(aModel);
+	public ComboBox(ComboBoxModel<E> model) {
+		super(model);
 	}
 
-	public ComboBox(E[] items) {
-		super(items);
+	public ComboBox(E[] itens) {
+		super(itens);
 	}
 
 	public ComboBox() {
