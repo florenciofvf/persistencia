@@ -6,8 +6,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
 
-import javax.swing.JFileChooser;
-
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Mensagens;
@@ -16,6 +14,7 @@ import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.RadioButton;
@@ -66,10 +65,10 @@ public class AtributoConfiguracao extends AbstratoConfiguracao {
 			}
 		});
 		btnDirPadraoSelArquivos.addActionListener(e -> {
-			JFileChooser fileChooser = new JFileChooser(ArquivoUtil.getValido(txtDirPadraoSelArquivos.getText()));
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			FileChooser fileChooser = new FileChooser(ArquivoUtil.getValido(txtDirPadraoSelArquivos.getText()));
+			fileChooser.setFileSelectionMode(FileChooser.DIRECTORIES);
 			int i = fileChooser.showOpenDialog(AtributoConfiguracao.this);
-			if (i == JFileChooser.APPROVE_OPTION) {
+			if (i == FileChooser.APPROVE) {
 				File sel = fileChooser.getSelectedFile();
 				txtDirPadraoSelArquivos.setText(sel.getAbsolutePath());
 				AtributoPreferencia.setDirPadraoSelecaoArquivos(txtDirPadraoSelArquivos.getText());
