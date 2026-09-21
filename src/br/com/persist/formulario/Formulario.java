@@ -29,7 +29,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JTabbedPane;
 
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.PluginBasico;
@@ -43,6 +42,7 @@ import br.com.persist.assistencia.StringComboModelo;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ComboBox;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.main.Main;
@@ -207,8 +207,7 @@ public class Formulario extends JFrame implements PluginBasico {
 	}
 
 	private void configurar() {
-		fichario.setTabLayoutPolicy(
-				Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+		fichario.setTabLayoutPolicy(Preferencias.isFicharioComRolagem() ? TabbedPane.SCROLL : TabbedPane.WRAP);
 		fichario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
 
 		addWindowListener(new WindowAdapter() {

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
@@ -33,6 +32,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.RadioButton;
 import br.com.persist.componente.Spinner;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.main.Main;
 
@@ -149,8 +149,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		comboSize.addItemListener(FormularioConfiguracao.this::alterarFonteSize);
 		chkFicharioScroll.addActionListener(e -> {
 			Preferencias.setFicharioComRolagem(chkFicharioScroll.isSelected());
-			formulario.setTabLayoutPolicy(
-					Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+			formulario.setTabLayoutPolicy(Preferencias.isFicharioComRolagem() ? TabbedPane.SCROLL : TabbedPane.WRAP);
 		});
 		chkDesenharERTEditor
 				.addActionListener(e -> Preferencias.setDesenharEspacoRetornoTab(chkDesenharERTEditor.isSelected()));

@@ -34,7 +34,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.InputMap;
-import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -49,10 +48,11 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioEvento;
 
-public class Fichario extends JTabbedPane implements WindowHandler {
+public class Fichario extends TabbedPane implements WindowHandler {
 	private final transient Navegacao navegacaoEsquerdo = new Navegacao(ESQUERDO);
 	private final transient Navegacao navegacaoDireito = new Navegacao(DIREITO);
 	private final transient Navegacao navegacaoLimpar = new Navegacao(LIMPAR);
