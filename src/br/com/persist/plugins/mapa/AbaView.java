@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import br.com.persist.assistencia.ArgumentoException;
@@ -31,6 +30,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBoxMenuItem;
+import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.plugins.mapa.organiza.Organizador;
@@ -183,12 +183,12 @@ public class AbaView extends Panel {
 		}
 	}
 
-	class LabelMenu extends JLabel {
+	class LabelMenu extends Label {
 		private static final long serialVersionUID = 1L;
 		private static final String ESPACO = "     ";
 
 		public LabelMenu(String rotulo, final Objeto objeto, final PanelView panelView) {
-			super(ESPACO + rotulo + ESPACO);
+			super(ESPACO + rotulo + ESPACO, false);
 			addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseExited(MouseEvent e) {

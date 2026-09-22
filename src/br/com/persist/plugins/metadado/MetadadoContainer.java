@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.swing.Icon;
-import javax.swing.JProgressBar;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -41,6 +40,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.ProgressBar;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -142,7 +142,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private ButtonInfoDiff buttonInfoDiff = new ButtonInfoDiff();
-		private final JProgressBar progresso = new JProgressBar();
+		private final ProgressBar progresso = new ProgressBar();
 		private ButtonInfo buttonInfo = new ButtonInfo();
 		private static final long serialVersionUID = 1L;
 		private transient MetadadoPesquisa pesquisa;
