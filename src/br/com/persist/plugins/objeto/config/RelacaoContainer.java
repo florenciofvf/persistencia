@@ -29,7 +29,6 @@ import java.util.Objects;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.Icon;
-import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -48,6 +47,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ColorChooser;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Nil;
@@ -368,10 +368,10 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 	private class PanelCorFonte extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
-		private final JColorChooser colorChooser;
+		private final ColorChooser colorChooser;
 
 		private PanelCorFonte() {
-			colorChooser = new JColorChooser(relacao.getCorFonte());
+			colorChooser = new ColorChooser(relacao.getCorFonte());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			Marcador.aplicarBordaMacro(colorChooser);
 			add(BorderLayout.CENTER, colorChooser);
@@ -467,10 +467,10 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 	private class PanelCorFundo extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
-		private final JColorChooser colorChooser;
+		private final ColorChooser colorChooser;
 
 		private PanelCorFundo() {
-			colorChooser = new JColorChooser(relacao.getCor());
+			colorChooser = new ColorChooser(relacao.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			Marcador.aplicarBordaMacro(colorChooser);
 			add(BorderLayout.CENTER, colorChooser);

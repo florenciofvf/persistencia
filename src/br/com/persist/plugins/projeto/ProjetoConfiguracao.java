@@ -110,8 +110,7 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Label label = (Label) e.getSource();
-				Color color = ColorChooser.showDialog(ProjetoConfiguracao.this, label.getText(),
-						label.getForeground());
+				Color color = ColorChooser.showDialog(ProjetoConfiguracao.this, label.getText(), label.getForeground());
 				if (color == null) {
 					return;
 				}

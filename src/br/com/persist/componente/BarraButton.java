@@ -43,7 +43,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
 
-public abstract class BarraButton extends JToolBar
+public abstract class BarraButton extends ToolBar
 		implements WindowHandler, DialogHandler, FicharioHandler, WindowInternalHandler {
 	protected Action aplicarAcao = actionIcon(Constantes.LABEL_APLICAR, Icones.SUCESSO);
 	protected Action salvarComoAcao = actionIcon("label.salvar_como", Icones.SALVARC);
