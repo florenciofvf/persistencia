@@ -7,23 +7,23 @@ import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-import javax.swing.JColorChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ColorChooser;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 
 public class AnexoCorContainer extends Panel implements ChangeListener {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
-	private final JColorChooser colorChooser;
+	private final ColorChooser colorChooser;
 	private final transient Anexo anexo;
 
 	public AnexoCorContainer(Janela janela, Anexo anexo) {
-		colorChooser = new JColorChooser();
+		colorChooser = new ColorChooser();
 		colorChooser.getSelectionModel().addChangeListener(this);
 		toolbar.ini(janela);
 		this.anexo = anexo;

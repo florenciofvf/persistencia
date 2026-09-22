@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.BorderFactory;
-import javax.swing.JColorChooser;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.arquivo.ArquivoUtil;
@@ -21,6 +20,7 @@ import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ColorChooser;
 import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -110,7 +110,7 @@ public class ProjetoConfiguracao extends AbstratoConfiguracao {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Label label = (Label) e.getSource();
-				Color color = JColorChooser.showDialog(ProjetoConfiguracao.this, label.getText(),
+				Color color = ColorChooser.showDialog(ProjetoConfiguracao.this, label.getText(),
 						label.getForeground());
 				if (color == null) {
 					return;

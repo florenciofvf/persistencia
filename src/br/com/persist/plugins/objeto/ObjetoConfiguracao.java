@@ -17,7 +17,6 @@ import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.JColorChooser;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.Atalho;
@@ -26,6 +25,7 @@ import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.SwingConstantes;
 import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ColorChooser;
 import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -288,7 +288,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Label label = (Label) e.getSource();
-				Color color = JColorChooser.showDialog(ObjetoConfiguracao.this, label.getText(), label.getForeground());
+				Color color = ColorChooser.showDialog(ObjetoConfiguracao.this, label.getText(), label.getForeground());
 				if (color == null) {
 					return;
 				}

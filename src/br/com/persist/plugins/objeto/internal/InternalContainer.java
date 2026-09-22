@@ -48,7 +48,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.swing.Icon;
-import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
@@ -84,6 +83,7 @@ import br.com.persist.componente.ButtonGrupo;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.CheckBoxMenuItem;
+import br.com.persist.componente.ColorChooser;
 import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Janela;
@@ -3276,7 +3276,7 @@ public class InternalContainer extends Panel
 
 				private void configCor() {
 					Color cor = InternalContainer.this.getBackground();
-					cor = JColorChooser.showDialog(InternalContainer.this, "Cor", cor);
+					cor = ColorChooser.showDialog(InternalContainer.this, "Cor", cor);
 					InternalContainer.this.setBackground(cor);
 					Util.updateComponentTreeUI(InternalContainer.this);
 				}

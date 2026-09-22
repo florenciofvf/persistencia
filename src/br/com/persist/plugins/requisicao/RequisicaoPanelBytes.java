@@ -9,7 +9,6 @@ import java.io.InputStream;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
-import javax.swing.JToolBar;
 
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
@@ -18,6 +17,7 @@ import br.com.persist.componente.ComboBox;
 import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ToolBar;
 import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
@@ -69,7 +69,7 @@ public class RequisicaoPanelBytes extends Panel {
 		barraInfo.checarView(outro);
 	}
 
-	private class BarraInfo extends JToolBar {
+	private class BarraInfo extends ToolBar {
 		private ComboBox<RequisicaoVisualizador> cmbVisualizador = new ComboBox<>();
 		private Label labelVisualizador = new Label("label.visualizador");
 		private Button btnBaixar = new Button("label.baixar");
