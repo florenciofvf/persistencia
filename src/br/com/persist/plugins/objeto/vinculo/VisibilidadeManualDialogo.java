@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.abstrato.AbstratoDialogo;
@@ -18,6 +17,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 
 public class VisibilidadeManualDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
@@ -54,8 +54,8 @@ class VisibilidadeManualContainer extends Panel {
 	}
 
 	private void montarLayout() {
-		JTable table = new JTable(new VisibilidadeManualModelo(listener.getReferencias()));
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		Table table = new Table(new VisibilidadeManualModelo(listener.getReferencias()));
+		table.setAutoResizeMode(Table.AUTO_RESIZE_ALL_COLUMNS);
 		add(BorderLayout.CENTER, new ScrollPane(table));
 		add(BorderLayout.NORTH, toolbar);
 	}

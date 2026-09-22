@@ -22,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -38,13 +37,14 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class AlternativoContainer extends AbstratoContainer implements PluginTabela {
 	private final AlternativoModelo alternativoModelo = new AlternativoModelo();
-	private final JTable tabela = new JTable(alternativoModelo);
+	private final Table tabela = new Table(alternativoModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private AlternativoFormulario alternativoFormulario;
 	private static final long serialVersionUID = 1L;
@@ -90,7 +90,7 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 		tabela.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
 		tabela.getColumnModel().getColumn(2).setCellEditor(new AlternativoEditor());
 		tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tabela.setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 		toolbar.baixar();
 	}
 

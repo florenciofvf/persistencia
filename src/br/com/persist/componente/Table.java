@@ -11,4 +11,8 @@ public class Table extends JTable {
 	public Table(TableModel dm) {
 		super(dm);
 	}
+
+	public Table() {
+		super();
+	}
 }

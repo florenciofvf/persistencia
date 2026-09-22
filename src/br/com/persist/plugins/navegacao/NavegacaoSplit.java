@@ -53,7 +53,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
-import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -96,6 +95,7 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TabbedPane;
+import br.com.persist.componente.Table;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
@@ -807,7 +807,7 @@ class Aba extends Transferivel {
 		}
 	}
 
-	private class TabelaRequisicao extends JTable {
+	private class TabelaRequisicao extends Table {
 		private final PopupTabela popupTabela = new PopupTabela();
 		private RequisicaoModelo modelo = new RequisicaoModelo();
 		private static final long serialVersionUID = 1L;

@@ -51,7 +51,6 @@ import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
@@ -98,6 +97,7 @@ import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.SetLista.Config;
 import br.com.persist.componente.SetListaCheck;
+import br.com.persist.componente.Table;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
@@ -5745,7 +5745,7 @@ class Intervalo {
 		return (min <= max) && (min >= 0 && min < rows) && (max >= 0 && max < rows);
 	}
 
-	void selecionar(JTable table) {
+	void selecionar(Table table) {
 		int rows = table.getRowCount();
 		if (valido(rows)) {
 			table.addRowSelectionInterval(min, max);

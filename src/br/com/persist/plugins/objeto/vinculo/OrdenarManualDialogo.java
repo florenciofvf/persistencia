@@ -22,6 +22,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 
 public class OrdenarManualDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
@@ -58,10 +59,10 @@ class OrdenarManualContainer extends Panel {
 	}
 
 	private void montarLayout() {
-		JTable table = new JTable(new OrdenarManualModelo(listener.getPesquisas()));
+		Table table = new Table(new OrdenarManualModelo(listener.getPesquisas()));
 		TableColumnModel columnModel = table.getColumnModel();
 		columnModel.getColumn(1).setCellRenderer(new OrdenarManualRenderer());
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setAutoResizeMode(Table.AUTO_RESIZE_ALL_COLUMNS);
 		add(BorderLayout.CENTER, new ScrollPane(table));
 		add(BorderLayout.NORTH, toolbar);
 	}
