@@ -132,7 +132,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		funcao = classe.criarFuncaoPrivada("void", "configurar");
 		funcao.addInstrucao("tabela.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer())");
 		funcao.addInstrucao("tabela.getColumnModel().getColumn(1).setCellEditor(new " + config.nameCap + "Editor())");
-		funcao.addInstrucao("tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF)");
+		funcao.addInstrucao("tabela.setAutoResizeMode(Table.AUTO_RESIZE_OFF)");
 		funcao.addInstrucao("toolbar.baixar()");
 
 		classe.addOverride(true);
