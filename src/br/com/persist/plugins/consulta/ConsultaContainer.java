@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -56,6 +55,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.Table;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.fichario.Fichario;
@@ -70,7 +70,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 public class ConsultaContainer extends AbstratoContainer implements PluginBasico {
 	private final transient ConsultaCor consultaCor = new ConsultaCor();
 	private final ToolbarTabela toolbarTabela = new ToolbarTabela();
-	private final JTable tabela = new JTable(new VazioModelo());
+	private final Table tabela = new Table(new VazioModelo());
 	private final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -88,7 +88,7 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 		textEditor.setText(conteudo == null ? Constantes.VAZIO : conteudo);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
 		fileParent = new File(ConsultaConstantes.CONSULTAS);
-		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tabela.setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();

@@ -29,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -45,6 +44,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -52,7 +52,7 @@ import br.com.persist.formulario.FormularioEvento;
 
 public class ConexaoContainer extends AbstratoContainer implements PluginTabela {
 	private final ConexaoModelo conexaoModelo = new ConexaoModelo();
-	private final JTable tabela = new JTable(conexaoModelo);
+	private final Table tabela = new Table(conexaoModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -99,7 +99,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new ConexaoRendererStatus());
 		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoEditorStatus());
 		tabela.getColumnModel().getColumn(3).setCellEditor(new ConexaoEditorURL());
-		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tabela.setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 		toolbar.baixar();
 	}
 

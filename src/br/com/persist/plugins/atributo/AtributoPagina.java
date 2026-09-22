@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
@@ -44,6 +43,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TabbedPane;
+import br.com.persist.componente.Table;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 import br.com.persist.componente.TextField;
@@ -127,7 +127,7 @@ public class AtributoPagina extends Panel implements Aba {
 	}
 
 	class PainelAtributo extends Panel {
-		private final JTable tabela = new JTable(new AtributoModelo());
+		private final Table tabela = new Table(new AtributoModelo());
 		public final TextEditor textEditor = new TextEditor();
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
@@ -164,7 +164,7 @@ public class AtributoPagina extends Panel implements Aba {
 		private Panel criarPanelTabela() {
 			Panel panel = new Panel();
 			panel.add(BorderLayout.CENTER, new ScrollPane(tabela));
-			tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			tabela.setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 			return panel;
 		}
 

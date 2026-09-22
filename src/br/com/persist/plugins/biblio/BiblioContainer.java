@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -30,6 +29,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
+import br.com.persist.componente.Table;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -37,9 +37,9 @@ import br.com.persist.formulario.Formulario;
 public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 	private final BiblioJarModelo biblioJarModelo = new BiblioJarModelo();
 	private final BiblioModelo biblioModelo = new BiblioModelo();
-	private final JTable tabelaJar = new JTable(biblioJarModelo);
+	private final Table tabelaJar = new Table(biblioJarModelo);
 	private final FicharioInner fichario = new FicharioInner();
-	private final JTable tabela = new JTable(biblioModelo);
+	private final Table tabela = new Table(biblioModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -81,7 +81,7 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 		fichario.addTab("label.jars", Icones.CONFIG, new ScrollPane(tabelaJar));
 		fichario.addTab("label.outros", Icones.CONFIG2, new ScrollPane(tabela));
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new BiblioRenderer());
-		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tabela.setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 	}
 
 	private class FicharioInner extends TabbedPane {

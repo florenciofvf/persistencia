@@ -25,7 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -41,13 +40,14 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class FragmentoContainer extends AbstratoContainer implements PluginTabela {
 	private final FragmentoModelo fragmentoModelo = new FragmentoModelo();
-	private final JTable tabela = new JTable(fragmentoModelo);
+	private final Table tabela = new Table(fragmentoModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private FragmentoFormulario fragmentoFormulario;
@@ -92,7 +92,7 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
 		tabela.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
 		tabela.getColumnModel().getColumn(2).setCellEditor(new FragmentoEditor());
-		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tabela.setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 		toolbar.baixar();
 	}
 

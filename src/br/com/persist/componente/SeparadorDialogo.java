@@ -7,8 +7,6 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -20,14 +18,14 @@ public class SeparadorDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final SeparadorContainer container;
 
-	private SeparadorDialogo(Frame frame, String titulo, JTable table, int indiceColuna, boolean comAspas,
+	private SeparadorDialogo(Frame frame, String titulo, Table table, int indiceColuna, boolean comAspas,
 			List<String> listaString) {
 		super(frame, titulo + " [ASPAS=" + comAspas + "]");
 		container = new SeparadorContainer(this, table, indiceColuna, comAspas, listaString);
 		montarLayout();
 	}
 
-	private SeparadorDialogo(Dialog dialog, String titulo, JTable table, int indiceColuna, boolean comAspas,
+	private SeparadorDialogo(Dialog dialog, String titulo, Table table, int indiceColuna, boolean comAspas,
 			List<String> listaString) {
 		super(dialog, titulo + " [ASPAS=" + comAspas + "]");
 		container = new SeparadorContainer(this, table, indiceColuna, comAspas, listaString);
@@ -38,7 +36,7 @@ public class SeparadorDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static void criar(Component c, String titulo, JTable table, int indiceColuna, boolean comAspas,
+	public static void criar(Component c, String titulo, Table table, int indiceColuna, boolean comAspas,
 			List<String> listaString) {
 		Component comp = Util.getViewParent(c);
 		SeparadorDialogo form = null;
@@ -69,9 +67,9 @@ class SeparadorContainer extends Panel {
 	private final boolean comAspas;
 	private final int indiceColuna;
 	private final Dialog dialogo;
-	private final JTable table;
+	private final Table table;
 
-	public SeparadorContainer(Dialog dialogo, JTable table, int indiceColuna, boolean comAspas,
+	public SeparadorContainer(Dialog dialogo, Table table, int indiceColuna, boolean comAspas,
 			List<String> listaString) {
 		this.indiceColuna = indiceColuna;
 		this.listaString = listaString;
