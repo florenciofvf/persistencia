@@ -39,13 +39,14 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class VariavelContainer extends AbstratoContainer implements PluginTabela {
 	private final VariavelModelo variavelModelo = new VariavelModelo();
-	private final JTable tabela = new JTable(variavelModelo);
+	private final Table tabela = new Table(variavelModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private VariavelFormulario variavelFormulario;

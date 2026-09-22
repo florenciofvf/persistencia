@@ -23,7 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -42,6 +41,7 @@ import br.com.persist.componente.MenuPadrao2;
 import br.com.persist.componente.MenuPadrao3;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.SeparadorDialogo;
+import br.com.persist.componente.Table;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.data.DataDialogo;
 import br.com.persist.data.DataListener;
@@ -53,7 +53,7 @@ import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
-public class TabelaPersistencia extends JTable {
+public class TabelaPersistencia extends Table {
 	private transient TabelaPersistenciaListener listener;
 	private static final Logger LOG = Logger.getGlobal();
 	private PopupHeader popupHeader = new PopupHeader();
@@ -72,7 +72,7 @@ public class TabelaPersistencia extends JTable {
 		super(modelo);
 		tableHeader.addMouseListener(headerListenerInner);
 		addMouseMotionListener(mouseMotionListenerInner);
-		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 		addMouseListener(mouseListenerInner);
 		chaveamento = new HashMap<>();
 		mapeamento = new HashMap<>();

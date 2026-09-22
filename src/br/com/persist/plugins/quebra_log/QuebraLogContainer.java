@@ -16,7 +16,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -31,6 +30,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -192,7 +192,7 @@ class PanelQuebraLog extends Panel {
 	private static final long serialVersionUID = 1L;
 	private Button btnDestino = new Button(QuebraLogMensagens.getString("label.diretorio_destino"), false);
 	private Button btnOrigem = new Button(QuebraLogMensagens.getString("label.arquivo_origem"), false);
-	private JTable table = new JTable(new QuebraLogModelo());
+	private Table table = new Table(new QuebraLogModelo());
 	private Button btnLimpar = new Button("label.limpar");
 	private Button btnCriar = new Button("label.criar");
 	private TextField txtDestino = new TextField();
@@ -345,7 +345,7 @@ class PanelQuebraLog extends Panel {
 	}
 
 	private void inicializar() {
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setAutoResizeMode(Table.AUTO_RESIZE_ALL_COLUMNS);
 		table.setModel(new QuebraLogModelo());
 		labelStatus.limpar();
 		txtDestino.limpar();
