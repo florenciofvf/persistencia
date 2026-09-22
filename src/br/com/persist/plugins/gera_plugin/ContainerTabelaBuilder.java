@@ -54,8 +54,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		arquivo.addImport("java.util.Set");
 		arquivo.addImport("java.util.logging.Level");
 		arquivo.addImport("java.util.logging.Logger").newLine();
-		arquivo.addImport("javax.swing.Icon");
-		arquivo.addImport("javax.swing.JTable").newLine();
+		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginTabela");
@@ -69,6 +68,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
 		arquivo.addImport("br.com.persist.componente.ScrollPane");
+		arquivo.addImport("br.com.persist.componente.Table");
 		arquivo.addImport("br.com.persist.fichario.Fichario");
 		arquivo.addImport("br.com.persist.fichario.Titulo");
 		arquivo.addImport("br.com.persist.formulario.Formulario").newLine();
@@ -78,7 +78,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 	void templateClass(ClassePublica classe) {
 		classe.addInstrucao("private final " + config.nameCapModelo() + " " + config.nameDecap + "Modelo = new "
 				+ config.nameCapModelo() + "()");
-		classe.addInstrucao("private final JTable tabela = new JTable(" + config.nameDecap + "Modelo)");
+		classe.addInstrucao("private final Table tabela = new Table(" + config.nameDecap + "Modelo)");
 		classe.addInstrucao("private static final Logger LOG = Logger.getGlobal()");
 		classe.addInstrucao("private " + config.nameCapFormulario() + " " + config.nameDecapFormulario());
 		classe.addInstrucao("private static final long serialVersionUID = 1L");
