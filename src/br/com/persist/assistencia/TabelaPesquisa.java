@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import br.com.persist.componente.Label;
+import br.com.persist.componente.Table;
 
 public class TabelaPesquisa implements Busca {
 	private List<Integer> lista = new ArrayList<>();
 	final boolean porParte;
-	final JTable tabela;
+	final Table tabela;
 	final String string;
 	int indice;
 	int coluna;
 
-	public TabelaPesquisa(JTable tabela, String string, int coluna, boolean porParte) {
+	public TabelaPesquisa(Table tabela, String string, int coluna, boolean porParte) {
 		this.string = Objects.requireNonNull(string);
 		this.tabela = Objects.requireNonNull(tabela);
 		this.porParte = porParte;

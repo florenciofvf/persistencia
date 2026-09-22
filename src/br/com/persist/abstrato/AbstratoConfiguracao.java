@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.Table;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
 import br.com.persist.formulario.Formulario;
@@ -85,7 +85,7 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 		}
 		Panel panel = new Panel();
 		panel.setPreferredSize(new Dimension(0, altura));
-		panel.add(new ScrollPane(new JTable(new AtalhoModelo(atalhos))));
+		panel.add(new ScrollPane(new Table(new AtalhoModelo(atalhos))));
 		return panel;
 	}
 }

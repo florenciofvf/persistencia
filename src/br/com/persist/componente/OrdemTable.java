@@ -4,20 +4,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import br.com.persist.assistencia.Constantes;
 
-public class OrdemTable extends JTable {
+public class OrdemTable extends Table {
 	private static final long serialVersionUID = 1L;
 
 	public OrdemTable(OrdemModel model) {
 		super(model);
 		tableHeader.addMouseListener(headerListenerInner);
-		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		setAutoResizeMode(Table.AUTO_RESIZE_OFF);
 	}
 
 	@Override

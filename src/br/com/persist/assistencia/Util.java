@@ -71,6 +71,7 @@ import br.com.persist.componente.FileChooser;
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.Table;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.componente.TextEditor;
@@ -238,7 +239,7 @@ public class Util {
 		}
 	}
 
-	public static void copiarColunaUnicaString(String titulo, JTable table, boolean comAspas, List<String> nomes) {
+	public static void copiarColunaUnicaString(String titulo, Table table, boolean comAspas, List<String> nomes) {
 		if (table == null) {
 			return;
 		}
@@ -260,7 +261,7 @@ public class Util {
 		}
 	}
 
-	private static void copiarColunaUnicaString(String titulo, JTable table, TableColumnModel columnModel,
+	private static void copiarColunaUnicaString(String titulo, Table table, TableColumnModel columnModel,
 			boolean comAspas, Coletor coletor) {
 		ColunaSel sel = colunasSelecionadas(coletor, columnModel).get(0);
 		SeparadorDialogo.criar(table, titulo, table, sel.indiceModel, comAspas, null);
@@ -1254,7 +1255,7 @@ public class Util {
 		return new Selecao(component, string);
 	}
 
-	public static TabelaPesquisa getTabelaPesquisa(JTable tabela, TabelaPesquisa pesquisa, int coluna, String string,
+	public static TabelaPesquisa getTabelaPesquisa(Table tabela, TabelaPesquisa pesquisa, int coluna, String string,
 			boolean porParte) {
 		if (pesquisa == null) {
 			return new TabelaPesquisa(tabela, string, coluna, porParte);
