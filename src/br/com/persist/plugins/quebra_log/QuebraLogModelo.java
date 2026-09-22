@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Table;
 
 public class QuebraLogModelo extends AbstractTableModel {
 	private final transient List<QuebraLog> lista = new ArrayList<>();
@@ -76,7 +76,7 @@ public class QuebraLogModelo extends AbstractTableModel {
 		LOG.log(Level.FINEST, "setValueAt");
 	}
 
-	public void fragmentarArquivo(JTable table) {
+	public void fragmentarArquivo(Table table) {
 		ThreadFragmento selecionado = null;
 		ThreadFragmento primeiro = null;
 		for (QuebraLog qlog : lista) {
@@ -96,9 +96,9 @@ public class QuebraLogModelo extends AbstractTableModel {
 	private class ThreadFragmento extends Thread {
 		ThreadFragmento proximo;
 		final QuebraLog qlog;
-		final JTable table;
+		final Table table;
 
-		ThreadFragmento(QuebraLog qlog, JTable table) {
+		ThreadFragmento(QuebraLog qlog, Table table) {
 			this.table = table;
 			this.qlog = qlog;
 		}

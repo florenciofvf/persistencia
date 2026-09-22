@@ -13,12 +13,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.componente.Table;
 
 public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 	private final transient List<CellEditorListener> listeners;
 	private static final long serialVersionUID = 1L;
 	private ChangeEvent changeEvent;
-	private JTable tabela;
+	private Table tabela;
 	private int linha;
 
 	protected AbstratoEditor() {
@@ -51,7 +52,7 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 		return false;
 	}
 
-	public abstract void abrirModalEdicaoValor(JTable table, int row);
+	public abstract void abrirModalEdicaoValor(Table table, int row);
 
 	@Override
 	public boolean stopCellEditing() {
@@ -82,7 +83,7 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		this.tabela = table;
+		this.tabela = (Table) table;
 		this.linha = row;
 		return this;
 	}
