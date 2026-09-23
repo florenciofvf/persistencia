@@ -15,7 +15,8 @@ public class FabricaBuilder extends Builder {
 
 	@Override
 	void templateImport(Arquivo arquivo) {
-		arquivo.addImport("java.util.Arrays").newLine();
+		arquivo.addImport("java.util.Arrays");
+		arquivo.addImport("java.util.List").newLine();
 		if (config.comConfiguracao) {
 			arquivo.addImport("br.com.persist.abstrato.AbstratoConfiguracao");
 		}
@@ -30,13 +31,14 @@ public class FabricaBuilder extends Builder {
 		if (config.comRecurso()) {
 			arquivo.addImport("br.com.persist.assistencia.Util");
 		}
+		arquivo.addImport("br.com.persist.componente.Menu");
 		arquivo.addImport("br.com.persist.componente.MenuPadrao1");
 		arquivo.addImport("br.com.persist.fichario.Pagina");
 		arquivo.addImport("br.com.persist.fichario.PaginaServico");
 		arquivo.addImport("br.com.persist.formulario.Formulario").newLine();
 
-		arquivo.addComentario(
-				"\t\t<menu classeFabrica=\"" + config.pacote + "." + config.nameCapFabrica() + "\" ativo=\"true\" />");
+		arquivo.addComentario("\t\t<menuItem classeFabrica=\"" + config.pacote + "." + config.nameCapFabrica()
+				+ "\" ativo=\"true\" />");
 	}
 
 	@Override
