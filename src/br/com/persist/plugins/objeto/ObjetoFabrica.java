@@ -3,15 +3,12 @@ package br.com.persist.plugins.objeto;
 import java.awt.Window;
 import java.awt.event.InputEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Action;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
@@ -25,6 +22,8 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.FileChooser;
+import br.com.persist.componente.Menu;
+import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -227,13 +226,11 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		List<JMenuItem> lista = new ArrayList<>();
-		JMenuItem itemNovo = new JMenuItem(Mensagens.getString(Constantes.LABEL_NOVO), Icones.CUBO);
+	public void processarMenu(Formulario formulario, Menu menu) {
+		MenuItem itemNovo = new MenuItem(Mensagens.getString(Constantes.LABEL_NOVO), false, Icones.CUBO);
 		itemNovo.addActionListener(e -> novo(formulario));
-		lista.add(itemNovo);
-		lista.add(new MenuAbrir(formulario));
-		return lista;
+		menu.add(itemNovo);
+		menu.add(new MenuAbrir(formulario));
 	}
 
 	private class MenuAbrir extends MenuPadrao1 {
