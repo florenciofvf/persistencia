@@ -2,18 +2,14 @@ package br.com.persist.plugins.ambiente;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -67,12 +63,10 @@ public class AmbienteFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		List<JMenuItem> lista = new ArrayList<>();
+	public void processarMenu(Formulario formulario, Menu menu) {
 		for (Ambiente ambiente : cache.getAmbientes()) {
-			lista.add(new MenuAmbiente(formulario, ambiente));
+			menu.add(new MenuAmbiente(formulario, ambiente));
 		}
-		return lista;
 	}
 
 	private class MenuAmbiente extends MenuPadrao1 {

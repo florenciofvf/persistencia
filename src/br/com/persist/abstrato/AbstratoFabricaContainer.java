@@ -3,16 +3,14 @@ package br.com.persist.abstrato;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
+import br.com.persist.componente.Menu;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoFabricaContainer implements FabricaContainer {
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		return new ArrayList<>();
+	public void processarMenu(Formulario formulario, Menu menu) {
+		//
 	}
 
 	@Override

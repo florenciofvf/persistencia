@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
@@ -21,6 +20,8 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Menu;
+import br.com.persist.componente.MenuItem;
 
 public class FormularioFabrica extends AbstratoFabricaContainer {
 	private JMenuItem itemFechar = new JMenuItem(Mensagens.getString("label.fechar"), Icones.SAIR);
@@ -85,10 +86,10 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		JMenuItem itemOutraInstancia = new JMenuItem(FormularioMensagens.getString("label.abrir_outra_instancia"),
+	public void processarMenu(Formulario formulario, Menu menu) {
+		MenuItem itemOutraInstancia = new MenuItem(FormularioMensagens.getString("label.abrir_outra_instancia"), false,
 				Icones.CRIAR2);
-		JMenuItem itemFecharEConexao = new JMenuItem(FormularioMensagens.getString("label.fechar_com_conexao"),
+		MenuItem itemFecharEConexao = new MenuItem(FormularioMensagens.getString("label.fechar_com_conexao"), false,
 				Icones.SAIR);
 		itemOutraInstancia.addActionListener(e -> abrirOutraInstancia(formulario));
 		itemFecharEConexao.addActionListener(e -> fechar(formulario, true));
@@ -97,7 +98,6 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 		menu.addSeparator();
 		/** menu.add(itemFecharEConexao); */
 		menu.add(itemFechar);
-		return new ArrayList<>();
 	}
 
 	private void fechar(Formulario formulario, boolean fecharConexao) {

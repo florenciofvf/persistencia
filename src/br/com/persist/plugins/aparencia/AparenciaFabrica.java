@@ -1,12 +1,9 @@
 package br.com.persist.plugins.aparencia;
 
 import java.awt.Window;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -18,6 +15,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ButtonGrupo;
+import br.com.persist.componente.Menu;
 import br.com.persist.formulario.Formulario;
 
 public class AparenciaFabrica extends AbstratoFabricaContainer {
@@ -38,20 +36,18 @@ public class AparenciaFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
+	public void processarMenu(Formulario formulario, Menu menu) {
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
-		List<JMenuItem> lista = new ArrayList<>();
 		ButtonGrupo grupo = new ButtonGrupo();
 		for (LookAndFeelInfo info : installedLookAndFeels) {
 			ItemLAF item = new ItemLAF(formulario, info);
 			grupo.add(item);
-			lista.add(item);
+			menu.add(item);
 		}
 		LookAndFeelInfo info = new LookAndFeelInfo("Nimbus" + Constantes.DOIS, NimbusLookAndFeel2.class.getName());
 		padrao = new ItemLAF(formulario, info);
 		grupo.add(padrao);
-		lista.add(padrao);
-		return lista;
+		menu.add(padrao);
 	}
 }
 
