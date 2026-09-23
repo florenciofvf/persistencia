@@ -1,17 +1,14 @@
 package br.com.persist.plugins.atributo;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -50,10 +47,8 @@ public class AtributoFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
-		List<JMenuItem> lista = new ArrayList<>();
-		lista.add(new MenuAtributo(formulario));
-		return lista;
+	public void processarMenu(Formulario formulario, Menu menu) {
+		menu.add(new MenuAtributo(formulario));
 	}
 
 	private class MenuAtributo extends MenuPadrao1 {
