@@ -15,11 +15,7 @@ public class FabricaBuilder extends Builder {
 
 	@Override
 	void templateImport(Arquivo arquivo) {
-		arquivo.addImport("java.util.ArrayList");
-		arquivo.addImport("java.util.Arrays");
-		arquivo.addImport("java.util.List").newLine();
-		arquivo.addImport("javax.swing.JMenu");
-		arquivo.addImport("javax.swing.JMenuItem").newLine();
+		arquivo.addImport("java.util.Arrays").newLine();
 		if (config.comConfiguracao) {
 			arquivo.addImport("br.com.persist.abstrato.AbstratoConfiguracao");
 		}
@@ -86,12 +82,10 @@ public class FabricaBuilder extends Builder {
 		classe.criarClassePrivada(config.nameCapServico() + " extends AbstratoServico");
 
 		classe.addOverride(true);
-		funcao = classe.criarFuncaoPublica("List<JMenuItem>", "criarMenuItens",
-				new Parametros("Formulario formulario, JMenu menu"));
+		funcao = classe.criarFuncaoPublica("void", "processarMenu",
+				new Parametros("Formulario formulario, Menu menu"));
 
-		funcao.addInstrucao("List<JMenuItem> lista = new ArrayList<>()");
-		funcao.addInstrucao("lista.add(new Menu" + config.nameCap + "(formulario))");
-		funcao.addReturn("lista");
+		funcao.addInstrucao("menu.add(new Menu" + config.nameCap + "(formulario))");
 
 		classe.newLine();
 		classePrivada = classe.criarClassePrivada("Menu" + config.nameCap + " extends MenuPadrao1");
