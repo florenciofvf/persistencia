@@ -1,37 +1,35 @@
 package br.com.persist.formulario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import br.com.persist.marca.XMLHandler;
 
 class MenuHandler extends XMLHandler {
-	private final MenuColetor coletor;
-	private MenuApp selecionado;
+	private final List<MenuXML> menus;
+	private MenuXML selecionado;
 
-	MenuHandler(MenuColetor coletor) {
-		this.coletor = coletor;
-		coletor.init();
+	MenuHandler() {
+		menus = new ArrayList<>();
 	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("menu".equals(qName)) {
-			MenuApp menu = selecionado;
-			selecionado = new MenuApp();
-			selecionado.aplicar(attributes);
-			if (menu == null) {
-				coletor.getMenus().add(selecionado);
-			} else {
-				menu.add(selecionado);
+			selecionado = MenuXML.criar(attributes);
+			menus.add(selecionado);
+		} else if ("menuItem".equals(qName)) {
+			MenuItemXML item = MenuItemXML.criar(attributes);
+			if(selecionado != null) {
+				selecionado.add(item);
 			}
 		}
 	}
 
-	@Override
-	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if ("menu".equals(qName) && selecionado != null) {
-			selecionado = selecionado.getPai();
-		}
+	public List<MenuXML> getMenus() {
+		return menus;
 	}
 }

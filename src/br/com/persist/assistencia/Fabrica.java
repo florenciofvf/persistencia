@@ -7,6 +7,9 @@ public class Fabrica {
 	}
 
 	public static FabricaContainer criar(String classe) {
+		if (classe == null || classe.trim().isEmpty()) {
+			return null;
+		}
 		try {
 			Class<?> klass = Class.forName(classe);
 			return (FabricaContainer) klass.newInstance();

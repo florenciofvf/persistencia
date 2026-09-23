@@ -42,6 +42,7 @@ import br.com.persist.assistencia.StringComboModelo;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ComboBox;
+import br.com.persist.componente.Menu;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
@@ -263,10 +264,23 @@ public class Formulario extends JFrame implements PluginBasico {
 
 		private void carregarMenu(File file) {
 			try {
-				MenuColetor coletor = new MenuColetor();
-				XML.processar(file, new MenuHandler(coletor));
-				for (MenuApp m : coletor.getMenus()) {
-					add(m.criarMenu(Formulario.this));
+				MenuHandler handler = new MenuHandler();
+				XML.processar(file, handler);
+				for (MenuXML menu : handler.getMenus()) {
+					if(!menu.isAtivo()) {
+						return;
+					}
+					Menu menuObj = menu.criarMenu();
+					add(menuObj);
+					for(MenuItemXML item : menu.getItens()) {
+						if(!item.isAtivo()) {
+							return;
+						}
+						if(item.isSeparador()) {
+							menuObj.addSeparator();
+						}
+						item.processar(Formulario.this, menuObj);
+					}
 				}
 				Collections.sort(servicos, (o1, o2) -> o1.getOrdem() - o2.getOrdem());
 				SwingUtilitario.updateComponentTreeUI(this);
