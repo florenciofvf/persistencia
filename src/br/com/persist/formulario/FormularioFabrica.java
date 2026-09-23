@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JMenuItem;
-
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
@@ -24,7 +22,7 @@ import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuItem;
 
 public class FormularioFabrica extends AbstratoFabricaContainer {
-	private JMenuItem itemFechar = new JMenuItem(Mensagens.getString("label.fechar"), Icones.SAIR);
+	private MenuItem itemFechar = new MenuItem(Mensagens.getString("label.fechar"), false, Icones.SAIR);
 
 	@Override
 	public void inicializar() {

@@ -267,16 +267,16 @@ public class Formulario extends JFrame implements PluginBasico {
 				MenuHandler handler = new MenuHandler();
 				XML.processar(file, handler);
 				for (MenuXML menu : handler.getMenus()) {
-					if(!menu.isAtivo()) {
+					if (!menu.isAtivo()) {
 						return;
 					}
 					Menu menuObj = menu.criarMenu();
 					add(menuObj);
-					for(MenuItemXML item : menu.getItens()) {
-						if(!item.isAtivo()) {
+					for (MenuItemXML item : menu.getItens()) {
+						if (!item.isAtivo()) {
 							return;
 						}
-						if(item.isSeparador()) {
+						if (item.isSeparador()) {
 							menuObj.addSeparator();
 						}
 						item.processar(Formulario.this, menuObj);

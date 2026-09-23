@@ -82,8 +82,7 @@ public class FabricaBuilder extends Builder {
 		classe.criarClassePrivada(config.nameCapServico() + " extends AbstratoServico");
 
 		classe.addOverride(true);
-		funcao = classe.criarFuncaoPublica("void", "processarMenu",
-				new Parametros("Formulario formulario, Menu menu"));
+		funcao = classe.criarFuncaoPublica("void", "processarMenu", new Parametros("Formulario formulario, Menu menu"));
 
 		funcao.addInstrucao("menu.add(new Menu" + config.nameCap + "(formulario))");
 

@@ -23,7 +23,7 @@ class MenuHandler extends XMLHandler {
 			menus.add(selecionado);
 		} else if ("menuItem".equals(qName)) {
 			MenuItemXML item = MenuItemXML.criar(attributes);
-			if(selecionado != null) {
+			if (selecionado != null) {
 				selecionado.add(item);
 			}
 		}
