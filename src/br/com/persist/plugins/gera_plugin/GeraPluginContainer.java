@@ -19,7 +19,6 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
@@ -27,6 +26,7 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.SwingUtilitario;
@@ -51,7 +51,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class GeraPluginContainer extends AbstratoContainer implements PluginBasico {
-	private ComboBox<Icone> comboIconePlugin = new ComboBox<>(arrayObjetoIcone());
+	private ComboBox<ItemIcone> comboIconePlugin = new ComboBox<>(arrayItemIcone());
 	private CheckBox chkComConfiguracao = criarCheckBox("label.com_configuracao");
 	private CheckBox chkComClasseUtil = criarCheckBox("label.com_classe_util");
 	private CheckBox chkComException = criarCheckBox("label.com_exception");
@@ -80,7 +80,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 
 	public GeraPluginContainer(Janela janela, Formulario formulario) {
 		super(formulario);
-		comboIconePlugin.setRenderer(new ItemRenderer());
+		comboIconePlugin.setRenderer(new ItemIconeRenderer());
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -118,52 +118,44 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		return label;
 	}
 
-	private Icone[] arrayObjetoIcone() {
-		List<Icone> resp = new ArrayList<>();
+	private ItemIcone[] arrayItemIcone() {
+		List<ItemIcone> resp = new ArrayList<>();
 		Class<?> klass = Icones.class;
 		Field[] fields = klass.getDeclaredFields();
 		for (Field field : fields) {
 			Class<?> tipo = field.getType();
-			if (tipo.equals(Icon.class)) {
+			if (tipo.equals(Icone.class)) {
 				try {
-					Icon icon = (Icon) field.get(Icones.class);
-					resp.add(new Icone(field.getName(), icon));
+					Icone icone = (Icone) field.get(Icones.class);
+					resp.add(new ItemIcone(field.getName(), icone));
 				} catch (Exception e) {
 					//
 				}
 			}
 		}
-		return resp.toArray(new Icone[0]);
+		return resp.toArray(new ItemIcone[0]);
 	}
 
-	class Icone {
+	class ItemIcone {
 		final String string;
-		final Icon icon;
+		final Icone icone;
 
-		public Icone(String string, Icon icon) {
+		public ItemIcone(String string, Icone icone) {
 			this.string = string;
-			this.icon = icon;
-		}
-
-		public String getString() {
-			return string;
-		}
-
-		public Icon getIcon() {
-			return icon;
+			this.icone = icone;
 		}
 	}
 
-	class ItemRenderer extends DefaultListCellRenderer {
+	class ItemIconeRenderer extends DefaultListCellRenderer {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
 			super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-			Icone icone = (Icone) value;
-			setText(icone.string);
-			setIcon(icone.icon);
+			ItemIcone itemIcone = (ItemIcone) value;
+			setIcon(itemIcone.icone.getIcon());
+			setText(itemIcone.string);
 			return this;
 		}
 	}
@@ -200,8 +192,8 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.5));
 		add(BorderLayout.CENTER, split);
 
-		buttonGerar.setIcon(Icones.EXECUTAR);
 		buttonGerar.addActionListener(e -> gerarArquivos());
+		buttonGerar.setIcon(Icones.EXECUTAR.getIcon());
 	}
 
 	private Panel criarCamada(Component... comps) {
@@ -465,7 +457,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 		config.nameDecap = nome.substring(0, 1).toLowerCase() + nome.substring(1);
 		config.nameUpper = nome.toUpperCase();
 		config.nameLower = nome.toLowerCase();
-		Icone icone = (Icone) comboIconePlugin.getSelectedItem();
+		ItemIcone icone = (ItemIcone) comboIconePlugin.getSelectedItem();
 		config.icone = icone.string;
 		config.comConfiguracao = chkComConfiguracao.isSelected();
 		config.comDialogo = chkComDialogo.isSelected();
@@ -581,7 +573,7 @@ public class GeraPluginContainer extends AbstratoContainer implements PluginBasi
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.CRIAR2;
 			}
 		};
