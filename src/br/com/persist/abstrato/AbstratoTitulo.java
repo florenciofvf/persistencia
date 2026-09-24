@@ -1,7 +1,6 @@
 package br.com.persist.abstrato;
 
-import javax.swing.Icon;
-
+import br.com.persist.assistencia.Icone;
 import br.com.persist.fichario.Titulo;
 
 public abstract class AbstratoTitulo implements Titulo {
@@ -26,7 +25,7 @@ public abstract class AbstratoTitulo implements Titulo {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return null;
 	}
 }

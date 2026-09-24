@@ -17,10 +17,10 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -58,9 +58,9 @@ class Cabecalho extends Panel {
 	private class IconeLabel extends Label {
 		private static final long serialVersionUID = 1L;
 
-		private IconeLabel(Icon icone) {
+		private IconeLabel(Icone icone) {
 			setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-			setIcon(icone);
+			setIcone(icone);
 		}
 
 		@Override

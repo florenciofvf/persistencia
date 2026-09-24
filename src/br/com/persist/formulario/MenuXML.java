@@ -3,11 +3,10 @@ package br.com.persist.formulario;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Icon;
-
 import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.AssistenciaException;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Menu;
@@ -47,15 +46,15 @@ public class MenuXML {
 	}
 
 	public Menu criarMenu() {
-		return new Menu(descricao, false, getIcon());
+		return new Menu(descricao, false, getIcone());
 	}
 
-	public Icon getIcon() {
+	public Icone getIcone() {
 		if (Util.isEmpty(icone)) {
 			return null;
 		}
 		try {
-			return Imagens.getIcon(icone);
+			return Imagens.getIcone(icone);
 		} catch (AssistenciaException ex) {
 			return null;
 		}

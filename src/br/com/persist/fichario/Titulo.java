@@ -1,6 +1,6 @@
 package br.com.persist.fichario;
 
-import javax.swing.Icon;
+import br.com.persist.assistencia.Icone;
 
 public interface Titulo {
 	public String getTituloMin();
@@ -11,5 +11,5 @@ public interface Titulo {
 
 	public String getHint();
 
-	public Icon getIcone();
+	public Icone getIcone();
 }

@@ -48,7 +48,6 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -80,6 +79,7 @@ import br.com.persist.mensagem.MensagemFormulario;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColuna;
 
 public class Util {
+	private static final String MSG_COM_CABECALHO = "msg.com_cabecalho";
 	private static final Logger LOG = Logger.getGlobal();
 	private static boolean mensagemHtml;
 	private static Desktop desktop;
@@ -315,7 +315,7 @@ public class Util {
 		StringBuilder html = new StringBuilder();
 		StringBuilder pipe = new StringBuilder();
 		iniciar(html);
-		if (confirmar(table, "msg.com_cabecalho")) {
+		if (confirmar(table, MSG_COM_CABECALHO)) {
 			cabecalho(html, tabular, pipe, barra, columnModel, selecionadas);
 		}
 		conteudo(html, tabular, pipe, barra, model, indices, selecionadas);
@@ -331,7 +331,7 @@ public class Util {
 		util.abrirTag("dados");
 		util.atributo("tabela", tabela);
 		util.fecharTag();
-		if (confirmar(table, "msg.com_cabecalho")) {
+		if (confirmar(table, MSG_COM_CABECALHO)) {
 			colunasXML(util, columnModel, selecionadas);
 		}
 		dadosXML(util, model, indices, selecionadas);
@@ -644,16 +644,16 @@ public class Util {
 	}
 
 	public static class Config {
-		final int messageType;
-		final Icon icon;
-		final Object[] options;
 		final Object initialValue;
+		final Object[] options;
+		final int messageType;
+		final Icone icone;
 
-		public Config(int messageType, Icon icon, Object[] options, Object initialValue) {
-			this.messageType = messageType;
-			this.icon = icon;
-			this.options = options;
+		public Config(int messageType, Icone icone, Object[] options, Object initialValue) {
 			this.initialValue = initialValue;
+			this.messageType = messageType;
+			this.options = options;
+			this.icone = icone;
 		}
 
 		public Config(int messageType) {
@@ -663,8 +663,8 @@ public class Util {
 
 	public static int showOptionDialog(Component parentComponent, Object message, String title, int optionType,
 			Config config) {
-		JOptionPane pane = new JOptionPane(message, config.messageType, optionType, config.icon, config.options,
-				config.initialValue);
+		JOptionPane pane = new JOptionPane(message, config.messageType, optionType,
+				config.icone != null ? config.icone.getIcon() : null, config.options, config.initialValue);
 		pane.setInitialValue(config.initialValue);
 		pane.setComponentOrientation(
 				((parentComponent == null) ? JOptionPane.getRootFrame() : parentComponent).getComponentOrientation());
@@ -782,8 +782,9 @@ public class Util {
 	}
 
 	private static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType,
-			int messageType, Icon icon) {
-		return showOptionDialog(parentComponent, message, title, optionType, new Config(messageType, icon, null, null));
+			int messageType, Icone icone) {
+		return showOptionDialog(parentComponent, message, title, optionType,
+				new Config(messageType, icone, null, null));
 	}
 
 	public static Object showInputDialog(Component parent, String titulo, String mensagem, String valorPadrao) {

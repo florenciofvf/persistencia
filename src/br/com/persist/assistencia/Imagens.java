@@ -9,31 +9,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 public class Imagens {
-	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
+	private static final Map<String, Icone> MAPA_ICONES = new HashMap<>();
 	private static final File file = new File(Constantes.IMAGENS);
 
 	private Imagens() {
 	}
 
-	private static ImageIcon criarImagem(String nome) throws AssistenciaException {
+	private static Icone criarIcone(String nome) throws AssistenciaException {
 		try {
-			return new ImageIcon(file.getAbsolutePath() + File.separator + nome + ".png");
+			return new Icone(new ImageIcon(file.getAbsolutePath() + File.separator + nome + ".png"));
 		} catch (Exception e) {
 			throw new AssistenciaException("Erro imagem! " + nome);
 		}
 	}
 
-	public static Icon getIcon(String nome) throws AssistenciaException {
-		ImageIcon icone = criarImagem(nome);
+	public static Icone getIcone(String nome) throws AssistenciaException {
+		Icone icone = criarIcone(nome);
 		return MAPA_ICONES.computeIfAbsent(nome, t -> icone);
 	}
 
-	public static List<Map.Entry<String, Icon>> getIcones() {
-		List<Map.Entry<String, Icon>> lista = new ArrayList<>(MAPA_ICONES.entrySet());
+	public static List<Map.Entry<String, Icone>> getIcones() {
+		List<Map.Entry<String, Icone>> lista = new ArrayList<>(MAPA_ICONES.entrySet());
 		Collections.sort(lista, new Comparador());
 		return lista;
 	}
@@ -46,15 +45,15 @@ public class Imagens {
 				String s = f.getName();
 				if (s.endsWith(".png")) {
 					s = s.substring(0, s.length() - 4);
-					getIcon(s);
+					getIcone(s);
 				}
 			}
 		}
 	}
 
-	private static class Comparador implements Comparator<Map.Entry<String, Icon>> {
+	private static class Comparador implements Comparator<Map.Entry<String, Icone>> {
 		@Override
-		public int compare(Entry<String, Icon> o1, Entry<String, Icon> o2) {
+		public int compare(Entry<String, Icone> o1, Entry<String, Icone> o2) {
 			return o1.getKey().compareTo(o2.getKey());
 		}
 	}
