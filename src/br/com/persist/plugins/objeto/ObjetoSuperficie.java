@@ -36,7 +36,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.swing.Icon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -46,6 +45,7 @@ import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -389,8 +389,8 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		return true;
 	}
 
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+	static Action acaoMenu(String chave, Icone icone) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), icone);
 	}
 
 	static Action acaoMenu(String chave) {
@@ -1267,11 +1267,11 @@ class SuperficiePopup2 extends Popup {
 		limparFormulariosAcao.setEnabled(contemFrames);
 		menuIgnorados.preShow();
 		if (contemFrames && contemExcecao()) {
-			formulariosComExcecaoAcaoMsg.icon(Icones.GLOBO_GIF);
-			formulariosComExcecaoAcaoOuv.icon(Icones.GLOBO_GIF);
+			formulariosComExcecaoAcaoMsg.icone(Icones.GLOBO_GIF);
+			formulariosComExcecaoAcaoOuv.icone(Icones.GLOBO_GIF);
 		} else {
-			formulariosComExcecaoAcaoMsg.icon(null);
-			formulariosComExcecaoAcaoOuv.icon(null);
+			formulariosComExcecaoAcaoMsg.icone(null);
+			formulariosComExcecaoAcaoOuv.icone(null);
 		}
 	}
 
@@ -2199,8 +2199,8 @@ class SuperficiePopup extends Popup {
 			addVinculadoAcao.setActionListener(e -> adicionarVinculado());
 		}
 
-		Action acaoMenu(String chave, Icon icon) {
-			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+		Action acaoMenu(String chave, Icone icone) {
+			return Action.acaoMenu(ObjetoMensagens.getString(chave), icone);
 		}
 
 		private void adicionarVinculado() {

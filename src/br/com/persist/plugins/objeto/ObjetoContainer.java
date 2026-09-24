@@ -38,7 +38,6 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.Icon;
 import javax.swing.InputMap;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -46,6 +45,7 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
@@ -266,16 +266,16 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			addButton(modeloMemoriaAcao);
 		}
 
-		Action acaoMenu(String chave, Icon icon) {
-			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+		Action acaoMenu(String chave, Icone icone) {
+			return Action.acaoMenu(ObjetoMensagens.getString(chave), icone);
 		}
 
 		Action acaoMenu(String chave) {
 			return acaoMenu(chave, null);
 		}
 
-		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+		Action acaoIcon(String chave, Icone icone) {
+			return Action.acaoIcon(ObjetoMensagens.getString(chave), icone);
 		}
 
 		private void configurar() {
@@ -1124,7 +1124,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.CUBO;
 			}
 		};

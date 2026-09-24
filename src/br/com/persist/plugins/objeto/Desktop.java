@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
 import javax.swing.JInternalFrame;
 
 import br.com.persist.abstrato.AbstratoDesktop;
@@ -33,6 +32,7 @@ import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
@@ -634,7 +634,7 @@ public class Desktop extends AbstratoDesktop implements IDesktop, Pagina, Fichar
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.PANEL2;
 			}
 		};

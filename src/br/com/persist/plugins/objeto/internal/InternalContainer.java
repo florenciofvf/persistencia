@@ -47,7 +47,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
@@ -66,6 +65,7 @@ import br.com.persist.abstrato.WindowInternalHandler;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Mensagens;
@@ -223,8 +223,8 @@ public class InternalContainer extends Panel
 		processar("", g, null, null);
 	}
 
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+	static Action acaoMenu(String chave, Icone icone) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), icone);
 	}
 
 	static Action acaoMenu(String chave) {
@@ -963,13 +963,13 @@ public class InternalContainer extends Panel
 			if (exceptionAcao.isEnabled()) {
 				msgException = Constantes.VAZIO;
 				exceptionAcao.setEnabled(false);
-				exceptionAcao.icon(null);
+				exceptionAcao.icone(null);
 			}
 		}
 
 		void exceptionEnable(String string) {
 			if (!exceptionAcao.isEnabled()) {
-				exceptionAcao.icon(Icones.GLOBO_GIF);
+				exceptionAcao.icone(Icones.GLOBO_GIF);
 				exceptionAcao.setEnabled(true);
 				msgException = string;
 			}
@@ -1728,7 +1728,7 @@ public class InternalContainer extends Panel
 
 					private void configurarIcone(String nomeIcone, Vinculacao vinculacao, Pesquisa pesq)
 							throws AssistenciaException {
-						MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
+						MenuPesquisa.this.setIcone(Imagens.getIcone(nomeIcone));
 						pesquisa.setIconeGrupo(nomeIcone);
 						pesq.setIconeGrupo(nomeIcone);
 						vinculoListener.salvarVinculacao(vinculacao);
@@ -1761,7 +1761,7 @@ public class InternalContainer extends Panel
 						if (arquivo != null) {
 							configurarIcone(nomeIcone, vinculacao, arquivo);
 						} else {
-							MenuPesquisa.this.setIcon(Imagens.getIcon(nomeIcone));
+							MenuPesquisa.this.setIcone(Imagens.getIcone(nomeIcone));
 						}
 					}
 
@@ -1774,7 +1774,7 @@ public class InternalContainer extends Panel
 
 					private class ListenerIcone implements IconeListener {
 						@Override
-						public void setIcone(Object objeto, String nome, Icon icon) throws AssistenciaException {
+						public void setIcone(Object objeto, String nome, Icone icone) throws AssistenciaException {
 							try {
 								checarProcesso(ArquivoVinculo.OBRIGATORIO);
 							} catch (ObjetoException ex) {
@@ -2163,7 +2163,7 @@ public class InternalContainer extends Panel
 				}
 
 				private void configurarIcone(Pesquisa pesq, String nomeIcone) throws AssistenciaException {
-					setIcon(Imagens.getIcon(nomeIcone));
+					setIcone(Imagens.getIcone(nomeIcone));
 					pesquisa.setIconeGrupo(nomeIcone);
 					pesq.setIconeGrupo(nomeIcone);
 				}
@@ -5490,7 +5490,7 @@ public class InternalContainer extends Panel
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.CUBO;
 			}
 		};
@@ -5571,10 +5571,10 @@ public class InternalContainer extends Panel
 		LOG.log(Level.FINEST, "windowInternalOpenedHandler");
 	}
 
-	static Icon iconePesquisa(Pesquisa pesquisa) {
+	static Icone iconePesquisa(Pesquisa pesquisa) {
 		try {
 			String iconeGrupo = pesquisa.getIconeGrupo();
-			return Util.isEmpty(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
+			return Util.isEmpty(iconeGrupo) ? null : Imagens.getIcone(iconeGrupo);
 		} catch (AssistenciaException ex) {
 			Util.mensagem(null, ex.getMessage());
 			return null;

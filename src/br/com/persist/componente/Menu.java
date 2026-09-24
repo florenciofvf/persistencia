@@ -22,6 +22,10 @@ public class Menu extends JMenu {
 		super(Mensagens.getString(chaveRotulo));
 	}
 
+	public void setIcone(Icone icone) {
+		setIcon(icone != null ? icone.getIcon() : null);
+	}
+
 	protected MenuItem addMenuItem(Action action) {
 		return addMenuItem(false, action);
 	}
