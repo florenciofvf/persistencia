@@ -360,7 +360,7 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		tre.addInstrucao(
 				"String resp = Util.clonarEm(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref, true)");
 		tre.addInstrucao("ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo)");
-		tre.addInstrucao("arquivoTree.atualizarEstrutura(ref.get());");
+		tre.addInstrucao("arquivoTree.atualizarEstrutura(ref.get())");
 		se = tre.criarIf(PREFERENCIAS_IS_EXIBIR_TOTAL_BYTES_CLONADOS, null);
 		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + THIS_RESP);
 
@@ -372,7 +372,7 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		tre.addInstrucao(ATOMIC_REFERENCE_FILE_REF_NEW_ATOMIC_REFERENCE);
 		tre.addInstrucao(
 				"String resp = Util.clonarEm(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref, false)");
-		tre.addInstrucao("arquivoTree.atualizarEstrutura(ref.get());");
+		tre.addInstrucao("arquivoTree.atualizarEstrutura(ref.get())");
 		se = tre.criarIf(PREFERENCIAS_IS_EXIBIR_TOTAL_BYTES_CLONADOS, null);
 		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + THIS_RESP);
 
