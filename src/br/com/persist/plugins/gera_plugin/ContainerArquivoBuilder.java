@@ -16,12 +16,15 @@ import br.com.persist.geradores.RetornoClasseAnonima;
 import br.com.persist.geradores.Try;
 
 public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
+	private static final String ATOMIC_REFERENCE_FILE_REF_NEW_ATOMIC_REFERENCE = "AtomicReference<File> ref = new AtomicReference<>()";
 	private static final String ARQUIVO_TREE_GET_OBJETO_SELECIONADO = "Arquivo arquivo = arquivoTree.getObjetoSelecionado()";
+	private static final String PREFERENCIAS_IS_EXIBIR_TOTAL_BYTES_CLONADOS = "Preferencias.isExibirTotalBytesClonados()";
 	private static final String THIS_ARQUIVO_GET_FILE = ".this, arquivo.getFile())";
 	private static final String EXCLUIR_CONTAINER = ".excluirContainer()";
 	private static final String ARQUIVO_DIFF_NULL = "arquivo != null";
 	private static final String UTIL_MSG = "Util.mensagem(";
 	private static final String GET_STRING = ".getString(";
+	private static final String THIS_RESP = ".this, resp)";
 	private static final String DIFF_NULL = " != null";
 	private static final String DOT_THIS = ".this)";
 	private static final String STRING = "String";
@@ -350,20 +353,37 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "moverParaArquivo", parametros);
-		funcao.addComentario("Impl");
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf(ARQUIVO_DIFF_NULL, null);
+		tre = se.criarTry(catche);
+		tre.addInstrucao(ATOMIC_REFERENCE_FILE_REF_NEW_ATOMIC_REFERENCE);
+		tre.addInstrucao(
+				"String resp = Util.clonarEm(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref, true)");
+		tre.addInstrucao("ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo)");
+		tre.addInstrucao("arquivoTree.atualizarEstrutura(ref.get());");
+		se = tre.criarIf(PREFERENCIAS_IS_EXIBIR_TOTAL_BYTES_CLONADOS, null);
+		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + THIS_RESP);
 
 		classe.addOverride(true);
 		funcao = classe.criarFuncaoPublica("void", "clonarEmArquivo", parametros);
-		funcao.addComentario("Impl");
+		funcao.addInstrucao(ARQUIVO_TREE_GET_OBJETO_SELECIONADO);
+		se = funcao.criarIf(ARQUIVO_DIFF_NULL, null);
+		tre = se.criarTry(catche);
+		tre.addInstrucao(ATOMIC_REFERENCE_FILE_REF_NEW_ATOMIC_REFERENCE);
+		tre.addInstrucao(
+				"String resp = Util.clonarEm(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref, false)");
+		tre.addInstrucao("arquivoTree.atualizarEstrutura(ref.get());");
+		se = tre.criarIf(PREFERENCIAS_IS_EXIBIR_TOTAL_BYTES_CLONADOS, null);
+		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + THIS_RESP);
 
 		classe.newLine();
 		funcao = classe.criarFuncaoPrivada("void", "clonar",
 				new Parametros("ArquivoTree arquivoTree, Arquivo arquivo"));
 		tre = funcao.criarTry(catche);
-		tre.addInstrucao("AtomicReference<File> ref = new AtomicReference<>()");
+		tre.addInstrucao(ATOMIC_REFERENCE_FILE_REF_NEW_ATOMIC_REFERENCE);
 		tre.addInstrucao("String resp = Util.clonar(" + config.nameCapContainer() + ".this, arquivo.getFile(), ref)");
-		se = tre.criarIf("Preferencias.isExibirTotalBytesClonados()", null);
-		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + ".this, resp)");
+		se = tre.criarIf(PREFERENCIAS_IS_EXIBIR_TOTAL_BYTES_CLONADOS, null);
+		se.addInstrucao(UTIL_MSG + config.nameCapContainer() + THIS_RESP);
 		tre.addInstrucao("adicionar(arquivoTree, arquivo.getPai(), ref.get())");
 
 		classe.addOverride(true);
