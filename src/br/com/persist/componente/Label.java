@@ -14,6 +14,7 @@ import br.com.persist.assistencia.Util;
 public class Label extends JLabel {
 	private transient LabelLinkListener linkListener;
 	private static final long serialVersionUID = 1L;
+	private transient Icone icone;
 	private Popup popup;
 
 	public Label(String rotulo, boolean chaveRotulo) {
@@ -38,6 +39,11 @@ public class Label extends JLabel {
 
 	public void setIcone(Icone icone) {
 		setIcon(icone != null ? icone.getIcon() : null);
+		this.icone = icone;
+	}
+
+	public Icone getIcone() {
+		return icone;
 	}
 
 	public void limpar() {

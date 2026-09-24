@@ -16,11 +16,11 @@ import java.util.Map.Entry;
 import java.util.Objects;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Busca;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -51,9 +51,9 @@ public class IconeContainer extends Panel implements PluginBasico {
 	}
 
 	private void montarLayout() {
-		List<Entry<String, Icon>> icones = Imagens.getIcones();
+		List<Entry<String, Icone>> icones = Imagens.getIcones();
 		Panel matriz = new Panel(new GridLayout(0, 25));
-		for (Map.Entry<String, Icon> entry : icones) {
+		for (Map.Entry<String, Icone> entry : icones) {
 			LabelIcone icone = new LabelIcone(entry);
 			listaLabelIcone.add(icone);
 			matriz.add(icone);
@@ -71,10 +71,10 @@ public class IconeContainer extends Panel implements PluginBasico {
 		private static final long serialVersionUID = 1L;
 		private final String nome;
 
-		private LabelIcone(Map.Entry<String, Icon> entry) {
+		private LabelIcone(Map.Entry<String, Icone> entry) {
 			addMouseListener(mouseListenerInner);
 			setHorizontalAlignment(CENTER);
-			setIcon(entry.getValue());
+			setIcone(entry.getValue());
 			nome = entry.getKey();
 			setToolTipText(nome);
 			selecionar(iconeSel);
@@ -96,9 +96,9 @@ public class IconeContainer extends Panel implements PluginBasico {
 				try {
 					if (labelIcone != null) {
 						labelIcone.setToolTipText(nome);
-						labelIcone.setIcon(getIcon());
+						labelIcone.setIcone(getIcone());
 					}
-					listener.setIcone(objeto, nome, getIcon());
+					listener.setIcone(objeto, nome, getIcone());
 					toolbar.fechar();
 				} catch (AssistenciaException ex) {
 					Util.mensagem(IconeContainer.this, ex.getMessage());
