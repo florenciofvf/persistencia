@@ -3,9 +3,9 @@ package br.com.persist.componente;
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Mensagens;
 
 public class TabbedPane extends JTabbedPane {
@@ -19,12 +19,11 @@ public class TabbedPane extends JTabbedPane {
 		borda();
 	}
 
-	@Override
-	public void addTab(String title, Icon icon, Component component) {
+	public void addTab(String title, Icone icone, Component component) {
 		if (chaveProperty) {
-			super.addTab(Mensagens.getString(title), icon, component);
+			super.addTab(Mensagens.getString(title), icone != null ? icone.getIcon() : null, component);
 		} else {
-			super.addTab(title, icon, component);
+			super.addTab(title, icone != null ? icone.getIcon() : null, component);
 		}
 	}
 

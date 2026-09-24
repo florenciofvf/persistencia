@@ -2,9 +2,8 @@ package br.com.persist.componente;
 
 import java.awt.Component;
 
-import javax.swing.Icon;
-
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Preferencias;
 
 public class MenuPadrao3 extends Menu {
@@ -12,13 +11,13 @@ public class MenuPadrao3 extends Menu {
 	protected Action dialogoAcao = Action.actionMenuDialogo();
 	private static final long serialVersionUID = 1L;
 
-	public MenuPadrao3(String rotulo, boolean chaveRotulo, Icon icon) {
-		super(rotulo, chaveRotulo, icon);
+	public MenuPadrao3(String rotulo, boolean chaveRotulo, Icone icone) {
+		super(rotulo, chaveRotulo, icone);
 		init();
 	}
 
-	public MenuPadrao3(String chaveRotulo, Icon icon) {
-		this(chaveRotulo, true, icon);
+	public MenuPadrao3(String chaveRotulo, Icone icone) {
+		this(chaveRotulo, true, icone);
 	}
 
 	private void init() {

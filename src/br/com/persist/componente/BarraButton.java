@@ -29,7 +29,6 @@ import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Icon;
 import javax.swing.JInternalFrame;
 import javax.swing.JToolBar;
 
@@ -37,6 +36,7 @@ import br.com.persist.abstrato.DialogHandler;
 import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.abstrato.WindowInternalHandler;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
@@ -110,7 +110,7 @@ public abstract class BarraButton extends ToolBar
 		txtPesquisa.requestFocus();
 	}
 
-	protected Action actionIcon(String chaveRotulo, Icon icone) {
+	protected Action actionIcon(String chaveRotulo, Icone icone) {
 		return Action.actionIcon(chaveRotulo, icone);
 	}
 

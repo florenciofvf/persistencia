@@ -5,12 +5,12 @@ import java.awt.Point;
 import java.awt.Window;
 
 import javax.swing.DefaultDesktopManager;
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -565,8 +565,8 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree,
 			JInternalFrame frame);
 
-	static Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
+	static Action acaoMenu(String chave, Icone icone) {
+		return Action.acaoMenu(AbstratoMensagens.getString(chave), icone);
 	}
 
 	static Action acaoMenu(String chave) {

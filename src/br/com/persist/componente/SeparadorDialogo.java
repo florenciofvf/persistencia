@@ -84,9 +84,9 @@ class SeparadorContainer extends Panel {
 	private void montarLayout() {
 		Label label = new Label("label.separador");
 		label.setHorizontalAlignment(SwingConstantes.RIGHT);
+		btnCopiar.setIcone(Icones.COPIA);
+		label.setIcone(Icones.SEPARADOR);
 		setLayout(new GridLayout(1, 0));
-		btnCopiar.setIcon(Icones.COPIA);
-		label.setIcon(Icones.SEPARADOR);
 		add(label);
 		add(txtSeparador);
 		add(chkQuebraLinha);

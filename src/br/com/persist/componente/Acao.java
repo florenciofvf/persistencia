@@ -2,8 +2,8 @@ package br.com.persist.componente;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
 
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Mensagens;
 
 public abstract class Acao extends AbstractAction {
@@ -12,11 +12,11 @@ public abstract class Acao extends AbstractAction {
 	protected final String chave;
 	protected final boolean menu;
 
-	protected Acao(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
+	protected Acao(boolean menu, String rotulo, boolean chaveRotulo, Icone icone) {
 		setRotulo(menu, rotulo, chaveRotulo);
 		this.chave = rotulo;
 		this.menu = menu;
-		icon(icone);
+		icone(icone);
 	}
 
 	public String getChave() {
@@ -39,8 +39,8 @@ public abstract class Acao extends AbstractAction {
 		setRotulo(menu, chaveRotulo);
 	}
 
-	public void icon(Icon icone) {
-		putValue(Action.SMALL_ICON, icone);
+	public void icone(Icone icone) {
+		putValue(Action.SMALL_ICON, icone != null ? icone.getIcon() : null);
 	}
 
 	public void text(String rotulo) {

@@ -1,8 +1,9 @@
 package br.com.persist.componente;
 
-import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+
+import br.com.persist.assistencia.Icone;
 
 public class Popup extends JPopupMenu {
 	private static final long serialVersionUID = 1L;
@@ -52,7 +53,7 @@ public class Popup extends JPopupMenu {
 		}
 	}
 
-	protected Action actionMenu(String chaveRotulo, Icon icone) {
+	protected Action actionMenu(String chaveRotulo, Icone icone) {
 		return Action.actionMenu(chaveRotulo, icone);
 	}
 

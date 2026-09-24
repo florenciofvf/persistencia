@@ -3,20 +3,19 @@ package br.com.persist.componente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Icon;
-
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 
 public class Action extends Acao {
 	protected transient ActionListener actionListener;
 	private static final long serialVersionUID = 1L;
 
-	public Action(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
+	public Action(boolean menu, String rotulo, boolean chaveRotulo, Icone icone) {
 		super(menu, rotulo, chaveRotulo, icone);
 	}
 
-	public Action(boolean menu, String chaveRotulo, Icon icone) {
+	public Action(boolean menu, String chaveRotulo, Icone icone) {
 		this(menu, chaveRotulo, true, icone);
 	}
 
@@ -33,31 +32,31 @@ public class Action extends Acao {
 		actionListener.actionPerformed(e);
 	}
 
-	public static Action actionIcon(String chaveRotulo, Icon icone, ActionListener actionListener) {
+	public static Action actionIcon(String chaveRotulo, Icone icone, ActionListener actionListener) {
 		Action action = new Action(false, chaveRotulo, icone);
 		action.actionListener = actionListener;
 		return action;
 	}
 
-	public static Action actionMenu(String chaveRotulo, Icon icone, ActionListener actionListener) {
+	public static Action actionMenu(String chaveRotulo, Icone icone, ActionListener actionListener) {
 		Action action = new Action(true, chaveRotulo, icone);
 		action.actionListener = actionListener;
 		return action;
 	}
 
-	public static Action actionIcon(String chaveRotulo, Icon icone) {
+	public static Action actionIcon(String chaveRotulo, Icone icone) {
 		return new Action(false, chaveRotulo, icone);
 	}
 
-	public static Action acaoIcon(String rotulo, Icon icone) {
+	public static Action acaoIcon(String rotulo, Icone icone) {
 		return new Action(false, rotulo, false, icone);
 	}
 
-	public static Action actionMenu(String chaveRotulo, Icon icone) {
+	public static Action actionMenu(String chaveRotulo, Icone icone) {
 		return new Action(true, chaveRotulo, icone);
 	}
 
-	public static Action acaoMenu(String rotulo, Icon icone) {
+	public static Action acaoMenu(String rotulo, Icone icone) {
 		return new Action(true, rotulo, false, icone);
 	}
 

@@ -1,21 +1,21 @@
 package br.com.persist.componente;
 
-import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Mensagens;
 
 public class Menu extends JMenu {
 	private static final long serialVersionUID = 1L;
 
-	public Menu(String rotulo, boolean chaveRotulo, Icon icon) {
+	public Menu(String rotulo, boolean chaveRotulo, Icone icone) {
 		super(chaveRotulo ? Mensagens.getString(rotulo) : rotulo);
-		setIcon(icon);
+		setIcon(icone != null ? icone.getIcon() : null);
 	}
 
-	public Menu(String chaveRotulo, Icon icon) {
-		this(chaveRotulo, true, icon);
+	public Menu(String chaveRotulo, Icone icone) {
+		this(chaveRotulo, true, icone);
 	}
 
 	public Menu(String chaveRotulo) {
@@ -42,7 +42,7 @@ public class Menu extends JMenu {
 		add(menuItem);
 	}
 
-	protected Action actionMenu(String chaveRotulo, Icon icone) {
+	protected Action actionMenu(String chaveRotulo, Icone icone) {
 		return Action.actionMenu(chaveRotulo, icone);
 	}
 

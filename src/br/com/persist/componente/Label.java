@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 
@@ -33,6 +34,10 @@ public class Label extends JLabel {
 	}
 
 	public Label() {
+	}
+
+	public void setIcone(Icone icone) {
+		setIcon(icone != null ? icone.getIcon() : null);
 	}
 
 	public void limpar() {

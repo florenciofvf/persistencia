@@ -2,20 +2,20 @@ package br.com.persist.componente;
 
 import java.awt.Component;
 
-import javax.swing.Icon;
 import javax.swing.JPopupMenu;
 
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Mensagens;
 
 public abstract class ButtonPopup extends Button {
 	private static final long serialVersionUID = 1L;
 	private Popup popup = new Popup();
 
-	protected ButtonPopup(String chaveRotulo, Icon icon) {
+	protected ButtonPopup(String chaveRotulo, Icone icone) {
 		setToolTipText(Mensagens.getString(chaveRotulo));
+		setIcon(icone != null ? icone.getIcon() : null);
 		addActionListener(e -> popupShow());
 		setComponentPopupMenu(popup);
-		setIcon(icon);
 	}
 
 	protected void popupShow() {
@@ -121,7 +121,7 @@ public abstract class ButtonPopup extends Button {
 		popup.limpar();
 	}
 
-	protected Action actionMenu(String chaveRotulo, Icon icone) {
+	protected Action actionMenu(String chaveRotulo, Icone icone) {
 		return Action.actionMenu(chaveRotulo, icone);
 	}
 

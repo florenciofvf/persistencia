@@ -46,16 +46,16 @@ public class OrdemHeader extends Panel implements TableCellRenderer {
 		private final int indice;
 
 		private Ordenacao(int indice, boolean numero) {
-			setIcon(Icones.ORDEM);
+			setIcone(Icones.ORDEM);
 			this.indice = indice;
 			this.numero = numero;
 		}
 
 		private void ordenar() {
 			if (numero) {
-				setIcon(asc ? Icones.ASC_NUMERO : Icones.DESC_NUMERO);
+				setIcone(asc ? Icones.ASC_NUMERO : Icones.DESC_NUMERO);
 			} else {
-				setIcon(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
+				setIcone(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
 			}
 			model.ordenar(indice, numero, asc);
 			asc = !asc;

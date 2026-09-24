@@ -3,6 +3,7 @@ package br.com.persist.componente;
 import javax.swing.Action;
 import javax.swing.JButton;
 
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Mensagens;
 
 public class Button extends JButton {
@@ -22,6 +23,10 @@ public class Button extends JButton {
 	}
 
 	public Button() {
+	}
+
+	public void setIcone(Icone icone) {
+		setIcon(icone != null ? icone.getIcon() : null);
 	}
 
 	public String getTag() {
