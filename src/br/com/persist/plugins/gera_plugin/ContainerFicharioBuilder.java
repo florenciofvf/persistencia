@@ -56,12 +56,12 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 		arquivo.addImport("java.util.ArrayList");
 		arquivo.addImport("java.util.List");
 		arquivo.addImport("java.util.concurrent.atomic.AtomicBoolean").newLine();
-		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginFichario");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoUtil");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
+		arquivo.addImport("br.com.persist.assistencia.Icone");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Mensagens");
 		arquivo.addImport("br.com.persist.assistencia.Util");
@@ -445,7 +445,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 				+ config.nameUpperApos(LABEL) + ")");
 
 		anonima.addOverride(true);
-		funcao = anonima.criarFuncaoPublica("Icon", "getIcone");
+		funcao = anonima.criarFuncaoPublica("Icone", "getIcone");
 		funcao.addReturn("Icones." + config.icone);
 	}
 }

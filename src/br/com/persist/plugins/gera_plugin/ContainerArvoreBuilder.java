@@ -46,12 +46,12 @@ public class ContainerArvoreBuilder extends Builder implements PluginArvore {
 		arquivo.addImport("java.util.Set").newLine();
 		arquivo.addImport("java.util.logging.Level");
 		arquivo.addImport("java.util.logging.Logger").newLine();
-		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginArvore");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoPesquisa");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
+		arquivo.addImport("br.com.persist.assistencia.Icone");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Util");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
@@ -295,7 +295,7 @@ public class ContainerArvoreBuilder extends Builder implements PluginArvore {
 				+ config.nameUpperApos(LABEL) + ")");
 
 		anonima.addOverride(true);
-		funcao = anonima.criarFuncaoPublica("Icon", "getIcone");
+		funcao = anonima.criarFuncaoPublica("Icone", "getIcone");
 		funcao.addReturn("Icones." + config.icone);
 	}
 }

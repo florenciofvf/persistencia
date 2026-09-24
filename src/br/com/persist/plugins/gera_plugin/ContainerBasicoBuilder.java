@@ -36,12 +36,12 @@ public class ContainerBasicoBuilder extends Builder implements PluginBasico {
 		if (config.comDialogo) {
 			arquivo.addImport("java.awt.Dialog");
 		}
-		arquivo.addImport("java.awt.Window");
-		arquivo.addImport("javax.swing.Icon").newLine();
+		arquivo.addImport("java.awt.Window").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginBasico");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
+		arquivo.addImport("br.com.persist.assistencia.Icone");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.componente.BarraButton");
 		arquivo.addImport("br.com.persist.componente.Janela");
@@ -250,7 +250,7 @@ public class ContainerBasicoBuilder extends Builder implements PluginBasico {
 				+ config.nameUpperApos(LABEL) + ")");
 
 		anonima.addOverride(true);
-		funcao = anonima.criarFuncaoPublica("Icon", "getIcone");
+		funcao = anonima.criarFuncaoPublica("Icone", "getIcone");
 		funcao.addReturn("Icones." + config.icone);
 	}
 }

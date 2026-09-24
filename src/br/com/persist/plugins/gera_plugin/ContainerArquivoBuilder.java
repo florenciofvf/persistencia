@@ -53,7 +53,6 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		arquivo.addImport("java.util.LinkedHashSet");
 		arquivo.addImport("java.util.Set");
 		arquivo.addImport("java.util.concurrent.atomic.AtomicReference").newLine();
-		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginArquivo");
@@ -65,6 +64,7 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeListener");
 		arquivo.addImport("br.com.persist.arquivo.ArquivoTreeUtil");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
+		arquivo.addImport("br.com.persist.assistencia.Icone");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Preferencias");
 		arquivo.addImport("br.com.persist.assistencia.Util");
@@ -421,7 +421,7 @@ public class ContainerArquivoBuilder extends Builder implements PluginArquivo {
 				+ config.nameUpperApos(LABEL) + ")");
 
 		anonima.addOverride(true);
-		funcao = anonima.criarFuncaoPublica("Icon", "getIcone");
+		funcao = anonima.criarFuncaoPublica("Icone", "getIcone");
 		funcao.addReturn("Icones." + config.icone);
 	}
 }

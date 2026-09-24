@@ -54,13 +54,13 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		arquivo.addImport("java.util.Set");
 		arquivo.addImport("java.util.logging.Level");
 		arquivo.addImport("java.util.logging.Logger").newLine();
-		arquivo.addImport("javax.swing.Icon").newLine();
 		arquivo.addImport("br.com.persist.abstrato.AbstratoContainer");
 		arquivo.addImport("br.com.persist.abstrato.AbstratoTitulo");
 		arquivo.addImport("br.com.persist.abstrato.PluginTabela");
 		arquivo.addImport("br.com.persist.assistencia.ArgumentoException");
 		arquivo.addImport("br.com.persist.assistencia.CellRenderer");
 		arquivo.addImport("br.com.persist.assistencia.Constantes");
+		arquivo.addImport("br.com.persist.assistencia.Icone");
 		arquivo.addImport("br.com.persist.assistencia.Icones");
 		arquivo.addImport("br.com.persist.assistencia.Mensagens");
 		arquivo.addImport("br.com.persist.assistencia.TabelaPesquisa");
@@ -398,7 +398,7 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 				+ config.nameUpperApos(LABEL) + ")");
 
 		anonima.addOverride(true);
-		funcao = anonima.criarFuncaoPublica("Icon", "getIcone");
+		funcao = anonima.criarFuncaoPublica("Icone", "getIcone");
 		funcao.addReturn("Icones." + config.icone);
 	}
 
