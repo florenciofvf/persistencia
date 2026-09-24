@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
 
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
@@ -54,7 +54,7 @@ public class RequisicaoPanelBytes extends Panel {
 		return requisicaoRota;
 	}
 
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.BAIXAR;
 	}
 

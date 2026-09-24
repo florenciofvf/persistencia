@@ -36,7 +36,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
 import javax.swing.plaf.TextUI;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
@@ -53,6 +52,7 @@ import br.com.persist.arquivo.ArquivoTreeListener;
 import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -599,8 +599,8 @@ class Aba extends Transferivel {
 			add(label);
 		}
 
-		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icon);
+		Action acaoIcon(String chave, Icone icone) {
+			return Action.acaoIcon(InstrucaoMensagens.getString(chave), icone);
 		}
 
 		private void verCompilado() {

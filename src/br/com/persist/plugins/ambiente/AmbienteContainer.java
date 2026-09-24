@@ -20,13 +20,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
@@ -376,7 +375,7 @@ public class AmbienteContainer extends AbstratoContainer implements PluginBasico
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.BOLA_VERDE;
 			}
 		};

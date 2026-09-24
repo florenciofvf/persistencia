@@ -20,14 +20,13 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginTabela;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.TabelaPesquisa;
@@ -301,7 +300,7 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.REFERENCIA;
 			}
 		};

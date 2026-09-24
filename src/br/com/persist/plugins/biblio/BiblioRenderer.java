@@ -23,7 +23,7 @@ public class BiblioRenderer extends DefaultTableCellRenderer {
 		TableModel model = table.getModel();
 		if (model instanceof BiblioModelo) {
 			File file = BiblioProvedor.getBiblio(row).getFile();
-			setIcon(file.exists() ? Icones.SUCESSO : Icones.EXCEPTION);
+			setIcon(file.exists() ? Icones.SUCESSO.getIcon() : Icones.EXCEPTION.getIcon());
 		}
 		return this;
 	}

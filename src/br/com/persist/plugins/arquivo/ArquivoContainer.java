@@ -22,8 +22,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginArquivo;
@@ -33,6 +31,7 @@ import br.com.persist.arquivo.ArquivoPesquisa;
 import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -480,7 +479,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.EXPANDIR;
 			}
 		};

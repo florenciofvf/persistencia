@@ -26,8 +26,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -35,6 +33,7 @@ import br.com.persist.abstrato.PluginArquivo;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Mensagens;
@@ -447,9 +446,9 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		}
 
 		@Override
-		public void setIcone(Object objeto, String nome, Icon icon) throws AssistenciaException {
+		public void setIcone(Object objeto, String nome, Icone icone) throws AssistenciaException {
 			Anexo item = (Anexo) objeto;
-			item.setIcone(icon, nome);
+			item.setIcone(icone, nome);
 			AnexoModelo.putAnexo(item);
 		}
 
@@ -496,7 +495,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		arquivo.setCorFonte(corFonte);
 		String nome = (String) map.get(Constantes.ICONE);
 		if (!Util.isEmpty(nome)) {
-			Icon icone = Imagens.getIcon(nome);
+			Icone icone = Imagens.getIcone(nome);
 			arquivo.setIcone(icone, nome);
 		}
 		AnexoModelo.putAnexo(arquivo);
@@ -547,7 +546,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.ANEXO;
 			}
 		};

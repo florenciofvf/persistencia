@@ -23,8 +23,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginArquivo;
@@ -32,6 +30,7 @@ import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
@@ -789,7 +788,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.CAMPOS;
 			}
 		};

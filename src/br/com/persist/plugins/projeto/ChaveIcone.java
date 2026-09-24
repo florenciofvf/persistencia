@@ -1,12 +1,12 @@
 package br.com.persist.plugins.projeto;
 
-import javax.swing.Icon;
+import br.com.persist.assistencia.Icone;
 
 public class ChaveIcone {
 	final String chave;
-	final Icon icone;
+	final Icone icone;
 
-	public ChaveIcone(String chave, Icon icone) {
+	public ChaveIcone(String chave, Icone icone) {
 		this.chave = chave;
 		this.icone = icone;
 	}

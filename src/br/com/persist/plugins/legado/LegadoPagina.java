@@ -19,10 +19,9 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.Icon;
-
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.SwingUtilitario;
@@ -104,8 +103,8 @@ public class LegadoPagina extends Panel implements Aba {
 			add(label);
 		}
 
-		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(LegadoMensagens.getString(chave), icon);
+		Action acaoIcon(String chave, Icone icone) {
+			return Action.acaoIcon(LegadoMensagens.getString(chave), icone);
 		}
 
 		private void executar() {

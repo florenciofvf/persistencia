@@ -19,7 +19,7 @@ public class AnexoRenderer extends DefaultTreeCellRenderer {
 		if (value instanceof Anexo) {
 			Anexo obj = (Anexo) value;
 			if (obj.getIcone() != null) {
-				setIcon(obj.getIcone());
+				setIcon(obj.getIcone() != null ? obj.getIcone().getIcon() : null);
 			}
 			if (obj.getCorFonte() != null) {
 				setForeground(obj.getCorFonte());

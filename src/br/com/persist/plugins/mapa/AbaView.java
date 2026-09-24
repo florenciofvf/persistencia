@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 import br.com.persist.assistencia.ArgumentoException;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
@@ -138,8 +138,8 @@ public class AbaView extends Panel {
 				eventos();
 			}
 
-			Action acaoMenu(String chave, Icon icon) {
-				return Action.acaoMenu(MapaMensagens.getString(chave), icon);
+			Action acaoMenu(String chave, Icone icone) {
+				return Action.acaoMenu(MapaMensagens.getString(chave), icone);
 			}
 
 			Action acaoMenu(String chave) {

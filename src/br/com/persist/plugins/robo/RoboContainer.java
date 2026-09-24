@@ -24,13 +24,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginFichario;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
@@ -180,8 +179,8 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 			}
 		}
 
-		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(RoboMensagens.getString(chave), icon);
+		Action acaoIcon(String chave, Icone icone) {
+			return Action.acaoIcon(RoboMensagens.getString(chave), icone);
 		}
 
 		private void executar() {
@@ -356,7 +355,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.CONFIG;
 			}
 		};

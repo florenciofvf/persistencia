@@ -27,9 +27,9 @@ public class ConexaoRendererStatus extends DefaultTableCellRenderer {
 			try {
 				Connection conn = ConexaoProvedor.get(conexao);
 				if (conn == null || conn.isClosed()) {
-					setIcon(Icones.BANCO_DESCONECTA);
+					setIcon(Icones.BANCO_DESCONECTA.getIcon());
 				} else {
-					setIcon(Icones.CONECTA);
+					setIcon(Icones.CONECTA.getIcon());
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ERRO STATUS CONN", ex, this);

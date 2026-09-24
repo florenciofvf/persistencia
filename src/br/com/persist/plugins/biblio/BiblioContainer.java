@@ -15,12 +15,11 @@ import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
@@ -275,7 +274,7 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.COR;
 			}
 		};

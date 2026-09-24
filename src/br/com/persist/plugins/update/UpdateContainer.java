@@ -26,7 +26,6 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Icon;
 import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -34,6 +33,7 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -459,7 +459,7 @@ public class UpdateContainer extends AbstratoContainer implements PluginBasico {
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.UPDATE;
 			}
 		};

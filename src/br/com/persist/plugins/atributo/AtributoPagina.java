@@ -22,10 +22,9 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.swing.Icon;
-
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.StringPool;
@@ -193,12 +192,12 @@ public class AtributoPagina extends Panel implements Aba {
 				tabelaAcao.setActionListener(e -> carregar());
 			}
 
-			Action acaoMenu(String chave, Icon icon) {
-				return Action.acaoMenu(AtributoMensagens.getString(chave), icon);
+			Action acaoMenu(String chave, Icone icone) {
+				return Action.acaoMenu(AtributoMensagens.getString(chave), icone);
 			}
 
-			Action acaoIcon(String chave, Icon icon) {
-				return Action.acaoIcon(AtributoMensagens.getString(chave), icon);
+			Action acaoIcon(String chave, Icone icone) {
+				return Action.acaoIcon(AtributoMensagens.getString(chave), icone);
 			}
 
 			@Override

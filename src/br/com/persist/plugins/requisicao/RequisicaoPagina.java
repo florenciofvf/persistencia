@@ -31,14 +31,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
-
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.FragmentoUtil;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.RequestResult;
 import br.com.persist.assistencia.RequestUtil;
@@ -346,8 +345,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		return Action.acaoMenu(RequisicaoMensagens.getString(chave), null);
 	}
 
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
+	static Action acaoIcon(String chave, Icone icone) {
+		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icone);
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
@@ -876,7 +875,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			int indice = tabbedPane.getSelectedIndex();
 			if (indice != -1) {
 				tabbedPane.setTitleAt(indice, visualizador.getTitulo());
-				tabbedPane.setIconAt(indice, visualizador.getIcone());
+				tabbedPane.setIconAt(indice,
+						visualizador.getIcone() != null ? visualizador.getIcone().getIcon() : null);
 			}
 		});
 	}

@@ -4,8 +4,7 @@ import java.awt.Component;
 import java.io.PrintWriter;
 import java.util.Set;
 
-import javax.swing.Icon;
-
+import br.com.persist.assistencia.Icone;
 import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
 
@@ -24,7 +23,7 @@ public interface RequisicaoVisualizador {
 
 	public String getTitulo();
 
-	public Icon getIcone();
+	public Icone getIcone();
 
 	public void limpar();
 

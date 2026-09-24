@@ -18,9 +18,9 @@ public class ArquivoRenderer extends DefaultTreeCellRenderer {
 		if (value instanceof Arquivo) {
 			Arquivo obj = (Arquivo) value;
 			if (obj.isArquivoAberto()) {
-				setIcon(Icones.BOLA_VERDE);
+				setIcon(Icones.BOLA_VERDE.getIcon());
 			} else if (obj.isFile()) {
-				setIcon(Icones.NOVO);
+				setIcon(Icones.NOVO.getIcon());
 			}
 		}
 		return this;

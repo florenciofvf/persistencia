@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -22,6 +21,7 @@ import javax.swing.tree.TreePath;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Imagens;
 
 public class AnexoModelo implements TreeModel {
@@ -79,7 +79,7 @@ public class AnexoModelo implements TreeModel {
 		}
 		if (linha.startsWith(Constantes.ICONE)) {
 			String nome = linha.substring(Constantes.ICONE.length());
-			Icon icone = Imagens.getIcon(nome);
+			Icone icone = Imagens.getIcone(nome);
 			selecionado.setIcone(icone, nome);
 		} else if (linha.startsWith(AnexoConstantes.ABRIR_VISIVEL)) {
 			String abrirVisivel = linha.substring(AnexoConstantes.ABRIR_VISIVEL.length());

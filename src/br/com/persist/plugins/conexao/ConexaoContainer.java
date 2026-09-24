@@ -28,7 +28,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
 import javax.swing.table.JTableHeader;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -36,6 +35,7 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.PluginTabela;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.TabelaPesquisa;
@@ -123,8 +123,8 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		toolbar.setJanela(janela);
 	}
 
-	static Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(ConexaoMensagens.getString(chave), icon);
+	static Action acaoIcon(String chave, Icone icone) {
+		return Action.acaoIcon(ConexaoMensagens.getString(chave), icone);
 	}
 
 	static Action acaoIcon(String chave) {
@@ -431,7 +431,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.BANCO;
 			}
 		};

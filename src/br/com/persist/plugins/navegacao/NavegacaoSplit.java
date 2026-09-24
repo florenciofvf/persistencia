@@ -49,7 +49,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
@@ -76,6 +75,7 @@ import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -1115,8 +1115,8 @@ class Aba extends Transferivel {
 			return Action.acaoMenu(NavegacaoMensagens.getString(chave), null);
 		}
 
-		Action acaoIcon(String chave, Icon icon) {
-			return Action.acaoIcon(ExpressaoMensagens.getString(chave), icon);
+		Action acaoIcon(String chave, Icone icone) {
+			return Action.acaoIcon(ExpressaoMensagens.getString(chave), icone);
 		}
 
 		private void atualizarVar() {
@@ -1607,7 +1607,7 @@ class AccessToken {
 interface IVisualizador {
 	public String getTitulo();
 
-	public Icon getIcone();
+	public Icone getIcone();
 
 	public void salvar();
 }
@@ -1679,7 +1679,7 @@ class VisualizadorMetadados extends Visualizador {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.NOVO;
 	}
 }
@@ -1716,7 +1716,7 @@ class VisualizadorTexto extends Visualizador {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.TEXTO;
 	}
 }
@@ -1793,7 +1793,7 @@ class VisualizadorImagem extends Visualizador {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.ICON;
 	}
 }
@@ -1828,7 +1828,7 @@ class VisualizadorPDF extends Visualizador {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.PDF;
 	}
 }
@@ -1889,7 +1889,7 @@ class VisualizadorHTML extends Visualizador {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.URL;
 	}
 }
@@ -2025,7 +2025,7 @@ class VisualizadorJSON extends Visualizador {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.CONFIG;
 	}
 }

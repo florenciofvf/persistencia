@@ -14,14 +14,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Icon;
-
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
@@ -237,7 +236,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements PluginBa
 			}
 
 			@Override
-			public Icon getIcone() {
+			public Icone getIcone() {
 				return Icones.CONFIG;
 			}
 		};

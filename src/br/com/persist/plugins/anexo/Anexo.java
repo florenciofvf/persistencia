@@ -13,11 +13,10 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
-
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Util;
 
 public class Anexo {
@@ -29,7 +28,7 @@ public class Anexo {
 	private String nomeIcone;
 	private boolean checado;
 	private Color corFonte;
-	private Icon icone;
+	private Icone icone;
 	private File file;
 	private Anexo pai;
 
@@ -180,11 +179,11 @@ public class Anexo {
 		return file.getName();
 	}
 
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return icone;
 	}
 
-	public void setIcone(Icon icone, String nomeIcone) {
+	public void setIcone(Icone icone, String nomeIcone) {
 		if (icone != null && nomeIcone != null) {
 			this.nomeIcone = nomeIcone;
 			this.icone = icone;
