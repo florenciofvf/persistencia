@@ -22,12 +22,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Icon;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.TransferidorTabular;
@@ -456,8 +456,8 @@ public class TabelaPersistencia extends Table {
 			eventos();
 		}
 
-		Action acaoMenu(String chave, Icon icon) {
-			return Action.acaoMenu(getString(chave), icon);
+		Action acaoMenu(String chave, Icone icone) {
+			return Action.acaoMenu(getString(chave), icone);
 		}
 
 		Action acaoMenu(String chave) {
@@ -852,7 +852,7 @@ public class TabelaPersistencia extends Table {
 				String string = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.isEmpty(string)) {
 					Util.setContentTransfered(string);
-					setIcon(Icones.SUCESSO);
+					setIcon(Icones.SUCESSO.getIcon());
 				}
 			}
 

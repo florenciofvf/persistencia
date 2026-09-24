@@ -85,7 +85,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setVinculoListener(vinculoListener);
 		container.setSelecaoListener(selecaoListener);
 		margemInferior = objeto.getMargemInferior();
-		setFrameIcon(Icones.VAZIO);
+		setFrameIcon(Icones.VAZIO.getIcon());
 		montarLayout();
 		configurar2();
 	}

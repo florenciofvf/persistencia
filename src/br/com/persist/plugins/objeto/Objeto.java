@@ -25,6 +25,7 @@ import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
@@ -589,7 +590,10 @@ public class Objeto implements Runnable {
 		if (Util.isEmpty(this.icone)) {
 			this.icone = Constantes.VAZIO;
 		} else {
-			icon = Imagens.getIcon(this.icone);
+			Icone ref = Imagens.getIcone(this.icone);
+			if (ref != null) {
+				icon = ref.getIcon();
+			}
 		}
 	}
 

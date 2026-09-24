@@ -2,11 +2,11 @@ package br.com.persist.plugins.projeto;
 
 import java.awt.Component;
 
-import javax.swing.Icon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import br.com.persist.arquivo.Arquivo;
+import br.com.persist.assistencia.Icone;
 
 public class ProjetoRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = 1L;
@@ -22,9 +22,9 @@ public class ProjetoRenderer extends DefaultTreeCellRenderer {
 			} else if (arquivo.getName().endsWith("View")) {
 				setForeground(ProjetoPreferencia.getCorElementoFinalView());
 			} else {
-				Icon icon = MapaSufixos.getIcon(arquivo);
-				if (icon != null) {
-					setIcon(icon);
+				Icone icone = MapaSufixos.getIcone(arquivo);
+				if (icone != null) {
+					setIcon(icone.getIcon());
 				}
 			}
 		}

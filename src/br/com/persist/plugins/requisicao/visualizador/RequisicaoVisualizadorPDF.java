@@ -7,9 +7,9 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import javax.swing.Icon;
 import javax.swing.JComponent;
 
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
@@ -43,7 +43,7 @@ public class RequisicaoVisualizadorPDF extends AbstratoRequisicaoVisualizador {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.PDF;
 	}
 }

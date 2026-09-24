@@ -28,7 +28,6 @@ import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
@@ -38,6 +37,7 @@ import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.SwingConstantes;
@@ -360,8 +360,8 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 			}
 		}
 
-		Action acaoMenu(String chave, Icon icon) {
-			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+		Action acaoMenu(String chave, Icone icone) {
+			return Action.acaoMenu(ObjetoMensagens.getString(chave), icone);
 		}
 	}
 
@@ -692,8 +692,8 @@ public class RelacaoContainer extends Panel implements PluginBasico {
 		}
 	}
 
-	Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+	Action acaoIcon(String chave, Icone icone) {
+		return Action.acaoIcon(ObjetoMensagens.getString(chave), icone);
 	}
 
 	private class Fichario extends TabbedPane {

@@ -89,16 +89,16 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		private final int indice;
 
 		private Ordenacao(int indice, boolean numero) {
-			setIcon(Icones.ORDEM);
+			setIcone(Icones.ORDEM);
 			this.indice = indice;
 			this.numero = numero;
 		}
 
 		private void ordenar() {
 			if (numero) {
-				setIcon(asc ? Icones.ASC_NUMERO : Icones.DESC_NUMERO);
+				setIcone(asc ? Icones.ASC_NUMERO : Icones.DESC_NUMERO);
 			} else {
-				setIcon(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
+				setIcone(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
 			}
 			modelo.ordenar(indice, numero, asc);
 			asc = !asc;
@@ -111,7 +111,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		private String filtroString;
 
 		private Filtro(String coluna) {
-			setIcon(Icones.FILTRO);
+			setIcone(Icones.FILTRO);
 			this.coluna = coluna;
 		}
 
@@ -121,13 +121,13 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 
 		private void restaurar() {
 			if (!Util.isEmpty(filtroString)) {
-				setIcon(Icones.OLHO);
+				setIcone(Icones.OLHO);
 			}
 		}
 
 		@Override
 		public void limpar() {
-			setIcon(Icones.FILTRO);
+			setIcone(Icones.FILTRO);
 			filtroString = null;
 		}
 	}

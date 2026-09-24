@@ -68,12 +68,12 @@ class SufixoDialogo extends AbstratoDialogo {
 			for (ChaveIcone item : MapaSufixos.getLista()) {
 				Label label = new Label("_" + item.chave, false);
 				label.setHorizontalAlignment(SwingConstantes.CENTER);
-				label.setIcon(item.icone);
+				label.setIcone(item.icone);
 				add(label);
 			}
 			Label label = new Label("isFile", false);
 			label.setHorizontalAlignment(SwingConstantes.CENTER);
-			label.setIcon(Icones.TEXTO);
+			label.setIcone(Icones.TEXTO);
 			add(label);
 		}
 	}

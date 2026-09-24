@@ -33,7 +33,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
@@ -43,6 +42,7 @@ import br.com.persist.abstrato.PluginBasico;
 import br.com.persist.assistencia.AssistenciaException;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.HoraUtil;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -2005,7 +2005,7 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 			}
 
 			@Override
-			public void setIcone(Object objeto, String nome, Icon icon) throws AssistenciaException {
+			public void setIcone(Object objeto, String nome, Icone icone) throws AssistenciaException {
 				Objeto item = (Objeto) objeto;
 				item.setIcone(nome);
 				MacroProvedor.imagem(item.getIcone());
@@ -2331,16 +2331,16 @@ public class ObjetoContainer extends Panel implements PluginBasico {
 		ObjetoSuperficieUtil.salvarVinculacao(objetoSuperficie, vinculacao);
 	}
 
-	Action acaoMenu(String chave, Icon icon) {
-		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+	Action acaoMenu(String chave, Icone icone) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), icone);
 	}
 
 	Action acaoMenu(String chave) {
 		return acaoMenu(chave, null);
 	}
 
-	Action acaoIcon(String chave, Icon icon) {
-		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+	Action acaoIcon(String chave, Icone icone) {
+		return Action.acaoIcon(ObjetoMensagens.getString(chave), icone);
 	}
 
 	Action acaoIcon(String chave) {

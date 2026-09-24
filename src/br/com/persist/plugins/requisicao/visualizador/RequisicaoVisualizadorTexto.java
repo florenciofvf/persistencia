@@ -4,8 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Rectangle;
 
-import javax.swing.Icon;
-
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
@@ -52,7 +51,7 @@ public class RequisicaoVisualizadorTexto extends AbstratoRequisicaoVisualizador 
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.TEXTO;
 	}
 }

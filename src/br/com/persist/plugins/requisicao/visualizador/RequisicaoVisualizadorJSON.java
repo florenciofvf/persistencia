@@ -4,12 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Rectangle;
 
-import javax.swing.Icon;
 import javax.swing.JTextPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
@@ -154,7 +154,7 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	}
 
 	@Override
-	public Icon getIcone() {
+	public Icone getIcone() {
 		return Icones.CONFIG;
 	}
 }

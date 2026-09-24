@@ -3,9 +3,8 @@ package br.com.persist.plugins.projeto;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Icon;
-
 import br.com.persist.arquivo.Arquivo;
+import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
 
 public class MapaSufixos {
@@ -14,7 +13,7 @@ public class MapaSufixos {
 	private MapaSufixos() {
 	}
 
-	public static Icon getIcon(Arquivo arquivo) {
+	public static Icone getIcone(Arquivo arquivo) {
 		String nome = arquivo.getName();
 		int posUnder = nome.lastIndexOf('_');
 		int posDot = nome.lastIndexOf('.');
