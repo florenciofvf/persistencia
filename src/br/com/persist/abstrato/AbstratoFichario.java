@@ -1,4 +1,4 @@
-package br.com.persist.componente;
+package br.com.persist.abstrato;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -8,6 +8,9 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.KeyStroke;
+
+import br.com.persist.componente.FicharioPesquisa;
+import br.com.persist.componente.TabbedPane;
 
 public abstract class AbstratoFichario extends TabbedPane {
 	private transient AbstratoFicharioListener listener;

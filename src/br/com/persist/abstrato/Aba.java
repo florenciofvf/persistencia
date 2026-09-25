@@ -1,4 +1,4 @@
-package br.com.persist.componente;
+package br.com.persist.abstrato;
 
 import java.io.File;
 

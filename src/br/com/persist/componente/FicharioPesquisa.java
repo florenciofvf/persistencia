@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import br.com.persist.abstrato.Aba;
+import br.com.persist.abstrato.AbstratoFichario;
 import br.com.persist.assistencia.Busca;
 import br.com.persist.assistencia.Util;
 

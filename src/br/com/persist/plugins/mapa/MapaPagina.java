@@ -16,12 +16,12 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import br.com.persist.abstrato.Aba;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Aba;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;

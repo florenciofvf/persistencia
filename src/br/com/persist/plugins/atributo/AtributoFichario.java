@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import br.com.persist.abstrato.Aba;
+import br.com.persist.abstrato.AbstratoFichario;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Aba;
-import br.com.persist.componente.AbstratoFichario;
 
 public class AtributoFichario extends AbstratoFichario {
 	private static final long serialVersionUID = 1L;

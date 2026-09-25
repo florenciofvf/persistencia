@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.abstrato.Aba;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.ArgumentoException;
 import br.com.persist.assistencia.Base64Util;
@@ -44,7 +45,6 @@ import br.com.persist.assistencia.RequestUtil;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Aba;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
