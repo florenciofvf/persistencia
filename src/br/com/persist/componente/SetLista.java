@@ -398,11 +398,14 @@ class SetListaDialogo extends AbstratoDialogo {
 
 		private void ordenar() {
 			List<Item> listaItem = ((SetListaModelo) lista.getModel()).getListaItem();
+			boolean ascendente = false;
 			for (Item item : listaItem) {
 				item.ascendente = !item.ascendente;
+				ascendente = item.ascendente;
 			}
 			Collections.sort(listaItem);
 			lista.setModel(new SetListaModelo(listaItem, config));
+			ordenarAcao.icone(ascendente ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
 		}
 
 		private void criarCampo() {
