@@ -445,7 +445,7 @@ public class Preferencias {
 			return new Dimension(largura, altura);
 		}
 		if (string.length() < 201) {
-			return new Dimension(100, 100);
+			return new Dimension(250, 150);
 		}
 		if (string.length() < 501) {
 			return new Dimension(500, 300);
