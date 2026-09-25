@@ -418,7 +418,7 @@ public class Preferencias {
 		Preferencias.dimensaoMensagem = dimensaoMensagem;
 	}
 
-	public static Dimension getDimensionMensagem() {
+	public static Dimension getDimensionMensagem(String string) {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		String dm = pref.get(DIMENSAO_MENSAGEM, LA_500_300);
 		int largura = 500;
@@ -440,6 +440,15 @@ public class Preferencias {
 			altura = Integer.parseInt(array[1].trim());
 		} catch (Exception e) {
 			//
+		}
+		if (string == null) {
+			return new Dimension(largura, altura);
+		}
+		if (string.length() < 201) {
+			return new Dimension(100, 100);
+		}
+		if (string.length() < 501) {
+			return new Dimension(500, 300);
 		}
 		return new Dimension(largura, altura);
 	}
