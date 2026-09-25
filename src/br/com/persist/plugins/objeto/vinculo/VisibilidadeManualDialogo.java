@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.swing.table.AbstractTableModel;
-
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -75,7 +74,7 @@ class VisibilidadeManualContainer extends Panel {
 	}
 }
 
-class VisibilidadeManualModelo extends AbstractTableModel {
+class VisibilidadeManualModelo extends AbstratoTableModel {
 	private static final Class<?>[] COLUNAS_CLASS = { String.class, Boolean.class };
 	private static final String[] COLUNAS = { "TO_STRING", "VAZIO_INVISIVEL" };
 	private static final long serialVersionUID = 1L;

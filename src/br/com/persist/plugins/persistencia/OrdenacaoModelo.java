@@ -7,15 +7,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.swing.table.AbstractTableModel;
-
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 
-public class OrdenacaoModelo extends AbstractTableModel {
+public class OrdenacaoModelo extends AbstratoTableModel {
 	private final transient PersistenciaModelo model;
 	private static final long serialVersionUID = 1L;
 	private transient Linha[] linhas;

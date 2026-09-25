@@ -1,8 +1,8 @@
 package br.com.persist.plugins.biblio;
 
-import javax.swing.table.AbstractTableModel;
+import br.com.persist.abstrato.AbstratoTableModel;
 
-public class BiblioJarModelo extends AbstractTableModel {
+public class BiblioJarModelo extends AbstratoTableModel {
 	private static final String[] COLUNAS = { "NOME" };
 	private static final long serialVersionUID = 1L;
 

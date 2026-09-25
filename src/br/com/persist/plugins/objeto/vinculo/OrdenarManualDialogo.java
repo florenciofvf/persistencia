@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -82,7 +82,7 @@ class OrdenarManualContainer extends Panel {
 	}
 }
 
-class OrdenarManualModelo extends AbstractTableModel {
+class OrdenarManualModelo extends AbstratoTableModel {
 	private static final String[] COLUNAS = { "ORDEM", "NOME" };
 	private static final long serialVersionUID = 1L;
 	private final transient List<Pesquisa> lista;

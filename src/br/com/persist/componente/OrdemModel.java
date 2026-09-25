@@ -3,13 +3,13 @@ package br.com.persist.componente;
 import java.util.Arrays;
 import java.util.Objects;
 
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
-public class OrdemModel extends AbstractTableModel {
+public class OrdemModel extends AbstratoTableModel {
 	private static final long serialVersionUID = 1L;
 	private final transient TableModel model;
 	private transient Linha[] linhas;

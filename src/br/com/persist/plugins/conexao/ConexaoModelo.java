@@ -2,12 +2,11 @@ package br.com.persist.plugins.conexao;
 
 import java.util.Set;
 
-import javax.swing.table.AbstractTableModel;
-
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.BuscaConteudo;
 import br.com.persist.assistencia.Constantes;
 
-public class ConexaoModelo extends AbstractTableModel implements BuscaConteudo {
+public class ConexaoModelo extends AbstratoTableModel implements BuscaConteudo {
 	private static final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "SELECT CONSTRAINT",
 			"FILTRO", "ESQUEMA", "CATALOGO", "TIPO=FUNCAO;TIPO=FUNCAO", "GRUPO", "LIMIT", "ATIVO" };
 	private static final long serialVersionUID = 1L;

@@ -10,7 +10,6 @@ import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
@@ -90,7 +89,7 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 	}
 }
 
-class AtalhoModelo extends AbstractTableModel {
+class AtalhoModelo extends AbstratoTableModel {
 	private static final String[] COLUNAS = { "TECLAS", "FUNCIONALIDADE", "CONTEXTO" };
 	private static final long serialVersionUID = 1L;
 	private final transient List<Atalho> atalhos;

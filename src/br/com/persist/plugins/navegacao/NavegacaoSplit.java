@@ -56,7 +56,6 @@ import javax.swing.JTextPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.plaf.TextUI;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
@@ -67,6 +66,7 @@ import javax.swing.tree.TreePath;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoModelo;
 import br.com.persist.arquivo.ArquivoTree;
@@ -940,7 +940,7 @@ class Aba extends Transferivel {
 		}
 	}
 
-	private class RequisicaoModelo extends AbstractTableModel {
+	private class RequisicaoModelo extends AbstratoTableModel {
 		private final String[] colunas = { "URL", "MIME", "STATUS" };
 		private static final long serialVersionUID = 1L;
 		private final List<Requisicao> requisicoes;

@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.table.AbstractTableModel;
-
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Table;
 
-public class QuebraLogModelo extends AbstractTableModel {
+public class QuebraLogModelo extends AbstratoTableModel {
 	private final transient List<QuebraLog> lista = new ArrayList<>();
 	private static final String[] COLUNAS = { "NOME", "CAMINHO ABSOLUTO", "TAMANHO" };
 	private static final Logger LOG = Logger.getGlobal();

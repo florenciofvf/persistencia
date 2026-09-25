@@ -2,12 +2,11 @@ package br.com.persist.plugins.variaveis;
 
 import java.util.Set;
 
-import javax.swing.table.AbstractTableModel;
-
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.BuscaConteudo;
 import br.com.persist.assistencia.Constantes;
 
-public class VariavelModelo extends AbstractTableModel implements BuscaConteudo {
+public class VariavelModelo extends AbstratoTableModel implements BuscaConteudo {
 	private static final String[] COLUNAS = { "NOME", "VALOR" };
 	private static final long serialVersionUID = 1L;
 

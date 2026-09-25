@@ -3,9 +3,9 @@ package br.com.persist.plugins.atributo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.table.AbstractTableModel;
+import br.com.persist.abstrato.AbstratoTableModel;
 
-public class AtributoModelo extends AbstractTableModel {
+public class AtributoModelo extends AbstratoTableModel {
 	private static final Class<?>[] CLASS_COLUNAS = { Boolean.class, String.class, String.class, String.class,
 			String.class, Boolean.class, Boolean.class };
 	private static final String[] COLUNAS = { "IGNORAR", "NOME", "ROTULO", "CLASSE", "VIEW_TO_BACK", "PARSE_DATE",

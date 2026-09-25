@@ -2,12 +2,11 @@ package br.com.persist.plugins.objeto.alter;
 
 import java.util.Set;
 
-import javax.swing.table.AbstractTableModel;
-
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.BuscaConteudo;
 import br.com.persist.assistencia.Constantes;
 
-public class AlternativoModelo extends AbstractTableModel implements BuscaConteudo {
+public class AlternativoModelo extends AbstratoTableModel implements BuscaConteudo {
 	private static final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
 	private static final long serialVersionUID = 1L;
 

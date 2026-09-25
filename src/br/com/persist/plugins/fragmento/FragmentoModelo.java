@@ -2,12 +2,11 @@ package br.com.persist.plugins.fragmento;
 
 import java.util.Set;
 
-import javax.swing.table.AbstractTableModel;
-
+import br.com.persist.abstrato.AbstratoTableModel;
 import br.com.persist.assistencia.BuscaConteudo;
 import br.com.persist.assistencia.Constantes;
 
-public class FragmentoModelo extends AbstractTableModel implements BuscaConteudo {
+public class FragmentoModelo extends AbstratoTableModel implements BuscaConteudo {
 	private static final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR", "DEMANDA" };
 	private static final long serialVersionUID = 1L;
 
