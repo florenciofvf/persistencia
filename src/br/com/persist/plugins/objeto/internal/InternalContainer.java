@@ -4813,6 +4813,7 @@ public class InternalContainer extends Panel
 			}
 			Coletor coletor = getNomeBiblio();
 			if (coletor.size() != 1) {
+				Util.mensagem(InternalContainer.this, "getNomeBiblio.size != 1");
 				return;
 			}
 			mapear(coluna, coletor.get(0));
@@ -4825,6 +4826,7 @@ public class InternalContainer extends Panel
 				SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.nome_entrada_file"), entradas, coletor,
 						InternalContainer.this, new SetLista.Config(true, true, objeto.getId()));
 				if (coletor.size() != 1) {
+					Util.mensagem(InternalContainer.this, "coletor.size() != 1");
 					return;
 				}
 				String classe = normalizar(coletor.get(0));
