@@ -86,8 +86,8 @@ public class TabelaPersistenciaUtil {
 		}
 		Annotation[] annotations = field.getAnnotations();
 		if (annotations != null) {
-			for (Annotation annotacao : annotations) {
-				String toString = annotacao.toString();
+			for (Annotation item : annotations) {
+				String toString = item.toString();
 				if (toString != null && toString.toUpperCase().indexOf(coluna) != -1) {
 					return true;
 				}
