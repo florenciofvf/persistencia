@@ -1126,8 +1126,8 @@ public class TabelaPersistencia extends Table {
 					}
 					Field field = TabelaPersistenciaUtil.getFieldParaColuna(classe, colunaTabela.getNome());
 					if (field == null) {
-						String msg = TabelaMensagens.getString("msg.class_biblio_field_inexist",
-								colunaTabela.getNome());
+						String msg = TabelaMensagens.getString("msg.class_biblio_field_inexist", colunaTabela.getNome(),
+								Util.getOrigem(classe));
 						Util.mensagem(TabelaPersistencia.this, msg);
 						return;
 					}

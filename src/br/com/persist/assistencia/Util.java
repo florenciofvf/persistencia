@@ -33,7 +33,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.CodeSource;
 import java.security.NoSuchAlgorithmException;
+import java.security.ProtectionDomain;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1869,5 +1871,20 @@ public class Util {
 			}
 		}
 		return sb.toString();
+	}
+
+	public static String getOrigem(Class<?> klass) {
+		if (klass == null) {
+			return "Class nula";
+		}
+		ProtectionDomain protectionDomain = klass.getProtectionDomain();
+		if (protectionDomain == null) {
+			return "ProtectionDomain nulo";
+		}
+		CodeSource codeSource = protectionDomain.getCodeSource();
+		if (codeSource == null) {
+			return "CodeSource nulo";
+		}
+		return codeSource.toString();
 	}
 }
