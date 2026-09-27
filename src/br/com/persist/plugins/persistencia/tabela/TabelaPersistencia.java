@@ -1124,7 +1124,8 @@ public class TabelaPersistencia extends Table {
 						Util.mensagem(TabelaPersistencia.this, msg + ex.getMessage());
 						return;
 					}
-					Field field = TabelaPersistenciaUtil.getFieldParaColuna(classe, colunaTabela.getNome());
+					StringBuilder anotacoes = new StringBuilder();
+					Field field = TabelaPersistenciaUtil.getFieldParaColuna(classe, colunaTabela.getNome(), anotacoes);
 					if (field == null) {
 						String msg = TabelaMensagens.getString("msg.class_biblio_field_inexist", colunaTabela.getNome(),
 								Util.getOrigem(classe));
@@ -1138,8 +1139,12 @@ public class TabelaPersistencia extends Table {
 						List<String> selecionados = new ArrayList<>();
 						String string = TabelaPersistenciaUtil.descreverField(field, criarListaValores(set),
 								selecionados);
+						if (anotacoes.length() > 0) {
+							anotacoes.append("\n");
+						}
+						anotacoes.append(string);
 						String sel = selecionados.size() == 1 ? selecionados.get(0) : null;
-						Util.mensagemSel(TabelaPersistencia.this, string, sel);
+						Util.mensagemSel(TabelaPersistencia.this, anotacoes.toString(), sel);
 					} catch (Exception ex) {
 						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
 					}

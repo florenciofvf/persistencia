@@ -65,13 +65,14 @@ public class TabelaPersistenciaUtil {
 		return resposta;
 	}
 
-	public static Field getFieldParaColuna(Class<?> classe, String coluna) {
+	public static Field getFieldParaColuna(Class<?> classe, String coluna, StringBuilder builder) {
 		if (classe != null && coluna != null) {
 			Field[] fields = classe.getDeclaredFields();
 			if (fields != null) {
 				coluna = coluna.toUpperCase();
 				for (Field field : fields) {
 					if (corresponde(field, coluna)) {
+						anotacoesBuilder(field, coluna, builder);
 						return field;
 					}
 				}
@@ -94,6 +95,21 @@ public class TabelaPersistenciaUtil {
 			}
 		}
 		return false;
+	}
+
+	private static void anotacoesBuilder(Field field, String coluna, StringBuilder builder) {
+		Annotation[] annotations = field.getAnnotations();
+		if (annotations != null) {
+			for (Annotation item : annotations) {
+				String toString = item.toString();
+				if (toString != null && toString.toUpperCase().indexOf(coluna) != -1) {
+					if (builder.length() > 0) {
+						builder.append("\n");
+					}
+					builder.append(toString);
+				}
+			}
+		}
 	}
 
 	public static String descreverField(Field field, List<Valor> valores, List<String> selecionados)
