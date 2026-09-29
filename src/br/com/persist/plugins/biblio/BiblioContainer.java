@@ -155,6 +155,7 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 
 		@Override
 		protected void novo() {
+			fichario.setSelectedIndex(1);
 			int[] linhas = tabela.getSelectedRows();
 			Biblio biblio = new Biblio("#-" + BiblioProvedor.nextInt());
 			if (linhas != null && linhas.length == 1) {
