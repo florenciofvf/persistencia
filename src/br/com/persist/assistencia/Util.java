@@ -489,6 +489,14 @@ public class Util {
 		tabular.deleteCharAt(tabular.length() - 1);
 	}
 
+	public static void mensagemChave(Component componente, String chave, Object... argumentos) {
+		mensagem(componente, Mensagens.getString(chave, argumentos), null);
+	}
+
+	public static void mensagemObrigatorioUmItemSelecionado(Component componente) {
+		mensagemChave(componente, "msg.obrigatorio_um_reg_selecionado");
+	}
+
 	public static void mensagem(Component componente, String string) {
 		mensagem(componente, string, null);
 	}

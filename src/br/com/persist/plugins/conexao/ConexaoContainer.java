@@ -334,7 +334,11 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1 && Util.confirmaExclusao(ConexaoContainer.this, false)) {
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(ConexaoContainer.this);
+				return;
+			}
+			if (Util.confirmaExclusao(ConexaoContainer.this, false)) {
 				ConexaoProvedor.excluir(linhas[0]);
 				conexaoModelo.fireTableDataChanged();
 			}
