@@ -258,24 +258,26 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		void clonarSelecionados() {
 			int[] linhas = getSelectedRows();
-			if (linhas != null) {
-				RequisicaoModelo modelo = getModelo();
-				int total = modelo.getRowCount();
-				List<Integer> lista = new ArrayList<>();
-				for (int i : linhas) {
-					int indice = ((OrdemModel) getModel()).getRowIndex(i);
-					Requisicao req = modelo.getRequisicao(indice);
-					if (req != null) {
-						lista.add(modelo.adicionar(req.clonar()));
-						lista.add(i);
-					}
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(RequisicaoPagina.this);
+				return;
+			}
+			RequisicaoModelo modelo = getModelo();
+			int total = modelo.getRowCount();
+			List<Integer> lista = new ArrayList<>();
+			for (int i : linhas) {
+				int indice = ((OrdemModel) getModel()).getRowIndex(i);
+				Requisicao req = modelo.getRequisicao(indice);
+				if (req != null) {
+					lista.add(modelo.adicionar(req.clonar()));
+					lista.add(i);
 				}
-				if (modelo.getRowCount() != total) {
-					setModel(new OrdemModel(modelo));
-					Util.ajustar(this, RequisicaoPagina.this.getGraphics());
-					for (int i : lista) {
-						addRowSelectionInterval(i, i);
-					}
+			}
+			if (modelo.getRowCount() != total) {
+				setModel(new OrdemModel(modelo));
+				Util.ajustar(this, RequisicaoPagina.this.getGraphics());
+				for (int i : lista) {
+					addRowSelectionInterval(i, i);
 				}
 			}
 		}

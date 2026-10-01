@@ -233,16 +233,18 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null) {
-				for (int i : linhas) {
-					Variavel v = VariavelProvedor.getVariavel(i);
-					String nome = getValor(v.getNome());
-					if (nome != null) {
-						try {
-							adicionar(v.clonar(nome));
-						} catch (ArgumentoException ex) {
-							Util.mensagem(VariavelContainer.this, ex.getMessage());
-						}
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(VariavelContainer.this);
+				return;
+			}
+			for (int i : linhas) {
+				Variavel v = VariavelProvedor.getVariavel(i);
+				String nome = getValor(v.getNome());
+				if (nome != null) {
+					try {
+						adicionar(v.clonar(nome));
+					} catch (ArgumentoException ex) {
+						Util.mensagem(VariavelContainer.this, ex.getMessage());
 					}
 				}
 			}
@@ -251,7 +253,11 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(VariavelContainer.this, false)) {
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(VariavelContainer.this);
+				return;
+			}
+			if (Util.confirmaExclusao(VariavelContainer.this, false)) {
 				VariavelProvedor.excluir(linhas);
 				variavelModelo.fireTableDataChanged();
 			}

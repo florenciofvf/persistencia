@@ -245,16 +245,18 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null) {
-				for (int i : linhas) {
-					Alternativo f = AlternativoProvedor.getAlternativo(i);
-					String resumo = getValor(AlternativoMensagens.getString("label.nome_alternativo"), f.getResumo());
-					if (resumo != null) {
-						try {
-							adicionar(f.clonar(resumo));
-						} catch (ArgumentoException ex) {
-							Util.mensagem(AlternativoContainer.this, ex.getMessage());
-						}
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(AlternativoContainer.this);
+				return;
+			}
+			for (int i : linhas) {
+				Alternativo f = AlternativoProvedor.getAlternativo(i);
+				String resumo = getValor(AlternativoMensagens.getString("label.nome_alternativo"), f.getResumo());
+				if (resumo != null) {
+					try {
+						adicionar(f.clonar(resumo));
+					} catch (ArgumentoException ex) {
+						Util.mensagem(AlternativoContainer.this, ex.getMessage());
 					}
 				}
 			}
@@ -291,7 +293,11 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(AlternativoContainer.this, false)) {
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(AlternativoContainer.this);
+				return;
+			}
+			if (Util.confirmaExclusao(AlternativoContainer.this, false)) {
 				AlternativoProvedor.excluir(linhas);
 				alternativoModelo.fireTableDataChanged();
 			}
