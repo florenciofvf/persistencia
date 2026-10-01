@@ -306,7 +306,7 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
 			if (linhas == null || linhas.length == 0) {
-				Util.mensagemObrigatorioUmItemSelecionado(ConexaoContainer.this);
+				Util.mensagemObrigatorioItensSelecionado(ConexaoContainer.this);
 				return;
 			}
 			for (int i : linhas) {

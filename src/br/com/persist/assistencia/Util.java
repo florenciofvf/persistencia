@@ -497,6 +497,10 @@ public class Util {
 		mensagemChave(componente, "msg.obrigatorio_um_reg_selecionado");
 	}
 
+	public static void mensagemObrigatorioItensSelecionado(Component componente) {
+		mensagemChave(componente, "msg.obrigatorio_itens_reg_selecionado");
+	}
+
 	public static void mensagem(Component componente, String string) {
 		mensagem(componente, string, null);
 	}
