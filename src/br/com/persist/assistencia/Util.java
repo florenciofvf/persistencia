@@ -549,7 +549,7 @@ public class Util {
 		MensagemDialogo mensagem = MensagemDialogo.criar(dialog, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
 		mensagem.setSel(sel);
-		if(Preferencias.ajusteAuto(string)) {
+		if (Preferencias.ajusteAuto(string)) {
 			mensagem.pack();
 		} else {
 			mensagem.setSize(Preferencias.getDimensionMensagem(string));
@@ -562,7 +562,11 @@ public class Util {
 		Dialog dialog = (Dialog) view;
 		MensagemDialogo mensagem = MensagemDialogo.criar(dialog, Mensagens.getString(Constantes.LABEL_ATENCAO),
 				listaText);
-		mensagem.setSize(Preferencias.getDimensionMensagem(null));
+		if (Preferencias.ajusteAuto(mensagem.getString())) {
+			mensagem.pack();
+		} else {
+			mensagem.setSize(Preferencias.getDimensionMensagem(null));
+		}
 		mensagem.setLocationRelativeTo(dialog);
 		mensagem.setVisible(true);
 	}
@@ -572,7 +576,7 @@ public class Util {
 		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
 		mensagem.setSel(sel);
-		if(Preferencias.ajusteAuto(string)) {
+		if (Preferencias.ajusteAuto(string)) {
 			mensagem.pack();
 		} else {
 			mensagem.setSize(Preferencias.getDimensionMensagem(string));
@@ -585,7 +589,11 @@ public class Util {
 		Frame frame = (Frame) view;
 		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO),
 				listaText);
-		mensagem.setSize(Preferencias.getDimensionMensagem(null));
+		if (Preferencias.ajusteAuto(mensagem.getString())) {
+			mensagem.pack();
+		} else {
+			mensagem.setSize(Preferencias.getDimensionMensagem(null));
+		}
 		mensagem.setLocationRelativeTo(frame);
 		mensagem.setVisible(true);
 	}
@@ -656,7 +664,7 @@ public class Util {
 		Component view = getViewParent(componente);
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
 		MensagemFormulario mensagem = MensagemFormulario.criar(titulo, string, file);
-		if(Preferencias.ajusteAuto(string)) {
+		if (Preferencias.ajusteAuto(string)) {
 			mensagem.pack();
 		} else {
 			mensagem.setSize(Preferencias.getDimensionMensagem(string));

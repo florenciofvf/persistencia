@@ -74,6 +74,10 @@ public class MensagemDialogo extends AbstratoDialogo implements Dimensao {
 		}
 	}
 
+	public String getString() {
+		return container.getString();
+	}
+
 	public void setSel(String sel) {
 		container.setSel(sel);
 	}
