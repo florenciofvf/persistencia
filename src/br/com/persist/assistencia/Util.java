@@ -549,7 +549,11 @@ public class Util {
 		MensagemDialogo mensagem = MensagemDialogo.criar(dialog, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
 		mensagem.setSel(sel);
-		mensagem.setSize(Preferencias.getDimensionMensagem(string));
+		if(Preferencias.ajusteAuto(string)) {
+			mensagem.pack();
+		} else {
+			mensagem.setSize(Preferencias.getDimensionMensagem(string));
+		}
 		mensagem.setLocationRelativeTo(dialog);
 		mensagem.setVisible(true);
 	}
@@ -568,7 +572,11 @@ public class Util {
 		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
 				file);
 		mensagem.setSel(sel);
-		mensagem.setSize(Preferencias.getDimensionMensagem(string));
+		if(Preferencias.ajusteAuto(string)) {
+			mensagem.pack();
+		} else {
+			mensagem.setSize(Preferencias.getDimensionMensagem(string));
+		}
 		mensagem.setLocationRelativeTo(frame);
 		mensagem.setVisible(true);
 	}
@@ -648,7 +656,11 @@ public class Util {
 		Component view = getViewParent(componente);
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
 		MensagemFormulario mensagem = MensagemFormulario.criar(titulo, string, file);
-		mensagem.setSize(Preferencias.getDimensionMensagem(string));
+		if(Preferencias.ajusteAuto(string)) {
+			mensagem.pack();
+		} else {
+			mensagem.setSize(Preferencias.getDimensionMensagem(string));
+		}
 		mensagem.setLocationRelativeTo(view);
 		mensagem.setVisible(true);
 	}

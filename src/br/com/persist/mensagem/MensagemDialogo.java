@@ -2,6 +2,7 @@ package br.com.persist.mensagem;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.File;
 import java.util.List;
@@ -9,9 +10,12 @@ import java.util.List;
 import javax.swing.text.BadLocationException;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Dimensao;
+import br.com.persist.assistencia.DimensaoUtil;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Text;
 
-public class MensagemDialogo extends AbstratoDialogo {
+public class MensagemDialogo extends AbstratoDialogo implements Dimensao {
 	private static final long serialVersionUID = 1L;
 	private final MensagemContainer container;
 
@@ -64,9 +68,47 @@ public class MensagemDialogo extends AbstratoDialogo {
 	@Override
 	public void dialogOpenedHandler(Dialog dialog) {
 		container.dialogOpenedHandler();
+		String string = container.getString();
+		if (Preferencias.ajusteAuto(string)) {
+			DimensaoUtil.ajustar(this);
+		}
 	}
 
 	public void setSel(String sel) {
 		container.setSel(sel);
+	}
+
+	@Override
+	public boolean contemScrollHorizontal() {
+		return container.contemScrollHorizontal();
+	}
+
+	@Override
+	public boolean contemScrollVertical() {
+		return container.contemScrollVertical();
+	}
+
+	@Override
+	public void somarALargura(int valor) {
+		Dimension dimension = getSize();
+		dimension.width += valor;
+		setSize(dimension);
+	}
+
+	@Override
+	public void somarAAltura(int valor) {
+		Dimension dimension = getSize();
+		dimension.height += valor;
+		setSize(dimension);
+	}
+
+	@Override
+	public int getLargura() {
+		return getWidth();
+	}
+
+	@Override
+	public int getAltura() {
+		return getHeight();
 	}
 }

@@ -1,6 +1,7 @@
 package br.com.persist.assistencia;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.FileInputStream;
@@ -416,6 +417,22 @@ public class Preferencias {
 
 	public static void setDimensaoMensagem(String dimensaoMensagem) {
 		Preferencias.dimensaoMensagem = dimensaoMensagem;
+	}
+
+	protected static void aplicarDimension(Container container, String string) {
+		if (string == null || string.length() > 500) {
+			container.setSize(Preferencias.getDimensionMensagem(string));
+			return;
+		}
+		if (container instanceof Dimensao) {
+			DimensaoUtil.ajustar((Dimensao) container);
+			return;
+		}
+		container.setSize(Preferencias.getDimensionMensagem(string));
+	}
+
+	public static boolean ajusteAuto(String string) {
+		return string != null && string.length() <= 500;
 	}
 
 	public static Dimension getDimensionMensagem(String string) {

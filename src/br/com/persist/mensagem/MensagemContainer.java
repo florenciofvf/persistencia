@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.JScrollBar;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Style;
@@ -46,6 +47,10 @@ public class MensagemContainer extends Panel implements PluginBasico {
 		textEditor.setText(string);
 		toolbar.ini(janela);
 		montarLayout();
+	}
+
+	public String getString() {
+		return textEditor.getText();
 	}
 
 	public MensagemContainer(Janela janela, List<Text> listaText) throws BadLocationException {
@@ -136,11 +141,24 @@ public class MensagemContainer extends Panel implements PluginBasico {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		ScrollPane scrollPane = new ScrollPane(textEditor);
-		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+		ScrollPane scrollPaneA = new ScrollPane(textEditor);
+		scrollPaneA.setRowHeaderView(new TextEditorLine(textEditor));
 		Panel panelScroll = new Panel();
-		panelScroll.add(BorderLayout.CENTER, scrollPane);
-		add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+		panelScroll.add(BorderLayout.CENTER, scrollPaneA);
+		scrollPane = new ScrollPane(panelScroll);
+		add(BorderLayout.CENTER, scrollPane);
+	}
+
+	private ScrollPane scrollPane;
+
+	public boolean contemScrollHorizontal() {
+		JScrollBar scrollBar = scrollPane.getHorizontalScrollBar();
+		return scrollBar.isVisible();
+	}
+
+	public boolean contemScrollVertical() {
+		JScrollBar scrollBar = scrollPane.getVerticalScrollBar();
+		return scrollBar.isVisible();
 	}
 
 	public void setSel(String string) {
