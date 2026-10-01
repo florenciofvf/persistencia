@@ -305,16 +305,18 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null) {
-				for (int i : linhas) {
-					Conexao c = ConexaoProvedor.getConexao(i);
-					String nome = getValor(c.getNome());
-					if (nome != null) {
-						try {
-							adicionar(c.clonar(nome));
-						} catch (ArgumentoException ex) {
-							Util.mensagem(ConexaoContainer.this, ex.getMessage());
-						}
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioUmItemSelecionado(ConexaoContainer.this);
+				return;
+			}
+			for (int i : linhas) {
+				Conexao c = ConexaoProvedor.getConexao(i);
+				String nome = getValor(c.getNome());
+				if (nome != null) {
+					try {
+						adicionar(c.clonar(nome));
+					} catch (ArgumentoException ex) {
+						Util.mensagem(ConexaoContainer.this, ex.getMessage());
 					}
 				}
 			}
@@ -323,12 +325,14 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1) {
-				Conexao c = ConexaoProvedor.getConexao(linhas[0]);
-				Map<String, Object> map = new HashMap<>();
-				map.put(ConexaoEvento.SELECIONAR_CONEXAO, c);
-				formulario.processar(map);
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(ConexaoContainer.this);
+				return;
 			}
+			Conexao c = ConexaoProvedor.getConexao(linhas[0]);
+			Map<String, Object> map = new HashMap<>();
+			map.put(ConexaoEvento.SELECIONAR_CONEXAO, c);
+			formulario.processar(map);
 		}
 
 		@Override
@@ -346,8 +350,12 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 
 		private void subir() {
 			int[] linhas = tabela.getSelectedRows();
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(ConexaoContainer.this);
+				return;
+			}
 			int registros = conexaoModelo.getRowCount();
-			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] > 0) {
+			if (registros > 1 && linhas[0] > 0) {
 				int i = ConexaoProvedor.anterior(linhas[0]);
 				conexaoModelo.fireTableDataChanged();
 				if (i != -1) {
@@ -358,8 +366,12 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 
 		private void descer() {
 			int[] linhas = tabela.getSelectedRows();
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(ConexaoContainer.this);
+				return;
+			}
 			int registros = conexaoModelo.getRowCount();
-			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] + 1 < registros) {
+			if (registros > 1 && linhas[0] + 1 < registros) {
 				int i = ConexaoProvedor.proximo(linhas[0]);
 				conexaoModelo.fireTableDataChanged();
 				if (i != -1) {
@@ -370,15 +382,17 @@ public class ConexaoContainer extends AbstratoContainer implements PluginTabela 
 
 		private void conectar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1) {
-				try {
-					Conexao conexao = ConexaoProvedor.getConexao(linhas[0]);
-					ConexaoProvedor.getConnection2(conexao);
-					Util.mensagem(ConexaoContainer.this, "SUCESSO");
-					tabela.repaint();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(Constantes.ERRO, ex, ConexaoContainer.this);
-				}
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(ConexaoContainer.this);
+				return;
+			}
+			try {
+				Conexao conexao = ConexaoProvedor.getConexao(linhas[0]);
+				ConexaoProvedor.getConnection2(conexao);
+				Util.mensagem(ConexaoContainer.this, "SUCESSO");
+				tabela.repaint();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(Constantes.ERRO, ex, ConexaoContainer.this);
 			}
 		}
 	}
