@@ -259,16 +259,18 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null) {
-				for (int i : linhas) {
-					Fragmento f = FragmentoProvedor.getFragmento(i);
-					String resumo = getValor(FragmentoMensagens.getString("label.nome_fragmento"), f.getResumo());
-					if (resumo != null) {
-						try {
-							adicionar(f.clonar(resumo));
-						} catch (ArgumentoException ex) {
-							Util.mensagem(FragmentoContainer.this, ex.getMessage());
-						}
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(FragmentoContainer.this);
+				return;
+			}
+			for (int i : linhas) {
+				Fragmento f = FragmentoProvedor.getFragmento(i);
+				String resumo = getValor(FragmentoMensagens.getString("label.nome_fragmento"), f.getResumo());
+				if (resumo != null) {
+					try {
+						adicionar(f.clonar(resumo));
+					} catch (ArgumentoException ex) {
+						Util.mensagem(FragmentoContainer.this, ex.getMessage());
 					}
 				}
 			}
@@ -338,7 +340,11 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(FragmentoContainer.this, false)) {
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(FragmentoContainer.this);
+				return;
+			}
+			if (Util.confirmaExclusao(FragmentoContainer.this, false)) {
 				FragmentoProvedor.excluir(linhas);
 				fragmentoModelo.fireTableDataChanged();
 			}
@@ -346,8 +352,12 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 
 		private void subir() {
 			int[] linhas = tabela.getSelectedRows();
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(FragmentoContainer.this);
+				return;
+			}
 			int registros = fragmentoModelo.getRowCount();
-			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] > 0) {
+			if (registros > 1 && linhas[0] > 0) {
 				int i = FragmentoProvedor.anterior(linhas[0]);
 				fragmentoModelo.fireTableDataChanged();
 				if (i != -1) {
@@ -358,8 +368,12 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 
 		private void descer() {
 			int[] linhas = tabela.getSelectedRows();
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(FragmentoContainer.this);
+				return;
+			}
 			int registros = fragmentoModelo.getRowCount();
-			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] + 1 < registros) {
+			if (registros > 1 && linhas[0] + 1 < registros) {
 				int i = FragmentoProvedor.proximo(linhas[0]);
 				fragmentoModelo.fireTableDataChanged();
 				if (i != -1) {

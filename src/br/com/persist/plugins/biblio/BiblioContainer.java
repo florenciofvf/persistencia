@@ -192,7 +192,11 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1 && Util.confirmaExclusao(BiblioContainer.this, false)) {
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(BiblioContainer.this);
+				return;
+			}
+			if (Util.confirmaExclusao(BiblioContainer.this, false)) {
 				BiblioProvedor.excluir(linhas[0]);
 				biblioModelo.fireTableDataChanged();
 			}
@@ -200,8 +204,12 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 
 		private void subir() {
 			int[] linhas = tabela.getSelectedRows();
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(BiblioContainer.this);
+				return;
+			}
 			int registros = biblioModelo.getRowCount();
-			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] > 0) {
+			if (registros > 1 && linhas[0] > 0) {
 				int i = BiblioProvedor.anterior(linhas[0]);
 				biblioModelo.fireTableDataChanged();
 				if (i != -1) {
@@ -212,8 +220,12 @@ public class BiblioContainer extends AbstratoContainer implements PluginBasico {
 
 		private void descer() {
 			int[] linhas = tabela.getSelectedRows();
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(BiblioContainer.this);
+				return;
+			}
 			int registros = biblioModelo.getRowCount();
-			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] + 1 < registros) {
+			if (registros > 1 && linhas[0] + 1 < registros) {
 				int i = BiblioProvedor.proximo(linhas[0]);
 				biblioModelo.fireTableDataChanged();
 				if (i != -1) {

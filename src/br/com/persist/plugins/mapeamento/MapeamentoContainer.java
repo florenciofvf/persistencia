@@ -223,16 +223,18 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null) {
-				for (int i : linhas) {
-					Mapeamento m = MapeamentoProvedor.getMapeamento(i);
-					String nome = getValor(m.getNome());
-					if (nome != null) {
-						try {
-							adicionar(m.clonar(nome));
-						} catch (ArgumentoException ex) {
-							Util.mensagem(MapeamentoContainer.this, ex.getMessage());
-						}
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(MapeamentoContainer.this);
+				return;
+			}
+			for (int i : linhas) {
+				Mapeamento m = MapeamentoProvedor.getMapeamento(i);
+				String nome = getValor(m.getNome());
+				if (nome != null) {
+					try {
+						adicionar(m.clonar(nome));
+					} catch (ArgumentoException ex) {
+						Util.mensagem(MapeamentoContainer.this, ex.getMessage());
 					}
 				}
 			}
@@ -241,7 +243,11 @@ public class MapeamentoContainer extends AbstratoContainer implements PluginTabe
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(MapeamentoContainer.this, false)) {
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(MapeamentoContainer.this);
+				return;
+			}
+			if (Util.confirmaExclusao(MapeamentoContainer.this, false)) {
 				MapeamentoProvedor.excluir(linhas);
 				mapeamentoModelo.fireTableDataChanged();
 			}
