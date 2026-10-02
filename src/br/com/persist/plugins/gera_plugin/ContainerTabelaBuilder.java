@@ -321,8 +321,11 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		classe.addOverride(true);
 		Funcao funcao = classe.criarFuncaoProtegida("void", "copiar");
 		funcao.addInstrucao("int[] linhas = tabela.getSelectedRows()");
-		If se = funcao.criarIf("linhas != null", null);
-		For fro = se.criarFor("int i : linhas");
+		If se = funcao.criarIf("linhas == null || linhas.length == 0", null);
+		se.addInstrucao("Util.mensagemObrigatorioItensSelecionado(" + config.nameCapContainer() + DOT_THIS);
+		se.addReturn();
+
+		For fro = funcao.criarFor("int i : linhas");
 		fro.addInstrucao(config.nameCap + " item = " + config.nameCapProvedor() + ".get" + config.nameCap + "(i)");
 		fro.addInstrucao("String nome = getValor(item.getNome())");
 
@@ -340,8 +343,11 @@ public class ContainerTabelaBuilder extends Builder implements PluginTabela {
 		Funcao funcao = classe.criarFuncaoProtegida("void", "excluir");
 		funcao.addInstrucao("int[] linhas = tabela.getSelectedRows()");
 
-		If se = funcao.criarIf("linhas != null && linhas.length > 0 && Util.confirmaExclusao("
-				+ config.nameCapContainer() + ".this, false)", null);
+		If se = funcao.criarIf("linhas == null || linhas.length == 0", null);
+		se.addInstrucao("Util.mensagemObrigatorioItensSelecionado(" + config.nameCapContainer() + DOT_THIS);
+		se.addReturn();
+
+		se = funcao.criarIf("Util.confirmaExclusao(" + config.nameCapContainer() + ".this, false)", null);
 		se.addInstrucao(config.nameCapProvedor() + ".excluir(linhas)");
 		se.addInstrucao(config.nameDecap + MODELO + FIRE_TABLE_DATA_CHANGED);
 	}
