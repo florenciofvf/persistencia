@@ -16,6 +16,7 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -34,6 +35,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.TabelaPesquisa;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
@@ -98,6 +100,7 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
+		private Action conteudoAcao = actionIcon("label.conteudo", Icones.TEXTO);
 		private static final long serialVersionUID = 1L;
 		private transient VariavelColetor coletor;
 		private transient TabelaPesquisa pesquisa;
@@ -106,12 +109,14 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
 					EXCLUIR, COPIAR, APLICAR);
 			txtPesquisa.addActionListener(this);
+			addButton(conteudoAcao);
 			setColetor(coletor);
 			add(txtPesquisa);
 			add(chkPorParte);
 			chkPsqConteudo.setTag(Constantes.TABELA);
 			add(chkPsqConteudo);
 			add(label);
+			conteudoAcao.setActionListener(e -> conteudo());
 		}
 
 		@Override
@@ -280,6 +285,14 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 			}
 			coletor.setLista(lista);
 			janela.fechar();
+		}
+
+		private void conteudo() {
+			try {
+				Util.conteudo(VariavelContainer.this, VariavelProvedor.getFile());
+			} catch (IOException e) {
+				Util.mensagem(VariavelContainer.this, e.getMessage());
+			}
 		}
 	}
 

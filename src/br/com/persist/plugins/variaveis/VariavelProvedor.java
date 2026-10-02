@@ -28,6 +28,10 @@ public class VariavelProvedor {
 		file = new File(VariavelConstantes.VARIAVEIS + Constantes.SEPARADOR + "var.xml");
 	}
 
+	public static File getFile() {
+		return file;
+	}
+
 	public static Variavel getVariavel(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
