@@ -1147,7 +1147,11 @@ public class InternalContainer extends Panel
 				}
 				try {
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(InternalContainer.this, false)) {
+					if (linhas == null || linhas.length == 0) {
+						Util.mensagemObrigatorioItensSelecionado(InternalContainer.this);
+						return;
+					}
+					if (Util.confirmaExclusao(InternalContainer.this, false)) {
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						List<List<IndiceValor>> listaValores = new ArrayList<>();
 						AtomicBoolean confirmarCadaItem = null;
@@ -2546,16 +2550,18 @@ public class InternalContainer extends Panel
 				dadosAcao.setActionListener(e -> {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length == 1) {
-						StringBuilder sb = new StringBuilder(objeto.getTabela());
-						sb.append(Constantes.QL);
-						Coletor coletor = new Coletor();
-						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-								InternalContainer.this, null);
-						if (!coletor.estaVazio()) {
-							modelo.getDados(linhas[0], sb, coletor, null);
-							Util.mensagem(InternalContainer.this, sb.toString());
-						}
+					if (linhas == null || linhas.length != 1) {
+						Util.mensagemObrigatorioUmItemSelecionado(InternalContainer.this);
+						return;
+					}
+					StringBuilder sb = new StringBuilder(objeto.getTabela());
+					sb.append(Constantes.QL);
+					Coletor coletor = new Coletor();
+					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+							InternalContainer.this, null);
+					if (!coletor.estaVazio()) {
+						modelo.getDados(linhas[0], sb, coletor, null);
+						Util.mensagem(InternalContainer.this, sb.toString());
 					}
 				});
 			}
@@ -2591,22 +2597,23 @@ public class InternalContainer extends Panel
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length > 0) {
-						Object resp = Util.getValorInputDialog(InternalContainer.this, Constantes.LABEL_ENTIDADE,
-								Mensagens.getString(Constantes.LABEL_ENTIDADE), Constantes.VAZIO);
-						if (resp == null || Util.isEmpty(resp.toString())) {
-							return;
-						}
-						Coletor coletor = new Coletor();
-						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-								InternalContainer.this, new SetLista.Config(true, false));
-						if (!coletor.estaVazio()) {
-							String fonte = modelo.gerarEntidades(linhas, coletor, resp.toString().trim(),
-									objeto.getMetodoSet());
-							if (!Util.isEmpty(fonte)) {
-								updateFormDialog(abrirEmForm, null, fonte,
-										Mensagens.getString(Constantes.LABEL_ENTIDADE));
-							}
+					if (linhas == null || linhas.length == 0) {
+						Util.mensagemObrigatorioItensSelecionado(InternalContainer.this);
+						return;
+					}
+					Object resp = Util.getValorInputDialog(InternalContainer.this, Constantes.LABEL_ENTIDADE,
+							Mensagens.getString(Constantes.LABEL_ENTIDADE), Constantes.VAZIO);
+					if (resp == null || Util.isEmpty(resp.toString())) {
+						return;
+					}
+					Coletor coletor = new Coletor();
+					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+							InternalContainer.this, new SetLista.Config(true, false));
+					if (!coletor.estaVazio()) {
+						String fonte = modelo.gerarEntidades(linhas, coletor, resp.toString().trim(),
+								objeto.getMetodoSet());
+						if (!Util.isEmpty(fonte)) {
+							updateFormDialog(abrirEmForm, null, fonte, Mensagens.getString(Constantes.LABEL_ENTIDADE));
 						}
 					}
 				}
@@ -2628,16 +2635,18 @@ public class InternalContainer extends Panel
 				private void processar(boolean abrirEmForm) {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length > 0) {
-						Object resp = Util.getValorInputDialog(InternalContainer.this, Constantes.LABEL_FRAGMENTO,
-								Mensagens.getString("label.template"), Constantes.VAZIO);
-						if (resp == null || Util.isEmpty(resp.toString())) {
-							return;
-						}
-						String fonte = modelo.gerarFragmentos(linhas, resp.toString().trim());
-						if (!Util.isEmpty(fonte)) {
-							updateFormDialog(abrirEmForm, null, fonte, Mensagens.getString("label.fragmentos"));
-						}
+					if (linhas == null || linhas.length == 0) {
+						Util.mensagemObrigatorioItensSelecionado(InternalContainer.this);
+						return;
+					}
+					Object resp = Util.getValorInputDialog(InternalContainer.this, Constantes.LABEL_FRAGMENTO,
+							Mensagens.getString("label.template"), Constantes.VAZIO);
+					if (resp == null || Util.isEmpty(resp.toString())) {
+						return;
+					}
+					String fonte = modelo.gerarFragmentos(linhas, resp.toString().trim());
+					if (!Util.isEmpty(fonte)) {
+						updateFormDialog(abrirEmForm, null, fonte, Mensagens.getString("label.fragmentos"));
 					}
 				}
 
@@ -2662,25 +2671,27 @@ public class InternalContainer extends Panel
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length > 0) {
-						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-						if (chaves.isEmpty()) {
-							return;
-						}
-						Coletor coletor = new Coletor();
-						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
-								InternalContainer.this, new SetLista.Config(true, false));
-						if (!coletor.estaVazio()) {
-							try {
-								String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
-										false, conexao);
-								instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
-								if (!Util.isEmpty(instrucao)) {
-									updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
-								}
-							} catch (PersistenciaException ex) {
-								Util.mensagem(InternalContainer.this, ex.getMessage());
+					if (linhas == null || linhas.length == 0) {
+						Util.mensagemObrigatorioItensSelecionado(InternalContainer.this);
+						return;
+					}
+					List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+					if (chaves.isEmpty()) {
+						return;
+					}
+					Coletor coletor = new Coletor();
+					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
+							InternalContainer.this, new SetLista.Config(true, false));
+					if (!coletor.estaVazio()) {
+						try {
+							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
+									false, conexao);
+							instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
+							if (!Util.isEmpty(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
 							}
+						} catch (PersistenciaException ex) {
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 						}
 					}
 				}
@@ -2706,25 +2717,27 @@ public class InternalContainer extends Panel
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length == 1) {
-						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-						if (chaves.isEmpty()) {
-							return;
-						}
-						Coletor coletor = new Coletor();
-						List<String> nomeColunas = getNomeColunas(linhas);
-						SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
-								new SetLista.Config(true, false));
-						if (!coletor.estaVazio()) {
-							try {
-								String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
-										true, conexao);
-								if (!Util.isEmpty(instrucao)) {
-									updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
-								}
-							} catch (PersistenciaException ex) {
-								Util.mensagem(InternalContainer.this, ex.getMessage());
+					if (linhas == null || linhas.length != 1) {
+						Util.mensagemObrigatorioUmItemSelecionado(InternalContainer.this);
+						return;
+					}
+					List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+					if (chaves.isEmpty()) {
+						return;
+					}
+					Coletor coletor = new Coletor();
+					List<String> nomeColunas = getNomeColunas(linhas);
+					SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
+							new SetLista.Config(true, false));
+					if (!coletor.estaVazio()) {
+						try {
+							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor, true,
+									conexao);
+							if (!Util.isEmpty(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 							}
+						} catch (PersistenciaException ex) {
+							Util.mensagem(InternalContainer.this, ex.getMessage());
 						}
 					}
 				}
@@ -2755,21 +2768,22 @@ public class InternalContainer extends Panel
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length > 0) {
-						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-						if (chaves.isEmpty()) {
-							return;
+					if (linhas == null || linhas.length == 0) {
+						Util.mensagemObrigatorioItensSelecionado(InternalContainer.this);
+						return;
+					}
+					List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+					if (chaves.isEmpty()) {
+						return;
+					}
+					try {
+						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false, conexao);
+						instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
+						if (!Util.isEmpty(instrucao)) {
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
 						}
-						try {
-							String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false,
-									conexao);
-							instrucao += Constantes.QL + WHERE + getComplementoChaves(false, conexao);
-							if (!Util.isEmpty(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
-							}
-						} catch (PersistenciaException ex) {
-							Util.mensagem(InternalContainer.this, ex.getMessage());
-						}
+					} catch (PersistenciaException ex) {
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 					}
 				}
 
@@ -2794,20 +2808,21 @@ public class InternalContainer extends Panel
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length == 1) {
-						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-						if (chaves.isEmpty()) {
-							return;
+					if (linhas == null || linhas.length != 1) {
+						Util.mensagemObrigatorioUmItemSelecionado(InternalContainer.this);
+						return;
+					}
+					List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+					if (chaves.isEmpty()) {
+						return;
+					}
+					try {
+						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true, conexao);
+						if (!Util.isEmpty(instrucao)) {
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
-						try {
-							String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true,
-									conexao);
-							if (!Util.isEmpty(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
-							}
-						} catch (PersistenciaException ex) {
-							Util.mensagem(InternalContainer.this, ex.getMessage());
-						}
+					} catch (PersistenciaException ex) {
+						Util.mensagem(InternalContainer.this, ex.getMessage());
 					}
 				}
 			}
@@ -2826,18 +2841,20 @@ public class InternalContainer extends Panel
 					if (conexao != null) {
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						int[] linhas = tabelaPersistencia.getSelectedRows();
-						if (linhas != null && linhas.length == 1) {
-							Coletor coletor = new Coletor();
-							List<String> nomeColunas = getNomeColunas(linhas);
-							SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
-									new SetLista.Config(true, false));
-							if (!coletor.estaVazio()) {
-								checarColunaInsertAlternativo(modelo, coletor);
-								String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
-										conexao);
-								if (!Util.isEmpty(instrucao)) {
-									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
-								}
+						if (linhas == null || linhas.length != 1) {
+							Util.mensagemObrigatorioUmItemSelecionado(InternalContainer.this);
+							return;
+						}
+						Coletor coletor = new Coletor();
+						List<String> nomeColunas = getNomeColunas(linhas);
+						SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
+								new SetLista.Config(true, false));
+						if (!coletor.estaVazio()) {
+							checarColunaInsertAlternativo(modelo, coletor);
+							String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
+									conexao);
+							if (!Util.isEmpty(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 							}
 						}
 					}
@@ -2883,22 +2900,24 @@ public class InternalContainer extends Panel
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length > 0) {
-						Map<String, String> chaves = modelo.getMapaChaves(linhas[0], conexao);
-						if (chaves.isEmpty() || Util.isEmpty(instrucao.getValor())) {
-							return;
-						}
-						Map<String, List<String>> mapaChaves = criar(chaves);
-						for (int i = 1; i < linhas.length; i++) {
-							chaves = modelo.getMapaChaves(linhas[i], conexao);
-							mergear(mapaChaves, chaves);
-						}
-						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), mapaChaves);
-						if (instrucao.isSelect()) {
-							selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
-						} else {
-							updateFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
-						}
+					if (linhas == null || linhas.length == 0) {
+						Util.mensagemObrigatorioItensSelecionado(InternalContainer.this);
+						return;
+					}
+					Map<String, String> chaves = modelo.getMapaChaves(linhas[0], conexao);
+					if (chaves.isEmpty() || Util.isEmpty(instrucao.getValor())) {
+						return;
+					}
+					Map<String, List<String>> mapaChaves = criar(chaves);
+					for (int i = 1; i < linhas.length; i++) {
+						chaves = modelo.getMapaChaves(linhas[i], conexao);
+						mergear(mapaChaves, chaves);
+					}
+					String conteudo = ObjetoUtil.substituir(instrucao.getValor(), mapaChaves);
+					if (instrucao.isSelect()) {
+						selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
+					} else {
+						updateFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 					}
 				}
 
