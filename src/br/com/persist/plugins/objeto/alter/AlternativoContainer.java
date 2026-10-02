@@ -262,18 +262,14 @@ public class AlternativoContainer extends AbstratoContainer implements PluginTab
 			}
 		}
 
-		private void mensagem() {
-			Util.mensagem(AlternativoContainer.this, Mensagens.getString("msg.nenhum_registro_selecionado"));
-		}
-
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1) {
-				aplicarListaAlternativo(linhas);
-			} else {
-				mensagem();
+			if (linhas == null || linhas.length != 1) {
+				Util.mensagemObrigatorioUmItemSelecionado(AlternativoContainer.this);
+				return;
 			}
+			aplicarListaAlternativo(linhas);
 		}
 
 		private void aplicarListaAlternativo(int[] linhas) {

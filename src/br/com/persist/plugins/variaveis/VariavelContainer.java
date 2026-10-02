@@ -266,11 +266,11 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0) {
-				aplicarLista(linhas);
-			} else {
-				mensagem();
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(VariavelContainer.this);
+				return;
 			}
+			aplicarLista(linhas);
 		}
 
 		private void aplicarLista(int[] linhas) {
@@ -280,10 +280,6 @@ public class VariavelContainer extends AbstratoContainer implements PluginTabela
 			}
 			coletor.setLista(lista);
 			janela.fechar();
-		}
-
-		private void mensagem() {
-			Util.mensagem(VariavelContainer.this, Mensagens.getString("msg.nenhum_registro_selecionado"));
 		}
 	}
 

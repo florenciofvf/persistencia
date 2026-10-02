@@ -276,38 +276,34 @@ public class FragmentoContainer extends AbstratoContainer implements PluginTabel
 			}
 		}
 
-		private void mensagem() {
-			Util.mensagem(FragmentoContainer.this, Mensagens.getString("msg.nenhum_registro_selecionado"));
-		}
-
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0) {
-				aplicarListaFragmento(linhas, false, false);
-			} else {
-				mensagem();
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(FragmentoContainer.this);
+				return;
 			}
+			aplicarListaFragmento(linhas, false, false);
 		}
 
 		@Override
 		protected void aplicar2() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0) {
-				aplicarListaFragmento(linhas, true, true);
-			} else {
-				mensagem();
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(FragmentoContainer.this);
+				return;
 			}
+			aplicarListaFragmento(linhas, true, true);
 		}
 
 		@Override
 		protected void aplicar3() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0) {
-				aplicarListaFragmento(linhas, true, false);
-			} else {
-				mensagem();
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(FragmentoContainer.this);
+				return;
 			}
+			aplicarListaFragmento(linhas, true, false);
 		}
 
 		private void aplicarListaFragmento(int[] linhas, boolean concatenar, boolean and) {
