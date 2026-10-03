@@ -497,11 +497,11 @@ public class ConsultaContainer extends AbstratoContainer implements PluginBasico
 		protected void atualizar() {
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 			if (conexao == null) {
-				Util.mensagem(ConsultaContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(ConsultaContainer.this);
 				return;
 			}
 			if (Preferencias.isDesconectado()) {
-				Util.mensagem(ConsultaContainer.this, Constantes.DESCONECTADO);
+				Util.mensagemDesconectado(ConsultaContainer.this);
 				return;
 			}
 			if (!Util.isEmpty(textEditor.getText())) {

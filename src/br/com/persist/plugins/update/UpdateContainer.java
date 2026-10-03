@@ -383,11 +383,11 @@ public class UpdateContainer extends AbstratoContainer implements PluginBasico {
 		public void atualizar() {
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 			if (conexao == null) {
-				Util.mensagem(UpdateContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(UpdateContainer.this);
 				return;
 			}
 			if (Preferencias.isDesconectado()) {
-				Util.mensagem(UpdateContainer.this, Constantes.DESCONECTADO);
+				Util.mensagemDesconectado(UpdateContainer.this);
 				return;
 			}
 			if (!Util.isEmpty(textEditor.getText())) {

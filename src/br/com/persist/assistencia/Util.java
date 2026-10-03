@@ -73,9 +73,9 @@ import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.Table;
+import br.com.persist.componente.TextEditor;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.componente.TextEditor;
 import br.com.persist.mensagem.MensagemDialogo;
 import br.com.persist.mensagem.MensagemFormulario;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColuna;
@@ -499,6 +499,14 @@ public class Util {
 
 	public static void mensagemObrigatorioItensSelecionado(Component componente) {
 		mensagemChave(componente, "msg.obrigatorio_itens_reg_selecionado");
+	}
+
+	public static void mensagemConexaoNula(Component componente) {
+		mensagem(componente, Constantes.CONEXAO_NULA);
+	}
+
+	public static void mensagemDesconectado(Component componente) {
+		mensagem(componente, Constantes.DESCONECTADO);
 	}
 
 	public static void mensagem(Component componente, String string) {
