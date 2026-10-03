@@ -277,6 +277,7 @@ public class InternalContainer extends Panel
 	private void preStartDrag(DragGestureEvent dge) {
 		Conexao conexao = getConexao();
 		if (conexao == null) {
+			Util.mensagemConexaoNula(InternalContainer.this);
 			return;
 		}
 		Dimension dimension = null;
@@ -1143,6 +1144,7 @@ public class InternalContainer extends Panel
 			public void actionPerformed(ActionEvent e) {
 				Conexao conexao = getConexao();
 				if (conexao == null) {
+					Util.mensagemConexaoNula(InternalContainer.this);
 					return;
 				}
 				try {
@@ -1258,6 +1260,7 @@ public class InternalContainer extends Panel
 				private void abrirInstrucao(boolean abrirEmForm) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					String conteudo = instrucao.getValor();
@@ -1365,6 +1368,7 @@ public class InternalContainer extends Panel
 			private void processar(int tipoConcat) {
 				Conexao conexao = getConexao();
 				if (conexao == null) {
+					Util.mensagemConexaoNula(InternalContainer.this);
 					return;
 				}
 				String complemento = Util.getContentTransfered();
@@ -2667,6 +2671,7 @@ public class InternalContainer extends Panel
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -2713,6 +2718,7 @@ public class InternalContainer extends Panel
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -2764,6 +2770,7 @@ public class InternalContainer extends Panel
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -2804,6 +2811,7 @@ public class InternalContainer extends Panel
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -2896,6 +2904,7 @@ public class InternalContainer extends Panel
 				private void abrirInstrucao(boolean abrirEmForm) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -2989,6 +2998,7 @@ public class InternalContainer extends Panel
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					Frame frame = Util.getViewParentFrame(InternalContainer.this);
@@ -3011,6 +3021,7 @@ public class InternalContainer extends Panel
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = getConexao();
 					if (conexao == null) {
+						Util.mensagemConexaoNula(InternalContainer.this);
 						return;
 					}
 					String[] chaves = objeto.getChavesArray();
@@ -4480,6 +4491,7 @@ public class InternalContainer extends Panel
 			Conexao conexao = getConexao();
 			final String chave = Constantes.SEP;
 			if (conexao == null) {
+				Util.mensagemConexaoNula(InternalContainer.this);
 				return;
 			}
 			String consulta = alternativo.getValor();

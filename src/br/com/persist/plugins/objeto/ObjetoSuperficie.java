@@ -2277,6 +2277,7 @@ class MestreDetalhe {
 	void processar(int tipo, boolean abrirEmForm, Conexao conexao, String titulo) {
 		this.conexao = conexao;
 		if (conexao == null) {
+			Util.mensagemConexaoNula(superficie);
 			return;
 		}
 		InternalFormulario internalMestre = ObjetoSuperficieUtil.getInternalFormulario(superficie, mestre);
