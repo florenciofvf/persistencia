@@ -490,6 +490,7 @@ public class InternalContainer extends Panel
 		antesProcessar();
 		if (Preferencias.isDesconectado()) {
 			toolbar.exceptionEnable(Constantes.DESCONECTADO);
+			Util.mensagemDesconectado(InternalContainer.this);
 			processado.set(false);
 			return;
 		}
@@ -500,6 +501,8 @@ public class InternalContainer extends Panel
 			} else {
 				processado.set(false);
 			}
+		} else {
+			Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 		}
 	}
 
