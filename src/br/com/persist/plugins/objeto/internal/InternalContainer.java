@@ -4474,6 +4474,7 @@ public class InternalContainer extends Panel
 		toolbar.exceptionDisable();
 		if (Preferencias.isDesconectado()) {
 			toolbar.exceptionEnable(Constantes.DESCONECTADO);
+			Util.mensagemDesconectado(InternalContainer.this);
 			return null;
 		}
 		return (Conexao) comboConexao.getSelectedItem();
