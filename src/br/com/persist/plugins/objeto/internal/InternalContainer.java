@@ -2865,6 +2865,8 @@ public class InternalContainer extends Panel
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 							}
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 
@@ -3074,6 +3076,8 @@ public class InternalContainer extends Panel
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("TOTAL", ex, InternalContainer.this);
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 			}
@@ -3727,6 +3731,8 @@ public class InternalContainer extends Panel
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 								}
 							}
+						} else {
+							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 						}
 					}
 				}
@@ -3758,6 +3764,8 @@ public class InternalContainer extends Panel
 									Util.mensagem(InternalContainer.this, ex.getMessage());
 								}
 							}
+						} else {
+							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 						}
 					}
 				}
@@ -3783,6 +3791,8 @@ public class InternalContainer extends Panel
 							} catch (PersistenciaException ex) {
 								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
+						} else {
+							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 						}
 					}
 				}
@@ -3803,6 +3813,8 @@ public class InternalContainer extends Panel
 							if (!Util.isEmpty(instrucao)) {
 								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
+						} else {
+							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 						}
 					}
 				}
@@ -3901,6 +3913,8 @@ public class InternalContainer extends Panel
 							if (!Util.isEmpty(instrucao)) {
 								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
+						} else {
+							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 						}
 					}
 				}
@@ -3924,6 +3938,8 @@ public class InternalContainer extends Panel
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("INFO-BANCO", ex, InternalContainer.this);
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 			}
@@ -3946,6 +3962,8 @@ public class InternalContainer extends Panel
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("ESQUEMA", ex, InternalContainer.this);
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 			}
@@ -3969,6 +3987,8 @@ public class InternalContainer extends Panel
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, InternalContainer.this);
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 			}
@@ -3992,6 +4012,8 @@ public class InternalContainer extends Panel
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 			}
@@ -4015,6 +4037,8 @@ public class InternalContainer extends Panel
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 			}
@@ -4287,6 +4311,8 @@ public class InternalContainer extends Panel
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("META-DADOS", ex, InternalContainer.this);
 						}
+					} else {
+						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 					}
 				}
 			}
@@ -4750,6 +4776,8 @@ public class InternalContainer extends Panel
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
@@ -4763,6 +4791,8 @@ public class InternalContainer extends Panel
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
@@ -4775,6 +4805,8 @@ public class InternalContainer extends Panel
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
@@ -4787,6 +4819,8 @@ public class InternalContainer extends Panel
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
@@ -4799,6 +4833,8 @@ public class InternalContainer extends Panel
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
@@ -4810,6 +4846,8 @@ public class InternalContainer extends Panel
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
@@ -4821,6 +4859,8 @@ public class InternalContainer extends Panel
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
+			} else {
+				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
