@@ -219,8 +219,10 @@ public class InternalContainer extends Panel
 		configurar();
 	}
 
-	public void processar(Graphics g) {
-		processar("", g, null, null);
+	private void processar(Graphics g) {
+		if (!Preferencias.isDesconectado()) {
+			processar("", g, null, null);
+		}
 	}
 
 	static Action acaoMenu(String chave, Icone icone) {
@@ -486,7 +488,7 @@ public class InternalContainer extends Panel
 		}
 	}
 
-	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, String consultaAlter) {
+	private void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, String consultaAlter) {
 		antesProcessar();
 		if (Preferencias.isDesconectado()) {
 			toolbar.exceptionEnable(Constantes.DESCONECTADO);
