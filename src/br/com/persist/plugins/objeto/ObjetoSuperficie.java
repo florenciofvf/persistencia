@@ -500,11 +500,11 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 
 	public void atualizarTotal(Conexao conexao, MenuItem[] menuItens, Label label) {
 		if (conexao == null) {
-			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
+			Util.mensagemConexaoNula(ObjetoSuperficie.this);
 			return;
 		}
 		if (Preferencias.isDesconectado()) {
-			Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
+			Util.mensagemDesconectado(ObjetoSuperficie.this);
 			return;
 		}
 		if (!ObjetoSuperficieUtil.objetosComTabela(this, Estado.INDIFERENTE).isEmpty()) {
@@ -536,11 +536,11 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 
 	public void compararRecent(Conexao conexao, MenuItem[] menuItens, Label label) {
 		if (conexao == null) {
-			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
+			Util.mensagemConexaoNula(ObjetoSuperficie.this);
 			return;
 		}
 		if (Preferencias.isDesconectado()) {
-			Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
+			Util.mensagemDesconectado(ObjetoSuperficie.this);
 			return;
 		}
 		Font font = getFont();
@@ -950,7 +950,7 @@ class ThreadTotal extends ThreadComparacao {
 	@Override
 	public void run() {
 		if (Preferencias.isDesconectado()) {
-			Util.mensagem(superficie, Constantes.DESCONECTADO);
+			Util.mensagemDesconectado(superficie);
 			return;
 		}
 		sleepIntervaloComparacao();
@@ -1036,7 +1036,7 @@ class ThreadRecente extends ThreadComparacao {
 	@Override
 	public void run() {
 		if (Preferencias.isDesconectado()) {
-			Util.mensagem(superficie, Constantes.DESCONECTADO);
+			Util.mensagemDesconectado(superficie);
 			return;
 		}
 		sleepIntervaloComparacao();
