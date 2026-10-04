@@ -504,7 +504,7 @@ public class InternalContainer extends Panel
 				processado.set(false);
 			}
 		} else {
-			Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+			Util.mensagemConexaoNula(InternalContainer.this);
 		}
 	}
 
@@ -795,7 +795,7 @@ public class InternalContainer extends Panel
 				}
 				executarPesquisa(string, soTotal);
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 	}
@@ -2871,7 +2871,7 @@ public class InternalContainer extends Panel
 							}
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 
@@ -3082,7 +3082,7 @@ public class InternalContainer extends Panel
 							Util.stackTraceAndMessage("TOTAL", ex, InternalContainer.this);
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 			}
@@ -3737,7 +3737,7 @@ public class InternalContainer extends Panel
 								}
 							}
 						} else {
-							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+							Util.mensagemConexaoNula(InternalContainer.this);
 						}
 					}
 				}
@@ -3770,7 +3770,7 @@ public class InternalContainer extends Panel
 								}
 							}
 						} else {
-							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+							Util.mensagemConexaoNula(InternalContainer.this);
 						}
 					}
 				}
@@ -3797,7 +3797,7 @@ public class InternalContainer extends Panel
 								Util.mensagem(InternalContainer.this, ex.getMessage());
 							}
 						} else {
-							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+							Util.mensagemConexaoNula(InternalContainer.this);
 						}
 					}
 				}
@@ -3819,7 +3819,7 @@ public class InternalContainer extends Panel
 								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
 						} else {
-							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+							Util.mensagemConexaoNula(InternalContainer.this);
 						}
 					}
 				}
@@ -3919,7 +3919,7 @@ public class InternalContainer extends Panel
 								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
 						} else {
-							Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+							Util.mensagemConexaoNula(InternalContainer.this);
 						}
 					}
 				}
@@ -3944,7 +3944,7 @@ public class InternalContainer extends Panel
 							Util.stackTraceAndMessage("INFO-BANCO", ex, InternalContainer.this);
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 			}
@@ -3968,7 +3968,7 @@ public class InternalContainer extends Panel
 							Util.stackTraceAndMessage("ESQUEMA", ex, InternalContainer.this);
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 			}
@@ -3993,7 +3993,7 @@ public class InternalContainer extends Panel
 							Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, InternalContainer.this);
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 			}
@@ -4018,7 +4018,7 @@ public class InternalContainer extends Panel
 							Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 			}
@@ -4043,7 +4043,7 @@ public class InternalContainer extends Panel
 							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 			}
@@ -4317,7 +4317,7 @@ public class InternalContainer extends Panel
 							Util.stackTraceAndMessage("META-DADOS", ex, InternalContainer.this);
 						}
 					} else {
-						Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+						Util.mensagemConexaoNula(InternalContainer.this);
 					}
 				}
 			}
@@ -4783,7 +4783,7 @@ public class InternalContainer extends Panel
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 
@@ -4798,7 +4798,7 @@ public class InternalContainer extends Panel
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 
@@ -4812,7 +4812,7 @@ public class InternalContainer extends Panel
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 
@@ -4826,7 +4826,7 @@ public class InternalContainer extends Panel
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 
@@ -4840,7 +4840,7 @@ public class InternalContainer extends Panel
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 
@@ -4853,7 +4853,7 @@ public class InternalContainer extends Panel
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 
@@ -4866,7 +4866,7 @@ public class InternalContainer extends Panel
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			} else {
-				Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
+				Util.mensagemConexaoNula(InternalContainer.this);
 			}
 		}
 
