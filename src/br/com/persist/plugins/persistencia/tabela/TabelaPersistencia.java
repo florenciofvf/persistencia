@@ -410,6 +410,7 @@ public class TabelaPersistencia extends Table {
 
 	private class PopupHeader extends Popup {
 		private CheckBoxMenuItem inativoTempCheck = new CheckBoxMenuItem(getString("label.inativo_temp"));
+		private Action copiarNomeColunaConcatAcao = acaoMenu("label.copiar_nome_coluna_concat");
 		private Action pesquisaApartirColunaAcao = acaoMenu("label.pesquisa_a_partir_coluna");
 		private Action mapearApartirBiblioAcao = acaoMenu("label.mapear_a_partir_biblio");
 		private Action copiarNomeColunaAcao = acaoMenu("label.copiar_nome_coluna");
@@ -445,6 +446,7 @@ public class TabelaPersistencia extends Table {
 			addMenuItem(true, pesquisaApartirColunaAcao);
 			addMenuItem(true, mapearApartirBiblioAcao);
 			add(true, new MenuColocarNomeColuna());
+			addMenuItem(copiarNomeColunaConcatAcao);
 			addMenuItem(copiarNomeColunaAcao);
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
@@ -664,10 +666,8 @@ public class TabelaPersistencia extends Table {
 					inativarColuna(colunaTabela.getIndice(), colunaTabela.isInativoTemp());
 				}
 			});
-			copiarNomeColunaAcao.setActionListener(e -> {
-				String coluna = getModel().getColumnName(indiceColuna);
-				Util.setContentTransfered(coluna);
-			});
+			copiarNomeColunaConcatAcao.setActionListener(e -> copiarNomeColuna(indiceColuna, true));
+			copiarNomeColunaAcao.setActionListener(e -> copiarNomeColuna(indiceColuna, false));
 			pesquisaApartirColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
@@ -690,6 +690,17 @@ public class TabelaPersistencia extends Table {
 			larguraConteudoAcao.setActionListener(e -> larguraConteudo(indiceColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
+		}
+
+		private void copiarNomeColuna(int indice, boolean concat) {
+			String coluna = getModel().getColumnName(indice);
+			if (!concat) {
+				Util.setContentTransfered(coluna);
+				return;
+			}
+			String string = Util.getContentTransfered();
+			String conteudo = Util.isEmpty(string) ? coluna : string + ", " + coluna;
+			Util.setContentTransfered(conteudo);
 		}
 
 		private void larguraConteudo(int coluna) {
