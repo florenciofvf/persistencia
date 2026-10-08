@@ -87,7 +87,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	private ArquivoModelo criarArquivoModeloRaiz() {
 		File ignorados = new File(file, ArquivoConstantes.IGNORADOS);
-		Arquivo raiz = new Arquivo(file, ArquivoUtil.lerArquivo(ignorados));
+		Arquivo raiz = new Arquivo(file, ArquivoUtil.getIgnorados(ignorados));
 		return new ArquivoModelo(raiz);
 	}
 

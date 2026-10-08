@@ -45,10 +45,6 @@ public class ArquivoUtil {
 		map.put(chave, lerArquivo(file));
 	}
 
-	public static void lerIgnorados(String chave, File file) {
-		lerArquivo(chave, file);
-	}
-
 	public static List<String> lerArquivo(File file) {
 		return lerArquivo(file, false);
 	}
@@ -285,6 +281,10 @@ public class ArquivoUtil {
 			return null;
 		}
 		return resp.toString();
+	}
+
+	public static void lerIgnorados(String chave, File file) {
+		lerArquivo(chave, file);
 	}
 
 	public static List<String> getIgnorados(File arquivo) {

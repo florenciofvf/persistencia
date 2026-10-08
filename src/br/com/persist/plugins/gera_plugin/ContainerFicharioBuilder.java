@@ -174,7 +174,7 @@ public class ContainerFicharioBuilder extends Builder implements PluginFichario 
 	private void templateAbrir(ClassePublica classe) {
 		classe.newLine();
 		Funcao funcao = classe.criarFuncaoPrivada("void", "abrir", new Parametros("String conteudo, String idPagina"));
-		funcao.addInstrucao("ArquivoUtil.lerArquivo(" + config.nameCapConstantes() + "." + config.recurso
+		funcao.addInstrucao("ArquivoUtil.lerIgnorados(" + config.nameCapConstantes() + "." + config.recurso
 				+ ", new File(file, " + config.nameCapConstantes() + ".IGNORADOS))");
 		funcao.addInstrucao("fichario.excluirPaginas()");
 
