@@ -32,4 +32,6 @@ public interface AnexoTreeListener {
 	public void abrirAnexo(AnexoTree anexoTree);
 
 	public void iconeAnexo(AnexoTree anexoTree);
+
+	public void salvar(AnexoTree anexoTree);
 }

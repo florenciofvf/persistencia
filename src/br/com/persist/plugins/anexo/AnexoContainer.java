@@ -248,6 +248,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	@Override
+	public void salvar(AnexoTree anexoTree) {
+		toolbar.salvar();
+	}
+
+	@Override
 	public void imprimirAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {

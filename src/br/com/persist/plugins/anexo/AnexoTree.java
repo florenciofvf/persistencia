@@ -42,7 +42,9 @@ public class AnexoTree extends Tree {
 
 	private void configurar() {
 		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_F), "focus_input_pesquisar");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_S), "salvar_conteudo");
 		getActionMap().put("focus_input_pesquisar", actionFocusPesquisar);
+		getActionMap().put("salvar_conteudo", actionSalvarConteudo);
 	}
 
 	private transient javax.swing.Action actionFocusPesquisar = new AbstractAction() {
@@ -51,6 +53,15 @@ public class AnexoTree extends Tree {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ouvintes.forEach(o -> o.focusInputPesquisar(AnexoTree.this));
+		}
+	};
+
+	private transient javax.swing.Action actionSalvarConteudo = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ouvintes.forEach(o -> o.salvar(AnexoTree.this));
 		}
 	};
 
