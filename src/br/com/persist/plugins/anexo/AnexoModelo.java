@@ -70,7 +70,7 @@ public class AnexoModelo implements TreeModel {
 	}
 
 	private void iniIgnorados() {
-		ArquivoUtil.lerArquivo(AnexoConstantes.ANEXOS, new File(anexosRaiz, AnexoConstantes.IGNORADOS));
+		ArquivoUtil.lerIgnorados(AnexoConstantes.ANEXOS, new File(anexosRaiz, AnexoConstantes.IGNORADOS));
 	}
 
 	private void configurar(Anexo selecionado, String linha) throws AssistenciaException {

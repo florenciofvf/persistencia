@@ -112,7 +112,7 @@ public class AtributoContainer extends AbstratoContainer implements PluginFichar
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(AtributoConstantes.ATRIBUTO, new File(file, AtributoConstantes.IGNORADOS));
+		ArquivoUtil.lerIgnorados(AtributoConstantes.ATRIBUTO, new File(file, AtributoConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

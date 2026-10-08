@@ -117,7 +117,7 @@ public class LegadoContainer extends AbstratoContainer implements PluginFichario
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(LegadoConstantes.LEGADO, new File(file, LegadoConstantes.IGNORADOS));
+		ArquivoUtil.lerIgnorados(LegadoConstantes.LEGADO, new File(file, LegadoConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

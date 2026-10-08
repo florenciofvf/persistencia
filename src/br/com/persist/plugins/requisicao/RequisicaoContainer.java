@@ -142,7 +142,7 @@ public class RequisicaoContainer extends AbstratoContainer implements PluginFich
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(RequisicaoConstantes.REQUISICOES, new File(file, RequisicaoConstantes.IGNORADOS));
+		ArquivoUtil.lerIgnorados(RequisicaoConstantes.REQUISICOES, new File(file, RequisicaoConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

@@ -112,7 +112,7 @@ public class MapaContainer extends AbstratoContainer implements PluginFichario {
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(MapaConstantes.MAPAS, new File(file, MapaConstantes.IGNORADOS));
+		ArquivoUtil.lerIgnorados(MapaConstantes.MAPAS, new File(file, MapaConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

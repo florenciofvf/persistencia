@@ -112,7 +112,7 @@ public class EntregaContainer extends AbstratoContainer implements PluginFichari
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(EntregaConstantes.ENTREGAS, new File(file, EntregaConstantes.IGNORADOS));
+		ArquivoUtil.lerIgnorados(EntregaConstantes.ENTREGAS, new File(file, EntregaConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

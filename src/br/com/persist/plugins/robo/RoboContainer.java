@@ -120,7 +120,7 @@ public class RoboContainer extends AbstratoContainer implements PluginFichario {
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(RoboConstantes.ROBOSCRIPTS, new File(file, RoboConstantes.IGNORADOS));
+		ArquivoUtil.lerIgnorados(RoboConstantes.ROBOSCRIPTS, new File(file, RoboConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
