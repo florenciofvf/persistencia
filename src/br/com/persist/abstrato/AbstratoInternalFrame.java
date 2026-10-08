@@ -16,6 +16,7 @@ import javax.swing.event.InternalFrameEvent;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Janela;
 import br.com.persist.formulario.Formulario;
 
@@ -25,7 +26,7 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 
 	protected AbstratoInternalFrame(Formulario formulario, String titulo) {
 		super(titulo, true, true, false, false);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout());
 		this.formulario = formulario;
 		setSize(Constantes.SIZE);
@@ -88,6 +89,9 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 
 	@Override
 	public void windowInternalClosingHandler(JInternalFrame window) {
+		if (Util.confirmar(formulario, "label.confirma_fechar")) {
+			dispose();
+		}
 	}
 
 	@Override
