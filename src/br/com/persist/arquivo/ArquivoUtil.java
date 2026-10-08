@@ -307,6 +307,7 @@ public class ArquivoUtil {
 			if (string.startsWith("/*")) {
 				ativadoRemocao = true;
 			} else if (string.endsWith("*/")) {
+				it.remove();
 				ativadoRemocao = false;
 			}
 			if (ativadoRemocao) {
