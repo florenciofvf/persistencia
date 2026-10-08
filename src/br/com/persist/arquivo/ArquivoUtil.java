@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -285,10 +286,33 @@ public class ArquivoUtil {
 
 	public static void lerIgnorados(String chave, File file) {
 		lerArquivo(chave, file);
+		List<String> lista = map.get(chave);
+		if (lista != null) {
+			processarListaIgnorados(lista);
+			map.put(chave, lista);
+		}
 	}
 
 	public static List<String> getIgnorados(File arquivo) {
-		return lerArquivo(arquivo);
+		List<String> resp = lerArquivo(arquivo);
+		processarListaIgnorados(resp);
+		return resp;
+	}
+
+	private static void processarListaIgnorados(List<String> lista) {
+		Iterator<String> it = lista.iterator();
+		boolean ativadoRemocao = false;
+		while (it.hasNext()) {
+			String string = it.next().trim();
+			if (string.startsWith("/*")) {
+				ativadoRemocao = true;
+			} else if (string.endsWith("*/")) {
+				ativadoRemocao = false;
+			}
+			if (ativadoRemocao) {
+				it.remove();
+			}
+		}
 	}
 
 	public static void arquivoIgnorado(List<String> ignorados, boolean exibir) {
