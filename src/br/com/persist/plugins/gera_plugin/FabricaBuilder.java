@@ -37,7 +37,7 @@ public class FabricaBuilder extends Builder {
 		arquivo.addImport("br.com.persist.fichario.PaginaServico");
 		arquivo.addImport("br.com.persist.formulario.Formulario").newLine();
 
-		arquivo.addComentario("\t\t<menuItem classeFabrica=\"" + config.pacote + "." + config.nameCapFabrica()
+		arquivo.addComentario("\t<menuItem classeFabrica=\"" + config.pacote + "." + config.nameCapFabrica()
 				+ "\" ativo=\"true\" />");
 	}
 
