@@ -402,6 +402,7 @@ public abstract class ObjetoSuperficie extends Desktop implements ObjetoListener
 		ObjetoSuperficieUtil.processarIDObjeto(this, novo, Constantes.VAZIO, Constantes.VAZIO);
 		addObjeto(novo);
 		ObjetoSuperficieUtil.limparSelecao(this);
+		margemParaInternalFormulario(novo);
 		repaint();
 	}
 
