@@ -24,6 +24,7 @@ public class MenuPadrao1 extends Menu {
 	private void init() {
 		String[] strings = Preferencias.getFormFichaDialogo().split(",");
 		for (String item : strings) {
+			item = item.trim();
 			if (Constantes.FORM.equals(item)) {
 				addMenuItem(formularioAcao);
 			} else if (Constantes.FICHA.equals(item)) {
