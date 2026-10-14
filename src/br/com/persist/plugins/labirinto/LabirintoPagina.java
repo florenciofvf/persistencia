@@ -19,134 +19,144 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.abstrato.Aba;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Icone;
-import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
 
 public class LabirintoPagina extends Panel implements Aba {
 	private final TabbedPane tabbedPane = new TabbedPane(false);
-	public final TextEditor textEditor = new TextEditor();
 	private static final long serialVersionUID = 1L;
-	private final Toolbar toolbar = new Toolbar();
 	private final LabirintoFichario fichario;
-	private ScrollPane scrollPane;
+	private final AbaText abaText;
+	private final AbaView abaView;
 	private final File file;
 	private int indice;
 
 	public LabirintoPagina(LabirintoFichario fichario, File file) {
 		tabbedPane.setTabLayoutPolicy(TabbedPane.SCROLL);
 		this.fichario = fichario;
+		abaView = new AbaView(file);
+		abaText = new AbaText();
 		this.file = file;
 		montarLayout();
 		abrir();
 	}
 
 	private void montarLayout() {
-		SplitPane split = new SplitPane(SplitPane.VERTICAL, criarPanel(), criarPanelResultado());
-		SwingUtilitario.invokeLater(() -> split.setDividerLocation(.99));
-		add(BorderLayout.CENTER, split);
-		textEditor.setListener(
-				TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
+		tabbedPane.addTab("Text", abaText);
+		tabbedPane.addTab("View", abaView);
+		add(BorderLayout.CENTER, tabbedPane);
 	}
 
-	private Panel criarPanel() {
-		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, toolbar);
-		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, textEditor);
-		scrollPane = new ScrollPane(panelArea);
-		scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-		Panel panelScroll = new Panel();
-		panelScroll.add(BorderLayout.CENTER, scrollPane);
-		panel.add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-		return panel;
-	}
-
-	private Panel criarPanelResultado() {
-		Panel panel = new Panel();
-		panel.add(BorderLayout.CENTER, tabbedPane);
-		return panel;
-	}
-
-	private int getValueScrollPane() {
-		return scrollPane.getVerticalScrollBar().getValue();
-	}
-
-	private void setValueScrollPane(int value) {
-		SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
-	}
-
-	private class Toolbar extends BarraButton implements ActionListener {
-		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
+	class AbaText extends Panel {
+		private final TextEditor textEditor = new TextEditor();
 		private static final long serialVersionUID = 1L;
-		private transient Selecao selecao;
+		private final Toolbar toolbar = new Toolbar();
+		private ScrollPane scrollPane;
 
-		private Toolbar() {
-			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
-			executarAcao.setActionListener(e -> executar());
-			txtPesquisa.addActionListener(this);
-			addButton(executarAcao);
-			add(txtPesquisa);
-			add(label);
+		AbaText() {
+			montarLayout();
 		}
 
-		Action acaoIcon(String chave, Icone icone) {
-			return Action.acaoIcon(LabirintoMensagens.getString(chave), icone);
+		void montarLayout() {
+			add(BorderLayout.NORTH, toolbar);
+			Panel panelArea = new Panel();
+			panelArea.add(BorderLayout.CENTER, textEditor);
+			scrollPane = new ScrollPane(panelArea);
+			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
+			Panel panelScroll = new Panel();
+			panelScroll.add(BorderLayout.CENTER, scrollPane);
+			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
+			textEditor.setListener(
+					TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
 		}
 
-		private void executar() {
-			// TODO - impl
+		int getValueScrollPane() {
+			return scrollPane.getVerticalScrollBar().getValue();
 		}
 
-		@Override
-		protected void limpar() {
+		void setValueScrollPane(int value) {
+			SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		}
+
+		String getConteudo() {
+			return textEditor.getText();
+		}
+
+		void abrir() {
 			textEditor.setText(Constantes.VAZIO);
+			if (file.exists()) {
+				try {
+					int value = getValueScrollPane();
+					textEditor.setText(ArquivoUtil.getString(file));
+					setValueScrollPane(value);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(LabirintoConstantes.PAINEL_LABIRINTO, ex, this);
+				}
+			}
 		}
 
-		@Override
-		protected void baixar() {
-			abrir();
-			selecao = null;
-			label.limpar();
-		}
+		private class Toolbar extends BarraButton implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private transient Selecao selecao;
 
-		@Override
-		protected void copiar() {
-			String string = Util.getString(textEditor);
-			Util.setContentTransfered(string);
-			copiarMensagem(string);
-			textEditor.requestFocus();
-		}
+			private Toolbar() {
+				super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
+				txtPesquisa.addActionListener(this);
+				add(txtPesquisa);
+				add(label);
+			}
 
-		@Override
-		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textEditor, numeros, letras);
-		}
+			@Override
+			protected void limpar() {
+				textEditor.setText(Constantes.VAZIO);
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!Util.isEmpty(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
-				selecao.selecionar(label);
-			} else {
+			@Override
+			protected void baixar() {
+				abrir();
+				selecao = null;
 				label.limpar();
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(textEditor);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				textEditor.requestFocus();
+			}
+
+			@Override
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(textEditor, numeros, letras);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!Util.isEmpty(txtPesquisa.getText())) {
+					selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
+					selecao.selecionar(label);
+				} else {
+					label.limpar();
+				}
 			}
 		}
 	}
 
 	public String getConteudo() {
-		return textEditor.getText();
+		return abaText.getConteudo();
+	}
+
+	public void setConteudo(String string) {
+		abaText.textEditor.setText(string);
 	}
 
 	public String getNome() {
@@ -154,16 +164,7 @@ public class LabirintoPagina extends Panel implements Aba {
 	}
 
 	private void abrir() {
-		textEditor.setText(Constantes.VAZIO);
-		if (file.exists()) {
-			try {
-				int value = getValueScrollPane();
-				textEditor.setText(ArquivoUtil.getString(file));
-				setValueScrollPane(value);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(LabirintoConstantes.PAINEL_LABIRINTO, ex, this);
-			}
-		}
+		abaText.abrir();
 	}
 
 	public void excluir() {
@@ -182,7 +183,7 @@ public class LabirintoPagina extends Panel implements Aba {
 			return;
 		}
 		try {
-			ArquivoUtil.salvar(textEditor, file);
+			ArquivoUtil.salvar(abaText.textEditor, file);
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(LabirintoConstantes.PAINEL_LABIRINTO, ex, this);

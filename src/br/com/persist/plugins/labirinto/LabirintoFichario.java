@@ -78,7 +78,7 @@ public class LabirintoFichario extends AbstratoFichario {
 		LabirintoPagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.isEmpty(conteudo)) {
-				pagina.textEditor.setText(conteudo);
+				pagina.setConteudo(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}
