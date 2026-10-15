@@ -289,7 +289,8 @@ public class ExpressaoContexto extends Salto {
 		for (int i = 1; i < array.length; i++) {
 			item = array[i].trim();
 			Contexto ultimo = excluirUltimo();
-			InvocacaoContexto invocacao = InvocacaoContexto.criarComEL(tokenManager, token, item, (InvocacaoContexto) ultimo);
+			InvocacaoContexto invocacao = InvocacaoContexto.criarComEL(tokenManager, token, item,
+					(InvocacaoContexto) ultimo);
 			adicionar(invocacao);
 		}
 		selecionado = new QQOperadorOuIniInvocacao();
