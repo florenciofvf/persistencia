@@ -16,8 +16,8 @@ public class ExpressaoCor {
 	private static final MutableAttributeSet GREEN3 = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE2 = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE3 = new SimpleAttributeSet();
+	private static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
 	private static final MutableAttributeSet GRAY = new SimpleAttributeSet();
-	public static final MutableAttributeSet PLAIN = new SimpleAttributeSet();
 	private static final MutableAttributeSet BLUE = new SimpleAttributeSet();
 	private static final MutableAttributeSet BOLD = new SimpleAttributeSet();
 	private static final MutableAttributeSet RED2 = new SimpleAttributeSet();
