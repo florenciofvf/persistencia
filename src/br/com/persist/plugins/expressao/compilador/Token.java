@@ -17,6 +17,7 @@ public class Token {
 	public static final int PARAMETRO = 2;
 	public static final int DEC_LOCAL = 3;
 	private boolean consumido;
+	private Token origem;
 	final String string;
 	final int indice;
 	String original;
@@ -59,6 +60,17 @@ public class Token {
 
 	public void setStyle(int style) {
 		this.style = style;
+		if (origem != null) {
+			origem.style = style;
+		}
+	}
+
+	public Token getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(Token origem) {
+		this.origem = origem;
 	}
 
 	public enum Tipo {

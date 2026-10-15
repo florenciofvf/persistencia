@@ -249,8 +249,9 @@ public class ExpressaoContexto extends Salto {
 		return criar(stringContexto);
 	}
 
-	public static ExpressaoContexto criarComChave(String string) throws ExpressaoException {
+	public static ExpressaoContexto criarComChave(String string, Token origem) throws ExpressaoException {
 		Token token = new Token(string, Tipo.VIRTUAL, -1);
+		token.setOrigem(origem);
 		ChaveContexto chaveContexto = new ChaveContexto(token);
 		return criar(chaveContexto);
 	}

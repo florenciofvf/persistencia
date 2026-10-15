@@ -244,7 +244,8 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 				tokenManager.invalidar();
 			}
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
-			ArgumentosContexto argumentos = ArgumentosContexto.criarComChave(getArg(tokenManager, origem, string, ':'));
+			ArgumentosContexto argumentos = ArgumentosContexto.criarComChave(getArg(tokenManager, origem, string, ':'),
+					origem);
 			invocacao.adicionar(argumentos);
 			return invocacao;
 		} else if (string.contains(".")) {
@@ -252,7 +253,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
 			ArgumentosContexto argumentos = ArgumentosContexto.criar();
 			invocacao.adicionar(argumentos);
-			ExpressaoContexto mapa = ExpressaoContexto.criarComChave(getArg(tokenManager, origem, string, '.'));
+			ExpressaoContexto mapa = ExpressaoContexto.criarComChave(getArg(tokenManager, origem, string, '.'), origem);
 			argumentos.adicionar(mapa);
 			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, origem, string, '.'));
 			argumentos.adicionar(campo);
