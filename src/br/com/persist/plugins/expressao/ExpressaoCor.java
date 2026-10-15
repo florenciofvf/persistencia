@@ -29,37 +29,61 @@ public class ExpressaoCor {
 
 	public static void processar(StyledDocument doc, List<Token> tokens) {
 		for (Token token : tokens) {
+			if (token.isVirtual() && token.getOrigem() != null) {
+				Token origem = token.getOrigem();
+				if (token.isStyle(Token.CONSTANTE)) {
+					setOriginal(doc, origem, BLUE2);
+				} else if (token.isStyle(Token.DEC_LOCAL)) {
+					setOriginal(doc, origem, BLUE3);
+				} else if (token.isStyle(Token.PARAMETRO)) {
+					setOriginal(doc, origem, GREEN2);
+				}
+			}
+		}
+		for (Token token : tokens) {
 			if (token.isVirtual()) {
 				continue;
 			}
-			if (token.isStyle(Token.CONSTANTE)) {
-				set(doc, token, BLUE2);
-			} else if (token.isStyle(Token.DEC_LOCAL)) {
-				set(doc, token, BLUE3);
-			} else if (token.isStyle(Token.PARAMETRO)) {
-				set(doc, token, GREEN2);
-			} else if (token.isReservado()) {
-				set(doc, token, RED);
-			} else if (token.isEL()) {
-				setOriginal(doc, token, MAGENTA);
-			} else if (token.isString()) {
-				setOriginal(doc, token, BLUE);
-			} else if (token.isComentario()) {
-				set(doc, token, GRAY);
-			} else if (token.isOperador() || token.isEspecial()) {
-				set(doc, token, BOLD);
-			} else if (token.isInteiro() || token.isFlutuante()) {
-				set(doc, token, RED2);
-			}
+			setCharacterAttributes(doc, token);
+		}
+	}
+
+	private static void setCharacterAttributes(StyledDocument doc, Token token) {
+		if (token.isStyle(Token.CONSTANTE)) {
+			set(doc, token, BLUE2);
+		} else if (token.isStyle(Token.DEC_LOCAL)) {
+			set(doc, token, BLUE3);
+		} else if (token.isStyle(Token.PARAMETRO)) {
+			set(doc, token, GREEN2);
+		} else if (token.isReservado()) {
+			set(doc, token, RED);
+		} else if (token.isEL()) {
+			setOriginal(doc, token, MAGENTA);
+		} else if (token.isString()) {
+			setOriginal(doc, token, BLUE);
+		} else if (token.isComentario()) {
+			set(doc, token, GRAY);
+		} else if (token.isOperador() || token.isEspecial()) {
+			set(doc, token, BOLD);
+		} else if (token.isInteiro() || token.isFlutuante()) {
+			set(doc, token, RED2);
 		}
 	}
 
 	static void setOriginal(StyledDocument doc, Token token, MutableAttributeSet att) {
+		if (token.isProcessadoCor()) {
+			return;
+		}
 		doc.setCharacterAttributes(token.getIndice(), token.getOriginal().length(), att, true);
+		token.setProcessadoCor(true);
 	}
 
 	static void set(StyledDocument doc, Token token, MutableAttributeSet att) {
+		if (token.isProcessadoCor()) {
+			return;
+		}
 		doc.setCharacterAttributes(token.getIndice(), token.getString().length(), att, true);
+		token.setProcessadoCor(true);
 	}
 
 	public static void clearAttr(StyledDocument doc) {
