@@ -249,9 +249,13 @@ public class ExpressaoContexto extends Salto {
 		return criar(stringContexto);
 	}
 
-	public static ExpressaoContexto criarComChave(String string, Token origem) throws ExpressaoException {
+	public static ExpressaoContexto criarComChave(String string, Token origem, TokenManager tokenManager,
+			boolean salvarVirtual) throws ExpressaoException {
 		Token token = new Token(string, Tipo.VIRTUAL, -1);
 		token.setOrigem(origem);
+		if (tokenManager != null && salvarVirtual) {
+			tokenManager.addToken(token);
+		}
 		ChaveContexto chaveContexto = new ChaveContexto(token);
 		return criar(chaveContexto);
 	}
@@ -281,12 +285,11 @@ public class ExpressaoContexto extends Salto {
 			checarTotal(tokenManager, token, item);
 		}
 		String item = array[0].trim();
-		adicionar(InvocacaoContexto.criarComEL(tokenManager, token, item));
+		adicionar(InvocacaoContexto.criarComEL(tokenManager, token, item, true));
 		for (int i = 1; i < array.length; i++) {
 			item = array[i].trim();
 			Contexto ultimo = excluirUltimo();
-			InvocacaoContexto invocacao = InvocacaoContexto.criarComEL(tokenManager, token, item,
-					(InvocacaoContexto) ultimo);
+			InvocacaoContexto invocacao = InvocacaoContexto.criarComEL(tokenManager, token, item, (InvocacaoContexto) ultimo);
 			adicionar(invocacao);
 		}
 		selecionado = new QQOperadorOuIniInvocacao();

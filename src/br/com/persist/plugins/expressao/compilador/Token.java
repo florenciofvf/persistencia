@@ -16,6 +16,7 @@ public class Token {
 	public static final int CONSTANTE = 1;
 	public static final int PARAMETRO = 2;
 	public static final int DEC_LOCAL = 3;
+	private boolean processadoCor;
 	private boolean consumido;
 	private Token origem;
 	final String string;
@@ -186,6 +187,14 @@ public class Token {
 
 	public boolean isOperadorMOuM() {
 		return isOperador() && ("+".equals(string) || "-".equals(string));
+	}
+
+	public boolean isProcessadoCor() {
+		return processadoCor;
+	}
+
+	public void setProcessadoCor(boolean processadoCor) {
+		this.processadoCor = processadoCor;
 	}
 
 	public boolean isReservado() {

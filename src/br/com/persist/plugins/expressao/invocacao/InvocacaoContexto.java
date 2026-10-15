@@ -232,8 +232,8 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 		print(pw, getPrefixo(), getBiblio(), getMetodo());
 	}
 
-	public static InvocacaoContexto criarComEL(TokenManager tokenManager, Token origem, String string)
-			throws ExpressaoException {
+	public static InvocacaoContexto criarComEL(TokenManager tokenManager, Token origem, String string,
+			boolean salvarVirtual) throws ExpressaoException {
 		if (string.contains(":")) {
 			Token token = null;
 			if (string.endsWith("head")) {
@@ -245,7 +245,7 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			}
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
 			ArgumentosContexto argumentos = ArgumentosContexto.criarComChave(getArg(tokenManager, origem, string, ':'),
-					origem);
+					origem, tokenManager, salvarVirtual);
 			invocacao.adicionar(argumentos);
 			return invocacao;
 		} else if (string.contains(".")) {
@@ -253,7 +253,8 @@ public class InvocacaoContexto extends Contexto implements LinkBibliotecaContext
 			InvocacaoContexto invocacao = new InvocacaoContexto(token, true);
 			ArgumentosContexto argumentos = ArgumentosContexto.criar();
 			invocacao.adicionar(argumentos);
-			ExpressaoContexto mapa = ExpressaoContexto.criarComChave(getArg(tokenManager, origem, string, '.'), origem);
+			ExpressaoContexto mapa = ExpressaoContexto.criarComChave(getArg(tokenManager, origem, string, '.'), origem,
+					tokenManager, salvarVirtual);
 			argumentos.adicionar(mapa);
 			ExpressaoContexto campo = ExpressaoContexto.criarComString(getArg2(tokenManager, origem, string, '.'));
 			argumentos.adicionar(campo);

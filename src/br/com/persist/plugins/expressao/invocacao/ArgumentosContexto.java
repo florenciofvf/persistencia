@@ -64,9 +64,11 @@ public class ArgumentosContexto extends Contexto {
 		return argumentosContexto;
 	}
 
-	public static ArgumentosContexto criarComChave(String string, Token origem) throws ExpressaoException {
+	public static ArgumentosContexto criarComChave(String string, Token origem, TokenManager tokenManager,
+			boolean salvarVirtual) throws ExpressaoException {
 		ArgumentosContexto argumentosContexto = criar();
-		ExpressaoContexto expressaoContexto = ExpressaoContexto.criarComChave(string, origem);
+		ExpressaoContexto expressaoContexto = ExpressaoContexto.criarComChave(string, origem, tokenManager,
+				salvarVirtual);
 		argumentosContexto.adicionar(expressaoContexto);
 		return argumentosContexto;
 	}
