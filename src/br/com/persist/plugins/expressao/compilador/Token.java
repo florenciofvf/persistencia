@@ -61,9 +61,6 @@ public class Token {
 
 	public void setStyle(int style) {
 		this.style = style;
-		if (origem != null) {
-			origem.style = style;
-		}
 	}
 
 	public Token getOrigem() {

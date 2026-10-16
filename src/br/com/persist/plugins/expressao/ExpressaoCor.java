@@ -28,23 +28,23 @@ public class ExpressaoCor {
 	}
 
 	public static void processar(StyledDocument doc, List<Token> tokens) {
-		for (Token token : tokens) {
-			if (token.isVirtual() && token.getOrigem() != null) {
-				Token origem = token.getOrigem();
-				if (token.isStyle(Token.CONSTANTE)) {
+		for (Token item : tokens) {
+			if (item.isVirtual() && item.getOrigem() != null && item.getOrigem().isEL()) {
+				Token origem = item.getOrigem();
+				if (item.isStyle(Token.CONSTANTE)) {
 					setOriginal(doc, origem, BLUE2);
-				} else if (token.isStyle(Token.DEC_LOCAL)) {
+				} else if (item.isStyle(Token.DEC_LOCAL)) {
 					setOriginal(doc, origem, BLUE3);
-				} else if (token.isStyle(Token.PARAMETRO)) {
+				} else if (item.isStyle(Token.PARAMETRO)) {
 					setOriginal(doc, origem, GREEN2);
 				}
 			}
 		}
-		for (Token token : tokens) {
-			if (token.isVirtual()) {
+		for (Token item : tokens) {
+			if (item.isVirtual()) {
 				continue;
 			}
-			setCharacterAttributes(doc, token);
+			setCharacterAttributes(doc, item);
 		}
 	}
 
