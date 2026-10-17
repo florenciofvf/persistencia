@@ -8,4 +8,9 @@ public class Ponto {
 		x = (int) (origem.x + vetor.x);
 		y = (int) (origem.y + vetor.y);
 	}
+
+	void copiar(Ponto outro) {
+		x = outro.x;
+		y = outro.y;
+	}
 }

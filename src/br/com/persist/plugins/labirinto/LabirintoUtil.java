@@ -36,4 +36,12 @@ public class LabirintoUtil {
 		}
 		return null;
 	}
+
+	public static int largura(Ponto ponto1, Ponto ponto2) {
+		return ponto2.x - ponto1.x;
+	}
+
+	public static int altura(Ponto ponto1, Ponto ponto2) {
+		return ponto2.y - ponto1.y;
+	}
 }

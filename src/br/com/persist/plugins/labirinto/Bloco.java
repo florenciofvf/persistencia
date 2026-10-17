@@ -4,10 +4,16 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Bloco {
-	private static Vetor3D vetor1 = new Vetor3D();
-	private static Vetor3D vetor2 = new Vetor3D();
-	private static Vetor3D vetor3 = new Vetor3D();
-	private static Vetor3D vetor4 = new Vetor3D();
+	private final Ponto origemFrente = new Ponto();
+	private int larguraFrente;
+	private int alturaFrente;
+
+	private static final int GRAU_ROTACAO = 35;
+
+	private static Vetor vetor1 = new Vetor();
+	private static Vetor vetor2 = new Vetor();
+	private static Vetor vetor3 = new Vetor();
+	private static Vetor vetor4 = new Vetor();
 
 	final Face front = new Face();
 	final Face back = new Face();
@@ -34,17 +40,40 @@ public class Bloco {
 		g2.fillRect(x, y, lado, lado);
 	}
 
+	void calcular3DFrente(Ponto origem, int comprimento) {
+		if (vazio) {
+			return;
+		}
+
+		vetor1.init(-comprimento);
+		vetor2.init(comprimento);
+		vetor3.init(comprimento);
+		vetor4.init(-comprimento);
+
+		vetor1.rotacionar(GRAU_ROTACAO);
+		vetor2.rotacionar(-GRAU_ROTACAO);
+		vetor3.rotacionar(GRAU_ROTACAO);
+		vetor4.rotacionar(-GRAU_ROTACAO);
+
+		front.ponto1.copiar(origem, vetor1);
+		front.ponto2.copiar(origem, vetor2);
+		front.ponto3.copiar(origem, vetor3);
+		front.ponto4.copiar(origem, vetor4);
+
+		origemFrente.copiar(front.ponto1);
+		larguraFrente = LabirintoUtil.largura(front.ponto1, front.ponto2);
+		alturaFrente = LabirintoUtil.largura(front.ponto1, front.ponto4);
+	}
+
 	void desenhar3DFrente(Graphics2D g2) {
 		g2.setColor(color);
-		Ponto ponto1 = front.ponto1;
-		Ponto ponto2 = front.ponto2;
-		Ponto ponto3 = front.ponto3;
-		Ponto ponto4 = front.ponto4;
-		int lado = 10;
-		g2.fillRect(ponto1.x, ponto1.y, lado, lado);
-		g2.fillRect(ponto2.x, ponto2.y, lado, lado);
-		g2.fillRect(ponto3.x, ponto3.y, lado, lado);
-		g2.fillRect(ponto4.x, ponto4.y, lado, lado);
+		g2.fillRect(origemFrente.x, origemFrente.y, larguraFrente, alturaFrente);
+	}
+
+	void calcular3DEsquerdo(int comprimento) {
+		if (vazio) {
+			return;
+		}
 	}
 
 	void desenhar3DEsquerdo(Graphics2D g2) {
@@ -53,25 +82,13 @@ public class Bloco {
 		}
 	}
 
+	void calcular3DDireito(int comprimento) {
+		if (vazio) {
+			return;
+		}
+	}
+
 	void desenhar3DDireito(Graphics2D g2) {
-		if (vazio) {
-			return;
-		}
-	}
-
-	void calcularFaceFrente(int comprimento) {
-		if (vazio) {
-			return;
-		}
-	}
-
-	void calcularFaceEsquerdo(int comprimento) {
-		if (vazio) {
-			return;
-		}
-	}
-
-	void calcularFaceDireito(int comprimento) {
 		if (vazio) {
 			return;
 		}
