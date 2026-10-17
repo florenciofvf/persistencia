@@ -74,10 +74,10 @@ public class AbaView3D extends Panel {
 				blocoFrente.calcular3DFrente(origem, metadeAltura);
 			}
 			for (Bloco item : blocosEsquerdo) {
-				item.calcular3DEsquerdo(metadeAltura);
+				item.calcular3DEsquerdo(origem, metadeAltura);
 			}
 			for (Bloco item : blocosDireito) {
-				item.calcular3DDireito(metadeAltura);
+				item.calcular3DDireito(origem, metadeAltura);
 			}
 		}
 

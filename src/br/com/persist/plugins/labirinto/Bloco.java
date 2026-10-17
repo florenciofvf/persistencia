@@ -7,6 +7,9 @@ public class Bloco {
 	private final int[] arrayXFrente = new int[4];
 	private final int[] arrayYFrente = new int[4];
 
+	private final int[] arrayXBloco = new int[4];
+	private final int[] arrayYBloco = new int[4];
+
 	private static Vetor vetor1 = new Vetor();
 	private static Vetor vetor2 = new Vetor();
 	private static Vetor vetor3 = new Vetor();
@@ -79,19 +82,36 @@ public class Bloco {
 		g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
 	}
 
-	void calcular3DEsquerdo(int comprimento) {
+	void calcular3DEsquerdo(Ponto origem, int comprimento) {
 		if (vazio) {
 			return;
 		}
+
+		initVetores(comprimento);
+
+		front.ponto1.copiar(origem, vetor1);
+		// front.ponto2.copiar(origem, vetor2);
+		// front.ponto3.copiar(origem, vetor3);
+		front.ponto4.copiar(origem, vetor4);
+		int altura = LabirintoUtil.altura(front.ponto1, front.ponto4);
+		front.ponto2.copiar(origem, vetor1, -altura, 0);
+		front.ponto3.copiar(origem, vetor4, -altura, 0);
+
+		copiar(arrayXBloco, arrayYBloco, front.ponto1, 0);
+		copiar(arrayXBloco, arrayYBloco, front.ponto2, 1);
+		copiar(arrayXBloco, arrayYBloco, front.ponto3, 2);
+		copiar(arrayXBloco, arrayYBloco, front.ponto4, 3);
 	}
 
 	void desenhar3DEsquerdo(Graphics2D g2) {
 		if (vazio) {
 			return;
 		}
+		g2.setColor(color);
+		g2.fillPolygon(arrayXBloco, arrayYBloco, 4);
 	}
 
-	void calcular3DDireito(int comprimento) {
+	void calcular3DDireito(Ponto origem, int comprimento) {
 		if (vazio) {
 			return;
 		}
