@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Bloco {
-	private final Ponto origemFrente = new Ponto();
-	private int larguraFrente;
-	private int alturaFrente;
-
-	private static final int GRAU_ROTACAO = 35;
+	private final int[] arrayXFrente = new int[4];
+	private final int[] arrayYFrente = new int[4];
 
 	private static Vetor vetor1 = new Vetor();
 	private static Vetor vetor2 = new Vetor();
@@ -18,15 +15,16 @@ public class Bloco {
 	final Face front = new Face();
 	final Face back = new Face();
 
+	final boolean vazio;
 	final Color color;
 	int indiceTemp;
-	boolean vazio;
 	int coluna;
 	int linha;
 	Pivo pivo;
 
-	public Bloco() {
-		color = LabirintoUtil.createColor();
+	public Bloco(boolean vazio) {
+		this.color = LabirintoUtil.createColor();
+		this.vazio = vazio;
 	}
 
 	public void desenhar2D(int x, int y, int lado, Graphics2D g2) {
@@ -40,34 +38,45 @@ public class Bloco {
 		g2.fillRect(x, y, lado, lado);
 	}
 
-	void calcular3DFrente(Ponto origem, int comprimento) {
-		if (vazio) {
-			return;
-		}
-
+	private void initVetores(int comprimento) {
 		vetor1.init(-comprimento);
 		vetor2.init(comprimento);
 		vetor3.init(comprimento);
 		vetor4.init(-comprimento);
 
-		vetor1.rotacionar(GRAU_ROTACAO);
-		vetor2.rotacionar(-GRAU_ROTACAO);
-		vetor3.rotacionar(GRAU_ROTACAO);
-		vetor4.rotacionar(-GRAU_ROTACAO);
+		int grau = 35;
+		vetor1.rotacionar(grau);
+		vetor2.rotacionar(-grau);
+		vetor3.rotacionar(grau);
+		vetor4.rotacionar(-grau);
+	}
+
+	void calcular3DFrente(Ponto origem, int comprimento) {
+		if (vazio) {
+			return;
+		}
+
+		initVetores(comprimento);
 
 		front.ponto1.copiar(origem, vetor1);
 		front.ponto2.copiar(origem, vetor2);
 		front.ponto3.copiar(origem, vetor3);
 		front.ponto4.copiar(origem, vetor4);
 
-		origemFrente.copiar(front.ponto1);
-		larguraFrente = LabirintoUtil.largura(front.ponto1, front.ponto2);
-		alturaFrente = LabirintoUtil.altura(front.ponto1, front.ponto4);
+		copiar(arrayXFrente, arrayYFrente, front.ponto1, 0);
+		copiar(arrayXFrente, arrayYFrente, front.ponto2, 1);
+		copiar(arrayXFrente, arrayYFrente, front.ponto3, 2);
+		copiar(arrayXFrente, arrayYFrente, front.ponto4, 3);
+	}
+
+	private void copiar(int[] arrayX, int[] arrayY, Ponto ponto, int indice) {
+		arrayX[indice] = ponto.x;
+		arrayY[indice] = ponto.y;
 	}
 
 	void desenhar3DFrente(Graphics2D g2) {
 		g2.setColor(color);
-		g2.fillRect(origemFrente.x, origemFrente.y, larguraFrente, alturaFrente);
+		g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
 	}
 
 	void calcular3DEsquerdo(int comprimento) {

@@ -18,8 +18,7 @@ class LabirintoXMLHandler extends XMLHandler {
 			boolean vazio = "true".equals(attributes.getValue("vazio"));
 			boolean pivo = "true".equals(attributes.getValue("pivo"));
 
-			Bloco bloco = new Bloco();
-			bloco.vazio = vazio;
+			Bloco bloco = new Bloco(vazio);
 
 			if (vazio && pivo) {
 				bloco.pivo = new Pivo();
