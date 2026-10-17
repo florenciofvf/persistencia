@@ -1,8 +1,8 @@
 package br.com.persist.plugins.labirinto;
 
 public class Face {
-	Ponto ponto1;
-	Ponto ponto2;
-	Ponto ponto3;
-	Ponto ponto4;
+	final Ponto ponto1 = new Ponto();
+	final Ponto ponto2 = new Ponto();
+	final Ponto ponto3 = new Ponto();
+	final Ponto ponto4 = new Ponto();
 }

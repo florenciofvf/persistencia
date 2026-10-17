@@ -12,6 +12,10 @@ public class Vetor3D {
 		this.z = z;
 	}
 
+	public Vetor3D() {
+		this(0, 0, 0);
+	}
+
 	public void rotacaoX(int grau) {
 		double cos = Math.cos(grau * RADIANO);
 		double sen = Math.sin(grau * RADIANO);

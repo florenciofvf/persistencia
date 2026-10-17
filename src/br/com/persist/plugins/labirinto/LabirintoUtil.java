@@ -21,6 +21,10 @@ public class LabirintoUtil {
 		while (blocos.size() > 10) {
 			blocos.remove(blocos.size() - 1);
 		}
+		int indice = 0;
+		for (Bloco item : blocos) {
+			item.indiceTemp = indice++;
+		}
 		return blocos;
 	}
 }
