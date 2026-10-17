@@ -42,10 +42,10 @@ import br.com.persist.formulario.Formulario;
 public class LabirintoContainer extends AbstratoContainer implements PluginFichario {
 	private static final File file = new File(LabirintoConstantes.LABIRINTO);
 	private static final long serialVersionUID = 1L;
-	private final Toolbar toolbar = new Toolbar();
 	private LabirintoFormulario labirintoFormulario;
-	private final LabirintoFichario fichario;
+	private final Toolbar toolbar = new Toolbar();
 	private LabirintoDialogo labirintoDialogo;
+	private final LabirintoFichario fichario;
 
 	public LabirintoContainer(Janela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);

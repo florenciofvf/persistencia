@@ -1,13 +1,6 @@
 package br.com.persist.plugins.labirinto;
 
-import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
-import static br.com.persist.componente.BarraButtonEnum.COLAR;
-import static br.com.persist.componente.BarraButtonEnum.COPIAR;
-import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
-
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -18,145 +11,42 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.abstrato.Aba;
 import br.com.persist.arquivo.ArquivoUtil;
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Selecao;
-import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.BarraButton;
-import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
-import br.com.persist.componente.TextEditor;
-import br.com.persist.componente.TextEditorLine;
 
 public class LabirintoPagina extends Panel implements Aba {
 	private final TabbedPane tabbedPane = new TabbedPane(false);
 	private static final long serialVersionUID = 1L;
-	private final LabirintoFichario fichario;
-	private final AbaText abaText;
-	private final AbaView abaView;
+	private final AbaViewXML abaViewXML;
+	private final AbaView2D abaView2D;
+	private final AbaView3D abaView3D;
 	private final File file;
 	private int indice;
 
 	public LabirintoPagina(LabirintoFichario fichario, File file) {
 		tabbedPane.setTabLayoutPolicy(TabbedPane.SCROLL);
-		this.fichario = fichario;
-		abaView = new AbaView(file);
-		abaText = new AbaText();
+		abaViewXML = new AbaViewXML(fichario, file);
+		abaView2D = new AbaView2D(file);
+		abaView3D = new AbaView3D(file);
 		this.file = file;
 		montarLayout();
 		abrir();
 	}
 
 	private void montarLayout() {
-		tabbedPane.addTab("Text", abaText);
-		tabbedPane.addTab("View", abaView);
+		tabbedPane.addTab("ViewXML", abaViewXML);
+		tabbedPane.addTab("View2D", abaView2D);
+		tabbedPane.addTab("View3D", abaView3D);
 		add(BorderLayout.CENTER, tabbedPane);
 	}
 
-	class AbaText extends Panel {
-		private final TextEditor textEditor = new TextEditor();
-		private static final long serialVersionUID = 1L;
-		private final Toolbar toolbar = new Toolbar();
-		private ScrollPane scrollPane;
-
-		AbaText() {
-			montarLayout();
-		}
-
-		void montarLayout() {
-			add(BorderLayout.NORTH, toolbar);
-			Panel panelArea = new Panel();
-			panelArea.add(BorderLayout.CENTER, textEditor);
-			scrollPane = new ScrollPane(panelArea);
-			scrollPane.setRowHeaderView(new TextEditorLine(textEditor));
-			Panel panelScroll = new Panel();
-			panelScroll.add(BorderLayout.CENTER, scrollPane);
-			add(BorderLayout.CENTER, new ScrollPane(panelScroll));
-			textEditor.setListener(
-					TextEditor.newTextEditorAdapter(toolbar::focusInputPesquisar, fichario::salvar, toolbar::baixar));
-		}
-
-		int getValueScrollPane() {
-			return scrollPane.getVerticalScrollBar().getValue();
-		}
-
-		void setValueScrollPane(int value) {
-			SwingUtilitario.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
-		}
-
-		String getConteudo() {
-			return textEditor.getText();
-		}
-
-		void abrir() {
-			textEditor.setText(Constantes.VAZIO);
-			if (file.exists()) {
-				try {
-					int value = getValueScrollPane();
-					textEditor.setText(ArquivoUtil.getString(file));
-					setValueScrollPane(value);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(LabirintoConstantes.PAINEL_LABIRINTO, ex, this);
-				}
-			}
-		}
-
-		private class Toolbar extends BarraButton implements ActionListener {
-			private static final long serialVersionUID = 1L;
-			private transient Selecao selecao;
-
-			private Toolbar() {
-				super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
-				txtPesquisa.addActionListener(this);
-				add(txtPesquisa);
-				add(label);
-			}
-
-			@Override
-			protected void limpar() {
-				textEditor.setText(Constantes.VAZIO);
-			}
-
-			@Override
-			protected void baixar() {
-				abrir();
-				selecao = null;
-				label.limpar();
-			}
-
-			@Override
-			protected void copiar() {
-				String string = Util.getString(textEditor);
-				Util.setContentTransfered(string);
-				copiarMensagem(string);
-				textEditor.requestFocus();
-			}
-
-			@Override
-			protected void colar(boolean numeros, boolean letras) {
-				Util.getContentTransfered(textEditor, numeros, letras);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!Util.isEmpty(txtPesquisa.getText())) {
-					selecao = Util.getSelecao(textEditor, selecao, txtPesquisa.getText());
-					selecao.selecionar(label);
-				} else {
-					label.limpar();
-				}
-			}
-		}
-	}
-
 	public String getConteudo() {
-		return abaText.getConteudo();
+		return abaViewXML.getConteudo();
 	}
 
 	public void setConteudo(String string) {
-		abaText.textEditor.setText(string);
+		abaViewXML.textEditor.setText(string);
 	}
 
 	public String getNome() {
@@ -164,7 +54,7 @@ public class LabirintoPagina extends Panel implements Aba {
 	}
 
 	private void abrir() {
-		abaText.abrir();
+		abaViewXML.abrir();
 	}
 
 	public void excluir() {
@@ -183,7 +73,7 @@ public class LabirintoPagina extends Panel implements Aba {
 			return;
 		}
 		try {
-			ArquivoUtil.salvar(abaText.textEditor, file);
+			ArquivoUtil.salvar(abaViewXML.textEditor, file);
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(LabirintoConstantes.PAINEL_LABIRINTO, ex, this);
