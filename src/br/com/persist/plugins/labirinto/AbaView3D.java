@@ -6,8 +6,6 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +15,12 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 
 public class AbaView3D extends Panel {
-	private List<Bloco> blocosLadoEsquerdo = new ArrayList<>();
+	private transient List<Bloco> blocosEsquerdo = new ArrayList<>();
+	private transient List<Bloco> blocosDireito = new ArrayList<>();
 	private PainelDesenho painelDesenho = new PainelDesenho();
-	private List<Bloco> blocosLadoDireito = new ArrayList<>();
-	private List<Bloco> blocosNaFrente = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private transient Bloco blocoFrente;
 	private final AbaView2D abaView2D;
 
 	public AbaView3D(AbaView2D abaView2D) {
@@ -54,24 +52,36 @@ public class AbaView3D extends Panel {
 
 		private void selecionarBlocos(Matriz matriz) {
 			Pivo pivo = matriz.pivo;
-			blocosNaFrente = matriz.getBlocosNaFrente(pivo);
-			blocosLadoEsquerdo = matriz.getBlocosLadoEsquerdo(pivo);
-			blocosLadoDireito = matriz.getBlocosLadoDireito(pivo);
+			List<Bloco> blocosNaFrente = matriz.getBlocosNaFrente(pivo);
+			blocoFrente = LabirintoUtil.primeiro(blocosNaFrente);
+			blocosEsquerdo = matriz.getBlocosLadoEsquerdo(pivo);
+			blocosDireito = matriz.getBlocosLadoDireito(pivo);
+			painelDesenho.configurarFaces();
+			painelDesenho.repaint();
 		}
 	}
 
 	class PainelDesenho extends Panel {
 		private static final long serialVersionUID = 1L;
+		int largura;
+		int altura;
+		int metadeLargura;
+		int metadeAltura;
 
-		public PainelDesenho() {
-			addMouseMotionListener(new OuvinteMouseMotion());
-			addMouseListener(new OuvinteMouse());
-		}
-
-		private class OuvinteMouseMotion extends MouseMotionAdapter {
-		}
-
-		private class OuvinteMouse extends MouseAdapter {
+		void configurarFaces() {
+			largura = getWidth();
+			altura = getHeight();
+			metadeLargura = getWidth() / 2;
+			metadeAltura = getHeight() / 2;
+			if (blocoFrente != null) {
+				blocoFrente.calcularFaceFrente(metadeAltura);
+			}
+			for (Bloco item : blocosEsquerdo) {
+				item.calcularFaceEsquerdo(metadeAltura);
+			}
+			for (Bloco item : blocosDireito) {
+				item.calcularFaceDireito(metadeAltura);
+			}
 		}
 
 		@Override
@@ -79,7 +89,15 @@ public class AbaView3D extends Panel {
 			super.paint(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+			if (blocoFrente != null) {
+				blocoFrente.desenhar3DFrente(g2);
+			}
+			for (Bloco item : blocosEsquerdo) {
+				item.desenhar3DEsquerdo(g2);
+			}
+			for (Bloco item : blocosDireito) {
+				item.desenhar3DDireito(g2);
+			}
 		}
 	}
 }

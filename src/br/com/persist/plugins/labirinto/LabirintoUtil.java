@@ -27,4 +27,13 @@ public class LabirintoUtil {
 		}
 		return blocos;
 	}
+
+	public static Bloco primeiro(List<Bloco> blocos) {
+		for (Bloco item : blocos) {
+			if (!item.vazio) {
+				return item;
+			}
+		}
+		return null;
+	}
 }
