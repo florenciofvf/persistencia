@@ -11,6 +11,7 @@ public class Matriz {
 	private int indiceColuna;
 	private int indiceLinha;
 	int lado = 40;
+	Pivo pivo;
 
 	public Matriz(int linhas, int colunas) {
 		this.linhas = linhas;
@@ -19,6 +20,9 @@ public class Matriz {
 	}
 
 	public void add(Bloco bloco) {
+		if (bloco.pivo != null) {
+			pivo = bloco.pivo;
+		}
 		blocos[indiceLinha][indiceColuna] = bloco;
 		bloco.linha = indiceLinha;
 		bloco.coluna = indiceColuna;

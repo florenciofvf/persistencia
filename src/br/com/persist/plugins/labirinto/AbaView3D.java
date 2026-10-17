@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
@@ -15,7 +17,10 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 
 public class AbaView3D extends Panel {
+	private List<Bloco> blocosLadoEsquerdo = new ArrayList<>();
 	private PainelDesenho painelDesenho = new PainelDesenho();
+	private List<Bloco> blocosLadoDireito = new ArrayList<>();
+	private List<Bloco> blocosNaFrente = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final AbaView2D abaView2D;
@@ -44,6 +49,14 @@ public class AbaView3D extends Panel {
 				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString("msg.favor_construir_matriz"));
 				return;
 			}
+			selecionarBlocos(matriz);
+		}
+
+		private void selecionarBlocos(Matriz matriz) {
+			Pivo pivo = matriz.pivo;
+			blocosNaFrente = matriz.getBlocosNaFrente(pivo);
+			blocosLadoEsquerdo = matriz.getBlocosLadoEsquerdo(pivo);
+			blocosLadoDireito = matriz.getBlocosLadoDireito(pivo);
 		}
 	}
 
