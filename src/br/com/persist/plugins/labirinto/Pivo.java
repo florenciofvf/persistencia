@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class Pivo {
 	Sentido sentido;
-	Bloco bloco;
+	Bloco piso;
 
 	Pivo() {
 		sentido = Sentido.ACIMA;

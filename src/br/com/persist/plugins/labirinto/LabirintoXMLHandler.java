@@ -23,7 +23,7 @@ class LabirintoXMLHandler extends XMLHandler {
 
 			if (vazio && pivo) {
 				bloco.pivo = new Pivo();
-				bloco.pivo.bloco = bloco;
+				bloco.pivo.piso = bloco;
 			}
 
 			matriz.add(bloco);

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Bloco {
+	int linha;
+	int coluna;
 	final Color color;
 	boolean vazio;
 	Face front;

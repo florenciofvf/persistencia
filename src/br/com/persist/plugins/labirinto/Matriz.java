@@ -16,12 +16,10 @@ public class Matriz {
 		blocos = new Bloco[linhas][colunas];
 	}
 
-	public void set(int linha, int coluna, Bloco bloco) {
-		blocos[linha][coluna] = bloco;
-	}
-
 	public void add(Bloco bloco) {
 		blocos[indiceLinha][indiceColuna] = bloco;
+		bloco.linha = indiceLinha;
+		bloco.coluna = indiceColuna;
 		indiceColuna++;
 		if (indiceColuna == colunas) {
 			indiceColuna = 0;
@@ -38,5 +36,24 @@ public class Matriz {
 				bloco.desenhar2D(x, y, lado, g2);
 			}
 		}
+	}
+
+	Bloco getAfrente(Pivo pivo) {
+		Sentido sentido = pivo.sentido;
+		if (sentido == Sentido.ACIMA) {
+			return getAfrenteAcima(pivo.piso);
+		} else if (sentido == Sentido.DIREITA) {
+			sentido = Sentido.ABAIXO;
+		} else if (sentido == Sentido.ABAIXO) {
+			sentido = Sentido.ESQUERDA;
+		} else if (sentido == Sentido.ESQUERDA) {
+			sentido = Sentido.ACIMA;
+		}
+		return null;
+	}
+
+	private Bloco getAfrenteAcima(Bloco piso) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
