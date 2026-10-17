@@ -3,48 +3,30 @@ package br.com.persist.plugins.labirinto;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.assistencia.ArgumentoException;
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
 
 class LabirintoXMLHandler extends XMLHandler {
-	private final StringBuilder builder = new StringBuilder();
-	private Labirinto selecionado;
-
-	private void limpar() {
-		if (builder.length() > 0) {
-			builder.delete(0, builder.length());
-		}
-	}
+	Matriz matriz;
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		try {
-			if (LabirintoConstantes.LABIRINTO.equals(qName)) {
-				selecionado = new Labirinto(attributes.getValue("nome"));
-				LabirintoProvedor.adicionar(selecionado);
-			}
-		} catch (ArgumentoException ex) {
-			throw new SAXException(ex);
-		}
-	}
+		if ("matriz".equals(qName)) {
+			int linhas = Integer.parseInt(attributes.getValue("linhas"));
+			int colunas = Integer.parseInt(attributes.getValue("colunas"));
+			matriz = new Matriz(linhas, colunas);
+		} else if ("cell".equals(qName)) {
+			boolean vazio = "true".equals(attributes.getValue("vazio"));
+			boolean pivo = "true".equals(attributes.getValue("pivo"));
 
-	@Override
-	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (LabirintoConstantes.LABIRINTO.equals(qName)) {
-			selecionado = null;
-		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
-			String string = builder.toString();
-			if (!Util.isEmpty(string)) {
-				selecionado.setValor(string.trim());
-			}
-			limpar();
-		}
-	}
+			Bloco bloco = new Bloco();
+			bloco.vazio = vazio;
 
-	@Override
-	public void characters(char[] ch, int start, int length) throws SAXException {
-		builder.append(new String(ch, start, length));
+			if(vazio && pivo) {
+				bloco.pivo = new Pivo();
+				bloco.pivo.bloco = bloco;
+			}
+
+			matriz.add(bloco);
+		}
 	}
 }
