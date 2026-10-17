@@ -28,7 +28,7 @@ public class LabirintoPagina extends Panel implements Aba {
 		tabbedPane.setTabLayoutPolicy(TabbedPane.SCROLL);
 		abaViewXML = new AbaViewXML(fichario, file);
 		abaView2D = new AbaView2D(file);
-		abaView3D = new AbaView3D(file);
+		abaView3D = new AbaView3D(abaView2D);
 		this.file = file;
 		montarLayout();
 		abrir();

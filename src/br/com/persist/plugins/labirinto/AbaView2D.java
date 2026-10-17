@@ -52,6 +52,10 @@ public class AbaView2D extends Panel {
 		}
 	}
 
+	Matriz getMatriz() {
+		return painelDesenho.matriz;
+	}
+
 	class PainelDesenho extends Panel {
 		private static final long serialVersionUID = 1L;
 		private transient Matriz matriz;
