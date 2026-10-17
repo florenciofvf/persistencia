@@ -7,6 +7,34 @@ public class Pivo {
 	Sentido sentido;
 	Bloco bloco;
 
+	Pivo() {
+		sentido = Sentido.ACIMA;
+	}
+
+	void horario() {
+		if (sentido == Sentido.ACIMA) {
+			sentido = Sentido.DIREITA;
+		} else if (sentido == Sentido.DIREITA) {
+			sentido = Sentido.ABAIXO;
+		} else if (sentido == Sentido.ABAIXO) {
+			sentido = Sentido.ESQUERDA;
+		} else if (sentido == Sentido.ESQUERDA) {
+			sentido = Sentido.ACIMA;
+		}
+	}
+
+	void antiHorario() {
+		if (sentido == Sentido.ACIMA) {
+			sentido = Sentido.ESQUERDA;
+		} else if (sentido == Sentido.ESQUERDA) {
+			sentido = Sentido.ABAIXO;
+		} else if (sentido == Sentido.ABAIXO) {
+			sentido = Sentido.DIREITA;
+		} else if (sentido == Sentido.DIREITA) {
+			sentido = Sentido.ACIMA;
+		}
+	}
+
 	public void desenhar2D(int x, int y, int lado, Graphics2D g2) {
 		g2.setColor(Color.RED);
 		lado /= 2;
