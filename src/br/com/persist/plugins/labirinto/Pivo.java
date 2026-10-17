@@ -9,6 +9,8 @@ public class Pivo {
 
 	public void desenhar2D(int x, int y, int lado, Graphics2D g2) {
 		g2.setColor(Color.RED);
-		g2.fillOval(x, y, lado, lado);
+		lado /= 2;
+		int m = lado / 2;
+		g2.fillOval(x + m, y + m, lado, lado);
 	}
 }
