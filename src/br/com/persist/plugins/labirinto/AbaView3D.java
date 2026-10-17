@@ -18,6 +18,7 @@ public class AbaView3D extends Panel {
 	private transient List<Bloco> blocosEsquerdo = new ArrayList<>();
 	private transient List<Bloco> blocosDireito = new ArrayList<>();
 	private PainelDesenho painelDesenho = new PainelDesenho();
+	private final transient Ponto origem = new Ponto();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private transient Bloco blocoFrente;
@@ -63,24 +64,20 @@ public class AbaView3D extends Panel {
 
 	class PainelDesenho extends Panel {
 		private static final long serialVersionUID = 1L;
-		int largura;
-		int altura;
-		int metadeLargura;
-		int metadeAltura;
 
 		void configurarFaces() {
-			largura = getWidth();
-			altura = getHeight();
-			metadeLargura = getWidth() / 2;
-			metadeAltura = getHeight() / 2;
+			int metadeLargura = getWidth() / 2;
+			int metadeAltura = getHeight() / 2;
+			origem.x = metadeLargura;
+			origem.y = metadeAltura;
 			if (blocoFrente != null) {
-				blocoFrente.calcularFaceFrente(metadeAltura);
+				blocoFrente.calcular3DFrente(origem, metadeAltura);
 			}
 			for (Bloco item : blocosEsquerdo) {
-				item.calcularFaceEsquerdo(metadeAltura);
+				item.calcular3DEsquerdo(metadeAltura);
 			}
 			for (Bloco item : blocosDireito) {
-				item.calcularFaceDireito(metadeAltura);
+				item.calcular3DDireito(metadeAltura);
 			}
 		}
 
