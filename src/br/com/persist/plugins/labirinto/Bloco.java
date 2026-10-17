@@ -62,7 +62,7 @@ public class Bloco {
 
 		origemFrente.copiar(front.ponto1);
 		larguraFrente = LabirintoUtil.largura(front.ponto1, front.ponto2);
-		alturaFrente = LabirintoUtil.largura(front.ponto1, front.ponto4);
+		alturaFrente = LabirintoUtil.altura(front.ponto1, front.ponto4);
 	}
 
 	void desenhar3DFrente(Graphics2D g2) {

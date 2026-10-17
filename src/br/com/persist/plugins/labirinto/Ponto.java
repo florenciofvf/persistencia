@@ -13,4 +13,8 @@ public class Ponto {
 		x = outro.x;
 		y = outro.y;
 	}
+
+	public String toString() {
+		return "Ponto[x=" + x + ", y=" + y + "]";
+	}
 }
