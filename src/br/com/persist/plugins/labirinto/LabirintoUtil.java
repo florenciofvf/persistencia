@@ -1,6 +1,7 @@
 package br.com.persist.plugins.labirinto;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.Random;
 
 public class LabirintoUtil {
@@ -14,5 +15,12 @@ public class LabirintoUtil {
 		int g = random.nextInt(255);
 		int b = random.nextInt(255);
 		return new Color(r, g, b);
+	}
+
+	public static List<Bloco> limitar(List<Bloco> blocos) {
+		while (blocos.size() > 10) {
+			blocos.remove(blocos.size() - 1);
+		}
+		return blocos;
 	}
 }

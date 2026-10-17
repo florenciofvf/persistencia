@@ -1,6 +1,8 @@
 package br.com.persist.plugins.labirinto;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Matriz {
 	private final Bloco[][] blocos;
@@ -38,22 +40,99 @@ public class Matriz {
 		}
 	}
 
-	Bloco getAfrente(Pivo pivo) {
+	public List<Bloco> getBlocosNaFrente(Pivo pivo) {
 		Sentido sentido = pivo.sentido;
-		if (sentido == Sentido.ACIMA) {
-			return getAfrenteAcima(pivo.piso);
-		} else if (sentido == Sentido.DIREITA) {
-			sentido = Sentido.ABAIXO;
-		} else if (sentido == Sentido.ABAIXO) {
-			sentido = Sentido.ESQUERDA;
-		} else if (sentido == Sentido.ESQUERDA) {
-			sentido = Sentido.ACIMA;
-		}
-		return null;
+		int linha = pivo.piso.linha;
+		int coluna = pivo.piso.coluna;
+		return getBlocos(sentido, linha, coluna);
 	}
 
-	private Bloco getAfrenteAcima(Bloco piso) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Bloco> getBlocosLadoEsquerdo(Pivo pivo) {
+		Sentido sentido = pivo.sentido;
+		int linha = pivo.piso.linha;
+		int coluna = pivo.piso.coluna;
+		if (sentido == Sentido.ACIMA) {
+			coluna--;
+		} else if (sentido == Sentido.DIREITA) {
+			linha--;
+		} else if (sentido == Sentido.ABAIXO) {
+			coluna++;
+		} else if (sentido == Sentido.ESQUERDA) {
+			linha++;
+		}
+		return getBlocos(sentido, linha, coluna);
+	}
+
+	public List<Bloco> getBlocosLadoDireito(Pivo pivo) {
+		Sentido sentido = pivo.sentido;
+		int linha = pivo.piso.linha;
+		int coluna = pivo.piso.coluna;
+		if (sentido == Sentido.ACIMA) {
+			coluna++;
+		} else if (sentido == Sentido.DIREITA) {
+			linha++;
+		} else if (sentido == Sentido.ABAIXO) {
+			coluna--;
+		} else if (sentido == Sentido.ESQUERDA) {
+			linha--;
+		}
+		return getBlocos(sentido, linha, coluna);
+	}
+
+	private List<Bloco> getBlocos(Sentido sentido, int linha, int coluna) {
+		if (sentido == Sentido.ACIMA) {
+			return getBlocosAcima(linha, coluna);
+		} else if (sentido == Sentido.DIREITA) {
+			return getBlocosDireita(linha, coluna);
+		} else if (sentido == Sentido.ABAIXO) {
+			return getBlocosAbaixo(linha, coluna);
+		} else if (sentido == Sentido.ESQUERDA) {
+			return getBlocosEsquerda(linha, coluna);
+		}
+		return new ArrayList<>();
+	}
+
+	private List<Bloco> getBlocosAcima(int linha, int coluna) {
+		List<Bloco> resp = new ArrayList<>();
+		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
+			while (linha >= 0) {
+				resp.add(blocos[linha][coluna]);
+				linha--;
+			}
+		}
+		return LabirintoUtil.limitar(resp);
+	}
+
+	private List<Bloco> getBlocosDireita(int linha, int coluna) {
+		List<Bloco> resp = new ArrayList<>();
+		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
+			while (coluna < colunas) {
+				resp.add(blocos[linha][coluna]);
+				coluna++;
+			}
+		}
+		return LabirintoUtil.limitar(resp);
+	}
+
+	private List<Bloco> getBlocosAbaixo(int linha, int coluna) {
+		List<Bloco> resp = new ArrayList<>();
+		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
+			while (linha < linhas) {
+				resp.add(blocos[linha][coluna]);
+				linha++;
+			}
+		}
+		return LabirintoUtil.limitar(resp);
+	}
+
+	private List<Bloco> getBlocosEsquerda(int linha, int coluna) {
+		List<Bloco> resp = new ArrayList<>();
+		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
+			while (coluna >= 0) {
+				resp.add(blocos[linha][coluna]);
+				coluna--;
+			}
+		}
+		return LabirintoUtil.limitar(resp);
 	}
 }
