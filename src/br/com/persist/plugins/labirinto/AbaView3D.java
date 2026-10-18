@@ -64,21 +64,45 @@ public class AbaView3D extends Panel {
 
 	class PainelDesenho extends Panel {
 		private static final long serialVersionUID = 1L;
+		private transient Vetor vetor1 = new Vetor();
+		private transient Vetor vetor2 = new Vetor();
+		private transient Vetor vetor3 = new Vetor();
+		private transient Vetor vetor4 = new Vetor();
 
 		void configurarFaces() {
 			int metadeLargura = getWidth() / 2;
 			int metadeAltura = getHeight() / 2;
+
 			origem.x = metadeLargura;
 			origem.y = metadeAltura;
+
+			initVetores(metadeLargura);
 			if (blocoFrente != null) {
-				blocoFrente.calcular3DFrente(origem, metadeAltura);
+				blocoFrente.calcular3DFrente(origem, vetor1, vetor2, vetor3, vetor4);
 			}
+
+			initVetores(metadeLargura);
 			for (Bloco item : blocosEsquerdo) {
-				item.calcular3DEsquerdo(origem, metadeAltura);
+				item.calcular3DEsquerdo(origem, vetor1, vetor4);
 			}
+
+			initVetores(metadeLargura);
 			for (Bloco item : blocosDireito) {
-				item.calcular3DDireito(origem, metadeAltura);
+				item.calcular3DDireito(origem, vetor2, vetor3);
 			}
+		}
+
+		private void initVetores(int comprimento) {
+			vetor1.init(-comprimento);
+			vetor2.init(comprimento);
+			vetor3.init(comprimento);
+			vetor4.init(-comprimento);
+
+			int grau = 35;
+			vetor1.rotacionar(grau);
+			vetor2.rotacionar(-grau);
+			vetor3.rotacionar(grau);
+			vetor4.rotacionar(-grau);
 		}
 
 		@Override
