@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -35,10 +36,34 @@ public class AbaView3D extends Panel {
 	}
 
 	private class Toolbar extends BarraButton {
+		private Action updateAcao = Action.actionIconUpdate();
 		private static final long serialVersionUID = 1L;
 
 		private Toolbar() {
 			super.ini(new Nil(), BAIXAR);
+			addButton(updateAcao);
+			updateAcao.setActionListener(e -> caminhar());
+		}
+
+		private void caminhar() {
+			Matriz matriz = abaView2D.getMatriz();
+			if (matriz == null) {
+				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString("msg.favor_construir_matriz"));
+				return;
+			}
+			Pivo pivo = matriz.pivo;
+			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
+			if (blocos.isEmpty()) {
+				Util.mensagem(AbaView3D.this, "Sem blocos a frente");
+				return;
+			}
+			Bloco proximoPiso = blocos.get(0);
+			if (!proximoPiso.vazio) {
+				Util.mensagem(AbaView3D.this, "O bloco nao esta vazio");
+				return;
+			}
+			pivo.ocupar(proximoPiso);
+			selecionarBlocos(matriz);
 		}
 
 		@Override

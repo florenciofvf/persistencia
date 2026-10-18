@@ -11,6 +11,17 @@ public class Pivo {
 		sentido = Sentido.ACIMA;
 	}
 
+	void ocupar(Bloco bloco) {
+		if (bloco == null) {
+			return;
+		}
+		if (piso != null) {
+			piso.pivo = null;
+		}
+		bloco.pivo = this;
+		piso = bloco;
+	}
+
 	void horario() {
 		if (sentido == Sentido.ACIMA) {
 			sentido = Sentido.DIREITA;
