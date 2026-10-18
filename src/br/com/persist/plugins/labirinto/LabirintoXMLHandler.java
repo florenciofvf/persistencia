@@ -6,7 +6,7 @@ import org.xml.sax.SAXException;
 import br.com.persist.marca.XMLHandler;
 
 class LabirintoXMLHandler extends XMLHandler {
-	Matriz matriz;
+	private Matriz matriz;
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -35,5 +35,13 @@ class LabirintoXMLHandler extends XMLHandler {
 
 			matriz.add(bloco);
 		}
+	}
+
+	public Matriz getMatriz() throws LabirintoException {
+		if (matriz == null) {
+			throw new LabirintoException("erro.matriz_nula");
+		}
+		matriz.completar();
+		return matriz;
 	}
 }

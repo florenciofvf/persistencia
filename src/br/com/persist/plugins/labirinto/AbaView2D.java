@@ -66,7 +66,7 @@ public class AbaView2D extends Panel {
 			try {
 				LabirintoXMLHandler handler = new LabirintoXMLHandler();
 				XML.processar(file, handler);
-				painelDesenho.matriz = handler.matriz;
+				painelDesenho.matriz = handler.getMatriz();
 				painelDesenho.validarMatriz();
 				painelDesenho.repaint();
 			} catch (Exception ex) {
@@ -88,10 +88,7 @@ public class AbaView2D extends Panel {
 			addMouseListener(new OuvinteMouse());
 		}
 
-		void validarMatriz() throws LabirintoException {
-			if (matriz == null) {
-				throw new LabirintoException("erro.matriz_nula");
-			}
+		void validarMatriz() {
 			if (matriz.pivo == null) {
 				matriz.criarPivo();
 			}
