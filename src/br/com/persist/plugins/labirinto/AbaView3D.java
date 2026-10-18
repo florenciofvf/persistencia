@@ -109,10 +109,6 @@ public class AbaView3D extends Panel {
 			super.paint(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			for (int i = blocosFrente.size() - 1; i >= 0; i--) {
-				Bloco item = blocosFrente.get(i);
-				item.desenhar3DFrente(g2);
-			}
 			for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 				Bloco item = blocosEsquerdo.get(i);
 				item.desenhar3DEsquerdo(g2);
@@ -120,6 +116,10 @@ public class AbaView3D extends Panel {
 			for (int i = blocosDireito.size() - 1; i >= 0; i--) {
 				Bloco item = blocosDireito.get(i);
 				item.desenhar3DDireito(g2);
+			}
+			for (int i = blocosFrente.size() - 1; i >= 0; i--) {
+				Bloco item = blocosFrente.get(i);
+				item.desenhar3DFrente(g2);
 			}
 		}
 	}

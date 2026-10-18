@@ -10,7 +10,7 @@ public class Matriz {
 	private final int linhas;
 	private int indiceColuna;
 	private int indiceLinha;
-	int lado = 40;
+	private int lado = 40;
 	Pivo pivo;
 
 	public Matriz(int linhas, int colunas) {
