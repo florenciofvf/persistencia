@@ -13,12 +13,16 @@ public class Matriz {
 	private int indiceColuna;
 	private int indiceLinha;
 	private int lado = 40;
-	Pivo pivo;
+	protected Pivo pivo;
 
 	public Matriz(int linhas, int colunas) {
 		this.linhas = linhas;
 		this.colunas = colunas;
 		blocos = new Bloco[linhas][colunas];
+	}
+
+	public void setLado(int lado) {
+		this.lado = lado;
 	}
 
 	public void add(Bloco bloco) {

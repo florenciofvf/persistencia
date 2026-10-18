@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,15 +33,22 @@ public class FormularioLabirinto extends JFrame {
 	public FormularioLabirinto(Matriz matriz) {
 		super(LabirintoMensagens.getString(LabirintoConstantes.LABEL_LABIRINTO));
 		this.matriz = Objects.requireNonNull(matriz);
+		matriz.setLado(6);
 		ini();
 	}
 
 	private void ini() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelDesenho);
 		add(BorderLayout.SOUTH, status);
-		setLayout(new BorderLayout());
 		setSize(Constantes.SIZE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				selecionarBlocos(matriz);
+			}
+		});
 	}
 
 	class GirarAction extends AbstractAction {
@@ -149,7 +158,6 @@ public class FormularioLabirinto extends JFrame {
 			super.paint(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			matriz.desenhar2D(g2);
 			for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 				Bloco item = blocosEsquerdo.get(i);
 				item.desenhar3DEsquerdo(g2);
@@ -162,6 +170,7 @@ public class FormularioLabirinto extends JFrame {
 				Bloco item = blocosFrente.get(i);
 				item.desenhar3DFrente(g2);
 			}
+			matriz.desenhar2D(g2);
 		}
 	}
 }
