@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 
@@ -79,6 +80,12 @@ public class AbaView2D extends Panel {
 		}
 
 		private class OuvinteMouse extends MouseAdapter {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (matriz != null && matriz.click(e.getX(), e.getY())) {
+					repaint();
+				}
+			}
 		}
 
 		@Override

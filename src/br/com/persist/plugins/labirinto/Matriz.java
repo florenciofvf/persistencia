@@ -33,13 +33,32 @@ public class Matriz {
 		}
 	}
 
+	public boolean click(int x, int y) {
+		Bloco bloco = getBloco(x, y);
+		if (bloco != null) {
+			bloco.click();
+			return true;
+		}
+		return false;
+	}
+
+	private Bloco getBloco(int x, int y) {
+		for (int linha = 0; linha < linhas; linha++) {
+			for (int coluna = 0; coluna < colunas; coluna++) {
+				Bloco bloco = blocos[linha][coluna];
+				if (bloco.contem(lado, x, y)) {
+					return bloco;
+				}
+			}
+		}
+		return null;
+	}
+
 	public void desenhar2D(Graphics2D g2) {
 		for (int linha = 0; linha < linhas; linha++) {
 			for (int coluna = 0; coluna < colunas; coluna++) {
 				Bloco bloco = blocos[linha][coluna];
-				int x = lado * coluna;
-				int y = lado * linha;
-				bloco.desenhar2D(x, y, lado, g2);
+				bloco.desenhar2D(lado, g2);
 			}
 		}
 	}

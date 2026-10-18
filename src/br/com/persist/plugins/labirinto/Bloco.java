@@ -12,8 +12,8 @@ public class Bloco {
 	private final Linha quina = new Linha();
 	private final Face front = new Face();
 	private final Face back = new Face();
-	protected final boolean vazio;
 	private final Color color;
+	protected boolean vazio;
 	int coluna;
 	int linha;
 	Pivo pivo;
@@ -23,7 +23,19 @@ public class Bloco {
 		this.vazio = vazio;
 	}
 
-	public void desenhar2D(int x, int y, int lado, Graphics2D g2) {
+	public void click() {
+		vazio = !vazio;
+	}
+
+	public boolean contem(int lado, int x, int y) {
+		int posX = lado * coluna;
+		int posY = lado * linha;
+		return (x > posX && x < posX + lado) && (y > posY && y < posY + lado);
+	}
+
+	public void desenhar2D(int lado, Graphics2D g2) {
+		int x = lado * coluna;
+		int y = lado * linha;
 		if (vazio) {
 			if (pivo != null) {
 				pivo.desenhar2D(x, y, lado, g2);
