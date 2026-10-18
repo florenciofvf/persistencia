@@ -94,9 +94,12 @@ public class Matriz {
 	}
 
 	public void criarPivo() {
+		if (pivo != null) {
+			return;
+		}
 		Bloco bloco = getBlocoParaPivo();
-		Pivo objPivo = new Pivo();
-		objPivo.ocupar(bloco);
+		pivo = new Pivo();
+		pivo.ocupar(bloco);
 	}
 
 	private Bloco getBlocoParaPivo() {
