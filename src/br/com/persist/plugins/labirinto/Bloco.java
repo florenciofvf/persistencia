@@ -9,6 +9,7 @@ public class Bloco {
 	private final int[] arrayYFrente = new int[4];
 	private final int[] arrayXBloco = new int[6];
 	private final int[] arrayYBloco = new int[6];
+	private final Linha quina = new Linha();
 	private final Face front = new Face();
 	private final Face back = new Face();
 	protected final boolean vazio;
@@ -96,6 +97,8 @@ public class Bloco {
 		copiar(arrayXBloco, arrayYBloco, back.ponto4, 3);
 		copiar(arrayXBloco, arrayYBloco, front.ponto4, 4);
 		copiar(arrayXBloco, arrayYBloco, front.ponto3, 5);
+		quina.copiar1(front.ponto1);
+		quina.copiar2(front.ponto4);
 	}
 
 	void desenhar3DEsquerdo(Graphics2D g2) {
@@ -106,6 +109,7 @@ public class Bloco {
 		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
 		g2.setColor(COR_BORDA);
 		g2.drawPolygon(arrayXBloco, arrayYBloco, 6);
+		g2.drawLine(quina.x1, quina.y1, quina.x2, quina.y2);
 	}
 
 	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
@@ -136,6 +140,8 @@ public class Bloco {
 		copiar(arrayXBloco, arrayYBloco, front.ponto3, 3);
 		copiar(arrayXBloco, arrayYBloco, back.ponto3, 4);
 		copiar(arrayXBloco, arrayYBloco, back.ponto2, 5);
+		quina.copiar1(front.ponto2);
+		quina.copiar2(front.ponto3);
 	}
 
 	void desenhar3DDireito(Graphics2D g2) {
@@ -146,5 +152,6 @@ public class Bloco {
 		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
 		g2.setColor(COR_BORDA);
 		g2.drawPolygon(arrayXBloco, arrayYBloco, 6);
+		g2.drawLine(quina.x1, quina.y1, quina.x2, quina.y2);
 	}
 }
