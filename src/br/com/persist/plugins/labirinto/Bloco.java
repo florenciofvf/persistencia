@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Bloco {
+	private static final Color COR_BORDA = Color.BLACK;
 	private final int[] arrayXFrente = new int[4];
 	private final int[] arrayYFrente = new int[4];
 	private final int[] arrayXBloco = new int[6];
@@ -63,6 +64,8 @@ public class Bloco {
 	void desenhar3DFrente(Graphics2D g2) {
 		g2.setColor(color);
 		g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
+		g2.setColor(COR_BORDA);
+		g2.drawPolygon(arrayXFrente, arrayYFrente, 4);
 	}
 
 	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4) {
@@ -101,6 +104,8 @@ public class Bloco {
 		}
 		g2.setColor(color);
 		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
+		g2.setColor(COR_BORDA);
+		g2.drawPolygon(arrayXBloco, arrayYBloco, 6);
 	}
 
 	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
@@ -139,5 +144,7 @@ public class Bloco {
 		}
 		g2.setColor(color);
 		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
+		g2.setColor(COR_BORDA);
+		g2.drawPolygon(arrayXBloco, arrayYBloco, 6);
 	}
 }
