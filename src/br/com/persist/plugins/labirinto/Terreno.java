@@ -3,7 +3,7 @@ package br.com.persist.plugins.labirinto;
 import java.awt.Graphics2D;
 
 public class Terreno {
-	public static final int LINHAS = 30;
+	public static final int LINHAS = 10;
 	private static final int COLUNAS = 3;
 	private final Face[][] faces = new Face[LINHAS][COLUNAS];
 	private Controle controle = new Controle();
@@ -49,7 +49,6 @@ public class Terreno {
 		face = faces[linha][2];
 		face.montarPolygon(controle.back.ponto3, controle.back.derivado, controle.front.derivado,
 				controle.front.ponto3);
-
 	}
 
 	void desenhar3D(Graphics2D g2) {
