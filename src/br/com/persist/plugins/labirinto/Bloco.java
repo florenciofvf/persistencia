@@ -10,11 +10,12 @@ public class Bloco {
 	private final int[] arrayXBloco = new int[6];
 	private final int[] arrayYBloco = new int[6];
 
-	final Face front = new Face();
-	final Face back = new Face();
+	private final Face front = new Face();
+	private final Face back = new Face();
 
-	final boolean vazio;
-	final Color color;
+	protected final boolean vazio;
+	private final Color color;
+
 	int indiceTemp;
 	int coluna;
 	int linha;
@@ -61,8 +62,8 @@ public class Bloco {
 	}
 
 	void desenhar3DFrente(Graphics2D g2) {
-		//g2.setColor(color);
-		//g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
+		// g2.setColor(color);
+		// g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
 	}
 
 	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4) {
@@ -117,8 +118,8 @@ public class Bloco {
 		front.ponto1.copiar(origem, vetor2, altura, 0);
 		front.ponto4.copiar(origem, vetor3, altura, 0);
 
-		// 2 1 | 2
-		// 3 4 | 3
+		// 2 | 2 1
+		// 3 | 3 4
 
 		vetor2.reduzir();
 		vetor3.reduzir();
@@ -127,10 +128,10 @@ public class Bloco {
 
 		copiar(arrayXBloco, arrayYBloco, front.ponto2, 0);
 		copiar(arrayXBloco, arrayYBloco, front.ponto1, 1);
-		copiar(arrayXBloco, arrayYBloco, back.ponto2, 2);
-		copiar(arrayXBloco, arrayYBloco, back.ponto3, 3);
-		copiar(arrayXBloco, arrayYBloco, front.ponto4, 4);
-		copiar(arrayXBloco, arrayYBloco, front.ponto3, 5);
+		copiar(arrayXBloco, arrayYBloco, front.ponto4, 2);
+		copiar(arrayXBloco, arrayYBloco, front.ponto3, 3);
+		copiar(arrayXBloco, arrayYBloco, back.ponto3, 4);
+		copiar(arrayXBloco, arrayYBloco, back.ponto2, 5);
 	}
 
 	void desenhar3DDireito(Graphics2D g2) {
