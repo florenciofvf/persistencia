@@ -50,6 +50,7 @@ public class AbaView3D extends Panel {
 	private class Toolbar extends BarraButton {
 		private Action esquerdaAcao = acaoIcone("label.virar_esquerda", Icones.ALINHA_ESQUERDO);
 		private Action direitaAcao = acaoIcone("label.virar_direita", Icones.ALINHA_DIREITO);
+		private Action destacarAcao = acaoIcone("label.destacar", Icones.ARRASTAR2);
 		private Action updateAcao = Action.actionIconUpdate();
 		private static final long serialVersionUID = 1L;
 
@@ -58,9 +59,21 @@ public class AbaView3D extends Panel {
 			addButton(updateAcao);
 			addButton(esquerdaAcao);
 			addButton(direitaAcao);
+			addButton(destacarAcao);
 			updateAcao.setActionListener(e -> caminhar());
 			esquerdaAcao.setActionListener(e -> girar(true));
 			direitaAcao.setActionListener(e -> girar(false));
+			destacarAcao.setActionListener(e -> destacar());
+		}
+
+		private void destacar() {
+			Matriz matriz = abaView2D.getMatriz();
+			if (matriz == null) {
+				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
+				return;
+			}
+			FormularioLabirinto form = new FormularioLabirinto(matriz);
+			form.setVisible(true);
 		}
 
 		private void girar(boolean esquerda) {
