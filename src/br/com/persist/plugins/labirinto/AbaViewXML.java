@@ -97,6 +97,8 @@ public class AbaViewXML extends Panel {
 				util.abrirTag("matriz");
 				util.atributo("linhas", 10);
 				util.atributo("colunas", 10);
+				util.atributo("auto", true);
+				util.fecharTag();
 				util.finalizarTag("matriz");
 				util.close();
 				textEditor.setText(sw.toString());
