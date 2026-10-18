@@ -17,11 +17,11 @@ import br.com.persist.componente.Panel;
 public class AbaView3D extends Panel {
 	private transient List<Bloco> blocosEsquerdo = new ArrayList<>();
 	private transient List<Bloco> blocosDireito = new ArrayList<>();
+	private transient List<Bloco> blocosFrente = new ArrayList<>();
 	private PainelDesenho painelDesenho = new PainelDesenho();
 	private final transient Ponto origem = new Ponto();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
-	private transient Bloco blocoFrente;
 	private final AbaView2D abaView2D;
 
 	public AbaView3D(AbaView2D abaView2D) {
@@ -53,10 +53,9 @@ public class AbaView3D extends Panel {
 
 		private void selecionarBlocos(Matriz matriz) {
 			Pivo pivo = matriz.pivo;
-			List<Bloco> blocosNaFrente = matriz.getBlocosNaFrente(pivo);
-			blocoFrente = LabirintoUtil.primeiro(blocosNaFrente);
 			blocosEsquerdo = matriz.getBlocosLadoEsquerdo(pivo);
 			blocosDireito = matriz.getBlocosLadoDireito(pivo);
+			blocosFrente = matriz.getBlocosNaFrente(pivo);
 			painelDesenho.configurarFaces();
 			painelDesenho.repaint();
 		}
@@ -77,8 +76,8 @@ public class AbaView3D extends Panel {
 			origem.y = metadeAltura;
 
 			initVetores(metadeLargura);
-			if (blocoFrente != null) {
-				blocoFrente.calcular3DFrente(origem, vetor1, vetor2, vetor3, vetor4);
+			for (Bloco item : blocosFrente) {
+				item.calcular3DFrente(origem, vetor1, vetor2, vetor3, vetor4);
 			}
 
 			initVetores(metadeLargura);
@@ -110,8 +109,9 @@ public class AbaView3D extends Panel {
 			super.paint(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			if (blocoFrente != null) {
-				blocoFrente.desenhar3DFrente(g2);
+			for (int i = blocosFrente.size() - 1; i >= 0; i--) {
+				Bloco item = blocosFrente.get(i);
+				item.desenhar3DFrente(g2);
 			}
 			for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 				Bloco item = blocosEsquerdo.get(i);
