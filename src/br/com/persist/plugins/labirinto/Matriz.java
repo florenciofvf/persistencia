@@ -77,6 +77,26 @@ public class Matriz {
 		}
 	}
 
+	public void criarPivo() {
+		Bloco bloco = getBlocoParaPivo();
+		Pivo objPivo = new Pivo();
+		objPivo.ocupar(bloco);
+	}
+
+	private Bloco getBlocoParaPivo() {
+		for (int linha = linhas - 1; linha >= 0; linha--) {
+			for (int coluna = 0; coluna < colunas; coluna++) {
+				Bloco bloco = blocos[linha][coluna];
+				if (bloco.vazio) {
+					return bloco;
+				}
+			}
+		}
+		Bloco bloco = blocos[linhas - 1][0];
+		bloco.vazio = true;
+		return bloco;
+	}
+
 	public String gerarStringFile() {
 		StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		builder.append(Constantes.QL2);

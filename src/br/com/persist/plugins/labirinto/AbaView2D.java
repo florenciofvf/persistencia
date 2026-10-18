@@ -93,7 +93,7 @@ public class AbaView2D extends Panel {
 				throw new LabirintoException("erro.matriz_nula");
 			}
 			if (matriz.pivo == null) {
-				throw new LabirintoException("erro.pivo_nao_definido");
+				matriz.criarPivo();
 			}
 		}
 
