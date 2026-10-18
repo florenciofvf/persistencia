@@ -106,7 +106,8 @@ public class Bloco {
 		// 2 1 | 1
 		// 3 4 | 4
 
-		initVetores((int) (comprimento * .9));
+		vetor1.reduzir();
+		vetor4.reduzir();
 		back.ponto1.copiar(origem, vetor1);
 		back.ponto4.copiar(origem, vetor4);
 

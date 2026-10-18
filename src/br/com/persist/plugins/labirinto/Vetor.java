@@ -13,6 +13,12 @@ public final class Vetor {
 		y = y * valor;
 	}
 
+	void reduzir() {
+		double comprimento = getComprimento();
+		double dezPorCento = comprimento * .1;
+		alterarTamanho((int) (comprimento - dezPorCento));
+	}
+
 	void init(float x) {
 		this.x = x;
 		this.y = 0;
