@@ -10,11 +10,6 @@ public class Bloco {
 	private final int[] arrayXBloco = new int[6];
 	private final int[] arrayYBloco = new int[6];
 
-	private static Vetor vetor1 = new Vetor();
-	private static Vetor vetor2 = new Vetor();
-	private static Vetor vetor3 = new Vetor();
-	private static Vetor vetor4 = new Vetor();
-
 	final Face front = new Face();
 	final Face back = new Face();
 
@@ -41,27 +36,12 @@ public class Bloco {
 		g2.fillRect(x, y, lado, lado);
 	}
 
-	private void initVetores(int comprimento) {
-		vetor1.init(-comprimento);
-		vetor2.init(comprimento);
-		vetor3.init(comprimento);
-		vetor4.init(-comprimento);
-
-		int grau = 35;
-		vetor1.rotacionar(grau);
-		vetor2.rotacionar(-grau);
-		vetor3.rotacionar(grau);
-		vetor4.rotacionar(-grau);
-	}
-
-	void calcular3DFrente(Ponto origem, int comprimento) {
+	void calcular3DFrente(Ponto origem, Vetor vetor1, Vetor vetor2, Vetor vetor3, Vetor vetor4) {
 		if (vazio) {
 			return;
 		}
 
-		initVetores(comprimento);
-
-		front.ponto1.copiar(origem, vetor1);
+		/*front.ponto1.copiar(origem, vetor1);
 		front.ponto2.copiar(origem, vetor2);
 		front.ponto3.copiar(origem, vetor3);
 		front.ponto4.copiar(origem, vetor4);
@@ -72,7 +52,7 @@ public class Bloco {
 		copiar(arrayXFrente, arrayYFrente, front.ponto1, 0);
 		copiar(arrayXFrente, arrayYFrente, front.ponto2, 1);
 		copiar(arrayXFrente, arrayYFrente, front.ponto3, 2);
-		copiar(arrayXFrente, arrayYFrente, front.ponto4, 3);
+		copiar(arrayXFrente, arrayYFrente, front.ponto4, 3);*/
 	}
 
 	private void copiar(int[] arrayX, int[] arrayY, Ponto ponto, int indice) {
@@ -81,24 +61,20 @@ public class Bloco {
 	}
 
 	void desenhar3DFrente(Graphics2D g2) {
-		g2.setColor(color);
-		g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
+		//g2.setColor(color);
+		//g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
 	}
 
-	void calcular3DEsquerdo(Ponto origem, int comprimento) {
+	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4) {
 		if (vazio) {
+			vetor1.reduzir();
+			vetor4.reduzir();
 			return;
 		}
 
-		int fatia = comprimento / 10;
-		comprimento -= fatia * indiceTemp;
-
-		initVetores(comprimento);
-
 		front.ponto1.copiar(origem, vetor1);
-		// front.ponto2.copiar(origem, vetor2);
-		// front.ponto3.copiar(origem, vetor3);
 		front.ponto4.copiar(origem, vetor4);
+
 		int altura = LabirintoUtil.altura(front.ponto1, front.ponto4);
 		front.ponto2.copiar(origem, vetor1, -altura, 0);
 		front.ponto3.copiar(origem, vetor4, -altura, 0);
@@ -127,15 +103,41 @@ public class Bloco {
 		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
 	}
 
-	void calcular3DDireito(Ponto origem, int comprimento) {
+	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
 		if (vazio) {
+			vetor2.reduzir();
+			vetor3.reduzir();
 			return;
 		}
+
+		front.ponto2.copiar(origem, vetor2);
+		front.ponto3.copiar(origem, vetor3);
+
+		int altura = LabirintoUtil.altura(front.ponto2, front.ponto3);
+		front.ponto1.copiar(origem, vetor2, altura, 0);
+		front.ponto4.copiar(origem, vetor3, altura, 0);
+
+		// 2 1 | 2
+		// 3 4 | 3
+
+		vetor2.reduzir();
+		vetor3.reduzir();
+		back.ponto2.copiar(origem, vetor2);
+		back.ponto3.copiar(origem, vetor3);
+
+		copiar(arrayXBloco, arrayYBloco, front.ponto2, 0);
+		copiar(arrayXBloco, arrayYBloco, front.ponto1, 1);
+		copiar(arrayXBloco, arrayYBloco, back.ponto2, 2);
+		copiar(arrayXBloco, arrayYBloco, back.ponto3, 3);
+		copiar(arrayXBloco, arrayYBloco, front.ponto4, 4);
+		copiar(arrayXBloco, arrayYBloco, front.ponto3, 5);
 	}
 
 	void desenhar3DDireito(Graphics2D g2) {
 		if (vazio) {
 			return;
 		}
+		g2.setColor(color);
+		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
 	}
 }
