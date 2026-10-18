@@ -6,17 +6,12 @@ import java.awt.Graphics2D;
 public class Bloco {
 	private final int[] arrayXFrente = new int[4];
 	private final int[] arrayYFrente = new int[4];
-
 	private final int[] arrayXBloco = new int[6];
 	private final int[] arrayYBloco = new int[6];
-
 	private final Face front = new Face();
 	private final Face back = new Face();
-
 	protected final boolean vazio;
 	private final Color color;
-
-	int indiceTemp;
 	int coluna;
 	int linha;
 	Pivo pivo;
@@ -39,10 +34,14 @@ public class Bloco {
 
 	void calcular3DFrente(Ponto origem, Vetor vetor1, Vetor vetor2, Vetor vetor3, Vetor vetor4) {
 		if (vazio) {
+			vetor1.reduzir();
+			vetor2.reduzir();
+			vetor3.reduzir();
+			vetor4.reduzir();
 			return;
 		}
 
-		/*front.ponto1.copiar(origem, vetor1);
+		front.ponto1.copiar(origem, vetor1);
 		front.ponto2.copiar(origem, vetor2);
 		front.ponto3.copiar(origem, vetor3);
 		front.ponto4.copiar(origem, vetor4);
@@ -53,7 +52,7 @@ public class Bloco {
 		copiar(arrayXFrente, arrayYFrente, front.ponto1, 0);
 		copiar(arrayXFrente, arrayYFrente, front.ponto2, 1);
 		copiar(arrayXFrente, arrayYFrente, front.ponto3, 2);
-		copiar(arrayXFrente, arrayYFrente, front.ponto4, 3);*/
+		copiar(arrayXFrente, arrayYFrente, front.ponto4, 3);
 	}
 
 	private void copiar(int[] arrayX, int[] arrayY, Ponto ponto, int indice) {
@@ -62,8 +61,8 @@ public class Bloco {
 	}
 
 	void desenhar3DFrente(Graphics2D g2) {
-		// g2.setColor(color);
-		// g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
+		g2.setColor(color);
+		g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
 	}
 
 	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4) {
