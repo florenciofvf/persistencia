@@ -90,6 +90,9 @@ public class Bloco {
 			return;
 		}
 
+		int fatia = comprimento / 10;
+		comprimento -= fatia * indiceTemp;
+
 		initVetores(comprimento);
 
 		front.ponto1.copiar(origem, vetor1);

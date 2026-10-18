@@ -89,10 +89,12 @@ public class AbaView3D extends Panel {
 			if (blocoFrente != null) {
 				blocoFrente.desenhar3DFrente(g2);
 			}
-			for (Bloco item : blocosEsquerdo) {
+			for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
+				Bloco item = blocosEsquerdo.get(i);
 				item.desenhar3DEsquerdo(g2);
 			}
-			for (Bloco item : blocosDireito) {
+			for (int i = blocosDireito.size() - 1; i >= 0; i--) {
+				Bloco item = blocosDireito.get(i);
 				item.desenhar3DDireito(g2);
 			}
 		}
