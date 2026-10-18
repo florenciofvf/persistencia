@@ -131,7 +131,9 @@ public class FormularioLabirinto extends JFrame {
 			origem.y = metadeAltura;
 
 			initVetores(metadeLargura);
-			terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4);
+			for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
+				terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4, linha);
+			}
 
 			initVetores(metadeLargura);
 			for (Bloco item : blocosFrente) {
