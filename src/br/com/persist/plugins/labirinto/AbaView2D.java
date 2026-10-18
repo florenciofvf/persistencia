@@ -11,7 +11,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 
+import br.com.persist.assistencia.Icone;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
@@ -21,9 +24,11 @@ public class AbaView2D extends Panel {
 	private PainelDesenho painelDesenho = new PainelDesenho();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private final AbaViewXML abaViewXML;
 	private final File file;
 
-	public AbaView2D(File file) {
+	public AbaView2D(AbaViewXML abaViewXML, File file) {
+		this.abaViewXML = abaViewXML;
 		this.file = file;
 		montarLayout();
 	}
@@ -33,11 +38,27 @@ public class AbaView2D extends Panel {
 		add(BorderLayout.CENTER, painelDesenho);
 	}
 
+	static Action acaoIcone(String chave, Icone icone) {
+		return Action.acaoIcon(LabirintoMensagens.getString(chave), icone);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action gerarConteudoAcao = acaoIcone("label.gerar_arquivo", Icones.ALINHA_ESQUERDO);
 
 		private Toolbar() {
 			super.ini(new Nil(), BAIXAR);
+			addButton(gerarConteudoAcao);
+			gerarConteudoAcao.setActionListener(e -> gerarConteudo());
+		}
+
+		private void gerarConteudo() {
+			if (painelDesenho.matriz == null) {
+				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString(AbaView3D.MSG_FAVOR_CONSTRUIR_MATRIZ));
+				return;
+			}
+			String string = painelDesenho.matriz.gerarStringFile();
+			abaViewXML.textEditor.setText(string);
 		}
 
 		@Override

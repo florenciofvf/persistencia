@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Constantes;
+
 public class Matriz {
 	private final Bloco[][] blocos;
 	private final int colunas;
@@ -61,6 +63,29 @@ public class Matriz {
 				bloco.desenhar2D(lado, g2);
 			}
 		}
+	}
+
+	public String gerarStringFile() {
+		StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		builder.append(Constantes.QL2);
+		builder.append("<matriz linhas=\"5\" colunas=\"5\">").append(Constantes.QL);
+		for (int linha = 0; linha < linhas; linha++) {
+			for (int coluna = 0; coluna < colunas; coluna++) {
+				Bloco bloco = blocos[linha][coluna];
+				builder.append("<cell");
+				if (bloco.vazio) {
+					builder.append(" vazio=\"true\"");
+				}
+				if (bloco.pivo != null) {
+					builder.append(" pivo=\"true\"");
+				}
+				builder.append("/>");
+				builder.append(Constantes.QL);
+			}
+			builder.append(Constantes.QL);
+		}
+		builder.append("</matriz>");
+		return builder.toString();
 	}
 
 	public List<Bloco> getBlocosNaFrente(Pivo pivo) {

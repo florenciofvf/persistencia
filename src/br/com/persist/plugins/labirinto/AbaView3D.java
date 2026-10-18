@@ -23,6 +23,7 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 
 public class AbaView3D extends Panel {
+	public static final String MSG_FAVOR_CONSTRUIR_MATRIZ = "msg.favor_construir_matriz";
 	private transient List<Bloco> blocosEsquerdo = new ArrayList<>();
 	private transient List<Bloco> blocosDireito = new ArrayList<>();
 	private transient List<Bloco> blocosFrente = new ArrayList<>();
@@ -48,7 +49,6 @@ public class AbaView3D extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private Action esquerdaAcao = acaoIcone("label.virar_esquerda", Icones.ALINHA_ESQUERDO);
-		private static final String MSG_FAVOR_CONSTRUIR_MATRIZ = "msg.favor_construir_matriz";
 		private Action direitaAcao = acaoIcone("label.virar_direita", Icones.ALINHA_DIREITO);
 		private Action updateAcao = Action.actionIconUpdate();
 		private static final long serialVersionUID = 1L;
