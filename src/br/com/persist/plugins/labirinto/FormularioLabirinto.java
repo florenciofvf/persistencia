@@ -33,7 +33,7 @@ public class FormularioLabirinto extends JFrame {
 	public FormularioLabirinto(Matriz matriz) {
 		super(LabirintoMensagens.getString(LabirintoConstantes.LABEL_LABIRINTO));
 		this.matriz = Objects.requireNonNull(matriz);
-		matriz.setLado(6);
+		matriz.setLado(10);
 		ini();
 	}
 
@@ -47,6 +47,11 @@ public class FormularioLabirinto extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				selecionarBlocos(matriz);
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				matriz.setLado(40);
 			}
 		});
 	}
