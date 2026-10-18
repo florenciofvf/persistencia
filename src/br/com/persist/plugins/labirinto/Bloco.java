@@ -113,17 +113,6 @@ public class Bloco {
 		quina.copiar2(front.ponto4);
 	}
 
-	void desenhar3DEsquerdo(Graphics2D g2) {
-		if (vazio) {
-			return;
-		}
-		g2.setColor(color);
-		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
-		g2.setColor(COR_BORDA);
-		g2.drawPolygon(arrayXBloco, arrayYBloco, 6);
-		g2.drawLine(quina.x1, quina.y1, quina.x2, quina.y2);
-	}
-
 	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
 		if (vazio) {
 			vetor2.reduzir();
@@ -156,7 +145,15 @@ public class Bloco {
 		quina.copiar2(front.ponto3);
 	}
 
+	void desenhar3DEsquerdo(Graphics2D g2) {
+		desenhar3D(g2);
+	}
+
 	void desenhar3DDireito(Graphics2D g2) {
+		desenhar3D(g2);
+	}
+
+	private void desenhar3D(Graphics2D g2) {
 		if (vazio) {
 			return;
 		}
