@@ -13,7 +13,11 @@ class LabirintoXMLHandler extends XMLHandler {
 		if ("matriz".equals(qName)) {
 			int linhas = Integer.parseInt(attributes.getValue("linhas"));
 			int colunas = Integer.parseInt(attributes.getValue("colunas"));
+			boolean auto = "true".equals(attributes.getValue("auto"));
 			matriz = new Matriz(linhas, colunas);
+			if (auto) {
+				matriz.preencher();
+			}
 		} else if ("cell".equals(qName)) {
 			boolean vazio = "true".equals(attributes.getValue("vazio"));
 			boolean pivo = "true".equals(attributes.getValue("pivo"));

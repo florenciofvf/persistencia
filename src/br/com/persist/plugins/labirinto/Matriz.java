@@ -65,6 +65,14 @@ public class Matriz {
 		}
 	}
 
+	public void preencher() {
+		for (int linha = 0; linha < linhas; linha++) {
+			for (int coluna = 0; coluna < colunas; coluna++) {
+				add(new Bloco(false));
+			}
+		}
+	}
+
 	public String gerarStringFile() {
 		StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		builder.append(Constantes.QL2);

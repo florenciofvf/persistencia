@@ -4,11 +4,13 @@ import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
+import static br.com.persist.componente.BarraButtonEnum.NOVO;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.StringWriter;
 
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
@@ -21,6 +23,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextEditor;
 import br.com.persist.componente.TextEditorLine;
+import br.com.persist.marca.XMLUtil;
 
 public class AbaViewXML extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -79,10 +82,27 @@ public class AbaViewXML extends Panel {
 		private transient Selecao selecao;
 
 		private Toolbar() {
-			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
+			super.ini(new Nil(), NOVO, LIMPAR, BAIXAR, COPIAR, COLAR);
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		@Override
+		protected void novo() {
+			try {
+				StringWriter sw = new StringWriter();
+				XMLUtil util = new XMLUtil(sw);
+				util.prologo();
+				util.abrirTag("matriz");
+				util.atributo("linhas", 10);
+				util.atributo("colunas", 10);
+				util.finalizarTag("matriz");
+				util.close();
+				textEditor.setText(sw.toString());
+			} catch (Exception ex) {
+				//
+			}
 		}
 
 		@Override
