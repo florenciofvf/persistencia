@@ -37,14 +37,14 @@ public class AbaView3D extends Panel {
 		add(BorderLayout.CENTER, painelDesenho);
 	}
 
-	static Action acaoMenu(String chave, Icone icone) {
-		return Action.acaoMenu(LabirintoMensagens.getString(chave), icone);
+	static Action acaoIcone(String chave, Icone icone) {
+		return Action.acaoIcon(LabirintoMensagens.getString(chave), icone);
 	}
 
 	private class Toolbar extends BarraButton {
+		private Action esquerdaAcao = acaoIcone("label.virar_esquerda", Icones.ALINHA_ESQUERDO);
 		private static final String MSG_FAVOR_CONSTRUIR_MATRIZ = "msg.favor_construir_matriz";
-		private Action esquerdaAcao = acaoMenu("label.virar_esquerda", Icones.ALINHA_ESQUERDO);
-		private Action direitaAcao = acaoMenu("label.virar_direita", Icones.ALINHA_DIREITO);
+		private Action direitaAcao = acaoIcone("label.virar_direita", Icones.ALINHA_DIREITO);
 		private Action updateAcao = Action.actionIconUpdate();
 		private static final long serialVersionUID = 1L;
 
