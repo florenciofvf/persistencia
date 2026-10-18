@@ -26,6 +26,7 @@ public class FormularioLabirinto extends JFrame {
 	private transient List<Bloco> blocosDireito = new ArrayList<>();
 	private transient List<Bloco> blocosFrente = new ArrayList<>();
 	private PainelDesenho painelDesenho = new PainelDesenho();
+	private final transient Terreno terreno = new Terreno();
 	private final transient Ponto origem = new Ponto();
 	private LabelTemp status = new LabelTemp();
 	private final transient Matriz matriz;
@@ -130,6 +131,9 @@ public class FormularioLabirinto extends JFrame {
 			origem.y = metadeAltura;
 
 			initVetores(metadeLargura);
+			terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4);
+
+			initVetores(metadeLargura);
 			for (Bloco item : blocosFrente) {
 				item.calcular3DFrente(origem, vetor1, vetor2, vetor3, vetor4);
 			}
@@ -163,6 +167,7 @@ public class FormularioLabirinto extends JFrame {
 			super.paint(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			terreno.desenhar3D(g2);
 			for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 				Bloco item = blocosEsquerdo.get(i);
 				item.desenhar3DEsquerdo(g2);

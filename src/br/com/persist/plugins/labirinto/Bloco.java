@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Bloco {
-	private static final Color COR_BORDA = Color.BLACK;
+	public static final Color COR_BORDA = Color.BLACK;
 	private final int[] arrayXFrente = new int[4];
 	private final int[] arrayYFrente = new int[4];
 	private final int[] arrayXBloco = new int[6];
