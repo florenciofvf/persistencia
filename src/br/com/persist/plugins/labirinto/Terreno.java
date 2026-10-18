@@ -6,7 +6,7 @@ public class Terreno {
 	public static final int LINHAS = 10;
 	private static final int COLUNAS = 3;
 	private final Face[][] faces = new Face[LINHAS][COLUNAS];
-	private Controle controle = new Controle();
+	private final Controle controle = new Controle();
 
 	public Terreno() {
 		for (int linha = 0; linha < LINHAS; linha++) {

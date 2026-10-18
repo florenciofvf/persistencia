@@ -5,13 +5,12 @@ import java.awt.Graphics2D;
 
 public class Bloco {
 	public static final Color COR_BORDA = Color.BLACK;
+	private final Controle controle = new Controle();
 	private final int[] arrayXFrente = new int[4];
 	private final int[] arrayYFrente = new int[4];
 	private final int[] arrayXBloco = new int[6];
 	private final int[] arrayYBloco = new int[6];
 	private final Linha quina = new Linha();
-	private final Face front = new Face();
-	private final Face back = new Face();
 	private final Color color;
 	protected boolean vazio;
 	int coluna;
@@ -55,18 +54,18 @@ public class Bloco {
 			return;
 		}
 
-		front.ponto1.copiar(origem, vetor1);
-		front.ponto2.copiar(origem, vetor2);
-		front.ponto3.copiar(origem, vetor3);
-		front.ponto4.copiar(origem, vetor4);
+		controle.front.ponto1.copiar(origem, vetor1);
+		controle.front.ponto2.copiar(origem, vetor2);
+		controle.front.ponto3.copiar(origem, vetor3);
+		controle.front.ponto4.copiar(origem, vetor4);
 
 		// 1 2
 		// 4 3
 
-		copiar(arrayXFrente, arrayYFrente, front.ponto1, 0);
-		copiar(arrayXFrente, arrayYFrente, front.ponto2, 1);
-		copiar(arrayXFrente, arrayYFrente, front.ponto3, 2);
-		copiar(arrayXFrente, arrayYFrente, front.ponto4, 3);
+		copiar(arrayXFrente, arrayYFrente, controle.front.ponto1, 0);
+		copiar(arrayXFrente, arrayYFrente, controle.front.ponto2, 1);
+		copiar(arrayXFrente, arrayYFrente, controle.front.ponto3, 2);
+		copiar(arrayXFrente, arrayYFrente, controle.front.ponto4, 3);
 	}
 
 	private void copiar(int[] arrayX, int[] arrayY, Ponto ponto, int indice) {
@@ -88,29 +87,33 @@ public class Bloco {
 			return;
 		}
 
-		front.ponto1.copiar(origem, vetor1);
-		front.ponto4.copiar(origem, vetor4);
-
-		int altura = LabirintoUtil.altura(front.ponto1, front.ponto4);
-		front.ponto2.copiar(origem, vetor1, -altura, 0);
-		front.ponto3.copiar(origem, vetor4, -altura, 0);
-
-		// 2 1 | 1
-		// 3 4 | 4
+		controle.front.ponto1.copiar(origem, vetor1);
+		controle.front.ponto4.copiar(origem, vetor4);
 
 		vetor1.reduzir();
 		vetor4.reduzir();
-		back.ponto1.copiar(origem, vetor1);
-		back.ponto4.copiar(origem, vetor4);
 
-		copiar(arrayXBloco, arrayYBloco, front.ponto2, 0);
-		copiar(arrayXBloco, arrayYBloco, front.ponto1, 1);
-		copiar(arrayXBloco, arrayYBloco, back.ponto1, 2);
-		copiar(arrayXBloco, arrayYBloco, back.ponto4, 3);
-		copiar(arrayXBloco, arrayYBloco, front.ponto4, 4);
-		copiar(arrayXBloco, arrayYBloco, front.ponto3, 5);
-		quina.copiar1(front.ponto1);
-		quina.copiar2(front.ponto4);
+		controle.back.ponto1.copiar(origem, vetor1);
+		controle.back.ponto4.copiar(origem, vetor4);
+
+		controle.calcularLadoFrontE();
+
+		// 1 1 1
+		// 4 4 4
+
+		controle.front.montarDerivado(controle.front.ponto1, -controle.front.lado);
+		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 0);
+
+		copiar(arrayXBloco, arrayYBloco, controle.front.ponto1, 1);
+		copiar(arrayXBloco, arrayYBloco, controle.back.ponto1, 2);
+		copiar(arrayXBloco, arrayYBloco, controle.back.ponto4, 3);
+		copiar(arrayXBloco, arrayYBloco, controle.front.ponto4, 4);
+
+		controle.front.montarDerivado(controle.front.ponto4, -controle.front.lado);
+		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 5);
+
+		quina.copiar1(controle.front.ponto1);
+		quina.copiar2(controle.front.ponto4);
 	}
 
 	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
@@ -120,29 +123,34 @@ public class Bloco {
 			return;
 		}
 
-		front.ponto2.copiar(origem, vetor2);
-		front.ponto3.copiar(origem, vetor3);
-
-		int altura = LabirintoUtil.altura(front.ponto2, front.ponto3);
-		front.ponto1.copiar(origem, vetor2, altura, 0);
-		front.ponto4.copiar(origem, vetor3, altura, 0);
-
-		// 2 | 2 1
-		// 3 | 3 4
+		controle.front.ponto2.copiar(origem, vetor2);
+		controle.front.ponto3.copiar(origem, vetor3);
 
 		vetor2.reduzir();
 		vetor3.reduzir();
-		back.ponto2.copiar(origem, vetor2);
-		back.ponto3.copiar(origem, vetor3);
 
-		copiar(arrayXBloco, arrayYBloco, front.ponto2, 0);
-		copiar(arrayXBloco, arrayYBloco, front.ponto1, 1);
-		copiar(arrayXBloco, arrayYBloco, front.ponto4, 2);
-		copiar(arrayXBloco, arrayYBloco, front.ponto3, 3);
-		copiar(arrayXBloco, arrayYBloco, back.ponto3, 4);
-		copiar(arrayXBloco, arrayYBloco, back.ponto2, 5);
-		quina.copiar1(front.ponto2);
-		quina.copiar2(front.ponto3);
+		controle.back.ponto2.copiar(origem, vetor2);
+		controle.back.ponto3.copiar(origem, vetor3);
+
+		controle.calcularLadoFrontD();
+
+		// 2 2 2
+		// 3 3 3
+
+		copiar(arrayXBloco, arrayYBloco, controle.back.ponto2, 0);
+		copiar(arrayXBloco, arrayYBloco, controle.front.ponto2, 1);
+
+		controle.front.montarDerivado(controle.front.ponto2, controle.front.lado);
+		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 2);
+
+		controle.front.montarDerivado(controle.front.ponto3, controle.front.lado);
+		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 3);
+
+		copiar(arrayXBloco, arrayYBloco, controle.front.ponto3, 4);
+		copiar(arrayXBloco, arrayYBloco, controle.back.ponto3, 5);
+
+		quina.copiar1(controle.front.ponto2);
+		quina.copiar2(controle.front.ponto3);
 	}
 
 	void desenhar3DEsquerdo(Graphics2D g2) {
@@ -162,5 +170,18 @@ public class Bloco {
 		g2.setColor(COR_BORDA);
 		g2.drawPolygon(arrayXBloco, arrayYBloco, 6);
 		g2.drawLine(quina.x1, quina.y1, quina.x2, quina.y2);
+	}
+
+	class Controle {
+		private final Face front = new Face();
+		private final Face back = new Face();
+
+		void calcularLadoFrontE() {
+			front.lado = LabirintoUtil.altura(front.ponto1, front.ponto4);
+		}
+
+		void calcularLadoFrontD() {
+			front.lado = LabirintoUtil.altura(front.ponto2, front.ponto3);
+		}
 	}
 }

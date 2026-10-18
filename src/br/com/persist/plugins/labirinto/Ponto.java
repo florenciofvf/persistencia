@@ -4,13 +4,6 @@ public class Ponto {
 	int x;
 	int y;
 
-	void copiar(Ponto origem, Vetor vetor, int deltaX, int deltaY) {
-		x = (int) (origem.x + vetor.x);
-		y = (int) (origem.y + vetor.y);
-		x += deltaX;
-		y += deltaY;
-	}
-
 	void copiar(Ponto origem, Vetor vetor) {
 		x = (int) (origem.x + vetor.x);
 		y = (int) (origem.y + vetor.y);
@@ -18,11 +11,6 @@ public class Ponto {
 
 	void copiar(Ponto outro, int deltaX) {
 		x = outro.x + deltaX;
-		y = outro.y;
-	}
-
-	void copiar(Ponto outro) {
-		x = outro.x;
 		y = outro.y;
 	}
 
