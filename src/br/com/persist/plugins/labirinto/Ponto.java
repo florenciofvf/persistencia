@@ -16,6 +16,11 @@ public class Ponto {
 		y = (int) (origem.y + vetor.y);
 	}
 
+	void copiar(Ponto outro, int deltaX) {
+		x = outro.x + deltaX;
+		y = outro.y;
+	}
+
 	void copiar(Ponto outro) {
 		x = outro.x;
 		y = outro.y;
