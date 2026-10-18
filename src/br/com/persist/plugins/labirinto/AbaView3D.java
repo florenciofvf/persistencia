@@ -53,11 +53,11 @@ public class AbaView3D extends Panel {
 			}
 			Pivo pivo = matriz.pivo;
 			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
-			if (blocos.isEmpty()) {
+			if (blocos.isEmpty() || blocos.size() == 1) {
 				Util.mensagem(AbaView3D.this, "Sem blocos a frente");
 				return;
 			}
-			Bloco proximoPiso = blocos.get(0);
+			Bloco proximoPiso = blocos.get(1);
 			if (!proximoPiso.vazio) {
 				Util.mensagem(AbaView3D.this, "O bloco nao esta vazio");
 				return;

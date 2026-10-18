@@ -25,6 +25,10 @@ class LabirintoXMLHandler extends XMLHandler {
 				objPivo.ocupar(bloco);
 			}
 
+			if (matriz == null) {
+				throw new SAXException("Defina o elemento matriz");
+			}
+
 			matriz.add(bloco);
 		}
 	}
