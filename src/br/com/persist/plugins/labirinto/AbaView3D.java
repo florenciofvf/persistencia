@@ -6,8 +6,13 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
 
 import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
@@ -114,12 +119,33 @@ public class AbaView3D extends Panel {
 		}
 	}
 
+	class GirarAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private final boolean esquerda;
+
+		public GirarAction(boolean esquerda) {
+			this.esquerda = esquerda;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			toolbar.girar(esquerda);
+		}
+	}
+
 	class PainelDesenho extends Panel {
 		private static final long serialVersionUID = 1L;
 		private transient Vetor vetor1 = new Vetor();
 		private transient Vetor vetor2 = new Vetor();
 		private transient Vetor vetor3 = new Vetor();
 		private transient Vetor vetor4 = new Vetor();
+
+		PainelDesenho() {
+			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "para_esquerda");
+			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "para_direita");
+			getActionMap().put("para_esquerda", new GirarAction(true));
+			getActionMap().put("para_direita", new GirarAction(false));
+		}
 
 		void configurarFaces() {
 			int metadeLargura = getWidth() / 2;

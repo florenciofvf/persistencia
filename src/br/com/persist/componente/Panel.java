@@ -3,6 +3,7 @@ package br.com.persist.componente;
 import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 
+import javax.swing.InputMap;
 import javax.swing.JPanel;
 
 public class Panel extends JPanel {
@@ -14,5 +15,9 @@ public class Panel extends JPanel {
 
 	public Panel() {
 		setLayout(new BorderLayout());
+	}
+
+	protected InputMap inputMap() {
+		return getInputMap(WHEN_FOCUSED);
 	}
 }
