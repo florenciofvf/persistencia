@@ -9,6 +9,8 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Icone;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -35,20 +37,46 @@ public class AbaView3D extends Panel {
 		add(BorderLayout.CENTER, painelDesenho);
 	}
 
+	static Action acaoMenu(String chave, Icone icone) {
+		return Action.acaoMenu(LabirintoMensagens.getString(chave), icone);
+	}
+
 	private class Toolbar extends BarraButton {
+		private static final String MSG_FAVOR_CONSTRUIR_MATRIZ = "msg.favor_construir_matriz";
+		private Action esquerdaAcao = acaoMenu("label.virar_esquerda", Icones.ALINHA_ESQUERDO);
+		private Action direitaAcao = acaoMenu("label.virar_direita", Icones.ALINHA_DIREITO);
 		private Action updateAcao = Action.actionIconUpdate();
 		private static final long serialVersionUID = 1L;
 
 		private Toolbar() {
 			super.ini(new Nil(), BAIXAR);
 			addButton(updateAcao);
+			addButton(esquerdaAcao);
+			addButton(direitaAcao);
 			updateAcao.setActionListener(e -> caminhar());
+			esquerdaAcao.setActionListener(e -> girar(true));
+			direitaAcao.setActionListener(e -> girar(false));
+		}
+
+		private void girar(boolean esquerda) {
+			Matriz matriz = abaView2D.getMatriz();
+			if (matriz == null) {
+				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
+				return;
+			}
+			Pivo pivo = matriz.pivo;
+			if (esquerda) {
+				pivo.antiHorario();
+			} else {
+				pivo.horario();
+			}
+			selecionarBlocos(matriz);
 		}
 
 		private void caminhar() {
 			Matriz matriz = abaView2D.getMatriz();
 			if (matriz == null) {
-				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString("msg.favor_construir_matriz"));
+				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
 				return;
 			}
 			Pivo pivo = matriz.pivo;
@@ -70,7 +98,7 @@ public class AbaView3D extends Panel {
 		protected void baixar() {
 			Matriz matriz = abaView2D.getMatriz();
 			if (matriz == null) {
-				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString("msg.favor_construir_matriz"));
+				Util.mensagem(AbaView3D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
 				return;
 			}
 			selecionarBlocos(matriz);
