@@ -68,7 +68,7 @@ public class Matriz {
 	public String gerarStringFile() {
 		StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		builder.append(Constantes.QL2);
-		builder.append("<matriz linhas=\"5\" colunas=\"5\">").append(Constantes.QL);
+		builder.append("<matriz linhas=\"" + linhas + "\" colunas=\"" + colunas + "\">").append(Constantes.QL);
 		for (int linha = 0; linha < linhas; linha++) {
 			for (int coluna = 0; coluna < colunas; coluna++) {
 				Bloco bloco = blocos[linha][coluna];
