@@ -21,6 +21,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.marca.XML;
 
 public class AbaView2D extends Panel {
+	public static final String MSG_FAVOR_CONSTRUIR_MATRIZ = "msg.favor_construir_matriz";
 	private PainelDesenho painelDesenho = new PainelDesenho();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
@@ -45,20 +46,33 @@ public class AbaView2D extends Panel {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action gerarConteudoAcao = acaoIcone("label.gerar_arquivo", Icones.ALINHA_ESQUERDO);
+		private Action destacarAcao = acaoIcone("label.destacar", Icones.ARRASTAR2);
 
 		private Toolbar() {
 			super.ini(new Nil(), BAIXAR);
 			addButton(gerarConteudoAcao);
+			addButton(destacarAcao);
 			gerarConteudoAcao.setActionListener(e -> gerarConteudo());
+			destacarAcao.setActionListener(e -> destacar());
 		}
 
 		private void gerarConteudo() {
 			if (painelDesenho.matriz == null) {
-				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString(AbaView3D.MSG_FAVOR_CONSTRUIR_MATRIZ));
+				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
 				return;
 			}
 			String string = painelDesenho.matriz.gerarStringFile();
 			abaViewXML.textEditor.setText(string);
+		}
+
+		private void destacar() {
+			Matriz matriz = getMatriz();
+			if (matriz == null) {
+				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
+				return;
+			}
+			FormularioLabirinto form = new FormularioLabirinto(matriz);
+			form.setVisible(true);
 		}
 
 		@Override

@@ -20,7 +20,6 @@ public class LabirintoPagina extends Panel implements Aba {
 	private static final long serialVersionUID = 1L;
 	private final AbaViewXML abaViewXML;
 	private final AbaView2D abaView2D;
-	private final AbaView3D abaView3D;
 	private final File file;
 	private int indice;
 
@@ -28,7 +27,6 @@ public class LabirintoPagina extends Panel implements Aba {
 		tabbedPane.setTabLayoutPolicy(TabbedPane.SCROLL);
 		abaViewXML = new AbaViewXML(fichario, file);
 		abaView2D = new AbaView2D(abaViewXML, file);
-		abaView3D = new AbaView3D(abaView2D);
 		this.file = file;
 		montarLayout();
 		abrir();
@@ -37,7 +35,6 @@ public class LabirintoPagina extends Panel implements Aba {
 	private void montarLayout() {
 		tabbedPane.addTab("ViewXML", abaViewXML);
 		tabbedPane.addTab("View2D", abaView2D);
-		tabbedPane.addTab("View3D", abaView3D);
 		add(BorderLayout.CENTER, tabbedPane);
 	}
 

@@ -12,7 +12,7 @@ public class Terreno {
 	}
 
 	void desenhar3D(Graphics2D g2) {
-		for(int linha=0; linha<LINHAS; linha++) {
+		for (int linha = 0; linha < LINHAS; linha++) {
 			faces[linha][0].desenhar3D(g2);
 			faces[linha][1].desenhar3D(g2);
 			faces[linha][2].desenhar3D(g2);
