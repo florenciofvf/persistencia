@@ -10,8 +10,8 @@ public class Bloco {
 	private final int[] arrayYFront = new int[4];
 	private final int[] arrayXLado = new int[4];
 	private final int[] arrayYLado = new int[4];
+	private Color colorAnterior;
 	private final Color color;
-	private Color colorLado;
 	protected boolean vazio;
 	private Bloco anterior;
 	int offset;
@@ -21,7 +21,7 @@ public class Bloco {
 
 	public Bloco(boolean vazio) {
 		this.color = LabirintoUtil.createColor();
-		this.colorLado = color;
+		this.colorAnterior = color;
 		this.vazio = vazio;
 	}
 
@@ -126,7 +126,7 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.front.ponto4, 3);
 
 		if (anterior != null) {
-			colorLado = anterior.color;
+			colorAnterior = anterior.color;
 		}
 	}
 
@@ -166,7 +166,7 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.back.ponto3, 3);
 
 		if (anterior != null) {
-			colorLado = anterior.color;
+			colorAnterior = anterior.color;
 		}
 	}
 
@@ -183,9 +183,9 @@ public class Bloco {
 			return;
 		}
 		g2.setColor(color);
-		g2.fillPolygon(arrayXFront, arrayYFront, 4);
-		g2.setColor(colorLado);
 		g2.fillPolygon(arrayXLado, arrayYLado, 4);
+		g2.setColor(colorAnterior);
+		g2.fillPolygon(arrayXFront, arrayYFront, 4);
 		g2.setColor(COR_BORDA);
 		g2.drawPolygon(arrayXFront, arrayYFront, 4);
 		g2.drawPolygon(arrayXLado, arrayYLado, 4);
