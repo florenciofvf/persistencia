@@ -117,7 +117,7 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.back.ponto4, 2);
 		copiar(arrayXLado, arrayYLado, controle.front.ponto4, 3);
 
-		if (anterior != null) {
+		if (anterior != null && !anterior.vazio) {
 			colorLado = anterior.color;
 		}
 	}
@@ -157,7 +157,7 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.front.ponto3, 2);
 		copiar(arrayXLado, arrayYLado, controle.back.ponto3, 3);
 
-		if (anterior != null) {
+		if (anterior != null && !anterior.vazio) {
 			colorLado = anterior.color;
 		}
 	}
