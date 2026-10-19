@@ -13,6 +13,7 @@ public class Bloco {
 	private final Color color;
 	private Color colorLado;
 	protected boolean vazio;
+	private Bloco anterior;
 	int offset;
 	int coluna;
 	int linha;
@@ -22,6 +23,13 @@ public class Bloco {
 		this.color = LabirintoUtil.createColor();
 		this.colorLado = color;
 		this.vazio = vazio;
+	}
+
+	public void setAnterior(Bloco anterior) {
+		if (anterior != null && anterior.vazio) {
+			anterior = null;
+		}
+		this.anterior = anterior;
 	}
 
 	public void click() {
@@ -82,7 +90,7 @@ public class Bloco {
 		g2.drawPolygon(arrayXFront, arrayYFront, 4);
 	}
 
-	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4, Bloco anterior) {
+	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4) {
 		if (vazio) {
 			vetor1.reduzir();
 			vetor4.reduzir();
@@ -117,12 +125,12 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.back.ponto4, 2);
 		copiar(arrayXLado, arrayYLado, controle.front.ponto4, 3);
 
-		if (anterior != null && !anterior.vazio) {
+		if (anterior != null) {
 			colorLado = anterior.color;
 		}
 	}
 
-	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3, Bloco anterior) {
+	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
 		if (vazio) {
 			vetor2.reduzir();
 			vetor3.reduzir();
@@ -157,7 +165,7 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.front.ponto3, 2);
 		copiar(arrayXLado, arrayYLado, controle.back.ponto3, 3);
 
-		if (anterior != null && !anterior.vazio) {
+		if (anterior != null) {
 			colorLado = anterior.color;
 		}
 	}

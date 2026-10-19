@@ -192,46 +192,66 @@ public class Matriz {
 	}
 
 	private List<Bloco> getBlocosAcima(int linha, int coluna) {
+		int linhaBkp = linha + 1;
+		Bloco anterior = null;
 		List<Bloco> resp = new ArrayList<>();
 		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
 			while (linha >= 0) {
 				resp.add(blocos[linha][coluna]);
 				linha--;
 			}
+			if (linhaBkp >= 0 && linhaBkp < linhas) {
+				anterior = blocos[linhaBkp][coluna];
+			}
 		}
-		return LabirintoUtil.limitar(resp);
+		return LabirintoUtil.limitar(resp, anterior);
 	}
 
 	private List<Bloco> getBlocosDireita(int linha, int coluna) {
+		int colunaBkp = coluna - 1;
+		Bloco anterior = null;
 		List<Bloco> resp = new ArrayList<>();
 		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
 			while (coluna < colunas) {
 				resp.add(blocos[linha][coluna]);
 				coluna++;
 			}
+			if (colunaBkp >= 0 && colunaBkp < colunas) {
+				anterior = blocos[linha][colunaBkp];
+			}
 		}
-		return LabirintoUtil.limitar(resp);
+		return LabirintoUtil.limitar(resp, anterior);
 	}
 
 	private List<Bloco> getBlocosAbaixo(int linha, int coluna) {
+		int linhaBkp = linha - 1;
+		Bloco anterior = null;
 		List<Bloco> resp = new ArrayList<>();
 		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
 			while (linha < linhas) {
 				resp.add(blocos[linha][coluna]);
 				linha++;
 			}
+			if (linhaBkp >= 0 && linhaBkp < linhas) {
+				anterior = blocos[linhaBkp][coluna];
+			}
 		}
-		return LabirintoUtil.limitar(resp);
+		return LabirintoUtil.limitar(resp, anterior);
 	}
 
 	private List<Bloco> getBlocosEsquerda(int linha, int coluna) {
+		int colunaBkp = coluna + 1;
+		Bloco anterior = null;
 		List<Bloco> resp = new ArrayList<>();
 		if (linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas) {
 			while (coluna >= 0) {
 				resp.add(blocos[linha][coluna]);
 				coluna--;
 			}
+			if (colunaBkp >= 0 && colunaBkp < colunas) {
+				anterior = blocos[linha][colunaBkp];
+			}
 		}
-		return LabirintoUtil.limitar(resp);
+		return LabirintoUtil.limitar(resp, anterior);
 	}
 }

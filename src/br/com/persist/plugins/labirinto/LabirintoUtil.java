@@ -17,9 +17,13 @@ public class LabirintoUtil {
 		return new Color(r, g, b);
 	}
 
-	public static List<Bloco> limitar(List<Bloco> blocos) {
+	public static List<Bloco> limitar(List<Bloco> blocos, Bloco anterior) {
 		while (blocos.size() > 10) {
 			blocos.remove(blocos.size() - 1);
+		}
+		for (Bloco item : blocos) {
+			item.setAnterior(anterior);
+			anterior = item;
 		}
 		return blocos;
 	}
