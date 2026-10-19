@@ -71,6 +71,10 @@ public class Matriz {
 	}
 
 	public void desenhar2D(Graphics2D g2) {
+		g2.setColor(Face.COR_PISO);
+		int largura = colunas * lado;
+		int altura = linhas * lado;
+		g2.fillRect(0, 0, largura, altura);
 		for (int linha = 0; linha < linhas; linha++) {
 			for (int coluna = 0; coluna < colunas; coluna++) {
 				Bloco bloco = blocos[linha][coluna];
