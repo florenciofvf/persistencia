@@ -15,8 +15,8 @@ public final class Vetor {
 
 	void reduzir() {
 		double comprimento = getComprimento();
-		double dezPorCento = comprimento * .3;
-		alterarTamanho((int) (comprimento - dezPorCento));
+		double porcentagem = comprimento * .3;
+		alterarTamanho((int) (comprimento - porcentagem));
 	}
 
 	void init(float x) {
