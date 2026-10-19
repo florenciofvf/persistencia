@@ -6,8 +6,10 @@ import java.awt.Graphics2D;
 public class Bloco {
 	public static final Color COR_BORDA = Color.BLACK;
 	private final Controle controle = new Controle();
-	private final int[] arrayXFrente = new int[4];
-	private final int[] arrayYFrente = new int[4];
+	private final int[] arrayXFront = new int[4];
+	private final int[] arrayYFront = new int[4];
+	private final int[] arrayXLado = new int[4];
+	private final int[] arrayYLado = new int[4];
 	private final int[] arrayXBloco = new int[6];
 	private final int[] arrayYBloco = new int[6];
 	private final Linha quina = new Linha();
@@ -63,10 +65,10 @@ public class Bloco {
 		// 1 2
 		// 4 3
 
-		copiar(arrayXFrente, arrayYFrente, controle.front.ponto1, 0);
-		copiar(arrayXFrente, arrayYFrente, controle.front.ponto2, 1);
-		copiar(arrayXFrente, arrayYFrente, controle.front.ponto3, 2);
-		copiar(arrayXFrente, arrayYFrente, controle.front.ponto4, 3);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto1, 0);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto2, 1);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto3, 2);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto4, 3);
 	}
 
 	private void copiar(int[] arrayX, int[] arrayY, Ponto ponto, int indice) {
@@ -76,9 +78,9 @@ public class Bloco {
 
 	void desenhar3DFrente(Graphics2D g2) {
 		g2.setColor(color);
-		g2.fillPolygon(arrayXFrente, arrayYFrente, 4);
+		g2.fillPolygon(arrayXFront, arrayYFront, 4);
 		g2.setColor(COR_BORDA);
-		g2.drawPolygon(arrayXFrente, arrayYFrente, 4);
+		g2.drawPolygon(arrayXFront, arrayYFront, 4);
 	}
 
 	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4) {
