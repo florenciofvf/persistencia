@@ -3,7 +3,7 @@ package br.com.persist.plugins.labirinto;
 import java.awt.Graphics2D;
 
 public class Terreno {
-	public static final int LINHAS = 10;
+	public static final int LINHAS = LabirintoConstantes.FILA_BLOCOS_MAX;
 	private static final int COLUNAS = 3;
 	private final Face[][] faces = new Face[LINHAS][COLUNAS];
 	private final Controle controle = new Controle();

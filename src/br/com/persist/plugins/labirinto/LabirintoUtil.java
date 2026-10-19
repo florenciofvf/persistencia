@@ -18,7 +18,7 @@ public class LabirintoUtil {
 	}
 
 	public static List<Bloco> limitar(List<Bloco> blocos, Bloco anterior) {
-		while (blocos.size() > 10) {
+		while (blocos.size() > LabirintoConstantes.FILA_BLOCOS_MAX) {
 			blocos.remove(blocos.size() - 1);
 		}
 		for (Bloco item : blocos) {

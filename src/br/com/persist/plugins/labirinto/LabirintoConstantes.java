@@ -6,6 +6,7 @@ public class LabirintoConstantes {
 	public static final String LABEL_LABIRINTO = "label.labirinto";
 	public static final String LABIRINTO = "labirinto";
 	public static final String IGNORADOS = "ignorados";
+	public static final int FILA_BLOCOS_MAX = 10;
 
 	private LabirintoConstantes() {
 	}
