@@ -13,6 +13,7 @@ public class Bloco {
 	private final Linha quina = new Linha();
 	private final Color color;
 	protected boolean vazio;
+	int offset;
 	int coluna;
 	int linha;
 	Pivo pivo;

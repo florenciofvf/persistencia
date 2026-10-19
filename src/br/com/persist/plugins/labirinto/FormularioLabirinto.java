@@ -83,6 +83,10 @@ public class FormularioLabirinto extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Pivo pivo = matriz.pivo;
+			if (pivo.caminhar()) {
+				selecionarBlocos(matriz);
+				return;
+			}
 			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
 			if (blocos.isEmpty() || blocos.size() == 1) {
 				status.mensagem("Sem blocos a frente");
@@ -103,7 +107,7 @@ public class FormularioLabirinto extends JFrame {
 		blocosEsquerdo = matriz.getBlocosLadoEsquerdo(pivo);
 		blocosDireito = matriz.getBlocosLadoDireito(pivo);
 		blocosFrente = matriz.getBlocosNaFrente(pivo);
-		painelDesenho.configurarFaces();
+		painelDesenho.configurarFaces(pivo.piso.offset);
 		painelDesenho.repaint();
 	}
 
@@ -123,12 +127,14 @@ public class FormularioLabirinto extends JFrame {
 			getActionMap().put("caminhar", new CaminharAction());
 		}
 
-		void configurarFaces() {
+		void configurarFaces(int offset) {
 			int metadeLargura = getWidth() / 2;
 			int metadeAltura = getHeight() / 2;
 
 			origem.x = metadeLargura;
 			origem.y = metadeAltura;
+
+			metadeLargura += offset;
 
 			initVetores(metadeLargura);
 			for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {

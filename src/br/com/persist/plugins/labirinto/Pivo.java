@@ -19,7 +19,16 @@ public class Pivo {
 			piso.pivo = null;
 		}
 		bloco.pivo = this;
+		bloco.offset = 0;
 		piso = bloco;
+	}
+
+	boolean caminhar() {
+		if (piso.offset == 0) {
+			piso.offset = 100;
+			return true;
+		}
+		return false;
 	}
 
 	void horario() {
