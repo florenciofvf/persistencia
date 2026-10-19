@@ -24,8 +24,8 @@ public class Pivo {
 	}
 
 	boolean caminhar() {
-		if (piso.offset == 0) {
-			piso.offset = 100;
+		if (piso.offset < 200) {
+			piso.offset += 20;
 			return true;
 		}
 		return false;
