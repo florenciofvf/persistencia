@@ -10,10 +10,8 @@ public class Bloco {
 	private final int[] arrayYFront = new int[4];
 	private final int[] arrayXLado = new int[4];
 	private final int[] arrayYLado = new int[4];
-	private final int[] arrayXBloco = new int[6];
-	private final int[] arrayYBloco = new int[6];
-	private final Linha quina = new Linha();
 	private final Color color;
+	private Color colorLado;
 	protected boolean vazio;
 	int offset;
 	int coluna;
@@ -22,6 +20,7 @@ public class Bloco {
 
 	public Bloco(boolean vazio) {
 		this.color = LabirintoUtil.createColor();
+		this.colorLado = color;
 		this.vazio = vazio;
 	}
 
@@ -83,7 +82,7 @@ public class Bloco {
 		g2.drawPolygon(arrayXFront, arrayYFront, 4);
 	}
 
-	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4) {
+	void calcular3DEsquerdo(Ponto origem, Vetor vetor1, Vetor vetor4, Bloco anterior) {
 		if (vazio) {
 			vetor1.reduzir();
 			vetor4.reduzir();
@@ -101,25 +100,29 @@ public class Bloco {
 
 		controle.calcularLadoFrontE();
 
-		// 1 1 1
-		// 4 4 4
+		// 1 1
+		// 4 4
+		// 1 1
+		// 4 4
 
 		controle.front.montarDerivado(controle.front.ponto1, -controle.front.lado);
-		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 0);
-
-		copiar(arrayXBloco, arrayYBloco, controle.front.ponto1, 1);
-		copiar(arrayXBloco, arrayYBloco, controle.back.ponto1, 2);
-		copiar(arrayXBloco, arrayYBloco, controle.back.ponto4, 3);
-		copiar(arrayXBloco, arrayYBloco, controle.front.ponto4, 4);
-
+		copiar(arrayXFront, arrayYFront, controle.front.derivado, 0);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto1, 1);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto4, 2);
 		controle.front.montarDerivado(controle.front.ponto4, -controle.front.lado);
-		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 5);
+		copiar(arrayXFront, arrayYFront, controle.front.derivado, 3);
 
-		quina.copiar1(controle.front.ponto1);
-		quina.copiar2(controle.front.ponto4);
+		copiar(arrayXLado, arrayYLado, controle.front.ponto1, 0);
+		copiar(arrayXLado, arrayYLado, controle.back.ponto1, 1);
+		copiar(arrayXLado, arrayYLado, controle.back.ponto4, 2);
+		copiar(arrayXLado, arrayYLado, controle.front.ponto4, 3);
+
+		if (anterior != null) {
+			colorLado = anterior.color;
+		}
 	}
 
-	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
+	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3, Bloco anterior) {
 		if (vazio) {
 			vetor2.reduzir();
 			vetor3.reduzir();
@@ -137,23 +140,26 @@ public class Bloco {
 
 		controle.calcularLadoFrontD();
 
-		// 2 2 2
-		// 3 3 3
+		// 2 2
+		// 3 3
+		// 2 2
+		// 3 3
 
-		copiar(arrayXBloco, arrayYBloco, controle.back.ponto2, 0);
-		copiar(arrayXBloco, arrayYBloco, controle.front.ponto2, 1);
-
+		copiar(arrayXFront, arrayYFront, controle.front.ponto2, 0);
 		controle.front.montarDerivado(controle.front.ponto2, controle.front.lado);
-		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 2);
-
+		copiar(arrayXFront, arrayYFront, controle.front.derivado, 1);
 		controle.front.montarDerivado(controle.front.ponto3, controle.front.lado);
-		copiar(arrayXBloco, arrayYBloco, controle.front.derivado, 3);
+		copiar(arrayXFront, arrayYFront, controle.front.derivado, 2);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto3, 3);
 
-		copiar(arrayXBloco, arrayYBloco, controle.front.ponto3, 4);
-		copiar(arrayXBloco, arrayYBloco, controle.back.ponto3, 5);
+		copiar(arrayXLado, arrayYLado, controle.back.ponto2, 0);
+		copiar(arrayXLado, arrayYLado, controle.front.ponto2, 1);
+		copiar(arrayXLado, arrayYLado, controle.front.ponto3, 2);
+		copiar(arrayXLado, arrayYLado, controle.back.ponto3, 3);
 
-		quina.copiar1(controle.front.ponto2);
-		quina.copiar2(controle.front.ponto3);
+		if (anterior != null) {
+			colorLado = anterior.color;
+		}
 	}
 
 	void desenhar3DEsquerdo(Graphics2D g2) {
@@ -169,10 +175,12 @@ public class Bloco {
 			return;
 		}
 		g2.setColor(color);
-		g2.fillPolygon(arrayXBloco, arrayYBloco, 6);
+		g2.fillPolygon(arrayXFront, arrayYFront, 4);
+		g2.setColor(colorLado);
+		g2.fillPolygon(arrayXLado, arrayYLado, 4);
 		g2.setColor(COR_BORDA);
-		g2.drawPolygon(arrayXBloco, arrayYBloco, 6);
-		g2.drawLine(quina.x1, quina.y1, quina.x2, quina.y2);
+		g2.drawPolygon(arrayXFront, arrayYFront, 4);
+		g2.drawPolygon(arrayXLado, arrayYLado, 4);
 	}
 
 	class Controle {
