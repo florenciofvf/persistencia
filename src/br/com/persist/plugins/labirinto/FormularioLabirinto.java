@@ -3,6 +3,7 @@ package br.com.persist.plugins.labirinto;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -31,8 +32,8 @@ public class FormularioLabirinto extends JFrame {
 	private LabelTemp status = new LabelTemp();
 	private final transient Matriz matriz;
 
-	public FormularioLabirinto(Matriz matriz) {
-		super(LabirintoMensagens.getString(LabirintoConstantes.LABEL_LABIRINTO));
+	public FormularioLabirinto(Matriz matriz, GraphicsConfiguration gc) {
+		super(LabirintoMensagens.getString(LabirintoConstantes.LABEL_LABIRINTO), gc);
 		this.matriz = Objects.requireNonNull(matriz);
 		matriz.setLado(10);
 		ini();

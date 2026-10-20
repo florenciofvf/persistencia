@@ -71,7 +71,7 @@ public class AbaView2D extends Panel {
 				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
 				return;
 			}
-			FormularioLabirinto form = new FormularioLabirinto(matriz);
+			FormularioLabirinto form = new FormularioLabirinto(matriz, getGraphicsConfiguration());
 			form.setVisible(true);
 		}
 
