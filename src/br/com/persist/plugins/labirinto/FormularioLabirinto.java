@@ -135,24 +135,25 @@ public class FormularioLabirinto extends JFrame {
 			origem.x = metadeLargura;
 			origem.y = metadeAltura;
 
-			metadeLargura += offset;
+			int comprimento = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight());
+			comprimento += offset;
 
-			initVetores(metadeLargura);
+			initVetores(comprimento);
 			for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
 				terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4, linha);
 			}
 
-			initVetores(metadeLargura);
+			initVetores(comprimento);
 			for (Bloco item : blocosFrente) {
 				item.calcular3DFrente(origem, vetor1, vetor2, vetor3, vetor4);
 			}
 
-			initVetores(metadeLargura);
+			initVetores(comprimento);
 			for (Bloco item : blocosEsquerdo) {
 				item.calcular3DEsquerdo(origem, vetor1, vetor4);
 			}
 
-			initVetores(metadeLargura);
+			initVetores(comprimento);
 			for (Bloco item : blocosDireito) {
 				item.calcular3DDireito(origem, vetor2, vetor3);
 			}
