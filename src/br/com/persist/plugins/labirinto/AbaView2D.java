@@ -113,8 +113,27 @@ public class AbaView2D extends Panel {
 
 		private class OuvinteMouse extends MouseAdapter {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (matriz != null && matriz.click(e.getX(), e.getY())) {
+			public void mousePressed(MouseEvent e) {
+				if (matriz == null) {
+					return;
+				}
+				int x = e.getX();
+				int y = e.getY();
+				if (e.isShiftDown()) {
+					clickPivo(x, y);
+				} else {
+					clickBloco(x, y);
+				}
+			}
+
+			private void clickBloco(int x, int y) {
+				if (matriz.clickBloco(x, y)) {
+					repaint();
+				}
+			}
+
+			private void clickPivo(int x, int y) {
+				if (matriz.clickPivo(x, y)) {
 					repaint();
 				}
 			}

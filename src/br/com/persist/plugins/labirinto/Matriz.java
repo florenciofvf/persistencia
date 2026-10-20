@@ -49,10 +49,23 @@ public class Matriz {
 		}
 	}
 
-	public boolean click(int x, int y) {
+	public boolean clickBloco(int x, int y) {
 		Bloco bloco = getBloco(x, y);
 		if (bloco != null) {
-			bloco.click();
+			if (bloco.pivo != null) {
+				return false;
+			} else {
+				bloco.click();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean clickPivo(int x, int y) {
+		Bloco bloco = getBloco(x, y);
+		if (bloco != null && bloco.vazio && pivo != null) {
+			pivo.ocupar(bloco);
 			return true;
 		}
 		return false;
