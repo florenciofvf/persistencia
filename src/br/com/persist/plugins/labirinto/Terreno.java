@@ -35,8 +35,8 @@ public class Terreno {
 		Face face = faces[linha][1];
 		face.montarPolygon(controle.back.ponto4, controle.back.ponto3, controle.front.ponto3, controle.front.ponto4);
 
-		controle.calcularLadoFront();
-		controle.calcularLadoBack();
+		controle.calcularLadoFrontE();
+		controle.calcularLadoBackE();
 
 		controle.back.montarDerivado(controle.back.ponto4, -controle.back.lado);
 		controle.front.montarDerivado(controle.front.ponto4, -controle.front.lado);
@@ -56,19 +56,6 @@ public class Terreno {
 			faces[linha][0].desenhar3D(g2);
 			faces[linha][1].desenhar3D(g2);
 			faces[linha][2].desenhar3D(g2);
-		}
-	}
-
-	class Controle {
-		private final Face front = new Face();
-		private final Face back = new Face();
-
-		void calcularLadoFront() {
-			front.lado = LabirintoUtil.altura(front.ponto1, front.ponto4);
-		}
-
-		void calcularLadoBack() {
-			back.lado = LabirintoUtil.altura(back.ponto1, back.ponto4);
 		}
 	}
 }

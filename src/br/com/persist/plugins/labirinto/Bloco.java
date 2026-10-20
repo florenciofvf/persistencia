@@ -190,17 +190,4 @@ public class Bloco {
 		g2.drawPolygon(arrayXFront, arrayYFront, 4);
 		g2.drawPolygon(arrayXLado, arrayYLado, 4);
 	}
-
-	class Controle {
-		private final Face front = new Face();
-		private final Face back = new Face();
-
-		void calcularLadoFrontE() {
-			front.lado = LabirintoUtil.altura(front.ponto1, front.ponto4);
-		}
-
-		void calcularLadoFrontD() {
-			front.lado = LabirintoUtil.altura(front.ponto2, front.ponto3);
-		}
-	}
 }

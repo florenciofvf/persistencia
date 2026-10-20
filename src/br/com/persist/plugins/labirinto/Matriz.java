@@ -216,6 +216,9 @@ public class Matriz {
 			while (linha >= 0) {
 				resp.add(blocos[linha][coluna]);
 				linha--;
+				if (resp.size() == LabirintoConstantes.FILA_BLOCOS_MAX) {
+					break;
+				}
 			}
 			if (linhaBkp >= 0 && linhaBkp < linhas) {
 				anterior = blocos[linhaBkp][coluna];
@@ -232,6 +235,9 @@ public class Matriz {
 			while (coluna < colunas) {
 				resp.add(blocos[linha][coluna]);
 				coluna++;
+				if (resp.size() == LabirintoConstantes.FILA_BLOCOS_MAX) {
+					break;
+				}
 			}
 			if (colunaBkp >= 0 && colunaBkp < colunas) {
 				anterior = blocos[linha][colunaBkp];
@@ -248,6 +254,9 @@ public class Matriz {
 			while (linha < linhas) {
 				resp.add(blocos[linha][coluna]);
 				linha++;
+				if (resp.size() == LabirintoConstantes.FILA_BLOCOS_MAX) {
+					break;
+				}
 			}
 			if (linhaBkp >= 0 && linhaBkp < linhas) {
 				anterior = blocos[linhaBkp][coluna];
@@ -264,6 +273,9 @@ public class Matriz {
 			while (coluna >= 0) {
 				resp.add(blocos[linha][coluna]);
 				coluna--;
+				if (resp.size() == LabirintoConstantes.FILA_BLOCOS_MAX) {
+					break;
+				}
 			}
 			if (colunaBkp >= 0 && colunaBkp < colunas) {
 				anterior = blocos[linha][colunaBkp];
