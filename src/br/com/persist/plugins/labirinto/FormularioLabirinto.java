@@ -135,7 +135,7 @@ public class FormularioLabirinto extends JFrame {
 			origem.x = metadeLargura;
 			origem.y = metadeAltura;
 
-			int comprimento = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight());
+			int comprimento = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight()) + 100;
 			comprimento += offset;
 
 			initVetores(comprimento);

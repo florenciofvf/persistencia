@@ -36,9 +36,9 @@ public class LabirintoUtil {
 		return ponto2.y - ponto1.y;
 	}
 
-	public static int comprimento(int x1, int y1, int x2, int y2) {
-		int x = x2 - x1;
-		int y = y2 - y1;
+	public static int comprimento(float x1, float y1, float x2, float y2) {
+		float x = x2 - x1;
+		float y = y2 - y1;
 		return (int) Math.sqrt(x * x + y * y);
 	}
 }
