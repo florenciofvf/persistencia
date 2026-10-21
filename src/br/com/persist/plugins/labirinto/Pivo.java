@@ -4,15 +4,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Pivo {
-	public static final int TOTAL_PASSOS_PISO = 4;
-	int comprimentoDelta;
-	int comprimento;
+	public static final int TOTAL_PASSOS_PISO = 5;
+	double comprimentoFracao;
+	private int passos;
 	Sentido sentido;
 	Bloco piso;
-	int passos;
 
 	Pivo() {
 		sentido = Sentido.ACIMA;
+	}
+
+	double calibrar() {
+		return comprimentoFracao + (passos * comprimentoFracao);
 	}
 
 	boolean podeCaminharNoPiso() {
@@ -34,6 +37,7 @@ public class Pivo {
 		}
 		bloco.pivo = this;
 		piso = bloco;
+		passos = 0;
 	}
 
 	void horario() {

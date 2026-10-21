@@ -58,7 +58,7 @@ public class FormularioLabirinto extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			painelDesenho.init();
+			painelDesenho.processar();
 		}
 	}
 
@@ -78,8 +78,7 @@ public class FormularioLabirinto extends JFrame {
 			} else {
 				pivo.horario();
 			}
-			painelDesenho.selecionarBlocos();
-			painelDesenho.configurarFaces(0);
+			painelDesenho.processar();
 		}
 	}
 
@@ -91,12 +90,11 @@ public class FormularioLabirinto extends JFrame {
 			Pivo pivo = matriz.pivo;
 			if (pivo.podeCaminharNoPiso()) {
 				pivo.caminhar();
-				painelDesenho.selecionarBlocos();
-				painelDesenho.configurarFaces(pivo.comprimentoDelta);
+				painelDesenho.processar();
 				return;
 			}
 			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
-			if (blocos.isEmpty() || blocos.size() == 1) {
+			if (blocos.size() < 2) {
 				status.mensagem("Sem blocos a frente");
 				return;
 			}
@@ -106,9 +104,7 @@ public class FormularioLabirinto extends JFrame {
 				return;
 			}
 			pivo.ocupar(proximoPiso);
-			painelDesenho.initOcupado();
-			painelDesenho.selecionarBlocos();
-			painelDesenho.configurarFaces(0);
+			painelDesenho.processar();
 		}
 	}
 
@@ -118,12 +114,11 @@ public class FormularioLabirinto extends JFrame {
 		private transient List<Bloco> blocosFrente = new ArrayList<>();
 		private final transient Terreno terreno = new Terreno();
 		private final transient Ponto origem = new Ponto();
+		private final transient Vetor vetor1 = new Vetor();
+		private final transient Vetor vetor2 = new Vetor();
+		private final transient Vetor vetor3 = new Vetor();
+		private final transient Vetor vetor4 = new Vetor();
 		private static final long serialVersionUID = 1L;
-		private transient Vetor vetor1 = new Vetor();
-		private transient Vetor vetor2 = new Vetor();
-		private transient Vetor vetor3 = new Vetor();
-		private transient Vetor vetor4 = new Vetor();
-		private int comprimentoVetores;
 
 		PainelDesenho() {
 			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "para_esquerda");
@@ -136,27 +131,9 @@ public class FormularioLabirinto extends JFrame {
 			getActionMap().put("init", new InitAction());
 		}
 
-		void init() {
-			int metadeLargura = getWidth() / 2;
-			int metadeAltura = getHeight() / 2;
-			origem.x = metadeLargura;
-			origem.y = metadeAltura;
-			Vetor vetor = new Vetor(origem.x, origem.y);
-			Pivo pivo = matriz.pivo;
-			pivo.comprimento = (int) (vetor.getComprimento() * .3) / 2;
-			pivo.comprimentoDelta = pivo.comprimento / 2;
-			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight())
-					+ pivo.comprimento;
+		void processar() {
 			selecionarBlocos();
-			configurarFaces(0);
-			pivo.passos = 1;
-		}
-
-		void initOcupado() {
-			Pivo pivo = matriz.pivo;
-			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight())
-					+ pivo.comprimento;
-			pivo.passos = 0;
+			configurarFaces();
 		}
 
 		void selecionarBlocos() {
@@ -166,8 +143,16 @@ public class FormularioLabirinto extends JFrame {
 			blocosFrente = matriz.getBlocosNaFrente(pivo);
 		}
 
-		void configurarFaces(int comprimentoDelta) {
-			comprimentoVetores += comprimentoDelta;
+		void configurarFaces() {
+			origem.x = getWidth() / 2;
+			origem.y = getHeight() / 2;
+
+			double comprimento = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight());
+			double comprimentoFracao = comprimento * .1;
+
+			Pivo pivo = matriz.pivo;
+			pivo.comprimentoFracao = comprimentoFracao;
+			int comprimentoVetores = (int) pivo.calibrar();
 
 			initVetores(comprimentoVetores);
 			for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {

@@ -4,10 +4,10 @@ import static java.lang.Math.PI;
 
 public final class Vetor {
 	private static final double FVF = PI / 180;
-	float x;
-	float y;
+	double x;
+	double y;
 
-	public Vetor(float x, float y) {
+	public Vetor(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -28,15 +28,15 @@ public final class Vetor {
 		alterarTamanho((int) (comprimento - porcentagem));
 	}
 
-	void init(float x) {
+	void init(double x) {
 		this.x = x;
 		this.y = 0;
 	}
 
 	private void normalizar() {
 		double comprimento = getComprimento();
-		x = (float) (x / comprimento);
-		y = (float) (y / comprimento);
+		x = x / comprimento;
+		y = y / comprimento;
 	}
 
 	double getComprimento() {
@@ -48,8 +48,8 @@ public final class Vetor {
 		double sen = Math.sin(grau * FVF);
 		double novoX = x * cos - y * sen;
 		double novoY = x * sen + y * cos;
-		x = (float) novoX;
-		y = (float) novoY;
+		x = novoX;
+		y = novoY;
 	}
 
 	public String toString() {
