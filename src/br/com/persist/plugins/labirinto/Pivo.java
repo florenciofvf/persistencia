@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Pivo {
+	public static final int TOTAL_PASSOS_PISO = 5;
 	public static final int COMPRIMENTO = 100;
 	Sentido sentido;
 	Bloco piso;
@@ -16,6 +17,16 @@ public class Pivo {
 
 	void initPassos() {
 		passos = 3;
+	}
+
+	boolean podeCaminharNoPiso() {
+		return passos < TOTAL_PASSOS_PISO;
+	}
+
+	void caminhar() {
+		if (podeCaminharNoPiso()) {
+			passos++;
+		}
 	}
 
 	void ocupar(Bloco bloco) {
