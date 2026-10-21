@@ -6,9 +6,15 @@ import java.awt.Graphics2D;
 public class Pivo {
 	Sentido sentido;
 	Bloco piso;
+	int passos;
 
 	Pivo() {
 		sentido = Sentido.ACIMA;
+		initPassos();
+	}
+
+	void initPassos() {
+		passos = 3;
 	}
 
 	void ocupar(Bloco bloco) {
@@ -19,19 +25,11 @@ public class Pivo {
 			piso.pivo = null;
 		}
 		bloco.pivo = this;
-		bloco.offset = 0;
 		piso = bloco;
 	}
 
-	boolean caminhar() {
-		if (piso.offset <= 200) {
-			piso.offset += 20;
-			return true;
-		}
-		return false;
-	}
-
 	void horario() {
+		initPassos();
 		if (sentido == Sentido.ACIMA) {
 			sentido = Sentido.DIREITA;
 		} else if (sentido == Sentido.DIREITA) {
@@ -44,6 +42,7 @@ public class Pivo {
 	}
 
 	void antiHorario() {
+		initPassos();
 		if (sentido == Sentido.ACIMA) {
 			sentido = Sentido.ESQUERDA;
 		} else if (sentido == Sentido.ESQUERDA) {

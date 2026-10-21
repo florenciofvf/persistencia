@@ -13,7 +13,6 @@ public class Bloco {
 	private final Color color;
 	protected boolean vazio;
 	private Bloco anterior;
-	int offset;
 	int coluna;
 	int linha;
 	Pivo pivo;
