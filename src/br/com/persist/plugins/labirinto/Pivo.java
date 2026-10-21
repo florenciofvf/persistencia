@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Pivo {
+	public static final int COMPRIMENTO = 100;
 	Sentido sentido;
 	Bloco piso;
 	int passos;
