@@ -179,4 +179,8 @@ public class Bloco {
 		g2.drawPolygon(arrayXFront, arrayYFront, 4);
 		g2.drawPolygon(arrayXLado, arrayYLado, 4);
 	}
+
+	public String toString() {
+		return "Bloco[linha=" + (linha + 1) + ", coluna=" + (coluna + 1) + "]";
+	}
 }

@@ -86,7 +86,6 @@ public class FormularioLabirinto extends JFrame {
 				pivo.caminhar();
 				painelDesenho.selecionarBlocos();
 				painelDesenho.configurarFaces(comprimentoDelta);
-				comprimentoDelta += 50;
 				return;
 			}
 			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
@@ -100,10 +99,9 @@ public class FormularioLabirinto extends JFrame {
 				return;
 			}
 			pivo.ocupar(proximoPiso);
-			pivo.passos = 1;
+			painelDesenho.initOcupado();
 			painelDesenho.selecionarBlocos();
-			painelDesenho.configurarFaces(comprimentoDelta);
-			comprimentoDelta += 50;
+			painelDesenho.configurarFaces(0);
 		}
 	}
 
@@ -134,9 +132,19 @@ public class FormularioLabirinto extends JFrame {
 			int metadeAltura = getHeight() / 2;
 			origem.x = metadeLargura;
 			origem.y = metadeAltura;
-			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight()) + Pivo.COMPRIMENTO;
+			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight())
+					+ Pivo.COMPRIMENTO;
 			selecionarBlocos();
 			configurarFaces(0);
+			Pivo pivo = matriz.pivo;
+			pivo.passos = 1;
+		}
+
+		void initOcupado() {
+			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight())
+					+ Pivo.COMPRIMENTO;
+			Pivo pivo = matriz.pivo;
+			pivo.passos = 0;
 		}
 
 		void selecionarBlocos() {

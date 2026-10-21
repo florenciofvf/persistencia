@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Pivo {
-	public static final int TOTAL_PASSOS_PISO = 5;
+	public static final int TOTAL_PASSOS_PISO = 4;
 	public static final int COMPRIMENTO = 100;
 	Sentido sentido;
 	Bloco piso;
@@ -12,11 +12,6 @@ public class Pivo {
 
 	Pivo() {
 		sentido = Sentido.ACIMA;
-		initPassos();
-	}
-
-	void initPassos() {
-		passos = 3;
 	}
 
 	boolean podeCaminharNoPiso() {
@@ -41,7 +36,6 @@ public class Pivo {
 	}
 
 	void horario() {
-		initPassos();
 		if (sentido == Sentido.ACIMA) {
 			sentido = Sentido.DIREITA;
 		} else if (sentido == Sentido.DIREITA) {
@@ -54,7 +48,6 @@ public class Pivo {
 	}
 
 	void antiHorario() {
-		initPassos();
 		if (sentido == Sentido.ACIMA) {
 			sentido = Sentido.ESQUERDA;
 		} else if (sentido == Sentido.ESQUERDA) {
@@ -71,5 +64,9 @@ public class Pivo {
 		lado /= 2;
 		int m = lado / 2;
 		g2.fillOval(x + m, y + m, lado, lado);
+	}
+
+	public String toString() {
+		return "Pivo[sentido=" + sentido + ", passos=" + passos + "]";
 	}
 }
