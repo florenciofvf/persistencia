@@ -10,7 +10,6 @@ public class Bloco {
 	private final int[] arrayYFront = new int[4];
 	private final int[] arrayXLado = new int[4];
 	private final int[] arrayYLado = new int[4];
-	private Color colorAnterior;
 	private final Color color;
 	protected boolean vazio;
 	private Bloco anterior;
@@ -21,7 +20,6 @@ public class Bloco {
 
 	public Bloco(boolean vazio) {
 		this.color = LabirintoUtil.createColor();
-		this.colorAnterior = color;
 		this.vazio = vazio;
 	}
 
@@ -124,10 +122,6 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.back.ponto1, 1);
 		copiar(arrayXLado, arrayYLado, controle.back.ponto4, 2);
 		copiar(arrayXLado, arrayYLado, controle.front.ponto4, 3);
-
-		if (anterior != null) {
-			colorAnterior = anterior.color;
-		}
 	}
 
 	void calcular3DDireito(Ponto origem, Vetor vetor2, Vetor vetor3) {
@@ -164,10 +158,6 @@ public class Bloco {
 		copiar(arrayXLado, arrayYLado, controle.front.ponto2, 1);
 		copiar(arrayXLado, arrayYLado, controle.front.ponto3, 2);
 		copiar(arrayXLado, arrayYLado, controle.back.ponto3, 3);
-
-		if (anterior != null) {
-			colorAnterior = anterior.color;
-		}
 	}
 
 	void desenhar3DEsquerdo(Graphics2D g2) {
@@ -184,7 +174,7 @@ public class Bloco {
 		}
 		g2.setColor(color);
 		g2.fillPolygon(arrayXLado, arrayYLado, 4);
-		g2.setColor(colorAnterior);
+		g2.setColor(anterior != null ? anterior.color : color);
 		g2.fillPolygon(arrayXFront, arrayYFront, 4);
 		g2.setColor(COR_BORDA);
 		g2.drawPolygon(arrayXFront, arrayYFront, 4);
