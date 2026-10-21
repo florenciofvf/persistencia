@@ -43,7 +43,7 @@ public class FormularioLabirinto extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				painelDesenho.init();
+				new InitAction().actionPerformed(null);
 			}
 
 			@Override
@@ -51,6 +51,15 @@ public class FormularioLabirinto extends JFrame {
 				matriz.setLado(40);
 			}
 		});
+	}
+
+	class InitAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			painelDesenho.init();
+		}
 	}
 
 	class GirarAction extends AbstractAction {
@@ -122,9 +131,11 @@ public class FormularioLabirinto extends JFrame {
 			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "para_esquerda");
 			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "para_direita");
 			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "caminhar");
+			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "init");
 			getActionMap().put("para_esquerda", new GirarAction(true));
 			getActionMap().put("para_direita", new GirarAction(false));
 			getActionMap().put("caminhar", new CaminharAction());
+			getActionMap().put("init", new InitAction());
 		}
 
 		void init() {
