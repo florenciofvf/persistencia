@@ -7,6 +7,15 @@ public final class Vetor {
 	float x;
 	float y;
 
+	public Vetor(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public Vetor() {
+		this(0, 0);
+	}
+
 	void alterarTamanho(int valor) {
 		normalizar();
 		x = x * valor;

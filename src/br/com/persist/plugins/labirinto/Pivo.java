@@ -5,7 +5,8 @@ import java.awt.Graphics2D;
 
 public class Pivo {
 	public static final int TOTAL_PASSOS_PISO = 4;
-	public static final int COMPRIMENTO = 100;
+	int comprimentoDelta;
+	int comprimento;
 	Sentido sentido;
 	Bloco piso;
 	int passos;

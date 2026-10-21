@@ -83,8 +83,6 @@ public class FormularioLabirinto extends JFrame {
 		}
 	}
 
-	int comprimentoDelta = 50;
-
 	class CaminharAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 
@@ -94,7 +92,7 @@ public class FormularioLabirinto extends JFrame {
 			if (pivo.podeCaminharNoPiso()) {
 				pivo.caminhar();
 				painelDesenho.selecionarBlocos();
-				painelDesenho.configurarFaces(comprimentoDelta);
+				painelDesenho.configurarFaces(pivo.comprimentoDelta);
 				return;
 			}
 			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
@@ -143,18 +141,21 @@ public class FormularioLabirinto extends JFrame {
 			int metadeAltura = getHeight() / 2;
 			origem.x = metadeLargura;
 			origem.y = metadeAltura;
+			Vetor vetor = new Vetor(origem.x, origem.y);
+			Pivo pivo = matriz.pivo;
+			pivo.comprimento = (int) (vetor.getComprimento() * .3) / 2;
+			pivo.comprimentoDelta = pivo.comprimento / 2;
 			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight())
-					+ Pivo.COMPRIMENTO;
+					+ pivo.comprimento;
 			selecionarBlocos();
 			configurarFaces(0);
-			Pivo pivo = matriz.pivo;
 			pivo.passos = 1;
 		}
 
 		void initOcupado() {
-			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight())
-					+ Pivo.COMPRIMENTO;
 			Pivo pivo = matriz.pivo;
+			comprimentoVetores = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight())
+					+ pivo.comprimento;
 			pivo.passos = 0;
 		}
 
