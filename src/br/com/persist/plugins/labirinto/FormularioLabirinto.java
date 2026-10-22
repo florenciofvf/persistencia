@@ -95,12 +95,12 @@ public class FormularioLabirinto extends JFrame {
 			}
 			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
 			if (blocos.size() < 2) {
-				status.mensagem("Sem blocos a frente");
+				status.mensagem(LabirintoMensagens.getString("msg.sem_blocos_a_frente"));
 				return;
 			}
 			Bloco proximoPiso = blocos.get(1);
 			if (!proximoPiso.vazio) {
-				status.mensagem("O bloco nao esta vazio");
+				status.mensagem(LabirintoMensagens.getString("msg.bloco_nao_vazio"));
 				return;
 			}
 			pivo.ocupar(proximoPiso);
