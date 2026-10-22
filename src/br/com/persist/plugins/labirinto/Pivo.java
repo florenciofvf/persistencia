@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Pivo {
-	public static final int TOTAL_PASSOS_PISO = 5;
+	public static final int TOTAL_PASSOS_PISO = 8;
 	double comprimentoFracao;
 	private int passos;
 	Sentido sentido;
