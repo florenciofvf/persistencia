@@ -14,8 +14,8 @@ public class Pivo {
 		sentido = Sentido.ACIMA;
 	}
 
-	double calibrar() {
-		return comprimentoFracao + (passos * comprimentoFracao);
+	double calibrar(double comprimento) {
+		return comprimento + comprimentoFracao + (passos * comprimentoFracao);
 	}
 
 	boolean podeCaminharNoPiso() {

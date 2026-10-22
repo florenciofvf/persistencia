@@ -152,7 +152,7 @@ public class FormularioLabirinto extends JFrame {
 
 			Pivo pivo = matriz.pivo;
 			pivo.comprimentoFracao = comprimentoFracao;
-			int comprimentoVetores = (int) pivo.calibrar();
+			int comprimentoVetores = (int) pivo.calibrar(comprimento);
 
 			initVetores(comprimentoVetores);
 			for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
