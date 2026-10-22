@@ -12,9 +12,9 @@ public class Matriz {
 	private final int linhas;
 	private int indiceColuna;
 	private int indiceLinha;
+	private int armazenados;
 	private int lado = 40;
 	protected Pivo pivo;
-	private int total;
 
 	public Matriz(int linhas, int colunas) {
 		this.linhas = linhas;
@@ -22,12 +22,8 @@ public class Matriz {
 		blocos = new Bloco[linhas][colunas];
 	}
 
-	public int getTamanho() {
+	public int getCapacidade() {
 		return linhas * colunas;
-	}
-
-	public int getTotal() {
-		return total;
 	}
 
 	public void setLado(int lado) {
@@ -35,11 +31,14 @@ public class Matriz {
 	}
 
 	public void add(Bloco bloco) {
+		if (bloco == null || armazenados >= getCapacidade()) {
+			return;
+		}
 		if (bloco.pivo != null) {
 			pivo = bloco.pivo;
 		}
 		blocos[indiceLinha][indiceColuna] = bloco;
-		total++;
+		armazenados++;
 		bloco.linha = indiceLinha;
 		bloco.coluna = indiceColuna;
 		indiceColuna++;
@@ -96,16 +95,8 @@ public class Matriz {
 		}
 	}
 
-	public void preencher() {
-		for (int linha = 0; linha < linhas; linha++) {
-			for (int coluna = 0; coluna < colunas; coluna++) {
-				add(new Bloco(false));
-			}
-		}
-	}
-
 	public void completar() {
-		while (total < getTamanho()) {
+		while (armazenados < getCapacidade()) {
 			add(new Bloco(false));
 		}
 	}
