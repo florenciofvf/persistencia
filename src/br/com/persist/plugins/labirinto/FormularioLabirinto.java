@@ -159,6 +159,10 @@ public class FormularioLabirinto extends JFrame {
 					terreno.calcular3DGiroE(origem, vetor2, vetor3, linha);
 				}
 				initVetoresEsquerdo(largura);
+				for (Bloco item : blocosFrente) {
+					item.calcular3DFrenteGiroE(origem, vetor2, vetor3);
+				}
+				initVetoresEsquerdo(largura);
 				for (Bloco item : blocosDireito) {
 					item.calcular3DDireito(origem, vetor2, vetor3);
 				}
@@ -181,6 +185,10 @@ public class FormularioLabirinto extends JFrame {
 				initVetoresDireito(largura);
 				for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
 					terreno.calcular3DGiroD(origem, vetor1, vetor4, linha, getWidth());
+				}
+				initVetoresDireito(largura);
+				for (Bloco item : blocosFrente) {
+					item.calcular3DFrenteGiroD(origem, vetor1, vetor4, getWidth());
 				}
 				initVetoresDireito(largura);
 				for (Bloco item : blocosEsquerdo) {
@@ -206,6 +214,7 @@ public class FormularioLabirinto extends JFrame {
 			Pivo pivo = matriz.pivo;
 			pivo.antiHorario();
 			blocosDireito = matriz.getBlocosLadoDireito(pivo);
+			blocosFrente = matriz.getBlocosNaFrente(pivo);
 
 			int metadeLargura = getWidth() / 2;
 			giroControle.parcela = metadeLargura / giroControle.parcelaMaximo;
@@ -229,6 +238,7 @@ public class FormularioLabirinto extends JFrame {
 			Pivo pivo = matriz.pivo;
 			pivo.horario();
 			blocosEsquerdo = matriz.getBlocosLadoEsquerdo(pivo);
+			blocosFrente = matriz.getBlocosNaFrente(pivo);
 
 			int metadeLargura = getWidth() / 2;
 			giroControle.parcela = metadeLargura / giroControle.parcelaMaximo;
@@ -334,12 +344,22 @@ public class FormularioLabirinto extends JFrame {
 					Bloco item = blocosDireito.get(i);
 					item.desenhar3DDireito(g2);
 				}
+				for (int i = blocosFrente.size() - 1; i >= 0; i--) {
+					Bloco item = blocosFrente.get(i);
+					item.desenhar3DFrente(g2);
+				}
+				matriz.desenhar2D(g2);
 			} else {
 				terreno.desenhar3DGiroD(g2);
 				for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 					Bloco item = blocosEsquerdo.get(i);
 					item.desenhar3DEsquerdo(g2);
 				}
+				for (int i = blocosFrente.size() - 1; i >= 0; i--) {
+					Bloco item = blocosFrente.get(i);
+					item.desenhar3DFrente(g2);
+				}
+				matriz.desenhar2D(g2);
 			}
 		}
 

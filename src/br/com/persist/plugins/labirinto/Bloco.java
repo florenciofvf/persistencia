@@ -75,6 +75,46 @@ public class Bloco {
 		copiar(arrayXFront, arrayYFront, controle.front.ponto4, 3);
 	}
 
+	void calcular3DFrenteGiroE(Ponto origem, Vetor vetor2, Vetor vetor3) {
+		if (vazio) {
+			vetor2.reduzir();
+			vetor3.reduzir();
+			return;
+		}
+
+		controle.front.ponto2.copiar(origem, vetor2);
+		controle.front.ponto3.copiar(origem, vetor3);
+
+		controle.front.ponto1.x = 0;
+		controle.front.ponto1.y = controle.front.ponto2.y;
+		copiar(arrayXFront, arrayYFront, controle.front.ponto1, 0);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto2, 1);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto3, 2);
+		controle.front.ponto4.x = 0;
+		controle.front.ponto4.y = controle.front.ponto3.y;
+		copiar(arrayXFront, arrayYFront, controle.front.ponto4, 3);
+	}
+
+	void calcular3DFrenteGiroD(Ponto origem, Vetor vetor1, Vetor vetor4, int largura) {
+		if (vazio) {
+			vetor1.reduzir();
+			vetor4.reduzir();
+			return;
+		}
+
+		controle.front.ponto1.copiar(origem, vetor1);
+		controle.front.ponto4.copiar(origem, vetor4);
+
+		copiar(arrayXFront, arrayYFront, controle.front.ponto1, 0);
+		controle.front.ponto2.x = largura;
+		controle.front.ponto2.y = controle.front.ponto1.y;
+		copiar(arrayXFront, arrayYFront, controle.front.ponto2, 1);
+		controle.front.ponto3.x = largura;
+		controle.front.ponto3.y = controle.front.ponto4.y;
+		copiar(arrayXFront, arrayYFront, controle.front.ponto3, 2);
+		copiar(arrayXFront, arrayYFront, controle.front.ponto4, 3);
+	}
+
 	private void copiar(int[] arrayX, int[] arrayY, Ponto ponto, int indice) {
 		arrayX[indice] = ponto.x;
 		arrayY[indice] = ponto.y;
