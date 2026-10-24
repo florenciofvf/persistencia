@@ -157,8 +157,8 @@ public class FormularioLabirinto extends JFrame {
 
 			void processarDireito() {
 				int largura = getHeight() - (repeticoes * parcela);
-				vetor1.init(-largura, origem.y);
-				vetor4.init(-largura, -origem.y);
+				vetor1.init(-largura, -origem.y);
+				vetor4.init(-largura, origem.y);
 				configurarFacesDireito();
 				origem.x -= parcela;
 				repeticoes++;
