@@ -148,34 +148,50 @@ public class FormularioLabirinto extends JFrame {
 
 			void processarEsquerdo() {
 				int largura = getHeight() - (repeticoes * parcela);
-				vetor2.init(largura, -origem.y);
-				vetor3.init(largura, origem.y);
-				configurarFacesEsquerdo();
+				configurarFacesEsquerdo(largura);
 				origem.x += parcela;
 				repeticoes++;
 			}
 
-			void processarDireito() {
-				int largura = getHeight() - (repeticoes * parcela);
-				vetor1.init(-largura, -origem.y);
-				vetor4.init(-largura, origem.y);
-				configurarFacesDireito();
-				origem.x -= parcela;
-				repeticoes++;
-			}
-
-			void configurarFacesEsquerdo() {
+			void configurarFacesEsquerdo(int largura) {
+				initVetoresEsquerdo(largura);
+				for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
+					terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4, linha);
+				}
+				initVetoresEsquerdo(largura);
 				for (Bloco item : blocosDireito) {
 					item.calcular3DDireito(origem, vetor2, vetor3);
 				}
 				repaint();
 			}
 
-			void configurarFacesDireito() {
+			private void initVetoresEsquerdo(int largura) {
+				vetor2.init(largura, -origem.y);
+				vetor3.init(largura, origem.y);
+			}
+
+			void processarDireito() {
+				int largura = getHeight() - (repeticoes * parcela);
+				configurarFacesDireito(largura);
+				origem.x -= parcela;
+				repeticoes++;
+			}
+
+			void configurarFacesDireito(int largura) {
+				initVetoresDireito(largura);
+				for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
+					terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4, linha);
+				}
+				initVetoresDireito(largura);
 				for (Bloco item : blocosEsquerdo) {
 					item.calcular3DEsquerdo(origem, vetor1, vetor4);
 				}
 				repaint();
+			}
+
+			private void initVetoresDireito(int largura) {
+				vetor1.init(-largura, -origem.y);
+				vetor4.init(-largura, origem.y);
 			}
 		}
 
@@ -312,6 +328,7 @@ public class FormularioLabirinto extends JFrame {
 		}
 
 		private void desenharGiro(Graphics2D g2) {
+			terreno.desenhar3D(g2);
 			if (giroControle.esquerdo) {
 				for (int i = blocosDireito.size() - 1; i >= 0; i--) {
 					Bloco item = blocosDireito.get(i);
