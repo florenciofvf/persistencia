@@ -139,13 +139,15 @@ public class FormularioLabirinto extends JFrame {
 			Vetor vetor2 = new Vetor();
 			Vetor vetor3 = new Vetor();
 			Vetor vetor4 = new Vetor();
+			int parcelaMaximo = 5;
 			boolean processando;
 			double comprimento;
 			boolean esquerdo;
 			int repeticoes;
+			int parcela;
 
 			void processarEsquerdo() {
-				int deslocamentoX = origem.x + (repeticoes * 20);
+				int deslocamentoX = origem.x + (repeticoes * parcela);
 				comprimento = LabirintoUtil.comprimento(deslocamentoX, origem.y, getWidth(), getHeight());
 				configurarFacesEsquerdo();
 				repeticoes++;
@@ -189,6 +191,8 @@ public class FormularioLabirinto extends JFrame {
 			pivo.antiHorario();
 			blocosDireito = matriz.getBlocosLadoDireito(pivo);
 
+			int metadeLargura = getWidth() / 2;
+			giroControle.parcela = metadeLargura / giroControle.parcelaMaximo;
 			giroControle.origem.x = 0;
 			giroControle.origem.y = getHeight() / 2;
 
@@ -205,7 +209,7 @@ public class FormularioLabirinto extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (giroControle.repeticoes >= 5) {
+			if (giroControle.repeticoes >= giroControle.parcelaMaximo) {
 				giroControle.processando = false;
 				timerGiroControle.stop();
 				processar();
