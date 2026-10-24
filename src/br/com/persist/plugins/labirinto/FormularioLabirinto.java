@@ -147,8 +147,8 @@ public class FormularioLabirinto extends JFrame {
 
 			void processarEsquerdo() {
 				int largura = getHeight() - (repeticoes * parcela);
-				vetor2.init(largura, origem.y);
-				vetor3.init(largura, -origem.y);
+				vetor2.init(largura, -origem.y);
+				vetor3.init(largura, origem.y);
 				configurarFacesEsquerdo();
 				origem.x += parcela;
 				repeticoes++;
@@ -184,7 +184,7 @@ public class FormularioLabirinto extends JFrame {
 			giroControle.origem.y = getHeight() / 2;
 
 			if (timerGiroControle == null) {
-				timerGiroControle = new Timer(1000, this);
+				timerGiroControle = new Timer(100, this);
 			}
 			timerGiroControle.start();
 		}
