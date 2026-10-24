@@ -120,6 +120,7 @@ public class FormularioLabirinto extends JFrame {
 		private final transient Vetor vetor3 = new Vetor();
 		private final transient Vetor vetor4 = new Vetor();
 		private static final long serialVersionUID = 1L;
+		private int velocidadeGiro = 100;
 		private Timer timerGiroControle;
 
 		PainelDesenho() {
@@ -155,12 +156,24 @@ public class FormularioLabirinto extends JFrame {
 			}
 
 			void processarDireito() {
-				// ---
+				int largura = getHeight() - (repeticoes * parcela);
+				vetor1.init(-largura, origem.y);
+				vetor4.init(-largura, -origem.y);
+				configurarFacesDireito();
+				origem.x -= parcela;
+				repeticoes++;
 			}
 
 			void configurarFacesEsquerdo() {
 				for (Bloco item : blocosDireito) {
 					item.calcular3DDireito(origem, vetor2, vetor3);
+				}
+				repaint();
+			}
+
+			void configurarFacesDireito() {
+				for (Bloco item : blocosEsquerdo) {
+					item.calcular3DEsquerdo(origem, vetor1, vetor4);
 				}
 				repaint();
 			}
@@ -184,14 +197,32 @@ public class FormularioLabirinto extends JFrame {
 			giroControle.origem.y = getHeight() / 2;
 
 			if (timerGiroControle == null) {
-				timerGiroControle = new Timer(100, this);
+				timerGiroControle = new Timer(velocidadeGiro, this);
 			}
 			timerGiroControle.start();
 		}
 
 		void girarDireito() {
-			// Pivo pivo = matriz.pivo;
-			// pivo.horario();
+			if (giroControle.processando) {
+				return;
+			}
+			giroControle.processando = true;
+			giroControle.esquerdo = false;
+			giroControle.repeticoes = 0;
+
+			Pivo pivo = matriz.pivo;
+			pivo.horario();
+			blocosEsquerdo = matriz.getBlocosLadoEsquerdo(pivo);
+
+			int metadeLargura = getWidth() / 2;
+			giroControle.parcela = metadeLargura / giroControle.parcelaMaximo;
+			giroControle.origem.x = getWidth();
+			giroControle.origem.y = getHeight() / 2;
+
+			if (timerGiroControle == null) {
+				timerGiroControle = new Timer(velocidadeGiro, this);
+			}
+			timerGiroControle.start();
 		}
 
 		@Override
@@ -285,6 +316,11 @@ public class FormularioLabirinto extends JFrame {
 				for (int i = blocosDireito.size() - 1; i >= 0; i--) {
 					Bloco item = blocosDireito.get(i);
 					item.desenhar3DDireito(g2);
+				}
+			} else {
+				for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
+					Bloco item = blocosEsquerdo.get(i);
+					item.desenhar3DEsquerdo(g2);
 				}
 			}
 		}
