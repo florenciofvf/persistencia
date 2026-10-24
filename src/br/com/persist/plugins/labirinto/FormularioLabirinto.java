@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -16,6 +17,7 @@ import java.util.Objects;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.LabelTemp;
@@ -72,13 +74,11 @@ public class FormularioLabirinto extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Pivo pivo = matriz.pivo;
 			if (esquerda) {
-				pivo.antiHorario();
+				painelDesenho.girarEsquerdo();
 			} else {
-				pivo.horario();
+				painelDesenho.girarDireito();
 			}
-			painelDesenho.processar();
 		}
 	}
 
@@ -108,7 +108,8 @@ public class FormularioLabirinto extends JFrame {
 		}
 	}
 
-	class PainelDesenho extends Panel {
+	class PainelDesenho extends Panel implements ActionListener {
+		private final transient GiroControle giroControle = new GiroControle();
 		private transient List<Bloco> blocosEsquerdo = new ArrayList<>();
 		private transient List<Bloco> blocosDireito = new ArrayList<>();
 		private transient List<Bloco> blocosFrente = new ArrayList<>();
@@ -119,6 +120,7 @@ public class FormularioLabirinto extends JFrame {
 		private final transient Vetor vetor3 = new Vetor();
 		private final transient Vetor vetor4 = new Vetor();
 		private static final long serialVersionUID = 1L;
+		private Timer timerGiroControle;
 
 		PainelDesenho() {
 			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "para_esquerda");
@@ -129,6 +131,91 @@ public class FormularioLabirinto extends JFrame {
 			getActionMap().put("para_direita", new GirarAction(false));
 			getActionMap().put("caminhar", new CaminharAction());
 			getActionMap().put("init", new InitAction());
+		}
+
+		class GiroControle {
+			Ponto origem = new Ponto();
+			Vetor vetor1 = new Vetor();
+			Vetor vetor2 = new Vetor();
+			Vetor vetor3 = new Vetor();
+			Vetor vetor4 = new Vetor();
+			boolean processando;
+			double comprimento;
+			boolean esquerdo;
+			int repeticoes;
+
+			void processarEsquerdo() {
+				int deslocamentoX = origem.x + (repeticoes * 20);
+				comprimento = LabirintoUtil.comprimento(deslocamentoX, origem.y, getWidth(), getHeight());
+				configurarFacesEsquerdo();
+				repeticoes++;
+			}
+
+			void processarDireito() {
+				// ---
+			}
+
+			void configurarFacesEsquerdo() {
+				initVetores((int) comprimento);
+				for (Bloco item : blocosDireito) {
+					item.calcular3DDireito(origem, vetor2, vetor3);
+				}
+				repaint();
+			}
+
+			void initVetores(int comprimento) {
+				vetor1.init(-comprimento);
+				vetor2.init(comprimento);
+				vetor3.init(comprimento);
+				vetor4.init(-comprimento);
+
+				int grau = 35;
+				vetor1.rotacionar(grau);
+				vetor2.rotacionar(-grau);
+				vetor3.rotacionar(grau);
+				vetor4.rotacionar(-grau);
+			}
+		}
+
+		void girarEsquerdo() {
+			if (giroControle.processando) {
+				return;
+			}
+			giroControle.processando = true;
+			giroControle.esquerdo = true;
+			giroControle.repeticoes = 0;
+
+			Pivo pivo = matriz.pivo;
+			pivo.antiHorario();
+			blocosDireito = matriz.getBlocosLadoDireito(pivo);
+
+			giroControle.origem.x = 0;
+			giroControle.origem.y = getHeight() / 2;
+
+			if (timerGiroControle == null) {
+				timerGiroControle = new Timer(1000, this);
+			}
+			timerGiroControle.start();
+		}
+
+		void girarDireito() {
+			// Pivo pivo = matriz.pivo;
+			// pivo.horario();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (giroControle.repeticoes >= 5) {
+				giroControle.processando = false;
+				timerGiroControle.stop();
+				processar();
+			} else {
+				if (giroControle.esquerdo) {
+					giroControle.processarEsquerdo();
+				} else {
+					giroControle.processarDireito();
+				}
+			}
 		}
 
 		void processar() {
@@ -195,6 +282,15 @@ public class FormularioLabirinto extends JFrame {
 			super.paint(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			if (giroControle.processando) {
+				if (giroControle.esquerdo) {
+					for (int i = blocosDireito.size() - 1; i >= 0; i--) {
+						Bloco item = blocosDireito.get(i);
+						item.desenhar3DDireito(g2);
+					}
+				}
+				return;
+			}
 			terreno.desenhar3D(g2);
 			for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 				Bloco item = blocosEsquerdo.get(i);
