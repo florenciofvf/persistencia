@@ -33,10 +33,10 @@ public class FormularioLabirinto extends JFrame {
 		super(LabirintoMensagens.getString(LabirintoConstantes.LABEL_LABIRINTO), gc);
 		this.matriz = Objects.requireNonNull(matriz);
 		matriz.setLado(10);
-		ini();
+		init();
 	}
 
-	private void ini() {
+	private void init() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelDesenho);
