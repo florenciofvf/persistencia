@@ -141,15 +141,16 @@ public class FormularioLabirinto extends JFrame {
 			Vetor vetor4 = new Vetor();
 			int parcelaMaximo = 5;
 			boolean processando;
-			double comprimento;
 			boolean esquerdo;
 			int repeticoes;
 			int parcela;
 
 			void processarEsquerdo() {
-				origem.x += parcela;
-				comprimento = LabirintoUtil.comprimento(origem.x, origem.y, getWidth(), getHeight());
+				int largura = getHeight() - (repeticoes * parcela);
+				vetor2.init(largura, origem.y);
+				vetor3.init(largura, -origem.y);
 				configurarFacesEsquerdo();
+				origem.x += parcela;
 				repeticoes++;
 			}
 
@@ -158,24 +159,10 @@ public class FormularioLabirinto extends JFrame {
 			}
 
 			void configurarFacesEsquerdo() {
-				initVetores((int) comprimento);
 				for (Bloco item : blocosDireito) {
 					item.calcular3DDireito(origem, vetor2, vetor3);
 				}
 				repaint();
-			}
-
-			void initVetores(int comprimento) {
-				vetor1.init(-comprimento);
-				vetor2.init(comprimento);
-				vetor3.init(comprimento);
-				vetor4.init(-comprimento);
-
-				int grau = 35;
-				vetor1.rotacionar(grau);
-				vetor2.rotacionar(-grau);
-				vetor3.rotacionar(grau);
-				vetor4.rotacionar(-grau);
 			}
 		}
 
@@ -197,7 +184,7 @@ public class FormularioLabirinto extends JFrame {
 			giroControle.origem.y = getHeight() / 2;
 
 			if (timerGiroControle == null) {
-				timerGiroControle = new Timer(100, this);
+				timerGiroControle = new Timer(1000, this);
 			}
 			timerGiroControle.start();
 		}

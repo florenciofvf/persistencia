@@ -33,6 +33,11 @@ public final class Vetor {
 		this.y = 0;
 	}
 
+	void init(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+
 	private void normalizar() {
 		double comprimento = getComprimento();
 		x = x / comprimento;
