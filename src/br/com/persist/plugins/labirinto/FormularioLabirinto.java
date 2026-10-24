@@ -283,14 +283,22 @@ public class FormularioLabirinto extends JFrame {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			if (giroControle.processando) {
-				if (giroControle.esquerdo) {
-					for (int i = blocosDireito.size() - 1; i >= 0; i--) {
-						Bloco item = blocosDireito.get(i);
-						item.desenhar3DDireito(g2);
-					}
-				}
-				return;
+				desenharGiro(g2);
+			} else {
+				desenhar(g2);
 			}
+		}
+
+		private void desenharGiro(Graphics2D g2) {
+			if (giroControle.esquerdo) {
+				for (int i = blocosDireito.size() - 1; i >= 0; i--) {
+					Bloco item = blocosDireito.get(i);
+					item.desenhar3DDireito(g2);
+				}
+			}
+		}
+
+		private void desenhar(Graphics2D g2) {
 			terreno.desenhar3D(g2);
 			for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 				Bloco item = blocosEsquerdo.get(i);
