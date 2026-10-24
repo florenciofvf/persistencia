@@ -8,11 +8,15 @@ class Controle {
 		front.lado = LabirintoUtil.altura(front.ponto1, front.ponto4);
 	}
 
+	void calcularLadoBackE() {
+		back.lado = LabirintoUtil.altura(back.ponto1, back.ponto4);
+	}
+
 	void calcularLadoFrontD() {
 		front.lado = LabirintoUtil.altura(front.ponto2, front.ponto3);
 	}
 
-	void calcularLadoBackE() {
-		back.lado = LabirintoUtil.altura(back.ponto1, back.ponto4);
+	void calcularLadoBackD() {
+		back.lado = LabirintoUtil.altura(back.ponto2, back.ponto3);
 	}
 }

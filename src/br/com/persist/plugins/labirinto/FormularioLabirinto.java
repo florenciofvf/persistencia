@@ -156,7 +156,7 @@ public class FormularioLabirinto extends JFrame {
 			void configurarFacesEsquerdo(int largura) {
 				initVetoresEsquerdo(largura);
 				for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
-					terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4, linha);
+					terreno.calcular3DGiroE(origem, vetor2, vetor3, linha);
 				}
 				initVetoresEsquerdo(largura);
 				for (Bloco item : blocosDireito) {
@@ -180,7 +180,7 @@ public class FormularioLabirinto extends JFrame {
 			void configurarFacesDireito(int largura) {
 				initVetoresDireito(largura);
 				for (int linha = Terreno.LINHAS - 1; linha >= 0; linha--) {
-					terreno.calcular3D(origem, vetor1, vetor2, vetor3, vetor4, linha);
+					terreno.calcular3DGiroD(origem, vetor1, vetor4, linha, getWidth());
 				}
 				initVetoresDireito(largura);
 				for (Bloco item : blocosEsquerdo) {
@@ -328,13 +328,14 @@ public class FormularioLabirinto extends JFrame {
 		}
 
 		private void desenharGiro(Graphics2D g2) {
-			terreno.desenhar3D(g2);
 			if (giroControle.esquerdo) {
+				terreno.desenhar3DGiroE(g2);
 				for (int i = blocosDireito.size() - 1; i >= 0; i--) {
 					Bloco item = blocosDireito.get(i);
 					item.desenhar3DDireito(g2);
 				}
 			} else {
+				terreno.desenhar3DGiroD(g2);
 				for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
 					Bloco item = blocosEsquerdo.get(i);
 					item.desenhar3DEsquerdo(g2);
