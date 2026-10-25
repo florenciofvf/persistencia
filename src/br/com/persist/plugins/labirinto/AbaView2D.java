@@ -154,6 +154,7 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 		private class OuvinteMouse extends MouseAdapter {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				requestFocus();
 				if (matriz == null) {
 					return;
 				}
