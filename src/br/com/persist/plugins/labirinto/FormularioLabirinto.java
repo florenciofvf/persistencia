@@ -120,7 +120,7 @@ public class FormularioLabirinto extends JFrame {
 		private final transient Vetor vetor3 = new Vetor();
 		private final transient Vetor vetor4 = new Vetor();
 		private static final long serialVersionUID = 1L;
-		private int velocidadeGiro = 100;
+		private int velocidadeGiro = 20;
 		private Timer timerGiroControle;
 
 		PainelDesenho() {
