@@ -65,7 +65,7 @@ public class Pivo {
 	}
 
 	public void desenhar2D(int x, int y, int lado, Graphics2D g2) {
-		g2.setColor(Color.RED);
+		g2.setColor(Color.BLACK);
 		int met = lado / 2;
 		int m = met / 2;
 		g2.fillOval(x + m, y + m, met, met);
@@ -73,7 +73,7 @@ public class Pivo {
 	}
 
 	private void sentido(int x, int y, int lado, Graphics2D g2) {
-		g2.setColor(Color.BLACK);
+		g2.setColor(Color.WHITE);
 		int met = lado / 2;
 		int m = met / 2;
 		if (sentido == Sentido.ACIMA) {
