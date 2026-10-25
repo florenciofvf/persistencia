@@ -22,6 +22,7 @@ import br.com.persist.marca.XML;
 public class AbaView2D extends Panel implements FormularioLabirintoListener {
 	public static final String MSG_FAVOR_CONSTRUIR_MATRIZ = "msg.favor_construir_matriz";
 	private PainelDesenho painelDesenho = new PainelDesenho();
+	private FormularioLabirinto formularioLabirinto;
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final AbaViewXML abaViewXML;
@@ -70,9 +71,9 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString(MSG_FAVOR_CONSTRUIR_MATRIZ));
 				return;
 			}
-			FormularioLabirinto form = new FormularioLabirinto(matriz, getGraphicsConfiguration());
-			form.setListener(AbaView2D.this);
-			form.setVisible(true);
+			formularioLabirinto = new FormularioLabirinto(matriz, getGraphicsConfiguration());
+			formularioLabirinto.setListener(AbaView2D.this);
+			formularioLabirinto.setVisible(true);
 		}
 
 		@Override
@@ -125,13 +126,21 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 
 			private void clickBloco(int x, int y) {
 				if (matriz.clickBloco(x, y)) {
+					notificar();
 					repaint();
 				}
 			}
 
 			private void clickPivo(int x, int y) {
 				if (matriz.clickPivo(x, y)) {
+					notificar();
 					repaint();
+				}
+			}
+
+			private void notificar() {
+				if (formularioLabirinto != null && formularioLabirinto.isVisible()) {
+					formularioLabirinto.processar();
 				}
 			}
 		}
@@ -146,6 +155,11 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 				matriz.desenhar2D(g2);
 			}
 		}
+	}
+
+	@Override
+	public void fechado(FormularioLabirinto formulario) {
+		this.formularioLabirinto = null;
 	}
 
 	@Override
