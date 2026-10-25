@@ -121,6 +121,9 @@ public class Bloco {
 	}
 
 	void desenhar3DFrente(Graphics2D g2) {
+		if (vazio) {
+			return;
+		}
 		g2.setColor(color);
 		g2.fillPolygon(arrayXFront, arrayYFront, 4);
 		g2.setColor(COR_BORDA);
