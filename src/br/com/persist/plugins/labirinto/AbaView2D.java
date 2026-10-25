@@ -113,6 +113,7 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 				if (matriz == null) {
 					return;
 				}
+				matriz.ladoPadrao();
 				int x = e.getX();
 				int y = e.getY();
 				if (e.isShiftDown()) {
@@ -141,7 +142,7 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			if (matriz != null) {
-				matriz.setLado(40);
+				matriz.ladoPadrao();
 				matriz.desenhar2D(g2);
 			}
 		}

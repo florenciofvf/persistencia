@@ -7,13 +7,14 @@ import java.util.List;
 import br.com.persist.assistencia.Constantes;
 
 public class Matriz {
+	private static final int LADO_PADRAO = 40;
+	private int lado = LADO_PADRAO;
 	private final Bloco[][] blocos;
 	private final int colunas;
 	private final int linhas;
 	private int indiceColuna;
 	private int indiceLinha;
 	private int armazenados;
-	private int lado = 40;
 	protected Pivo pivo;
 
 	public Matriz(int linhas, int colunas) {
@@ -27,7 +28,14 @@ public class Matriz {
 	}
 
 	public void setLado(int lado) {
+		if (lado < 10) {
+			return;
+		}
 		this.lado = lado;
+	}
+
+	public void ladoPadrao() {
+		lado = LADO_PADRAO;
 	}
 
 	public void add(Bloco bloco) {
