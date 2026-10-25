@@ -54,6 +54,7 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 		private Action destacarAcao = acaoIcone("label.destacar", Icones.ARRASTAR2);
 
 		private Toolbar() {
+			botoesSemFocus = true;
 			super.ini(new Nil(), BAIXAR);
 			addButton(gerarConteudoAcao);
 			addButton(destacarAcao);

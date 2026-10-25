@@ -74,6 +74,7 @@ public abstract class BarraButton extends ToolBar
 	private Label labelNomeBackup = new Label();
 	protected Label label = new Label();
 	protected transient Janela janela;
+	protected boolean botoesSemFocus;
 
 	public void ini(Janela janela, BarraButtonEnum... enuns) {
 		this.janela = janela;
@@ -537,6 +538,9 @@ public abstract class BarraButton extends ToolBar
 		}
 		Button button = new Button(action);
 		add(button);
+		if (botoesSemFocus) {
+			button.setFocusable(false);
+		}
 		return button;
 	}
 
