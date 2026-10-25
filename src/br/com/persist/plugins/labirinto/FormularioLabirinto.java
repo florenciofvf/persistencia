@@ -39,24 +39,6 @@ public class FormularioLabirinto extends JFrame {
 		init();
 	}
 
-	public FormularioLabirintoListener getListener() {
-		return listener;
-	}
-
-	public void setListener(FormularioLabirintoListener listener) {
-		this.listener = listener;
-	}
-
-	private void notificar() {
-		if (listener != null) {
-			listener.alterado(matriz, matriz.pivo);
-		}
-	}
-
-	void processar() {
-		painelDesenho.processar();
-	}
-
 	private void init() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -78,6 +60,58 @@ public class FormularioLabirinto extends JFrame {
 		});
 	}
 
+	public FormularioLabirintoListener getListener() {
+		return listener;
+	}
+
+	public void setListener(FormularioLabirintoListener listener) {
+		this.listener = listener;
+	}
+
+	private void notificar() {
+		if (listener != null) {
+			listener.alterado(matriz, matriz.pivo);
+		}
+	}
+
+	void processar() {
+		painelDesenho.processar();
+		notificar();
+	}
+
+	void caminhar() {
+		Pivo pivo = matriz.pivo;
+		if (pivo.podeCaminharNoPiso()) {
+			pivo.caminhar();
+			painelDesenho.processar();
+			notificar();
+			return;
+		}
+		List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
+		if (blocos.size() < 2) {
+			status.mensagem(LabirintoMensagens.getString("msg.sem_blocos_a_frente"));
+			return;
+		}
+		Bloco proximoPiso = blocos.get(1);
+		if (!proximoPiso.vazio) {
+			status.mensagem(LabirintoMensagens.getString("msg.bloco_nao_vazio"));
+			return;
+		}
+		pivo.ocupar(proximoPiso);
+		painelDesenho.processar();
+		notificar();
+	}
+
+	void girarEsquerdo() {
+		painelDesenho.girarEsquerdo();
+		notificar();
+	}
+
+	void girarDireito() {
+		painelDesenho.girarDireito();
+		notificar();
+	}
+
 	class GirarAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private final boolean esquerda;
@@ -89,11 +123,10 @@ public class FormularioLabirinto extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (esquerda) {
-				painelDesenho.girarEsquerdo();
+				girarEsquerdo();
 			} else {
-				painelDesenho.girarDireito();
+				girarDireito();
 			}
-			notificar();
 		}
 	}
 
@@ -102,26 +135,7 @@ public class FormularioLabirinto extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Pivo pivo = matriz.pivo;
-			if (pivo.podeCaminharNoPiso()) {
-				pivo.caminhar();
-				painelDesenho.processar();
-				notificar();
-				return;
-			}
-			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
-			if (blocos.size() < 2) {
-				status.mensagem(LabirintoMensagens.getString("msg.sem_blocos_a_frente"));
-				return;
-			}
-			Bloco proximoPiso = blocos.get(1);
-			if (!proximoPiso.vazio) {
-				status.mensagem(LabirintoMensagens.getString("msg.bloco_nao_vazio"));
-				return;
-			}
-			pivo.ocupar(proximoPiso);
-			painelDesenho.processar();
-			notificar();
+			caminhar();
 		}
 	}
 

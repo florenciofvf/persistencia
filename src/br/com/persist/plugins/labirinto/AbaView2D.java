@@ -6,9 +6,14 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
 
 import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
@@ -94,11 +99,48 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 		return painelDesenho.matriz;
 	}
 
+	class GirarAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private final boolean esquerda;
+
+		public GirarAction(boolean esquerda) {
+			this.esquerda = esquerda;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (formularioLabirinto != null && formularioLabirinto.isVisible()) {
+				if (esquerda) {
+					formularioLabirinto.girarEsquerdo();
+				} else {
+					formularioLabirinto.girarDireito();
+				}
+			}
+		}
+	}
+
+	class CaminharAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (formularioLabirinto != null && formularioLabirinto.isVisible()) {
+				formularioLabirinto.caminhar();
+			}
+		}
+	}
+
 	class PainelDesenho extends Panel {
 		private static final long serialVersionUID = 1L;
 		private transient Matriz matriz;
 
 		public PainelDesenho() {
+			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "para_esquerda");
+			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "para_direita");
+			inputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "caminhar");
+			getActionMap().put("para_esquerda", new GirarAction(true));
+			getActionMap().put("para_direita", new GirarAction(false));
+			getActionMap().put("caminhar", new CaminharAction());
 			addMouseListener(new OuvinteMouse());
 		}
 
