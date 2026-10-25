@@ -27,14 +27,28 @@ import br.com.persist.componente.Panel;
 public class FormularioLabirinto extends JFrame {
 	private static final long serialVersionUID = -1355576882746374912L;
 	private PainelDesenho painelDesenho = new PainelDesenho();
+	private transient FormularioLabirintoListener listener;
 	private LabelTemp status = new LabelTemp();
 	private final transient Matriz matriz;
 
 	public FormularioLabirinto(Matriz matriz, GraphicsConfiguration gc) {
 		super(LabirintoMensagens.getString(LabirintoConstantes.LABEL_LABIRINTO), gc);
 		this.matriz = Objects.requireNonNull(matriz);
-		matriz.setLado(10);
 		init();
+	}
+
+	public FormularioLabirintoListener getListener() {
+		return listener;
+	}
+
+	public void setListener(FormularioLabirintoListener listener) {
+		this.listener = listener;
+	}
+
+	private void notificar() {
+		if (listener != null) {
+			listener.alterado(matriz, matriz.pivo);
+		}
 	}
 
 	private void init() {
@@ -47,11 +61,6 @@ public class FormularioLabirinto extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				new InitAction().actionPerformed(null);
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-				matriz.setLado(40);
 			}
 		});
 	}
@@ -80,6 +89,7 @@ public class FormularioLabirinto extends JFrame {
 			} else {
 				painelDesenho.girarDireito();
 			}
+			notificar();
 		}
 	}
 
@@ -92,6 +102,7 @@ public class FormularioLabirinto extends JFrame {
 			if (pivo.podeCaminharNoPiso()) {
 				pivo.caminhar();
 				painelDesenho.processar();
+				notificar();
 				return;
 			}
 			List<Bloco> blocos = matriz.getBlocosNaFrente(pivo);
@@ -106,6 +117,7 @@ public class FormularioLabirinto extends JFrame {
 			}
 			pivo.ocupar(proximoPiso);
 			painelDesenho.processar();
+			notificar();
 		}
 	}
 
@@ -333,6 +345,7 @@ public class FormularioLabirinto extends JFrame {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setColor(Color.BLACK);
 			g2.fillRect(0, 0, getWidth(), getHeight());
+			matriz.setLado(10);
 			if (giroControle.processando) {
 				desenharGiro(g2);
 			} else {

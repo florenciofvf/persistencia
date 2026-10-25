@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 
 import br.com.persist.assistencia.Icone;
@@ -20,7 +19,7 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.marca.XML;
 
-public class AbaView2D extends Panel {
+public class AbaView2D extends Panel implements FormularioLabirintoListener {
 	public static final String MSG_FAVOR_CONSTRUIR_MATRIZ = "msg.favor_construir_matriz";
 	private PainelDesenho painelDesenho = new PainelDesenho();
 	private static final long serialVersionUID = 1L;
@@ -72,6 +71,7 @@ public class AbaView2D extends Panel {
 				return;
 			}
 			FormularioLabirinto form = new FormularioLabirinto(matriz, getGraphicsConfiguration());
+			form.setListener(AbaView2D.this);
 			form.setVisible(true);
 		}
 
@@ -98,7 +98,6 @@ public class AbaView2D extends Panel {
 		private transient Matriz matriz;
 
 		public PainelDesenho() {
-			addMouseMotionListener(new OuvinteMouseMotion());
 			addMouseListener(new OuvinteMouse());
 		}
 
@@ -106,9 +105,6 @@ public class AbaView2D extends Panel {
 			if (matriz.pivo == null) {
 				matriz.criarPivo();
 			}
-		}
-
-		private class OuvinteMouseMotion extends MouseMotionAdapter {
 		}
 
 		private class OuvinteMouse extends MouseAdapter {
@@ -145,8 +141,14 @@ public class AbaView2D extends Panel {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			if (matriz != null) {
+				matriz.setLado(40);
 				matriz.desenhar2D(g2);
 			}
 		}
+	}
+
+	@Override
+	public void alterado(Matriz matriz, Pivo pivo) {
+		painelDesenho.repaint();
 	}
 }
