@@ -1,6 +1,7 @@
 package br.com.persist.plugins.labirinto;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -330,6 +331,8 @@ public class FormularioLabirinto extends JFrame {
 			super.paint(g);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setColor(Color.BLACK);
+			g2.fillRect(0, 0, getWidth(), getHeight());
 			if (giroControle.processando) {
 				desenharGiro(g2);
 			} else {
