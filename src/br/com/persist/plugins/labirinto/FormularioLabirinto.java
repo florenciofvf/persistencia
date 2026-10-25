@@ -9,6 +9,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -145,6 +147,14 @@ public class FormularioLabirinto extends JFrame {
 			getActionMap().put("para_direita", new GirarAction(false));
 			getActionMap().put("caminhar", new CaminharAction());
 			getActionMap().put("init", new InitAction());
+			addMouseListener(new OuvinteMouse());
+		}
+
+		private class OuvinteMouse extends MouseAdapter {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				repaint();
+			}
 		}
 
 		class GiroControle {
