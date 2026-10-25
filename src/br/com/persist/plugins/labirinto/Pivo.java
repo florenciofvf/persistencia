@@ -66,9 +66,25 @@ public class Pivo {
 
 	public void desenhar2D(int x, int y, int lado, Graphics2D g2) {
 		g2.setColor(Color.RED);
-		lado /= 2;
-		int m = lado / 2;
-		g2.fillOval(x + m, y + m, lado, lado);
+		int met = lado / 2;
+		int m = met / 2;
+		g2.fillOval(x + m, y + m, met, met);
+		sentido(x + m, y + m, met, g2);
+	}
+
+	private void sentido(int x, int y, int lado, Graphics2D g2) {
+		g2.setColor(Color.BLACK);
+		int met = lado / 2;
+		int m = met / 2;
+		if (sentido == Sentido.ACIMA) {
+			g2.fillRect(x + m, y, met, met);
+		} else if (sentido == Sentido.DIREITA) {
+			g2.fillRect(x + met, y + m, met, met);
+		} else if (sentido == Sentido.ABAIXO) {
+			g2.fillRect(x + m, y + met, met, met);
+		} else if (sentido == Sentido.ESQUERDA) {
+			g2.fillRect(x, y + m, met, met);
+		}
 	}
 
 	public String toString() {
