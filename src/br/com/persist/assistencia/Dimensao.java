@@ -7,7 +7,15 @@ public interface Dimensao {
 
 	public void somarALargura(int valor);
 
+	public void checarMaximoHorizontal();
+
 	public void somarAAltura(int valor);
+
+	public void setLargura(int largura);
+
+	public void checarMaximoVertical();
+
+	public void setAltura(int altura);
 
 	public int getLargura();
 

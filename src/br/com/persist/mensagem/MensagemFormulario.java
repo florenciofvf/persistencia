@@ -2,6 +2,7 @@ package br.com.persist.mensagem;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.io.File;
 
@@ -55,9 +56,23 @@ public class MensagemFormulario extends AbstratoFormulario implements Dimensao {
 	}
 
 	@Override
+	public void setLargura(int largura) {
+		Dimension dimension = getSize();
+		dimension.width = largura;
+		setSize(dimension);
+	}
+
+	@Override
 	public void somarAAltura(int valor) {
 		Dimension dimension = getSize();
 		dimension.height += valor;
+		setSize(dimension);
+	}
+
+	@Override
+	public void setAltura(int altura) {
+		Dimension dimension = getSize();
+		dimension.height = altura;
 		setSize(dimension);
 	}
 
@@ -69,5 +84,21 @@ public class MensagemFormulario extends AbstratoFormulario implements Dimensao {
 	@Override
 	public int getAltura() {
 		return getHeight();
+	}
+
+	@Override
+	public void checarMaximoHorizontal() {
+		Rectangle bounds = getGraphicsConfiguration().getBounds();
+		if (getLargura() > bounds.width) {
+			setLargura(bounds.width);
+		}
+	}
+
+	@Override
+	public void checarMaximoVertical() {
+		Rectangle bounds = getGraphicsConfiguration().getBounds();
+		if (getAltura() > bounds.height) {
+			setAltura(bounds.height);
+		}
 	}
 }

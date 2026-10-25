@@ -19,6 +19,8 @@ public class DimensaoUtil {
 		} else if (dimensao.contemScrollHorizontal()) {
 			dimensao.somarALargura(10);
 		} else {
+			dimensao.checarMaximoVertical();
+			dimensao.checarMaximoHorizontal();
 			dimensao = null;
 			timer.stop();
 		}
