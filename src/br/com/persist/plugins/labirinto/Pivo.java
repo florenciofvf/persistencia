@@ -65,6 +65,17 @@ public class Pivo {
 	}
 
 	public void desenhar2D(int x, int y, int lado, Graphics2D g2) {
+		if (lado > 30) {
+			if (sentido == Sentido.ACIMA) {
+				y -= passos;
+			} else if (sentido == Sentido.DIREITA) {
+				x += passos;
+			} else if (sentido == Sentido.ABAIXO) {
+				y += passos;
+			} else if (sentido == Sentido.ESQUERDA) {
+				x -= passos;
+			}
+		}
 		g2.setColor(Color.BLACK);
 		int met = lado / 2;
 		int m = met / 2;
