@@ -388,7 +388,9 @@ public class FormularioLabirinto extends JFrame {
 					Bloco item = blocosFrente.get(i);
 					item.desenhar3DFrente(g2);
 				}
-				matriz.desenhar2D(g2);
+				if (LabirintoPreferencia.isDesenharMiniLabirinto()) {
+					matriz.desenhar2D(g2);
+				}
 			} else {
 				terreno.desenhar3DGiroD(g2);
 				for (int i = blocosEsquerdo.size() - 1; i >= 0; i--) {
@@ -399,7 +401,9 @@ public class FormularioLabirinto extends JFrame {
 					Bloco item = blocosFrente.get(i);
 					item.desenhar3DFrente(g2);
 				}
-				matriz.desenhar2D(g2);
+				if (LabirintoPreferencia.isDesenharMiniLabirinto()) {
+					matriz.desenhar2D(g2);
+				}
 			}
 		}
 
@@ -417,7 +421,9 @@ public class FormularioLabirinto extends JFrame {
 				Bloco item = blocosFrente.get(i);
 				item.desenhar3DFrente(g2);
 			}
-			matriz.desenhar2D(g2);
+			if (LabirintoPreferencia.isDesenharMiniLabirinto()) {
+				matriz.desenhar2D(g2);
+			}
 		}
 	}
 }

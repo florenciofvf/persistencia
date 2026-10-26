@@ -15,6 +15,7 @@ import br.com.persist.componente.RadioButton;
 import br.com.persist.formulario.Formulario;
 
 public class LabirintoConfiguracao extends AbstratoConfiguracao {
+	private final CheckBox chkDesenharMiniLabirinto = criarCheckBox("label.desenhar_mini_labirinto");
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 	private static final long serialVersionUID = 1L;
 
@@ -32,16 +33,19 @@ public class LabirintoConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, LabirintoPreferencia.getLabirintoPosicaoAbaFichario());
+		chkDesenharMiniLabirinto.setSelected(LabirintoPreferencia.isDesenharMiniLabirinto());
 		chkExibirArqIgnorados.setSelected(LabirintoPreferencia.isExibirArqIgnorados());
 
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
-		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
+		muro.camada(Muro.panelGrid(chkDesenharMiniLabirinto, chkExibirArqIgnorados));
 		add(BorderLayout.CENTER, muro);
 	}
 
 	private void configurar() {
+		chkDesenharMiniLabirinto.addActionListener(
+				e -> LabirintoPreferencia.setDesenharMiniLabirinto(chkDesenharMiniLabirinto.isSelected()));
 		chkExibirArqIgnorados
 				.addActionListener(e -> LabirintoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 	}

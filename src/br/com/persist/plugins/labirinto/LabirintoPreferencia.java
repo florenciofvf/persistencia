@@ -7,6 +7,7 @@ import br.com.persist.formulario.Formulario;
 
 public class LabirintoPreferencia {
 	private static int labirintoPosicaoAbaFichario;
+	private static boolean desenharMiniLabirinto;
 	private static boolean exibirArqIgnorados;
 
 	private LabirintoPreferencia() {
@@ -15,11 +16,13 @@ public class LabirintoPreferencia {
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		labirintoPosicaoAbaFichario = pref.getInt("labirinto_posicao_aba_fichario", SwingConstantes.TOP);
+		desenharMiniLabirinto = pref.getBoolean("labirinto_desenhar_mini_labirinto", true);
 		exibirArqIgnorados = pref.getBoolean("labirinto_exibir_arq_ignorados", false);
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		pref.putBoolean("labirinto_desenhar_mini_labirinto", desenharMiniLabirinto);
 		pref.putInt("labirinto_posicao_aba_fichario", labirintoPosicaoAbaFichario);
 		pref.putBoolean("labirinto_exibir_arq_ignorados", exibirArqIgnorados);
 	}
@@ -41,5 +44,13 @@ public class LabirintoPreferencia {
 
 	public static void setExibirArqIgnorados(boolean exibirArqIgnorados) {
 		LabirintoPreferencia.exibirArqIgnorados = exibirArqIgnorados;
+	}
+
+	public static boolean isDesenharMiniLabirinto() {
+		return desenharMiniLabirinto;
+	}
+
+	public static void setDesenharMiniLabirinto(boolean desenharMiniLabirinto) {
+		LabirintoPreferencia.desenharMiniLabirinto = desenharMiniLabirinto;
 	}
 }
