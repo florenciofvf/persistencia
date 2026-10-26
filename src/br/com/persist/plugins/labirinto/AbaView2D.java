@@ -116,6 +116,8 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 				} else {
 					formularioLabirinto.girarDireito();
 				}
+			} else {
+				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString("msg.formulario.versao3D.invisivel"));
 			}
 		}
 	}
@@ -127,6 +129,8 @@ public class AbaView2D extends Panel implements FormularioLabirintoListener {
 		public void actionPerformed(ActionEvent e) {
 			if (formularioLabirinto != null && formularioLabirinto.isVisible()) {
 				formularioLabirinto.caminhar();
+			} else {
+				Util.mensagem(AbaView2D.this, LabirintoMensagens.getString("msg.formulario.versao3D.invisivel"));
 			}
 		}
 	}
