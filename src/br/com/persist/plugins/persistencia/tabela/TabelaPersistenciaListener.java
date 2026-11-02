@@ -4,10 +4,11 @@ import br.com.persist.plugins.objeto.ObjetoException;
 import br.com.persist.plugins.persistencia.Coluna;
 
 public interface TabelaPersistenciaListener {
+	public void menorMaiorLength(TabelaPersistencia tabelaPersistencia, String coluna, String funcao, boolean where,
+			boolean form);
+
 	public void colocarNomeColunaAtalho(TabelaPersistencia tabelaPersistencia, String nome, boolean concat,
 			Coluna coluna);
-
-	public void menorMaiorLength(TabelaPersistencia tabelaPersistencia, String coluna, String funcao, boolean form);
 
 	public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
 

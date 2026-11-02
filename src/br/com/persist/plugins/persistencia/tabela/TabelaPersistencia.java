@@ -484,9 +484,11 @@ public class TabelaPersistencia extends Table {
 				addMenuItem(true, importaDeAcao);
 				add(true, new MenuTotalRepetidos());
 				add(new MenuTotalQueRepetem());
-				add(true,
-						new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_maior_length_string"), "MAX"));
-				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_menor_length_string"), "MIN"));
+				add(true, new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_maior_length_string"), "MAX",
+						false));
+				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.total_menor_length_string"), "MIN",
+						false));
+				add(new MenuMenorMaiorLength(TabelaMensagens.getString("label.where_length_string"), null, true));
 				add(true, new MenuGroupBy());
 				add(new MenuDistinct());
 				add(true, new MenuMenorMaior(TabelaMensagens.getString("label.primeiro_registro"), "MIN"));
@@ -569,11 +571,13 @@ public class TabelaPersistencia extends Table {
 
 			private class MenuMenorMaiorLength extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
+				private final boolean where;
 				private final String funcao;
 
-				private MenuMenorMaiorLength(String titulo, String funcao) {
+				private MenuMenorMaiorLength(String titulo, String funcao, boolean where) {
 					super(titulo, false, null);
 					this.funcao = funcao;
+					this.where = where;
 					formularioAcao.setActionListener(e -> abrirSelect(true));
 					dialogoAcao.setActionListener(e -> abrirSelect(false));
 				}
@@ -581,7 +585,7 @@ public class TabelaPersistencia extends Table {
 				private void abrirSelect(boolean abrirEmForm) {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.menorMaiorLength(TabelaPersistencia.this, coluna, funcao, abrirEmForm);
+						listener.menorMaiorLength(TabelaPersistencia.this, coluna, funcao, where, abrirEmForm);
 					}
 				}
 			}

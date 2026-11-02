@@ -4803,11 +4803,12 @@ public class InternalContainer extends Panel
 		}
 
 		@Override
-		public void menorMaiorLength(TabelaPersistencia tabelaPersistencia, String nome, String funcao, boolean form) {
+		public void menorMaiorLength(TabelaPersistencia tabelaPersistencia, String nome, String funcao, boolean where,
+				boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				InstrucaoCampo instrucaoCampo = new InstrucaoCampo(conexao, objeto, nome);
-				String instrucao = instrucaoCampo.totalMenorMaiorLength(funcao);
+				String instrucao = instrucaoCampo.totalMenorMaiorLength(funcao, where);
 				if (!Util.isEmpty(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
@@ -5763,10 +5764,17 @@ class InstrucaoCampo {
 		return sb.toString();
 	}
 
-	String totalMenorMaiorLength(String funcao) {
-		StringBuilder sb = new StringBuilder("SELECT " + funcao + "(LENGTH(" + objeto.comApelido(campo) + "))");
-		sb.append(FROM2 + objeto.getTabelaEsquema(conexao));
-		return sb.toString();
+	String totalMenorMaiorLength(String funcao, boolean where) {
+		StringBuilder builder = null;
+		if (where) {
+			builder = new StringBuilder("SELECT * ");
+			builder.append(FROM2 + objeto.getTabelaEsquema(conexao));
+			builder.append("\nWHERE " + "LENGTH(" + objeto.comApelido(campo) + ") = 1");
+		} else {
+			builder = new StringBuilder("SELECT " + funcao + "(LENGTH(" + objeto.comApelido(campo) + "))");
+			builder.append(FROM2 + objeto.getTabelaEsquema(conexao));
+		}
+		return builder.toString();
 	}
 }
 
