@@ -29,6 +29,7 @@ import javax.swing.table.TableModel;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icone;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.SwingUtilitario;
 import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
@@ -703,8 +704,19 @@ public class TabelaPersistencia extends Table {
 				return;
 			}
 			String string = Util.getContentTransfered();
-			String conteudo = Util.isEmpty(string) ? coluna : string + ", " + coluna;
-			Util.setContentTransfered(conteudo);
+			if (Util.isEmpty(string)) {
+				Util.setContentTransfered(coluna);
+				return;
+			}
+			String separador = ", ";
+			Object resp = Util.getValorInputDialog(TabelaPersistencia.this, "label.separador",
+					Mensagens.getString("label.separador"), separador);
+			if (resp == null) {
+				separador = "";
+			} else {
+				separador = resp.toString();
+			}
+			Util.setContentTransfered(string + separador + coluna);
 		}
 
 		private void larguraConteudo(int coluna) {
