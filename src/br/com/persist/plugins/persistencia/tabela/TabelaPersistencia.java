@@ -414,6 +414,7 @@ public class TabelaPersistencia extends Table {
 		private Action copiarNomeColunaConcatAcao = acaoMenu("label.copiar_nome_coluna_concat");
 		private Action pesquisaApartirColunaAcao = acaoMenu("label.pesquisa_a_partir_coluna");
 		private Action mapearApartirBiblioAcao = acaoMenu("label.mapear_a_partir_biblio");
+		private Action excluirValorColunaAcao = acaoMenu("label.excluir_valor_coluna");
 		private Action copiarNomeColunaAcao = acaoMenu("label.copiar_nome_coluna");
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
 		private Action larguraConteudoAcao = acaoMenu("label.largura_conteudo");
@@ -449,6 +450,7 @@ public class TabelaPersistencia extends Table {
 			add(true, new MenuColocarNomeColuna());
 			addMenuItem(copiarNomeColunaConcatAcao);
 			addMenuItem(copiarNomeColunaAcao);
+			addMenuItem(true, excluirValorColunaAcao);
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_t", false, false));
@@ -673,6 +675,7 @@ public class TabelaPersistencia extends Table {
 			});
 			copiarNomeColunaConcatAcao.setActionListener(e -> copiarNomeColuna(indiceColuna, true));
 			copiarNomeColunaAcao.setActionListener(e -> copiarNomeColuna(indiceColuna, false));
+			excluirValorColunaAcao.setActionListener(e -> excluirValorColuna());
 			pesquisaApartirColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
@@ -695,6 +698,16 @@ public class TabelaPersistencia extends Table {
 			larguraConteudoAcao.setActionListener(e -> larguraConteudo(indiceColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
+		}
+
+		private void excluirValorColuna() {
+			if (colunaTabela != null && colunaTabela.isChave()) {
+				Util.mensagem(TabelaPersistencia.this, "A coluna " + colunaTabela.getNome() + " eh chave.");
+				return;
+			}
+			if (colunaTabela != null && listener != null) {
+				listener.excluirValorColuna(TabelaPersistencia.this, colunaTabela);
+			}
 		}
 
 		private void copiarNomeColuna(int indice, boolean concat) {

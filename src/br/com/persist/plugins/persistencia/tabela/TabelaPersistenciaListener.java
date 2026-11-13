@@ -36,6 +36,8 @@ public interface TabelaPersistenciaListener {
 
 	public void mapearApartirBiblio(TabelaPersistencia tabelaPersistencia, Coluna coluna);
 
+	public void excluirValorColuna(TabelaPersistencia tabelaPersistencia, Coluna coluna);
+
 	public void campoExportadoPara(String coluna);
 
 	public void campoImportadoDe(String coluna);
