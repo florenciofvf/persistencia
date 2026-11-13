@@ -4773,6 +4773,27 @@ public class InternalContainer extends Panel
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
+		public void excluirValorColuna(TabelaPersistencia tabelaPersistencia, Coluna coluna) {
+			Conexao conexao = getConexao();
+			if (conexao == null) {
+				Util.mensagemConexaoNula(InternalContainer.this);
+				return;
+			}
+			int[] linhas = tabelaPersistencia.getSelectedRows();
+			if (linhas == null || linhas.length == 0) {
+				Util.mensagemObrigatorioItensSelecionado(InternalContainer.this);
+				return;
+			}
+			if (Util.confirmaExclusao(InternalContainer.this, false)) {
+				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+				for (int linha : linhas) {
+					modelo.setValueAt("", linha, coluna.getIndice());
+				}
+				modelo.fireTableDataChanged();
+			}
+		}
+
+		@Override
 		public void selectTotalValoresQueRepetem(TabelaPersistencia tabelaPersistencia, String nome, boolean form,
 				String titulo) {
 			Conexao conexao = getConexao();
