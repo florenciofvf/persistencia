@@ -278,7 +278,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	public class Dimensao {
 		public void ajusteManual() {
 			String string = getWidth() + "," + getHeight();
-			Object resp = Util.getValorInputDialog(AbstratoDesktop.this, "label.largura_altura", string, string);
+			Object resp = Util.getValorInputDialog(formulario, "label.largura_altura", string, string);
 			if (resp != null && !Util.isEmpty(resp.toString())) {
 				ajustarManual(resp);
 			}
