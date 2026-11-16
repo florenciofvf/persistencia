@@ -1393,7 +1393,7 @@ class SuperficiePopup2 extends Popup {
 			set.add(item);
 		}
 
-		if (lst.size() != set.size() && Util.confirmar(superficie,
+		if (lst.size() != set.size() && Util.confirmar(superficie.getFormulario(),
 				ObjetoMensagens.getString("msg.objetos_com_tabela_confirmar_duplicados"), false)) {
 			collection = new ArrayList<>();
 		} else {
@@ -1404,8 +1404,10 @@ class SuperficiePopup2 extends Popup {
 			collection.add(item);
 		}
 
-		if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.salvar_tree_set_formulario"), false)) {
-			if (Util.confirmar(superficie, ObjetoMensagens.getString("msg.salvar_tree_set_formulario_limpar"), false)) {
+		if (Util.confirmar(superficie.getFormulario(), ObjetoMensagens.getString("msg.salvar_tree_set_formulario"),
+				false)) {
+			if (Util.confirmar(superficie.getFormulario(),
+					ObjetoMensagens.getString("msg.salvar_tree_set_formulario_limpar"), false)) {
 				superficie.getFormulario().limparCollection();
 			}
 			superficie.getFormulario().setCollection(collection);
@@ -1449,7 +1451,7 @@ class SuperficiePopup2 extends Popup {
 					ObjetoMensagens.getString("msg.nenhum_instrucao_biblio_paraObjeto_result"));
 			return;
 		}
-		String nomeBiblio = ObjetoUtil.getSelBiblio(superficie, result);
+		String nomeBiblio = ObjetoUtil.getSelBiblio(superficie.getFormulario(), result);
 		if (nomeBiblio == null) {
 			return;
 		}
@@ -1909,7 +1911,7 @@ class SuperficiePopup extends Popup {
 			List<Objeto> lista = ObjetoSuperficieUtil.getSelecionados(superficie);
 			if (ObjetoSuperficieUtil.getContinua(lista)) {
 				String ajustes = nomeObjetosAjusteAuto(lista);
-				if (!Util.isEmpty(ajustes) && !Util.confirmar(superficie,
+				if (!Util.isEmpty(ajustes) && !Util.confirmar(superficie.getFormulario(),
 						ObjetoMensagens.getString("msg.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {
 					return;
 				}
