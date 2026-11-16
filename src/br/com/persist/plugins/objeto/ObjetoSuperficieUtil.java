@@ -185,7 +185,7 @@ public class ObjetoSuperficieUtil {
 		Objeto objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(superficie);
 		boolean confirmado = false;
 		if (objeto != null) {
-			if (Util.confirmaExclusao(superficie, true)) {
+			if (Util.confirmaExclusao(superficie.getFormulario(), true)) {
 				confirmado = true;
 			} else {
 				return;
@@ -196,7 +196,7 @@ public class ObjetoSuperficieUtil {
 			objeto = ObjetoSuperficieUtil.getPrimeiroObjetoSelecionado(superficie);
 		}
 		Relacao relacao = ObjetoSuperficieUtil.getPrimeiroRelacaoSelecionado(superficie);
-		if (relacao != null && !confirmado && !Util.confirmaExclusao(superficie, true)) {
+		if (relacao != null && !confirmado && !Util.confirmaExclusao(superficie.getFormulario(), true)) {
 			return;
 		}
 		while (relacao != null) {
@@ -208,16 +208,18 @@ public class ObjetoSuperficieUtil {
 
 	public static void todosIconesParaArquivoVinculado(ObjetoSuperficie superficie) throws ObjetoException {
 		if (Util.isEmpty(superficie.getArquivoVinculo())) {
-			Util.mensagem(superficie, ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_inexistente"));
+			Util.mensagem(superficie.getFormulario(),
+					ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_inexistente"));
 			return;
 		}
 		List<Objeto> objetosTabelaIcone = getObjetosTabelaIcone(superficie);
 		if (objetosTabelaIcone.isEmpty()) {
-			Util.mensagem(superficie, ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_sem_objetos"));
+			Util.mensagem(superficie.getFormulario(),
+					ObjetoMensagens.getString("msg.todos_icones_arquivo_vinculado_sem_objetos"));
 			return;
 		}
-		if (!Util.confirmar(superficie, ObjetoMensagens.getString("msg.confirmar_todos_icones_arquivo_vinculado"),
-				false)) {
+		if (!Util.confirmar(superficie.getFormulario(),
+				ObjetoMensagens.getString("msg.confirmar_todos_icones_arquivo_vinculado"), false)) {
 			return;
 		}
 		Vinculacao vinculacao = new Vinculacao();
@@ -237,7 +239,7 @@ public class ObjetoSuperficieUtil {
 			para.setIcone(item.getIcone());
 		}
 		ObjetoSuperficieUtil.salvarVinculacao(superficie, vinculacao);
-		Util.mensagem(superficie, "SUCESSO");
+		Util.mensagem(superficie.getFormulario(), "SUCESSO");
 	}
 
 	public static List<Objeto> getObjetosTabelaIcone(ObjetoSuperficie superficie) {
@@ -336,10 +338,10 @@ public class ObjetoSuperficieUtil {
 			}
 		}
 		if (!contem) {
-			Util.mensagem(superficie, ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
+			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
 			return;
 		}
-		if (Util.confirmaExclusao(superficie, true)) {
+		if (Util.confirmaExclusao(superficie.getFormulario(), true)) {
 			for (Objeto item : superficie.getObjetos()) {
 				if (Util.isEmpty(item.getTabela())) {
 					superficie.excluir(item);
@@ -360,7 +362,7 @@ public class ObjetoSuperficieUtil {
 			}
 		}
 		if (lista.isEmpty()) {
-			Util.mensagem(superficie, ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
+			Util.mensagem(superficie.getFormulario(), ObjetoMensagens.getString("msg.nenhum_objeto_sem_tabela"));
 			return;
 		}
 		FiltroTotalRegistro filtro = getFiltro(superficie);
