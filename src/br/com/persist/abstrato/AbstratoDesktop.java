@@ -49,6 +49,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	private class DesktopManagerInner extends DefaultDesktopManager {
 		private static final long serialVersionUID = 1L;
 		private boolean abortarArrasto;
+		private boolean abortarResize;
 
 		@Override
 		public void dragFrame(JComponent f, int newX, int newY) {
@@ -57,14 +58,30 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			}
 			super.dragFrame(f, newX, newY);
 		}
+
+		@Override
+		public void resizeFrame(JComponent f, int newX, int newY, int newWidth, int newHeight) {
+			if (abortarResize) {
+				return;
+			}
+			super.resizeFrame(f, newX, newY, newWidth, newHeight);
+		}
 	}
 
 	public void setAbortarArrastoForm(boolean b) {
 		desktopManagerInner.abortarArrasto = b;
 	}
 
+	public void setAbortarResizeForm(boolean b) {
+		desktopManagerInner.abortarResize = b;
+	}
+
 	public boolean isAbortarArrastoForm() {
 		return desktopManagerInner.abortarArrasto;
+	}
+
+	public boolean isAbortarResizeForm() {
+		return desktopManagerInner.abortarResize;
 	}
 
 	public class MenuDistribuicao extends Menu {

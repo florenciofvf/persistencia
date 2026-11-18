@@ -73,6 +73,7 @@ public class ObjetoHandler extends XMLHandler {
 
 	private void processarRaiz(Attributes attributes) {
 		coletor.getAbortarArrastoForm().set(Boolean.parseBoolean(attributes.getValue("abortarArrastoForm")));
+		coletor.getAbortarResizeForm().set(Boolean.parseBoolean(attributes.getValue("abortarResizeForm")));
 		coletor.getAjusteLarguraForm().set(Boolean.parseBoolean(attributes.getValue("ajusteLarguraForm")));
 		coletor.getCompararRegistros().set(Boolean.parseBoolean(attributes.getValue("compararRegistros")));
 		coletor.getSomenteObjetoSel().set(Boolean.parseBoolean(attributes.getValue("somenteObjetoSel")));

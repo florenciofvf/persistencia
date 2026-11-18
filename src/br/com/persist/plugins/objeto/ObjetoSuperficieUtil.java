@@ -68,6 +68,7 @@ public class ObjetoSuperficieUtil {
 		util.abrirTag("fvf");
 		util.atributo("ajusteAutoForm", superficie.isAjusteAutoEmpilhaForm());
 		util.atributo("abortarArrastoForm", superficie.isAbortarArrastoForm());
+		util.atributo("abortarResizeForm", superficie.isAbortarResizeForm());
 		util.atributo("ajusteLarguraForm", superficie.isAjusteAutoLarguraForm());
 		util.atributo("compararRegistros", superficie.container.isCompararRegistros());
 		util.atributo("somenteObjetoSel", superficie.container.isSomenteObjetoSel());
