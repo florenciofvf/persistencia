@@ -415,7 +415,7 @@ public class ObjetoContainer extends AbstratoContainer implements PluginBasico {
 		}
 
 		private void setAbortarResizeIntForm() {
-			objetoSuperficie.setAbortarArrastoForm(chkAbortarResizeIntForm.isSelected());
+			objetoSuperficie.setAbortarResizeForm(chkAbortarResizeIntForm.isSelected());
 		}
 
 		private void setAjusteAutoEmpilhaForm() {
