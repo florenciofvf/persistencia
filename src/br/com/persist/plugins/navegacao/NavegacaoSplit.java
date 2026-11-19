@@ -740,6 +740,7 @@ class Aba extends Transferivel {
 				String mimes, byte[] bytes, String string) {
 			if (mimes.contains("image/")) {
 				requisicao.add(new VisualizadorImagem(bytes, string));
+				containerRequisicao.requisicaoSelecionada(requisicao);
 			}
 
 			if (mimes.contains("application/json")) {
