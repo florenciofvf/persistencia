@@ -1736,7 +1736,7 @@ class VisualizadorImagem extends Visualizador {
 		add(BorderLayout.CENTER, new ScrollPane(labelImagem));
 
 		fieldZoom.setToolTipText(NavegacaoMensagens.getString("label.aplica_zoom_imagem"));
-		fieldZoom.addActionListener(e -> aplicar(-1));
+		fieldZoom.addActionListener(e -> aplicar());
 		fieldZoom.ignorarEspaco();
 		aplicar0();
 	}
@@ -1752,10 +1752,11 @@ class VisualizadorImagem extends Visualizador {
 		BufferedImage original = getOriginal();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		if (largura70(screenSize.width, original.getWidth())) {
-			aplicar(-1);
+			fieldZoom.setText("0.1");
 		} else {
-			aplicar(1.0);
+			fieldZoom.setText("1.0");
 		}
+		aplicar();
 	}
 
 	private static boolean largura70(int total, int compara) {
@@ -1763,15 +1764,15 @@ class VisualizadorImagem extends Visualizador {
 		return calculo > 70;
 	}
 
-	private void aplicar(double zoomPref) {
-		BufferedImage buffered = criarBuffered(zoomPref);
+	private void aplicar() {
+		BufferedImage buffered = criarBuffered();
 		labelImagem.setIcon(new ImageIcon(buffered));
 	}
 
-	private BufferedImage criarBuffered(double zoomPref) {
+	private BufferedImage criarBuffered() {
 		BufferedImage original = getOriginal();
 
-		double zoom = zoomPref == -1 ? getZoom() : zoomPref;
+		double zoom = getZoom();
 		int largura = (int) (original.getWidth() * zoom);
 		int altura = (int) (original.getHeight() * zoom);
 
