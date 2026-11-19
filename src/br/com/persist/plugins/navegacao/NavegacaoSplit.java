@@ -9,8 +9,10 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -1733,9 +1735,9 @@ class VisualizadorImagem extends Visualizador {
 		add(BorderLayout.CENTER, new ScrollPane(labelImagem));
 
 		fieldZoom.setToolTipText(NavegacaoMensagens.getString("label.aplica_zoom_imagem"));
-		fieldZoom.addActionListener(e -> aplicar());
+		fieldZoom.addActionListener(e -> aplicar(-1));
 		fieldZoom.ignorarEspaco();
-		aplicar();
+		aplicar0();
 	}
 
 	private Panel criarPanelControles() {
@@ -1745,15 +1747,26 @@ class VisualizadorImagem extends Visualizador {
 		return panel;
 	}
 
-	private void aplicar() {
-		BufferedImage buffered = criarBuffered();
+	private void aplicar0() {
+		BufferedImage original = getOriginal();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int metadeLargura = screenSize.width / 2;
+		if (original.getWidth() > metadeLargura) {
+			aplicar(-1);
+		} else {
+			aplicar(1.0);
+		}
+	}
+
+	private void aplicar(double zoomPref) {
+		BufferedImage buffered = criarBuffered(zoomPref);
 		labelImagem.setIcon(new ImageIcon(buffered));
 	}
 
-	private BufferedImage criarBuffered() {
+	private BufferedImage criarBuffered(double zoomPref) {
 		BufferedImage original = getOriginal();
 
-		double zoom = getZoom();
+		double zoom = zoomPref == -1 ? getZoom() : zoomPref;
 		int largura = (int) (original.getWidth() * zoom);
 		int altura = (int) (original.getHeight() * zoom);
 
