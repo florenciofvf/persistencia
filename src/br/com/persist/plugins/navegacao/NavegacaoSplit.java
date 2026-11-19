@@ -1751,12 +1751,16 @@ class VisualizadorImagem extends Visualizador {
 	private void aplicar0() {
 		BufferedImage original = getOriginal();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int metadeLargura = screenSize.width / 2;
-		if (original.getWidth() > metadeLargura) {
+		if (largura70(screenSize.width, original.getWidth())) {
 			aplicar(-1);
 		} else {
 			aplicar(1.0);
 		}
+	}
+
+	private static boolean largura70(int total, int compara) {
+		int calculo = (compara * 100) / total;
+		return calculo > 70;
 	}
 
 	private void aplicar(double zoomPref) {
