@@ -8,6 +8,7 @@ import br.com.persist.formulario.Formulario;
 public class ObjetoPreferencia {
 	private static boolean mouseWheelTitleFormInternalTopDown;
 	private static boolean habilitadoEsquemaTabelaAlter;
+	private static boolean tentarMostrarColunaDestacada;
 	private static boolean moverTopoFormOrigemPesquisa;
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean pesquisaFormInternalLazy;
@@ -36,6 +37,7 @@ public class ObjetoPreferencia {
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		habilitadoEsquemaTabelaAlter = pref.getBoolean("habilitado_esquema_tabela_alter", false);
 		moverTopoFormOrigemPesquisa = pref.getBoolean("mover_topo_form_origem_pesquisa", false);
+		tentarMostrarColunaDestacada = pref.getBoolean("tentarMostrarColunaDestacada", false);
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		exibirTotalColunasTabela = pref.getBoolean("exibir_total_colunas_tabela", false);
 		pesquisaFormInternalLazy = pref.getBoolean("pesquisa_form_internal_lazy", false);
@@ -53,6 +55,7 @@ public class ObjetoPreferencia {
 		pref.putBoolean("mouseWheelTitleFormInternalTopDown", mouseWheelTitleFormInternalTopDown);
 		pref.putBoolean("habilitado_esquema_tabela_alter", habilitadoEsquemaTabelaAlter);
 		pref.putBoolean("mover_topo_form_origem_pesquisa", moverTopoFormOrigemPesquisa);
+		pref.putBoolean("tentarMostrarColunaDestacada", tentarMostrarColunaDestacada);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putInt("tipo_destaque_formulario_pesquisado", tipoDestaqueFormulario);
 		pref.putBoolean("pesquisa_form_internal_lazy", pesquisaFormInternalLazy);
@@ -194,5 +197,13 @@ public class ObjetoPreferencia {
 
 	public static void setMouseWheelTitleFormInternalTopDown(boolean mouseWheelTitleFormInternalTopDown) {
 		ObjetoPreferencia.mouseWheelTitleFormInternalTopDown = mouseWheelTitleFormInternalTopDown;
+	}
+
+	public static boolean isTentarMostrarColunaDestacada() {
+		return tentarMostrarColunaDestacada;
+	}
+
+	public static void setTentarMostrarColunaDestacada(boolean tentarMostrarColunaDestacada) {
+		ObjetoPreferencia.tentarMostrarColunaDestacada = tentarMostrarColunaDestacada;
 	}
 }

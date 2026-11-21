@@ -50,6 +50,7 @@ import br.com.persist.data.Tipo;
 import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
 import br.com.persist.plugins.objeto.ObjetoException;
+import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
@@ -268,6 +269,9 @@ public class TabelaPersistencia extends Table {
 	};
 
 	public void tornarVisivel(int linha, int coluna) {
+		if (!ObjetoPreferencia.isTentarMostrarColunaDestacada()) {
+			return;
+		}
 		int colunaView = convertColumnIndexToView(coluna);
 		Rectangle rect = getCellRect(linha, colunaView, true);
 		if (rect != null) {
