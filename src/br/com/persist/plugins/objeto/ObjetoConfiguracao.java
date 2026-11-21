@@ -49,6 +49,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			ObjetoMensagens.getString("label.abrir_auto_destacado"), false);
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox(ObjetoMensagens.getString("label.ativar_abrir_auto"),
 			false);
+	private final CheckBox chkTentarMostrarColunaDestacada = new CheckBox(
+			ObjetoMensagens.getString("label.tentar_mostrar_coluna_destac"), false);
 	private final CheckBox chkMoverTopoFormOrigemPesquisa = new CheckBox(
 			ObjetoMensagens.getString("label.mover_topo_form_origem_pesquisa"), false);
 	private final ButtonGrupo grupoTiposDestacForm = new ButtonGrupo();
@@ -102,6 +104,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 		chkMouseWheelTitleFormInternalTopDown.setSelected(ObjetoPreferencia.isMouseWheelTitleFormInternalTopDown());
 		cmbNivelTransparencia.setSelectedItem(String.valueOf(ObjetoPreferencia.getNivelTransparencia()));
+		chkTentarMostrarColunaDestacada.setSelected(ObjetoPreferencia.isTentarMostrarColunaDestacada());
 		chkMoverTopoFormOrigemPesquisa.setSelected(ObjetoPreferencia.isMoverTopoFormOrigemPesquisa());
 		chkHabitEsquemaTabelaAlter.setSelected(ObjetoPreferencia.isHabilitadoEsquemaTabelaAlter());
 		chkExibirTotalColunasTabela.setSelected(ObjetoPreferencia.isExibirTotalColunasTabela());
@@ -119,7 +122,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
 				chkPesquisaFormInternalLazy, chkExibirTotalColunasTabela, chkMoverTopoFormOrigemPesquisa,
-				chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj, chkMouseWheelTitleFormInternalTopDown));
+				chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj, chkMouseWheelTitleFormInternalTopDown,
+				chkTentarMostrarColunaDestacada));
 		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados,
 				tituloDestacForm, panelDestacForm));
 		muro.camada(Muro
@@ -170,6 +174,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private void configurar() {
 		chkMoverTopoFormOrigemPesquisa.addActionListener(
 				e -> ObjetoPreferencia.setMoverTopoFormOrigemPesquisa(chkMoverTopoFormOrigemPesquisa.isSelected()));
+		chkTentarMostrarColunaDestacada.addActionListener(
+				e -> ObjetoPreferencia.setTentarMostrarColunaDestacada(chkTentarMostrarColunaDestacada.isSelected()));
 		chkHabitEsquemaTabelaAlter.addActionListener(
 				e -> ObjetoPreferencia.setHabilitadoEsquemaTabelaAlter(chkHabitEsquemaTabelaAlter.isSelected()));
 		chkExibirTotalColunasTabela.addActionListener(
