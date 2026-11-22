@@ -20,10 +20,10 @@ public class ParaTabela {
 	private static final String TABELA_ALTERNATIVO = "tabelaAlternativo";
 	private static final String CLONAR_AO_DESTACAR = "clonarAoDestacar";
 	private static final String STR_MARGEM_INFERIOR = "margemInferior";
+	private static final String STR_POSICIONAMENTO = "posicionamento";
 	private static final String BIBLIO_CHECAGEM = "biblioChecagem";
 	private static final String LARGURA_ROTULOS = "larguraRotulos";
 	private static final String AJUSTAR_LARGURA = "ajustarLargura";
-	private static final String POSICIONAMENTO = "posicionamento";
 	private static final String STR_TRANSPARENTE = "transparente";
 	private static final String INTERNAL_FORM_X = "internalFormX";
 	private static final String INTERNAL_FORM_Y = "internalFormY";
@@ -353,10 +353,10 @@ public class ParaTabela {
 		setSelectAlternativo(attributes.getValue(SELECT_ALTERNATIVO), null);
 		setClonarAoDestacar(attributes.getValue(CLONAR_AO_DESTACAR), null);
 		setMargemInferior(attributes.getValue(STR_MARGEM_INFERIOR), null);
+		setPosicionamento(attributes.getValue(STR_POSICIONAMENTO), null);
 		setLarguraRotulos(attributes.getValue(LARGURA_ROTULOS), null);
 		setBiblioChecagem(attributes.getValue(BIBLIO_CHECAGEM), null);
 		setAjustarLargura(attributes.getValue(AJUSTAR_LARGURA), null);
-		setPosicionamento(attributes.getValue(POSICIONAMENTO), null);
 		setTransparente(attributes.getValue(STR_TRANSPARENTE), null);
 		setInternalFormX(attributes.getValue(INTERNAL_FORM_X), null);
 		setInternalFormY(attributes.getValue(INTERNAL_FORM_Y), null);
@@ -419,10 +419,10 @@ public class ParaTabela {
 		atributoValor(util, SELECT_ALTERNATIVO, selectAlternativo);
 		atributoValor(util, CLONAR_AO_DESTACAR, clonarAoDestacar);
 		atributoValor(util, STR_MARGEM_INFERIOR, margemInferior);
+		atributoValor(util, STR_POSICIONAMENTO, posicionamento);
 		atributoValor(util, LARGURA_ROTULOS, larguraRotulos);
 		atributoValor(util, BIBLIO_CHECAGEM, biblioChecagem);
 		atributoValor(util, AJUSTAR_LARGURA, ajustarLargura);
-		atributoValor(util, POSICIONAMENTO, posicionamento);
 		atributoValor(util, INTERNAL_FORM_X, internalFormX);
 		atributoValor(util, INTERNAL_FORM_Y, internalFormY);
 		atributoValor(util, INTERNAL_FORM_L, internalFormL);
@@ -484,8 +484,8 @@ public class ParaTabela {
 		util.tab().atributo(SELECT_ALTERNATIVO, "").ql();
 		util.tab().atributo(CLONAR_AO_DESTACAR, true).ql();
 		util.tab().atributo(LARGURA_ROTULOS, false).ql();
+		util.tab().atributo(STR_POSICIONAMENTO, "").ql();
 		util.tab().atributo(BIBLIO_CHECAGEM, "").ql();
-		util.tab().atributo(POSICIONAMENTO, "").ql();
 		util.tab().atributo(AJUSTAR_LARGURA, true).ql();
 		util.tab().atributo(INTERNAL_FORM_X, "").ql();
 		util.tab().atributo(INTERNAL_FORM_Y, "").ql();

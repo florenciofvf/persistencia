@@ -222,7 +222,7 @@ public class ObjetoUtil {
 			builder.append("WHEN " + item + " THEN " + ordem + Constantes.QL);
 			ordem++;
 		}
-		builder.append(" END");
+		builder.append("END");
 		return builder.toString();
 	}
 }
