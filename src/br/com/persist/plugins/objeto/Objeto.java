@@ -803,14 +803,21 @@ public class Objeto implements Runnable {
 			sb.append(" ORDER BY ");
 			if (Util.isEmpty(apelidoParaJoins)) {
 				sb.append(orderBy);
+				return;
+			}
+
+			String order = orderBy.trim();
+
+			if (order.toUpperCase().startsWith("CASE ")) {
+				sb.append(orderBy);
+				return;
+			}
+
+			String apelido = apelidoParaJoins + ".";
+			if (order.startsWith(apelido)) {
+				sb.append(orderBy);
 			} else {
-				String apelido = apelidoParaJoins + ".";
-				String order = orderBy.trim();
-				if (order.startsWith(apelido)) {
-					sb.append(orderBy);
-				} else {
-					sb.append(apelido + order);
-				}
+				sb.append(apelido + order);
 			}
 		}
 	}

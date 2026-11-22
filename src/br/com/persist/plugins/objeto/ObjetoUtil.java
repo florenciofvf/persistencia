@@ -201,7 +201,7 @@ public class ObjetoUtil {
 		return ObjetoMensagens.getString("hint.pesquisa.total.ref_manipul");
 	}
 
-	public static String montarOrderByCASE(String coluna, String string) {
+	public static String montarOrderByCASE(String prefixo, String coluna, String string) {
 		if (Util.isEmpty(string)) {
 			return "";
 		}
@@ -216,7 +216,12 @@ public class ObjetoUtil {
 		if (lista.isEmpty()) {
 			return "";
 		}
-		StringBuilder builder = new StringBuilder("CASE " + coluna + Constantes.QL);
+		StringBuilder builder = new StringBuilder("CASE ");
+		if (Util.isEmpty(prefixo)) {
+			builder.append(coluna + Constantes.QL);
+		} else {
+			builder.append(prefixo + "." + coluna + Constantes.QL);
+		}
 		int ordem = 1;
 		for (String item : lista) {
 			builder.append("WHEN " + item + " THEN " + ordem + Constantes.QL);

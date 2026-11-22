@@ -4775,7 +4775,7 @@ public class InternalContainer extends Panel
 		@Override
 		public void orderByColunaIN(TabelaPersistencia tabelaPersistencia, Coluna coluna) {
 			String string = Util.getContentTransfered();
-			objeto.setOrderBy(ObjetoUtil.montarOrderByCASE(coluna.getNome(), string));
+			objeto.setOrderBy(ObjetoUtil.montarOrderByCASE(objeto.getApelidoParaJoins(), coluna.getNome(), string));
 		}
 
 		@Override
