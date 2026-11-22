@@ -200,4 +200,29 @@ public class ObjetoUtil {
 	public static String getHintTotalRefValidaManipul() {
 		return ObjetoMensagens.getString("hint.pesquisa.total.ref_manipul");
 	}
+
+	public static String montarOrderByCASE(String coluna, String string) {
+		if (Util.isEmpty(string)) {
+			return "";
+		}
+		String[] array = string.split(",");
+		List<String> lista = new ArrayList<>();
+		for (String item : array) {
+			item = item.trim();
+			if (!lista.contains(item)) {
+				lista.add(item);
+			}
+		}
+		if (lista.isEmpty()) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder("CASE " + coluna + Constantes.QL);
+		int ordem = 1;
+		for (String item : lista) {
+			builder.append("WHEN " + item + " THEN " + ordem + Constantes.QL);
+			ordem++;
+		}
+		builder.append(" END");
+		return builder.toString();
+	}
 }

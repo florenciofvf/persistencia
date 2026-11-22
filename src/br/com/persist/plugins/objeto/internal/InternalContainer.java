@@ -4773,6 +4773,12 @@ public class InternalContainer extends Panel
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
+		public void orderByColunaIN(TabelaPersistencia tabelaPersistencia, Coluna coluna) {
+			String string = Util.getContentTransfered();
+			objeto.setOrderBy(ObjetoUtil.montarOrderByCASE(coluna.getNome(), string));
+		}
+
+		@Override
 		public void excluirValorColuna(TabelaPersistencia tabelaPersistencia, Coluna coluna) {
 			Conexao conexao = getConexao();
 			if (conexao == null) {

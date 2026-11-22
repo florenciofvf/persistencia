@@ -420,6 +420,7 @@ public class TabelaPersistencia extends Table {
 		private Action mapearApartirBiblioAcao = acaoMenu("label.mapear_a_partir_biblio");
 		private Action excluirValorColunaAcao = acaoMenu("label.excluir_valor_coluna");
 		private Action copiarNomeColunaAcao = acaoMenu("label.copiar_nome_coluna");
+		private Action orderByColunaINAcao = acaoMenu("label.order_by_coluna_IN");
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
 		private Action larguraConteudoAcao = acaoMenu("label.largura_conteudo");
 		private Action larguraColunaAcao = actionMenu("label.largura_manual");
@@ -455,6 +456,7 @@ public class TabelaPersistencia extends Table {
 			addMenuItem(copiarNomeColunaConcatAcao);
 			addMenuItem(copiarNomeColunaAcao);
 			addMenuItem(true, excluirValorColunaAcao);
+			addMenuItem(true, orderByColunaINAcao);
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_t", false, false));
@@ -680,6 +682,7 @@ public class TabelaPersistencia extends Table {
 			copiarNomeColunaConcatAcao.setActionListener(e -> copiarNomeColuna(indiceColuna, true));
 			copiarNomeColunaAcao.setActionListener(e -> copiarNomeColuna(indiceColuna, false));
 			excluirValorColunaAcao.setActionListener(e -> excluirValorColuna());
+			orderByColunaINAcao.setActionListener(e -> orderByColunaIN());
 			pesquisaApartirColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
@@ -711,6 +714,12 @@ public class TabelaPersistencia extends Table {
 			}
 			if (colunaTabela != null && listener != null) {
 				listener.excluirValorColuna(TabelaPersistencia.this, colunaTabela);
+			}
+		}
+
+		private void orderByColunaIN() {
+			if (colunaTabela != null && listener != null) {
+				listener.orderByColunaIN(TabelaPersistencia.this, colunaTabela);
 			}
 		}
 
