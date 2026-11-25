@@ -725,11 +725,6 @@ public class Util {
 			if (pDialog.y <= pComp.y) {
 				dialog.setLocation(dialog.getX(), dialog.getY() + 100);
 			}
-			Window window = getWindowParent(componente);
-			if (window != null) {
-				int x = window.getWidth() - dialog.getWidth();
-				dialog.setLocation(x / 2, dialog.getY());
-			}
 		}
 	}
 
