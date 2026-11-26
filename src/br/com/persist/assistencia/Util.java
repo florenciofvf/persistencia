@@ -724,7 +724,7 @@ public class Util {
 			if (componente instanceof JTable) {
 				Component comp = getViewParent(componente);
 				dialog.setLocationRelativeTo(comp);
-				dialog.setLocation(dialog.getX(), (int) pointOnScreen.getX());
+				dialog.setLocation(dialog.getX(), (int) pointOnScreen.getY());
 			}
 		}
 	}
