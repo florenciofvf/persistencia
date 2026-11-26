@@ -720,10 +720,11 @@ public class Util {
 
 	private static void configLocation(JDialog dialog, Component componente) {
 		if (componente != null && componente.isShowing()) {
-			Point pDialog = dialog.getLocation();
-			Point pComp = componente.getLocationOnScreen();
-			if (pDialog.y <= pComp.y) {
-				dialog.setLocation(dialog.getX(), dialog.getY() + 100);
+			Point pointOnScreen = componente.getLocationOnScreen();
+			if (componente instanceof JTable) {
+				Component comp = getViewParent(componente);
+				dialog.setLocationRelativeTo(comp);
+				dialog.setLocation(dialog.getX(), (int) pointOnScreen.getX());
 			}
 		}
 	}
